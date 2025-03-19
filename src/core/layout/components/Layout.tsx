@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router'
 
-import Sidebar from './components/sidebar/Sidebar'
+import Sidebar from './Sidebar/Sidebar'
 
 function MainApplication() {
   return (

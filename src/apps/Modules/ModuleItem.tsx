@@ -8,7 +8,7 @@ import { Switch } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { RouteItem } from '../../core/routes/interfaces/routes_interfaces'
+import { RouteItem } from '../../core/layout/interfaces/routes_interfaces'
 
 function ModuleItem({
   module,
