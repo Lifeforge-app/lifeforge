@@ -2,6 +2,8 @@ import _ from 'lodash'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { LoadingScreen } from '@lifeforge/ui'
+
 import fetchAPI from '@utils/fetchAPI'
 
 import { useAuth } from '../AuthProvider'
@@ -61,6 +63,7 @@ export default function PersonalizationProvider({
     saturation: 100,
     overlayOpacity: 50
   })
+  const [languageLoaded, setLanguageLoaded] = useState(false)
 
   const themeColor = useMemo(
     () =>
@@ -144,7 +147,7 @@ export default function PersonalizationProvider({
   useThemeEffect(theme, rawThemeColor, bgTemp)
   useRawThemeColorEffect(rawThemeColor, theme)
   useBgTempEffect(bgTemp, theme)
-  useLanguageEffect(language)
+  useLanguageEffect(language, setLanguageLoaded)
 
   async function changeFontFamily(font: string) {
     setFontFamily(font)
@@ -219,20 +222,26 @@ export default function PersonalizationProvider({
 
   return (
     <PersonalizationContext value={value}>
-      <meta
-        content={
-          rawThemeColor.startsWith('#')
-            ? rawThemeColor
-            : THEME_COLOR_HEX[
-                rawThemeColor.replace(
-                  'theme-',
-                  ''
-                ) as keyof typeof THEME_COLOR_HEX
-              ]
-        }
-        name="theme-color"
-      />
-      {children}
+      {!languageLoaded ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <meta
+            content={
+              rawThemeColor.startsWith('#')
+                ? rawThemeColor
+                : THEME_COLOR_HEX[
+                    rawThemeColor.replace(
+                      'theme-',
+                      ''
+                    ) as keyof typeof THEME_COLOR_HEX
+                  ]
+            }
+            name="theme-color"
+          />
+          {children}
+        </>
+      )}
     </PersonalizationContext>
   )
 }

@@ -8,7 +8,6 @@ function initLocale() {
     .use(initReactI18next)
     .init({
       lng: 'en',
-      fallbackLng: 'en',
       cache: {
         enabled: true
       },

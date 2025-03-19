@@ -292,6 +292,14 @@ export const ROUTES: RouteCategory[] = [
           sudoku: lazy(() => import('@apps/Sudoku'))
         },
         togglable: true
+      },
+      {
+        name: 'Currency Converter',
+        icon: <IconCurrencyDollar />,
+        routes: {
+          'currency-converter': lazy(() => import('@apps/CurrencyConverter'))
+        },
+        togglable: true
       }
     ]
   },
