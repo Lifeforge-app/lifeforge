@@ -28,8 +28,11 @@ function YoutubeSummarizer() {
   const debouncedVideoUrl = useDebounce(videoUrl, 500)
   const videoID = useMemo(() => {
     try {
-      const url = new URL(debouncedVideoUrl)
-      return url.searchParams.get('v')
+      if (debouncedVideoUrl.includes('youtube.com/watch?v=')) {
+        return new URL(debouncedVideoUrl).searchParams.get('v')
+      } else if (debouncedVideoUrl.includes('youtu.be/')) {
+        return debouncedVideoUrl.split('?')[0].split('/').pop()
+      }
     } catch {
       return
     }
