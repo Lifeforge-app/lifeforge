@@ -28,9 +28,7 @@ function ChildRoutesRenderer({
           <APIKeyStatusProvider APIKeys={APIKeys}>
             <Suspense
               key={`path-${path}`}
-              fallback={
-                <LoadingScreen customMessage={t('common.misc:loadingModule')} />
-              }
+              fallback={<LoadingScreen customMessage={t('loadingModule')} />}
             >
               <Comp />
             </Suspense>
