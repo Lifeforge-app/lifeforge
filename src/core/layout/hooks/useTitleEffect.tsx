@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useEffect } from 'react'
 
-import ROUTES from '../Routes'
+import ROUTES from '../../Routes'
 
 function useTitleEffect() {
   useEffect(() => {

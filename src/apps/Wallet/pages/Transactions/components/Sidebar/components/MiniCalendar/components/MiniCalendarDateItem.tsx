@@ -1,8 +1,9 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import clsx from 'clsx'
 import moment from 'moment'
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 interface MiniCalendarDateItemProps {
   index: number
@@ -226,6 +227,10 @@ function MiniCalendarDateItem({
             'end_date',
             moment(target, 'YYYY-MM-DD').format('YYYY-M-DD')
           )
+
+          setNextToSelect('end')
+          setSearchParams(searchParams)
+          return
         }
 
         if (
@@ -248,7 +253,7 @@ function MiniCalendarDateItem({
           return
         }
 
-        setNextToSelect(nextToSelect === 'start' ? 'end' : 'start')
+        setNextToSelect('start')
         setSearchParams(searchParams)
       }}
     >
