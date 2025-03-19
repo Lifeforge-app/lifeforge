@@ -21,14 +21,15 @@ function SidebarItems({ query }: { query: string }) {
       ROUTES.filter(
         e =>
           e.title.toLowerCase().includes(query.toLowerCase()) ||
-          e.items.some(subItem =>
-            subItem.name.toLowerCase().includes(query.toLowerCase()) &&
-            subItem.hidden !== true &&
-            (!subItem.togglable ||
-              userData?.enabledModules.includes(_.kebabCase(subItem.name))) &&
-            subItem.name === 'Localization Manager'
-              ? import.meta.env.VITE_LOCALIZATION_MANAGER_URL !== undefined
-              : true
+          e.items.some(
+            subItem =>
+              subItem.name.toLowerCase().includes(query.toLowerCase()) &&
+              subItem.hidden !== true &&
+              (!subItem.togglable ||
+                userData?.enabledModules.includes(_.kebabCase(subItem.name))) &&
+              (subItem.name === 'Localization Manager'
+                ? import.meta.env.VITE_LOCALIZATION_MANAGER_URL !== undefined
+                : true)
           )
       ),
     [query, userData]
@@ -39,16 +40,18 @@ function SidebarItems({ query }: { query: string }) {
       <Scrollbar>
         {filteredRoutes.length > 0 ? (
           filteredRoutes.map((item, index) => {
-            const filteredModules = item.items.filter(subItem =>
-              (!subItem.togglable ||
-                userData?.enabledModules.includes(_.kebabCase(subItem.name)) ===
-                  true) &&
-              subItem.hidden !== true &&
-              (item.title.toLowerCase().includes(query.toLowerCase()) ||
-                subItem.name.toLowerCase().includes(query.toLowerCase())) &&
-              subItem.name === 'Localization Manager'
-                ? import.meta.env.VITE_LOCALIZATION_MANAGER_URL !== undefined
-                : true
+            const filteredModules = item.items.filter(
+              subItem =>
+                (!subItem.togglable ||
+                  userData?.enabledModules.includes(
+                    _.kebabCase(subItem.name)
+                  ) === true) &&
+                subItem.hidden !== true &&
+                (item.title.toLowerCase().includes(query.toLowerCase()) ||
+                  subItem.name.toLowerCase().includes(query.toLowerCase())) &&
+                (subItem.name === 'Localization Manager'
+                  ? import.meta.env.VITE_LOCALIZATION_MANAGER_URL !== undefined
+                  : true)
             )
 
             return (
