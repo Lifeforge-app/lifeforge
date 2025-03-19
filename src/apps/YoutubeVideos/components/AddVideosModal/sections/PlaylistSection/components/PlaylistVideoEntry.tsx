@@ -81,7 +81,7 @@ function PlaylistVideoEntry({
           />
           <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5 text-sm">
             {dayjs
-              .duration(+video.duration)
+              .duration(+video.duration, 'second')
               .format(+video.duration > 3600 ? 'h:mm:ss' : 'm:ss')}
           </p>
         </div>
