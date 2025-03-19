@@ -4,10 +4,10 @@ import { Route, Routes } from 'react-router'
 
 import { NotFoundScreen } from '@lifeforge/ui'
 
-import MainApplication from '../../MainApplication'
-import Auth from '../../auth'
-import ROUTES from '../Routes'
+import ROUTES from '../../Routes'
+import Auth from '../../pages/Auth'
 import ChildRoutesRenderer from './ChildRoutesRenderer'
+import MainApplication from './Layout'
 
 function MainRoutesRenderer() {
   const { userData } = useAuth()

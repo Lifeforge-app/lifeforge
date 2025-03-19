@@ -10,10 +10,10 @@ import 'react-virtualized/styles.css'
 
 import '@lifeforge/ui/dist/index.css'
 
-import Providers from './Providers.tsx'
 import './i18n'
-import AppRouter from './routes/index.tsx'
-import './styles/index.css'
+import './index.css'
+import AppRouter from './layout/index.tsx'
+import Providers from './providers/index.tsx'
 
 function App() {
   return (

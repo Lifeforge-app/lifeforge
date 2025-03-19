@@ -29,7 +29,7 @@ import {
 import { lazy } from 'react'
 import { Navigate } from 'react-router'
 
-import { RouteCategory } from './interfaces/routes_interfaces'
+import { RouteCategory } from './layout/interfaces/routes_interfaces'
 
 export const ROUTES: RouteCategory[] = [
   {
@@ -39,7 +39,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Dashboard',
         icon: <IconDashboard />,
         routes: {
-          dashboard: lazy(() => import('../lib/Dashboard'))
+          dashboard: lazy(() => import('./pages/Dashboard'))
         },
         togglable: false
       }
@@ -263,7 +263,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'API Keys',
         icon: <IconPassword />,
         routes: {
-          'api-keys': lazy(() => import('../lib/APIKeys'))
+          'api-keys': lazy(() => import('./pages/APIKeys'))
         },
         togglable: false
       }
@@ -302,7 +302,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Personalization',
         icon: <IconPalette />,
         routes: {
-          personalization: lazy(() => import('../lib/Personalization'))
+          personalization: lazy(() => import('./pages/Personalization'))
         },
         togglable: false,
         requiredAPIKeys: ['pixabay']
@@ -319,7 +319,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Server Status',
         icon: <IconServer />,
         routes: {
-          'server-status': lazy(() => import('../lib/ServerStatus'))
+          'server-status': lazy(() => import('./pages/ServerStatus'))
         },
         togglable: false
       }
@@ -333,7 +333,7 @@ export const ROUTES: RouteCategory[] = [
         icon: 'mingcute:translate-line',
         routes: {
           'localization-manager': lazy(
-            () => import('../lib/LocalizationManager')
+            () => import('./pages/LocalizationManager')
           )
         },
         togglable: false
@@ -359,7 +359,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Account Settings',
         icon: <IconUserCog />,
         routes: {
-          account: lazy(() => import('../lib/Account'))
+          account: lazy(() => import('./pages/Account'))
         },
         togglable: false,
         hidden: true
