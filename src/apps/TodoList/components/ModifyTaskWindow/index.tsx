@@ -11,7 +11,6 @@ import {
   DateInput,
   HamburgerMenu,
   MenuItem,
-  QueryWrapper,
   Scrollbar,
   TextInput
 } from '@lifeforge/ui'
@@ -45,6 +44,7 @@ function ModifyTaskWindow() {
   } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
+  const [subtasks, setSubtasks] = useState<ITodoSubtask[]>([])
   const subTasksQuery = useAPIQuery<ITodoSubtask[]>(
     `todo-list/subtasks/list/${selectedTask?.id}`,
     ['todo-list', 'subtasks', selectedTask?.id],
@@ -76,7 +76,7 @@ function ModifyTaskWindow() {
     const task = {
       summary: summary.trim(),
       notes: notes.trim(),
-      subtasks: subTasksQuery.data ?? [],
+      subtasks: subtasks,
       due_date: dayjs(dueDate).format('yyyy-MM-DD 23:59:59Z'),
       priority,
       list,
@@ -98,6 +98,8 @@ function ModifyTaskWindow() {
 
       queryClient.setQueryData<ITodoListEntry[]>(entriesQueryKey, entries => {
         if (!entries) return []
+
+        console.log(data)
 
         if (innerOpenType === 'create') {
           return [data, ...entries]
@@ -142,6 +144,12 @@ function ModifyTaskWindow() {
       setInnerOpenType(openType)
     }, 5)
   }, [openType])
+
+  useEffect(() => {
+    if (subTasksQuery.data && !subTasksQuery.isLoading) {
+      setSubtasks(subTasksQuery.data)
+    }
+  }, [subTasksQuery.data, subTasksQuery.isLoading])
 
   useEffect(() => {
     if (selectedTask !== null) {
@@ -220,16 +228,12 @@ function ModifyTaskWindow() {
               setValue={setSummary}
               value={summary}
             />
-            <QueryWrapper query={subTasksQuery}>
-              {subtasks => (
-                <SubtaskBox
-                  notes={notes}
-                  subtasks={subtasks}
-                  summary={summary}
-                  taskId={selectedTask?.id ?? ''}
-                />
-              )}
-            </QueryWrapper>
+            <SubtaskBox
+              notes={notes}
+              setSubtasks={setSubtasks}
+              subtasks={subtasks}
+              summary={summary}
+            />
             <DateInput
               darker
               date={dueDate}

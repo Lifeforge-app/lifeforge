@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -17,16 +16,15 @@ function SubtaskBoxHeader({
   setNewTask,
   summary,
   notes,
-  taskId
+  setSubtasks
 }: {
   spiciness: number
   setSpiciness: (spiciness: number) => void
   setNewTask: React.Dispatch<React.SetStateAction<string>>
   summary: string
   notes: string
-  taskId: string
+  setSubtasks: React.Dispatch<React.SetStateAction<ITodoSubtask[]>>
 }) {
-  const queryClient = useQueryClient()
   const { t } = useTranslation('apps.todoList')
   const [AIGenerateLoading, setAIGenerateLoading] = useState(false)
   async function AIGenerateSubtask() {
@@ -51,8 +49,7 @@ function SubtaskBoxHeader({
       )
 
       setAIGenerateLoading(false)
-      queryClient.setQueryData<ITodoSubtask[]>(
-        ['todo-list', 'subtasks', taskId],
+      setSubtasks(() =>
         data.map((e: string) => ({
           id: `new-${Math.random()}`,
           title: e,
@@ -90,22 +87,19 @@ function SubtaskBoxHeader({
         <button
           className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-2 transition-all"
           onClick={() => {
-            queryClient.setQueryData<ITodoSubtask[]>(
-              ['todo-list', 'subtasks', taskId],
-              prev => {
-                if (!prev) {
-                  return []
-                }
-
-                const newTaskId = `new-${Math.random()}`
-                setNewTask(newTaskId)
-                return prev.concat({
-                  id: newTaskId,
-                  title: '',
-                  done: false
-                })
+            setSubtasks(prev => {
+              if (!prev) {
+                return []
               }
-            )
+
+              const newTaskId = `new-${Math.random()}`
+              setNewTask(newTaskId)
+              return prev.concat({
+                id: newTaskId,
+                title: '',
+                done: false
+              })
+            })
           }}
         >
           <Icon className="text-2xl" icon="tabler:plus" />

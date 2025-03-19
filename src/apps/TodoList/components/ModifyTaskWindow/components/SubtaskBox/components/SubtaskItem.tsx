@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
 import type { Identifier, XYCoord } from 'dnd-core'
 import { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
@@ -11,19 +10,18 @@ import { type ITodoSubtask } from '../../../../../interfaces/todo_list_interface
 function SubtaskItem({
   subtask,
   subtasks,
+  setSubtasks,
   moveTask,
   newTask,
-  setNewTask,
-  taskId
+  setNewTask
 }: {
   subtask: ITodoSubtask
   subtasks: ITodoSubtask[]
+  setSubtasks: React.Dispatch<React.SetStateAction<ITodoSubtask[]>>
   moveTask: (from: number, to: number) => void
   newTask: string
   setNewTask: React.Dispatch<React.SetStateAction<string>>
-  taskId: string
 }) {
-  const queryClient = useQueryClient()
   const ref = useRef<HTMLDivElement>(null)
   const editInputRef = useRef<HTMLInputElement>(null)
   const [isEditing, setIsEditing] = useState(false)
@@ -111,26 +109,22 @@ function SubtaskItem({
         opacity
       }}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full">
         <Icon className="text-bg-500 size-5 shrink-0" icon="tabler:menu" />
         {isEditing ? (
           <input
             ref={editInputRef}
-            className="bg-transparent"
+            className="bg-transparent w-full"
             type="text"
             value={subtask.title}
             onBlur={e => {
               setIsEditing(false)
               if (e.target.value === '') {
-                queryClient.setQueryData<ITodoSubtask[]>(
-                  ['todo-list', 'subtasks', taskId],
-                  subtasks.filter(task => task.id !== subtask.id)
-                )
+                setSubtasks(subtasks.filter(task => task.id !== subtask.id))
               }
             }}
             onChange={e => {
-              queryClient.setQueryData<ITodoSubtask[]>(
-                ['todo-list', 'subtasks', taskId],
+              setSubtasks(
                 subtasks.map(task =>
                   task.id === subtask.id
                     ? {
@@ -163,10 +157,7 @@ function SubtaskItem({
           icon="tabler:trash"
           text="Delete"
           onClick={() => {
-            queryClient.setQueryData(
-              ['todo-list', 'subtasks', taskId],
-              subtasks.filter(task => task.id !== subtask.id)
-            )
+            setSubtasks(subtasks.filter(task => task.id !== subtask.id))
           }}
         />
       </HamburgerMenu>

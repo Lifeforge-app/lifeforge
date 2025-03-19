@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
 import update from 'immutability-helper'
 import { useCallback, useState } from 'react'
 
@@ -9,36 +8,32 @@ import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
 
 function SubtaskBox({
-  taskId,
   summary,
   notes,
-  subtasks
+  subtasks,
+  setSubtasks
 }: {
-  taskId: string
   summary: string
   notes: string
   subtasks: ITodoSubtask[]
+  setSubtasks: React.Dispatch<React.SetStateAction<ITodoSubtask[]>>
 }) {
-  const queryClient = useQueryClient()
   const [spiciness, setSpiciness] = useState(0)
   const [newTask, setNewTask] = useState('')
 
   const moveTask = useCallback((dragIndex: number, hoverIndex: number) => {
-    queryClient.setQueryData<ITodoSubtask[]>(
-      ['todo-list', 'subtasks', taskId],
-      prevCards => {
-        if (!prevCards) {
-          return []
-        }
-
-        return update(prevCards, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, prevCards[dragIndex]]
-          ]
-        })
+    setSubtasks(prevCards => {
+      if (!prevCards) {
+        return []
       }
-    )
+
+      return update(prevCards, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, prevCards[dragIndex]]
+        ]
+      })
+    })
   }, [])
 
   return (
@@ -47,9 +42,9 @@ function SubtaskBox({
         notes={notes}
         setNewTask={setNewTask}
         setSpiciness={setSpiciness}
+        setSubtasks={setSubtasks}
         spiciness={spiciness}
         summary={summary}
-        taskId={taskId}
       />
       <APIFallbackComponent data={subtasks}>
         {subtasks =>
@@ -61,9 +56,9 @@ function SubtaskBox({
                   moveTask={moveTask}
                   newTask={newTask}
                   setNewTask={setNewTask}
+                  setSubtasks={setSubtasks}
                   subtask={subtask}
                   subtasks={subtasks}
-                  taskId={taskId}
                 />
               ))}
             </div>
