@@ -1,3 +1,12 @@
+import Providers from '@providers/index.tsx'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import duration from 'dayjs/plugin/duration'
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
 import 'leaflet/dist/leaflet.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -13,7 +22,14 @@ import '@lifeforge/ui/dist/index.css'
 import './i18n'
 import './index.css'
 import AppRouter from './layout/index.tsx'
-import Providers from './providers/index.tsx'
+
+dayjs.extend(duration)
+dayjs.extend(isBetween)
+dayjs.extend(relativeTime)
+dayjs.extend(isSameOrAfter)
+dayjs.extend(isSameOrBefore)
+dayjs.extend(weekOfYear)
+dayjs.extend(customParseFormat)
 
 function App() {
   return (

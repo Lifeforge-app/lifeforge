@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import prettyBytes from 'pretty-bytes'
 import { useEffect } from 'react'
 
@@ -52,7 +52,7 @@ function SystemStatus() {
             valueKey: 'usage',
             unit: '%',
             description: (data: ICPUUSage) =>
-              `${moment(data.uptime * 1000).format(
+              `${dayjs(data.uptime * 1000).format(
                 'D [days], H [hrs], m [mins]'
               )} uptime`
           },

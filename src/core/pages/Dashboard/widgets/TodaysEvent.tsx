@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { Link } from 'react-router'
 
 import {
@@ -47,9 +47,9 @@ export default function TodaysEvent() {
             <QueryWrapper query={rawEventsQuery}>
               {rawEvents =>
                 rawEvents.filter(event =>
-                  moment().isBetween(
-                    moment(event.start),
-                    moment(event.end).subtract(1, 'second'),
+                  dayjs().isBetween(
+                    dayjs(event.start),
+                    dayjs(event.end).subtract(1, 'second'),
                     'day',
                     '[]'
                   )
@@ -60,9 +60,9 @@ export default function TodaysEvent() {
                         <>
                           {rawEvents
                             .filter(event =>
-                              moment().isBetween(
-                                moment(event.start),
-                                moment(event.end).subtract(1, 'second'),
+                              dayjs().isBetween(
+                                dayjs(event.start),
+                                dayjs(event.end).subtract(1, 'second'),
                                 'day',
                                 '[]'
                               )

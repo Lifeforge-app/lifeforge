@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
+import dayjs from 'dayjs'
 import humanNumber from 'human-number'
-import moment from 'moment'
 
 import {
   type IYoutubePlaylistVideoEntry,
@@ -26,11 +26,9 @@ function VideoInfo({
           src={videoInfo.thumbnail}
         />
         <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5">
-          {moment
-            .utc(
-              moment.duration(videoInfo.duration, 'seconds').asMilliseconds()
-            )
-            .format(+videoInfo.duration >= 3600 ? 'H:mm:ss' : 'm:ss')}
+          {dayjs
+            .duration(+videoInfo.duration)
+            .format(+videoInfo.duration > 3600 ? 'h:mm:ss' : 'm:ss')}
         </p>
       </div>
       <div>
@@ -39,7 +37,7 @@ function VideoInfo({
         {videoInfo.uploadDate !== undefined && (
           <p className="text-bg-500 mt-4">
             {humanNumber(+videoInfo.viewCount)} views •{' '}
-            {moment(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
+            {dayjs(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
           </p>
         )}
         {videoInfo.likeCount !== undefined && (

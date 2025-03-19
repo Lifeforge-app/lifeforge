@@ -1,3 +1,8 @@
+import { useDebounce } from '@uidotdev/usehooks'
+import dayjs from 'dayjs'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { Outlet, useSearchParams } from 'react-router'
+
 import {
   type IWalletAsset,
   type IWalletCategory,
@@ -5,10 +10,6 @@ import {
   type IWalletLedger,
   type IWalletTransaction
 } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useDebounce } from '@uidotdev/usehooks'
-import moment from 'moment'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Outlet, useSearchParams } from 'react-router'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -90,19 +91,19 @@ export default function WalletProvider() {
         .filter(transaction => {
           const startDate =
             searchParams.get('start_date') !== null &&
-            moment(searchParams.get('start_date')).isValid()
-              ? moment(searchParams.get('start_date'))
-              : moment('1900-01-01')
+            dayjs(searchParams.get('start_date')).isValid()
+              ? dayjs(searchParams.get('start_date'))
+              : dayjs('1900-01-01')
           const endDate =
             searchParams.get('end_date') !== null &&
-            moment(searchParams.get('end_date')).isValid()
-              ? moment(searchParams.get('end_date'))
-              : moment()
+            dayjs(searchParams.get('end_date')).isValid()
+              ? dayjs(searchParams.get('end_date'))
+              : dayjs()
 
-          const transactionDate = moment(transaction.date).format('YYYY-MM-DD')
+          const transactionDate = dayjs(transaction.date).format('YYYY-MM-DD')
           return (
-            moment(transactionDate).isSameOrAfter(startDate) &&
-            moment(transactionDate).isSameOrBefore(endDate)
+            dayjs(transactionDate).isSameOrAfter(startDate) &&
+            dayjs(transactionDate).isSameOrBefore(endDate)
           )
         })
     )

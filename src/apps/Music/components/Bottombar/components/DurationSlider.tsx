@@ -1,5 +1,6 @@
+import dayjs from 'dayjs'
+
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
-import moment from 'moment'
 
 function DurationSlider() {
   const { audio, currentDuration, setCurrentDuration, currentMusic } =
@@ -12,8 +13,8 @@ function DurationSlider() {
   return (
     <div className="flex w-full items-center gap-2 text-sm">
       <span className="text-bg-500 -mt-0.5">
-        {moment
-          .utc(moment.duration(+currentDuration, 'seconds').asMilliseconds())
+        {dayjs
+          .duration(+currentDuration, 'seconds')
           .format(+currentDuration >= 3600 ? 'H:mm:ss' : 'm:ss')}
       </span>
       <input
@@ -32,10 +33,8 @@ function DurationSlider() {
         }}
       ></input>
       <span className="text-bg-500 -mt-0.5">
-        {moment
-          .utc(
-            moment.duration(+currentMusic.duration, 'seconds').asMilliseconds()
-          )
+        {dayjs
+          .duration(+currentMusic.duration, 'seconds')
           .format(+currentMusic.duration >= 3600 ? 'H:mm:ss' : 'm:ss')}
       </span>
     </div>

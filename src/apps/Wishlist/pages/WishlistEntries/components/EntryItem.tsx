@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -92,7 +92,7 @@ function EntryItem({
             <p className="mt-2 text-2xl">RM {entry.price.toFixed(2)}</p>
             {entry.bought && (
               <p className="mt-2 text-sm text-zinc-500">
-                Bought {moment(entry.bought_at).fromNow()}
+                Bought {dayjs(entry.bought_at).fromNow()}
               </p>
             )}
           </div>

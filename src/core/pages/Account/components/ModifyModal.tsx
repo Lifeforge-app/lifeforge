@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
+import dayjs from 'dayjs'
 import _ from 'lodash'
-import moment from 'moment'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -44,7 +44,7 @@ function ModifyModal({
           data: {
             [id]:
               type === 'date'
-                ? moment(value).subtract(1, 'second').format('YYYY-MM-DD')
+                ? dayjs(value).subtract(1, 'second').format('YYYY-MM-DD')
                 : value
           }
         }

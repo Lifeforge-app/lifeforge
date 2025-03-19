@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { QRCodeSVG } from 'qrcode.react'
 
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
@@ -36,7 +36,7 @@ function ShowTicketModal({
             </div>
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:calendar" />
-              {moment(entry.theatre_showtime).format('DD MMM YYYY, h:mm a')}
+              {dayjs(entry.theatre_showtime).format('DD MMM YYYY, h:mm a')}
             </div>
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:hash" />

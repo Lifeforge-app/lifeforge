@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
+import dayjs from 'dayjs'
 import humanNumber from 'human-number'
-import moment from 'moment'
 
 import IconButton from '../../../../../../Music/components/Bottombar/components/IconButton'
 import { type IYoutubePlaylistVideoEntry } from '../../../../../interfaces/youtube_video_storage_interfaces'
@@ -80,9 +80,9 @@ function PlaylistVideoEntry({
             src={video.thumbnail}
           />
           <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5 text-sm">
-            {moment
-              .utc(moment.duration(video.duration, 'seconds').asMilliseconds())
-              .format(video.duration >= 3600 ? 'H:mm:ss' : 'm:ss')}
+            {dayjs
+              .duration(+video.duration)
+              .format(+video.duration > 3600 ? 'h:mm:ss' : 'm:ss')}
           </p>
         </div>
         <div className="flex flex-col">

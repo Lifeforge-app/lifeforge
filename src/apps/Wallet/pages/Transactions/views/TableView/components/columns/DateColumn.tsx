@@ -1,9 +1,9 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 function DateColumn({ date }: { date: string }) {
   return (
     <td className="whitespace-nowrap p-2 text-center">
-      {moment(date).format('MMM DD, YYYY')}
+      {dayjs(date).format('MMM DD, YYYY')}
     </td>
   )
 }

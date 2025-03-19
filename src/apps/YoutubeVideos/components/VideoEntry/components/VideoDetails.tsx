@@ -1,7 +1,8 @@
-import { VIDEO_RESOLUTIONS } from '@apps/YoutubeVideos/constants/video_res'
 import { Icon } from '@iconify/react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import prettyBytes from 'pretty-bytes'
+
+import { VIDEO_RESOLUTIONS } from '@apps/YoutubeVideos/constants/video_res'
 
 import { type IYoutubeVideosStorageEntry } from '../../../interfaces/youtube_video_storage_interfaces'
 
@@ -28,7 +29,7 @@ function VideoDetails({ video }: { video: IYoutubeVideosStorageEntry }) {
             <Icon className="size-1" icon="tabler:circle-filled" />
             <p className="text-bg-500 flex shrink-0 items-center gap-1 whitespace-nowrap">
               <Icon className="mr-1 size-5" icon="tabler:clock" />
-              {moment(video.upload_date).fromNow()}
+              {dayjs(video.upload_date).fromNow()}
             </p>
           </>
         )}

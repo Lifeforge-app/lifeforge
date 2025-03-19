@@ -1,5 +1,5 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
@@ -30,8 +30,8 @@ function MiniCalendarContent({
       ))}
       {Array(
         Math.ceil(
-          (moment().year(currentYear).month(currentMonth).daysInMonth() +
-            moment()
+          (dayjs().year(currentYear).month(currentMonth).daysInMonth() +
+            dayjs()
               .year(currentYear)
               .month(currentMonth - 1)
               .endOf('month')
@@ -42,18 +42,18 @@ function MiniCalendarContent({
         .fill(0)
         .map((_, index) =>
           (() => {
-            const date = moment(
+            const date = dayjs(
               `${currentYear}-${currentMonth + 1}-01`,
               'YYYY-M-DD'
             ).toDate()
 
-            let firstDay = moment(date).startOf('month').day() - 1
+            let firstDay = dayjs(date).startOf('month').day() - 1
             firstDay = firstDay === -1 ? 6 : firstDay
 
-            const lastDate = moment(date).endOf('month').date()
+            const lastDate = dayjs(date).endOf('month').date()
 
             const lastDateOfPrevMonth =
-              moment(date).subtract(1, 'month').endOf('month').date() - 1
+              dayjs(date).subtract(1, 'month').endOf('month').date() - 1
 
             const actualIndex = (() => {
               if (firstDay > index) {

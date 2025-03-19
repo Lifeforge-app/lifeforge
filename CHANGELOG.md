@@ -17,8 +17,11 @@
 - **Code**: Renamed entry file from `main.tsx` to `index.tsx`.
 - **Code**: Removed `pocketbase` from frontend.
 - **Code**: Continued migration to `FormModal`.
-- **Code**: Co
+- **Code**: Finished integration of `@tanstack/query` for API data fetching.
+- **Code**: Restructured the `core` directory.
 - **Code**: Fixed bugs where the locale for page title and description for subsection pages were not displayed.
+- **Code**: Migrated from `moment` to `dayjs` for date manipulation.
+- **Wallet**: Fixed a bug where mini calendar doesn't properly set date range search params when clicked.
 
 ---
 

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -77,7 +77,7 @@ function ModifyTaskWindow() {
       summary: summary.trim(),
       notes: notes.trim(),
       subtasks: subTasksQuery.data ?? [],
-      due_date: moment(dueDate).format('yyyy-MM-DD 23:59:59Z'),
+      due_date: dayjs(dueDate).format('yyyy-MM-DD 23:59:59Z'),
       priority,
       list,
       tags

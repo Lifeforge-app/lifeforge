@@ -1,5 +1,5 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 
 import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
@@ -86,8 +86,8 @@ function ModifyEventModal({
     if (openType === 'update' && existedData !== null) {
       setFormState({
         title: existedData.title,
-        start: moment(existedData.start).toISOString(),
-        end: moment(existedData.end).toISOString(),
+        start: dayjs(existedData.start).toISOString(),
+        end: dayjs(existedData.end).toISOString(),
         category: existedData.category
       })
     } else {
@@ -102,8 +102,8 @@ function ModifyEventModal({
         setFormState({
           title: '',
           category: '',
-          start: moment(existedData.start).toISOString(),
-          end: moment(existedData.end).toISOString()
+          start: dayjs(existedData.start).toISOString(),
+          end: dayjs(existedData.end).toISOString()
         })
       }
     }

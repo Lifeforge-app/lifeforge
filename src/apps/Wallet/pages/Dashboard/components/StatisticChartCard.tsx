@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -47,7 +47,7 @@ function StatisticChardCard() {
     return [
       ...new Set(
         transactions.map(transaction =>
-          moment(transaction.date).format('MMM DD')
+          dayjs(transaction.date).format('MMM DD')
         )
       )
     ].reverse()
@@ -64,7 +64,7 @@ function StatisticChardCard() {
           transactions
             .filter(transaction => transaction.type === type)
             .filter(
-              transaction => moment(transaction.date).format('MMM DD') === date
+              transaction => dayjs(transaction.date).format('MMM DD') === date
             )
             .reduce((acc, curr) => acc + curr.amount, 0)
         )

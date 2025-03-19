@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
@@ -13,15 +13,15 @@ import {
 import useAPIQuery from '@hooks/useAPIQuery'
 
 export default function MiniCalendar() {
-  const [currentMonth, setCurrentMonth] = useState(moment().month())
-  const [currentYear, setCurrentYear] = useState(moment().year())
+  const [currentMonth, setCurrentMonth] = useState(dayjs().month())
+  const [currentYear, setCurrentYear] = useState(dayjs().year())
 
-  const startDate = moment()
+  const startDate = dayjs()
     .year(currentYear)
     .month(currentMonth)
     .startOf('month')
     .format('YYYY-MM-DD')
-  const endDate = moment()
+  const endDate = dayjs()
     .year(currentYear)
     .month(currentMonth)
     .endOf('month')

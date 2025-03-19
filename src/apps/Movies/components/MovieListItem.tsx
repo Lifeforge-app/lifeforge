@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -41,7 +41,7 @@ function MovieListItem({
       </div>
       <div className="w-full">
         <p className="text-custom-500 mb-1 font-semibold">
-          {moment(data.release_date).year()}
+          {dayjs(data.release_date).year()}
         </p>
         <h1 className="text-xl font-semibold">
           {data.title}
@@ -66,7 +66,7 @@ function MovieListItem({
             </div>
             <div>
               {data.release_date
-                ? moment(data.release_date).format('DD MMM YYYY')
+                ? dayjs(data.release_date).format('DD MMM YYYY')
                 : 'TBA'}
             </div>
           </div>
@@ -76,8 +76,8 @@ function MovieListItem({
               Duration
             </div>
             <div>
-              {moment.duration(data.duration, 'minutes').get('hours')}h{' '}
-              {moment.duration(data.duration, 'minutes').get('minutes')}m
+              {dayjs.duration(data.duration, 'minutes').get('hours')}h{' '}
+              {dayjs.duration(data.duration, 'minutes').get('minutes')}m
             </div>
           </div>
           <div className="space-y-2">

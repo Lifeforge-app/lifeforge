@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import WavesurferPlayer from '@wavesurfer/react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -200,8 +200,8 @@ function AudioType({
                   onReady={onReady}
                 />
                 <p className="text-bg-500 w-full whitespace-nowrap text-left text-sm sm:w-auto">
-                  {moment().startOf('day').seconds(currentTime).format('mm:ss')}{' '}
-                  / {moment().startOf('day').seconds(totalTime).format('mm:ss')}
+                  {dayjs().startOf('day').second(currentTime).format('mm:ss')} /{' '}
+                  {dayjs().startOf('day').second(totalTime).format('mm:ss')}
                 </p>
               </div>
             </div>

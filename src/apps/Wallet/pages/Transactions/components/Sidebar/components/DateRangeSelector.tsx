@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -19,18 +19,18 @@ function DateRangeSelector() {
     const otherType = type === 'start_date' ? 'end_date' : 'start_date'
     const otherDate =
       searchParams.get(otherType) !== null &&
-      moment(searchParams.get(otherType)).isValid()
-        ? moment(searchParams.get(otherType))
-        : moment()
+      dayjs(searchParams.get(otherType)).isValid()
+        ? dayjs(searchParams.get(otherType))
+        : dayjs()
 
     if (
-      (type === 'start_date' && moment(date).isAfter(otherDate)) ||
-      (type === 'end_date' && moment(date).isBefore(otherDate))
+      (type === 'start_date' && dayjs(date).isAfter(otherDate)) ||
+      (type === 'end_date' && dayjs(date).isBefore(otherDate))
     ) {
-      searchParams.set(otherType, moment(date).format('YYYY-MM-DD'))
+      searchParams.set(otherType, dayjs(date).format('YYYY-MM-DD'))
     }
 
-    searchParams.set(type, moment(date).format('YYYY-MM-DD'))
+    searchParams.set(type, dayjs(date).format('YYYY-MM-DD'))
 
     setSearchParams(searchParams)
   }
@@ -51,8 +51,8 @@ function DateRangeSelector() {
             className={clsx('w-full', idx === 1 && 'mt-4')}
             date={
               searchParams.get(type) !== null &&
-              moment(searchParams.get(type)).isValid()
-                ? moment(searchParams.get(type)).format('YYYY-MM-DD')
+              dayjs(searchParams.get(type)).isValid()
+                ? dayjs(searchParams.get(type)).format('YYYY-MM-DD')
                 : ''
             }
             hasMargin={false}

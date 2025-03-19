@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
 import Zoom from 'react-medium-image-zoom'
 
@@ -76,7 +76,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
           />
         </Zoom>
         <span className="text-bg-500 block text-sm">
-          {moment(entry.created).fromNow()}
+          {dayjs(entry.created).fromNow()}
         </span>
         <InFolderChip entry={entry} />
       </div>

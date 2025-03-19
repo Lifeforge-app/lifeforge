@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { Button } from '@lifeforge/ui'
 
@@ -76,7 +76,7 @@ function SearchResultItem({
                 <p className="text-bg-500 text-sm font-medium">{key}</p>
                 <p className="text-base font-light">
                   {key.includes('Time')
-                    ? moment(book[key]).format('MMM DD, YYYY')
+                    ? dayjs(book[key]).format('MMM DD, YYYY')
                     : book[key]}
                 </p>
               </div>

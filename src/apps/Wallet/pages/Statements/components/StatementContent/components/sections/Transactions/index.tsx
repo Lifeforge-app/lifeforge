@@ -1,8 +1,9 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 function Transactions({ month, year }: { month: number; year: number }) {
   const { transactions, assets, categories } = useWalletContext()
@@ -23,8 +24,8 @@ function Transactions({ month, year }: { month: number; year: number }) {
                   transactions.filter(
                     transaction =>
                       transaction.type === 'income' &&
-                      moment(transaction.date).month() === month &&
-                      moment(transaction.date).year() === year
+                      dayjs(transaction.date).month() === month &&
+                      dayjs(transaction.date).year() === year
                   ).length
                 }{' '}
                 entries
@@ -37,8 +38,8 @@ function Transactions({ month, year }: { month: number; year: number }) {
                   transactions.filter(
                     transaction =>
                       transaction.type === 'expenses' &&
-                      moment(transaction.date).month() === month &&
-                      moment(transaction.date).year() === year
+                      dayjs(transaction.date).month() === month &&
+                      dayjs(transaction.date).year() === year
                   ).length
                 }{' '}
                 entries
@@ -51,8 +52,8 @@ function Transactions({ month, year }: { month: number; year: number }) {
                   transactions.filter(
                     transaction =>
                       transaction.type === 'transfer' &&
-                      moment(transaction.date).month() === month &&
-                      moment(transaction.date).year() === year
+                      dayjs(transaction.date).month() === month &&
+                      dayjs(transaction.date).year() === year
                   ).length
                 }{' '}
                 entries
@@ -70,8 +71,8 @@ function Transactions({ month, year }: { month: number; year: number }) {
                 {
                   transactions.filter(
                     transaction =>
-                      moment(transaction.date).month() === month &&
-                      moment(transaction.date).year() === year
+                      dayjs(transaction.date).month() === month &&
+                      dayjs(transaction.date).year() === year
                   ).length
                 }{' '}
                 entries
@@ -130,10 +131,10 @@ function Transactions({ month, year }: { month: number; year: number }) {
                       .filter(
                         transaction =>
                           transaction.type === type &&
-                          moment(transaction.date).month() === month &&
-                          moment(transaction.date).year() === year
+                          dayjs(transaction.date).month() === month &&
+                          dayjs(transaction.date).year() === year
                       )
-                      .sort((a, b) => moment(a.date).diff(b.date))
+                      .sort((a, b) => dayjs(a.date).diff(b.date))
                       .map((transaction, index) => (
                         <tr
                           key={transaction.id}
@@ -142,7 +143,7 @@ function Transactions({ month, year }: { month: number; year: number }) {
                           <td className="whitespace-nowrap p-3 text-lg">
                             {((type === 'transfer' && index % 2 === 0) ||
                               type !== 'transfer') &&
-                              moment(transaction.date).format('MMM DD')}
+                              dayjs(transaction.date).format('MMM DD')}
                           </td>
                           <td className="min-w-96 p-3 text-lg">
                             {transaction.particulars}
@@ -226,8 +227,8 @@ function Transactions({ month, year }: { month: number; year: number }) {
                             .filter(
                               transaction =>
                                 transaction.type === type &&
-                                moment(transaction.date).month() === month &&
-                                moment(transaction.date).year() === year
+                                dayjs(transaction.date).month() === month &&
+                                dayjs(transaction.date).year() === year
                             )
                             .reduce((acc, curr) => {
                               if (curr.type !== 'transfer') {
