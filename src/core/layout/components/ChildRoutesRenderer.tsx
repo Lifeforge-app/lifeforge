@@ -1,5 +1,4 @@
 import { Suspense } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Route } from 'react-router'
 
 import { LoadingScreen } from '@lifeforge/ui'
@@ -10,14 +9,14 @@ import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
 function ChildRoutesRenderer({
   routes,
   isNested = false,
-  APIKeys = []
+  APIKeys = [],
+  t
 }: {
   routes: RouteItem['routes']
+  t: any
   isNested?: boolean
   APIKeys?: string[]
 }) {
-  const { t } = useTranslation('common.misc')
-
   return Object.entries(routes).map(([path, component]) => {
     const Comp = component
 
