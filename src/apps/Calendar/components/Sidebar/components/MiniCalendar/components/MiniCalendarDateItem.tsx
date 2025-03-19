@@ -36,7 +36,7 @@ function MiniCalendarDateItem({
       ? events.filter(event => {
           return dayjs(
             `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-            'YYYY-M-DD'
+            'YYYY-M-D'
           ).isBetween(
             dayjs(event.start),
             dayjs(event.end).subtract(1, 'second'),
@@ -52,7 +52,7 @@ function MiniCalendarDateItem({
       dayjs().isSame(
         dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-          'YYYY-M-DD'
+          'YYYY-M-D'
         ),
         'day'
       ) && isInThisMonth,

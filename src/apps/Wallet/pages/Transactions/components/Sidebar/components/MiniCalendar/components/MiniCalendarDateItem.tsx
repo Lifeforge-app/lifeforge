@@ -115,7 +115,7 @@ function MiniCalendarDateItem({
       const transactionDate = dayjs(transaction.date, 'YYYY-MM-DD')
       const targetDate = dayjs(
         `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-        'YYYY-M-DD'
+        'YYYY-M-D'
       )
 
       return (
@@ -154,7 +154,7 @@ function MiniCalendarDateItem({
     const endDateParam = searchParams.get('end_date')
     const formattedDate = dayjs(
       `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-      'YYYY-M-DD'
+      'YYYY-M-D'
     )
 
     if (startDateParam && dayjs(startDateParam).isSame(formattedDate, 'day')) {
@@ -182,7 +182,7 @@ function MiniCalendarDateItem({
       ).isBefore(
         dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-          'YYYY-M-DD'
+          'YYYY-M-D'
         ),
         'day'
       ) &&
@@ -191,7 +191,7 @@ function MiniCalendarDateItem({
       ).isAfter(
         dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-          'YYYY-M-DD'
+          'YYYY-M-D'
         ),
         'day'
       )
