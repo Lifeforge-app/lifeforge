@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -72,7 +72,7 @@ function TransactionsCard() {
                                 className="border-bg-200 dark:border-bg-800 border-b"
                               >
                                 <td className="whitespace-nowrap py-2 text-center">
-                                  {moment(transaction.date).format('MMM DD')}
+                                  {dayjs(transaction.date).format('MMM DD')}
                                 </td>
                                 <td className="py-4 text-center">
                                   <Link
@@ -211,9 +211,7 @@ function TransactionsCard() {
                                 </span>
                               </div>
                               <div className="text-bg-500 whitespace-nowrap text-right text-sm">
-                                {moment(transaction.date).format(
-                                  'MMM DD, YYYY'
-                                )}
+                                {dayjs(transaction.date).format('MMM DD, YYYY')}
                               </div>
                             </div>
                           </li>

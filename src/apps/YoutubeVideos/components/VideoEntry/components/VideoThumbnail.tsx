@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 function VideoThumbnail({ id, duration }: { id: string; duration: number }) {
   return (
@@ -16,9 +16,7 @@ function VideoThumbnail({ id, duration }: { id: string; duration: number }) {
         }/youtube-videos/video/thumbnail/${id}`}
       />
       <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5">
-        {moment
-          .utc(moment.duration(duration, 'seconds').asMilliseconds())
-          .format(duration >= 3600 ? 'H:mm:ss' : 'm:ss')}
+        {dayjs.duration(duration).format(duration > 3600 ? 'h:mm:ss' : 'm:ss')}
       </p>
     </div>
   )

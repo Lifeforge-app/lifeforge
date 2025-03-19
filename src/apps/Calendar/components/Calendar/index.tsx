@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useCallback } from 'react'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
 
@@ -14,7 +14,7 @@ import {
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 
-const localizer = momentLocalizer(moment)
+const localizer = dayjsLocalizer(dayjs)
 const DnDCalendar: any = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
@@ -68,8 +68,8 @@ function CalendarComponent({
         method: 'PATCH',
         body: {
           title: event.title,
-          start: moment(start).toISOString(),
-          end: moment(end).toISOString(),
+          start: dayjs(start).toISOString(),
+          end: dayjs(end).toISOString(),
           category: event.category
         }
       })
@@ -142,8 +142,8 @@ function CalendarComponent({
         updateEvent(e).catch(console.error)
       }}
       onRangeChange={({ start, end }: { start: Date; end: Date }) => {
-        setStart(moment(start).format('YYYY-MM-DD'))
-        setEnd(moment(end).format('YYYY-MM-DD'))
+        setStart(dayjs(start).format('YYYY-MM-DD'))
+        setEnd(dayjs(end).format('YYYY-MM-DD'))
       }}
       onSelectSlot={handleSelectSlot}
     />

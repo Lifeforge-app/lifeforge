@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -77,7 +77,7 @@ function EntryItem({
           <span className="ml-0.5">{entry.key}</span>
         </code>
         <span className="text-bg-500 text-sm">
-          Last updated: {moment(entry.updated).fromNow()}
+          Last updated: {dayjs(entry.updated).fromNow()}
         </span>
       </div>
       <div className="ml-2 flex gap-2">

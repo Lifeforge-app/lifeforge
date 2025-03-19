@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
-import moment, { Moment } from 'moment'
+import dayjs, { Dayjs } from 'dayjs'
 import { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
@@ -16,7 +16,7 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-const getDatesBetween = (start: Moment, end: Moment): Moment[] => {
+const getDatesBetween = (start: Dayjs, end: Dayjs): Dayjs[] => {
   if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {
     return []
   }
@@ -103,13 +103,13 @@ const CodeTime = () => {
     if (!data || data.length === 0) return 'No data'
 
     const labels = getDatesBetween(
-      moment(data[0].date),
-      moment(data[data.length - 1].date)
+      dayjs(data[0].date),
+      dayjs(data[data.length - 1].date)
     ).map(date => date.format('DD MMM'))
 
     const processedData = labels.map(date => {
       const day = data.find(
-        d => d.date === moment(date, 'DD MMM').format('YYYY-MM-DD')
+        d => d.date === dayjs(date, 'DD MMM').format('YYYY-MM-DD')
       )
       return day ? day.duration / 3600000 : 0
     })

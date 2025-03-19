@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
+import dayjs from 'dayjs'
 import _ from 'lodash'
-import moment from 'moment'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -38,7 +38,7 @@ function OrdinaryColumn({
               }
 
               if (type === 'date') {
-                return moment(userData[id]).format('DD MMM YYYY')
+                return dayjs(userData[id]).format('DD MMM YYYY')
               }
 
               return userData[id]

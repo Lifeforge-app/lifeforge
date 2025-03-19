@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
 import {
@@ -34,12 +34,12 @@ function MiniCalendarDateItem({
   const eventsOnTheDay = useMemo<ICalendarEvent[]>(() => {
     return isInThisMonth
       ? events.filter(event => {
-          return moment(
+          return dayjs(
             `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
             'YYYY-M-DD'
           ).isBetween(
-            moment(event.start),
-            moment(event.end).subtract(1, 'second'),
+            dayjs(event.start),
+            dayjs(event.end).subtract(1, 'second'),
             'day',
             '[]'
           )
@@ -49,8 +49,8 @@ function MiniCalendarDateItem({
 
   const isToday = useMemo(
     () =>
-      moment().isSame(
-        moment(
+      dayjs().isSame(
+        dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
           'YYYY-M-DD'
         ),

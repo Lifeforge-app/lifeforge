@@ -3,7 +3,7 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import type { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -138,8 +138,8 @@ function AudioEntry({
             onReady={onReady}
           />
           <p className="text-bg-500 w-full whitespace-nowrap text-left text-sm sm:w-auto">
-            {moment().startOf('day').seconds(currentTime).format('mm:ss')} /{' '}
-            {moment().startOf('day').seconds(totalTime).format('mm:ss')}
+            {dayjs().startOf('day').second(currentTime).format('mm:ss')} /{' '}
+            {dayjs().startOf('day').second(totalTime).format('mm:ss')}
           </p>
         </div>
         <HamburgerMenu>
@@ -169,7 +169,7 @@ function AudioEntry({
         </div>
       )}
       <p className="text-bg-500 mt-4 flex items-center gap-2">
-        <Icon icon="tabler:clock" /> {moment(entry.created).fromNow()}
+        <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
       </p>
     </div>
   )

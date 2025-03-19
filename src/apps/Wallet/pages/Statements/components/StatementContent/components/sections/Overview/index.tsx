@@ -1,10 +1,11 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 function Overview({ month, year }: { month: number; year: number }) {
   const { transactions, assets, categories } = useWalletContext()
@@ -13,8 +14,8 @@ function Overview({ month, year }: { month: number; year: number }) {
 
     return transactions.filter(
       transaction =>
-        moment(transaction.date).month() === month &&
-        moment(transaction.date).year() === year
+        dayjs(transaction.date).month() === month &&
+        dayjs(transaction.date).year() === year
     )
   }, [transactions, month, year])
 
@@ -93,12 +94,12 @@ function Overview({ month, year }: { month: number; year: number }) {
                     Assets
                   </th>
                   <th className="whitespace-nowrap p-3 text-lg font-medium">
-                    {moment()
+                    {dayjs()
                       .month(month - 1)
                       .format('MMM YYYY')}
                   </th>
                   <th className="whitespace-nowrap p-3 text-lg font-medium">
-                    {moment().month(month).format('MMM YYYY')}
+                    {dayjs().month(month).format('MMM YYYY')}
                   </th>
                   <th
                     className="whitespace-nowrap p-3 text-lg font-medium"
@@ -144,15 +145,15 @@ function Overview({ month, year }: { month: number; year: number }) {
                         const transactionsAfterMonth =
                           transactionsForAsset.filter(
                             transaction =>
-                              moment(transaction.date).month() > month &&
-                              moment(transaction.date).year() === year
+                              dayjs(transaction.date).month() > month &&
+                              dayjs(transaction.date).year() === year
                           )
 
                         const transactionsThisMonth =
                           transactionsForAsset.filter(
                             transaction =>
-                              moment(transaction.date).month() === month &&
-                              moment(transaction.date).year() === year
+                              dayjs(transaction.date).month() === month &&
+                              dayjs(transaction.date).year() === year
                           )
 
                         const thatMonthAmount =
@@ -237,14 +238,14 @@ function Overview({ month, year }: { month: number; year: number }) {
 
                     const transactionsAfterMonth = transactions.filter(
                       transaction =>
-                        moment(transaction.date).month() > month &&
-                        moment(transaction.date).year() === year
+                        dayjs(transaction.date).month() > month &&
+                        dayjs(transaction.date).year() === year
                     )
 
                     const transactionsThisMonth = transactions.filter(
                       transaction =>
-                        moment(transaction.date).month() === month &&
-                        moment(transaction.date).year() === year
+                        dayjs(transaction.date).month() === month &&
+                        dayjs(transaction.date).year() === year
                     )
 
                     const thatMonthAmount =
@@ -352,12 +353,12 @@ function Overview({ month, year }: { month: number; year: number }) {
                         Category
                       </th>
                       <th className="whitespace-nowrap p-3 text-lg font-medium">
-                        {moment()
+                        {dayjs()
                           .month(month - 1)
                           .format('MMM YYYY')}
                       </th>
                       <th className="whitespace-nowrap p-3 text-lg font-medium">
-                        {moment().month(month).format('MMM YYYY')}
+                        {dayjs().month(month).format('MMM YYYY')}
                       </th>
                       <th
                         className="whitespace-nowrap p-3 text-lg font-medium"
@@ -402,16 +403,16 @@ function Overview({ month, year }: { month: number; year: number }) {
                               return <></>
                             }
 
-                            const lastMonth = moment()
+                            const lastMonth = dayjs()
                               .year(year)
                               .month(month - 1)
 
                             const lastMonthAmount = transactions
                               .filter(
                                 transaction =>
-                                  moment(transaction.date).month() ===
+                                  dayjs(transaction.date).month() ===
                                     lastMonth.month() &&
-                                  moment(transaction.date).year() ===
+                                  dayjs(transaction.date).year() ===
                                     lastMonth.year() &&
                                   transaction.category === category.id
                               )
@@ -420,8 +421,8 @@ function Overview({ month, year }: { month: number; year: number }) {
                             const thatMonthAmount = transactions
                               .filter(
                                 transaction =>
-                                  moment(transaction.date).month() === month &&
-                                  moment(transaction.date).year() === year &&
+                                  dayjs(transaction.date).month() === month &&
+                                  dayjs(transaction.date).year() === year &&
                                   transaction.category === category.id
                               )
                               .reduce((acc, curr) => acc + curr.amount, 0)
@@ -486,16 +487,16 @@ function Overview({ month, year }: { month: number; year: number }) {
                           return <></>
                         }
 
-                        const lastMonth = moment()
+                        const lastMonth = dayjs()
                           .year(year)
                           .month(month - 1)
                         const lastMonthAmount = transactions
                           .filter(
                             transaction =>
                               transaction.type === type &&
-                              moment(transaction.date).month() ===
+                              dayjs(transaction.date).month() ===
                                 lastMonth.month() &&
-                              moment(transaction.date).year() ===
+                              dayjs(transaction.date).year() ===
                                 lastMonth.year()
                           )
                           .reduce((acc, curr) => acc + curr.amount, 0)
@@ -504,8 +505,8 @@ function Overview({ month, year }: { month: number; year: number }) {
                           .filter(
                             transaction =>
                               transaction.type === type &&
-                              moment(transaction.date).month() === month &&
-                              moment(transaction.date).year() === year
+                              dayjs(transaction.date).month() === month &&
+                              dayjs(transaction.date).year() === year
                           )
                           .reduce((acc, curr) => acc + curr.amount, 0)
 

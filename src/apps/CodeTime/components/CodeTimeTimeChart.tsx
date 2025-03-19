@@ -12,7 +12,7 @@ import {
   Tooltip
 } from 'chart.js'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -43,14 +43,14 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   const projectsData = useMemo(() => {
     if (!dataQuery.data && !dataQuery.isSuccess) return []
 
-    const days = dataQuery.data.map(e => moment(e.date).format('DD MMM'))
+    const days = dataQuery.data.map(e => dayjs(e.date).format('DD MMM'))
     const data = [...new Set(dataQuery.data.flatMap(e => Object.keys(e[type])))]
       .sort()
       .map(item => ({
         label: item,
         data: days.map(
           day =>
-            dataQuery.data.find(e => moment(e.date).format('DD MMM') === day)?.[
+            dataQuery.data.find(e => dayjs(e.date).format('DD MMM') === day)?.[
               type
             ][item] || 0
         )
@@ -115,9 +115,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
               let label = context.dataset.label || ''
               if (label) label += ': '
               if (context.parsed.y) {
-                label += moment
-                  .duration(+context.parsed.y, 'minutes')
-                  .humanize()
+                label += dayjs.duration(+context.parsed.y, 'minutes').humanize()
               }
               return label
             }
@@ -172,7 +170,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
         {data => (
           <Chart
             data={{
-              labels: data.map(e => moment(e.date).format('DD MMM')),
+              labels: data.map(e => dayjs(e.date).format('DD MMM')),
               datasets: [
                 {
                   type: 'line' as any,

@@ -1,13 +1,11 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { type IMusicEntry } from '../../../interfaces/music_interfaces'
 import PlayStateIndicator from './components/PlayStateIndicator'
 import SideButtons from './components/SideButtons'
 
 function formatDuration(duration: string): string {
-  return moment
-    .utc(moment.duration(duration, 'seconds').asMilliseconds())
-    .format(+duration >= 3600 ? 'HH:mm:ss' : 'mm:ss')
+  return dayjs.duration(+duration).format(+duration > 3600 ? 'h:mm:ss' : 'm:ss')
 }
 
 function MusicListItem({ music }: { music: IMusicEntry }) {

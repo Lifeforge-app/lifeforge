@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useDrag } from 'react-dnd'
 
@@ -69,7 +69,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
           {entry.content}
         </p>
         <span className="text-bg-500 text-sm">
-          {moment(entry.created).fromNow()}
+          {dayjs(entry.created).fromNow()}
         </span>
         <InFolderChip entry={entry} />
       </div>

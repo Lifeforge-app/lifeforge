@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useEffect, useMemo } from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
@@ -22,7 +22,7 @@ function YearMonthInput({
     if (typeof transactions === 'string') return []
 
     return Array.from(
-      new Set(transactions.map(transaction => moment(transaction.date).year()))
+      new Set(transactions.map(transaction => dayjs(transaction.date).year()))
     )
   }, [transactions])
 
@@ -32,8 +32,8 @@ function YearMonthInput({
     return Array.from(
       new Set(
         transactions
-          .filter(transaction => moment(transaction.date).year() === year)
-          .map(transaction => moment(transaction.date).month())
+          .filter(transaction => dayjs(transaction.date).year() === year)
+          .map(transaction => dayjs(transaction.date).month())
       )
     )
   }, [transactions, year])
@@ -56,7 +56,7 @@ function YearMonthInput({
         buttonContent={
           <>
             <span className="-mt-px block truncate">
-              {month !== null ? moment().month(month).format('MMMM') : 'None'}
+              {month !== null ? dayjs().month(month).format('MMMM') : 'None'}
             </span>
           </>
         }
@@ -71,7 +71,7 @@ function YearMonthInput({
         {monthsOptions.map(mon => (
           <ListboxOrComboboxOption
             key={mon}
-            text={moment().month(mon).format('MMMM')}
+            text={dayjs().month(mon).format('MMMM')}
             value={mon}
           />
         ))}

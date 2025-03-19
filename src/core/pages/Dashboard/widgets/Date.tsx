@@ -1,6 +1,6 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import moment from 'moment/min/moment-with-locales'
+import dayjs from 'dayjs'
 import { useRef } from 'react'
 import tinycolor from 'tinycolor2'
 
@@ -29,14 +29,14 @@ export default function DateWidget() {
             : 'p-8 text-6xl'
         )}
       >
-        {moment().format('DD')}
+        {dayjs().format('DD')}
       </span>
       <div className="flex w-full min-w-0 flex-col gap-1">
         <span className="text-2xl font-semibold">
-          {moment().locale(language).format('dddd')}
+          {dayjs().locale(language).format('dddd')}
         </span>
         <span className="w-full min-w-0 truncate">
-          {moment()
+          {dayjs()
             .locale(language)
             .format(language.startsWith('zh') ? 'YYYY[年] MMMM' : 'MMMM YYYY')}
           ,{' '}
@@ -45,17 +45,17 @@ export default function DateWidget() {
               case 'zh-CN':
               case 'zh-TW':
                 return `第${arabicToChinese(
-                  `${moment().week()}`,
+                  `${dayjs().week()}`,
                   language.endsWith('-CN') ? 'simplified' : 'traditional'
                 )}${language.endsWith('-CN') ? '周' : '週'}`
               case 'ms':
-                return moment().week() < 4
+                return dayjs().week() < 4
                   ? `Minggu ${
-                      ['pertama', 'kedua', 'ketiga'][moment().week() - 1]
+                      ['pertama', 'kedua', 'ketiga'][dayjs().week() - 1]
                     }`
-                  : `Minggu ke-${moment().week()}`
+                  : `Minggu ke-${dayjs().week()}`
               default:
-                return `Week ${moment().week()}`
+                return `Week ${dayjs().week()}`
             }
           })()}
         </span>
