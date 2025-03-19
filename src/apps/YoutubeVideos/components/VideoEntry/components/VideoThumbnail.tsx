@@ -16,7 +16,9 @@ function VideoThumbnail({ id, duration }: { id: string; duration: number }) {
         }/youtube-videos/video/thumbnail/${id}`}
       />
       <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5">
-        {dayjs.duration(duration).format(duration > 3600 ? 'h:mm:ss' : 'm:ss')}
+        {dayjs
+          .duration(duration, 'second')
+          .format(duration > 3600 ? 'h:mm:ss' : 'm:ss')}
       </p>
     </div>
   )

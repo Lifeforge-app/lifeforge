@@ -151,7 +151,7 @@ function PlaylistSection({
     return () => {
       intervalManager.clearAllIntervals()
     }
-  }, [])
+  }, [isOpen])
 
   return (
     <>
