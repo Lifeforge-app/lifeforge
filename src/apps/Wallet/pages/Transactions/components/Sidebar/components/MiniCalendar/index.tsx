@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -20,8 +20,8 @@ const VIEWS = [
 
 function MiniCalendar() {
   const { t } = useTranslation('apps.wallet')
-  const [currentMonth, setCurrentMonth] = useState(moment().month())
-  const [currentYear, setCurrentYear] = useState(moment().year())
+  const [currentMonth, setCurrentMonth] = useState(dayjs().month())
+  const [currentYear, setCurrentYear] = useState(dayjs().year())
   const [viewsFilter, setViewsFilter] = useState<
     ('income' | 'expenses' | 'transfer')[]
   >(['income', 'expenses'])

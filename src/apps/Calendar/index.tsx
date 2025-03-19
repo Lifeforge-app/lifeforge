@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from 'react'
 
 import {
@@ -44,9 +44,9 @@ function CalendarModule() {
   const [existedCategoryData, setExistedCategoryData] =
     useState<ICalendarCategory | null>(null)
   const [start, setStart] = useState(
-    moment().startOf('month').format('YYYY-MM-DD')
+    dayjs().startOf('month').format('YYYY-MM-DD')
   )
-  const [end, setEnd] = useState(moment().endOf('month').format('YYYY-MM-DD'))
+  const [end, setEnd] = useState(dayjs().endOf('month').format('YYYY-MM-DD'))
   const eventQueryKey = useMemo(
     () => ['calendar', 'events', start, end],
     [start, end]

@@ -1,12 +1,13 @@
-import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
-import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
-import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
+import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
+import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -119,7 +120,7 @@ function EntryItem<T extends boolean = false>({
           <p className="text-sm text-zinc-500">
             Last worn on:{' '}
             {entry.last_worn !== ''
-              ? moment(entry.last_worn).fromNow()
+              ? dayjs(entry.last_worn).fromNow()
               : 'Never'}
           </p>
         </div>

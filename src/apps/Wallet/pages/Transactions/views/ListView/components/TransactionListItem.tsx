@@ -1,10 +1,11 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 
@@ -97,10 +98,10 @@ function TransactionListItem({
           </div>
           <div className="text-bg-500 flex items-center gap-2 text-sm font-medium">
             <span className="block sm:hidden">
-              {moment(transaction.date).format('DD MMM')}
+              {dayjs(transaction.date).format('DD MMM')}
             </span>
             <span className="hidden sm:block">
-              {moment(transaction.date).format('MMM DD, YYYY')}
+              {dayjs(transaction.date).format('MMM DD, YYYY')}
             </span>
             <Icon className="size-1" icon="tabler:circle-filled" />
             <div className="flex items-center gap-1">

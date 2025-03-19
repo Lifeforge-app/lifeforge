@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import moment from 'moment/min/moment-with-locales'
+import dayjs from 'dayjs'
 
 function MiniCalendarHeader({
   currentMonth,
@@ -18,7 +18,7 @@ function MiniCalendarHeader({
   return (
     <div className="flex-between mb-4 flex gap-2">
       <div className="whitespace-nowrap text-lg font-semibold">
-        {moment()
+        {dayjs()
           .year(currentYear)
           .month(currentMonth)
           .locale(language)

@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 function StatementHeader({ month, year }: { month: number; year: number }) {
   return (
@@ -20,7 +20,7 @@ function StatementHeader({ month, year }: { month: number; year: number }) {
       <p className="text-bg-500 mt-4 hidden text-3xl print:block">
         For the month ended{' '}
         <span className="text-bg-100 font-bold">
-          {moment()
+          {dayjs()
             .year(year)
             .month(month + 1)
             .date(0)

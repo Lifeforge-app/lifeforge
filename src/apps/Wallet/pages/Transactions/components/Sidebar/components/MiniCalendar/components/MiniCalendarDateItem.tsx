@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -42,8 +42,8 @@ const getDayClassName = ({
       searchParams.get('end_date') !== null)
   ) {
     if (isFirstAndLastDay !== '') {
-      const isSingleDate = moment(searchParams.get('start_date')).isSame(
-        moment(searchParams.get('end_date') ?? moment().format('YYYY-MM-DD')),
+      const isSingleDate = dayjs(searchParams.get('start_date')).isSame(
+        dayjs(searchParams.get('end_date') ?? dayjs().format('YYYY-MM-DD')),
         'day'
       )
 
@@ -112,8 +112,8 @@ function MiniCalendarDateItem({
     }
 
     const relatedTransactions = transactions.filter(transaction => {
-      const transactionDate = moment(transaction.date, 'YYYY-MM-DD')
-      const targetDate = moment(
+      const transactionDate = dayjs(transaction.date, 'YYYY-MM-DD')
+      const targetDate = dayjs(
         `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
         'YYYY-M-DD'
       )
@@ -152,16 +152,16 @@ function MiniCalendarDateItem({
   const isFirstAndLastDay = useMemo(() => {
     const startDateParam = searchParams.get('start_date')
     const endDateParam = searchParams.get('end_date')
-    const formattedDate = moment(
+    const formattedDate = dayjs(
       `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
       'YYYY-M-DD'
     )
 
-    if (startDateParam && moment(startDateParam).isSame(formattedDate, 'day')) {
+    if (startDateParam && dayjs(startDateParam).isSame(formattedDate, 'day')) {
       return 'first'
     }
 
-    if (endDateParam && moment(endDateParam).isSame(formattedDate, 'day')) {
+    if (endDateParam && dayjs(endDateParam).isSame(formattedDate, 'day')) {
       return 'last'
     }
 
@@ -177,19 +177,19 @@ function MiniCalendarDateItem({
     }
 
     return (
-      moment(
-        searchParams.get('start_date') ?? moment().format('YYYY-MM-DD')
+      dayjs(
+        searchParams.get('start_date') ?? dayjs().format('YYYY-MM-DD')
       ).isBefore(
-        moment(
+        dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
           'YYYY-M-DD'
         ),
         'day'
       ) &&
-      moment(
-        searchParams.get('end_date') ?? moment().format('YYYY-MM-DD')
+      dayjs(
+        searchParams.get('end_date') ?? dayjs().format('YYYY-MM-DD')
       ).isAfter(
-        moment(
+        dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
           'YYYY-M-DD'
         ),
@@ -219,13 +219,13 @@ function MiniCalendarDateItem({
 
         searchParams.set(
           `${nextToSelect}_date`,
-          moment(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+          dayjs(target, 'YYYY-MM-DD').format('YYYY-M-DD')
         )
 
         if (nextToSelect === 'start') {
           searchParams.set(
             'end_date',
-            moment(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+            dayjs(target, 'YYYY-MM-DD').format('YYYY-M-DD')
           )
 
           setNextToSelect('end')
@@ -236,17 +236,17 @@ function MiniCalendarDateItem({
         if (
           nextToSelect === 'end' &&
           searchParams.get('start_date') !== null &&
-          moment(searchParams.get('start_date')).isAfter(
-            moment(target, 'YYYY-MM-DD')
+          dayjs(searchParams.get('start_date')).isAfter(
+            dayjs(target, 'YYYY-MM-DD')
           )
         ) {
           searchParams.set(
             'start_date',
-            moment(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+            dayjs(target, 'YYYY-MM-DD').format('YYYY-M-DD')
           )
           searchParams.set(
             'end_date',
-            moment(searchParams.get('start_date')).format('YYYY-M-DD')
+            dayjs(searchParams.get('start_date')).format('YYYY-M-DD')
           )
           setNextToSelect('end')
           setSearchParams(searchParams)

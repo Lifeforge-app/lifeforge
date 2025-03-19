@@ -1,10 +1,11 @@
-import { IMovieSearchResult } from '@apps/Movies/interfaces/movies_interfaces'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
+
+import { IMovieSearchResult } from '@apps/Movies/interfaces/movies_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -40,7 +41,7 @@ function TMDBResultItem({
       </div>
       <div className="w-full">
         <p className="text-custom-500 font-semibold">
-          {moment(data.release_date).year()}
+          {dayjs(data.release_date).year()}
         </p>
         <h1 className="text-xl font-semibold">
           {data.title}

@@ -1,18 +1,18 @@
 import clsx from 'clsx'
-import moment from 'moment/min/moment-with-locales'
+import dayjs from 'dayjs'
 import { useRef, useState } from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 export default function Clock() {
   const { componentBg } = useComponentBg()
-  const [time, setTime] = useState(moment().format('HH:mm'))
-  const [seocond, setSecond] = useState(moment().format('ss') as any)
+  const [time, setTime] = useState(dayjs().format('HH:mm'))
+  const [seocond, setSecond] = useState(dayjs().format('ss') as any)
   const ref = useRef<HTMLDivElement>(null)
 
   setInterval(() => {
-    setTime(moment().format('HH:mm'))
-    setSecond(moment().format('ss'))
+    setTime(dayjs().format('HH:mm'))
+    setSecond(dayjs().format('ss'))
   }, 1000)
 
   return (
@@ -34,8 +34,8 @@ export default function Clock() {
             .replace('_', ' ')}
         </span>
         <span className="text-bg-500">
-          UTC {moment().utcOffset() > 0 ? '+' : ''}
-          {moment().utcOffset() / 60}
+          UTC {dayjs().utcOffset() > 0 ? '+' : ''}
+          {dayjs().utcOffset() / 60}
         </span>
       </div>
       <span

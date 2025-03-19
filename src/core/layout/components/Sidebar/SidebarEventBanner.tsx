@@ -3,7 +3,7 @@ import { useAuth } from '@providers/AuthProvider'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
@@ -14,10 +14,10 @@ function addNumberSuffix(number: number): string {
 }
 
 const getEventType = (userDOB: string): string => {
-  const today = moment().format('MM-DD')
+  const today = dayjs().format('MM-DD')
   if (today === '08-31') return 'merdeka'
   if (today === '12-25') return 'christmas'
-  if (moment(userDOB).format('MM-DD') === today) return 'birthday'
+  if (dayjs(userDOB).format('MM-DD') === today) return 'birthday'
   return ''
 }
 
@@ -32,7 +32,7 @@ const getEventMessage = (
     case 'birthday':
       return (
         <>
-          Happy {addNumberSuffix(moment().year() - moment(userDOB).year())}{' '}
+          Happy {addNumberSuffix(dayjs().year() - dayjs(userDOB).year())}{' '}
           Birthday, <br />
           {userName}!
         </>

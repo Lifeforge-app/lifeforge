@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
+import dayjs from 'dayjs'
 import { parse } from 'file-type-mime'
-import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -81,7 +81,7 @@ function ModifyTransactionsModal({
       if (existedData) {
         setParticular(existedData.particulars)
         setTransactionType(existedData.type)
-        setTransactionDate(moment(existedData.date).format('YYYY-MM-DD'))
+        setTransactionDate(dayjs(existedData.date).format('YYYY-MM-DD'))
         setAmount(`${existedData.amount}`)
         setCategory(existedData.category || '')
         setLocation(existedData.location || '')
@@ -106,7 +106,7 @@ function ModifyTransactionsModal({
       } else {
         setParticular('')
         setTransactionType('income')
-        setTransactionDate(moment().format('YYYY-MM-DD'))
+        setTransactionDate(dayjs().format('YYYY-MM-DD'))
         setAmount(undefined)
         setLocation('')
         setCategory(null)
@@ -141,7 +141,7 @@ function ModifyTransactionsModal({
 
     const data = new FormData()
     data.append('particulars', particular)
-    data.append('date', moment(transactionDate).format('YYYY-MM-DD'))
+    data.append('date', dayjs(transactionDate).format('YYYY-MM-DD'))
     data.append('amount', parseFloat(`${amount}` || '0').toString())
     data.append('category', category ?? '')
     data.append('location', location ?? '')
