@@ -111,12 +111,14 @@ function VideoSection({
   useEffect(() => {
     if (isOpen) {
       setVideoUrl('')
+      setLoading(false)
+      setProgress(0)
     }
 
     return () => {
       intervalManager.clearAllIntervals()
     }
-  }, [])
+  }, [isOpen])
 
   return (
     <>

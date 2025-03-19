@@ -17,31 +17,33 @@ function VideoDetails({
   progress: number
 }) {
   return (
-    <QueryWrapper query={videoInfoQuery}>
-      {videoInfo => (
-        <>
-          <div className="mt-6 flex w-full gap-6">
-            <VideoInfo videoInfo={videoInfo} />
-          </div>
-          {loading && (
-            <div className="bg-bg-200 dark:bg-bg-800 mt-6 h-4 w-full rounded-md">
-              <div
-                className="bg-custom-500 h-full rounded-md transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              />
+    <div className="mt-6">
+      <QueryWrapper query={videoInfoQuery}>
+        {videoInfo => (
+          <>
+            <div className="flex w-full gap-6">
+              <VideoInfo videoInfo={videoInfo} />
             </div>
-          )}
-          <Button
-            className="mt-4"
-            icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-            loading={loading}
-            onClick={downloadVideo}
-          >
-            {loading ? 'Downloading' : 'Download'}
-          </Button>
-        </>
-      )}
-    </QueryWrapper>
+            {loading && (
+              <div className="bg-bg-200 dark:bg-bg-800 mt-6 h-4 w-full rounded-md">
+                <div
+                  className="bg-custom-500 h-full rounded-md transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            )}
+            <Button
+              className="mt-4 w-full"
+              icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
+              loading={loading}
+              onClick={downloadVideo}
+            >
+              {loading ? 'Downloading' : 'Download'}
+            </Button>
+          </>
+        )}
+      </QueryWrapper>
+    </div>
   )
 }
 
