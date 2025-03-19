@@ -1,5 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router'
 
 import { NotFoundScreen } from '@lifeforge/ui'
@@ -10,6 +11,7 @@ import ChildRoutesRenderer from './ChildRoutesRenderer'
 import MainApplication from './Layout'
 
 function MainRoutesRenderer() {
+  const { t } = useTranslation('common.misc')
   const { userData } = useAuth()
 
   return (
@@ -36,14 +38,16 @@ function MainRoutesRenderer() {
                         {ChildRoutesRenderer({
                           routes: item.routes,
                           APIKeys: item.requiredAPIKeys,
-                          isNested: true
+                          isNested: true,
+                          t
                         })}
                       </Route>
                     )
                   })()
                 : ChildRoutesRenderer({
                     routes: item.routes,
-                    APIKeys: item.requiredAPIKeys
+                    APIKeys: item.requiredAPIKeys,
+                    t
                   })
             )
         ) : (

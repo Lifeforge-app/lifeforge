@@ -300,6 +300,14 @@ export const ROUTES: RouteCategory[] = [
           'currency-converter': lazy(() => import('@apps/CurrencyConverter'))
         },
         togglable: true
+      },
+      {
+        name: 'Youtube Summarizer',
+        icon: 'tabler:brand-youtube',
+        routes: {
+          'youtube-summarizer': lazy(() => import('@apps/YoutubeSummarizer'))
+        },
+        togglable: true
       }
     ]
   },
