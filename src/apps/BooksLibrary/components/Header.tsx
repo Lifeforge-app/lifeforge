@@ -9,9 +9,9 @@ import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 function Header({ itemCount }: { itemCount: number }) {
   const { t } = useTranslation('apps.booksLibrary')
   const {
-    categories: { data: categories },
-    languages: { data: languages },
-    fileTypes: { data: fileTypes },
+    categories: { dataQuery: categoriesQuery },
+    languages: { dataQuery: languagesQuery },
+    fileTypes: { dataQuery: fileTypesQuery },
     miscellaneous: { setSidebarOpen, searchQuery, setLibgenModalOpen }
   } = useBooksLibraryContext()
   const [searchParams] = useSearchParams()
@@ -74,18 +74,19 @@ function Header({ itemCount }: { itemCount: number }) {
       <HeaderFilter
         items={{
           category: {
-            data: categories,
+            data: categoriesQuery.data ?? [],
             isColored: true
           },
           language: {
-            data: languages,
+            data: languagesQuery.data ?? [],
             isColored: true
           },
           fileType: {
             data:
-              typeof fileTypes !== 'string'
-                ? fileTypes.map(e => ({ ...e, icon: 'tabler:file-text' }))
-                : []
+              fileTypesQuery.data?.map(e => ({
+                ...e,
+                icon: 'tabler:file-text'
+              })) ?? []
           }
         }}
       />

@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
 import {
-  APIFallbackComponent,
   DashboardItem,
   EmptyStateScreen,
+  QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
 
@@ -17,7 +17,7 @@ import useComponentBg from '@hooks/useComponentBg'
 function AssetsBalanceCard() {
   const { componentBgLighterWithHover } = useComponentBg()
   const navigate = useNavigate()
-  const { assets, isAmountHidden } = useWalletContext()
+  const { assetsQuery, isAmountHidden } = useWalletContext()
   const { t } = useTranslation('apps.wallet')
 
   return (
@@ -35,7 +35,7 @@ function AssetsBalanceCard() {
       namespace="apps.wallet"
       title="Assets Balance"
     >
-      <APIFallbackComponent data={assets}>
+      <QueryWrapper query={assetsQuery}>
         {assets =>
           assets.length > 0 ? (
             <Scrollbar>
@@ -98,7 +98,7 @@ function AssetsBalanceCard() {
             />
           )
         }
-      </APIFallbackComponent>
+      </QueryWrapper>
     </DashboardItem>
   )
 }

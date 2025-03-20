@@ -13,11 +13,16 @@ function ModifyEntryModal() {
       setExistedData,
       existedData
     },
-    categories: { data: categories },
-    statuses: { data: statuses },
-    visibilities: { data: visibilities },
-    technologies: { data: technologies }
+    categories: { dataQuery: categoriesQuery },
+    statuses: { dataQuery: statusesQuery },
+    visibilities: { dataQuery: visibilitiesQuery },
+    technologies: { dataQuery: technologiesQuery }
   } = useProjectsMContext()
+
+  const categories = categoriesQuery.data ?? []
+  const statuses = statusesQuery.data ?? []
+  const visibilities = visibilitiesQuery.data ?? []
+  const technologies = technologiesQuery.data ?? []
 
   const [data, setData] = useState({
     name: '',

@@ -1,8 +1,6 @@
 import update from 'immutability-helper'
 import { useCallback, useState } from 'react'
 
-import { APIFallbackComponent } from '@lifeforge/ui'
-
 import { type ITodoSubtask } from '../../../../interfaces/todo_list_interfaces'
 import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
@@ -46,27 +44,23 @@ function SubtaskBox({
         spiciness={spiciness}
         summary={summary}
       />
-      <APIFallbackComponent data={subtasks}>
-        {subtasks =>
-          subtasks.length > 0 ? (
-            <div className="mt-4 grid gap-2">
-              {subtasks.map((subtask, index) => (
-                <SubtaskItem
-                  key={subtask.id ?? index}
-                  moveTask={moveTask}
-                  newTask={newTask}
-                  setNewTask={setNewTask}
-                  setSubtasks={setSubtasks}
-                  subtask={subtask}
-                  subtasks={subtasks}
-                />
-              ))}
-            </div>
-          ) : (
-            <></>
-          )
-        }
-      </APIFallbackComponent>
+      {subtasks.length > 0 ? (
+        <div className="mt-4 grid gap-2">
+          {subtasks.map((subtask, index) => (
+            <SubtaskItem
+              key={subtask.id ?? index}
+              moveTask={moveTask}
+              newTask={newTask}
+              setNewTask={setNewTask}
+              setSubtasks={setSubtasks}
+              subtask={subtask}
+              subtasks={subtasks}
+            />
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   )
 }

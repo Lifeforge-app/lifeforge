@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import {
-  APIFallbackComponent,
-  Button,
-  ModalHeader,
-  ModalWrapper,
-  TextInput
-} from '@lifeforge/ui'
+import { Button, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -97,19 +91,15 @@ function GuitarWorldModal({
           </Button>
         </>
       ) : (
-        <APIFallbackComponent data={data}>
-          {data => (
-            <ScoreList
-              cookie={cookie}
-              data={data}
-              page={page}
-              setPage={(page: number) => {
-                setPage(page)
-                fetchData(page).catch(console.error)
-              }}
-            />
-          )}
-        </APIFallbackComponent>
+        <ScoreList
+          cookie={cookie}
+          data={data}
+          page={page}
+          setPage={(page: number) => {
+            setPage(page)
+            fetchData(page).catch(console.error)
+          }}
+        />
       )}
     </ModalWrapper>
   )

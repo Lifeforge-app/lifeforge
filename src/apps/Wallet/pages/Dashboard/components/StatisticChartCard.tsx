@@ -4,11 +4,7 @@ import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
-import {
-  APIFallbackComponent,
-  DashboardItem,
-  EmptyStateScreen
-} from '@lifeforge/ui'
+import { DashboardItem, EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
@@ -38,7 +34,10 @@ const options = {
 }
 
 function StatisticChardCard() {
-  const { transactions } = useWalletContext()
+  const { transactionsQuery } = useWalletContext()
+
+  const transactions = transactionsQuery.data ?? []
+
   const dates = useMemo(() => {
     if (typeof transactions === 'string') {
       return []
@@ -96,7 +95,7 @@ function StatisticChardCard() {
       title="Statistics"
     >
       <div className="flex-center size-full min-h-0 flex-1">
-        <APIFallbackComponent data={transactions}>
+        <QueryWrapper query={transactionsQuery}>
           {transactions =>
             transactions.length === 0 ? (
               <EmptyStateScreen name="transactions" namespace="apps.wallet" />
@@ -126,7 +125,7 @@ function StatisticChardCard() {
               />
             )
           }
-        </APIFallbackComponent>
+        </QueryWrapper>
       </div>
       <div className="mt-4 flex-center gap-8 sm:hidden">
         <div className="flex items-center gap-2">

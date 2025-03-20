@@ -35,7 +35,7 @@ function Header({
   setView,
   queryKey
 }: {
-  totalItems: number
+  totalItems: number | undefined
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>

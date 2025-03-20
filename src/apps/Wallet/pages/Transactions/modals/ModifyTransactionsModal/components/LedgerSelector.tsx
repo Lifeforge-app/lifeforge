@@ -15,7 +15,8 @@ function LedgerSelector({
   ledger: string | null
   setLedger: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { ledgers } = useWalletContext()
+  const { ledgersQuery } = useWalletContext()
+  const ledgers = ledgersQuery.data ?? []
 
   return (
     <ListboxOrComboboxInput

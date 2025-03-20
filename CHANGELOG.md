@@ -24,6 +24,13 @@
 - **Wallet**: Fixed a bug where mini calendar doesn't properly set date range search params when clicked.
 - **TodoList**: Fixed bugs that arose from the recent code refactor.
 - **Calendar**: Fixed a bug where the mini calendar didn't properly parse the date.
+- **Youtube Summarizer**: Created and completed this module.
+- **Currency Converter**: Created and completed this module.
+- **UI**: Created Github workflow for automatic deployment and versioning.
+- **UI**: Fixed a bug where sidebar item with subsections collapse the sidebar when clicked in mobile view.
+- **UI**: Removed `eslint-plugin-import` from the project as it was causing issues.
+- **UI**: Fixed all the ESLint errors.
+- **UI**: Added a lot more commands in `package.json` for easier development.
 
 ---
 

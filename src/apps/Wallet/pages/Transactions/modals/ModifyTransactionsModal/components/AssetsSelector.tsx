@@ -15,7 +15,8 @@ function AssetsSelector({
   transactionAsset: string | null
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { assets } = useWalletContext()
+  const { assetsQuery } = useWalletContext()
+  const assets = assetsQuery.data ?? []
 
   return (
     <ListboxOrComboboxInput

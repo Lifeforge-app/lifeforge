@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/pseudo-random */
-import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 import { useAuth } from '@providers/AuthProvider'
-import { useQueryClient } from '@tanstack/react-query'
+import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import {
   type ReactNode,
@@ -12,6 +11,8 @@ import {
   useState
 } from 'react'
 import { toast } from 'react-toastify'
+
+import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -33,7 +34,7 @@ interface IMusicContext {
   nextMusic: () => void
 
   // Music list related
-  musics: IMusicEntry[]
+  musicsQuery: UseQueryResult<IMusicEntry[]>
   toggleFavourite: (music: IMusicEntry) => Promise<void>
 
   // Search related
@@ -252,7 +253,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       nextMusic,
 
       // Music list related
-      musics: musicsQuery.data ?? [],
+      musicsQuery,
       toggleFavourite,
 
       // Search related

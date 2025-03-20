@@ -9,7 +9,8 @@ import {
   FAB,
   MenuItem,
   ModuleHeader,
-  ModuleWrapper
+  ModuleWrapper,
+  QueryWrapper
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
@@ -20,7 +21,8 @@ import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets() {
   const { t } = useTranslation('apps.wallet')
-  const { assets, isAmountHidden, toggleAmountVisibility } = useWalletContext()
+  const { assetsQuery, isAmountHidden, toggleAmountVisibility } =
+    useWalletContext()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -40,8 +42,7 @@ function Assets() {
     <ModuleWrapper>
       <ModuleHeader
         actionButton={
-          typeof assets !== 'string' &&
-          assets.length > 0 && (
+          (assetsQuery.data ?? []).length > 0 && (
             <Button
               className="hidden sm:flex"
               icon="tabler:plus"
@@ -73,39 +74,47 @@ function Assets() {
         title="Assets"
         tKey="subsectionsTitleAndDesc"
       />
-      {assets.length > 0 ? (
-        <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
-          {assets.map(asset => (
-            <AssetItem
-              key={asset.id}
-              asset={asset}
-              setDeleteAssetsConfirmationOpen={setDeleteAssetsConfirmationOpen}
-              setModifyModalOpenType={setModifyModalOpenType}
-              setSelectedData={setSelectedData}
-            />
-          ))}
-        </div>
-      ) : (
-        <EmptyStateScreen
-          ctaContent="new"
-          ctaTProps={{
-            item: t('items.asset')
-          }}
-          icon="tabler:wallet-off"
-          name="assets"
-          namespace="apps.wallet"
-          onCTAClick={setModifyModalOpenType}
-        />
-      )}
-      {assets.length > 0 && (
-        <FAB
-          icon="tabler:plus"
-          onClick={() => {
-            setSelectedData(null)
-            setModifyModalOpenType('create')
-          }}
-        />
-      )}
+      <QueryWrapper query={assetsQuery}>
+        {assets => (
+          <>
+            {assets.length > 0 ? (
+              <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
+                {assets.map(asset => (
+                  <AssetItem
+                    key={asset.id}
+                    asset={asset}
+                    setDeleteAssetsConfirmationOpen={
+                      setDeleteAssetsConfirmationOpen
+                    }
+                    setModifyModalOpenType={setModifyModalOpenType}
+                    setSelectedData={setSelectedData}
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyStateScreen
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.asset')
+                }}
+                icon="tabler:wallet-off"
+                name="assets"
+                namespace="apps.wallet"
+                onCTAClick={setModifyModalOpenType}
+              />
+            )}
+            {assets.length > 0 && (
+              <FAB
+                icon="tabler:plus"
+                onClick={() => {
+                  setSelectedData(null)
+                  setModifyModalOpenType('create')
+                }}
+              />
+            )}
+          </>
+        )}
+      </QueryWrapper>
       <ModifyAssetsModal
         existedData={selectedData}
         openType={modifyAssetsModalOpenType}

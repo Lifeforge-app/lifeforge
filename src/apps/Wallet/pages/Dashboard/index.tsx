@@ -48,8 +48,7 @@ ChartJS.register(
 function WalletDashboard() {
   const navigate = useNavigate()
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
-  const { incomeExpenses, isAmountHidden, toggleAmountVisibility } =
-    useWalletContext()
+  const { isAmountHidden, toggleAmountVisibility } = useWalletContext()
 
   return (
     <ModuleWrapper>
@@ -104,16 +103,8 @@ function WalletDashboard() {
         title="Wallet"
       />
       <div className="mt-6 flex size-full grid-cols-3 grid-rows-6 flex-col gap-4 pb-8 xl:grid">
-        <IncomeExpenseCard
-          data={incomeExpenses}
-          icon="tabler:login-2"
-          title="Income"
-        />
-        <IncomeExpenseCard
-          data={incomeExpenses}
-          icon="tabler:logout-2"
-          title="Expenses"
-        />
+        <IncomeExpenseCard icon="tabler:login-2" title="Income" />
+        <IncomeExpenseCard icon="tabler:logout-2" title="Expenses" />
         <AssetsBalanceCard />
         <StatisticChardCard />
         <TransactionsCountCard />

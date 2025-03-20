@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router'
 
-import { APIFallbackComponent, SidebarItem } from '@lifeforge/ui'
+import { QueryWrapper, SidebarItem } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -10,10 +10,10 @@ function TaskStatusList({
   setSidebarOpen: (value: boolean) => void
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { statusCounter } = useTodoListContext()
+  const { statusCounterQuery } = useTodoListContext()
 
   return (
-    <APIFallbackComponent data={statusCounter}>
+    <QueryWrapper query={statusCounterQuery}>
       {statusCounter => (
         <>
           {[
@@ -53,7 +53,7 @@ function TaskStatusList({
           ))}
         </>
       )}
-    </APIFallbackComponent>
+    </QueryWrapper>
   )
 }
 

@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
+import { DashboardItem, QueryWrapper, Scrollbar } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
@@ -12,8 +12,10 @@ import useComponentBg from '@hooks/useComponentBg'
 
 function TransactionsCountCard() {
   const { componentBgLighterWithHover } = useComponentBg()
-  const { transactions, isAmountHidden } = useWalletContext()
+  const { transactionsQuery, isAmountHidden } = useWalletContext()
   const { t } = useTranslation('apps.wallet')
+
+  const transactions = transactionsQuery.data ?? []
 
   const amounts = useMemo<{
     income: {
@@ -29,23 +31,6 @@ function TransactionsCountCard() {
       count: number
     }
   }>(() => {
-    if (typeof transactions === 'string') {
-      return {
-        income: {
-          amount: 0,
-          count: 0
-        },
-        expenses: {
-          amount: 0,
-          count: 0
-        },
-        transfer: {
-          amount: 0,
-          count: 0
-        }
-      }
-    }
-
     return transactions.reduce(
       (acc, transaction) => {
         if (transaction.type === 'income') {
@@ -94,7 +79,7 @@ function TransactionsCountCard() {
       namespace="apps.wallet"
       title="Transactions Count"
     >
-      <APIFallbackComponent data={transactions}>
+      <QueryWrapper query={transactionsQuery}>
         {transactions => (
           <Scrollbar>
             <ul className="space-y-2">
@@ -177,7 +162,7 @@ function TransactionsCountCard() {
             </ul>
           </Scrollbar>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </DashboardItem>
   )
 }

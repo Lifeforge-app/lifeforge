@@ -29,7 +29,7 @@ function LedgerItem({
   const { t } = useTranslation('apps.wallet')
   const { componentBgWithHover } = useComponentBg()
   const navigate = useNavigate()
-  const { transactions } = useWalletContext()
+  const { transactionsQuery } = useWalletContext()
 
   return (
     <div
@@ -67,10 +67,11 @@ function LedgerItem({
         <div>
           <h2 className="text-xl font-medium">{ledger.name}</h2>
           <p className="text-bg-500 text-left text-sm">
-            {typeof transactions !== 'string' &&
-              transactions.filter(
+            {
+              transactionsQuery.data?.filter(
                 transaction => transaction.ledger === ledger.id
-              ).length}{' '}
+              ).length
+            }{' '}
             {t('transactionCount')}
           </p>
         </div>

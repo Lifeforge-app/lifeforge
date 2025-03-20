@@ -1,4 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import {
   createContext,
   useContext,
@@ -34,8 +34,7 @@ function useBooksLibraryCommonState<T>(
     useState(false)
 
   return {
-    data: dataQuery.data ?? [],
-    loading: dataQuery.isLoading,
+    dataQuery,
     modifyDataModalOpenType,
     setModifyDataModalOpenType,
     existedData,
@@ -46,8 +45,7 @@ function useBooksLibraryCommonState<T>(
 }
 
 interface IBooksLibraryCommon<T> {
-  data: T[]
-  loading: boolean
+  dataQuery: UseQueryResult<T[]>
   modifyDataModalOpenType: 'create' | 'update' | null
   setModifyDataModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>

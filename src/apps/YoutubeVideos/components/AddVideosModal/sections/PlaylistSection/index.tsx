@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/empty-string-repetition */
+/* eslint-disable sonarjs/regex-complexity */
+/* eslint-disable react-compiler/react-compiler */
 import { useDebounce } from '@uidotdev/usehooks'
 import { parse as parseCookie } from 'cookie'
 import { useEffect, useRef, useState } from 'react'

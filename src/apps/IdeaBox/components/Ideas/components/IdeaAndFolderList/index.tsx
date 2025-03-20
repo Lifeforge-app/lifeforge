@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
+import { EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
@@ -10,12 +10,9 @@ import IdeaList from './components/IdeaList'
 function IdeaAndFolderList() {
   const { t } = useTranslation('apps.ideaBox')
   const {
-    entries,
-    entriesLoading,
-    folders,
-    foldersLoading,
-    searchResults,
-    searchResultsLoading,
+    entriesQuery,
+    foldersQuery,
+    searchResultsQuery,
     debouncedSearchQuery,
     selectedTags,
     viewArchived,
@@ -25,9 +22,9 @@ function IdeaAndFolderList() {
   return (
     <div className="mb-20 mt-6">
       {debouncedSearchQuery.trim().length === 0 && selectedTags.length === 0 ? (
-        <APIFallbackComponent data={entriesLoading ? 'loading' : entries}>
+        <QueryWrapper query={entriesQuery}>
           {data => (
-            <APIFallbackComponent data={foldersLoading ? 'loading' : folders}>
+            <QueryWrapper query={foldersQuery}>
               {folders => (
                 <>
                   {data.length === 0 && folders.length === 0 ? (
@@ -57,13 +54,11 @@ function IdeaAndFolderList() {
                   )}
                 </>
               )}
-            </APIFallbackComponent>
+            </QueryWrapper>
           )}
-        </APIFallbackComponent>
+        </QueryWrapper>
       ) : (
-        <APIFallbackComponent
-          data={searchResultsLoading ? 'loading' : searchResults}
-        >
+        <QueryWrapper query={searchResultsQuery}>
           {searchResults => (
             <>
               {searchResults.length === 0 ? (
@@ -79,7 +74,7 @@ function IdeaAndFolderList() {
               )}
             </>
           )}
-        </APIFallbackComponent>
+        </QueryWrapper>
       )}
     </div>
   )

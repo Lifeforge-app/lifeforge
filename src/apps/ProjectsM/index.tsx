@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
 
 import {
-  APIFallbackComponent,
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
   ModuleWrapper,
+  QueryWrapper,
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
@@ -27,7 +27,11 @@ function ProjectsM() {
       setSearchQuery,
       setSidebarOpen
     },
-    entries: { data: entries, setModifyDataModalOpenType, setExistedData }
+    entries: {
+      dataQuery: entriesQuery,
+      setModifyDataModalOpenType,
+      setExistedData
+    }
   } = useProjectsMContext()
 
   return (
@@ -71,7 +75,7 @@ function ProjectsM() {
             stuffToSearch="project"
           />
           <div className="mt-6 flex flex-1 flex-col">
-            <APIFallbackComponent data={entries}>
+            <QueryWrapper query={entriesQuery}>
               {entries =>
                 entries.length !== 0 ? (
                   <Scrollbar>
@@ -89,7 +93,7 @@ function ProjectsM() {
                   />
                 )
               }
-            </APIFallbackComponent>
+            </QueryWrapper>
           </div>
         </div>
       </div>

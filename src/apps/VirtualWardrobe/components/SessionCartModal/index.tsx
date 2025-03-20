@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
-  APIFallbackComponent,
   Button,
   EmptyStateScreen,
   ModalHeader,
@@ -81,44 +80,40 @@ function SessionCartModal({
           title="Session Cart"
           onClose={onClose}
         />
-        <APIFallbackComponent data={cartItems}>
-          {cartItems =>
-            cartItems.length === 0 ? (
-              <EmptyStateScreen
-                smaller
-                icon="tabler:icons-off"
-                name="sessionCart"
-                namespace="apps.virtualWardrobe"
-              />
-            ) : (
-              <>
-                <ul className="space-y-4">
-                  {cartItems.map(entry => (
-                    <EntryItem
-                      key={entry.id}
-                      isCartItem
-                      entry={entry}
-                      onRemoveFromCart={async () => {
-                        await handleRemoveFromCart(entry.id)
-                      }}
-                    />
-                  ))}
-                </ul>
-
-                <Button
-                  iconAtEnd
-                  className="mt-6 w-full"
-                  icon="tabler:arrow-right"
-                  onClick={() => {
-                    setCheckoutConfirmationModalOpen(true)
+        {cartItems.length === 0 ? (
+          <EmptyStateScreen
+            smaller
+            icon="tabler:icons-off"
+            name="sessionCart"
+            namespace="apps.virtualWardrobe"
+          />
+        ) : (
+          <>
+            <ul className="space-y-4">
+              {cartItems.map(entry => (
+                <EntryItem
+                  key={entry.id}
+                  isCartItem
+                  entry={entry}
+                  onRemoveFromCart={async () => {
+                    await handleRemoveFromCart(entry.id)
                   }}
-                >
-                  Checkout
-                </Button>
-              </>
-            )
-          }
-        </APIFallbackComponent>
+                />
+              ))}
+            </ul>
+
+            <Button
+              iconAtEnd
+              className="mt-6 w-full"
+              icon="tabler:arrow-right"
+              onClick={() => {
+                setCheckoutConfirmationModalOpen(true)
+              }}
+            >
+              Checkout
+            </Button>
+          </>
+        )}
       </ModalWrapper>
       <CheckoutConfirmationModal
         isOpen={checkoutConfirmationModalOpen}

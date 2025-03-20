@@ -1,8 +1,7 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import { useMemo } from 'react'
 import { useParams } from 'react-router'
 
-import { APIFallbackComponent } from '@lifeforge/ui'
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
 import TagItem from './components/TagItem'
@@ -17,22 +16,19 @@ const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {
 function TagsSelector() {
   const { '*': path } = useParams<{ '*': string }>()
   const {
-    tags,
-    tagsLoading,
-    entries,
-    entriesLoading,
-    searchResults,
+    tagsQuery,
+    entriesQuery,
+    searchResultsQuery,
     debouncedSearchQuery,
     viewArchived,
     selectedTags,
     setSelectedTags
   } = useIdeaBoxContext()
+  const entries = entriesQuery.data ?? []
+  const tags = tagsQuery.data ?? []
+  const searchResults = searchResultsQuery.data ?? []
 
   const filteredTags = useMemo(() => {
-    if (tagsLoading || entriesLoading || typeof entries === 'string') {
-      return 'loading'
-    }
-
     if (debouncedSearchQuery.trim().length > 0) {
       return tags
         .filter(tag => {
@@ -45,7 +41,7 @@ function TagsSelector() {
 
     return tags
       .filter(tag => {
-        return entries.some(entry => entry.tags?.includes(tag.name))
+        return entriesQuery.data?.some(entry => entry.tags?.includes(tag.name))
       })
       .sort(sortFunc)
   }, [entries, searchResults, tags, path, debouncedSearchQuery])
@@ -53,11 +49,7 @@ function TagsSelector() {
   const countHashMap = useMemo(() => {
     const hashMap = new Map<string, number>()
 
-    if (
-      typeof filteredTags === 'string' ||
-      typeof searchResults === 'string' ||
-      entriesLoading
-    ) {
+    if (typeof filteredTags === 'string' || typeof searchResults === 'string') {
       return hashMap
     }
 
@@ -71,15 +63,7 @@ function TagsSelector() {
     })
 
     return hashMap
-  }, [
-    filteredTags,
-    searchResults,
-    entries,
-    debouncedSearchQuery,
-    entriesLoading,
-    tags,
-    tagsLoading
-  ])
+  }, [filteredTags, searchResults, entries, debouncedSearchQuery, tags])
 
   const handleSelectTag = (tagName: string) => {
     if (selectedTags.includes(tagName)) {
@@ -90,22 +74,18 @@ function TagsSelector() {
   }
 
   return !viewArchived ? (
-    <APIFallbackComponent data={filteredTags} showLoading={false}>
-      {tags =>
-        tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {tags.map(tag => (
-              <TagItem
-                key={tag.id}
-                countHashMap={countHashMap}
-                tag={tag}
-                onSelect={handleSelectTag}
-              />
-            ))}
-          </div>
-        )
-      }
-    </APIFallbackComponent>
+    tags.length > 0 && (
+      <div className="mt-4 flex flex-wrap gap-1.5">
+        {tags.map(tag => (
+          <TagItem
+            key={tag.id}
+            countHashMap={countHashMap}
+            tag={tag}
+            onSelect={handleSelectTag}
+          />
+        ))}
+      </div>
+    )
   ) : (
     <></>
   )

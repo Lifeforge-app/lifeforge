@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useSearchParams } from 'react-router'
 
-import { APIFallbackComponent, SidebarItem, SidebarTitle } from '@lifeforge/ui'
+import { QueryWrapper, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
@@ -12,7 +12,7 @@ function LedgerSection({
 }) {
   const { t } = useTranslation('apps.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
-  const { ledgers, filteredTransactions } = useWalletContext()
+  const { ledgersQuery, filteredTransactions } = useWalletContext()
   const navigate = useNavigate()
 
   return (
@@ -24,7 +24,7 @@ function LedgerSection({
         }}
         name={t('sidebar.ledgers')}
       />
-      <APIFallbackComponent data={ledgers}>
+      <QueryWrapper query={ledgersQuery}>
         {ledgers => (
           <>
             {[
@@ -79,7 +79,7 @@ function LedgerSection({
               ))}
           </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </>
   )
 }

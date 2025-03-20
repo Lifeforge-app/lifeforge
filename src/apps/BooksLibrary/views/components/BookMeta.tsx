@@ -13,7 +13,7 @@ function BookMeta({
   isGridView?: boolean
 }) {
   const {
-    languages: { data: languages }
+    languages: { dataQuery: languagesQuery }
   } = useBooksLibraryContext()
 
   return (
@@ -25,9 +25,9 @@ function BookMeta({
           : 'flex-row items-center'
       )}
     >
-      {typeof languages !== 'string' &&
+      {languagesQuery.data &&
         (() => {
-          const langs = languages.filter(language =>
+          const langs = languagesQuery.data.filter(language =>
             item.languages.includes(language.id)
           )
 

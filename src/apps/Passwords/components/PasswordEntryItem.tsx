@@ -1,11 +1,13 @@
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -19,6 +21,8 @@ function PasswordEntryITem({
   password: IPasswordEntry
   pinPassword: (id: string) => Promise<void>
 }) {
+  const queryClient = useQueryClient()
+
   const {
     masterPassword,
     setIsDeletePasswordConfirmationModalOpen,
@@ -43,6 +47,26 @@ function PasswordEntryITem({
       copy(decrypted)
       toast.success('Password copied!')
       setCopyLoading(false)
+    }
+  }
+
+  async function onEdit() {
+    try {
+      const decrypted = await getDecryptedPassword(masterPassword, password.id)
+      queryClient.setQueryData<IPasswordEntry[]>(
+        ['passwords', 'entries'],
+        prev => {
+          if (!prev) return prev
+
+          return prev.map(p =>
+            p.id === password.id ? { ...p, decrypted: decrypted } : p
+          )
+        }
+      )
+      setExistedData(password)
+      setModifyPasswordModalOpenType('update')
+    } catch {
+      toast.error('Couldn’t fetch the password. Please try again.')
     }
   }
 
@@ -144,23 +168,7 @@ function PasswordEntryITem({
                 pinPassword(password.id)
               }}
             />
-            <MenuItem
-              icon="tabler:pencil"
-              text="Edit"
-              onClick={() => {
-                getDecryptedPassword(masterPassword, password.id)
-                  .then(decrypted => {
-                    password.decrypted = decrypted
-                    setExistedData(password)
-                    setModifyPasswordModalOpenType('update')
-                  })
-                  .catch(() => {
-                    toast.error(
-                      'Couldn’t fetch the password. Please try again.'
-                    )
-                  })
-              }}
-            />
+            <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
             <MenuItem
               isRed
               icon="tabler:trash"
