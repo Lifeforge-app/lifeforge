@@ -49,24 +49,21 @@ function StatisticChardCard() {
           dayjs(transaction.date).format('MMM DD')
         )
       )
-    ].reverse()
+    ]
+      .reverse()
+      .slice(-30)
   }, [transactions])
 
-  const groupedByDate = useMemo(() => {
-    if (typeof transactions === 'string') {
-      return [[], []]
-    }
+  const getTransactions = (date: string, type: 'income' | 'expenses') =>
+    transactions
+      .filter(transaction => transaction.type === type)
+      .filter(transaction => dayjs(transaction.date).format('MMM DD') === date)
+      .reduce((acc, curr) => acc + curr.amount, 0)
 
-    return ['income', 'expenses'].map(type => {
+  const groupedByDate = useMemo(() => {
+    return (['income', 'expenses'] as const).map(type => {
       return dates
-        .map(date =>
-          transactions
-            .filter(transaction => transaction.type === type)
-            .filter(
-              transaction => dayjs(transaction.date).format('MMM DD') === date
-            )
-            .reduce((acc, curr) => acc + curr.amount, 0)
-        )
+        .map(date => getTransactions(date, type))
         .map(amount => (amount === 0 ? 0.1 : amount))
     })
   }, [transactions])
