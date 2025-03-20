@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import dayjs, { Dayjs } from 'dayjs'

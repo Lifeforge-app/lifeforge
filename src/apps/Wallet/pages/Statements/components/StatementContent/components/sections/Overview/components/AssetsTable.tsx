@@ -4,7 +4,67 @@ import dayjs from 'dayjs'
 
 import { QueryWrapper } from '@lifeforge/ui'
 
+import {
+  IWalletAsset,
+  IWalletTransaction
+} from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+
+function getAmounts({
+  asset,
+  transactions,
+  month,
+  year
+}: {
+  asset: IWalletAsset
+  transactions: IWalletTransaction[]
+  month: number
+  year: number
+}) {
+  const balance = asset.balance
+
+  const transactionsForAsset = transactions.filter(
+    transaction => transaction.asset === asset.id
+  )
+
+  const transactionsAfterMonth = transactionsForAsset.filter(
+    transaction =>
+      dayjs(transaction.date).month() > month &&
+      dayjs(transaction.date).year() === year
+  )
+
+  const transactionsThisMonth = transactionsForAsset.filter(
+    transaction =>
+      dayjs(transaction.date).month() === month &&
+      dayjs(transaction.date).year() === year
+  )
+
+  const thatMonthAmount =
+    balance -
+    transactionsAfterMonth.reduce((acc, curr) => {
+      if (curr.side === 'debit') {
+        return acc + curr.amount
+      }
+      if (curr.side === 'credit') {
+        return acc - curr.amount
+      }
+      return acc
+    }, 0)
+
+  const lastMonthAmount =
+    thatMonthAmount -
+    transactionsThisMonth.reduce((acc, curr) => {
+      if (curr.side === 'debit') {
+        return acc + curr.amount
+      }
+      if (curr.side === 'credit') {
+        return acc - curr.amount
+      }
+      return acc
+    }, 0)
+
+  return { thatMonthAmount, lastMonthAmount }
+}
 
 function AssetsTable({ month, year }: { month: number; year: number }) {
   const { assetsQuery, transactionsQuery } = useWalletContext()
@@ -61,48 +121,13 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       if (typeof transactions === 'string') {
                         return <></>
                       }
-                      const balance = asset.balance
 
-                      const transactionsForAsset = transactions.filter(
-                        transaction => transaction.asset === asset.id
-                      )
-
-                      const transactionsAfterMonth =
-                        transactionsForAsset.filter(
-                          transaction =>
-                            dayjs(transaction.date).month() > month &&
-                            dayjs(transaction.date).year() === year
-                        )
-
-                      const transactionsThisMonth = transactionsForAsset.filter(
-                        transaction =>
-                          dayjs(transaction.date).month() === month &&
-                          dayjs(transaction.date).year() === year
-                      )
-
-                      const thatMonthAmount =
-                        balance -
-                        transactionsAfterMonth.reduce((acc, curr) => {
-                          if (curr.side === 'debit') {
-                            return acc + curr.amount
-                          }
-                          if (curr.side === 'credit') {
-                            return acc - curr.amount
-                          }
-                          return acc
-                        }, 0)
-
-                      const lastMonthAmount =
-                        thatMonthAmount -
-                        transactionsThisMonth.reduce((acc, curr) => {
-                          if (curr.side === 'debit') {
-                            return acc + curr.amount
-                          }
-                          if (curr.side === 'credit') {
-                            return acc - curr.amount
-                          }
-                          return acc
-                        }, 0)
+                      const { thatMonthAmount, lastMonthAmount } = getAmounts({
+                        asset,
+                        transactions,
+                        month,
+                        year
+                      })
 
                       return (
                         <>
