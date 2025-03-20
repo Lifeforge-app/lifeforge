@@ -1,0 +1,57 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import dayjs from 'dayjs'
+import humanNumber from 'human-number'
+
+import { DashboardItem } from '@lifeforge/ui'
+
+import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
+
+interface VideoInfoProps {
+  videoInfo: IYoutubeVideoInfo
+}
+
+function VideoInfo({ videoInfo }: VideoInfoProps) {
+  return (
+    <DashboardItem
+      className="h-min"
+      icon="tabler:info-circle"
+      namespace="apps.youtubeSummarizer"
+      title="Video Info"
+    >
+      <div className="flex md:items-center md:flex-row flex-col gap-6">
+        <div className="md:w-64 w-full border-bg-800 relative shrink-0 overflow-hidden rounded-md border">
+          <img
+            alt=""
+            className="size-full object-cover"
+            src={videoInfo.thumbnail}
+          />
+          <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5">
+            {dayjs
+              .duration(+videoInfo.duration, 'second')
+              .format(+videoInfo.duration > 3600 ? 'h:mm:ss' : 'm:ss')}
+          </p>
+        </div>
+        <div>
+          <h2 className="line-clamp-2 text-2xl font-medium">
+            {videoInfo.title}
+          </h2>
+          <p className="text-custom-500 mt-1">{videoInfo.uploader}</p>
+          {videoInfo.uploadDate !== undefined && (
+            <p className="text-bg-500 mt-4">
+              {humanNumber(+videoInfo.viewCount)} views •{' '}
+              {dayjs(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
+            </p>
+          )}
+          {videoInfo.likeCount !== undefined && (
+            <p className="text-bg-500 mt-1 flex items-center gap-1">
+              <Icon icon="uil:thumbs-up" /> {humanNumber(+videoInfo.likeCount)}{' '}
+              likes
+            </p>
+          )}
+        </div>
+      </div>
+    </DashboardItem>
+  )
+}
+
+export default VideoInfo
