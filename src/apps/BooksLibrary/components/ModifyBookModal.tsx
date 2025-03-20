@@ -7,6 +7,7 @@ import { type IFieldProps } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal() {
@@ -22,20 +23,7 @@ function ModifyBookModal() {
     categories: { data: categories }
   } = useBooksLibraryContext()
 
-  const [data, setData] = useState<{
-    authors: string
-    category: string
-    edition: string
-    extension: string
-    isbn: string
-    languages: string[]
-    md5: string
-    publisher: string
-    size: string | number
-    thumbnail: string
-    title: string
-    year_published: string | number
-  }>({
+  const [data, setData] = useState<IBooksLibraryFormSate>({
     authors: '',
     category: '',
     edition: '',
@@ -179,7 +167,21 @@ function ModifyBookModal() {
 
   useEffect(() => {
     if (existedData !== null) {
-      setData({ ...data, ...existedData })
+      setData({
+        ...data,
+        authors: existedData.authors,
+        category: existedData.category,
+        edition: existedData.edition,
+        extension: existedData.extension,
+        isbn: existedData.isbn,
+        languages: existedData.languages,
+        md5: existedData.md5,
+        publisher: existedData.publisher,
+        size: existedData.size.toString(),
+        thumbnail: existedData.thumbnail,
+        title: existedData.title,
+        year_published: existedData.year_published.toString()
+      })
       if (existedData.year_published === 0) {
         setData({ ...data, year_published: '' })
       }

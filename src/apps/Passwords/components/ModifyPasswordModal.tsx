@@ -54,7 +54,11 @@ function ModifyPasswordModal() {
   }
 
   async function onSubmit() {
-    if (Object.values(formState).some(value => value.trim() === '')) {
+    if (
+      Object.values(formState).some(
+        value => typeof value === 'string' && value.trim() === ''
+      )
+    ) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }

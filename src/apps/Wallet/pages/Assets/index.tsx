@@ -114,7 +114,7 @@ function Assets() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/assets"
-        data={selectedData}
+        data={selectedData ?? undefined}
         isOpen={deleteAssetsConfirmationOpen}
         itemName="asset account"
         nameKey="name"

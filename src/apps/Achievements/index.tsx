@@ -102,7 +102,7 @@ function Achievements() {
       />
       <DeleteConfirmationModal
         apiEndpoint="achievements/entries"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={deleteAchievementConfirmationModalOpen}
         itemName="achievement"
         nameKey="title"

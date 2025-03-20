@@ -95,7 +95,7 @@ function IdeaBox() {
       />
       <DeleteConfirmationModal
         apiEndpoint="idea-box/containers"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={deleteContainerConfirmationModalOpen}
         itemName="container"
         queryKey={['idea-box', 'containers']}

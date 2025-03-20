@@ -116,7 +116,7 @@ function Movies() {
       />
       <DeleteConfirmationModal
         apiEndpoint="/movies/entries"
-        data={toBeDeleted}
+        data={toBeDeleted ?? undefined}
         isOpen={Boolean(toBeDeleted)}
         itemName="movie"
         nameKey="title"

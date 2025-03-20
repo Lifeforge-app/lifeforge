@@ -82,7 +82,7 @@ function Wishlist() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wishlist/lists"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={deleteConfirmationModalOpen}
         itemName="wishlist"
         nameKey="name"

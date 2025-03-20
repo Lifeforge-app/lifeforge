@@ -154,7 +154,7 @@ function MomentVault() {
       />
       <DeleteConfirmationModal
         apiEndpoint="/moment-vault/entries"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
         queryKey={['moment-vault', 'entries', page]}

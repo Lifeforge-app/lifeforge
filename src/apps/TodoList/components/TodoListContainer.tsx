@@ -103,7 +103,7 @@ function TodoListContainer() {
       <ModifyTaskWindow />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/entries"
-        data={selectedTask}
+        data={selectedTask ?? undefined}
         isOpen={deleteTaskConfirmationModalOpen}
         itemName="task"
         nameKey="summary"
@@ -132,7 +132,7 @@ function TodoListContainer() {
       <DeleteConfirmationModal
         apiEndpoint="todo-list/priorities"
         customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
-        data={selectedPriority}
+        data={selectedPriority ?? undefined}
         isOpen={deletePriorityConfirmationModalOpen}
         itemName="priority"
         queryKey={['todo-list', 'priorities']}
@@ -144,7 +144,7 @@ function TodoListContainer() {
       <DeleteConfirmationModal
         apiEndpoint="todo-list/lists"
         customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
-        data={selectedList}
+        data={selectedList ?? undefined}
         isOpen={deleteListConfirmationModalOpen}
         itemName="list"
         queryKey={['todo-list', 'lists']}
@@ -156,7 +156,7 @@ function TodoListContainer() {
       <DeleteConfirmationModal
         apiEndpoint="todo-list/tags"
         customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
-        data={selectedTag}
+        data={selectedTag ?? undefined}
         isOpen={deleteTagConfirmationModalOpen}
         itemName="tag"
         queryKey={['todo-list', 'tags']}

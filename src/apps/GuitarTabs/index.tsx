@@ -316,7 +316,7 @@ function GuitarTabs() {
       />
       <DeleteConfirmationModal
         apiEndpoint="guitar-tabs/entries"
-        data={existingEntry}
+        data={existingEntry ?? undefined}
         isOpen={deleteConfirmationModalOpen}
         itemName="guitar tab"
         nameKey="title"
