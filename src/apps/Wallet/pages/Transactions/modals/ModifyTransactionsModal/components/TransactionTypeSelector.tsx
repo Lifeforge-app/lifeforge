@@ -18,7 +18,7 @@ function TransactionTypeSelector({
   transactionType,
   setTransactionType
 }: {
-  transactionType: string
+  transactionType: 'income' | 'expenses' | 'transfer'
   setTransactionType: (type: 'income' | 'expenses' | 'transfer') => void
 }) {
   const { t } = useTranslation('apps.wallet')

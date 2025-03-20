@@ -99,7 +99,7 @@ function Ledgers() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/ledgers"
-        data={selectedData}
+        data={selectedData ?? undefined}
         isOpen={deleteLedgersConfirmationOpen}
         itemName="ledger account"
         nameKey="name"

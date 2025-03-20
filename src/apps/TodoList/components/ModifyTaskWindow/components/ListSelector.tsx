@@ -34,7 +34,7 @@ function ListSelector({
       namespace="apps.todoList"
       setValue={setList}
       type="listbox"
-      value={list}
+      value={list ?? ''}
     >
       <ListboxOrComboboxOption color="lightgray" text="None" value="" />
       {lists.map(({ name, color, id }) => (

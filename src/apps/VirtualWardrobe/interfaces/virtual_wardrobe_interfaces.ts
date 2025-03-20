@@ -1,5 +1,7 @@
 import type { RecordModel } from 'pocketbase'
 
+import type { IFormState } from '@lifeforge/ui'
+
 interface IVirtualWardrobeSidebarData {
   total: number
   favourites: number
@@ -25,7 +27,7 @@ interface IVirtualWardrobeEntry extends RecordModel {
   back_image: string
 }
 
-interface IVirtualWardrobeFormState {
+interface IVirtualWardrobeFormState extends IFormState {
   name: string
   category: string
   subcategory: string

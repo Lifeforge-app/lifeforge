@@ -88,7 +88,7 @@ function AvatarColumn() {
       <DeleteConfirmationModal
         apiEndpoint="/user/settings/avatar"
         customText="Are you sure you want to remove your profile picture?"
-        data={{}}
+        data={undefined}
         isOpen={deleteAvatarConfirmationModal}
         itemName="avatar"
         updateDataList={() => {

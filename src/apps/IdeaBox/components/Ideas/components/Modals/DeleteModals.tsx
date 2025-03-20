@@ -1,7 +1,8 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import { useParams } from 'react-router'
 
 import { DeleteConfirmationModal } from '@lifeforge/ui'
+
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function DeleteModals() {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
@@ -22,7 +23,7 @@ function DeleteModals() {
       <DeleteConfirmationModal
         multiQueryKey
         apiEndpoint="idea-box/ideas"
-        data={existedEntry}
+        data={existedEntry ?? undefined}
         isOpen={deleteIdeaConfirmationModalOpen}
         itemName="idea"
         queryKey={[
@@ -35,7 +36,7 @@ function DeleteModals() {
       />
       <DeleteConfirmationModal
         apiEndpoint="idea-box/folders"
-        data={existedFolder}
+        data={existedFolder ?? undefined}
         isOpen={deleteFolderConfirmationModalOpen}
         itemName="folder"
         queryKey={['idea-box', 'folders', id!, path!]}
