@@ -1,5 +1,6 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 import { Icon } from '@iconify/react/dist/iconify.js'
+
+import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvider'
 import { centerMapOnStation } from '../../../../Maps/maps/RouteMap/utils/renderUtils'

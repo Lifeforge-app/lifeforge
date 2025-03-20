@@ -1,5 +1,6 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 import * as d3 from 'd3'
+
+import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 let zoomBehavior: d3.ZoomBehavior<Element, unknown>
 

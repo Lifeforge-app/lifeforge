@@ -1,8 +1,9 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
 import { Checkbox } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 

@@ -1,10 +1,11 @@
 /* eslint-disable import/named */
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 import { UseQueryResult } from '@tanstack/react-query'
 import { ListResult } from 'pocketbase'
 import { useEffect } from 'react'
 
 import { Pagination, QueryWrapper } from '@lifeforge/ui'
+
+import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import AudioEntry from './entries/AudioEntry'
 

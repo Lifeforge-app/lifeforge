@@ -1,6 +1,6 @@
-import { TodoListProvider } from '@apps/TodoList/providers/TodoListProvider'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+
+import { TodoListProvider } from '@apps/TodoList/providers/TodoListProvider'
 
 import TodoListContainer from './components/TodoListContainer'
 

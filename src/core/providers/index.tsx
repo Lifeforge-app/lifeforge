@@ -1,4 +1,3 @@
-import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 import APIOnlineStatusProvider from '@providers/APIOnlineStatusProvider'
 import AuthProvider from '@providers/AuthProvider'
 import BackgroundProvider from '@providers/BackgroundProvider'
@@ -9,6 +8,8 @@ import ToastProvider from '@providers/ToastProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+
+import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 const queryClient = new QueryClient()
 

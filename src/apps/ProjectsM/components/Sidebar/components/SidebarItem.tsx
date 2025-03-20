@@ -1,13 +1,14 @@
+import { useMemo } from 'react'
+import { useSearchParams } from 'react-router'
+
+import { MenuItem, SidebarItem } from '@lifeforge/ui'
+
 import {
   type IProjectsMCategory,
   type IProjectsMStatus,
   type IProjectsMTechnology,
   type IProjectsMVisibility
 } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
-import { useMemo } from 'react'
-import { useSearchParams } from 'react-router'
-
-import { MenuItem, SidebarItem } from '@lifeforge/ui'
 
 import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 
