@@ -43,6 +43,7 @@ function useFontFamily(fontFamily: string) {
         })
       }
     } catch {
+      document.body.style.fontFamily = 'Onest, sans-serif'
       console.error('Failed to update font family')
     }
   }
