@@ -226,7 +226,7 @@ function Transactions() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/transactions"
-        data={selectedData}
+        data={selectedData ?? undefined}
         isOpen={deleteTransactionsConfirmationOpen}
         itemName="transaction"
         queryKey={['wallet', 'transactions']}

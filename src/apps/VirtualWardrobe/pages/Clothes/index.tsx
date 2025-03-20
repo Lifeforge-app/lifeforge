@@ -269,7 +269,7 @@ function VirtualWardrobeClothes() {
 
       <DeleteConfirmationModal
         apiEndpoint="virtual-wardrobe/entries"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={deleteItemConfirmModalOpen}
         itemName="item"
         nameKey="name"

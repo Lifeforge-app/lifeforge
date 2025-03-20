@@ -79,7 +79,7 @@ function ModifyItemModal({
       if (Array.isArray(value)) {
         formData.append(key, JSON.stringify(value))
       } else {
-        formData.append(key, value)
+        formData.append(key, value as string)
       }
     })
 

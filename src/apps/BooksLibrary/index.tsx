@@ -178,7 +178,7 @@ function BooksLibrary() {
       ))}
       <DeleteConfirmationModal
         apiEndpoint="books-library/entries"
-        data={existedBookData}
+        data={existedBookData ?? undefined}
         isOpen={deleteBookConfirmationModalOpen}
         itemName="book"
         nameKey="title"

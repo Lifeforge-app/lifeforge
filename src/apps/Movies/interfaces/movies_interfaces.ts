@@ -1,5 +1,7 @@
 import type { RecordModel } from 'pocketbase'
 
+import type { IFormState } from '@lifeforge/ui'
+
 interface IMovieSearchResult {
   adult: boolean
   backdrop_path: string
@@ -43,7 +45,7 @@ interface IMovieEntry extends RecordModel {
   theatre_number: string
 }
 
-interface IMovieTicketFormState {
+interface IMovieTicketFormState extends IFormState {
   entry_id: string
   ticket_number: string
   theatre_seat: string

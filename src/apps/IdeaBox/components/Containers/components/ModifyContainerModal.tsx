@@ -57,7 +57,9 @@ function ModifyContainerModal({
   useEffect(() => {
     if (openType === 'update' && existedData !== null) {
       setFormState({
-        ...existedData,
+        name: existedData.name,
+        icon: existedData.icon,
+        color: existedData.color,
         cover:
           existedData.cover !== ''
             ? {

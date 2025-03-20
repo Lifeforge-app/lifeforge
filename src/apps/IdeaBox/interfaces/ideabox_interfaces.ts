@@ -1,5 +1,7 @@
 import type { RecordModel } from 'pocketbase'
 
+import type { IFormState } from '@lifeforge/ui'
+
 interface IIdeaBoxContainer extends RecordModel {
   name: string
   color: string
@@ -10,7 +12,7 @@ interface IIdeaBoxContainer extends RecordModel {
   text_count: number
 }
 
-interface IIdeaBoxContainerFormState {
+interface IIdeaBoxContainerFormState extends IFormState {
   name: string
   color: string
   icon: string
@@ -28,7 +30,7 @@ interface IIdeaBoxFolder extends RecordModel {
   parent: string
 }
 
-interface IIdeaBoxFolderFormState {
+interface IIdeaBoxFolderFormState extends IFormState {
   name: string
   color: string
   icon: string
@@ -55,7 +57,7 @@ interface IIdeaBoxTag extends RecordModel {
   count: number
 }
 
-interface IIdeaBoxTagFormState {
+interface IIdeaBoxTagFormState extends IFormState {
   name: string
   color: string
   icon: string

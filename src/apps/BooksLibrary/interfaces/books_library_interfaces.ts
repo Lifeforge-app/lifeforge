@@ -1,5 +1,7 @@
 import type { RecordModel } from 'pocketbase'
 
+import type { IFormState } from '@lifeforge/ui'
+
 interface IBooksLibraryEntry extends RecordModel {
   md5: string
   authors: string
@@ -17,7 +19,7 @@ interface IBooksLibraryEntry extends RecordModel {
   is_favourite: boolean
 }
 
-interface IBooksLibraryFormSate {
+interface IBooksLibraryFormSate extends IFormState {
   authors: string
   category: string
   edition: string

@@ -1,5 +1,7 @@
 import type { RecordModel } from 'pocketbase'
 
+import type { IFormState } from '@lifeforge/ui'
+
 interface IGuitarTabsEntry extends RecordModel {
   name: string
   author: string
@@ -12,7 +14,7 @@ interface IGuitarTabsEntry extends RecordModel {
   isFavourite: boolean
 }
 
-interface IGuitarTabsEntryFormState {
+interface IGuitarTabsEntryFormState extends IFormState {
   name: string
   author: string
   type: 'singalong' | 'fingerstyle' | ''

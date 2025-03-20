@@ -141,7 +141,7 @@ function ModifyEventModal({
       />
       <DeleteConfirmationModal
         apiEndpoint="calendar/events"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={isDeleteConfirmationModalOpen}
         itemName="event"
         nameKey="title"

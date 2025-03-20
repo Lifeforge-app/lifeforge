@@ -1,4 +1,3 @@
-import { type IProjectsMKanbanColumn } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
@@ -11,6 +10,8 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
+
+import { type IProjectsMKanbanColumn } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
@@ -143,7 +144,7 @@ function ProjectKanban() {
       />
       <DeleteConfirmationModal
         apiEndpoint="projects-m/kanban/columns"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={deleteColumnConfirmationModalOpen}
         itemName="column"
         nameKey="name"

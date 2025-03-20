@@ -91,7 +91,7 @@ function BgImageSelector() {
         )}
       </ConfigColumn>
       <ImagePickerModal
-        enablePixaBay
+        enablePixabay
         enableUrl
         acceptedMimeTypes={{
           'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']

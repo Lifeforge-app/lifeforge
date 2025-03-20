@@ -99,7 +99,7 @@ function Music() {
       <YoutubeDownloaderModal />
       <DeleteConfirmationModal
         apiEndpoint="music/entries"
-        data={existedData}
+        data={existedData ?? undefined}
         isOpen={isDeleteMusicConfirmationModalOpen}
         itemName="music"
         nameKey="name"
