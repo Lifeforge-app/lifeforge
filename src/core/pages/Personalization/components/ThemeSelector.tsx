@@ -34,7 +34,10 @@ function ThemeSelector() {
             Image: '/assets/mockup/dark.png'
           }
         ].map(({ id, name, Image }) => (
-          <div key={id} className="flex flex-col items-center gap-2">
+          <div
+            key={id}
+            className="flex w-full md:w-1/3 flex-col items-center gap-2"
+          >
             <button
               className={clsx(
                 'flex-1 rounded-lg border-2 lg:rounded-xl',

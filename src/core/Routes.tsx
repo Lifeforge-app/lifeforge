@@ -308,7 +308,8 @@ export const ROUTES: RouteCategory[] = [
           'youtube-summarizer': lazy(() => import('@apps/YoutubeSummarizer'))
         },
         togglable: true,
-        requiredAPIKeys: ['groq']
+        requiredAPIKeys: ['groq'],
+        hasAI: true
       }
     ]
   },
