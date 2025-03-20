@@ -10,9 +10,9 @@ function PrioritySelector({
   priority: string | null
   setPriority: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { priorities } = useTodoListContext()
+  const { prioritiesQuery } = useTodoListContext()
 
-  if (typeof priorities === 'string') return <></>
+  const priorities = prioritiesQuery.data ?? []
 
   return (
     <ListboxOrComboboxInput

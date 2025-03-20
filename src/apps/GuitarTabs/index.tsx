@@ -170,7 +170,7 @@ function GuitarTabs() {
         queryKey={queryKey}
         setGuitarWorldModalOpen={setGuitarWorldModalOpen}
         setView={setView}
-        totalItems={entriesQuery.data?.totalItems ?? 0}
+        totalItems={entriesQuery.data?.totalItems}
         view={view}
       />
       <LayoutWithSidebar>

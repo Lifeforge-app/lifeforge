@@ -1,14 +1,15 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { useDebounce } from '@uidotdev/usehooks'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams, useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
+
 import {
   IIdeaBoxContainer,
   type IIdeaBoxEntry,
   type IIdeaBoxFolder,
   type IIdeaBoxTag
 } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
-import { useQuery } from '@tanstack/react-query'
-import { useDebounce } from '@uidotdev/usehooks'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router'
-import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -22,14 +23,10 @@ interface IIdeaBoxData {
       }
     | undefined
   pathDetailsLoading: boolean
-  entries: IIdeaBoxEntry[]
-  entriesLoading: boolean
-  folders: IIdeaBoxFolder[]
-  foldersLoading: boolean
-  tags: IIdeaBoxTag[]
-  tagsLoading: boolean
-  searchResults: IIdeaBoxEntry[]
-  searchResultsLoading: boolean
+  entriesQuery: UseQueryResult<IIdeaBoxEntry[]>
+  foldersQuery: UseQueryResult<IIdeaBoxFolder[]>
+  tagsQuery: UseQueryResult<IIdeaBoxTag[]>
+  searchResultsQuery: UseQueryResult<IIdeaBoxEntry[]>
 
   searchQuery: string
   debouncedSearchQuery: string
@@ -267,14 +264,10 @@ export default function IdeaBoxProvider({
       pathValidLoading: pathValidQuery.isLoading,
       pathDetails: pathDetailsQuery.data,
       pathDetailsLoading: pathDetailsQuery.isLoading,
-      entries: entriesQuery.data ?? [],
-      entriesLoading: entriesQuery.isLoading,
-      folders: foldersQuery.data ?? [],
-      foldersLoading: foldersQuery.isLoading,
-      tags: tagsQuery.data ?? [],
-      tagsLoading: tagsQuery.isLoading,
-      searchResults: searchResultsQuery.data ?? [],
-      searchResultsLoading: searchResultsQuery.isLoading,
+      entriesQuery,
+      foldersQuery,
+      tagsQuery,
+      searchResultsQuery,
       searchQuery,
       debouncedSearchQuery,
       setSearchQuery,

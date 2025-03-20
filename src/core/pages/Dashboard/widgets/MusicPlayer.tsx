@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useRef } from 'react'

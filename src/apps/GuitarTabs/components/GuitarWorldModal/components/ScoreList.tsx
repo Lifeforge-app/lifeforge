@@ -1,4 +1,4 @@
-import { Pagination } from '@lifeforge/ui'
+import { ErrorScreen, LoadingScreen, Pagination } from '@lifeforge/ui'
 
 import { type IGuitarTabsGuitarWorldScores } from '../../../interfaces/guitar_tabs_interfaces'
 import ScoreItem from './ScoreItem'
@@ -9,11 +9,19 @@ function ScoreList({
   setPage,
   cookie
 }: {
-  data: IGuitarTabsGuitarWorldScores
+  data: IGuitarTabsGuitarWorldScores | 'loading' | 'error'
   page: number
   setPage: (page: number) => void
   cookie: string
 }) {
+  if (data === 'loading') {
+    return <LoadingScreen />
+  }
+
+  if (data === 'error') {
+    return <ErrorScreen message="Failed to fetch data" />
+  }
+
   return (
     <>
       <Pagination

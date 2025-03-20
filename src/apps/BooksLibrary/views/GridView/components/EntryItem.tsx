@@ -10,7 +10,7 @@ import EntryContextMenu from '../../components/EntryContextMenu'
 
 function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   const {
-    categories: { data: categories }
+    categories: { dataQuery: categoriesQuery }
   } = useBooksLibraryContext()
 
   return (
@@ -43,9 +43,9 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }) {
         />
       </div>
       <div className="text-bg-500 mt-4 flex items-center gap-1 text-sm font-medium">
-        {typeof categories !== 'string' &&
+        {categoriesQuery.data &&
           (() => {
-            const category = categories.find(
+            const category = categoriesQuery.data.find(
               category => category.id === item.category
             )
 

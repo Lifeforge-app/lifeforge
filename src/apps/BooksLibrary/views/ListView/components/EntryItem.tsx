@@ -19,7 +19,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   const queryClient = useQueryClient()
   const { componentBgWithHover, componentBgLighter } = useComponentBg()
   const {
-    categories: { data: categories }
+    categories: { dataQuery: categoriesQuery }
   } = useBooksLibraryContext()
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
@@ -110,10 +110,10 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        {typeof categories !== 'string' && (
+        {categoriesQuery.data && (
           <div className="text-bg-500 flex items-center gap-1 text-sm font-medium">
             {(() => {
-              const category = categories.find(
+              const category = categoriesQuery.data.find(
                 category => category.id === item.category
               )
 

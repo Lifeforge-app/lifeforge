@@ -1,8 +1,9 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 
 import { Checkbox } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -27,18 +28,19 @@ function TaskItem({
   const { componentBgWithHover } = useComponentBg()
   const {
     entriesQueryKey,
-    entries: innerEntries,
-    lists,
+    entriesQuery,
+    listsQuery,
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
 
-  async function toggleTaskCompletion() {
-    if (typeof innerEntries === 'string') return
+  const entries = entriesQuery.data ?? []
+  const lists = listsQuery.data ?? []
 
+  async function toggleTaskCompletion() {
     queryClient.setQueryData<ITodoListEntry[]>(
       entriesQueryKey,
-      innerEntries.map(e =>
+      entries.map(e =>
         e.id === entry.id
           ? {
               ...e,

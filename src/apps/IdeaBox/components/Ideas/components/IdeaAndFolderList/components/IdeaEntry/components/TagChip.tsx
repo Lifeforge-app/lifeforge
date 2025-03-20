@@ -1,11 +1,14 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 function TagChip({ text }: { text: string }) {
-  const { selectedTags, tags } = useIdeaBoxContext()
+  const { selectedTags, tagsQuery } = useIdeaBoxContext()
+  const tags = tagsQuery.data ?? []
+
   const metadata = useMemo(
     () =>
       typeof tags !== 'string'

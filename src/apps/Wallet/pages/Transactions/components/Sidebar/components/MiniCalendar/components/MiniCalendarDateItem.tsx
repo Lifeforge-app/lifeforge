@@ -92,7 +92,8 @@ function MiniCalendarDateItem({
   viewsFilter
 }: MiniCalendarDateItemProps) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { transactions } = useWalletContext()
+  const { transactionsQuery } = useWalletContext()
+  const transactions = transactionsQuery.data ?? []
 
   const transactionCount = useMemo<{
     income: number

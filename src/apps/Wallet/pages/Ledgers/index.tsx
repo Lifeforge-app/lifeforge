@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
 import {
-  APIFallbackComponent,
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper
+  ModuleWrapper,
+  QueryWrapper
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
@@ -20,7 +20,7 @@ import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers() {
   const { t } = useTranslation('apps.wallet')
-  const { ledgers } = useWalletContext()
+  const { ledgersQuery } = useWalletContext()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -40,8 +40,7 @@ function Ledgers() {
     <ModuleWrapper>
       <ModuleHeader
         actionButton={
-          typeof ledgers !== 'string' &&
-          ledgers.length > 0 && (
+          (ledgersQuery.data ?? []).length > 0 && (
             <Button
               className="hidden md:flex"
               icon="tabler:plus"
@@ -61,36 +60,47 @@ function Ledgers() {
         title="Ledgers"
         tKey="subsectionsTitleAndDesc"
       />
-      <APIFallbackComponent data={ledgers}>
-        {ledgers =>
-          ledgers.length > 0 ? (
-            <div className="mb-24 mt-6 space-y-4 md:mb-6">
-              {ledgers.map(ledger => (
-                <LedgerItem
-                  key={ledger.id}
-                  ledger={ledger}
-                  setDeleteLedgersConfirmationOpen={
-                    setDeleteLedgersConfirmationOpen
-                  }
-                  setModifyModalOpenType={setModifyModalOpenType}
-                  setSelectedData={setSelectedData}
-                />
-              ))}
-            </div>
-          ) : (
-            <EmptyStateScreen
-              ctaContent="new"
-              ctaTProps={{
-                item: t('items.ledger')
-              }}
-              icon="tabler:wallet-off"
-              name="ledger"
-              namespace="apps.wallet"
-              onCTAClick={setModifyModalOpenType}
-            />
-          )
-        }
-      </APIFallbackComponent>
+      <QueryWrapper query={ledgersQuery}>
+        {ledgers => (
+          <>
+            {ledgers.length > 0 ? (
+              <div className="mb-24 mt-6 space-y-4 md:mb-6">
+                {ledgers.map(ledger => (
+                  <LedgerItem
+                    key={ledger.id}
+                    ledger={ledger}
+                    setDeleteLedgersConfirmationOpen={
+                      setDeleteLedgersConfirmationOpen
+                    }
+                    setModifyModalOpenType={setModifyModalOpenType}
+                    setSelectedData={setSelectedData}
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyStateScreen
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.ledger')
+                }}
+                icon="tabler:wallet-off"
+                name="ledger"
+                namespace="apps.wallet"
+                onCTAClick={setModifyModalOpenType}
+              />
+            )}
+            {ledgers.length > 0 && (
+              <FAB
+                hideWhen="md"
+                onClick={() => {
+                  setSelectedData(null)
+                  setModifyModalOpenType('create')
+                }}
+              />
+            )}
+          </>
+        )}
+      </QueryWrapper>
       <ModifyLedgersModal
         existedData={selectedData}
         openType={modifyLedgersModalOpenType}
@@ -107,13 +117,6 @@ function Ledgers() {
         onClose={() => {
           setDeleteLedgersConfirmationOpen(false)
           setSelectedData(null)
-        }}
-      />
-      <FAB
-        hideWhen="md"
-        onClick={() => {
-          setSelectedData(null)
-          setModifyModalOpenType('create')
         }}
       />
     </ModuleWrapper>

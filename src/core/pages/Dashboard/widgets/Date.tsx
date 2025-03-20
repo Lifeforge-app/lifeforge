@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import dayjs from 'dayjs'

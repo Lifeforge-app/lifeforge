@@ -20,8 +20,8 @@ function AddToLibraryModal({
   md5: string | null
 }) {
   const {
-    categories: { data: categories },
-    languages: { data: languages }
+    categories: { dataQuery: categoriesQuery },
+    languages: { dataQuery: languagesQuery }
   } = useBooksLibraryContext()
   const fetchedDataQuery = useAPIQuery<{
     md5: string
@@ -96,8 +96,8 @@ function AddToLibraryModal({
       type: 'listbox',
       nullOption: 'None',
       options:
-        typeof categories !== 'string'
-          ? categories.map(({ id, name, icon }) => ({
+        !categoriesQuery.isLoading && categoriesQuery.data
+          ? categoriesQuery.data.map(({ id, name, icon }) => ({
               text: name[0].toUpperCase() + name.slice(1),
               value: id,
               icon
@@ -151,8 +151,8 @@ function AddToLibraryModal({
       type: 'listbox',
       multiple: true,
       options:
-        typeof languages !== 'string'
-          ? languages.map(({ id, name, icon }) => ({
+        !languagesQuery.isLoading && languagesQuery.data
+          ? languagesQuery.data.map(({ id, name, icon }) => ({
               text: name[0].toUpperCase() + name.slice(1),
               value: id,
               icon
@@ -193,10 +193,14 @@ function AddToLibraryModal({
   }
 
   useEffect(() => {
-    if (fetchedDataQuery.data && typeof languages !== 'string') {
+    if (
+      fetchedDataQuery.data &&
+      !languagesQuery.isLoading &&
+      languagesQuery.data
+    ) {
       setData({
         ...fetchedDataQuery.data,
-        languages: languages
+        languages: languagesQuery.data
           .filter(lang =>
             fetchedDataQuery.data.languages.some(name => name === lang.name)
           )
@@ -204,7 +208,7 @@ function AddToLibraryModal({
         category: ''
       })
     }
-  }, [fetchedDataQuery.data, languages])
+  }, [fetchedDataQuery.data, languagesQuery.data])
 
   return (
     <FormModal

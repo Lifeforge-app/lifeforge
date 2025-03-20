@@ -9,9 +9,9 @@ function TagsSelector({
   tags: string[]
   setTags: (tags: string[]) => void
 }) {
-  const { tags: tagsList } = useTodoListContext()
+  const { tagsListQuery } = useTodoListContext()
 
-  if (typeof tagsList === 'string') return <></>
+  const tagsList = tagsListQuery.data ?? []
 
   return (
     <ListboxOrComboboxInput

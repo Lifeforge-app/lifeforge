@@ -14,7 +14,7 @@ function AddToLibraryButton({
 }) {
   const { t } = useTranslation('apps.booksLibrary')
   const {
-    entries: { data: entries },
+    entries: { dataQuery: entriesQuery },
     miscellaneous: { processes }
   } = useBooksLibraryContext()
 
@@ -23,45 +23,37 @@ function AddToLibraryButton({
       return 'svg-spinners:180-ring'
     }
 
-    if (
-      typeof entries !== 'string' &&
-      entries.some(entry => entry.md5 === md5)
-    ) {
+    if (entriesQuery.data?.some(entry => entry.md5 === md5)) {
       return 'tabler:check'
     }
 
     return 'tabler:plus'
-  }, [entries, md5, processes])
+  }, [entriesQuery.data, md5, processes])
 
   const text = useMemo(() => {
     if (Object.keys(processes).includes(md5)) {
       return `${t('buttons.downloading')} (${processes[md5].percentage})`
     }
 
-    if (
-      typeof entries !== 'string' &&
-      entries.some(entry => entry.md5 === md5)
-    ) {
+    if (entriesQuery.data?.some(entry => entry.md5 === md5)) {
       return t('buttons.alreadyInLibrary')
     }
 
     return t('buttons.addToLibrary')
-  }, [entries, md5, processes])
+  }, [entriesQuery.data, md5, processes])
 
   return (
     <Button
       className="w-full xl:w-1/2"
       disabled={
         Object.keys(processes).includes(md5) ||
-        (typeof entries !== 'string' &&
-          entries.some(entry => entry.md5 === md5))
+        entriesQuery.data?.some(entry => entry.md5 === md5)
       }
       icon={icon}
       namespace="apps.booksLibrary"
       variant={
         Object.keys(processes).includes(md5) ||
-        (typeof entries !== 'string' &&
-          entries.some(entry => entry.md5 === md5))
+        entriesQuery.data?.some(entry => entry.md5 === md5)
           ? 'plain'
           : 'primary'
       }

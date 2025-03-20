@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
+import { useMemo } from 'react'
 import { Link } from 'react-router'
 
 import {
-  APIFallbackComponent,
   Button,
   DashboardItem,
   EmptyStateScreen,
@@ -17,6 +17,36 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+function EventItem({
+  categories,
+  event
+}: {
+  categories: ICalendarCategory[]
+  event: ICalendarEvent
+}) {
+  return (
+    <li
+      key={event.id}
+      className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex max-h-24 flex-1 gap-4 rounded-lg p-4"
+    >
+      <div
+        className="h-full w-1.5 rounded-full"
+        style={{
+          backgroundColor: categories.find(
+            category => category.id === event.category
+          )?.color
+        }}
+      />
+      <div className="flex w-full flex-col gap-1">
+        <div className="font-semibold">{event.title}</div>
+        <div className="text-bg-500 text-sm">
+          {categories.find(category => category.id === event.category)?.name}
+        </div>
+      </div>
+    </li>
+  )
+}
+
 export default function TodaysEvent() {
   const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
     'calendar/events/today',
@@ -25,6 +55,18 @@ export default function TodaysEvent() {
   const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
     'calendar/categories',
     ['calendar', 'categories']
+  )
+  const filteredEvents = useMemo(
+    () =>
+      rawEventsQuery.data?.filter(event =>
+        dayjs().isBetween(
+          dayjs(event.start),
+          dayjs(event.end).subtract(1, 'second'),
+          'day',
+          '[]'
+        )
+      ),
+    [rawEventsQuery.data]
   )
 
   return (
@@ -45,59 +87,16 @@ export default function TodaysEvent() {
         <QueryWrapper query={categoriesQuery}>
           {categories => (
             <QueryWrapper query={rawEventsQuery}>
-              {rawEvents =>
-                rawEvents.filter(event =>
-                  dayjs().isBetween(
-                    dayjs(event.start),
-                    dayjs(event.end).subtract(1, 'second'),
-                    'day',
-                    '[]'
-                  )
-                ).length > 0 ? (
+              {() =>
+                (filteredEvents ?? []).length > 0 ? (
                   <ul className="flex flex-1 flex-col gap-4">
-                    <APIFallbackComponent data={categories}>
-                      {categories => (
-                        <>
-                          {rawEvents
-                            .filter(event =>
-                              dayjs().isBetween(
-                                dayjs(event.start),
-                                dayjs(event.end).subtract(1, 'second'),
-                                'day',
-                                '[]'
-                              )
-                            )
-                            .map(event => (
-                              <li
-                                key={event.id}
-                                className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex max-h-24 flex-1 gap-4 rounded-lg p-4"
-                              >
-                                <div
-                                  className="h-full w-1.5 rounded-full"
-                                  style={{
-                                    backgroundColor: categories.find(
-                                      category => category.id === event.category
-                                    )?.color
-                                  }}
-                                />
-                                <div className="flex w-full flex-col gap-1">
-                                  <div className="font-semibold">
-                                    {event.title}
-                                  </div>
-                                  <div className="text-bg-500 text-sm">
-                                    {
-                                      categories.find(
-                                        category =>
-                                          category.id === event.category
-                                      )?.name
-                                    }
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                        </>
-                      )}
-                    </APIFallbackComponent>
+                    {filteredEvents?.map(event => (
+                      <EventItem
+                        key={event.id}
+                        categories={categories}
+                        event={event}
+                      />
+                    ))}
                   </ul>
                 ) : (
                   <div className="flex-center flex-1">

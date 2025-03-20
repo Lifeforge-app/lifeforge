@@ -16,7 +16,8 @@ function YearMonthInput({
   year: number | null
   setYear: (value: number | null) => void
 }) {
-  const { transactions } = useWalletContext()
+  const { transactionsQuery } = useWalletContext()
+  const transactions = transactionsQuery.data ?? []
 
   const yearsOptions = useMemo(() => {
     if (typeof transactions === 'string') return []

@@ -1,3 +1,7 @@
+import { UseQueryResult } from '@tanstack/react-query'
+import { createContext, useContext, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router'
+
 import {
   type ITodoListEntry,
   type ITodoListList,
@@ -5,25 +9,17 @@ import {
   type ITodoListTag,
   type ITodoPriority
 } from '@apps/TodoList/interfaces/todo_list_interfaces'
-import { createContext, useContext, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 interface ITodoListData {
   entriesQueryKey: unknown[]
   // Data
-  priorities: ITodoPriority[]
-  lists: ITodoListList[]
-  tags: ITodoListTag[]
-  entries: ITodoListEntry[]
-  statusCounter: ITodoListStatusCounter
-
-  prioritiesLoading: boolean
-  listsLoading: boolean
-  tagsLoading: boolean
-  entriesLoading: boolean
-  statusCounterLoading: boolean
+  prioritiesQuery: UseQueryResult<ITodoPriority[]>
+  listsQuery: UseQueryResult<ITodoListList[]>
+  tagsListQuery: UseQueryResult<ITodoListTag[]>
+  entriesQuery: UseQueryResult<ITodoListEntry[]>
+  statusCounterQuery: UseQueryResult<ITodoListStatusCounter>
 
   selectedTask: ITodoListEntry | null
   selectedPriority: ITodoPriority | null
@@ -146,18 +142,11 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       entriesQueryKey,
-      priorities: prioritiesQuery.data ?? [],
-      lists: listsQuery.data ?? [],
-      tags: tagsListQuery.data ?? [],
-      entries: entriesQuery.data ?? [],
-      statusCounter: statusCounterQuery.data ?? {
-        all: 0,
-        completed: 0,
-        pending: 0,
-        overdue: 0,
-        scheduled: 0,
-        today: 0
-      },
+      prioritiesQuery,
+      listsQuery,
+      tagsListQuery,
+      entriesQuery,
+      statusCounterQuery,
       prioritiesLoading: prioritiesQuery.isLoading,
       listsLoading: listsQuery.isLoading,
       tagsLoading: tagsListQuery.isLoading,

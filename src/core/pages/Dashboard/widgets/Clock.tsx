@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useRef, useState } from 'react'

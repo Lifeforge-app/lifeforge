@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
+import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import SidebarItem from './SidebarItem'
@@ -17,7 +17,7 @@ function SidebarSection({
   hasHamburgerMenu?: boolean
 }) {
   const { t } = useTranslation('apps.booksLibrary')
-  const { data, setExistedData, setModifyDataModalOpenType } =
+  const { dataQuery, setExistedData, setModifyDataModalOpenType } =
     useBooksLibraryContext()[stuff]
 
   return (
@@ -35,7 +35,7 @@ function SidebarSection({
             }
           : {})}
       />
-      <APIFallbackComponent data={data}>
+      <QueryWrapper query={dataQuery}>
         {data =>
           data.length > 0 ? (
             <>
@@ -55,7 +55,7 @@ function SidebarSection({
             </p>
           )
         }
-      </APIFallbackComponent>
+      </QueryWrapper>
     </>
   )
 }

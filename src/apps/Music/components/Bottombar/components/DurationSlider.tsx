@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import dayjs from 'dayjs'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'

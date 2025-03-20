@@ -3,11 +3,11 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 
 import {
-  APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
+  QueryWrapper,
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
@@ -24,7 +24,7 @@ function Music() {
   const {
     searchQuery,
     setSearchQuery,
-    musics,
+    musicsQuery,
     currentMusic,
     existedData,
     togglePlay,
@@ -57,7 +57,7 @@ function Music() {
         actionButton={<AddMusicButton />}
         icon="tabler:music"
         title="Music"
-        totalItems={musics.length}
+        totalItems={musicsQuery.data?.length}
       />
       <div className="music relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
@@ -68,7 +68,7 @@ function Music() {
         />
         <div className="divide-bg-200/50 dark:divide-bg-900 relative flex size-full min-w-0 flex-col divide-y-2">
           <Scrollbar>
-            <APIFallbackComponent data={musics}>
+            <QueryWrapper query={musicsQuery}>
               {musics =>
                 musics.filter(music =>
                   music.name
@@ -91,7 +91,7 @@ function Music() {
                   />
                 )
               }
-            </APIFallbackComponent>
+            </QueryWrapper>
           </Scrollbar>
         </div>
         {currentMusic !== null && <BottomBar />}

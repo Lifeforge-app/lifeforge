@@ -1,8 +1,9 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
-import { APIFallbackComponent } from '@lifeforge/ui'
+import { QueryWrapper } from '@lifeforge/ui'
+
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import MusicListItem from './components/MusicListItem'
 
@@ -10,10 +11,10 @@ const AS = AutoSizer as any
 const L = List as any
 
 function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
-  const { musics } = useMusicContext()
+  const { musicsQuery } = useMusicContext()
 
   return (
-    <APIFallbackComponent data={musics}>
+    <QueryWrapper query={musicsQuery}>
       {musics => (
         <AS>
           {({ height, width }: { height: number; width: number }) => (
@@ -53,7 +54,7 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
           )}
         </AS>
       )}
-    </APIFallbackComponent>
+    </QueryWrapper>
   )
 }
 

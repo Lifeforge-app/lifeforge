@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
+import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -15,7 +15,7 @@ function TaskPriorityList({
   const {
     setModifyPriorityModalOpenType: setModifyModalOpenType,
     setSelectedPriority: setSelectedData,
-    priorities
+    prioritiesQuery
   } = useTodoListContext()
 
   return (
@@ -29,7 +29,7 @@ function TaskPriorityList({
         name="priorities"
         namespace="apps.todoList"
       />
-      <APIFallbackComponent data={priorities}>
+      <QueryWrapper query={prioritiesQuery}>
         {priorities =>
           priorities.length > 0 ? (
             <>
@@ -45,7 +45,7 @@ function TaskPriorityList({
             <p className="text-bg-500 text-center">{t('empty.priorities')}</p>
           )
         }
-      </APIFallbackComponent>
+      </QueryWrapper>
     </>
   )
 }

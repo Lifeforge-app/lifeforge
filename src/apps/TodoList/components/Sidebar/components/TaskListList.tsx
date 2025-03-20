@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
+import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -15,7 +15,7 @@ function TaskListList({
   const {
     setModifyListModalOpenType: setModifyModalOpenType,
     setSelectedPriority: setSelectedData,
-    lists
+    listsQuery
   } = useTodoListContext()
 
   return (
@@ -29,7 +29,7 @@ function TaskListList({
         name="lists"
         namespace="apps.todoList"
       />
-      <APIFallbackComponent data={lists}>
+      <QueryWrapper query={listsQuery}>
         {lists =>
           lists.length > 0 ? (
             <>
@@ -45,7 +45,7 @@ function TaskListList({
             <p className="text-bg-500 text-center">{t('empty.lists')}</p>
           )
         }
-      </APIFallbackComponent>
+      </QueryWrapper>
     </>
   )
 }

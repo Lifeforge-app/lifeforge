@@ -9,9 +9,9 @@ function ListSelector({
   list: string | null
   setList: (list: string) => void
 }) {
-  const { lists } = useTodoListContext()
+  const { listsQuery } = useTodoListContext()
 
-  if (typeof lists === 'string') return <></>
+  const lists = listsQuery.data ?? []
 
   return (
     <ListboxOrComboboxInput

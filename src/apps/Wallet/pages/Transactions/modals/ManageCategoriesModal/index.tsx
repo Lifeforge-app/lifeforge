@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
   ModalHeader,
-  ModalWrapper
+  ModalWrapper,
+  QueryWrapper
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
@@ -23,7 +23,7 @@ function ManageCategoriesModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.wallet')
-  const { categories } = useWalletContext()
+  const { categoriesQuery } = useWalletContext()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
   const [existedData, setExistedData] = useState<IWalletCategory | null>(null)
@@ -49,7 +49,7 @@ function ManageCategoriesModal({
           title="categories.manage"
           onClose={onClose}
         />
-        <APIFallbackComponent data={categories}>
+        <QueryWrapper query={categoriesQuery}>
           {categories =>
             categories.length > 0 ? (
               <>
@@ -86,7 +86,7 @@ function ManageCategoriesModal({
               />
             )
           }
-        </APIFallbackComponent>
+        </QueryWrapper>
       </ModalWrapper>
       <ModifyCategoriesModal
         existedData={existedData}

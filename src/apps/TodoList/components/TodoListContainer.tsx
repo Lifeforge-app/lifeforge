@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
 
 import {
-  APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
+  QueryWrapper,
   SearchInput
 } from '@lifeforge/ui'
 
@@ -27,7 +27,7 @@ function TodoListContainer() {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     entriesQueryKey,
-    entries,
+    entriesQuery,
     setModifyTaskWindowOpenType,
     deleteTaskConfirmationModalOpen,
     setDeleteTaskConfirmationModalOpen,
@@ -80,7 +80,7 @@ function TodoListContainer() {
             setSearchQuery={setSearchQuery}
             stuffToSearch="task"
           />
-          <APIFallbackComponent data={entries}>
+          <QueryWrapper query={entriesQuery}>
             {entries =>
               entries.length > 0 ? (
                 <TaskList />
@@ -97,7 +97,7 @@ function TodoListContainer() {
                 />
               )
             }
-          </APIFallbackComponent>
+          </QueryWrapper>
         </div>
       </div>
       <ModifyTaskWindow />
@@ -120,7 +120,7 @@ function TodoListContainer() {
           })
         }}
       />
-      {entries.length > 0 && (
+      {(entriesQuery.data ?? []).length > 0 && (
         <FAB
           onClick={() => {
             setSelectedTask(null)

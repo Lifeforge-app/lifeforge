@@ -19,15 +19,19 @@ function Header({
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const {
-    categories,
-    assets,
-    ledgers,
-    transactions,
+    categoriesQuery,
+    assetsQuery,
+    ledgersQuery,
+    transactionsQuery,
     searchQuery,
     filteredTransactions
   } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
+  const assets = assetsQuery.data ?? []
+  const categories = categoriesQuery.data ?? []
+  const ledgers = ledgersQuery.data ?? []
+  const transactions = transactionsQuery.data ?? []
 
   useEffect(() => {
     const params = searchParams.get('type')

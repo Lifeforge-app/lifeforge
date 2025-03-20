@@ -12,23 +12,19 @@ function Header({
 }) {
   const { t } = useTranslation('apps.todoList')
   const {
-    entries,
-    priorities,
-    lists,
-    tags,
+    entriesQuery,
+    prioritiesQuery,
+    listsQuery,
+    tagsListQuery,
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
   const [searchParams] = useSearchParams()
 
-  if (
-    typeof entries === 'string' ||
-    typeof lists === 'string' ||
-    typeof tags === 'string' ||
-    typeof priorities === 'string'
-  ) {
-    return <div>Loading...</div>
-  }
+  const entries = entriesQuery.data ?? []
+  const priorities = prioritiesQuery.data ?? []
+  const lists = listsQuery.data ?? []
+  const tags = tagsListQuery.data ?? []
 
   return (
     <div className="flex-between flex">

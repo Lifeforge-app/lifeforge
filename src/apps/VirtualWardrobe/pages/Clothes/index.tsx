@@ -247,7 +247,7 @@ function VirtualWardrobeClothes() {
           setExistedData(null)
         }}
       />
-      {sessionCartItemsQuery.isSuccess && (
+      {sessionCartItemsQuery.data && (
         <SessionCartModal
           cartItems={sessionCartItemsQuery.data}
           isOpen={sessionCartModalOpen}
@@ -266,7 +266,6 @@ function VirtualWardrobeClothes() {
           }}
         />
       )}
-
       <DeleteConfirmationModal
         apiEndpoint="virtual-wardrobe/entries"
         data={existedData ?? undefined}

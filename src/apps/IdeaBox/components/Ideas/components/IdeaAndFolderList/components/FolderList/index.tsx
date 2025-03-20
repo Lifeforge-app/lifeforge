@@ -1,14 +1,15 @@
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
+import { QueryWrapper } from '@lifeforge/ui'
+
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import { type IIdeaBoxFolder } from '../../../../../../interfaces/ideabox_interfaces'
 import FolderItem from './components/FolderItem'
 
 function FolderList() {
   const { t } = useTranslation('apps.ideaBox')
-  const { folders } = useIdeaBoxContext()
+  const { foldersQuery } = useIdeaBoxContext()
 
   return (
     <>
@@ -16,11 +17,15 @@ function FolderList() {
         <Icon className="size-6" icon="tabler:folder" />
         {t('entryType.folder')}
       </h2>
-      <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-        {(folders as IIdeaBoxFolder[]).map(folder => (
-          <FolderItem key={folder.id} folder={folder} />
-        ))}
-      </div>
+      <QueryWrapper query={foldersQuery}>
+        {folders => (
+          <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+            {folders.map(folder => (
+              <FolderItem key={folder.id} folder={folder} />
+            ))}
+          </div>
+        )}
+      </QueryWrapper>
     </>
   )
 }

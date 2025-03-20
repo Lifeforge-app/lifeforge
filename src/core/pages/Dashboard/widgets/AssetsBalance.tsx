@@ -1,15 +1,16 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import { APIFallbackComponent, Button, DashboardItem } from '@lifeforge/ui'
+import { Button, DashboardItem, QueryWrapper } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 export default function AssetsBalance() {
-  const { assets } = useWalletContext()
+  const { assetsQuery } = useWalletContext()
   const { componentBgLighterWithHover } = useComponentBg()
   const [showBalance, setShowBalance] = useState(false)
 
@@ -28,7 +29,7 @@ export default function AssetsBalance() {
       icon="tabler:wallet"
       title="Assets Balance"
     >
-      <APIFallbackComponent data={assets}>
+      <QueryWrapper query={assetsQuery}>
         {assets => (
           <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-2 overflow-y-auto">
             {assets.map(asset => (
@@ -78,7 +79,7 @@ export default function AssetsBalance() {
             ))}
           </ul>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </DashboardItem>
   )
 }

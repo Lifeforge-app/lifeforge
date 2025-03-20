@@ -19,8 +19,8 @@ function ModifyBookModal() {
       existedData,
       setExistedData
     },
-    languages: { data: languages },
-    categories: { data: categories }
+    languages: { dataQuery: languagesQuery },
+    categories: { dataQuery: categoriesQuery }
   } = useBooksLibraryContext()
 
   const [data, setData] = useState<IBooksLibraryFormSate>({
@@ -61,8 +61,8 @@ function ModifyBookModal() {
       type: 'listbox',
       nullOption: 'None',
       options:
-        typeof categories !== 'string'
-          ? categories.map(({ id, name, icon }) => ({
+        !categoriesQuery.isLoading && categoriesQuery.data
+          ? categoriesQuery.data.map(({ id, name, icon }) => ({
               text: name[0].toUpperCase() + name.slice(1),
               value: id,
               icon
@@ -116,8 +116,8 @@ function ModifyBookModal() {
       type: 'listbox',
       multiple: true,
       options:
-        typeof languages !== 'string'
-          ? languages.map(({ id, name, icon }) => ({
+        !languagesQuery.isLoading && languagesQuery.data
+          ? languagesQuery.data.map(({ id, name, icon }) => ({
               text: name[0].toUpperCase() + name.slice(1),
               value: id,
               icon
@@ -194,7 +194,7 @@ function ModifyBookModal() {
       fields={FIELDS}
       icon="tabler:pencil"
       isOpen={modifyDataModalOpenType !== null}
-      loading={typeof languages === 'string' || typeof categories === 'string'}
+      loading={languagesQuery.isLoading || categoriesQuery.isLoading}
       namespace="apps.booksLibrary"
       openType="update"
       setData={setData}

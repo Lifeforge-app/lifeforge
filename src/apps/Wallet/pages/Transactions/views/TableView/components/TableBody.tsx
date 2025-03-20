@@ -30,11 +30,14 @@ function TableBody({
   >
 }) {
   const {
-    assets,
-    ledgers,
-    categories,
+    assetsQuery,
+    ledgersQuery,
+    categoriesQuery,
     filteredTransactions: transactions
   } = useWalletContext()
+  const ledgers = ledgersQuery.data ?? []
+  const assets = assetsQuery.data ?? []
+  const categories = categoriesQuery.data ?? []
 
   return (
     <tbody>

@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import * as d3 from 'd3'
 import { useEffect, useMemo, useRef } from 'react'

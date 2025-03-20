@@ -1,9 +1,10 @@
-import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -16,12 +17,17 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }) {
       setModifyDataModalOpenType,
       setDeleteDataConfirmationOpen
     },
-    categories: { data: categories },
-    statuses: { data: statuses },
-    visibilities: { data: visibilities },
-    technologies: { data: technologies }
+    categories: { dataQuery: categoriesQuery },
+    statuses: { dataQuery: statusesQuery },
+    visibilities: { dataQuery: visibilitiesQuery },
+    technologies: { dataQuery: technologiesQuery }
   } = useProjectsMContext()
   const { componentBgWithHover } = useComponentBg()
+
+  const categories = categoriesQuery.data ?? []
+  const statuses = statusesQuery.data ?? []
+  const visibilities = visibilitiesQuery.data ?? []
+  const technologies = technologiesQuery.data ?? []
 
   return (
     <li

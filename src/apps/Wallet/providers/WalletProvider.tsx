@@ -1,3 +1,4 @@
+import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import dayjs from 'dayjs'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
@@ -14,17 +15,12 @@ import {
 import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IWalletData {
-  transactions: IWalletTransaction[]
-  transactionsLoading: boolean
+  transactionsQuery: UseQueryResult<IWalletTransaction[]>
   filteredTransactions: IWalletTransaction[]
-  ledgers: IWalletLedger[]
-  ledgersLoading: boolean
-  assets: IWalletAsset[]
-  assetsLoading: boolean
-  categories: IWalletCategory[]
-  categoriesLoading: boolean
-  incomeExpenses: IWalletIncomeExpenses
-  incomeExpensesLoading: boolean
+  ledgersQuery: UseQueryResult<IWalletLedger[]>
+  assetsQuery: UseQueryResult<IWalletAsset[]>
+  categoriesQuery: UseQueryResult<IWalletCategory[]>
+  incomeExpensesQuery: UseQueryResult<IWalletIncomeExpenses>
   isAmountHidden: boolean
   toggleAmountVisibility: React.Dispatch<React.SetStateAction<boolean>>
   searchQuery: string
@@ -116,39 +112,24 @@ export default function WalletProvider() {
 
   const value = useMemo(
     () => ({
-      transactions: transactionsQuery.data ?? [],
-      transactionsLoading: transactionsQuery.isLoading,
+      transactionsQuery,
       filteredTransactions,
-      ledgers: ledgersQuery.data ?? [],
-      ledgersLoading: ledgersQuery.isLoading,
-      assets: assetsQuery.data ?? [],
-      assetsLoading: assetsQuery.isLoading,
-      categories: categoriesQuery.data ?? [],
-      categoriesLoading: categoriesQuery.isLoading,
-      incomeExpenses: incomeExpensesQuery.data ?? {
-        monthlyExpenses: 0,
-        monthlyIncome: 0,
-        totalExpenses: 0,
-        totalIncome: 0
-      },
-      incomeExpensesLoading: incomeExpensesQuery.isLoading,
+      ledgersQuery,
+      assetsQuery,
+      categoriesQuery,
+      incomeExpensesQuery,
       isAmountHidden,
       toggleAmountVisibility,
       searchQuery,
       setSearchQuery
     }),
     [
-      transactionsQuery.data,
-      transactionsQuery.isLoading,
+      transactionsQuery,
       filteredTransactions,
-      ledgersQuery.data,
-      ledgersQuery.isLoading,
-      assetsQuery.data,
-      assetsQuery.isLoading,
-      categoriesQuery.data,
-      categoriesQuery.isLoading,
-      incomeExpensesQuery.data,
-      incomeExpensesQuery.isLoading,
+      ledgersQuery,
+      assetsQuery,
+      categoriesQuery,
+      incomeExpensesQuery,
       isAmountHidden,
       searchQuery
     ]

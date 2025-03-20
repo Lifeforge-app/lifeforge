@@ -24,15 +24,10 @@ function TransactionListItem({
   setReceiptToView: React.Dispatch<string>
   setSelectedData: React.Dispatch<IWalletTransaction | null>
 }) {
-  const { categories, ledgers, assets } = useWalletContext()
-
-  if (
-    typeof assets === 'string' ||
-    typeof ledgers === 'string' ||
-    typeof categories === 'string'
-  ) {
-    return <></>
-  }
+  const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletContext()
+  const categories = categoriesQuery.data ?? []
+  const ledgers = ledgersQuery.data ?? []
+  const assets = assetsQuery.data ?? []
 
   return (
     <div className="flex-between border-bg-200 dark:border-bg-800/50 relative flex gap-12 border-b py-4 pl-2">

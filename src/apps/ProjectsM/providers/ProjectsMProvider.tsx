@@ -1,3 +1,7 @@
+import { UseQueryResult } from '@tanstack/react-query'
+import { createContext, useContext, useMemo, useState } from 'react'
+import { Outlet } from 'react-router'
+
 import {
   type IProjectsMCategory,
   type IProjectsMEntry,
@@ -5,8 +9,6 @@ import {
   type IProjectsMTechnology,
   type IProjectsMVisibility
 } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
-import { createContext, useContext, useMemo, useState } from 'react'
-import { Outlet } from 'react-router'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -24,8 +26,7 @@ function useProjectsMCommonState<T>(
     useState(false)
 
   return {
-    data: dataQuery.data ?? [],
-    loading: dataQuery.isLoading,
+    dataQuery,
     modifyDataModalOpenType,
     setModifyDataModalOpenType,
     existedData,
@@ -36,8 +37,7 @@ function useProjectsMCommonState<T>(
 }
 
 interface IProjectsMCommon<T> {
-  data: T[]
-  loading: boolean
+  dataQuery: UseQueryResult<T[]>
   modifyDataModalOpenType: 'create' | 'update' | null
   setModifyDataModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
