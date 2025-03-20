@@ -1,8 +1,4 @@
 import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-import {
   createContext,
   useContext,
   useEffect,
@@ -11,6 +7,11 @@ import {
   useState
 } from 'react'
 import { toast } from 'react-toastify'
+
+import {
+  IRailwayMapLine,
+  IRailwayMapStation
+} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

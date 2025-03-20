@@ -1,13 +1,14 @@
+import { Icon } from '@iconify/react'
+import { UseQueryResult } from '@tanstack/react-query'
+
+import { HeaderFilter } from '@lifeforge/ui'
+
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
 import {
   IVirtualWardrobeEntry,
   IVirtualWardrobeSidebarData
 } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
-import { Icon } from '@iconify/react'
-import { UseQueryResult } from '@tanstack/react-query'
-
-import { HeaderFilter } from '@lifeforge/ui'
 
 function Header({
   entriesQuery,

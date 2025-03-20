@@ -1,8 +1,9 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import forceDown from '@utils/forceDown'
 

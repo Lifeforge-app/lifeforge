@@ -1,8 +1,9 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { toast } from 'react-toastify'
+
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 

@@ -1,8 +1,9 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useParams } from 'react-router'
 import tinycolor from 'tinycolor2'
+
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxTag } from '../../../../../../../interfaces/ideabox_interfaces'
 
