@@ -7,7 +7,6 @@ import { Outlet, useSearchParams } from 'react-router'
 import {
   type IWalletAsset,
   type IWalletCategory,
-  type IWalletIncomeExpenses,
   type IWalletLedger,
   type IWalletTransaction
 } from '@apps/Wallet/interfaces/wallet_interfaces'
@@ -20,7 +19,6 @@ interface IWalletData {
   ledgersQuery: UseQueryResult<IWalletLedger[]>
   assetsQuery: UseQueryResult<IWalletAsset[]>
   categoriesQuery: UseQueryResult<IWalletCategory[]>
-  incomeExpensesQuery: UseQueryResult<IWalletIncomeExpenses>
   isAmountHidden: boolean
   toggleAmountVisibility: React.Dispatch<React.SetStateAction<boolean>>
   searchQuery: string
@@ -48,12 +46,6 @@ export default function WalletProvider() {
     'wallet',
     'categories'
   ])
-  const incomeExpensesQuery = useAPIQuery<IWalletIncomeExpenses>(
-    `wallet/transactions/income-expenses?year=${new Date().getFullYear()}&month=${
-      new Date().getMonth() + 1
-    }`,
-    ['wallet', 'transactions', 'income-expenses']
-  )
   const [filteredTransactions, setFilteredTransactions] = useState<
     IWalletTransaction[]
   >([])
@@ -117,7 +109,6 @@ export default function WalletProvider() {
       ledgersQuery,
       assetsQuery,
       categoriesQuery,
-      incomeExpensesQuery,
       isAmountHidden,
       toggleAmountVisibility,
       searchQuery,
@@ -129,7 +120,6 @@ export default function WalletProvider() {
       ledgersQuery,
       assetsQuery,
       categoriesQuery,
-      incomeExpensesQuery,
       isAmountHidden,
       searchQuery
     ]
