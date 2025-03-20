@@ -10,7 +10,7 @@ import EntryItem from './components/EntryItem'
 function GridView({ books }: { books: IBooksLibraryEntry[] }) {
   const {
     miscellaneous: { processes },
-    categories: { data: categories }
+    categories: { dataQuery: categoriesQuery }
   } = useBooksLibraryContext()
 
   return (
@@ -31,9 +31,9 @@ function GridView({ books }: { books: IBooksLibraryEntry[] }) {
               <Icon className="text-bg-500 size-16" icon="tabler:clock" />
             </div>
             <div className="text-bg-500 mt-4 flex items-center gap-1 text-sm font-medium">
-              {typeof categories !== 'string' &&
+              {categoriesQuery.data &&
                 (() => {
-                  const category = categories.find(
+                  const category = categoriesQuery.data.find(
                     category => category.id === value.metadata.category
                   )
 

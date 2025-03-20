@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
-import { APIFallbackComponent, SidebarItem, SidebarTitle } from '@lifeforge/ui'
+import { QueryWrapper, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
@@ -18,7 +18,7 @@ function CategoriesSection({
 }) {
   const { t } = useTranslation('apps.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
-  const { categories, filteredTransactions } = useWalletContext()
+  const { categoriesQuery, filteredTransactions } = useWalletContext()
 
   return searchParams.get('type') !== 'transfer' ? (
     <>
@@ -29,7 +29,7 @@ function CategoriesSection({
         }}
         name={t('sidebar.categories')}
       />
-      <APIFallbackComponent data={categories}>
+      <QueryWrapper query={categoriesQuery}>
         {categories => (
           <>
             {[
@@ -126,7 +126,7 @@ function CategoriesSection({
               ))}
           </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </>
   ) : (
     <></>

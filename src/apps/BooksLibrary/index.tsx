@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
-  APIFallbackComponent,
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
@@ -13,6 +12,7 @@ import {
   MenuItem,
   ModuleHeader,
   ModuleWrapper,
+  QueryWrapper,
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
@@ -22,6 +22,7 @@ import LibgenModal from './components/LibgenModal'
 import ModifyBookModal from './components/ModifyBookModal'
 import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
+import { IBooksLibraryEntry } from './interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from './providers/BooksLibraryProvider'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
@@ -31,13 +32,13 @@ function BooksLibrary() {
   const [searchParams] = useSearchParams()
   const {
     entries: {
-      data: entries,
+      dataQuery: entriesQuery,
       deleteDataConfirmationModalOpen: deleteBookConfirmationModalOpen,
       setDeleteDataConfirmationOpen: setDeleteBookConfirmationModalOpen,
       existedData: existedBookData,
       setExistedData: setExistedBookData
     },
-    fileTypes: { data: fileTypes },
+    fileTypes: { dataQuery: fileTypesQuery },
     miscellaneous: {
       deleteModalConfigs,
       searchQuery,
@@ -46,13 +47,22 @@ function BooksLibrary() {
     }
   } = useBooksLibraryContext()
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
-  const [filteredEntries, setFilteredEntries] = useState(entries)
+  const [filteredEntries, setFilteredEntries] = useState<IBooksLibraryEntry[]>(
+    []
+  )
   const [view, setView] = useState<'list' | 'grid'>('list')
 
   useEffect(() => {
-    if (typeof entries === 'string') return
+    if (
+      entriesQuery.isLoading ||
+      fileTypesQuery.isLoading ||
+      !entriesQuery.data ||
+      !fileTypesQuery.data
+    ) {
+      return
+    }
 
-    const filteredEntries = entries.filter(
+    const filteredEntries = entriesQuery.data.filter(
       entry =>
         entry.title
           .toLowerCase()
@@ -66,16 +76,21 @@ function BooksLibrary() {
         (searchParams.get('favourite') === 'true'
           ? entry.is_favourite
           : true) &&
-        (searchParams.get('fileType') !== null && typeof fileTypes !== 'string'
+        (searchParams.get('fileType') !== null
           ? entry.extension ===
-            fileTypes.find(
+            fileTypesQuery.data.find(
               fileType => fileType.id === searchParams.get('fileType')
             )?.name
           : true)
     )
 
     setFilteredEntries(filteredEntries)
-  }, [entries, debouncedSearchQuery, searchParams, fileTypes])
+  }, [
+    entriesQuery.data,
+    debouncedSearchQuery,
+    searchParams,
+    fileTypesQuery.data
+  ])
 
   return (
     <ModuleWrapper>
@@ -124,8 +139,8 @@ function BooksLibrary() {
               viewMode={view}
             />
           </div>
-          <APIFallbackComponent data={filteredEntries}>
-            {filteredEntries => {
+          <QueryWrapper query={entriesQuery}>
+            {entries => {
               if (filteredEntries.length === 0) {
                 if (entries.length === 0) {
                   return (
@@ -153,7 +168,7 @@ function BooksLibrary() {
                   return <ListView books={filteredEntries} />
               }
             }}
-          </APIFallbackComponent>
+          </QueryWrapper>
         </div>
       </div>
       <LibgenModal />

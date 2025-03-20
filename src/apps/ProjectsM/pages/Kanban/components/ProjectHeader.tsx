@@ -1,15 +1,16 @@
-import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useNavigate } from 'react-router'
 
-import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
+import { GoBackButton, QueryWrapper } from '@lifeforge/ui'
+
+import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 
 import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 
 function ProjectHeader({ projectData }: { projectData: IProjectsMEntry }) {
   const {
-    statuses: { data: statuses }
+    statuses: { dataQuery: statusesQuery }
   } = useProjectsMContext()
   const navigate = useNavigate()
 
@@ -32,7 +33,7 @@ function ProjectHeader({ projectData }: { projectData: IProjectsMEntry }) {
             <Icon className="text-3xl" icon="tabler:hammer" />
           </div>
           {projectData.name}
-          <APIFallbackComponent data={statuses}>
+          <QueryWrapper query={statusesQuery}>
             {statuses => (
               <div
                 className="shadow-custom ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest"
@@ -53,7 +54,7 @@ function ProjectHeader({ projectData }: { projectData: IProjectsMEntry }) {
                 <Icon className="ml-1" icon="tabler:chevron-down" />
               </div>
             )}
-          </APIFallbackComponent>
+          </QueryWrapper>
         </h1>
         <div className="flex gap-2 rounded-lg p-2">
           {[

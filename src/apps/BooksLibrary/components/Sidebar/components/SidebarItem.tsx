@@ -29,7 +29,7 @@ function _SidebarItem({
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
-    entries: { data: entries },
+    entries: { dataQuery: entriesQuery },
     miscellaneous: { setSidebarOpen },
     ...booksLibraryContext
   } = useBooksLibraryContext()
@@ -78,8 +78,8 @@ function _SidebarItem({
         name={item.name}
         number={
           item.count ??
-          (typeof entries !== 'string'
-            ? entries.filter(entry =>
+          (!entriesQuery.isLoading && entriesQuery.data
+            ? entriesQuery.data.filter(entry =>
                 Array.isArray(entry[recordKeyInDB[stuff] as keyof typeof entry])
                   ? (
                       entry[

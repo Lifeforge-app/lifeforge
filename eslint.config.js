@@ -1,17 +1,11 @@
 // Plugin imports grouped by type
 import pluginJs from '@eslint/js'
 import pluginQuery from '@tanstack/eslint-plugin-query'
-import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import sonarjs from 'eslint-plugin-sonarjs'
-import path from 'path'
-import process from 'process'
 import tseslint from 'typescript-eslint'
-
-const projectRoot = process.cwd()
-const srcPath = path.resolve(projectRoot, 'src')
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -46,9 +40,6 @@ export default [
     }
   },
 
-  // Import plugin configuration
-  importPlugin.flatConfigs.recommended,
-
   // Query plugin configuration
   ...pluginQuery.configs['flat/recommended'],
 
@@ -77,33 +68,6 @@ export default [
       // Import rules
       'import/no-named-as-default': 'off',
       'import/no-named-as-default-member': 'off'
-    }
-  },
-
-  // Consolidated settings
-  {
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
-          moduleDirectory: ['node_modules', 'src']
-        },
-        alias: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
-          map: [
-            ['@components', path.resolve(srcPath, 'components')],
-            ['@providers', path.resolve(srcPath, 'core/providers')],
-            ['@hooks', path.resolve(srcPath, 'core/hooks')],
-            ['@interfaces', path.resolve(srcPath, 'core/interfaces')],
-            ['@utils', path.resolve(srcPath, 'core/utils')],
-            ['@apps', path.resolve(srcPath, 'apps')],
-            ['@security', path.resolve(srcPath, 'core/security')]
-          ]
-        }
-      },
-      react: {
-        version: 'detect'
-      }
     }
   }
 ]

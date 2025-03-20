@@ -1,23 +1,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
-import { DashboardItem } from '@lifeforge/ui'
+import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
-import { type IWalletIncomeExpenses } from '../../../interfaces/wallet_interfaces'
-
-function IncomeExpenseCard({
-  title,
-  icon,
-  data
-}: {
-  title: string
-  icon: string
-  data: IWalletIncomeExpenses
-}) {
+function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const isIncome = title.toLowerCase() === 'income'
-  const { isAmountHidden } = useWalletContext()
+  const { isAmountHidden, incomeExpensesQuery } = useWalletContext()
 
   return (
     <DashboardItem
@@ -26,8 +16,8 @@ function IncomeExpenseCard({
       namespace="apps.wallet"
       title={isIncome ? 'income' : 'expenses'}
     >
-      {typeof data !== 'string' && (
-        <>
+      <QueryWrapper query={incomeExpensesQuery}>
+        {data => (
           <div className="flex h-full flex-col justify-evenly">
             <p className="flex w-full items-end justify-start gap-2 text-4xl font-medium xl:text-5xl">
               <span className="text-bg-500 -mb-0.5 text-2xl xl:text-3xl">
@@ -80,8 +70,8 @@ function IncomeExpenseCard({
               from this month
             </p>
           </div>
-        </>
-      )}
+        )}
+      </QueryWrapper>
     </DashboardItem>
   )
 }

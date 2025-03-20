@@ -17,7 +17,8 @@ function CategorySelector({
   setCategory: React.Dispatch<React.SetStateAction<string | null>>
   transactionType: string
 }) {
-  const { categories } = useWalletContext()
+  const { categoriesQuery } = useWalletContext()
+  const categories = categoriesQuery.data ?? []
 
   return (
     <ListboxOrComboboxInput

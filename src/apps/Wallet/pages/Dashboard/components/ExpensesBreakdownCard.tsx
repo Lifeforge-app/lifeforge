@@ -5,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
+import { DashboardItem, QueryWrapper, Scrollbar } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
@@ -21,19 +21,23 @@ const options2 = {
 }
 
 function ExpensesBreakdownCard() {
-  const { categories, transactions, incomeExpenses, isAmountHidden } =
-    useWalletContext()
+  const {
+    categoriesQuery,
+    transactionsQuery,
+    incomeExpensesQuery,
+    isAmountHidden
+  } = useWalletContext()
   // TODO
   const [year] = useState(new Date().getFullYear())
   const [month] = useState(new Date().getMonth())
+  const transactions = transactionsQuery.data ?? []
 
   const expensesCategories = useMemo(() => {
-    if (typeof categories === 'string') {
-      return []
-    }
-
-    return categories.filter(category => category.type === 'expenses')
-  }, [categories])
+    return (
+      categoriesQuery.data?.filter(category => category.type === 'expenses') ||
+      []
+    )
+  }, [categoriesQuery.data])
 
   const thisMonthsTransactions = useMemo(() => {
     if (typeof transactions === 'string') {
@@ -47,10 +51,6 @@ function ExpensesBreakdownCard() {
   }, [transactions, year, month])
 
   const spentOnEachCategory = useMemo<Record<string, number>>(() => {
-    if (typeof categories === 'string' || typeof transactions === 'string') {
-      return {}
-    }
-
     return expensesCategories.reduce<Record<string, number>>(
       (acc, category) => {
         acc[category.id] = thisMonthsTransactions
@@ -61,7 +61,7 @@ function ExpensesBreakdownCard() {
       },
       {}
     )
-  }, [categories, thisMonthsTransactions])
+  }, [expensesCategories, thisMonthsTransactions])
 
   const { t } = useTranslation('apps.wallet')
 
@@ -80,9 +80,9 @@ function ExpensesBreakdownCard() {
       namespace="apps.wallet"
       title="Expenses Breakdown"
     >
-      <APIFallbackComponent data={transactions}>
+      <QueryWrapper query={transactionsQuery}>
         {() => (
-          <APIFallbackComponent data={categories}>
+          <QueryWrapper query={categoriesQuery}>
             {categories => (
               <>
                 <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
@@ -94,22 +94,21 @@ function ExpensesBreakdownCard() {
                       )}
                     >
                       <span className="text-bg-500 mr-1 text-xl">RM</span>
-                      {typeof incomeExpenses !== 'string' &&
-                        (isAmountHidden ? (
-                          <span className="flex items-center">
-                            {Array(4)
-                              .fill(0)
-                              .map((_, i) => (
-                                <Icon
-                                  key={i}
-                                  className="-mx-0.5 size-6 sm:size-8"
-                                  icon="uil:asterisk"
-                                />
-                              ))}
-                          </span>
-                        ) : (
-                          incomeExpenses.monthlyExpenses.toFixed(2)
-                        ))}
+                      {isAmountHidden ? (
+                        <span className="flex items-center">
+                          {Array(4)
+                            .fill(0)
+                            .map((_, i) => (
+                              <Icon
+                                key={i}
+                                className="-mx-0.5 size-6 sm:size-8"
+                                icon="uil:asterisk"
+                              />
+                            ))}
+                        </span>
+                      ) : (
+                        incomeExpensesQuery.data?.monthlyExpenses.toFixed(2)
+                      )}
                     </div>
                     <div className="text-bg-500 mt-2 w-1/2 text-center text-sm sm:text-base">
                       {t('widgets.expensesBreakdown.thisMonthsSpending')}
@@ -258,9 +257,9 @@ function ExpensesBreakdownCard() {
                 </div>
               </>
             )}
-          </APIFallbackComponent>
+          </QueryWrapper>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </DashboardItem>
   )
 }

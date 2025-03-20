@@ -1,6 +1,6 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
+
+import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import StationCodes from '../../StationCode'
 import { formatStationDisplay } from '../utils/stations'
@@ -17,7 +17,7 @@ interface StationSelectorProps {
   namespace: string
 }
 
-const StationSelector: React.FC<StationSelectorProps> = ({
+function StationSelector({
   stations,
   filteredStations,
   value,
@@ -27,7 +27,7 @@ const StationSelector: React.FC<StationSelectorProps> = ({
   icon,
   name,
   namespace
-}) => {
+}: StationSelectorProps) {
   return (
     <ListboxOrComboboxInput
       className={className}

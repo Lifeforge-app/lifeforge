@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
@@ -86,9 +85,9 @@ function YoutubeVideos() {
                 }}
               />
             ) : (
-              <APIFallbackComponent data={filteredVideos}>
-                {videos =>
-                  videos.length === 0 ? (
+              <QueryWrapper query={videosQuery}>
+                {() =>
+                  filteredVideos.length === 0 ? (
                     <EmptyStateScreen
                       icon="tabler:search-off"
                       name="results"
@@ -98,11 +97,11 @@ function YoutubeVideos() {
                     <VideoList
                       setIsConfirmDeleteModalOpen={setIsConfirmDeleteModalOpen}
                       setVideoToDelete={setVideoToDelete}
-                      videos={videos}
+                      videos={filteredVideos}
                     />
                   )
                 }
-              </APIFallbackComponent>
+              </QueryWrapper>
             )
           }
         </QueryWrapper>

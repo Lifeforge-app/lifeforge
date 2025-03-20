@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 
 import {
-  APIFallbackComponent,
   DnDContainer,
   PreviewContainer,
+  QueryWrapper,
   TagsInput,
   TextInput
 } from '@lifeforge/ui'
@@ -58,7 +58,7 @@ function IdeaContentInput({
   debouncedImageLink: string
 }) {
   const { t } = useTranslation('apps.ideaBox')
-  const { tags } = useIdeaBoxContext()
+  const { tagsQuery } = useIdeaBoxContext()
 
   return (
     <div className="space-y-4">
@@ -123,7 +123,7 @@ function IdeaContentInput({
           </>
         )
       )}
-      <APIFallbackComponent data={tags}>
+      <QueryWrapper query={tagsQuery}>
         {tags => (
           <TagsInput
             darker
@@ -137,7 +137,7 @@ function IdeaContentInput({
             value={ideaTags}
           />
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </div>
   )
 }

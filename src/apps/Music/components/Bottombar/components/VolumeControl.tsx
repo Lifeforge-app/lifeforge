@@ -1,5 +1,7 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
+/* eslint-disable react-compiler/react-compiler */
 import { Icon } from '@iconify/react'
+
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import IconButton from './IconButton'
 

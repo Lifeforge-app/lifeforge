@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
 import {
-  APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   HamburgerMenuSelectorWrapper,
   MenuItem,
   ModuleHeader,
-  ModuleWrapper
+  ModuleWrapper,
+  QueryWrapper
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
@@ -31,7 +31,7 @@ import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilit
 
 function Transactions() {
   const { t } = useTranslation('apps.wallet')
-  const { transactions, filteredTransactions } = useWalletContext()
+  const { transactionsQuery, filteredTransactions } = useWalletContext()
 
   const queryClient = useQueryClient()
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
@@ -133,7 +133,7 @@ function Transactions() {
           />
           <SearchBar setView={setView} view={view} />
           <div className="mt-6 size-full">
-            <APIFallbackComponent data={transactions}>
+            <QueryWrapper query={transactionsQuery}>
               {transactions => {
                 if (transactions.length === 0) {
                   return (
@@ -186,8 +186,8 @@ function Transactions() {
                     )
                 }
               }}
-            </APIFallbackComponent>
-            {transactions.length > 0 && (
+            </QueryWrapper>
+            {(transactionsQuery.data ?? []).length > 0 && (
               <Menu>
                 <FAB as={MenuButton} hideWhen="md" />
                 <MenuItems

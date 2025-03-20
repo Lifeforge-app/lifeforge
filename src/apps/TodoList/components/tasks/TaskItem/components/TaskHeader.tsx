@@ -3,9 +3,9 @@ import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
 
 function TaskHeader({ entry }: { entry: ITodoListEntry }) {
-  const { priorities } = useTodoListContext()
+  const { prioritiesQuery } = useTodoListContext()
 
-  if (typeof priorities === 'string') return <></>
+  const priorities = prioritiesQuery.data ?? []
 
   return (
     <div className="flex items-center w-full min-w-0 gap-2 font-semibold">

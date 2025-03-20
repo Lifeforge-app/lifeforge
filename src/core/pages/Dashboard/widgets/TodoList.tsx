@@ -1,7 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { DashboardItem, EmptyStateScreen, Scrollbar } from '@lifeforge/ui'
+import {
+  DashboardItem,
+  EmptyStateScreen,
+  QueryWrapper,
+  Scrollbar
+} from '@lifeforge/ui'
 
 import TaskItem from '@apps/TodoList/components/tasks/TaskItem'
 import {
@@ -12,31 +17,40 @@ import {
 function TodoListContent() {
   const { t } = useTranslation('apps.todoList')
   const navigate = useNavigate()
-  const { entries } = useTodoListContext()
+  const { entriesQuery } = useTodoListContext()
 
   return (
-    <ul className="flex flex-1 flex-col gap-4">
-      {entries.length > 0 ? (
-        entries.map(entry => (
-          <TaskItem key={entry.id} isInDashboardWidget lighter entry={entry} />
-        ))
-      ) : (
-        <EmptyStateScreen
-          smaller
-          ctaContent="new"
-          ctaTProps={{
-            item: t('items.task')
-          }}
-          icon="tabler:calendar-smile"
-          name="today"
-          namespace="core.dashboard"
-          tKey="widgets.todoList"
-          onCTAClick={() => {
-            navigate('/todo-list#new')
-          }}
-        />
+    <QueryWrapper query={entriesQuery}>
+      {entries => (
+        <ul className="flex flex-1 flex-col gap-4">
+          {entries.length > 0 ? (
+            entries.map(entry => (
+              <TaskItem
+                key={entry.id}
+                isInDashboardWidget
+                lighter
+                entry={entry}
+              />
+            ))
+          ) : (
+            <EmptyStateScreen
+              smaller
+              ctaContent="new"
+              ctaTProps={{
+                item: t('items.task')
+              }}
+              icon="tabler:calendar-smile"
+              name="today"
+              namespace="core.dashboard"
+              tKey="widgets.todoList"
+              onCTAClick={() => {
+                navigate('/todo-list#new')
+              }}
+            />
+          )}
+        </ul>
       )}
-    </ul>
+    </QueryWrapper>
   )
 }
 

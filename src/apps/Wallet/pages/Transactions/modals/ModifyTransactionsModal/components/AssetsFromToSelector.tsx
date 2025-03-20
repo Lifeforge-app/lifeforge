@@ -13,7 +13,8 @@ function AssetsFromToSelector({
   toAsset: string | null
   setToAsset: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { assets } = useWalletContext()
+  const { assetsQuery } = useWalletContext()
+  const assets = assetsQuery.data ?? []
 
   return (
     <>
