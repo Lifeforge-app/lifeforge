@@ -773,3 +773,11 @@ button[class^='react-calendar__navigation'] {
 .tabler-icon {
   @apply size-6 shrink-0;
 }
+
+* {
+  --tw-prose-bold: var(--color-bg-800);
+}
+
+.dark * {
+  --tw-prose-bold: var(--color-bg-100);
+}
