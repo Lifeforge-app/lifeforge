@@ -12,6 +12,7 @@ function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [formDisabled, setFormDisabled] = useState(false)
   const { t } = useTranslation('common.auth')
 
   const {
@@ -32,6 +33,7 @@ function AuthForm({ providers }: { providers: string[] }) {
     authenticate({ email: emailOrUsername, password })
       .then(res => {
         if (res === '2FA required' || !res) {
+          setFormDisabled(true)
           return
         }
 
@@ -84,6 +86,7 @@ function AuthForm({ providers }: { providers: string[] }) {
           key={index}
           {...input}
           darker
+          disabled={formDisabled}
           isPassword={input.name === 'Password'}
           namespace={false}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
