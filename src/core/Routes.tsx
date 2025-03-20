@@ -307,7 +307,8 @@ export const ROUTES: RouteCategory[] = [
         routes: {
           'youtube-summarizer': lazy(() => import('@apps/YoutubeSummarizer'))
         },
-        togglable: true
+        togglable: true,
+        requiredAPIKeys: ['groq']
       }
     ]
   },

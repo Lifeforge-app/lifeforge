@@ -66,7 +66,7 @@
     "react-i18next": "^15.4.1",
     "react-lazy-load-image-component": "^1.6.3",
     "react-leaflet": "^5.0.0",
-    "react-markdown": "^9.1.0",
+    "react-markdown": "^10.1.0",
     "react-medium-image-zoom": "^5.2.14",
     "react-photo-album": "^2.4.1",
     "react-router": "^7.3.0",
