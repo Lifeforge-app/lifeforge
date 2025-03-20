@@ -1,6 +1,7 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import { Icon } from '@iconify/react'
 import { Link, useParams } from 'react-router'
+
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 

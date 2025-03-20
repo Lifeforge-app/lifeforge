@@ -1,4 +1,3 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useState } from 'react'
@@ -7,6 +6,8 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
+
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 

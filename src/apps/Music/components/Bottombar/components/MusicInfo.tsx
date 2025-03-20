@@ -1,8 +1,9 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 import { HamburgerMenu } from '@lifeforge/ui'
+
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 export default function MusicInfo() {
   const { currentMusic, isPlaying } = useMusicContext()
