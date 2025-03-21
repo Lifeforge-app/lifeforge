@@ -10,7 +10,8 @@ import { toast } from 'react-toastify'
 
 import {
   IRailwayMapLine,
-  IRailwayMapStation
+  IRailwayMapStation,
+  IRailwayMapViewType
 } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -18,8 +19,8 @@ import useAPIQuery from '@hooks/useAPIQuery'
 import fetchAPI from '@utils/fetchAPI'
 
 interface IRailwayMapData {
-  viewType: 'route' | 'earth' | 'list'
-  setViewType: React.Dispatch<React.SetStateAction<'route' | 'earth' | 'list'>>
+  viewType: IRailwayMapViewType
+  setViewType: React.Dispatch<React.SetStateAction<IRailwayMapViewType>>
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
   lines: IRailwayMapLine[]
@@ -56,7 +57,7 @@ export default function RailwayMapProvider({
 }: {
   children: React.ReactNode
 }) {
-  const [viewType, setViewType] = useState<'route' | 'earth' | 'list'>('route')
+  const [viewType, setViewType] = useState<IRailwayMapViewType>('route')
   const [searchQuery, setSearchQuery] = useState('')
   const linesQuery = useAPIQuery<IRailwayMapLine[]>('railway-map/lines', [
     'railway-map',

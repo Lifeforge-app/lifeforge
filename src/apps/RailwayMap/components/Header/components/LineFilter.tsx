@@ -1,12 +1,23 @@
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
+
+import { IRailwayMapLine } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 
 function LineFilter() {
   const { lines, filteredLines, setFilteredLines } = useRailwayMapContext()
   const { t } = useTranslation('apps.railwayMap')
+
+  const onClick = useCallback((line: IRailwayMapLine) => {
+    setFilteredLines(prev =>
+      prev.includes(line.id)
+        ? prev.filter(l => l !== line.id)
+        : [...prev, line.id]
+    )
+  }, [])
 
   return (
     <HamburgerMenuSelectorWrapper
@@ -30,13 +41,7 @@ function LineFilter() {
           isToggled={filteredLines.includes(line.id)}
           namespace={false}
           text={line.name}
-          onClick={() => {
-            setFilteredLines(prev =>
-              prev.includes(line.id)
-                ? prev.filter(l => l !== line.id)
-                : [...prev, line.id]
-            )
-          }}
+          onClick={() => onClick(line)}
         />
       ))}
     </HamburgerMenuSelectorWrapper>

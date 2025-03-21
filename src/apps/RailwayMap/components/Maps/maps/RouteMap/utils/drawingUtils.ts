@@ -200,14 +200,20 @@ export const drawStations = (
     const textColor = bgTemp[finalTheme === 'dark' ? 200 : 800]
     drawText(g, station, textColor)
 
+    const fill = (() => {
+      if (isInRoute || isSelected) {
+        return line ? line.color : bgTemp[200]
+      }
+
+      return bgTemp[finalTheme === 'dark' ? 900 : 100]
+    })()
+
     if (station.type === 'interchange') {
       drawInterchange(
         g,
         station,
         textColor,
-        isInRoute || isSelected
-          ? bgTemp[200]
-          : bgTemp[finalTheme === 'dark' ? 900 : 100],
+        fill,
         isSelected,
         setSelectedStation,
         svgRef,
@@ -218,12 +224,6 @@ export const drawStations = (
     }
 
     const line = getLine(station, lines)
-    const fill =
-      isInRoute || isSelected
-        ? line
-          ? line.color
-          : bgTemp[200]
-        : bgTemp[finalTheme === 'dark' ? 900 : 100]
 
     drawStation(
       g,

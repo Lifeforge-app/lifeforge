@@ -28,9 +28,8 @@ function ModifyIdeaModal() {
   } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
-  const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
-    'text' | 'image' | 'link'
-  >('text')
+  const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] =
+    useState<IIdeaBoxEntry['type']>('text')
   const [ideaTitle, setIdeaTitle] = useState('')
   const [ideaContent, setIdeaContent] = useState('')
   const [ideaLink, setIdeaLink] = useState('')

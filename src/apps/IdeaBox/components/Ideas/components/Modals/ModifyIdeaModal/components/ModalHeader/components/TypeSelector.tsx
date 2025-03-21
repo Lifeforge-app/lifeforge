@@ -5,15 +5,17 @@ import { useTranslation } from 'react-i18next'
 
 import { MenuItem } from '@lifeforge/ui'
 
+import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+
 function TypeSelector({
   inline = false,
   innerTypeOfModifyIdea,
   setInnerTypeOfModifyIdea
 }: {
   inline?: boolean
-  innerTypeOfModifyIdea: 'text' | 'image' | 'link'
+  innerTypeOfModifyIdea: IIdeaBoxEntry['type']
   setInnerTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'text' | 'image' | 'link'>
+    React.SetStateAction<IIdeaBoxEntry['type']>
   >
 }) {
   const { t } = useTranslation('apps.ideaBox')
@@ -36,11 +38,11 @@ function TypeSelector({
           <Icon
             className="mr-2 size-5"
             icon={
-              innerTypeOfModifyIdea === 'text'
-                ? 'tabler:article'
-                : innerTypeOfModifyIdea === 'image'
-                  ? 'tabler:photo'
-                  : 'tabler:link'
+              {
+                text: 'tabler:article',
+                image: 'tabler:photo',
+                link: 'tabler:link'
+              }[innerTypeOfModifyIdea]
             }
           />
           {t(`entryType.${innerTypeOfModifyIdea}`)}
@@ -56,20 +58,20 @@ function TypeSelector({
         anchor="bottom start"
         className="bg-bg-100 text-bg-800 dark:bg-bg-800 z-9999 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 overflow-hidden rounded-lg shadow-lg transition duration-100 ease-out"
       >
-        {[
-          ['text', 'tabler:article'],
-          ...[['image', 'tabler:photo']],
-          ['link', 'tabler:link']
-        ].map(([type, icon]) => (
+        {(
+          [
+            ['text', 'tabler:article'],
+            ...[['image', 'tabler:photo']],
+            ['link', 'tabler:link']
+          ] as const
+        ).map(([type, icon]) => (
           <MenuItem
             key={type}
             icon={icon}
             isToggled={innerTypeOfModifyIdea === type}
             namespace={false}
             text={t(`entryType.${type}`)}
-            onClick={() =>
-              setInnerTypeOfModifyIdea(type as 'text' | 'image' | 'link')
-            }
+            onClick={() => setInnerTypeOfModifyIdea(type)}
           />
         ))}
       </MenuItems>

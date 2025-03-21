@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 /* eslint-disable sonarjs/regex-complexity */
-/* eslint-disable react-compiler/react-compiler */
 import { useDebounce } from '@uidotdev/usehooks'
 import { parse as parseCookie } from 'cookie'
 import { useEffect, useRef, useState } from 'react'
@@ -83,7 +82,24 @@ function PlaylistSection({
     return [] as any
   }
 
-  function downloadVideo(metadata: IYoutubePlaylistVideoEntry) {
+  const checkStatusInterval = async () => {
+    const status = await checkDownloadStatus()
+    setProcesses(status)
+
+    Object.entries(status).forEach(([id, p]) => {
+      if (p.status === 'completed') {
+        downloadingVideos.current.delete(id)
+        setDownloadedVideos(prev => prev.add(id))
+      }
+    })
+
+    if (Object.values(status).every(p => p.status === 'completed')) {
+      setIsVideoDownloading(false)
+      intervalManager.clearAllIntervals()
+    }
+  }
+
+  async function downloadVideo(metadata: IYoutubePlaylistVideoEntry) {
     if (downloadingVideos.current.has(metadata.id)) {
       toast.error('Video is already being downloaded')
       return
@@ -91,56 +107,41 @@ function PlaylistSection({
 
     downloadingVideos.current.add(metadata.id)
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/youtube-videos/video/async-download/${
-        metadata.id
-      }`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${parseCookie(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          metadata
-        })
-      }
-    )
-      .then(async res => {
-        if (res.status === 202) {
-          const data = await res.json()
-          if (data.state === 'accepted') {
-            setIsVideoDownloading(true)
-            if (!intervalManager.hasIntervals()) {
-              intervalManager.setInterval(async () => {
-                const status = await checkDownloadStatus()
-                setProcesses(status)
-
-                Object.entries(status).forEach(([id, p]) => {
-                  if (p.status === 'completed') {
-                    downloadingVideos.current.delete(id)
-                    setDownloadedVideos(prev => prev.add(id))
-                  }
-                })
-
-                if (
-                  Object.values(status).every(p => p.status === 'completed')
-                ) {
-                  setIsVideoDownloading(false)
-                  intervalManager.clearAllIntervals()
-                }
-              }, 1000)
-            }
-          }
-        } else {
-          const data = await res.json()
-          throw new Error(data.message)
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_HOST}/youtube-videos/video/async-download/${
+          metadata.id
+        }`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
+          },
+          body: JSON.stringify({
+            metadata
+          })
         }
-      })
-      .catch(err => {
-        toast.error(`Oops! Couldn't download video! ${err}`)
-        downloadingVideos.current.delete(metadata.id)
-      })
+      )
+      if (res.status === 202) {
+        const data = await res.json()
+        if (data.state === 'accepted') {
+          setIsVideoDownloading(true)
+
+          if (intervalManager.hasIntervals()) {
+            return
+          }
+
+          intervalManager.setInterval(checkStatusInterval, 1000)
+        }
+      } else {
+        const data = await res.json()
+        throw new Error(data.message)
+      }
+    } catch (err) {
+      toast.error(`Oops! Couldn't download video! ${err}`)
+      downloadingVideos.current.delete(metadata.id)
+    }
   }
 
   useEffect(() => {

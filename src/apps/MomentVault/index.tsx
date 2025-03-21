@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { ListResult } from 'pocketbase'
 import { useState } from 'react'

@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/use-type-alias */
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
@@ -36,9 +37,9 @@ interface IIdeaBoxData {
   viewArchived: boolean
   setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
 
-  typeOfModifyIdea: 'text' | 'image' | 'link'
+  typeOfModifyIdea: IIdeaBoxEntry['type']
   setTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'text' | 'image' | 'link'>
+    React.SetStateAction<IIdeaBoxEntry['type']>
   >
   modifyIdeaModalOpenType: null | 'create' | 'update' | 'paste'
   setModifyIdeaModalOpenType: React.Dispatch<
@@ -166,9 +167,8 @@ export default function IdeaBoxProvider({
   const [modifyTagModalOpenType, setModifyTagModalOpenType] = useState<
     null | 'create' | 'update'
   >(null)
-  const [typeOfModifyIdea, setTypeOfModifyIdea] = useState<
-    'text' | 'image' | 'link'
-  >('text')
+  const [typeOfModifyIdea, setTypeOfModifyIdea] =
+    useState<IIdeaBoxEntry['type']>('text')
 
   const [existedEntry, setExistedEntry] = useState<IIdeaBoxEntry | null>(null)
   const [existedTag, setExistedTag] = useState<IIdeaBoxTag | null>(null)

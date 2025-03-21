@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { Checkbox } from '@lifeforge/ui'
@@ -22,6 +23,14 @@ function SubtaskItem({
   const { entriesQueryKey } = useTodoListContext()
   const queryClient = useQueryClient()
 
+  const getNewSubtasks = useCallback(
+    (subtasks: ITodoSubtask[]) =>
+      subtasks.map(subtask =>
+        subtask.id === entry.id ? { ...subtask, done: !subtask.done } : subtask
+      ),
+    [entry.id]
+  )
+
   async function toggleSubTaskCompletion() {
     queryClient.setQueryData<ITodoListEntry[]>(entriesQueryKey, data => {
       if (data === undefined) {
@@ -29,18 +38,14 @@ function SubtaskItem({
       }
 
       return data.map(list => {
-        if (list.id === parentId) {
-          return {
-            ...list,
-            subtasks: list.subtasks.map(subtask =>
-              subtask.id === entry.id
-                ? { ...subtask, done: !subtask.done }
-                : subtask
-            )
-          }
+        if (list.id !== parentId) {
+          return list
         }
 
-        return list
+        return {
+          ...list,
+          subtasks: getNewSubtasks(list.subtasks)
+        }
       })
     })
 
