@@ -200,6 +200,7 @@ export const drawStations = (
     const textColor = bgTemp[finalTheme === 'dark' ? 200 : 800]
     drawText(g, station, textColor)
 
+    const line = getLine(station, lines)
     const fill = (() => {
       if (isInRoute || isSelected) {
         return line ? line.color : bgTemp[200]
@@ -222,8 +223,6 @@ export const drawStations = (
       )
       return
     }
-
-    const line = getLine(station, lines)
 
     drawStation(
       g,

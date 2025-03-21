@@ -25,32 +25,25 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   async function pinIdea() {
-    const updateFunc = (prev: IIdeaBoxEntry[]) =>
-      prev
-        .map(idea =>
-          idea.id === entry.id ? { ...idea, pinned: !idea.pinned } : idea
-        )
-        .sort((a, b) => {
-          if (a.pinned === b.pinned) {
-            return a.created < b.created ? 1 : -1
-          }
-          return a.pinned ? -1 : 1
-        })
-
     try {
       await fetchAPI(`idea-box/ideas/pin/${entry.id}`, {
         method: 'POST'
       })
 
-      queryClient.setQueryData(
-        ['idea-box', 'ideas', id!, path!, viewArchived],
-        updateFunc
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
+      })
 
-      queryClient.setQueryData(
-        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-        updateFunc
-      )
+      queryClient.invalidateQueries({
+        queryKey: [
+          'idea-box',
+          'search',
+          id,
+          path,
+          selectedTags,
+          debouncedSearchQuery
+        ]
+      })
     } catch {
       toast.error(`Failed to ${entry.pinned ? 'unpin' : 'pin'} idea`)
     }
@@ -62,14 +55,19 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
         method: 'POST'
       })
 
-      queryClient.setQueryData(
-        ['idea-box', 'ideas', id!, path!, viewArchived],
-        (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
-      )
-      queryClient.setQueryData(
-        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-        (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
+      })
+      queryClient.invalidateQueries({
+        queryKey: [
+          'idea-box',
+          'search',
+          id,
+          path,
+          selectedTags,
+          debouncedSearchQuery
+        ]
+      })
     } catch {
       toast.error(`Failed to ${entry.archived ? 'unarchive' : 'archive'} idea`)
     }
@@ -81,10 +79,9 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
         method: 'DELETE'
       })
 
-      queryClient.setQueryData(
-        ['idea-box', 'ideas', id!, path!, viewArchived],
-        (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
+      })
     } catch {
       toast.error('Failed to remove idea from folder')
     }
