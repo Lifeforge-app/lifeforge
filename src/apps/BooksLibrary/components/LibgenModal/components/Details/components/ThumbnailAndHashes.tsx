@@ -20,7 +20,7 @@ function ThumbnailAndHashes({ data }: { data: BookDetailProps }) {
           icon="iconamoon:file-document-light"
         />
       )}
-      <h2 className="mb-2 mt-4 hidden w-full text-left font-medium md:block">
+      <h2 className="mt-4 mb-2 hidden w-full text-left font-medium md:block">
         Hashes
       </h2>
       <div className="hidden w-full flex-col gap-2 text-xs md:flex">

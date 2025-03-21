@@ -31,9 +31,9 @@ function MovieItem({
         type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >
-      <div className="bg-bg-200 dark:bg-bg-800 h-66 relative isolate flex w-48 shrink-0 items-center justify-center overflow-hidden rounded-md">
+      <div className="bg-bg-200 dark:bg-bg-800 relative isolate flex h-66 w-48 shrink-0 items-center justify-center overflow-hidden rounded-md">
         <Icon
-          className="text-bg-300 dark:text-bg-700 size-18 absolute left-1/2 top-1/2 z-[-1] -translate-x-1/2 -translate-y-1/2 transform"
+          className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-18 -translate-x-1/2 -translate-y-1/2 transform"
           icon="tabler:movie"
         />
         <img

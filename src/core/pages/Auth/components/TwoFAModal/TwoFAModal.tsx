@@ -47,7 +47,7 @@ function TwoFAModal() {
       ) : (
         <UsingEmail callback={otp => verifyOTP(otp)} />
       )}
-      <div className="flex items-center gap-3 mt-6">
+      <div className="mt-6 flex items-center gap-3">
         <div className="bg-bg-500 h-[2px] w-full"></div>
         <div className="text-bg-500 shrink-0 font-medium">
           {t('orAuthenticateWith')}

@@ -72,7 +72,7 @@ function EntryItem({
             )}
           >
             <Icon
-              className="text-bg-200 dark:text-bg-700 absolute left-1/2 top-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
+              className="text-bg-200 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
               icon="tabler:shopping-bag"
             />
             {entry.image !== '' && (
@@ -109,7 +109,7 @@ function EntryItem({
         <Button
           iconAtEnd
           as="a"
-          className="px-0! sm:px-4! w-auto"
+          className="w-auto px-0! sm:px-4!"
           href={entry.url}
           icon="iconamoon:arrow-top-right-1"
           namespace="apps.wishlist"

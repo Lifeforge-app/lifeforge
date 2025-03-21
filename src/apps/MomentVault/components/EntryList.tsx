@@ -70,7 +70,7 @@ function EntryList({
             })}
           </div>
           <Pagination
-            className="pagination mb-24 mt-6 md:mb-6"
+            className="pagination mt-6 mb-24 md:mb-6"
             currentPage={page}
             totalPages={data.totalPages}
             onPageChange={setPage}

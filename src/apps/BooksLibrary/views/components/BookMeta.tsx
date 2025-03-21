@@ -76,12 +76,12 @@ function BookMeta({
         <>
           <p
             className={clsx(
-              'text-bg-500 flex min-w-0 max-w-48 shrink-0 items-center whitespace-nowrap',
+              'text-bg-500 flex max-w-48 min-w-0 shrink-0 items-center whitespace-nowrap',
               isGridView ? 'w-full sm:w-auto' : 'w-auto'
             )}
           >
             <Icon className="mr-1 size-4 shrink-0" icon="tabler:user" />
-            <span className="w-full min-w-0 max-w-44 truncate">
+            <span className="w-full max-w-44 min-w-0 truncate">
               {item.publisher}
             </span>
           </p>

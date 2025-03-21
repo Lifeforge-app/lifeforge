@@ -263,7 +263,7 @@ function MiniCalendarDateItem({
         transactionCount.total > 0 && (
           <div
             className={clsx(
-              'absolute left-1/2 top-1/2 z-[-1] flex size-10 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md',
+              'absolute top-1/2 left-1/2 z-[-1] flex size-10 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md',
               getTransactionClassName(transactionCount.count)
             )}
           >

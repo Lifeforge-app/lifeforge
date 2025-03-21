@@ -26,7 +26,7 @@ function BackgroundProvider({ children }: { children: React.ReactNode }) {
     >
       {bgImage !== '' && (
         <div
-          className="absolute left-0 top-0 z-[-1] size-full"
+          className="absolute top-0 left-0 z-[-1] size-full"
           style={{
             backgroundColor: `color-mix(in oklab, var(--color-bg-${
               (theme === 'system' &&

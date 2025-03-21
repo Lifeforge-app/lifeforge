@@ -88,7 +88,7 @@ function EntryItem<T extends boolean = false>({
           </div>
           {!isCartItem && (
             <div className="shrink-0">
-              <p className="mb-2 whitespace-nowrap text-right text-sm text-zinc-500">
+              <p className="mb-2 text-right text-sm whitespace-nowrap text-zinc-500">
                 Size: {entry.size}
               </p>
               <div className="mb-1.5 grid grid-cols-5 gap-1">

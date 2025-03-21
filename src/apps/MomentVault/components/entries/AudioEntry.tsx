@@ -118,7 +118,7 @@ function AudioEntry({
           icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
           onClick={onPlayPause}
         />
-        <div className="flex w-full flex-col items-center gap-2 mr-16 *:first:w-full sm:flex-row sm:gap-4">
+        <div className="mr-16 flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-4">
           <WavesurferPlayer
             barGap={2}
             barRadius={100}
@@ -140,7 +140,7 @@ function AudioEntry({
             onPlay={() => setIsPlaying(true)}
             onReady={onReady}
           />
-          <p className="text-bg-500 w-full whitespace-nowrap text-left text-sm sm:w-auto">
+          <p className="text-bg-500 w-full text-left text-sm whitespace-nowrap sm:w-auto">
             {dayjs().startOf('day').second(currentTime).format('mm:ss')} /{' '}
             {dayjs().startOf('day').second(totalTime).format('mm:ss')}
           </p>

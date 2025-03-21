@@ -138,7 +138,7 @@ export default function ConversionRatesHistoryGraph() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 sm:flex-row flex-center">
+      <div className="flex-center flex flex-col gap-4 sm:flex-row">
         <ListboxOrComboboxInput
           buttonContent={
             <div className="flex items-center gap-2">
@@ -174,7 +174,7 @@ export default function ConversionRatesHistoryGraph() {
           ))}
         </ListboxOrComboboxInput>
         <Button
-          className="sm:w-auto w-full"
+          className="w-full sm:w-auto"
           icon="tabler:arrows-exchange"
           onClick={() => {
             setFromCurrency(toCurrency)
@@ -217,7 +217,7 @@ export default function ConversionRatesHistoryGraph() {
         </ListboxOrComboboxInput>
       </div>
 
-      <div className="relative flex-1 min-h-64 mt-4">
+      <div className="relative mt-4 min-h-64 flex-1">
         {isLoading ? (
           <div className="flex-center size-full">
             <div className="loader"></div>

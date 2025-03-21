@@ -14,7 +14,7 @@ export default function Quotes() {
   return (
     <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-6">
       <Icon
-        className="text-bg-800/10 absolute right-2 top-2 text-8xl"
+        className="text-bg-800/10 absolute top-2 right-2 text-8xl"
         icon="tabler:quote"
       />
       <Icon

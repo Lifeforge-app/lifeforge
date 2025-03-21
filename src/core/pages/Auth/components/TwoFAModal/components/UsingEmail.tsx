@@ -87,7 +87,7 @@ function UsingEmail({
   return (
     <>
       <p className="mb-6">{t('modals.twoFA.emailDescription')}</p>
-      <div className="w-full flex-center flex-col">
+      <div className="flex-center w-full flex-col">
         {otpSent ? (
           <div className="space-y-4">
             <OTPInputBox
@@ -114,7 +114,7 @@ function UsingEmail({
           <>
             <TextInput
               darker
-              className="w-full mb-4"
+              className="mb-4 w-full"
               icon="tabler:mail"
               inputMode="email"
               name="email"

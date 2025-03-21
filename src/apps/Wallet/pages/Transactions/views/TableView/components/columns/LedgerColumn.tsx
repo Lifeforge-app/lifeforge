@@ -14,7 +14,7 @@ function LedgerColumn({
     <td className="p-2 text-center">
       {ledger !== '' ? (
         <Link
-          className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
+          className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap"
           style={{
             backgroundColor: ledgers.find(l => l.id === ledger)?.color + '20',
             color: ledgers.find(l => l.id === ledger)?.color

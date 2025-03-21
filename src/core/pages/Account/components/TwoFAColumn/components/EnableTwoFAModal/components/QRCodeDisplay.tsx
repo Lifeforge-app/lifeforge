@@ -49,7 +49,7 @@ function QRCodeDisplay() {
     <>
       <div
         className={clsx(
-          'aspect-square w-full flex-center p-12 rounded-lg mt-6',
+          'flex-center mt-6 aspect-square w-full rounded-lg p-12',
           componentBgLighter
         )}
       >

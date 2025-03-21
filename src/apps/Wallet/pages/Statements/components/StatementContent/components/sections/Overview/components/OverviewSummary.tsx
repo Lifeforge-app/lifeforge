@@ -21,7 +21,7 @@ function OverviewSummary({
             .toFixed(2)}
         </p>
       </div>
-      <div className="bg-bg-200 dark:bg-bg-900 print:bg-black/[3%]! flex items-center justify-between p-3">
+      <div className="bg-bg-200 dark:bg-bg-900 flex items-center justify-between p-3 print:bg-black/[3%]!">
         <p className="text-xl">Expenses</p>
         <p className="text-lg">
           RM (

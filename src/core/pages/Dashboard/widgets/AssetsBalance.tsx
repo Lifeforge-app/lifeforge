@@ -36,7 +36,7 @@ export default function AssetsBalance() {
               <Link
                 key={asset.id}
                 className={clsx(
-                  'flex-between bg-bg-100 flex h-full gap-4 rounded-lg p-2 pl-4 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
+                  'flex-between bg-bg-100 flex h-full gap-4 rounded-lg p-2 pr-0 pl-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
                   componentBgLighterWithHover
                 )}
                 to={'/wallet/assets'}

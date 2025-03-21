@@ -12,7 +12,7 @@ function StatementHeader({ month, year }: { month: number; year: number }) {
         Lifeforge
         <span className="text-custom-500 print:text-lime-600">.</span>
       </h1>
-      <h1 className="hidden text-6xl font-bold uppercase leading-snug tracking-widest print:block">
+      <h1 className="hidden text-6xl leading-snug font-bold tracking-widest uppercase print:block">
         Personal
         <br />
         Financial Statements

@@ -32,7 +32,7 @@ function EnableTwoFAModal({
       {!otpSuccess ? (
         <div
           className={clsx(
-            'p-6 mt-6 rounded-lg shadow-custom',
+            'shadow-custom mt-6 rounded-lg p-6',
             componentBgLighter
           )}
         >

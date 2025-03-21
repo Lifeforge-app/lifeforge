@@ -72,11 +72,11 @@ function TaskItem({
       <li
         key={entry.id}
         className={clsx(
-          'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 transition-all',
+          'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pr-6 pl-5 transition-all',
           lighter ? 'bg-bg-100/50 dark:bg-bg-800' : componentBgWithHover
         )}
       >
-        <div className="flex items-center w-full min-w-0 gap-4">
+        <div className="flex w-full min-w-0 items-center gap-4">
           {typeof lists !== 'string' && entry.list !== '' && (
             <span
               className="h-10 w-1 shrink-0 rounded-full"
@@ -102,7 +102,7 @@ function TaskItem({
           }}
         />
         <button
-          className="absolute left-0 top-0 size-full"
+          className="absolute top-0 left-0 size-full"
           onClick={() => {
             if (!isInDashboardWidget) {
               setModifyTaskWindowOpenType('update')
