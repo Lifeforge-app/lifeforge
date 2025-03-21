@@ -13,7 +13,7 @@ import {
 } from 'chart.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
@@ -40,6 +40,17 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
     ['code-time', 'last-x-days', lastFor]
   )
 
+  const getDailyData = useCallback(
+    (days: string[], item: string) =>
+      days.map(
+        day =>
+          dataQuery.data?.find(e => dayjs(e.date).format('DD MMM') === day)?.[
+            type
+          ][item] || 0
+      ),
+    [dataQuery.data, type]
+  )
+
   const projectsData = useMemo(() => {
     if (!dataQuery.data && !dataQuery.isSuccess) return []
 
@@ -48,12 +59,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
       .sort()
       .map(item => ({
         label: item,
-        data: days.map(
-          day =>
-            dataQuery.data.find(e => dayjs(e.date).format('DD MMM') === day)?.[
-              type
-            ][item] || 0
-        )
+        data: getDailyData(days, item)
       }))
 
     return data

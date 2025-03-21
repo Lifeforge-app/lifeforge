@@ -22,6 +22,8 @@
 - **Code**: Fixed bugs where the locale for page title and description for subsection pages were not displayed.
 - **Code**: Migrated from `moment` to `dayjs` for date manipulation.
 - **Code**: Fully migrated from `APIFallbackComponent` to `QueryWrapper`.
+- **Code**: Refactored the code to fix all ESLint errors (except TODOs).
+- **Code**: Removed `eslint-plugin-import` from the project as it was causing issues.
 - **Wallet**: Fixed a bug where mini calendar doesn't properly set date range search params when clicked.
 - **TodoList**: Fixed bugs that arose from the recent code refactor.
 - **Calendar**: Fixed a bug where the mini calendar didn't properly parse the date.

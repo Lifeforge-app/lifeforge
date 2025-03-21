@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/use-type-alias */
 import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'

@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 import { UseQueryResult } from '@tanstack/react-query'
 import { ListResult } from 'pocketbase'
 import { useEffect } from 'react'

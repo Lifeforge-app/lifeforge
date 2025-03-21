@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/use-type-alias */
 import { UseQueryResult } from '@tanstack/react-query'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'

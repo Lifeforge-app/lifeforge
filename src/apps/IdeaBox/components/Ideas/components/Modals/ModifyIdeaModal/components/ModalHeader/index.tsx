@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
 
+import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+
 import TypeSelector from './components/TypeSelector'
 
 function ModalHeader({
@@ -15,9 +17,9 @@ function ModalHeader({
   setOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | 'paste' | null>
   >
-  innerTypeOfModifyIdea: 'text' | 'image' | 'link'
+  innerTypeOfModifyIdea: IIdeaBoxEntry['type']
   setInnerTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'text' | 'image' | 'link'>
+    React.SetStateAction<IIdeaBoxEntry['type']>
   >
 }) {
   const { t } = useTranslation('apps.ideaBox')

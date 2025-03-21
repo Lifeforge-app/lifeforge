@@ -8,6 +8,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
+import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import TextContentInput from './components/TextContentInput'
@@ -41,7 +42,7 @@ function IdeaContentInput({
   ideaTitle: string
   imageLink: string
   innerOpenType: 'create' | 'update' | 'paste' | null
-  innerTypeOfModifyIdea: 'text' | 'image' | 'link'
+  innerTypeOfModifyIdea: IIdeaBoxEntry['type']
   getInputProps: () => Record<string, unknown>
   getRootProps: () => Record<string, unknown>
   isDragActive: boolean
