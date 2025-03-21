@@ -9,7 +9,11 @@ function useAuthEffect() {
   useEffect(() => {
     if (!authLoading) {
       if (!auth && location.pathname !== '/auth') {
-        navigate('/auth?redirect=' + location.pathname + location.search)
+        navigate(
+          '/auth?redirect=' +
+            (location.pathname === '/' ? '/dashboard' : location.pathname) +
+            location.search
+        )
       } else if (auth) {
         if (location.pathname === '/auth') {
           const redirect = new URLSearchParams(location.search).get('redirect')
