@@ -3,6 +3,7 @@ import {
   CurrencyInput,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
+  TextAreaInput,
   TextInput
 } from '@lifeforge/ui'
 
@@ -83,14 +84,15 @@ function AdditionalInfoSection({
           setValue={handleChange('price')}
           value={formState.price}
         />
-        <div className="bg-bg-200/70 shadow-custom focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500 mt-4 size-full rounded-lg p-6 transition-all focus-within:ring-1">
-          <textarea
-            className="caret-custom-500 placeholder:text-bg-500 h-max min-h-32 w-full resize-none bg-transparent"
-            placeholder="Any additional notes?"
-            value={formState.notes}
-            onChange={e => handleChange('notes')(e.target.value)}
-          />
-        </div>
+        <TextAreaInput
+          darker
+          icon="tabler:pencil"
+          name="Notes"
+          namespace="apps.virtualWardrobe"
+          placeholder="Add notes here..."
+          setValue={handleChange('notes')}
+          value={formState.notes}
+        />
       </div>
       <div className="mt-6 flex justify-between">
         <Button

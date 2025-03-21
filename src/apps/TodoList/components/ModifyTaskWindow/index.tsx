@@ -12,6 +12,7 @@ import {
   HamburgerMenu,
   MenuItem,
   Scrollbar,
+  TextAreaInput,
   TextInput
 } from '@lifeforge/ui'
 
@@ -26,7 +27,6 @@ import {
   type ITodoSubtask
 } from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'
-import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
 import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
@@ -125,10 +125,6 @@ function ModifyTaskWindow() {
     } finally {
       setLoading(false)
     }
-  }
-
-  function updateNotes(event: React.FormEvent<HTMLTextAreaElement>) {
-    setNotes(event.currentTarget.value)
   }
 
   function closeWindow() {
@@ -246,7 +242,15 @@ function ModifyTaskWindow() {
             <PrioritySelector priority={priority} setPriority={setPriority} />
             <ListSelector list={list} setList={setList} />
             <TagsSelector setTags={setTags} tags={tags} />
-            <NotesInput notes={notes} updateNotes={updateNotes} />
+            <TextAreaInput
+              darker
+              icon="tabler:pencil"
+              name="Notes"
+              namespace="apps.todoList"
+              placeholder="Add notes here..."
+              setValue={setNotes}
+              value={notes}
+            />
           </div>
           <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
             <Button

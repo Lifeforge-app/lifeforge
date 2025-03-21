@@ -34,6 +34,8 @@
 - **UI**: Removed `eslint-plugin-import` from the project as it was causing issues.
 - **UI**: Fixed all the ESLint errors.
 - **UI**: Added a lot more commands in `package.json` for easier development.
+- **UI**: Created reusable `TextAreaInput`.
+- **UI**: Removed `APIFallbackComponent`.
 
 ---
 

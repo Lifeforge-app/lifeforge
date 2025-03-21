@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Button, ModalWrapper } from '@lifeforge/ui'
+import { Button, ModalHeader, ModalWrapper, TextAreaInput } from '@lifeforge/ui'
 
 function CheckoutConfirmationModal({
   isOpen,
@@ -11,26 +12,29 @@ function CheckoutConfirmationModal({
   onClose: () => void
   onConfirm: (notes: string) => Promise<void>
 }) {
+  const { t } = useTranslation('apps.virtualWardrobe')
   const [loading, setLoading] = useState(false)
   const [notes, setNotes] = useState('')
 
   return (
     <ModalWrapper isOpen={isOpen}>
-      <h1 className="text-2xl font-semibold">Before checking out...</h1>
-      <p className="text-bg-500 mt-2">
-        By clicking checkout, this set of items will be added into your wardrobe
-        history. You can view them in the &quot;Histories&quot; page.
-      </p>
-      <div className="bg-bg-200/70 shadow-custom focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500 mt-4 size-full rounded-lg p-6 transition-all focus-within:ring-1">
-        <textarea
-          className="caret-custom-500 placeholder:text-bg-500 h-max min-h-32 w-full resize-none bg-transparent"
-          placeholder="Any additional notes?"
-          value={notes}
-          onChange={e => {
-            setNotes(e.target.value)
-          }}
-        />
-      </div>
+      <ModalHeader
+        icon="tabler:shopping-cart"
+        namespace="apps.virtualWardrobe"
+        title="Checkout"
+        onClose={onClose}
+      />
+      <p className="text-bg-500 mt-2">{t('modals.checkout.desc')}</p>
+      <TextAreaInput
+        darker
+        className="mt-4"
+        icon="tabler:pencil"
+        name="Notes"
+        namespace="apps.virtualWardrobe"
+        placeholder="Add notes here..."
+        setValue={setNotes}
+        value={notes}
+      />
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button
           className="w-full"
@@ -45,6 +49,7 @@ function CheckoutConfirmationModal({
           className="w-full"
           icon="tabler:arrow-right"
           loading={loading}
+          namespace="apps.virtualWardrobe"
           onClick={() => {
             setLoading(true)
             onConfirm(notes)
