@@ -57,7 +57,7 @@ function EntryItem({
       <div className="relative">
         <div className="flex-center bg-bg-100 dark:bg-bg-800 relative aspect-[1/1.4142] w-full overflow-hidden rounded-md">
           <Icon
-            className="text-bg-300 dark:text-bg-700 absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2"
+            className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2"
             icon="mingcute:guitar-line"
           />
           <img
@@ -69,7 +69,7 @@ function EntryItem({
             }/${entry.id}/${entry.thumbnail}?thumb=500x0`}
           />
         </div>
-        <div className="bg-bg-500/80 absolute bottom-0 right-0 rounded-br-md rounded-tl-md p-1 px-2">
+        <div className="bg-bg-500/80 absolute right-0 bottom-0 rounded-tl-md rounded-br-md p-1 px-2">
           <p className="text-xs text-white">{entry.pageCount} pages</p>
         </div>
         <HamburgerMenu

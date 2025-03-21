@@ -45,7 +45,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
     >
       {entry.pinned && (
         <Icon
-          className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
+          className="absolute -top-2 -left-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
           icon="tabler:pin"
         />
       )}

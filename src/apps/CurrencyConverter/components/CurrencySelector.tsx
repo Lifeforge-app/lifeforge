@@ -54,7 +54,7 @@ function CurrencySelector({
       </div>
 
       <Button
-        className="sm:w-auto w-full"
+        className="w-full sm:w-auto"
         icon="tabler:arrows-exchange"
         onClick={handleSwapCurrencies}
       />

@@ -51,7 +51,7 @@ function DisableTwoFAModal({
       {!otpSuccess ? (
         <div
           className={clsx(
-            'p-6 mt-6 rounded-lg shadow-custom',
+            'shadow-custom mt-6 rounded-lg p-6',
             componentBgLighter
           )}
         >
@@ -66,7 +66,7 @@ function DisableTwoFAModal({
       ) : (
         <>
           <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
-          <div className="flex gap-2 w-full mt-6 sm:flex-row flex-col-reverse">
+          <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
             <Button className="sm:w-1/2" icon="" onClick={onClose}>
               Cancel
             </Button>

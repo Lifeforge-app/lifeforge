@@ -80,16 +80,16 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                 <th className="w-full p-3 text-left text-lg font-medium">
                   Assets
                 </th>
-                <th className="whitespace-nowrap p-3 text-lg font-medium">
+                <th className="p-3 text-lg font-medium whitespace-nowrap">
                   {dayjs()
                     .month(month - 1)
                     .format('MMM YYYY')}
                 </th>
-                <th className="whitespace-nowrap p-3 text-lg font-medium">
+                <th className="p-3 text-lg font-medium whitespace-nowrap">
                   {dayjs().month(month).format('MMM YYYY')}
                 </th>
                 <th
-                  className="whitespace-nowrap p-3 text-lg font-medium"
+                  className="p-3 text-lg font-medium whitespace-nowrap"
                   colSpan={2}
                 >
                   Change
@@ -131,15 +131,15 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
 
                       return (
                         <>
-                          <td className="whitespace-nowrap p-3 text-right text-lg">
+                          <td className="p-3 text-right text-lg whitespace-nowrap">
                             {lastMonthAmount.toFixed(2)}
                           </td>
-                          <td className="whitespace-nowrap p-3 text-right text-lg">
+                          <td className="p-3 text-right text-lg whitespace-nowrap">
                             {thatMonthAmount.toFixed(2)}
                           </td>
                           <td
                             className={clsx(
-                              'whitespace-nowrap p-3 text-right text-lg',
+                              'p-3 text-right text-lg whitespace-nowrap',
                               thatMonthAmount - lastMonthAmount < 0 &&
                                 'text-rose-600'
                             )}
@@ -152,7 +152,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                           </td>
                           <td
                             className={clsx(
-                              'whitespace-nowrap p-3 text-right text-lg',
+                              'p-3 text-right text-lg whitespace-nowrap',
                               thatMonthAmount - lastMonthAmount < 0 &&
                                 'text-rose-600'
                             )}
@@ -222,7 +222,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                   return (
                     <>
                       <td
-                        className="whitespace-nowrap p-3 text-right text-lg font-medium"
+                        className="p-3 text-right text-lg font-medium whitespace-nowrap"
                         style={{
                           borderTop: '2px solid',
                           borderBottom: '6px double'
@@ -231,7 +231,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                         {lastMonthAmount.toFixed(2)}
                       </td>
                       <td
-                        className="whitespace-nowrap p-3 text-right text-lg font-medium"
+                        className="p-3 text-right text-lg font-medium whitespace-nowrap"
                         style={{
                           borderTop: '2px solid',
                           borderBottom: '6px double'
@@ -241,7 +241,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       </td>
                       <td
                         className={clsx(
-                          'whitespace-nowrap p-3 text-right text-lg font-medium',
+                          'p-3 text-right text-lg font-medium whitespace-nowrap',
                           thatMonthAmount - lastMonthAmount < 0 &&
                             'text-rose-600'
                         )}
@@ -258,7 +258,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       </td>
                       <td
                         className={clsx(
-                          'whitespace-nowrap p-3 text-right text-lg font-medium',
+                          'p-3 text-right text-lg font-medium whitespace-nowrap',
                           thatMonthAmount - lastMonthAmount < 0 &&
                             'text-rose-600'
                         )}

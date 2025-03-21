@@ -4,7 +4,7 @@ import TransactionsSummary from './components/TransactionsSummary'
 function Transactions({ month, year }: { month: number; year: number }) {
   return (
     <>
-      <h2 className="mt-16 text-3xl font-semibold uppercase tracking-widest">
+      <h2 className="mt-16 text-3xl font-semibold tracking-widest uppercase">
         <span className="text-custom-500 print:text-lime-600">02. </span>
         Transactions
       </h2>

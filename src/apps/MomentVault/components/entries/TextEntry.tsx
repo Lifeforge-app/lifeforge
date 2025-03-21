@@ -22,7 +22,7 @@ function TextEntry({
   return (
     <div
       className={clsx(
-        'shadow-custom w-full relative rounded-md gap-6 p-6',
+        'shadow-custom relative w-full gap-6 rounded-md p-6',
         componentBg
       )}
       id={`audio-entry-${entry.id}`}

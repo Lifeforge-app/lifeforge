@@ -10,7 +10,7 @@ function CurrencyInputSection({
   setAmount
 }: CurrencyInputSectionProps) {
   return (
-    <div className="mb-6 mt-6">
+    <div className="mt-6 mb-6">
       <CurrencyInput
         darker
         required

@@ -22,12 +22,12 @@ function Overview({ month, year }: { month: number; year: number }) {
 
   return (
     <>
-      <h2 className="mt-16 text-3xl font-semibold uppercase tracking-widest">
+      <h2 className="mt-16 text-3xl font-semibold tracking-widest uppercase">
         <span className="text-custom-500 print:text-lime-600">01. </span>
         Overview
       </h2>
       <OverviewSummary filteredTransactions={filteredTransactions} />
-      <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
+      <h2 className="mt-16 text-2xl font-semibold tracking-widest uppercase">
         <span>1.1 </span>
         Assets
       </h2>

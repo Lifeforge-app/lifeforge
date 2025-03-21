@@ -18,14 +18,14 @@ function VideoInfo({ videoInfo }: VideoInfoProps) {
       namespace="apps.youtubeSummarizer"
       title="Video Info"
     >
-      <div className="flex md:items-center md:flex-row flex-col gap-6">
-        <div className="md:w-64 w-full border-bg-800 relative shrink-0 overflow-hidden rounded-md border">
+      <div className="flex flex-col gap-6 md:flex-row md:items-center">
+        <div className="border-bg-800 relative w-full shrink-0 overflow-hidden rounded-md border md:w-64">
           <img
             alt=""
             className="size-full object-cover"
             src={videoInfo.thumbnail}
           />
-          <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5">
+          <p className="bg-bg-900/70 text-bg-50 absolute right-2 bottom-2 rounded-md px-1.5 py-0.5">
             {dayjs
               .duration(+videoInfo.duration, 'second')
               .format(+videoInfo.duration > 3600 ? 'h:mm:ss' : 'm:ss')}

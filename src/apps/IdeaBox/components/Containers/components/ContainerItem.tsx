@@ -83,7 +83,7 @@ function ContainerItem({
         </div>
       </div>
       <Link
-        className="absolute left-0 top-0 size-full"
+        className="absolute top-0 left-0 size-full"
         to={`/idea-box/${container.id}`}
       />
       <HamburgerMenu

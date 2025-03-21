@@ -20,7 +20,7 @@ function IdeaAndFolderList() {
   } = useIdeaBoxContext()
 
   return (
-    <div className="mb-20 mt-6">
+    <div className="mt-6 mb-20">
       {debouncedSearchQuery.trim().length === 0 && selectedTags.length === 0 ? (
         <QueryWrapper query={entriesQuery}>
           {data => (

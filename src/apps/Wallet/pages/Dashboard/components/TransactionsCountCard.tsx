@@ -114,7 +114,7 @@ function TransactionsCountCard() {
                   <div className="flex w-full flex-row items-center justify-between sm:w-auto sm:flex-col sm:items-end">
                     <div
                       className={clsx(
-                        'flex gap-2 whitespace-nowrap text-right font-medium',
+                        'flex gap-2 text-right font-medium whitespace-nowrap',
                         isAmountHidden ? 'items-center' : 'items-end'
                       )}
                     >

@@ -78,7 +78,7 @@ function Assets() {
         {assets => (
           <>
             {assets.length > 0 ? (
-              <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-6 mb-24 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
                 {assets.map(asset => (
                   <AssetItem
                     key={asset.id}

@@ -61,11 +61,11 @@ function CodeTimeStatistics() {
                       }
                     />
                   </div>
-                  <div className="text-bg-500 whitespace-nowrap text-lg">
+                  <div className="text-bg-500 text-lg whitespace-nowrap">
                     {t(`statisticType.${_.camelCase(key)}`)}
                   </div>
                 </div>
-                <div className="mt-2 whitespace-nowrap text-4xl font-semibold">
+                <div className="mt-2 text-4xl font-semibold whitespace-nowrap">
                   {index < 3 ? (
                     <HoursAndMinutesFromSeconds seconds={value} />
                   ) : (

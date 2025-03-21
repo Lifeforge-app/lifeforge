@@ -57,7 +57,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
         <p className="text-sm font-medium">{OGQuery.data.ogTitle}</p>
       )}
       {OGQuery.data.ogDescription !== undefined && (
-        <p className="text-bg-500 mt-2 break-words text-xs">
+        <p className="text-bg-500 mt-2 text-xs break-words">
           {OGQuery.data.ogDescription}
         </p>
       )}

@@ -79,7 +79,7 @@ function PasswordEntryITem({
     >
       {password.pinned && (
         <Icon
-          className="text-custom-500 absolute left-0 top-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90"
+          className="text-custom-500 absolute top-0 left-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90"
           icon="tabler:pin-filled"
         />
       )}
@@ -124,7 +124,7 @@ function PasswordEntryITem({
             )}
           </p>
           <Button
-            className="p-2! hidden sm:flex"
+            className="hidden p-2! sm:flex"
             icon={(() => {
               if (loading) {
                 return 'svg-spinners:180-ring'
@@ -154,7 +154,7 @@ function PasswordEntryITem({
             }}
           />
           <Button
-            className="p-2! hidden sm:flex"
+            className="hidden p-2! sm:flex"
             icon="tabler:copy"
             loading={copyLoading}
             variant="plain"

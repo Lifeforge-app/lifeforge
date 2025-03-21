@@ -56,13 +56,13 @@ function ProjectKanban() {
           <Scrollbar>
             <div
               ref={containerRef}
-              className="mb-8 mt-6 flex h-full min-h-0 min-w-0 flex-1 gap-4"
+              className="mt-6 mb-8 flex h-full min-h-0 min-w-0 flex-1 gap-4"
             >
               {columns.map((column, id) => (
                 <div
                   key={id}
                   className={clsx(
-                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4',
+                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pr-4 pb-0',
                     componentBg
                   )}
                   style={{

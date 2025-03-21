@@ -15,7 +15,7 @@ function UsingAuthApp({
   return (
     <>
       <p className="mb-6">{t('modals.twoFA.description')}</p>
-      <div className="w-full flex-center flex-col">
+      <div className="flex-center w-full flex-col">
         <OTPInputBox
           buttonFullWidth
           lighter
