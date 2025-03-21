@@ -18,6 +18,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import AddEntryModal from './components/AddEntryModal'
 import EntryList from './components/EntryList'
+import ModifyTextEntryModal from './components/ModifyTextEntryModal'
 
 function MomentVault() {
   const { t } = useTranslation('apps.momentVault')
@@ -34,6 +35,8 @@ function MomentVault() {
     deleteEntryConfirmationModalOpen,
     setDeleteEntryConfirmationModalOpen
   ] = useState(false)
+  const [modifyTextEntryModalOpen, setModifyTextEntryModalOpen] =
+    useState(false)
 
   return (
     <ModuleWrapper>
@@ -101,6 +104,10 @@ function MomentVault() {
           setExistedData(data)
           setDeleteEntryConfirmationModalOpen(true)
         }}
+        onTextEntryEdit={(data: IMomentVaultEntry) => {
+          setExistedData(data)
+          setModifyTextEntryModalOpen(true)
+        }}
       />
       <Menu>
         <FAB as={MenuButton} hideWhen="md" />
@@ -149,6 +156,15 @@ function MomentVault() {
         setOpenType={setAddEntryModalOpenType}
         onClose={() => {
           setAddEntryModalOpenType(null)
+        }}
+      />
+      <ModifyTextEntryModal
+        existedEntry={existedData ?? undefined}
+        isOpen={modifyTextEntryModalOpen}
+        onClose={() => setModifyTextEntryModalOpen(false)}
+        onSuccess={() => {
+          setModifyTextEntryModalOpen(false)
+          dataQuery.refetch()
         }}
       />
       <DeleteConfirmationModal

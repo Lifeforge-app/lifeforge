@@ -119,7 +119,7 @@
 - **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.
 - **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.
 - **Code Time**: Introduced time charts to track project and language usage trends.
-- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.
+- **API Keys**: Moved this module from the "Settings" section to the "Confidential" section for better organization.
 - **API Keys**: Added a copy button for API keys, enhancing usability.
 - **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.
 - **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.

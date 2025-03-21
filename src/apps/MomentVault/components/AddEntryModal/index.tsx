@@ -1,7 +1,7 @@
-/* eslint-disable sonarjs/no-small-switch */
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   DeleteConfirmationModal,
@@ -12,26 +12,23 @@ import {
 } from '@lifeforge/ui'
 
 import AudioType from './components/AudioType'
+import TextType from './components/TextType'
 
 const TYPES = [
   {
     id: 'text',
-    name: 'Text',
     icon: 'tabler:file-text'
   },
   {
     id: 'audio',
-    name: 'Audio',
     icon: 'tabler:microphone'
   },
   {
     id: 'photo',
-    name: 'Photo',
     icon: 'tabler:photo'
   },
   {
     id: 'video',
-    name: 'Video',
     icon: 'tabler:video'
   }
 ]
@@ -47,6 +44,7 @@ function AddEntryModal({
   setOpenType: (type: 'text' | 'audio' | 'photo' | 'video' | null) => void
   onClose: () => void
 }) {
+  const { t } = useTranslation('apps.momentVault')
   const queryClient = useQueryClient()
   const [overwriteAudioWarningModalOpen, setOverwriteAudioWarningModalOpen] =
     useState(false)
@@ -79,7 +77,7 @@ function AddEntryModal({
                   icon={TYPES.find(l => l.id === openType)?.icon ?? ''}
                 />
                 <span className="-mt-px block truncate">
-                  {TYPES.find(l => l.id === openType)?.name ?? 'None'}
+                  {t(`entryTypes.${TYPES.find(l => l.id === openType)?.id}`)}
                 </span>
               </>
             }
@@ -90,11 +88,11 @@ function AddEntryModal({
             type="listbox"
             value={openType}
           >
-            {TYPES.map(({ name, id, icon }, i) => (
+            {TYPES.map(({ id, icon }, i) => (
               <ListboxOrComboboxOption
                 key={i}
                 icon={icon}
-                text={name}
+                text={t(`entryTypes.${id}`)}
                 value={id}
               />
             ))}
@@ -111,6 +109,17 @@ function AddEntryModal({
                     }
                     setTranscription={setTranscription}
                     transcription={transcription}
+                    onSuccess={() => {
+                      onClose()
+                      queryClient.invalidateQueries({
+                        queryKey: entriesQueryKey
+                      })
+                    }}
+                  />
+                )
+              case 'text':
+                return (
+                  <TextType
                     onSuccess={() => {
                       onClose()
                       queryClient.invalidateQueries({
