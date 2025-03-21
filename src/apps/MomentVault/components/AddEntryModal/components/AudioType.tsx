@@ -21,7 +21,7 @@ function AudioType({
   setTranscription,
   setOverwriteAudioWarningModalOpen
 }: {
-  onSuccess: (data: IMomentVaultEntry) => void
+  onSuccess: () => void
   audioURL: string | null
   setAudioURL: (url: string | null) => void
   transcription: string | null
@@ -144,14 +144,12 @@ function AudioType({
     body.append('transcription', transcription ?? '')
 
     try {
-      const data = await fetchAPI<IMomentVaultEntry>('moment-vault/entries', {
+      await fetchAPI<IMomentVaultEntry>('moment-vault/entries', {
         method: 'POST',
         body
       })
 
-      setAudioURL(null)
-      setTranscription(null)
-      onSuccess(data)
+      onSuccess()
     } catch {
       toast.error(t('fetch.fetchError'))
     } finally {

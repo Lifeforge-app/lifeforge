@@ -25,7 +25,7 @@ function AudioEntry({
 }: {
   entriesQueryKey: unknown[]
   entry: IMomentVaultEntry
-  onDelete: (data: IMomentVaultEntry) => void
+  onDelete: () => void
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
 }) {
   const {
@@ -106,7 +106,10 @@ function AudioEntry({
 
   return (
     <div
-      className={clsx('shadow-custom w-full rounded-md p-4', componentBg)}
+      className={clsx(
+        'shadow-custom relative w-full rounded-md p-6',
+        componentBg
+      )}
       id={`audio-entry-${entry.id}`}
     >
       <div className="flex items-center gap-4">
@@ -115,7 +118,7 @@ function AudioEntry({
           icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
           onClick={onPlayPause}
         />
-        <div className="flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-4">
+        <div className="flex w-full flex-col items-center gap-2 mr-16 *:first:w-full sm:flex-row sm:gap-4">
           <WavesurferPlayer
             barGap={2}
             barRadius={100}
@@ -142,26 +145,6 @@ function AudioEntry({
             {dayjs().startOf('day').second(totalTime).format('mm:ss')}
           </p>
         </div>
-        <HamburgerMenu>
-          {entry.transcription === '' && (
-            <MenuItem
-              preventDefault
-              icon="tabler:file-text"
-              loading={transcriptionLoading}
-              namespace="apps.momentVault"
-              text="Transcribe to Text"
-              onClick={(_, close) => {
-                addTranscription().then(close).catch(console.error)
-              }}
-            />
-          )}
-          <MenuItem
-            isRed
-            icon="tabler:trash"
-            text="Delete"
-            onClick={() => onDelete(entry)}
-          />
-        </HamburgerMenu>
       </div>
       {entry.transcription && (
         <div className="border-custom-500 mt-6 border-l-4 pl-4">
@@ -171,6 +154,21 @@ function AudioEntry({
       <p className="text-bg-500 mt-4 flex items-center gap-2">
         <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
       </p>
+      <HamburgerMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
+        {entry.transcription === '' && (
+          <MenuItem
+            preventDefault
+            icon="tabler:file-text"
+            loading={transcriptionLoading}
+            namespace="apps.momentVault"
+            text="Transcribe to Text"
+            onClick={(_, close) => {
+              addTranscription().then(close).catch(console.error)
+            }}
+          />
+        )}
+        <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
+      </HamburgerMenu>
     </div>
   )
 }
