@@ -7,19 +7,22 @@ import { Pagination, QueryWrapper } from '@lifeforge/ui'
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import AudioEntry from './entries/AudioEntry'
+import TextEntry from './entries/TextEntry'
 
 function EntryList({
   dataQuery,
   page,
   setPage,
   onDelete,
-  addEntryModalOpenType
+  addEntryModalOpenType,
+  onTextEntryEdit
 }: {
   dataQuery: UseQueryResult<ListResult<IMomentVaultEntry>>
   page: number
   setPage: (page: number) => void
   onDelete: (data: IMomentVaultEntry) => void
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
+  onTextEntryEdit: (data: IMomentVaultEntry) => void
 }) {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLDivElement>('.pagination')
@@ -41,15 +44,30 @@ function EntryList({
             onPageChange={setPage}
           />
           <div className="space-y-4">
-            {data.items.map(entry => (
-              <AudioEntry
-                key={entry.id}
-                addEntryModalOpenType={addEntryModalOpenType}
-                entriesQueryKey={['moment-vault', 'entries', page]}
-                entry={entry}
-                onDelete={onDelete}
-              />
-            ))}
+            {data.items.map(entry => {
+              if (entry.type === 'audio') {
+                return (
+                  <AudioEntry
+                    key={entry.id}
+                    addEntryModalOpenType={addEntryModalOpenType}
+                    entriesQueryKey={['moment-vault', 'entries', page]}
+                    entry={entry}
+                    onDelete={() => onDelete(entry)}
+                  />
+                )
+              }
+
+              if (entry.type === 'text') {
+                return (
+                  <TextEntry
+                    key={entry.id}
+                    entry={entry}
+                    onDelete={() => onDelete(entry)}
+                    onEdit={() => onTextEntryEdit(entry)}
+                  />
+                )
+              }
+            })}
           </div>
           <Pagination
             className="pagination mb-24 mt-6 md:mb-6"
