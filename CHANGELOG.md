@@ -29,6 +29,7 @@
 - **Calendar**: Fixed a bug where the mini calendar didn't properly parse the date.
 - **Youtube Summarizer**: Created and completed this module.
 - **Currency Converter**: Created and completed this module.
+- **BooksLibrary**: Added a button beside the search bar to scan barcode.
 - **UI**: Created Github workflow for automatic deployment and versioning.
 - **UI**: Fixed a bug where sidebar item with subsections collapse the sidebar when clicked in mobile view.
 - **UI**: Removed `eslint-plugin-import` from the project as it was causing issues.
@@ -36,6 +37,7 @@
 - **UI**: Added a lot more commands in `package.json` for easier development.
 - **UI**: Created reusable `TextAreaInput` and fixed some minor issues with it.
 - **UI**: Removed `APIFallbackComponent`.
+- **UI**: Added `formats` prop to `QRCodeScanner` to allow for scanning different QR code formats.
 
 ---
 

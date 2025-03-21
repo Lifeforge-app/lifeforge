@@ -9,10 +9,7 @@ import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import {
-  IIdeaBoxEntry,
-  type IIdeaBoxFolder
-} from '../../../../../../../interfaces/ideabox_interfaces'
+import { type IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
 import FolderContextMenu from './FolderContextMenu'
 
 interface FolderItemProps {
@@ -94,18 +91,16 @@ function FolderItem({ folder }: FolderItemProps) {
       await fetchAPI(`idea-box/${type}s/move/${targetId}?target=${folder.id}`, {
         method: 'POST'
       })
-      queryClient.setQueryData(
-        (
+      queryClient.invalidateQueries({
+        queryKey: (
           [
             'idea-box',
             type === 'idea' ? 'ideas' : 'folders',
             id,
             path
           ] as unknown[]
-        ).concat(type === 'idea' ? [false] : []),
-        (prev: IIdeaBoxEntry[] | IIdeaBoxFolder[]) =>
-          prev.filter(item => item.id !== targetId)
-      )
+        ).concat(type === 'idea' ? [false] : [])
+      })
     } catch {
       toast.error('Failed to move item')
     }
@@ -116,10 +111,9 @@ function FolderItem({ folder }: FolderItemProps) {
       await fetchAPI(`idea-box/folders/move/${folder.id}`, {
         method: 'DELETE'
       })
-      queryClient.setQueryData(
-        ['idea-box', 'folders', id, path],
-        (prev: IIdeaBoxFolder[]) => prev.filter(f => f.id !== folder.id)
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['idea-box', 'folders', id, path]
+      })
     } catch {
       toast.error('Failed to remove item from folder')
     }
