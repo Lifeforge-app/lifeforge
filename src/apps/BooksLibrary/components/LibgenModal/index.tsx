@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalWrapper,
   Pagination,
+  QRCodeScanner,
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
@@ -35,6 +36,7 @@ function LibgenModal() {
   const [totalPages, setTotalPages] = useState(0)
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
   const [addToLibraryFor, setAddToLibraryFor] = useState<string | null>(null)
+  const [qrcodeScannerOpen, setQrcodeScannerOpen] = useState(false)
 
   async function fetchBookResults(page: number) {
     setLoading(true)
@@ -110,11 +112,15 @@ function LibgenModal() {
                 namespace="apps.booksLibrary"
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+                sideButtonIcon="tabler:scan"
                 stuffToSearch="Libgen Book"
                 onKeyUp={e => {
                   if (e.key === 'Enter') {
                     searchBooks().catch(console.error)
                   }
+                }}
+                onSideButtonClick={() => {
+                  setQrcodeScannerOpen(true)
                 }}
               />
               <Button
@@ -206,6 +212,17 @@ function LibgenModal() {
         md5={addToLibraryFor}
         onClose={() => {
           setAddToLibraryFor(null)
+        }}
+      />
+      <QRCodeScanner
+        formats={['linear_codes']}
+        isOpen={qrcodeScannerOpen}
+        onClose={() => {
+          setQrcodeScannerOpen(false)
+        }}
+        onScanned={data => {
+          setSearchQuery(data)
+          setQrcodeScannerOpen(false)
         }}
       />
     </>
