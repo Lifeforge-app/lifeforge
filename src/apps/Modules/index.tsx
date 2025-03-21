@@ -53,7 +53,7 @@ function Modules() {
             route =>
               route.items.filter(route => route.togglable).length > 0 && (
                 <li key={route.title}>
-                  <h2 className="before:bg-custom-500 relative mb-6 pl-4 text-3xl font-semibold before:absolute before:left-0 before:top-1/2 before:h-8 before:w-1 before:-translate-y-1/2 before:rounded-full">
+                  <h2 className="before:bg-custom-500 relative mb-6 pl-4 text-3xl font-semibold before:absolute before:top-1/2 before:left-0 before:h-8 before:w-1 before:-translate-y-1/2 before:rounded-full">
                     {t(`categories.${_.camelCase(route.title)}`)}
                   </h2>
                   <ul className="space-y-2">

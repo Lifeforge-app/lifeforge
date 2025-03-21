@@ -67,7 +67,7 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
                     {transaction.amount.toFixed(2)}
                   </span>
                 </div>
-                <div className="text-bg-500 whitespace-nowrap text-right text-sm">
+                <div className="text-bg-500 text-right text-sm whitespace-nowrap">
                   {dayjs(transaction.date).format('MMM DD, YYYY')}
                 </div>
               </div>

@@ -37,7 +37,7 @@ function MovieList({
   }
 
   return (
-    <div className="mb-24 mt-6 space-y-4 md:mb-6">
+    <div className="mt-6 mb-24 space-y-4 md:mb-6">
       {data.map(item => (
         <MovieItem
           key={item.id}

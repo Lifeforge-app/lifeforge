@@ -41,7 +41,7 @@ function WishlistListItem({
         <p className="text-bg-500 min-w-0">{list.description}</p>
       </div>
       <div className="text-right">
-        <div className="flex-between text-bg-500 whitespace-nowrap text-sm">
+        <div className="flex-between text-bg-500 text-sm whitespace-nowrap">
           <p>{list.bought_count} bought</p>
           <p>{list.item_count} items</p>
         </div>

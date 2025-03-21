@@ -45,16 +45,16 @@ function ConversionResult({
           <div className="flex-center flex-wrap gap-2 text-3xl font-bold">
             <div className="flex-center gap-2">
               <Icon
-                className="text-2xl mr-1"
+                className="mr-1 text-2xl"
                 icon={`circle-flags:${currencies.find(c => c.code === fromCurrency)?.country.toLowerCase()}`}
               />
               <span>{parseFloat(amount).toLocaleString()}</span>
               <span className="text-bg-500">{fromCurrency}</span>
             </div>
-            <span className="mx-4 block md:w-auto w-full">=</span>
+            <span className="mx-4 block w-full md:w-auto">=</span>
             <div className="flex-center gap-2">
               <Icon
-                className="text-2xl mr-1"
+                className="mr-1 text-2xl"
                 icon={`circle-flags:${currencies.find(c => c.code === toCurrency)?.country.toLowerCase()}`}
               />
               <span>

@@ -34,7 +34,7 @@ function SectionCard({
               <span className="text-bg-500 text-lg">
                 {camelCaseToTitleCase(k)}
               </span>
-              <span className="text-bg-500 w-1/2 break-all text-lg">
+              <span className="text-bg-500 w-1/2 text-lg break-all">
                 {(() => {
                   if (typeof v === 'object') {
                     return (
@@ -74,7 +74,7 @@ function SectionCard({
                 <span className="text-bg-500 text-lg">
                   {camelCaseToTitleCase(k)}
                 </span>
-                <span className="text-bg-500 w-1/2 break-all text-lg">
+                <span className="text-bg-500 w-1/2 text-lg break-all">
                   {(k.includes('byte') &&
                     // @ts-expect-error - uhh lazy to fix for now =)
                     prettyBytes(+v)) ||

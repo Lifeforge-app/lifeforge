@@ -67,7 +67,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
         componentBgWithHover
       )}
     >
-      <div className="absolute right-3 top-4 z-20 flex">
+      <div className="absolute top-4 right-3 z-20 flex">
         <Button
           className={clsx('p-2!', item.is_favourite && 'text-red-500!')}
           icon={(() => {

@@ -16,7 +16,7 @@ function TableView({ categories }: { categories: IWalletCategory[] }) {
   return (
     <QueryWrapper query={transactionsQuery}>
       {transactions => (
-        <table className="text-base! hidden w-full lg:table">
+        <table className="hidden w-full text-base! lg:table">
           <thead>
             <tr className="border-bg-200 text-bg-500 dark:border-bg-800 border-b-2 text-center text-base">
               {['date', 'type', 'particulars', 'category', 'amount'].map(
@@ -41,7 +41,7 @@ function TableView({ categories }: { categories: IWalletCategory[] }) {
                   key={transaction.id}
                   className="border-bg-200 dark:border-bg-800 border-b"
                 >
-                  <td className="whitespace-nowrap py-2 text-center">
+                  <td className="py-2 text-center whitespace-nowrap">
                     {dayjs(transaction.date).format('MMM DD')}
                   </td>
                   <td className="py-4 text-center">
@@ -66,7 +66,7 @@ function TableView({ categories }: { categories: IWalletCategory[] }) {
                   <td className="py-2 text-center">
                     {transaction.category !== '' ? (
                       <Link
-                        className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
+                        className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap"
                         style={{
                           backgroundColor:
                             categories.find(

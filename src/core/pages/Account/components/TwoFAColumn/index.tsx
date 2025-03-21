@@ -21,7 +21,7 @@ function TwoFAColumn() {
         icon="tabler:lock-access"
         title={t('settings.title.twoFA')}
       >
-        <div className="w-full flex items-center justify-between gap-4">
+        <div className="flex w-full items-center justify-between gap-4">
           <span className="text-bg-500">
             {userData.twoFAEnabled ? 'Enabled' : 'Disabled'}
           </span>

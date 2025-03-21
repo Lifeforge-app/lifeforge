@@ -30,7 +30,7 @@ function TMDBResultItem({
     >
       <div className="bg-bg-200 dark:bg-bg-800 relative isolate h-48 w-32 shrink-0">
         <Icon
-          className="text-bg-300 dark:text-bg-700 size-18 absolute left-1/2 top-1/2 z-[-1] -translate-x-1/2 -translate-y-1/2 transform"
+          className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-18 -translate-x-1/2 -translate-y-1/2 transform"
           icon="tabler:movie"
         />
         <img

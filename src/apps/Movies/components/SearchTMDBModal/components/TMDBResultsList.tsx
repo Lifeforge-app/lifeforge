@@ -36,7 +36,7 @@ function TMDBResultsList({
   return (
     <>
       <Pagination
-        className="mb-4 mt-6"
+        className="mt-6 mb-4"
         currentPage={page}
         totalPages={results.total_pages}
         onPageChange={setPage}

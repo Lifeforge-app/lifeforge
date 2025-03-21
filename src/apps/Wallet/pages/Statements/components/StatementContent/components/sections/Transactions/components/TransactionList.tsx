@@ -19,7 +19,7 @@ function TransactionList({
 
   return (
     <>
-      <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
+      <h2 className="mt-16 text-2xl font-semibold tracking-widest uppercase">
         <span>
           2.
           {['income', 'expenses', 'transfer'].indexOf(type) + 1}{' '}
@@ -30,32 +30,32 @@ function TransactionList({
         <table className="mt-6 w-full">
           <thead>
             <tr className="bg-custom-500 text-white print:bg-lime-600">
-              <th className="whitespace-nowrap p-3 text-lg font-medium">
+              <th className="p-3 text-lg font-medium whitespace-nowrap">
                 Date
               </th>
               <th className="w-full p-3 text-left text-lg font-medium">
                 Particular
               </th>
-              <th className="whitespace-nowrap p-3 text-lg font-medium">
+              <th className="p-3 text-lg font-medium whitespace-nowrap">
                 Asset
               </th>
               {type !== 'transfer' && (
-                <th className="whitespace-nowrap p-3 text-lg font-medium">
+                <th className="p-3 text-lg font-medium whitespace-nowrap">
                   Category
                 </th>
               )}
-              <th className="whitespace-nowrap p-3 text-lg font-medium">
+              <th className="p-3 text-lg font-medium whitespace-nowrap">
                 Amount
               </th>
             </tr>
             <tr className="bg-zinc-800 text-white print:bg-black/70">
-              <th className="whitespace-nowrap p-3 text-lg font-medium"></th>
+              <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
               <th className="w-full p-3 text-left text-lg font-medium"></th>
-              <th className="whitespace-nowrap p-3 text-lg font-medium"></th>
+              <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
               {type !== 'transfer' && (
-                <th className="whitespace-nowrap p-3 text-lg font-medium"></th>
+                <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
               )}
-              <th className="whitespace-nowrap p-3 text-lg font-medium">RM</th>
+              <th className="p-3 text-lg font-medium whitespace-nowrap">RM</th>
             </tr>
           </thead>
           <tbody>
@@ -72,7 +72,7 @@ function TransactionList({
                   key={transaction.id}
                   className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]"
                 >
-                  <td className="whitespace-nowrap p-3 text-lg">
+                  <td className="p-3 text-lg whitespace-nowrap">
                     {((type === 'transfer' && index % 2 === 0) ||
                       type !== 'transfer') &&
                       dayjs(transaction.date).format('MMM DD')}
@@ -81,7 +81,7 @@ function TransactionList({
                     {transaction.particulars}
                   </td>
 
-                  <td className="whitespace-nowrap p-3 text-lg">
+                  <td className="p-3 text-lg whitespace-nowrap">
                     {typeof assets !== 'string' && (
                       <div className="flex items-center gap-2">
                         <Icon
@@ -101,7 +101,7 @@ function TransactionList({
                     )}
                   </td>
                   {type !== 'transfer' && (
-                    <td className="whitespace-nowrap p-3 text-lg">
+                    <td className="p-3 text-lg whitespace-nowrap">
                       {typeof categories !== 'string' && (
                         <div className="flex items-center gap-2">
                           <Icon
@@ -128,7 +128,7 @@ function TransactionList({
                       )}
                     </td>
                   )}
-                  <td className="whitespace-nowrap p-3 text-right text-lg">
+                  <td className="p-3 text-right text-lg whitespace-nowrap">
                     {transaction.side === 'credit'
                       ? `(${transaction.amount.toFixed(2)})`
                       : transaction.amount.toFixed(2)}
@@ -137,13 +137,13 @@ function TransactionList({
               ))}
             <tr className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]">
               <td
-                className="whitespace-nowrap p-3 text-left text-xl font-semibold"
+                className="p-3 text-left text-xl font-semibold whitespace-nowrap"
                 colSpan={type !== 'transfer' ? 4 : 3}
               >
                 Total {type.charAt(0).toUpperCase() + type.slice(1)}
               </td>
               <td
-                className="whitespace-nowrap p-3 text-right text-lg font-medium"
+                className="p-3 text-right text-lg font-medium whitespace-nowrap"
                 style={{
                   borderTop: '2px solid',
                   borderBottom: '6px double'

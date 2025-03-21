@@ -36,7 +36,7 @@ function TagChip({ text }: { text: string }) {
   return (
     <div
       className={clsx(
-        'shadow-xs flex items-center rounded-full px-3 py-1 text-sm',
+        'flex items-center rounded-full px-3 py-1 text-sm shadow-xs',
         tagColor
       )}
       style={{

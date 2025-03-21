@@ -19,7 +19,7 @@ function AssetColumn({
     <td className="p-2 text-center">
       <Link
         className={clsx(
-          'text-bg-500 dark:text-bg-400! inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm',
+          'text-bg-500 dark:text-bg-400! inline-flex w-min items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap',
           componentBgLighter
         )}
         to={`/wallet/transactions?asset=${asset}`}

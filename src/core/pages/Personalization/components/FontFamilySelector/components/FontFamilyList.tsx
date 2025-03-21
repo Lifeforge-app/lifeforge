@@ -25,7 +25,7 @@ function FontFamilyList({
   const { t } = useTranslation('core.personalization')
 
   if (enabled === 'loading') {
-    return <Icon className="size-6 text-bg-500" icon="svg-spinners:180-ring" />
+    return <Icon className="text-bg-500 size-6" icon="svg-spinners:180-ring" />
   }
 
   if (enabled) {
@@ -39,7 +39,7 @@ function FontFamilyList({
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'shadow-custom outline-hidden focus:outline-hidden flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left transition-all',
+              'shadow-custom flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden',
               componentBgWithHover
             )}
           >
@@ -62,7 +62,7 @@ function FontFamilyList({
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
+            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
             {allFonts.map(({ family }) => (
               <FontFamilyItem key={family} family={family} />
@@ -86,7 +86,7 @@ function FontFamilyList({
         <p className="text-bg-500 max-w-84">
           {t('fontFamily.disabled.tooltip')}{' '}
           <a
-            className="font-medium underline text-custom-500 decoration-custom-500 decoration-2"
+            className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
             href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#font-family"
             rel="noopener noreferrer"
             target="_blank"

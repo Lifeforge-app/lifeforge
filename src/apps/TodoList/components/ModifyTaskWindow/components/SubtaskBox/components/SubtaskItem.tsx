@@ -109,12 +109,12 @@ function SubtaskItem({
         opacity
       }}
     >
-      <div className="flex items-center gap-2 w-full">
+      <div className="flex w-full items-center gap-2">
         <Icon className="text-bg-500 size-5 shrink-0" icon="tabler:menu" />
         {isEditing ? (
           <input
             ref={editInputRef}
-            className="bg-transparent w-full"
+            className="w-full bg-transparent"
             type="text"
             value={subtask.title}
             onBlur={e => {

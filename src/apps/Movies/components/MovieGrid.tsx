@@ -37,7 +37,7 @@ function MovieGrid({
   }
 
   return (
-    <div className="mb-24 mt-6 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-3 md:mb-6">
+    <div className="mt-6 mb-24 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-3 md:mb-6">
       {data.map(item => (
         <MovieItem
           key={item.id}

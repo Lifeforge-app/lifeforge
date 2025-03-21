@@ -35,7 +35,7 @@ function BreakdownDoughnutChart({
 
   return (
     <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
-      <div className="absolute left-1/2 top-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
+      <div className="absolute top-1/2 left-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
         <div
           className={clsx(
             'flex text-3xl font-medium sm:text-4xl',

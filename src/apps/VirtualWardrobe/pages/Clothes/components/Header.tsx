@@ -26,7 +26,7 @@ function Header({
           <h1 className="truncate text-3xl font-semibold sm:text-4xl">
             All Clothes
           </h1>
-          <span className="text-bg-500 ml-2 mr-8 text-base">
+          <span className="text-bg-500 mr-8 ml-2 text-base">
             ({entriesQuery.isSuccess ? entriesQuery.data.length : 0})
           </span>
         </div>

@@ -203,7 +203,7 @@ function GuitarTabs() {
                     : ''
                 }`.trim()}
               </h1>
-              <span className="text-bg-500 ml-2 mr-8 text-base">
+              <span className="text-bg-500 mr-8 ml-2 text-base">
                 ({entriesQuery.data?.totalItems ?? 0})
               </span>
             </div>
@@ -242,7 +242,7 @@ function GuitarTabs() {
                       )?.[0] ?? 'tabler:clock'
                     }
                   />
-                  <span className="whitespace-nowrap font-medium">
+                  <span className="font-medium whitespace-nowrap">
                     {t(
                       `sortTypes.${
                         SORT_TYPE.find(

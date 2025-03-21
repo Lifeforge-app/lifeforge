@@ -36,7 +36,7 @@ function ThemeSelector() {
         ].map(({ id, name, Image }) => (
           <div
             key={id}
-            className="flex w-full md:w-1/3 flex-col items-center gap-2"
+            className="flex w-full flex-col items-center gap-2 md:w-1/3"
           >
             <button
               className={clsx(
@@ -53,7 +53,7 @@ function ThemeSelector() {
               <div className="relative rounded-lg p-2 lg:rounded-2xl">
                 {theme === id && (
                   <Icon
-                    className="text-custom-500 absolute bottom-2 right-2.5 block size-6 text-xl"
+                    className="text-custom-500 absolute right-2.5 bottom-2 block size-6 text-xl"
                     icon="tabler:circle-check-filled"
                   />
                 )}

@@ -169,19 +169,19 @@ function ModifyTaskWindow() {
     <div
       ref={ref}
       className={clsx(
-        'bg-bg-900/20 backdrop-blur-xs fixed left-0 top-0 h-dvh w-full transition-all',
+        'bg-bg-900/20 fixed top-0 left-0 h-dvh w-full backdrop-blur-xs transition-all',
         innerOpenType !== null
           ? 'z-9990 opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
           : 'z-0 opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
       )}
     >
       <button
-        className="absolute left-0 top-0 size-full"
+        className="absolute top-0 left-0 size-full"
         onClick={closeWindow}
       />
       <div
         className={clsx(
-          'bg-bg-100 dark:bg-bg-900 absolute right-0 top-0 flex size-full flex-col p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
+          'bg-bg-100 dark:bg-bg-900 absolute top-0 right-0 flex size-full flex-col p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
           innerOpenType !== null && 'translate-x-0',
           innerOpenType === null && 'translate-x-full'
         )}

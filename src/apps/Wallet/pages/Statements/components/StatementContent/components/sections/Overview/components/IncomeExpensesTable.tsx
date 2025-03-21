@@ -19,7 +19,7 @@ function IncomeExpensesTable({
 
   return (
     <>
-      <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
+      <h2 className="mt-16 text-2xl font-semibold tracking-widest uppercase">
         <span>1.{type === 'income' ? '2' : '3'} </span>
         {type.charAt(0).toUpperCase() + type.slice(1)}
       </h2>
@@ -30,16 +30,16 @@ function IncomeExpensesTable({
               <th className="w-full p-3 text-left text-lg font-medium">
                 Category
               </th>
-              <th className="whitespace-nowrap p-3 text-lg font-medium">
+              <th className="p-3 text-lg font-medium whitespace-nowrap">
                 {dayjs()
                   .month(month - 1)
                   .format('MMM YYYY')}
               </th>
-              <th className="whitespace-nowrap p-3 text-lg font-medium">
+              <th className="p-3 text-lg font-medium whitespace-nowrap">
                 {dayjs().month(month).format('MMM YYYY')}
               </th>
               <th
-                className="whitespace-nowrap p-3 text-lg font-medium"
+                className="p-3 text-lg font-medium whitespace-nowrap"
                 colSpan={2}
               >
                 Change
@@ -104,15 +104,15 @@ function IncomeExpensesTable({
 
                     return (
                       <>
-                        <td className="whitespace-nowrap p-3 text-right text-lg">
+                        <td className="p-3 text-right text-lg whitespace-nowrap">
                           {lastMonthAmount.toFixed(2)}
                         </td>
-                        <td className="whitespace-nowrap p-3 text-right text-lg">
+                        <td className="p-3 text-right text-lg whitespace-nowrap">
                           {thatMonthAmount.toFixed(2)}
                         </td>
                         <td
                           className={clsx(
-                            'whitespace-nowrap p-3 text-right text-lg',
+                            'p-3 text-right text-lg whitespace-nowrap',
                             (type === 'income'
                               ? thatMonthAmount - lastMonthAmount
                               : lastMonthAmount - thatMonthAmount) < 0 &&
@@ -127,7 +127,7 @@ function IncomeExpensesTable({
                         </td>
                         <td
                           className={clsx(
-                            'whitespace-nowrap p-3 text-right text-lg',
+                            'p-3 text-right text-lg whitespace-nowrap',
                             (type === 'income'
                               ? thatMonthAmount - lastMonthAmount
                               : lastMonthAmount - thatMonthAmount) < 0 &&
@@ -182,7 +182,7 @@ function IncomeExpensesTable({
                 return (
                   <>
                     <td
-                      className="whitespace-nowrap p-3 text-right text-lg font-medium"
+                      className="p-3 text-right text-lg font-medium whitespace-nowrap"
                       style={{
                         borderTop: '2px solid',
                         borderBottom: '6px double'
@@ -191,7 +191,7 @@ function IncomeExpensesTable({
                       {lastMonthAmount.toFixed(2)}
                     </td>
                     <td
-                      className="whitespace-nowrap p-3 text-right text-lg font-medium"
+                      className="p-3 text-right text-lg font-medium whitespace-nowrap"
                       style={{
                         borderTop: '2px solid',
                         borderBottom: '6px double'
@@ -201,7 +201,7 @@ function IncomeExpensesTable({
                     </td>
                     <td
                       className={clsx(
-                        'whitespace-nowrap p-3 text-right text-lg font-medium',
+                        'p-3 text-right text-lg font-medium whitespace-nowrap',
                         (type === 'income'
                           ? thatMonthAmount - lastMonthAmount
                           : lastMonthAmount - thatMonthAmount) < 0 &&
@@ -220,7 +220,7 @@ function IncomeExpensesTable({
                     </td>
                     <td
                       className={clsx(
-                        'whitespace-nowrap p-3 text-right text-lg font-medium',
+                        'p-3 text-right text-lg font-medium whitespace-nowrap',
                         (type === 'income'
                           ? thatMonthAmount - lastMonthAmount
                           : lastMonthAmount - thatMonthAmount) < 0 &&

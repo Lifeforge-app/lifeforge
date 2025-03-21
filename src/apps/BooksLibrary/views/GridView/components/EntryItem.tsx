@@ -65,7 +65,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }) {
           <span className="text-bg-500 text-sm">({item.edition} ed)</span>
         )}
       </div>
-      <div className="text-custom-500 mt-0.5 line-clamp-3 break-all text-sm font-medium">
+      <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
         {item.authors}
       </div>
       <div className="mt-auto w-full min-w-0">

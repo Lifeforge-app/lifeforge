@@ -36,7 +36,7 @@ function ResultShowcase({
         }}
       >
         <div
-          className="bg-bg-50 dark:bg-bg-950 absolute left-0 top-0 z-[-1] size-full"
+          className="bg-bg-50 dark:bg-bg-950 absolute top-0 left-0 z-[-1] size-full"
           style={{
             opacity: `${overlayOpacity}%`
           }}

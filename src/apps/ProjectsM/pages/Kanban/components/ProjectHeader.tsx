@@ -36,7 +36,7 @@ function ProjectHeader({ projectData }: { projectData: IProjectsMEntry }) {
           <QueryWrapper query={statusesQuery}>
             {statuses => (
               <div
-                className="shadow-custom ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest"
+                className="shadow-custom ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium tracking-widest uppercase"
                 style={{
                   backgroundColor:
                     statuses.find(e => e.id === projectData.status)?.color +

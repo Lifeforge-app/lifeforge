@@ -17,7 +17,7 @@ function MiniCalendarHeader({
 
   return (
     <div className="flex-between mb-4 flex gap-2">
-      <div className="whitespace-nowrap text-lg font-semibold">
+      <div className="text-lg font-semibold whitespace-nowrap">
         {dayjs()
           .year(currentYear)
           .month(currentMonth)

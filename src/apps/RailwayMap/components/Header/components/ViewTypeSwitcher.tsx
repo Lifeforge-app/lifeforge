@@ -39,7 +39,7 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
     >
       <ListboxButton
         className={clsx(
-          'flex-between shadow-custom flex gap-12 gap-2 rounded-md p-4',
+          'flex-between shadow-custom flex gap-2 gap-12 rounded-md p-4',
           componentBgWithHover
         )}
       >
@@ -50,7 +50,7 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
               VIEW_TYPES.find(([, , value]) => value === viewType)?.[0] ?? ''
             }
           />
-          <span className="whitespace-nowrap font-medium">
+          <span className="font-medium whitespace-nowrap">
             {t(
               `viewTypes.${_.camelCase(
                 VIEW_TYPES.find(([, , value]) => value === viewType)?.[1] ?? ''

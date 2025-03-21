@@ -21,7 +21,7 @@ function GridView({ books }: { books: IBooksLibraryEntry[] }) {
             key={key}
             className="bg-bg-50 dark:bg-bg-900 relative flex w-full min-w-0 flex-col items-start rounded-lg p-4 transition-all"
           >
-            <div className="flex-center bg-bg-50/50 dark:bg-bg-900/70 absolute left-0 top-0 size-full rounded-lg p-8 text-center font-medium">
+            <div className="flex-center bg-bg-50/50 dark:bg-bg-900/70 absolute top-0 left-0 size-full rounded-lg p-8 text-center font-medium">
               Downloading... {value.percentage}
               <br />
               {value.downloaded}/{value.total}, {value.speed}/s, ETA:{' '}
@@ -58,7 +58,7 @@ function GridView({ books }: { books: IBooksLibraryEntry[] }) {
                 </span>
               )}
             </p>
-            <div className="text-custom-500 mt-0.5 line-clamp-3 break-all text-sm font-medium">
+            <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
               {value.metadata.authors}
             </div>
             <div className="mt-auto w-full min-w-0">

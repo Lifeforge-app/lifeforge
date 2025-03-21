@@ -13,7 +13,7 @@ function IdeaList({ data }: { data: IIdeaBoxEntry[] }) {
 
   return (
     <Column
-      className="overflow-x-visible! mb-8 shrink-0"
+      className="mb-8 shrink-0 overflow-x-visible!"
       gap="0.5rem"
       queries={[
         {

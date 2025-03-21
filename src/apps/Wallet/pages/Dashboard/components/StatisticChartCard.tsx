@@ -124,7 +124,7 @@ function StatisticChardCard() {
           }
         </QueryWrapper>
       </div>
-      <div className="mt-4 flex-center gap-8 sm:hidden">
+      <div className="flex-center mt-4 gap-8 sm:hidden">
         <div className="flex items-center gap-2">
           <span className="-mb-0.5 size-3 rounded-full bg-green-500"></span>
           <span className="text-sm">Income</span>

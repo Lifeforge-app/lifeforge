@@ -21,7 +21,7 @@ function SidebarHeader({
           !sidebarExpanded && 'overflow-hidden'
         )}
       >
-        <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold">
+        <h1 className="ml-1 flex shrink-0 items-center gap-2 text-xl font-semibold whitespace-nowrap">
           <Icon className="text-custom-500 text-3xl" icon="tabler:hammer" />
           {sidebarExpanded && (
             <div>

@@ -64,7 +64,7 @@ function EntryItem({
                 />
               )}
             </div>
-            <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 whitespace-nowrap text-sm font-medium">
+            <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
               <p className="min-w-0 truncate">
                 {entry.author !== '' ? entry.author : 'Unknown'}
               </p>

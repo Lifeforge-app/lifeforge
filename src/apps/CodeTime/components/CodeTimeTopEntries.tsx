@@ -109,7 +109,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                         componentBg
                       )}
                     >
-                      <div className="flex items-center gap-4 break-all text-lg font-medium">
+                      <div className="flex items-center gap-4 text-lg font-medium break-all">
                         <div
                           className={clsx(
                             'size-4 shrink-0 rounded-full rounded-md border',

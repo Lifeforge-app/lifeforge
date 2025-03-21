@@ -22,7 +22,7 @@ function FAB() {
     <>
       <Menu
         as="div"
-        className="z-9990 group fixed bottom-6 right-6 sm:bottom-12 sm:right-12"
+        className="group fixed right-6 bottom-6 z-9990 sm:right-12 sm:bottom-12"
       >
         {({ open }) => (
           <>
@@ -40,7 +40,7 @@ function FAB() {
               transition
               anchor="top end"
               className={clsx(
-                'z-9999 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mb-4 rounded-lg transition duration-100 ease-out [--anchor-gap:1rem]'
+                'z-9999 mb-4 rounded-lg outline-hidden transition duration-100 ease-out [--anchor-gap:1rem] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0'
               )}
             >
               {[
@@ -52,7 +52,7 @@ function FAB() {
                 <MenuItem key={name}>
                   <div
                     className={
-                      'group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-2 pr-2'
+                      'group flex w-full items-center justify-end gap-4 rounded-md py-2 pr-2 whitespace-nowrap'
                     }
                   >
                     <span className="text-bg-50 group-data-focus:text-bg-200 transition-all">
@@ -81,13 +81,13 @@ function FAB() {
             </MenuItems>
             <div
               className={clsx(
-                'fixed left-0 top-0 size-full transition-transform',
+                'fixed top-0 left-0 size-full transition-transform',
                 open ? 'translate-x-0 duration-0' : 'translate-x-full delay-100'
               )}
             >
               <div
                 className={clsx(
-                  'bg-bg-900/50 backdrop-blur-xs size-full transition-opacity',
+                  'bg-bg-900/50 size-full backdrop-blur-xs transition-opacity',
                   open ? 'opacity-100' : 'opacity-0'
                 )}
               />
