@@ -2,14 +2,7 @@ import { t } from 'i18next'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import {
-  Button,
-  InputIcon,
-  InputLabel,
-  InputWrapper,
-  ModalHeader,
-  ModalWrapper
-} from '@lifeforge/ui'
+import { Button, ModalHeader, ModalWrapper, TextAreaInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -73,25 +66,17 @@ function ModifyTextEntryModal({
         title="Update Text Entry"
         onClose={onClose}
       />
-      <InputWrapper darker inputRef={inputRef}>
-        <InputIcon active={text.length !== 0} icon="tabler:file-text" />
-        <div className="flex w-full items-center gap-2">
-          <InputLabel
-            required
-            active={text.length !== 0}
-            label={t('inputs.textContent')}
-          />
-          <textarea
-            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-            className="focus:placeholder:text-bg-500 outline-hidden focus:outline-hidden mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent"
-            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
-            value={text}
-            onInput={e => {
-              setText(e.currentTarget.value)
-            }}
-          />
-        </div>
-      </InputWrapper>
+      <TextAreaInput
+        darker
+        required
+        className="mt-4"
+        icon="tabler:file-text"
+        name="Text Content"
+        namespace="apps.momentVault"
+        placeholder={t('apps.momentVault:placeholders.textEntry')}
+        setValue={setText}
+        value={text}
+      />
       <Button
         className="mt-6 w-full"
         disabled={text.trim().length === 0}
