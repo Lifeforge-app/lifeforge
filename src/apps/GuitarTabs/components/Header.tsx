@@ -47,6 +47,31 @@ function Header({
   const toastId = useRef<Id>(null)
   const { themeColor } = usePersonalization()
 
+  function startInterval() {
+    intervalManager.setInterval(async () => {
+      const { status, left, total } = await checkUploadStatus()
+
+      switch (status) {
+        case 'completed':
+          if (toastId.current !== null) {
+            toast.done(toastId.current)
+            toastId.current = null
+          }
+          toast.success('Guitar tabs uploaded successfully!')
+          intervalManager.clearAllIntervals()
+          queryClient.invalidateQueries({ queryKey })
+          break
+        case 'in_progress':
+          updateProgressBar((total - left) / total)
+          break
+        case 'failed':
+          toast.error('Failed to upload guitar tabs!')
+          intervalManager.clearAllIntervals()
+          break
+      }
+    }, 1000)
+  }
+
   async function uploadFiles() {
     const input = document.createElement('input')
     input.type = 'file'
@@ -56,60 +81,46 @@ function Header({
       const files = (e.target as HTMLInputElement).files
 
       const formData = new FormData()
-      if (files !== null) {
-        if (files.length > 100) {
-          toast.error('You can only upload 100 files at a time!')
-          return
+
+      if (files === null) {
+        return
+      }
+
+      if (files.length > 100) {
+        toast.error('You can only upload 100 files at a time!')
+        return
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i], encodeURIComponent(files[i].name))
+      }
+
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/upload`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${parseCookie(document.cookie).token}`
+            },
+            body: formData
+          }
+        )
+
+        if (res.status === 202) {
+          const data = await res.json()
+          if (data.state === 'accepted') {
+            startInterval()
+          }
+        } else {
+          const data = await res.json()
+          throw new Error(
+            `Failed to upload guitar tabs. Error: ${data.message}`
+          )
         }
-
-        for (let i = 0; i < files.length; i++) {
-          formData.append('files', files[i], encodeURIComponent(files[i].name))
-        }
-
-        fetch(`${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/upload`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${parseCookie(document.cookie).token}`
-          },
-          body: formData
-        })
-          .then(async res => {
-            if (res.status === 202) {
-              const data = await res.json()
-              if (data.state === 'accepted') {
-                intervalManager.setInterval(async () => {
-                  const { status, left, total } = await checkUploadStatus()
-
-                  switch (status) {
-                    case 'completed':
-                      if (toastId.current !== null) {
-                        toast.done(toastId.current)
-                        toastId.current = null
-                      }
-                      toast.success('Guitar tabs uploaded successfully!')
-                      intervalManager.clearAllIntervals()
-                      queryClient.invalidateQueries({ queryKey })
-                      break
-                    case 'in_progress':
-                      updateProgressBar((total - left) / total)
-                      break
-                    case 'failed':
-                      toast.error('Failed to upload guitar tabs!')
-                      intervalManager.clearAllIntervals()
-                      break
-                  }
-                }, 1000)
-              }
-            } else {
-              const data = await res.json()
-              throw new Error(
-                `Failed to upload guitar tabs. Error: ${data.message}`
-              )
-            }
-          })
-          .catch(err => {
-            toast.error(`Oops! Couldn't upload the guitar tabs! Error: ${err}`)
-          })
+      } catch (error) {
+        console.error(error)
+        toast.error('Failed to upload guitar tabs')
       }
     }
     input.click()

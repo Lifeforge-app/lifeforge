@@ -9,6 +9,8 @@ import {
   ListboxOrComboboxOptions
 } from '@lifeforge/ui'
 
+import { IRailwayMapViewType } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+
 import useComponentBg from '@hooks/useComponentBg'
 
 export const VIEW_TYPES = [
@@ -18,8 +20,8 @@ export const VIEW_TYPES = [
 ] as const
 
 interface ViewTypeSwitcherProps {
-  viewType: 'route' | 'earth' | 'list'
-  setViewType: (viewType: 'route' | 'earth' | 'list') => void
+  viewType: IRailwayMapViewType
+  setViewType: (viewType: IRailwayMapViewType) => void
 }
 
 function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {

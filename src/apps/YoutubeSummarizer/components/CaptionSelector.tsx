@@ -143,7 +143,10 @@ function CaptionSelector({
       </ListboxOrComboboxInput>
       {captionType &&
         (Object.keys(
-          captionType === 'auto' ? videoInfo.auto_captions : videoInfo.captions
+          {
+            auto: videoInfo.auto_captions,
+            manual: videoInfo.captions
+          }[captionType]
         ).length > 0 ? (
           <>
             <ListboxOrComboboxInput

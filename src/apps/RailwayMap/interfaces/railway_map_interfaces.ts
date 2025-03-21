@@ -27,4 +27,6 @@ interface IRailwayMapStation extends RecordModel {
   }
 }
 
-export type { IRailwayMapLine, IRailwayMapStation }
+type IRailwayMapViewType = 'earth' | 'list' | 'route'
+
+export type { IRailwayMapLine, IRailwayMapStation, IRailwayMapViewType }
