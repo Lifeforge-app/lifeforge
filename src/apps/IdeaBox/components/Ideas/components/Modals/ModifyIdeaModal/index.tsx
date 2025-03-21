@@ -159,7 +159,7 @@ function ModifyIdeaModal() {
     formData.append('tags', JSON.stringify(ideaTags))
 
     try {
-      const data = await fetchAPI<IIdeaBoxEntry>(
+      await fetchAPI<IIdeaBoxEntry>(
         `idea-box/ideas/${innerOpenType === 'update' ? existedEntry?.id : ''}`,
         {
           method: innerOpenType === 'update' ? 'PATCH' : 'POST',
@@ -178,23 +178,19 @@ function ModifyIdeaModal() {
         }
       )
 
-      const updateFunc = (prev: IIdeaBoxEntry[]) =>
-        innerOpenType === 'update'
-          ? prev.map(idea => (idea.id === existedEntry?.id ? data : idea))
-          : [
-              ...prev.filter(e => e.pinned),
-              data,
-              ...prev.filter(e => !e.pinned)
-            ]
-
-      queryClient.setQueryData(
-        ['idea-box', 'ideas', id, path, viewArchived],
-        updateFunc
-      )
-      queryClient.setQueryData(
-        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-        updateFunc
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['idea-box', 'ideas', id, path, viewArchived]
+      })
+      queryClient.invalidateQueries({
+        queryKey: [
+          'idea-box',
+          'search',
+          id,
+          path,
+          selectedTags,
+          debouncedSearchQuery
+        ]
+      })
 
       queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags', id] })
       setOpenType(null)
