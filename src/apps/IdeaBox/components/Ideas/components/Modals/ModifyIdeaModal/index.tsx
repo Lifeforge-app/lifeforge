@@ -5,14 +5,14 @@ import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { Button, ModalWrapper } from '@lifeforge/ui'
+import { Button, ModalWrapper, QueryWrapper, TagsInput } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { IIdeaBoxEntry } from '../../../../../interfaces/ideabox_interfaces'
-import IdeaContentInput from './IdeaContentInput'
+import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal() {
@@ -24,7 +24,8 @@ function ModifyIdeaModal() {
     pastedData,
     viewArchived,
     selectedTags,
-    debouncedSearchQuery
+    debouncedSearchQuery,
+    tagsQuery
   } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
@@ -55,14 +56,6 @@ function ModifyIdeaModal() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop
   })
-
-  function updateIdeaContent(event: React.FormEvent<HTMLTextAreaElement>) {
-    setIdeaContent(event.currentTarget.value)
-  }
-
-  function updateIdeaLink(event: React.ChangeEvent<HTMLInputElement>) {
-    setIdeaLink(event.target.value)
-  }
 
   useEffect(() => {
     setInnerTypeOfModifyIdea(typeOfModifyIdea)
@@ -272,30 +265,43 @@ function ModifyIdeaModal() {
         setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
         setOpenType={setOpenType}
       />
-      <IdeaContentInput
-        debouncedImageLink={debouncedImageLink}
-        getInputProps={getInputProps}
-        getRootProps={getRootProps}
-        ideaContent={ideaContent}
-        ideaImage={ideaImage}
-        ideaLink={ideaLink}
-        ideaTags={ideaTags}
-        ideaTitle={ideaTitle}
-        imageLink={imageLink}
-        innerOpenType={innerOpenType}
-        innerTypeOfModifyIdea={innerTypeOfModifyIdea}
-        isDragActive={isDragActive}
-        preview={preview}
-        setIdeaContent={setIdeaContent}
-        setIdeaImage={setIdeaImage}
-        setIdeaLink={setIdeaLink}
-        setIdeaTags={setIdeaTags}
-        setIdeaTitle={setIdeaTitle}
-        setImageLink={setImageLink}
-        setPreview={setPreview}
-        updateIdeaContent={updateIdeaContent}
-        updateIdeaLink={updateIdeaLink}
-      />
+      <div className="space-y-4">
+        <IdeaContentInput
+          debouncedImageLink={debouncedImageLink}
+          getInputProps={getInputProps}
+          getRootProps={getRootProps}
+          ideaContent={ideaContent}
+          ideaImage={ideaImage}
+          ideaLink={ideaLink}
+          ideaTitle={ideaTitle}
+          imageLink={imageLink}
+          innerOpenType={innerOpenType}
+          innerTypeOfModifyIdea={innerTypeOfModifyIdea}
+          isDragActive={isDragActive}
+          preview={preview}
+          setIdeaContent={setIdeaContent}
+          setIdeaImage={setIdeaImage}
+          setIdeaLink={setIdeaLink}
+          setIdeaTitle={setIdeaTitle}
+          setImageLink={setImageLink}
+          setPreview={setPreview}
+        />
+        <QueryWrapper query={tagsQuery}>
+          {tags => (
+            <TagsInput
+              darker
+              className="mt-6"
+              existedTags={tags}
+              icon="tabler:tag"
+              name="Idea tags"
+              namespace="apps.ideaBox"
+              placeholder='Tag your idea with "awesome", "cool", etc.'
+              setValue={setIdeaTags}
+              value={ideaTags}
+            />
+          )}
+        </QueryWrapper>
+      </div>
       <Button
         className="mt-6"
         disabled={

@@ -106,6 +106,7 @@ function SessionCartModal({
               iconAtEnd
               className="mt-6 w-full"
               icon="tabler:arrow-right"
+              namespace="apps.virtualWardrobe"
               onClick={() => {
                 setCheckoutConfirmationModalOpen(true)
               }}
