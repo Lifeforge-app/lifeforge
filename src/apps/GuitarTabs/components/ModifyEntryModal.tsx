@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query'
+import { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -26,6 +28,7 @@ function ModifyEntryModal({
   queryKey: unknown[]
 }) {
   const { t } = useTranslation('apps.guitarTabs')
+  const queryClient = useQueryClient()
 
   const [formState, setFormState] = useState<IGuitarTabsEntryFormState>({
     name: '',
@@ -88,6 +91,23 @@ function ModifyEntryModal({
 
   return (
     <FormModal
+      customUpdateDataList={{
+        update: (newData: IGuitarTabsEntry) => {
+          queryClient.setQueryData<ListResult<IGuitarTabsEntry>>(
+            queryKey,
+            oldData => {
+              if (oldData === undefined) return oldData
+
+              return {
+                ...oldData,
+                items: oldData.items.map(item =>
+                  item.id === newData.id ? newData : item
+                )
+              }
+            }
+          )
+        }
+      }}
       data={formState}
       endpoint="guitar-tabs/entries"
       fields={FIELDS}
