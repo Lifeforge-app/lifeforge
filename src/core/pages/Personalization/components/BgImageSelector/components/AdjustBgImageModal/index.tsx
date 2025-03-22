@@ -1,5 +1,6 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Button, ModalHeader, ModalWrapper, Scrollbar } from '@lifeforge/ui'
 
@@ -14,6 +15,7 @@ function AdjustBgImageModal({
   isOpen: boolean
   onClose: () => void
 }) {
+  const { t } = useTranslation('core.personalization')
   const { setBackdropFilters, backdropFilters } = usePersonalization()
   const [bgBlur, setBgBlur] = useState<keyof typeof BG_BLURS>(
     backdropFilters.blur
@@ -29,7 +31,6 @@ function AdjustBgImageModal({
     {
       icon: 'tabler:blur',
       title: 'Blur',
-      desc: 'Adjust the blur-sm of the background image',
       value: Object.keys(BG_BLURS).indexOf(bgBlur),
       setValue: (value: number) => {
         setBgBlur(Object.keys(BG_BLURS)[value] as keyof typeof BG_BLURS)
@@ -40,7 +41,6 @@ function AdjustBgImageModal({
     {
       icon: 'tabler:sun',
       title: 'Brightness',
-      desc: 'Adjust the brightness of the background image',
       value: bgBrightness,
       setValue: setBgBrightness,
       labels: ['0%', '100%', '200%'],
@@ -49,7 +49,6 @@ function AdjustBgImageModal({
     {
       icon: 'tabler:contrast',
       title: 'Contrast',
-      desc: 'Adjust the contrast of the background image',
       value: bgContrast,
       setValue: setBgContrast,
       labels: ['0%', '150%', '200%'],
@@ -58,7 +57,6 @@ function AdjustBgImageModal({
     {
       icon: 'tabler:color-filter',
       title: 'Saturation',
-      desc: 'Adjust the saturation of the background image',
       value: bgSaturation,
       setValue: setBgSaturation,
       labels: ['0%', '100%', '200%'],
@@ -67,7 +65,6 @@ function AdjustBgImageModal({
     {
       icon: 'tabler:layers-difference',
       title: 'Overlay Opacity',
-      desc: 'Adjust the opacity of the plain color overlay',
       value: overlayOpacity,
       setValue: setOverlayOpacity,
       labels: ['0%', '50%', '100%'],
@@ -99,7 +96,8 @@ function AdjustBgImageModal({
     <ModalWrapper isOpen={isOpen} minHeight="90vh" minWidth="40vw">
       <ModalHeader
         icon="tabler:adjustments"
-        title="Adjust Background Image"
+        needTranslate={false}
+        title={t('bgImageSelector.modals.adjustBackground.title')}
         onClose={onClose}
       />
       <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">
@@ -119,8 +117,8 @@ function AdjustBgImageModal({
               needDivider={index !== ADJUSTMENTS_COLUMNS.length - 1}
             />
           ))}
-          <Button className="mt-8" icon="tabler:check" onClick={onSaveChanges}>
-            Save Changes
+          <Button className="mt-8" icon="uil:save" onClick={onSaveChanges}>
+            Save
           </Button>
         </Scrollbar>
       </div>

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Button,
   DeleteConfirmationModal,
+  EmptyStateScreen,
   FAB,
   ModuleHeader,
   ModuleWrapper,
@@ -26,7 +27,7 @@ import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'
 
 function APIKeys() {
-  const { t } = useTranslation('core.apiKeys')
+  const { t } = useTranslation(['common.buttons', 'core.apiKeys'])
   const { userData } = useAuth()
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
@@ -81,19 +82,32 @@ function APIKeys() {
         <QueryWrapper query={entriesQuery}>
           {entries => (
             <div className="mt-8 mb-24 flex-1 lg:mb-6">
-              {entries.map((entry, idx) => (
-                <EntryItem
-                  key={entry.id}
-                  entry={entry}
-                  hasDivider={idx !== entries.length - 1}
-                  masterPassword={masterPassword}
-                  setDeleteConfirmationModalOpen={
-                    setDeleteConfirmationModalOpen
-                  }
-                  setExistingData={setExistingData}
-                  setModifyAPIKeyModalOpenType={setModifyAPIKeyModalOpenType}
+              {entries.length > 0 ? (
+                entries.map((entry, idx) => (
+                  <EntryItem
+                    key={entry.id}
+                    entry={entry}
+                    hasDivider={idx !== entries.length - 1}
+                    masterPassword={masterPassword}
+                    setDeleteConfirmationModalOpen={
+                      setDeleteConfirmationModalOpen
+                    }
+                    setExistingData={setExistingData}
+                    setModifyAPIKeyModalOpenType={setModifyAPIKeyModalOpenType}
+                  />
+                ))
+              ) : (
+                <EmptyStateScreen
+                  ctaContent={t('common.buttons:new', {
+                    item: t('core.apiKeys:items.apiKey')
+                  })}
+                  ctaIcon="tabler:plus"
+                  icon="tabler:key-off"
+                  name="apiKeys"
+                  namespace="core.apiKeys"
+                  onCTAClick={() => setModifyAPIKeyModalOpenType('create')}
                 />
-              ))}
+              )}
             </div>
           )}
         </QueryWrapper>
@@ -127,12 +141,13 @@ function APIKeys() {
         <ModuleHeader
           actionButton={
             otpSuccess &&
-            masterPassword !== '' && (
+            masterPassword !== '' &&
+            (entriesQuery.data ?? [])?.length > 0 && (
               <Button
                 className="hidden lg:flex"
                 icon="tabler:plus"
                 tProps={{
-                  item: t('items.apiKey')
+                  item: t('core.apiKeys:items.apiKey')
                 }}
                 onClick={() => {
                   setModifyAPIKeyModalOpenType('create')

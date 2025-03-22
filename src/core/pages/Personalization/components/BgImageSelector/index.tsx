@@ -7,8 +7,11 @@ import {
   Button,
   ConfigColumn,
   DeleteConfirmationModal,
-  ImagePickerModal
+  ImagePickerModal,
+  Tooltip
 } from '@lifeforge/ui'
+
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -16,6 +19,10 @@ import AdjustBgImageModal from './components/AdjustBgImageModal'
 
 function BgImageSelector() {
   const { t } = useTranslation('core.personalization')
+  const pixabayEnabledQuery = useAPIQuery<boolean>('/pixabay/key-exists', [
+    'pixabay',
+    'key-exists'
+  ])
   const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
   const [adjustBgImageModalOpen, setAdjustBgImageModalOpen] = useState(false)
@@ -79,23 +86,44 @@ function BgImageSelector() {
             </Button>
           </>
         ) : (
-          <Button
-            className="w-full md:w-auto"
-            icon="tabler:photo-hexagon"
-            onClick={() => {
-              setImageSelectorModalOpen(true)
-            }}
-          >
-            select
-          </Button>
+          <>
+            <Button
+              className="w-full md:w-auto"
+              icon="tabler:photo-hexagon"
+              onClick={() => {
+                setImageSelectorModalOpen(true)
+              }}
+            >
+              select
+            </Button>
+            <Tooltip
+              icon="tabler:info-circle"
+              id="pixabayDisabled"
+              tooltipProps={{
+                clickable: true
+              }}
+            >
+              <p className="text-bg-500 max-w-84">
+                {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
+                <a
+                  className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
+                  href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#pixabay"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Customization Guide
+                </a>
+              </p>
+            </Tooltip>
+          </>
         )}
       </ConfigColumn>
       <ImagePickerModal
-        enablePixabay
         enableUrl
         acceptedMimeTypes={{
           'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
         }}
+        enablePixabay={pixabayEnabledQuery.data ?? false}
         isOpen={imageSelectorModalOpen}
         onClose={() => {
           setImageSelectorModalOpen(false)
