@@ -1,9 +1,11 @@
+import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
+
 import { ConfigColumn } from '@lifeforge/ui'
 
 function AdjustmentColumn({
   icon,
   title,
-  desc,
   value,
   setValue,
   labels,
@@ -12,20 +14,25 @@ function AdjustmentColumn({
 }: {
   icon: string
   title: string
-  desc: string
   value: number
   setValue: (value: number) => void
   labels: string[]
   max: number
   needDivider?: boolean
 }) {
+  const { t } = useTranslation('core.personalization')
+
   return (
     <ConfigColumn
       noDefaultBreakpoints
-      desc={desc}
+      desc={t(
+        `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.desc`
+      )}
       hasDivider={needDivider}
       icon={icon}
-      title={title}
+      title={t(
+        `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.title`
+      )}
     >
       <div className="w-full">
         <input

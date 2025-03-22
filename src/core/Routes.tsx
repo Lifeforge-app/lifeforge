@@ -322,8 +322,7 @@ export const ROUTES: RouteCategory[] = [
         routes: {
           personalization: lazy(() => import('./pages/Personalization'))
         },
-        togglable: false,
-        requiredAPIKeys: ['pixabay']
+        togglable: false
       },
       {
         name: 'Modules',
