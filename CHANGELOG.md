@@ -30,6 +30,8 @@
 - **Youtube Summarizer**: Created and completed this module.
 - **Currency Converter**: Created and completed this module.
 - **BooksLibrary**: Added a button beside the search bar to scan barcode.
+- **Guitar Tabs**: Added a button beside the search bar to show random tabs.
+- **Guitar Tabs**: Fixed a bug where guitar tab metadata failed to update after editing.
 - **UI**: Created Github workflow for automatic deployment and versioning.
 - **UI**: Fixed a bug where sidebar item with subsections collapse the sidebar when clicked in mobile view.
 - **UI**: Removed `eslint-plugin-import` from the project as it was causing issues.
@@ -38,6 +40,8 @@
 - **UI**: Created reusable `TextAreaInput` and fixed some minor issues with it.
 - **UI**: Removed `APIFallbackComponent`.
 - **UI**: Added `formats` prop to `QRCodeScanner` to allow for scanning different QR code formats.
+- **UI**: Changed the side button in search bar to reusable `Button` component.
+- **UI**: Added `sideButtonLoading` prop to `SearchBar` to show loading state.
 
 ---
 
