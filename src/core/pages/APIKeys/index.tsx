@@ -26,7 +26,7 @@ import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'
 
 function APIKeys() {
-  const { t } = useTranslation('apps.apiKeys')
+  const { t } = useTranslation('core.apiKeys')
   const { userData } = useAuth()
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')

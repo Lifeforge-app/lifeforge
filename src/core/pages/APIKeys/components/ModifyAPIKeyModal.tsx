@@ -150,7 +150,7 @@ function ModifyAPIKeyModal({
       id={existingData?.id}
       isOpen={openType !== null}
       loading={isFetchingKey}
-      namespace="apps.apiKeys"
+      namespace="core.apiKeys"
       openType={openType}
       queryKey={['api-keys', 'entries', masterPassword, challenge]}
       setData={setFormState}
