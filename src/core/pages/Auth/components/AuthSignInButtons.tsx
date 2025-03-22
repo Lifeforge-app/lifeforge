@@ -61,7 +61,7 @@ function AuthSignInButton({
       >
         Sign In
       </Button>
-      {providers.length && (
+      {providers.length > 0 && (
         <>
           <div className="flex items-center gap-3">
             <div className="bg-bg-500 h-[2px] w-full"></div>
