@@ -9,7 +9,10 @@ import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
 import ControlButtons from '@apps/Music/components/Bottombar/components/ControlButtons'
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
+import useComponentBg from '@hooks/useComponentBg'
+
 export default function MusicPlayer() {
+  const { componentBgLighter } = useComponentBg()
   const { currentMusic, isPlaying } = useMusicContext()
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
@@ -19,16 +22,16 @@ export default function MusicPlayer() {
       <div className="flex min-h-0 flex-1 flex-col">
         {currentMusic !== null ? (
           <>
-            <div className="relative flex h-full min-h-0 flex-1 flex-col">
-              <div className="bg-bg-100 shadow-custom dark:bg-bg-800 absolute top-1/2 left-1/2 flex aspect-square h-full flex-1 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md">
-                <Icon
-                  className={clsx(
-                    'aspect-square h-full w-1/2',
-                    isPlaying ? 'text-custom-500 animate-spin' : 'text-bg-500'
-                  )}
-                  icon="tabler:disc"
-                />
-              </div>
+            <div
+              className={`shadow-custom flex w-full flex-1 items-center justify-center rounded-md ${componentBgLighter}`}
+            >
+              <Icon
+                className={clsx(
+                  'aspect-square h-full w-1/2',
+                  isPlaying ? 'text-custom-500 animate-spin' : 'text-bg-500'
+                )}
+                icon="tabler:disc"
+              />
             </div>
             <div className="my-4 flex flex-col items-center gap-1">
               <h2 className="line-clamp-2 text-center text-lg font-semibold">

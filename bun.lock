@@ -7,7 +7,7 @@
         "@headlessui/react": "^2.2.0",
         "@iconify/react": "^5.2.0",
         "@iconify/types": "^2.0.0",
-        "@lifeforge/ui": "^0.25.12-47",
+        "@lifeforge/ui": "^0.25.13-3",
         "@tabler/icons-react": "^3.31.0",
         "@tailwindcss/postcss": "^4.0.14",
         "@tailwindcss/vite": "^4.0.14",
@@ -16,7 +16,7 @@
         "@uiw/react-color": "^2.4.5",
         "@vis.gl/react-google-maps": "^1.5.2",
         "@wavesurfer/react": "^1.0.9",
-        "babel-plugin-react-compiler": "^19.0.0-beta-e552027-20250112",
+        "babel-plugin-react-compiler": "^19.0.0-beta-3229e95-20250315",
         "chart.js": "^4.4.8",
         "clsx": "^2.1.1",
         "cookie": "^1.0.2",
@@ -278,7 +278,7 @@
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 
-    "@lifeforge/ui": ["@lifeforge/ui@0.25.12-47", "", { "dependencies": { "@headlessui/react": "^2.2.0", "@iconify/collections": "^1.0.529", "@iconify/react": "^5.2.0", "@tanstack/react-query": "^5.69.0", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.4.5", "@yudiel/react-qr-scanner": "^2.2.1", "clsx": "^2.1.1", "color-sorter": "^6.2.0", "crypto-js": "^4.2.0", "file-type-mime": "^0.4.6", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.25.2", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.8", "react-i18next": "^15.4.1", "react-medium-image-zoom": "^5.2.14", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.4.0", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.0", "react-virtualized": "^9.22.6", "tailwindcss": "^4.0.14", "tinycolor2": "^1.6.0" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-VIp4o0ogMwLBGReTBnaE+nbeFOWOUyzjVS0XCoVyBUEq9rIXtrXLVG7nbGqQ5nifBB396Bl00QqcajuaTONw2A=="],
+    "@lifeforge/ui": ["@lifeforge/ui@0.25.13-3", "", { "dependencies": { "@headlessui/react": "^2.2.0", "@iconify/collections": "^1.0.529", "@iconify/react": "^5.2.0", "@tanstack/react-query": "^5.69.0", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.4.5", "@yudiel/react-qr-scanner": "^2.2.1", "clsx": "^2.1.1", "color-sorter": "^6.2.0", "crypto-js": "^4.2.0", "file-type-mime": "^0.4.6", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.25.2", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.8", "react-i18next": "^15.4.1", "react-medium-image-zoom": "^5.2.14", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.4.0", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.0", "react-virtualized": "^9.22.6", "tailwindcss": "^4.0.14", "tinycolor2": "^1.6.0" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-1dNTYuFAX/4gtT01otT7pdGLdCWXXmmo5UrvcPOSsXmUO3oSnWd2pUuiBAvGLu6+IL5q1fILrclRryTwcFlYWg=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
@@ -706,7 +706,7 @@
 
     "axobject-query": ["axobject-query@4.1.0", "", {}, "sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ=="],
 
-    "babel-plugin-react-compiler": ["babel-plugin-react-compiler@19.0.0-beta-e552027-20250112", "", { "dependencies": { "@babel/types": "^7.19.0" } }, "sha512-pUTT0mAZ4XLewC6bvqVeX015nVRLVultcSQlkzGdC10G6YV6K2h4E7cwGlLAuLKWTj3Z08mTO9uTnPP/opUBsg=="],
+    "babel-plugin-react-compiler": ["babel-plugin-react-compiler@19.0.0-beta-3229e95-20250315", "", { "dependencies": { "@babel/types": "^7.26.0" } }, "sha512-r29/CW4gPXX2kgIdgiCmI/MJzeOhI9iM+FCYmg88bOj5esNhKrSPwp2YcOufLhZRGVX2VuX8ung9mFDsotQusg=="],
 
     "bail": ["bail@2.0.2", "", {}, "sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw=="],
 
