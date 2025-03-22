@@ -42,6 +42,7 @@
 - **UI**: Added `formats` prop to `QRCodeScanner` to allow for scanning different QR code formats.
 - **UI**: Changed the side button in search bar to reusable `Button` component.
 - **UI**: Added `sideButtonLoading` prop to `SearchBar` to show loading state.
+- **UI**: Removed Storybook due to being too uncustomizable.
 
 ---
 
