@@ -7,6 +7,7 @@ import { Pagination, QueryWrapper } from '@lifeforge/ui'
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import AudioEntry from './entries/AudioEntry'
+import PhotosEntry from './entries/PhotosEntry'
 import TextEntry from './entries/TextEntry'
 
 function EntryList({
@@ -21,7 +22,7 @@ function EntryList({
   page: number
   setPage: (page: number) => void
   onDelete: (data: IMomentVaultEntry) => void
-  addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
+  addEntryModalOpenType: 'text' | 'audio' | 'photos' | 'video' | null
   onTextEntryEdit: (data: IMomentVaultEntry) => void
 }) {
   useEffect(() => {
@@ -64,6 +65,16 @@ function EntryList({
                     entry={entry}
                     onDelete={() => onDelete(entry)}
                     onEdit={() => onTextEntryEdit(entry)}
+                  />
+                )
+              }
+
+              if (entry.type === 'photos') {
+                return (
+                  <PhotosEntry
+                    key={entry.id}
+                    entry={entry}
+                    onDelete={() => onDelete(entry)}
                   />
                 )
               }

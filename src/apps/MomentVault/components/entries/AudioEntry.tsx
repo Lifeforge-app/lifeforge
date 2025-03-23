@@ -26,7 +26,7 @@ function AudioEntry({
   entriesQueryKey: unknown[]
   entry: IMomentVaultEntry
   onDelete: () => void
-  addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
+  addEntryModalOpenType: 'text' | 'audio' | 'photos' | 'video' | null
 }) {
   const {
     theme: lightOrDarkTheme,
@@ -126,7 +126,7 @@ function AudioEntry({
             cursorColor={themeColor}
             height={50}
             progressColor={themeColor}
-            url={`${import.meta.env.VITE_API_HOST}/media/${entry.file}`}
+            url={`${import.meta.env.VITE_API_HOST}/media/${entry.file?.[0]}`}
             waveColor={
               (lightOrDarkTheme === 'system' &&
                 window.matchMedia &&
