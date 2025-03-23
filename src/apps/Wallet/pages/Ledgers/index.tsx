@@ -109,6 +109,7 @@ function Ledgers() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/ledgers"
+        confirmationText="Delete this ledger account"
         data={selectedData ?? undefined}
         isOpen={deleteLedgersConfirmationOpen}
         itemName="ledger account"

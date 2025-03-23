@@ -78,9 +78,10 @@ function ContainerHeader() {
                       }}
                     >
                       <div
-                        className="rounded-lg p-3"
+                        className="rounded-lg border-2 p-3"
                         style={{
-                          backgroundColor: pathDetails!.container.color + '20'
+                          backgroundColor: pathDetails!.container.color + '20',
+                          borderColor: pathDetails!.container.color
                         }}
                       >
                         <Icon

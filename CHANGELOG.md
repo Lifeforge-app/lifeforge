@@ -1,6 +1,7 @@
 ### 📌 **dev 25w13 (3/23/2025 - 3/29/2025)**
 
 - **UI**: Added a tab in image picker modal for user to generate image from text using AI
+- **UI**: Added confirmation text input in the delete modal
 
 ---
 

@@ -144,6 +144,7 @@ function ProjectKanban() {
       />
       <DeleteConfirmationModal
         apiEndpoint="projects-m/kanban/columns"
+        confirmationText="Delete this column"
         data={existedData ?? undefined}
         isOpen={deleteColumnConfirmationModalOpen}
         itemName="column"

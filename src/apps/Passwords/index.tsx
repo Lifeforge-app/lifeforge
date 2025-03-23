@@ -30,6 +30,7 @@ function ModalsSection() {
       <ModifyPasswordModal />
       <DeleteConfirmationModal
         apiEndpoint="passwords/password"
+        confirmationText="Delete this password"
         customText={`Are you sure you want to delete the password for ${existedData?.name}? This action is irreversible.`}
         data={existedData ?? undefined}
         isOpen={isDeletePasswordConfirmationModalOpen}

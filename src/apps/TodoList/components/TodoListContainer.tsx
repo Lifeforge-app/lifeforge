@@ -131,6 +131,7 @@ function TodoListContainer() {
       <ModifyPriorityModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/priorities"
+        confirmationText="Delete this priority"
         customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
         data={selectedPriority ?? undefined}
         isOpen={deletePriorityConfirmationModalOpen}
@@ -143,6 +144,7 @@ function TodoListContainer() {
       <ModifyListModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/lists"
+        confirmationText="Delete this list"
         customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
         data={selectedList ?? undefined}
         isOpen={deleteListConfirmationModalOpen}
@@ -155,6 +157,7 @@ function TodoListContainer() {
       <ModifyTagModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/tags"
+        confirmationText="Delete this tag"
         customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
         data={selectedTag ?? undefined}
         isOpen={deleteTagConfirmationModalOpen}

@@ -36,6 +36,7 @@ function DeleteModals() {
       />
       <DeleteConfirmationModal
         apiEndpoint="idea-box/folders"
+        confirmationText="Delete this folder"
         data={existedFolder ?? undefined}
         isOpen={deleteFolderConfirmationModalOpen}
         itemName="folder"

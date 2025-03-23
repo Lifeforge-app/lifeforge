@@ -119,6 +119,7 @@ function CalendarModule() {
       />
       <DeleteConfirmationModal
         apiEndpoint="calendar/categories"
+        confirmationText="Delete this event"
         data={existedCategoryData ?? undefined}
         isOpen={deleteCategoryConfirmationModalOpen}
         itemName="category"

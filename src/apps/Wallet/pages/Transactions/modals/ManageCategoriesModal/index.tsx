@@ -95,6 +95,7 @@ function ManageCategoriesModal({
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/category"
+        confirmationText="Delete this category"
         data={existedData ?? undefined}
         isOpen={deleteCategoriesConfirmationOpen}
         itemName="category"
