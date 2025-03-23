@@ -1,9 +1,9 @@
 import type { RecordModel } from 'pocketbase'
 
 interface IMomentVaultEntry extends RecordModel {
-  type: 'text' | 'audio' | 'video' | 'photo'
+  type: 'text' | 'audio' | 'video' | 'photos'
   content: string
-  file?: string | undefined
+  file?: string[]
   transcription: string
 }
 

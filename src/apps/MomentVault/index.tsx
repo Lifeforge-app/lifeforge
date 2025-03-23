@@ -28,7 +28,7 @@ function MomentVault() {
     ['moment-vault', 'entries', page]
   )
   const [addEntryModalOpenType, setAddEntryModalOpenType] = useState<
-    'text' | 'audio' | 'photo' | 'video' | null
+    'text' | 'audio' | 'photos' | 'video' | null
   >(null)
   const [existedData, setExistedData] = useState<IMomentVaultEntry | null>(null)
   const [
@@ -76,9 +76,9 @@ function MomentVault() {
               <MenuItem
                 icon="tabler:camera"
                 namespace="apps.momentVault"
-                text="photo"
+                text="photos"
                 onClick={() => {
-                  setAddEntryModalOpenType('photo')
+                  setAddEntryModalOpenType('photos')
                 }}
               />
               <MenuItem
@@ -135,9 +135,9 @@ function MomentVault() {
           <MenuItem
             icon="tabler:camera"
             namespace="apps.momentVault"
-            text="photo"
+            text="photos"
             onClick={() => {
-              setAddEntryModalOpenType('photo')
+              setAddEntryModalOpenType('photos')
             }}
           />
           <MenuItem
