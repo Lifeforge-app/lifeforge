@@ -48,9 +48,10 @@ function ContainerHeader() {
         style={{
           backgroundImage:
             typeof pathDetails !== 'string'
-              ? `url(${import.meta.env.VITE_API_HOST}/media/${
-                  pathDetails?.container.cover
-                })`
+              ? `url(${import.meta.env.VITE_API_HOST}/media/${pathDetails?.container.cover.replace(
+                  /^\//,
+                  ''
+                )})`
               : ''
         }}
       >
