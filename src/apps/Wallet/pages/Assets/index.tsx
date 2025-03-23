@@ -123,6 +123,7 @@ function Assets() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/assets"
+        confirmationText="Delete this asset account"
         data={selectedData ?? undefined}
         isOpen={deleteAssetsConfirmationOpen}
         itemName="asset account"

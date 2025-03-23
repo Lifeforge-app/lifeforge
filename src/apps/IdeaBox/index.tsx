@@ -95,6 +95,7 @@ function IdeaBox() {
       />
       <DeleteConfirmationModal
         apiEndpoint="idea-box/containers"
+        confirmationText="Delete this container"
         data={existedData ?? undefined}
         isOpen={deleteContainerConfirmationModalOpen}
         itemName="container"

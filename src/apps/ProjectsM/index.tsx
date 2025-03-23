@@ -114,6 +114,7 @@ function ProjectsM() {
         <DeleteConfirmationModal
           key={index}
           apiEndpoint={config.apiEndpoint}
+          confirmationText={`Delete this ${config.itemName}`}
           data={config.data}
           isOpen={config.isOpen}
           itemName={config.itemName}

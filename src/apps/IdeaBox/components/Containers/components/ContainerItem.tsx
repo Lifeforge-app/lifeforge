@@ -51,10 +51,9 @@ function ContainerItem({
       <div className="flex flex-col items-center justify-start gap-6 p-8 pt-0">
         <div className="bg-bg-950 -mt-12 overflow-hidden rounded-lg">
           <div
-            className="p-4"
+            className="rounded-lg p-4"
             style={{
-              backgroundColor: container.color + '30',
-              borderColor: container.color
+              backgroundColor: container.color + '30'
             }}
           >
             <Icon
