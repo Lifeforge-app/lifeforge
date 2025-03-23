@@ -1,3 +1,9 @@
+### 📌 **dev 25w13 (3/23/2025 - 3/29/2025)**
+
+- **UI**: Added a tab in image picker modal for user to generate image from text using AI
+
+---
+
 ### 📌 **dev 25w12 (3/16/2025 - 3/22/2025)**
 
 - **API**: Moved type interfaces to their respective module directories for better organization.
@@ -10,6 +16,7 @@
 - **API**: Moved locale-related files of each module to their respective directories.
 - **API**: Moved `.env` files to the `env` directory.
 - **API**: Migrated bundler from `pkgroll` to `bun`.
+- **API**: Included a script to automatically scan for all the `schema.json` files and import them into the database.
 - **Code**: Replaced all `useReducer` with `useState`.
 - **Code**: Reconstructed routing mechanism, combining all route configurations into a single file.
 - **Code**: Removed modules that are just empty shells.
@@ -30,8 +37,9 @@
 - **Youtube Summarizer**: Created and completed this module.
 - **Currency Converter**: Created and completed this module.
 - **BooksLibrary**: Added a button beside the search bar to scan barcode.
-- **Guitar Tabs**: Added a button beside the search bar to show random tabs.
+- **Guitar Tabs**: Added a button beside the search bar to load random tabs.
 - **Guitar Tabs**: Fixed a bug where guitar tab metadata failed to update after editing.
+- **Personalization**: Added missing locales for background image adjustment modal.
 - **UI**: Created Github workflow for automatic deployment and versioning.
 - **UI**: Fixed a bug where sidebar item with subsections collapse the sidebar when clicked in mobile view.
 - **UI**: Removed `eslint-plugin-import` from the project as it was causing issues.
@@ -43,6 +51,8 @@
 - **UI**: Changed the side button in search bar to reusable `Button` component.
 - **UI**: Added `sideButtonLoading` prop to `SearchBar` to show loading state.
 - **UI**: Removed Storybook due to being too uncustomizable.
+- **Documentation**: Updated the installation and configuration guide to align with the latest codebase structure.
+- **Documentation**: Added brief user guides for the system.
 
 ---
 
