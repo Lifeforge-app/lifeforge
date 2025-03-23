@@ -12,6 +12,7 @@ import {
 } from '@lifeforge/ui'
 
 import AudioType from './components/AudioType'
+import PhotoType from './components/PhotoType'
 import TextType from './components/TextType'
 
 const TYPES = [
@@ -24,7 +25,7 @@ const TYPES = [
     icon: 'tabler:microphone'
   },
   {
-    id: 'photo',
+    id: 'photos',
     icon: 'tabler:photo'
   },
   {
@@ -40,8 +41,8 @@ function AddEntryModal({
   onClose
 }: {
   entriesQueryKey: unknown[]
-  openType: 'text' | 'audio' | 'photo' | 'video' | null
-  setOpenType: (type: 'text' | 'audio' | 'photo' | 'video' | null) => void
+  openType: 'text' | 'audio' | 'photos' | 'video' | null
+  setOpenType: (type: 'text' | 'audio' | 'photos' | 'video' | null) => void
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.momentVault')
@@ -120,6 +121,18 @@ function AddEntryModal({
               case 'text':
                 return (
                   <TextType
+                    onSuccess={() => {
+                      onClose()
+                      queryClient.invalidateQueries({
+                        queryKey: entriesQueryKey
+                      })
+                    }}
+                  />
+                )
+
+              case 'photos':
+                return (
+                  <PhotoType
                     onSuccess={() => {
                       onClose()
                       queryClient.invalidateQueries({

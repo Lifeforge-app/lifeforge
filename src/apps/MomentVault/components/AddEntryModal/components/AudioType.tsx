@@ -140,7 +140,7 @@ function AudioType({
     )
 
     body.append('type', 'audio')
-    body.append('file', file)
+    body.append('files', file)
     body.append('transcription', transcription ?? '')
 
     try {
