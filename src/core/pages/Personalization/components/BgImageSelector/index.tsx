@@ -30,6 +30,10 @@ function BgImageSelector() {
     deleteBgImageConfirmationModalOpen,
     setDeleteBgImageConfirmationModalOpen
   ] = useState(false)
+  const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
+    'ai/image-generation/key-exists',
+    ['ai', 'image-generation', 'key-exists']
+  )
 
   async function onSubmit(url: string | File) {
     try {
@@ -123,6 +127,7 @@ function BgImageSelector() {
         acceptedMimeTypes={{
           'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
         }}
+        enableAI={imageGenAPIKeyExistsQuery.data ?? false}
         enablePixabay={pixabayEnabledQuery.data ?? false}
         isOpen={imageSelectorModalOpen}
         onClose={() => {

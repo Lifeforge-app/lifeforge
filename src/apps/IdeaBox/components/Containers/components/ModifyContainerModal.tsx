@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { FormModal, type IFieldProps } from '@lifeforge/ui'
 
+import useAPIQuery from '@hooks/useAPIQuery'
+
 import {
   type IIdeaBoxContainer,
   IIdeaBoxContainerFormState
@@ -16,6 +18,10 @@ function ModifyContainerModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: IIdeaBoxContainer | null
 }) {
+  const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
+    'ai/image-generation/key-exists',
+    ['ai', 'image-generation', 'key-exists']
+  )
   const [formState, setFormState] = useState<IIdeaBoxContainerFormState>({
     name: '',
     icon: '',
@@ -50,7 +56,9 @@ function ModifyContainerModal({
     {
       id: 'cover',
       label: 'Cover Image',
-      type: 'file'
+      type: 'file',
+      enableAIImageGeneration: imageGenAPIKeyExistsQuery.data ?? false,
+      defaultImageGenerationPrompt: `I have an idea box named "${formState.name}", where I store all my ideas related to this title. Can you generate a thumbnail for the idea box? The image should focus on the title of this idea box instead of the fact that this is the idea box. It should clearly represent the project or whatever the idea box is used to contain the idea for. In other words, do not include any words related to "idea box" in the image unless the title of the box said so.`
     }
   ]
 
