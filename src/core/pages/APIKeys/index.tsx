@@ -122,6 +122,7 @@ function APIKeys() {
         />
         <DeleteConfirmationModal
           apiEndpoint="api-keys/entries"
+          confirmationText="Delete this API key"
           data={existingData ?? undefined}
           isOpen={deleteConfirmationModalOpen}
           itemName="API Key"

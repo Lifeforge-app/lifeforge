@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -30,18 +31,22 @@ function EntryItem({
         componentBg
       )}
     >
-      <div className="flex h-full gap-4">
+      <div className="flex h-full items-center gap-4">
         <div
           className={clsx(
-            'h-full w-1 shrink-0 rounded-full',
+            'flex-center size-12 shrink-0 rounded-md',
             {
-              easy: 'bg-green-500',
-              medium: 'bg-yellow-500',
-              hard: 'bg-red-500',
-              impossible: 'bg-purple-500'
+              easy: 'border-2 border-green-500 bg-green-500/20 text-green-500',
+              medium:
+                'border-2 border-yellow-500 bg-yellow-500/20 text-yellow-500',
+              hard: 'border-2 border-red-500 bg-red-500/20 text-red-500',
+              impossible:
+                'border-2 border-purple-500 bg-purple-500/20 text-purple-500'
             }[entry.difficulty]
           )}
-        />
+        >
+          <Icon className="size-8" icon="tabler:award" />
+        </div>
         <div>
           <h2 className="text-lg font-semibold">{entry.title}</h2>
           <p className="text-bg-500 mt-1 text-sm">{entry.thoughts}</p>

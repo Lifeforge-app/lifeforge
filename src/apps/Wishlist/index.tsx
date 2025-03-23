@@ -82,6 +82,7 @@ function Wishlist() {
       />
       <DeleteConfirmationModal
         apiEndpoint="wishlist/lists"
+        confirmationText="Delete this wishlist"
         data={existedData ?? undefined}
         isOpen={deleteConfirmationModalOpen}
         itemName="wishlist"
