@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function IncomeExpensesTable({
   month,
@@ -105,10 +106,10 @@ function IncomeExpensesTable({
                     return (
                       <>
                         <td className="p-3 text-right text-lg whitespace-nowrap">
-                          {lastMonthAmount.toFixed(2)}
+                          {numberToCurrency(lastMonthAmount)}
                         </td>
                         <td className="p-3 text-right text-lg whitespace-nowrap">
-                          {thatMonthAmount.toFixed(2)}
+                          {numberToCurrency(thatMonthAmount)}
                         </td>
                         <td
                           className={clsx(
@@ -120,10 +121,12 @@ function IncomeExpensesTable({
                           )}
                         >
                           {thatMonthAmount - lastMonthAmount < 0
-                            ? `(${Math.abs(
+                            ? `(${numberToCurrency(
+                                Math.abs(thatMonthAmount - lastMonthAmount)
+                              )})`
+                            : numberToCurrency(
                                 thatMonthAmount - lastMonthAmount
-                              ).toFixed(2)})`
-                            : (thatMonthAmount - lastMonthAmount).toFixed(2)}
+                              )}
                         </td>
                         <td
                           className={clsx(
@@ -188,7 +191,7 @@ function IncomeExpensesTable({
                         borderBottom: '6px double'
                       }}
                     >
-                      {lastMonthAmount.toFixed(2)}
+                      {numberToCurrency(lastMonthAmount)}
                     </td>
                     <td
                       className="p-3 text-right text-lg font-medium whitespace-nowrap"
@@ -197,7 +200,7 @@ function IncomeExpensesTable({
                         borderBottom: '6px double'
                       }}
                     >
-                      {thatMonthAmount.toFixed(2)}
+                      {numberToCurrency(thatMonthAmount)}
                     </td>
                     <td
                       className={clsx(
@@ -213,10 +216,10 @@ function IncomeExpensesTable({
                       }}
                     >
                       {thatMonthAmount - lastMonthAmount < 0
-                        ? `(${Math.abs(
-                            thatMonthAmount - lastMonthAmount
-                          ).toFixed(2)})`
-                        : (thatMonthAmount - lastMonthAmount).toFixed(2)}
+                        ? `(${numberToCurrency(
+                            Math.abs(thatMonthAmount - lastMonthAmount)
+                          )})`
+                        : numberToCurrency(thatMonthAmount - lastMonthAmount)}
                     </td>
                     <td
                       className={clsx(

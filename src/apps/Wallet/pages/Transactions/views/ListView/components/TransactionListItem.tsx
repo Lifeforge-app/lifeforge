@@ -6,6 +6,7 @@ import { Tooltip } from 'react-tooltip'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 
@@ -155,7 +156,7 @@ function TransactionListItem({
           })}
         >
           {transaction.side === 'debit' ? '+' : '-'}
-          {transaction.amount.toFixed(2)}
+          {numberToCurrency(transaction.amount)}
         </span>
         <HamburgerMenu>
           {transaction.type !== 'transfer' && (

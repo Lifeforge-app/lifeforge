@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 const CHART_OPTIONS = {
   responsive: true,
@@ -56,9 +57,12 @@ function BreakdownDoughnutChart({
                 ))}
             </span>
           ) : (
-            Object.values(spentOnEachCategory)
-              .reduce((acc, curr) => acc + curr.amount, 0)
-              .toFixed(2)
+            numberToCurrency(
+              Object.values(spentOnEachCategory).reduce(
+                (acc, curr) => acc + curr.amount,
+                0
+              )
+            )
           )}
         </div>
         <div className="text-bg-500 mt-2 w-1/2 text-center text-sm sm:text-base">
