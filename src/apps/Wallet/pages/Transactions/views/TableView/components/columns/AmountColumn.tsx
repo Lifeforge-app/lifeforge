@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
+
 function AmountColumn({
   side,
   amount
@@ -16,7 +18,7 @@ function AmountColumn({
         })}
       >
         {side === 'debit' ? '+' : '-'}
-        {amount.toFixed(2)}
+        {numberToCurrency(amount)}
       </span>
     </td>
   )

@@ -9,6 +9,7 @@ import {
   IWalletTransaction
 } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function getAmounts({
   asset,
@@ -132,10 +133,10 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       return (
                         <>
                           <td className="p-3 text-right text-lg whitespace-nowrap">
-                            {lastMonthAmount.toFixed(2)}
+                            {numberToCurrency(lastMonthAmount)}
                           </td>
                           <td className="p-3 text-right text-lg whitespace-nowrap">
-                            {thatMonthAmount.toFixed(2)}
+                            {numberToCurrency(thatMonthAmount)}
                           </td>
                           <td
                             className={clsx(
@@ -145,10 +146,12 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                             )}
                           >
                             {thatMonthAmount - lastMonthAmount < 0
-                              ? `(${Math.abs(
+                              ? `(${numberToCurrency(
+                                  Math.abs(thatMonthAmount - lastMonthAmount)
+                                )})`
+                              : numberToCurrency(
                                   thatMonthAmount - lastMonthAmount
-                                ).toFixed(2)})`
-                              : (thatMonthAmount - lastMonthAmount).toFixed(2)}
+                                )}
                           </td>
                           <td
                             className={clsx(
@@ -157,7 +160,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                                 'text-rose-600'
                             )}
                           >
-                            {+lastMonthAmount.toFixed(2) === 0
+                            {lastMonthAmount === 0
                               ? '-'
                               : `${(
                                   ((thatMonthAmount - lastMonthAmount) /
@@ -228,7 +231,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                           borderBottom: '6px double'
                         }}
                       >
-                        {lastMonthAmount.toFixed(2)}
+                        {numberToCurrency(lastMonthAmount)}
                       </td>
                       <td
                         className="p-3 text-right text-lg font-medium whitespace-nowrap"
@@ -237,7 +240,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                           borderBottom: '6px double'
                         }}
                       >
-                        {thatMonthAmount.toFixed(2)}
+                        {numberToCurrency(thatMonthAmount)}
                       </td>
                       <td
                         className={clsx(
@@ -251,10 +254,10 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                         }}
                       >
                         {thatMonthAmount - lastMonthAmount < 0
-                          ? `(${Math.abs(
-                              thatMonthAmount - lastMonthAmount
-                            ).toFixed(2)})`
-                          : (thatMonthAmount - lastMonthAmount).toFixed(2)}
+                          ? `(${numberToCurrency(
+                              Math.abs(thatMonthAmount - lastMonthAmount)
+                            )})`
+                          : numberToCurrency(thatMonthAmount - lastMonthAmount)}
                       </td>
                       <td
                         className={clsx(

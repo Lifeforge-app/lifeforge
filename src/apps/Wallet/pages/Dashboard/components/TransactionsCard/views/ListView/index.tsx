@@ -6,6 +6,7 @@ import { QueryWrapper } from '@lifeforge/ui'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function ListView({ categories }: { categories: IWalletCategory[] }) {
   const { transactionsQuery } = useWalletContext()
@@ -64,7 +65,7 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
                     )}
                   >
                     {transaction.side === 'debit' ? '+' : '-'}
-                    {transaction.amount.toFixed(2)}
+                    {numberToCurrency(transaction.amount)}
                   </span>
                 </div>
                 <div className="text-bg-500 text-right text-sm whitespace-nowrap">

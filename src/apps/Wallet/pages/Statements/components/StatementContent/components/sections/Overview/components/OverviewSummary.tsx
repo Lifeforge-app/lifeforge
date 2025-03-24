@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 
 import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function OverviewSummary({
   filteredTransactions
@@ -13,24 +14,24 @@ function OverviewSummary({
         <p className="text-xl">Income</p>
         <p className="text-lg">
           RM{' '}
-          {filteredTransactions
-            .reduce((acc, curr) => {
+          {numberToCurrency(
+            filteredTransactions.reduce((acc, curr) => {
               if (curr.type === 'income') return acc + curr.amount
               return acc
             }, 0)
-            .toFixed(2)}
+          )}
         </p>
       </div>
       <div className="bg-bg-200 dark:bg-bg-900 flex items-center justify-between p-3 print:bg-black/[3%]!">
         <p className="text-xl">Expenses</p>
         <p className="text-lg">
           RM (
-          {filteredTransactions
-            .reduce((acc, curr) => {
+          {numberToCurrency(
+            filteredTransactions.reduce((acc, curr) => {
               if (curr.type === 'expenses') return acc + curr.amount
               return acc
             }, 0)
-            .toFixed(2)}
+          )}
           )
         </p>
       </div>
@@ -56,8 +57,8 @@ function OverviewSummary({
             >
               RM{' '}
               {netIncome >= 0
-                ? netIncome.toFixed(2)
-                : `(${Math.abs(netIncome).toFixed(2)})`}
+                ? numberToCurrency(netIncome)
+                : `(${numberToCurrency(Math.abs(netIncome))})`}
             </p>
           )
         })()}

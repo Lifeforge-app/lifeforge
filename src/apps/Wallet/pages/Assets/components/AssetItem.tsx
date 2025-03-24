@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 
@@ -46,7 +47,7 @@ function AssetItem({
               ))}
           </span>
         ) : (
-          asset.balance.toFixed(2)
+          numberToCurrency(asset.balance)
         )}
       </p>
       <Button

@@ -5,6 +5,7 @@ import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import { IWalletIncomeExpenses } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -46,9 +47,9 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
                     ))}
                 </span>
               ) : (
-                +data[
-                  `total${title}` as 'totalIncome' | 'totalExpenses'
-                ].toFixed(2)
+                numberToCurrency(
+                  +data[`total${title}` as 'totalIncome' | 'totalExpenses']
+                )
               )}
             </p>
             <p>
@@ -72,9 +73,11 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
                       ))}
                   </span>
                 ) : (
-                  +data[
-                    `monthly${title}` as 'monthlyIncome' | 'monthlyExpenses'
-                  ].toFixed(2)
+                  numberToCurrency(
+                    +data[
+                      `monthly${title}` as 'monthlyIncome' | 'monthlyExpenses'
+                    ]
+                  )
                 )}
               </span>{' '}
               from this month

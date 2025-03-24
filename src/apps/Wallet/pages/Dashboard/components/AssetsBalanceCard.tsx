@@ -11,6 +11,7 @@ import {
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -75,7 +76,7 @@ function AssetsBalanceCard() {
                             ))}
                         </span>
                       ) : (
-                        <span>{+asset.balance.toFixed(2)}</span>
+                        <span>{numberToCurrency(asset.balance)}</span>
                       )}
                     </div>
                   </Link>

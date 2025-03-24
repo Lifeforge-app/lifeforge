@@ -7,6 +7,7 @@ import { Scrollbar } from '@lifeforge/ui'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function BreakdownDetails({
   spentOnEachCategory,
@@ -74,7 +75,7 @@ function BreakdownDetails({
                         ))}
                     </span>
                   ) : (
-                    spentOnEachCategory[category.id]?.amount.toFixed(2)
+                    numberToCurrency(spentOnEachCategory[category.id]?.amount)
                   )}
                 </div>
                 <div className="text-bg-500 text-right text-sm">
