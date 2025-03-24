@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function TransactionList({
   type,
@@ -130,8 +131,8 @@ function TransactionList({
                   )}
                   <td className="p-3 text-right text-lg whitespace-nowrap">
                     {transaction.side === 'credit'
-                      ? `(${transaction.amount.toFixed(2)})`
-                      : transaction.amount.toFixed(2)}
+                      ? `(${numberToCurrency(transaction.amount)})`
+                      : numberToCurrency(transaction.amount)}
                   </td>
                 </tr>
               ))}
@@ -174,8 +175,8 @@ function TransactionList({
                   return (
                     <span className="font-medium">
                       {amount < 0
-                        ? `(${Math.abs(amount).toFixed(2)})`
-                        : amount.toFixed(2)}
+                        ? `(${numberToCurrency(Math.abs(amount))})`
+                        : numberToCurrency(amount)}
                     </span>
                   )
                 })()}

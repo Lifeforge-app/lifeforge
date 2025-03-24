@@ -7,6 +7,7 @@ import { Link } from 'react-router'
 import { DashboardItem, QueryWrapper, Scrollbar } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -137,7 +138,7 @@ function TransactionsCountCard() {
                             ))}
                         </span>
                       ) : (
-                        amounts[type].amount.toFixed(2)
+                        numberToCurrency(amounts[type].amount)
                       )}
                     </div>
                     <div className="text-bg-500 text-right text-sm">
