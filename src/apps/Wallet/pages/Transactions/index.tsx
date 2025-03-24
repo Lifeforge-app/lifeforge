@@ -57,9 +57,8 @@ function Transactions() {
   const [isManageCategoriesModalOpen, setManageCategoriesModalOpen] = useState<
     boolean | 'new'
   >(false)
-  const [selectedData, setSelectedData] = useState<IWalletTransaction | null>(
-    null
-  )
+  const [selectedData, setSelectedData] =
+    useState<Partial<IWalletTransaction> | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState<'list' | 'table'>('list')
   const [receiptModalOpen, setReceiptModalOpen] = useState(false)

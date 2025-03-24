@@ -34,9 +34,9 @@ function ModifyTransactionsModal({
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IWalletTransaction | null
+  existedData: Partial<IWalletTransaction> | null
   setExistedData: React.Dispatch<
-    React.SetStateAction<IWalletTransaction | null>
+    React.SetStateAction<Partial<IWalletTransaction> | null>
   >
 }) {
   const { t } = useTranslation('apps.wallet')
@@ -79,8 +79,8 @@ function ModifyTransactionsModal({
   useEffect(() => {
     if (openType) {
       if (existedData) {
-        setParticular(existedData.particulars)
-        setTransactionType(existedData.type)
+        setParticular(existedData.particulars ?? '')
+        setTransactionType(existedData.type ?? 'income')
         setTransactionDate(dayjs(existedData.date).format('YYYY-MM-DD'))
         setAmount(`${existedData.amount}`)
         setCategory(existedData.category || '')
@@ -299,6 +299,7 @@ function ModifyTransactionsModal({
           />
         </div>
         <Button
+          className="mt-6"
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           loading={loading}
           onClick={() => {

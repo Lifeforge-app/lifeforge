@@ -42,20 +42,29 @@ function Assets() {
     <ModuleWrapper>
       <ModuleHeader
         actionButton={
-          (assetsQuery.data ?? []).length > 0 && (
-            <Button
-              className="hidden sm:flex"
-              icon="tabler:plus"
-              tProps={{
-                item: t('items.asset')
-              }}
+          <>
+            <MenuItem
+              icon="tabler:refresh"
+              text="Refresh"
               onClick={() => {
-                setModifyModalOpenType('create')
+                assetsQuery.refetch()
               }}
-            >
-              new
-            </Button>
-          )
+            />
+            {(assetsQuery.data ?? []).length > 0 && (
+              <Button
+                className="hidden sm:flex"
+                icon="tabler:plus"
+                tProps={{
+                  item: t('items.asset')
+                }}
+                onClick={() => {
+                  setModifyModalOpenType('create')
+                }}
+              >
+                new
+              </Button>
+            )}
+          </>
         }
         hamburgerMenuItems={
           <>
