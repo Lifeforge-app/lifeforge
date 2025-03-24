@@ -2,6 +2,7 @@
 
 - **UI**: Added a tab in image picker modal for user to generate image from text using AI
 - **UI**: Added confirmation text input in the delete modal
+- **Moment Vault**: User can now add image entries
 
 ---
 
@@ -41,6 +42,7 @@
 - **Guitar Tabs**: Added a button beside the search bar to load random tabs.
 - **Guitar Tabs**: Fixed a bug where guitar tab metadata failed to update after editing.
 - **Personalization**: Added missing locales for background image adjustment modal.
+- **Moment Vault**: User can now add text entries.
 - **UI**: Created Github workflow for automatic deployment and versioning.
 - **UI**: Fixed a bug where sidebar item with subsections collapse the sidebar when clicked in mobile view.
 - **UI**: Removed `eslint-plugin-import` from the project as it was causing issues.
