@@ -84,6 +84,15 @@ function Transactions() {
         hamburgerMenuItems={
           <>
             <MenuItem
+              icon="tabler:refresh"
+              text="Refresh"
+              onClick={() => {
+                queryClient.invalidateQueries({
+                  queryKey: ['wallet', 'transactions']
+                })
+              }}
+            />
+            <MenuItem
               icon="tabler:apps"
               namespace="apps.wallet"
               text="Manage Categories"
