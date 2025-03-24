@@ -28,7 +28,7 @@ function ScanReceiptModal({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setExistedData: React.Dispatch<
-    React.SetStateAction<IWalletTransaction | null>
+    React.SetStateAction<Partial<IWalletTransaction> | null>
   >
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -62,15 +62,10 @@ function ScanReceiptModal({
       )
 
       setModifyModalOpenType('create')
-      setExistedData(prev =>
-        prev
-          ? {
-              ...prev,
-              ...data,
-              receipt: keepReceiptAfterScan ? file : ''
-            }
-          : null
-      )
+      setExistedData({
+        ...data,
+        receipt: keepReceiptAfterScan ? file : ''
+      })
       setOpen(false)
     } catch {
       toast.error('Failed to scan receipt')
