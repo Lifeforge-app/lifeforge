@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { Bar } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
 import { DashboardItem, EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
@@ -67,6 +67,7 @@ function StatisticChardCard() {
         .map(amount => (amount === 0 ? 0.1 : amount))
     })
   }, [transactions])
+  console.log(groupedByDate)
   const { t } = useTranslation('apps.wallet')
 
   return (
@@ -97,7 +98,7 @@ function StatisticChardCard() {
             transactions.length === 0 ? (
               <EmptyStateScreen name="transactions" namespace="apps.wallet" />
             ) : (
-              <Bar
+              <Line
                 className="w-full"
                 data={{
                   labels: dates,
@@ -105,14 +106,14 @@ function StatisticChardCard() {
                     {
                       label: 'Income',
                       data: groupedByDate[0],
-                      borderWidth: 1,
+                      borderWidth: 2,
                       borderColor: 'rgb(34 197 94)',
                       backgroundColor: 'rgba(34,197,94,0.2)'
                     },
                     {
                       label: 'Expenses',
                       data: groupedByDate[1],
-                      borderWidth: 1,
+                      borderWidth: 2,
                       borderColor: 'rgb(239 68 68)',
                       backgroundColor: 'rgba(239,68,68,0.2)'
                     }

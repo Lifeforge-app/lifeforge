@@ -49,6 +49,7 @@ function ModifyEventModal({
       label: 'Start time',
       icon: 'tabler:clock',
       type: 'datetime',
+      hasTime: true,
       index: 0,
       modalRef: ref
     },
@@ -57,6 +58,7 @@ function ModifyEventModal({
       required: true,
       label: 'End time',
       icon: 'tabler:clock',
+      hasTime: true,
       type: 'datetime',
       index: 1,
       modalRef: ref
@@ -113,7 +115,7 @@ function ModifyEventModal({
     <>
       <FormModal
         actionButtonIsRed
-        actionButtonIcon="tabler:trash"
+        actionButtonIcon={openType === 'update' ? 'tabler:trash' : ''}
         data={formState}
         endpoint="calendar/events"
         fields={FIELDS}
