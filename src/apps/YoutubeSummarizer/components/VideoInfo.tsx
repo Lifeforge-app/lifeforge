@@ -28,7 +28,7 @@ function VideoInfo({ videoInfo }: VideoInfoProps) {
           <p className="bg-bg-900/70 text-bg-50 absolute right-2 bottom-2 rounded-md px-1.5 py-0.5">
             {dayjs
               .duration(+videoInfo.duration, 'second')
-              .format(+videoInfo.duration > 3600 ? 'h:mm:ss' : 'm:ss')}
+              .format(+videoInfo.duration > 3600 ? 'H:mm:ss' : 'm:ss')}
           </p>
         </div>
         <div>

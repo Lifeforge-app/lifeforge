@@ -7,7 +7,7 @@ import SideButtons from './components/SideButtons'
 function formatDuration(duration: string): string {
   return dayjs
     .duration(+duration, 'second')
-    .format(+duration > 3600 ? 'h:mm:ss' : 'm:ss')
+    .format(+duration > 3600 ? 'H:mm:ss' : 'm:ss')
 }
 
 function MusicListItem({ music }: { music: IMusicEntry }) {

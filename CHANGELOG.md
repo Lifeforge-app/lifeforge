@@ -2,7 +2,12 @@
 
 - **UI**: Added a tab in image picker modal for user to generate image from text using AI
 - **UI**: Added confirmation text input in the delete modal
+- **Code**: Fixed duration formatting bugs.
 - **Moment Vault**: User can now add image entries
+- **Movies**: Fixed API endpoint bugs.
+- **Calendar**: Improved rendering performance.
+- **Calendar**: Start end end time field of an event now contains both date and time.
+- **Calendar**: Fixed a bug where the event isn't fetched when the date and view mode is changed.
 
 ---
 
