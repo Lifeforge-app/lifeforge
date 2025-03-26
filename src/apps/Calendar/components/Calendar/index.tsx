@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
@@ -15,7 +15,7 @@ import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 
 const localizer = dayjsLocalizer(dayjs)
-const DnDCalendar: any = withDragAndDrop(Calendar)
+const DnDCalendar = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
   queryKey: unknown[]
@@ -25,8 +25,7 @@ interface CalendarComponentProps {
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  setStart: React.Dispatch<React.SetStateAction<string>>
-  setEnd: React.Dispatch<React.SetStateAction<string>>
+  refetchEvents: (range: Date[] | { start: Date; end: Date }) => void
 }
 
 function CalendarComponent({
@@ -35,50 +34,80 @@ function CalendarComponent({
   categories,
   setModifyEventModalOpenType,
   setExistedData,
-  setStart,
-  setEnd
+  refetchEvents
 }: CalendarComponentProps) {
   const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
 
-  async function updateEvent({
-    event,
-    start,
-    end
-  }: {
-    event: ICalendarEvent
-    start: Date
-    end: Date
-  }) {
-    queryClient.setQueryData(queryKey, (prevEvents: ICalendarEvent[]) => {
-      return prevEvents.map(prevEvent => {
-        if (prevEvent.id === event.id) {
-          return {
-            ...prevEvent,
-            start,
-            end
-          }
-        }
-        return prevEvent
-      })
-    })
+  const calendarComponents = useMemo(
+    () => ({
+      toolbar: (props: any) => {
+        return (
+          <CalendarHeader
+            {...props}
+            setModifyEventModalOpenType={setModifyEventModalOpenType}
+          />
+        )
+      },
+      event: ({
+        event
+      }: {
+        event: ICalendarEvent | Record<string, unknown>
+      }) => {
+        return (
+          <EventItem
+            categories={categories}
+            event={event as ICalendarEvent}
+            setExistedData={setExistedData}
+            setModifyEventModalOpenType={setModifyEventModalOpenType}
+          />
+        )
+      }
+    }),
+    [categories, setExistedData, setModifyEventModalOpenType]
+  )
 
-    try {
-      await fetchAPI<ICalendarEvent>(`calendar/events/${event.id}`, {
-        method: 'PATCH',
-        body: {
-          title: event.title,
-          start: dayjs(start).toISOString(),
-          end: dayjs(end).toISOString(),
-          category: event.category
-        }
+  const updateEvent = useCallback(
+    async ({
+      event,
+      start,
+      end
+    }: {
+      event: ICalendarEvent
+      start: Date
+      end: Date
+    }) => {
+      queryClient.setQueryData(queryKey, (prevEvents: ICalendarEvent[]) => {
+        return prevEvents.map(prevEvent => {
+          if (prevEvent.id === event.id) {
+            return {
+              ...prevEvent,
+              start,
+              end
+            }
+          }
+          return prevEvent
+        })
       })
-    } catch {
-      queryClient.invalidateQueries({
-        queryKey: queryKey
-      })
-    }
-  }
+
+      try {
+        await fetchAPI<ICalendarEvent>(`calendar/events/${event.id}`, {
+          method: 'PATCH',
+          body: {
+            title: event.title,
+            start: dayjs(start).toISOString(),
+            end: dayjs(end).toISOString(),
+            category: event.category
+          }
+        })
+      } catch {
+        queryClient.invalidateQueries({
+          queryKey: queryKey
+        })
+      }
+    },
+    [queryClient, queryKey]
+  )
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
@@ -95,36 +124,13 @@ function CalendarComponent({
         updated: ''
       })
     },
-    []
+    [setExistedData, setModifyEventModalOpenType]
   )
 
   return (
     <DnDCalendar
       selectable
-      components={{
-        toolbar: (props: any) => {
-          return (
-            <CalendarHeader
-              {...props}
-              setModifyEventModalOpenType={setModifyEventModalOpenType}
-            />
-          )
-        },
-        event: ({
-          event
-        }: {
-          event: ICalendarEvent | Record<string, unknown>
-        }) => {
-          return (
-            <EventItem
-              categories={categories}
-              event={event as ICalendarEvent}
-              setExistedData={setExistedData}
-              setModifyEventModalOpenType={setModifyEventModalOpenType}
-            />
-          )
-        }
-      }}
+      components={calendarComponents as any}
       draggableAccessor={() => {
         return true
       }}
@@ -141,10 +147,7 @@ function CalendarComponent({
       onEventResize={(e: any) => {
         updateEvent(e).catch(console.error)
       }}
-      onRangeChange={({ start, end }: { start: Date; end: Date }) => {
-        setStart(dayjs(start).format('YYYY-MM-DD'))
-        setEnd(dayjs(end).format('YYYY-MM-DD'))
-      }}
+      onRangeChange={refetchEvents}
       onSelectSlot={handleSelectSlot}
     />
   )

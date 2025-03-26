@@ -1,13 +1,11 @@
-import clsx from 'clsx'
+import { memo } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
-import ChangeViewButton from './components/ChangeViewButton'
-import NavigationButton from './components/NavigationButton'
+import NavigationControl from './components/NavigationControl'
+import ViewSelector from './components/ViewSelector'
 
 interface CalendarHeaderProps {
   label: string
@@ -27,38 +25,12 @@ function CalendarHeader({
   setModifyEventModalOpenType
 }: CalendarHeaderProps) {
   const { t } = useTranslation('apps.calendar')
-  const { componentBg } = useComponentBg()
 
   return (
     <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 lg:flex-row">
-      <div className="flex w-full items-center gap-4">
-        <div className="flex-between flex w-full gap-2 lg:w-auto lg:justify-start">
-          <NavigationButton direction="PREV" onNavigate={onNavigate} />
-          <div className="block text-center text-2xl font-bold lg:hidden">
-            {label}
-          </div>
-          <NavigationButton direction="NEXT" onNavigate={onNavigate} />
-        </div>
-        <div className="hidden text-center text-2xl font-bold lg:block">
-          {label}
-        </div>
-      </div>
+      <NavigationControl label={label} onNavigate={onNavigate} />
       <div className="flex w-full gap-4 lg:w-auto">
-        <div
-          className={clsx(
-            'shadow-custom flex w-full gap-1 rounded-md p-2',
-            componentBg
-          )}
-        >
-          {['Month', 'Week', 'Day', 'Agenda'].map(view => (
-            <ChangeViewButton
-              key={view}
-              currentView={currentView}
-              view={view}
-              onView={onView}
-            />
-          ))}
-        </div>
+        <ViewSelector currentView={currentView} onView={onView} />
         <Button
           className="hidden whitespace-nowrap lg:flex"
           icon="tabler:plus"
@@ -74,4 +46,4 @@ function CalendarHeader({
   )
 }
 
-export default CalendarHeader
+export default memo(CalendarHeader)
