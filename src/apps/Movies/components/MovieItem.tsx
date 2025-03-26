@@ -79,9 +79,7 @@ function MovieItem({
               Duration
             </div>
             <div>
-              {dayjs
-                .duration(data.duration, 'minutes')
-                .format(data.duration > 3600 ? 'h:mm:ss' : 'm:ss')}
+              {dayjs.duration(data.duration, 'minutes').format('H [h] mm [m]')}
             </div>
           </div>
           <div className="space-y-2">
