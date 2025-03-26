@@ -43,13 +43,6 @@ function Assets() {
       <ModuleHeader
         actionButton={
           <>
-            <MenuItem
-              icon="tabler:refresh"
-              text="Refresh"
-              onClick={() => {
-                assetsQuery.refetch()
-              }}
-            />
             {(assetsQuery.data ?? []).length > 0 && (
               <Button
                 className="hidden sm:flex"
@@ -68,6 +61,13 @@ function Assets() {
         }
         hamburgerMenuItems={
           <>
+            <MenuItem
+              icon="tabler:refresh"
+              text="Refresh"
+              onClick={() => {
+                assetsQuery.refetch()
+              }}
+            />
             <MenuItem
               icon="tabler:eye-off"
               isToggled={isAmountHidden}
