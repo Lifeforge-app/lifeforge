@@ -18,7 +18,7 @@ export default function EventItem({
 }) {
   return (
     <button
-      className="rbc-event bg-bg-100 dark:bg-bg-800 flex flex-row! items-center gap-2 rounded-md"
+      className="rbc-event bg-bg-100 dark:bg-bg-800 flex flex-row! flex-nowrap! items-center gap-2 rounded-md"
       style={{
         border: 'none'
       }}

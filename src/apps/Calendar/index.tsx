@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import {
   ContentWrapperWithSidebar,
@@ -7,7 +7,6 @@ import {
   LayoutWithSidebar,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
 
@@ -29,7 +28,6 @@ function CalendarModule() {
     'calendar/categories',
     ['calendar', 'categories']
   )
-  const [events, setEvents] = useState<ICalendarEvent[]>([])
   const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -56,17 +54,40 @@ function CalendarModule() {
     eventQueryKey
   )
 
-  useEffect(() => {
-    if (rawEventsQuery.isSuccess && rawEventsQuery.data) {
-      setEvents(
-        rawEventsQuery.data.map(event => ({
-          ...event,
-          start: new Date(event.start),
-          end: new Date(event.end)
-        }))
-      )
+  const events = useMemo(() => {
+    if (rawEventsQuery.data) {
+      return rawEventsQuery.data.map(event => ({
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end)
+      }))
+    } else {
+      return []
     }
-  }, [rawEventsQuery.data, rawEventsQuery.isSuccess])
+  }, [rawEventsQuery.data])
+
+  const refetchEvents = useCallback(
+    (
+      range:
+        | Date[]
+        | {
+            start: Date
+            end: Date
+          }
+    ) => {
+      if (Array.isArray(range)) {
+        setStart(dayjs(range[0]).format('YYYY-MM-DD'))
+        setEnd(dayjs(range[range.length - 1]).format('YYYY-MM-DD'))
+        return
+      }
+
+      if (range.start && range.end) {
+        setStart(dayjs(range.start).format('YYYY-MM-DD'))
+        setEnd(dayjs(range.end).format('YYYY-MM-DD'))
+      }
+    },
+    []
+  )
 
   return (
     <>
@@ -87,19 +108,14 @@ function CalendarModule() {
           <ContentWrapperWithSidebar>
             <Scrollbar>
               <div className="mb-8 size-full pr-4">
-                <QueryWrapper query={categoriesQuery}>
-                  {categories => (
-                    <CalendarComponent
-                      categories={categories}
-                      events={events}
-                      queryKey={eventQueryKey}
-                      setEnd={setEnd}
-                      setExistedData={setExistedData}
-                      setModifyEventModalOpenType={setModifyEventModalOpenType}
-                      setStart={setStart}
-                    />
-                  )}
-                </QueryWrapper>
+                <CalendarComponent
+                  categories={categoriesQuery?.data ?? []}
+                  events={events}
+                  queryKey={eventQueryKey}
+                  refetchEvents={refetchEvents}
+                  setExistedData={setExistedData}
+                  setModifyEventModalOpenType={setModifyEventModalOpenType}
+                />
               </div>
             </Scrollbar>
           </ContentWrapperWithSidebar>
