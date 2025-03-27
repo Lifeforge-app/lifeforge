@@ -8,6 +8,7 @@
 - **Calendar**: Improved rendering performance.
 - **Calendar**: Start end end time field of an event now contains both date and time.
 - **Calendar**: Fixed a bug where the event isn't fetched when the date and view mode is changed.
+- **Wallet**: Fixed bugs in sidebar mini calendar where dates aren't formatted properly.
 
 ---
 
