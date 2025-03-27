@@ -43,7 +43,7 @@ const getDayClassName = ({
   ) {
     if (isFirstAndLastDay !== '') {
       const isSingleDate = dayjs(searchParams.get('start_date')).isSame(
-        dayjs(searchParams.get('end_date') ?? dayjs().format('YYYY-MM-DD')),
+        dayjs(searchParams.get('end_date') ?? dayjs().format('YYYY-M-D')),
         'day'
       )
 
@@ -113,7 +113,7 @@ function MiniCalendarDateItem({
     }
 
     const relatedTransactions = transactions.filter(transaction => {
-      const transactionDate = dayjs(transaction.date, 'YYYY-MM-DD')
+      const transactionDate = dayjs(transaction.date, 'YYYY-M-D')
       const targetDate = dayjs(
         `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
         'YYYY-M-D'
@@ -179,7 +179,7 @@ function MiniCalendarDateItem({
 
     return (
       dayjs(
-        searchParams.get('start_date') ?? dayjs().format('YYYY-MM-DD')
+        searchParams.get('start_date') ?? dayjs().format('YYYY-M-D')
       ).isBefore(
         dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
@@ -187,9 +187,7 @@ function MiniCalendarDateItem({
         ),
         'day'
       ) &&
-      dayjs(
-        searchParams.get('end_date') ?? dayjs().format('YYYY-MM-DD')
-      ).isAfter(
+      dayjs(searchParams.get('end_date') ?? dayjs().format('YYYY-M-D')).isAfter(
         dayjs(
           `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
           'YYYY-M-D'
@@ -220,13 +218,13 @@ function MiniCalendarDateItem({
 
         searchParams.set(
           `${nextToSelect}_date`,
-          dayjs(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+          dayjs(target, 'YYYY-M-D').format('YYYY-M-D')
         )
 
         if (nextToSelect === 'start') {
           searchParams.set(
             'end_date',
-            dayjs(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+            dayjs(target, 'YYYY-M-D').format('YYYY-M-D')
           )
 
           setNextToSelect('end')
@@ -238,16 +236,16 @@ function MiniCalendarDateItem({
           nextToSelect === 'end' &&
           searchParams.get('start_date') !== null &&
           dayjs(searchParams.get('start_date')).isAfter(
-            dayjs(target, 'YYYY-MM-DD')
+            dayjs(target, 'YYYY-M-D')
           )
         ) {
           searchParams.set(
             'start_date',
-            dayjs(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+            dayjs(target, 'YYYY-M-D').format('YYYY-M-D')
           )
           searchParams.set(
             'end_date',
-            dayjs(searchParams.get('start_date')).format('YYYY-M-DD')
+            dayjs(searchParams.get('start_date')).format('YYYY-M-D')
           )
           setNextToSelect('end')
           setSearchParams(searchParams)
