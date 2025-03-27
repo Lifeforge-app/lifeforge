@@ -29,7 +29,7 @@ function TextEntry({
     >
       <div className="mr-16">
         <div className="border-custom-500 border-l-4 pl-4">
-          <p className="text-bg-500">{entry.content}</p>
+          <p className="text-bg-500 whitespace-pre-wrap">{entry.content}</p>
         </div>
         <p className="text-bg-500 mt-4 flex items-center gap-2">
           <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
