@@ -68,6 +68,10 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
     input.type = 'file'
     input.accept = 'image/*'
     input.multiple = true
+
+    input.style.display = 'none'
+    document.body.appendChild(input)
+
     input.click()
 
     input.onchange = async () => {
@@ -94,6 +98,8 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
 
         setPhotos(finalPhotos)
       }
+
+      document.body.removeChild(input)
     }
   }
 
