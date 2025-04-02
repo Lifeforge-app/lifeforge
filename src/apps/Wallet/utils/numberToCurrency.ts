@@ -3,6 +3,6 @@ export default function numberToCurrency(number: number): string {
     style: 'currency',
     currency: 'USD'
   })
-    .format(number)
+    .format(Math.abs(number) < 0.001 ? 0 : number)
     .replace('$', '')
 }
