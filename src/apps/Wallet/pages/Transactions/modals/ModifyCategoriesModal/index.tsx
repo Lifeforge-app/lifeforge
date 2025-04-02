@@ -106,6 +106,7 @@ function ModifyCategoriesModal({
       id={existedData?.id}
       isOpen={openType !== null}
       namespace="apps.wallet"
+      openType={openType === 'update' ? 'update' : 'create'}
       queryKey={['wallet', 'categories']}
       setData={setFormState}
       title={`categories.${openType === 'update' ? 'update' : 'create'}`}
