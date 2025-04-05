@@ -21,10 +21,15 @@ interface CalendarComponentProps {
   queryKey: unknown[]
   events: ICalendarEvent[]
   categories: ICalendarCategory[]
+  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
+  setExistedData: React.Dispatch<
+    React.SetStateAction<Partial<ICalendarEvent> | null>
+  >
   refetchEvents: (range: Date[] | { start: Date; end: Date }) => void
 }
 
@@ -32,6 +37,7 @@ function CalendarComponent({
   queryKey,
   events,
   categories,
+  setIsDeleteEventConfirmationModalOpen,
   setModifyEventModalOpenType,
   setExistedData,
   refetchEvents
@@ -45,6 +51,7 @@ function CalendarComponent({
         return (
           <CalendarHeader
             {...props}
+            setExistedData={setExistedData}
             setModifyEventModalOpenType={setModifyEventModalOpenType}
           />
         )
@@ -53,12 +60,16 @@ function CalendarComponent({
         event
       }: {
         event: ICalendarEvent | Record<string, unknown>
+        props: any
       }) => {
         return (
           <EventItem
             categories={categories}
             event={event as ICalendarEvent}
             setExistedData={setExistedData}
+            setIsDeleteEventConfirmationModalOpen={
+              setIsDeleteEventConfirmationModalOpen
+            }
             setModifyEventModalOpenType={setModifyEventModalOpenType}
           />
         )
@@ -119,10 +130,7 @@ function CalendarComponent({
         end,
         category: '',
         location: '',
-        collectionId: '',
-        collectionName: '',
-        created: '',
-        updated: ''
+        reference_link: ''
       })
     },
     [setExistedData, setModifyEventModalOpenType]

@@ -48,65 +48,68 @@ function MovieItem({
         </p>
         <h1 className="text-xl font-semibold">
           {data.title}
-          <span className="text-bg-500 text-base font-medium">
-            {' '}
+          <span className="text-bg-500 ml-1 text-base font-medium">
             ({data.original_title})
           </span>
         </h1>
         <p className="text-bg-500 mt-2 line-clamp-2">{data.overview}</p>
-        <div className="mt-4 flex flex-1 flex-wrap items-center gap-x-8 gap-y-4">
-          <div className="space-y-2">
-            <div className="text-bg-500 flex items-center gap-2 font-medium">
-              <Icon className="size-5" icon="tabler:category" />
-              Genres
+        <div className="mt-4 flex-1">
+          <div className="flex flex-wrap items-start gap-x-8 gap-y-4">
+            <div className="space-y-2">
+              <div className="text-bg-500 flex items-center gap-2 font-medium">
+                <Icon className="size-5" icon="tabler:category" />
+                Genres
+              </div>
+              <div>{data.genres.join(', ')}</div>
             </div>
-            <div>{data.genres.join(', ')}</div>
-          </div>
-          <div className="space-y-2">
-            <div className="text-bg-500 flex items-center gap-2 font-medium">
-              <Icon className="size-5" icon="tabler:calendar" />
-              Release Date
+            <div className="space-y-2">
+              <div className="text-bg-500 flex items-center gap-2 font-medium">
+                <Icon className="size-5" icon="tabler:calendar" />
+                Release Date
+              </div>
+              <div>
+                {data.release_date
+                  ? dayjs(data.release_date).format('DD MMM YYYY')
+                  : 'TBA'}
+              </div>
             </div>
-            <div>
-              {data.release_date
-                ? dayjs(data.release_date).format('DD MMM YYYY')
-                : 'TBA'}
+            <div className="space-y-2">
+              <div className="text-bg-500 flex items-center gap-2 font-medium">
+                <Icon className="size-5" icon="tabler:clock" />
+                Duration
+              </div>
+              <div>
+                {dayjs
+                  .duration(data.duration, 'minutes')
+                  .format('H [h] mm [m]')}
+              </div>
             </div>
-          </div>
-          <div className="space-y-2">
-            <div className="text-bg-500 flex items-center gap-2 font-medium">
-              <Icon className="size-5" icon="tabler:clock" />
-              Duration
+            <div className="space-y-2">
+              <div className="text-bg-500 flex items-center gap-2 font-medium">
+                <Icon className="size-5" icon="uil:globe" />
+                Language
+              </div>
+              <div>{data.language}</div>
             </div>
-            <div>
-              {dayjs.duration(data.duration, 'minutes').format('H [h] mm [m]')}
-            </div>
-          </div>
-          <div className="space-y-2">
-            <div className="text-bg-500 flex items-center gap-2 font-medium">
-              <Icon className="size-5" icon="uil:globe" />
-              Language
-            </div>
-            <div>{data.language}</div>
-          </div>
-          <div className="space-y-2">
-            <div className="text-bg-500 flex items-center gap-2 font-medium">
-              <Icon className="size-5" icon="tabler:flag" />
-              Countries
-            </div>
-            <div className="flex items-center gap-4">
-              {data.countries.map((country, index) => (
-                <div
-                  key={`country-${index}-${country}`}
-                  className="flex items-center gap-2"
-                >
-                  <Icon
-                    className="size-5"
-                    icon={`circle-flags:${country.toLowerCase()}`}
-                  />
-                  {country}
-                </div>
-              ))}
+            <div className="space-y-2">
+              <div className="text-bg-500 flex items-center gap-2 font-medium">
+                <Icon className="size-5" icon="tabler:flag" />
+                Countries
+              </div>
+              <div className="flex items-center gap-4">
+                {data.countries.map((country, index) => (
+                  <div
+                    key={`country-${index}-${country}`}
+                    className="flex items-center gap-2"
+                  >
+                    <Icon
+                      className="size-5"
+                      icon={`circle-flags:${country.toLowerCase()}`}
+                    />
+                    {country}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

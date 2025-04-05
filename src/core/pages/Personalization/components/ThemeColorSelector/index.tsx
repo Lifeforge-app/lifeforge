@@ -36,7 +36,7 @@ function ThemeColorSelector() {
         {themeColor.startsWith('#') && (
           <>
             <ColorInput
-              className="md:w-min"
+              className="w-full md:w-min"
               color={customThemeColor}
               hasTopMargin={false}
               name="Color Hex"

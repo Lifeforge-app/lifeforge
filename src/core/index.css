@@ -596,6 +596,10 @@ button[class^='react-calendar__navigation'] {
   @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 p-0! shadow-xs;
 }
 
+.rbc-event button {
+  @apply h-full;
+}
+
 .rbc-selected-cell {
   @apply bg-bg-500/20!;
 }
@@ -608,7 +612,7 @@ button[class^='react-calendar__navigation'] {
   @apply bg-bg-200 dark:bg-bg-900 border-bg-700 dark:border-bg-700;
 }
 
-.rbc-calendar *,
+.rbc-calendar *:not(button, a),
 .rbc-day-bg + .rbc-day-bg,
 .rbc-month-row + .rbc-month-row,
 .rbc-header + .rbc-header,
@@ -627,6 +631,10 @@ button[class^='react-calendar__navigation'] {
 
 .rbc-month-row {
   @apply min-h-[7rem];
+}
+
+.rbc-addons-dnd-resize-ns-icon {
+  @apply dark:border-bg-100! border-bg-800!;
 }
 
 .music input[type='range'].main {

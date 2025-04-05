@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
+import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import {
   type ICalendarCategory,
@@ -14,7 +15,8 @@ export default function EventItem({
   event,
   categories,
   setModifyEventModalOpenType,
-  setExistedData
+  setExistedData,
+  setIsDeleteEventConfirmationModalOpen
 }: {
   event: ICalendarEvent
   categories: ICalendarCategory[]
@@ -22,6 +24,9 @@ export default function EventItem({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
+  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }) {
   const eventIsWholeDay = useMemo(() => {
     return (
@@ -37,22 +42,26 @@ export default function EventItem({
   return (
     <>
       <button
-        className="flex w-full flex-row! flex-nowrap! items-center gap-2 rounded-md px-[5px] py-[2px]"
+        className="flex w-full flex-row! flex-nowrap! items-start rounded-md px-[5px] py-[2px]"
         data-tooltip-id={`calendar-event-${event.id}`}
         style={{
           backgroundColor: category?.color + '33'
         }}
       >
-        {typeof categories !== 'string' && event.category !== '' && (
-          <Icon
-            className="size-4 shrink-0"
-            icon={category?.icon ?? ''}
-            style={{
-              color: category?.color
-            }}
-          />
-        )}
-        <span className="truncate">{event.title}</span>
+        <div className="flex w-full min-w-0 items-center gap-2">
+          {typeof categories !== 'string' && event.category !== '' && (
+            <Icon
+              className="size-4 shrink-0"
+              icon={category?.icon ?? ''}
+              style={{
+                color: category?.color
+              }}
+            />
+          )}
+          <span className="w-full min-w-0 truncate text-left">
+            {event.title}
+          </span>
+        </div>
       </button>
       <Tooltip
         clickable
@@ -65,19 +74,49 @@ export default function EventItem({
         positionStrategy="fixed"
       >
         <div className="relative max-w-96 min-w-64 whitespace-normal">
-          <div className="flex items-center gap-2">
-            {typeof categories !== 'string' && event.category !== '' && (
-              <Icon
-                className="size-4 shrink-0"
-                icon={category?.icon ?? ''}
-                style={{
-                  color: category?.color
+          <div className="flex items-start justify-between gap-8">
+            <div>
+              <div className="flex items-center gap-2">
+                {typeof categories !== 'string' && event.category !== '' && (
+                  <Icon
+                    className="size-4 shrink-0"
+                    icon={category?.icon ?? ''}
+                    style={{
+                      color: category?.color
+                    }}
+                  />
+                )}
+                <span className="text-bg-500 truncate">{category?.name}</span>
+              </div>
+              <h3 className="mt-2 text-lg font-semibold">{event.title}</h3>
+            </div>
+
+            <HamburgerMenu
+              classNames={{
+                button: 'dark:hover:bg-bg-700/50!'
+              }}
+            >
+              <MenuItem
+                icon="tabler:pencil"
+                text="Edit"
+                onClick={() => {
+                  setExistedData(event)
+                  setModifyEventModalOpenType('update')
                 }}
               />
-            )}
-            <span className="text-bg-500 truncate">{category?.name}</span>
+              {!event.cannot_delete && (
+                <MenuItem
+                  isRed
+                  icon="tabler:trash"
+                  text="Delete"
+                  onClick={() => {
+                    setExistedData(event)
+                    setIsDeleteEventConfirmationModalOpen(true)
+                  }}
+                />
+              )}
+            </HamburgerMenu>
           </div>
-          <h3 className="mt-2 text-lg font-semibold">{event.title}</h3>
           <div className="mt-4 space-y-2">
             <div className="flex items-center gap-2">
               <Icon
@@ -102,21 +141,23 @@ export default function EventItem({
               </div>
             )}
           </div>
-          <HamburgerMenu
-            classNames={{
-              wrapper: 'absolute top-0 right-0',
-              button: 'dark:hover:bg-bg-700/50!'
-            }}
-          >
-            <MenuItem
-              icon="tabler:pencil"
-              text="Edit"
-              onClick={() => {
-                setExistedData(event)
-                setModifyEventModalOpenType('update')
-              }}
-            />
-          </HamburgerMenu>
+          <div className="mt-6">
+            {event.reference_link && (
+              <Button
+                as={Link}
+                className="w-full"
+                icon="tabler:link"
+                rel="noopener noreferrer"
+                target={
+                  event.reference_link.startsWith('http') ? '_blank' : undefined
+                }
+                to={event.reference_link}
+                variant="secondary"
+              >
+                View Reference
+              </Button>
+            )}
+          </div>
         </div>
       </Tooltip>
     </>
