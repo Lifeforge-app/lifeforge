@@ -97,8 +97,8 @@ function Sidebar({
               })
               .map(([author, count]) => (
                 <SidebarItem
-                  key={author}
-                  active={searchParams.get('author') === author}
+                  key={author ?? 'na'}
+                  active={searchParams.get('author') === (author || 'na')}
                   autoActive={false}
                   icon="tabler:user"
                   name={author !== '' ? author : t('unknownAuthor')}
@@ -113,7 +113,7 @@ function Sidebar({
                   onClick={() => {
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
-                      author
+                      author: author || 'na'
                     })
                     setOpen(false)
                   }}
