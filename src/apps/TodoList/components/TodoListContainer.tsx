@@ -74,12 +74,14 @@ function TodoListContainer() {
         <Sidebar isOpen={sidebarOpen} setOpen={setSidebarOpen} />
         <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
           <Header setSidebarOpen={setSidebarOpen} />
-          <SearchInput
-            namespace="apps.todoList"
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            stuffToSearch="task"
-          />
+          <div className="w-full px-4">
+            <SearchInput
+              namespace="apps.todoList"
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              stuffToSearch="task"
+            />
+          </div>
           <QueryWrapper query={entriesQuery}>
             {entries =>
               entries.length > 0 ? (

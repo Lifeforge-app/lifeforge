@@ -67,7 +67,7 @@ export default function EventItem({
         clickable
         noArrow
         openOnClick
-        className="bg-bg-50 text-bg-800 shadow-custom dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 z-[999]! rounded-md! p-4! text-base!"
+        className="bg-bg-50! text-bg-800! shadow-custom dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 z-[999]! rounded-md! p-4! text-base!"
         id={`calendar-event-${event.id}`}
         opacity={1}
         place="bottom-end"
