@@ -8,6 +8,7 @@ import {
   ConfigColumn,
   DeleteConfirmationModal,
   ImagePickerModal,
+  QueryWrapper,
   Tooltip
 } from '@lifeforge/ui'
 
@@ -90,36 +91,42 @@ function BgImageSelector() {
             </Button>
           </>
         ) : (
-          <>
-            <Button
-              className="w-full md:w-auto"
-              icon="tabler:photo-hexagon"
-              onClick={() => {
-                setImageSelectorModalOpen(true)
-              }}
-            >
-              select
-            </Button>
-            <Tooltip
-              icon="tabler:info-circle"
-              id="pixabayDisabled"
-              tooltipProps={{
-                clickable: true
-              }}
-            >
-              <p className="text-bg-500 max-w-84">
-                {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
-                <a
-                  className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
-                  href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#pixabay"
-                  rel="noopener noreferrer"
-                  target="_blank"
+          <QueryWrapper query={pixabayEnabledQuery}>
+            {pixabayEnabled => (
+              <>
+                <Button
+                  className="w-full md:w-auto"
+                  icon="tabler:photo-hexagon"
+                  onClick={() => {
+                    setImageSelectorModalOpen(true)
+                  }}
                 >
-                  Customization Guide
-                </a>
-              </p>
-            </Tooltip>
-          </>
+                  select
+                </Button>
+                {!pixabayEnabled && (
+                  <Tooltip
+                    icon="tabler:info-circle"
+                    id="pixabayDisabled"
+                    tooltipProps={{
+                      clickable: true
+                    }}
+                  >
+                    <p className="text-bg-500 max-w-84">
+                      {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
+                      <a
+                        className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
+                        href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#pixabay"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Customization Guide
+                      </a>
+                    </p>
+                  </Tooltip>
+                )}
+              </>
+            )}
+          </QueryWrapper>
         )}
       </ConfigColumn>
       <ImagePickerModal
