@@ -608,10 +608,6 @@ button[class^='react-calendar__navigation'] {
   @apply bg-custom-700/20!;
 }
 
-.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
-  @apply bg-bg-200 dark:bg-bg-900 border-bg-700 dark:border-bg-700;
-}
-
 .rbc-calendar *:not(button, a),
 .rbc-day-bg + .rbc-day-bg,
 .rbc-month-row + .rbc-month-row,
@@ -622,7 +618,7 @@ button[class^='react-calendar__navigation'] {
 .rbc-agenda-view table.rbc-agenda-table thead > tr > th,
 .rbc-agenda-view table.rbc-agenda-table,
 .rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
-  @apply border-bg-700 dark:border-bg-700;
+  @apply border-bg-300 dark:border-bg-700;
 }
 
 .rbc-header {

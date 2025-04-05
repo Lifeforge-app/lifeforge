@@ -29,6 +29,7 @@ function TaskItem({
   const {
     entriesQueryKey,
     entriesQuery,
+    statusCounterQuery,
     listsQuery,
     setSelectedTask,
     setModifyTaskWindowOpenType
@@ -57,10 +58,7 @@ function TaskItem({
 
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: entriesQueryKey })
-
-        queryClient.invalidateQueries({
-          queryKey: ['todo-list', 'status-counter']
-        })
+        statusCounterQuery.refetch()
       }, 500)
     } catch {
       queryClient.invalidateQueries({ queryKey: entriesQueryKey })

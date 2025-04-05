@@ -27,7 +27,7 @@ function Header({
   const tags = tagsListQuery.data ?? []
 
   return (
-    <div className="flex-between flex">
+    <div className="flex-between flex px-4">
       <div className="space-y-4">
         <h1 className="text-3xl font-semibold md:text-4xl">
           {`${t(
