@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import dayjs from 'dayjs'
 
+import { Button } from '@lifeforge/ui'
+
 function MiniCalendarHeader({
   currentMonth,
   setCurrentMonth,
@@ -25,8 +27,9 @@ function MiniCalendarHeader({
           .format(language.startsWith('zh') ? 'YYYY[年] MMM' : 'MMMM YYYY')}
       </div>
       <div className="-mr-4 flex gap-1">
-        <button
-          className="text-bg-500 hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50 rounded-lg p-2 transition-all"
+        <Button
+          variant="plain"
+          className="p-2!"
           onClick={() => {
             setCurrentMonth(currentMonth - 1)
             if (currentMonth === 0) {
@@ -34,11 +37,10 @@ function MiniCalendarHeader({
               setCurrentMonth(11)
             }
           }}
-        >
-          <Icon className="size-6" icon="uil:angle-left" />
-        </button>
-        <button
-          className="text-bg-500 hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50 rounded-lg p-2 transition-all"
+          icon="tabler:chevron-left"
+        />
+        <Button
+          className="p-2!"
           onClick={() => {
             setCurrentMonth(currentMonth + 1)
             if (currentMonth === 11) {
@@ -46,9 +48,9 @@ function MiniCalendarHeader({
               setCurrentMonth(0)
             }
           }}
-        >
-          <Icon className="size-6" icon="uil:angle-right" />
-        </button>
+          variant="plain"
+          icon="tabler:chevron-right"
+        />
       </div>
     </div>
   )
