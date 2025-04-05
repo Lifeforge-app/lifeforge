@@ -56,7 +56,7 @@ function TMDBResultItem({
           disabled={isAdded}
           icon="tabler:plus"
           loading={loading}
-          namespace="movies"
+          namespace="apps.movies"
           variant={isAdded ? 'plain' : 'primary'}
           onClick={() => {
             setLoading(true)

@@ -35,7 +35,12 @@ function CalendarModule() {
     deleteCategoryConfirmationModalOpen,
     setDeleteCategoryConfirmationModalOpen
   ] = useState(false)
-  const [existedData, setExistedData] = useState<ICalendarEvent | null>(null)
+  const [
+    isDeleteEventConfirmationModalOpen,
+    setIsDeleteEventConfirmationModalOpen
+  ] = useState(false)
+  const [existedData, setExistedData] =
+    useState<Partial<ICalendarEvent> | null>(null)
   const [modifyCategoryOpenType, setModifyCategoryOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -107,13 +112,16 @@ function CalendarModule() {
           />
           <ContentWrapperWithSidebar>
             <Scrollbar>
-              <div className="mb-8 size-full pr-4">
+              <div className="size-full pr-4 pb-8">
                 <CalendarComponent
                   categories={categoriesQuery?.data ?? []}
                   events={events}
                   queryKey={eventQueryKey}
                   refetchEvents={refetchEvents}
                   setExistedData={setExistedData}
+                  setIsDeleteEventConfirmationModalOpen={
+                    setIsDeleteEventConfirmationModalOpen
+                  }
                   setModifyEventModalOpenType={setModifyEventModalOpenType}
                 />
               </div>
@@ -143,6 +151,18 @@ function CalendarModule() {
         queryKey={['calendar', 'categories']}
         onClose={() => {
           setDeleteCategoryConfirmationModalOpen(false)
+        }}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="calendar/events"
+        data={existedData ?? undefined}
+        isOpen={isDeleteEventConfirmationModalOpen}
+        itemName="event"
+        nameKey="title"
+        queryKey={eventQueryKey}
+        onClose={() => {
+          setIsDeleteEventConfirmationModalOpen(false)
+          setExistedData(null)
         }}
       />
     </>

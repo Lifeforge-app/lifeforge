@@ -43,6 +43,7 @@ interface IMovieEntry extends RecordModel {
   theatre_location: string
   theatre_showtime: string
   theatre_number: string
+  calendar_record: string
 }
 
 interface IMovieTicketFormState extends IFormState {

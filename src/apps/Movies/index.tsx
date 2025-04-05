@@ -1,6 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router'
 
 import {
   Button,
@@ -25,6 +26,7 @@ import ShowTicketModal from './components/ShowTicketModal'
 
 function Movies() {
   const { t } = useTranslation('apps.movies')
+  const [searchParams, setSearchParams] = useSearchParams()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchTMDBModal, setSearchTMDBModal] = useState(false)
   const [modifyTicketModalOpenType, setModifyTicketModalOpenType] = useState<
@@ -40,6 +42,13 @@ function Movies() {
     [debouncedSearchQuery]
   )
   const entriesQuery = useAPIQuery<IMovieEntry[]>('movies/entries', queryKey)
+
+  useEffect(() => {
+    if (searchParams.get('show-ticket')) {
+      setShowTicketModalOpenFor(searchParams.get('show-ticket') ?? '')
+      setSearchParams({}, { replace: true })
+    }
+  }, [searchParams, setSearchParams])
 
   return (
     <ModuleWrapper>
@@ -112,7 +121,12 @@ function Movies() {
           entry => entry.id === showTicketModalOpenFor
         )}
         isOpen={Boolean(showTicketModalOpenFor)}
-        onClose={() => setShowTicketModalOpenFor('')}
+        onClose={added => {
+          if (added) {
+            entriesQuery.refetch()
+          }
+          setShowTicketModalOpenFor('')
+        }}
       />
       <DeleteConfirmationModal
         apiEndpoint="/movies/entries"
