@@ -5,6 +5,7 @@ interface ICalendarEvent extends RecordModel {
   start: string | Date
   end: string | Date
   category: string
+  location: string
 }
 
 type ICalendarEventFormState = {
@@ -12,6 +13,7 @@ type ICalendarEventFormState = {
   start: string
   end: string
   category: string
+  location: string
 }
 
 interface ICalendarCategory extends RecordModel {

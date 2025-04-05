@@ -118,6 +118,7 @@ function CalendarComponent({
         start,
         end,
         category: '',
+        location: '',
         collectionId: '',
         collectionName: '',
         created: '',

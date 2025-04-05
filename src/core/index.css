@@ -565,6 +565,10 @@ button[class^='react-calendar__navigation'] {
   @apply text-custom-500;
 }
 
+.rbc-row-content {
+  @apply z-auto!;
+}
+
 .rbc-month-view,
 .rbc-day-bg,
 .rbc-month-row,
@@ -589,7 +593,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-event {
-  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 shadow-xs;
+  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 p-0! shadow-xs;
 }
 
 .rbc-selected-cell {
