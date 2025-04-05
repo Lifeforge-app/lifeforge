@@ -8,6 +8,7 @@ interface ICalendarEvent extends RecordModel {
   location: string
   reference_link: string
   cannot_delete: boolean
+  description: string
 }
 
 type ICalendarEventFormState = {
@@ -17,6 +18,7 @@ type ICalendarEventFormState = {
   category: string
   location: string
   reference_link: string
+  description: string
 }
 
 interface ICalendarCategory extends RecordModel {

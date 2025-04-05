@@ -32,7 +32,8 @@ function ModifyEventModal({
     end: '',
     category: '',
     location: '',
-    reference_link: ''
+    reference_link: '',
+    description: ''
   })
   const ref = useRef<HTMLInputElement>(null)
 
@@ -94,6 +95,14 @@ function ModifyEventModal({
       icon: 'tabler:link',
       type: 'text',
       placeholder: 'https://example.com'
+    },
+    {
+      id: 'description',
+      required: false,
+      label: 'Description',
+      icon: 'tabler:file-text',
+      type: 'textarea',
+      placeholder: 'Event description'
     }
   ]
 
@@ -106,7 +115,8 @@ function ModifyEventModal({
           start: '',
           end: '',
           location: '',
-          reference_link: ''
+          reference_link: '',
+          description: ''
         })
       } else {
         setFormState({
@@ -115,7 +125,8 @@ function ModifyEventModal({
           start: dayjs(existedData.start).toISOString(),
           end: dayjs(existedData.end).toISOString(),
           location: existedData.location ?? '',
-          reference_link: existedData.reference_link ?? ''
+          reference_link: existedData.reference_link ?? '',
+          description: ''
         })
       }
     }
@@ -127,7 +138,8 @@ function ModifyEventModal({
         end: dayjs(existedData.end).toISOString(),
         category: existedData.category ?? '',
         location: existedData.location ?? '',
-        reference_link: existedData.reference_link ?? ''
+        reference_link: existedData.reference_link ?? '',
+        description: existedData.description ?? ''
       })
     }
   }, [openType, existedData])
