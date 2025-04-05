@@ -93,7 +93,7 @@ export default function EventItem({
 
             <HamburgerMenu
               classNames={{
-                button: 'dark:hover:bg-bg-700/50!'
+                button: 'dark:hover:bg-bg-700/50! p-2!'
               }}
             >
               <MenuItem
@@ -141,23 +141,21 @@ export default function EventItem({
               </div>
             )}
           </div>
-          <div className="mt-6">
-            {event.reference_link && (
-              <Button
-                as={Link}
-                className="w-full"
-                icon="tabler:link"
-                rel="noopener noreferrer"
-                target={
-                  event.reference_link.startsWith('http') ? '_blank' : undefined
-                }
-                to={event.reference_link}
-                variant="secondary"
-              >
-                View Reference
-              </Button>
-            )}
-          </div>
+          {event.reference_link && (
+            <Button
+              as={Link}
+              className="mt-6 w-full"
+              icon="tabler:link"
+              rel="noopener noreferrer"
+              target={
+                event.reference_link.startsWith('http') ? '_blank' : undefined
+              }
+              to={event.reference_link}
+              variant="secondary"
+            >
+              View Reference
+            </Button>
+          )}
         </div>
       </Tooltip>
     </>
