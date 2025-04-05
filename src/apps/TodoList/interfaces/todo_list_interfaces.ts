@@ -2,6 +2,7 @@ import type { RecordModel } from 'pocketbase'
 
 interface ITodoListEntry extends RecordModel {
   due_date: string
+  due_date_has_time: boolean
   list: string
   notes: string
   priority: string

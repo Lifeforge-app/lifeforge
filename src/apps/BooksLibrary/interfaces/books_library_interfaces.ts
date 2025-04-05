@@ -37,19 +37,19 @@ interface IBooksLibraryFormSate extends IFormState {
 interface IBooksLibraryCategory extends RecordModel {
   name: string
   icon: string
-  count: number
+  amount: number
 }
 
 interface IBooksLibraryLanguage extends RecordModel {
   name: string
   icon: string
-  count: number
+  amount: number
 }
 
 interface IBooksLibraryFileType extends RecordModel {
   name: string
   icon: never
-  count: number
+  amount: number
 }
 
 export type {
