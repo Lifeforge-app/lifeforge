@@ -127,7 +127,7 @@ function CalendarComponent({
         id: '',
         title: '',
         start,
-        end,
+        end: dayjs(end).subtract(1, 'minute').toDate(),
         category: '',
         location: '',
         reference_link: ''

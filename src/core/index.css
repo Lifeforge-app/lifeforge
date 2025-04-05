@@ -593,7 +593,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-event {
-  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 p-0! shadow-xs;
+  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 border-bg-300! dark:border-bg-700! p-0! shadow-xs;
 }
 
 .rbc-event button {

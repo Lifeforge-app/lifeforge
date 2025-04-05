@@ -1,6 +1,8 @@
 import { memo, useMemo } from 'react'
 import { NavigateAction } from 'react-big-calendar'
 
+import { Button } from '@lifeforge/ui'
+
 import NavigationButton from './components/NavigationButton'
 
 const MONTHS_ABBR = {
@@ -38,12 +40,24 @@ function NavigationControl({
 
   return (
     <div className="flex w-full items-center gap-4">
-      <div className="flex-between flex w-full gap-2 lg:w-auto lg:justify-start">
-        <NavigationButton direction="PREV" onNavigate={onNavigate} />
+      <div className="flex-between flex w-full gap-2 lg:w-auto lg:justify-start lg:gap-0">
+        <Button
+          icon="tabler:chevron-left"
+          onClick={() => {
+            onNavigate('PREV')
+          }}
+          variant="plain"
+        />
         <div className="block text-center text-2xl font-bold lg:hidden">
           {finalLabel}
         </div>
-        <NavigationButton direction="NEXT" onNavigate={onNavigate} />
+        <Button
+          icon="tabler:chevron-right"
+          onClick={() => {
+            onNavigate('NEXT')
+          }}
+          variant="plain"
+        />
       </div>
       <div className="hidden text-center text-2xl font-bold lg:block">
         {finalLabel}
