@@ -1,3 +1,19 @@
+### 📌 **dev 25w14 (3/30/2025 - 4/5/2025)**
+
+- **Personalization**: Fixed a bug where the add pixabay API tooltip is being shown when the user already has the API key.
+- **Moment Vault**: Fixed a bug where the photos don't show up when user press the "Add" button in mobile phone.
+- **Calendar**: Added tooltip showing the event info when user click on the event in the calendar.
+- **Calendar**: Added `Location`, `Reference Link`, and `Description` field to the event creation modal.
+- **Calendar**: Further enhanced the styling of the calendar component.
+- **Guitar Tabs**: Audio files are now loaded on demand to improve loading performance.
+- **Todo List**: Added a toggle button to let user choose whether the task due date should include the time.
+- **Todo List**: Fixed a bug where the data isn't properly recorded in the database when the task is created or modified.
+- **Movies**: Added a button in the ticket entry to add the ticket to the calendar.
+- **UI**: Fixed a bug where the linebreak isn't applied to the correct line in the text area input.
+- **UI**: Changed the icon for the ListBox component from chevron down to chevron up down.
+- **UI**: Added `TextAreaInput` component to the `FormModal`.
+- **API**: Utilized Pocketbase's built-in `View` collection to track the number of entries using SQL queries.
+
 ### 📌 **dev 25w13 (3/23/2025 - 3/29/2025)**
 
 - **UI**: Added a tab in image picker modal for user to generate image from text using AI
