@@ -30,7 +30,8 @@ function ModifyEventModal({
     title: '',
     start: '',
     end: '',
-    category: ''
+    category: '',
+    location: ''
   })
   const ref = useRef<HTMLInputElement>(null)
 
@@ -42,6 +43,22 @@ function ModifyEventModal({
       icon: 'tabler:calendar',
       type: 'text',
       placeholder: 'My event'
+    },
+    {
+      id: 'category',
+      required: true,
+      label: 'Event Category',
+      icon: 'tabler:list',
+      type: 'listbox',
+      options: categoriesQuery.isSuccess
+        ? categoriesQuery.data.map(({ name, color, icon, id }) => ({
+            value: id,
+            text: name,
+            icon,
+            color
+          }))
+        : [],
+      nullOption: 'tabler:apps-off'
     },
     {
       id: 'start',
@@ -64,20 +81,10 @@ function ModifyEventModal({
       modalRef: ref
     },
     {
-      id: 'category',
-      required: true,
-      label: 'Event Category',
-      icon: 'tabler:list',
-      type: 'listbox',
-      options: categoriesQuery.isSuccess
-        ? categoriesQuery.data.map(({ name, color, icon, id }) => ({
-            value: id,
-            text: name,
-            icon,
-            color
-          }))
-        : [],
-      nullOption: 'tabler:apps-off'
+      id: 'location',
+      required: false,
+      type: 'location',
+      label: 'Location'
     }
   ]
 
@@ -90,14 +97,16 @@ function ModifyEventModal({
         title: existedData.title,
         start: dayjs(existedData.start).toISOString(),
         end: dayjs(existedData.end).toISOString(),
-        category: existedData.category
+        category: existedData.category,
+        location: existedData.location
       })
     } else {
       setFormState({
         title: '',
         category: '',
         start: '',
-        end: ''
+        end: '',
+        location: ''
       })
 
       if (existedData !== null) {
@@ -105,7 +114,8 @@ function ModifyEventModal({
           title: '',
           category: '',
           start: dayjs(existedData.start).toISOString(),
-          end: dayjs(existedData.end).toISOString()
+          end: dayjs(existedData.end).toISOString(),
+          location: existedData.location
         })
       }
     }
