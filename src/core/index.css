@@ -55,7 +55,7 @@ layer(base);
 
 :root {
   interpolate-size: allow-keywords;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 * {
