@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
 
+import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+
 import NavigationControl from './components/NavigationControl'
 import ViewSelector from './components/ViewSelector'
 
@@ -15,6 +17,9 @@ interface CalendarHeaderProps {
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
+  setExistedData: React.Dispatch<
+    React.SetStateAction<Partial<ICalendarEvent> | null>
+  >
 }
 
 function CalendarHeader({
@@ -22,7 +27,8 @@ function CalendarHeader({
   view: currentView,
   onNavigate,
   onView,
-  setModifyEventModalOpenType
+  setModifyEventModalOpenType,
+  setExistedData
 }: CalendarHeaderProps) {
   const { t } = useTranslation('apps.calendar')
 
@@ -37,6 +43,7 @@ function CalendarHeader({
           tProps={{ item: t('items.event') }}
           onClick={() => {
             setModifyEventModalOpenType('create')
+            setExistedData(null)
           }}
         >
           new

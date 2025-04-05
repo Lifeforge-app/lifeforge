@@ -2,7 +2,7 @@ import { UseQueryResult } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 
-import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
+import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
 import {
@@ -14,7 +14,7 @@ import {
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: ICalendarEvent | null
+  existedData: Partial<ICalendarEvent> | null
   categoriesQuery: UseQueryResult<ICalendarCategory[]>
   eventQueryKey: unknown[]
 }
@@ -31,7 +31,8 @@ function ModifyEventModal({
     start: '',
     end: '',
     category: '',
-    location: ''
+    location: '',
+    reference_link: ''
   })
   const ref = useRef<HTMLInputElement>(null)
 
@@ -85,85 +86,76 @@ function ModifyEventModal({
       required: false,
       type: 'location',
       label: 'Location'
+    },
+    {
+      id: 'reference_link',
+      required: false,
+      label: 'Reference link',
+      icon: 'tabler:link',
+      type: 'text',
+      placeholder: 'https://example.com'
     }
   ]
 
-  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
-    useState(false)
-
   useEffect(() => {
-    if (openType === 'update' && existedData !== null) {
-      setFormState({
-        title: existedData.title,
-        start: dayjs(existedData.start).toISOString(),
-        end: dayjs(existedData.end).toISOString(),
-        category: existedData.category,
-        location: existedData.location
-      })
-    } else {
-      setFormState({
-        title: '',
-        category: '',
-        start: '',
-        end: '',
-        location: ''
-      })
-
-      if (existedData !== null) {
+    if (openType === 'create') {
+      if (!existedData) {
+        setFormState({
+          title: '',
+          category: '',
+          start: '',
+          end: '',
+          location: '',
+          reference_link: ''
+        })
+      } else {
         setFormState({
           title: '',
           category: '',
           start: dayjs(existedData.start).toISOString(),
           end: dayjs(existedData.end).toISOString(),
-          location: existedData.location
+          location: existedData.location ?? '',
+          reference_link: existedData.reference_link ?? ''
         })
       }
+    }
+
+    if (openType === 'update' && existedData !== null) {
+      setFormState({
+        title: existedData.title ?? '',
+        start: dayjs(existedData.start).toISOString(),
+        end: dayjs(existedData.end).toISOString(),
+        category: existedData.category ?? '',
+        location: existedData.location ?? '',
+        reference_link: existedData.reference_link ?? ''
+      })
     }
   }, [openType, existedData])
 
   return (
-    <>
-      <FormModal
-        actionButtonIsRed
-        actionButtonIcon={openType === 'update' ? 'tabler:trash' : ''}
-        data={formState}
-        endpoint="calendar/events"
-        fields={FIELDS}
-        icon={
-          {
-            create: 'tabler:plus',
-            update: 'tabler:pencil'
-          }[openType!]
-        }
-        id={existedData?.id}
-        isOpen={openType !== null}
-        loading={categoriesQuery.isLoading}
-        modalRef={ref}
-        namespace="apps.calendar"
-        openType={openType}
-        queryKey={eventQueryKey}
-        setData={setFormState}
-        title={`event.${openType}`}
-        onActionButtonClick={() => {
-          setIsDeleteConfirmationModalOpen(true)
-        }}
-        onClose={() => {
-          setOpenType(null)
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="calendar/events"
-        data={existedData ?? undefined}
-        isOpen={isDeleteConfirmationModalOpen}
-        itemName="event"
-        nameKey="title"
-        queryKey={eventQueryKey}
-        onClose={() => {
-          setIsDeleteConfirmationModalOpen(false)
-          setOpenType(null)
-        }}
-      />
-    </>
+    <FormModal
+      data={formState}
+      endpoint="calendar/events"
+      fields={FIELDS}
+      icon={
+        {
+          create: 'tabler:plus',
+          update: 'tabler:pencil'
+        }[openType!]
+      }
+      id={existedData?.id}
+      isOpen={openType !== null}
+      loading={categoriesQuery.isLoading}
+      modalRef={ref}
+      namespace="apps.calendar"
+      openType={openType}
+      queryKey={eventQueryKey}
+      setData={setFormState}
+      title={`event.${openType}`}
+      onClose={() => {
+        setOpenType(null)
+      }}
+    />
   )
 }
 

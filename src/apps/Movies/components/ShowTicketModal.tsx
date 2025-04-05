@@ -1,10 +1,24 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 import { QRCodeSVG } from 'qrcode.react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
-import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+import {
+  Button,
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption,
+  ModalHeader,
+  ModalWrapper,
+  QueryWrapper
+} from '@lifeforge/ui'
 
+import { ICalendarCategory } from '@apps/Calendar/interfaces/calendar_interfaces'
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
+
+import useAPIQuery from '@hooks/useAPIQuery'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function ShowTicketModal({
   isOpen,
@@ -12,16 +26,67 @@ function ShowTicketModal({
   entry
 }: {
   isOpen: boolean
-  onClose: () => void
+  onClose: (added: boolean) => void
   entry: IMovieEntry | undefined
 }) {
+  const [addToCalendarLoading, setAddToCalendarLoading] = useState(false)
+  const [addedToCalendar, setAddedToCalendar] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [showCategoriesSelector, setShowCategoriesSelector] = useState(false)
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories'],
+    showCategoriesSelector
+  )
+
+  async function addToCalendar() {
+    if (!entry) {
+      toast.error('No entry found!')
+      return
+    }
+
+    if (!selectedCategory) {
+      toast.error('Please select a category!')
+      return
+    }
+
+    setAddToCalendarLoading(true)
+    try {
+      await fetchAPI(
+        `movies/entries/ticket/add-to-calendar/${entry.id}?category=${selectedCategory}`,
+        {
+          method: 'POST'
+        }
+      )
+
+      toast.success('Event added to calendar')
+      setAddedToCalendar(true)
+      setShowCategoriesSelector(false)
+      setSelectedCategory('')
+      setAddToCalendarLoading(false)
+    } catch (error) {
+      toast.error('An error occurred while adding to calendar')
+      console.error('Error adding to calendar:', error)
+    } finally {
+      setAddToCalendarLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen && entry) {
+      setAddedToCalendar(!!entry.calendar_record)
+    }
+  }, [isOpen, entry])
+
   return (
     <ModalWrapper isOpen={isOpen} maxWidth="20rem">
       <ModalHeader
         icon="tabler:ticket"
         namespace="apps.movies"
         title="ticket.view"
-        onClose={onClose}
+        onClose={() => {
+          onClose(addedToCalendar !== !!entry?.calendar_record)
+        }}
       />
       {entry && (
         <>
@@ -46,6 +111,89 @@ function ShowTicketModal({
               <Icon className="size-5 shrink-0" icon="mdi:love-seat-outline" />
               {entry.theatre_seat}
             </div>
+            {!addedToCalendar ? (
+              <>
+                <Button
+                  className="mt-8 w-full"
+                  icon="tabler:calendar"
+                  loading={addToCalendarLoading}
+                  variant="secondary"
+                  onClick={() => {
+                    setShowCategoriesSelector(true)
+                  }}
+                >
+                  Add to Calendar
+                </Button>
+                {showCategoriesSelector && (
+                  <QueryWrapper query={categoriesQuery}>
+                    {categories => (
+                      <>
+                        <ListboxOrComboboxInput
+                          required
+                          buttonContent={
+                            <>
+                              <Icon
+                                className="mr-2 size-4"
+                                icon={
+                                  categories.find(
+                                    c => c.id === selectedCategory
+                                  )?.icon ?? ''
+                                }
+                                style={{
+                                  color:
+                                    categories.find(
+                                      c => c.id === selectedCategory
+                                    )?.color ?? ''
+                                }}
+                              />
+                              <span className="-mt-px block truncate">
+                                {categories.find(c => c.id === selectedCategory)
+                                  ?.name ?? 'Select category'}
+                              </span>
+                            </>
+                          }
+                          icon="tabler:list"
+                          name="Category"
+                          namespace="apps.movies"
+                          setValue={setSelectedCategory}
+                          type="listbox"
+                          value={selectedCategory}
+                        >
+                          {categories.map(({ name, color, id, icon }) => (
+                            <ListboxOrComboboxOption
+                              key={id}
+                              color={color}
+                              icon={icon}
+                              text={name}
+                              value={id}
+                            />
+                          ))}
+                        </ListboxOrComboboxInput>
+                        <Button
+                          className="mt-4 w-full"
+                          icon="tabler:check"
+                          loading={addToCalendarLoading}
+                          onClick={() => {
+                            addToCalendar()
+                          }}
+                        >
+                          Confirm
+                        </Button>
+                      </>
+                    )}
+                  </QueryWrapper>
+                )}
+              </>
+            ) : (
+              <Button
+                disabled
+                className="mt-8 w-full"
+                icon="tabler:check"
+                variant="tertiary"
+              >
+                Added to Calendar
+              </Button>
+            )}
           </div>
         </>
       )}
