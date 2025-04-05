@@ -10,12 +10,6 @@ import {
 } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 
-const recordKeyInDB = {
-  categories: 'category',
-  languages: 'languages',
-  fileTypes: 'file_type'
-}
-
 function _SidebarItem({
   item,
   stuff,
@@ -29,7 +23,6 @@ function _SidebarItem({
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
-    entries: { dataQuery: entriesQuery },
     miscellaneous: { setSidebarOpen },
     ...booksLibraryContext
   } = useBooksLibraryContext()
@@ -76,21 +69,7 @@ function _SidebarItem({
         }
         icon={item.icon ?? fallbackIcon}
         name={item.name}
-        number={
-          item.count ??
-          (!entriesQuery.isLoading && entriesQuery.data
-            ? entriesQuery.data.filter(entry =>
-                Array.isArray(entry[recordKeyInDB[stuff] as keyof typeof entry])
-                  ? (
-                      entry[
-                        recordKeyInDB[stuff] as keyof typeof entry
-                      ] as string[]
-                    ).includes(item.id)
-                  : entry[recordKeyInDB[stuff] as keyof typeof entry] ===
-                    item.id
-              ).length
-            : 0)
-        }
+        number={item.amount}
         onCancelButtonClick={() => {
           searchParams.delete(singleStuff)
           setSearchParams(searchParams)

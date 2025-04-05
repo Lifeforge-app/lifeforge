@@ -9,9 +9,9 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
 import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
-import AudioPlayer from '../../ListView/components/AudioPlayer'
 
 function EntryItem({
   entry,

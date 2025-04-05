@@ -5,9 +5,9 @@ import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
 import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
-import AudioPlayer from './AudioPlayer'
 
 function EntryItem({
   entry,

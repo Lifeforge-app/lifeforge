@@ -12,6 +12,7 @@ import {
   HamburgerMenu,
   MenuItem,
   Scrollbar,
+  Switch,
   TextAreaInput,
   TextInput
 } from '@lifeforge/ui'
@@ -52,6 +53,7 @@ function ModifyTaskWindow() {
   )
 
   const [notes, setNotes] = useState('')
+  const [dueDateHasTime, setDueDateHasTime] = useState(false)
   const [dueDate, setDueDate] = useState('')
   const [priority, setPriority] = useState<string | null>(null)
   const [list, setList] = useState<string | null>(null)
@@ -77,7 +79,8 @@ function ModifyTaskWindow() {
       summary: summary.trim(),
       notes: notes.trim(),
       subtasks: subtasks,
-      due_date: dayjs(dueDate).format('yyyy-MM-DD 23:59:59Z'),
+      due_date: dueDate,
+      due_date_has_time: dueDateHasTime,
       priority,
       list,
       tags
@@ -138,6 +141,9 @@ function ModifyTaskWindow() {
   useEffect(() => {
     setTimeout(() => {
       setInnerOpenType(openType)
+      if (summaryInputRef.current) {
+        summaryInputRef.current.focus()
+      }
     }, 5)
   }, [openType])
 
@@ -152,6 +158,7 @@ function ModifyTaskWindow() {
       setSummary(selectedTask.summary)
       setNotes(selectedTask.notes)
       setDueDate(selectedTask.due_date)
+      setDueDateHasTime(selectedTask.due_date_has_time)
       setPriority(selectedTask.priority)
       setList(selectedTask.list)
       setTags(selectedTask.tags)
@@ -159,6 +166,7 @@ function ModifyTaskWindow() {
       setSummary('')
       setNotes('')
       setDueDate('')
+      setDueDateHasTime(false)
       setPriority(null)
       setList(null)
       setTags([])
@@ -230,9 +238,28 @@ function ModifyTaskWindow() {
               subtasks={subtasks}
               summary={summary}
             />
+            <div className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-2">
+                <Icon className="size-6" icon="tabler:clock" />
+                <span className="text-lg">{t('inputs.hasTime')}</span>
+              </div>
+              <Switch
+                checked={dueDateHasTime}
+                onChange={() => {
+                  setDueDateHasTime(!dueDateHasTime)
+                  if (dueDate)
+                    setDueDate(
+                      dayjs(dueDate).format(
+                        dueDateHasTime ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm'
+                      )
+                    )
+                }}
+              />
+            </div>
             <DateInput
               darker
               date={dueDate}
+              hasTime={dueDateHasTime}
               icon="tabler:calendar"
               modalRef={ref}
               name="Due date"
