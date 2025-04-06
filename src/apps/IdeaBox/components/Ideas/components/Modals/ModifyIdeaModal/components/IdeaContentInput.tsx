@@ -112,6 +112,16 @@ function IdeaContentInput({
             getInputProps={getInputProps}
             getRootProps={getRootProps}
             isDragActive={isDragActive}
+            setFile={
+              setIdeaImage as React.Dispatch<
+                React.SetStateAction<File | string | null>
+              >
+            }
+            setPreview={
+              setPreview as React.Dispatch<
+                React.SetStateAction<string | ArrayBuffer | null>
+              >
+            }
           />
         )}
         {ideaImage === null && (
