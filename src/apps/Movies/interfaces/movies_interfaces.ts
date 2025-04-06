@@ -44,6 +44,7 @@ interface IMovieEntry extends RecordModel {
   theatre_showtime: string
   theatre_number: string
   calendar_record: string
+  is_watched: boolean
 }
 
 interface IMovieTicketFormState extends IFormState {

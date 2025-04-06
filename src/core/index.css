@@ -806,9 +806,9 @@ button[class^='react-calendar__navigation'] {
 }
 
 .prose * {
-  @apply text-bg-800 dark:text-bg-50;
+  @apply text-bg-500 leading-snug;
 }
 
-.prose h3 {
-  @apply text-lg;
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  @apply text-bg-800 dark:text-bg-50 text-lg;
 }

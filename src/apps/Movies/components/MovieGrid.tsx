@@ -11,13 +11,15 @@ function MovieGrid({
   onModifyTicket,
   onShowTicket,
   onDelete,
-  onNewMovie
+  onNewMovie,
+  onToggleWatched
 }: {
   data: IMovieEntry[]
   onModifyTicket: (type: 'create' | 'update', entry: IMovieEntry) => void
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
   onNewMovie: () => void
+  onToggleWatched: (id: string) => Promise<void>
 }) {
   const { t } = useTranslation(['apps.movies', 'common.buttons'])
 
@@ -46,6 +48,7 @@ function MovieGrid({
           onDelete={onDelete}
           onModifyTicket={onModifyTicket}
           onShowTicket={onShowTicket}
+          onToggleWatched={onToggleWatched}
         />
       ))}
     </div>

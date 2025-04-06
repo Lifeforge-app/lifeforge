@@ -1,7 +1,9 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import {
   Button,
@@ -18,6 +20,8 @@ import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import fetchAPI from '@utils/fetchAPI'
+
 import ModifyTicketModal from './components/ModifyTicketModal'
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
@@ -26,6 +30,7 @@ import ShowTicketModal from './components/ShowTicketModal'
 
 function Movies() {
   const { t } = useTranslation('apps.movies')
+  const queryClient = useQueryClient()
   const [searchParams, setSearchParams] = useSearchParams()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchTMDBModal, setSearchTMDBModal] = useState(false)
@@ -49,6 +54,34 @@ function Movies() {
       setSearchParams({}, { replace: true })
     }
   }, [searchParams, setSearchParams])
+
+  async function toggleWatched(id: string, isWatched: boolean = false) {
+    try {
+      await fetchAPI<IMovieEntry>(
+        `/movies/entries/watch-status/${id}?watched=${isWatched}`,
+        {
+          method: 'PATCH'
+        }
+      )
+
+      queryClient.setQueryData<IMovieEntry[]>(queryKey, oldData => {
+        if (!oldData) return []
+
+        return oldData.map(entry => {
+          if (entry.id === id) {
+            return {
+              ...entry,
+              is_watched: !entry.is_watched
+            }
+          }
+          return entry
+        })
+      })
+    } catch (error) {
+      console.error('Error marking movie as watched:', error)
+      toast.error('Failed to mark movie as watched.')
+    }
+  }
 
   return (
     <ModuleWrapper>
@@ -100,6 +133,7 @@ function Movies() {
               }}
               onNewMovie={() => setSearchTMDBModal(true)}
               onShowTicket={id => setShowTicketModalOpenFor(id)}
+              onToggleWatched={async id => toggleWatched(id)}
             />
           )
         }}
