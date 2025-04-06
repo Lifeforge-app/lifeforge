@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import {
   DeleteConfirmationModal,
@@ -13,6 +14,9 @@ import {
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
+import fetchAPI from '@utils/fetchAPI'
+
+import { ITodoListEntry } from '../interfaces/todo_list_interfaces'
 import ModifyListModal from '../modals/ModifyListModal'
 import ModifyPriorityModal from '../modals/ModifyPriorityModal'
 import ModifyTagModal from '../modals/ModifyTagModal'
@@ -48,6 +52,18 @@ function TodoListContainer() {
 
   const { hash } = useLocation()
 
+  async function fetchAndSetTask(id: string) {
+    try {
+      const data = await fetchAPI<ITodoListEntry>(`todo-list/entries/${id}`)
+
+      setSelectedTask(data)
+      setModifyTaskWindowOpenType('update')
+    } catch (error) {
+      console.error('Error fetching entry:', error)
+      toast.error('Error fetching entry')
+    }
+  }
+
   useEffect(() => {
     if (hash === '#new') {
       setSelectedTask(null)
@@ -56,6 +72,13 @@ function TodoListContainer() {
   }, [hash])
 
   useEffect(() => {
+    const id = searchParams.get('entry')
+    if (id) {
+      fetchAndSetTask(id)
+      const newSearchParams = new URLSearchParams(searchParams)
+      newSearchParams.delete('entry')
+      setSearchParams(newSearchParams, { replace: true })
+    }
     const status = searchParams.get('status')
     if (status === null || status === '') return
     if (
@@ -66,7 +89,7 @@ function TodoListContainer() {
         status: 'all'
       })
     }
-  }, [searchParams])
+  }, [searchParams, entriesQuery.data])
 
   return (
     <>
@@ -167,6 +190,14 @@ function TodoListContainer() {
         queryKey={['todo-list', 'tags']}
         onClose={() => {
           setDeleteTagConfirmationModalOpen(false)
+          queryClient.invalidateQueries({
+            queryKey: ['todo-list', 'priorities']
+          })
+          queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
+          queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
+          queryClient.invalidateQueries({
+            queryKey: ['todo-list', 'status-counter']
+          })
         }}
       />
     </>
