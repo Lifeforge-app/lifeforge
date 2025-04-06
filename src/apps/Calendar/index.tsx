@@ -20,6 +20,7 @@ import {
 } from './interfaces/calendar_interfaces'
 import ModifyCategoryModal from './modals/ModifyCategoryModal'
 import ModifyEventModal from './modals/ModifyEventModal'
+import ScanImageModal from './modals/ScanImageModal'
 
 function CalendarModule() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -28,6 +29,7 @@ function CalendarModule() {
     'calendar/categories',
     ['calendar', 'categories']
   )
+  const [scanImageModalOpen, setScanImageModalOpen] = useState(false)
   const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -123,12 +125,19 @@ function CalendarModule() {
                     setIsDeleteEventConfirmationModalOpen
                   }
                   setModifyEventModalOpenType={setModifyEventModalOpenType}
+                  setScanImageModalOpen={setScanImageModalOpen}
                 />
               </div>
             </Scrollbar>
           </ContentWrapperWithSidebar>
         </LayoutWithSidebar>
       </ModuleWrapper>
+      <ScanImageModal
+        open={scanImageModalOpen}
+        setExistedData={setExistedData}
+        setModifyModalOpenType={setModifyEventModalOpenType}
+        setOpen={setScanImageModalOpen}
+      />
       <ModifyEventModal
         categoriesQuery={categoriesQuery}
         eventQueryKey={eventQueryKey}

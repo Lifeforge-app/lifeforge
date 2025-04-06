@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useMemo, useState } from 'react'
@@ -6,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import {
+  Button,
   ContentWrapperWithSidebar,
   DeleteConfirmationModal,
   LayoutWithSidebar,
@@ -141,14 +141,14 @@ function GuitarTabs() {
               </span>
             </div>
 
-            <button
-              className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 -ml-4 rounded-lg p-4 transition-all lg:hidden"
+            <Button
+              className="lg:hidden"
+              icon="tabler:menu"
+              variant="plain"
               onClick={() => {
                 setSidebarOpen(true)
               }}
-            >
-              <Icon className="text-2xl" icon="tabler:menu" />
-            </button>
+            />
           </header>
           <Searchbar
             searchQuery={searchQuery}

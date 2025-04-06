@@ -240,7 +240,7 @@ function Header({
                       searchParams.get('sort') === id ||
                       (id === 'newest' && !searchParams.has('sort'))
                     }
-                    text={t(`sortType.${id}`)}
+                    text={t(`sortTypes.${id}`)}
                     onClick={() => {
                       searchParams.set('sort', id)
                       setSearchParams(searchParams)
