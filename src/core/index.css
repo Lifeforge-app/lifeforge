@@ -593,7 +593,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-event {
-  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 border-bg-300! dark:border-bg-700! p-0! shadow-xs;
+  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 border-bg-300! dark:border-bg-700! p-0! text-sm shadow-xs;
 }
 
 .rbc-event button {
@@ -606,6 +606,10 @@ button[class^='react-calendar__navigation'] {
 
 .rbc-selected-cell.rbc-today {
   @apply bg-custom-700/20!;
+}
+
+.rbc-event-label {
+  @apply hidden;
 }
 
 .rbc-calendar *:not(button, a),
@@ -626,7 +630,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-month-row {
-  @apply min-h-[7rem];
+  @apply min-h-[6rem];
 }
 
 .rbc-addons-dnd-resize-ns-icon {
@@ -799,4 +803,12 @@ button[class^='react-calendar__navigation'] {
 
 .react-datetime-picker__clock {
   @apply hidden;
+}
+
+.prose * {
+  @apply text-bg-800 dark:text-bg-50;
+}
+
+.prose h3 {
+  @apply text-lg;
 }

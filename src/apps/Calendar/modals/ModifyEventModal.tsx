@@ -85,8 +85,10 @@ function ModifyEventModal({
     {
       id: 'location',
       required: false,
-      type: 'location',
-      label: 'Location'
+      type: 'text',
+      label: 'Location',
+      icon: 'tabler:map-pin',
+      placeholder: 'Event location'
     },
     {
       id: 'reference_link',
@@ -107,31 +109,7 @@ function ModifyEventModal({
   ]
 
   useEffect(() => {
-    if (openType === 'create') {
-      if (!existedData) {
-        setFormState({
-          title: '',
-          category: '',
-          start: '',
-          end: '',
-          location: '',
-          reference_link: '',
-          description: ''
-        })
-      } else {
-        setFormState({
-          title: '',
-          category: '',
-          start: dayjs(existedData.start).toISOString(),
-          end: dayjs(existedData.end).toISOString(),
-          location: existedData.location ?? '',
-          reference_link: existedData.reference_link ?? '',
-          description: ''
-        })
-      }
-    }
-
-    if (openType === 'update' && existedData !== null) {
+    if (existedData !== null) {
       setFormState({
         title: existedData.title ?? '',
         start: dayjs(existedData.start).toISOString(),
@@ -140,6 +118,16 @@ function ModifyEventModal({
         location: existedData.location ?? '',
         reference_link: existedData.reference_link ?? '',
         description: existedData.description ?? ''
+      })
+    } else {
+      setFormState({
+        title: '',
+        category: '',
+        start: '',
+        end: '',
+        location: '',
+        reference_link: '',
+        description: ''
       })
     }
   }, [openType, existedData])

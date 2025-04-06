@@ -27,6 +27,7 @@ interface CalendarComponentProps {
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
+  setScanImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setExistedData: React.Dispatch<
     React.SetStateAction<Partial<ICalendarEvent> | null>
   >
@@ -39,6 +40,7 @@ function CalendarComponent({
   categories,
   setIsDeleteEventConfirmationModalOpen,
   setModifyEventModalOpenType,
+  setScanImageModalOpen,
   setExistedData,
   refetchEvents
 }: CalendarComponentProps) {
@@ -53,6 +55,7 @@ function CalendarComponent({
             {...props}
             setExistedData={setExistedData}
             setModifyEventModalOpenType={setModifyEventModalOpenType}
+            setScanImageModalOpen={setScanImageModalOpen}
           />
         )
       },
