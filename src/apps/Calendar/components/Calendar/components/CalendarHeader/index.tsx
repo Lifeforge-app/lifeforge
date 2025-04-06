@@ -1,8 +1,9 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { memo } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '@lifeforge/ui'
+import { Button, MenuItem } from '@lifeforge/ui'
 
 import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 
@@ -20,6 +21,7 @@ interface CalendarHeaderProps {
   setExistedData: React.Dispatch<
     React.SetStateAction<Partial<ICalendarEvent> | null>
   >
+  setScanImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function CalendarHeader({
@@ -28,7 +30,8 @@ function CalendarHeader({
   onNavigate,
   onView,
   setModifyEventModalOpenType,
-  setExistedData
+  setExistedData,
+  setScanImageModalOpen
 }: CalendarHeaderProps) {
   const { t } = useTranslation('apps.calendar')
 
@@ -37,17 +40,40 @@ function CalendarHeader({
       <NavigationControl label={label} onNavigate={onNavigate} />
       <div className="flex w-full gap-4 lg:w-auto">
         <ViewSelector currentView={currentView} onView={onView} />
-        <Button
-          className="hidden whitespace-nowrap lg:flex"
-          icon="tabler:plus"
-          tProps={{ item: t('items.event') }}
-          onClick={() => {
-            setModifyEventModalOpenType('create')
-            setExistedData(null)
-          }}
-        >
-          new
-        </Button>
+
+        <Menu as="div" className="relative z-50 hidden lg:block">
+          <Button
+            as={MenuButton}
+            icon="tabler:plus"
+            tProps={{ item: t('items.event') }}
+            onClick={() => {}}
+          >
+            new
+          </Button>
+          <MenuItems
+            transition
+            anchor="bottom end"
+            className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          >
+            <MenuItem
+              icon="tabler:photo"
+              namespace="apps.calendar"
+              text="Scan from Image"
+              onClick={() => {
+                setScanImageModalOpen(true)
+              }}
+            />
+            <MenuItem
+              icon="tabler:plus"
+              namespace="apps.calendar"
+              text="Input Manually"
+              onClick={() => {
+                setModifyEventModalOpenType('create')
+                setExistedData(null)
+              }}
+            />
+          </MenuItems>
+        </Menu>
       </div>
     </div>
   )

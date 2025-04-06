@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
+import Markdown from 'react-markdown'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 
@@ -73,7 +74,7 @@ export default function EventItem({
         place="bottom-end"
         positionStrategy="fixed"
       >
-        <div className="relative max-w-96 min-w-64 whitespace-normal">
+        <div className="relative max-h-96 max-w-96 min-w-64 overflow-y-auto whitespace-normal">
           <div className="flex items-start justify-between gap-8">
             <div>
               <div className="flex items-center gap-2">
@@ -138,6 +139,11 @@ export default function EventItem({
                   icon="tabler:map-pin"
                 />
                 <span className="text-bg-500">{event.location}</span>
+              </div>
+            )}
+            {event.description && (
+              <div className="prose max-w-auto! mt-4 w-full">
+                <Markdown>{event.description}</Markdown>
               </div>
             )}
           </div>
