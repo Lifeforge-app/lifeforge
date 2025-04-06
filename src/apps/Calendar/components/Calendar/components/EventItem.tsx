@@ -89,7 +89,9 @@ export default function EventItem({
                 )}
                 <span className="text-bg-500 truncate">{category?.name}</span>
               </div>
-              <h3 className="mt-2 text-lg font-semibold">{event.title}</h3>
+              <h3 className="text-bg-800 dark:text-bg-100 mt-2 text-lg font-semibold">
+                {event.title}
+              </h3>
             </div>
 
             <HamburgerMenu

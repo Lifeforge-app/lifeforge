@@ -1,5 +1,7 @@
 ### 📌 **dev 25w14 (3/30/2025 - 4/5/2025)**
 
+- **Calendar**: Added an option for user to parse event details from image using OpenAI's GPT-4o.
+
 - **Personalization**: Fixed a bug where the add pixabay API tooltip is being shown when the user already has the API key.
 - **Moment Vault**: Fixed a bug where the photos don't show up when user press the "Add" button in mobile phone.
 - **Calendar**: Added tooltip showing the event info when user click on the event in the calendar.
