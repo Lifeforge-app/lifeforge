@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import dayjs from 'dayjs'
 
@@ -28,8 +27,9 @@ function MiniCalendarHeader({
       </div>
       <div className="-mr-4 flex gap-1">
         <Button
-          variant="plain"
           className="p-2!"
+          icon="tabler:chevron-left"
+          variant="plain"
           onClick={() => {
             setCurrentMonth(currentMonth - 1)
             if (currentMonth === 0) {
@@ -37,10 +37,11 @@ function MiniCalendarHeader({
               setCurrentMonth(11)
             }
           }}
-          icon="tabler:chevron-left"
         />
         <Button
           className="p-2!"
+          icon="tabler:chevron-right"
+          variant="plain"
           onClick={() => {
             setCurrentMonth(currentMonth + 1)
             if (currentMonth === 11) {
@@ -48,8 +49,6 @@ function MiniCalendarHeader({
               setCurrentMonth(0)
             }
           }}
-          variant="plain"
-          icon="tabler:chevron-right"
         />
       </div>
     </div>

@@ -3,8 +3,6 @@ import { NavigateAction } from 'react-big-calendar'
 
 import { Button } from '@lifeforge/ui'
 
-import NavigationButton from './components/NavigationButton'
-
 const MONTHS_ABBR = {
   January: 'Jan',
   February: 'Feb',
@@ -43,20 +41,20 @@ function NavigationControl({
       <div className="flex-between flex w-full gap-2 lg:w-auto lg:justify-start lg:gap-0">
         <Button
           icon="tabler:chevron-left"
+          variant="plain"
           onClick={() => {
             onNavigate('PREV')
           }}
-          variant="plain"
         />
         <div className="block text-center text-2xl font-bold lg:hidden">
           {finalLabel}
         </div>
         <Button
           icon="tabler:chevron-right"
+          variant="plain"
           onClick={() => {
             onNavigate('NEXT')
           }}
-          variant="plain"
         />
       </div>
       <div className="hidden text-center text-2xl font-bold lg:block">
