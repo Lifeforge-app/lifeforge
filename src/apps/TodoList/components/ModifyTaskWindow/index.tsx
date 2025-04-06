@@ -81,8 +81,8 @@ function ModifyTaskWindow() {
       subtasks: subtasks,
       due_date: dueDate,
       due_date_has_time: dueDateHasTime,
-      priority,
-      list,
+      priority: priority ?? null,
+      list: list ?? '',
       tags
     }
 
