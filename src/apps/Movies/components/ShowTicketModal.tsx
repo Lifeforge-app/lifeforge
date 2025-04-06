@@ -97,19 +97,21 @@ function ShowTicketModal({
           <div className="text-bg-500 mt-6 space-y-4">
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:map-pin" />
-              {entry.theatre_location}
+              {entry.theatre_location || 'N/A'}
             </div>
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:calendar" />
-              {dayjs(entry.theatre_showtime).format('DD MMM YYYY, h:mm a')}
+              {entry.theatre_showtime
+                ? dayjs(entry.theatre_showtime).format('DD MMM YYYY, h:mm a')
+                : 'N/A'}
             </div>
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:hash" />
-              Theatre No. {entry.theatre_number}
+              Theatre No. {entry.theatre_number || 'N/A'}
             </div>
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="mdi:love-seat-outline" />
-              {entry.theatre_seat}
+              {entry.theatre_seat || 'N/A'}
             </div>
             {!addedToCalendar ? (
               <>

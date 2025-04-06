@@ -9,6 +9,7 @@ interface ICalendarEvent extends RecordModel {
   reference_link: string
   cannot_delete: boolean
   description: string
+  is_strikethrough: boolean
 }
 
 type ICalendarEventFormState = {

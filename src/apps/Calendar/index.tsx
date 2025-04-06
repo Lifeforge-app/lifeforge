@@ -172,6 +172,7 @@ function CalendarModule() {
         onClose={() => {
           setIsDeleteEventConfirmationModalOpen(false)
           setExistedData(null)
+          categoriesQuery.refetch()
         }}
       />
     </>

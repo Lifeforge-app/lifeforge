@@ -23,10 +23,10 @@ function MiniCalendarContent({
   return (
     <div className="grid grid-cols-7 gap-4">
       {{
-        en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        'zh-CN': ['一', '二', '三', '四', '五', '六', '日'],
-        'zh-TW': ['一', '二', '三', '四', '五', '六', '日'],
-        ms: ['Is', 'Se', 'Ra', 'Kh', 'Ju', 'Sa', 'Ah']
+        en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        'zh-CN': ['日', '一', '二', '三', '四', '五', '六'],
+        'zh-TW': ['日', '一', '二', '三', '四', '五', '六'],
+        ms: ['Ah', 'Is', 'Se', 'Ra', 'Kh', 'Ju', 'Sa']
       }[language ?? 'en']?.map(day => (
         <div key={day} className="flex-center text-bg-500 text-sm">
           {day}
@@ -39,7 +39,8 @@ function MiniCalendarContent({
               .year(currentYear)
               .month(currentMonth - 1)
               .endOf('month')
-              .day()) /
+              .day() +
+            1) /
             7
         ) * 7
       )
@@ -51,30 +52,33 @@ function MiniCalendarContent({
               'YYYY-M-DD'
             ).toDate()
 
-            let firstDay = dayjs(date).startOf('month').day() - 1
-            firstDay = firstDay === -1 ? 6 : firstDay
-
+            const firstDay = dayjs(date).startOf('month').day()
             const lastDate = dayjs(date).endOf('month').date()
 
-            const lastDateOfPrevMonth =
-              dayjs(date).subtract(1, 'month').endOf('month').date() - 1
+            const lastDateOfPrevMonth = dayjs(date)
+              .subtract(1, 'month')
+              .endOf('month')
+              .date()
 
             const actualIndex = (() => {
+              // filling the first week date that is not in this month
               if (firstDay > index) {
-                return lastDateOfPrevMonth - firstDay + index + 2
+                return lastDateOfPrevMonth - firstDay + index
               }
 
+              // filling the last week date that is not in this month
               if (index - firstDay + 1 > lastDate) {
-                return index - lastDate - firstDay + 1
+                return index - lastDate - firstDay
               }
 
-              return index - firstDay + 1
+              // filling the date that is in this month
+              return index - firstDay
             })()
 
             return (
               <MiniCalendarDateItem
                 key={index}
-                actualIndex={actualIndex}
+                actualIndex={actualIndex + 1}
                 categories={categories}
                 date={date}
                 events={events}

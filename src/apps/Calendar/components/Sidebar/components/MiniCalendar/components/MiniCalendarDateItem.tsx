@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
+import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -59,6 +61,13 @@ function MiniCalendarDateItem({
     [date, firstDay, index, lastDate, actualIndex]
   )
 
+  function getBgColor(event: ICalendarEvent) {
+    return event.category.startsWith('_')
+      ? INTERNAL_CATEGORIES[event.category as keyof typeof INTERNAL_CATEGORIES]
+          .color
+      : categories.find(category => category.id === event.category)?.color
+  }
+
   return (
     <div
       key={index}
@@ -70,24 +79,36 @@ function MiniCalendarDateItem({
       )}
     >
       <span>{actualIndex}</span>
-      {isInThisMonth && eventsOnTheDay.length > 0 && (
-        <div className="flex w-full items-center justify-center gap-px">
-          {eventsOnTheDay.slice(0, 3).map(event => (
-            <div
-              key={event.id}
-              className="size-1 rounded-full"
-              style={{
-                backgroundColor:
-                  typeof categories !== 'string'
-                    ? categories.find(
-                        category => category.id === event.category
-                      )?.color
-                    : ''
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {isInThisMonth &&
+        eventsOnTheDay.length > 0 &&
+        (() => {
+          const groupedByThree = []
+
+          for (let i = 0; i < eventsOnTheDay.length; i += 3) {
+            groupedByThree.push(eventsOnTheDay.slice(i, i + 3))
+          }
+          return (
+            <div className="space-y-px">
+              {groupedByThree.map(group => (
+                <div key={`group-${group[0].id}`} className="flex gap-px">
+                  {group.map(event => {
+                    const backgroundColor = getBgColor(event)
+
+                    return (
+                      <div
+                        key={event.id}
+                        className="size-1 rounded-full"
+                        style={{
+                          backgroundColor: backgroundColor ?? ''
+                        }}
+                      />
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          )
+        })()}
     </div>
   )
 }
