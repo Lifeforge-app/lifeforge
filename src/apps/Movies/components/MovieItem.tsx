@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { useState } from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -13,15 +14,18 @@ function MovieItem({
   onModifyTicket,
   onShowTicket,
   onDelete,
+  onToggleWatched,
   type
 }: {
   data: IMovieEntry
   onModifyTicket: (type: 'create' | 'update', entry: IMovieEntry) => void
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
+  onToggleWatched: (id: string) => Promise<void>
   type: 'grid' | 'list'
 }) {
   const { componentBg } = useComponentBg()
+  const [toggleWatchedLoading, setToggleWatchedLoading] = useState(false)
 
   return (
     <div
@@ -119,14 +123,34 @@ function MovieItem({
             type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
           )}
         >
-          <Button
-            className="w-full"
-            icon="tabler:check"
-            namespace="apps.movies"
-            variant="secondary"
-          >
-            Mark as Watched
-          </Button>
+          {data.is_watched ? (
+            <Button
+              disabled
+              className="w-full"
+              icon="tabler:check"
+              loading={toggleWatchedLoading}
+              namespace="apps.movies"
+              variant="secondary"
+            >
+              Watched
+            </Button>
+          ) : (
+            <Button
+              className="w-full"
+              icon="tabler:check"
+              loading={toggleWatchedLoading}
+              namespace="apps.movies"
+              variant="secondary"
+              onClick={() => {
+                setToggleWatchedLoading(true)
+                onToggleWatched(data.id).finally(() => {
+                  setToggleWatchedLoading(false)
+                })
+              }}
+            >
+              Mark as Watched
+            </Button>
+          )}
           {data.ticket_number && (
             <Button
               className="w-full"
@@ -144,6 +168,19 @@ function MovieItem({
           wrapper: 'absolute right-4 top-4'
         }}
       >
+        {data.is_watched && (
+          <MenuItem
+            icon="tabler:eye-off"
+            namespace="apps.movies"
+            text="Mark as Unwatched"
+            onClick={() => {
+              setToggleWatchedLoading(true)
+              onToggleWatched(data.id).finally(() => {
+                setToggleWatchedLoading(false)
+              })
+            }}
+          />
+        )}
         <MenuItem
           icon="tabler:ticket"
           namespace="apps.movies"

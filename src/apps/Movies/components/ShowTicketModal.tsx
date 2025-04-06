@@ -53,7 +53,7 @@ function ShowTicketModal({
     setAddToCalendarLoading(true)
     try {
       await fetchAPI(
-        `movies/entries/ticket/add-to-calendar/${entry.id}?category=${selectedCategory}`,
+        `movies/entries/ticket/calendar/${entry.id}?category=${selectedCategory}`,
         {
           method: 'POST'
         }
@@ -113,18 +113,7 @@ function ShowTicketModal({
             </div>
             {!addedToCalendar ? (
               <>
-                <Button
-                  className="mt-8 w-full"
-                  icon="tabler:calendar"
-                  loading={addToCalendarLoading}
-                  variant="secondary"
-                  onClick={() => {
-                    setShowCategoriesSelector(true)
-                  }}
-                >
-                  Add to Calendar
-                </Button>
-                {showCategoriesSelector && (
+                {showCategoriesSelector ? (
                   <QueryWrapper query={categoriesQuery}>
                     {categories => (
                       <>
@@ -170,18 +159,44 @@ function ShowTicketModal({
                           ))}
                         </ListboxOrComboboxInput>
                         <Button
+                          iconAtEnd
                           className="mt-4 w-full"
-                          icon="tabler:check"
+                          icon="tabler:arrow-right"
                           loading={addToCalendarLoading}
                           onClick={() => {
                             addToCalendar()
                           }}
                         >
-                          Confirm
+                          Proceed
+                        </Button>
+                        <Button
+                          className="mt-2 w-full"
+                          icon="tabler:x"
+                          namespace="apps.movies"
+                          variant="secondary"
+                          onClick={() => {
+                            setShowCategoriesSelector(false)
+                            setSelectedCategory('')
+                          }}
+                        >
+                          Cancel
                         </Button>
                       </>
                     )}
                   </QueryWrapper>
+                ) : (
+                  <Button
+                    className="mt-8 w-full"
+                    icon="tabler:calendar"
+                    loading={addToCalendarLoading}
+                    namespace="apps.movies"
+                    variant="secondary"
+                    onClick={() => {
+                      setShowCategoriesSelector(true)
+                    }}
+                  >
+                    Add to Calendar
+                  </Button>
                 )}
               </>
             ) : (
@@ -189,6 +204,7 @@ function ShowTicketModal({
                 disabled
                 className="mt-8 w-full"
                 icon="tabler:check"
+                namespace="apps.movies"
                 variant="tertiary"
               >
                 Added to Calendar
