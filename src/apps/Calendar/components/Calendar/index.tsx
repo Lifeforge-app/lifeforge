@@ -11,6 +11,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '../../interfaces/calendar_interfaces'
+import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 
@@ -67,6 +68,43 @@ function CalendarComponent({
       }) => {
         return (
           <EventItem
+            categories={categories}
+            event={event as ICalendarEvent}
+            setExistedData={setExistedData}
+            setIsDeleteEventConfirmationModalOpen={
+              setIsDeleteEventConfirmationModalOpen
+            }
+            setModifyEventModalOpenType={setModifyEventModalOpenType}
+          />
+        )
+      },
+      week: {
+        header: ({ label }: { label: string }) => {
+          return (
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-bg-500 text-sm font-semibold">
+                {label.split(' ').pop()}
+              </div>
+              <div className="text-xl font-semibold">{label.split(' ')[0]}</div>
+            </div>
+          )
+        }
+      },
+      agenda: {
+        date: ({ label }: { label: string }) => {
+          return (
+            <div className="p-2">
+              <div className="text-lg font-semibold">
+                {label.split(' ').slice(1).join(' ')}
+              </div>
+              <div className="text-bg-500 text-sm font-semibold">
+                {label.split(' ')[0]}
+              </div>
+            </div>
+          )
+        },
+        event: ({ event }: { event: ICalendarEvent }) => (
+          <AgendaEventItem
             categories={categories}
             event={event as ICalendarEvent}
             setExistedData={setExistedData}

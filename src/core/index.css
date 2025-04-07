@@ -4,6 +4,7 @@ layer(base);
 layer(base);
 
 @import 'tailwindcss';
+@import '../apps/calendar/styles/calendar.module.css';
 @source "../../node_modules/@lifeforge/ui/dist";
 
 @plugin 'daisyui';
@@ -547,94 +548,6 @@ button[class^='react-calendar__navigation'] {
 
 .react-calendar__tile--now {
   @apply bg-custom-500 text-bg-50 dark:text-bg-800;
-}
-
-.rbc-off-range-bg {
-  @apply bg-bg-200/50 dark:bg-bg-900/50;
-}
-
-.rbc-off-range > .rbc-button-link {
-  @apply text-bg-500;
-}
-
-.rbc-today {
-  @apply bg-custom-500/20;
-}
-
-.rbc-now {
-  @apply text-custom-500;
-}
-
-.rbc-row-content {
-  @apply z-auto!;
-}
-
-.rbc-month-view,
-.rbc-day-bg,
-.rbc-month-row,
-.rbc-header {
-  @apply dark:border-bg-700;
-}
-
-.rbc-date-cell {
-  @apply p-2 text-left text-lg;
-}
-
-.rbc-header {
-  @apply p-2;
-}
-
-.rbc-show-more {
-  @apply text-custom-500;
-}
-
-.rbc-show-more:hover {
-  @apply text-custom-600;
-}
-
-.rbc-event {
-  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 border-bg-300! dark:border-bg-700! p-0! text-sm shadow-xs;
-}
-
-.rbc-event button {
-  @apply h-full;
-}
-
-.rbc-selected-cell {
-  @apply bg-bg-500/20!;
-}
-
-.rbc-selected-cell.rbc-today {
-  @apply bg-custom-700/20!;
-}
-
-.rbc-event-label {
-  @apply hidden;
-}
-
-.rbc-calendar *:not(button, a),
-.rbc-day-bg + .rbc-day-bg,
-.rbc-month-row + .rbc-month-row,
-.rbc-header + .rbc-header,
-.rbc-time-content > * + * > *,
-.rbc-timeslot-group,
-.rbc-day-slot .rbc-time-slot,
-.rbc-agenda-view table.rbc-agenda-table thead > tr > th,
-.rbc-agenda-view table.rbc-agenda-table,
-.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
-  @apply border-bg-300 dark:border-bg-700;
-}
-
-.rbc-header {
-  @apply p-2!;
-}
-
-.rbc-month-row {
-  @apply min-h-[6rem];
-}
-
-.rbc-addons-dnd-resize-ns-icon {
-  @apply dark:border-bg-100! border-bg-800!;
 }
 
 .music input[type='range'].main {

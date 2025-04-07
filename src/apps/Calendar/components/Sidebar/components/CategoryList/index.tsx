@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react'
 
 import { SidebarTitle } from '@lifeforge/ui'
 
+import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
+
 import { type ICalendarCategory } from '../../../../interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
 
@@ -34,8 +36,11 @@ function CategoryList({
             namespace="apps.calendar"
           />
         </div>
-        {categories.length > 0 ? (
+        {[...categories, ...Object.keys(INTERNAL_CATEGORIES)].length > 0 ? (
           <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
+            {Object.entries(INTERNAL_CATEGORIES).map(([key, value]) => (
+              <CategoryListItem key={key} item={value as ICalendarCategory} />
+            ))}
             {categories.map(item => (
               <CategoryListItem
                 key={item.id}
