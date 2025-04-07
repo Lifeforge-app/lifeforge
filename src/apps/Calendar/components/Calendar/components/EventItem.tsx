@@ -39,7 +39,7 @@ export default function EventItem({
       dayjs(event.end).diff(dayjs(event.start), 'day') === 1
     )
   }, [event.start, event.end])
-  
+
   const category = useMemo(() => {
     if (event.category.startsWith('_')) {
       return (
@@ -95,7 +95,7 @@ export default function EventItem({
         clickable
         noArrow
         openOnClick
-        className="bg-bg-50! text-bg-800! shadow-custom dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 z-[999]! rounded-md! p-4! text-base!"
+        className="bg-bg-50! text-bg-800! border-bg-200 dark:border-bg-700 shadow-custom dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 z-[9999]! rounded-md! border p-4! text-base!"
         id={`calendar-event-${event.id}`}
         opacity={1}
         place="bottom-end"
