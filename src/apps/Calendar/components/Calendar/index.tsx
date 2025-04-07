@@ -11,9 +11,11 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '../../interfaces/calendar_interfaces'
+import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
-import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
+import CalendarHeader from './components/Headers/CalendarHeader'
+import WeekHeader from './components/Headers/WeekHeader'
 
 const localizer = dayjsLocalizer(dayjs)
 const DnDCalendar = withDragAndDrop(Calendar)
@@ -79,30 +81,10 @@ function CalendarComponent({
         )
       },
       week: {
-        header: ({ label }: { label: string }) => {
-          return (
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-bg-500 text-sm font-semibold">
-                {label.split(' ').pop()}
-              </div>
-              <div className="text-xl font-semibold">{label.split(' ')[0]}</div>
-            </div>
-          )
-        }
+        header: WeekHeader
       },
       agenda: {
-        date: ({ label }: { label: string }) => {
-          return (
-            <div className="p-2">
-              <div className="text-lg font-semibold">
-                {label.split(' ').slice(1).join(' ')}
-              </div>
-              <div className="text-bg-500 text-sm font-semibold">
-                {label.split(' ')[0]}
-              </div>
-            </div>
-          )
-        },
+        date: AgendaDate,
         event: ({ event }: { event: ICalendarEvent }) => (
           <AgendaEventItem
             categories={categories}

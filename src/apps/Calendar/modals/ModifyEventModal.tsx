@@ -1,7 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
@@ -11,6 +10,7 @@ import {
   type ICalendarEvent,
   ICalendarEventFormState
 } from '../interfaces/calendar_interfaces'
+import EventTimeSelector from './EventTimeSelector'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null
@@ -27,8 +27,6 @@ function ModifyEventModal({
   categoriesQuery,
   eventQueryKey
 }: ModifyEventModalProps) {
-  const { t } = useTranslation('apps.calendar')
-
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     type: 'single',
     title: '',
@@ -90,50 +88,7 @@ function ModifyEventModal({
         icon: 'tabler:file-text',
         type: 'textarea',
         placeholder: 'Event description'
-      },
-      {
-        id: 'type',
-        required: true,
-        label: 'Event type',
-        icon: 'tabler:repeat',
-        type: 'listbox',
-        options: [
-          {
-            icon: 'tabler:calendar',
-            value: 'single',
-            text: t('eventTypes.single')
-          },
-          {
-            icon: 'tabler:repeat',
-            value: 'recurring',
-            text: t('eventTypes.recurring')
-          }
-        ]
-      },
-      ...(formState.type === 'single'
-        ? ([
-            {
-              id: 'start',
-              required: true,
-              label: 'Start time',
-              icon: 'tabler:clock',
-              type: 'datetime',
-              hasTime: true,
-              index: 0,
-              modalRef: ref
-            },
-            {
-              id: 'end',
-              required: true,
-              label: 'End time',
-              icon: 'tabler:clock',
-              hasTime: true,
-              type: 'datetime',
-              index: 1,
-              modalRef: ref
-            }
-          ] as IFieldProps<ICalendarEventFormState>[])
-        : [])
+      }
     ],
     [formState.type, categoriesQuery.data]
   )
@@ -166,6 +121,9 @@ function ModifyEventModal({
 
   return (
     <FormModal
+      additionalFields={
+        <EventTimeSelector formState={formState} setFormState={setFormState} />
+      }
       data={formState}
       endpoint="calendar/events"
       fields={FIELDS}
