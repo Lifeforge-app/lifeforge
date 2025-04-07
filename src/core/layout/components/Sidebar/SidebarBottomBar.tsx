@@ -8,13 +8,10 @@ import { toast } from 'react-toastify'
 
 import { MenuItem } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 function SidebarBottomBar() {
   const navigate = useNavigate()
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const { userData, getAvatarURL, logout } = useAuth()
-  const { componentBgLighterWithHover } = useComponentBg()
 
   if (!userData) return <></>
 
@@ -28,8 +25,9 @@ function SidebarBottomBar() {
       <Menu as="div" className="relative w-full min-w-0">
         <MenuButton
           className={clsx(
-            'flex-between w-full min-w-0 gap-8 rounded-md p-4 text-left',
-            sidebarExpanded && componentBgLighterWithHover
+            'flex-between shadow-custom w-full min-w-0 gap-8 rounded-md p-4 text-left',
+            sidebarExpanded &&
+              'bg-bg-200/50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200/50 transition-all'
           )}
         >
           <div className="flex-center w-full min-w-0 gap-3">
