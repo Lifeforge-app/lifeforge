@@ -38,8 +38,12 @@ export default function MiniCalendar() {
   )
 
   return (
-    <DashboardItem icon="tabler:calendar" title="mini Calendar">
-      <div className="size-full">
+    <DashboardItem
+      className="higher-z"
+      icon="tabler:calendar"
+      title="mini Calendar"
+    >
+      <div className="relative z-[9999] size-full">
         <div className="px-2">
           <MiniCalendarHeader
             currentMonth={currentMonth}

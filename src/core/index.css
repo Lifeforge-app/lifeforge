@@ -684,6 +684,18 @@ button[class^='react-calendar__navigation'] {
   @apply text-bg-500;
 }
 
+.react-grid-layout {
+  @apply isolate;
+}
+
+.react-grid-item {
+  z-index: 0;
+}
+
+.react-grid-item:has(.higher-z) {
+  z-index: 1;
+}
+
 .react-grid-item.react-grid-placeholder {
   @apply bg-custom-500!;
 }
