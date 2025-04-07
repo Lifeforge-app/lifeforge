@@ -143,8 +143,8 @@ function CalendarComponent({
     <DnDCalendar
       selectable
       components={calendarComponents as any}
-      draggableAccessor={() => {
-        return true
+      draggableAccessor={event => {
+        return !(event as ICalendarEvent).category.startsWith('_')
       }}
       events={events.filter(event => {
         if (searchParams.has('category')) {
