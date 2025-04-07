@@ -844,3 +844,7 @@ button[class^='react-calendar__navigation'] {
 .rbc-addons-dnd-resize-ns-icon {
   @apply dark:border-bg-100! border-bg-800!;
 }
+
+.rbc-agenda-table tr:has(th) {
+  @apply hidden;
+}
