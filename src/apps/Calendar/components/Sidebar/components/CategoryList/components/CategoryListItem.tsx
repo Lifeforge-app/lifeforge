@@ -11,13 +11,13 @@ function CategoryListItem({
   setDeleteConfirmationModalOpen
 }: {
   item: ICalendarCategory
-  setSelectedData: React.Dispatch<
+  setSelectedData?: React.Dispatch<
     React.SetStateAction<ICalendarCategory | null>
   >
-  setModifyModalOpenType: React.Dispatch<
+  setModifyModalOpenType?: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteConfirmationModalOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -25,27 +25,31 @@ function CategoryListItem({
     <SidebarItem
       active={searchParams.get('category') === item.id}
       hamburgerMenuItems={
-        <>
-          <MenuItem
-            icon="tabler:pencil"
-            text="Edit"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setModifyModalOpenType('update')
-            }}
-          />
-          <MenuItem
-            isRed
-            icon="tabler:trash"
-            text="Delete"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setDeleteConfirmationModalOpen(true)
-            }}
-          />
-        </>
+        setSelectedData &&
+        setModifyModalOpenType &&
+        setDeleteConfirmationModalOpen && (
+          <>
+            <MenuItem
+              icon="tabler:pencil"
+              text="Edit"
+              onClick={e => {
+                e.stopPropagation()
+                setSelectedData(item)
+                setModifyModalOpenType('update')
+              }}
+            />
+            <MenuItem
+              isRed
+              icon="tabler:trash"
+              text="Delete"
+              onClick={e => {
+                e.stopPropagation()
+                setSelectedData(item)
+                setDeleteConfirmationModalOpen(true)
+              }}
+            />
+          </>
+        )
       }
       icon={item.icon}
       name={item.name}

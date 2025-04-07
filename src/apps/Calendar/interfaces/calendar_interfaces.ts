@@ -10,6 +10,7 @@ interface ICalendarEvent extends RecordModel {
   cannot_delete: boolean
   description: string
   is_strikethrough: boolean
+  is_recurring: boolean
 }
 
 type ICalendarEventFormState = {
@@ -20,6 +21,7 @@ type ICalendarEventFormState = {
   location: string
   reference_link: string
   description: string
+  type: 'single' | 'recurring'
 }
 
 interface ICalendarCategory extends RecordModel {
