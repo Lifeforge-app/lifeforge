@@ -63,17 +63,15 @@ function EventDetailsHeader({
               setModifyEventModalOpenType('update')
             }}
           />
-          {!event.cannot_delete && (
-            <MenuItem
-              isRed
-              icon="tabler:trash"
-              text="Delete"
-              onClick={() => {
-                setExistedData(event)
-                setIsDeleteEventConfirmationModalOpen(true)
-              }}
-            />
-          )}
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="Delete"
+            onClick={() => {
+              setExistedData(event)
+              setIsDeleteEventConfirmationModalOpen(true)
+            }}
+          />
         </HamburgerMenu>
       )}
     </header>

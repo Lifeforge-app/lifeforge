@@ -1,17 +1,13 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@lifeforge/ui'
+import { Button, DateInput } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { ICalendarEventFormState } from '../interfaces/calendar_interfaces'
+import { ICalendarEventFormState } from '../../../../interfaces/calendar_interfaces'
+import RecurringSelector from './components/RecurringSelector'
 
 function EventTimeSelector({
   formState,
@@ -20,12 +16,8 @@ function EventTimeSelector({
   formState: ICalendarEventFormState
   setFormState: React.Dispatch<React.SetStateAction<ICalendarEventFormState>>
 }) {
-  const [freq, setFreq] = useState<
-    'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
-  >('yearly')
+  const { t } = useTranslation(['apps.calendar', 'common.misc'])
   const { componentBgLighter } = useComponentBg()
-
-  const { t } = useTranslation('apps.calendar')
 
   return (
     <div
@@ -62,24 +54,41 @@ function EventTimeSelector({
           </Button>
         ))}
       </div>
-      <ListboxOrComboboxInput
-        buttonContent={<>{t(`recurringFreqs.${freq}`)}</>}
+      <DateInput
+        darker
+        hasTime
+        required
         className="mt-4"
-        icon="tabler:repeat"
-        name="frequency"
+        date={formState.start}
+        icon="tabler:clock"
+        name="Start Time"
         namespace="apps.calendar"
-        setValue={setFreq}
-        type="listbox"
-        value={freq}
-      >
-        {['hourly', 'daily', 'weekly', 'monthly', 'yearly'].map(freq => (
-          <ListboxOrComboboxOption
-            key={freq}
-            text={t(`recurringFreqs.${freq}`)}
-            value={freq}
-          />
-        ))}
-      </ListboxOrComboboxInput>
+        setDate={date => {
+          setFormState({
+            ...formState,
+            start: date
+          })
+        }}
+      />
+      {formState.type === 'recurring' && <RecurringSelector />}
+      {formState.type === 'single' && (
+        <DateInput
+          darker
+          hasTime
+          required
+          className="mt-4"
+          date={formState.end}
+          icon="tabler:clock"
+          name="End Time"
+          namespace="apps.calendar"
+          setDate={date => {
+            setFormState({
+              ...formState,
+              end: date
+            })
+          }}
+        />
+      )}
     </div>
   )
 }

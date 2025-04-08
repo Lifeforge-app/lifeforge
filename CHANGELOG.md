@@ -1,12 +1,22 @@
-### 📌 **dev 25w14 (3/30/2025 - 4/5/2025)**
+### 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 
-- **Calendar**: Added an option for user to parse event details from image using OpenAI's GPT-4o.
+- **UI**: Added support for additional custom fields in `FormModal`.
+- **UI**: Added `CheckboxInput` to `FormModal`.
+- **Calendar**: Improved UI design for the calendar component.
+- **Calendar**: Hovering over a date with event in mini calendar will now show a popup with event details.
+- **Calendar**: Added a button to the calendar sidebar for quick access to the calendar.
+- **Todo List**: Tasks with due date are now automatically added to the calendar.
+- **Movies**: Removed the "Add to Calendar" button from the ticket entry.
+- **Movies**: Movies with ticket data available will now be added to the calendar automatically.
+
+### 📌 **dev 25w14 (3/30/2025 - 4/5/2025)**
 
 - **Personalization**: Fixed a bug where the add pixabay API tooltip is being shown when the user already has the API key.
 - **Moment Vault**: Fixed a bug where the photos don't show up when user press the "Add" button in mobile phone.
 - **Calendar**: Added tooltip showing the event info when user click on the event in the calendar.
 - **Calendar**: Added `Location`, `Reference Link`, and `Description` field to the event creation modal.
 - **Calendar**: Further enhanced the styling of the calendar component.
+- **Calendar**: Added an option for user to parse event details from image using OpenAI's GPT-4o.
 - **Guitar Tabs**: Audio files are now loaded on demand to improve loading performance.
 - **Todo List**: Added a toggle button to let user choose whether the task due date should include the time.
 - **Todo List**: Fixed a bug where the data isn't properly recorded in the database when the task is created or modified.
