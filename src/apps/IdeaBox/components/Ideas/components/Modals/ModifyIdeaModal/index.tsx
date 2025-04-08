@@ -75,6 +75,7 @@ function ModifyIdeaModal() {
         setIdeaTitle(existedEntry.title)
         setIdeaContent(existedEntry.content)
         setIdeaLink(existedEntry.content)
+        setImageLink('')
         setIdeaImage(null)
         setPreview(null)
         setIdeaTags(existedEntry.tags ?? [])
@@ -84,6 +85,7 @@ function ModifyIdeaModal() {
       setIdeaContent('')
       setIdeaLink('')
       setIdeaImage(pastedData.file)
+      setImageLink('')
       setPreview(pastedData.preview)
       setIdeaTags([])
     }
