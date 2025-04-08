@@ -23,6 +23,14 @@ export default defineConfig({
     tailwindcss()
     // mkcert()
   ],
+  server: {
+    fs: {
+      strict: true
+    },
+    watch: {
+      ignored: ['**/node_modules/**', '**/.git/**']
+    }
+  },
   resolve: {
     alias: {
       '@components': path.resolve(__dirname, './src/components'),
@@ -36,6 +44,7 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -52,6 +61,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
+      sourcemap: false,
       target: 'esnext'
     }
   }

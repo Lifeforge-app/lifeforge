@@ -9,8 +9,8 @@ import {
   type ICalendarCategory,
   type ICalendarEvent,
   ICalendarEventFormState
-} from '../interfaces/calendar_interfaces'
-import EventTimeSelector from './EventTimeSelector'
+} from '../../interfaces/calendar_interfaces'
+import EventTimeSelector from './components/EventTimeSelector'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null

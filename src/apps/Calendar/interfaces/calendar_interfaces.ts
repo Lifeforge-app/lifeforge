@@ -7,7 +7,6 @@ interface ICalendarEvent extends RecordModel {
   category: string
   location: string
   reference_link: string
-  cannot_delete: boolean
   description: string
   is_strikethrough: boolean
   is_recurring: boolean

@@ -18,7 +18,6 @@ function MiniCalendarEventDetails({
 }) {
   return (
     <Tooltip
-      clickable
       noArrow
       className="bg-bg-50! text-bg-800! shadow-custom border-bg-200 dark:border-bg-700 dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 z-[9999]! rounded-md! border p-4! text-base!"
       id={`calendar-tooltip-${index}`}
