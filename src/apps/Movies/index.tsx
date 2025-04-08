@@ -155,10 +155,7 @@ function Movies() {
           entry => entry.id === showTicketModalOpenFor
         )}
         isOpen={Boolean(showTicketModalOpenFor)}
-        onClose={added => {
-          if (added) {
-            entriesQuery.refetch()
-          }
+        onClose={() => {
           setShowTicketModalOpenFor('')
         }}
       />
