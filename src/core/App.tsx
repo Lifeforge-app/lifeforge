@@ -8,6 +8,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import 'leaflet/dist/leaflet.css'
+import { useEffect } from 'react'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-grid-layout/css/styles.css'
@@ -32,6 +33,13 @@ dayjs.extend(weekOfYear)
 dayjs.extend(customParseFormat)
 
 function App() {
+  useEffect(() => {
+    const preloader = document.querySelector('.preloader')
+    if (preloader) {
+      preloader.remove()
+    }
+  }, [])
+
   return (
     <BrowserRouter>
       <main
