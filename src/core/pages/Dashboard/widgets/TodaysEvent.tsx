@@ -89,7 +89,7 @@ export default function TodaysEvent() {
             <QueryWrapper query={rawEventsQuery}>
               {() =>
                 (filteredEvents ?? []).length > 0 ? (
-                  <ul className="flex flex-1 flex-col gap-4">
+                  <ul className="flex flex-1 flex-col gap-2">
                     {filteredEvents?.map(event => (
                       <EventItem
                         key={event.id}
