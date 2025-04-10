@@ -5,6 +5,7 @@ interface ICalendarEvent extends RecordModel {
   start: string | Date
   end: string | Date
   category: string
+  use_google_map: boolean
   location: string
   reference_link: string
   description: string
@@ -16,6 +17,7 @@ type ICalendarEventFormState = {
   title: string
   start: string
   end: string
+  use_google_map: boolean
   category: string
   location: string
   reference_link: string
