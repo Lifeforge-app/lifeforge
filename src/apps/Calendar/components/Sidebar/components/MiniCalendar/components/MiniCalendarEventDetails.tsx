@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
 
 import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
@@ -16,14 +17,14 @@ function MiniCalendarEventDetails({
   eventsOnTheDay: ICalendarEvent[]
   getBgColor: (event: ICalendarEvent) => string | undefined
 }) {
-  return (
+  return createPortal(
     <Tooltip
       noArrow
       className="bg-bg-50! text-bg-800! shadow-custom border-bg-200 dark:border-bg-700 dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 z-[9999]! rounded-md! border p-4! text-base!"
       id={`calendar-tooltip-${index}`}
       opacity={1}
       place="bottom"
-      positionStrategy="fixed"
+      positionStrategy="absolute"
     >
       <div className="relative max-h-96 max-w-96 min-w-64 overflow-y-auto">
         <div className="flex items-start justify-between gap-8">
@@ -55,7 +56,8 @@ function MiniCalendarEventDetails({
           })}
         </div>
       </div>
-    </Tooltip>
+    </Tooltip>,
+    document.body
   )
 }
 
