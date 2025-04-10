@@ -32,6 +32,7 @@ function ModifyEventModal({
     title: '',
     start: '',
     end: '',
+    use_google_map: false,
     category: '',
     location: '',
     reference_link: '',
@@ -66,13 +67,31 @@ function ModifyEventModal({
         nullOption: 'tabler:apps-off'
       },
       {
-        id: 'location',
+        id: 'use_google_map',
         required: false,
-        type: 'text',
-        label: 'Location',
-        icon: 'tabler:map-pin',
-        placeholder: 'Event location'
+        label: 'Use Google Map',
+        icon: 'tabler:brand-google-maps',
+        type: 'checkbox'
       },
+      ...[
+        (formState.use_google_map
+          ? {
+              id: 'location',
+              required: true,
+              type: 'location',
+              label: 'Location',
+              icon: 'tabler:map-pin',
+              placeholder: 'Event location'
+            }
+          : {
+              id: 'location',
+              required: false,
+              type: 'text',
+              label: 'Location',
+              icon: 'tabler:map-pin',
+              placeholder: 'Event location'
+            }) as IFieldProps<ICalendarEventFormState>
+      ],
       {
         id: 'reference_link',
         required: false,
@@ -90,7 +109,7 @@ function ModifyEventModal({
         placeholder: 'Event description'
       }
     ],
-    [formState.type, categoriesQuery.data]
+    [formState.type, categoriesQuery.data, formState.use_google_map]
   )
 
   useEffect(() => {
@@ -101,6 +120,7 @@ function ModifyEventModal({
         start: dayjs(existedData.start).toISOString(),
         end: dayjs(existedData.end).toISOString(),
         category: existedData.category ?? '',
+        use_google_map: existedData.use_google_map ?? false,
         location: existedData.location ?? '',
         reference_link: existedData.reference_link ?? '',
         description: existedData.description ?? ''
@@ -112,6 +132,7 @@ function ModifyEventModal({
         category: '',
         start: '',
         end: '',
+        use_google_map: false,
         location: '',
         reference_link: '',
         description: ''
