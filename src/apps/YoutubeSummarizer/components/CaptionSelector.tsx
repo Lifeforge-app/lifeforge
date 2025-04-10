@@ -172,14 +172,16 @@ function CaptionSelector({
                 captionType === 'auto'
                   ? videoInfo.auto_captions
                   : videoInfo.captions
-              ).map(([language, meta]) => (
-                <ListboxOrComboboxOption
-                  key={language}
-                  icon="tabler:language"
-                  text={meta[0].name}
-                  value={JSON.stringify({ language, meta })}
-                />
-              ))}
+              )
+                .filter(([, meta]) => meta[0].name)
+                .map(([language, meta]) => (
+                  <ListboxOrComboboxOption
+                    key={language}
+                    icon="tabler:language"
+                    text={meta[0].name ?? ''}
+                    value={JSON.stringify({ language, meta })}
+                  />
+                ))}
             </ListboxOrComboboxInput>
             {selectedLanguage && (
               <>
