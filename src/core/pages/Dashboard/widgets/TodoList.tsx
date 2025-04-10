@@ -22,7 +22,7 @@ function TodoListContent() {
   return (
     <QueryWrapper query={entriesQuery}>
       {entries => (
-        <ul className="flex flex-1 flex-col gap-4">
+        <ul className="flex flex-1 flex-col gap-2">
           {entries.length > 0 ? (
             entries.map(entry => (
               <TaskItem
