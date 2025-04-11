@@ -2,9 +2,11 @@
 
 - **UI**: Added support for additional custom fields in `FormModal`.
 - **UI**: Added `CheckboxInput` to `FormModal`.
+- **Server Status**: Added empty state screen in storage status dashboard widget.
 - **Calendar**: Improved UI design for the calendar component.
 - **Calendar**: Hovering over a date with event in mini calendar will now show a popup with event details.
 - **Calendar**: Added a button to the calendar sidebar for quick access to the calendar.
+- **Calendar**: Started implementing recurring events.
 - **Todo List**: Tasks with due date are now automatically added to the calendar.
 - **Movies**: Removed the "Add to Calendar" button from the ticket entry.
 - **Movies**: Movies with ticket data available will now be added to the calendar automatically.

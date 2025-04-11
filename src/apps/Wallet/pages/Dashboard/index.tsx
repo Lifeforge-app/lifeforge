@@ -92,6 +92,7 @@ function WalletDashboard() {
             <MenuItem
               icon="tabler:eye-off"
               isToggled={isAmountHidden}
+              namespace="apps.wallet"
               text="Hide Amount"
               onClick={() => {
                 toggleAmountVisibility(!isAmountHidden)
