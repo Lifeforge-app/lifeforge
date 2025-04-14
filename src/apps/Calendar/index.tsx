@@ -164,11 +164,14 @@ function CalendarModule() {
       />
       <DeleteConfirmationModal
         apiEndpoint="calendar/events"
-        data={existedData ?? undefined}
+        data={
+          { ...existedData, id: existedData?.id?.split('-')[0] ?? '' } as any
+        }
         isOpen={isDeleteEventConfirmationModalOpen}
         itemName="event"
         nameKey="title"
         queryKey={eventQueryKey}
+        queryUpdateType="invalidate"
         onClose={() => {
           setIsDeleteEventConfirmationModalOpen(false)
           setExistedData(null)

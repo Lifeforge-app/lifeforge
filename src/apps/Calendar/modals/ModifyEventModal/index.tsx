@@ -1,4 +1,4 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -27,16 +27,20 @@ function ModifyEventModal({
   categoriesQuery,
   eventQueryKey
 }: ModifyEventModalProps) {
+  const queryClient = useQueryClient()
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     type: 'single',
     title: '',
-    start: '',
+    start: dayjs().startOf('day').toISOString(),
     end: '',
     use_google_map: false,
     category: '',
     location: '',
     reference_link: '',
-    description: ''
+    description: '',
+    recurring_rrule: '',
+    recurring_duration_amount: '1',
+    recurring_duration_unit: 'day'
   })
   const ref = useRef<HTMLInputElement>(null)
 
@@ -115,7 +119,7 @@ function ModifyEventModal({
   useEffect(() => {
     if (existedData !== null) {
       setFormState({
-        type: existedData.is_recurring ? 'recurring' : 'single',
+        type: existedData.type ? 'recurring' : 'single',
         title: existedData.title ?? '',
         start: dayjs(existedData.start).toISOString(),
         end: dayjs(existedData.end).toISOString(),
@@ -123,19 +127,26 @@ function ModifyEventModal({
         use_google_map: existedData.use_google_map ?? false,
         location: existedData.location ?? '',
         reference_link: existedData.reference_link ?? '',
-        description: existedData.description ?? ''
+        description: existedData.description ?? '',
+        recurring_rrule: existedData.recurring_rrule ?? '',
+        recurring_duration_amount:
+          existedData.recurring_duration_amount?.toString() ?? '1',
+        recurring_duration_unit: existedData.recurring_duration_unit ?? 'day'
       })
     } else {
       setFormState({
         type: 'single',
         title: '',
         category: '',
-        start: '',
+        start: dayjs().startOf('day').toISOString(),
         end: '',
         use_google_map: false,
         location: '',
         reference_link: '',
-        description: ''
+        description: '',
+        recurring_rrule: '',
+        recurring_duration_amount: '1',
+        recurring_duration_unit: 'day'
       })
     }
   }, [openType, existedData])
@@ -143,8 +154,24 @@ function ModifyEventModal({
   return (
     <FormModal
       additionalFields={
-        <EventTimeSelector formState={formState} setFormState={setFormState} />
+        <EventTimeSelector
+          formState={formState}
+          openType={openType}
+          setFormState={setFormState}
+        />
       }
+      customUpdateDataList={{
+        create: () => {
+          queryClient.invalidateQueries({
+            queryKey: eventQueryKey
+          })
+        },
+        update: () => {
+          queryClient.invalidateQueries({
+            queryKey: eventQueryKey
+          })
+        }
+      }}
       data={formState}
       endpoint="calendar/events"
       fields={FIELDS}

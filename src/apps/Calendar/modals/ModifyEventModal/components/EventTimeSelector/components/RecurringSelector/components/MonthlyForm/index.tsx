@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TextInput } from '@lifeforge/ui'
@@ -8,29 +8,31 @@ import MonthlyExactDateForm from './components/MonthlyExactDateForm'
 import MonthlyRelativeDayForm from './components/MonthlyRelativeDayForm'
 
 function MonthlyForm({
+  monthlyType,
   monthlyEvery,
   monthlyOnDate,
   monthlyOnThe,
   monthlyOnTheDay,
+  setMonthlyType,
   setMonthlyEvery,
   setMonthlyOnDate,
   setMonthlyOnThe,
   setMonthlyOnTheDay
 }: {
+  monthlyType: 'exactDate' | 'relativeDay'
   monthlyEvery: string
   monthlyOnDate: string
   monthlyOnThe: string
   monthlyOnTheDay: string
+  setMonthlyType: React.Dispatch<
+    React.SetStateAction<'exactDate' | 'relativeDay'>
+  >
   setMonthlyEvery: React.Dispatch<React.SetStateAction<string>>
   setMonthlyOnDate: React.Dispatch<React.SetStateAction<string>>
   setMonthlyOnThe: React.Dispatch<React.SetStateAction<string>>
   setMonthlyOnTheDay: React.Dispatch<React.SetStateAction<string>>
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
-
-  const [monthlyType, setMonthlyType] = useState<'exactDate' | 'relativeDay'>(
-    'exactDate'
-  )
 
   const memoizedMonthlyExactDateForm = useMemo(
     () => (

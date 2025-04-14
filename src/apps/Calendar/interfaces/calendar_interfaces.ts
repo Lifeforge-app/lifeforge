@@ -1,6 +1,7 @@
 import type { RecordModel } from 'pocketbase'
 
 interface ICalendarEvent extends RecordModel {
+  type: 'single' | 'recurring'
   title: string
   start: string | Date
   end: string | Date
@@ -10,7 +11,9 @@ interface ICalendarEvent extends RecordModel {
   reference_link: string
   description: string
   is_strikethrough: boolean
-  is_recurring: boolean
+  recurring_rrule: string
+  recurring_duration_amount: number
+  recurring_duration_unit: string
 }
 
 type ICalendarEventFormState = {
@@ -23,6 +26,9 @@ type ICalendarEventFormState = {
   reference_link: string
   description: string
   type: 'single' | 'recurring'
+  recurring_rrule: string
+  recurring_duration_amount: string
+  recurring_duration_unit: string
 }
 
 interface ICalendarCategory extends RecordModel {
