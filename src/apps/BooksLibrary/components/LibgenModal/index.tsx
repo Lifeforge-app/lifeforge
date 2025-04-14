@@ -1,3 +1,5 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -24,6 +26,9 @@ function LibgenModal() {
   const {
     miscellaneous: { libgenModalOpen: isOpen, setLibgenModalOpen: setOpen }
   } = useBooksLibraryContext()
+  const [libgenOnline, setLibgenOnline] = useState<'loading' | boolean>(
+    'loading'
+  )
   const [searchQuery, setSearchQuery] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
   const [data, setData] = useState<{
@@ -37,6 +42,17 @@ function LibgenModal() {
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
   const [addToLibraryFor, setAddToLibraryFor] = useState<string | null>(null)
   const [qrcodeScannerOpen, setQrcodeScannerOpen] = useState(false)
+
+  async function checkLibgenOnlineStatus() {
+    try {
+      const isOnline = await fetchAPI<boolean>('books-library/libgen/status', {
+        timeout: 5000
+      })
+      setLibgenOnline(isOnline)
+    } catch {
+      setLibgenOnline(false)
+    }
+  }
 
   async function fetchBookResults(page: number) {
     setLoading(true)
@@ -80,6 +96,8 @@ function LibgenModal() {
 
   useEffect(() => {
     if (isOpen) {
+      setLibgenOnline('loading')
+      checkLibgenOnlineStatus()
       setHasSearched(false)
       setSearchQuery('')
     }
@@ -89,6 +107,26 @@ function LibgenModal() {
     <>
       <ModalWrapper isOpen={isOpen} minHeight="80vh" minWidth="70vw">
         <ModalHeader
+          appendTitle={
+            libgenOnline === 'loading' ? (
+              <Icon
+                className="text-bg-500 size-4"
+                icon="svg-spinners:180-ring"
+              />
+            ) : (
+              <div
+                className={clsx(
+                  'flex-center gap-1 rounded-full px-2 py-0.5 text-sm font-medium',
+                  libgenOnline
+                    ? 'bg-green-500/20 text-green-500'
+                    : 'bg-red-500/20 text-red-500'
+                )}
+              >
+                <Icon className="size-2" icon="tabler:circle-filled" />
+                <span>{libgenOnline === true ? 'Online' : 'Offline'}</span>
+              </div>
+            )
+          }
           icon="tabler:books"
           namespace="apps.booksLibrary"
           title="Library Genesis"
