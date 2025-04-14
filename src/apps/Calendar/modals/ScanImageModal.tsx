@@ -49,7 +49,10 @@ function ScanImageModal({
           body: formData
         }
       )
-      setExistedData(data)
+      setExistedData({
+        ...data,
+        type: 'single'
+      })
       setModifyModalOpenType('create')
       setOpen(false)
       setFile(null)

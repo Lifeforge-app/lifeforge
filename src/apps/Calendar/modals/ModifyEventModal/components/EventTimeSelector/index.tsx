@@ -11,13 +11,19 @@ import RecurringSelector from './components/RecurringSelector'
 
 function EventTimeSelector({
   formState,
-  setFormState
+  setFormState,
+  openType
 }: {
   formState: ICalendarEventFormState
   setFormState: React.Dispatch<React.SetStateAction<ICalendarEventFormState>>
+  openType: 'create' | 'update' | null
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
   const { componentBgLighter } = useComponentBg()
+
+  if (openType === 'update') {
+    return <></>
+  }
 
   return (
     <div
@@ -54,40 +60,47 @@ function EventTimeSelector({
           </Button>
         ))}
       </div>
-      <DateInput
-        darker
-        hasTime
-        required
-        className="mt-4"
-        date={formState.start}
-        icon="tabler:clock"
-        name="Start Time"
-        namespace="apps.calendar"
-        setDate={date => {
-          setFormState({
-            ...formState,
-            start: date
-          })
-        }}
-      />
-      {formState.type === 'recurring' && <RecurringSelector />}
+
+      {formState.type === 'recurring' && (
+        <RecurringSelector formState={formState} setFormState={setFormState} />
+      )}
       {formState.type === 'single' && (
-        <DateInput
-          darker
-          hasTime
-          required
-          className="mt-4"
-          date={formState.end}
-          icon="tabler:clock"
-          name="End Time"
-          namespace="apps.calendar"
-          setDate={date => {
-            setFormState({
-              ...formState,
-              end: date
-            })
-          }}
-        />
+        <>
+          <DateInput
+            darker
+            hasTime
+            required
+            className="mt-4"
+            date={formState.start}
+            icon="tabler:clock"
+            index={0}
+            name="Start Time"
+            namespace="apps.calendar"
+            setDate={date => {
+              setFormState({
+                ...formState,
+                start: date
+              })
+            }}
+          />
+          <DateInput
+            darker
+            hasTime
+            required
+            className="mt-4"
+            date={formState.end}
+            icon="tabler:clock"
+            index={1}
+            name="End Time"
+            namespace="apps.calendar"
+            setDate={date => {
+              setFormState({
+                ...formState,
+                end: date
+              })
+            }}
+          />
+        </>
       )}
     </div>
   )
