@@ -1,36 +1,38 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 
 import SelectableFormWrapper from '../SelectableFormWrapper'
 import YearlyExactDateForm from './components/YearlyExactDateForm'
 import YearlyRelativeDayForm from './components/YearlyRelativeDayForm'
 
 function YearlyForm({
-  setYearlyDate,
-  setYearlyMonth,
+  yearlyType,
   yearlyDate,
   yearlyMonth,
+  yearlyOnThe,
+  yearlyOnTheDay,
+  yearlyOnTheDayOfMonth,
+  setYearlyType,
   setYearlyOnThe,
   setYearlyOnTheDay,
   setYearlyOnTheDayOfMonth,
-  yearlyOnThe,
-  yearlyOnTheDay,
-  yearlyOnTheDayOfMonth
+  setYearlyDate,
+  setYearlyMonth
 }: {
-  setYearlyDate: React.Dispatch<React.SetStateAction<string>>
-  setYearlyMonth: React.Dispatch<React.SetStateAction<number>>
+  yearlyType: 'exactDate' | 'relativeDay'
   yearlyDate: string
   yearlyMonth: number
-  setYearlyOnThe: React.Dispatch<React.SetStateAction<string>>
-  setYearlyOnTheDay: React.Dispatch<React.SetStateAction<string>>
-  setYearlyOnTheDayOfMonth: React.Dispatch<React.SetStateAction<number>>
   yearlyOnThe: string
   yearlyOnTheDay: string
   yearlyOnTheDayOfMonth: number
+  setYearlyType: React.Dispatch<
+    React.SetStateAction<'exactDate' | 'relativeDay'>
+  >
+  setYearlyDate: React.Dispatch<React.SetStateAction<string>>
+  setYearlyMonth: React.Dispatch<React.SetStateAction<number>>
+  setYearlyOnThe: React.Dispatch<React.SetStateAction<string>>
+  setYearlyOnTheDay: React.Dispatch<React.SetStateAction<string>>
+  setYearlyOnTheDayOfMonth: React.Dispatch<React.SetStateAction<number>>
 }) {
-  const [yearlyType, setYearlyType] = useState<'exactDate' | 'relativeDay'>(
-    'exactDate'
-  )
-
   const memoizedYearlyExactDateForm = useMemo(
     () => (
       <YearlyExactDateForm

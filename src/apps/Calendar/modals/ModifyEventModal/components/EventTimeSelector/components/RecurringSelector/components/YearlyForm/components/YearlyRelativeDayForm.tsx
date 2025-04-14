@@ -47,13 +47,13 @@ function YearlyRelativeDayForm({
             {t(
               yearlyOnTheDay.length === 3 && yearlyOnTheDay !== 'day'
                 ? `common.misc:dates.days.${[
+                    'sun',
                     'mon',
                     'tue',
                     'wed',
                     'thu',
                     'fri',
-                    'sat',
-                    'sun'
+                    'sat'
                   ].indexOf(yearlyOnTheDay)}`
                 : `recurring.onTheDay.${yearlyOnTheDay}`
             )}
@@ -68,13 +68,13 @@ function YearlyRelativeDayForm({
         value={yearlyOnTheDay}
       >
         {[
+          'sun',
           'mon',
           'tue',
           'wed',
           'thu',
           'fri',
           'sat',
-          'sun',
           'day',
           'weekday',
           'weekendDay'
@@ -84,13 +84,13 @@ function YearlyRelativeDayForm({
             text={t(
               idx < 7
                 ? `common.misc:dates.days.${[
+                    'sun',
                     'mon',
                     'tue',
                     'wed',
                     'thu',
                     'fri',
-                    'sat',
-                    'sun'
+                    'sat'
                   ].indexOf(day)}`
                 : `recurring.onTheDay.${day}`
             )}
