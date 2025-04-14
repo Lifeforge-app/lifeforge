@@ -27,7 +27,7 @@ function EventItem({
   return (
     <li
       key={event.id}
-      className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex max-h-24 flex-1 gap-4 rounded-lg p-4"
+      className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex flex-1 gap-4 rounded-lg p-4"
     >
       <div
         className="h-full w-1.5 rounded-full"
