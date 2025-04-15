@@ -6,6 +6,7 @@ import PersonalizationProvider from '@providers/PersonalizationProvider'
 import SidebarStateProvider from '@providers/SidebarStateProvider'
 import ToastProvider from '@providers/ToastProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
@@ -33,6 +34,7 @@ function Providers({ children }: { children: React.ReactNode }) {
           </AuthProvider>
         </SidebarStateProvider>
       </APIOnlineStatusProvider>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }

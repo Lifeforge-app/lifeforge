@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/use-type-alias */
-import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
@@ -12,7 +12,7 @@ import {
   type IIdeaBoxTag
 } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
-import fetchAPI from '@utils/fetchAPI'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IIdeaBoxData {
   pathValid: boolean
@@ -100,63 +100,51 @@ export default function IdeaBoxProvider({
     searchParams.get('archived') === 'true'
   )
 
-  const pathValidQuery = useQuery<boolean>({
-    queryKey: ['idea-box', 'valid', id, path],
-    queryFn: () => fetchAPI(`idea-box/valid/${id}/${path}`),
-    enabled: id !== undefined && path !== undefined
-  })
+  const pathValidQuery = useAPIQuery<boolean>(
+    `idea-box/valid/${id}/${path}`,
+    ['idea-box', 'valid', id, path],
+    id !== undefined && path !== undefined
+  )
 
-  const pathDetailsQuery = useQuery<{
+  const pathDetailsQuery = useAPIQuery<{
     container: IIdeaBoxContainer
     path: IIdeaBoxFolder[]
-  }>({
-    queryKey: ['idea-box', 'details', id, path],
-    queryFn: () => fetchAPI(`idea-box/path/${id}/${path}`),
-    enabled: id !== undefined && path !== undefined && pathValidQuery.data
-  })
+  }>(
+    `idea-box/path/${id}/${path}`,
+    ['idea-box', 'path', id, path],
+    id !== undefined && path !== undefined && pathValidQuery.data
+  )
 
-  const entriesQuery = useQuery<IIdeaBoxEntry[]>({
-    queryKey: ['idea-box', 'ideas', id, path, viewArchived],
-    queryFn: () =>
-      fetchAPI(`idea-box/ideas/${id}/${path}?archived=${viewArchived}`),
-    enabled: id !== undefined && path !== undefined && pathValidQuery.data
-  })
+  const entriesQuery = useAPIQuery<IIdeaBoxEntry[]>(
+    `idea-box/ideas/${id}/${path}?archived=${viewArchived}`,
+    ['idea-box', 'ideas', id, path, viewArchived],
+    id !== undefined && path !== undefined && pathValidQuery.data
+  )
 
-  const foldersQuery = useQuery<IIdeaBoxFolder[]>({
-    queryKey: ['idea-box', 'folders', id, path],
-    queryFn: () => fetchAPI(`idea-box/folders/${id}/${path}`),
-    enabled: id !== undefined && path !== undefined && pathValidQuery.data
-  })
+  const foldersQuery = useAPIQuery<IIdeaBoxFolder[]>(
+    `idea-box/folders/${id}/${path}`,
+    ['idea-box', 'folders', id, path],
+    id !== undefined && path !== undefined && pathValidQuery.data
+  )
 
-  const tagsQuery = useQuery<IIdeaBoxTag[]>({
-    queryKey: ['idea-box', 'tags', id],
-    queryFn: () => fetchAPI(`idea-box/tags/${id}`),
-    enabled: id !== undefined
-  })
+  const tagsQuery = useAPIQuery<IIdeaBoxTag[]>(
+    `idea-box/tags/${id}${path !== '' ? '?folder=' + path : ''}`,
+    ['idea-box', 'tags', id, path],
+    id !== undefined && path !== undefined && pathValidQuery.data
+  )
 
-  const searchResultsQuery = useQuery<IIdeaBoxEntry[]>({
-    queryKey: [
-      'idea-box',
-      'search',
-      id,
-      path,
-      selectedTags,
-      debouncedSearchQuery
-    ],
-    queryFn: () =>
-      fetchAPI(
-        `idea-box/search?q=${encodeURIComponent(
-          debouncedSearchQuery.trim()
-        )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
-          path !== '' ? `&folder=${path?.split('/').pop()}` : ''
-        }`
-      ),
-    enabled:
-      id !== undefined &&
+  const searchResultsQuery = useAPIQuery<IIdeaBoxEntry[]>(
+    `idea-box/search?q=${encodeURIComponent(
+      debouncedSearchQuery.trim()
+    )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
+      path !== '' ? `&folder=${path?.split('/').pop()}` : ''
+    }`,
+    ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+    id !== undefined &&
       path !== undefined &&
       pathValidQuery.data &&
       (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0)
-  })
+  )
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
     null | 'create' | 'update' | 'paste'
