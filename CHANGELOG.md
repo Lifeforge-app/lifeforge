@@ -1,3 +1,8 @@
+### 📌 **dev 25w16 (4/13/2025 - 4/19/2025)**
+
+- **Calendar**: Recurring events are now displayed in the calendar.
+- **Books Library**: Added indicator in libgen modal to show whether the host is online or offline.
+- **Code Time**: Added an endpoint in the API to generate code time summary image for the user to display in their Github profile.
 ### 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 
 - **UI**: Added support for additional custom fields in `FormModal`.
@@ -6,7 +11,7 @@
 - **Calendar**: Improved UI design for the calendar component.
 - **Calendar**: Hovering over a date with event in mini calendar will now show a popup with event details.
 - **Calendar**: Added a button to the calendar sidebar for quick access to the calendar.
-- **Calendar**: Started implementing recurring events.
+- **Calendar**: Created component in form to select recurring time.
 - **Todo List**: Tasks with due date are now automatically added to the calendar.
 - **Movies**: Removed the "Add to Calendar" button from the ticket entry.
 - **Movies**: Movies with ticket data available will now be added to the calendar automatically.
