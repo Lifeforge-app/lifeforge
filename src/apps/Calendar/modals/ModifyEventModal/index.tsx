@@ -119,7 +119,7 @@ function ModifyEventModal({
   useEffect(() => {
     if (existedData !== null) {
       setFormState({
-        type: existedData.type ? 'recurring' : 'single',
+        type: existedData.type ?? 'single',
         title: existedData.title ?? '',
         start: dayjs(existedData.start).toISOString(),
         end: dayjs(existedData.end).toISOString(),
@@ -165,10 +165,16 @@ function ModifyEventModal({
           queryClient.invalidateQueries({
             queryKey: eventQueryKey
           })
+          queryClient.invalidateQueries({
+            queryKey: ['calendar', 'categories']
+          })
         },
         update: () => {
           queryClient.invalidateQueries({
             queryKey: eventQueryKey
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['calendar', 'categories']
           })
         }
       }}
