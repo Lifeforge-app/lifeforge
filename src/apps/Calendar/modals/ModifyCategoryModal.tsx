@@ -81,6 +81,8 @@ function ModifyCategoryModal({
       openType={openType}
       queryKey={['calendar', 'categories']}
       setData={setData}
+      sortBy="name"
+      sortMode="asc"
       title={`category.${innerOpenType}`}
       onClose={() => {
         setOpenType(null)
