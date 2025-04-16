@@ -1,10 +1,13 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import dayjs from 'dayjs'
 import { useCallback, useMemo, useState } from 'react'
 
 import {
   ContentWrapperWithSidebar,
   DeleteConfirmationModal,
+  FAB,
   LayoutWithSidebar,
+  MenuItem,
   ModuleHeader,
   ModuleWrapper,
   Scrollbar
@@ -131,6 +134,32 @@ function CalendarModule() {
             </Scrollbar>
           </ContentWrapperWithSidebar>
         </LayoutWithSidebar>
+        <Menu as="div" className="relative z-[9991]">
+          <FAB as={MenuButton} hideWhen="lg" />
+          <MenuItems
+            transition
+            anchor="bottom end"
+            className="bg-bg-100 dark:bg-bg-800 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          >
+            <MenuItem
+              icon="tabler:photo"
+              namespace="apps.calendar"
+              text="Scan from Image"
+              onClick={() => {
+                setScanImageModalOpen(true)
+              }}
+            />
+            <MenuItem
+              icon="tabler:plus"
+              namespace="apps.calendar"
+              text="Input Manually"
+              onClick={() => {
+                setModifyEventModalOpenType('create')
+                setExistedData(null)
+              }}
+            />
+          </MenuItems>
+        </Menu>
       </ModuleWrapper>
       <ScanImageModal
         open={scanImageModalOpen}
