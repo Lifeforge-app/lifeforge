@@ -38,7 +38,7 @@ function SigninWithProviderButton({
     if (!providerInstance) return
 
     localStorage.setItem('authState', providerInstance.state)
-    localStorage.setItem('authProvider', providerInstance)
+    localStorage.setItem('authProvider', provider)
 
     window.location.href =
       providerInstance.authUrl + `${window.location.origin}/auth`
