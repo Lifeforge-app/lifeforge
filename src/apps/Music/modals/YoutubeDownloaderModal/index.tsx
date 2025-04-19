@@ -49,7 +49,7 @@ function YoutubeDownloaderModal() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${parseCookie(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).session}`
         }
       }
     )
@@ -70,7 +70,7 @@ function YoutubeDownloaderModal() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${parseCookie(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).session}`
         },
         body: JSON.stringify({
           metadata: videoInfoQuery.data

@@ -3,6 +3,7 @@
 - **Calendar**: Recurring events are now displayed in the calendar.
 - **Books Library**: Added indicator in libgen modal to show whether the host is online or offline.
 - **Code Time**: Added an endpoint in the API to generate code time summary image for the user to display in their Github profile.
+- **Authentication**: Renamed `token` key in cookies to `session` for better clarity.
 
 ### 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 

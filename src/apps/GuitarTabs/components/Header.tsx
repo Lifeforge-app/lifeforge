@@ -101,7 +101,7 @@ function Header({
           {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${parseCookie(document.cookie).token}`
+              Authorization: `Bearer ${parseCookie(document.cookie).session}`
             },
             body: formData
           }
@@ -137,7 +137,7 @@ function Header({
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${parseCookie(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).session}`
         }
       }
     )

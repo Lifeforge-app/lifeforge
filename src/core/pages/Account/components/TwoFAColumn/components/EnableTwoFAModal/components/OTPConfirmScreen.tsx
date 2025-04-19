@@ -28,7 +28,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
         body: {
           otp: encrypt(
             encrypt(otp, challenge),
-            parseCookie(document.cookie).token ?? ''
+            parseCookie(document.cookie).session ?? ''
           )
         }
       })

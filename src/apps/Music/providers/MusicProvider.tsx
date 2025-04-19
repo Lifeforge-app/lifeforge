@@ -123,7 +123,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${parseCookie(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).session}`
           }
         }
       )
