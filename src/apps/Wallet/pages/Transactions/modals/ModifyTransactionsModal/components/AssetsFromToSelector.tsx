@@ -1,4 +1,4 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import AssetListbox from './AssetsListbox'
 
@@ -13,7 +13,7 @@ function AssetsFromToSelector({
   toAsset: string | null
   setToAsset: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { assetsQuery } = useWalletContext()
+  const { assetsQuery } = useWalletData()
   const assets = assetsQuery.data ?? []
 
   return (

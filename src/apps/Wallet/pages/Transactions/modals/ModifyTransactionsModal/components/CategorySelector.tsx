@@ -6,7 +6,7 @@ import {
   ListboxOrComboboxOption
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 function CategorySelector({
   category,
@@ -17,7 +17,7 @@ function CategorySelector({
   setCategory: React.Dispatch<React.SetStateAction<string | null>>
   transactionType: string
 }) {
-  const { categoriesQuery } = useWalletContext()
+  const { categoriesQuery } = useWalletData()
   const categories = categoriesQuery.data ?? []
 
   return (

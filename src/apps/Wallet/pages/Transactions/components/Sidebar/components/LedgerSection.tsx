@@ -1,18 +1,15 @@
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useSearchParams } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import { QueryWrapper, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-function LedgerSection({
-  setSidebarOpen
-}: {
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+function LedgerSection() {
   const { t } = useTranslation('apps.wallet')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const { ledgersQuery, filteredTransactions } = useWalletContext()
+  const { ledgersQuery } = useWalletData()
+  const { selectedLedger, setSelectedLedger, setSidebarOpen } = useWalletStore()
   const navigate = useNavigate()
 
   return (
@@ -40,39 +37,27 @@ function LedgerSection({
                 <SidebarItem
                   key={id}
                   active={
-                    searchParams.get('ledger') === id ||
-                    (searchParams.get('ledger') === null && index === 0)
+                    selectedLedger === id ||
+                    (selectedLedger === null && index === 0)
                   }
                   icon={icon}
                   name={name}
-                  number={
-                    typeof filteredTransactions !== 'string'
-                      ? filteredTransactions.filter(
-                          transaction =>
-                            transaction.ledger === id || id === null
-                        ).length
-                      : 0
-                  }
+                  number={0}
                   sideStripColor={color}
                   onCancelButtonClick={
                     name !== 'All'
                       ? () => {
-                          searchParams.delete('ledger')
-                          setSearchParams(searchParams)
+                          setSelectedLedger(null)
                           setSidebarOpen(false)
                         }
                       : undefined
                   }
                   onClick={() => {
                     if (name === 'All') {
-                      searchParams.delete('ledger')
-                      setSearchParams(searchParams)
+                      setSelectedLedger(null)
                       return
                     }
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      ledger: id!
-                    })
+                    setSelectedLedger(id)
                     setSidebarOpen(false)
                   }}
                 />

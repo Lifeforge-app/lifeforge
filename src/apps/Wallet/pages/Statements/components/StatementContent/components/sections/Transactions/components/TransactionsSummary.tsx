@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 function TransactionsSummary({ month, year }: { month: number; year: number }) {
-  const { transactionsQuery } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
   const transactions = transactionsQuery.data ?? []
 
   return (

@@ -4,7 +4,7 @@ import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 const CHART_OPTIONS = {
@@ -32,7 +32,7 @@ function BreakdownDoughnutChart({
   expensesCategories: IWalletCategory[]
 }) {
   const { t } = useTranslation('apps.wallet')
-  const { isAmountHidden } = useWalletContext()
+  const { isAmountHidden } = useWalletStore()
 
   return (
     <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
