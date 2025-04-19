@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -10,19 +10,16 @@ import {
 } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import { type IWalletCategory } from '../../../../interfaces/wallet_interfaces'
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
 import CategorySection from './components/CategorySection'
 
-function ManageCategoriesModal({
-  isOpen,
-  onClose
-}: {
-  isOpen: boolean | 'new'
-  onClose: () => void
-}) {
+function ManageCategoriesModal() {
   const { t } = useTranslation('apps.wallet')
+  const { isManageCategoriesModalOpen: isOpen, setManageCategoriesModalOpen } =
+    useWalletStore()
   const { categoriesQuery } = useWalletData()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
@@ -39,6 +36,18 @@ function ManageCategoriesModal({
       }, 200)
     }
   }, [isOpen])
+
+  const handleDeleteConfirmationModalClose = useCallback(() => {
+    setDeleteCategoriesConfirmationOpen(false)
+    setExistedData(null)
+  }, [])
+
+  const onClose = useCallback(() => {
+    setManageCategoriesModalOpen(false)
+    setModifyCategoriesModalOpenType(null)
+    setExistedData(null)
+    setDeleteCategoriesConfirmationOpen(false)
+  }, [setManageCategoriesModalOpen])
 
   return (
     <>
@@ -101,9 +110,7 @@ function ManageCategoriesModal({
         itemName="category"
         nameKey="name"
         queryKey={['wallet', 'categories']}
-        onClose={() => {
-          setDeleteCategoriesConfirmationOpen(false)
-        }}
+        onClose={handleDeleteConfirmationModalClose}
       />
     </>
   )

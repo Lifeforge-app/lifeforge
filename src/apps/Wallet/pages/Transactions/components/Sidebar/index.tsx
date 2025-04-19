@@ -10,13 +10,7 @@ import LedgerSection from './components/LedgerSection'
 import MiniCalendar from './components/MiniCalendar'
 import TypeSection from './components/TypeSection'
 
-function Sidebar({
-  setManageCategoriesModalOpen
-}: {
-  setManageCategoriesModalOpen: React.Dispatch<
-    React.SetStateAction<boolean | 'new'>
-  >
-}) {
+function Sidebar() {
   const { selectedType, sidebarOpen, setSidebarOpen } = useWalletStore()
 
   return (
@@ -29,9 +23,7 @@ function Sidebar({
       <SidebarDivider />
       <TypeSection />
       <SidebarDivider />
-      <CategoriesSection
-        setManageCategoriesModalOpen={setManageCategoriesModalOpen}
-      />
+      <CategoriesSection />
       {selectedType === 'transfer' && <SidebarDivider />}
       <AssetsSection />
       <SidebarDivider />

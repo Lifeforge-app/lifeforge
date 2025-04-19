@@ -54,9 +54,6 @@ function Transactions() {
     deleteTransactionsConfirmationOpen,
     setDeleteTransactionsConfirmationOpen
   ] = useState(false)
-  const [isManageCategoriesModalOpen, setManageCategoriesModalOpen] = useState<
-    boolean | 'new'
-  >(false)
   const [selectedData, setSelectedData] =
     useState<Partial<IWalletTransaction> | null>(null)
   const [view, setView] = useState<'list' | 'table'>('list')
@@ -76,20 +73,13 @@ function Transactions() {
   const memoizedHeaderMenu = useMemo(
     () => (
       <HeaderMenu
-        setManageCategoriesModalOpen={setManageCategoriesModalOpen}
         setView={setView}
         setVisibleColumn={setVisibleColumn}
         view={view}
         visibleColumn={visibleColumn}
       />
     ),
-    [
-      setManageCategoriesModalOpen,
-      setView,
-      view,
-      visibleColumn,
-      setVisibleColumn
-    ]
+    [setView, view, visibleColumn, setVisibleColumn]
   )
 
   useEffect(() => {
@@ -113,7 +103,7 @@ function Transactions() {
         tKey="subsectionsTitleAndDesc"
       />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
-        <Sidebar setManageCategoriesModalOpen={setManageCategoriesModalOpen} />
+        <Sidebar />
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <InnerHeader
             setModifyModalOpenType={setModifyModalOpenType}
@@ -226,13 +216,7 @@ function Transactions() {
           setSelectedData(null)
         }}
       />
-      <ManageCategoriesModal
-        isOpen={isManageCategoriesModalOpen}
-        onClose={() => {
-          setManageCategoriesModalOpen(false)
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
-        }}
-      />
+      <ManageCategoriesModal />
       <ReceiptModal
         isOpen={receiptModalOpen}
         receiptSrc={receiptToView}
