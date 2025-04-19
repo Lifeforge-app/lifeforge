@@ -69,7 +69,7 @@ export default function WalletProvider() {
           return (
             debouncedSearchQuery === '' ||
             transaction.particulars
-              .toLowerCase()
+              ?.toLowerCase()
               .includes(debouncedSearchQuery.toLowerCase()) ||
             transaction.location
               .toLowerCase()
