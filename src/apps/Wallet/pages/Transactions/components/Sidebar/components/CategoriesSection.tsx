@@ -8,16 +8,10 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import CategoriesSectionItem from './CategoriesSectionItem'
 
-function CategoriesSection({
-  setManageCategoriesModalOpen
-}: {
-  setManageCategoriesModalOpen: React.Dispatch<
-    React.SetStateAction<boolean | 'new'>
-  >
-}) {
+function CategoriesSection() {
   const { t } = useTranslation('apps.wallet')
   const { categoriesQuery } = useWalletData()
-  const { selectedType } = useWalletStore()
+  const { selectedType, setManageCategoriesModalOpen } = useWalletStore()
 
   const handleActionButtonClick = useCallback(() => {
     setManageCategoriesModalOpen('new')

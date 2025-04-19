@@ -14,6 +14,8 @@ interface WalletState {
   isAmountHidden: boolean
   sidebarOpen: boolean
 
+  isManageCategoriesModalOpen: boolean | 'new'
+
   // actions
   setSelectedType: (t: WalletState['selectedType']) => void
   setSelectedCategory: (c: string | null) => void
@@ -25,6 +27,8 @@ interface WalletState {
   setNextToSelect: (s: WalletState['nextToSelect']) => void
   toggleAmountVisibility: () => void
   setSidebarOpen: (s: boolean) => void
+
+  setManageCategoriesModalOpen: (s: boolean | 'new') => void
 }
 
 export const useWalletStore = create<WalletState>()(set => ({
@@ -38,6 +42,7 @@ export const useWalletStore = create<WalletState>()(set => ({
   nextToSelect: 'start',
   isAmountHidden: true,
   sidebarOpen: false,
+  isManageCategoriesModalOpen: false,
 
   setSelectedType: t => set({ selectedType: t }),
   setSelectedCategory: c => set({ selectedCategory: c }),
@@ -49,5 +54,6 @@ export const useWalletStore = create<WalletState>()(set => ({
   setNextToSelect: s => set({ nextToSelect: s }),
   toggleAmountVisibility: () =>
     set(state => ({ isAmountHidden: !state.isAmountHidden })),
-  setSidebarOpen: s => set({ sidebarOpen: s })
+  setSidebarOpen: s => set({ sidebarOpen: s }),
+  setManageCategoriesModalOpen: s => set({ isManageCategoriesModalOpen: s })
 }))
