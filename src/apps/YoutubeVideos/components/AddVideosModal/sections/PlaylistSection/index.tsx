@@ -70,7 +70,7 @@ function PlaylistSection({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${parseCookie(document.cookie).token} `
+          Authorization: `Bearer ${parseCookie(document.cookie).session} `
         },
         body: JSON.stringify({ id: [...downloadingVideos.current] })
       }
@@ -116,7 +116,7 @@ function PlaylistSection({
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${parseCookie(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).session}`
           },
           body: JSON.stringify({
             metadata

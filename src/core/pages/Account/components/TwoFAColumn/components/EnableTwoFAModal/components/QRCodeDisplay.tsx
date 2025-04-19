@@ -32,7 +32,10 @@ function QRCodeDisplay() {
       const challenge = await fetchAPI<string>('/user/2fa/challenge')
       const link = await fetchAPI<string>('/user/2fa/link')
 
-      const decrypted1 = decrypt(link, parseCookie(document.cookie).token ?? '')
+      const decrypted1 = decrypt(
+        link,
+        parseCookie(document.cookie).session ?? ''
+      )
       const decrypted2 = decrypt(decrypted1, challenge)
 
       setLink(decrypted2)

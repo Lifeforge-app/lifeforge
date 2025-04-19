@@ -26,7 +26,7 @@ function AddMusicButton() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${parseCookie(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).session}`
         }
       }
     )
@@ -44,7 +44,7 @@ function AddMusicButton() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${parseCookie(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).session}`
       }
     })
       .then(async res => {
