@@ -16,7 +16,7 @@ const ReactCompilerConfig = {
 export default defineConfig({
   envDir: path.resolve(__dirname, './env'),
   plugins: [
-    MillionCompiler.vite(),
+    // MillionCompiler.vite(),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
