@@ -6,7 +6,7 @@ import {
   ListboxOrComboboxOption
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 function LedgerSelector({
   ledger,
@@ -15,7 +15,7 @@ function LedgerSelector({
   ledger: string | null
   setLedger: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { ledgersQuery } = useWalletContext()
+  const { ledgersQuery } = useWalletData()
   const ledgers = ledgersQuery.data ?? []
 
   return (

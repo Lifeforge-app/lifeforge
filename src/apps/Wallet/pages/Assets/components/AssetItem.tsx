@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
@@ -20,7 +20,7 @@ function AssetItem({
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteAssetsConfirmationOpen: React.Dispatch<boolean>
 }) {
-  const { isAmountHidden } = useWalletContext()
+  const { isAmountHidden } = useWalletStore()
   const navigate = useNavigate()
 
   return (

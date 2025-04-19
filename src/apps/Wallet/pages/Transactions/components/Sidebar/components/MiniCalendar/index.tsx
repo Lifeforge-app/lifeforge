@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -9,52 +9,37 @@ import {
   SidebarTitle
 } from '@lifeforge/ui'
 
+import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
+
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
-
-const VIEWS = [
-  ['tabler:login-2', 'income'],
-  ['tabler:logout', 'expenses'],
-  ['tabler:transfer', 'transfer']
-] as const
+import MiniCalendarToggleViewMenu from './components/MiniCalendarToggleViewMenu'
 
 function MiniCalendar() {
   const { t } = useTranslation('apps.wallet')
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
   const [currentYear, setCurrentYear] = useState(dayjs().year())
-  const [viewsFilter, setViewsFilter] = useState<
-    ('income' | 'expenses' | 'transfer')[]
-  >(['income', 'expenses'])
+  const [viewsFilter, setViewsFilter] = useState<IWalletTransaction['type'][]>([
+    'income',
+    'expenses'
+  ])
 
-  function toggleView(view: 'income' | 'expenses' | 'transfer') {
+  const toggleView = useCallback((view: IWalletTransaction['type']) => {
     setViewsFilter(prevViews =>
       prevViews.includes(view)
         ? prevViews.filter(v => v !== view)
         : [...prevViews, view]
     )
-  }
+  }, [])
 
   return (
     <>
       <SidebarTitle
         customActionButton={
-          <HamburgerMenu>
-            <HamburgerMenuSelectorWrapper icon="tabler:eye" title="Toggle view">
-              {VIEWS.map(([icon, id]) => (
-                <MenuItem
-                  key={id}
-                  icon={icon}
-                  isToggled={viewsFilter.includes(id)}
-                  namespace={false}
-                  text={t(`transactionTypes.${id}`)}
-                  onClick={e => {
-                    e.preventDefault()
-                    toggleView(id)
-                  }}
-                />
-              ))}
-            </HamburgerMenuSelectorWrapper>
-          </HamburgerMenu>
+          <MiniCalendarToggleViewMenu
+            toggleView={toggleView}
+            viewsFilter={viewsFilter}
+          />
         }
         name={t('sidebar.calendarHeatmap')}
       />

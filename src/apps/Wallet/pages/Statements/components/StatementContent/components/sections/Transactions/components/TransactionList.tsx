@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function TransactionList({
@@ -13,7 +13,7 @@ function TransactionList({
   month: number
   year: number
 }) {
-  const { transactionsQuery, assetsQuery, categoriesQuery } = useWalletContext()
+  const { transactionsQuery, assetsQuery, categoriesQuery } = useWalletData()
   const transactions = transactionsQuery.data ?? []
   const assets = assetsQuery.data ?? []
   const categories = categoriesQuery.data ?? []

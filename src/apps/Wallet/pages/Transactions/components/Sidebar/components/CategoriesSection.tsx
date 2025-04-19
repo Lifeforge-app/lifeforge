@@ -1,32 +1,33 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 
-import { QueryWrapper, SidebarItem, SidebarTitle } from '@lifeforge/ui'
+import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
+
+import CategoriesSectionItem from './CategoriesSectionItem'
 
 function CategoriesSection({
-  setManageCategoriesModalOpen,
-  setSidebarOpen
+  setManageCategoriesModalOpen
 }: {
   setManageCategoriesModalOpen: React.Dispatch<
     React.SetStateAction<boolean | 'new'>
   >
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const { t } = useTranslation('apps.wallet')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const { categoriesQuery, filteredTransactions } = useWalletContext()
+  const { categoriesQuery } = useWalletData()
+  const { selectedType } = useWalletStore()
 
-  return searchParams.get('type') !== 'transfer' ? (
+  const handleActionButtonClick = useCallback(() => {
+    setManageCategoriesModalOpen('new')
+  }, [setManageCategoriesModalOpen])
+
+  return selectedType !== 'transfer' ? (
     <>
       <SidebarTitle
         actionButtonIcon="tabler:plus"
-        actionButtonOnClick={() => {
-          setManageCategoriesModalOpen('new')
-        }}
+        actionButtonOnClick={handleActionButtonClick}
         name={t('sidebar.categories')}
       />
       <QueryWrapper query={categoriesQuery}>
@@ -38,7 +39,7 @@ function CategoriesSection({
                 name: t('sidebar.allCategories'),
                 color: 'white',
                 id: null,
-                type: 'all'
+                type: null
               }
             ]
               .concat(
@@ -50,78 +51,16 @@ function CategoriesSection({
               )
               .filter(
                 ({ type }) =>
-                  searchParams.get('type') === type ||
-                  (searchParams.get('type') ?? 'all') === 'all'
+                  selectedType === type || (selectedType ?? null) === null
               )
               .map(({ icon, name, color, id, type }) => (
-                <SidebarItem
+                <CategoriesSectionItem
                   key={id}
-                  active={searchParams.get('category') === id}
-                  icon={
-                    <div className="relative flex size-7 items-center justify-center">
-                      <Icon
-                        className={clsx(
-                          'size-6 shrink-0',
-                          searchParams.get('category') === id &&
-                            'text-custom-500'
-                        )}
-                        icon={icon}
-                      />
-                      <Icon
-                        className={clsx(
-                          'absolute -right-2 -bottom-2 size-4 shrink-0',
-                          {
-                            income: 'text-green-500',
-                            expenses: 'text-red-500',
-                            all: 'text-yellow-500'
-                          }[type]
-                        )}
-                        icon={
-                          {
-                            income: 'tabler:login-2',
-                            expenses: 'tabler:logout',
-                            all: 'tabler:arrow-bar-both'
-                          }[type] ?? ''
-                        }
-                      />
-                    </div>
-                  }
+                  color={color}
+                  icon={icon}
+                  id={id}
                   name={name}
-                  number={
-                    typeof filteredTransactions !== 'string'
-                      ? filteredTransactions.filter(
-                          transaction =>
-                            transaction.category === id || name === 'All'
-                        ).length
-                      : 0
-                  }
-                  sideStripColor={color}
-                  onCancelButtonClick={
-                    name !== 'All'
-                      ? () => {
-                          searchParams.delete('category')
-                          searchParams.delete('type')
-                          setSearchParams(searchParams)
-                          setSidebarOpen(false)
-                        }
-                      : undefined
-                  }
-                  onClick={() => {
-                    if (name === 'All') {
-                      searchParams.delete('category')
-                      searchParams.delete('type')
-                      setSearchParams(searchParams)
-                      setSidebarOpen(false)
-                      return
-                    }
-
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      category: id!,
-                      type
-                    })
-                    setSidebarOpen(false)
-                  }}
+                  type={type}
                 />
               ))}
           </>

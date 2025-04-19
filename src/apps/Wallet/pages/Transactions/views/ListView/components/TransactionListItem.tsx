@@ -5,7 +5,7 @@ import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
@@ -25,7 +25,7 @@ function TransactionListItem({
   setReceiptToView: React.Dispatch<string>
   setSelectedData: React.Dispatch<IWalletTransaction | null>
 }) {
-  const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletContext()
+  const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
   const categories = categoriesQuery.data ?? []
   const ledgers = ledgersQuery.data ?? []
   const assets = assetsQuery.data ?? []

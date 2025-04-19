@@ -5,12 +5,12 @@ import { Link } from 'react-router'
 
 import { Button, DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 export default function AssetsBalance() {
-  const { assetsQuery } = useWalletContext()
+  const { assetsQuery } = useWalletData()
   const { componentBgLighterWithHover } = useComponentBg()
   const [showBalance, setShowBalance] = useState(false)
 

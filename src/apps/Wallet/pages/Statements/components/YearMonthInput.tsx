@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 function YearMonthInput({
   month,
@@ -16,7 +16,7 @@ function YearMonthInput({
   year: number | null
   setYear: (value: number | null) => void
 }) {
-  const { transactionsQuery } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
   const transactions = transactionsQuery.data ?? []
 
   const yearsOptions = useMemo(() => {

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -29,7 +29,7 @@ function LedgerItem({
   const { t } = useTranslation('apps.wallet')
   const { componentBgWithHover } = useComponentBg()
   const navigate = useNavigate()
-  const { transactionsQuery } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
 
   return (
     <div

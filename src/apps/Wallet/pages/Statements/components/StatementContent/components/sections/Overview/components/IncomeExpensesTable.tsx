@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function IncomeExpensesTable({
@@ -14,7 +14,7 @@ function IncomeExpensesTable({
   year: number
   type: 'income' | 'expenses'
 }) {
-  const { transactionsQuery, categoriesQuery } = useWalletContext()
+  const { transactionsQuery, categoriesQuery } = useWalletData()
   const transactions = transactionsQuery.data ?? []
   const categories = categoriesQuery.data ?? []
 
