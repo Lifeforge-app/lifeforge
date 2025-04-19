@@ -9,7 +9,7 @@ import {
   QueryWrapper
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import { type IWalletCategory } from '../../../../interfaces/wallet_interfaces'
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
@@ -23,7 +23,7 @@ function ManageCategoriesModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.wallet')
-  const { categoriesQuery } = useWalletContext()
+  const { categoriesQuery } = useWalletData()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
   const [existedData, setExistedData] = useState<IWalletCategory | null>(null)

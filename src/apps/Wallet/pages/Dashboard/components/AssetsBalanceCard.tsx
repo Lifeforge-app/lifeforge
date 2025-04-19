@@ -10,7 +10,8 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -18,7 +19,8 @@ import useComponentBg from '@hooks/useComponentBg'
 function AssetsBalanceCard() {
   const { componentBgLighterWithHover } = useComponentBg()
   const navigate = useNavigate()
-  const { assetsQuery, isAmountHidden } = useWalletContext()
+  const { assetsQuery } = useWalletData()
+  const { isAmountHidden } = useWalletStore()
   const { t } = useTranslation('apps.wallet')
 
   return (

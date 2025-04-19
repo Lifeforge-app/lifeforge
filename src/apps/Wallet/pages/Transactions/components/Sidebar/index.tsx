@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
+import { SidebarDivider, SidebarWrapper } from '@lifeforge/ui'
 
-import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
+import AllTransactionsButton from './components/AllTransactionsButton'
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
 import DateRangeSelector from './components/DateRangeSelector'
@@ -11,45 +11,31 @@ import MiniCalendar from './components/MiniCalendar'
 import TypeSection from './components/TypeSection'
 
 function Sidebar({
-  sidebarOpen,
-  setSidebarOpen,
   setManageCategoriesModalOpen
 }: {
-  sidebarOpen: boolean
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
   setManageCategoriesModalOpen: React.Dispatch<
     React.SetStateAction<boolean | 'new'>
   >
 }) {
-  const { t } = useTranslation('apps.wallet')
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { selectedType, sidebarOpen, setSidebarOpen } = useWalletStore()
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
-      <SidebarItem
-        active={searchParams.entries().next().done === true}
-        icon="tabler:list"
-        name={t('sidebar.allTransactions')}
-        onClick={() => {
-          setSearchParams(new URLSearchParams())
-          setSidebarOpen(false)
-        }}
-      />
+      <AllTransactionsButton />
       <SidebarDivider />
       <MiniCalendar />
       <SidebarDivider />
       <DateRangeSelector />
       <SidebarDivider />
-      <TypeSection setSidebarOpen={setSidebarOpen} />
+      <TypeSection />
       <SidebarDivider />
       <CategoriesSection
         setManageCategoriesModalOpen={setManageCategoriesModalOpen}
-        setSidebarOpen={setSidebarOpen}
       />
-      {searchParams.get('type') !== 'transfer' && <SidebarDivider />}
-      <AssetsSection setSidebarOpen={setSidebarOpen} />
+      {selectedType === 'transfer' && <SidebarDivider />}
+      <AssetsSection />
       <SidebarDivider />
-      <LedgerSection setSidebarOpen={setSidebarOpen} />
+      <LedgerSection />
     </SidebarWrapper>
   )
 }

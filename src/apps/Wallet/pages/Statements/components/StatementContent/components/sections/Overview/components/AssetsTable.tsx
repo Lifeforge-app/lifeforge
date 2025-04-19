@@ -4,11 +4,11 @@ import dayjs from 'dayjs'
 
 import { QueryWrapper } from '@lifeforge/ui'
 
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import {
   IWalletAsset,
   IWalletTransaction
 } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function getAmounts({
@@ -68,7 +68,7 @@ function getAmounts({
 }
 
 function AssetsTable({ month, year }: { month: number; year: number }) {
-  const { assetsQuery, transactionsQuery } = useWalletContext()
+  const { assetsQuery, transactionsQuery } = useWalletData()
   const transactions = transactionsQuery.data ?? []
 
   return (

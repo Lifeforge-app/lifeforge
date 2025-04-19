@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import { Scrollbar } from '@lifeforge/ui'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function BreakdownDetails({
@@ -24,7 +24,7 @@ function BreakdownDetails({
   expensesCategories: IWalletCategory[]
 }) {
   const { t } = useTranslation('apps.wallet')
-  const { isAmountHidden } = useWalletContext()
+  const { isAmountHidden } = useWalletStore()
 
   return (
     <div className="h-full min-h-96 xl:min-h-0">

@@ -23,7 +23,7 @@ import {
   ModuleWrapper
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import AssetsBalanceCard from './components/AssetsBalanceCard'
 import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'
@@ -48,7 +48,7 @@ ChartJS.register(
 function WalletDashboard() {
   const navigate = useNavigate()
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
-  const { isAmountHidden, toggleAmountVisibility } = useWalletContext()
+  const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
 
   return (
     <ModuleWrapper>
@@ -95,7 +95,7 @@ function WalletDashboard() {
               namespace="apps.wallet"
               text="Hide Amount"
               onClick={() => {
-                toggleAmountVisibility(!isAmountHidden)
+                toggleAmountVisibility()
               }}
             />
           </>

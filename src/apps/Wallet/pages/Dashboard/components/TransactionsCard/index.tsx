@@ -8,13 +8,13 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import ListView from './views/ListView'
 import TableView from './views/TableView'
 
 function TransactionsCard() {
-  const { transactionsQuery, categoriesQuery } = useWalletContext()
+  const { transactionsQuery, categoriesQuery } = useWalletData()
 
   return (
     <DashboardItem

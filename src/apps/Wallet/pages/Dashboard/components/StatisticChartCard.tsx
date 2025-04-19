@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { DashboardItem, EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 const options = {
   maintainAspectRatio: false,
@@ -34,7 +34,7 @@ const options = {
 }
 
 function StatisticChardCard() {
-  const { transactionsQuery } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
 
   const transactions = transactionsQuery.data ?? []
 

@@ -165,7 +165,6 @@ export const ROUTES: RouteCategory[] = [
       {
         name: 'Wallet',
         icon: <IconCurrencyDollar />,
-        provider: lazy(() => import('@apps/Wallet/providers/WalletProvider')),
         hasAI: true,
         subsection: [
           { name: 'Dashboard', icon: <IconDashboard />, path: '' },
@@ -183,11 +182,15 @@ export const ROUTES: RouteCategory[] = [
           }
         ],
         routes: {
-          '': lazy(() => import('@apps/Wallet/pages/Dashboard')),
-          transactions: lazy(() => import('@apps/Wallet/pages/Transactions')),
-          assets: lazy(() => import('@apps/Wallet/pages/Assets')),
-          ledgers: lazy(() => import('@apps/Wallet/pages/Ledgers')),
-          statements: lazy(() => import('@apps/Wallet/pages/Statements'))
+          wallet: lazy(() => import('@apps/Wallet/pages/Dashboard')),
+          'wallet/transactions': lazy(
+            () => import('@apps/Wallet/pages/Transactions')
+          ),
+          'wallet/assets': lazy(() => import('@apps/Wallet/pages/Assets')),
+          'wallet/ledgers': lazy(() => import('@apps/Wallet/pages/Ledgers')),
+          'wallet/statements': lazy(
+            () => import('@apps/Wallet/pages/Statements')
+          )
         },
         togglable: true
       },

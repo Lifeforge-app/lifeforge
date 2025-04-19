@@ -3,7 +3,8 @@ import List from 'react-virtualized/dist/commonjs/List'
 
 import { Scrollbar } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import TransactionListItem from './components/TransactionListItem'
@@ -26,7 +27,8 @@ function ListView({
   setReceiptModalOpen: React.Dispatch<boolean>
   setReceiptToView: React.Dispatch<string>
 }) {
-  const { filteredTransactions: transactions } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
+  const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
 
   return (
     <>

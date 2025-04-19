@@ -1,82 +1,46 @@
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useSearchParams } from 'react-router'
+import { useNavigate } from 'react-router'
 
-import { QueryWrapper, SidebarItem, SidebarTitle } from '@lifeforge/ui'
+import { SidebarTitle } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-function AssetsSection({
-  setSidebarOpen
-}: {
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+import AssetsSectionItem from './AssetsSectionItem'
+
+function AssetsSection() {
   const { t } = useTranslation('apps.wallet')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const { assetsQuery, filteredTransactions } = useWalletContext()
+  const { assetsQuery } = useWalletData()
   const navigate = useNavigate()
+
+  const handleActionButtonClick = useCallback(() => {
+    navigate('/wallet/assets#new')
+  }, [navigate])
+
+  const ITEMS = useMemo(
+    () =>
+      [
+        {
+          icon: 'tabler:coin',
+          name: t('sidebar.allAssets'),
+          color: 'white',
+          id: null,
+          type: null
+        }
+      ].concat(assetsQuery.data ?? ([] as any)),
+    [assetsQuery.data, t]
+  )
 
   return (
     <>
       <SidebarTitle
         actionButtonIcon="tabler:plus"
-        actionButtonOnClick={() => {
-          navigate('/wallet/assets#new')
-        }}
+        actionButtonOnClick={handleActionButtonClick}
         name={t('sidebar.assets')}
       />
-      <QueryWrapper query={assetsQuery}>
-        {assets => (
-          <>
-            {[
-              {
-                icon: 'tabler:coin',
-                name: t('sidebar.allAssets'),
-                color: 'white',
-                id: null,
-                type: 'all'
-              }
-            ]
-              .concat(assets as any)
-              .map(({ icon, name, id }, index) => (
-                <SidebarItem
-                  key={id}
-                  active={
-                    searchParams.get('asset') === id ||
-                    (searchParams.get('asset') === null && index === 0)
-                  }
-                  icon={icon}
-                  name={name}
-                  number={
-                    typeof filteredTransactions !== 'string'
-                      ? filteredTransactions.filter(
-                          transaction => transaction.asset === id || id === null
-                        ).length
-                      : 0
-                  }
-                  onCancelButtonClick={
-                    name !== 'All'
-                      ? () => {
-                          searchParams.delete('asset')
-                          setSearchParams(searchParams)
-                          setSidebarOpen(false)
-                        }
-                      : undefined
-                  }
-                  onClick={() => {
-                    if (id === null) {
-                      searchParams.delete('asset')
-                      setSearchParams(searchParams)
-                    } else {
-                      searchParams.set('asset', id)
-                      setSearchParams(searchParams)
-                    }
-                    setSidebarOpen(false)
-                  }}
-                />
-              ))}
-          </>
-        )}
-      </QueryWrapper>
+      {ITEMS.map(({ icon, name, id }) => (
+        <AssetsSectionItem key={id} icon={icon} id={id} name={name} />
+      ))}
     </>
   )
 }

@@ -13,7 +13,8 @@ import {
   QueryWrapper
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import { type IWalletAsset } from '../../interfaces/wallet_interfaces'
 import AssetItem from './components/AssetItem'
@@ -21,8 +22,8 @@ import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets() {
   const { t } = useTranslation('apps.wallet')
-  const { assetsQuery, isAmountHidden, toggleAmountVisibility } =
-    useWalletContext()
+  const { assetsQuery } = useWalletData()
+  const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -74,7 +75,7 @@ function Assets() {
               namespace="apps.wallet"
               text="Hide Amount"
               onClick={() => {
-                toggleAmountVisibility(!isAmountHidden)
+                toggleAmountVisibility()
               }}
             />
           </>

@@ -6,14 +6,16 @@ import { Link } from 'react-router'
 
 import { DashboardItem, QueryWrapper, Scrollbar } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 function TransactionsCountCard() {
   const { componentBgLighterWithHover } = useComponentBg()
-  const { transactionsQuery, isAmountHidden } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
+  const { isAmountHidden } = useWalletStore()
   const { t } = useTranslation('apps.wallet')
 
   const transactions = transactionsQuery.data ?? []

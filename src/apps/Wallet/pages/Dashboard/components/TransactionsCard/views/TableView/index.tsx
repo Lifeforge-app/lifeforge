@@ -6,13 +6,13 @@ import { Link } from 'react-router'
 
 import { QueryWrapper } from '@lifeforge/ui'
 
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function TableView({ categories }: { categories: IWalletCategory[] }) {
   const { t } = useTranslation('apps.wallet')
-  const { transactionsQuery } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
 
   return (
     <QueryWrapper query={transactionsQuery}>

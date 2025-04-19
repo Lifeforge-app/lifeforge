@@ -5,8 +5,8 @@ import { Link } from 'react-router'
 
 import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -15,7 +15,7 @@ import BreakdownDetails from './components/BreakdownDetails'
 import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'
 
 function ExpensesBreakdownCard() {
-  const { categoriesQuery } = useWalletContext()
+  const { categoriesQuery } = useWalletData()
   // TODO
   const [year] = useState(dayjs().year())
   const [month] = useState(dayjs().month() + 1)

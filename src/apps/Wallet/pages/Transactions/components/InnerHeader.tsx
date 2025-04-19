@@ -1,83 +1,39 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 
 import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-function Header({
+function InnerHeader({
   setModifyModalOpenType,
-  setUploadReceiptModalOpen,
-  setSidebarOpen
+  setUploadReceiptModalOpen
 }: {
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setUploadReceiptModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =
+    useWalletData()
   const {
-    categoriesQuery,
-    assetsQuery,
-    ledgersQuery,
-    transactionsQuery,
     searchQuery,
-    filteredTransactions
-  } = useWalletContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+    selectedType,
+    selectedCategory,
+    selectedAsset,
+    selectedLedger,
+    setSidebarOpen
+  } = useWalletStore()
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
   const assets = assetsQuery.data ?? []
   const categories = categoriesQuery.data ?? []
   const ledgers = ledgersQuery.data ?? []
   const transactions = transactionsQuery.data ?? []
-
-  useEffect(() => {
-    const params = searchParams.get('type')
-    if (params === null) return
-    if (!['income', 'expenses', 'transfer'].includes(params)) {
-      searchParams.delete('type')
-      setSearchParams(searchParams)
-    }
-  }, [searchParams])
-
-  useEffect(() => {
-    const params = searchParams.get('category')
-    if (params === null || typeof categories === 'string') return
-    if (
-      categories.find(category => category.id === params) === undefined &&
-      params !== 'all'
-    ) {
-      searchParams.delete('category')
-      setSearchParams(searchParams)
-    }
-  }, [searchParams, categories])
-
-  useEffect(() => {
-    const params = searchParams.get('asset')
-    if (params === null || typeof assets === 'string') return
-    if (
-      assets.find(asset => asset.id === params) === undefined &&
-      params !== 'all'
-    ) {
-      searchParams.delete('asset')
-
-      setSearchParams(searchParams)
-    }
-  }, [searchParams, assets])
-
-  useEffect(() => {
-    const params = searchParams.get('ledger')
-    if (params === null || typeof ledgers === 'string') return
-    if (
-      ledgers.find(ledger => ledger.id === params) === undefined &&
-      params !== 'all'
-    ) {
-      searchParams.delete('ledger')
-      setSearchParams(searchParams)
-    }
-  }, [searchParams, ledgers])
+  const filteredTransactions = useFilteredTransactions(
+    transactionsQuery.data ?? []
+  )
 
   return (
     <div className="flex-between flex">
@@ -85,7 +41,13 @@ function Header({
         <h1 className="text-3xl font-semibold lg:text-4xl">
           {t(
             `apps.wallet:header.${
-              searchParams.size === 0 && searchQuery === '' ? 'all' : 'filtered'
+              !selectedType &&
+              !selectedCategory &&
+              !selectedAsset &&
+              !selectedLedger &&
+              searchQuery === ''
+                ? 'all'
+                : 'filtered'
             }Transactions`
           )}{' '}
           <span className="text-bg-500 text-base">
@@ -181,4 +143,4 @@ function Header({
   )
 }
 
-export default Header
+export default InnerHeader

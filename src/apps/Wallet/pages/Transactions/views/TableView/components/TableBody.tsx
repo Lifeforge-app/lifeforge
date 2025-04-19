@@ -1,4 +1,5 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 import ActionColumn from './columns/ActionColumn'
@@ -29,12 +30,9 @@ function TableBody({
     React.SetStateAction<boolean>
   >
 }) {
-  const {
-    assetsQuery,
-    ledgersQuery,
-    categoriesQuery,
-    filteredTransactions: transactions
-  } = useWalletContext()
+  const { assetsQuery, ledgersQuery, categoriesQuery, transactionsQuery } =
+    useWalletData()
+  const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
   const ledgers = ledgersQuery.data ?? []
   const assets = assetsQuery.data ?? []
   const categories = categoriesQuery.data ?? []

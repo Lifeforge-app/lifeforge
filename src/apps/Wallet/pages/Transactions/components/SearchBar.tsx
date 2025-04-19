@@ -1,6 +1,6 @@
 import { SearchInput, ViewModeSelector } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 function SearchBar({
   setView,
@@ -9,7 +9,7 @@ function SearchBar({
   setView: React.Dispatch<React.SetStateAction<'table' | 'list'>>
   view: 'table' | 'list'
 }) {
-  const { searchQuery, setSearchQuery } = useWalletContext()
+  const { searchQuery, setSearchQuery } = useWalletStore()
 
   return (
     <div className="flex items-center gap-2">

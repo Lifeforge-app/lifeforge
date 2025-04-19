@@ -1,14 +1,14 @@
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import AssetsTable from './components/AssetsTable'
 import IncomeExpensesTable from './components/IncomeExpensesTable'
 import OverviewSummary from './components/OverviewSummary'
 
 function Overview({ month, year }: { month: number; year: number }) {
-  const { transactionsQuery } = useWalletContext()
+  const { transactionsQuery } = useWalletData()
   const transactions = transactionsQuery.data ?? []
   const filteredTransactions = useMemo(() => {
     if (typeof transactions === 'string') return []

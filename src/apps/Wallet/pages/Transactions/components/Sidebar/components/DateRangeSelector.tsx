@@ -1,38 +1,50 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 
 import { DateInput, SidebarTitle } from '@lifeforge/ui'
 
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
+
 function DateRangeSelector() {
   const { t } = useTranslation('apps.wallet')
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { startDate, endDate, setStartDate, setEndDate } = useWalletStore()
 
   const handleDateChange = (date: string, type: 'start_date' | 'end_date') => {
     if (date === '') {
-      searchParams.delete(type)
-      setSearchParams(searchParams)
+      if (type === 'start_date') {
+        setStartDate(null)
+      } else {
+        setEndDate(null)
+      }
       return
     }
 
-    const otherType = type === 'start_date' ? 'end_date' : 'start_date'
     const otherDate =
-      searchParams.get(otherType) !== null &&
-      dayjs(searchParams.get(otherType)).isValid()
-        ? dayjs(searchParams.get(otherType))
-        : dayjs()
+      type === 'start_date'
+        ? endDate !== null && dayjs(endDate).isValid()
+          ? dayjs(endDate)
+          : dayjs()
+        : startDate !== null && dayjs(startDate).isValid()
+          ? dayjs(startDate)
+          : dayjs()
 
     if (
       (type === 'start_date' && dayjs(date).isAfter(otherDate)) ||
       (type === 'end_date' && dayjs(date).isBefore(otherDate))
     ) {
-      searchParams.set(otherType, dayjs(date).format('YYYY-MM-DD'))
+      if (type === 'start_date') {
+        setEndDate(dayjs(date).format('YYYY-MM-DD'))
+      } else {
+        setStartDate(dayjs(date).format('YYYY-MM-DD'))
+      }
     }
 
-    searchParams.set(type, dayjs(date).format('YYYY-MM-DD'))
-
-    setSearchParams(searchParams)
+    if (type === 'start_date') {
+      setStartDate(dayjs(date).format('YYYY-MM-DD'))
+    } else {
+      setEndDate(dayjs(date).format('YYYY-MM-DD'))
+    }
   }
 
   const dateInputsConfig = [
@@ -50,9 +62,11 @@ function DateRangeSelector() {
             darker
             className={clsx('w-full', idx === 1 && 'mt-4')}
             date={
-              searchParams.get(type) !== null &&
-              dayjs(searchParams.get(type)).isValid()
-                ? dayjs(searchParams.get(type)).format('YYYY-MM-DD')
+              (type === 'start_date' ? startDate : endDate) !== null &&
+              dayjs(type === 'start_date' ? startDate : endDate).isValid()
+                ? dayjs(type === 'start_date' ? startDate : endDate).format(
+                    'YYYY-MM-DD'
+                  )
                 : ''
             }
             hasMargin={false}

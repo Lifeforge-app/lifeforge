@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import { IWalletIncomeExpenses } from '@apps/Wallet/interfaces/wallet_interfaces'
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -12,7 +12,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const isIncome = title.toLowerCase() === 'income'
 
-  const { isAmountHidden } = useWalletContext()
+  const { isAmountHidden } = useWalletStore()
   const incomeExpensesQuery = useAPIQuery<IWalletIncomeExpenses>(
     `wallet/utils/income-expenses?year=${new Date().getFullYear()}&month=${
       new Date().getMonth() + 1

@@ -1,8 +1,11 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
+import useTransactionCountMap from './MiniCalendarDateItem/hooks/useTransactionCountMap'
 
 function MiniCalendarContent({
   currentMonth,
@@ -14,7 +17,21 @@ function MiniCalendarContent({
   viewsFilter: ('income' | 'expenses' | 'transfer')[]
 }) {
   const { language } = usePersonalization()
+  const { transactionsQuery } = useWalletData()
   const [nextToSelect, setNextToSelect] = useState<'start' | 'end'>('start')
+  const transactions = transactionsQuery.data ?? []
+
+  const firstDateOfMonth = useMemo(
+    () => dayjs(`${currentYear}-${currentMonth + 1}-01`, 'YYYY-M-DD').toDate(),
+    [currentMonth, currentYear]
+  )
+
+  const transactionCountMap = useTransactionCountMap({
+    transactions,
+    currentMonth,
+    currentYear,
+    viewsFilter
+  })
 
   return (
     <div className="grid grid-cols-7 gap-y-2">
@@ -40,47 +57,16 @@ function MiniCalendarContent({
         ) * 7
       )
         .fill(0)
-        .map((_, index) =>
-          (() => {
-            const date = dayjs(
-              `${currentYear}-${currentMonth + 1}-01`,
-              'YYYY-M-DD'
-            ).toDate()
-
-            let firstDay = dayjs(date).startOf('month').day() - 1
-            firstDay = firstDay === -1 ? 6 : firstDay
-
-            const lastDate = dayjs(date).endOf('month').date()
-
-            const lastDateOfPrevMonth =
-              dayjs(date).subtract(1, 'month').endOf('month').date() - 1
-
-            const actualIndex = (() => {
-              if (firstDay > index) {
-                return lastDateOfPrevMonth - firstDay + index + 2
-              }
-              if (index - firstDay + 1 > lastDate) {
-                return index - lastDate - firstDay + 1
-              }
-
-              return index - firstDay + 1
-            })()
-
-            return (
-              <MiniCalendarDateItem
-                key={index}
-                actualIndex={actualIndex}
-                date={date}
-                firstDay={firstDay}
-                index={index}
-                lastDate={lastDate}
-                nextToSelect={nextToSelect}
-                setNextToSelect={setNextToSelect}
-                viewsFilter={viewsFilter}
-              />
-            )
-          })()
-        )}
+        .map((_, index) => (
+          <MiniCalendarDateItem
+            key={index}
+            date={firstDateOfMonth}
+            index={index}
+            nextToSelect={nextToSelect}
+            setNextToSelect={setNextToSelect}
+            transactionCountMap={transactionCountMap}
+          />
+        ))}
     </div>
   )
 }

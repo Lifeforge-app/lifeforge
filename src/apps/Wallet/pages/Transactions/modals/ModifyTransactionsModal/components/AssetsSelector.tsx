@@ -6,7 +6,7 @@ import {
   ListboxOrComboboxOption
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 function AssetsSelector({
   transactionAsset,
@@ -15,7 +15,7 @@ function AssetsSelector({
   transactionAsset: string | null
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { assetsQuery } = useWalletContext()
+  const { assetsQuery } = useWalletData()
   const assets = assetsQuery.data ?? []
 
   return (

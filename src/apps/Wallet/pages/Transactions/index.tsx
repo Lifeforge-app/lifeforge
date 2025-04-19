@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
@@ -8,17 +8,19 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
-  HamburgerMenuSelectorWrapper,
   MenuItem,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
+
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type IWalletTransaction } from '../../interfaces/wallet_interfaces'
-import Header from './components/Header'
+import HeaderMenu from './components/HeaderMenu'
+import InnerHeader from './components/InnerHeader'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import ManageCategoriesModal from './modals/ManageCategoriesModal'
@@ -27,11 +29,9 @@ import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
 import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
-import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
 function Transactions() {
   const { t } = useTranslation('apps.wallet')
-  const { transactionsQuery, filteredTransactions } = useWalletContext()
 
   const queryClient = useQueryClient()
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
@@ -59,12 +59,38 @@ function Transactions() {
   >(false)
   const [selectedData, setSelectedData] =
     useState<Partial<IWalletTransaction> | null>(null)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState<'list' | 'table'>('list')
   const [receiptModalOpen, setReceiptModalOpen] = useState(false)
   const [receiptToView, setReceiptToView] = useState('')
+  const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
+    'wallet/transactions',
+    ['wallet', 'transactions']
+  )
+
+  const filteredTransactions = useFilteredTransactions(
+    transactionsQuery.data ?? []
+  )
 
   const { hash } = useLocation()
+
+  const memoizedHeaderMenu = useMemo(
+    () => (
+      <HeaderMenu
+        setManageCategoriesModalOpen={setManageCategoriesModalOpen}
+        setView={setView}
+        setVisibleColumn={setVisibleColumn}
+        view={view}
+        visibleColumn={visibleColumn}
+      />
+    ),
+    [
+      setManageCategoriesModalOpen,
+      setView,
+      view,
+      visibleColumn,
+      setVisibleColumn
+    ]
+  )
 
   useEffect(() => {
     if (hash === '#new') {
@@ -80,63 +106,17 @@ function Transactions() {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        hamburgerMenuItems={
-          <>
-            <MenuItem
-              icon="tabler:refresh"
-              text="Refresh"
-              onClick={() => {
-                queryClient.invalidateQueries({
-                  queryKey: ['wallet', 'transactions']
-                })
-              }}
-            />
-            <MenuItem
-              icon="tabler:apps"
-              namespace="apps.wallet"
-              text="Manage Categories"
-              onClick={() => {
-                setManageCategoriesModalOpen(true)
-              }}
-            />
-            <div className="block md:hidden">
-              <HamburgerMenuSelectorWrapper icon="tabler:eye" title="View as">
-                {['list', 'table'].map(type => (
-                  <MenuItem
-                    key={type}
-                    icon={type === 'list' ? 'uil:apps' : 'uil:list-ul'}
-                    isToggled={view === type}
-                    text={type.charAt(0).toUpperCase() + type.slice(1)}
-                    onClick={() => {
-                      setView(type as 'list' | 'table')
-                    }}
-                  />
-                ))}
-              </HamburgerMenuSelectorWrapper>
-            </div>
-            {view === 'table' && (
-              <ColumnVisibilityToggle
-                setVisibleColumn={setVisibleColumn}
-                visibleColumn={visibleColumn}
-              />
-            )}
-          </>
-        }
+        hamburgerMenuItems={memoizedHeaderMenu}
         icon="tabler:arrows-exchange"
         namespace="apps.wallet"
         title="Transactions"
         tKey="subsectionsTitleAndDesc"
       />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
-        <Sidebar
-          setManageCategoriesModalOpen={setManageCategoriesModalOpen}
-          setSidebarOpen={setSidebarOpen}
-          sidebarOpen={sidebarOpen}
-        />
+        <Sidebar setManageCategoriesModalOpen={setManageCategoriesModalOpen} />
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
-          <Header
+          <InnerHeader
             setModifyModalOpenType={setModifyModalOpenType}
-            setSidebarOpen={setSidebarOpen}
             setUploadReceiptModalOpen={setIsUploadReceiptModalOpen}
           />
           <SearchBar setView={setView} view={view} />

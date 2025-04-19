@@ -12,7 +12,7 @@ import {
   QueryWrapper
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import { type IWalletLedger } from '../../interfaces/wallet_interfaces'
 import LedgerItem from './components/LedgerItem'
@@ -20,7 +20,7 @@ import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers() {
   const { t } = useTranslation('apps.wallet')
-  const { ledgersQuery } = useWalletContext()
+  const { ledgersQuery } = useWalletData()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
