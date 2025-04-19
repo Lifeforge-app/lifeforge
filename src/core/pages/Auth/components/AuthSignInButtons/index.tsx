@@ -1,8 +1,8 @@
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SignInButton from './SignInButton'
-import SigninWithProviderButton from './SigninWithProviderButton'
+import SignInButton from './components/SignInButton'
+import SigninWithProviderButton from './components/SigninWithProviderButton'
 
 function AuthSignInButton({
   loading,
