@@ -89,11 +89,11 @@ async function signInWithPasskey() {
       const data = await res.json()
 
       if (res.ok && data.state === 'success') {
-        document.cookie = `token=${data.token}; path=/; expires=${new Date(
+        document.cookie = `session=${data.session}; path=/; expires=${new Date(
           Date.now() + 7 * 24 * 60 * 60 * 1000
         ).toUTCString()}`
 
-        verifyToken(data.token)
+        verifySession(data.session)
           .then(async ({ success, userData }) => {
             if (success) {
               setUserData(userData)

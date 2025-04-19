@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -21,50 +22,63 @@ function CategoryListItem({
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const hamburgerMenuItems = useMemo(
+    () =>
+      setSelectedData &&
+      setModifyModalOpenType &&
+      setDeleteConfirmationModalOpen && (
+        <>
+          <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={e => {
+              e.stopPropagation()
+              setSelectedData(item)
+              setModifyModalOpenType('update')
+            }}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="Delete"
+            onClick={e => {
+              e.stopPropagation()
+              setSelectedData(item)
+              setDeleteConfirmationModalOpen(true)
+            }}
+          />
+        </>
+      ),
+    [
+      item,
+      setDeleteConfirmationModalOpen,
+      setModifyModalOpenType,
+      setSelectedData
+    ]
+  )
+
+  const handleClick = useCallback(() => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      category: item.id
+    })
+  }, [item.id, searchParams])
+
+  const handleCancelButtonClick = useCallback(() => {
+    searchParams.delete('category')
+    setSearchParams(searchParams)
+  }, [searchParams])
+
   return (
     <SidebarItem
       active={searchParams.get('category') === item.id}
-      hamburgerMenuItems={
-        setSelectedData &&
-        setModifyModalOpenType &&
-        setDeleteConfirmationModalOpen && (
-          <>
-            <MenuItem
-              icon="tabler:pencil"
-              text="Edit"
-              onClick={e => {
-                e.stopPropagation()
-                setSelectedData(item)
-                setModifyModalOpenType('update')
-              }}
-            />
-            <MenuItem
-              isRed
-              icon="tabler:trash"
-              text="Delete"
-              onClick={e => {
-                e.stopPropagation()
-                setSelectedData(item)
-                setDeleteConfirmationModalOpen(true)
-              }}
-            />
-          </>
-        )
-      }
+      hamburgerMenuItems={hamburgerMenuItems}
       icon={item.icon}
       name={item.name}
       number={item.amount}
       sideStripColor={item.color}
-      onCancelButtonClick={() => {
-        searchParams.delete('category')
-        setSearchParams(searchParams)
-      }}
-      onClick={() => {
-        setSearchParams({
-          ...Object.fromEntries(searchParams.entries()),
-          category: item.id
-        })
-      }}
+      onCancelButtonClick={handleCancelButtonClick}
+      onClick={handleClick}
     />
   )
 }

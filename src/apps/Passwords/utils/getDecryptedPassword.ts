@@ -20,7 +20,7 @@ export async function getDecryptedPassword(
       body: JSON.stringify({ master: encryptedMaster }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${parseCookie(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).session}`
       }
     }
   )

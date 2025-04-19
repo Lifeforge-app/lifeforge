@@ -67,7 +67,7 @@ export default async function fetchAPI<T>(
     )
 
   const cookies = parseCookie(document.cookie)
-  const token = cookies.token ?? ''
+  const session = cookies.session ?? ''
   const url = isExternal ? new URL(endpoint) : new URL(endpoint, apiHost)
 
   try {
@@ -75,7 +75,7 @@ export default async function fetchAPI<T>(
       method,
       signal: AbortSignal.timeout(timeout),
       headers: {
-        Authorization: !isExternal && token ? `Bearer ${token}` : '',
+        Authorization: !isExternal && session ? `Bearer ${session}` : '',
         ...(isJSON ? { 'Content-Type': 'application/json' } : {})
       },
       body: body && getRequestBody(body, isJSON)

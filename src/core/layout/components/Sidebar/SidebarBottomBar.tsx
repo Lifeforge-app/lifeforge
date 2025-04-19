@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import { useAuth } from '@providers/AuthProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
+import { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -13,15 +14,22 @@ function SidebarBottomBar() {
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const { userData, getAvatarURL, logout } = useAuth()
 
+  const handleNavigateToAccountSettings = useCallback(() => {
+    if (window.innerWidth < 1024) {
+      toggleSidebar()
+    }
+    navigate('/account')
+  }, [navigate, toggleSidebar])
+
+  const handleLoggingOut = useCallback(() => {
+    logout()
+    toast.warning('Logged out successfully!')
+  }, [logout])
+
   if (!userData) return <></>
 
-  return (
-    <div
-      className={clsx(
-        'flex-center w-full min-w-0 pt-0 pb-4',
-        sidebarExpanded && 'px-4'
-      )}
-    >
+  const memoizedMenu = useMemo(
+    () => (
       <Menu as="div" className="relative w-full min-w-0">
         <MenuButton
           className={clsx(
@@ -72,26 +80,36 @@ function SidebarBottomBar() {
               icon="tabler:user-cog"
               namespace="common.sidebar"
               text="Account settings"
-              onClick={() => {
-                if (window.innerWidth < 1024) {
-                  toggleSidebar()
-                }
-                navigate('/account')
-              }}
+              onClick={handleNavigateToAccountSettings}
             />
             <MenuItem
               isRed
               icon="tabler:logout"
               namespace="common.sidebar"
               text="Sign out"
-              onClick={() => {
-                logout()
-                toast.warning('Logged out successfully!')
-              }}
+              onClick={handleLoggingOut}
             />
           </div>
         </MenuItems>
       </Menu>
+    ),
+    [
+      sidebarExpanded,
+      userData,
+      getAvatarURL,
+      handleNavigateToAccountSettings,
+      handleLoggingOut
+    ]
+  )
+
+  return (
+    <div
+      className={clsx(
+        'flex-center w-full min-w-0 pt-0 pb-4',
+        sidebarExpanded && 'px-4'
+      )}
+    >
+      {memoizedMenu}
     </div>
   )
 }

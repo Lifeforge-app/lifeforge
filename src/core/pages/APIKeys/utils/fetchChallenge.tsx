@@ -8,7 +8,7 @@ export async function fetchChallenge(): Promise<string> {
     {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${parseCookie(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).session}`
       }
     }
   ).then(async res => {

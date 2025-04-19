@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
 interface ISidebarState {
   sidebarExpanded: boolean
@@ -14,9 +21,9 @@ export default function SidebarStateProvider({
 }) {
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
 
-  function toggleSidebar() {
-    setSidebarExpanded(!sidebarExpanded)
-  }
+  const toggleSidebar = useCallback(() => {
+    setSidebarExpanded(prev => !prev)
+  }, [])
 
   useEffect(() => {
     if (window.innerWidth < 1024) {
@@ -24,15 +31,16 @@ export default function SidebarStateProvider({
     }
   }, [])
 
+  const memoizedValue = useMemo(
+    () => ({
+      sidebarExpanded,
+      toggleSidebar
+    }),
+    [sidebarExpanded, toggleSidebar]
+  )
+
   return (
-    <SidebarStateContext
-      value={{
-        sidebarExpanded,
-        toggleSidebar
-      }}
-    >
-      {children}
-    </SidebarStateContext>
+    <SidebarStateContext value={memoizedValue}>{children}</SidebarStateContext>
   )
 }
 

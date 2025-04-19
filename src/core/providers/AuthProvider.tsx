@@ -1,3 +1,4 @@
+import { cookieParse } from 'pocketbase'
 import {
   RefObject,
   createContext,
@@ -30,7 +31,9 @@ interface IAuthData {
     otp: string
     type: 'email' | 'app'
   }) => Promise<string | void>
-  verifyToken: (token: string) => Promise<{ success: boolean; userData: any }>
+  verifySession: (
+    session: string
+  ) => Promise<{ success: boolean; userData: any }>
   verifyOAuth: (code: string, state: string) => void
   logout: () => void
   loginQuota: {
@@ -119,9 +122,9 @@ export default function AuthProvider({
     toast.error(t('messages.quotaExceeded'))
   }, [updateQuota])
 
-  const verifyToken = useCallback(
+  const verifySession = useCallback(
     async (
-      token: string
+      session: string
     ): Promise<{
       success: boolean
       userData: any
@@ -129,7 +132,7 @@ export default function AuthProvider({
       return await fetch(`${import.meta.env.VITE_API_HOST}/user/auth/verify`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${session}`
         }
       })
         .then(async res => {
@@ -170,7 +173,7 @@ export default function AuthProvider({
               window.localStorage.setItem('quota', '5')
               window.localStorage.removeItem('lastQuotaExceeded')
 
-              document.cookie = `token=${data.token}; path=/; expires=${new Date(
+              document.cookie = `session=${data.session}; path=/; expires=${new Date(
                 Date.now() + 7 * 24 * 60 * 60 * 1000
               ).toUTCString()}`
 
@@ -228,7 +231,7 @@ export default function AuthProvider({
           window.localStorage.setItem('quota', '5')
           window.localStorage.removeItem('lastQuotaExceeded')
 
-          document.cookie = `token=${data.token}; path=/; expires=${new Date(
+          document.cookie = `session=${data.session}; path=/; expires=${new Date(
             Date.now() + 7 * 24 * 60 * 60 * 1000
           ).toUTCString()}`
 
@@ -262,7 +265,7 @@ export default function AuthProvider({
           throw new Error('Invalid state')
         }
 
-        const token = await fetchAPI<
+        const session = await fetchAPI<
           | string
           | {
               state: string
@@ -273,20 +276,20 @@ export default function AuthProvider({
           body: { code, provider: storedProvider }
         })
 
-        if (typeof token !== 'string') {
-          if (token.state !== '2fa_required') {
+        if (typeof session !== 'string') {
+          if (session.state !== '2fa_required') {
             throw new Error()
           }
           setTwoFAModalOpen(true)
-          tid.current = token.tid
+          tid.current = session.tid
           return
         }
 
-        document.cookie = `token=${token}; path=/; expires=${new Date(
+        document.cookie = `session=${session}; path=/; expires=${new Date(
           Date.now() + 7 * 24 * 60 * 60 * 1000
         ).toUTCString()}`
 
-        verifyToken(token)
+        verifySession(session)
           .then(async ({ success, userData }) => {
             if (success) {
               setUserData(userData)
@@ -306,12 +309,12 @@ export default function AuthProvider({
         toast.error(toast.error(t('messages.invalidLoginAttempt')))
       }
     },
-    [verifyToken]
+    [verifySession]
   )
 
   const logout = useCallback(() => {
     setAuth(false)
-    document.cookie = `token=; path=/; expires=${new Date(0).toUTCString()}`
+    document.cookie = `session=; path=/; expires=${new Date(0).toUTCString()}`
     setUserData(null)
 
     window.localStorage.setItem('quota', '5')
@@ -330,8 +333,8 @@ export default function AuthProvider({
   const doUseEffect = useCallback(() => {
     setAuthLoading(true)
     updateQuota()
-    if (document.cookie.includes('token')) {
-      verifyToken(document.cookie.split('=')[1])
+    if (document.cookie.includes('session')) {
+      verifySession(cookieParse(document.cookie).session)
         .then(async ({ success, userData }) => {
           if (success) {
             setUserData(userData)
@@ -359,7 +362,7 @@ export default function AuthProvider({
       setAuth,
       authenticate,
       authenticateWith2FA,
-      verifyToken,
+      verifySession,
       verifyOAuth,
       logout,
       loginQuota: {

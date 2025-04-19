@@ -1,6 +1,6 @@
 // import * as webauthn from '@passwordless-id/webauthn'
 import { useAuth } from '@providers/AuthProvider'
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -11,6 +11,8 @@ import AuthSignInButton from './AuthSignInButtons'
 function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const emailOrUsernameRef = useRef(emailOrUsername)
+  const passwordRef = useRef(password)
   const [loading, setLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
   const { t } = useTranslation('common.auth')
@@ -20,7 +22,28 @@ function AuthForm({ providers }: { providers: string[] }) {
     loginQuota: { quota, dismissQuota }
   } = useAuth()
 
-  function signIn() {
+  const INPUT_FIELDS = [
+    {
+      name: t('inputs.emailOrUsername.label'),
+      placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
+      icon: 'tabler:user',
+      value: emailOrUsername,
+      setValue: setEmail,
+      inputMode: 'email'
+    },
+    {
+      name: t('inputs.password.label'),
+      placeholder: '••••••••••••••••',
+      icon: 'tabler:key',
+      value: password,
+      setValue: setPassword
+    }
+  ] as const
+
+  const signIn = useCallback(() => {
+    const emailOrUsername = emailOrUsernameRef.current
+    const password = passwordRef.current
+
     if (emailOrUsername.length === 0 || password.length === 0) {
       toast.error(t('messages.invalidFields'))
       return
@@ -59,29 +82,28 @@ function AuthForm({ providers }: { providers: string[] }) {
       .finally(() => {
         setLoading(false)
       })
-  }
+  }, [authenticate, t, quota, dismissQuota])
+
+  const onInputKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        signIn()
+      }
+    },
+    [signIn]
+  )
+
+  useEffect(() => {
+    emailOrUsernameRef.current = emailOrUsername
+  }, [emailOrUsername])
+
+  useEffect(() => {
+    passwordRef.current = password
+  }, [password])
 
   return (
     <div className="mt-6 flex w-full max-w-md flex-col gap-6 sm:mt-12">
-      {(
-        [
-          {
-            name: t('inputs.emailOrUsername.label'),
-            placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
-            icon: 'tabler:user',
-            value: emailOrUsername,
-            setValue: setEmail,
-            inputMode: 'email'
-          },
-          {
-            name: t('inputs.password.label'),
-            placeholder: '••••••••••••••••',
-            icon: 'tabler:key',
-            value: password,
-            setValue: setPassword
-          }
-        ] as const
-      ).map((input, index) => (
+      {INPUT_FIELDS.map((input, index) => (
         <TextInput
           key={index}
           {...input}
@@ -89,17 +111,11 @@ function AuthForm({ providers }: { providers: string[] }) {
           disabled={formDisabled}
           isPassword={input.name === 'Password'}
           namespace={false}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter') {
-              signIn()
-            }
-          }}
+          onKeyDown={onInputKeyDown}
         />
       ))}
       <AuthSignInButton
-        emailOrUsername={emailOrUsername}
         loading={loading}
-        password={password}
         providers={providers}
         signIn={signIn}
       />

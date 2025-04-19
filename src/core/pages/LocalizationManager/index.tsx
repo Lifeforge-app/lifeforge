@@ -11,13 +11,13 @@ function LocalizationManager() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = parseCookie(document.cookie).token
+    const session = parseCookie(document.cookie).session
 
-    if (!token) {
+    if (!session) {
       window.location.href = '/'
     } else {
       const a = document.createElement('a')
-      a.href = `${import.meta.env.VITE_LOCALIZATION_MANAGER_URL}?token=${token}`
+      a.href = `${import.meta.env.VITE_LOCALIZATION_MANAGER_URL}?session=${session}`
       a.target = '_blank'
       a.click()
 
