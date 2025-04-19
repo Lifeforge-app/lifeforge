@@ -1,5 +1,5 @@
 import { useAuth } from '@providers/AuthProvider'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
