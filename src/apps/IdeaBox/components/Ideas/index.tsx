@@ -6,8 +6,8 @@ import IdeaBoxProvider, {
   useIdeaBoxContext
 } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'
+import Header from './components/Header'
 import IdeaAndFolderList from './components/IdeaAndFolderList'
 import DeleteModals from './components/Modals/DeleteModals'
 import ModifyFolderModal from './components/Modals/ModifyFolderModal'
@@ -21,7 +21,7 @@ function IdeasInsideProvider() {
 
   return (
     <ModuleWrapper>
-      <ContainerHeader />
+      <Header />
       {!viewArchived && (
         <SearchInput
           namespace="apps.ideaBox"

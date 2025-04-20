@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
@@ -58,4 +58,6 @@ function TagChip({ text }: { text: string }) {
   )
 }
 
-export default TagChip
+export default memo(TagChip, (prevProps, nextProps) => {
+  return prevProps.text === nextProps.text
+})
