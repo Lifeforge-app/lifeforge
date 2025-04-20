@@ -1,8 +1,10 @@
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect, useMemo, useState } from 'react'
+import { parse as parseCookie } from 'cookie'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
+import { Id, toast } from 'react-toastify'
 
 import {
   Button,
@@ -17,6 +19,8 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import IntervalManager from '@utils/intervalManager'
+
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
@@ -28,36 +32,27 @@ import {
 } from './interfaces/guitar_tabs_interfaces'
 import Views from './views'
 
+const intervalManager = IntervalManager.getInstance()
+
 function GuitarTabs() {
   const { t } = useTranslation('apps.guitarTabs')
-  const queryClient = useQueryClient()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
-  const [searchParams] = useSearchParams()
-  const category = useMemo(
-    () => searchParams.get('category') ?? 'all',
-    [searchParams]
-  )
-  const author = useMemo(() => searchParams.get('author') ?? '', [searchParams])
-  const starred = useMemo(
-    () => searchParams.get('starred') === 'true',
-    [searchParams]
-  )
-  const sort = useMemo(
-    () => searchParams.get('sort') ?? 'newest',
-    [searchParams]
-  )
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null)
+  const [isStarred, setStarred] = useState<boolean>(false)
+  const [selectedSortType, setSelectedSortType] = useState<string>('newest')
   const queryKey = [
     'guitar-tabs',
     'entries',
     page,
     debouncedSearchQuery,
-    category,
-    starred,
-    author,
-    sort
+    selectedCategory,
+    isStarred,
+    selectedAuthor,
+    selectedSortType
   ]
 
   const entriesQuery = useAPIQuery<{
@@ -68,11 +63,9 @@ function GuitarTabs() {
   }>(
     `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
       debouncedSearchQuery.trim()
-    )}&category=${searchParams.get('category') ?? 'all'}${
-      searchParams.get('starred') !== null ? '&starred=true' : ''
-    }&author=${searchParams.get('author') ?? 'all'}&sort=${
-      searchParams.get('sort') ?? 'newest'
-    }`,
+    )}&category=${selectedCategory ?? 'all'}${
+      isStarred !== null ? '&starred=true' : ''
+    }&author=${selectedAuthor ?? 'all'}&sort=${selectedSortType}`,
     queryKey
   )
 
@@ -89,51 +82,183 @@ function GuitarTabs() {
     useState(false)
   const [guitarWorldModalOpen, setGuitarWorldModalOpen] = useState(false)
 
+  const queryClient = useQueryClient()
+  const toastId = useRef<Id>(null)
+  const { themeColor } = usePersonalization()
+
+  const startInterval = useCallback(() => {
+    intervalManager.setInterval(async () => {
+      const { status, left, total } = await checkUploadStatus()
+
+      switch (status) {
+        case 'completed':
+          if (toastId.current !== null) {
+            toast.done(toastId.current)
+            toastId.current = null
+          }
+          toast.success('Guitar tabs uploaded successfully!')
+          intervalManager.clearAllIntervals()
+          queryClient.invalidateQueries({ queryKey })
+          break
+        case 'in_progress':
+          updateProgressBar((total - left) / total)
+          break
+        case 'failed':
+          toast.error('Failed to upload guitar tabs!')
+          intervalManager.clearAllIntervals()
+          break
+      }
+    }, 1000)
+  }, [queryClient, queryKey])
+
+  const uploadFiles = useCallback(async () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.multiple = true
+    input.accept = '.pdf,.mp3,.mscz'
+    input.onchange = async e => {
+      const files = (e.target as HTMLInputElement).files
+
+      const formData = new FormData()
+
+      if (files === null) {
+        return
+      }
+
+      if (files.length > 100) {
+        toast.error('You can only upload 100 files at a time!')
+        return
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i], encodeURIComponent(files[i].name))
+      }
+
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/upload`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${parseCookie(document.cookie).session}`
+            },
+            body: formData
+          }
+        )
+
+        if (res.status === 202) {
+          const data = await res.json()
+          if (data.state === 'accepted') {
+            startInterval()
+          }
+        } else {
+          const data = await res.json()
+          throw new Error(
+            `Failed to upload guitar tabs. Error: ${data.message}`
+          )
+        }
+      } catch (error) {
+        console.error(error)
+        toast.error('Failed to upload guitar tabs')
+      }
+    }
+    input.click()
+  }, [queryKey])
+
+  const checkUploadStatus = useCallback(async (): Promise<{
+    status: 'completed' | 'failed' | 'in_progress'
+    left: number
+    total: number
+  }> => {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/process-status`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${parseCookie(document.cookie).session}`
+        }
+      }
+    )
+    if (res.status === 200) {
+      const data = await res.json()
+      return data.data
+    }
+    return {
+      status: 'failed',
+      left: 0,
+      total: 0
+    }
+  }, [])
+
+  const updateProgressBar = useCallback(
+    (progress: number) => {
+      if (toastId.current === null) {
+        toastId.current = toast('Upload in Progress', {
+          progress,
+          autoClose: false
+        })
+      } else {
+        setTimeout(() => {
+          if (toastId.current !== null) {
+            toast.update(toastId.current, {
+              progress,
+              progressStyle: {
+                background: themeColor
+              }
+            })
+          }
+        }, 0)
+      }
+    },
+    [themeColor]
+  )
+
   useEffect(() => {
     setPage(1)
   }, [debouncedSearchQuery])
 
   useEffect(() => {
     setPage(1)
-  }, [searchParams])
+  }, [selectedCategory, selectedAuthor, isStarred, selectedSortType])
 
   return (
     <ModuleWrapper>
       <Header
-        queryKey={queryKey}
         setGuitarWorldModalOpen={setGuitarWorldModalOpen}
+        setSortType={setSelectedSortType}
         setView={setView}
+        sortType={selectedSortType}
         totalItems={entriesQuery.data?.totalItems}
+        uploadFiles={uploadFiles}
         view={view}
       />
       <LayoutWithSidebar>
         <Sidebar
+          author={selectedAuthor}
+          category={selectedCategory}
           isOpen={sidebarOpen}
+          setAuthor={setSelectedAuthor}
+          setCategory={setSelectedCategory}
           setOpen={setSidebarOpen}
+          setStarred={setStarred}
           sidebarDataQuery={sidebarDataQuery}
+          starred={isStarred}
         />
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
               <h1 className="truncate text-3xl font-semibold sm:text-4xl">
-                {`${
-                  searchParams.get('starred') === 'true'
-                    ? t('headers.starred')
+                {`${isStarred ? t('headers.starred') : ''} ${
+                  selectedCategory !== null
+                    ? t(`headers.${selectedCategory}`)
                     : ''
                 } ${
-                  searchParams.get('category') !== null
-                    ? t(`headers.${searchParams.get('category')}`)
-                    : ''
-                } ${
-                  searchParams.get('category') === null &&
-                  searchParams.get('author') === null &&
-                  searchParams.get('starred') === null
+                  !selectedAuthor && !selectedCategory && !isStarred
                     ? t('headers.all')
                     : ''
                 } ${t('items.score')} ${
-                  searchParams.get('author') !== null
-                    ? `by ${searchParams.get('author')}`
-                    : ''
+                  selectedAuthor !== null ? `by ${selectedAuthor}` : ''
                 }`.trim()}
               </h1>
               <span className="text-bg-500 mr-8 ml-2 text-base">
@@ -153,7 +278,9 @@ function GuitarTabs() {
           <Searchbar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            setSortType={setSelectedSortType}
             setView={setView}
+            sortType={selectedSortType}
             view={view}
           />
           <QueryWrapper query={entriesQuery}>
