@@ -1,37 +1,41 @@
 import clsx from 'clsx'
-import { useMemo } from 'react'
-import { useParams } from 'react-router'
+import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
-
-import { IIdeaBoxTag } from '../../../../../../../interfaces/ideabox_interfaces'
-
-function ItemCount({ tag, count }: { tag: IIdeaBoxTag; count: number }) {
-  const { '*': path } = useParams<{ '*': string }>()
-  const { debouncedSearchQuery, selectedTags } = useIdeaBoxContext()
-
+function ItemCount({
+  tagColor,
+  tagCount,
+  isSelected
+}: {
+  tagColor: string
+  tagCount: number
+  isSelected: boolean
+}) {
   const tagCountColor = useMemo(() => {
-    if (!selectedTags.includes(tag.name)) {
+    if (!isSelected) {
       return 'text-bg-500'
     }
 
-    if (tag.color === '') {
+    if (tagColor === '') {
       return 'bg-custom-500/30 text-custom-500'
     }
 
-    return tinycolor(tag.color).isLight() ? 'text-bg-800' : 'text-bg-100'
-  }, [selectedTags, tag])
+    return tinycolor(tagColor).isLight() ? 'text-bg-800' : 'text-bg-100'
+  }, [isSelected, tagColor])
 
   return (
     <span
       className={clsx('ml-[5px] text-xs group-hover:hidden', tagCountColor)}
     >
-      {path === '' && debouncedSearchQuery.trim().length === 0
-        ? tag.count
-        : count}
+      {tagCount}
     </span>
   )
 }
 
-export default ItemCount
+export default memo(ItemCount, (prevProps, nextProps) => {
+  return (
+    prevProps.tagColor === nextProps.tagColor &&
+    prevProps.tagCount === nextProps.tagCount &&
+    prevProps.isSelected === nextProps.isSelected
+  )
+})

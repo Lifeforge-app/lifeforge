@@ -102,8 +102,6 @@ function ModifyTaskWindow() {
       queryClient.setQueryData<ITodoListEntry[]>(entriesQueryKey, entries => {
         if (!entries) return []
 
-        console.log(data)
-
         if (innerOpenType === 'create') {
           return [data, ...entries]
         }
