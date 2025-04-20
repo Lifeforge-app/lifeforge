@@ -2,12 +2,7 @@ import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  HamburgerMenu,
-  HamburgerMenuSelectorWrapper,
-  MenuItem,
-  SidebarTitle
-} from '@lifeforge/ui'
+import { SidebarTitle } from '@lifeforge/ui'
 
 import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
 
