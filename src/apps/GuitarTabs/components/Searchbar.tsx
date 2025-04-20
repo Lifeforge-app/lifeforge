@@ -1,45 +1,28 @@
-import { Listbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import clsx from 'clsx'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import {
-  ListboxOrComboboxOption,
-  ListboxOrComboboxOptions,
-  SearchInput,
-  ViewModeSelector
-} from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
+import { SearchInput, ViewModeSelector } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
-
-const SORT_TYPE = [
-  ['tabler:clock', 'newest'],
-  ['tabler:clock', 'oldest'],
-  ['tabler:at', 'author'],
-  ['tabler:abc', 'name']
-]
+import SortBySelector from './SortBySelector'
 
 function Searchbar({
   view,
   setView,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  sortType,
+  setSortType
 }: {
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+  sortType: string
+  setSortType: React.Dispatch<React.SetStateAction<string>>
 }) {
-  const { t } = useTranslation('apps.guitarTabs')
-  const { componentBgWithHover } = useComponentBg()
-  const [searchParams, setSearchParams] = useSearchParams()
   const [requestRandomLoading, setRequestRandomLoading] = useState(false)
 
   async function requestRandomEntry() {
@@ -65,53 +48,7 @@ function Searchbar({
 
   return (
     <div className="flex gap-2">
-      <Listbox
-        as="div"
-        className="relative hidden md:block"
-        value={searchParams.get('sort') ?? 'newest'}
-        onChange={value => {
-          searchParams.set('sort', value)
-          setSearchParams(searchParams)
-        }}
-      >
-        <ListboxButton
-          className={clsx(
-            'flex-between shadow-custom mt-4 flex w-48 gap-2 rounded-md p-4',
-            componentBgWithHover
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <Icon
-              className="size-6"
-              icon={
-                SORT_TYPE.find(
-                  ([, value]) => value === searchParams.get('sort')
-                )?.[0] ?? 'tabler:clock'
-              }
-            />
-            <span className="font-medium whitespace-nowrap">
-              {t(
-                `sortTypes.${
-                  SORT_TYPE.find(
-                    ([, value]) => value === searchParams.get('sort')
-                  )?.[1] ?? 'newest'
-                }`
-              )}
-            </span>
-          </div>
-          <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
-        </ListboxButton>
-        <ListboxOrComboboxOptions>
-          {SORT_TYPE.map(([icon, value]) => (
-            <ListboxOrComboboxOption
-              key={value}
-              icon={icon}
-              text={t(`sortTypes.${value}`)}
-              value={value}
-            />
-          ))}
-        </ListboxOrComboboxOptions>
-      </Listbox>
+      <SortBySelector setSortType={setSortType} sortType={sortType} />
       <SearchInput
         namespace="apps.guitarTabs"
         searchQuery={searchQuery}
