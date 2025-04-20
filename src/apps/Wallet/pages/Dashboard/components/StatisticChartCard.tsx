@@ -35,7 +35,7 @@ const options = {
 
 function StatisticChardCard() {
   const { transactionsQuery } = useWalletData()
-
+  const { t } = useTranslation('apps.wallet')
   const transactions = transactionsQuery.data ?? []
 
   const dates = useMemo(() => {
@@ -67,8 +67,6 @@ function StatisticChardCard() {
         .map(amount => (amount === 0 ? 0.1 : amount))
     })
   }, [transactions])
-  console.log(groupedByDate)
-  const { t } = useTranslation('apps.wallet')
 
   return (
     <DashboardItem

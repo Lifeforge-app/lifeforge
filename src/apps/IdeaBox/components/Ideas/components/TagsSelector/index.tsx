@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useParams } from 'react-router'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
@@ -22,7 +22,9 @@ function TagsSelector() {
     debouncedSearchQuery,
     viewArchived,
     selectedTags,
-    setSelectedTags
+    setSelectedTags,
+    setExistedTag,
+    setModifyTagModalOpenType
   } = useIdeaBoxContext()
   const entries = entriesQuery.data ?? []
   const tags = tagsQuery.data ?? []
@@ -65,25 +67,48 @@ function TagsSelector() {
     return hashMap
   }, [filteredTags, searchResults, entries, debouncedSearchQuery, tags])
 
-  const handleSelectTag = (tagName: string) => {
-    if (selectedTags.includes(tagName)) {
-      setSelectedTags(selectedTags.filter(t => t !== tagName))
-    } else {
-      setSelectedTags([...selectedTags, tagName])
-    }
-  }
+  const handleSelectTag = useCallback((tagName: string) => {
+    setSelectedTags(prev => {
+      if (prev.includes(tagName)) {
+        return prev.filter(t => t !== tagName)
+      } else {
+        return [...prev, tagName]
+      }
+    })
+  }, [])
+
+  const handleUpdateTag = useCallback(
+    (id: string) => {
+      const tag = tags.find(tag => tag.id === id)
+      setExistedTag(tag ?? null)
+      setModifyTagModalOpenType('update')
+    },
+    [tags]
+  )
 
   return !viewArchived ? (
     tags.length > 0 && (
       <div className="mt-4 flex flex-wrap gap-1.5">
-        {tags.map(tag => (
-          <TagItem
-            key={tag.id}
-            countHashMap={countHashMap}
-            tag={tag}
-            onSelect={handleSelectTag}
-          />
-        ))}
+        {tags.map(tag => {
+          const tagCount =
+            path === '' && debouncedSearchQuery.trim().length === 0
+              ? tag.count
+              : (countHashMap.get(tag.name) ?? 0)
+
+          return (
+            <TagItem
+              key={tag.id}
+              color={tag.color}
+              count={tagCount}
+              icon={tag.icon}
+              id={tag.id}
+              isSelected={selectedTags.includes(tag.name)}
+              name={tag.name}
+              onSelect={handleSelectTag}
+              onUpdate={handleUpdateTag}
+            />
+          )
+        })}
       </div>
     )
   ) : (

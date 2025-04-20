@@ -1,0 +1,43 @@
+import { memo, useCallback } from 'react'
+import { useNavigate } from 'react-router'
+
+import { GoBackButton, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
+function GoBackButtonAndMenu() {
+  const navigate = useNavigate()
+  const { viewArchived, setViewArchived, setSearchQuery, setSelectedTags } =
+    useIdeaBoxContext()
+
+  const handleGoBack = useCallback(() => {
+    if (viewArchived) {
+      setViewArchived(false)
+    }
+    setSearchQuery('')
+    setSelectedTags([])
+    navigate(location.pathname.split('/').slice(0, -1).join('/'))
+  }, [viewArchived])
+
+  const handleViewArchive = useCallback(() => {
+    setViewArchived(prev => !prev)
+    setSearchQuery('')
+    setSelectedTags([])
+  }, [])
+
+  return (
+    <div className="flex-between w-full">
+      <GoBackButton onClick={handleGoBack} />
+      <HamburgerMenu>
+        <MenuItem
+          icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
+          namespace="apps.ideaBox"
+          text={viewArchived ? 'View Active' : 'View Archived'}
+          onClick={handleViewArchive}
+        />
+      </HamburgerMenu>
+    </div>
+  )
+}
+
+export default memo(GoBackButtonAndMenu)

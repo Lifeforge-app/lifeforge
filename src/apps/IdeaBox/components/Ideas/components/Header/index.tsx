@@ -1,48 +1,19 @@
 import { Icon } from '@iconify/react'
-import { Link, useNavigate, useParams } from 'react-router'
-
-import { GoBackButton, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { Link, useParams } from 'react-router'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-function ContainerHeader() {
-  const {
-    pathDetails,
-    pathDetailsLoading,
-    viewArchived,
-    setViewArchived,
-    setSearchQuery,
-    setSelectedTags
-  } = useIdeaBoxContext()
+import ContainerName from './components/ContainerName'
+import GoBackButtonAndMenu from './components/GoBackButtonAndMenu'
+
+function Header() {
+  const { pathDetails, pathDetailsLoading, setSearchQuery, setSelectedTags } =
+    useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
-  const navigate = useNavigate()
 
   return (
     <header className="space-y-4">
-      <div className="flex-between w-full">
-        <GoBackButton
-          onClick={() => {
-            if (viewArchived) {
-              setViewArchived(false)
-            }
-            setSearchQuery('')
-            setSelectedTags([])
-            navigate(location.pathname.split('/').slice(0, -1).join('/'))
-          }}
-        />
-        <HamburgerMenu>
-          <MenuItem
-            icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
-            namespace="apps.ideaBox"
-            text={viewArchived ? 'View Active' : 'View Archived'}
-            onClick={() => {
-              setViewArchived(!viewArchived)
-              setSearchQuery('')
-              setSelectedTags([])
-            }}
-          />
-        </HamburgerMenu>
-      </div>
+      <GoBackButtonAndMenu />
       <div
         className="bg-bg-900 relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-cover bg-center bg-no-repeat p-6 sm:h-72"
         style={{
@@ -69,32 +40,12 @@ function ContainerHeader() {
               } else {
                 return (
                   <div className="flex flex-wrap items-center gap-3">
-                    <Link
-                      className="flex items-center gap-3"
-                      to={`/idea-box/${id}`}
-                      onClick={() => {
-                        setSelectedTags([])
-                        setSearchQuery('')
-                      }}
-                    >
-                      <div
-                        className="rounded-lg border-2 p-3"
-                        style={{
-                          backgroundColor: pathDetails!.container.color + '20',
-                          borderColor: pathDetails!.container.color
-                        }}
-                      >
-                        <Icon
-                          className="text-2xl sm:text-3xl"
-                          icon={pathDetails!.container.icon}
-                          style={{
-                            color: pathDetails!.container.color
-                          }}
-                        />
-                      </div>
-                      {viewArchived ? 'Archived ideas in ' : ''}
-                      {pathDetails!.container.name}
-                    </Link>
+                    <ContainerName
+                      color={pathDetails!.container.color}
+                      icon={pathDetails!.container.icon}
+                      id={pathDetails!.container.id}
+                      name={pathDetails!.container.name}
+                    />
                     {pathDetails!.path.length > 0 && (
                       <Icon
                         className="size-5 text-gray-500"
@@ -145,4 +96,4 @@ function ContainerHeader() {
   )
 }
 
-export default ContainerHeader
+export default Header

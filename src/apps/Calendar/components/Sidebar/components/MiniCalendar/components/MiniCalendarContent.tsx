@@ -20,8 +20,6 @@ function MiniCalendarContent({
 }) {
   const { language } = usePersonalization()
 
-  console.log('MiniCalendarContent')
-
   return (
     <div className="grid grid-cols-7 gap-4">
       {{

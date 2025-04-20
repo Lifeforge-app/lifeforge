@@ -4,7 +4,7 @@ import { IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfac
 
 function FolderContextMenu({
   folder,
-  isOver,
+  // isOver,
   removeFromFolder,
   setModifyFolderModalOpenType,
   setExistedFolder,
@@ -21,7 +21,7 @@ function FolderContextMenu({
     React.SetStateAction<boolean>
   >
 }) {
-  console.log(isOver) //TODO
+  // console.log(isOver) //TODO
 
   return (
     <HamburgerMenu

@@ -1,29 +1,30 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
-
-import { IIdeaBoxTag } from '../../../../../../../interfaces/ideabox_interfaces'
-
-function HamburgerButton({ tag }: { tag: IIdeaBoxTag }) {
-  const { selectedTags, setExistedTag, setModifyTagModalOpenType } =
-    useIdeaBoxContext()
-
+function HamburgerButton({
+  tagColor,
+  isSelected,
+  onUpdate
+}: {
+  tagColor: string
+  isSelected: boolean
+  onUpdate: () => void
+}) {
   const hamburgerIconColor = useMemo(() => {
-    if (!selectedTags.includes(tag.name)) {
+    if (!isSelected) {
       return 'text-bg-500 hover:bg-bg-600 hover:text-bg-100'
     }
 
-    if (tag.color === '') {
+    if (tagColor === '') {
       return 'text-custom-500 hover:bg-custom-500/30 hover:text-custom-500'
     }
 
-    return tinycolor(tag.color).isLight()
+    return tinycolor(tagColor).isLight()
       ? 'text-bg-800 hover:bg-bg-800 hover:text-bg-100'
       : 'text-bg-100 hover:bg-bg-100 hover:text-bg-800'
-  }, [selectedTags, tag])
+  }, [isSelected, tagColor])
 
   return (
     <button
@@ -31,15 +32,16 @@ function HamburgerButton({ tag }: { tag: IIdeaBoxTag }) {
         'hidden aspect-square h-full items-center justify-center rounded-full text-xs transition-all group-hover:flex',
         hamburgerIconColor
       )}
-      onClick={e => {
-        e.stopPropagation()
-        setExistedTag(tag)
-        setModifyTagModalOpenType('update')
-      }}
+      onClick={onUpdate}
     >
       <Icon icon="tabler:dots-vertical" />
     </button>
   )
 }
 
-export default HamburgerButton
+export default memo(HamburgerButton, (prevProps, nextProps) => {
+  return (
+    prevProps.tagColor === nextProps.tagColor &&
+    prevProps.isSelected === nextProps.isSelected
+  )
+})
