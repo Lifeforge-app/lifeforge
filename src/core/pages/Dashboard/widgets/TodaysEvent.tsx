@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Link } from 'react-router'
@@ -24,13 +25,18 @@ function EventItem({
   categories: ICalendarCategory[]
   event: ICalendarEvent
 }) {
+  const targetCategory = useMemo(
+    () => categories.find(category => category.id === event.category),
+    [categories, event.category]
+  )
+
   return (
     <li
       key={event.id}
-      className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex flex-1 gap-4 rounded-lg p-4"
+      className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex gap-3 rounded-lg p-4"
     >
       <div
-        className="h-full w-1.5 rounded-full"
+        className="h-full w-1 rounded-full"
         style={{
           backgroundColor: categories.find(
             category => category.id === event.category
@@ -38,10 +44,16 @@ function EventItem({
         }}
       />
       <div className="flex w-full flex-col gap-1">
-        <div className="font-semibold">{event.title}</div>
-        <div className="text-bg-500 text-sm">
-          {categories.find(category => category.id === event.category)?.name}
+        <div className="text-bg-500 flex items-center gap-1 text-sm">
+          <Icon
+            icon={targetCategory?.icon ?? ''}
+            style={{
+              color: targetCategory?.color
+            }}
+          />
+          {targetCategory?.name}
         </div>
+        <div className="font-semibold">{event.title}</div>
       </div>
     </li>
   )

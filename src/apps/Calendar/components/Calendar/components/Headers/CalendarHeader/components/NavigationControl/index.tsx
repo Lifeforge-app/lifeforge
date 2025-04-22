@@ -20,10 +20,12 @@ const MONTHS_ABBR = {
 
 function NavigationControl({
   label,
-  onNavigate
+  onNavigate,
+  refreshEvents
 }: {
   label: string
   onNavigate: (direction: NavigateAction) => void
+  refreshEvents: () => void
 }) {
   const finalLabel = useMemo(() => {
     let newLabel = label
@@ -44,6 +46,7 @@ function NavigationControl({
           variant="plain"
           onClick={() => {
             onNavigate('PREV')
+            refreshEvents()
           }}
         />
         <div className="block text-center text-2xl font-bold lg:hidden">
@@ -54,6 +57,7 @@ function NavigationControl({
           variant="plain"
           onClick={() => {
             onNavigate('NEXT')
+            refreshEvents()
           }}
         />
       </div>

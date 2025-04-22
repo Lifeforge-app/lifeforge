@@ -13,6 +13,7 @@ import ViewSelector from './components/ViewSelector'
 interface CalendarHeaderProps {
   label: string
   view: View
+  refreshEvents: () => void
   onNavigate: (direction: NavigateAction) => void
   onView: (view: View) => void
   setModifyEventModalOpenType: React.Dispatch<
@@ -27,6 +28,7 @@ interface CalendarHeaderProps {
 function CalendarHeader({
   label,
   view: currentView,
+  refreshEvents,
   onNavigate,
   onView,
   setModifyEventModalOpenType,
@@ -37,7 +39,11 @@ function CalendarHeader({
 
   return (
     <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 lg:flex-row">
-      <NavigationControl label={label} onNavigate={onNavigate} />
+      <NavigationControl
+        label={label}
+        refreshEvents={refreshEvents}
+        onNavigate={onNavigate}
+      />
       <div className="flex w-full gap-4 lg:w-auto">
         <ViewSelector currentView={currentView} onView={onView} />
 

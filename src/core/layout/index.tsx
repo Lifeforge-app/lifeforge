@@ -1,4 +1,5 @@
 import { useAuth } from '@providers/AuthProvider'
+import { useEffect } from 'react'
 import { useLocation } from 'react-router'
 
 import { LoadingScreen } from '@lifeforge/ui'
@@ -11,6 +12,12 @@ import useTitleEffect from './hooks/useTitleEffect'
 function AppRouter() {
   const { auth, authLoading } = useAuth()
   const location = useLocation()
+
+  useEffect(() => {
+    if (auth && location.pathname === '/') {
+      window.location.href = '/dashboard'
+    }
+  }, [auth, location.pathname])
 
   useAuthEffect()
   useTitleEffect()

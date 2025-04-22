@@ -5,10 +5,10 @@ import { useRef, useState } from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-export default function Clock() {
+function Clock() {
   const { componentBg } = useComponentBg()
   const [time, setTime] = useState(dayjs().format('HH:mm'))
-  const [seocond, setSecond] = useState(dayjs().format('ss') as any)
+  const [second, setSecond] = useState(dayjs().format('ss') as any)
   const ref = useRef<HTMLDivElement>(null)
 
   setInterval(() => {
@@ -54,9 +54,11 @@ export default function Clock() {
             (ref.current?.offsetHeight ?? 0) < 160 ? 'text-2xl' : 'text-4xl'
           )}
         >
-          {seocond}
+          {second}
         </span>
       </span>
     </div>
   )
 }
+
+export default Clock
