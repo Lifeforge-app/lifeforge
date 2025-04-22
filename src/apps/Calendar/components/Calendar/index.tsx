@@ -56,6 +56,7 @@ function CalendarComponent({
         return (
           <CalendarHeader
             {...props}
+            refreshEvents={refetchEvents}
             setExistedData={setExistedData}
             setModifyEventModalOpenType={setModifyEventModalOpenType}
             setScanImageModalOpen={setScanImageModalOpen}

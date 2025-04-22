@@ -25,6 +25,8 @@ function EventDetailsHeader({
     React.SetStateAction<boolean>
   >
 }) {
+  const exceptToday = () => {}
+
   return (
     <header className="flex items-start justify-between gap-8">
       <div>
@@ -55,6 +57,13 @@ function EventDetailsHeader({
             button: 'dark:hover:bg-bg-700/50! p-2!'
           }}
         >
+          {event.type === 'recurring' && (
+            <MenuItem
+              icon="tabler:calendar-off"
+              text="Except Today"
+              onClick={exceptToday}
+            />
+          )}
           <MenuItem
             icon="tabler:pencil"
             text="Edit"
