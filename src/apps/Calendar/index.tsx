@@ -63,6 +63,9 @@ function CalendarModule() {
     `calendar/events?start=${start}&end=${end}`,
     eventQueryKey
   )
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined
+  )
 
   const events = useMemo(() => {
     if (rawEventsQuery.data) {
@@ -107,11 +110,13 @@ function CalendarModule() {
           <Sidebar
             categoriesQuery={categoriesQuery}
             modifyCategoryModalOpenType={modifyCategoryOpenType}
+            selectedCategory={selectedCategory}
             setDeleteCategoryConfirmationModalOpen={
               setDeleteCategoryConfirmationModalOpen
             }
             setExistedData={setExistedCategoryData}
             setModifyCategoryModalOpenType={setModifyCategoryOpenType}
+            setSelectedCategory={setSelectedCategory}
             setSidebarOpen={setSidebarOpen}
             sidebarOpen={sidebarOpen}
           />
@@ -123,6 +128,7 @@ function CalendarModule() {
                   events={events}
                   queryKey={eventQueryKey}
                   refetchEvents={refetchEvents}
+                  selectedCategory={selectedCategory}
                   setExistedData={setExistedData}
                   setIsDeleteEventConfirmationModalOpen={
                     setIsDeleteEventConfirmationModalOpen
