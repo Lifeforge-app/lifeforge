@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useCallback } from 'react'
 
 import { SidebarTitle } from '@lifeforge/ui'
 
@@ -8,11 +9,15 @@ import { type ICalendarCategory } from '../../../../interfaces/calendar_interfac
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({
+  selectedCategory,
+  setSelectedCategory,
   categories,
   setModifyCategoryModalOpenType,
   setExistedData,
   setDeleteCategoryConfirmationModalOpen
 }: {
+  selectedCategory: string | undefined
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
   categories: ICalendarCategory[]
   setModifyCategoryModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -22,16 +27,29 @@ function CategoryList({
     React.SetStateAction<boolean>
   >
 }) {
+  const handleSelect = useCallback(
+    (item: ICalendarCategory) => {
+      setSelectedCategory(item.id)
+    },
+    [setSelectedCategory]
+  )
+
+  const handleCancelSelect = useCallback(() => {
+    setSelectedCategory(undefined)
+  }, [setSelectedCategory])
+
+  const handleCreate = useCallback(() => {
+    setModifyCategoryModalOpenType('create')
+    setExistedData(null)
+  }, [])
+
   return (
     <>
       <section className="flex w-full min-w-0 flex-1 flex-col">
         <div className="mt-4">
           <SidebarTitle
             actionButtonIcon="tabler:plus"
-            actionButtonOnClick={() => {
-              setModifyCategoryModalOpenType('create')
-              setExistedData(null)
-            }}
+            actionButtonOnClick={handleCreate}
             name="Categories"
             namespace="apps.calendar"
           />
@@ -39,17 +57,26 @@ function CategoryList({
         {[...categories, ...Object.keys(INTERNAL_CATEGORIES)].length > 0 ? (
           <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
             {Object.entries(INTERNAL_CATEGORIES).map(([key, value]) => (
-              <CategoryListItem key={key} item={value as ICalendarCategory} />
+              <CategoryListItem
+                key={key}
+                isSelected={selectedCategory === key}
+                item={value as ICalendarCategory}
+                onCancelSelect={handleCancelSelect}
+                onSelect={handleSelect}
+              />
             ))}
             {categories.map(item => (
               <CategoryListItem
                 key={item.id}
+                isSelected={selectedCategory === item.id}
                 item={item}
                 setDeleteConfirmationModalOpen={
                   setDeleteCategoryConfirmationModalOpen
                 }
                 setModifyModalOpenType={setModifyCategoryModalOpenType}
                 setSelectedData={setExistedData}
+                onCancelSelect={handleCancelSelect}
+                onSelect={handleSelect}
               />
             ))}
           </ul>
