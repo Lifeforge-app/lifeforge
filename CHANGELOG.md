@@ -1,9 +1,16 @@
+# Change Log
+
+### 📌 **dev 25w16 (4/20/2025 - 4/27/2025)**
+
+- **Code Time**: Published custom extension for Code Time to allow users to track their coding time in the system.
+
 ### 📌 **dev 25w16 (4/13/2025 - 4/19/2025)**
 
 - **Calendar**: Recurring events are now displayed in the calendar.
 - **Books Library**: Added indicator in libgen modal to show whether the host is online or offline.
 - **Code Time**: Added an endpoint in the API to generate code time summary image for the user to display in their Github profile.
 - **Authentication**: Renamed `token` key in cookies to `session` for better clarity.
+- **Code**: Performance optimization by removing unnecessary re-renders.
 
 ### 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 

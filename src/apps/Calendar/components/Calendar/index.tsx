@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import { useSearchParams } from 'react-router'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -24,6 +23,7 @@ interface CalendarComponentProps {
   queryKey: unknown[]
   events: ICalendarEvent[]
   categories: ICalendarCategory[]
+  selectedCategory: string | undefined
   setIsDeleteEventConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
@@ -41,14 +41,24 @@ function CalendarComponent({
   queryKey,
   events,
   categories,
+  selectedCategory,
   setIsDeleteEventConfirmationModalOpen,
   setModifyEventModalOpenType,
   setScanImageModalOpen,
   setExistedData,
   refetchEvents
 }: CalendarComponentProps) {
-  const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
+  const filteredEvents = useMemo(
+    () =>
+      events.filter(event => {
+        if (selectedCategory) {
+          return event.category === selectedCategory
+        }
+        return true
+      }),
+    [events, selectedCategory]
+  )
 
   const calendarComponents = useMemo(
     () => ({
@@ -157,29 +167,26 @@ function CalendarComponent({
         reference_link: ''
       })
     },
-    [setExistedData, setModifyEventModalOpenType]
+    []
   )
+
+  const handleEvenChange = useCallback((e: any) => {
+    updateEvent(e).catch(console.error)
+  }, [])
+
+  const draggableAccessor = useCallback((event: any) => {
+    return !(event.category.startsWith('_') || event.type === 'recurring')
+  }, [])
 
   return (
     <DnDCalendar
       selectable
       components={calendarComponents as any}
-      draggableAccessor={event => {
-        return !(event as ICalendarEvent).category.startsWith('_')
-      }}
-      events={events.filter(event => {
-        if (searchParams.has('category')) {
-          return event.category === searchParams.get('category')
-        }
-        return true
-      })}
+      draggableAccessor={draggableAccessor}
+      events={filteredEvents}
       localizer={localizer}
-      onEventDrop={(e: any) => {
-        updateEvent(e).catch(console.error)
-      }}
-      onEventResize={(e: any) => {
-        updateEvent(e).catch(console.error)
-      }}
+      onEventDrop={handleEvenChange}
+      onEventResize={handleEvenChange}
       onRangeChange={refetchEvents}
       onSelectSlot={handleSelectSlot}
     />

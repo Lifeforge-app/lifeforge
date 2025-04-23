@@ -1,17 +1,24 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { MenuItem, SidebarItem } from '@lifeforge/ui'
+import { SidebarItem } from '@lifeforge/ui'
 
 import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
+import ActionMenu from './ActionMenu'
 
 function CategoryListItem({
   item,
+  isSelected,
+  onSelect,
+  onCancelSelect,
   setSelectedData,
   setModifyModalOpenType,
   setDeleteConfirmationModalOpen
 }: {
   item: ICalendarCategory
+  isSelected: boolean
+  onSelect: (item: ICalendarCategory) => void
+  onCancelSelect: () => void
   setSelectedData?: React.Dispatch<
     React.SetStateAction<ICalendarCategory | null>
   >
@@ -20,64 +27,47 @@ function CategoryListItem({
   >
   setDeleteConfirmationModalOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const handleEdit = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setSelectedData?.(item)
+      setModifyModalOpenType?.('update')
+    },
+    [item]
+  )
+
+  const handleDelete = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setSelectedData?.(item)
+      setDeleteConfirmationModalOpen?.(true)
+    },
+    [item]
+  )
 
   const hamburgerMenuItems = useMemo(
     () =>
       setSelectedData &&
       setModifyModalOpenType &&
       setDeleteConfirmationModalOpen && (
-        <>
-          <MenuItem
-            icon="tabler:pencil"
-            text="Edit"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setModifyModalOpenType('update')
-            }}
-          />
-          <MenuItem
-            isRed
-            icon="tabler:trash"
-            text="Delete"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setDeleteConfirmationModalOpen(true)
-            }}
-          />
-        </>
+        <ActionMenu onDelete={handleDelete} onEdit={handleEdit} />
       ),
-    [
-      item,
-      setDeleteConfirmationModalOpen,
-      setModifyModalOpenType,
-      setSelectedData
-    ]
+    []
   )
 
   const handleClick = useCallback(() => {
-    setSearchParams({
-      ...Object.fromEntries(searchParams.entries()),
-      category: item.id
-    })
-  }, [item.id, searchParams])
-
-  const handleCancelButtonClick = useCallback(() => {
-    searchParams.delete('category')
-    setSearchParams(searchParams)
-  }, [searchParams])
+    onSelect(item)
+  }, [])
 
   return (
     <SidebarItem
-      active={searchParams.get('category') === item.id}
+      active={isSelected}
       hamburgerMenuItems={hamburgerMenuItems}
       icon={item.icon}
       name={item.name}
       number={item.amount}
       sideStripColor={item.color}
-      onCancelButtonClick={handleCancelButtonClick}
+      onCancelButtonClick={onCancelSelect}
       onClick={handleClick}
     />
   )
