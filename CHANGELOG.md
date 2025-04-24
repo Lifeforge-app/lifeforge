@@ -11,6 +11,7 @@
 - **Code Time**: Added an endpoint in the API to generate code time summary image for the user to display in their Github profile.
 - **Authentication**: Renamed `token` key in cookies to `session` for better clarity.
 - **Code**: Performance optimization by removing unnecessary re-renders.
+- **API**: Moved puppeteer executable path variable to the `.env` file for better configurability.
 
 ### 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 
