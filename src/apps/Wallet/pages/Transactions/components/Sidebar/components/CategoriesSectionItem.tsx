@@ -12,13 +12,15 @@ function CategoriesSectionItem({
   name,
   color,
   id,
-  type
+  type,
+  amount
 }: {
   icon: string
   name: string
   color: string
   id: string | null
   type: 'income' | 'expenses' | null
+  amount: number | undefined
 }) {
   const {
     selectedCategory,
@@ -35,7 +37,7 @@ function CategoriesSectionItem({
   const handleCancelButtonClick = useCallback(() => {
     setSelectedCategory(null)
     setSidebarOpen(false)
-  }, [setSelectedCategory, setSidebarOpen])
+  }, [])
 
   const handleClick = useCallback(() => {
     if (id === null) {
@@ -46,7 +48,7 @@ function CategoriesSectionItem({
       setSelectedType(type as IWalletTransaction['type'])
       setSidebarOpen(false)
     }
-  }, [id, type, setSelectedCategory, setSelectedType, setSidebarOpen])
+  }, [])
 
   return (
     <SidebarItem
@@ -54,9 +56,9 @@ function CategoriesSectionItem({
       active={selectedCategory === id}
       icon={memoizedIcon}
       name={name}
-      number={0}
+      number={amount}
       sideStripColor={color}
-      onCancelButtonClick={name !== 'All' ? handleCancelButtonClick : undefined}
+      onCancelButtonClick={id !== null ? handleCancelButtonClick : undefined}
       onClick={handleClick}
     />
   )

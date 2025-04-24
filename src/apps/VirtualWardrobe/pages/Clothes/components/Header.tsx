@@ -1,10 +1,6 @@
 import { Icon } from '@iconify/react'
 import { UseQueryResult } from '@tanstack/react-query'
 
-import { HeaderFilter } from '@lifeforge/ui'
-
-import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
-import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
 import {
   IVirtualWardrobeEntry,
   IVirtualWardrobeSidebarData
@@ -12,7 +8,7 @@ import {
 
 function Header({
   entriesQuery,
-  sidebarDataQuery,
+  // sidebarDataQuery,
   setSidebarOpen
 }: {
   entriesQuery: UseQueryResult<IVirtualWardrobeEntry[]>
@@ -30,7 +26,7 @@ function Header({
             ({entriesQuery.isSuccess ? entriesQuery.data.length : 0})
           </span>
         </div>
-        {sidebarDataQuery.isSuccess && sidebarDataQuery.data && (
+        {/* TODO {sidebarDataQuery.isSuccess && sidebarDataQuery.data && (
           <HeaderFilter
             items={{
               category: {
@@ -74,7 +70,7 @@ function Header({
               }
             }}
           />
-        )}
+        )} */}
       </div>
       <button
         className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 -ml-4 rounded-lg p-4 transition-all lg:hidden"

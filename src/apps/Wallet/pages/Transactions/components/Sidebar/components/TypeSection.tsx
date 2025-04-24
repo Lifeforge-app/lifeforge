@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 
 import { SidebarTitle } from '@lifeforge/ui'
 
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+
 import TypeSectionItem from './TypeSectionItem'
 
 const TYPES = [
@@ -13,12 +15,20 @@ const TYPES = [
 
 function TypeSection() {
   const { t } = useTranslation('apps.wallet')
+  const { typesCountQuery } = useWalletData()
+
+  console.log(typesCountQuery.data)
 
   return (
     <>
       <SidebarTitle name={t('sidebar.transactionTypes')} />
       {TYPES.map(([icon, name]) => (
-        <TypeSectionItem key={name} icon={icon} name={name} />
+        <TypeSectionItem
+          key={name}
+          amount={typesCountQuery.data?.[name.toLowerCase()]?.amount}
+          icon={icon}
+          name={name}
+        />
       ))}
     </>
   )

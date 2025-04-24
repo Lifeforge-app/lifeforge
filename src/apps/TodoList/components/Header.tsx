@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
-import { Button, HeaderFilter } from '@lifeforge/ui'
+import { Button } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -13,18 +13,18 @@ function Header({
   const { t } = useTranslation('apps.todoList')
   const {
     entriesQuery,
-    prioritiesQuery,
-    listsQuery,
-    tagsListQuery,
+    // prioritiesQuery,
+    // listsQuery,
+    // tagsListQuery,
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
   const [searchParams] = useSearchParams()
 
   const entries = entriesQuery.data ?? []
-  const priorities = prioritiesQuery.data ?? []
-  const lists = listsQuery.data ?? []
-  const tags = tagsListQuery.data ?? []
+  // const priorities = prioritiesQuery.data ?? []
+  // const lists = listsQuery.data ?? []
+  // const tags = tagsListQuery.data ?? []
 
   return (
     <div className="flex-between flex px-4">
@@ -45,7 +45,7 @@ function Header({
           )}`.trim()}{' '}
           <span className="text-bg-500 text-base">({entries.length})</span>
         </h1>
-        <HeaderFilter
+        {/* TODO <HeaderFilter
           items={{
             list: {
               data: lists,
@@ -62,7 +62,7 @@ function Header({
               isColored: true
             }
           }}
-        />
+        /> */}
       </div>
       <div className="flex items-center gap-6">
         <Button

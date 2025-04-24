@@ -24,7 +24,7 @@ function Sidebar() {
       <TypeSection />
       <SidebarDivider />
       <CategoriesSection />
-      {selectedType === 'transfer' && <SidebarDivider />}
+      {selectedType !== 'transfer' && <SidebarDivider />}
       <AssetsSection />
       <SidebarDivider />
       <LedgerSection />

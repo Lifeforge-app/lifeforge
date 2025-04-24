@@ -24,6 +24,10 @@ function InnerHeader({
     selectedCategory,
     selectedAsset,
     selectedLedger,
+    setSelectedType,
+    setSelectedCategory,
+    setSelectedAsset,
+    setSelectedLedger,
     setSidebarOpen
   } = useWalletStore()
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
@@ -90,6 +94,18 @@ function InnerHeader({
               data: ledgers,
               isColored: true
             }
+          }}
+          setValues={{
+            type: setSelectedType as (value: string | null) => void,
+            category: setSelectedCategory,
+            asset: setSelectedAsset,
+            ledger: setSelectedLedger
+          }}
+          values={{
+            type: selectedType,
+            category: selectedCategory,
+            asset: selectedAsset,
+            ledger: selectedLedger
           }}
         />
       </div>

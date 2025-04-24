@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
 import {
   DeleteConfirmationModal,
@@ -15,6 +15,7 @@ import {
 } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
+import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -32,7 +33,14 @@ import TableView from './views/TableView'
 
 function Transactions() {
   const { t } = useTranslation('apps.wallet')
+  const {
+    setSelectedType,
+    setSelectedLedger,
+    setSelectedAsset,
+    setSelectedCategory
+  } = useWalletStore()
 
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
@@ -67,6 +75,7 @@ function Transactions() {
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
   )
+  const [searchParams] = useSearchParams()
 
   const { hash } = useLocation()
 
@@ -92,6 +101,33 @@ function Transactions() {
       setIsUploadReceiptModalOpen(true)
     }
   }, [hash])
+
+  useEffect(() => {
+    const type = searchParams.get('type')
+    const ledger = searchParams.get('ledger')
+    const asset = searchParams.get('asset')
+    const category = searchParams.get('category')
+
+    if (type && ['income', 'expenses', 'transfer'].includes(type)) {
+      setSelectedType(type as IWalletTransaction['type'])
+    }
+
+    if (ledger) {
+      setSelectedLedger(ledger)
+    }
+
+    if (asset) {
+      setSelectedAsset(asset)
+    }
+
+    if (category) {
+      setSelectedCategory(category)
+    }
+
+    navigate('/wallet/transactions', {
+      replace: true
+    })
+  }, [searchParams])
 
   return (
     <ModuleWrapper>
@@ -210,6 +246,8 @@ function Transactions() {
         queryKey={['wallet', 'transactions']}
         updateDataList={() => {
           queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
+          queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
+          queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
         }}
         onClose={() => {
           setDeleteTransactionsConfirmationOpen(false)

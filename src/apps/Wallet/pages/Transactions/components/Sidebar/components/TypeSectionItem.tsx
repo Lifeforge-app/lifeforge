@@ -8,7 +8,15 @@ import { SidebarItem } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-function TypeSectionItem({ icon, name }: { icon: string; name: string }) {
+function TypeSectionItem({
+  icon,
+  name,
+  amount
+}: {
+  icon: string
+  name: string
+  amount: number | undefined
+}) {
   const { t } = useTranslation('apps.wallet')
   const { bgTempPalette } = usePersonalization()
   const { selectedType, setSelectedType, setSelectedCategory, setSidebarOpen } =
@@ -28,7 +36,7 @@ function TypeSectionItem({ icon, name }: { icon: string; name: string }) {
   const handleCancelButtonClick = useCallback(() => {
     setSelectedType(null)
     setSidebarOpen(false)
-  }, [setSelectedType, setSidebarOpen])
+  }, [])
 
   const handleClick = useCallback(() => {
     if (name === 'All Types') {
@@ -39,7 +47,7 @@ function TypeSectionItem({ icon, name }: { icon: string; name: string }) {
       setSelectedType(name.toLowerCase() as 'income' | 'expenses' | 'transfer')
       setSidebarOpen(false)
     }
-  }, [name, setSelectedCategory, setSelectedType, setSidebarOpen])
+  }, [])
 
   return (
     <SidebarItem
@@ -53,7 +61,7 @@ function TypeSectionItem({ icon, name }: { icon: string; name: string }) {
           ? `sidebar.${_.camelCase(name)}`
           : `transactionTypes.${_.camelCase(name)}`
       )}
-      number={0}
+      number={amount}
       sideStripColor={sidebarStripColor}
       onCancelButtonClick={
         name !== 'All Types' ? handleCancelButtonClick : undefined
