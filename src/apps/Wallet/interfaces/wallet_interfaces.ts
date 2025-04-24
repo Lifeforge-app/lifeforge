@@ -5,6 +5,7 @@ interface IWalletAsset extends RecordModel {
   icon: string
   balance: number
   starting_balance: number
+  amount: number
 }
 
 type IWalletAssetFormState = {
@@ -17,6 +18,7 @@ interface IWalletLedger extends RecordModel {
   name: string
   icon: string
   color: string
+  amount: number
 }
 
 type IWalletLedgerFormState = {
@@ -34,6 +36,7 @@ type IWalletCategoryFormState = {
   icon: string
   color: string
   type: 'income' | 'expenses'
+  amount: string
 }
 
 interface IWalletTransaction extends RecordModel {

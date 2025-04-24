@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react'
-import { useSearchParams } from 'react-router'
 
 import { SidebarItem } from '@lifeforge/ui'
 

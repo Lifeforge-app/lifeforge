@@ -72,17 +72,17 @@ function BreakdownDoughnutChart({
       <Doughnut
         className="relative aspect-square w-full min-w-0"
         data={{
-          labels: expensesCategories.map(category => category?.name),
+          labels: expensesCategories?.map(category => category?.name),
           datasets: [
             {
               label: 'Monies spent',
-              data: expensesCategories.map(
-                category => spentOnEachCategory[category.id].amount
+              data: expensesCategories?.map(
+                category => spentOnEachCategory[category.id]?.amount
               ),
-              backgroundColor: expensesCategories.map(
+              backgroundColor: expensesCategories?.map(
                 category => category.color + '20'
               ),
-              borderColor: expensesCategories.map(category => category.color),
+              borderColor: expensesCategories?.map(category => category.color),
               borderWidth: 1
             }
           ]

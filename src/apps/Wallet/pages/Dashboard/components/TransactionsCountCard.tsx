@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -14,58 +13,10 @@ import useComponentBg from '@hooks/useComponentBg'
 
 function TransactionsCountCard() {
   const { componentBgLighterWithHover } = useComponentBg()
-  const { transactionsQuery } = useWalletData()
+  const { transactionsQuery, typesCountQuery } = useWalletData()
   const { isAmountHidden } = useWalletStore()
   const { t } = useTranslation('apps.wallet')
-
-  const transactions = transactionsQuery.data ?? []
-
-  const amounts = useMemo<{
-    income: {
-      amount: number
-      count: number
-    }
-    expenses: {
-      amount: number
-      count: number
-    }
-    transfer: {
-      amount: number
-      count: number
-    }
-  }>(() => {
-    return transactions.reduce(
-      (acc, transaction) => {
-        if (transaction.type === 'income') {
-          acc.income.amount += transaction.amount
-          acc.income.count++
-        } else if (transaction.type === 'expenses') {
-          acc.expenses.amount += transaction.amount
-          acc.expenses.count++
-        }
-        if (transaction.type === 'transfer') {
-          acc.transfer.amount += transaction.amount / 2
-          acc.transfer.count += 0.5
-        }
-
-        return acc
-      },
-      {
-        income: {
-          amount: 0,
-          count: 0
-        },
-        expenses: {
-          amount: 0,
-          count: 0
-        },
-        transfer: {
-          amount: 0,
-          count: 0
-        }
-      }
-    )
-  }, [transactions])
+  const typesCount = typesCountQuery.data ?? {}
 
   return (
     <DashboardItem
@@ -110,7 +61,7 @@ function TransactionsCountCard() {
                         {t(`transactionTypes.${type}`)}
                       </div>
                       <div className="text-bg-500 text-sm">
-                        {amounts[type].count} {t('transactionCount')}
+                        {typesCount[type].amount} {t('transactionCount')}
                       </div>
                     </div>
                   </div>
@@ -140,12 +91,13 @@ function TransactionsCountCard() {
                             ))}
                         </span>
                       ) : (
-                        numberToCurrency(amounts[type].amount)
+                        numberToCurrency(typesCount[type].accumulate)
                       )}
                     </div>
                     <div className="text-bg-500 text-right text-sm">
                       {(
-                        (amounts[type].amount /
+                        (typesCount[type].accumulate /
+                          (type === 'transfer' ? 2 : 1) /
                           transactions
                             .filter(transaction => transaction.amount)
                             .reduce(

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
@@ -13,6 +13,31 @@ function CategoriesSection() {
   const { categoriesQuery } = useWalletData()
   const { selectedType, setManageCategoriesModalOpen } = useWalletStore()
 
+  const categories = useMemo(
+    () =>
+      [
+        {
+          icon: 'tabler:tag',
+          name: t('sidebar.allCategories'),
+          color: 'white',
+          id: null,
+          type: null,
+          amount: undefined
+        }
+      ]
+        .concat(
+          categoriesQuery.data?.sort(
+            (a, b) =>
+              ['income', 'expenses'].indexOf(a.type) -
+              ['income', 'expenses'].indexOf(b.type)
+          ) ?? ([] as any)
+        )
+        .filter(
+          ({ type }) => selectedType === type || (selectedType ?? null) === null
+        ),
+    [categoriesQuery.data, selectedType, t]
+  )
+
   const handleActionButtonClick = useCallback(() => {
     setManageCategoriesModalOpen('new')
   }, [setManageCategoriesModalOpen])
@@ -25,38 +50,19 @@ function CategoriesSection() {
         name={t('sidebar.categories')}
       />
       <QueryWrapper query={categoriesQuery}>
-        {categories => (
+        {() => (
           <>
-            {[
-              {
-                icon: 'tabler:tag',
-                name: t('sidebar.allCategories'),
-                color: 'white',
-                id: null,
-                type: null
-              }
-            ]
-              .concat(
-                categories.sort(
-                  (a, b) =>
-                    ['income', 'expenses'].indexOf(a.type) -
-                    ['income', 'expenses'].indexOf(b.type)
-                ) as any
-              )
-              .filter(
-                ({ type }) =>
-                  selectedType === type || (selectedType ?? null) === null
-              )
-              .map(({ icon, name, color, id, type }) => (
-                <CategoriesSectionItem
-                  key={id}
-                  color={color}
-                  icon={icon}
-                  id={id}
-                  name={name}
-                  type={type}
-                />
-              ))}
+            {categories.map(({ icon, name, color, id, type, amount }) => (
+              <CategoriesSectionItem
+                key={id}
+                amount={amount}
+                color={color}
+                icon={icon}
+                id={id}
+                name={name}
+                type={type}
+              />
+            ))}
           </>
         )}
       </QueryWrapper>
