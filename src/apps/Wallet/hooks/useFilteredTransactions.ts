@@ -36,12 +36,14 @@ export function useFilteredTransactions(transactions: IWalletTransaction[]) {
           tx.location?.toLowerCase().includes(debouncedQuery.toLowerCase())
       )
       .filter(tx => {
-        const start =
+        const start = (
           startDate && dayjs(startDate).isValid()
             ? dayjs(startDate)
             : dayjs('1900-01-01')
-        const end =
+        ).startOf('day')
+        const end = (
           endDate && dayjs(endDate).isValid() ? dayjs(endDate) : dayjs()
+        ).endOf('day')
         const date = dayjs(tx.date)
         return date.isSameOrAfter(start) && date.isSameOrBefore(end)
       })
