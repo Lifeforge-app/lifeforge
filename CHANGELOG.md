@@ -12,6 +12,7 @@
 - **Authentication**: Renamed `token` key in cookies to `session` for better clarity.
 - **Code**: Performance optimization by removing unnecessary re-renders.
 - **API**: Moved puppeteer executable path variable to the `.env` file for better configurability.
+- **Wallet**: Fixed bug where the date range selector in the sidebar doesn't work properly.
 
 ### 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 
