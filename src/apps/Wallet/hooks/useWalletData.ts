@@ -30,20 +30,19 @@ export function useWalletData() {
     'categories'
   ])
 
+  const typesCountQuery = useAPIQuery<
+    Record<
+      string,
+      {
+        amount: number
+        accumulate: number
+      }
+    >
+  >('wallet/utils/types-count', ['wallet', 'transactions', 'types-count'])
+
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
   )
-
-  const isLoading =
-    transactionsQuery.isLoading ||
-    assetsQuery.isLoading ||
-    ledgersQuery.isLoading ||
-    categoriesQuery.isLoading
-  const isError =
-    transactionsQuery.isError ||
-    assetsQuery.isError ||
-    ledgersQuery.isError ||
-    categoriesQuery.isError
 
   return {
     transactionsQuery,
@@ -51,7 +50,6 @@ export function useWalletData() {
     ledgersQuery,
     categoriesQuery,
     filteredTransactions,
-    isLoading,
-    isError
+    typesCountQuery
   }
 }

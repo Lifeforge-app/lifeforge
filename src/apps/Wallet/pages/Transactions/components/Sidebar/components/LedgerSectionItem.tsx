@@ -4,44 +4,47 @@ import { SidebarItem } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-function AssetsSectionItem({
+export default function LedgerSectionItem({
   icon,
   name,
+  color,
   id,
   amount
 }: {
   icon: string
   name: string
+  color: string
   id: string | null
   amount: number | undefined
 }) {
-  const { selectedAsset, setSelectedAsset, setSidebarOpen } = useWalletStore()
+  const { selectedLedger, setSelectedLedger, setSidebarOpen } = useWalletStore()
+
+  const active =
+    selectedLedger === id || (selectedLedger === null && id === null)
 
   const handleCancelButtonClick = useCallback(() => {
-    setSelectedAsset(null)
+    setSelectedLedger(null)
     setSidebarOpen(false)
   }, [])
 
   const handleClick = useCallback(() => {
-    if (id === null) {
-      setSelectedAsset(null)
-      setSidebarOpen(false)
-    } else {
-      setSelectedAsset(id)
-      setSidebarOpen(false)
+    if (name === 'All') {
+      setSelectedLedger(null)
+      return
     }
+    setSelectedLedger(id)
+    setSidebarOpen(false)
   }, [])
 
   return (
     <SidebarItem
-      active={selectedAsset === id || (selectedAsset === null && id === null)}
+      active={active}
       icon={icon}
       name={name}
       number={amount}
+      sideStripColor={color}
       onCancelButtonClick={id !== null ? handleCancelButtonClick : undefined}
       onClick={handleClick}
     />
   )
 }
-
-export default AssetsSectionItem

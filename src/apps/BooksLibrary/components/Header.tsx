@@ -2,16 +2,16 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
-import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
+import { Button, MenuItem } from '@lifeforge/ui'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }) {
   const { t } = useTranslation('apps.booksLibrary')
   const {
-    categories: { dataQuery: categoriesQuery },
-    languages: { dataQuery: languagesQuery },
-    fileTypes: { dataQuery: fileTypesQuery },
+    // categories: { dataQuery: categoriesQuery },
+    // languages: { dataQuery: languagesQuery },
+    // fileTypes: { dataQuery: fileTypesQuery },
     miscellaneous: { setSidebarOpen, searchQuery, setLibgenModalOpen }
   } = useBooksLibraryContext()
   const [searchParams] = useSearchParams()
@@ -71,7 +71,7 @@ function Header({ itemCount }: { itemCount: number }) {
           />
         </div>
       </div>
-      <HeaderFilter
+      {/* TODO <HeaderFilter
         items={{
           category: {
             data: categoriesQuery.data ?? [],
@@ -89,7 +89,7 @@ function Header({ itemCount }: { itemCount: number }) {
               })) ?? []
           }
         }}
-      />
+      /> */}
     </div>
   )
 }

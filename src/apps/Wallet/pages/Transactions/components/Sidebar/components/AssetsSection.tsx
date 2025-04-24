@@ -25,7 +25,7 @@ function AssetsSection() {
           name: t('sidebar.allAssets'),
           color: 'white',
           id: null,
-          type: null
+          amount: undefined
         }
       ].concat(assetsQuery.data ?? ([] as any)),
     [assetsQuery.data, t]
@@ -38,8 +38,14 @@ function AssetsSection() {
         actionButtonOnClick={handleActionButtonClick}
         name={t('sidebar.assets')}
       />
-      {ITEMS.map(({ icon, name, id }) => (
-        <AssetsSectionItem key={id} icon={icon} id={id} name={name} />
+      {ITEMS.map(({ icon, name, id, amount }) => (
+        <AssetsSectionItem
+          key={id}
+          amount={amount}
+          icon={icon}
+          id={id}
+          name={name}
+        />
       ))}
     </>
   )

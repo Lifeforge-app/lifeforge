@@ -187,7 +187,9 @@ function ModifyTransactionsModal({
         }
       )
 
-      queryClient.invalidateQueries({ queryKey: ['wallet', 'transactions'] })
+      queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
+      queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
+      queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
       setExistedData(null)
       setOpenType(null)
     } catch {
