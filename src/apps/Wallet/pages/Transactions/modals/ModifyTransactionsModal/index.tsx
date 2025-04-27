@@ -162,7 +162,7 @@ function ModifyTransactionsModal({
     setLoading(true)
 
     try {
-      const res = await fetchAPI<IWalletTransaction[]>(
+      const res = await fetchAPI<IWalletTransaction[] | IWalletTransaction>(
         `wallet/transactions${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,
@@ -178,21 +178,15 @@ function ModifyTransactionsModal({
           if (!prev) return []
 
           if (openType === 'create') {
-            return [...res, ...prev]
+            return [...(res as IWalletTransaction[]), ...prev]
           }
 
-          if (openType === 'update') {
-            const newPrev = [...prev]
-            for (const item of res) {
-              const index = newPrev.findIndex(e => e.id === item.id)
-              if (index === -1) {
-                continue
-              }
-              newPrev[index] = item
+          return prev.map(item => {
+            if (item.id === (res as IWalletTransaction).id) {
+              return res as IWalletTransaction
             }
-
-            return newPrev
-          }
+            return item
+          })
         }
       )
 
