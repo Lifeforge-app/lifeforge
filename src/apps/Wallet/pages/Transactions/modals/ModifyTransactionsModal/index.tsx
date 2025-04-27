@@ -162,7 +162,7 @@ function ModifyTransactionsModal({
     setLoading(true)
 
     try {
-      const res = await fetchAPI<IWalletTransaction>(
+      const res = await fetchAPI<IWalletTransaction[]>(
         `wallet/transactions${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,
@@ -175,14 +175,23 @@ function ModifyTransactionsModal({
       queryClient.setQueryData<IWalletTransaction[]>(
         ['wallet', 'transactions'],
         prev => {
+          if (!prev) return []
+
           if (openType === 'create') {
-            return prev ? [res, ...prev] : [res]
+            return [...res, ...prev]
           }
 
           if (openType === 'update') {
-            return prev?.map(transaction =>
-              transaction.id === res.id ? res : transaction
-            )
+            const newPrev = [...prev]
+            for (const item of res) {
+              const index = newPrev.findIndex(e => e.id === item.id)
+              if (index === -1) {
+                continue
+              }
+              newPrev[index] = item
+            }
+
+            return newPrev
           }
         }
       )
