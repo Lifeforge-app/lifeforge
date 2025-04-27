@@ -176,7 +176,7 @@ function ModifyTransactionsModal({
         ['wallet', 'transactions'],
         prev => {
           if (openType === 'create') {
-            return prev ? [...prev, res] : [res]
+            return prev ? [res, ...prev] : [res]
           }
 
           if (openType === 'update') {
