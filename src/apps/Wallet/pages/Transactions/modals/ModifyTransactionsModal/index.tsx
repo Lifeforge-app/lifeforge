@@ -178,7 +178,13 @@ function ModifyTransactionsModal({
           if (!prev) return []
 
           if (openType === 'create') {
-            return [...(res as IWalletTransaction[]), ...prev]
+            return [...(res as IWalletTransaction[]), ...prev].sort((a, b) => {
+              if (dayjs(b.date).isSame(a.date)) {
+                return dayjs(b.created).diff(a.created)
+              }
+
+              return dayjs(b.date).diff(a.date)
+            })
           }
 
           return prev.map(item => {
