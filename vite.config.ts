@@ -1,10 +1,7 @@
-import MillionCompiler from '@million/lint'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import { defineConfig } from 'vite'
-
-// import mkcert from 'vite-plugin-mkcert'
 
 const ReactCompilerConfig = {
   sources: filename => {
@@ -12,7 +9,6 @@ const ReactCompilerConfig = {
   }
 }
 
-// https://vitejs.dev/config/
 export default defineConfig({
   envDir: path.resolve(__dirname, './env'),
   plugins: [
@@ -23,7 +19,6 @@ export default defineConfig({
       }
     }),
     tailwindcss()
-    // mkcert()
   ],
   server: {
     fs: {
