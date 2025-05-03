@@ -4,6 +4,8 @@ import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
+import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
+
 import fetchAPI from '@utils/fetchAPI'
 
 import {
@@ -20,7 +22,6 @@ const localizer = dayjsLocalizer(dayjs)
 const DnDCalendar = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
-  queryKey: unknown[]
   events: ICalendarEvent[]
   categories: ICalendarCategory[]
   selectedCategory: string | undefined
@@ -34,21 +35,20 @@ interface CalendarComponentProps {
   setExistedData: React.Dispatch<
     React.SetStateAction<Partial<ICalendarEvent> | null>
   >
-  refetchEvents: (range: Date[] | { start: Date; end: Date }) => void
 }
 
 function CalendarComponent({
-  queryKey,
   events,
   categories,
   selectedCategory,
   setIsDeleteEventConfirmationModalOpen,
   setModifyEventModalOpenType,
   setScanImageModalOpen,
-  setExistedData,
-  refetchEvents
+  setExistedData
 }: CalendarComponentProps) {
   const queryClient = useQueryClient()
+  const { eventQueryKey: queryKey, setEventQueryKey } = useCalendarStore()
+
   const filteredEvents = useMemo(
     () =>
       events.filter(event => {
@@ -60,13 +60,37 @@ function CalendarComponent({
     [events, selectedCategory]
   )
 
+  const handleDateRangeChange = useCallback(
+    (
+      range:
+        | Date[]
+        | {
+            start: Date
+            end: Date
+          }
+    ) => {
+      if (Array.isArray(range)) {
+        const start = dayjs(range[0]).format('YYYY-MM-DD')
+        const end = dayjs(range[range.length - 1]).format('YYYY-MM-DD')
+        setEventQueryKey(['calendar', 'events', start, end])
+        return
+      }
+
+      if (range.start && range.end) {
+        const start = dayjs(range.start).format('YYYY-MM-DD')
+        const end = dayjs(range.end).format('YYYY-MM-DD')
+        setEventQueryKey(['calendar', 'events', start, end])
+      }
+    },
+    []
+  )
+
   const calendarComponents = useMemo(
     () => ({
       toolbar: (props: any) => {
         return (
           <CalendarHeader
             {...props}
-            refreshEvents={refetchEvents}
             setExistedData={setExistedData}
             setModifyEventModalOpenType={setModifyEventModalOpenType}
             setScanImageModalOpen={setScanImageModalOpen}
@@ -147,7 +171,7 @@ function CalendarComponent({
         })
       } catch {
         queryClient.invalidateQueries({
-          queryKey: queryKey
+          queryKey
         })
       }
     },
@@ -187,7 +211,7 @@ function CalendarComponent({
       localizer={localizer}
       onEventDrop={handleEvenChange}
       onEventResize={handleEvenChange}
-      onRangeChange={refetchEvents}
+      onRangeChange={handleDateRangeChange}
       onSelectSlot={handleSelectSlot}
     />
   )
