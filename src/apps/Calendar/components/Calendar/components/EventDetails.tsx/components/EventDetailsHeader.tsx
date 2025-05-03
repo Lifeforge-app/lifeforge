@@ -1,5 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -7,6 +10,9 @@ import {
   ICalendarCategory,
   ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
+import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function EventDetailsHeader({
   event,
@@ -25,7 +31,26 @@ function EventDetailsHeader({
     React.SetStateAction<boolean>
   >
 }) {
-  const exceptToday = () => {}
+  const queryClient = useQueryClient()
+  const { eventQueryKey } = useCalendarStore()
+
+  const handleAddException = useCallback(async () => {
+    try {
+      await fetchAPI(`/calendar/events/exception/${event.id.split('-')[0]}`, {
+        method: 'POST',
+        body: {
+          date: event.start
+        }
+      })
+
+      queryClient.setQueryData(eventQueryKey, (oldData: ICalendarEvent[]) => {
+        return oldData.filter(item => item.id !== event.id)
+      })
+    } catch (error) {
+      toast.error('Failed to add exception')
+      console.error('Error adding exception:', error)
+    }
+  }, [event.id])
 
   return (
     <header className="flex items-start justify-between gap-8">
@@ -61,7 +86,7 @@ function EventDetailsHeader({
             <MenuItem
               icon="tabler:calendar-off"
               text="Except Today"
-              onClick={exceptToday}
+              onClick={handleAddException}
             />
           )}
           <MenuItem

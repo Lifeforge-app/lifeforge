@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
+import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent,
@@ -17,17 +19,16 @@ interface ModifyEventModalProps {
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: Partial<ICalendarEvent> | null
   categoriesQuery: UseQueryResult<ICalendarCategory[]>
-  eventQueryKey: unknown[]
 }
 
 function ModifyEventModal({
   openType,
   setOpenType,
   existedData,
-  categoriesQuery,
-  eventQueryKey
+  categoriesQuery
 }: ModifyEventModalProps) {
   const queryClient = useQueryClient()
+  const { eventQueryKey } = useCalendarStore()
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     type: 'single',
     title: '',
