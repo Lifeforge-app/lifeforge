@@ -1,6 +1,14 @@
 # Change Log
 
-### 📌 **dev 25w16 (4/20/2025 - 4/27/2025)**
+### 📌 **dev 25w18 (4/28/2025 - 5/4/2025)**
+
+- **UI**: Reintroduced Storybook for debugging and testing purposes.
+- **UI**: Fixed a bug where the sidebar item hamburger menu icon would not return to its original state after closing the menu.
+- **UI**: Fixed a critical bug where the tailwind color palette was not working properly.
+- **Calendar**: Refactored the code.
+- **Calendar**: User can now exclude specific dates from calendar recurring events.
+
+### 📌 **dev 25w17 (4/20/2025 - 4/27/2025)**
 
 - **Code Time**: Published custom extension for Code Time to allow users to track their coding time in the system.
 
