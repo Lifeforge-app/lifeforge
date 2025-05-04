@@ -12,16 +12,16 @@ import RecurringSelector from './components/RecurringSelector'
 function EventTimeSelector({
   formState,
   setFormState,
-  openType
+  type
 }: {
   formState: ICalendarEventFormState
   setFormState: React.Dispatch<React.SetStateAction<ICalendarEventFormState>>
-  openType: 'create' | 'update' | null
+  type: 'create' | 'update' | null
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
   const { componentBgLighter } = useComponentBg()
 
-  if (openType === 'update') {
+  if (type === 'update') {
     return <></>
   }
 

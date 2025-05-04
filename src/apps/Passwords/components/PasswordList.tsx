@@ -14,12 +14,7 @@ import PasswordEntryItem from './PasswordEntryItem'
 function PasswordList() {
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.passwords')
-  const {
-    passwordListQuery,
-    setModifyPasswordModalOpenType,
-    setExistedData,
-    filteredPasswordList
-  } = usePasswordContext()
+  const { passwordListQuery, filteredPasswordList } = usePasswordContext()
 
   async function pinPassword(id: string) {
     const mapPasswords = (p: IPasswordEntry) =>
@@ -59,10 +54,6 @@ function PasswordList() {
             icon="tabler:key-off"
             name={passwordListQuery.data?.length ? 'search' : 'passwords'}
             namespace="apps.passwords"
-            onCTAClick={() => {
-              setModifyPasswordModalOpenType('create')
-              setExistedData(null)
-            }}
           />
         ) : (
           <div className="my-8 flex w-full flex-col gap-4">

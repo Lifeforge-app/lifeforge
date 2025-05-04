@@ -1,9 +1,9 @@
+import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
-
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type ITodoListList } from '../../../interfaces/todo_list_interfaces'
 
 function TaskListListItem({
@@ -13,12 +13,27 @@ function TaskListListItem({
   item: ITodoListList
   setSidebarOpen: (value: boolean) => void
 }) {
+  const open = useModalStore(state => state.open)
   const [searchParams, setSearchParams] = useSearchParams()
-  const {
-    setSelectedList: setSelectedData,
-    setModifyListModalOpenType: setModifyModalOpenType,
-    setDeleteListConfirmationModalOpen: setDeleteConfirmationModalOpen
-  } = useTodoListContext()
+
+  const handleUpdateList = useCallback(() => {
+    open('todoList.modifyList', {
+      type: 'update',
+      existedData: item
+    })
+  }, [item])
+
+  const handleDeleteList = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'todo-list/lists',
+      confirmationText: 'Delete this list',
+      customText:
+        'Are you sure you want to delete this list? The tasks inside this list will not be deleted.',
+      data: item,
+      itemName: 'list',
+      queryKey: ['todo-list', 'lists']
+    })
+  }, [item])
 
   return (
     <SidebarItem
@@ -28,21 +43,13 @@ function TaskListListItem({
           <MenuItem
             icon="tabler:pencil"
             text="Edit"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setModifyModalOpenType('update')
-            }}
+            onClick={handleUpdateList}
           />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setDeleteConfirmationModalOpen(true)
-            }}
+            onClick={handleDeleteList}
           />
         </>
       }

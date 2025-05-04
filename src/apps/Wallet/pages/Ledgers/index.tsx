@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
 import {
   Button,
-  DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
@@ -14,27 +13,34 @@ import {
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import { type IWalletLedger } from '../../interfaces/wallet_interfaces'
+import { useModalStore } from '../../../../core/modals/useModalStore'
+import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import LedgerItem from './components/LedgerItem'
-import ModifyLedgersModal from './components/ModifyLedgersModal'
+import { walletLedgersModals } from './modals'
 
 function Ledgers() {
   const { t } = useTranslation('apps.wallet')
   const { ledgersQuery } = useWalletData()
-  const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [deleteLedgersConfirmationOpen, setDeleteLedgersConfirmationOpen] =
-    useState(false)
-  const [selectedData, setSelectedData] = useState<IWalletLedger | null>(null)
   const { hash } = useLocation()
+  const open = useModalStore(state => state.open)
+
+  const handleCreateLedger = () => {
+    open('wallet.ledgers.modifyLedger', {
+      type: 'create',
+      existedData: null
+    })
+  }
 
   useEffect(() => {
     if (hash === '#new') {
-      setSelectedData(null)
-      setModifyModalOpenType('create')
+      open('wallet.ledgers.modifyLedger', {
+        type: 'create',
+        existedData: null
+      })
     }
   }, [hash])
+
+  useModalsEffect(walletLedgersModals)
 
   return (
     <ModuleWrapper>
@@ -47,9 +53,7 @@ function Ledgers() {
               tProps={{
                 item: t('items.ledger')
               }}
-              onClick={() => {
-                setModifyModalOpenType('create')
-              }}
+              onClick={handleCreateLedger}
             >
               New
             </Button>
@@ -66,15 +70,7 @@ function Ledgers() {
             {ledgers.length > 0 ? (
               <div className="mt-6 mb-24 space-y-4 md:mb-6">
                 {ledgers.map(ledger => (
-                  <LedgerItem
-                    key={ledger.id}
-                    ledger={ledger}
-                    setDeleteLedgersConfirmationOpen={
-                      setDeleteLedgersConfirmationOpen
-                    }
-                    setModifyModalOpenType={setModifyModalOpenType}
-                    setSelectedData={setSelectedData}
-                  />
+                  <LedgerItem key={ledger.id} ledger={ledger} />
                 ))}
               </div>
             ) : (
@@ -86,40 +82,15 @@ function Ledgers() {
                 icon="tabler:wallet-off"
                 name="ledger"
                 namespace="apps.wallet"
-                onCTAClick={setModifyModalOpenType}
+                onCTAClick={() => handleCreateLedger()}
               />
             )}
             {ledgers.length > 0 && (
-              <FAB
-                hideWhen="md"
-                onClick={() => {
-                  setSelectedData(null)
-                  setModifyModalOpenType('create')
-                }}
-              />
+              <FAB hideWhen="md" onClick={handleCreateLedger} />
             )}
           </>
         )}
       </QueryWrapper>
-      <ModifyLedgersModal
-        existedData={selectedData}
-        openType={modifyLedgersModalOpenType}
-        setExistedData={setSelectedData}
-        setOpenType={setModifyModalOpenType}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="wallet/ledgers"
-        confirmationText="Delete this ledger account"
-        data={selectedData ?? undefined}
-        isOpen={deleteLedgersConfirmationOpen}
-        itemName="ledger account"
-        nameKey="name"
-        queryKey={['wallet', 'ledgers']}
-        onClose={() => {
-          setDeleteLedgersConfirmationOpen(false)
-          setSelectedData(null)
-        }}
-      />
     </ModuleWrapper>
   )
 }

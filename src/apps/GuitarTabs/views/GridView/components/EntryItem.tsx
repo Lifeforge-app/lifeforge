@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -9,25 +10,21 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
 import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
 function EntryItem({
   entry,
-  setModifyEntryModalOpen,
-  setExistingEntry,
-  setDeleteConfirmationModalOpen,
   queryKey
 }: {
   entry: IGuitarTabsEntry
-  setModifyEntryModalOpen: (value: boolean) => void
-  setExistingEntry: (value: IGuitarTabsEntry) => void
-  setDeleteConfirmationModalOpen: (value: boolean) => void
   queryKey: unknown[]
 }) {
   const queryClient = useQueryClient()
   const { componentBgWithHover } = useComponentBg()
+  const open = useModalStore(state => state.open)
 
   async function favouriteTab() {
     try {
@@ -40,6 +37,24 @@ function EntryItem({
       toast.error('Failed to add to favourites')
     }
   }
+
+  const handleUpdateEntry = useCallback(() => {
+    open('guitarTabs.modifyEntry', {
+      type: 'update',
+      existedData: entry
+    })
+  }, [entry])
+
+  const handleDeleteEntry = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'guitar-tabs/entries',
+      confirmationText: 'Delete this guitar tab',
+      data: entry,
+      itemName: 'guitar tab',
+      nameKey: 'name',
+      queryKey
+    })
+  }, [entry])
 
   return (
     <a
@@ -76,6 +91,10 @@ function EntryItem({
           classNames={{
             wrapper: 'absolute right-2 top-2 shrink-0'
           }}
+          onClick={e => {
+            e.stopPropagation()
+            e.preventDefault()
+          }}
         >
           <MenuItem
             icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
@@ -87,19 +106,13 @@ function EntryItem({
           <MenuItem
             icon="tabler:pencil"
             text="Edit"
-            onClick={() => {
-              setExistingEntry(entry)
-              setModifyEntryModalOpen(true)
-            }}
+            onClick={handleUpdateEntry}
           />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={() => {
-              setExistingEntry(entry)
-              setDeleteConfirmationModalOpen(true)
-            }}
+            onClick={handleDeleteEntry}
           />
         </HamburgerMenu>
       </div>

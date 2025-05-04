@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -11,22 +13,24 @@ import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import fetchAPI from '@utils/fetchAPI'
+
+import { useModalStore } from '../../../../../core/modals/useModalStore'
+
 interface IEntryItemCommonProps<T extends boolean> {
   entry: IVirtualWardrobeEntry
   isCartItem?: T
 }
 
 interface IRegularItemProps {
-  onUpdate: () => void
-  onDelete: () => void
-  onAddToCart: () => Promise<void>
+  queryKey: unknown[]
+  isInCart: boolean
   onRemoveFromCart?: never
 }
 
 interface ICartItemProps {
-  onUpdate?: never
-  onDelete?: never
-  onAddToCart?: never
+  queryKey?: never
+  isInCart?: never
   onRemoveFromCart: () => Promise<void>
 }
 
@@ -35,15 +39,70 @@ type IEntryItemProps<T extends boolean> = IEntryItemCommonProps<T> &
 
 function EntryItem<T extends boolean = false>({
   entry,
+  queryKey,
+  isInCart,
   isCartItem = false as T,
-  onUpdate,
-  onDelete,
-  onAddToCart,
   onRemoveFromCart
 }: IEntryItemProps<T>) {
+  const open = useModalStore(state => state.open)
+  const queryClient = useQueryClient()
   const { componentBg, componentBgLighter } = useComponentBg()
   const [addToCartLoading, setAddToCartLoading] = useState(false)
   const [removeFromCartLoading, setRemoveFromCartLoading] = useState(false)
+
+  async function handleAddToCart() {
+    if (isInCart) {
+      toast.info('Item already in cart')
+      return
+    }
+
+    try {
+      await fetchAPI(`virtual-wardrobe/session/${entry.id}`, {
+        method: 'POST'
+      })
+
+      queryClient.setQueryData<IVirtualWardrobeEntry[]>(
+        ['virtual-wardrobe', 'session-cart-items'],
+        prev => {
+          if (!prev) return prev
+          return [...prev, entry]
+        }
+      )
+
+      toast.success('Item added to cart')
+    } catch {
+      toast.error('Failed to add item to cart')
+    }
+  }
+
+  const handleUpdateItem = useCallback(() => {
+    open('virtualWardrobe.modifyEntry', {
+      type: 'update',
+      existedData: entry
+    })
+  }, [entry])
+
+  const handleDeleteItem = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'virtual-wardrobe/entries',
+      data: entry,
+      itemName: 'item',
+      nameKey: 'name',
+      queryKey,
+      updateDataList: () => {
+        queryClient.setQueryData<IVirtualWardrobeEntry[]>(
+          ['virtual-wardrobe', 'session-cart-items'],
+          prev => {
+            if (!prev) return prev
+            return prev.filter(e => e.id !== entry.id)
+          }
+        )
+        queryClient.invalidateQueries({
+          queryKey: ['virtual-wardrobe', 'sidebar-data']
+        })
+      }
+    })
+  }, [entry])
 
   return (
     <li
@@ -134,7 +193,7 @@ function EntryItem<T extends boolean = false>({
             variant="plain"
             onClick={() => {
               setAddToCartLoading(true)
-              onAddToCart!()
+              handleAddToCart()
                 .catch(console.error)
                 .finally(() => {
                   setAddToCartLoading(false)
@@ -149,12 +208,16 @@ function EntryItem<T extends boolean = false>({
                 'data-open:block absolute right-4 top-4 hidden group-hover:block'
             }}
           >
-            <MenuItem icon="tabler:pencil" text="Edit" onClick={onUpdate!} />
+            <MenuItem
+              icon="tabler:pencil"
+              text="Edit"
+              onClick={handleUpdateItem}
+            />
             <MenuItem
               isRed
               icon="tabler:trash"
               text="Delete"
-              onClick={onDelete!}
+              onClick={handleDeleteItem}
             />
           </HamburgerMenu>
         </>

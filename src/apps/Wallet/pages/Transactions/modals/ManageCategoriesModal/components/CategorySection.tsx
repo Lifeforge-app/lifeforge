@@ -1,33 +1,30 @@
 import { Icon } from '@iconify/react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
-
+import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import { type IWalletCategory } from '../../../../../interfaces/wallet_interfaces'
+import CategorySectionItem from './CategorySectionItem'
 
 interface CategorySectionProps {
   categories: IWalletCategory[]
   type: 'income' | 'expenses'
   iconName: string
-  setModifyCategoriesModalOpenType: React.Dispatch<
-    React.SetStateAction<'income' | 'expenses' | 'update' | null>
-  >
-  setExistedData: (category: IWalletCategory) => void
-  setDeleteCategoriesConfirmationOpen: (isOpen: boolean) => void
 }
 
-function CategorySection({
-  categories,
-  type,
-  iconName,
-  setModifyCategoriesModalOpenType,
-  setExistedData,
-  setDeleteCategoriesConfirmationOpen
-}: CategorySectionProps) {
+function CategorySection({ categories, type, iconName }: CategorySectionProps) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wallet')
   const filteredCategories = categories.filter(
     category => category.type === type
   )
+
+  const handleCreateCategoryOfType = useCallback(() => {
+    open('wallet.transactions.modifyCategory', {
+      type,
+      existedData: null
+    })
+  }, [type])
 
   return (
     <>
@@ -38,9 +35,7 @@ function CategorySection({
         </h2>
         <button
           className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-2 transition-all"
-          onClick={() => {
-            setModifyCategoriesModalOpenType(type)
-          }}
+          onClick={handleCreateCategoryOfType}
         >
           <Icon className="size-5" icon="tabler:plus" />
         </button>
@@ -48,44 +43,7 @@ function CategorySection({
       <ul className="divide-bg-200 dark:divide-bg-800 mb-4 flex flex-col divide-y">
         {filteredCategories.length > 0 ? (
           filteredCategories.map(category => (
-            <li key={category.id} className="flex-between flex gap-4 px-2 py-4">
-              <div className="flex items-center gap-4">
-                <div
-                  className="rounded-md p-2"
-                  style={{
-                    backgroundColor: category.color + '20'
-                  }}
-                >
-                  <Icon
-                    className="size-6"
-                    icon={category.icon}
-                    style={{
-                      color: category.color
-                    }}
-                  />
-                </div>
-                <div className="font-semibold">{category.name}</div>
-              </div>
-              <HamburgerMenu>
-                <MenuItem
-                  icon="tabler:pencil"
-                  text="Edit"
-                  onClick={() => {
-                    setExistedData(category)
-                    setModifyCategoriesModalOpenType('update')
-                  }}
-                />
-                <MenuItem
-                  isRed
-                  icon="tabler:trash"
-                  text="Delete"
-                  onClick={() => {
-                    setExistedData(category)
-                    setDeleteCategoriesConfirmationOpen(true)
-                  }}
-                />
-              </HamburgerMenu>
-            </li>
+            <CategorySectionItem key={category.id} category={category} />
           ))
         ) : (
           <p className="text-bg-500 text-center">

@@ -1,37 +1,30 @@
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../modals/useModalStore'
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
-import { fetchChallenge } from '../utils/fetchChallenge'
 
 function EntryItem({
   entry,
   hasDivider,
-  setExistingData,
-  setModifyAPIKeyModalOpenType,
-  setDeleteConfirmationModalOpen,
   masterPassword
 }: {
   entry: IAPIKeyEntry
   hasDivider: boolean
-  setExistingData: React.Dispatch<React.SetStateAction<IAPIKeyEntry | null>>
-  setModifyAPIKeyModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   masterPassword: string
 }) {
+  const open = useModalStore(state => state.open)
   const [isCopying, setIsCopying] = useState(false)
   async function copyKey() {
-    const challenge = await fetchChallenge()
+    const challenge = await fetchAPI<string>('api-keys/auth/challenge')
     setIsCopying(true)
 
     try {
@@ -53,6 +46,25 @@ function EntryItem({
       setIsCopying(false)
     }
   }
+
+  const handleUpdateEntry = useCallback(async () => {
+    open('apiKeys.modifyEntry', {
+      type: 'update',
+      existedData: entry,
+      masterPassword
+    })
+  }, [entry, masterPassword])
+
+  const handleDeleteEntry = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'api-keys/entries',
+      confirmationText: 'Delete this API key',
+      data: entry,
+      itemName: 'API Key',
+      nameKey: 'name',
+      queryKey: ['api-keys', 'entries', masterPassword]
+    })
+  }, [entry, masterPassword])
 
   return (
     <ConfigColumn
@@ -94,19 +106,13 @@ function EntryItem({
           <MenuItem
             icon="tabler:pencil"
             text="edit"
-            onClick={() => {
-              setExistingData(entry)
-              setModifyAPIKeyModalOpenType('update')
-            }}
+            onClick={handleUpdateEntry}
           />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="delete"
-            onClick={() => {
-              setDeleteConfirmationModalOpen(true)
-              setExistingData(entry)
-            }}
+            onClick={handleDeleteEntry}
           />
         </HamburgerMenu>
       </div>

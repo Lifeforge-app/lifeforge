@@ -1,7 +1,6 @@
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 import ActionColumn from './columns/ActionColumn'
 import AmountColumn from './columns/AmountColumn'
 import AssetColumn from './columns/AssetColumn'
@@ -13,23 +12,7 @@ import ParticularsColumn from './columns/ParticularsColumn'
 import ReceiptColumn from './columns/ReceiptColumn'
 import TypeColumn from './columns/TypeColumn'
 
-function TableBody({
-  visibleColumn,
-  setSelectedData,
-  setModifyModalOpenType,
-  setDeleteTransactionsConfirmationOpen
-}: {
-  visibleColumn: string[]
-  setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletTransaction | null>
-  >
-  setModifyModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteTransactionsConfirmationOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-}) {
+function TableBody({ visibleColumn }: { visibleColumn: string[] }) {
   const { assetsQuery, ledgersQuery, categoriesQuery, transactionsQuery } =
     useWalletData()
   const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
@@ -91,15 +74,7 @@ function TableBody({
               return <Component key={columnId} {...props} />
             })
           })()}
-
-          <ActionColumn
-            setDeleteTransactionsConfirmationOpen={
-              setDeleteTransactionsConfirmationOpen
-            }
-            setModifyModalOpenType={setModifyModalOpenType}
-            setSelectedData={setSelectedData}
-            transaction={transaction}
-          />
+          <ActionColumn transaction={transaction} />
         </tr>
       ))}
     </tbody>

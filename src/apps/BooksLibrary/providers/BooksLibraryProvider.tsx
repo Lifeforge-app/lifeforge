@@ -21,46 +21,11 @@ import {
   type IBooksLibraryLanguage
 } from '../interfaces/books_library_interfaces'
 
-type ModifyModalOpenType = 'create' | 'update' | null
-
-function useBooksLibraryCommonState<T>(
-  endpoint: string
-): IBooksLibraryCommon<T> {
-  const dataQuery = useAPIQuery<T[]>(endpoint, endpoint.split('/'))
-  const [modifyDataModalOpenType, setModifyDataModalOpenType] =
-    useState<ModifyModalOpenType>(null)
-  const [existedData, setExistedData] = useState<T | null>(null)
-  const [deleteDataConfirmationModalOpen, setDeleteDataConfirmationOpen] =
-    useState(false)
-
-  return {
-    dataQuery,
-    modifyDataModalOpenType,
-    setModifyDataModalOpenType,
-    existedData,
-    setExistedData,
-    deleteDataConfirmationModalOpen,
-    setDeleteDataConfirmationOpen
-  }
-}
-
-interface IBooksLibraryCommon<T> {
-  dataQuery: UseQueryResult<T[]>
-  modifyDataModalOpenType: 'create' | 'update' | null
-  setModifyDataModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  existedData: T | null
-  setExistedData: React.Dispatch<React.SetStateAction<T | null>>
-  deleteDataConfirmationModalOpen: boolean
-  setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
 interface IBooksLibraryData {
-  entries: IBooksLibraryCommon<IBooksLibraryEntry>
-  categories: IBooksLibraryCommon<IBooksLibraryCategory>
-  languages: IBooksLibraryCommon<IBooksLibraryLanguage>
-  fileTypes: IBooksLibraryCommon<IBooksLibraryFileType>
+  entriesQuery: UseQueryResult<IBooksLibraryEntry[]>
+  categoriesQuery: UseQueryResult<IBooksLibraryCategory[]>
+  languagesQuery: UseQueryResult<IBooksLibraryLanguage[]>
+  fileTypesQuery: UseQueryResult<IBooksLibraryFileType[]>
   miscellaneous: {
     processes: Record<
       string,
@@ -77,17 +42,6 @@ interface IBooksLibraryData {
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     sidebarOpen: boolean
     setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-    libgenModalOpen: boolean
-    setLibgenModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-    deleteModalConfigs: Array<{
-      apiEndpoint: string
-      isOpen: boolean
-      data: any
-      itemName: string
-      nameKey: string
-      setOpen: React.Dispatch<React.SetStateAction<boolean>>
-      setData: React.Dispatch<React.SetStateAction<any>>
-    }>
   }
 }
 
@@ -100,32 +54,22 @@ export default function BooksLibraryProvider() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const entriesState = useBooksLibraryCommonState<IBooksLibraryEntry>(
-    'books-library/entries'
+  const entriesQuery = useAPIQuery<IBooksLibraryEntry[]>(
+    'books-library/entries',
+    ['books-library', 'entries']
   )
-  const categoriesState = useBooksLibraryCommonState<IBooksLibraryCategory>(
-    'books-library/categories'
+  const categoriesQuery = useAPIQuery<IBooksLibraryCategory[]>(
+    'books-library/categories',
+    ['books-library', 'categories']
   )
-  const languagesState = useBooksLibraryCommonState<IBooksLibraryLanguage>(
-    'books-library/languages'
+  const languagesQuery = useAPIQuery<IBooksLibraryLanguage[]>(
+    'books-library/languages',
+    ['books-library', 'languages']
   )
-  const fileTypesState = useBooksLibraryCommonState<IBooksLibraryFileType>(
-    'books-library/file-types'
+  const fileTypesQuery = useAPIQuery<IBooksLibraryFileType[]>(
+    'books-library/file-types',
+    ['books-library', 'fileTypes']
   )
-
-  const deleteModalConfigs = Object.entries({
-    category: categoriesState,
-    language: languagesState
-  } as Record<string, IBooksLibraryCommon<any>>).map(([key, state]) => ({
-    apiEndpoint: `books-library/${key.replace(/y$/, 'ie')}s`,
-    isOpen: state.deleteDataConfirmationModalOpen,
-    data: state.existedData,
-    itemName: key,
-    nameKey: 'name',
-    setOpen: state.setDeleteDataConfirmationOpen,
-    setData: state.setExistedData
-  }))
-
   const lastProcessesLength = useRef<number | null>(null)
   const lastProcessesData = useRef<string | null>(null)
   const [isFirstTime, setIsFirstTime] = useState(true)
@@ -196,10 +140,10 @@ export default function BooksLibraryProvider() {
 
   const value = useMemo(
     () => ({
-      entries: entriesState,
-      categories: categoriesState,
-      languages: languagesState,
-      fileTypes: fileTypesState,
+      entriesQuery,
+      categoriesQuery,
+      languagesQuery,
+      fileTypesQuery,
       miscellaneous: {
         processes,
         searchQuery,
@@ -207,20 +151,18 @@ export default function BooksLibraryProvider() {
         sidebarOpen,
         setSidebarOpen,
         libgenModalOpen,
-        setLibgenModalOpen,
-        deleteModalConfigs
+        setLibgenModalOpen
       }
     }),
     [
-      entriesState,
-      categoriesState,
-      languagesState,
-      fileTypesState,
+      entriesQuery,
+      categoriesQuery,
+      languagesQuery,
+      fileTypesQuery,
       processes,
       searchQuery,
       sidebarOpen,
-      libgenModalOpen,
-      deleteModalConfigs
+      libgenModalOpen
     ]
   )
 

@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react'
 
 import { SidebarItem } from '@lifeforge/ui'
 
+import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
 import ActionMenu from './ActionMenu'
 
@@ -10,27 +11,23 @@ function CategoryListItem({
   isSelected,
   onSelect,
   onCancelSelect,
-  setSelectedData,
-  setModifyModalOpenType,
-  setDeleteConfirmationModalOpen
+  modifiable = true
 }: {
   item: ICalendarCategory
   isSelected: boolean
   onSelect: (item: ICalendarCategory) => void
   onCancelSelect: () => void
-  setSelectedData?: React.Dispatch<
-    React.SetStateAction<ICalendarCategory | null>
-  >
-  setModifyModalOpenType?: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteConfirmationModalOpen?: React.Dispatch<React.SetStateAction<boolean>>
+  modifiable?: boolean
 }) {
+  const open = useModalStore(state => state.open)
+
   const handleEdit = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      setSelectedData?.(item)
-      setModifyModalOpenType?.('update')
+      open('calendar.modifyCategory', {
+        existedData: item,
+        type: 'update'
+      })
     },
     [item]
   )
@@ -38,19 +35,23 @@ function CategoryListItem({
   const handleDelete = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      setSelectedData?.(item)
-      setDeleteConfirmationModalOpen?.(true)
+      open('deleteConfirmation', {
+        apiEndpoint: 'calendar/categories',
+        confirmationText: 'Delete this event',
+        data: item,
+        itemName: 'category',
+        nameKey: 'name',
+        queryKey: ['calendar', 'categories']
+      })
     },
     [item]
   )
 
   const hamburgerMenuItems = useMemo(
     () =>
-      setSelectedData &&
-      setModifyModalOpenType &&
-      setDeleteConfirmationModalOpen && (
+      modifiable ? (
         <ActionMenu onDelete={handleDelete} onEdit={handleEdit} />
-      ),
+      ) : undefined,
     []
   )
 

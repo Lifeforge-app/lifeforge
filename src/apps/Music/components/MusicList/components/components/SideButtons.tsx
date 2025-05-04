@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -7,15 +9,33 @@ import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import forceDown from '@utils/forceDown'
 
+import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 
 function SideButtons({ music }: { music: IMusicEntry }) {
-  const {
-    toggleFavourite,
-    setIsModifyMusicModalOpen,
-    setExistedData,
-    setIsDeleteMusicConfirmationModalOpen
-  } = useMusicContext()
+  const queryClient = useQueryClient()
+  const open = useModalStore(state => state.open)
+  const { toggleFavourite } = useMusicContext()
+
+  const handleUpdateEntry = useCallback(() => {
+    open('music.updateMusic', {
+      existedData: music
+    })
+  }, [music])
+
+  const handleDeleteEntry = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'music/entries',
+      data: music,
+      itemName: 'music',
+      nameKey: 'name',
+      updateDataList: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['music', 'entries']
+        })
+      }
+    })
+  }, [music])
 
   return (
     <div className="flex w-auto min-w-0 shrink-0 items-center justify-end sm:w-2/12">
@@ -51,19 +71,13 @@ function SideButtons({ music }: { music: IMusicEntry }) {
         <MenuItem
           icon="tabler:pencil"
           text="Edit"
-          onClick={() => {
-            setIsModifyMusicModalOpen(true)
-            setExistedData(music)
-          }}
+          onClick={handleUpdateEntry}
         />
         <MenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
-          onClick={() => {
-            setExistedData(music)
-            setIsDeleteMusicConfirmationModalOpen(true)
-          }}
+          onClick={handleDeleteEntry}
         />
       </HamburgerMenu>
     </div>

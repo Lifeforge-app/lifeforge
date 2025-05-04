@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { Tooltip } from 'react-tooltip'
 
 import {
@@ -10,20 +10,10 @@ import EventDetails from '../../EventDetails.tsx'
 
 function EventItemTooltip({
   event,
-  category,
-  setModifyEventModalOpenType,
-  setExistedData,
-  setIsDeleteEventConfirmationModalOpen
+  category
 }: {
   event: ICalendarEvent
   category: ICalendarCategory | undefined
-  setModifyEventModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
   return (
     <Tooltip
@@ -37,15 +27,7 @@ function EventItemTooltip({
       positionStrategy="fixed"
     >
       <div className="relative max-h-96 max-w-96 min-w-64 overflow-y-auto whitespace-normal">
-        <EventDetails
-          category={category}
-          event={event}
-          setExistedData={setExistedData}
-          setIsDeleteEventConfirmationModalOpen={
-            setIsDeleteEventConfirmationModalOpen
-          }
-          setModifyEventModalOpenType={setModifyEventModalOpenType}
-        />
+        <EventDetails category={category} event={event} />
       </div>
     </Tooltip>
   )

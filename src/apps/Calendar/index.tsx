@@ -1,9 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import {
   ContentWrapperWithSidebar,
-  DeleteConfirmationModal,
   FAB,
   LayoutWithSidebar,
   MenuItem,
@@ -14,18 +13,19 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import { useModalStore } from '../../core/modals/useModalStore'
+import useModalsEffect from '../../core/modals/useModalsEffect'
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from './interfaces/calendar_interfaces'
-import ModifyCategoryModal from './modals/ModifyCategoryModal'
-import ModifyEventModal from './modals/ModifyEventModal'
-import ScanImageModal from './modals/ScanImageModal'
+import { calendarModals } from './modals'
 import { useCalendarStore } from './stores/useCalendarStore'
 
 function CalendarModule() {
+  const open = useModalStore(state => state.open)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { eventQueryKey } = useCalendarStore()
 
@@ -33,25 +33,6 @@ function CalendarModule() {
     'calendar/categories',
     ['calendar', 'categories']
   )
-  const [scanImageModalOpen, setScanImageModalOpen] = useState(false)
-  const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [
-    deleteCategoryConfirmationModalOpen,
-    setDeleteCategoryConfirmationModalOpen
-  ] = useState(false)
-  const [
-    isDeleteEventConfirmationModalOpen,
-    setIsDeleteEventConfirmationModalOpen
-  ] = useState(false)
-  const [existedData, setExistedData] =
-    useState<Partial<ICalendarEvent> | null>(null)
-  const [modifyCategoryOpenType, setModifyCategoryOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [existedCategoryData, setExistedCategoryData] =
-    useState<ICalendarCategory | null>(null)
   const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
     `calendar/events?start=${eventQueryKey[2]}&end=${eventQueryKey[3]}`,
     eventQueryKey
@@ -72,6 +53,19 @@ function CalendarModule() {
     }
   }, [rawEventsQuery.data])
 
+  const handleScanImageModalOpen = useCallback(() => {
+    open('calendar.scanImage', {})
+  }, [])
+
+  const handleCreateEvent = useCallback(() => {
+    open('calendar.modifyEvent', {
+      existedData: null,
+      type: 'create'
+    })
+  }, [])
+
+  useModalsEffect(calendarModals)
+
   return (
     <>
       <ModuleWrapper>
@@ -79,13 +73,7 @@ function CalendarModule() {
         <LayoutWithSidebar>
           <Sidebar
             categoriesQuery={categoriesQuery}
-            modifyCategoryModalOpenType={modifyCategoryOpenType}
             selectedCategory={selectedCategory}
-            setDeleteCategoryConfirmationModalOpen={
-              setDeleteCategoryConfirmationModalOpen
-            }
-            setExistedData={setExistedCategoryData}
-            setModifyCategoryModalOpenType={setModifyCategoryOpenType}
             setSelectedCategory={setSelectedCategory}
             setSidebarOpen={setSidebarOpen}
             sidebarOpen={sidebarOpen}
@@ -97,12 +85,6 @@ function CalendarModule() {
                   categories={categoriesQuery?.data ?? []}
                   events={events}
                   selectedCategory={selectedCategory}
-                  setExistedData={setExistedData}
-                  setIsDeleteEventConfirmationModalOpen={
-                    setIsDeleteEventConfirmationModalOpen
-                  }
-                  setModifyEventModalOpenType={setModifyEventModalOpenType}
-                  setScanImageModalOpen={setScanImageModalOpen}
                 />
               </div>
             </Scrollbar>
@@ -119,67 +101,17 @@ function CalendarModule() {
               icon="tabler:photo"
               namespace="apps.calendar"
               text="Scan from Image"
-              onClick={() => {
-                setScanImageModalOpen(true)
-              }}
+              onClick={handleScanImageModalOpen}
             />
             <MenuItem
               icon="tabler:plus"
               namespace="apps.calendar"
               text="Input Manually"
-              onClick={() => {
-                setModifyEventModalOpenType('create')
-                setExistedData(null)
-              }}
+              onClick={handleCreateEvent}
             />
           </MenuItems>
         </Menu>
       </ModuleWrapper>
-      <ScanImageModal
-        open={scanImageModalOpen}
-        setExistedData={setExistedData}
-        setModifyModalOpenType={setModifyEventModalOpenType}
-        setOpen={setScanImageModalOpen}
-      />
-      <ModifyEventModal
-        categoriesQuery={categoriesQuery}
-        existedData={existedData}
-        openType={modifyEventModalOpenType}
-        setOpenType={setModifyEventModalOpenType}
-      />
-      <ModifyCategoryModal
-        existedData={existedCategoryData}
-        openType={modifyCategoryOpenType}
-        setOpenType={setModifyCategoryOpenType}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="calendar/categories"
-        confirmationText="Delete this event"
-        data={existedCategoryData ?? undefined}
-        isOpen={deleteCategoryConfirmationModalOpen}
-        itemName="category"
-        nameKey="name"
-        queryKey={['calendar', 'categories']}
-        onClose={() => {
-          setDeleteCategoryConfirmationModalOpen(false)
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="calendar/events"
-        data={
-          { ...existedData, id: existedData?.id?.split('-')[0] ?? '' } as any
-        }
-        isOpen={isDeleteEventConfirmationModalOpen}
-        itemName="event"
-        nameKey="title"
-        queryKey={eventQueryKey}
-        queryUpdateType="invalidate"
-        onClose={() => {
-          setIsDeleteEventConfirmationModalOpen(false)
-          setExistedData(null)
-          categoriesQuery.refetch()
-        }}
-      />
     </>
   )
 }

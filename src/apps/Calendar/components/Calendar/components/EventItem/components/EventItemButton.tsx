@@ -36,7 +36,7 @@ function EventItemButton({
         <span
           className={clsx(
             'w-full min-w-0 truncate text-left',
-            isStrikethrough && 'line-through decoration-2'
+            isStrikethrough && 'line-through decoration-[1.5px]'
           )}
         >
           {title}
@@ -47,5 +47,11 @@ function EventItemButton({
 }
 
 export default memo(EventItemButton, (prevProps, nextProps) => {
-  return prevProps.id === nextProps.id
+  return (
+    prevProps.id === nextProps.id &&
+    prevProps.title === nextProps.title &&
+    prevProps.color === nextProps.color &&
+    prevProps.icon === nextProps.icon &&
+    prevProps.isStrikethrough === nextProps.isStrikethrough
+  )
 })

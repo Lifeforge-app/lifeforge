@@ -1,9 +1,9 @@
+import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
-
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type ITodoListTag } from '../../../interfaces/todo_list_interfaces'
 
 function TaskTagListItem({
@@ -13,12 +13,27 @@ function TaskTagListItem({
   item: ITodoListTag
   setSidebarOpen: (value: boolean) => void
 }) {
+  const open = useModalStore(state => state.open)
   const [searchParams, setSearchParams] = useSearchParams()
-  const {
-    setModifyTagModalOpenType: setModifyModalOpenType,
-    setSelectedTag: setSelectedData,
-    setDeleteTagConfirmationModalOpen: setDeleteConfirmationModalOpen
-  } = useTodoListContext()
+
+  const handleUpdateTag = useCallback(() => {
+    open('todoList.modifyTag', {
+      type: 'update',
+      existedData: item
+    })
+  }, [item])
+
+  const handleDeleteTag = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'todo-list/tags',
+      confirmationText: 'Delete this tag',
+      customText:
+        'Are you sure you want to delete this tag? The tasks with this tag will not be deleted.',
+      data: item,
+      itemName: 'tag',
+      queryKey: ['todo-list', 'tags']
+    })
+  }, [item])
 
   return (
     <SidebarItem
@@ -28,21 +43,13 @@ function TaskTagListItem({
           <MenuItem
             icon="tabler:pencil"
             text="Edit"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setModifyModalOpenType('update')
-            }}
+            onClick={handleUpdateTag}
           />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setDeleteConfirmationModalOpen(true)
-            }}
+            onClick={handleDeleteTag}
           />
         </>
       }

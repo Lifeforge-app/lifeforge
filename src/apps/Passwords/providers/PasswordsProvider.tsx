@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/use-type-alias */
 import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'
@@ -14,21 +13,11 @@ interface IPasswordsData {
 
   otpSuccess: boolean
   masterPassword: string
-  modifyPasswordModalOpenType: 'create' | 'update' | null
   query: string
-  isDeletePasswordConfirmationModalOpen: boolean
-  existedData: IPasswordEntry | null
 
   setOtpSuccess: React.Dispatch<React.SetStateAction<boolean>>
   setMasterPassword: React.Dispatch<React.SetStateAction<string>>
-  setModifyPasswordModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
   setQuery: React.Dispatch<React.SetStateAction<string>>
-  setIsDeletePasswordConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<IPasswordEntry | null>>
 }
 
 export const PasswordsContext = createContext<IPasswordsData | undefined>(
@@ -36,16 +25,9 @@ export const PasswordsContext = createContext<IPasswordsData | undefined>(
 )
 
 export default function PasswordsProvider() {
-  const [otpSuccess, setOtpSuccess] = useState(true)
+  const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState('')
-  const [modifyPasswordModalOpenType, setModifyPasswordModalOpenType] =
-    useState<'create' | 'update' | null>(null)
   const [query, setQuery] = useState('')
-  const [
-    isDeletePasswordConfirmationModalOpen,
-    setIsDeletePasswordConfirmationModalOpen
-  ] = useState(false)
-  const [existedData, setExistedData] = useState<IPasswordEntry | null>(null)
   const debouncedQuery = useDebounce(query, 500)
   const passwordListQuery = useAPIQuery<IPasswordEntry[]>(
     'passwords/password',
@@ -75,29 +57,13 @@ export default function PasswordsProvider() {
 
       otpSuccess,
       masterPassword,
-      modifyPasswordModalOpenType,
       query,
-      isDeletePasswordConfirmationModalOpen,
-      existedData,
 
       setOtpSuccess,
       setMasterPassword,
-      setModifyPasswordModalOpenType,
-      setQuery,
-      setIsDeletePasswordConfirmationModalOpen,
-      setExistedData
+      setQuery
     }),
-    [
-      passwordListQuery,
-      filteredPasswordList,
-
-      otpSuccess,
-      masterPassword,
-      modifyPasswordModalOpenType,
-      query,
-      isDeletePasswordConfirmationModalOpen,
-      existedData
-    ]
+    [passwordListQuery, filteredPasswordList, otpSuccess, masterPassword, query]
   )
 
   return (

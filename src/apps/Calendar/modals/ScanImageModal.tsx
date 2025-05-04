@@ -1,36 +1,17 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import {
-  Button,
-  ImageAndFileInput,
-  ImagePickerModal,
-  ModalHeader,
-  ModalWrapper
-} from '@lifeforge/ui'
+import { Button, ImageAndFileInput, ModalHeader } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
 import { ICalendarEvent } from '../interfaces/calendar_interfaces'
 
-function ScanImageModal({
-  open,
-  setOpen,
-  setExistedData,
-  setModifyModalOpenType
-}: {
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setExistedData: React.Dispatch<
-    React.SetStateAction<Partial<ICalendarEvent> | null>
-  >
-  setModifyModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-}) {
+function ScanImageModal({ onClose }: { onClose: () => void }) {
+  const open = useModalStore(state => state.open)
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
-  const [imagePickerModalOpen, setImagePickerModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
   async function onSubmit() {
@@ -49,12 +30,13 @@ function ScanImageModal({
           body: formData
         }
       )
-      setExistedData({
-        ...data,
-        type: 'single'
+      open('calendar.modifyEvent', {
+        type: 'create',
+        existedData: {
+          ...data,
+          type: 'single'
+        }
       })
-      setModifyModalOpenType('create')
-      setOpen(false)
       setFile(null)
       setPreview(null)
       toast.success('Image scanned successfully')
@@ -68,26 +50,28 @@ function ScanImageModal({
 
   return (
     <>
-      <ModalWrapper isOpen={open} minWidth="50vw">
+      <div className="min-w-[50vw]">
         <ModalHeader
           hasAI
           icon="tabler:scan"
           namespace="apps.calendar"
           title="scanImage"
-          onClose={() => {
-            setOpen(false)
-            setExistedData(null)
-          }}
+          onClose={onClose}
         />
         <ImageAndFileInput
+          acceptedMimeTypes={{
+            images: ['image/jpeg', 'image/png', 'image/jpg'],
+            files: ['application/pdf']
+          }}
           icon="tabler:photo"
           image={file}
           name="image"
           namespace="apps.calendar"
           preview={preview}
-          setImage={setFile}
-          setImagePickerModalOpen={setImagePickerModalOpen}
-          setPreview={setPreview}
+          setData={({ image, preview }) => {
+            setFile(image)
+            setPreview(preview)
+          }}
           onImageRemoved={() => {
             setFile(null)
             setPreview(null)
@@ -95,7 +79,7 @@ function ScanImageModal({
         />
         <Button
           iconAtEnd
-          className="mt-6"
+          className="mt-6 w-full"
           icon="tabler:arrow-right"
           loading={loading}
           onClick={() => {
@@ -104,21 +88,7 @@ function ScanImageModal({
         >
           proceed
         </Button>
-      </ModalWrapper>
-      <ImagePickerModal
-        acceptedMimeTypes={{
-          images: ['image/jpeg', 'image/png', 'image/jpg'],
-          files: ['application/pdf']
-        }}
-        isOpen={imagePickerModalOpen}
-        onClose={() => {
-          setImagePickerModalOpen(false)
-        }}
-        onSelect={async (file, preview) => {
-          setFile(file)
-          setPreview(preview)
-        }}
-      />
+      </div>
     </>
   )
 }

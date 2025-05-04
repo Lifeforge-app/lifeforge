@@ -9,27 +9,15 @@ import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 
-function LedgerItem({
-  ledger,
-  setSelectedData,
-  setModifyModalOpenType,
-  setDeleteLedgersConfirmationOpen
-}: {
-  ledger: IWalletLedger
-  setSelectedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
-  setModifyModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteLedgersConfirmationOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-}) {
+function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
   const { t } = useTranslation('apps.wallet')
   const { componentBgWithHover } = useComponentBg()
   const navigate = useNavigate()
   const { transactionsQuery } = useWalletData()
+  const open = useModalStore(state => state.open)
 
   return (
     <div
@@ -81,8 +69,10 @@ function LedgerItem({
           icon="tabler:pencil"
           text="Edit"
           onClick={() => {
-            setSelectedData(ledger)
-            setModifyModalOpenType('update')
+            open('wallet.ledgers.modifyLedger', {
+              type: 'update',
+              existedData: ledger
+            })
           }}
         />
         <MenuItem
@@ -90,8 +80,14 @@ function LedgerItem({
           icon="tabler:trash"
           text="Delete"
           onClick={() => {
-            setSelectedData(ledger)
-            setDeleteLedgersConfirmationOpen(true)
+            open('deleteConfirmation', {
+              apiEndpoint: 'wallet/ledgers',
+              confirmationText: 'Delete this ledger',
+              data: ledger,
+              itemName: 'ledger',
+              nameKey: 'name',
+              queryKey: ['wallet', 'ledgers']
+            })
           }}
         />
       </HamburgerMenu>

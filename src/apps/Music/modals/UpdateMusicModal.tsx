@@ -3,22 +3,24 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { Button, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
-
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
+import { Button, ModalHeader, TextInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { IMusicEntry } from '../interfaces/music_interfaces'
 
-function ModifyMusicModal() {
+function UpdateMusicModal({
+  data: { existedData },
+  onClose
+}: {
+  data: {
+    existedData: IMusicEntry | null
+  }
+  onClose: () => void
+}) {
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.music')
-  const {
-    isModifyMusicModalOpen: isOpen,
-    setIsModifyMusicModalOpen: setOpen,
-    existedData: targetMusic
-  } = useMusicContext()
+
   const [musicName, setMusicName] = useState('')
   const [musicAuthor, setMusicAuthor] = useState('')
   const [loading, setLoading] = useState(false)
@@ -38,17 +40,16 @@ function ModifyMusicModal() {
     }
 
     try {
-      await fetchAPI(`music-library/entries/${targetMusic?.id}`, {
+      await fetchAPI(`music/entries/${existedData?.id}`, {
         method: 'PATCH',
         body: music
       })
 
-      setOpen(false)
       queryClient.setQueryData<IMusicEntry[]>(['music', 'entries'], prev => {
         if (!prev) return prev
 
         return prev.map(music => {
-          if (music.id === targetMusic?.id) {
+          if (music.id === existedData?.id) {
             return {
               ...music,
               name: musicName,
@@ -58,6 +59,8 @@ function ModifyMusicModal() {
           return music
         })
       })
+
+      onClose()
     } catch {
       toast.error('Failed to update music data')
     } finally {
@@ -66,24 +69,22 @@ function ModifyMusicModal() {
   }
 
   useEffect(() => {
-    if (isOpen && ref.current !== null) {
+    if (ref.current !== null) {
       ref.current.focus()
     }
 
-    if (targetMusic !== null && isOpen) {
-      setMusicName(targetMusic.name)
-      setMusicAuthor(targetMusic.author)
+    if (existedData !== null) {
+      setMusicName(existedData.name)
+      setMusicAuthor(existedData.author)
     }
-  }, [isOpen, targetMusic])
+  }, [existedData])
 
   return (
-    <ModalWrapper isOpen={isOpen}>
+    <>
       <ModalHeader
         icon="tabler:pencil"
         title={t('music.updateMusic')}
-        onClose={() => {
-          setOpen(false)
-        }}
+        onClose={onClose}
       />
       <TextInput
         ref={ref}
@@ -103,7 +104,7 @@ function ModifyMusicModal() {
       />
       <TextInput
         darker
-        className="mt-6 w-[40rem]"
+        className="mt-4 w-[40rem]"
         icon="tabler:user"
         name="Author"
         namespace="apps.music"
@@ -117,6 +118,7 @@ function ModifyMusicModal() {
         }}
       />
       <Button
+        className="mt-6 w-full"
         icon="tabler:pencil"
         loading={loading}
         onClick={() => {
@@ -125,8 +127,8 @@ function ModifyMusicModal() {
       >
         Rename
       </Button>
-    </ModalWrapper>
+    </>
   )
 }
 
-export default ModifyMusicModal
+export default UpdateMusicModal

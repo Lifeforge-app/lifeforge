@@ -4,12 +4,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  Button,
-  ColorInput,
-  ColorPickerModal,
-  ConfigColumn
-} from '@lifeforge/ui'
+import { Button, ColorInput, ConfigColumn } from '@lifeforge/ui'
 
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 
@@ -18,8 +13,6 @@ function BgTempSelector() {
   const [customBgTemp, setCustomBgTemp] = useState<string>(
     bgTemp.startsWith('#') ? bgTemp : '#000000'
   )
-  const [colorPickerModalOpen, setColorPickerModalOpen] =
-    useState<boolean>(false)
   const { t } = useTranslation(['core.personalization', 'common.buttons'])
 
   return (
@@ -57,7 +50,6 @@ function BgTempSelector() {
               name="Color Hex"
               namespace="core.personalization"
               setColor={setCustomBgTemp}
-              setColorPickerOpen={setColorPickerModalOpen}
             />
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (
@@ -80,12 +72,6 @@ function BgTempSelector() {
                   </Button>
                 </>
               )}
-            <ColorPickerModal
-              color={customBgTemp}
-              isOpen={colorPickerModalOpen}
-              setColor={setCustomBgTemp}
-              setOpen={setColorPickerModalOpen}
-            />
           </>
         )}
       </div>

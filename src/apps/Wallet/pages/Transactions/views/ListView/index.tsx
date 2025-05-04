@@ -6,24 +6,15 @@ import { Scrollbar } from '@lifeforge/ui'
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import TransactionListItem from './components/TransactionListItem'
 
 const AS = AutoSizer as any
 const L = List as any
 
 function ListView({
-  setSelectedData,
-  setModifyModalOpenType,
-  setDeleteTransactionsConfirmationOpen,
   setReceiptModalOpen,
   setReceiptToView
 }: {
-  setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletTransaction | null>
-  >
-  setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
-  setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>
   setReceiptModalOpen: React.Dispatch<boolean>
   setReceiptToView: React.Dispatch<string>
 }) {
@@ -55,13 +46,8 @@ function ListView({
                   <div key={key} style={style}>
                     {transaction && (
                       <TransactionListItem
-                        setDeleteTransactionsConfirmationOpen={
-                          setDeleteTransactionsConfirmationOpen
-                        }
-                        setModifyModalOpenType={setModifyModalOpenType}
                         setReceiptModalOpen={setReceiptModalOpen}
                         setReceiptToView={setReceiptToView}
-                        setSelectedData={setSelectedData}
                         transaction={transaction}
                       />
                     )}

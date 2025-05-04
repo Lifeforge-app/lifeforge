@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
 import {
   Button,
-  DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   MenuItem,
@@ -16,28 +15,32 @@ import {
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-import { type IWalletAsset } from '../../interfaces/wallet_interfaces'
+import { useModalStore } from '../../../../core/modals/useModalStore'
+import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import AssetItem from './components/AssetItem'
-import ModifyAssetsModal from './components/ModifyAssetsModal'
+import { walletAssetsModals } from './modals'
 
 function Assets() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wallet')
   const { assetsQuery } = useWalletData()
   const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
-  const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [deleteAssetsConfirmationOpen, setDeleteAssetsConfirmationOpen] =
-    useState(false)
-  const [selectedData, setSelectedData] = useState<IWalletAsset | null>(null)
   const { hash } = useLocation()
+
+  const handleCreateCategory = useCallback(() => {
+    open('wallet.assets.modifyAsset', {
+      type: 'create',
+      existedData: null
+    })
+  }, [])
 
   useEffect(() => {
     if (hash === '#new') {
-      setSelectedData(null)
-      setModifyModalOpenType('create')
+      handleCreateCategory()
     }
   }, [hash])
+
+  useModalsEffect(walletAssetsModals)
 
   return (
     <ModuleWrapper>
@@ -51,9 +54,7 @@ function Assets() {
                 tProps={{
                   item: t('items.asset')
                 }}
-                onClick={() => {
-                  setModifyModalOpenType('create')
-                }}
+                onClick={handleCreateCategory}
               >
                 new
               </Button>
@@ -91,15 +92,7 @@ function Assets() {
             {assets.length > 0 ? (
               <div className="mt-6 mb-24 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
                 {assets.map(asset => (
-                  <AssetItem
-                    key={asset.id}
-                    asset={asset}
-                    setDeleteAssetsConfirmationOpen={
-                      setDeleteAssetsConfirmationOpen
-                    }
-                    setModifyModalOpenType={setModifyModalOpenType}
-                    setSelectedData={setSelectedData}
-                  />
+                  <AssetItem key={asset.id} asset={asset} />
                 ))}
               </div>
             ) : (
@@ -111,40 +104,15 @@ function Assets() {
                 icon="tabler:wallet-off"
                 name="assets"
                 namespace="apps.wallet"
-                onCTAClick={setModifyModalOpenType}
+                onCTAClick={handleCreateCategory}
               />
             )}
             {assets.length > 0 && (
-              <FAB
-                icon="tabler:plus"
-                onClick={() => {
-                  setSelectedData(null)
-                  setModifyModalOpenType('create')
-                }}
-              />
+              <FAB icon="tabler:plus" onClick={handleCreateCategory} />
             )}
           </>
         )}
       </QueryWrapper>
-      <ModifyAssetsModal
-        existedData={selectedData}
-        openType={modifyAssetsModalOpenType}
-        setExistedData={setSelectedData}
-        setOpenType={setModifyModalOpenType}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="wallet/assets"
-        confirmationText="Delete this asset account"
-        data={selectedData ?? undefined}
-        isOpen={deleteAssetsConfirmationOpen}
-        itemName="asset account"
-        nameKey="name"
-        queryKey={['wallet', 'assets']}
-        onClose={() => {
-          setDeleteAssetsConfirmationOpen(false)
-          setSelectedData(null)
-        }}
-      />
     </ModuleWrapper>
   )
 }
