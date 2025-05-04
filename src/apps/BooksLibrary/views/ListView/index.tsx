@@ -10,7 +10,7 @@ import EntryItem from './components/EntryItem'
 function ListView({ books }: { books: IBooksLibraryEntry[] }) {
   const {
     miscellaneous: { processes },
-    categories: { dataQuery: categoriesQuery }
+    categoriesQuery
   } = useBooksLibraryContext()
 
   return (

@@ -5,15 +5,7 @@ import { parse as parseCookie } from 'cookie'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import {
-  Button,
-  ModalHeader,
-  ModalWrapper,
-  QueryWrapper,
-  TextInput
-} from '@lifeforge/ui'
-
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
+import { Button, ModalHeader, QueryWrapper, TextInput } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -27,10 +19,8 @@ const intervalManager = IntervalManager.getInstance()
 const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
 
-function YoutubeDownloaderModal() {
+function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
-  const { isYoutubeDownloaderOpen: isOpen, setIsYoutubeDownloaderOpen } =
-    useMusicContext()
   const [loading, setLoading] = useState(false)
   const [videoURLinput, setVideoURLInput] = useState('')
   const videoURL = useDebounce(videoURLinput, 500)
@@ -88,10 +78,10 @@ function YoutubeDownloaderModal() {
                   toast.success('Music downloaded successfully!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
-                  setIsYoutubeDownloaderOpen(false)
                   queryClient.invalidateQueries({
                     queryKey: ['music', 'entries']
                   })
+                  onClose()
                   break
                 case 'failed':
                   toast.error('Failed to download music!')
@@ -114,19 +104,17 @@ function YoutubeDownloaderModal() {
   }
 
   useEffect(() => {
-    if (isOpen) {
-      setVideoURLInput('')
-    }
+    setVideoURLInput('')
   }, [])
 
   return (
-    <ModalWrapper isOpen={isOpen} minWidth="40vw">
+    <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:brand-youtube"
         namespace="apps.music"
         title="Download from YouTube"
         onClose={() => {
-          setIsYoutubeDownloaderOpen(false)
+          onClose()
           queryClient.invalidateQueries({
             queryKey: ['music', 'entries']
           })
@@ -161,7 +149,7 @@ function YoutubeDownloaderModal() {
           )}
         </QueryWrapper>
       )}
-    </ModalWrapper>
+    </div>
   )
 }
 export default YoutubeDownloaderModal

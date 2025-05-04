@@ -3,6 +3,7 @@ import { Route } from 'react-router'
 
 import { LoadingScreen } from '@lifeforge/ui'
 
+import ModalManager from '../../modals/ModalManager'
 import { RouteItem } from '../interfaces/routes_interfaces'
 import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
 
@@ -31,6 +32,7 @@ function ChildRoutesRenderer({
             >
               <Comp />
             </Suspense>
+            <ModalManager />
           </APIKeyStatusProvider>
         }
         path={(!isNested ? '/' : '') + path}

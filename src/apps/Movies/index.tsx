@@ -1,13 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import {
   Button,
-  DeleteConfirmationModal,
+  EmptyStateScreen,
   FAB,
   ModuleHeader,
   ModuleWrapper,
@@ -22,38 +22,40 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import ModifyTicketModal from './components/ModifyTicketModal'
+import { useModalStore } from '../../core/modals/useModalStore'
+import useModalsEffect from '../../core/modals/useModalsEffect'
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
-import SearchTMDBModal from './components/SearchTMDBModal'
-import ShowTicketModal from './components/ShowTicketModal'
+import { moviesModals } from './modals'
 
 function Movies() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.movies')
   const queryClient = useQueryClient()
   const [searchParams, setSearchParams] = useSearchParams()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [searchTMDBModal, setSearchTMDBModal] = useState(false)
-  const [modifyTicketModalOpenType, setModifyTicketModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [showTicketModalOpenFor, setShowTicketModalOpenFor] = useState('')
-  const [toBeDeleted, setToBeDeleted] = useState<IMovieEntry | null>(null)
-  const [toBeUpdated, setToBeUpdated] = useState<IMovieEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
-  const queryKey = useMemo(
-    () => ['movies', 'entries', debouncedSearchQuery],
-    [debouncedSearchQuery]
-  )
-  const entriesQuery = useAPIQuery<IMovieEntry[]>('movies/entries', queryKey)
+  const entriesQuery = useAPIQuery<IMovieEntry[]>('movies/entries', [
+    'movies',
+    'entries'
+  ])
 
   useEffect(() => {
+    if (!entriesQuery.data) return
+
     if (searchParams.get('show-ticket')) {
-      setShowTicketModalOpenFor(searchParams.get('show-ticket') ?? '')
+      const target = entriesQuery.data.find(
+        entry => entry.id === searchParams.get('show-ticket')
+      )
+      if (!target) return
+
+      open('movies.showTicket', {
+        entry: target
+      })
       setSearchParams({}, { replace: true })
     }
-  }, [searchParams, setSearchParams])
+  }, [searchParams, setSearchParams, entriesQuery.data])
 
   async function toggleWatched(id: string, isWatched: boolean = false) {
     try {
@@ -64,24 +66,35 @@ function Movies() {
         }
       )
 
-      queryClient.setQueryData<IMovieEntry[]>(queryKey, oldData => {
-        if (!oldData) return []
+      queryClient.setQueryData<IMovieEntry[]>(
+        ['movies', 'entries'],
+        oldData => {
+          if (!oldData) return []
 
-        return oldData.map(entry => {
-          if (entry.id === id) {
-            return {
-              ...entry,
-              is_watched: !entry.is_watched
+          return oldData.map(entry => {
+            if (entry.id === id) {
+              return {
+                ...entry,
+                is_watched: !entry.is_watched
+              }
             }
-          }
-          return entry
-        })
-      })
+            return entry
+          })
+        }
+      )
     } catch (error) {
       console.error('Error marking movie as watched:', error)
       toast.error('Failed to mark movie as watched.')
     }
   }
+
+  const handleOpenTMDBModal = useCallback(() => {
+    open('movies.searchTMDB', {
+      entriesIDs: entriesQuery.data?.map(entry => entry.id) ?? []
+    })
+  }, [entriesQuery.data])
+
+  useModalsEffect(moviesModals)
 
   return (
     <ModuleWrapper>
@@ -91,7 +104,7 @@ function Movies() {
             className="hidden md:flex"
             icon="tabler:plus"
             tProps={{ item: t('items.movie') }}
-            onClick={() => setSearchTMDBModal(true)}
+            onClick={handleOpenTMDBModal}
           >
             new
           </Button>
@@ -118,6 +131,21 @@ function Movies() {
       </div>
       <QueryWrapper query={entriesQuery}>
         {data => {
+          if (!data.length) {
+            return (
+              <EmptyStateScreen
+                ctaContent={t('common.buttons:new', {
+                  item: t('apps.movies:items.movie')
+                })}
+                ctaIcon="tabler:plus"
+                icon="tabler:movie-off"
+                name="library"
+                namespace="apps.movies"
+                onCTAClick={handleOpenTMDBModal}
+              />
+            )
+          }
+
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
           return (
             <FinalComponent
@@ -126,49 +154,12 @@ function Movies() {
                   .toLowerCase()
                   .includes(debouncedSearchQuery.toLowerCase())
               )}
-              onDelete={entry => setToBeDeleted(entry)}
-              onModifyTicket={(type, entry) => {
-                setModifyTicketModalOpenType(type)
-                setToBeUpdated(entry)
-              }}
-              onNewMovie={() => setSearchTMDBModal(true)}
-              onShowTicket={id => setShowTicketModalOpenFor(id)}
               onToggleWatched={async id => toggleWatched(id)}
             />
           )
         }}
       </QueryWrapper>
-      <SearchTMDBModal
-        entriesIDs={entriesQuery.data?.map(entry => entry.tmdb_id) ?? []}
-        isOpen={searchTMDBModal}
-        queryKey={queryKey}
-        onClose={() => setSearchTMDBModal(false)}
-      />
-      <ModifyTicketModal
-        existedData={toBeUpdated}
-        openType={modifyTicketModalOpenType}
-        queryKey={queryKey}
-        setOpenType={setModifyTicketModalOpenType}
-      />
-      <ShowTicketModal
-        entry={entriesQuery.data?.find(
-          entry => entry.id === showTicketModalOpenFor
-        )}
-        isOpen={Boolean(showTicketModalOpenFor)}
-        onClose={() => {
-          setShowTicketModalOpenFor('')
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="/movies/entries"
-        data={toBeDeleted ?? undefined}
-        isOpen={Boolean(toBeDeleted)}
-        itemName="movie"
-        nameKey="title"
-        queryKey={queryKey}
-        onClose={() => setToBeDeleted(null)}
-      />
-      <FAB hideWhen="md" onClick={() => setSearchTMDBModal(true)} />
+      <FAB hideWhen="md" onClick={handleOpenTMDBModal} />
     </ModuleWrapper>
   )
 }

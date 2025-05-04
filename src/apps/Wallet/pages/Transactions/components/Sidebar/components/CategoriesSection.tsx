@@ -6,12 +6,14 @@ import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
+import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import CategoriesSectionItem from './CategoriesSectionItem'
 
 function CategoriesSection() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wallet')
   const { categoriesQuery } = useWalletData()
-  const { selectedType, setManageCategoriesModalOpen } = useWalletStore()
+  const { selectedType } = useWalletStore()
 
   const categories = useMemo(
     () =>
@@ -39,8 +41,11 @@ function CategoriesSection() {
   )
 
   const handleActionButtonClick = useCallback(() => {
-    setManageCategoriesModalOpen('new')
-  }, [setManageCategoriesModalOpen])
+    open('wallet.transactions.modifyCategory', {
+      type: 'create',
+      existedData: null
+    })
+  }, [])
 
   return selectedType !== 'transfer' ? (
     <>

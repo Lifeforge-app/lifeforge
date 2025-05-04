@@ -2,12 +2,7 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  Button,
-  ColorInput,
-  ColorPickerModal,
-  ConfigColumn
-} from '@lifeforge/ui'
+import { Button, ColorInput, ConfigColumn } from '@lifeforge/ui'
 
 import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 
@@ -16,8 +11,6 @@ function ThemeColorSelector() {
   const [customThemeColor, setCustomThemeColor] = useState<string>(
     themeColor.startsWith('#') ? themeColor : '#000000'
   )
-  const [colorPickerModalOpen, setColorPickerModalOpen] =
-    useState<boolean>(false)
   const { t } = useTranslation('core.personalization')
 
   return (
@@ -42,7 +35,6 @@ function ThemeColorSelector() {
               name="Color Hex"
               namespace="core.personalization"
               setColor={setCustomThemeColor}
-              setColorPickerOpen={setColorPickerModalOpen}
             />
             {themeColor !== customThemeColor &&
               customThemeColor.match(/^#[0-9A-F]{6}$/i) !== null && (
@@ -56,12 +48,6 @@ function ThemeColorSelector() {
                   <span className="inline lg:hidden">{t('buttons.save')}</span>
                 </Button>
               )}
-            <ColorPickerModal
-              color={customThemeColor}
-              isOpen={colorPickerModalOpen}
-              setColor={setCustomThemeColor}
-              setOpen={setColorPickerModalOpen}
-            />
           </>
         )}
       </div>

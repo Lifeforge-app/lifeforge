@@ -1,3 +1,4 @@
+// import MillionLint from '@million/lint'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
@@ -12,7 +13,7 @@ const ReactCompilerConfig = {
 export default defineConfig({
   envDir: path.resolve(__dirname, './env'),
   plugins: [
-    // MillionCompiler.vite(),
+    // MillionLint.vite({}),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]

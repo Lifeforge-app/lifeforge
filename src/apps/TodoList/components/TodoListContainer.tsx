@@ -1,52 +1,27 @@
-import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import {
-  DeleteConfirmationModal,
-  EmptyStateScreen,
-  FAB,
-  QueryWrapper,
-  SearchInput
-} from '@lifeforge/ui'
+import { EmptyStateScreen, FAB, QueryWrapper, SearchInput } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import useModalsEffect from '../../../core/modals/useModalsEffect'
 import { ITodoListEntry } from '../interfaces/todo_list_interfaces'
-import ModifyListModal from '../modals/ModifyListModal'
-import ModifyPriorityModal from '../modals/ModifyPriorityModal'
-import ModifyTagModal from '../modals/ModifyTagModal'
+import { todoListModals } from '../modals'
 import Header from './Header'
 import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 
 function TodoListContainer() {
-  const queryClient = useQueryClient()
   const { t } = useTranslation('apps.todoList')
   const [searchParams, setSearchParams] = useSearchParams()
-  const {
-    entriesQueryKey,
-    entriesQuery,
-    setModifyTaskWindowOpenType,
-    deleteTaskConfirmationModalOpen,
-    setDeleteTaskConfirmationModalOpen,
-    selectedTask,
-    selectedPriority,
-    selectedList,
-    selectedTag,
-    setSelectedTask,
-    deletePriorityConfirmationModalOpen,
-    setDeletePriorityConfirmationModalOpen,
-    deleteListConfirmationModalOpen,
-    setDeleteListConfirmationModalOpen,
-    deleteTagConfirmationModalOpen,
-    setDeleteTagConfirmationModalOpen
-  } = useTodoListContext()
+  const { entriesQuery, setModifyTaskWindowOpenType, setSelectedTask } =
+    useTodoListContext()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -91,6 +66,8 @@ function TodoListContainer() {
     }
   }, [searchParams, entriesQuery.data])
 
+  useModalsEffect(todoListModals)
+
   return (
     <>
       <div className="mt-6 flex size-full min-h-0 flex-1">
@@ -126,25 +103,6 @@ function TodoListContainer() {
         </div>
       </div>
       <ModifyTaskWindow />
-      <DeleteConfirmationModal
-        apiEndpoint="todo-list/entries"
-        data={selectedTask ?? undefined}
-        isOpen={deleteTaskConfirmationModalOpen}
-        itemName="task"
-        nameKey="summary"
-        queryKey={entriesQueryKey}
-        onClose={() => {
-          setDeleteTaskConfirmationModalOpen(false)
-          queryClient.invalidateQueries({
-            queryKey: ['todo-list', 'priorities']
-          })
-          queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
-          queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
-          queryClient.invalidateQueries({
-            queryKey: ['todo-list', 'status-counter']
-          })
-        }}
-      />
       {(entriesQuery.data ?? []).length > 0 && (
         <FAB
           onClick={() => {
@@ -153,53 +111,6 @@ function TodoListContainer() {
           }}
         />
       )}
-      <ModifyPriorityModal />
-      <DeleteConfirmationModal
-        apiEndpoint="todo-list/priorities"
-        confirmationText="Delete this priority"
-        customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
-        data={selectedPriority ?? undefined}
-        isOpen={deletePriorityConfirmationModalOpen}
-        itemName="priority"
-        queryKey={['todo-list', 'priorities']}
-        onClose={() => {
-          setDeletePriorityConfirmationModalOpen(false)
-        }}
-      />
-      <ModifyListModal />
-      <DeleteConfirmationModal
-        apiEndpoint="todo-list/lists"
-        confirmationText="Delete this list"
-        customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
-        data={selectedList ?? undefined}
-        isOpen={deleteListConfirmationModalOpen}
-        itemName="list"
-        queryKey={['todo-list', 'lists']}
-        onClose={() => {
-          setDeleteListConfirmationModalOpen(false)
-        }}
-      />
-      <ModifyTagModal />
-      <DeleteConfirmationModal
-        apiEndpoint="todo-list/tags"
-        confirmationText="Delete this tag"
-        customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
-        data={selectedTag ?? undefined}
-        isOpen={deleteTagConfirmationModalOpen}
-        itemName="tag"
-        queryKey={['todo-list', 'tags']}
-        onClose={() => {
-          setDeleteTagConfirmationModalOpen(false)
-          queryClient.invalidateQueries({
-            queryKey: ['todo-list', 'priorities']
-          })
-          queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
-          queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
-          queryClient.invalidateQueries({
-            queryKey: ['todo-list', 'status-counter']
-          })
-        }}
-      />
     </>
   )
 }

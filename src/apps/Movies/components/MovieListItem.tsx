@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { useCallback } from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -8,18 +9,30 @@ import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
+
 function MovieListItem({
   data,
-  onModifyTicket,
-  onShowTicket,
   onDelete
 }: {
   data: IMovieEntry
-  onModifyTicket: (type: 'create' | 'update', entry: IMovieEntry) => void
-  onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
 }) {
+  const open = useModalStore(state => state.open)
   const { componentBg } = useComponentBg()
+
+  const handleShowTicket = useCallback(() => {
+    open('movies.showTicket', {
+      entry: data
+    })
+  }, [data, open])
+
+  const handleUpdateTicket = useCallback(() => {
+    open('movies.modifyTicket', {
+      existedData: data,
+      type: data.ticket_number ? 'update' : 'create'
+    })
+  }, [data])
 
   return (
     <div
@@ -122,7 +135,7 @@ function MovieListItem({
               className="w-full"
               icon="tabler:ticket"
               namespace="apps.movies"
-              onClick={() => onShowTicket(data.id)}
+              onClick={handleShowTicket}
             >
               Show Ticket
             </Button>
@@ -138,9 +151,7 @@ function MovieListItem({
           icon="tabler:ticket"
           namespace="apps.movies"
           text={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
-          onClick={() => {
-            onModifyTicket(data.ticket_number ? 'update' : 'create', data)
-          }}
+          onClick={handleUpdateTicket}
         />
         <MenuItem
           isRed

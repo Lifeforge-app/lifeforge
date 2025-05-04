@@ -9,7 +9,6 @@ import { Id, toast } from 'react-toastify'
 import {
   Button,
   ContentWrapperWithSidebar,
-  DeleteConfirmationModal,
   LayoutWithSidebar,
   ModuleWrapper,
   Pagination,
@@ -21,15 +20,16 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import IntervalManager from '@utils/intervalManager'
 
-import GuitarWorldModal from './components/GuitarWorldModal'
+import { useModalStore } from '../../core/modals/useModalStore'
+import useModalsEffect from '../../core/modals/useModalsEffect'
 import Header from './components/Header'
-import ModifyEntryModal from './components/ModifyEntryModal'
 import Searchbar from './components/Searchbar'
 import Sidebar from './components/Sidebar'
 import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
 } from './interfaces/guitar_tabs_interfaces'
+import { guitarTabsModals } from './modals'
 import Views from './views'
 
 const intervalManager = IntervalManager.getInstance()
@@ -73,14 +73,9 @@ function GuitarTabs() {
     'guitar-tabs/entries/sidebar-data',
     ['guitar-tabs', 'sidebar-data']
   )
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [modifyEntryModalOpen, setModifyEntryModalOpen] = useState(false)
-  const [existingEntry, setExistingEntry] = useState<IGuitarTabsEntry | null>(
-    null
-  )
-  const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
-    useState(false)
-  const [guitarWorldModalOpen, setGuitarWorldModalOpen] = useState(false)
+  const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
   const toastId = useRef<Id>(null)
@@ -222,10 +217,12 @@ function GuitarTabs() {
     setPage(1)
   }, [selectedCategory, selectedAuthor, isStarred, selectedSortType])
 
+  useModalsEffect(guitarTabsModals)
+
   return (
     <ModuleWrapper>
       <Header
-        setGuitarWorldModalOpen={setGuitarWorldModalOpen}
+        setGuitarWorldModalOpen={() => open('guitarTabs.guitarWorld', null)}
         setSortType={setSelectedSortType}
         setView={setView}
         sortType={selectedSortType}
@@ -296,11 +293,6 @@ function GuitarTabs() {
                   debouncedSearchQuery={debouncedSearchQuery}
                   entries={entries.items}
                   queryKey={queryKey}
-                  setDeleteConfirmationModalOpen={
-                    setDeleteConfirmationModalOpen
-                  }
-                  setExistingEntry={setExistingEntry}
-                  setModifyEntryModalOpen={setModifyEntryModalOpen}
                   totalItems={entries.totalItems}
                   view={view}
                 />
@@ -315,37 +307,6 @@ function GuitarTabs() {
           </QueryWrapper>
         </ContentWrapperWithSidebar>
       </LayoutWithSidebar>
-      <ModifyEntryModal
-        existingItem={existingEntry}
-        isOpen={modifyEntryModalOpen}
-        queryKey={queryKey}
-        onClose={() => {
-          setModifyEntryModalOpen(false)
-          setExistingEntry(null)
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="guitar-tabs/entries"
-        data={existingEntry ?? undefined}
-        isOpen={deleteConfirmationModalOpen}
-        itemName="guitar tab"
-        nameKey="title"
-        queryKey={queryKey}
-        queryUpdateType="invalidate"
-        onClose={() => {
-          setDeleteConfirmationModalOpen(false)
-        }}
-      />
-      <GuitarWorldModal
-        isOpen={guitarWorldModalOpen}
-        onClose={() => {
-          queryClient.invalidateQueries({ queryKey })
-          queryClient.invalidateQueries({
-            queryKey: ['guitar-tabs', 'sidebar-data']
-          })
-          setGuitarWorldModalOpen(false)
-        }}
-      />
     </ModuleWrapper>
   )
 }

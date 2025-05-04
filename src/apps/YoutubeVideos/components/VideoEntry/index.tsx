@@ -1,23 +1,39 @@
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'
 import VideoThumbnail from './components/VideoThumbnail'
 
-function VideoEntry({
-  video,
-  setVideoToDelete,
-  setIsConfirmDeleteModalOpen
-}: {
-  video: IYoutubeVideosStorageEntry
-  setVideoToDelete: (video: IYoutubeVideosStorageEntry) => void
-  setIsConfirmDeleteModalOpen: (value: boolean) => void
-}) {
+function VideoEntry({ video }: { video: IYoutubeVideosStorageEntry }) {
+  const queryClient = useQueryClient()
+  const open = useModalStore(state => state.open)
   const { componentBgWithHover } = useComponentBg()
+
+  const handleDeleteVideo = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'youtube-videos/video',
+      customCallback: async () => {
+        queryClient.setQueryData<IYoutubeVideosStorageEntry[]>(
+          ['youtube-videos', 'video'],
+          prevVideos => {
+            if (!prevVideos) return prevVideos
+
+            return prevVideos.filter(v => v.id !== video.id)
+          }
+        )
+      },
+      data: video,
+      itemName: 'video',
+      nameKey: 'title'
+    })
+  }, [])
 
   return (
     <a
@@ -53,10 +69,7 @@ function VideoEntry({
           isRed
           icon="tabler:trash"
           text="Delete"
-          onClick={() => {
-            setVideoToDelete(video)
-            setIsConfirmDeleteModalOpen(true)
-          }}
+          onClick={handleDeleteVideo}
         />
       </HamburgerMenu>
     </a>

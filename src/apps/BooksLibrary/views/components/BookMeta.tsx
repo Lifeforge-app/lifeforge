@@ -12,9 +12,7 @@ function BookMeta({
   item: IBooksLibraryEntry | Record<string, any>
   isGridView?: boolean
 }) {
-  const {
-    languages: { dataQuery: languagesQuery }
-  } = useBooksLibraryContext()
+  const { languagesQuery } = useBooksLibraryContext()
 
   return (
     <div

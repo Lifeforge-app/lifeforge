@@ -1,8 +1,7 @@
-/* eslint-disable sonarjs/use-type-alias */
 import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router'
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import {
@@ -13,6 +12,8 @@ import {
 } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
+
+import { useModalStore } from '../../../core/modals/useModalStore'
 
 interface IIdeaBoxData {
   pathValid: boolean
@@ -36,59 +37,12 @@ interface IIdeaBoxData {
   setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>
   viewArchived: boolean
   setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
-
-  typeOfModifyIdea: IIdeaBoxEntry['type']
-  setTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<IIdeaBoxEntry['type']>
-  >
-  modifyIdeaModalOpenType: null | 'create' | 'update' | 'paste'
-  setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<null | 'create' | 'update' | 'paste'>
-  >
-  modifyFolderModalOpenType: null | 'create' | 'update'
-  setModifyFolderModalOpenType: React.Dispatch<
-    React.SetStateAction<null | 'create' | 'update'>
-  >
-  modifyTagModalOpenType: null | 'create' | 'update'
-  setModifyTagModalOpenType: React.Dispatch<
-    React.SetStateAction<null | 'create' | 'update'>
-  >
-
-  pastedData: {
-    preview: string
-    file: File
-  } | null
-  setPastedData: React.Dispatch<
-    React.SetStateAction<{
-      preview: string
-      file: File
-    } | null>
-  >
-
-  existedEntry: IIdeaBoxEntry | null
-  setExistedEntry: React.Dispatch<React.SetStateAction<IIdeaBoxEntry | null>>
-  existedTag: IIdeaBoxTag | null
-  setExistedTag: React.Dispatch<React.SetStateAction<IIdeaBoxTag | null>>
-  existedFolder: IIdeaBoxFolder | null
-  setExistedFolder: React.Dispatch<React.SetStateAction<IIdeaBoxFolder | null>>
-
-  deleteIdeaConfirmationModalOpen: boolean
-  setDeleteIdeaConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  deleteFolderConfirmationModalOpen: boolean
-  setDeleteFolderConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }
 
 export const IdeaBoxContext = createContext<IIdeaBoxData | undefined>(undefined)
 
-export default function IdeaBoxProvider({
-  children
-}: {
-  children: React.ReactNode
-}) {
+export default function IdeaBoxProvider() {
+  const open = useModalStore(state => state.open)
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
@@ -146,38 +100,7 @@ export default function IdeaBoxProvider({
       (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0)
   )
 
-  const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
-    null | 'create' | 'update' | 'paste'
-  >(null)
-  const [modifyFolderModalOpenType, setModifyFolderModalOpenType] = useState<
-    null | 'create' | 'update'
-  >(null)
-  const [modifyTagModalOpenType, setModifyTagModalOpenType] = useState<
-    null | 'create' | 'update'
-  >(null)
-  const [typeOfModifyIdea, setTypeOfModifyIdea] =
-    useState<IIdeaBoxEntry['type']>('text')
-
-  const [existedEntry, setExistedEntry] = useState<IIdeaBoxEntry | null>(null)
-  const [existedTag, setExistedTag] = useState<IIdeaBoxTag | null>(null)
-  const [existedFolder, setExistedFolder] = useState<IIdeaBoxFolder | null>(
-    null
-  )
-  const [pastedData, setPastedData] = useState<{
-    preview: string
-    file: File
-  } | null>(null)
-
-  const [deleteIdeaConfirmationModalOpen, setDeleteIdeaConfirmationModalOpen] =
-    useState(false)
-  const [
-    deleteFolderConfirmationModalOpen,
-    setDeleteFolderConfirmationModalOpen
-  ] = useState(false)
-
   function onPasteImage(event: ClipboardEvent) {
-    if (modifyIdeaModalOpenType !== null) return
-
     const items = event.clipboardData?.items
 
     let pastedImage: DataTransferItem | undefined
@@ -207,11 +130,13 @@ export default function IdeaBoxProvider({
 
     reader.onload = function () {
       if (file !== null) {
-        setModifyIdeaModalOpenType('paste')
-        setTypeOfModifyIdea('image')
-        setPastedData({
-          preview: reader.result as string,
-          file
+        open('ideaBox.ideas.modifyIdea', {
+          type: 'paste',
+          ideaType: 'image',
+          pastedData: {
+            preview: reader.result as string,
+            file
+          }
         })
       }
     }
@@ -238,7 +163,7 @@ export default function IdeaBoxProvider({
     return () => {
       document.removeEventListener('paste', onPasteImage)
     }
-  }, [modifyIdeaModalOpenType])
+  }, [])
 
   useEffect(() => {
     if (path === '') {
@@ -262,27 +187,7 @@ export default function IdeaBoxProvider({
       selectedTags,
       setSelectedTags,
       viewArchived,
-      setViewArchived,
-      typeOfModifyIdea,
-      setTypeOfModifyIdea,
-      modifyIdeaModalOpenType,
-      setModifyIdeaModalOpenType,
-      modifyFolderModalOpenType,
-      setModifyFolderModalOpenType,
-      modifyTagModalOpenType,
-      setModifyTagModalOpenType,
-      pastedData,
-      setPastedData,
-      existedEntry,
-      setExistedEntry,
-      existedTag,
-      setExistedTag,
-      existedFolder,
-      setExistedFolder,
-      deleteIdeaConfirmationModalOpen,
-      setDeleteIdeaConfirmationModalOpen,
-      deleteFolderConfirmationModalOpen,
-      setDeleteFolderConfirmationModalOpen
+      setViewArchived
     }),
     [
       pathValidQuery.data,
@@ -300,21 +205,15 @@ export default function IdeaBoxProvider({
       searchQuery,
       debouncedSearchQuery,
       selectedTags,
-      viewArchived,
-      typeOfModifyIdea,
-      modifyIdeaModalOpenType,
-      modifyFolderModalOpenType,
-      modifyTagModalOpenType,
-      pastedData,
-      existedEntry,
-      existedTag,
-      existedFolder,
-      deleteIdeaConfirmationModalOpen,
-      deleteFolderConfirmationModalOpen
+      viewArchived
     ]
   )
 
-  return <IdeaBoxContext value={value}>{children}</IdeaBoxContext>
+  return (
+    <IdeaBoxContext value={value}>
+      <Outlet />
+    </IdeaBoxContext>
+  )
 }
 
 export function useIdeaBoxContext(): IIdeaBoxData {

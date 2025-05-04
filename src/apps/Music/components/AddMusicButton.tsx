@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -10,12 +11,15 @@ import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import IntervalManager from '@utils/intervalManager'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
+
 const intervalManager = IntervalManager.getInstance()
 
 function AddMusicButton() {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.music')
-  const { loading, setIsYoutubeDownloaderOpen, setLoading } = useMusicContext()
+  const { loading, setLoading } = useMusicContext()
 
   async function checkImportProgress(): Promise<
     'completed' | 'failed' | 'in_progress'
@@ -82,6 +86,10 @@ function AddMusicButton() {
       })
   }
 
+  const handleYoutubeDownloaderOpen = useCallback(() => {
+    open('music.youtubeDownloader', {})
+  }, [])
+
   return (
     <Menu as="div" className="relative z-50 hidden md:block">
       <Button
@@ -108,9 +116,7 @@ function AddMusicButton() {
           icon="tabler:brand-youtube"
           namespace="apps.music"
           text="Download from YouTube"
-          onClick={() => {
-            setIsYoutubeDownloaderOpen(true)
-          }}
+          onClick={handleYoutubeDownloaderOpen}
         />
       </MenuItems>
     </Menu>

@@ -9,19 +9,18 @@ import {
   ICalendarCategoryFormState
 } from '../interfaces/calendar_interfaces'
 
-interface ModifyCategoryModalProps {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: ICalendarCategory | null
-}
-
 function ModifyCategoryModal({
-  openType,
-  setOpenType,
-  existedData
-}: ModifyCategoryModalProps) {
+  data: { type, existedData },
+  onClose
+}: {
+  data: {
+    type: 'create' | 'update' | null
+    existedData: ICalendarCategory | null
+  }
+  onClose: () => void
+}) {
   const modalRef = useRef<HTMLDivElement>(null)
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const innerOpenType = useDebounce(type, type === null ? 300 : 0)
   const [data, setData] = useState<ICalendarCategoryFormState>({
     name: '',
     icon: '',
@@ -52,7 +51,7 @@ function ModifyCategoryModal({
   ]
 
   useEffect(() => {
-    if (openType === 'update' && existedData !== null) {
+    if (type === 'update' && existedData !== null) {
       setData(existedData)
     } else {
       setData({
@@ -75,18 +74,15 @@ function ModifyCategoryModal({
         }[innerOpenType!]
       }
       id={existedData?.id}
-      isOpen={openType !== null}
       modalRef={modalRef}
       namespace="apps.calendar"
-      openType={openType}
+      openType={type}
       queryKey={['calendar', 'categories']}
       setData={setData}
       sortBy="name"
       sortMode="asc"
       title={`category.${innerOpenType}`}
-      onClose={() => {
-        setOpenType(null)
-      }}
+      onClose={onClose}
     />
   )
 }

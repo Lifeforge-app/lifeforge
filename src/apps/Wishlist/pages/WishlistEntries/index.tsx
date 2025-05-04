@@ -1,12 +1,11 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import {
   Button,
-  DeleteConfirmationModal,
   EmptyStateScreen,
   MenuItem,
   ModuleWrapper,
@@ -17,16 +16,18 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
+import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import {
   IWishlistEntry,
   IWishlistList
 } from '../../interfaces/wishlist_interfaces'
 import EntryItem from './components/EntryItem'
-import FromOtherAppsModal from './components/FromOtherAppsModal'
 import Header from './components/Header'
-import ModifyEntryModal from './components/ModifyEntryModal'
+import { wishlistEntriesModals } from './modals'
 
 function WishlistEntries() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wishlist')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -51,16 +52,20 @@ function WishlistEntries() {
     queryKey,
     validQuery.data === true
   )
-  const [isFromOtherAppsModalOpen, setFromOtherAppsModalOpen] = useState(false)
-  const [existedData, setExistedData] =
-    useState<Partial<IWishlistEntry> | null>(null)
-  const [modifyEntryModalOpenType, setModifyEntryModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [
-    deleteEntryConfirmationModalOpen,
-    setDeleteEntryConfirmationModalOpen
-  ] = useState(false)
+
+  const handleAddManually = useCallback(() => {
+    open('wishlist.entries.modifyEntry', {
+      type: 'create',
+      existedData: {
+        list: id as string
+      },
+      queryKey
+    })
+  }, [id])
+
+  const handleAddFromOtherApps = useCallback(() => {
+    open('wishlist.entries.fromOtherApps', {})
+  }, [])
 
   useEffect(() => {
     if (typeof validQuery.data === 'boolean' && !validQuery.data) {
@@ -69,27 +74,14 @@ function WishlistEntries() {
     }
   }, [validQuery.data])
 
-  const handleEdit = (entry: IWishlistEntry) => {
-    setExistedData(entry)
-    setModifyEntryModalOpenType('update')
-  }
-
-  const handleDelete = (entry: IWishlistEntry) => {
-    setExistedData(entry)
-    setDeleteEntryConfirmationModalOpen(true)
-  }
+  useModalsEffect(wishlistEntriesModals)
 
   return (
     <ModuleWrapper>
       <QueryWrapper query={wishlistListDetailsQuery}>
         {wishlistListDetails => (
           <>
-            <Header
-              setExistedData={setExistedData}
-              setFromOtherAppsModalOpen={setFromOtherAppsModalOpen}
-              setModifyEntryModalOpenType={setModifyEntryModalOpenType}
-              wishlistListDetails={wishlistListDetails}
-            />
+            <Header wishlistListDetails={wishlistListDetails} />
             <QueryWrapper query={entriesQuery}>
               {entries => (
                 <>
@@ -153,8 +145,6 @@ function WishlistEntries() {
                             key={entry.id}
                             entry={entry}
                             queryKey={queryKey}
-                            onDelete={handleDelete}
-                            onEdit={handleEdit}
                           />
                         ))}
                       </ul>
@@ -166,31 +156,6 @@ function WishlistEntries() {
           </>
         )}
       </QueryWrapper>
-      <FromOtherAppsModal
-        isOpen={isFromOtherAppsModalOpen}
-        setExistedData={setExistedData}
-        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
-        onClose={() => {
-          setFromOtherAppsModalOpen(false)
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="wishlist/entries"
-        data={existedData ?? undefined}
-        isOpen={deleteEntryConfirmationModalOpen}
-        itemName="entry"
-        nameKey="name"
-        queryKey={queryKey}
-        onClose={() => {
-          setDeleteEntryConfirmationModalOpen(false)
-        }}
-      />
-      <ModifyEntryModal
-        existedData={existedData}
-        openType={modifyEntryModalOpenType}
-        queryKey={queryKey}
-        setOpenType={setModifyEntryModalOpenType}
-      />
       <Menu as="div" className="absolute right-6 bottom-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}} />
         <MenuItems
@@ -202,15 +167,13 @@ function WishlistEntries() {
             icon="tabler:plus"
             namespace="apps.wishlist"
             text="Add Manually"
-            onClick={() => {}}
+            onClick={handleAddManually}
           />
           <MenuItem
             icon="tabler:apps"
             namespace="apps.wishlist"
             text="From Other Apps"
-            onClick={() => {
-              setFromOtherAppsModalOpen(true)
-            }}
+            onClick={handleAddFromOtherApps}
           />
         </MenuItems>
       </Menu>

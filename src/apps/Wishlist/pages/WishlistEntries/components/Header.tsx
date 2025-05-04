@@ -1,30 +1,37 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 
 import { Button, GoBackButton, MenuItem } from '@lifeforge/ui'
 
-import {
-  IWishlistEntry,
-  IWishlistList
-} from '../../../interfaces/wishlist_interfaces'
+import { useModalStore } from '../../../../../core/modals/useModalStore'
+import { IWishlistList } from '../../../interfaces/wishlist_interfaces'
 
 function Header({
-  wishlistListDetails,
-  setModifyEntryModalOpenType,
-  setExistedData,
-  setFromOtherAppsModalOpen
+  wishlistListDetails
 }: {
   wishlistListDetails: IWishlistList
-  setModifyEntryModalOpenType: (value: 'create' | 'update' | null) => void
-  setExistedData: (value: Partial<IWishlistEntry> | null) => void
-  setFromOtherAppsModalOpen: (value: boolean) => void
 }) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wishlist')
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+
+  const handleAddManually = useCallback(() => {
+    open('wishlist.entries.modifyEntry', {
+      type: 'create',
+      existedData: {
+        list: id as string
+      }
+    })
+  }, [id])
+
+  const handleAddFromOtherApps = useCallback(() => {
+    open('wishlist.entries.fromOtherApps', {})
+  }, [])
 
   return (
     <header className="w-full min-w-0 space-y-1">
@@ -87,20 +94,13 @@ function Header({
               icon="tabler:plus"
               namespace="apps.wishlist"
               text="Add Manually"
-              onClick={() => {
-                setModifyEntryModalOpenType('create')
-                setExistedData({
-                  list: id as string
-                })
-              }}
+              onClick={handleAddManually}
             />
             <MenuItem
               icon="tabler:apps"
               namespace="apps.wishlist"
               text="From Other Apps"
-              onClick={() => {
-                setFromOtherAppsModalOpen(true)
-              }}
+              onClick={handleAddFromOtherApps}
             />
           </MenuItems>
         </Menu>
