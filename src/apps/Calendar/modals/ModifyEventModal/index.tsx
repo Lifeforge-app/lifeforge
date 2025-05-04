@@ -1,4 +1,4 @@
-import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -7,6 +7,8 @@ import { type IFieldProps } from '@lifeforge/ui'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
+import useAPIQuery from '@hooks/useAPIQuery'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent,
@@ -14,20 +16,21 @@ import {
 } from '../../interfaces/calendar_interfaces'
 import EventTimeSelector from './components/EventTimeSelector'
 
-interface ModifyEventModalProps {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: Partial<ICalendarEvent> | null
-  categoriesQuery: UseQueryResult<ICalendarCategory[]>
-}
-
 function ModifyEventModal({
-  openType,
-  setOpenType,
-  existedData,
-  categoriesQuery
-}: ModifyEventModalProps) {
+  data: { type, existedData },
+  onClose
+}: {
+  data: {
+    type: 'create' | 'update' | null
+    existedData: Partial<ICalendarEvent> | null
+  }
+  onClose: () => void
+}) {
   const queryClient = useQueryClient()
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories']
+  )
   const { eventQueryKey } = useCalendarStore()
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     type: 'single',
@@ -62,7 +65,7 @@ function ModifyEventModal({
         icon: 'tabler:list',
         type: 'listbox',
         options: categoriesQuery.isSuccess
-          ? categoriesQuery.data.map(({ name, color, icon, id }) => ({
+          ? categoriesQuery.data?.map(({ name, color, icon, id }) => ({
               value: id,
               text: name,
               icon,
@@ -150,15 +153,15 @@ function ModifyEventModal({
         recurring_duration_unit: 'day'
       })
     }
-  }, [openType, existedData])
+  }, [type, existedData])
 
   return (
     <FormModal
       additionalFields={
         <EventTimeSelector
           formState={formState}
-          openType={openType}
           setFormState={setFormState}
+          type={type}
         />
       }
       customUpdateDataList={{
@@ -186,20 +189,17 @@ function ModifyEventModal({
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
-        }[openType!]
+        }[type!]
       }
       id={existedData?.id}
-      isOpen={openType !== null}
       loading={categoriesQuery.isLoading}
       modalRef={ref}
       namespace="apps.calendar"
-      openType={openType}
+      openType={type}
       queryKey={eventQueryKey}
       setData={setFormState}
-      title={`event.${openType}`}
-      onClose={() => {
-        setOpenType(null)
-      }}
+      title={`event.${type}`}
+      onClose={onClose}
     />
   )
 }

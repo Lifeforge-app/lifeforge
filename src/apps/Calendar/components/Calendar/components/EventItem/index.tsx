@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
@@ -11,20 +11,10 @@ import EventItemTooltip from './components/EventItemTooltip.tsx'
 
 function EventItem({
   event,
-  categories,
-  setModifyEventModalOpenType,
-  setExistedData,
-  setIsDeleteEventConfirmationModalOpen
+  categories
 }: {
   event: ICalendarEvent
   categories: ICalendarCategory[]
-  setModifyEventModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
   const category = useMemo<ICalendarCategory | undefined>(() => {
     if (event.category.startsWith('_')) {
@@ -42,20 +32,24 @@ function EventItem({
         color={category?.color ?? ''}
         icon={category?.icon ?? ''}
         id={event.id}
-        isStrikethrough={event.isStrikethrough}
+        isStrikethrough={event.is_strikethrough}
         title={event.title}
       />
-      <EventItemTooltip
-        category={category}
-        event={event}
-        setExistedData={setExistedData}
-        setIsDeleteEventConfirmationModalOpen={
-          setIsDeleteEventConfirmationModalOpen
-        }
-        setModifyEventModalOpenType={setModifyEventModalOpenType}
-      />
+      <EventItemTooltip category={category} event={event} />
     </>
   )
 }
 
-export default EventItem
+export default memo(EventItem, (prevProps, nextProps) => {
+  return (
+    prevProps.event.id === nextProps.event.id &&
+    prevProps.categories.length === nextProps.categories.length &&
+    prevProps.categories.every((category, index) => {
+      return (
+        category.id === nextProps.categories[index].id &&
+        category.color === nextProps.categories[index].color &&
+        category.icon === nextProps.categories[index].icon
+      )
+    })
+  )
+})

@@ -1,9 +1,7 @@
-import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 
 import {
-  DeleteConfirmationModal,
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
@@ -14,24 +12,15 @@ import {
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
+import useModalsEffect from '../../core/modals/useModalsEffect'
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'
 import MusicList from './components/MusicList'
-import ModifyMusicModal from './modals/UpdateMusicModal'
-import YoutubeDownloaderModal from './modals/YoutubeDownloaderModal'
+import { MusicModals } from './modals'
 
 function Music() {
-  const {
-    searchQuery,
-    setSearchQuery,
-    musicsQuery,
-    currentMusic,
-    existedData,
-    togglePlay,
-    isDeleteMusicConfirmationModalOpen,
-    setIsDeleteMusicConfirmationModalOpen
-  } = useMusicContext()
-  const queryClient = useQueryClient()
+  const { searchQuery, setSearchQuery, musicsQuery, currentMusic, togglePlay } =
+    useMusicContext()
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
   useEffect(() => {
@@ -50,6 +39,8 @@ function Music() {
       window.removeEventListener('keydown', handleKeyPress)
     }
   })
+
+  useModalsEffect(MusicModals)
 
   return (
     <ModuleWrapper>
@@ -96,23 +87,6 @@ function Music() {
         </div>
         {currentMusic !== null && <BottomBar />}
       </div>
-      <YoutubeDownloaderModal />
-      <DeleteConfirmationModal
-        apiEndpoint="music/entries"
-        data={existedData ?? undefined}
-        isOpen={isDeleteMusicConfirmationModalOpen}
-        itemName="music"
-        nameKey="name"
-        updateDataList={() => {
-          queryClient.invalidateQueries({
-            queryKey: ['music', 'entries']
-          })
-        }}
-        onClose={() => {
-          setIsDeleteMusicConfirmationModalOpen(false)
-        }}
-      />
-      <ModifyMusicModal />
     </ModuleWrapper>
   )
 }

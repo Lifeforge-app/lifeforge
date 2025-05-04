@@ -1,25 +1,45 @@
-import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useCallback, useState } from 'react'
 
 import { MenuItem } from '@lifeforge/ui'
 
 import forceDown from '@utils/forceDown'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
 import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
-import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 
 export default function EntryContextMenu({
   item
 }: {
   item: IBooksLibraryEntry
 }) {
-  const {
-    entries: {
-      setExistedData,
-      setDeleteDataConfirmationOpen,
-      setModifyDataModalOpenType
-    }
-  } = useBooksLibraryContext()
+  const open = useModalStore(state => state.open)
+  const queryClient = useQueryClient()
   const [downloadLoading, setDownloadLoading] = useState(false)
+
+  const handleUpdateEntry = useCallback(() => {
+    open('booksLibrary.modifyBook', {
+      type: 'update',
+      existedData: item
+    })
+  }, [item])
+
+  const handleDeleteEntry = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'books-library/entries',
+      data: item,
+      itemName: 'book',
+      nameKey: 'title',
+      updateDataList: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['books-library', 'entries']
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['books-library', 'file-types']
+        })
+      }
+    })
+  }, [item])
 
   return (
     <>
@@ -41,22 +61,12 @@ export default function EntryContextMenu({
             .catch(console.error)
         }}
       />
-      <MenuItem
-        icon="tabler:pencil"
-        text="Edit"
-        onClick={() => {
-          setExistedData(item)
-          setModifyDataModalOpenType('update')
-        }}
-      />
+      <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateEntry} />
       <MenuItem
         isRed
         icon="tabler:trash"
         text="Delete"
-        onClick={() => {
-          setExistedData(item)
-          setDeleteDataConfirmationOpen(true)
-        }}
+        onClick={handleDeleteEntry}
       />
     </>
   )

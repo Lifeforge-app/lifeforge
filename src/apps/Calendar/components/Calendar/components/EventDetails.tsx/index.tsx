@@ -8,32 +8,14 @@ import EventDetailsHeader from './components/EventDetailsHeader'
 
 function EventDetails({
   event,
-  category,
-  setModifyEventModalOpenType,
-  setExistedData,
-  setIsDeleteEventConfirmationModalOpen
+  category
 }: {
   event: ICalendarEvent
   category: ICalendarCategory | undefined
-  setModifyEventModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
   return (
     <>
-      <EventDetailsHeader
-        category={category}
-        event={event}
-        setExistedData={setExistedData}
-        setIsDeleteEventConfirmationModalOpen={
-          setIsDeleteEventConfirmationModalOpen
-        }
-        setModifyEventModalOpenType={setModifyEventModalOpenType}
-      />
+      <EventDetailsHeader category={category} event={event} />
       <EventDetailsDescription event={event} />
     </>
   )

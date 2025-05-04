@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { ITodoListList } from '../interfaces/todo_list_interfaces'
 
-function ModifyListModal() {
-  const {
-    modifyListModalOpenType: openType,
-    setModifyListModalOpenType: setOpenType,
-    selectedList
-  } = useTodoListContext()
+function ModifyListModal({
+  data: { type, existedData },
+  onClose
+}: {
+  data: {
+    type: 'create' | 'update'
+    existedData: ITodoListList | null
+  }
+  onClose: () => void
+}) {
   const [data, setData] = useState({
     name: '',
     icon: '',
@@ -41,8 +45,8 @@ function ModifyListModal() {
   ]
 
   useEffect(() => {
-    if (openType === 'update' && selectedList !== null) {
-      setData(selectedList)
+    if (type === 'update' && existedData !== null) {
+      setData(existedData)
     } else {
       setData({
         name: '',
@@ -50,7 +54,7 @@ function ModifyListModal() {
         color: '#FFFFFF'
       })
     }
-  }, [openType, selectedList])
+  }, [type, existedData])
 
   return (
     <FormModal
@@ -61,18 +65,15 @@ function ModifyListModal() {
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
-        }[openType!]
+        }[type!]
       }`}
-      id={selectedList?.id}
-      isOpen={openType !== null}
+      id={existedData?.id}
       namespace="apps.todoList"
-      openType={openType}
+      openType={type}
       queryKey={['todo-list', 'lists']}
       setData={setData}
-      title={`list.${openType}`}
-      onClose={() => {
-        setOpenType(null)
-      }}
+      title={`list.${type}`}
+      onClose={onClose}
     />
   )
 }

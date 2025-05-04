@@ -10,10 +10,8 @@ import {
   CurrencyInput,
   DateInput,
   ImageAndFileInput,
-  ImagePickerModal,
   LocationInput,
   ModalHeader,
-  ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
 
@@ -27,17 +25,14 @@ import LedgerSelector from './components/LedgerSelector'
 import TransactionTypeSelector from './components/TransactionTypeSelector'
 
 function ModifyTransactionsModal({
-  openType,
-  setOpenType,
-  existedData,
-  setExistedData
+  data: { type, existedData },
+  onClose
 }: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: Partial<IWalletTransaction> | null
-  setExistedData: React.Dispatch<
-    React.SetStateAction<Partial<IWalletTransaction> | null>
-  >
+  data: {
+    type: 'create' | 'update' | null
+    existedData: Partial<IWalletTransaction> | null
+  }
+  onClose: () => void
 }) {
   const { t } = useTranslation('apps.wallet')
   const queryClient = useQueryClient()
@@ -59,7 +54,6 @@ function ModifyTransactionsModal({
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
   const [receipt, setReceipt] = useState<File | string | null>(null)
   const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
-  const [isImagePickerModalOpen, setIsImagePickerModalOpen] = useState(false)
 
   const ref = useRef<HTMLInputElement>(null)
 
@@ -77,7 +71,7 @@ function ModifyTransactionsModal({
   }
 
   useEffect(() => {
-    if (openType) {
+    if (type) {
       if (existedData) {
         setParticular(existedData.particulars ?? '')
         setTransactionType(existedData.type ?? 'income')
@@ -118,7 +112,7 @@ function ModifyTransactionsModal({
         setImagePreviewUrl(null)
       }
     }
-  }, [openType, existedData])
+  }, [type, existedData])
 
   async function onSubmitButtonClick() {
     if (transactionType === 'transfer') {
@@ -153,7 +147,7 @@ function ModifyTransactionsModal({
     data.append('fromAsset', fromAsset ?? '')
     data.append('toAsset', toAsset ?? '')
 
-    if (openType === 'update' && toRemoveReceipt) {
+    if (type === 'update' && toRemoveReceipt) {
       data.append('removeReceipt', 'true')
     }
 
@@ -163,11 +157,9 @@ function ModifyTransactionsModal({
 
     try {
       const res = await fetchAPI<IWalletTransaction[] | IWalletTransaction>(
-        `wallet/transactions${
-          openType === 'update' ? `/${existedData?.id}` : ''
-        }`,
+        `wallet/transactions${type === 'update' ? '/' + existedData?.id : ''}`,
         {
-          method: openType === 'create' ? 'POST' : 'PATCH',
+          method: type === 'create' ? 'POST' : 'PATCH',
           body: data
         }
       )
@@ -177,7 +169,7 @@ function ModifyTransactionsModal({
         prev => {
           if (!prev) return []
 
-          if (openType === 'create') {
+          if (type === 'create') {
             return [...(res as IWalletTransaction[]), ...prev].sort((a, b) => {
               if (dayjs(b.date).isSame(a.date)) {
                 return dayjs(b.created).diff(a.created)
@@ -199,8 +191,7 @@ function ModifyTransactionsModal({
       queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
       queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
       queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
-      setExistedData(null)
-      setOpenType(null)
+      onClose()
     } catch {
       toast.error('Failed to save transaction')
     } finally {
@@ -209,134 +200,118 @@ function ModifyTransactionsModal({
   }
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null} minWidth="40vw" modalRef={ref}>
-        <ModalHeader
-          className="mb-4!"
-          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          namespace="apps.wallet"
-          title={`transactions.${openType || ''}`}
-          onClose={() => {
-            setOpenType(null)
-            setExistedData(null)
+    <div ref={ref} className="min-w-[40vw]">
+      <ModalHeader
+        className="mb-4!"
+        icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+        namespace="apps.wallet"
+        title={`transactions.${type || ''}`}
+        onClose={onClose}
+      />
+      <div className="space-y-4">
+        <TransactionTypeSelector
+          setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
+            setTransactionType(type)
+            setCategory(null)
+            setTransactionAsset(null)
+            setFromAsset(null)
+            setToAsset(null)
           }}
+          transactionType={transactionType}
         />
-        <div className="space-y-4">
-          <TransactionTypeSelector
-            setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
-              setTransactionType(type)
-              setCategory(null)
-              setTransactionAsset(null)
-              setFromAsset(null)
-              setToAsset(null)
-            }}
-            transactionType={transactionType}
+        {transactionType === 'income' || transactionType === 'expenses' ? (
+          <AssetsSelector
+            setTransactionAsset={setTransactionAsset}
+            transactionAsset={transactionAsset}
           />
-          {transactionType === 'income' || transactionType === 'expenses' ? (
-            <AssetsSelector
-              setTransactionAsset={setTransactionAsset}
-              transactionAsset={transactionAsset}
-            />
-          ) : (
-            <AssetsFromToSelector
-              fromAsset={fromAsset}
-              setFromAsset={setFromAsset}
-              setToAsset={setToAsset}
-              toAsset={toAsset}
-            />
-          )}
-          <DateInput
-            darker
-            required
-            date={transactionDate}
-            icon="tabler:calendar"
-            modalRef={ref}
-            name="Date"
-            namespace="apps.wallet"
-            setDate={setTransactionDate}
+        ) : (
+          <AssetsFromToSelector
+            fromAsset={fromAsset}
+            setFromAsset={setFromAsset}
+            setToAsset={setToAsset}
+            toAsset={toAsset}
           />
-          {transactionType !== 'transfer' && (
-            <TextInput
-              darker
-              required
-              className="mt-4"
-              icon="tabler:file-text"
-              name="Particulars"
-              namespace="apps.wallet"
-              placeholder="My Transactions"
-              setValue={setParticular}
-              value={particular}
-            />
-          )}
-          <CurrencyInput
+        )}
+        <DateInput
+          darker
+          required
+          date={transactionDate}
+          icon="tabler:calendar"
+          modalRef={ref}
+          name="Date"
+          namespace="apps.wallet"
+          setDate={setTransactionDate}
+        />
+        {transactionType !== 'transfer' && (
+          <TextInput
             darker
             required
             className="mt-4"
-            icon="tabler:currency-dollar"
-            name="Amount"
+            icon="tabler:file-text"
+            name="Particulars"
             namespace="apps.wallet"
-            placeholder="0.00"
-            setValue={setAmount}
-            value={amount}
+            placeholder="My Transactions"
+            setValue={setParticular}
+            value={particular}
           />
-          {transactionType !== 'transfer' && (
-            <>
-              <LocationInput
-                location={location}
-                namespace="apps.wallet"
-                setLocation={setLocation}
-              />
-              <CategorySelector
-                category={category}
-                setCategory={setCategory}
-                transactionType={transactionType}
-              />
-              <LedgerSelector ledger={ledger} setLedger={setLedger} />
-            </>
-          )}
-          <ImageAndFileInput
-            icon="tabler:receipt"
-            image={receipt}
-            name="Receipt"
-            namespace="apps.wallet"
-            preview={imagePreviewUrl}
-            reminderText={t('receiptUploadInfo')}
-            setImage={setReceipt}
-            setImagePickerModalOpen={setIsImagePickerModalOpen}
-            setPreview={setImagePreviewUrl}
-            onImageRemoved={() => {
-              if (openType === 'update') setToRemoveReceipt(true)
-            }}
-          />
-        </div>
-        <Button
-          className="mt-6"
-          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
+        )}
+        <CurrencyInput
+          darker
+          required
+          className="mt-4"
+          icon="tabler:currency-dollar"
+          name="Amount"
+          namespace="apps.wallet"
+          placeholder="0.00"
+          setValue={setAmount}
+          value={amount}
+        />
+        {transactionType !== 'transfer' && (
+          <>
+            <LocationInput
+              location={location}
+              namespace="apps.wallet"
+              setLocation={setLocation}
+            />
+            <CategorySelector
+              category={category}
+              setCategory={setCategory}
+              transactionType={transactionType}
+            />
+            <LedgerSelector ledger={ledger} setLedger={setLedger} />
+          </>
+        )}
+        <ImageAndFileInput
+          acceptedMimeTypes={{
+            images: ['image/jpeg', 'image/png'],
+            documents: ['application/pdf']
           }}
-        >
-          {openType === 'create' ? 'Create' : 'Update'}
-        </Button>
-      </ModalWrapper>
-      <ImagePickerModal
-        acceptedMimeTypes={{
-          images: ['image/jpeg', 'image/png'],
-          documents: ['application/pdf']
+          icon="tabler:receipt"
+          image={receipt}
+          name="Receipt"
+          namespace="apps.wallet"
+          preview={imagePreviewUrl}
+          reminderText={t('receiptUploadInfo')}
+          setData={({ image, preview }) => {
+            setReceipt(image)
+            setImagePreviewUrl(preview)
+          }}
+          onImageRemoved={() => {
+            if (type === 'update') setToRemoveReceipt(true)
+          }}
+        />
+      </div>
+      <Button
+        className="mt-6 w-full"
+        icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+        loading={loading}
+        onClick={() => {
+          onSubmitButtonClick().catch(console.error)
         }}
-        isOpen={isImagePickerModalOpen}
-        onClose={() => {
-          setIsImagePickerModalOpen(false)
-        }}
-        onSelect={async (file, preview) => {
-          if (typeof file === 'string') return
-
-          setReceipt(file)
-          setImagePreviewUrl(preview)
-        }}
-      />
-    </>
+      >
+        {type === 'create' ? 'Create' : 'Update'}
+      </Button>
+    </div>
   )
 }
 

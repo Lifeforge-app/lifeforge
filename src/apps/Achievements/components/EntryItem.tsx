@@ -1,28 +1,27 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
 import { type IAchievementEntry } from '../interfaces/achievements_interfaces'
 
-function EntryItem({
-  entry,
-  setExistedData,
-  setModifyAchievementModalOpenType,
-  setDeleteAchievementConfirmationModalOpen
-}: {
-  entry: IAchievementEntry
-  setExistedData: React.Dispatch<React.SetStateAction<IAchievementEntry | null>>
-  setModifyAchievementModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteAchievementConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-}) {
+function EntryItem({ entry }: { entry: IAchievementEntry }) {
+  const open = useModalStore(state => state.open)
   const { componentBg } = useComponentBg()
+
+  const handleDeleteEntry = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'achievements/entries',
+      data: entry,
+      itemName: 'achievement',
+      nameKey: 'title',
+      queryKey: ['achievements/entries', entry.difficulty]
+    })
+  }, [entry])
 
   return (
     <div
@@ -57,18 +56,18 @@ function EntryItem({
           icon="tabler:pencil"
           text="Edit"
           onClick={() => {
-            setExistedData(entry)
-            setModifyAchievementModalOpenType('update')
+            open('achievements.modifyAchievement', {
+              type: 'update',
+              existedData: entry,
+              currentDifficulty: entry.difficulty
+            })
           }}
         />
         <MenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
-          onClick={() => {
-            setExistedData(entry)
-            setDeleteAchievementConfirmationModalOpen(true)
-          }}
+          onClick={handleDeleteEntry}
         />
       </HamburgerMenu>
     </div>

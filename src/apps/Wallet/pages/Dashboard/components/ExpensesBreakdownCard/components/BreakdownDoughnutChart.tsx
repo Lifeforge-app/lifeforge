@@ -76,9 +76,10 @@ function BreakdownDoughnutChart({
           datasets: [
             {
               label: 'Monies spent',
-              data: expensesCategories?.map(
-                category => spentOnEachCategory[category.id]?.amount
-              ),
+              data:
+                expensesCategories?.map(
+                  category => spentOnEachCategory?.[category?.id]?.amount || 0
+                ) ?? [],
               backgroundColor: expensesCategories?.map(
                 category => category.color + '20'
               ),

@@ -12,20 +12,10 @@ import useComponentBg from '@hooks/useComponentBg'
 
 function AgendaEventItem({
   event,
-  categories,
-  setModifyEventModalOpenType,
-  setExistedData,
-  setIsDeleteEventConfirmationModalOpen
+  categories
 }: {
   event: ICalendarEvent
   categories: ICalendarCategory[]
-  setModifyEventModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
   const { componentBg } = useComponentBg()
 
@@ -50,15 +40,7 @@ function AgendaEventItem({
         '--bg-color': category?.color ?? ''
       }}
     >
-      <EventDetails
-        category={category}
-        event={event}
-        setExistedData={setExistedData}
-        setIsDeleteEventConfirmationModalOpen={
-          setIsDeleteEventConfirmationModalOpen
-        }
-        setModifyEventModalOpenType={setModifyEventModalOpenType}
-      />
+      <EventDetails category={category} event={event} />
     </div>
   )
 }

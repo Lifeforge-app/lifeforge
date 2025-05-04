@@ -1,11 +1,12 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import { ListResult } from 'pocketbase'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import { Pagination, QueryWrapper } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
 import AudioEntry from './entries/AudioEntry'
 import PhotosEntry from './entries/PhotosEntry'
 import TextEntry from './entries/TextEntry'
@@ -13,18 +14,27 @@ import TextEntry from './entries/TextEntry'
 function EntryList({
   dataQuery,
   page,
-  setPage,
-  onDelete,
-  addEntryModalOpenType,
-  onTextEntryEdit
+  setPage
 }: {
   dataQuery: UseQueryResult<ListResult<IMomentVaultEntry>>
   page: number
   setPage: (page: number) => void
-  onDelete: (data: IMomentVaultEntry) => void
-  addEntryModalOpenType: 'text' | 'audio' | 'photos' | 'video' | null
-  onTextEntryEdit: (data: IMomentVaultEntry) => void
 }) {
+  const open = useModalStore(state => state.open)
+  const handleDeleteEntry = useCallback(
+    (entry: IMomentVaultEntry) => () => {
+      open('deleteConfirmation', {
+        apiEndpoint: '/moment-vault/entries',
+        data: entry,
+        itemName: 'entry',
+        queryKey: ['moment-vault', 'entries', page],
+        queryUpdateType: 'invalidate',
+        confirmationText: 'Delete this entry'
+      })
+    },
+    [page]
+  )
+
   useEffect(() => {
     const els = document.querySelectorAll<HTMLDivElement>('.pagination')
 
@@ -50,10 +60,9 @@ function EntryList({
                 return (
                   <AudioEntry
                     key={entry.id}
-                    addEntryModalOpenType={addEntryModalOpenType}
                     entriesQueryKey={['moment-vault', 'entries', page]}
                     entry={entry}
-                    onDelete={() => onDelete(entry)}
+                    onDelete={handleDeleteEntry(entry)}
                   />
                 )
               }
@@ -63,8 +72,8 @@ function EntryList({
                   <TextEntry
                     key={entry.id}
                     entry={entry}
-                    onDelete={() => onDelete(entry)}
-                    onEdit={() => onTextEntryEdit(entry)}
+                    page={page}
+                    onDelete={handleDeleteEntry(entry)}
                   />
                 )
               }
@@ -74,7 +83,7 @@ function EntryList({
                   <PhotosEntry
                     key={entry.id}
                     entry={entry}
-                    onDelete={() => onDelete(entry)}
+                    onDelete={handleDeleteEntry(entry)}
                   />
                 )
               }

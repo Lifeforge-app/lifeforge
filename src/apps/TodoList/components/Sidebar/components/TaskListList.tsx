@@ -1,9 +1,11 @@
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import TaskListListItem from './TaskListListItem'
 
 function TaskListList({
@@ -11,21 +13,22 @@ function TaskListList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.todoList')
-  const {
-    setModifyListModalOpenType: setModifyModalOpenType,
-    setSelectedPriority: setSelectedData,
-    listsQuery
-  } = useTodoListContext()
+  const { listsQuery } = useTodoListContext()
+
+  const handleCreateList = useCallback(() => {
+    open('todoList.modifyList', {
+      type: 'create',
+      existedData: null
+    })
+  }, [])
 
   return (
     <>
       <SidebarTitle
         actionButtonIcon="tabler:plus"
-        actionButtonOnClick={() => {
-          setModifyModalOpenType('create')
-          setSelectedData(null)
-        }}
+        actionButtonOnClick={handleCreateList}
         name="lists"
         namespace="apps.todoList"
       />

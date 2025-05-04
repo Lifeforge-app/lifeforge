@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   ModuleWrapper,
@@ -27,10 +26,6 @@ function YoutubeVideos() {
     'youtube-videos/video',
     ['youtube-videos', 'video']
   )
-  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
-    useState(false)
-  const [videoToDelete, setVideoToDelete] =
-    useState<IYoutubeVideosStorageEntry>()
 
   const [needsProgressCheck, setNeedsProgressCheck] = useState(true)
   const [query, setQuery] = useState('')
@@ -94,11 +89,7 @@ function YoutubeVideos() {
                       namespace="apps.youtubeVideos"
                     />
                   ) : (
-                    <VideoList
-                      setIsConfirmDeleteModalOpen={setIsConfirmDeleteModalOpen}
-                      setVideoToDelete={setVideoToDelete}
-                      videos={filteredVideos}
-                    />
+                    <VideoList videos={filteredVideos} />
                   )
                 }
               </QueryWrapper>
@@ -114,28 +105,6 @@ function YoutubeVideos() {
           if (isVideoDownloading) {
             setNeedsProgressCheck(true)
           }
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="youtube-videos/video"
-        customCallback={async () => {
-          queryClient.setQueryData<IYoutubeVideosStorageEntry[]>(
-            ['youtube-videos', 'video'],
-            prevVideos => {
-              if (!prevVideos) return prevVideos
-              if (videoToDelete === undefined) return prevVideos
-
-              return prevVideos.filter(v => v.id !== videoToDelete.id)
-            }
-          )
-          setVideoToDelete(undefined)
-        }}
-        data={videoToDelete}
-        isOpen={isConfirmDeleteModalOpen}
-        itemName="video"
-        nameKey="title"
-        onClose={() => {
-          setIsConfirmDeleteModalOpen(false)
         }}
       />
       <FAB

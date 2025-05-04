@@ -1,8 +1,11 @@
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
-import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
+import { useBooksLibraryContext } from '@apps/BooksLibrary/providers/BooksLibraryProvider'
+
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import SidebarItem from './SidebarItem'
 
 function SidebarSection({
@@ -16,9 +19,28 @@ function SidebarSection({
   hasActionButton?: boolean
   hasHamburgerMenu?: boolean
 }) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.booksLibrary')
-  const { dataQuery, setExistedData, setModifyDataModalOpenType } =
-    useBooksLibraryContext()[stuff]
+  const { categoriesQuery, languagesQuery, fileTypesQuery } =
+    useBooksLibraryContext()
+
+  const handleCreateItem = useCallback(() => {
+    open(`booksLibrary.modify`, {
+      type: 'create',
+      existedData: null,
+      stuff
+    })
+  }, [stuff])
+
+  const dataQuery = useMemo(
+    () =>
+      ({
+        categories: categoriesQuery,
+        languages: languagesQuery,
+        fileTypes: fileTypesQuery
+      })[stuff],
+    [stuff]
+  )
 
   return (
     <>
@@ -28,10 +50,7 @@ function SidebarSection({
         {...(hasActionButton
           ? {
               actionButtonIcon: 'tabler:plus',
-              actionButtonOnClick: () => {
-                setExistedData(null)
-                setModifyDataModalOpenType('create')
-              }
+              actionButtonOnClick: handleCreateItem
             }
           : {})}
       />

@@ -3,8 +3,7 @@ import React, { useCallback } from 'react'
 
 import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
 
-import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
-
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import ColumnVisibilityToggle from '../views/TableView/components/ColumnVisibilityToggle'
 
 function HeaderMenu({
@@ -18,8 +17,8 @@ function HeaderMenu({
   visibleColumn: string[]
   setVisibleColumn: React.Dispatch<React.SetStateAction<string[]>>
 }) {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
-  const { setManageCategoriesModalOpen } = useWalletStore()
 
   const handleRefresh = useCallback(() => {
     queryClient.invalidateQueries({
@@ -28,8 +27,8 @@ function HeaderMenu({
   }, [queryClient])
 
   const handleManageCategories = useCallback(() => {
-    setManageCategoriesModalOpen(true)
-  }, [setManageCategoriesModalOpen])
+    open('wallet.transactions.manageCategories', {})
+  }, [])
 
   const handleViewChange = useCallback(
     (type: 'list' | 'table') => {

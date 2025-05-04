@@ -1,9 +1,11 @@
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import TaskTagListItem from './TaskTagListItem'
 
 function TaskTagList({
@@ -11,21 +13,22 @@ function TaskTagList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.todoList')
-  const {
-    tagsListQuery,
-    setModifyTagModalOpenType: setModifyModalOpenType,
-    setSelectedPriority: setSelectedData
-  } = useTodoListContext()
+  const { tagsListQuery } = useTodoListContext()
+
+  const handleCreateTag = useCallback(() => {
+    open('todoList.modifyTag', {
+      type: 'create',
+      existedData: null
+    })
+  }, [])
 
   return (
     <>
       <SidebarTitle
         actionButtonIcon="tabler:plus"
-        actionButtonOnClick={() => {
-          setModifyModalOpenType('create')
-          setSelectedData(null)
-        }}
+        actionButtonOnClick={handleCreateTag}
         name="Tags"
         namespace="apps.todoList"
       />

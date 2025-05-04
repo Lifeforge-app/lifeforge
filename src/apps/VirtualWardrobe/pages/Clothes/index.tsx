@@ -1,14 +1,11 @@
-import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { toast } from 'react-toastify'
 
 import {
   Button,
   ContentWrapperWithSidebar,
-  DeleteConfirmationModal,
   EmptyStateScreen,
   LayoutWithSidebar,
   ModuleHeader,
@@ -26,32 +23,27 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import fetchAPI from '@utils/fetchAPI'
-
-import SessionCartModal from '../../components/SessionCartModal'
+import { useModalStore } from '../../../../core/modals/useModalStore'
+import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import EntryItem from './components/EntryItem'
 import Header from './components/Header'
-import ModifyItemModal from './components/ModifyItemModal'
 import Sidebar from './components/Sidebar'
+import { virtualWardrobeClothesModals } from './modals'
 
 function VirtualWardrobeClothes() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.virtualWardrobe')
-  const queryClient = useQueryClient()
   const [searchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [existedData, setExistedData] = useState<IVirtualWardrobeEntry | null>(
-    null
-  )
 
-  const [modifyItemModalOpenType, setModifyItemModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [deleteItemConfirmModalOpen, setDeleteItemConfirmModalOpen] =
-    useState<boolean>(false)
-  const [sessionCartModalOpen, setSessionCartModalOpen] =
-    useState<boolean>(false)
+  const queryKey = [
+    'virtual-wardrobe',
+    'entries',
+    searchParams.toString(),
+    debouncedSearchQuery
+  ]
 
   const sidebarDataQuery = useAPIQuery<IVirtualWardrobeSidebarData>(
     'virtual-wardrobe/entries/sidebar-data',
@@ -59,42 +51,29 @@ function VirtualWardrobeClothes() {
   )
   const entriesQuery = useAPIQuery<IVirtualWardrobeEntry[]>(
     `virtual-wardrobe/entries?${searchParams.toString()}&q=${debouncedSearchQuery}`,
-    [
-      'virtual-wardrobe',
-      'entries',
-      searchParams.toString(),
-      debouncedSearchQuery
-    ]
+    queryKey
   )
   const sessionCartItemsQuery = useAPIQuery<IVirtualWardrobeEntry[]>(
     'virtual-wardrobe/session',
     ['virtual-wardrobe', 'session-cart-items']
   )
 
-  async function handleAddToCart(entry: IVirtualWardrobeEntry) {
-    if (sessionCartItemsQuery.data?.some(item => item.id === entry.id)) {
-      toast.info('Item already in cart')
-      return
-    }
+  const handleOpenSessionCart = useCallback(() => {
+    open('virtualWardrobe.clothes.sessionCart', {
+      cartItems: sessionCartItemsQuery.data ?? [],
+      queryKey
+    })
+  }, [sessionCartItemsQuery.data, queryKey])
 
-    try {
-      await fetchAPI(`virtual-wardrobe/session/${entry.id}`, {
-        method: 'POST'
-      })
+  const handleCreateItem = useCallback(() => {
+    open('virtualWardrobe.clothes.modifyItem', {
+      type: 'create',
+      existedData: null,
+      queryKey
+    })
+  }, [queryKey])
 
-      queryClient.setQueryData<IVirtualWardrobeEntry[]>(
-        ['virtual-wardrobe', 'session-cart-items'],
-        prev => {
-          if (!prev) return prev
-          return [...prev, entry]
-        }
-      )
-
-      toast.success('Item added to cart')
-    } catch {
-      toast.error('Failed to add item to cart')
-    }
-  }
+  useModalsEffect(virtualWardrobeClothesModals)
 
   return (
     <ModuleWrapper>
@@ -105,9 +84,7 @@ function VirtualWardrobeClothes() {
               <Button
                 icon="tabler:shopping-bag"
                 variant="plain"
-                onClick={() => {
-                  setSessionCartModalOpen(true)
-                }}
+                onClick={handleOpenSessionCart}
               >
                 {sessionCartItemsQuery.data.length !== 0 && (
                   <>({sessionCartItemsQuery.data.length})</>
@@ -119,9 +96,7 @@ function VirtualWardrobeClothes() {
               tProps={{
                 item: t('items.clothes')
               }}
-              onClick={() => {
-                setModifyItemModalOpenType('create')
-              }}
+              onClick={handleCreateItem}
             >
               new
             </Button>
@@ -208,17 +183,12 @@ function VirtualWardrobeClothes() {
                         <EntryItem
                           key={entry.id}
                           entry={entry}
-                          onAddToCart={async () => {
-                            await handleAddToCart(entry)
-                          }}
-                          onDelete={() => {
-                            setExistedData(entry)
-                            setDeleteItemConfirmModalOpen(true)
-                          }}
-                          onUpdate={() => {
-                            setExistedData(entry)
-                            setModifyItemModalOpenType('update')
-                          }}
+                          isInCart={
+                            !!sessionCartItemsQuery.data?.some(
+                              cartItem => cartItem.id === entry.id
+                            )
+                          }
+                          queryKey={queryKey}
                         />
                       ))}
                   </ul>
@@ -228,72 +198,6 @@ function VirtualWardrobeClothes() {
           </QueryWrapper>
         </ContentWrapperWithSidebar>
       </LayoutWithSidebar>
-      <ModifyItemModal
-        existedData={existedData}
-        openType={modifyItemModalOpenType}
-        queryKey={[
-          'virtual-wardrobe',
-          'entries',
-          searchParams.toString(),
-          debouncedSearchQuery
-        ]}
-        refreshEntries={() => {
-          queryClient.invalidateQueries({
-            queryKey: ['virtual-wardrobe', 'sidebar-data']
-          })
-        }}
-        onClose={() => {
-          setModifyItemModalOpenType(null)
-          setExistedData(null)
-        }}
-      />
-      {sessionCartItemsQuery.data && (
-        <SessionCartModal
-          cartItems={sessionCartItemsQuery.data}
-          isOpen={sessionCartModalOpen}
-          refreshEntries={() => {
-            queryClient.invalidateQueries({
-              queryKey: [
-                'virtual-wardrobe',
-                'entries',
-                searchParams.toString(),
-                debouncedSearchQuery
-              ]
-            })
-          }}
-          onClose={() => {
-            setSessionCartModalOpen(false)
-          }}
-        />
-      )}
-      <DeleteConfirmationModal
-        apiEndpoint="virtual-wardrobe/entries"
-        data={existedData ?? undefined}
-        isOpen={deleteItemConfirmModalOpen}
-        itemName="item"
-        nameKey="name"
-        queryKey={[
-          'virtual-wardrobe',
-          'entries',
-          searchParams.toString(),
-          debouncedSearchQuery
-        ]}
-        updateDataList={() => {
-          queryClient.setQueryData<IVirtualWardrobeEntry[]>(
-            ['virtual-wardrobe', 'session-cart-items'],
-            prev => {
-              if (!prev) return prev
-              return prev.filter(entry => entry.id !== existedData?.id)
-            }
-          )
-          queryClient.invalidateQueries({
-            queryKey: ['virtual-wardrobe', 'sidebar-data']
-          })
-        }}
-        onClose={() => {
-          setDeleteItemConfirmModalOpen(false)
-        }}
-      />
     </ModuleWrapper>
   )
 }

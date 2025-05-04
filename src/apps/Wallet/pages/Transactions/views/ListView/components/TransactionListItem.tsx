@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { useCallback } from 'react'
 import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -8,27 +10,46 @@ import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
+import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 
 function TransactionListItem({
   transaction,
-  setModifyModalOpenType,
-  setDeleteTransactionsConfirmationOpen,
   setReceiptModalOpen,
-  setReceiptToView,
-  setSelectedData
+  setReceiptToView
 }: {
   transaction: IWalletTransaction
-  setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
-  setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>
   setReceiptModalOpen: React.Dispatch<boolean>
   setReceiptToView: React.Dispatch<string>
-  setSelectedData: React.Dispatch<IWalletTransaction | null>
 }) {
+  const open = useModalStore(state => state.open)
+  const queryClient = useQueryClient()
+
   const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
   const categories = categoriesQuery.data ?? []
   const ledgers = ledgersQuery.data ?? []
   const assets = assetsQuery.data ?? []
+
+  const handleEditTransaction = useCallback(() => {
+    open('wallet.transactions.modifyTransaction', {
+      type: 'update',
+      existedData: transaction
+    })
+  }, [transaction])
+
+  const handleDeleteTransaction = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'wallet/transactions',
+      data: transaction,
+      itemName: 'transaction',
+      queryKey: ['wallet', 'transactions'],
+      updateDataList: () => {
+        queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
+        queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
+        queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
+      }
+    })
+  }, [transaction])
 
   return (
     <div className="flex-between border-bg-200 dark:border-bg-800/50 relative flex gap-12 border-b py-4 pl-2">
@@ -163,20 +184,14 @@ function TransactionListItem({
             <MenuItem
               icon="tabler:pencil"
               text="Edit"
-              onClick={() => {
-                setSelectedData(transaction)
-                setModifyModalOpenType('update')
-              }}
+              onClick={handleEditTransaction}
             />
           )}
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={() => {
-              setSelectedData(transaction)
-              setDeleteTransactionsConfirmationOpen(true)
-            }}
+            onClick={handleDeleteTransaction}
           />
         </HamburgerMenu>
       </div>

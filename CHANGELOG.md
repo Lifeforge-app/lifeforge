@@ -1,10 +1,18 @@
 # Change Log
 
+### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
+- **UI**: Fixed some silly but fatal bugs related to `useCallback`.
+- **Code**: Created universal portal component to render modals and popups outside of the main app tree.
+- **API**: Fixed a few stupid mistakes.
+- **UI**: Improved button components.
+- **Account**: Fixed a bug where the remove button in the avatar column will show up even if the user doesn't have an avatar.
+
 ### 📌 **dev 25w18 (4/28/2025 - 5/4/2025)**
 
 - **UI**: Reintroduced Storybook for debugging and testing purposes.
 - **UI**: Fixed a bug where the sidebar item hamburger menu icon would not return to its original state after closing the menu.
 - **UI**: Fixed a critical bug where the tailwind color palette was not working properly.
+- **UI**: Moved modals into external portal located at the document body.
 - **Calendar**: Refactored the code.
 - **Calendar**: User can now exclude specific dates from calendar recurring events.
 

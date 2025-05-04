@@ -14,23 +14,16 @@ import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../../../../../core/modals/useModalStore'
+
 function EventDetailsHeader({
   event,
-  category,
-  setModifyEventModalOpenType,
-  setExistedData,
-  setIsDeleteEventConfirmationModalOpen
+  category
 }: {
   event: ICalendarEvent
   category: ICalendarCategory | undefined
-  setModifyEventModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { eventQueryKey } = useCalendarStore()
 
@@ -51,6 +44,25 @@ function EventDetailsHeader({
       console.error('Error adding exception:', error)
     }
   }, [event.id])
+
+  const handleEdit = useCallback(() => {
+    open('calendar.modifyEvent', {
+      existedData: event,
+      type: 'update'
+    })
+  }, [event])
+
+  const handleDelete = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'calendar/events',
+      confirmationText: 'Delete this event',
+      data: { ...event, id: event.id.split('-')[0] ?? '' },
+      itemName: 'event',
+      nameKey: 'title',
+      queryKey: eventQueryKey,
+      queryUpdateType: 'invalidate'
+    })
+  }, [event])
 
   return (
     <header className="flex items-start justify-between gap-8">
@@ -89,22 +101,12 @@ function EventDetailsHeader({
               onClick={handleAddException}
             />
           )}
-          <MenuItem
-            icon="tabler:pencil"
-            text="Edit"
-            onClick={() => {
-              setExistedData(event)
-              setModifyEventModalOpenType('update')
-            }}
-          />
+          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={() => {
-              setExistedData(event)
-              setIsDeleteEventConfirmationModalOpen(true)
-            }}
+            onClick={handleDelete}
           />
         </HamburgerMenu>
       )}

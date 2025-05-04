@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -13,19 +13,17 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 
 function EntryItem({
   entry,
-  onEdit,
-  onDelete,
   queryKey
 }: {
   entry: IWishlistEntry
-  onEdit: (entry: IWishlistEntry) => void
-  onDelete: (entry: IWishlistEntry) => void
   queryKey: unknown[]
 }) {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const collectionIdQuery = useAPIQuery<string>(
     'wishlist/entries/collection-id',
@@ -55,6 +53,24 @@ function EntryItem({
       setBought(bought)
     }
   }
+
+  const handleEdit = useCallback(() => {
+    open('wishlist.entries.modifyEntry', {
+      type: 'update',
+      existedData: entry,
+      queryKey
+    })
+  }, [entry])
+
+  const handleDelete = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'wishlist/entries',
+      data: entry,
+      itemName: 'entry',
+      nameKey: 'name',
+      queryKey: queryKey
+    })
+  }, [entry])
 
   return (
     <li
@@ -130,20 +146,12 @@ function EntryItem({
             wrapper: 'absolute right-4 top-4 sm:static'
           }}
         >
-          <MenuItem
-            icon="tabler:pencil"
-            text="Edit"
-            onClick={() => {
-              onEdit(entry)
-            }}
-          />
+          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={() => {
-              onDelete(entry)
-            }}
+            onClick={handleDelete}
           />
         </HamburgerMenu>
       </div>

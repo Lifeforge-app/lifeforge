@@ -8,6 +8,7 @@ import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -25,27 +26,14 @@ interface CalendarComponentProps {
   events: ICalendarEvent[]
   categories: ICalendarCategory[]
   selectedCategory: string | undefined
-  setIsDeleteEventConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setModifyEventModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setScanImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setExistedData: React.Dispatch<
-    React.SetStateAction<Partial<ICalendarEvent> | null>
-  >
 }
 
 function CalendarComponent({
   events,
   categories,
-  selectedCategory,
-  setIsDeleteEventConfirmationModalOpen,
-  setModifyEventModalOpenType,
-  setScanImageModalOpen,
-  setExistedData
+  selectedCategory
 }: CalendarComponentProps) {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { eventQueryKey: queryKey, setEventQueryKey } = useCalendarStore()
 
@@ -88,14 +76,7 @@ function CalendarComponent({
   const calendarComponents = useMemo(
     () => ({
       toolbar: (props: any) => {
-        return (
-          <CalendarHeader
-            {...props}
-            setExistedData={setExistedData}
-            setModifyEventModalOpenType={setModifyEventModalOpenType}
-            setScanImageModalOpen={setScanImageModalOpen}
-          />
-        )
+        return <CalendarHeader {...props} />
       },
       event: ({
         event
@@ -104,15 +85,7 @@ function CalendarComponent({
         props: any
       }) => {
         return (
-          <EventItem
-            categories={categories}
-            event={event as ICalendarEvent}
-            setExistedData={setExistedData}
-            setIsDeleteEventConfirmationModalOpen={
-              setIsDeleteEventConfirmationModalOpen
-            }
-            setModifyEventModalOpenType={setModifyEventModalOpenType}
-          />
+          <EventItem categories={categories} event={event as ICalendarEvent} />
         )
       },
       week: {
@@ -124,16 +97,11 @@ function CalendarComponent({
           <AgendaEventItem
             categories={categories}
             event={event as ICalendarEvent}
-            setExistedData={setExistedData}
-            setIsDeleteEventConfirmationModalOpen={
-              setIsDeleteEventConfirmationModalOpen
-            }
-            setModifyEventModalOpenType={setModifyEventModalOpenType}
           />
         )
       }
     }),
-    [categories, setExistedData, setModifyEventModalOpenType]
+    [categories]
   )
 
   const updateEvent = useCallback(
@@ -180,15 +148,17 @@ function CalendarComponent({
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
-      setModifyEventModalOpenType('create')
-      setExistedData({
-        id: '',
-        title: '',
-        start,
-        end: dayjs(end).subtract(1, 'minute').toDate(),
-        category: '',
-        location: '',
-        reference_link: ''
+      open('calendar.modifyEvent', {
+        type: 'create',
+        existedData: {
+          id: '',
+          title: '',
+          start,
+          end: dayjs(end).subtract(1, 'minute').toDate(),
+          category: '',
+          location: '',
+          reference_link: ''
+        }
       })
     },
     []

@@ -7,18 +7,12 @@ import ListView from './ListView'
 function Views({
   entries,
   queryKey,
-  setDeleteConfirmationModalOpen,
-  setExistingEntry,
-  setModifyEntryModalOpen,
   view,
   debouncedSearchQuery,
   totalItems
 }: {
   entries: IGuitarTabsEntry[]
   queryKey: unknown[]
-  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setExistingEntry: React.Dispatch<React.SetStateAction<any>>
-  setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   view: 'grid' | 'list'
   debouncedSearchQuery: string
   totalItems: number
@@ -45,24 +39,9 @@ function Views({
 
   switch (view) {
     case 'grid':
-      return (
-        <GridView
-          entries={entries}
-          queryKey={queryKey}
-          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
-          setExistingEntry={setExistingEntry}
-          setModifyEntryModalOpen={setModifyEntryModalOpen}
-        />
-      )
+      return <GridView entries={entries} queryKey={queryKey} />
     case 'list':
-      return (
-        <ListView
-          entries={entries}
-          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
-          setExistingEntry={setExistingEntry}
-          setModifyEntryModalOpen={setModifyEntryModalOpen}
-        />
-      )
+      return <ListView entries={entries} queryKey={queryKey} />
   }
 }
 

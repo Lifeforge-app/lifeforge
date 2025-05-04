@@ -1,8 +1,9 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import {
   type IBooksLibraryCategory,
   type IBooksLibraryFileType,
@@ -21,22 +22,34 @@ function _SidebarItem({
   fallbackIcon?: string
   hasHamburgerMenu?: boolean
 }) {
+  const open = useModalStore(state => state.open)
   const [searchParams, setSearchParams] = useSearchParams()
   const {
-    miscellaneous: { setSidebarOpen },
-    ...booksLibraryContext
+    miscellaneous: { setSidebarOpen }
   } = useBooksLibraryContext()
-
-  const {
-    setExistedData,
-    setModifyDataModalOpenType,
-    setDeleteDataConfirmationOpen
-  } = booksLibraryContext[stuff]
 
   const singleStuff = useMemo(
     () => stuff.replace(/ies$/, 'y').replace(/s$/, ''),
     [stuff]
   )
+
+  const handleUpdateStuff = useCallback(() => {
+    open(`booksLibrary.modify`, {
+      type: 'update',
+      existedData: item,
+      stuff
+    })
+  }, [item, stuff])
+
+  const handleDeleteStuff = useCallback(() => {
+    open(`deleteConfirmation`, {
+      apiEndpoint: `books-library/${stuff}`,
+      data: item,
+      itemName: singleStuff,
+      nameKey: 'name',
+      queryKey: ['booksLibrary', stuff]
+    })
+  }, [item, stuff])
 
   return (
     <>
@@ -48,21 +61,13 @@ function _SidebarItem({
               <MenuItem
                 icon="tabler:pencil"
                 text="Edit"
-                onClick={e => {
-                  e.stopPropagation()
-                  setExistedData(item as any)
-                  setModifyDataModalOpenType('update')
-                }}
+                onClick={handleUpdateStuff}
               />
               <MenuItem
                 isRed
                 icon="tabler:trash"
                 text="Delete"
-                onClick={e => {
-                  e.stopPropagation()
-                  setExistedData(item as any)
-                  setDeleteDataConfirmationOpen(true)
-                }}
+                onClick={handleDeleteStuff}
               />
             </>
           ) : undefined

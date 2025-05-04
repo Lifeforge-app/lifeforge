@@ -9,9 +9,7 @@ import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
 function EntryItem({ item }: { item: IBooksLibraryEntry }) {
-  const {
-    categories: { dataQuery: categoriesQuery }
-  } = useBooksLibraryContext()
+  const { categoriesQuery } = useBooksLibraryContext()
 
   return (
     <li

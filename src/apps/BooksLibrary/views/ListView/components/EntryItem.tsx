@@ -18,9 +18,7 @@ import EntryContextMenu from '../../components/EntryContextMenu'
 export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   const queryClient = useQueryClient()
   const { componentBgWithHover, componentBgLighter } = useComponentBg()
-  const {
-    categories: { dataQuery: categoriesQuery }
-  } = useBooksLibraryContext()
+  const { categoriesQuery } = useBooksLibraryContext()
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 

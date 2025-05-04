@@ -5,28 +5,21 @@ import { SidebarTitle } from '@lifeforge/ui'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
+import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import { type ICalendarCategory } from '../../../../interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({
   selectedCategory,
   setSelectedCategory,
-  categories,
-  setModifyCategoryModalOpenType,
-  setExistedData,
-  setDeleteCategoryConfirmationModalOpen
+  categories
 }: {
   selectedCategory: string | undefined
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
   categories: ICalendarCategory[]
-  setModifyCategoryModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
-  setDeleteCategoryConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
+  const open = useModalStore(state => state.open)
+
   const handleSelect = useCallback(
     (item: ICalendarCategory) => {
       setSelectedCategory(item.id)
@@ -39,8 +32,10 @@ function CategoryList({
   }, [setSelectedCategory])
 
   const handleCreate = useCallback(() => {
-    setModifyCategoryModalOpenType('create')
-    setExistedData(null)
+    open('calendar.modifyCategory', {
+      existedData: null,
+      type: 'create'
+    })
   }, [])
 
   return (
@@ -61,6 +56,7 @@ function CategoryList({
                 key={key}
                 isSelected={selectedCategory === key}
                 item={value as ICalendarCategory}
+                modifiable={false}
                 onCancelSelect={handleCancelSelect}
                 onSelect={handleSelect}
               />
@@ -70,11 +66,6 @@ function CategoryList({
                 key={item.id}
                 isSelected={selectedCategory === item.id}
                 item={item}
-                setDeleteConfirmationModalOpen={
-                  setDeleteCategoryConfirmationModalOpen
-                }
-                setModifyModalOpenType={setModifyCategoryModalOpenType}
-                setSelectedData={setExistedData}
                 onCancelSelect={handleCancelSelect}
                 onSelect={handleSelect}
               />

@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -11,6 +10,7 @@ import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
 import { type IPasswordEntry } from '../interfaces/password_interfaces'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 
@@ -21,14 +21,9 @@ function PasswordEntryITem({
   password: IPasswordEntry
   pinPassword: (id: string) => Promise<void>
 }) {
-  const queryClient = useQueryClient()
+  const open = useModalStore(state => state.open)
 
-  const {
-    masterPassword,
-    setIsDeletePasswordConfirmationModalOpen,
-    setExistedData,
-    setModifyPasswordModalOpenType
-  } = usePasswordContext()
+  const { masterPassword } = usePasswordContext()
   const { componentBg } = useComponentBg()
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
@@ -53,22 +48,28 @@ function PasswordEntryITem({
   async function onEdit() {
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
-      queryClient.setQueryData<IPasswordEntry[]>(
-        ['passwords', 'entries'],
-        prev => {
-          if (!prev) return prev
-
-          return prev.map(p =>
-            p.id === password.id ? { ...p, decrypted: decrypted } : p
-          )
+      open('passwords.modifyPassword', {
+        type: 'update',
+        existedData: {
+          ...password,
+          decrypted
         }
-      )
-      setExistedData(password)
-      setModifyPasswordModalOpenType('update')
+      })
     } catch {
       toast.error('Couldn’t fetch the password. Please try again.')
     }
   }
+
+  const handleDeletePassword = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'passwords/password',
+      confirmationText: 'Delete this password',
+      customText: `Are you sure you want to delete the password for ${password.name}? This action is irreversible.`,
+      data: password,
+      itemName: 'password',
+      queryKey: ['passwords', 'entries']
+    })
+  }, [password])
 
   return (
     <div
@@ -173,10 +174,7 @@ function PasswordEntryITem({
               isRed
               icon="tabler:trash"
               text="Delete"
-              onClick={() => {
-                setIsDeletePasswordConfirmationModalOpen(true)
-                setExistedData(password)
-              }}
+              onClick={handleDeletePassword}
             />
           </HamburgerMenu>
         </div>

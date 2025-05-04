@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
@@ -7,15 +8,9 @@ import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransacti
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-function InnerHeader({
-  setModifyModalOpenType,
-  setUploadReceiptModalOpen
-}: {
-  setModifyModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setUploadReceiptModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+import { useModalStore } from '../../../../../core/modals/useModalStore'
+
+function InnerHeader() {
   const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =
     useWalletData()
   const {
@@ -30,6 +25,7 @@ function InnerHeader({
     setSelectedLedger,
     setSidebarOpen
   } = useWalletStore()
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
   const assets = assetsQuery.data ?? []
   const categories = categoriesQuery.data ?? []
@@ -38,6 +34,17 @@ function InnerHeader({
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
   )
+
+  const handleCreateTransaction = useCallback(() => {
+    open('wallet.transactions.modifyTransaction', {
+      type: 'create',
+      existedData: null
+    })
+  }, [])
+
+  const handleUploadReceipt = useCallback(() => {
+    open('wallet.transactions.scanReceipt', {})
+  }, [])
 
   return (
     <div className="flex-between flex">
@@ -131,17 +138,13 @@ function InnerHeader({
                 icon="tabler:plus"
                 namespace="apps.wallet"
                 text="Add Manually"
-                onClick={() => {
-                  setModifyModalOpenType('create')
-                }}
+                onClick={handleCreateTransaction}
               />
               <MenuItem
                 icon="tabler:scan"
                 namespace="apps.wallet"
                 text="Scan Receipt"
-                onClick={() => {
-                  setUploadReceiptModalOpen(true)
-                }}
+                onClick={handleUploadReceipt}
               />
             </MenuItems>
           </Menu>

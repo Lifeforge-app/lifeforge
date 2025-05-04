@@ -45,20 +45,6 @@ interface IMusicContext {
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 
-  // Modal states
-  isYoutubeDownloaderOpen: boolean
-  setIsYoutubeDownloaderOpen: React.Dispatch<React.SetStateAction<boolean>>
-  isDeleteMusicConfirmationModalOpen: boolean
-  setIsDeleteMusicConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  isModifyMusicModalOpen: boolean
-  setIsModifyMusicModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-
-  // Music data
-  existedData: IMusicEntry | null
-  setExistedData: React.Dispatch<React.SetStateAction<IMusicEntry | null>>
-
   // Playback options
   isShuffle: boolean
   setIsShuffle: React.Dispatch<React.SetStateAction<boolean>>
@@ -79,19 +65,12 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     ['music', 'entries'],
     auth
   )
-  const [isYoutubeDownloaderOpen, setIsYoutubeDownloaderOpen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentMusic, setCurrentMusic] = useState<IMusicEntry | null>(null)
   const [currentDuration, setCurrentDuration] = useState(0)
   const [isShuffle, setIsShuffle] = useState(false)
   const [isRepeat, setIsRepeat] = useState(false)
   const [volume, setVolume] = useState(80)
-  const [existedData, setExistedData] = useState<IMusicEntry | null>(null)
-  const [
-    isDeleteMusicConfirmationModalOpen,
-    setIsDeleteMusicConfirmationModalOpen
-  ] = useState(false)
-  const [isModifyMusicModalOpen, setIsModifyMusicModalOpen] = useState(false)
 
   const playMusic = async (music: IMusicEntry) => {
     setCurrentMusic(music)
@@ -264,18 +243,6 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       loading,
       setLoading,
 
-      // Modal states
-      isYoutubeDownloaderOpen,
-      setIsYoutubeDownloaderOpen,
-      isDeleteMusicConfirmationModalOpen,
-      setIsDeleteMusicConfirmationModalOpen,
-      isModifyMusicModalOpen,
-      setIsModifyMusicModalOpen,
-
-      // Music data
-      existedData,
-      setExistedData,
-
       // Playback options
       isShuffle,
       setIsShuffle,
@@ -291,10 +258,6 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       musicsQuery.data,
       searchQuery,
       loading,
-      isYoutubeDownloaderOpen,
-      isDeleteMusicConfirmationModalOpen,
-      isModifyMusicModalOpen,
-      existedData,
       isShuffle,
       isRepeat
     ]

@@ -23,51 +23,15 @@ interface ITodoListData {
   statusCounterQuery: UseQueryResult<ITodoListStatusCounter>
 
   selectedTask: ITodoListEntry | null
-  selectedPriority: ITodoPriority | null
-  selectedList: ITodoListList | null
-  selectedTag: ITodoListTag | null
 
   // Modals
   modifyTaskWindowOpenType: 'create' | 'update' | null
-  modifyPriorityModalOpenType: 'create' | 'update' | null
-  modifyListModalOpenType: 'create' | 'update' | null
-  modifyTagModalOpenType: 'create' | 'update' | null
-  deleteTaskConfirmationModalOpen: boolean
-  deletePriorityConfirmationModalOpen: boolean
-  deleteListConfirmationModalOpen: boolean
-  deleteTagConfirmationModalOpen: boolean
 
   // Setters
   setModifyTaskWindowOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  setModifyPriorityModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setModifyListModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setModifyTagModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteTaskConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setDeletePriorityConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setDeleteListConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setDeleteTagConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
   setSelectedTask: React.Dispatch<React.SetStateAction<ITodoListEntry | null>>
-  setSelectedList: React.Dispatch<React.SetStateAction<ITodoListList | null>>
-  setSelectedPriority: React.Dispatch<
-    React.SetStateAction<ITodoPriority | null>
-  >
-  setSelectedTag: React.Dispatch<React.SetStateAction<ITodoListTag | null>>
 }
 
 export const TodoListContext = createContext<ITodoListData | undefined>(
@@ -119,26 +83,6 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [deleteTaskConfirmationModalOpen, setDeleteTaskConfirmationModalOpen] =
     useState(false)
   const [selectedTask, setSelectedTask] = useState<ITodoListEntry | null>(null)
-  const [modifyPriorityModalOpenType, setModifyPriorityModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [
-    deletePriorityConfirmationModalOpen,
-    setDeletePriorityConfirmationModalOpen
-  ] = useState(false)
-  const [selectedPriority, setSelectedPriority] =
-    useState<ITodoPriority | null>(null)
-  const [modifyListModalOpenType, setModifyListModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [deleteListConfirmationModalOpen, setDeleteListConfirmationModalOpen] =
-    useState(false)
-  const [selectedList, setSelectedList] = useState<ITodoListList | null>(null)
-  const [modifyTagModalOpenType, setModifyTagModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [deleteTagConfirmationModalOpen, setDeleteTagConfirmationModalOpen] =
-    useState(false)
-  const [selectedTag, setSelectedTag] = useState<ITodoListTag | null>(null)
 
   const value = useMemo(
     () => ({
@@ -149,29 +93,10 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
       entriesQuery,
       statusCounterQuery,
       selectedTask,
-      selectedPriority,
-      selectedList,
-      selectedTag,
       modifyTaskWindowOpenType,
-      modifyPriorityModalOpenType,
-      modifyListModalOpenType,
-      modifyTagModalOpenType,
-      deleteTaskConfirmationModalOpen,
-      deletePriorityConfirmationModalOpen,
-      deleteListConfirmationModalOpen,
-      deleteTagConfirmationModalOpen,
       setModifyTaskWindowOpenType,
-      setModifyPriorityModalOpenType,
-      setModifyListModalOpenType,
-      setModifyTagModalOpenType,
       setDeleteTaskConfirmationModalOpen,
-      setDeletePriorityConfirmationModalOpen,
-      setDeleteListConfirmationModalOpen,
-      setDeleteTagConfirmationModalOpen,
-      setSelectedTask,
-      setSelectedList,
-      setSelectedPriority,
-      setSelectedTag
+      setSelectedTask
     }),
     [
       entriesQueryKey,
@@ -181,17 +106,8 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
       entriesQuery,
       statusCounterQuery,
       selectedTask,
-      selectedPriority,
-      selectedList,
-      selectedTag,
       modifyTaskWindowOpenType,
-      modifyPriorityModalOpenType,
-      modifyListModalOpenType,
-      modifyTagModalOpenType,
-      deleteTaskConfirmationModalOpen,
-      deletePriorityConfirmationModalOpen,
-      deleteListConfirmationModalOpen,
-      deleteTagConfirmationModalOpen
+      deleteTaskConfirmationModalOpen
     ]
   )
 

@@ -3,25 +3,15 @@ import EntryItem from './components/EntryItem'
 
 function ListView({
   entries,
-  setExistingEntry,
-  setModifyEntryModalOpen,
-  setDeleteConfirmationModalOpen
+  queryKey
 }: {
   entries: IGuitarTabsEntry[]
-  setExistingEntry: React.Dispatch<React.SetStateAction<any>>
-  setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  queryKey: unknown[]
 }) {
   return (
     <ul className="mb-6 space-y-4">
       {entries.map(entry => (
-        <EntryItem
-          key={entry.id}
-          entry={entry}
-          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
-          setExistingEntry={setExistingEntry}
-          setModifyEntryModalOpen={setModifyEntryModalOpen}
-        />
+        <EntryItem key={entry.id} entry={entry} queryKey={queryKey} />
       ))}
     </ul>
   )

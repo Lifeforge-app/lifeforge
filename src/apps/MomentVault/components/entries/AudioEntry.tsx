@@ -17,17 +17,18 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
+
 function AudioEntry({
   entriesQueryKey,
   entry,
-  onDelete,
-  addEntryModalOpenType
+  onDelete
 }: {
   entriesQueryKey: unknown[]
   entry: IMomentVaultEntry
   onDelete: () => void
-  addEntryModalOpenType: 'text' | 'audio' | 'photos' | 'video' | null
 }) {
+  const key = useModalStore(state => state.key)
   const {
     theme: lightOrDarkTheme,
     bgTempPalette,
@@ -102,7 +103,7 @@ function AudioEntry({
       el.style.willChange = 'opacity, transform'
       el.getBoundingClientRect()
     }
-  }, [addEntryModalOpenType])
+  }, [key])
 
   return (
     <div

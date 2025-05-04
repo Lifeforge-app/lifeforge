@@ -1,12 +1,10 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
   Button,
-  DeleteConfirmationModal,
   EmptyStateScreen,
   HamburgerMenuSelectorWrapper,
   MenuItem,
@@ -17,40 +15,33 @@ import {
   ViewModeSelector
 } from '@lifeforge/ui'
 
+import { useModalStore } from '../../core/modals/useModalStore'
+import useModalsEffect from '../../core/modals/useModalsEffect'
 import Header from './components/Header'
-import LibgenModal from './components/LibgenModal'
-import ModifyBookModal from './components/ModifyBookModal'
-import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
 import { IBooksLibraryEntry } from './interfaces/books_library_interfaces'
+import { booksLibraryModals } from './modals'
 import { useBooksLibraryContext } from './providers/BooksLibraryProvider'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 function BooksLibrary() {
-  const queryClient = useQueryClient()
+  const open = useModalStore(state => state.open)
   const [searchParams] = useSearchParams()
   const {
-    entries: {
-      dataQuery: entriesQuery,
-      deleteDataConfirmationModalOpen: deleteBookConfirmationModalOpen,
-      setDeleteDataConfirmationOpen: setDeleteBookConfirmationModalOpen,
-      existedData: existedBookData,
-      setExistedData: setExistedBookData
-    },
-    fileTypes: { dataQuery: fileTypesQuery },
-    miscellaneous: {
-      deleteModalConfigs,
-      searchQuery,
-      setSearchQuery,
-      setLibgenModalOpen
-    }
+    entriesQuery,
+    fileTypesQuery,
+    miscellaneous: { searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [filteredEntries, setFilteredEntries] = useState<IBooksLibraryEntry[]>(
     []
   )
   const [view, setView] = useState<'list' | 'grid'>('list')
+
+  const handleOpenLibgenModal = useCallback(() => {
+    open('booksLibrary.libgen', {})
+  }, [])
 
   useEffect(() => {
     if (
@@ -91,6 +82,8 @@ function BooksLibrary() {
     searchParams,
     fileTypesQuery.data
   ])
+
+  useModalsEffect(booksLibraryModals)
 
   return (
     <ModuleWrapper>
@@ -171,45 +164,6 @@ function BooksLibrary() {
           </QueryWrapper>
         </div>
       </div>
-      <LibgenModal />
-      {(['categories', 'languages'] as const).map(stuff => (
-        <ModifyModal key={`modify-modal-${stuff}`} stuff={stuff} />
-      ))}
-      <ModifyBookModal />
-      {deleteModalConfigs.map(config => (
-        <DeleteConfirmationModal
-          key={`delete-confirmation-modal-${config.apiEndpoint}`}
-          apiEndpoint={config.apiEndpoint}
-          data={config.data}
-          isOpen={config.isOpen}
-          itemName={config.itemName}
-          nameKey={config.nameKey}
-          queryKey={['books-library', config.itemName]}
-          onClose={() => {
-            config.setOpen(false)
-            config.setData(null)
-          }}
-        />
-      ))}
-      <DeleteConfirmationModal
-        apiEndpoint="books-library/entries"
-        data={existedBookData ?? undefined}
-        isOpen={deleteBookConfirmationModalOpen}
-        itemName="book"
-        nameKey="title"
-        updateDataList={() => {
-          queryClient.invalidateQueries({
-            queryKey: ['books-library', 'entries']
-          })
-          queryClient.invalidateQueries({
-            queryKey: ['books-library', 'file-types']
-          })
-        }}
-        onClose={() => {
-          setDeleteBookConfirmationModalOpen(false)
-          setExistedBookData(null)
-        }}
-      />
       <Menu as="div" className="fixed right-6 bottom-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}}></Button>
         <MenuItems
@@ -225,9 +179,7 @@ function BooksLibrary() {
           <MenuItem
             icon="tabler:books"
             text="Download from Libgen"
-            onClick={() => {
-              setLibgenModalOpen(true)
-            }}
+            onClick={handleOpenLibgenModal}
           />
         </MenuItems>
       </Menu>

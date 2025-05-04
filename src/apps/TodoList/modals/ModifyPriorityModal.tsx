@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { ITodoPriority } from '../interfaces/todo_list_interfaces'
 
-function ModifyPriorityModal() {
-  const {
-    modifyPriorityModalOpenType: openType,
-    setModifyPriorityModalOpenType: setOpenType,
-    selectedPriority
-  } = useTodoListContext()
+function ModifyPriorityModal({
+  data: { type, existedData },
+  onClose
+}: {
+  data: {
+    type: 'create' | 'update'
+    existedData: ITodoPriority | null
+  }
+  onClose: () => void
+}) {
   const [data, setData] = useState({
     name: '',
     color: ''
@@ -34,15 +38,15 @@ function ModifyPriorityModal() {
   ]
 
   useEffect(() => {
-    if (openType === 'update' && selectedPriority !== null) {
-      setData(selectedPriority)
+    if (type === 'update' && existedData !== null) {
+      setData(existedData)
     } else {
       setData({
         name: '',
         color: '#FFFFFF'
       })
     }
-  }, [openType, selectedPriority])
+  }, [type, existedData])
 
   return (
     <FormModal
@@ -53,18 +57,15 @@ function ModifyPriorityModal() {
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
-        }[openType!]
+        }[type!]
       }
-      id={selectedPriority?.id}
-      isOpen={openType !== null}
+      id={existedData?.id}
       namespace="apps.todoList"
-      openType={openType}
+      openType={type}
       queryKey={['todo-list', 'priorities']}
       setData={setData}
-      title={`priority.${openType}`}
-      onClose={() => {
-        setOpenType(null)
-      }}
+      title={`priority.${type}`}
+      onClose={onClose}
     />
   )
 }

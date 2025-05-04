@@ -1,20 +1,27 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { Button, MenuItem } from '@lifeforge/ui'
 
+import { useModalStore } from '../../../core/modals/useModalStore'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.booksLibrary')
   const {
     // categories: { dataQuery: categoriesQuery },
     // languages: { dataQuery: languagesQuery },
     // fileTypes: { dataQuery: fileTypesQuery },
-    miscellaneous: { setSidebarOpen, searchQuery, setLibgenModalOpen }
+    miscellaneous: { setSidebarOpen, searchQuery }
   } = useBooksLibraryContext()
   const [searchParams] = useSearchParams()
+
+  const handleOpenLibgenModal = useCallback(() => {
+    open('booksLibrary.libgen', {})
+  }, [])
 
   return (
     <div>
@@ -55,9 +62,7 @@ function Header({ itemCount }: { itemCount: number }) {
                 icon="tabler:books"
                 namespace="apps.booksLibrary"
                 text="Download from Libgen"
-                onClick={() => {
-                  setLibgenModalOpen(true)
-                }}
+                onClick={handleOpenLibgenModal}
               />
             </MenuItems>
           </Menu>

@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { ITodoListTag } from '../interfaces/todo_list_interfaces'
 
-function ModifyTagModal() {
-  const {
-    modifyTagModalOpenType: openType,
-    setModifyTagModalOpenType: setOpenType,
-    selectedTag
-  } = useTodoListContext()
+function ModifyTagModal({
+  data: { type, existedData },
+  onClose
+}: {
+  data: {
+    type: 'create' | 'update' | null
+    existedData: ITodoListTag | null
+  }
+  onClose: () => void
+}) {
   const [data, setData] = useState({
     name: ''
   })
@@ -27,12 +31,12 @@ function ModifyTagModal() {
   ]
 
   useEffect(() => {
-    if (openType === 'update' && selectedTag !== null) {
-      setData(selectedTag)
+    if (type === 'update' && existedData !== null) {
+      setData(existedData)
     } else {
       setData({ name: '' })
     }
-  }, [openType, selectedTag])
+  }, [type, existedData])
 
   return (
     <FormModal
@@ -40,16 +44,13 @@ function ModifyTagModal() {
       endpoint="todo-list/tags"
       fields={FIELDS}
       icon="tabler:tag"
-      id={selectedTag?.id}
-      isOpen={openType !== null}
+      id={existedData?.id}
       namespace="apps.todoList"
-      openType={openType}
+      openType={type}
       queryKey={['todo-list', 'tags']}
       setData={setData}
-      title={`tag.${openType}`}
-      onClose={() => {
-        setOpenType(null)
-      }}
+      title={`tag.${type}`}
+      onClose={onClose}
     />
   )
 }

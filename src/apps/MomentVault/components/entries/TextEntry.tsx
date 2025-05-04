@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -8,16 +9,26 @@ import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_int
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
+
 function TextEntry({
   entry,
-  onDelete,
-  onEdit
+  page,
+  onDelete
 }: {
   entry: IMomentVaultEntry
+  page: number
   onDelete: () => void
-  onEdit: () => void
 }) {
+  const open = useModalStore(state => state.open)
   const { componentBg } = useComponentBg()
+
+  const handleUpdateEntry = useCallback(() => {
+    open('momentVault.modifyTextEntry', {
+      existedData: entry,
+      queryKey: ['moment-vault', 'entries', page]
+    })
+  }, [entry])
 
   return (
     <div
@@ -36,7 +47,11 @@ function TextEntry({
         </p>
       </div>
       <HamburgerMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
-        <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
+        <MenuItem
+          icon="tabler:pencil"
+          text="Edit"
+          onClick={handleUpdateEntry}
+        />
         <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
       </HamburgerMenu>
     </div>

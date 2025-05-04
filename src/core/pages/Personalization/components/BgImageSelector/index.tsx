@@ -1,12 +1,11 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import {
   Button,
   ConfigColumn,
-  DeleteConfirmationModal,
   ImagePickerModal,
   QueryWrapper,
   Tooltip
@@ -16,9 +15,12 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import AdjustBgImageModal from './components/AdjustBgImageModal'
+import { useModalStore } from '../../../../modals/useModalStore'
+import useModalsEffect from '../../../../modals/useModalsEffect'
+import { personalizationBgImageSelectorModals } from './modals'
 
 function BgImageSelector() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('core.personalization')
   const pixabayEnabledQuery = useAPIQuery<boolean>('/pixabay/key-exists', [
     'pixabay',
@@ -26,15 +28,33 @@ function BgImageSelector() {
   ])
   const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
-  const [adjustBgImageModalOpen, setAdjustBgImageModalOpen] = useState(false)
-  const [
-    deleteBgImageConfirmationModalOpen,
-    setDeleteBgImageConfirmationModalOpen
-  ] = useState(false)
   const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
     'ai/image-generation/key-exists',
     ['ai', 'image-generation', 'key-exists']
   )
+
+  const handleAdjustBgImage = useCallback(() => {
+    open('personalization.bgImageSelector.adjustBgImage', {})
+  }, [])
+
+  const handleDeleteBgImage = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'user/personalization/bg-image',
+      customCallback: async () => {
+        setBgImage('')
+        setBackdropFilters({
+          brightness: 100,
+          blur: 'none',
+          contrast: 100,
+          saturation: 100,
+          overlayOpacity: 50
+        })
+      },
+      customText:
+        'Deleting the background image will revert the system appearance to plain colors. Are you sure you want to proceed?',
+      itemName: 'background image'
+    })
+  }, [])
 
   async function onSubmit(url: string | File) {
     try {
@@ -59,6 +79,8 @@ function BgImageSelector() {
     }
   }
 
+  useModalsEffect(personalizationBgImageSelectorModals)
+
   return (
     <>
       <ConfigColumn
@@ -72,9 +94,7 @@ function BgImageSelector() {
               className="w-1/2 md:w-auto"
               icon="tabler:adjustments"
               variant="plain"
-              onClick={() => {
-                setAdjustBgImageModalOpen(true)
-              }}
+              onClick={handleAdjustBgImage}
             >
               adjust
             </Button>
@@ -83,9 +103,7 @@ function BgImageSelector() {
               className="w-1/2 md:w-auto"
               icon="tabler:trash"
               variant="plain"
-              onClick={() => {
-                setDeleteBgImageConfirmationModalOpen(true)
-              }}
+              onClick={handleDeleteBgImage}
             >
               remove
             </Button>
@@ -141,31 +159,6 @@ function BgImageSelector() {
           setImageSelectorModalOpen(false)
         }}
         onSelect={onSubmit}
-      />
-      <AdjustBgImageModal
-        isOpen={adjustBgImageModalOpen}
-        onClose={() => {
-          setAdjustBgImageModalOpen(false)
-        }}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="user/personalization/bg-image"
-        customCallback={async () => {
-          setBgImage('')
-          setBackdropFilters({
-            brightness: 100,
-            blur: 'none',
-            contrast: 100,
-            saturation: 100,
-            overlayOpacity: 50
-          })
-        }}
-        customText="Deleting the background image will revert the system appearance to plain colors. Are you sure you want to proceed?"
-        isOpen={deleteBgImageConfirmationModalOpen}
-        itemName="background image"
-        onClose={() => {
-          setDeleteBgImageConfirmationModalOpen(false)
-        }}
       />
     </>
   )

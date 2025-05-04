@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -7,21 +8,31 @@ import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 
-function AssetItem({
-  asset,
-  setSelectedData,
-  setModifyModalOpenType,
-  setDeleteAssetsConfirmationOpen
-}: {
-  asset: IWalletAsset
-  setSelectedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
-  setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
-  setDeleteAssetsConfirmationOpen: React.Dispatch<boolean>
-}) {
+function AssetItem({ asset }: { asset: IWalletAsset }) {
+  const open = useModalStore(state => state.open)
   const { isAmountHidden } = useWalletStore()
   const navigate = useNavigate()
+
+  const handleEditAsset = useCallback(() => {
+    open('wallet.assets.modifyAsset', {
+      type: 'update',
+      existedData: asset
+    })
+  }, [asset])
+
+  const handleDeleteAsset = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'wallet/assets',
+      confirmationText: 'Delete this asset account',
+      data: asset,
+      itemName: 'asset account',
+      nameKey: 'name',
+      queryKey: ['wallet', 'assets']
+    })
+  }, [asset])
 
   return (
     <div className="bg-bg-100 shadow-custom dark:bg-bg-900 relative space-y-4 rounded-lg p-4">
@@ -66,22 +77,12 @@ function AssetItem({
           wrapper: 'absolute right-4 top-4'
         }}
       >
-        <MenuItem
-          icon="tabler:pencil"
-          text="Edit"
-          onClick={() => {
-            setSelectedData(asset)
-            setModifyModalOpenType('update')
-          }}
-        />
+        <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEditAsset} />
         <MenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
-          onClick={() => {
-            setSelectedData(asset)
-            setDeleteAssetsConfirmationOpen(true)
-          }}
+          onClick={handleDeleteAsset}
         />
       </HamburgerMenu>
     </div>

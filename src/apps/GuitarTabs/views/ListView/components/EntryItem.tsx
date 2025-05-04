@@ -1,26 +1,60 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import fetchAPI from '@utils/fetchAPI'
+
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
 import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
 function EntryItem({
   entry,
-  setExistingEntry,
-  setModifyEntryModalOpen,
-  setDeleteConfirmationModalOpen
+  queryKey
 }: {
   entry: IGuitarTabsEntry
-  setExistingEntry: React.Dispatch<React.SetStateAction<IGuitarTabsEntry>>
-  setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  queryKey: unknown[]
 }) {
   const { componentBgWithHover } = useComponentBg()
+  const open = useModalStore(state => state.open)
+  const queryClient = useQueryClient()
+
+  async function favouriteTab() {
+    try {
+      await fetchAPI(`guitar-tabs/entries/favourite/${entry.id}`, {
+        method: 'POST'
+      })
+
+      queryClient.invalidateQueries({ queryKey: ['guitar-tabs', 'entries'] })
+    } catch {
+      toast.error('Failed to add to favourites')
+    }
+  }
+
+  const handleUpdateEntry = useCallback(() => {
+    open('guitarTabs.modifyEntry', {
+      type: 'update',
+      existedData: entry
+    })
+  }, [entry])
+
+  const handleDeleteEntry = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'guitar-tabs/entries',
+      confirmationText: 'Delete this guitar tab',
+      data: entry,
+      itemName: 'guitar tab',
+      nameKey: 'name',
+      queryKey
+    })
+  }, [entry])
 
   return (
     <li
@@ -63,6 +97,12 @@ function EntryItem({
                   }
                 />
               )}
+              {entry.isFavourite && (
+                <Icon
+                  className="size-4 shrink-0 text-yellow-500"
+                  icon="tabler:star-filled"
+                />
+              )}
             </div>
             <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
               <p className="min-w-0 truncate">
@@ -83,21 +123,23 @@ function EntryItem({
         <DownloadMenu entry={entry} />
         <HamburgerMenu>
           <MenuItem
+            icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
+            text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
+            onClick={e => {
+              e.preventDefault()
+              favouriteTab()
+            }}
+          />
+          <MenuItem
             icon="tabler:pencil"
             text="Edit"
-            onClick={() => {
-              setExistingEntry(entry)
-              setModifyEntryModalOpen(true)
-            }}
+            onClick={handleUpdateEntry}
           />
           <MenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={() => {
-              setExistingEntry(entry)
-              setDeleteConfirmationModalOpen(true)
-            }}
+            onClick={handleDeleteEntry}
           />
         </HamburgerMenu>
       </a>

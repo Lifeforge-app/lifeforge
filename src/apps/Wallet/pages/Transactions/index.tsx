@@ -1,11 +1,9 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
 import {
-  DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   MenuItem,
@@ -19,19 +17,20 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
+import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import { type IWalletTransaction } from '../../interfaces/wallet_interfaces'
 import HeaderMenu from './components/HeaderMenu'
 import InnerHeader from './components/InnerHeader'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
-import ManageCategoriesModal from './modals/ManageCategoriesModal'
-import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
-import ScanReceiptModal from './modals/ScanReceiptModal'
+import { walletTransactionsModals } from './modals'
 import ListView from './views/ListView'
 import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
 
 function Transactions() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wallet')
   const {
     setSelectedType,
@@ -41,12 +40,6 @@ function Transactions() {
   } = useWalletStore()
 
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
-  const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [isUploadReceiptModaLOpen, setIsUploadReceiptModalOpen] =
-    useState(false)
   const [visibleColumn, setVisibleColumn] = useState([
     'Date',
     'Type',
@@ -58,12 +51,6 @@ function Transactions() {
     'Amount',
     'Receipt'
   ])
-  const [
-    deleteTransactionsConfirmationOpen,
-    setDeleteTransactionsConfirmationOpen
-  ] = useState(false)
-  const [selectedData, setSelectedData] =
-    useState<Partial<IWalletTransaction> | null>(null)
   const [view, setView] = useState<'list' | 'table'>('list')
   const [receiptModalOpen, setReceiptModalOpen] = useState(false)
   const [receiptToView, setReceiptToView] = useState('')
@@ -91,14 +78,27 @@ function Transactions() {
     [setView, view, visibleColumn, setVisibleColumn]
   )
 
+  const handleCreateTransaction = useCallback(() => {
+    open('wallet.transactions.modifyTransaction', {
+      type: 'create',
+      existedData: null
+    })
+  }, [])
+
+  const handleUploadReceipt = useCallback(() => {
+    open('wallet.transactions.scanReceipt', {})
+  }, [])
+
   useEffect(() => {
     if (hash === '#new') {
-      setSelectedData(null)
-      setModifyModalOpenType('create')
+      open('wallet.transactions.modifyTransaction', {
+        type: 'create',
+        existedData: null
+      })
     }
 
     if (hash === '#scan') {
-      setIsUploadReceiptModalOpen(true)
+      open('wallet.transactions.scanReceipt', {})
     }
   }, [hash])
 
@@ -129,6 +129,8 @@ function Transactions() {
     })
   }, [searchParams])
 
+  useModalsEffect(walletTransactionsModals)
+
   return (
     <ModuleWrapper>
       <ModuleHeader
@@ -141,10 +143,7 @@ function Transactions() {
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
-          <InnerHeader
-            setModifyModalOpenType={setModifyModalOpenType}
-            setUploadReceiptModalOpen={setIsUploadReceiptModalOpen}
-          />
+          <InnerHeader />
           <SearchBar setView={setView} view={view} />
           <div className="mt-6 size-full">
             <QueryWrapper query={transactionsQuery}>
@@ -159,7 +158,7 @@ function Transactions() {
                       icon="tabler:wallet-off"
                       name="transactions"
                       namespace="apps.wallet"
-                      onCTAClick={setModifyModalOpenType}
+                      onCTAClick={handleCreateTransaction}
                     />
                   )
                 }
@@ -176,26 +175,12 @@ function Transactions() {
 
                 switch (view) {
                   case 'table':
-                    return (
-                      <TableView
-                        setDeleteTransactionsConfirmationOpen={
-                          setDeleteTransactionsConfirmationOpen
-                        }
-                        setModifyModalOpenType={setModifyModalOpenType}
-                        setSelectedData={setSelectedData}
-                        visibleColumn={visibleColumn}
-                      />
-                    )
+                    return <TableView visibleColumn={visibleColumn} />
                   case 'list':
                     return (
                       <ListView
-                        setDeleteTransactionsConfirmationOpen={
-                          setDeleteTransactionsConfirmationOpen
-                        }
-                        setModifyModalOpenType={setModifyModalOpenType}
                         setReceiptModalOpen={setReceiptModalOpen}
                         setReceiptToView={setReceiptToView}
-                        setSelectedData={setSelectedData}
                       />
                     )
                 }
@@ -213,18 +198,13 @@ function Transactions() {
                     icon="tabler:plus"
                     namespace="apps.wallet"
                     text="Add Manually"
-                    onClick={() => {
-                      setSelectedData(null)
-                      setModifyModalOpenType('create')
-                    }}
+                    onClick={handleCreateTransaction}
                   />
                   <MenuItem
                     icon="tabler:scan"
                     namespace="apps.wallet"
                     text="Scan Receipt"
-                    onClick={() => {
-                      setIsUploadReceiptModalOpen(true)
-                    }}
+                    onClick={handleUploadReceipt}
                   />
                 </MenuItems>
               </Menu>
@@ -232,39 +212,10 @@ function Transactions() {
           </div>
         </div>
       </div>
-      <ModifyTransactionsModal
-        existedData={selectedData}
-        openType={modifyTransactionsModalOpenType}
-        setExistedData={setSelectedData}
-        setOpenType={setModifyModalOpenType}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="wallet/transactions"
-        data={selectedData ?? undefined}
-        isOpen={deleteTransactionsConfirmationOpen}
-        itemName="transaction"
-        queryKey={['wallet', 'transactions']}
-        updateDataList={() => {
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
-        }}
-        onClose={() => {
-          setDeleteTransactionsConfirmationOpen(false)
-          setSelectedData(null)
-        }}
-      />
-      <ManageCategoriesModal />
       <ReceiptModal
         isOpen={receiptModalOpen}
         receiptSrc={receiptToView}
         setOpen={setReceiptModalOpen}
-      />
-      <ScanReceiptModal
-        open={isUploadReceiptModaLOpen}
-        setExistedData={setSelectedData}
-        setModifyModalOpenType={setModifyModalOpenType}
-        setOpen={setIsUploadReceiptModalOpen}
       />
     </ModuleWrapper>
   )

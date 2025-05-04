@@ -11,24 +11,13 @@ function Sidebar({
   setSelectedCategory,
   categoriesQuery,
   sidebarOpen,
-  setSidebarOpen,
-  setModifyCategoryModalOpenType,
-  setExistedData,
-  setDeleteCategoryConfirmationModalOpen
+  setSidebarOpen
 }: {
   selectedCategory: string | undefined
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
   categoriesQuery: UseQueryResult<ICalendarCategory[]>
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
-  modifyCategoryModalOpenType: 'create' | 'update' | null
-  setModifyCategoryModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
-  setDeleteCategoryConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
 }) {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
@@ -39,11 +28,6 @@ function Sidebar({
             <CategoryList
               categories={categories}
               selectedCategory={selectedCategory}
-              setDeleteCategoryConfirmationModalOpen={
-                setDeleteCategoryConfirmationModalOpen
-              }
-              setExistedData={setExistedData}
-              setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
               setSelectedCategory={setSelectedCategory}
             />
           </>

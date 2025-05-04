@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -23,6 +23,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
 import {
   ITodoListEntry,
   type ITodoSubtask
@@ -33,6 +34,7 @@ import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
 
 function ModifyTaskWindow() {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.todoList')
   const {
@@ -40,8 +42,7 @@ function ModifyTaskWindow() {
     modifyTaskWindowOpenType: openType,
     setModifyTaskWindowOpenType: setOpenType,
     selectedTask,
-    setSelectedTask,
-    setDeleteTaskConfirmationModalOpen
+    setSelectedTask
   } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
@@ -136,6 +137,26 @@ function ModifyTaskWindow() {
     }, 300)
   }
 
+  const handleDeleteTask = useCallback(() => {
+    open('deleteConfirmation', {
+      apiEndpoint: 'todo-list/entries',
+      data: selectedTask,
+      itemName: 'task',
+      nameKey: 'summary',
+      queryKey: entriesQueryKey,
+      onClose: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['todo-list', 'priorities']
+        })
+        queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
+        queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
+        queryClient.invalidateQueries({
+          queryKey: ['todo-list', 'status-counter']
+        })
+      }
+    })
+  }, [selectedTask])
+
   useEffect(() => {
     setTimeout(() => {
       setInnerOpenType(openType)
@@ -211,10 +232,7 @@ function ModifyTaskWindow() {
                 isRed
                 icon="tabler:trash"
                 text="Delete"
-                onClick={() => {
-                  setDeleteTaskConfirmationModalOpen(true)
-                  setOpenType(null)
-                }}
+                onClick={handleDeleteTask}
               />
             </HamburgerMenu>
           </div>

@@ -5,7 +5,6 @@ import {
   IconBooks,
   IconBulb,
   IconCalendar,
-  IconClipboard,
   IconCode,
   IconCurrencyDollar,
   IconDashboard,
@@ -49,23 +48,12 @@ export const ROUTES: RouteCategory[] = [
     title: 'Productivity',
     items: [
       {
-        name: 'Projects (M)',
-        icon: <IconClipboard />,
-        provider: lazy(
-          () => import('@apps/ProjectsM/providers/ProjectsMProvider')
-        ),
-        routes: {
-          '': lazy(() => import('@apps/ProjectsM')),
-          ':id': lazy(() => import('@apps/ProjectsM/pages/Kanban'))
-        },
-        togglable: true
-      },
-      {
         name: 'Idea Box',
+        provider: lazy(() => import('@apps/IdeaBox/providers/IdeaBoxProvider')),
         icon: <IconBulb />,
         routes: {
-          'idea-box': lazy(() => import('@apps/IdeaBox')),
-          'idea-box/:id/*': lazy(() => import('@apps/IdeaBox/components/Ideas'))
+          '': lazy(() => import('@apps/IdeaBox/pages/Containers')),
+          ':id/*': lazy(() => import('@apps/IdeaBox/pages/Ideas'))
         },
         togglable: true
       },
@@ -198,7 +186,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Wishlist',
         icon: <IconHeart />,
         routes: {
-          wishlist: lazy(() => import('@apps/Wishlist')),
+          wishlist: lazy(() => import('@apps/Wishlist/pages/WishlistList')),
           'wishlist/:id': lazy(
             () => import('@apps/Wishlist/pages/WishlistEntries')
           )
