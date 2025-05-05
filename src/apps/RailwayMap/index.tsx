@@ -2,19 +2,18 @@ import { memo } from 'react'
 
 import { ModuleWrapper } from '@lifeforge/ui'
 
+import useModalsEffect from '../../core/modals/useModalsEffect'
 import Header from './components/Header'
 import MapView from './components/Maps'
-import RoutePlannerModal from './components/RoutePlannerModal'
-import RailwayMapProvider from './providers/RailwayMapProvider'
+import { RailwayMapModals } from './modals'
 
 function RailwayMap() {
+  useModalsEffect(RailwayMapModals)
+
   return (
     <ModuleWrapper>
-      <RailwayMapProvider>
-        <Header />
-        <MapView />
-        <RoutePlannerModal />
-      </RailwayMapProvider>
+      <Header />
+      <MapView />
     </ModuleWrapper>
   )
 }

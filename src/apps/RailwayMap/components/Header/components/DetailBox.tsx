@@ -1,22 +1,30 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'
 
 function DetailBox() {
+  const open = useModalStore(state => state.open)
   const { componentBg } = useComponentBg()
-  const { selectedStation, setRoutePlannerOpen, setRoutePlannerStart } =
-    useRailwayMapContext()
+  const { selectedStation, setRoutePlannerStart } = useRailwayMapContext()
   const innerSelectedStation = useDebounce(
     selectedStation,
     selectedStation ? 0 : 500
   )
+
+  const handleRoutePlannerOpen = useCallback(() => {
+    if (!selectedStation) return
+    setRoutePlannerStart(selectedStation.id)
+    open('railwayMap.routePlanner', {})
+  }, [selectedStation])
 
   return (
     <div
@@ -46,11 +54,7 @@ function DetailBox() {
         <Button
           icon="tabler:arrow-left-right"
           variant="plain"
-          onClick={() => {
-            if (!selectedStation) return
-            setRoutePlannerStart(selectedStation.id)
-            setRoutePlannerOpen(true)
-          }}
+          onClick={handleRoutePlannerOpen}
         />
         <Button icon="tabler:info-circle" variant="plain" />
       </div>

@@ -1,16 +1,15 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  DeleteConfirmationModal,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
-  ModalHeader,
-  ModalWrapper
+  ModalHeader
 } from '@lifeforge/ui'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
 import AudioType from './components/AudioType'
 import PhotoType from './components/PhotoType'
 import TextType from './components/TextType'
@@ -44,15 +43,28 @@ function AddEntryModal({
   }
   onClose: () => void
 }) {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.momentVault')
   const queryClient = useQueryClient()
-  const [overwriteAudioWarningModalOpen, setOverwriteAudioWarningModalOpen] =
-    useState(false)
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const [transcription, setTranscription] = useState<string | null>(null)
   const [innerOpenType, setInnerOpenType] = useState<
     'text' | 'audio' | 'photos' | 'video'
   >(type)
+
+  const handleOverrideAudioConfirm = useCallback(() => {
+    open('deleteConfirmation', {
+      customConfirmButtonIcon: 'tabler:reload',
+      customConfirmButtonText: 'Overwrite',
+      customOnClick: async (close: () => void) => {
+        setAudioURL(null)
+        setTranscription(null)
+        close()
+      },
+      customText: 'Are you sure you want to overwrite the current audio?',
+      customTitle: 'Overwrite Audio'
+    })
+  }, [])
 
   useEffect(() => {
     if (type === null) {
@@ -105,9 +117,7 @@ function AddEntryModal({
               <AudioType
                 audioURL={audioURL}
                 setAudioURL={setAudioURL}
-                setOverwriteAudioWarningModalOpen={
-                  setOverwriteAudioWarningModalOpen
-                }
+                setOverwriteAudioWarningModalOpen={handleOverrideAudioConfirm}
                 setTranscription={setTranscription}
                 transcription={transcription}
                 onSuccess={() => {
@@ -142,24 +152,6 @@ function AddEntryModal({
           return components[innerOpenType as keyof typeof components] || <></>
         })()}
       </div>
-      <ModalWrapper isOpen={overwriteAudioWarningModalOpen} zIndex={10}>
-        <DeleteConfirmationModal
-          data={{
-            customConfirmButtonIcon: 'tabler:reload',
-            customConfirmButtonText: 'Overwrite',
-            customOnClick: async () => {
-              setAudioURL(null)
-              setTranscription(null)
-              setOverwriteAudioWarningModalOpen(false)
-            },
-            customText: 'Are you sure you want to overwrite the current audio?',
-            customTitle: 'Overwrite Audio'
-          }}
-          onClose={() => {
-            setOverwriteAudioWarningModalOpen(false)
-          }}
-        />
-      </ModalWrapper>
     </div>
   )
 }
