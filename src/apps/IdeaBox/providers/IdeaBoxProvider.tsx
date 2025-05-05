@@ -57,7 +57,10 @@ export default function IdeaBoxProvider() {
   const pathValidQuery = useAPIQuery<boolean>(
     `idea-box/valid/${id}/${path}`,
     ['idea-box', 'valid', id, path],
-    id !== undefined && path !== undefined
+    id !== undefined && path !== undefined,
+    {
+      staleTime: Infinity
+    }
   )
 
   const pathDetailsQuery = useAPIQuery<{
@@ -66,25 +69,37 @@ export default function IdeaBoxProvider() {
   }>(
     `idea-box/path/${id}/${path}`,
     ['idea-box', 'path', id, path],
-    id !== undefined && path !== undefined && pathValidQuery.data
+    id !== undefined && path !== undefined && pathValidQuery.data,
+    {
+      staleTime: Infinity
+    }
   )
 
   const entriesQuery = useAPIQuery<IIdeaBoxEntry[]>(
     `idea-box/ideas/${id}/${path}?archived=${viewArchived}`,
     ['idea-box', 'ideas', id, path, viewArchived],
-    id !== undefined && path !== undefined && pathValidQuery.data
+    id !== undefined && path !== undefined && pathValidQuery.data,
+    {
+      staleTime: Infinity
+    }
   )
 
   const foldersQuery = useAPIQuery<IIdeaBoxFolder[]>(
     `idea-box/folders/${id}/${path}`,
     ['idea-box', 'folders', id, path],
-    id !== undefined && path !== undefined && pathValidQuery.data
+    id !== undefined && path !== undefined && pathValidQuery.data,
+    {
+      staleTime: Infinity
+    }
   )
 
   const tagsQuery = useAPIQuery<IIdeaBoxTag[]>(
     `idea-box/tags/${id}${path !== '' ? '?folder=' + path : ''}`,
     ['idea-box', 'tags', id, path],
-    id !== undefined && path !== undefined && pathValidQuery.data
+    id !== undefined && path !== undefined && pathValidQuery.data,
+    {
+      staleTime: Infinity
+    }
   )
 
   const searchResultsQuery = useAPIQuery<IIdeaBoxEntry[]>(
@@ -97,7 +112,10 @@ export default function IdeaBoxProvider() {
     id !== undefined &&
       path !== undefined &&
       pathValidQuery.data &&
-      (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0)
+      (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0),
+    {
+      staleTime: Infinity
+    }
   )
 
   function onPasteImage(event: ClipboardEvent) {

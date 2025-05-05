@@ -12,7 +12,6 @@ function useAPIQuery<T>(
   return useQuery<T>({
     ...options,
     refetchOnWindowFocus: false,
-    staleTime: Infinity,
     queryKey: key,
     queryFn: () => fetchAPI(endpoint),
     enabled
