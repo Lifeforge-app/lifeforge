@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -10,6 +10,7 @@ import {
   ModuleHeader
 } from '@lifeforge/ui'
 
+import { useModalStore } from '../../../../core/modals/useModalStore'
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import DetailBox from './components/DetailBox'
 import LineFilter from './components/LineFilter'
@@ -17,18 +18,22 @@ import SearchBar from './components/SearchBar'
 import ViewTypeSwitcher, { VIEW_TYPES } from './components/ViewTypeSwitcher'
 
 function Header() {
+  const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.railwayMap')
-  const {
-    viewType,
-    setViewType,
-    setRoutePlannerOpen,
-    shortestRoute,
-    clearShortestRoute
-  } = useRailwayMapContext()
+  const { viewType, setViewType, shortestRoute, setShortestRoute } =
+    useRailwayMapContext()
   const hasRoute = useMemo(
     () => typeof shortestRoute !== 'string' && shortestRoute.length > 0,
     [shortestRoute]
   )
+
+  const handleRoutePlannerToggle = useCallback(() => {
+    if (hasRoute) {
+      setShortestRoute([])
+    } else {
+      open('railwayMap.routePlanner', {})
+    }
+  }, [hasRoute])
 
   return (
     <>
@@ -40,13 +45,7 @@ function Header() {
             isRed={hasRoute}
             namespace="apps.railwayMap"
             variant={hasRoute ? 'plain' : 'primary'}
-            onClick={() => {
-              if (hasRoute) {
-                clearShortestRoute()
-              } else {
-                setRoutePlannerOpen(true)
-              }
-            }}
+            onClick={handleRoutePlannerToggle}
           >
             {hasRoute ? 'clear Route' : 'Plan Route'}
           </Button>
@@ -86,13 +85,7 @@ function Header() {
         icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
         isRed={shortestRoute.length > 0}
         loading={typeof shortestRoute === 'string'}
-        onClick={() => {
-          if (hasRoute) {
-            clearShortestRoute()
-          } else {
-            setRoutePlannerOpen(true)
-          }
-        }}
+        onClick={handleRoutePlannerToggle}
       />
       <DetailBox />
     </>

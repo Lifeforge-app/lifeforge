@@ -266,8 +266,11 @@ export const ROUTES: RouteCategory[] = [
       {
         name: 'Railway Map',
         icon: 'uil:subway',
+        provider: lazy(
+          () => import('@apps/RailwayMap/providers/RailwayMapProvider')
+        ),
         routes: {
-          'railway-map': lazy(() => import('@apps/RailwayMap'))
+          '': lazy(() => import('@apps/RailwayMap'))
         },
         togglable: true
       }

@@ -6,7 +6,7 @@ import {
   useRef,
   useState
 } from 'react'
-import { toast } from 'react-toastify'
+import { Outlet } from 'react-router'
 
 import {
   IRailwayMapLine,
@@ -15,8 +15,6 @@ import {
 } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
 
 interface IRailwayMapData {
   viewType: IRailwayMapViewType
@@ -29,16 +27,14 @@ interface IRailwayMapData {
   stationsLoading: boolean
   filteredLines: string[]
   setFilteredLines: React.Dispatch<React.SetStateAction<string[]>>
-  routePlannerOpen: boolean
-  setRoutePlannerOpen: React.Dispatch<React.SetStateAction<boolean>>
   routePlannerStart: string
   setRoutePlannerStart: React.Dispatch<React.SetStateAction<string>>
   routePlannerEnd: string
   setRoutePlannerEnd: React.Dispatch<React.SetStateAction<string>>
-  routePlannerLoading: boolean
   shortestRoute: IRailwayMapStation[] | 'loading' | 'error'
-  fetchShortestRoute: () => Promise<void>
-  clearShortestRoute: () => void
+  setShortestRoute: React.Dispatch<
+    React.SetStateAction<IRailwayMapStation[] | 'loading' | 'error'>
+  >
   routeMapSVGRef: React.RefObject<SVGSVGElement | null>
   routeMapGRef: React.RefObject<SVGGElement | null>
   selectedStation: IRailwayMapStation | null
@@ -52,11 +48,7 @@ export const RailwayMapContext = createContext<IRailwayMapData | undefined>(
   undefined
 )
 
-export default function RailwayMapProvider({
-  children
-}: {
-  children: React.ReactNode
-}) {
+export default function RailwayMapProvider() {
   const [viewType, setViewType] = useState<IRailwayMapViewType>('route')
   const [searchQuery, setSearchQuery] = useState('')
   const linesQuery = useAPIQuery<IRailwayMapLine[]>('railway-map/lines', [
@@ -68,10 +60,8 @@ export default function RailwayMapProvider({
     ['railway-map', 'stations']
   )
   const [filteredLines, setFilteredLines] = useState<string[]>([])
-  const [routePlannerOpen, setRoutePlannerOpen] = useState(false)
   const [routePlannerStart, setRoutePlannerStart] = useState('')
   const [routePlannerEnd, setRoutePlannerEnd] = useState('')
-  const [routePlannerLoading, setRoutePlannerLoading] = useState(false)
   const [shortestRoute, setShortestRoute] = useState<
     IRailwayMapStation[] | 'loading' | 'error'
   >([])
@@ -83,32 +73,6 @@ export default function RailwayMapProvider({
 
   const routeMapSVGRef = useRef<SVGSVGElement>(null)
   const routeMapGRef = useRef<SVGGElement>(null)
-
-  async function fetchShortestRoute() {
-    if (!routePlannerStart || !routePlannerEnd) {
-      toast.error('Please select a start and end station')
-      return
-    }
-
-    setRoutePlannerLoading(true)
-    setShortestRoute('loading')
-    try {
-      const data = await fetchAPI<IRailwayMapStation[]>(
-        `railway-map/shortest?start=${routePlannerStart}&end=${routePlannerEnd}`
-      )
-      setShortestRoute(data)
-    } catch {
-      setShortestRoute('error')
-      toast.error('Failed to fetch shortest route')
-    } finally {
-      setRoutePlannerLoading(false)
-    }
-  }
-
-  function clearShortestRoute() {
-    if (typeof shortestRoute === 'string' || shortestRoute.length === 0) return
-    setShortestRoute([])
-  }
 
   useEffect(() => {
     if (linesQuery.data) {
@@ -128,16 +92,12 @@ export default function RailwayMapProvider({
       stationsLoading: stationsQuery.isLoading,
       filteredLines,
       setFilteredLines,
-      routePlannerOpen,
-      setRoutePlannerOpen,
       routePlannerStart,
       setRoutePlannerStart,
       routePlannerEnd,
       setRoutePlannerEnd,
-      routePlannerLoading,
       shortestRoute,
-      fetchShortestRoute,
-      clearShortestRoute,
+      setShortestRoute,
       routeMapSVGRef,
       routeMapGRef,
       selectedStation,
@@ -152,10 +112,8 @@ export default function RailwayMapProvider({
       stationsQuery.data,
       stationsQuery.isLoading,
       filteredLines,
-      routePlannerOpen,
       routePlannerStart,
       routePlannerEnd,
-      routePlannerLoading,
       shortestRoute,
       routeMapSVGRef,
       routeMapGRef,
@@ -166,7 +124,7 @@ export default function RailwayMapProvider({
 
   return (
     <RailwayMapContext.Provider value={value}>
-      {children}
+      <Outlet />
     </RailwayMapContext.Provider>
   )
 }
