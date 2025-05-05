@@ -1,4 +1,3 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
 
 import { EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
@@ -10,6 +9,7 @@ import { encrypt } from '@security/utils/encryption'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { useAuth } from '../../Auth/providers/AuthProvider'
 import { IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 import EntryItem from './EntryItem'
 

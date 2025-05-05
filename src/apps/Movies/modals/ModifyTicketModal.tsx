@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import {
   IMovieEntry,
@@ -11,8 +12,6 @@ import {
 } from '@apps/Movies/interfaces/movies_interfaces'
 
 import fetchAPI from '@utils/fetchAPI'
-
-import { useModalStore } from '../../../core/modals/useModalStore'
 
 function ModifyTicketModal({
   data: { type, existedData },

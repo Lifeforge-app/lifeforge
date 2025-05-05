@@ -5,12 +5,12 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { useModalStore } from '../../../core/modals/useModalStore'
 import { type IPasswordEntry } from '../interfaces/password_interfaces'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 

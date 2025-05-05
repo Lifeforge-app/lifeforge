@@ -1,9 +1,8 @@
 import { Suspense } from 'react'
 import { Route } from 'react-router'
 
-import { LoadingScreen } from '@lifeforge/ui'
+import { LoadingScreen, ModalManager } from '@lifeforge/ui'
 
-import ModalManager from '../../modals/ModalManager'
 import { RouteItem } from '../interfaces/routes_interfaces'
 import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
 

@@ -11,14 +11,14 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
-import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import { type IWalletTransaction } from '../../interfaces/wallet_interfaces'
 import HeaderMenu from './components/HeaderMenu'
 import InnerHeader from './components/InnerHeader'
@@ -26,7 +26,6 @@ import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import { walletTransactionsModals } from './modals'
 import ListView from './views/ListView'
-import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
 
 function Transactions() {
@@ -52,8 +51,6 @@ function Transactions() {
     'Receipt'
   ])
   const [view, setView] = useState<'list' | 'table'>('list')
-  const [receiptModalOpen, setReceiptModalOpen] = useState(false)
-  const [receiptToView, setReceiptToView] = useState('')
   const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
     'wallet/transactions',
     ['wallet', 'transactions']
@@ -177,12 +174,7 @@ function Transactions() {
                   case 'table':
                     return <TableView visibleColumn={visibleColumn} />
                   case 'list':
-                    return (
-                      <ListView
-                        setReceiptModalOpen={setReceiptModalOpen}
-                        setReceiptToView={setReceiptToView}
-                      />
-                    )
+                    return <ListView />
                 }
               }}
             </QueryWrapper>
@@ -212,11 +204,6 @@ function Transactions() {
           </div>
         </div>
       </div>
-      <ReceiptModal
-        isOpen={receiptModalOpen}
-        receiptSrc={receiptToView}
-        setOpen={setReceiptModalOpen}
-      />
     </ModuleWrapper>
   )
 }

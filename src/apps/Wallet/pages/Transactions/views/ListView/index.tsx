@@ -11,13 +11,7 @@ import TransactionListItem from './components/TransactionListItem'
 const AS = AutoSizer as any
 const L = List as any
 
-function ListView({
-  setReceiptModalOpen,
-  setReceiptToView
-}: {
-  setReceiptModalOpen: React.Dispatch<boolean>
-  setReceiptToView: React.Dispatch<string>
-}) {
+function ListView() {
   const { transactionsQuery } = useWalletData()
   const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
 
@@ -45,11 +39,7 @@ function ListView({
                 return (
                   <div key={key} style={style}>
                     {transaction && (
-                      <TransactionListItem
-                        setReceiptModalOpen={setReceiptModalOpen}
-                        setReceiptToView={setReceiptToView}
-                        transaction={transaction}
-                      />
+                      <TransactionListItem transaction={transaction} />
                     )}
                   </div>
                 )

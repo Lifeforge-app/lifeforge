@@ -1,11 +1,11 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
 
 import { DeleteConfirmationModal, LoadingScreen } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
 
-import useModalsEffect from '../modals/useModalsEffect'
 import Auth from '../pages/Auth'
+import { useAuth } from '../pages/Auth/providers/AuthProvider'
 import MainRoutesRenderer from './components/MainRoutesRenderer'
 import useAuthEffect from './hooks/useAuthEffect'
 import useTitleEffect from './hooks/useTitleEffect'

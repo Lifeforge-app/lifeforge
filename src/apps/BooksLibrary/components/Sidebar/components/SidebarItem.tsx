@@ -2,8 +2,8 @@ import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import {
   type IBooksLibraryCategory,
   type IBooksLibraryFileType,

@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from 'react'
 import { useParams } from 'react-router'
 
+import { useModalStore } from '@lifeforge/ui'
+
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
 import TagItem from './components/TagItem'
 

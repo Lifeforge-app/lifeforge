@@ -9,10 +9,10 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
-import useModalsEffect from '../../core/modals/useModalsEffect'
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'
 import MusicList from './components/MusicList'

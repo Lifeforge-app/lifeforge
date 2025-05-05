@@ -5,10 +5,10 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../modals/useModalStore'
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 

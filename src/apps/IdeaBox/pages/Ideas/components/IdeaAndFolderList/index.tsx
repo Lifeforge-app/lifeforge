@@ -2,10 +2,10 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import FolderList from './components/FolderList'
 import IdeaList from './components/IdeaList'
 

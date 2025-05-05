@@ -9,10 +9,10 @@ import {
   QueryWrapper,
   SearchInput
 } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import { type IIdeaBoxContainer } from '../../interfaces/ideabox_interfaces'
 import ContainerList from './components/ContainerList'
 

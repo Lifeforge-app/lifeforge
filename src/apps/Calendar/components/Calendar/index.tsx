@@ -4,11 +4,12 @@ import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
+import { useModalStore } from '@lifeforge/ui'
+
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import {
   type ICalendarCategory,
   type ICalendarEvent

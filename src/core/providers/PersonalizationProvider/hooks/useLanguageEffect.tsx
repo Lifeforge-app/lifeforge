@@ -1,7 +1,8 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
+import { useAuth } from '../../../pages/Auth/providers/AuthProvider'
 
 function useLanguageEffect(
   language: string,

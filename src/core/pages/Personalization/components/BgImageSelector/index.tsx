@@ -10,13 +10,13 @@ import {
   QueryWrapper,
   Tooltip
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../../modals/useModalStore'
-import useModalsEffect from '../../../../modals/useModalsEffect'
 import { personalizationBgImageSelectorModals } from './modals'
 
 function BgImageSelector() {

@@ -2,10 +2,10 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import TaskListListItem from './TaskListListItem'
 
 function TaskListList({
