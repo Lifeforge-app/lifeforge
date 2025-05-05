@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { Button, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../core/modals/useModalStore'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }) {

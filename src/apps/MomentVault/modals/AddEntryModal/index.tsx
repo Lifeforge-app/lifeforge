@@ -8,8 +8,8 @@ import {
   ListboxOrComboboxOption,
   ModalHeader
 } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import AudioType from './components/AudioType'
 import PhotoType from './components/PhotoType'
 import TextType from './components/TextType'

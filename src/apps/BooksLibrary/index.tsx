@@ -14,9 +14,9 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../core/modals/useModalStore'
-import useModalsEffect from '../../core/modals/useModalsEffect'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import { IBooksLibraryEntry } from './interfaces/books_library_interfaces'

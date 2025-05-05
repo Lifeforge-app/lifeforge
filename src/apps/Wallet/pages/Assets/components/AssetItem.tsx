@@ -4,11 +4,11 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 
 function AssetItem({ asset }: { asset: IWalletAsset }) {

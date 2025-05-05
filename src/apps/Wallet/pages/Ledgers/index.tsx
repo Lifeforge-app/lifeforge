@@ -10,11 +10,11 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
-import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import LedgerItem from './components/LedgerItem'
 import { walletLedgersModals } from './modals'
 

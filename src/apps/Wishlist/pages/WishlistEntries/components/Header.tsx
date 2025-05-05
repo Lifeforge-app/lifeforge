@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 
 import { Button, GoBackButton, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { IWishlistList } from '../../../interfaces/wishlist_interfaces'
 
 function Header({

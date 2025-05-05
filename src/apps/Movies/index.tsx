@@ -15,6 +15,8 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
@@ -22,8 +24,6 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../core/modals/useModalStore'
-import useModalsEffect from '../../core/modals/useModalsEffect'
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
 import { moviesModals } from './modals'

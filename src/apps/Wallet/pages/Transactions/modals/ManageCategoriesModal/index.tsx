@@ -2,10 +2,10 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { EmptyStateScreen, ModalHeader, QueryWrapper } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import CategorySection from './components/CategorySection'
 
 function ManageCategoriesModal({ onClose }: { onClose: () => void }) {

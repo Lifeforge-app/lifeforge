@@ -1,4 +1,3 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
@@ -12,6 +11,7 @@ import {
 } from '@lifeforge/ui'
 
 import ROUTES from '../../../Routes'
+import { useAuth } from '../../../pages/Auth/providers/AuthProvider'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()

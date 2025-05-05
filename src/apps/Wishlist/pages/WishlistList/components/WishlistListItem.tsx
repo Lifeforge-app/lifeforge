@@ -4,12 +4,11 @@ import { useCallback } from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IWishlistList } from '@apps/Wishlist/interfaces/wishlist_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 
 function WishlistListItem({ list }: { list: IWishlistList }) {
   const open = useModalStore(state => state.open)

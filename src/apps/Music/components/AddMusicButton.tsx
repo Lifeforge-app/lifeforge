@@ -6,12 +6,11 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import IntervalManager from '@utils/intervalManager'
-
-import { useModalStore } from '../../../core/modals/useModalStore'
 
 const intervalManager = IntervalManager.getInstance()
 

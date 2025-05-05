@@ -1,4 +1,5 @@
-import { ModalComponent } from '../../../core/modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
 import AddToLibraryModal from './AddToLibraryModal'
 import LibgenModal from './LibgenModal'
 import ModifyBookModal from './ModifyBookModal'

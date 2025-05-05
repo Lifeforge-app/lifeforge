@@ -4,10 +4,10 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import { Button } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'
 

@@ -2,8 +2,8 @@ import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 
 function AddToLibraryButton({

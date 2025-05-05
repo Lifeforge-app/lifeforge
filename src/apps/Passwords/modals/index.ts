@@ -1,4 +1,5 @@
-import { ModalComponent } from '../../../core/modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
 import ModifyPasswordModal from './ModifyPasswordModal'
 
 export const PasswordsModals: Record<string, ModalComponent> = {

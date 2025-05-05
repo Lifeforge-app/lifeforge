@@ -10,13 +10,13 @@ import {
   ModuleHeader,
   ModuleWrapper
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { useModalStore } from '../../core/modals/useModalStore'
-import useModalsEffect from '../../core/modals/useModalsEffect'
 import EntryList from './components/EntryList'
 import { MomentVaultModals } from './modals'
 

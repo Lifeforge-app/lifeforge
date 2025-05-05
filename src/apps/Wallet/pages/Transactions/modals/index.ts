@@ -1,4 +1,6 @@
-import { ModalComponent } from '../../../../../core/modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
+import ViewReceiptModal from '../views/ListView/components/ViewReceiptModal'
 import ManageCategoriesModal from './ManageCategoriesModal'
 import ModifyCategory from './ModifyCategoryModal'
 import ModifyTransactionsModal from './ModifyTransactionsModal'
@@ -8,5 +10,6 @@ export const walletTransactionsModals: Record<string, ModalComponent> = {
   'wallet.transactions.manageCategories': ManageCategoriesModal,
   'wallet.transactions.modifyCategory': ModifyCategory,
   'wallet.transactions.modifyTransaction': ModifyTransactionsModal,
-  'wallet.transactions.scanReceipt': ScanReceiptModal
+  'wallet.transactions.scanReceipt': ScanReceiptModal,
+  'wallet.transactions.viewReceipt': ViewReceiptModal
 }

@@ -2,10 +2,10 @@ import { Icon } from '@iconify/react'
 import { useCallback } from 'react'
 
 import { SidebarTitle } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
-import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import { type ICalendarCategory } from '../../../../interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
 

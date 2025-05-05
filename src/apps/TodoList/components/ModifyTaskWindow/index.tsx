@@ -16,6 +16,7 @@ import {
   TextAreaInput,
   TextInput
 } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -23,7 +24,6 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import {
   ITodoListEntry,
   type ITodoSubtask

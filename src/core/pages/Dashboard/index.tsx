@@ -11,12 +11,14 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { MenuItem, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
-import ManageWidgetsModal from './components/ManageWidgetsModal'
+import { DashboardModals } from './modals'
 
 ChartJS.register(
   ArcElement,
@@ -32,12 +34,20 @@ ChartJS.register(
 )
 
 function Dashboard() {
+  const open = useModalStore(state => state.open)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const [canLayoutChange, setCanLayoutChange] = useState(false)
-  const [manageWidgetsModalOpen, setManageWidgetsModalOpen] = useState(false)
 
   const [isReady, setReady] = useState(true)
+
+  const handleManageWidget = useCallback(() => {
+    open('dashboard.manageWidgets', {
+      setReady
+    })
+  }, [])
+
+  useModalsEffect(DashboardModals)
 
   return (
     <ModuleWrapper>
@@ -57,9 +67,7 @@ function Dashboard() {
                 icon="tabler:apps"
                 namespace="core.dashboard"
                 text="Manage Widgets"
-                onClick={() => {
-                  setManageWidgetsModalOpen(true)
-                }}
+                onClick={handleManageWidget}
               />
             </>
           }
@@ -72,13 +80,6 @@ function Dashboard() {
           />
         )}
       </div>
-      <ManageWidgetsModal
-        isOpen={manageWidgetsModalOpen}
-        setReady={setReady}
-        onClose={() => {
-          setManageWidgetsModalOpen(false)
-        }}
-      />
       {/* <FAB alwaysShow text="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
     </ModuleWrapper>
   )

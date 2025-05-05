@@ -1,4 +1,5 @@
-import { ModalComponent } from '../../../core/modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
 import AddEntryModal from './AddEntryModal'
 import ModifyTextEntryModal from './ModifyTextEntryModal'
 

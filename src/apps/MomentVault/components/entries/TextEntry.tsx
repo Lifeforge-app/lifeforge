@@ -4,12 +4,11 @@ import dayjs from 'dayjs'
 import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import { useModalStore } from '../../../../core/modals/useModalStore'
 
 function TextEntry({
   entry,

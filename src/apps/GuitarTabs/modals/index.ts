@@ -1,4 +1,5 @@
-import { ModalComponent } from '../../../core/modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
 import GuitarWorldModal from './GuitarWorldModal'
 import ModifyEntryModal from './ModifyEntryModal'
 

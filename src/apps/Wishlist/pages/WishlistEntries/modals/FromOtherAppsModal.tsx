@@ -10,10 +10,9 @@ import {
   ModalHeader,
   TextInput
 } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
-
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 
 const PROVIDERS = [
   {

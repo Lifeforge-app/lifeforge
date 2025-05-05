@@ -4,8 +4,8 @@ import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
 import { Button, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import NavigationControl from './components/NavigationControl'
 import ViewSelector from './components/ViewSelector'
 

@@ -2,10 +2,11 @@ import { Icon } from '@iconify/react'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
+
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
-import { useModalStore } from '../../../../../../core/modals/useModalStore'
-import useModalsEffect from '../../../../../../core/modals/useModalsEffect'
 import { ideaBoxContainerModals } from '../../modals'
 import ContainerItem from './components/ContainerItem'
 
