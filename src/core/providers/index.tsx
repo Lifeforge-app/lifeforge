@@ -1,5 +1,4 @@
 import APIOnlineStatusProvider from '@providers/APIOnlineStatusProvider'
-import AuthProvider from '@providers/AuthProvider'
 import BackgroundProvider from '@providers/BackgroundProvider'
 import LifeforgeUIProviderWrapper from '@providers/LifeforgeUIProviderWrapper'
 import PersonalizationProvider from '@providers/PersonalizationProvider'
@@ -10,6 +9,8 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { MusicProvider } from '@apps/Music/providers/MusicProvider'
+
+import AuthProvider from '../pages/Auth/providers/AuthProvider'
 
 const queryClient = new QueryClient()
 

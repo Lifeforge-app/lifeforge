@@ -11,12 +11,12 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
-import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import AssetItem from './components/AssetItem'
 import { walletAssetsModals } from './modals'
 

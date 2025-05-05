@@ -9,8 +9,8 @@ import {
   MenuItem,
   ModuleHeader
 } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import DetailBox from './components/DetailBox'
 import LineFilter from './components/LineFilter'

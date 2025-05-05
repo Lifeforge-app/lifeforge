@@ -3,10 +3,10 @@ import { ListResult } from 'pocketbase'
 import { useCallback, useEffect } from 'react'
 
 import { Pagination, QueryWrapper } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
-import { useModalStore } from '../../../core/modals/useModalStore'
 import AudioEntry from './entries/AudioEntry'
 import PhotosEntry from './entries/PhotosEntry'
 import TextEntry from './entries/TextEntry'

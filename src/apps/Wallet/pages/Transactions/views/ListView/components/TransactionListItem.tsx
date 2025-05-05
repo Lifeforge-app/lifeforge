@@ -6,21 +6,17 @@ import { useCallback } from 'react'
 import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 
 function TransactionListItem({
-  transaction,
-  setReceiptModalOpen,
-  setReceiptToView
+  transaction
 }: {
   transaction: IWalletTransaction
-  setReceiptModalOpen: React.Dispatch<boolean>
-  setReceiptToView: React.Dispatch<string>
 }) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
@@ -48,6 +44,14 @@ function TransactionListItem({
         queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
         queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
       }
+    })
+  }, [transaction])
+
+  const handleViewReceipt = useCallback(() => {
+    open('wallet.transactions.viewReceipt', {
+      src: `${import.meta.env.VITE_API_HOST}/media/${
+        transaction.collectionId
+      }/${transaction.id}/${transaction.receipt}`
     })
   }, [transaction])
 
@@ -80,16 +84,7 @@ function TransactionListItem({
               )}
             </div>
             {transaction.receipt !== '' && (
-              <button
-                onClick={() => {
-                  setReceiptToView(
-                    `${import.meta.env.VITE_API_HOST}/media/${
-                      transaction.collectionId
-                    }/${transaction.id}/${transaction.receipt}`
-                  )
-                  setReceiptModalOpen(true)
-                }}
-              >
+              <button onClick={handleViewReceipt}>
                 <Icon className="text-bg-500 size-5" icon="tabler:file-text" />
               </button>
             )}

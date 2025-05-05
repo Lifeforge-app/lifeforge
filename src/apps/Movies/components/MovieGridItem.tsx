@@ -4,12 +4,11 @@ import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import { useModalStore } from '../../../core/modals/useModalStore'
 
 function MovieGridItem({
   data,

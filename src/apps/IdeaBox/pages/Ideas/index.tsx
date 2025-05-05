@@ -1,10 +1,10 @@
 import { useParams } from 'react-router'
 
 import { ModuleWrapper, SearchInput } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import FAB from './components/FAB'
 import Header from './components/Header'
 import IdeaAndFolderList from './components/IdeaAndFolderList'

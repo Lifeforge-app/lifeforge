@@ -2,7 +2,8 @@ import { Icon } from '@iconify/react'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
+import { useModalStore } from '@lifeforge/ui'
+
 import { type IWalletCategory } from '../../../../../interfaces/wallet_interfaces'
 import CategorySectionItem from './CategorySectionItem'
 

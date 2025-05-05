@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../modals/useModalStore'
+import { useAuth } from '../../Auth/providers/AuthProvider'
 
 function AvatarColumn() {
   const open = useModalStore(state => state.open)

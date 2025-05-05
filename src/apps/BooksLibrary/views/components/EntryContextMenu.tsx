@@ -2,10 +2,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 
 import { MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import forceDown from '@utils/forceDown'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
 
 export default function EntryContextMenu({

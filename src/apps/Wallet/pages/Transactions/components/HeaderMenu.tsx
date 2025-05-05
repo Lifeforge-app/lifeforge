@@ -2,8 +2,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import React, { useCallback } from 'react'
 
 import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import ColumnVisibilityToggle from '../views/TableView/components/ColumnVisibilityToggle'
 
 function HeaderMenu({

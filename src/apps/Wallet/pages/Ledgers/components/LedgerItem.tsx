@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 
 function LedgerItem({ ledger }: { ledger: IWalletLedger }) {

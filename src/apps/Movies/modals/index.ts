@@ -1,4 +1,5 @@
-import { ModalComponent } from '../../../core/modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
 import ModifyTicketModal from './ModifyTicketModal'
 import SearchTMDBModal from './SearchTMDBModal'
 import ShowTicketModal from './ShowTicketModal'

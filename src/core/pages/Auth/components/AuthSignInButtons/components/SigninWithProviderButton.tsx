@@ -1,10 +1,11 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import { memo, useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
+
+import { useAuth } from '../../../providers/AuthProvider'
 
 function SigninWithProviderButton({
   provider,

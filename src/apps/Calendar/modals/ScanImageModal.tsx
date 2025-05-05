@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ImageAndFileInput, ModalHeader } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../core/modals/useModalStore'
 import { ICalendarEvent } from '../interfaces/calendar_interfaces'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {

@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { useModalStore } from '../../../core/modals/useModalStore'
 import { type IAchievementEntry } from '../interfaces/achievements_interfaces'
 
 function EntryItem({ entry }: { entry: IAchievementEntry }) {

@@ -14,6 +14,8 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import {
@@ -23,8 +25,6 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
-import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import EntryItem from './components/EntryItem'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'

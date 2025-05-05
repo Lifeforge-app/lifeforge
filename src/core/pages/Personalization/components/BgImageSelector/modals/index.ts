@@ -1,4 +1,5 @@
-import { ModalComponent } from '../../../../../modals/useModalStore'
+import { type ModalComponent } from '@lifeforge/ui'
+
 import AdjustBgImageModal from './AdjustBgImageModal'
 
 export const personalizationBgImageSelectorModals: Record<

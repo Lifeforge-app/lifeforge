@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
+
+import { useAuth } from '../../../pages/Auth/providers/AuthProvider'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']

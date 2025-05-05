@@ -6,7 +6,7 @@ import { LoadingScreen } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../AuthProvider'
+import { useAuth } from '../../pages/Auth/providers/AuthProvider'
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
 import useBgTempEffect from './hooks/useBgTempEffect'

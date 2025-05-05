@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import { useCallback, useMemo } from 'react'
@@ -8,6 +7,8 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { MenuItem } from '@lifeforge/ui'
+
+import { useAuth } from '../../../pages/Auth/providers/AuthProvider'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()

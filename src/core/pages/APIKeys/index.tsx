@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, FAB, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../modals/useModalStore'
-import useModalsEffect from '../../modals/useModalsEffect'
 import ContentContainer from './components/ContentContainer'
 import { APIKeyModals } from './modals'
 

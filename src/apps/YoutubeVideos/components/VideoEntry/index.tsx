@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'
 import VideoThumbnail from './components/VideoThumbnail'

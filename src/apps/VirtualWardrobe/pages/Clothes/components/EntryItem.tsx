@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
@@ -14,8 +15,6 @@ import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_
 import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
-
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 
 interface IEntryItemCommonProps<T extends boolean> {
   entry: IVirtualWardrobeEntry

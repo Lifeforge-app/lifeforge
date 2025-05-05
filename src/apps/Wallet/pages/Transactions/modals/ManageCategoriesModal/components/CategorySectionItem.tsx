@@ -2,10 +2,9 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 
 function CategorySectionItem({ category }: { category: IWalletCategory }) {
   const open = useModalStore(state => state.open)

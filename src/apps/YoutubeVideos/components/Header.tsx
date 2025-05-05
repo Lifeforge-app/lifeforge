@@ -1,36 +1,34 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, MenuItem, ModuleHeader, SearchInput } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { type IYoutubeVideoInfo } from '../interfaces/youtube_video_storage_interfaces'
-import DownloadProcessModal from './DownloadProcessModal'
 
 function Header({
   videosLength,
-  setIsAddVideosModalOpen,
   query,
   setQuery,
   needsProgressCheck,
   setNeedsProgressCheck,
-  isAddVideosModalOpen
+  handleOpenAddVideosModal
 }: {
   videosLength: number
-  setIsAddVideosModalOpen: (value: boolean) => void
   query: string
   setQuery: (value: string) => void
   needsProgressCheck: boolean
   setNeedsProgressCheck: (value: boolean) => void
-  isAddVideosModalOpen: boolean
+  handleOpenAddVideosModal: () => void
 }) {
+  const stack = useModalStore(state => state.stack)
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.youtubeVideos')
-  const [isDownloadProcessModalOpen, setIsDownloadProcessModalOpen] =
-    useState(false)
   const [processes, setProcesses] = useState<
     Record<
       string,
@@ -81,13 +79,17 @@ function Header({
     }
   }
 
+  const handleOpenDownloadProgressModal = useCallback(() => {
+    open('youtubeVideos.downloadProcess', { processes })
+  }, [processes])
+
   useEffect(() => {
     const interval = setInterval(checkProgress, 1000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [needsProgressCheck, isFirstTime, isAddVideosModalOpen])
+  }, [needsProgressCheck, isFirstTime, stack.length])
 
   return (
     <>
@@ -97,12 +99,7 @@ function Header({
             className="hidden whitespace-nowrap md:flex"
             icon="tabler:plus"
             tProps={{ item: t('items.video') }}
-            onClick={() => {
-              queryClient.invalidateQueries({
-                queryKey: ['youtube-videos', 'video']
-              })
-              setIsAddVideosModalOpen(true)
-            }}
+            onClick={handleOpenAddVideosModal}
           >
             new
           </Button>
@@ -115,9 +112,7 @@ function Header({
               className="p-5"
               icon="tabler:download"
               variant="plain"
-              onClick={() => {
-                setIsDownloadProcessModalOpen(true)
-              }}
+              onClick={handleOpenDownloadProgressModal}
             >
               (
               {
@@ -149,16 +144,6 @@ function Header({
         searchQuery={query}
         setSearchQuery={setQuery}
         stuffToSearch="video"
-      />
-      <DownloadProcessModal
-        isOpen={isDownloadProcessModalOpen}
-        processes={processes}
-        onClose={() => {
-          setIsDownloadProcessModalOpen(false)
-          queryClient.invalidateQueries({
-            queryKey: ['youtube-videos', 'video']
-          })
-        }}
       />
     </>
   )

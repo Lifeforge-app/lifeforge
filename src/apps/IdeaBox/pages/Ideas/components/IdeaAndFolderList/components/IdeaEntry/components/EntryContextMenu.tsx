@@ -4,12 +4,12 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../../../../../../../core/modals/useModalStore'
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 
 function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {

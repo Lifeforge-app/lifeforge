@@ -3,12 +3,11 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
-
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 
 function InnerHeader() {
   const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =

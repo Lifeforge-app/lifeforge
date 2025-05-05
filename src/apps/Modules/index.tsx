@@ -1,4 +1,3 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -8,6 +7,7 @@ import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 import fetchAPI from '@utils/fetchAPI'
 
 import ROUTES from '../../core/Routes'
+import { useAuth } from '../../core/pages/Auth/providers/AuthProvider'
 import ModuleItem from './ModuleItem'
 
 function Modules() {

@@ -1,12 +1,12 @@
-import { useAuth } from '@providers/AuthProvider'
 import dayjs from 'dayjs'
 import _ from 'lodash'
-import { useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, ConfigColumn } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import ModifyModal from './ModifyModal'
+import { useAuth } from '../../Auth/providers/AuthProvider'
 
 function OrdinaryColumn({
   title,
@@ -19,9 +19,18 @@ function OrdinaryColumn({
   icon: string
   type?: string
 }) {
+  const open = useModalStore(state => state.open)
   const { userData } = useAuth()
   const { t } = useTranslation('core.accountSettings')
-  const [modifyModalOpen, setModifyModalOpen] = useState(false)
+
+  const handleOpenModifyModal = useCallback(() => {
+    open('accountSettings.modify', {
+      type,
+      title,
+      id,
+      icon
+    })
+  }, [id, icon, title, type])
 
   return (
     <>
@@ -47,22 +56,10 @@ function OrdinaryColumn({
           <Button
             icon="tabler:pencil"
             variant="plain"
-            onClick={() => {
-              setModifyModalOpen(true)
-            }}
+            onClick={handleOpenModifyModal}
           />
         </div>
       </ConfigColumn>
-      <ModifyModal
-        icon={icon}
-        id={id}
-        isOpen={modifyModalOpen}
-        title={title}
-        type={type}
-        onClose={() => {
-          setModifyModalOpen(false)
-        }}
-      />
     </>
   )
 }

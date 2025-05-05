@@ -1,16 +1,17 @@
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { QueryWrapper } from '@lifeforge/ui'
+import { ModalManager, QueryWrapper } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
-import TwoFAModal from './components/TwoFAModal/TwoFAModal'
+import { AuthModals } from './modals'
+import { useAuth } from './providers/AuthProvider'
 
 function Auth() {
   const { verifyOAuth } = useAuth()
@@ -19,6 +20,8 @@ function Auth() {
     '/user/auth/oauth-providers',
     ['auth', 'oauth', 'providers']
   )
+
+  useModalsEffect(AuthModals)
 
   useEffect(() => {
     const code = searchParams.get('code')
@@ -69,7 +72,7 @@ function Auth() {
             </div>
           </section>
           <AuthSideImage />
-          <TwoFAModal />
+          <ModalManager />
         </>
       )}
     </QueryWrapper>

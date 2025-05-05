@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/pseudo-random */
-import { useAuth } from '@providers/AuthProvider'
 import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import {
@@ -15,6 +14,8 @@ import { toast } from 'react-toastify'
 import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
+
+import { useAuth } from '../../../core/pages/Auth/providers/AuthProvider'
 
 interface IMusicContext {
   // Audio related

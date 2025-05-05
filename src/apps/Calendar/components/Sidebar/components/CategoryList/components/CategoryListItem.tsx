@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react'
 
 import { SidebarItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
 import ActionMenu from './ActionMenu'
 

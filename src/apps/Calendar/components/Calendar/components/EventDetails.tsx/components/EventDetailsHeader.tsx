@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import {
   ICalendarCategory,
@@ -13,8 +14,6 @@ import {
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import fetchAPI from '@utils/fetchAPI'
-
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 
 function EventDetailsHeader({
   event,

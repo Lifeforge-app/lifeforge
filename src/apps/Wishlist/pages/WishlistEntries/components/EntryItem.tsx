@@ -7,13 +7,13 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 
 function EntryItem({

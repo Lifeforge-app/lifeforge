@@ -2,8 +2,8 @@ import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../core/modals/useModalStore'
 import { type ITodoListTag } from '../../../interfaces/todo_list_interfaces'
 
 function TaskTagListItem({

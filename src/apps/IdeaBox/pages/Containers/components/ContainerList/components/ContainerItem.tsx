@@ -4,12 +4,11 @@ import { useCallback } from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import { useModalStore } from '../../../../../../../core/modals/useModalStore'
 
 function ContainerItem({ container }: { container: IIdeaBoxContainer }) {
   const open = useModalStore(state => state.open)

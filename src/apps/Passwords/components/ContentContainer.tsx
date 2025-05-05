@@ -1,13 +1,13 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useCallback } from 'react'
 
 import { FAB, SearchInput } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 
-import { useModalStore } from '../../../core/modals/useModalStore'
+import { useAuth } from '../../../core/pages/Auth/providers/AuthProvider'
 import { usePasswordContext } from '../providers/PasswordsProvider'
 import PasswordList from './PasswordList'
 

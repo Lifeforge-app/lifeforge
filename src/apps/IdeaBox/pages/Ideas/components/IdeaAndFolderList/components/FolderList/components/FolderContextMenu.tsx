@@ -2,8 +2,8 @@ import { useCallback } from 'react'
 import { useParams } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
-import { useModalStore } from '../../../../../../../../../core/modals/useModalStore'
 import { IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
 
 function FolderContextMenu({

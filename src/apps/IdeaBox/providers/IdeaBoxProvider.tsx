@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useModalStore } from '@lifeforge/ui'
+
 import {
   IIdeaBoxContainer,
   type IIdeaBoxEntry,
@@ -12,8 +14,6 @@ import {
 } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-
-import { useModalStore } from '../../../core/modals/useModalStore'
 
 interface IIdeaBoxData {
   pathValid: boolean

@@ -4,12 +4,12 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import forceDown from '@utils/forceDown'
 
-import { useModalStore } from '../../../../../../core/modals/useModalStore'
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 
 function SideButtons({ music }: { music: IMusicEntry }) {

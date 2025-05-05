@@ -1,4 +1,3 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router'
@@ -7,6 +6,7 @@ import { NotFoundScreen } from '@lifeforge/ui'
 
 import ROUTES from '../../Routes'
 import Auth from '../../pages/Auth'
+import { useAuth } from '../../pages/Auth/providers/AuthProvider'
 import ChildRoutesRenderer from './ChildRoutesRenderer'
 import MainApplication from './Layout'
 

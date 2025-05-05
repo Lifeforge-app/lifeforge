@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -10,18 +10,20 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import AddVideosModal from './components/AddVideosModal'
 import Header from './components/Header'
 import VideoList from './components/VideoList'
 import { type IYoutubeVideosStorageEntry } from './interfaces/youtube_video_storage_interfaces'
+import { YoutubeVideosModals } from './modals'
 
 function YoutubeVideos() {
+  const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.youtubeVideos')
-  const [isAddVideosModalOpen, setIsAddVideosModalOpen] = useState(false)
   const videosQuery = useAPIQuery<IYoutubeVideosStorageEntry[]>(
     'youtube-videos/video',
     ['youtube-videos', 'video']
@@ -33,6 +35,14 @@ function YoutubeVideos() {
   const [filteredVideos, setFilteredVideos] = useState<
     IYoutubeVideosStorageEntry[]
   >([])
+
+  const handleOpenAddVideosModal = useCallback(() => {
+    queryClient.invalidateQueries({
+      queryKey: ['youtube-videos', 'video']
+    })
+
+    open('youtubeVideos/addVideo', { videos: videosQuery.data })
+  }, [videosQuery.data])
 
   useEffect(() => {
     if (!videosQuery.data) {
@@ -49,13 +59,14 @@ function YoutubeVideos() {
     )
   }, [videosQuery.data, debouncedQuery])
 
+  useModalsEffect(YoutubeVideosModals)
+
   return (
     <ModuleWrapper>
       <Header
-        isAddVideosModalOpen={isAddVideosModalOpen}
+        handleOpenAddVideosModal={handleOpenAddVideosModal}
         needsProgressCheck={needsProgressCheck}
         query={query}
-        setIsAddVideosModalOpen={setIsAddVideosModalOpen}
         setNeedsProgressCheck={setNeedsProgressCheck}
         setQuery={setQuery}
         videosLength={videosQuery.data?.length ?? 0}
@@ -72,12 +83,7 @@ function YoutubeVideos() {
                 icon="tabler:movie-off"
                 name="videos"
                 namespace="apps.youtubeVideos"
-                onCTAClick={() => {
-                  queryClient.invalidateQueries({
-                    queryKey: ['youtube-videos', 'video']
-                  })
-                  setIsAddVideosModalOpen(true)
-                }}
+                onCTAClick={handleOpenAddVideosModal}
               />
             ) : (
               <QueryWrapper query={videosQuery}>
@@ -97,25 +103,7 @@ function YoutubeVideos() {
           }
         </QueryWrapper>
       </Scrollbar>
-      <AddVideosModal
-        isOpen={isAddVideosModalOpen}
-        videos={videosQuery.data ?? []}
-        onClose={(isVideoDownloading: boolean) => {
-          setIsAddVideosModalOpen(false)
-          if (isVideoDownloading) {
-            setNeedsProgressCheck(true)
-          }
-        }}
-      />
-      <FAB
-        hideWhen="md"
-        onClick={() => {
-          queryClient.invalidateQueries({
-            queryKey: ['youtube-videos', 'video']
-          })
-          setIsAddVideosModalOpen(true)
-        }}
-      />
+      <FAB hideWhen="md" onClick={handleOpenAddVideosModal} />
     </ModuleWrapper>
   )
 }

@@ -13,11 +13,11 @@ import {
   Scrollbar,
   Tabs
 } from '@lifeforge/ui'
+import { useModalsEffect } from '@lifeforge/ui'
+import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { useModalStore } from '../../../../core/modals/useModalStore'
-import useModalsEffect from '../../../../core/modals/useModalsEffect'
 import {
   IWishlistEntry,
   IWishlistList
