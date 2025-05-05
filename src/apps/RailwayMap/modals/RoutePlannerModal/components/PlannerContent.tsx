@@ -1,9 +1,11 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
+import fetchShortestRoute from '../utils/fetchShortestRoute'
 import { filterStations } from '../utils/stations'
 import StationSelector from './StationSelector'
 
@@ -11,24 +13,25 @@ function PlannerContent({
   startQuery,
   endQuery,
   setStartQuery,
-  setEndQuery
+  setEndQuery,
+  onClose
 }: {
   startQuery: string
   endQuery: string
   setStartQuery: (query: string) => void
   setEndQuery: (query: string) => void
+  onClose: () => void
 }) {
   const {
-    fetchShortestRoute,
-    routePlannerLoading: loading,
     stations,
     routePlannerStart: start,
     routePlannerEnd: end,
     setRoutePlannerStart: setStart,
     setRoutePlannerEnd: setEnd,
-    setRoutePlannerOpen,
-    setSelectedStation
+    setSelectedStation,
+    setShortestRoute
   } = useRailwayMapContext()
+  const [loading, setLoading] = useState(false)
 
   const filteredStart = useMemo(
     () => filterStations(stations, startQuery),
@@ -39,6 +42,38 @@ function PlannerContent({
     () => filterStations(stations, endQuery),
     [stations, endQuery]
   )
+
+  const handleSubmit = useCallback(async () => {
+    if (!start || !end) {
+      toast.error('Please select a start and end station.')
+      return
+    }
+
+    setLoading(true)
+    setShortestRoute('loading')
+    try {
+      const data = await fetchShortestRoute(start, end)
+
+      if (!data) {
+        toast.error('No route found.')
+        return
+      }
+
+      setShortestRoute(data)
+      setStartQuery('')
+      setEndQuery('')
+      setStart('')
+      setEnd('')
+      setSelectedStation(null)
+      onClose()
+    } catch (error) {
+      setShortestRoute('error')
+      console.error('Error fetching shortest route:', error)
+    } finally {
+      setLoading(false)
+    }
+  }, [start, end])
+
   return (
     <>
       <div className="flex w-full flex-col items-center gap-4">
@@ -71,22 +106,11 @@ function PlannerContent({
       </div>
       <Button
         iconAtEnd
-        className="mt-6"
+        className="mt-6 w-full"
         disabled={start === '' || end === '' || start === end}
         icon="tabler:arrow-right"
         loading={loading}
-        onClick={() => {
-          fetchShortestRoute()
-            .then(() => {
-              setStartQuery('')
-              setEndQuery('')
-              setStart('')
-              setEnd('')
-              setSelectedStation(null)
-              setRoutePlannerOpen(false)
-            })
-            .catch(console.error)
-        }}
+        onClick={handleSubmit}
       >
         submit
       </Button>

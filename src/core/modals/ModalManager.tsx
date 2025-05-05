@@ -1,40 +1,58 @@
 import { useEffect, useState } from 'react'
 
-import ModalWrapper from './ModalWrapper'
+import { ModalWrapper } from '@lifeforge/ui'
+
 import { useModalStore } from './useModalStore'
 
-function FinalRenderedElement() {
-  const { isOpen, key, data, close, registry } = useModalStore()
-  const [innerIsOpen, setInnerIsOpen] = useState(isOpen)
-
-  useEffect(() => {
-    if (!isOpen) {
-      setTimeout(() => {
-        setInnerIsOpen(isOpen)
-      }, 500)
-    } else {
-      setInnerIsOpen(isOpen)
-    }
-  }, [isOpen])
-
-  if (!innerIsOpen || !key) return null
-
-  const ModalComponent = registry[key]
+function FinalElement({ index }: { index: number }) {
+  const { stack, close } = useModalStore()
+  const item = stack[index]
+  const { data, component: ModalComponent } = item || {}
 
   if (!ModalComponent) {
-    console.error(`Modal "${key}" is not registered.`)
     return null
   }
 
   return <ModalComponent data={data} onClose={close} />
 }
 
-export default function ModalManager() {
-  const { isOpen } = useModalStore()
+function StackModal({ index }: { index: number }) {
+  const { stack, remove } = useModalStore()
+  const item = stack[index]
+  const { isClosing } = item || {}
+  const [localOpen, setLocalOpen] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLocalOpen(true)
+    }, 10)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
-    <ModalWrapper isOpen={isOpen}>
-      <FinalRenderedElement />
+    <ModalWrapper
+      isOpen={localOpen && !isClosing}
+      zIndex={9990 + index * 10}
+      onExited={() => {
+        if (isClosing) {
+          remove(index)
+        }
+      }}
+    >
+      <FinalElement index={index} />
     </ModalWrapper>
+  )
+}
+
+export default function ModalManager() {
+  const { stack } = useModalStore()
+
+  return (
+    <>
+      {stack.map((_, index) => (
+        <StackModal key={`modal-${index}`} index={index} />
+      ))}
+    </>
   )
 }

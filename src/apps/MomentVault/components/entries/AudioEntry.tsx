@@ -28,7 +28,7 @@ function AudioEntry({
   entry: IMomentVaultEntry
   onDelete: () => void
 }) {
-  const key = useModalStore(state => state.key)
+  const stack = useModalStore(state => state.stack)
   const {
     theme: lightOrDarkTheme,
     bgTempPalette,
@@ -98,12 +98,16 @@ function AudioEntry({
   }
 
   useEffect(() => {
+    if (stack.length > 0) return
+
+    // Force rerender the component
+    // This is a workaround for the issue where the component does not rerender properly for some reason
     const el = document.getElementById(`audio-entry-${entry.id}`)
     if (el) {
       el.style.willChange = 'opacity, transform'
       el.getBoundingClientRect()
     }
-  }, [key])
+  }, [stack])
 
   return (
     <div

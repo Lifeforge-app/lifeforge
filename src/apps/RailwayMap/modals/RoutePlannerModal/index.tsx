@@ -1,43 +1,39 @@
 import { useEffect, useState } from 'react'
 
-import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+import { ModalHeader } from '@lifeforge/ui'
 
-import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
+import { useRailwayMapContext } from '@apps/RailwayMap/providers/RailwayMapProvider'
+
 import PlannerContent from './components/PlannerContent'
 
-function RoutePlannerModal() {
-  const {
-    clearShortestRoute,
-    routePlannerOpen: isOpen,
-    setRoutePlannerOpen
-  } = useRailwayMapContext()
+function RoutePlannerModal({ onClose }: { onClose: () => void }) {
+  const { setShortestRoute } = useRailwayMapContext()
 
   const [startQuery, setStartQuery] = useState('')
   const [endQuery, setEndQuery] = useState('')
 
   useEffect(() => {
-    if (isOpen) {
-      setStartQuery('')
-      setEndQuery('')
-      clearShortestRoute()
-    }
-  }, [isOpen])
+    setStartQuery('')
+    setEndQuery('')
+    setShortestRoute([])
+  }, [])
 
   return (
-    <ModalWrapper isOpen={isOpen} minWidth="40vw">
+    <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:route"
         namespace="apps.railwayMap"
         title="Route Planner"
-        onClose={() => setRoutePlannerOpen(false)}
+        onClose={onClose}
       />
       <PlannerContent
         endQuery={endQuery}
         setEndQuery={setEndQuery}
         setStartQuery={setStartQuery}
         startQuery={startQuery}
+        onClose={onClose}
       />
-    </ModalWrapper>
+    </div>
   )
 }
 
