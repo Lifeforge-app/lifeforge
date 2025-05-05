@@ -5,6 +5,8 @@
 - **Code**: Created universal portal component to render modals and popups outside of the main app tree.
 - **API**: Fixed a few stupid mistakes.
 - **UI**: Improved button components.
+- **UI**: Moved global modal manager components and mechanism to `@lifeforge/ui`.
+- **Code**: Migrated all modals to the new universal portal component.
 - **Account**: Fixed a bug where the remove button in the avatar column will show up even if the user doesn't have an avatar.
 
 ### 📌 **dev 25w18 (4/28/2025 - 5/4/2025)**
