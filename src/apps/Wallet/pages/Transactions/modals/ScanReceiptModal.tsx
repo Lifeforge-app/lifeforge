@@ -37,6 +37,8 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
           body: formData
         }
       )
+
+      onClose()
       open('wallet.transactions.modifyTransaction', {
         type: 'create',
         existedData: {
@@ -98,7 +100,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
       </div>
       <Button
         iconAtEnd
-        className="mt-6"
+        className="mt-6 w-full"
         icon="tabler:arrow-right"
         loading={loading}
         onClick={() => {
