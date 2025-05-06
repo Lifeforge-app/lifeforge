@@ -8,6 +8,7 @@
 - **UI**: Moved global modal manager components and mechanism to `@lifeforge/ui`.
 - **Code**: Migrated all modals to the new universal portal component.
 - **Account**: Fixed a bug where the remove button in the avatar column will show up even if the user doesn't have an avatar.
+- **Todo List**: Completed task will now be struck through in the mini calendar event list.
 
 ### 📌 **dev 25w18 (4/28/2025 - 5/4/2025)**
 
