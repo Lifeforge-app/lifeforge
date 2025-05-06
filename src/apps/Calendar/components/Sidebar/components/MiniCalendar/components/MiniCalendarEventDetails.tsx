@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
@@ -55,7 +56,13 @@ function MiniCalendarEventDetails({
                 }}
               >
                 <Icon className="size-4" icon={category?.icon ?? ''} />
-                {event.title}
+                <span
+                  className={clsx(
+                    event.is_strikethrough && 'line-through decoration-[1.5px]'
+                  )}
+                >
+                  {event.title}
+                </span>
               </p>
             )
           })}
