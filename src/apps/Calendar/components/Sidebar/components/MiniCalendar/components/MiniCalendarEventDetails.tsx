@@ -1,21 +1,25 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import dayjs from 'dayjs'
 import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
 
-import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+import {
+  ICalendarCategory,
+  ICalendarEvent
+} from '@apps/Calendar/interfaces/calendar_interfaces'
 
 function MiniCalendarEventDetails({
   index,
   actualIndex,
   date,
   eventsOnTheDay,
-  getBgColor
+  getCategory
 }: {
   index: number
   actualIndex: number
   date: Date
   eventsOnTheDay: ICalendarEvent[]
-  getBgColor: (event: ICalendarEvent) => string | undefined
+  getCategory: (event: ICalendarEvent) => ICalendarCategory | undefined
 }) {
   return createPortal(
     <Tooltip
@@ -39,17 +43,18 @@ function MiniCalendarEventDetails({
         </div>
         <div className="mt-4 flex flex-col gap-2">
           {eventsOnTheDay.map(event => {
-            const backgroundColor = getBgColor(event)
+            const category = getCategory(event)
 
             return (
               <p
                 key={event.id}
-                className="text-bg-500 relative pl-4 before:absolute before:top-1/2 before:left-0 before:h-full before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-[var(--bg-color)]"
+                className="text-bg-500 relative flex items-center gap-2 pl-4 before:absolute before:top-1/2 before:left-0 before:h-full before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-[var(--bg-color)]"
                 style={{
                   // @ts-expect-error - CSS variable
-                  '--bg-color': backgroundColor ?? ''
+                  '--bg-color': category?.color ?? ''
                 }}
               >
+                <Icon className="size-4" icon={category?.icon ?? ''} />
                 {event.title}
               </p>
             )

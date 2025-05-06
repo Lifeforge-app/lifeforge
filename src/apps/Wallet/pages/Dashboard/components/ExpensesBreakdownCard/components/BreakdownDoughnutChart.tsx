@@ -81,9 +81,9 @@ function BreakdownDoughnutChart({
                   category => spentOnEachCategory?.[category?.id]?.amount || 0
                 ) ?? [],
               backgroundColor: expensesCategories?.map(
-                category => category.color + '20'
+                category => category?.color + '20'
               ),
-              borderColor: expensesCategories?.map(category => category.color),
+              borderColor: expensesCategories?.map(category => category?.color),
               borderWidth: 1
             }
           ]

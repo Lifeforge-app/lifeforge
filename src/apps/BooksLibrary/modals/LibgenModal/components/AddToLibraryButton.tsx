@@ -50,7 +50,7 @@ function AddToLibraryButton({
 
   return (
     <Button
-      className={fullWidth ? '"w-full xl:w-1/2"' : ''}
+      className={fullWidth ? 'w-full xl:w-1/2' : ''}
       disabled={
         Object.keys(processes).includes(md5) ||
         entriesQuery.data?.some(entry => entry.md5 === md5)

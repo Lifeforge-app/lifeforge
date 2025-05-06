@@ -1,11 +1,14 @@
-import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+import {
+  ICalendarCategory,
+  ICalendarEvent
+} from '@apps/Calendar/interfaces/calendar_interfaces'
 
 function MiniCalendarEventIndicator({
   eventsOnTheDay,
-  getBgColor
+  getCategory
 }: {
   eventsOnTheDay: ICalendarEvent[]
-  getBgColor: (event: ICalendarEvent) => string | undefined
+  getCategory: (event: ICalendarEvent) => ICalendarCategory | undefined
 }) {
   const groupedByThree = []
 
@@ -17,14 +20,14 @@ function MiniCalendarEventIndicator({
       {groupedByThree.map(group => (
         <div key={`group-${group[0].id}`} className="flex gap-px">
           {group.map(event => {
-            const backgroundColor = getBgColor(event)
+            const category = getCategory(event)
 
             return (
               <div
                 key={event.id}
                 className="size-1 rounded-full"
                 style={{
-                  backgroundColor: backgroundColor ?? ''
+                  backgroundColor: category?.color ?? ''
                 }}
               />
             )
