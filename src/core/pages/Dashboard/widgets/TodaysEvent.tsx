@@ -11,6 +11,7 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
+import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -26,8 +27,13 @@ function EventItem({
   event: ICalendarEvent
 }) {
   const targetCategory = useMemo(
-    () => categories.find(category => category.id === event.category),
-    [categories, event.category]
+    () =>
+      event.category.startsWith('_')
+        ? (INTERNAL_CATEGORIES[
+            event.category as keyof typeof INTERNAL_CATEGORIES
+          ] as ICalendarCategory)
+        : categories.find(category => category.id === event.category),
+    [event.category, categories]
   )
 
   return (
@@ -38,9 +44,7 @@ function EventItem({
       <div
         className="h-full w-1 rounded-full"
         style={{
-          backgroundColor: categories.find(
-            category => category.id === event.category
-          )?.color
+          backgroundColor: targetCategory?.color
         }}
       />
       <div className="flex w-full flex-col gap-1">
