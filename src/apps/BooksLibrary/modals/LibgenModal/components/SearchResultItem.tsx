@@ -92,7 +92,7 @@ function SearchResultItem({
           >
             View Details
           </Button>
-          <AddToLibraryButton md5={book.md5} />
+          <AddToLibraryButton fullWidth md5={book.md5} />
         </div>
       </div>
     </li>

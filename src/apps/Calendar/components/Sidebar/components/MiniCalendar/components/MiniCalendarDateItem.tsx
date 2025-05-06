@@ -63,11 +63,12 @@ function MiniCalendarDateItem({
     [date, firstDay, index, lastDate, actualIndex]
   )
 
-  function getBgColor(event: ICalendarEvent) {
+  function getCategory(event: ICalendarEvent): ICalendarCategory | undefined {
     return event.category.startsWith('_')
-      ? INTERNAL_CATEGORIES[event.category as keyof typeof INTERNAL_CATEGORIES]
-          .color
-      : categories.find(category => category.id === event.category)?.color
+      ? (INTERNAL_CATEGORIES[
+          event.category as keyof typeof INTERNAL_CATEGORIES
+        ] as ICalendarCategory)
+      : categories.find(category => category.id === event.category)
   }
 
   return (
@@ -86,7 +87,7 @@ function MiniCalendarDateItem({
         {isInThisMonth && eventsOnTheDay.length > 0 && (
           <MiniCalendarEventIndicator
             eventsOnTheDay={eventsOnTheDay}
-            getBgColor={getBgColor}
+            getCategory={getCategory}
           />
         )}
       </div>
@@ -95,7 +96,7 @@ function MiniCalendarDateItem({
           actualIndex={actualIndex}
           date={date}
           eventsOnTheDay={eventsOnTheDay}
-          getBgColor={getBgColor}
+          getCategory={getCategory}
           index={index}
         />
       )}
