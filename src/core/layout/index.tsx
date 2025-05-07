@@ -1,7 +1,12 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
 
-import { DeleteConfirmationModal, LoadingScreen } from '@lifeforge/ui'
+import {
+  ColorPickerModal,
+  DeleteConfirmationModal,
+  IconPickerModal,
+  LoadingScreen
+} from '@lifeforge/ui'
 import { useModalsEffect } from '@lifeforge/ui'
 
 import Auth from '../pages/Auth'
@@ -11,7 +16,9 @@ import useAuthEffect from './hooks/useAuthEffect'
 import useTitleEffect from './hooks/useTitleEffect'
 
 const DEFAULT_MODALS = {
-  deleteConfirmation: DeleteConfirmationModal
+  deleteConfirmation: DeleteConfirmationModal,
+  iconPicker: IconPickerModal,
+  colorPicker: ColorPickerModal
 }
 
 function AppRouter() {
