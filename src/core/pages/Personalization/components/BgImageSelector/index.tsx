@@ -1,15 +1,9 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import {
-  Button,
-  ConfigColumn,
-  ImagePickerModal,
-  QueryWrapper,
-  Tooltip
-} from '@lifeforge/ui'
+import { Button, ConfigColumn, QueryWrapper, Tooltip } from '@lifeforge/ui'
 import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
@@ -27,7 +21,6 @@ function BgImageSelector() {
     'key-exists'
   ])
   const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
-  const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
   const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
     'ai/image-generation/key-exists',
     ['ai', 'image-generation', 'key-exists']
@@ -74,10 +67,20 @@ function BgImageSelector() {
       toast.success('Background image updated')
     } catch {
       toast.error('Failed to update background image')
-    } finally {
-      setImageSelectorModalOpen(false)
     }
   }
+
+  const handleOpenImageSelector = useCallback(() => {
+    open('fileAndImagePicker', {
+      enableUrl: true,
+      acceptedMimeTypes: {
+        'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
+      },
+      enableAI: imageGenAPIKeyExistsQuery.data ?? false,
+      enablePixabay: pixabayEnabledQuery.data ?? false,
+      onSelect: onSubmit
+    })
+  }, [imageGenAPIKeyExistsQuery.data, pixabayEnabledQuery.data])
 
   useModalsEffect(personalizationBgImageSelectorModals)
 
@@ -115,9 +118,7 @@ function BgImageSelector() {
                 <Button
                   className="w-full md:w-auto"
                   icon="tabler:photo-hexagon"
-                  onClick={() => {
-                    setImageSelectorModalOpen(true)
-                  }}
+                  onClick={handleOpenImageSelector}
                 >
                   select
                 </Button>
@@ -147,19 +148,6 @@ function BgImageSelector() {
           </QueryWrapper>
         )}
       </ConfigColumn>
-      <ImagePickerModal
-        enableUrl
-        acceptedMimeTypes={{
-          'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
-        }}
-        enableAI={imageGenAPIKeyExistsQuery.data ?? false}
-        enablePixabay={pixabayEnabledQuery.data ?? false}
-        isOpen={imageSelectorModalOpen}
-        onClose={() => {
-          setImageSelectorModalOpen(false)
-        }}
-        onSelect={onSubmit}
-      />
     </>
   )
 }
