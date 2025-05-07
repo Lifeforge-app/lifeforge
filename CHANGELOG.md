@@ -1,12 +1,14 @@
 # Change Log
 
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
-- **UI**: Fixed some silly but fatal bugs related to `useCallback`.
 - **Code**: Created universal portal component to render modals and popups outside of the main app tree.
-- **API**: Fixed a few stupid mistakes.
-- **UI**: Improved button components.
-- **UI**: Moved global modal manager components and mechanism to `@lifeforge/ui`.
 - **Code**: Migrated all modals to the new universal portal component.
+- **API**: Fixed a few stupid mistakes.
+- **UI**: Fixed some silly but fatal bugs related to `useCallback`.
+- **UI**: Improved styling for different state of button components.
+- **UI**: Moved global modal manager components and mechanism to `@lifeforge/ui`.
+- **UI**: Mega performance optimization for `FormModal` component by removing unnecessary re-renders.
+- **UI**: Text will now be highlighted in the theme color when the user selects it.
 - **Account**: Fixed a bug where the remove button in the avatar column will show up even if the user doesn't have an avatar.
 - **Todo List**: Completed task will now be struck through in the mini calendar event list.
 
