@@ -4,6 +4,7 @@ import { useLocation } from 'react-router'
 import {
   ColorPickerModal,
   DeleteConfirmationModal,
+  FileAndImagePickerModal,
   IconPickerModal,
   LoadingScreen
 } from '@lifeforge/ui'
@@ -18,7 +19,8 @@ import useTitleEffect from './hooks/useTitleEffect'
 const DEFAULT_MODALS = {
   deleteConfirmation: DeleteConfirmationModal,
   iconPicker: IconPickerModal,
-  colorPicker: ColorPickerModal
+  colorPicker: ColorPickerModal,
+  fileAndImagePicker: FileAndImagePickerModal
 }
 
 function AppRouter() {

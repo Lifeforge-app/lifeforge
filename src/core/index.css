@@ -852,3 +852,7 @@ button[class^='react-calendar__navigation'] {
 .rbc-agenda-table tr:has(th) {
   @apply hidden;
 }
+
+.input-icon {
+  @apply !bg-black;
+}
