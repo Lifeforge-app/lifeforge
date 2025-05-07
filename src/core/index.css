@@ -68,6 +68,10 @@ layer(base);
   @apply select-none;
 }
 
+*::selection {
+  @apply bg-custom-500;
+}
+
 input,
 textarea {
   @apply border-hidden;

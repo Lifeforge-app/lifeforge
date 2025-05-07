@@ -22,7 +22,7 @@
     "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/postcss": "^4.1.5",
     "@tailwindcss/vite": "^4.1.5",
-    "@tanstack/react-query": "^5.75.1",
+    "@tanstack/react-query": "^5.75.4",
     "@tanstack/react-query-devtools": "^5.75.1",
     "@uidotdev/usehooks": "^2.4.1",
     "@uiw/react-color": "^2.5.3",
