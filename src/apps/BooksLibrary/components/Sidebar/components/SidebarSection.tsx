@@ -39,7 +39,7 @@ function SidebarSection({
         languages: languagesQuery,
         fileTypes: fileTypesQuery
       })[stuff],
-    [stuff]
+    [stuff, categoriesQuery, languagesQuery, fileTypesQuery]
   )
 
   return (
