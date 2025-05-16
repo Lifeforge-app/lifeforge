@@ -179,12 +179,20 @@ function ModifyTransactionsModal({
             })
           }
 
-          return prev.map(item => {
-            if (item.id === (res as IWalletTransaction).id) {
-              return res as IWalletTransaction
-            }
-            return item
-          })
+          return prev
+            .map(item => {
+              if (item.id === (res as IWalletTransaction).id) {
+                return res as IWalletTransaction
+              }
+              return item
+            })
+            .sort((a, b) => {
+              if (dayjs(b.date).isSame(a.date)) {
+                return dayjs(b.created).diff(a.created)
+              }
+
+              return dayjs(b.date).diff(a.date)
+            })
         }
       )
 
