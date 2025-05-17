@@ -6,7 +6,7 @@ function ListSelector({
   list,
   setList
 }: {
-  list: string | null
+  list: string
   setList: (list: string) => void
 }) {
   const { listsQuery } = useTodoListContext()

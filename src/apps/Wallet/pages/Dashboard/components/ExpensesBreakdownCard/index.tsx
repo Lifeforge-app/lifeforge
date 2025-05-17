@@ -37,12 +37,14 @@ function ExpensesBreakdownCard() {
 
   const expensesCategories = useMemo(
     () =>
-      Object.keys(expensesBreakdownQuery.data ?? {}).map(
-        categoryId =>
-          categoriesQuery.data?.find(
-            category => category.id === categoryId
-          ) as IWalletCategory
-      ),
+      Object.keys(expensesBreakdownQuery.data ?? {})
+        .map(
+          categoryId =>
+            categoriesQuery.data?.find(
+              category => category.id === categoryId
+            ) as IWalletCategory
+        )
+        .filter(e => e),
     [categoriesQuery.data, expensesBreakdownQuery.data]
   )
 
