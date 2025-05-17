@@ -1,5 +1,12 @@
 # Change Log
 
+### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
+- **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.
+- **Wallet**: Fixed a critical bug where the page will crash when user tries to load the dashboard.
+- **Todo List**: Fixed a bug where the task creation will fail when user does not select a priority.
+- **Todo List**: Fixed a bug where the task modification drawer will not close when user delete the task.
+- **Todo List**: Renamed the `ModifyTaskWindow` to `ModifyTaskDrawer` for better clarity.
+
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
 - **Code**: Created universal portal component to render modals and popups outside of the main app tree.
 - **Code**: Migrated all modals to the new universal portal component.

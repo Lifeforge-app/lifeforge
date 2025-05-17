@@ -33,7 +33,7 @@ import PrioritySelector from './components/PrioritySelector'
 import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
 
-function ModifyTaskWindow() {
+function ModifyTaskDrawer() {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.todoList')
@@ -56,8 +56,8 @@ function ModifyTaskWindow() {
   const [notes, setNotes] = useState('')
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
   const [dueDate, setDueDate] = useState('')
-  const [priority, setPriority] = useState<string | null>(null)
-  const [list, setList] = useState<string | null>(null)
+  const [priority, setPriority] = useState<string>('')
+  const [list, setList] = useState<string>('')
   const [tags, setTags] = useState<string[]>([])
   const [innerOpenType, setInnerOpenType] = useState<
     'create' | 'update' | null
@@ -144,7 +144,7 @@ function ModifyTaskWindow() {
       itemName: 'task',
       nameKey: 'summary',
       queryKey: entriesQueryKey,
-      onClose: () => {
+      customCallback: () => {
         queryClient.invalidateQueries({
           queryKey: ['todo-list', 'priorities']
         })
@@ -153,6 +153,8 @@ function ModifyTaskWindow() {
         queryClient.invalidateQueries({
           queryKey: ['todo-list', 'status-counter']
         })
+        setOpenType(null)
+        setSelectedTask(null)
       }
     })
   }, [selectedTask])
@@ -186,8 +188,8 @@ function ModifyTaskWindow() {
       setNotes('')
       setDueDate('')
       setDueDateHasTime(false)
-      setPriority(null)
-      setList(null)
+      setPriority('')
+      setList('')
       setTags([])
     }
   }, [selectedTask, openType])
@@ -198,7 +200,7 @@ function ModifyTaskWindow() {
       className={clsx(
         'bg-bg-900/20 fixed top-0 left-0 h-dvh w-full backdrop-blur-xs transition-all',
         innerOpenType !== null
-          ? 'z-9990 opacity-100 [transition:z-index_0s_linear_0s,opacity_0.1s_linear_0s]'
+          ? 'z-9995 opacity-100 [transition:z-index_0s_linear_0s,opacity_0.1s_linear_0s]'
           : 'z-[-1] opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
       )}
     >
@@ -240,6 +242,7 @@ function ModifyTaskWindow() {
             <TextInput
               ref={summaryInputRef}
               darker
+              required
               className="w-full"
               icon="tabler:abc"
               name="Summary"
@@ -324,4 +327,4 @@ function ModifyTaskWindow() {
   )
 }
 
-export default ModifyTaskWindow
+export default ModifyTaskDrawer
