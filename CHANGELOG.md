@@ -7,7 +7,12 @@
 - **Todo List**: Fixed a bug where the task modification drawer will not close when user delete the task.
 - **Todo List**: Renamed the `ModifyTaskWindow` to `ModifyTaskDrawer` for better clarity.
 - **Idea Box**: Fixed a bug where the idea tags count will not update when user navigate between folders.
+- **Calendar**: User can now view the details of a calendar event by clicking on the event in dashboard event list widget.
+- **Calendar**: Fixed `z-index` issue where the calendar event tooltip will cover the sidebar, especially in mobile view.
+- **Calendar**: Fixed a bug where the calendar event item is not updated when the user changes the details of the event.
 - **Code**: Replaced `window.location.href = ...` with `useNavigate` to prevent page reload whenever route change from `/` to `/dashboard`.
+- **UI**: Fixed a bug where the search input field will be focused and the keyboard will pop up when the side action button is clicked.
+- **UI**: Removed a suspicious `console.log` statement in the code.
 
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
 - **Code**: Created universal portal component to render modals and popups outside of the main app tree.

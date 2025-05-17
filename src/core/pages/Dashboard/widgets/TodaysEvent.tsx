@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { useSidebarState } from '@providers/SidebarStateProvider'
+import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
+import { Tooltip } from 'react-tooltip'
 
 import {
   Button,
@@ -11,6 +15,7 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
+import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 import {
   type ICalendarCategory,
@@ -26,6 +31,8 @@ function EventItem({
   categories: ICalendarCategory[]
   event: ICalendarEvent
 }) {
+  const { sidebarExpanded } = useSidebarState()
+
   const targetCategory = useMemo(
     () =>
       event.category.startsWith('_')
@@ -37,29 +44,58 @@ function EventItem({
   )
 
   return (
-    <li
-      key={event.id}
-      className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex gap-3 rounded-lg p-4"
-    >
-      <div
-        className="h-full w-1 rounded-full"
-        style={{
-          backgroundColor: targetCategory?.color
-        }}
-      />
-      <div className="flex w-full flex-col gap-1">
-        <div className="text-bg-500 flex items-center gap-1 text-sm">
-          <Icon
-            icon={targetCategory?.icon ?? ''}
-            style={{
-              color: targetCategory?.color
-            }}
-          />
-          {targetCategory?.name}
+    <>
+      <li
+        key={event.id}
+        className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex cursor-pointer gap-3 rounded-lg p-4"
+        data-tooltip-id={`calendar-event-${event.id}`}
+      >
+        <div
+          className="h-full w-1 rounded-full"
+          style={{
+            backgroundColor: targetCategory?.color
+          }}
+        />
+        <div className="flex w-full flex-col gap-1">
+          <div className="text-bg-500 flex items-center gap-1 text-sm">
+            <Icon
+              icon={targetCategory?.icon ?? ''}
+              style={{
+                color: targetCategory?.color
+              }}
+            />
+            {targetCategory?.name}
+          </div>
+          <div className="font-semibold">{event.title}</div>
         </div>
-        <div className="font-semibold">{event.title}</div>
-      </div>
-    </li>
+      </li>
+      {
+        createPortal(
+          <Tooltip
+            clickable
+            noArrow
+            openOnClick
+            className={clsx(
+              'bg-bg-50! text-bg-800! border-bg-200 dark:border-bg-700 shadow-custom dark:bg-bg-800! bg-opacity-0! dark:text-bg-50 rounded-md! border p-4! text-base!',
+              sidebarExpanded ? 'z-[-1] lg:z-0' : 'z-0'
+            )}
+            id={`calendar-event-${event.id}`}
+            opacity={1}
+            place="bottom-end"
+            positionStrategy="fixed"
+          >
+            <div className="relative max-h-96 max-w-96 min-w-64 overflow-y-auto whitespace-normal">
+              <EventDetails
+                category={targetCategory}
+                editable={false}
+                event={event}
+              />
+            </div>
+          </Tooltip>,
+          document.getElementById('app') ?? document.body
+        ) as React.ReactPortal
+      }
+    </>
   )
 }
 
