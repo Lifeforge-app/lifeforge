@@ -52,10 +52,6 @@ function TagsSelector() {
   const countHashMap = useMemo(() => {
     const hashMap = new Map<string, number>()
 
-    if (typeof filteredTags === 'string' || typeof searchResults === 'string') {
-      return hashMap
-    }
-
     const target =
       debouncedSearchQuery.trim().length > 0 ? searchResults : entries
 

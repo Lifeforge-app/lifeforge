@@ -92,6 +92,7 @@ function TagItem({
 export default memo(TagItem, (prevProps, nextProps) => {
   return (
     prevProps.id === nextProps.id &&
-    prevProps.isSelected === nextProps.isSelected
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.count === nextProps.count
   )
 })
