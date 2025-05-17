@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
@@ -32,6 +32,22 @@ function EventItem({
   event: ICalendarEvent
 }) {
   const { sidebarExpanded } = useSidebarState()
+  const [width, setWidth] = useState(0)
+  const ref = useRef<HTMLLIElement>(null)
+
+  const handleResize = () => {
+    if (ref.current) {
+      setWidth(ref.current.offsetWidth)
+    }
+  }
+
+  useEffect(() => {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const targetCategory = useMemo(
     () =>
@@ -47,6 +63,7 @@ function EventItem({
     <>
       <li
         key={event.id}
+        ref={ref}
         className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex cursor-pointer gap-3 rounded-lg p-4"
         data-tooltip-id={`calendar-event-${event.id}`}
       >
@@ -81,10 +98,15 @@ function EventItem({
             )}
             id={`calendar-event-${event.id}`}
             opacity={1}
-            place="bottom-end"
+            place="bottom-start"
             positionStrategy="fixed"
           >
-            <div className="relative max-h-96 max-w-96 min-w-64 overflow-y-auto whitespace-normal">
+            <div
+              className="relative max-h-96 overflow-y-auto whitespace-normal"
+              style={{
+                width: `${width - 32}px`
+              }}
+            >
               <EventDetails
                 category={targetCategory}
                 editable={false}
