@@ -6,6 +6,7 @@
 - **Todo List**: Fixed a bug where the task creation will fail when user does not select a priority.
 - **Todo List**: Fixed a bug where the task modification drawer will not close when user delete the task.
 - **Todo List**: Renamed the `ModifyTaskWindow` to `ModifyTaskDrawer` for better clarity.
+- **Idea Box**: Fixed a bug where the idea tags count will not update when user navigate between folders.
 
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
 - **Code**: Created universal portal component to render modals and popups outside of the main app tree.

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 import {
   ColorPickerModal,
@@ -24,12 +24,13 @@ const DEFAULT_MODALS = {
 }
 
 function AppRouter() {
+  const navigate = useNavigate()
   const { auth, authLoading } = useAuth()
   const location = useLocation()
 
   useEffect(() => {
     if (auth && location.pathname === '/') {
-      window.location.href = '/dashboard'
+      navigate('/dashboard')
     }
   }, [auth, location.pathname])
 
