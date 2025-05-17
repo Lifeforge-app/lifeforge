@@ -7,6 +7,7 @@
 - **Todo List**: Fixed a bug where the task modification drawer will not close when user delete the task.
 - **Todo List**: Renamed the `ModifyTaskWindow` to `ModifyTaskDrawer` for better clarity.
 - **Idea Box**: Fixed a bug where the idea tags count will not update when user navigate between folders.
+- **Code**: Replaced `window.location.href = ...` with `useNavigate` to prevent page reload whenever route change from `/` to `/dashboard`.
 
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
 - **Code**: Created universal portal component to render modals and popups outside of the main app tree.
