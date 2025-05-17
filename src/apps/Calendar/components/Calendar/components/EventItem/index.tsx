@@ -40,16 +40,4 @@ function EventItem({
   )
 }
 
-export default memo(EventItem, (prevProps, nextProps) => {
-  return (
-    prevProps.event.id === nextProps.event.id &&
-    prevProps.categories.length === nextProps.categories.length &&
-    prevProps.categories.every((category, index) => {
-      return (
-        category.id === nextProps.categories[index].id &&
-        category.color === nextProps.categories[index].color &&
-        category.icon === nextProps.categories[index].icon
-      )
-    })
-  )
-})
+export default memo(EventItem)

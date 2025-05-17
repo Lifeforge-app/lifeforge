@@ -15,6 +15,7 @@ function EventItemButton({
   icon: string
   isStrikethrough?: boolean
 }) {
+  console.log('EventItemButton', id, title, color, icon, isStrikethrough)
   return (
     <button
       className="flex w-full flex-row! flex-nowrap! items-start rounded-md px-[5px] py-[2px]"
@@ -46,12 +47,4 @@ function EventItemButton({
   )
 }
 
-export default memo(EventItemButton, (prevProps, nextProps) => {
-  return (
-    prevProps.id === nextProps.id &&
-    prevProps.title === nextProps.title &&
-    prevProps.color === nextProps.color &&
-    prevProps.icon === nextProps.icon &&
-    prevProps.isStrikethrough === nextProps.isStrikethrough
-  )
-})
+export default memo(EventItemButton)

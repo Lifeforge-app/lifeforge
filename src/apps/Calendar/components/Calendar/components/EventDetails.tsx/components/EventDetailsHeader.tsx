@@ -17,10 +17,12 @@ import fetchAPI from '@utils/fetchAPI'
 
 function EventDetailsHeader({
   event,
-  category
+  category,
+  editable = true
 }: {
   event: ICalendarEvent
   category: ICalendarCategory | undefined
+  editable?: boolean
 }) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
@@ -87,7 +89,7 @@ function EventDetailsHeader({
           {event.title}
         </h3>
       </div>
-      {!event.category.startsWith('_') && (
+      {!event.category.startsWith('_') && editable && (
         <HamburgerMenu
           classNames={{
             button: 'dark:hover:bg-bg-700/50! p-2!'
