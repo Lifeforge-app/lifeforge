@@ -7,8 +7,8 @@ function PrioritySelector({
   priority,
   setPriority
 }: {
-  priority: string | null
-  setPriority: React.Dispatch<React.SetStateAction<string | null>>
+  priority: string
+  setPriority: React.Dispatch<React.SetStateAction<string>>
 }) {
   const { prioritiesQuery } = useTodoListContext()
 

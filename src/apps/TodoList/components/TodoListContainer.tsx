@@ -13,7 +13,7 @@ import fetchAPI from '@utils/fetchAPI'
 import { ITodoListEntry } from '../interfaces/todo_list_interfaces'
 import { todoListModals } from '../modals'
 import Header from './Header'
-import ModifyTaskWindow from './ModifyTaskWindow'
+import ModifyTaskDrawer from './ModifyTaskDrawer'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 
@@ -102,7 +102,7 @@ function TodoListContainer() {
           </QueryWrapper>
         </div>
       </div>
-      <ModifyTaskWindow />
+      <ModifyTaskDrawer />
       {(entriesQuery.data ?? []).length > 0 && (
         <FAB
           onClick={() => {
