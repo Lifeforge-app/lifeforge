@@ -8,14 +8,20 @@ import EventDetailsHeader from './components/EventDetailsHeader'
 
 function EventDetails({
   event,
-  category
+  category,
+  editable = true
 }: {
   event: ICalendarEvent
   category: ICalendarCategory | undefined
+  editable?: boolean
 }) {
   return (
     <>
-      <EventDetailsHeader category={category} event={event} />
+      <EventDetailsHeader
+        category={category}
+        editable={editable}
+        event={event}
+      />
       <EventDetailsDescription event={event} />
     </>
   )

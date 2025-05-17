@@ -17,8 +17,6 @@ function TypeSection() {
   const { t } = useTranslation('apps.wallet')
   const { typesCountQuery } = useWalletData()
 
-  console.log(typesCountQuery.data)
-
   return (
     <>
       <SidebarTitle name={t('sidebar.transactionTypes')} />
