@@ -164,46 +164,46 @@
 ### 📌 **dev 25w11 (3/9/2025 - 3/15/2025)**
 
 - **Documentation**: Resolved an issue where section detection and highlighting in the right navigation bar were inconsistent when scrolling.
-- **Railway Map**: Introduced this module.
-- **Idea Box**: Fixed text overflow issues caused by unspaced long strings.
 - **Documentation**: Updated the installation and configuration guide to align with the latest codebase structure.
+- **Idea Box**: Fixed text overflow issues caused by unspaced long strings.
+- **Idea Box**: Fixed bugs where link content doesn't get updated, and OG data remains the same after updating the link.
 - **Change Log**: All change log entries were moved from the local database to a public GitHub repository for better accessibility.
-- **Code**: Refactored and modularized components into an independent package, `@lifeforge/ui`, to improve maintainability.
+- **Railway Map**: Introduced this module.
 - **Railway Map**: Integrated d3.js for dynamic and scalable route visualization.
 - **Railway Map**: Integrated Leaflet.js to render an interactive Earth map of MRT lines and stations.
 - **Railway Map**: Developed a feature to calculate and display the shortest route between any two stations.
 - **Railway Map**: Enhanced user interactions with smoother animations for route navigation.
 - **Calendar**: Data is now fetched based on the selected date range instead of everything.
+- **Change Log**: Asked ChatGPT to help refine all the change log entries from 25w01 until now.
+- **Authentication**: Two-factor authentication via an external authenticator app has been added as a toggable security mechanism.
+- **Authentication**: If a user doesn't have an authenticator app available, they can now choose to perform 2FA with email OTP.
+- **Authentication**: Improved error handling logic.
+- **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
+- **Localization**: The sign-in button to the localization manager will now only be shown if there is `VITE_LOCALIZATION_MANAGER_URL` present in the frontend `.env` file
 - **Code**: Replaced multiple custom utility functions with optimized, pre-existing Node.js modules.
-- **UI**: Abstracted and relocated reusable UI components to `@lifeforge/ui` for a more structured component architecture.
 - **Code**: Consolidated core logic by moving all non-module-specific files from `modules` into the `core` directory.
 - **Code**: We reorganized providers, interfaces, and constants into their respective module directories to better separate concerns.
 - **Code**: Eliminated redundant constant files to reduce unnecessary complexity.
 - **Code**: Standardized naming conventions by renaming `useXXXContext` to `useXXX` for clarity.
 - **Code**: Centralized theme-related states by moving them from the `useThemeColors` hook into the `usePersonalization` context provider.
 - **Code**: Renamed `useThemeColors` hook to `useComponentsBg` for better semantic alignment with its functionality.
-- **Change Log**: Asked ChatGPT to help refine all the change log entries from 25w01 until now.
+- **Code**: Migrated `VITE_GOOGLE_API_KEY` from `.env` file to the API key vault.
 - **Code**: Removed unused typescript declarations like `function Component(): React.ReactElement {}`, etc.
 - **Code**: Refactored `PersonalizationProvider`.
 - **Code**: Moved routing logics and related files into `core/routes`.
+- **Code**: Refactored and modularized components into an independent package, `@lifeforge/ui`, to improve maintainability.
+- **UI**: Abstracted and relocated reusable UI components to `@lifeforge/ui` for a more structured component architecture.
 - **UI**: Renamed `no-bg` variant of button to `plain`.
 - **UI**: Added `tertiary` variant to button.
 - **UI**: Improved styling for button component.
 - **UI**: Started integrating Storybook for visualizing and documenting the deisgn system.
 - **UI**: Removed `CreateOrUpdateButton` component.
-- **UI**: Restructured the props of **HamburgerMenu** and remove redundant props.
+- **UI**: Restructured the props of `HamburgerMenu` and remove redundant props.
+- **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
+- **UI**: Main sidebar item with a subsection will now open the subsection menu without navigating anywhere.
 - **API**: Renamed `uplaods` folder to `medium`.
 - **API**: Splitted the subroutes for `/users` route into multiple files.
 - **API**: Continued working on Controller + Service refactoring.
-- **Idea Box**: Fixed bugs where link content doesn't get updated, and OG data remains the same after updating the link.
-- **Authentication**: Two-factor authentication via an external authenticator app has been added as a toggable security mechanism.
-- **Authentication**: If a user doesn't have an authenticator app available, they can now choose to perform 2FA with email OTP.
-- **Authentication**: Improved error handling logic.
-- **Code**: Migrated `VITE_GOOGLE_API_KEY` from `.env` file to the API key vault.
-- **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
-- **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
-- **Localization**: The sign-in button to the localization manager will now only be shown if there is `VITE_LOCALIZATION_MANAGER_URL` present in the frontend `.env` file
-- **UI**: Main sidebar item with a subsection will now open the subsection menu without navigating anywhere.
 
 ---
 
