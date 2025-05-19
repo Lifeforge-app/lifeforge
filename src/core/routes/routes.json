@@ -42,6 +42,7 @@
   {
     "title": "Confidential",
     "items": [
+      "@core/APIKeys",
       "@apps/Passwords"
     ]
   },
