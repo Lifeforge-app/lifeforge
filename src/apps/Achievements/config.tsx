@@ -1,13 +1,11 @@
-import { IconAward } from '@tabler/icons-react'
-import { lazy } from 'react'
-
-import { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
+import { IconAward } from "@tabler/icons-react";
+import { lazy } from "react";
 
 export default {
-  name: 'Achievements',
+  name: "Achievements",
   icon: <IconAward />,
   routes: {
-    achievements: lazy(() => import('.'))
+    achievements: lazy(() => import("./index")),
   },
-  togglable: true
-} satisfies ModuleConfig
+  togglable: true,
+};

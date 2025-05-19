@@ -1,83 +1,83 @@
 [
-    {
-        "title": "",
-        "items": [
-            "@core/Dashboard"
-        ]
-    },
-    {
-        "title": "Productivity",
-        "items": [
-            "@apps/IdeaBox",
-            "@apps/TodoList",
-            "@apps/Calendar",
-            "@apps/CodeTime"
-        ]
-    },
-    {
-        "title": "Lifestyle",
-        "items": [
-            "@apps/MomentVault",
-            "@apps/VirtualWardrobe",
-            "@apps/Movies",
-            "@apps/Achievements"
-        ]
-    },
-    {
-        "title": "Finance",
-        "items": [
-            "@apps/Wallet",
-            "@apps/Wishlist"
-        ]
-    },
-    {
-        "title": "Storage",
-        "items": [
-            "@apps/BooksLibrary",
-            "@apps/Music",
-            "@apps/GuitarTabs",
-            "@apps/YoutubeVideos"
-        ]
-    },
-    {
-        "title": "Confidential",
-        "items": [
-            "@apps/Passwords"
-        ]
-    },
-    {
-        "title": "Information",
-        "items": [
-            "@apps/RailwayMap"
-        ]
-    },
-    {
-        "title": "Utilities",
-        "items": [
-            "@apps/Sudoku",
-            "@apps/CurrencyConverter",
-            "@apps/YoutubeSummarizer"
-        ]
-    },
-    {
-        "title": "Settings",
-        "items": [
-            "@core/Personalization",
-            "@core/Modules",
-            "@core/ServerStatus"
-        ]
-    },
-    {
-        "title": "sso",
-        "items": [
-            "@core/LocalizationManager"
-        ]
-    },
-    {
-        "title": "",
-        "items": [
-            "@core/Documentation",
-            "@core/AccountSettings"
-        ]
-    }
+  {
+    "title": "",
+    "items": [
+      "@core/Dashboard"
+    ]
+  },
+  {
+    "title": "Productivity",
+    "items": [
+      "@apps/IdeaBox",
+      "@apps/TodoList",
+      "@apps/Calendar",
+      "@apps/CodeTime"
+    ]
+  },
+  {
+    "title": "Lifestyle",
+    "items": [
+      "@apps/MomentVault",
+      "@apps/VirtualWardrobe",
+      "@apps/Movies",
+      "@apps/Achievements"
+    ]
+  },
+  {
+    "title": "Finance",
+    "items": [
+      "@apps/Wallet",
+      "@apps/Wishlist"
+    ]
+  },
+  {
+    "title": "Storage",
+    "items": [
+      "@apps/BooksLibrary",
+      "@apps/Music",
+      "@apps/GuitarTabs",
+      "@apps/YoutubeVideos"
+    ]
+  },
+  {
+    "title": "Confidential",
+    "items": [
+      "@apps/Passwords"
+    ]
+  },
+  {
+    "title": "Information",
+    "items": [
+      "@apps/RailwayMap"
+    ]
+  },
+  {
+    "title": "Utilities",
+    "items": [
+      "@apps/Sudoku",
+      "@apps/CurrencyConverter",
+      "@apps/YoutubeSummarizer"
+    ]
+  },
+  {
+    "title": "Settings",
+    "items": [
+      "@core/Personalization",
+      "@core/Modules",
+      "@core/ServerStatus"
+    ]
+  },
+  {
+    "title": "sso",
+    "items": [
+      "@core/LocalizationManager"
+    ]
+  },
+  {
+    "title": "",
+    "items": [
+      "@core/Documentation",
+      "@core/AccountSettings"
+    ]
+  }
 ]
