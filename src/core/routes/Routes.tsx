@@ -19,7 +19,7 @@ function resolveAlias(path: string): string {
   return path
 }
 
-for (const route of RouteItems) {
+const routePromises = RouteItems.map(async route => {
   const { title, items } = route
 
   const importPromises = items.map(async item => {
@@ -34,10 +34,14 @@ for (const route of RouteItems) {
 
   const awaitedRoutes = await Promise.all(importPromises)
 
-  ROUTES.push({
+  return {
     title,
     items: awaitedRoutes
-  })
-}
+  }
+})
+
+await Promise.all(routePromises).then(resolvedRoutes => {
+  ROUTES.push(...resolvedRoutes)
+})
 
 export default ROUTES
