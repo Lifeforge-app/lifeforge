@@ -4,6 +4,7 @@ import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
+import { useTranslation } from 'react-i18next'
 
 import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
 
@@ -64,6 +65,7 @@ function DashboardGrid({
   wrapperRef: React.RefObject<HTMLDivElement | null>
   canLayoutChange: boolean
 }) {
+  const { t } = useTranslation('core.dashboard')
   const { sidebarExpanded } = useSidebarState()
   const [width, setWidth] = useState(0)
   const { dashboardLayout: enabledWidgets, setDashboardLayout } =
@@ -93,7 +95,7 @@ function DashboardGrid({
   }
 
   if (width === 0) {
-    return <LoadingScreen />
+    return <LoadingScreen customMessage={t('loading')} />
   }
 
   return Object.values(enabledWidgets).every(e => e.length === 0) ? (
