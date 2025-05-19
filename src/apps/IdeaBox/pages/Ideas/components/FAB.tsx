@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
@@ -33,7 +34,7 @@ function FAB() {
   )
 
   return !viewArchived ? (
-    <>
+    createPortal(
       <Menu
         as="div"
         className="group fixed right-6 bottom-6 z-9990 sm:right-12 sm:bottom-12"
@@ -43,7 +44,7 @@ function FAB() {
             <Button
               as={MenuButton}
               className={clsx(
-                'relative z-10 shadow-lg',
+                'relative z-[9991] shadow-lg',
                 open && 'rotate-45',
                 'transition-all'
               )}
@@ -84,7 +85,7 @@ function FAB() {
             </MenuItems>
             <div
               className={clsx(
-                'fixed top-0 left-0 size-full transition-transform',
+                'fixed top-0 left-0 z-[9990] size-full transition-transform',
                 open ? 'translate-x-0 duration-0' : 'translate-x-full delay-100'
               )}
             >
@@ -97,8 +98,9 @@ function FAB() {
             </div>
           </>
         )}
-      </Menu>
-    </>
+      </Menu>,
+      (document.getElementById('app') as HTMLElement) || document.body
+    )
   ) : (
     <></>
   )
