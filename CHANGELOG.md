@@ -5,6 +5,8 @@
 - **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.
 - **Code**: Massive mechanism refactor to load module routes dynamically.
 - **Code**: Renamed `layout` folder to `routes` for better clarity.
+- **UI**: Added loading messages to various loading screens so that user knows which loading state they are in.
+- **UI**: Added back pre-loader when the modules are being prepared.
 
 ### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
 - **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.
