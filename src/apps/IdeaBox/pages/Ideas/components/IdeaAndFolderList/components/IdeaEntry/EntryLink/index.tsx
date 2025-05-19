@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
+import { useTranslation } from 'react-i18next'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -12,6 +13,7 @@ import TagChip from '../components/TagChip'
 import EntryContent from './components/EntryContent'
 
 function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
+  const { t } = useTranslation('apps.ideaBox')
   const { componentBg } = useComponentBg()
 
   const [{ opacity, isDragging }, dragRef] = useDrag(
@@ -35,7 +37,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
         dragRef(node)
       }}
       className={clsx(
-        'shadow-custom group relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg p-4',
+        'shadow-custom group relative my-4 space-y-4 rounded-lg p-4',
         componentBg,
         isDragging && 'cursor-move'
       )}
@@ -49,23 +51,23 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
           icon="tabler:pin"
         />
       )}
-      <div className="space-y-2">
-        {entry.tags !== null && entry.tags?.length !== 0 && (
-          <div className="flex gap-2">
-            {entry.tags?.map((tag, index) => (
-              <TagChip key={index} text={tag} />
-            ))}
-          </div>
-        )}
-        {entry.title && (
-          <h3 className="text-xl font-semibold">{entry.title}</h3>
-        )}
+      <div className="flex-between w-full">
+        <div className="text-bg-400 dark:text-bg-600 flex items-center gap-2">
+          <Icon className="size-5" icon="tabler:link" />
+          <h3 className="font-medium">{t('entryType.link')}</h3>
+        </div>
         <EntryContextMenu entry={entry} />
       </div>
+      {entry.title && <h3 className="text-xl font-semibold">{entry.title}</h3>}
       <EntryContent key={entry.content} entry={entry} />
-      <span className="text-bg-500 text-sm">
+      {entry.tags !== null && entry.tags?.length !== 0 && (
+        <div className="flex gap-2">
+          {entry.tags?.map((tag, index) => <TagChip key={index} text={tag} />)}
+        </div>
+      )}
+      <div className="text-bg-500 text-sm">
         {dayjs(entry.created).fromNow()}
-      </span>
+      </div>
       <InFolderChip entry={entry} />
     </div>
   )

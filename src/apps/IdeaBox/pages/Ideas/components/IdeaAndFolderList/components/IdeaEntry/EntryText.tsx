@@ -3,6 +3,8 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useDrag } from 'react-dnd'
+import { useTranslation } from 'react-i18next'
+import Markdown from 'react-markdown'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -12,6 +14,7 @@ import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
 function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
+  const { t } = useTranslation('apps.ideaBox')
   const [expanded, setExpanded] = useState(false)
   const { componentBg } = useComponentBg()
   const [{ opacity, isDragging }, dragRef] = useDrag(
@@ -52,28 +55,35 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
           icon="tabler:pin"
         />
       )}
-      <div>
+      <div className="w-full min-w-0 space-y-4">
+        <div className="flex-between">
+          <div className="text-bg-400 dark:text-bg-600 flex items-center gap-2">
+            <Icon className="size-5" icon="tabler:text-size" />
+            <h3 className="font-medium">{t('entryType.text')}</h3>
+          </div>
+          <EntryContextMenu entry={entry} />
+        </div>
+        {!expanded ? (
+          <p className="line-clamp-6 w-full min-w-0 overflow-hidden break-all whitespace-pre-wrap !select-text">
+            {entry.content}
+          </p>
+        ) : (
+          <div className="prose flex flex-col break-all whitespace-pre-wrap">
+            <Markdown>{entry.content}</Markdown>
+          </div>
+        )}
         {entry.tags !== null && entry.tags?.length !== 0 && (
-          <div className="mb-2 flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1">
             {entry.tags?.map((tag, index) => (
               <TagChip key={index} text={tag} />
             ))}
           </div>
         )}
-        <p
-          className={clsx(
-            'break-all whitespace-pre-wrap !select-text',
-            !expanded && 'line-clamp-6'
-          )}
-        >
-          {entry.content}
-        </p>
-        <span className="text-bg-500 text-sm">
+        <div className="text-bg-500 text-sm">
           {dayjs(entry.created).fromNow()}
-        </span>
+        </div>
         <InFolderChip entry={entry} />
       </div>
-      <EntryContextMenu entry={entry} />
     </button>
   )
 }

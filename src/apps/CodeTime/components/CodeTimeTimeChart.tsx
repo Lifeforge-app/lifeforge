@@ -67,6 +67,8 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
 
   const chartOptions = useMemo(
     () => ({
+      responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
@@ -171,56 +173,57 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
           </div>
         </div>
       </div>
-
-      <QueryWrapper query={dataQuery}>
-        {data => (
-          <Chart
-            data={{
-              labels: data.map(e => dayjs(e.date).format('DD MMM')),
-              datasets: [
-                {
-                  type: 'line' as any,
-                  label: 'Total minutes',
-                  data: data.map(e => e.total_minutes),
-                  borderColor: `rgba(255,255,255, 1)`,
-                  backgroundColor: `rgba(255,200,100,0)`,
-                  lineTension: 0.3,
-                  borderWidth: 1,
-                  pointBorderColor: 'rgba(0, 0, 0, 0)',
-                  pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-                  pointHoverBackgroundColor: '#FFFFFF80',
-                  pointHoverBorderColor: '#FFFFFF',
-                  pointHoverBorderWidth: 2,
-                  pointHoverRadius: 6,
-                  yAxisID: 'y'
-                },
-                ...projectsData.map((project, index) => ({
-                  type: 'bar' as any,
-                  label: project.label,
-                  data: project.data,
-                  backgroundColor: hsvaToRgbaString({
-                    h: (index * 360) / projectsData.length,
-                    s: 100,
-                    v: 100,
-                    a: 0.4
-                  }),
-                  borderColor: hsvaToHex({
-                    h: (index * 360) / projectsData.length,
-                    s: 100,
-                    v: 100,
-                    a: 1
-                  }),
-                  borderWidth: 1,
-                  yAxisID: 'y',
-                  stack: 'stack1'
-                }))
-              ]
-            }}
-            options={chartOptions}
-            type="bar"
-          />
-        )}
-      </QueryWrapper>
+      <div className="h-96 w-full">
+        <QueryWrapper query={dataQuery}>
+          {data => (
+            <Chart
+              data={{
+                labels: data.map(e => dayjs(e.date).format('DD MMM')),
+                datasets: [
+                  {
+                    type: 'line' as any,
+                    label: 'Total minutes',
+                    data: data.map(e => e.total_minutes),
+                    borderColor: `rgba(255,255,255, 1)`,
+                    backgroundColor: `rgba(255,200,100,0)`,
+                    lineTension: 0.3,
+                    borderWidth: 1,
+                    pointBorderColor: 'rgba(0, 0, 0, 0)',
+                    pointBackgroundColor: 'rgba(0, 0, 0, 0)',
+                    pointHoverBackgroundColor: '#FFFFFF80',
+                    pointHoverBorderColor: '#FFFFFF',
+                    pointHoverBorderWidth: 2,
+                    pointHoverRadius: 6,
+                    yAxisID: 'y'
+                  },
+                  ...projectsData.map((project, index) => ({
+                    type: 'bar' as any,
+                    label: project.label,
+                    data: project.data,
+                    backgroundColor: hsvaToRgbaString({
+                      h: (index * 360) / projectsData.length,
+                      s: 100,
+                      v: 100,
+                      a: 0.4
+                    }),
+                    borderColor: hsvaToHex({
+                      h: (index * 360) / projectsData.length,
+                      s: 100,
+                      v: 100,
+                      a: 1
+                    }),
+                    borderWidth: 1,
+                    yAxisID: 'y',
+                    stack: 'stack1'
+                  }))
+                ]
+              }}
+              options={chartOptions}
+              type="bar"
+            />
+          )}
+        </QueryWrapper>
+      </div>
     </div>
   )
 }

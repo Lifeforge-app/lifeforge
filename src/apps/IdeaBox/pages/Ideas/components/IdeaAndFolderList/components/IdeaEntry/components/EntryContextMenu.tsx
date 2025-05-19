@@ -105,7 +105,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   }, [entry, id, path, viewArchived, debouncedSearchQuery, selectedTags])
 
   return (
-    <HamburgerMenu classNames={{ wrapper: 'absolute right-2 top-2' }}>
+    <HamburgerMenu classNames={{ button: 'w-10 h-10' }}>
       {!entry.archived && (
         <MenuItem
           icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}

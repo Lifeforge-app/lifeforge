@@ -132,9 +132,9 @@ function FolderItem({ folder }: FolderItemProps) {
       })}
       to={`/idea-box/${id}/${path}/${folder.id}`.replace('//', '/')}
     >
-      <div className="flex">
+      <div className="mr-2 flex w-full min-w-0 items-center">
         <Icon className="mr-2 size-5 shrink-0" icon={folder.icon} />
-        {folder.name}
+        <span className="w-full min-w-0 truncate">{folder.name}</span>
       </div>
       <FolderContextMenu
         folder={folder}

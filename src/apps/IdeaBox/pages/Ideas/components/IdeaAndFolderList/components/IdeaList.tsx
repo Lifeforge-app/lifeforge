@@ -21,19 +21,19 @@ function IdeaList({ data }: { data: IIdeaBoxEntry[] }) {
           query: 'min-width: 0px'
         },
         {
-          columns: 2,
+          columns: 1,
           query: 'min-width: 768px'
         },
         {
-          columns: 3,
+          columns: 2,
           query: 'min-width: 1024px'
         },
         {
-          columns: 4,
+          columns: 3,
           query: 'min-width: 1280px'
         },
         {
-          columns: 5,
+          columns: 4,
           query: 'min-width: 1536px'
         }
       ]}
