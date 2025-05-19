@@ -1,3 +1,4 @@
+import { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
@@ -8,14 +9,12 @@ import { Switch } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { RouteItem } from '../../core/layout/interfaces/routes_interfaces'
-
 function ModuleItem({
   module,
   enabled,
   toggleModule
 }: {
-  module: RouteItem
+  module: ModuleConfig
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }) {

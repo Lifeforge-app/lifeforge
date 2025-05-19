@@ -3,7 +3,7 @@ import { Route } from 'react-router'
 
 import { LoadingScreen, ModalManager } from '@lifeforge/ui'
 
-import { RouteItem } from '../interfaces/routes_interfaces'
+import { ModuleConfig } from '../../routes/interfaces/routes_interfaces'
 import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
 
 function ChildRoutesRenderer({
@@ -12,7 +12,7 @@ function ChildRoutesRenderer({
   APIKeys = [],
   t
 }: {
-  routes: RouteItem['routes']
+  routes: ModuleConfig['routes']
   t: any
   isNested?: boolean
   APIKeys?: string[]

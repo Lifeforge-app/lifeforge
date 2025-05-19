@@ -22,7 +22,7 @@ import '@lifeforge/ui/dist/index.css'
 
 import './i18n'
 import './index.css'
-import AppRouter from './layout/index.tsx'
+import AppRouter from './routes/index.tsx'
 
 dayjs.extend(duration)
 dayjs.extend(isBetween)
