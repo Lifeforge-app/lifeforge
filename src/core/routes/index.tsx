@@ -1,3 +1,4 @@
+import MainRoutesRenderer from '@core/routes/components/MainRoutesRenderer'
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
@@ -12,7 +13,6 @@ import { useModalsEffect } from '@lifeforge/ui'
 
 import Auth from '../pages/Auth'
 import { useAuth } from '../pages/Auth/providers/AuthProvider'
-import MainRoutesRenderer from './components/MainRoutesRenderer'
 import useAuthEffect from './hooks/useAuthEffect'
 import useTitleEffect from './hooks/useTitleEffect'
 

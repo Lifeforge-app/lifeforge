@@ -10,6 +10,17 @@ const ReactCompilerConfig = {
   }
 }
 
+export const alias = {
+  '@components': path.resolve(__dirname, './src/components'),
+  '@providers': path.resolve(__dirname, './src/core/providers'),
+  '@hooks': path.resolve(__dirname, './src/core/hooks'),
+  '@interfaces': path.resolve(__dirname, './src/core/interfaces'),
+  '@utils': path.resolve(__dirname, './src/core/utils'),
+  '@apps': path.resolve(__dirname, './src/apps'),
+  '@security': path.resolve(__dirname, './src/core/security'),
+  '@core': path.resolve(__dirname, './src/core')
+}
+
 export default defineConfig({
   envDir: path.resolve(__dirname, './env'),
   plugins: [
@@ -30,15 +41,7 @@ export default defineConfig({
     }
   },
   resolve: {
-    alias: {
-      '@components': path.resolve(__dirname, './src/components'),
-      '@providers': path.resolve(__dirname, './src/core/providers'),
-      '@hooks': path.resolve(__dirname, './src/core/hooks'),
-      '@interfaces': path.resolve(__dirname, './src/core/interfaces'),
-      '@utils': path.resolve(__dirname, './src/core/utils'),
-      '@apps': path.resolve(__dirname, './src/apps'),
-      '@security': path.resolve(__dirname, './src/core/security')
-    }
+    alias
   },
   build: {
     target: 'esnext',

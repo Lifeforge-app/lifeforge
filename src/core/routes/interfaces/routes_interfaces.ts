@@ -1,4 +1,4 @@
-export interface RouteItem {
+export interface ModuleConfig {
   name: string
   icon: React.ReactElement | string
   provider?:
@@ -20,7 +20,7 @@ export interface RouteItem {
   hidden?: boolean
 }
 
-export interface RouteCategory {
+export interface ModuleCategory {
   title: string
-  items: RouteItem[]
+  items: ModuleConfig[]
 }
