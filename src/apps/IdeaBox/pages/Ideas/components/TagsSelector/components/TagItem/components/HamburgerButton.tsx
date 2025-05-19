@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { memo, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
 function HamburgerButton({
@@ -10,11 +10,11 @@ function HamburgerButton({
 }: {
   tagColor: string
   isSelected: boolean
-  onUpdate: () => void
+  onUpdate: (e: React.MouseEvent<HTMLButtonElement>) => void
 }) {
   const hamburgerIconColor = useMemo(() => {
     if (!isSelected) {
-      return 'text-bg-500 hover:bg-bg-600 hover:text-bg-100'
+      return 'text-bg-500 dark:hover:bg-bg-600 dark:hover:text-bg-100 hover:bg-bg-300'
     }
 
     if (tagColor === '') {
@@ -26,13 +26,21 @@ function HamburgerButton({
       : 'text-bg-100 hover:bg-bg-100 hover:text-bg-800'
   }, [isSelected, tagColor])
 
+  const handleUpdate = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation()
+      onUpdate(e)
+    },
+    [onUpdate]
+  )
+
   return (
     <button
       className={clsx(
         'hidden aspect-square h-full items-center justify-center rounded-full text-xs transition-all group-hover:flex',
         hamburgerIconColor
       )}
-      onClick={onUpdate}
+      onClick={handleUpdate}
     >
       <Icon icon="tabler:dots-vertical" />
     </button>
