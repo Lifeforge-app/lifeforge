@@ -63,21 +63,19 @@ The screenshots provided are just a glimpse of Lifeforge. There's a lot more to
 explore and discover within the project.
 
 <div align="center">
-  <img width="49%" src="https://github.com/user-attachments/assets/77825f76-a22b-4328-94a0-b2781937f723">
-  <img width="49%" src="https://github.com/user-attachments/assets/36fd4d70-4aed-4685-999b-1a3f5f46bad1">
-  <img width="49%" src="https://github.com/user-attachments/assets/934525cf-6547-4e37-a288-76974f5e43e2">
-  <img width="49%" src="https://github.com/user-attachments/assets/2f404c76-a359-4c54-b994-ce0f509b87e4">
-  <img width="49%" src="https://github.com/user-attachments/assets/ac3a576e-ee16-4bf5-81cd-370fbdf44230">
-  <img width="49%" src="https://github.com/user-attachments/assets/09cb8dc8-cee4-495e-91d9-f034b462de0d">
-  <img width="49%" src="https://github.com/user-attachments/assets/e23c6642-f343-432a-89bb-c3b8cd10f872">
-  <img width="49%" src="https://github.com/user-attachments/assets/e8096faf-2f1d-48ed-af69-bdba47171178">
-  <img width="49%" src="https://github.com/user-attachments/assets/1c010398-84df-4d7b-a4f0-79355af3298e">
-  <img width="49%" src="https://github.com/user-attachments/assets/d885aa0b-ef8b-41dd-8caf-471e6fbf203a">
-  <img width="49%" src="https://github.com/user-attachments/assets/d4939935-f4a6-4890-ae9e-e0ef4ca06355">
-  <img width="49%" src="https://github.com/user-attachments/assets/81d93f20-0177-4750-a6b1-581243b14873">
-  <img width="49%" src="https://github.com/user-attachments/assets/04037e8d-7cb6-4552-afda-89c29ac96120">
-  <img width="49%" src="https://github.com/user-attachments/assets/a93df997-71cf-4351-8c5d-cdd6f1676fcb">
-</div>
+  <img width="49%" src="https://github.com/user-attachments/assets/a23e7659-b9e0-40ec-bd8c-05a7181e82b7">
+  <img width="49%" src="https://github.com/user-attachments/assets/44985456-4df8-4c7a-8f93-1eac59de42df">
+  <img width="49%" src="https://github.com/user-attachments/assets/ba32412b-edd1-4b68-8f56-111c8eb64e27">
+  <img width="49%" src="https://github.com/user-attachments/assets/3d03a481-7976-42c6-a0d4-f9329118121b">
+  <img width="49%" src="https://github.com/user-attachments/assets/9b93f817-9797-42d7-96ca-7bacdc8d7d3a">
+  <img width="49%" src="https://github.com/user-attachments/assets/41b2c15b-307a-40d6-a57f-049d1afbeba6">
+  <img width="49%" src="https://github.com/user-attachments/assets/bb6523f6-5079-44d7-b021-34cd4c787e1d">
+  <img width="49%" src="https://github.com/user-attachments/assets/f6b7ed5f-219f-4990-b37d-e6273701e2bb">
+  <img width="49%" src="https://github.com/user-attachments/assets/de700a7a-f80d-4656-afad-caf852b64e36">
+  <img width="49%" src="https://github.com/user-attachments/assets/441d5996-1695-4eaf-b47f-ddad866a45d0">
+  <img width="49%" src="https://github.com/user-attachments/assets/b5fb64bb-23f7-4aba-8dcb-2f8d9f646615">
+  <img width="49%" src="https://github.com/user-attachments/assets/16b23910-37bf-4f56-892d-c971d70b19ae">
+</div>=
 
 ## 🔬 Technologies Used
 
