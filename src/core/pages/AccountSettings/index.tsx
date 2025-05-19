@@ -7,7 +7,7 @@ import PasswordColumn from './components/PasswordColumn'
 import TwoFAColumn from './components/TwoFAColumn'
 import { AccountSettingsModals } from './modals'
 
-function Account() {
+function AccountSettings() {
   useModalsEffect(AccountSettingsModals)
 
   return (
@@ -35,4 +35,4 @@ function Account() {
   )
 }
 
-export default Account
+export default AccountSettings

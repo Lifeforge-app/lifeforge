@@ -1,5 +1,11 @@
 # Change Log
 
+### 📌 **dev 25w21 (5/19/2025 - 5/26/2025)**
+- **Account Settings**: Renamed the folder from `Account` to `Account Settings` for better clarity.
+- **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.
+- **Code**: Massive mechanism refactor to load module routes dynamically.
+- **Code**: Renamed `layout` folder to `routes` for better clarity.
+
 ### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
 - **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.
 - **Wallet**: Fixed a critical bug where the page will crash when user tries to load the dashboard.

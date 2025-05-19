@@ -1,14 +1,14 @@
+import MainApplication from '@core/routes/components/Layout'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router'
 
 import { NotFoundScreen } from '@lifeforge/ui'
 
-import ROUTES from '../../Routes'
 import Auth from '../../pages/Auth'
 import { useAuth } from '../../pages/Auth/providers/AuthProvider'
+import ROUTES from '../Routes'
 import ChildRoutesRenderer from './ChildRoutesRenderer'
-import MainApplication from './Layout'
 
 function MainRoutesRenderer() {
   const { t } = useTranslation('common.misc')
@@ -28,6 +28,8 @@ function MainRoutesRenderer() {
               item.provider !== undefined
                 ? (() => {
                     const Provider: React.FC = item.provider
+
+                    console.log('Provider', Provider)
 
                     return (
                       <Route
