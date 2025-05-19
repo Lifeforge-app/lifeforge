@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
+import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -13,7 +14,9 @@ import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
 function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
+  const { t } = useTranslation('apps.ideaBox')
   const { componentBg } = useComponentBg()
+
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'IDEA',
@@ -35,7 +38,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
         dragRef(node)
       }}
       className={clsx(
-        'shadow-custom group relative my-4 flex cursor-pointer items-start justify-between gap-2 rounded-lg p-4',
+        'shadow-custom group relative my-4 cursor-pointer space-y-4 rounded-lg p-4',
         componentBg,
         isDragging && 'cursor-move'
       )}
@@ -49,38 +52,41 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
           icon="tabler:pin"
         />
       )}
-      <div className="space-y-2">
-        {entry.tags !== null && entry.tags?.length !== 0 && (
-          <div className="mb-2 flex flex-wrap gap-1">
-            {entry.tags?.map((tag, index) => (
-              <TagChip key={index} text={tag} />
-            ))}
-          </div>
-        )}
-        <h3 className="text-xl font-semibold">{entry.title}</h3>
-        <Zoom
-          ZoomContent={CustomZoomContent}
-          zoomImg={{
-            src: `${import.meta.env.VITE_API_HOST}/media/${
-              entry.collectionId
-            }/${entry.id}/${entry.image}`
-          }}
-          zoomMargin={40}
-        >
-          <img
-            alt={''}
-            className="shadow-custom rounded-lg"
-            src={`${import.meta.env.VITE_API_HOST}/media/${
-              entry.collectionId
-            }/${entry.id}/${entry.image}?thumb=500x0`}
-          />
-        </Zoom>
-        <span className="text-bg-500 block text-sm">
-          {dayjs(entry.created).fromNow()}
-        </span>
-        <InFolderChip entry={entry} />
+      <div className="flex-between w-full">
+        <div className="text-bg-400 dark:text-bg-600 flex items-center gap-2">
+          <Icon className="size-5" icon="tabler:link" />
+          <h3 className="font-medium">{t('entryType.link')}</h3>
+        </div>
+        <EntryContextMenu entry={entry} />
       </div>
-      <EntryContextMenu entry={entry} />
+
+      <h3 className="text-xl font-semibold">{entry.title}</h3>
+      <Zoom
+        ZoomContent={CustomZoomContent}
+        zoomImg={{
+          src: `${import.meta.env.VITE_API_HOST}/media/${
+            entry.collectionId
+          }/${entry.id}/${entry.image}`
+        }}
+        zoomMargin={40}
+      >
+        <img
+          alt={''}
+          className="shadow-custom rounded-lg"
+          src={`${import.meta.env.VITE_API_HOST}/media/${
+            entry.collectionId
+          }/${entry.id}/${entry.image}?thumb=500x0`}
+        />
+      </Zoom>
+      {entry.tags !== null && entry.tags?.length !== 0 && (
+        <div className="mb-2 flex flex-wrap gap-1">
+          {entry.tags?.map((tag, index) => <TagChip key={index} text={tag} />)}
+        </div>
+      )}
+      <span className="text-bg-500 block text-sm">
+        {dayjs(entry.created).fromNow()}
+      </span>
+      <InFolderChip entry={entry} />
     </div>
   )
 }

@@ -22,7 +22,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
   return OGQuery.isSuccess && OGQuery.data !== undefined ? (
     <button
       className={clsx(
-        'w-full cursor-pointer space-y-2 rounded-md p-2 text-left',
+        'shadow-custom w-full cursor-pointer space-y-2 rounded-md p-2 text-left',
         componentBgLighterWithHover
       )}
       onClick={() => {
