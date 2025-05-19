@@ -67,7 +67,7 @@ export default function APIOnlineStatusProvider({
   }, [])
 
   if (isOnline === 'loading') {
-    return <LoadingScreen />
+    return <LoadingScreen customMessage="Checking API status..." />
   }
 
   if (isOnline === false) {
