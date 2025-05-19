@@ -2,9 +2,14 @@
 
 ### 📌 **dev 25w21 (5/19/2025 - 5/26/2025)**
 - **Account Settings**: Renamed the folder from `Account` to `Account Settings` for better clarity.
+- **Idea Box**: Fixed a bug where the sidebar isn't blurred when the create idea fab is clicked.
+- **Idea Box**: Added entry type display to the top of every idea entry and now the hamburger menu button will not overlap with the entry content.
+- **Idea Box**: Minor UI improvements here and there.
+- **Idea Box**: Text entries written in markdown format will now be rendered properly.
 - **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.
 - **Code**: Massive mechanism refactor to load module routes dynamically.
 - **Code**: Renamed `layout` folder to `routes` for better clarity.
+- **Code**: Updated `README.md` with the latest information and screenshots.
 - **UI**: Added loading messages to various loading screens so that user knows which loading state they are in.
 - **UI**: Added back pre-loader when the modules are being prepared.
 
