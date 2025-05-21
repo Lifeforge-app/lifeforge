@@ -55,7 +55,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
       <div className="flex-between w-full">
         <div className="text-bg-400 dark:text-bg-600 flex items-center gap-2">
           <Icon className="size-5" icon="tabler:link" />
-          <h3 className="font-medium">{t('entryType.link')}</h3>
+          <h3 className="font-medium">{t('entryType.image')}</h3>
         </div>
         <EntryContextMenu entry={entry} />
       </div>
