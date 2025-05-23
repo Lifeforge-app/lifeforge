@@ -138,7 +138,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
                 <VideoInfo videoInfo={videoInfo} />
               </div>
               <Button
-                className="mt-6"
+                className="mt-6 w-full"
                 icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
                 loading={loading}
                 onClick={downloadVideo}
