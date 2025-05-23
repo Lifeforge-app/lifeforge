@@ -30,6 +30,8 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           body: formData
         }
       )
+      onClose()
+
       open('calendar.modifyEvent', {
         type: 'create',
         existedData: {
