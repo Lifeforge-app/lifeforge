@@ -24,7 +24,6 @@ function ModifyTicketModal({
   onClose: () => void
 }) {
   const open = useModalStore(state => state.open)
-  const close = useModalStore(state => state.close)
 
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState<IMovieTicketFormState>({
@@ -105,7 +104,7 @@ function ModifyTicketModal({
       )
 
       toast.success('Ticket deleted successfully!')
-      close()
+      onClose()
 
       setTimeout(() => {
         onClose()
