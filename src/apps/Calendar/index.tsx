@@ -91,7 +91,7 @@ function CalendarModule() {
           </ContentWrapperWithSidebar>
         </LayoutWithSidebar>
         <Menu as="div" className="relative z-[9991]">
-          <FAB as={MenuButton} hideWhen="lg" />
+          <FAB as={MenuButton} hideWhen="md" />
           <MenuItems
             transition
             anchor="bottom end"
