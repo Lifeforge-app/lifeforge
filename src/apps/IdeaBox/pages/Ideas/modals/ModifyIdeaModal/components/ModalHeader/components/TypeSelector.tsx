@@ -56,7 +56,7 @@ function TypeSelector({
       <MenuItems
         transition
         anchor="bottom start"
-        className="bg-bg-100 text-bg-800 dark:bg-bg-800 z-9999 mt-2 overflow-hidden rounded-lg shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+        className="bg-bg-100 text-bg-800 dark:bg-bg-800 z-9999 mt-2 min-w-[var(--button-width)] overflow-hidden rounded-lg shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
       >
         {(
           [

@@ -10,8 +10,11 @@ function DateRangeSelector() {
   const { t } = useTranslation('apps.wallet')
   const { startDate, endDate, setStartDate, setEndDate } = useWalletStore()
 
-  const handleDateChange = (date: string, type: 'start_date' | 'end_date') => {
-    if (date === '') {
+  const handleDateChange = (
+    date: Date | null,
+    type: 'start_date' | 'end_date'
+  ) => {
+    if (!date) {
       if (type === 'start_date') {
         setStartDate(null)
       } else {
@@ -60,18 +63,14 @@ function DateRangeSelector() {
           <DateInput
             key={type}
             darker
-            className={clsx('w-full', idx === 1 && 'mt-4')}
+            className={clsx('w-full', idx === 1 ? 'mt-4!' : 'mt-0')}
             date={
               (type === 'start_date' ? startDate : endDate) !== null &&
               dayjs(type === 'start_date' ? startDate : endDate).isValid()
-                ? dayjs(type === 'start_date' ? startDate : endDate).format(
-                    'YYYY-MM-DD'
-                  )
-                : ''
+                ? dayjs(type === 'start_date' ? startDate : endDate).toDate()
+                : null
             }
-            hasMargin={false}
             icon={icon}
-            index={idx}
             name={name}
             namespace="apps.wallet"
             setDate={date => {
