@@ -1,16 +1,17 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import dayjs, { Dayjs } from 'dayjs'
-import { useMemo, useState } from 'react'
-import { Bar, Line } from 'react-chartjs-2'
+import { useMemo } from 'react'
+import { Bar } from 'react-chartjs-2'
+import { Link } from 'react-router'
 import tinycolor from 'tinycolor2'
 
 import {
+  Button,
   DashboardItem,
   EmptyStateScreen,
   LoadingScreen,
-  QueryWrapper,
-  ViewModeSelector
+  QueryWrapper
 } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -94,7 +95,6 @@ const CodeTime = () => {
     'each-day'
   ])
   const { themeColor } = usePersonalization()
-  const [view, setView] = useState<'bar' | 'line'>('bar')
 
   const chartData = useMemo(() => {
     const data = dataQuery.data
@@ -160,33 +160,18 @@ const CodeTime = () => {
         />
       )
 
-    switch (view) {
-      case 'bar':
-        return <Bar data={chartData as any} options={chartOptions as any} />
-      case 'line':
-        return <Line data={chartData as any} options={chartOptions as any} />
-      default:
-        return null
-    }
+    return <Bar data={chartData as any} options={chartOptions as any} />
   }
 
   return (
     <DashboardItem
       componentBesideTitle={
-        <ViewModeSelector
-          className="mt-0!"
-          options={[
-            {
-              icon: 'tabler:chart-bar',
-              value: 'bar'
-            },
-            {
-              icon: 'tabler:chart-line',
-              value: 'line'
-            }
-          ]}
-          setViewMode={setView}
-          viewMode={view}
+        <Button
+          as={Link}
+          className="p-2!"
+          icon="tabler:chevron-right"
+          to="/code-time"
+          variant="plain"
         />
       }
       icon="tabler:chart-line"

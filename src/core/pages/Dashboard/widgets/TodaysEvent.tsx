@@ -23,6 +23,7 @@ import {
 } from '@apps/Calendar/interfaces/calendar_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
+import useComponentBg from '@hooks/useComponentBg'
 
 function EventItem({
   categories,
@@ -31,6 +32,7 @@ function EventItem({
   categories: ICalendarCategory[]
   event: ICalendarEvent
 }) {
+  const { componentBgLighter } = useComponentBg()
   const { sidebarExpanded } = useSidebarState()
   const [width, setWidth] = useState(0)
   const ref = useRef<HTMLLIElement>(null)
@@ -64,7 +66,10 @@ function EventItem({
       <li
         key={event.id}
         ref={ref}
-        className="flex-between bg-bg-100/50 shadow-custom dark:bg-bg-800 flex cursor-pointer gap-3 rounded-lg p-4"
+        className={clsx(
+          'flex-between shadow-custom flex cursor-pointer gap-3 rounded-lg p-4',
+          componentBgLighter
+        )}
         data-tooltip-id={`calendar-event-${event.id}`}
       >
         <div
@@ -145,10 +150,11 @@ export default function TodaysEvent() {
 
   return (
     <DashboardItem
+      className="pr-4"
       componentBesideTitle={
         <Button
           as={Link}
-          className="p-2!"
+          className="mr-2 p-2!"
           icon="tabler:chevron-right"
           to="/calendar"
           variant="plain"
@@ -163,7 +169,7 @@ export default function TodaysEvent() {
             <QueryWrapper query={rawEventsQuery}>
               {() =>
                 (filteredEvents ?? []).length > 0 ? (
-                  <ul className="flex flex-1 flex-col gap-2">
+                  <ul className="flex flex-1 flex-col gap-2 pr-3">
                     {filteredEvents?.map(event => (
                       <EventItem
                         key={event.id}

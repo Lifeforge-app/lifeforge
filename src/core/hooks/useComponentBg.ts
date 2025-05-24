@@ -24,7 +24,7 @@ export default function useComponentBg(): {
 
   const componentBgLighter = useMemo(() => {
     if (bgImage !== '') return 'bg-bg-100/50 dark:bg-bg-800/50'
-    return 'bg-bg-100 dark:bg-bg-800/50'
+    return 'bg-bg-100/50 dark:bg-bg-800/50'
   }, [bgImage])
 
   const componentBgLighterWithHover = useMemo(() => {

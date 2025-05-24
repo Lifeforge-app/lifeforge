@@ -1,7 +1,8 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { Link } from 'react-router'
 
-import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
+import { Button, DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import MiniCalendarContent from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
@@ -40,6 +41,15 @@ export default function MiniCalendar() {
   return (
     <DashboardItem
       className="higher-z"
+      componentBesideTitle={
+        <Button
+          as={Link}
+          className="p-2!"
+          icon="tabler:chevron-right"
+          to="/calendar"
+          variant="plain"
+        />
+      }
       icon="tabler:calendar"
       title="mini Calendar"
     >

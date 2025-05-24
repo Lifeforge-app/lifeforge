@@ -1,8 +1,7 @@
-/* eslint-disable react-compiler/react-compiler */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useRef } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
 
@@ -18,7 +17,20 @@ export default function MusicPlayer() {
   const ref = useRef<HTMLDivElement>(null)
 
   return (
-    <DashboardItem ref={ref} icon="tabler:music" title="Music Player">
+    <DashboardItem
+      ref={ref}
+      componentBesideTitle={
+        <Button
+          as={Link}
+          className="p-2!"
+          icon="tabler:chevron-right"
+          to="/music"
+          variant="plain"
+        />
+      }
+      icon="tabler:music"
+      title="Music Player"
+    >
       <div className="flex min-h-0 flex-1 flex-col">
         {currentMusic !== null ? (
           <>
