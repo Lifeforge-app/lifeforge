@@ -73,7 +73,6 @@ function EventTimeSelector({
             className="mt-4"
             date={formState.start}
             icon="tabler:clock"
-            index={0}
             name="Start Time"
             namespace="apps.calendar"
             setDate={date => {
@@ -90,7 +89,6 @@ function EventTimeSelector({
             className="mt-4"
             date={formState.end}
             icon="tabler:clock"
-            index={1}
             name="End Time"
             namespace="apps.calendar"
             setDate={date => {

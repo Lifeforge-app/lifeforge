@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { ByWeekday, RRule, Options as RRuleOptions, datetime } from 'rrule'
 
-const createStartDate = (start: string) => {
+const createStartDate = (start: Date | null) => {
   const startDate = dayjs(start)
   return datetime(
     startDate.year(),
@@ -137,7 +137,7 @@ const configureEndOptions = (
 }
 
 export default function getRRULEString(params: {
-  start: string
+  start: Date | null
   freq: string
   yearlyType: string
   yearlyMonth: number
@@ -156,7 +156,7 @@ export default function getRRULEString(params: {
   hourlyEvery: string
   endType: 'never' | 'after' | 'on'
   endAfter: string
-  endOn: string
+  endOn: Date | null
 }) {
   const options: Partial<RRuleOptions> = {
     dtstart: createStartDate(params.start),

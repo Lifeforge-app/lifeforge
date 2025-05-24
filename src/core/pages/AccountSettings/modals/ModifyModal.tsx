@@ -82,7 +82,6 @@ function ModifyModal({
           darker
           date={value}
           icon={icon}
-          modalRef={modalRef}
           name={title}
           namespace="core.accountSettings"
           setDate={setValue}
