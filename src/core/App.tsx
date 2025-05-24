@@ -11,13 +11,6 @@ import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router'
 
 import './index.css'
-import 'leaflet/dist/leaflet.css'
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
-import 'react-grid-layout/css/styles.css'
-import 'react-medium-image-zoom/dist/styles.css'
-import 'react-toastify/dist/ReactToastify.css'
-import 'react-tooltip/dist/react-tooltip.css'
-import 'react-virtualized/styles.css'
 
 import './i18n'
 import AppRouter from './routes/index.tsx'

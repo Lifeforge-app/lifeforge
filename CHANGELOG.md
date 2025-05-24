@@ -17,6 +17,7 @@
 - **UI**: Added loading messages to various loading screens so that user knows which loading state they are in.
 - **UI**: Added back pre-loader when the modules are being prepared.
 - **UI**: Reworked the date input component to use the new `react-datepicker` library instead of the old `react-date-picker` library.
+- **UI**: Split the main `index.css` file into multiple files for better organization.
 
 ### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
 - **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.

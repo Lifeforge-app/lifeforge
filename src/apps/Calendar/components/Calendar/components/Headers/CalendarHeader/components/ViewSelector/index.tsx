@@ -18,7 +18,7 @@ function ViewSelector({
   return (
     <div
       className={clsx(
-        'shadow-custom flex w-full gap-1 rounded-md p-2',
+        'shadow-custom mb-4 flex w-full gap-1 rounded-md p-2',
         componentBg
       )}
     >

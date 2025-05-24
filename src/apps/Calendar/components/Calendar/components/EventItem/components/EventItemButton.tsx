@@ -39,6 +39,9 @@ function EventItemButton({
             'w-full min-w-0 truncate text-left',
             isStrikethrough && 'line-through decoration-[1.5px]'
           )}
+          style={{
+            color: color
+          }}
         >
           {title}
         </span>

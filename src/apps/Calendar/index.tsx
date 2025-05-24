@@ -1,8 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useCallback, useMemo, useState } from 'react'
 
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-
 import {
   ContentWrapperWithSidebar,
   FAB,

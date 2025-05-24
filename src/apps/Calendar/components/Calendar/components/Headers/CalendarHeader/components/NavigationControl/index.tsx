@@ -1,22 +1,9 @@
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
 import { NavigateAction } from 'react-big-calendar'
 
 import { Button } from '@lifeforge/ui'
 
-const MONTHS_ABBR = {
-  January: 'Jan',
-  February: 'Feb',
-  March: 'Mar',
-  April: 'Apr',
-  May: 'May',
-  June: 'Jun',
-  July: 'Jul',
-  August: 'Aug',
-  September: 'Sep',
-  October: 'Oct',
-  November: 'Nov',
-  December: 'Dec'
-}
+import DateRangeLabel from './components/DateRangeLabel'
 
 function NavigationControl({
   label,
@@ -25,17 +12,6 @@ function NavigationControl({
   label: string
   onNavigate: (direction: NavigateAction) => void
 }) {
-  const finalLabel = useMemo(() => {
-    let newLabel = label
-    Object.keys(MONTHS_ABBR).forEach(month => {
-      newLabel = newLabel.replace(
-        month,
-        MONTHS_ABBR[month as keyof typeof MONTHS_ABBR]
-      )
-    })
-    return newLabel
-  }, [label])
-
   return (
     <div className="flex w-full items-center gap-4">
       <div className="flex-between flex w-full gap-2 lg:w-auto lg:justify-start lg:gap-0">
@@ -46,8 +22,8 @@ function NavigationControl({
             onNavigate('PREV')
           }}
         />
-        <div className="block text-center text-2xl font-bold lg:hidden">
-          {finalLabel}
+        <div className="block shrink-0 text-center text-2xl font-bold lg:hidden">
+          <DateRangeLabel label={label} />
         </div>
         <Button
           icon="tabler:chevron-right"
@@ -57,8 +33,8 @@ function NavigationControl({
           }}
         />
       </div>
-      <div className="hidden text-center text-2xl font-bold lg:block">
-        {finalLabel}
+      <div className="hidden shrink-0 items-end gap-2 text-center text-2xl font-medium lg:flex">
+        <DateRangeLabel label={label} />
       </div>
     </div>
   )
