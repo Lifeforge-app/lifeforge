@@ -58,7 +58,7 @@ function RecurringSelector({
 
   const [endType, setEndType] = useState<'never' | 'after' | 'on'>('never')
   const [endAfter, setEndAfter] = useState('1')
-  const [endOn, setEndOn] = useState<string>('')
+  const [endOn, setEndOn] = useState<Date | null>(null)
 
   const forms = {
     yearly: (
@@ -106,6 +106,10 @@ function RecurringSelector({
   }
 
   useEffect(() => {
+    if (!formState.start) {
+      return
+    }
+
     const rrule = getRRULEString({
       start: formState.start,
       freq,
@@ -165,7 +169,6 @@ function RecurringSelector({
         className="mt-4"
         date={formState.start}
         icon="tabler:clock"
-        index={0}
         name="Start Time"
         namespace="apps.calendar"
         setDate={date => {
@@ -250,11 +253,9 @@ function RecurringSelector({
               <DateInput
                 darker
                 required
-                className="flex-1"
+                className="mt-0! flex-1"
                 date={endOn}
-                hasMargin={false}
                 icon="tabler:calendar"
-                index={1}
                 name={t('recurring.inputs.on')}
                 namespace={false}
                 setDate={setEndOn}

@@ -55,7 +55,7 @@ function ModifyTaskDrawer() {
 
   const [notes, setNotes] = useState('')
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
-  const [dueDate, setDueDate] = useState('')
+  const [dueDate, setDueDate] = useState<Date | null>(null)
   const [priority, setPriority] = useState<string>('')
   const [list, setList] = useState<string>('')
   const [tags, setTags] = useState<string[]>([])
@@ -178,7 +178,9 @@ function ModifyTaskDrawer() {
     if (selectedTask !== null) {
       setSummary(selectedTask.summary)
       setNotes(selectedTask.notes)
-      setDueDate(selectedTask.due_date)
+      setDueDate(
+        selectedTask.due_date ? dayjs(selectedTask.due_date).toDate() : null
+      )
       setDueDateHasTime(selectedTask.due_date_has_time)
       setPriority(selectedTask.priority)
       setList(selectedTask.list)
@@ -186,7 +188,7 @@ function ModifyTaskDrawer() {
     } else {
       setSummary('')
       setNotes('')
-      setDueDate('')
+      setDueDate(null)
       setDueDateHasTime(false)
       setPriority('')
       setList('')
@@ -268,9 +270,7 @@ function ModifyTaskDrawer() {
                   setDueDateHasTime(!dueDateHasTime)
                   if (dueDate)
                     setDueDate(
-                      dayjs(dueDate).format(
-                        dueDateHasTime ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm'
-                      )
+                      dayjs(dueDate).set('hour', 0).set('minute', 0).toDate()
                     )
                 }}
               />
@@ -280,7 +280,6 @@ function ModifyTaskDrawer() {
               date={dueDate}
               hasTime={dueDateHasTime}
               icon="tabler:calendar"
-              modalRef={ref}
               name="Due date"
               namespace="apps.todoList"
               setDate={setDueDate}

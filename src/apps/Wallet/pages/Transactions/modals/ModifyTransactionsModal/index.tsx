@@ -41,7 +41,7 @@ function ModifyTransactionsModal({
     'income' | 'expenses' | 'transfer'
   >('income')
 
-  const [transactionDate, setTransactionDate] = useState<string>('')
+  const [transactionDate, setTransactionDate] = useState<Date | null>(null)
   const [amount, setAmount] = useState<string>()
   const [location, setLocation] = useState<string | null>(null)
   const [category, setCategory] = useState<string | null>(null)
@@ -75,7 +75,9 @@ function ModifyTransactionsModal({
       if (existedData) {
         setParticular(existedData.particulars ?? '')
         setTransactionType(existedData.type ?? 'income')
-        setTransactionDate(dayjs(existedData.date).format('YYYY-MM-DD'))
+        setTransactionDate(
+          existedData.date ? dayjs(existedData.date).toDate() : null
+        )
         setAmount(`${existedData.amount}`)
         setCategory(existedData.category || '')
         setLocation(existedData.location || '')
@@ -100,7 +102,7 @@ function ModifyTransactionsModal({
       } else {
         setParticular('')
         setTransactionType('income')
-        setTransactionDate(dayjs().format('YYYY-MM-DD'))
+        setTransactionDate(dayjs().toDate())
         setAmount(undefined)
         setLocation('')
         setCategory(null)
@@ -245,7 +247,6 @@ function ModifyTransactionsModal({
           required
           date={transactionDate}
           icon="tabler:calendar"
-          modalRef={ref}
           name="Date"
           namespace="apps.wallet"
           setDate={setTransactionDate}

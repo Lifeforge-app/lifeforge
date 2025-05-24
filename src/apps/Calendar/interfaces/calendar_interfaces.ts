@@ -18,8 +18,8 @@ interface ICalendarEvent extends RecordModel {
 
 type ICalendarEventFormState = {
   title: string
-  start: string
-  end: string
+  start: Date | null
+  end: Date | null
   use_google_map: boolean
   category: string
   location: string

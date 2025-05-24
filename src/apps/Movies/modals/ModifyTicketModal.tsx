@@ -63,9 +63,7 @@ function ModifyTicketModal({
       label: 'Theatre showtime',
       icon: 'tabler:clock',
       type: 'datetime',
-      hasTime: true,
-      index: 0,
-      modalRef
+      hasTime: true
     },
     {
       id: 'theatre_number',

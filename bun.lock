@@ -8,7 +8,7 @@
         "@headlessui/react": "^2.2.2",
         "@iconify/react": "^5.2.1",
         "@iconify/types": "^2.0.0",
-        "@lifeforge/ui": "^0.25.21-2",
+        "@lifeforge/ui": "^0.25.22-2",
         "@million/lint": "^1.0.14",
         "@tabler/icons-react": "^3.31.0",
         "@tailwindcss/postcss": "^4.1.5",
@@ -53,6 +53,7 @@
         "react-chartjs-2": "^5.3.0",
         "react-columns": "^1.2.1",
         "react-custom-scrollbars": "^4.2.1",
+        "react-datepicker": "^8.3.0",
         "react-dnd": "^16.0.1",
         "react-dnd-html5-backend": "^16.0.1",
         "react-dom": "^19.1.0",
@@ -296,7 +297,7 @@
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 
-    "@lifeforge/ui": ["@lifeforge/ui@0.25.21-2", "", { "dependencies": { "@headlessui/react": "^2.2.2", "@iconify/collections": "^1.0.544", "@iconify/react": "^5.2.1", "@million/lint": "^1.0.14", "@tanstack/react-query": "^5.75.4", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.5.3", "@vitejs/plugin-react": "^4.4.1", "@yudiel/react-qr-scanner": "^2.3.0", "clsx": "^2.1.1", "color-sorter": "^6.2.0", "crypto-js": "^4.2.0", "dayjs": "^1.11.13", "file-type-mime": "^0.4.6", "i18next-http-backend": "^3.0.2", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.25.2", "radix-ui": "^1.3.4", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.8", "react-i18next": "^15.5.1", "react-medium-image-zoom": "^5.2.14", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.5.3", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.1", "react-virtualized": "^9.22.6", "tailwindcss": "^4.1.5", "tinycolor2": "^1.6.0", "zustand": "^5.0.4" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-VP5fSzIbwJbdGthki5FOuZAi3Hr68/3R2PMrLkm+5qBsq3s6+jfS/IxT5FO6naX7WcTB5cVmIr90DhiRPRJzWg=="],
+    "@lifeforge/ui": ["@lifeforge/ui@0.25.22-2", "", { "dependencies": { "@headlessui/react": "^2.2.2", "@iconify/collections": "^1.0.544", "@iconify/react": "^5.2.1", "@million/lint": "^1.0.14", "@tanstack/react-query": "^5.75.4", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.5.3", "@vitejs/plugin-react": "^4.4.1", "@yudiel/react-qr-scanner": "^2.3.0", "clsx": "^2.1.1", "color-sorter": "^6.2.0", "crypto-js": "^4.2.0", "dayjs": "^1.11.13", "file-type-mime": "^0.4.6", "i18next-http-backend": "^3.0.2", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.25.2", "radix-ui": "^1.3.4", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datepicker": "^8.3.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.8", "react-i18next": "^15.5.1", "react-medium-image-zoom": "^5.2.14", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.5.3", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.1", "react-virtualized": "^9.22.6", "tailwindcss": "^4.1.5", "tinycolor2": "^1.6.0", "zustand": "^5.0.4" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-JTBpdM49ggUqaBjOTOnpeO1/FNqRL+L/C9wUOeE8rdDIDSDFIW/WMNGRyevwAwjq8xWZ/1veysiaUWuQ0VINpQ=="],
 
     "@million/install": ["@million/install@1.0.14", "", { "dependencies": { "@antfu/ni": "^0.21.12", "@axiomhq/js": "1.0.0-rc.3", "@babel/parser": "^7.25.3", "@babel/types": "7.26.0", "@clack/prompts": "^0.7.0", "ast-types": "^0.14.2", "cli-high": "^0.4.2", "diff": "^5.1.0", "effect": "^3.8.4", "nanoid": "^5.0.7", "recast": "^0.23.9", "xycolors": "^0.1.2" }, "bin": { "install": "bin/index.js" } }, "sha512-xZvj4AEHc5hyn8RCiLl9dYNqggj2fa0lgNvUkCiJyhRJPNE2hZrUa/Ka0Weu82VpBaO//zujG0YErk7osjNXPA=="],
 
@@ -1885,6 +1886,8 @@
     "react-custom-scrollbars": ["react-custom-scrollbars@4.2.1", "", { "dependencies": { "dom-css": "^2.0.0", "prop-types": "^15.5.10", "raf": "^3.1.0" }, "peerDependencies": { "react": "^0.14.0 || ^15.0.0 || ^16.0.0", "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0" } }, "sha512-VtJTUvZ7kPh/auZWIbBRceGPkE30XBYe+HktFxuMWBR2eVQQ+Ur6yFJMoaYcNpyGq22uYJ9Wx4UAEcC0K+LNPQ=="],
 
     "react-date-picker": ["react-date-picker@11.0.0", "", { "dependencies": { "@wojtekmaj/date-utils": "^1.1.3", "clsx": "^2.0.0", "get-user-locale": "^2.2.1", "make-event-props": "^1.6.0", "react-calendar": "^5.0.0", "react-fit": "^2.0.0", "update-input-width": "^1.4.0" }, "peerDependencies": { "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" }, "optionalPeers": ["@types/react"] }, "sha512-l+siu5HSZ/ciGL1293KCAHl4o9aD5rw16V4tB0C43h7QbMv2dWGgj7Dxgt8iztLaPVtEfOt/+sxNiTYw4WVq6A=="],
+
+    "react-datepicker": ["react-datepicker@8.3.0", "", { "dependencies": { "@floating-ui/react": "^0.27.3", "clsx": "^2.1.1", "date-fns": "^4.1.0" }, "peerDependencies": { "react": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc", "react-dom": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc" } }, "sha512-DhfrIJnTPJTUVRtXU7c7zooug40rD6q+Fc8UTCt19dYEotLpDQgTN98MfocY6Rc4S99oOFFEoxyanOM/TKauuw=="],
 
     "react-datetime-picker": ["react-datetime-picker@6.0.1", "", { "dependencies": { "@wojtekmaj/date-utils": "^1.1.3", "clsx": "^2.0.0", "get-user-locale": "^2.2.1", "make-event-props": "^1.6.0", "react-calendar": "^5.0.0", "react-clock": "^5.0.0", "react-date-picker": "^11.0.0", "react-fit": "^2.0.0", "react-time-picker": "^7.0.0" }, "peerDependencies": { "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" }, "optionalPeers": ["@types/react"] }, "sha512-G7W8bK0SLuO66RVWYGD2q1bD4Wk4pUOpJCq9r44A4P33uq0aAtd3dT1HNEu2fvlmMpYxC4J571ZPI9bUG46pDA=="],
 

@@ -5,6 +5,7 @@
 - **Todo List**: Fixed a bug where the task tags looks off in dashboard widget.
 - **Idea Box**: Fixed a bug where the sidebar isn't blurred when the create idea fab is clicked.
 - **Idea Box**: Added entry type display to the top of every idea entry and now the hamburger menu button will not overlap with the entry content.
+- **Idea Box**: Fixed a bug where the width of idea type selection menu in the modify idea modal in mobile view isn't properly spanning the whole button as it should.
 - **Idea Box**: Minor UI improvements here and there.
 - **Idea Box**: Text entries written in markdown format will now be rendered properly.
 - **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.

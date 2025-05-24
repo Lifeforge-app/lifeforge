@@ -18,8 +18,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'react-tooltip/dist/react-tooltip.css'
 import 'react-virtualized/styles.css'
 
-import '@lifeforge/ui/dist/index.css'
-
 import './i18n'
 import './index.css'
 import AppRouter from './routes/index.tsx'
