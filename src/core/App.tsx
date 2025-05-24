@@ -7,19 +7,19 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-import 'leaflet/dist/leaflet.css'
 import { useEffect } from 'react'
+import { BrowserRouter } from 'react-router'
+
+import './index.css'
+import 'leaflet/dist/leaflet.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-grid-layout/css/styles.css'
 import 'react-medium-image-zoom/dist/styles.css'
-import { BrowserRouter } from 'react-router'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-tooltip/dist/react-tooltip.css'
 import 'react-virtualized/styles.css'
 
 import './i18n'
-import './index.css'
 import AppRouter from './routes/index.tsx'
 
 dayjs.extend(duration)
