@@ -9,8 +9,14 @@ layer(base);
 @plugin '@tailwindcss/typography';
 
 /* NPM package styles */
+@import 'leaflet/dist/leaflet.css';
+@import 'react-grid-layout/css/styles.css';
+@import 'react-medium-image-zoom/dist/styles.css';
+@import 'react-toastify/dist/ReactToastify.css';
+@import 'react-tooltip/dist/react-tooltip.css';
+@import 'react-virtualized/styles.css';
+@import 'react-datepicker/dist/react-datepicker.css';
 @import '@lifeforge/ui/dist/index.css';
-@import 'react-big-calendar/lib/css/react-big-calendar.css';
 @source "../../node_modules/@lifeforge/ui/dist";
 
 /* Local utility styles */

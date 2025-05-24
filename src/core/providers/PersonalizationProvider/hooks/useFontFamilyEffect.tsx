@@ -3,53 +3,68 @@ import { useEffect } from 'react'
 import fetchAPI from '@utils/fetchAPI'
 
 function useFontFamily(fontFamily: string) {
-  async function updateFontFamily() {
-    try {
-      const data = await fetchAPI<{ enabled: boolean; items: any[] }>(
-        `/user/personalization/font?family=${fontFamily.replace(/ /g, '+')}`
-      )
+  useEffect(() => {
+    const styleTagId = 'dynamic-font-style'
+    let styleTag = document.getElementById(
+      styleTagId
+    ) as HTMLStyleElement | null
 
-      if (!data.enabled) {
-        document.body.style.fontFamily = 'Onest, sans-serif'
-        return
-      }
+    // Remove previous style tag if exists
+    if (styleTag) {
+      styleTag.remove()
+    }
 
-      if (data.items) {
-        const sheet = window.document.styleSheets[0]
+    // Create new style tag
+    styleTag = document.createElement('style')
+    styleTag.id = styleTagId
+    document.head.appendChild(styleTag)
 
-        data.items.forEach(font => {
-          Object.entries(font.files).forEach(([variant, url]) => {
-            const fontFace = `@font-face {
-              font-family: '${font.family}';
-              src: url('${url}');
-              ${
-                !['regular', 'italic'].includes(variant)
-                  ? `font-weight: ${variant.replace('italic', '')};`
-                  : ''
-              }
-              font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
-              font-display: swap;
-            }`
+    async function updateFontFamily() {
+      try {
+        const data = await fetchAPI<{ enabled: boolean; items: any[] }>(
+          `/user/personalization/font?family=${fontFamily.replace(/ /g, '+')}`
+        )
 
-            try {
-              sheet.insertRule(fontFace, sheet.cssRules.length)
-            } catch (err) {
-              console.error(fontFace)
-              console.error(err)
-            }
+        if (!data.enabled) {
+          document.body.style.fontFamily = 'Onest, sans-serif'
+          return
+        }
 
+        let css = ''
+
+        if (data.items) {
+          data.items.forEach(font => {
+            Object.entries(font.files).forEach(([variant, url]) => {
+              const fontFace = `@font-face {
+                font-family: '${font.family}';
+                src: url('${url}');
+                ${
+                  !['regular', 'italic'].includes(variant)
+                    ? `font-weight: ${variant.replace('italic', '')};`
+                    : ''
+                }
+                font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
+                font-display: swap;
+              }`
+              css += fontFace + '\n'
+            })
             document.body.style.fontFamily = `${font.family}, sans-serif`
           })
-        })
-      }
-    } catch {
-      document.body.style.fontFamily = 'Onest, sans-serif'
-      console.error('Failed to update font family')
-    }
-  }
+        }
 
-  useEffect(() => {
+        styleTag!.textContent = css
+      } catch {
+        document.body.style.fontFamily = 'Onest, sans-serif'
+        console.error('Failed to update font family')
+      }
+    }
+
     updateFontFamily()
+
+    // Cleanup when unmounted or font changes
+    return () => {
+      styleTag?.remove()
+    }
   }, [fontFamily])
 }
 

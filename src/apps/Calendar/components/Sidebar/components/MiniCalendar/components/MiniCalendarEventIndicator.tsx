@@ -15,6 +15,7 @@ function MiniCalendarEventIndicator({
   for (let i = 0; i < eventsOnTheDay.length; i += 3) {
     groupedByThree.push(eventsOnTheDay.slice(i, i + 3))
   }
+
   return (
     <div className="space-y-px">
       {groupedByThree.map(group => (
