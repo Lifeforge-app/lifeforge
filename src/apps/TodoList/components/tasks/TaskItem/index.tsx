@@ -70,7 +70,7 @@ function TaskItem({
       <li
         key={entry.id}
         className={clsx(
-          'flex-between relative isolate flex gap-4 rounded-lg p-4 pr-6 pl-5 shadow-[2px_2px_5px_var(--color-bg-200)] transition-all',
+          'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pr-6 pl-5 transition-all',
           lighter ? componentBgLighter : componentBgWithHover
         )}
       >
