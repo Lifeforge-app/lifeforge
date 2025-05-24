@@ -34,11 +34,11 @@ export default function getDayClassName({
 
       const borderClassName =
         isFirstAndLastDay === 'first'
-          ? 'after:rounded-l-md after:border-y after:border-l'
-          : 'after:rounded-r-md after:border-y after:border-r'
+          ? 'after:rounded-l-sm after:border-y after:border-l'
+          : 'after:rounded-r-sm after:border-y after:border-r'
 
       return `font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-custom-500 after:content-[''] ${
-        isSingleDate ? 'after:rounded-md after:border' : borderClassName
+        isSingleDate ? 'after:rounded-sm after:border' : borderClassName
       }`
     }
 
