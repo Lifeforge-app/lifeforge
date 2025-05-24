@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --shadow-custom: 2px 2px 10px 0px var(--color-bg-200);
+  --shadow-custom: var(--custom-shadow);
 
   --color-custom-50: rgb(var(--color-custom-50));
   --color-custom-100: rgb(var(--color-custom-100));
@@ -33,4 +33,12 @@
 /* Overwriting daisyUI default colours */
 .bg-neutral {
   background-color: var(--color-bg-500);
+}
+
+#app {
+  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
+
+  .dark & {
+    --custom-shadow: 0px 0px 0px 0px var(--color-bg-800);
+  }
 }
