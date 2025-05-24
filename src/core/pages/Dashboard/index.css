@@ -1,0 +1,15 @@
+.react-grid-layout {
+  @apply isolate;
+}
+
+.react-grid-item {
+  z-index: 0;
+}
+
+.react-grid-item:has(.higher-z) {
+  z-index: 1;
+}
+
+.react-grid-item.react-grid-placeholder {
+  @apply bg-custom-500!;
+}

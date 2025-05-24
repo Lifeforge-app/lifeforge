@@ -33,7 +33,10 @@ function Header() {
               if (pathDetailsLoading) {
                 return (
                   <>
-                    <span className="small-loader-light"></span>
+                    <Icon
+                      className="text-bg-500 size-5"
+                      icon="svg-spinners:180-ring"
+                    />
                     Loading...
                   </>
                 )

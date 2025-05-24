@@ -1,0 +1,55 @@
+:root {
+  --tw-prose-bold: var(--color-bg-800);
+  --tw-prose-bullets: var(--color-bg-800);
+  --tw-prose-counters: var(--color-bg-800);
+}
+
+.dark :root {
+  --tw-prose-bold: var(--color-bg-100);
+  --tw-prose-bullets: var(--color-bg-100);
+  --tw-prose-counters: var(--color-bg-100);
+}
+
+.prose {
+  & * {
+    @apply text-bg-800 dark:text-bg-100 my-0 leading-normal select-text;
+  }
+
+  & :is(h1, h2, h3, h4, h5, h6) {
+    @apply text-bg-900 dark:text-bg-50 text-lg font-semibold;
+  }
+
+  & hr {
+    @apply border-bg-300 dark:border-bg-700 my-4!;
+  }
+
+  & li {
+    padding-inline-start: 0 !important;
+    @apply m-0! p-0!;
+    vertical-align: top;
+    @apply relative flex flex-col items-start before:absolute before:top-[0.6rem] before:left-[-1rem] before:h-[5px] before:w-[5px] before:rounded-full before:bg-[var(--tw-prose-bullets)];
+  }
+
+  & ul {
+    padding-inline-start: 0 !important;
+    @apply mx-5 list-disc;
+    line-height: 0.5;
+  }
+
+  & ol {
+    padding-inline-start: 0 !important;
+    @apply mx-5 list-decimal;
+  }
+
+  & blockquote {
+    @apply border-bg-300 dark:border-bg-700 bg-bg-200 dark:bg-bg-900/50 my-4 rounded-sm border-l-4 px-4;
+  }
+
+  & pre {
+    @apply bg-bg-100 dark:bg-bg-800/50 shadow-custom my-4 rounded-sm;
+  }
+
+  & code:not(pre > code) {
+    @apply bg-bg-200 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 rounded-sm border-0 px-2 py-0.5 shadow-sm;
+  }
+}

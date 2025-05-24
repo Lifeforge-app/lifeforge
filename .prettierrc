@@ -9,7 +9,7 @@
     "prettier-plugin-tailwindcss"
   ],
   "importOrder": [
-    "./wdyr",
+    "^.*?.css$",
     "^@lifeforge/(.*)$",
     "^@security/(.*)$",
     "^@apps/(.*)$",

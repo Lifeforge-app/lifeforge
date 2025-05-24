@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'LTAIdentityMedium';
+  src:
+    url('/fonts/LTAIdentity-Medium.woff2') format('woff2'),
+    url('/fonts/LTAIdentity-Medium.woff') format('woff');
+}
