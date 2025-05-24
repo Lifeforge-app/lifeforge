@@ -55,7 +55,7 @@ function ModifyModal({
   }
 
   return (
-    <div ref={modalRef} className="min-w-[30rem]">
+    <div ref={modalRef} className="sm:min-w-[30rem]">
       <ModalHeader
         icon="tabler:pencil"
         namespace="core.accountSettings"

@@ -977,6 +977,10 @@ button[class^='react-calendar__navigation'] {
   @apply bg-custom-600!;
 }
 
+.react-datepicker-wrapper {
+  @apply w-full!;
+}
+
 aside .sidebar-item .bg-bg-200\/50 svg {
   @apply text-custom-500!;
 }

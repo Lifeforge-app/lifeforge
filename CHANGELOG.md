@@ -2,6 +2,7 @@
 
 ### 📌 **dev 25w21 (5/19/2025 - 5/26/2025)**
 - **Account Settings**: Renamed the folder from `Account` to `Account Settings` for better clarity.
+- **Account Settings**: Fixed a bug where the input box in the modification modal is overflowing.
 - **Todo List**: Fixed a bug where the task tags looks off in dashboard widget.
 - **Idea Box**: Fixed a bug where the sidebar isn't blurred when the create idea fab is clicked.
 - **Idea Box**: Added entry type display to the top of every idea entry and now the hamburger menu button will not overlap with the entry content.
