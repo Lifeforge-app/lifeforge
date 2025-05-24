@@ -8,12 +8,14 @@
 - **Idea Box**: Fixed a bug where the width of idea type selection menu in the modify idea modal in mobile view isn't properly spanning the whole button as it should.
 - **Idea Box**: Minor UI improvements here and there.
 - **Idea Box**: Text entries written in markdown format will now be rendered properly.
+- **Wallet**: Reduced border radius for date items in the sidebar mini calendar.
 - **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.
 - **Code**: Massive mechanism refactor to load module routes dynamically.
 - **Code**: Renamed `layout` folder to `routes` for better clarity.
 - **Code**: Updated `README.md` with the latest information and screenshots.
 - **UI**: Added loading messages to various loading screens so that user knows which loading state they are in.
 - **UI**: Added back pre-loader when the modules are being prepared.
+- **UI**: Reworked the date input component to use the new `react-datepicker` library instead of the old `react-date-picker` library.
 
 ### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
 - **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.
