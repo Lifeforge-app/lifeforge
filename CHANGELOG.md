@@ -10,6 +10,10 @@
 - **Idea Box**: Minor UI improvements here and there.
 - **Idea Box**: Text entries written in markdown format will now be rendered properly.
 - **Wallet**: Reduced border radius for date items in the sidebar mini calendar.
+- **Calendar**: Moved the calendar display mode selector to the bottom of the calendar header for better responsiveness.
+- **Calendar**: Added a button in the calendar header to quickly navigate to the current date.
+- **Caleandar**: Minor design improvements to the page.
+- **Code Time**: Removed the chart type selector from the dashboard widget as bar chart better than line chart.
 - **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.
 - **Code**: Massive mechanism refactor to load module routes dynamically.
 - **Code**: Renamed `layout` folder to `routes` for better clarity.
@@ -18,6 +22,9 @@
 - **UI**: Added back pre-loader when the modules are being prepared.
 - **UI**: Reworked the date input component to use the new `react-datepicker` library instead of the old `react-date-picker` library.
 - **UI**: Split the main `index.css` file into multiple files for better organization.
+- **UI**: Added props sorting to ESLint configuration of the `@lifeforge/ui` package.
+- **UI**: Fixed a bug in ColorInput where the existed color is not properly passed to the color picker component.
+- **UI**: Minor UI improvements to the overall design of the system.
 
 ### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
 - **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.

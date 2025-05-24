@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import { hsvaToHex, hsvaToRgbaString } from '@uiw/react-color'
 import {
   BarElement,
@@ -34,6 +35,16 @@ ChartJS.register(
 
 function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   const { t } = useTranslation('apps.codeTime')
+  const { bgTempPalette, theme } = usePersonalization()
+  const finalTheme = useMemo(() => {
+    if (theme === 'system') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    }
+
+    return theme
+  }, [theme])
   const [lastFor, setLastFor] = useState<7 | 30>(7)
   const dataQuery = useAPIQuery<any[]>(
     `code-time/last-x-days?days=${lastFor}`,
@@ -180,22 +191,6 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
               data={{
                 labels: data.map(e => dayjs(e.date).format('DD MMM')),
                 datasets: [
-                  {
-                    type: 'line' as any,
-                    label: 'Total minutes',
-                    data: data.map(e => e.total_minutes),
-                    borderColor: `rgba(255,255,255, 1)`,
-                    backgroundColor: `rgba(255,200,100,0)`,
-                    lineTension: 0.3,
-                    borderWidth: 1,
-                    pointBorderColor: 'rgba(0, 0, 0, 0)',
-                    pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-                    pointHoverBackgroundColor: '#FFFFFF80',
-                    pointHoverBorderColor: '#FFFFFF',
-                    pointHoverBorderWidth: 2,
-                    pointHoverRadius: 6,
-                    yAxisID: 'y'
-                  },
                   ...projectsData.map((project, index) => ({
                     type: 'bar' as any,
                     label: project.label,
@@ -215,7 +210,25 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                     borderWidth: 1,
                     yAxisID: 'y',
                     stack: 'stack1'
-                  }))
+                  })),
+                  {
+                    type: 'line' as any,
+                    label: 'Total minutes',
+                    data: data.map(e => e.total_minutes),
+                    borderColor:
+                      finalTheme === 'dark'
+                        ? bgTempPalette[100]
+                        : bgTempPalette[500],
+                    lineTension: 0.3,
+                    borderWidth: 2,
+                    pointBorderColor: 'rgba(0, 0, 0, 0)',
+                    pointBackgroundColor: 'rgba(0, 0, 0, 0)',
+                    pointHoverBackgroundColor: '#FFFFFF80',
+                    pointHoverBorderColor: '#FFFFFF',
+                    pointHoverBorderWidth: 2,
+                    pointHoverRadius: 6,
+                    yAxisID: 'y'
+                  }
                 ]
               }}
               options={chartOptions}

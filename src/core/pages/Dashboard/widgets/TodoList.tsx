@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import {
+  Button,
   DashboardItem,
   EmptyStateScreen,
   QueryWrapper,
@@ -22,7 +23,7 @@ function TodoListContent() {
   return (
     <QueryWrapper query={entriesQuery}>
       {entries => (
-        <ul className="flex flex-1 flex-col gap-2">
+        <ul className="flex flex-1 flex-col gap-2 pr-4">
           {entries.length > 0 ? (
             entries.map(entry => (
               <TaskItem
@@ -56,7 +57,20 @@ function TodoListContent() {
 
 export default function TodoList() {
   return (
-    <DashboardItem icon="tabler:clipboard-list" title="Todo List">
+    <DashboardItem
+      className="pr-3"
+      componentBesideTitle={
+        <Button
+          as={Link}
+          className="mr-3 p-2!"
+          icon="tabler:chevron-right"
+          to="/todo-list"
+          variant="plain"
+        />
+      }
+      icon="tabler:clipboard-list"
+      title="Todo List"
+    >
       <TodoListProvider>
         <Scrollbar>
           <TodoListContent />

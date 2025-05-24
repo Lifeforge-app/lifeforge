@@ -42,10 +42,11 @@ function CalendarHeader({
 
   return (
     <>
-      <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 lg:flex-row">
+      <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 md:flex-row">
         <NavigationControl label={label} onNavigate={onNavigate} />
-        <div className="flex w-full gap-2 lg:w-auto">
+        <div className="flex hidden gap-2 md:flex">
           <Button
+            className=""
             icon="tabler:calendar-pin"
             namespace="apps.calendar"
             variant="plain"
@@ -53,7 +54,7 @@ function CalendarHeader({
           >
             today
           </Button>
-          <Menu as="div" className="relative z-50 hidden lg:block">
+          <Menu as="div" className="relative z-50">
             <Button
               as={MenuButton}
               icon="tabler:plus"
