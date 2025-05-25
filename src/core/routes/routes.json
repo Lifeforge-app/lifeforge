@@ -20,7 +20,6 @@
       "@apps/MomentVault",
       "@apps/VirtualWardrobe",
       "@apps/Movies",
-      "@apps/Achievements",
       "@apps/Achievements"
     ]
   },
