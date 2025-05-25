@@ -173,11 +173,13 @@ function BooksLibrary() {
         >
           <MenuItem
             icon="tabler:upload"
+            namespace="apps.booksLibrary"
             text="Upload from device"
             onClick={() => {}}
           />
           <MenuItem
             icon="tabler:books"
+            namespace="apps.booksLibrary"
             text="Download from Libgen"
             onClick={handleOpenLibgenModal}
           />
