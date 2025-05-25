@@ -56,8 +56,8 @@
     "title": "Utilities",
     "items": [
       "@apps/Sudoku",
-      "@apps/CurrencyConverter",
-      "@apps/YoutubeSummarizer"
+      "@apps/YoutubeSummarizer",
+      "@apps/CurrencyConverter"
     ]
   },
   {
