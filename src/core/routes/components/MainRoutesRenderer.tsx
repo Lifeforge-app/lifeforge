@@ -29,8 +29,6 @@ function MainRoutesRenderer() {
                 ? (() => {
                     const Provider: React.FC = item.provider
 
-                    console.log('Provider', Provider)
-
                     return (
                       <Route
                         key={item.name}

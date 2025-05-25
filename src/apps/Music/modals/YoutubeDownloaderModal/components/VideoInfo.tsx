@@ -17,7 +17,6 @@ function VideoInfo({
         uploadDate?: string
       })
 }) {
-  console.log(videoInfo.viewCount)
   return (
     <>
       <div className="border-bg-800 relative w-64 shrink-0 overflow-hidden rounded-md border">
