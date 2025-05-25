@@ -15,7 +15,6 @@ function EventItemButton({
   icon: string
   isStrikethrough?: boolean
 }) {
-  console.log('EventItemButton', id, title, color, icon, isStrikethrough)
   return (
     <button
       className="flex w-full flex-row! flex-nowrap! items-start rounded-md px-[5px] py-[2px]"
