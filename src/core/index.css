@@ -15,7 +15,6 @@ layer(base);
 @import 'react-toastify/dist/ReactToastify.css';
 @import 'react-tooltip/dist/react-tooltip.css';
 @import 'react-virtualized/styles.css';
-@import 'react-datepicker/dist/react-datepicker.css';
 @import '@lifeforge/ui/dist/index.css';
 @source "../../node_modules/@lifeforge/ui/dist";
 
@@ -28,7 +27,7 @@ layer(base);
 @import './styles/utils.css';
 
 /* App styles */
-@import './pages/Dashboard/index.css';
-@import '../apps/Calendar/index.css';
-@import '../apps/RailwayMap/index.css';
-@import '../apps/Music/index.css';
+@import '@core/pages/Dashboard/index.css';
+@import '@apps/Calendar/index.css';
+@import '@apps/RailwayMap/index.css';
+@import '@apps/Music/index.css';
