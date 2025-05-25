@@ -17,6 +17,26 @@ export default function EntryContextMenu({
   const queryClient = useQueryClient()
   const [downloadLoading, setDownloadLoading] = useState(false)
 
+  const handleDownload = useCallback(() => {
+    setDownloadLoading(true)
+    forceDown(
+      `${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
+        item.id
+      }/${item.file}`,
+      `${item.title}.${item.extension}`
+    )
+      .then(() => {
+        setDownloadLoading(false)
+      })
+      .catch(console.error)
+  }, [item])
+
+  const handleSendToKindle = useCallback(() => {
+    open('booksLibrary.sendToKindle', {
+      bookId: item.id
+    })
+  }, [item])
+
   const handleUpdateEntry = useCallback(() => {
     open('booksLibrary.modifyBook', {
       type: 'update',
@@ -47,19 +67,13 @@ export default function EntryContextMenu({
         disabled={downloadLoading}
         icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
         text="Download"
-        onClick={() => {
-          setDownloadLoading(true)
-          forceDown(
-            `${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
-              item.id
-            }/${item.file}`,
-            `${item.title}.${item.extension}`
-          )
-            .then(() => {
-              setDownloadLoading(false)
-            })
-            .catch(console.error)
-        }}
+        onClick={handleDownload}
+      />
+      <MenuItem
+        icon="tabler:brand-amazon"
+        namespace="apps.booksLibrary"
+        text="Send to Kindle"
+        onClick={handleSendToKindle}
       />
       <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateEntry} />
       <MenuItem
