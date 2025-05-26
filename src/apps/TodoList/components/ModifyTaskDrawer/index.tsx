@@ -80,7 +80,7 @@ function ModifyTaskDrawer() {
       summary: summary.trim(),
       notes: notes.trim(),
       subtasks: subtasks,
-      due_date: dueDate,
+      due_date: dueDate ?? '',
       due_date_has_time: dueDateHasTime,
       priority: priority ?? null,
       list: list ?? '',
