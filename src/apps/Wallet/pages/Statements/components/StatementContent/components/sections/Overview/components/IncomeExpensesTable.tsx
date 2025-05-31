@@ -137,7 +137,7 @@ function IncomeExpensesTable({
                               'text-rose-600'
                           )}
                         >
-                          {lastMonthAmount === 0
+                          {Math.abs(lastMonthAmount) < 0.001
                             ? '-'
                             : `${(
                                 ((thatMonthAmount - lastMonthAmount) /
@@ -234,7 +234,7 @@ function IncomeExpensesTable({
                         borderBottom: '6px double'
                       }}
                     >
-                      {lastMonthAmount === 0
+                      {Math.abs(lastMonthAmount) < 0.001
                         ? '-'
                         : `${(
                             ((thatMonthAmount - lastMonthAmount) /
