@@ -160,7 +160,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                                 'text-rose-600'
                             )}
                           >
-                            {lastMonthAmount === 0
+                            {Math.abs(lastMonthAmount) < 0.001
                               ? '-'
                               : `${(
                                   ((thatMonthAmount - lastMonthAmount) /
@@ -270,7 +270,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                           borderBottom: '6px double'
                         }}
                       >
-                        {lastMonthAmount === 0
+                        {Math.abs(lastMonthAmount) < 0.001
                           ? '-'
                           : `${(
                               ((thatMonthAmount - lastMonthAmount) /
