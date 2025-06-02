@@ -6,10 +6,7 @@ import { Button, DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import MiniCalendarContent from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+import { type ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -31,11 +28,6 @@ export default function MiniCalendar() {
   const eventsQuery = useAPIQuery<ICalendarEvent[]>(
     `calendar/events?start=${startDate}&end=${endDate}`,
     ['calendar', 'events', currentYear, currentMonth]
-  )
-
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
   )
 
   return (
@@ -62,18 +54,13 @@ export default function MiniCalendar() {
             setCurrentYear={setCurrentYear}
           />
         </div>
-        <QueryWrapper query={categoriesQuery}>
-          {categories => (
-            <QueryWrapper query={eventsQuery}>
-              {events => (
-                <MiniCalendarContent
-                  categories={categories}
-                  currentMonth={currentMonth}
-                  currentYear={currentYear}
-                  events={events}
-                />
-              )}
-            </QueryWrapper>
+        <QueryWrapper query={eventsQuery}>
+          {events => (
+            <MiniCalendarContent
+              currentMonth={currentMonth}
+              currentYear={currentYear}
+              events={events}
+            />
           )}
         </QueryWrapper>
       </div>
