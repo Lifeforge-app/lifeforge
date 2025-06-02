@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { memo } from 'react'
+import tinycolor from 'tinycolor2'
 
 function EventItemButton({
   id,
@@ -17,10 +18,15 @@ function EventItemButton({
 }) {
   return (
     <button
-      className="flex w-full flex-row! flex-nowrap! items-start rounded-md px-[5px] py-[2px]"
+      className={clsx(
+        'flex w-full flex-row! flex-nowrap! items-start rounded-md px-[5px] py-[2px]',
+        tinycolor(color).isDark() && 'dark-category'
+      )}
       data-tooltip-id={`calendar-event-${id}`}
       style={{
-        backgroundColor: color + '33'
+        backgroundColor: color + '33',
+        // @ts-expect-error - CSS variable not recognized
+        '--category-color': color
       }}
     >
       <div className="flex w-full min-w-0 items-center gap-2">
