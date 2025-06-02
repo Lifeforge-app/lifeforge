@@ -2,7 +2,12 @@
 
 ### 📌 **dev 25w23 (6/2/2025 - 6/9/2025)**
 - **Calendar**: User can now group events by different calendars like Work, Personal, etc. in the calendar sidebar.
-- **Calendar**: Sidebar is now a thing in mobile view. :)
+- **Calendar**: Sidebar is now a thing in mobile view.
+- **Calendar**: Made the borders of the calendar more subtle.
+- **Calendar**: Minor UI improvements.
+- **API**: Major refactoring of the codebase by introducing zod validation library to streamline API request validation.
+- **API**: Removed all the inconsistently written middlewares and replaced it with zod validation.
+- **Code**: Minor bug fixes here and there
 
 ### 📌 **dev 25w22 (5/26/2025 - 6/2/2025)**
 - **Wallet**: Fixed a bug where the percentage calculation in the statement is having rounding issues.
