@@ -82,7 +82,6 @@ function ModifyEventModal({
       },
       {
         id: 'calendar',
-        required: true,
         label: 'Calendar',
         icon: 'tabler:calendar',
         type: 'listbox',
@@ -219,6 +218,13 @@ function ModifyEventModal({
       data={formState}
       endpoint="calendar/events"
       fields={FIELDS}
+      getFinalData={async originalData => {
+        const data: Omit<ICalendarEvent, 'use_google_map'> = {
+          ...originalData
+        }
+        delete data.use_google_map
+        return data
+      }}
       icon={
         {
           create: 'tabler:plus',
