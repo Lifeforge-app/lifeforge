@@ -131,6 +131,21 @@ function CalendarComponent({
             category: event.category
           }
         })
+
+        queryClient.setQueryData<ICalendarEvent[]>(queryKey, prevEvents => {
+          return prevEvents?.map(prevEvent => {
+            if (prevEvent.id === event.id) {
+              return {
+                ...prevEvent,
+                start,
+                end,
+                title: event.title,
+                category: event.category
+              }
+            }
+            return prevEvent
+          })
+        })
       } catch {
         queryClient.invalidateQueries({
           queryKey

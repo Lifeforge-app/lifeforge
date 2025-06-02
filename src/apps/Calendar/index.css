@@ -21,13 +21,6 @@
   @apply z-auto!;
 }
 
-.rbc-month-view,
-.rbc-day-bg,
-.rbc-month-row,
-.rbc-header {
-  @apply dark:border-bg-700;
-}
-
 .rbc-date-cell {
   @apply p-2! text-center text-base;
 }
@@ -45,7 +38,19 @@
 }
 
 .rbc-event {
-  @apply bg-bg-50! dark:bg-bg-800! text-bg-800 dark:text-bg-50 border-none! p-0! text-sm shadow-xs;
+  @apply border-none! bg-transparent! p-0! text-sm shadow-xs transition-all;
+
+  &.rbc-selected button {
+    background-color: var(--category-color) !important;
+
+    & * {
+      @apply text-bg-800!;
+    }
+
+    &.dark-category * {
+      @apply text-bg-100!;
+    }
+  }
 }
 
 .rbc-event button {
@@ -82,7 +87,7 @@
 .rbc-agenda-view table.rbc-agenda-table thead > tr > th,
 .rbc-agenda-view table.rbc-agenda-table,
 .rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
-  @apply border-bg-300 dark:border-bg-700;
+  @apply border-bg-200 dark:border-bg-800;
 }
 
 .rbc-current-time-indicator {
