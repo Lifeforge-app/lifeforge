@@ -24,15 +24,18 @@ function CalendarList({
   )
   const open = useModalStore(state => state.open)
 
-  const handleSelect = useCallback((item: ICalendarCalendar) => {
-    setSelectedCalendar(item.id)
-    setSidebarOpen(false)
-  }, [])
+  const handleSelect = useCallback(
+    (item: ICalendarCalendar) => {
+      setSelectedCalendar(item.id)
+      setSidebarOpen(false)
+    },
+    [setSelectedCalendar, setSidebarOpen]
+  )
 
   const handleCancelSelect = useCallback(() => {
     setSelectedCalendar(undefined)
     setSidebarOpen(false)
-  }, [])
+  }, [setSelectedCalendar, setSidebarOpen])
 
   const handleCreate = useCallback(() => {
     open('calendar.modifyCalendar', {

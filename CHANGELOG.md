@@ -1,5 +1,9 @@
 # Change Log
 
+### 📌 **dev 25w23 (6/2/2025 - 6/9/2025)**
+- **Calendar**: User can now group events by different calendars like Work, Personal, etc. in the calendar sidebar.
+- **Calendar**: Sidebar is now a thing in mobile view. :)
+
 ### 📌 **dev 25w22 (5/26/2025 - 6/2/2025)**
 - **Wallet**: Fixed a bug where the percentage calculation in the statement is having rounding issues.
 - **Wallet**: Utilized the aggregation feature of PocketBase views through SQL query to derive the current balance of an asset 
