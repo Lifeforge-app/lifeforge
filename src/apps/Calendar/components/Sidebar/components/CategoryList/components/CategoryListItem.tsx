@@ -37,7 +37,7 @@ function CategoryListItem({
       e.stopPropagation()
       open('deleteConfirmation', {
         apiEndpoint: 'calendar/categories',
-        confirmationText: 'Delete this event',
+        confirmationText: 'Delete this category',
         data: item,
         itemName: 'category',
         nameKey: 'name',

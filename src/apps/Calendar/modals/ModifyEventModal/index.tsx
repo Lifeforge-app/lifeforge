@@ -10,6 +10,7 @@ import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
+  ICalendarCalendar,
   type ICalendarCategory,
   type ICalendarEvent,
   ICalendarEventFormState
@@ -27,6 +28,10 @@ function ModifyEventModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+  const calendarsQuery = useAPIQuery<ICalendarCalendar[]>(
+    'calendar/calendars',
+    ['calendar', 'calendars']
+  )
   const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
     'calendar/categories',
     ['calendar', 'categories']
@@ -39,6 +44,7 @@ function ModifyEventModal({
     end: null,
     use_google_map: false,
     category: '',
+    calendar: '',
     location: '',
     reference_link: '',
     description: '',
@@ -73,6 +79,21 @@ function ModifyEventModal({
             }))
           : [],
         nullOption: 'tabler:apps-off'
+      },
+      {
+        id: 'calendar',
+        required: true,
+        label: 'Calendar',
+        icon: 'tabler:calendar',
+        type: 'listbox',
+        options: calendarsQuery.isSuccess
+          ? calendarsQuery.data?.map(({ name, color, id }) => ({
+              value: id,
+              text: name,
+              color
+            }))
+          : [],
+        nullOption: ''
       },
       {
         id: 'use_google_map',
@@ -128,6 +149,7 @@ function ModifyEventModal({
         start: dayjs(existedData.start).toDate(),
         end: dayjs(existedData.end).toDate(),
         category: existedData.category ?? '',
+        calendar: existedData.calendar ?? '',
         use_google_map: existedData.use_google_map ?? false,
         location: existedData.location ?? '',
         reference_link: existedData.reference_link ?? '',
@@ -142,6 +164,7 @@ function ModifyEventModal({
         type: 'single',
         title: '',
         category: '',
+        calendar: '',
         start: dayjs().startOf('day').toDate(),
         end: null,
         use_google_map: false,
@@ -172,6 +195,9 @@ function ModifyEventModal({
           queryClient.invalidateQueries({
             queryKey: ['calendar', 'categories']
           })
+          queryClient.invalidateQueries({
+            queryKey: ['calendar', 'calendars']
+          })
         },
         update: () => {
           queryClient.invalidateQueries({
@@ -179,6 +205,9 @@ function ModifyEventModal({
           })
           queryClient.invalidateQueries({
             queryKey: ['calendar', 'categories']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['calendar', 'calendars']
           })
         }
       }}

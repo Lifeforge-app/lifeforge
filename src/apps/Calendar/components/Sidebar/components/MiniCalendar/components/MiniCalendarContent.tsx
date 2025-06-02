@@ -1,22 +1,17 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import dayjs from 'dayjs'
 
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '../../../../../interfaces/calendar_interfaces'
+import { type ICalendarEvent } from '../../../../../interfaces/calendar_interfaces'
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({
   currentMonth,
   currentYear,
-  events,
-  categories
+  events
 }: {
   currentMonth: number
   currentYear: number
   events: ICalendarEvent[]
-  categories: ICalendarCategory[]
 }) {
   const { language } = usePersonalization()
 
@@ -79,7 +74,6 @@ function MiniCalendarContent({
               <MiniCalendarDateItem
                 key={index}
                 actualIndex={actualIndex + 1}
-                categories={categories}
                 date={date}
                 events={events}
                 firstDay={firstDay}

@@ -17,10 +17,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from './interfaces/calendar_interfaces'
+import { type ICalendarEvent } from './interfaces/calendar_interfaces'
 import { calendarModals } from './modals'
 import { useCalendarStore } from './stores/useCalendarStore'
 
@@ -29,15 +26,14 @@ function CalendarModule() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { eventQueryKey } = useCalendarStore()
 
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
-  )
   const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
     `calendar/events?start=${eventQueryKey[2]}&end=${eventQueryKey[3]}`,
     eventQueryKey
   )
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined
+  )
+  const [selectedCalendar, setSelectedCalendar] = useState<string | undefined>(
     undefined
   )
 
@@ -72,8 +68,9 @@ function CalendarModule() {
         <ModuleHeader icon="tabler:calendar" title="Calendar" />
         <LayoutWithSidebar>
           <Sidebar
-            categoriesQuery={categoriesQuery}
+            selectedCalendar={selectedCalendar}
             selectedCategory={selectedCategory}
+            setSelectedCalendar={setSelectedCalendar}
             setSelectedCategory={setSelectedCategory}
             setSidebarOpen={setSidebarOpen}
             sidebarOpen={sidebarOpen}
@@ -82,9 +79,10 @@ function CalendarModule() {
             <Scrollbar>
               <div className="size-full pr-4 pb-8">
                 <CalendarComponent
-                  categories={categoriesQuery?.data ?? []}
                   events={events}
+                  selectedCalendar={selectedCalendar}
                   selectedCategory={selectedCategory}
+                  setSidebarOpen={setSidebarOpen}
                 />
               </div>
             </Scrollbar>

@@ -8,16 +8,15 @@ import {
   ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
 
+import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
 
-function AgendaEventItem({
-  event,
-  categories
-}: {
-  event: ICalendarEvent
-  categories: ICalendarCategory[]
-}) {
+function AgendaEventItem({ event }: { event: ICalendarEvent }) {
   const { componentBg } = useComponentBg()
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories']
+  )
 
   const category = useMemo<ICalendarCategory | undefined>(() => {
     if (event.category.startsWith('_')) {
@@ -26,8 +25,10 @@ function AgendaEventItem({
       ] ?? {}) as ICalendarCategory
     }
 
-    return categories.find(category => category.id === event.category)
-  }, [categories, event.category])
+    return categoriesQuery.data?.find(
+      category => category.id === event.category
+    )
+  }, [categoriesQuery, event.category])
 
   return (
     <div
