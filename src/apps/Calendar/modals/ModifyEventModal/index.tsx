@@ -138,7 +138,12 @@ function ModifyEventModal({
         placeholder: 'Event description'
       }
     ],
-    [formState.type, categoriesQuery.data, formState.use_google_map]
+    [
+      formState.type,
+      categoriesQuery.data,
+      calendarsQuery.data,
+      formState.use_google_map
+    ]
   )
 
   useEffect(() => {
@@ -221,7 +226,7 @@ function ModifyEventModal({
         }[type!]
       }
       id={existedData?.id}
-      loading={categoriesQuery.isLoading}
+      loading={categoriesQuery.isLoading || calendarsQuery.isLoading}
       modalRef={ref}
       namespace="apps.calendar"
       openType={type}

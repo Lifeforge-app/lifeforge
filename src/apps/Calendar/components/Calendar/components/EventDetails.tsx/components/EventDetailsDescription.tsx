@@ -6,15 +6,19 @@ import { Link } from 'react-router'
 
 import { Button } from '@lifeforge/ui'
 
-import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+import {
+  ICalendarCalendar,
+  ICalendarEvent
+} from '@apps/Calendar/interfaces/calendar_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
-  const calendarsQuery = useAPIQuery<ICalendarEvent[]>('calendar/calendars', [
-    'calendar',
-    'calendars'
-  ])
+  const calendarsQuery = useAPIQuery<ICalendarCalendar[]>(
+    'calendar/calendars',
+    ['calendar', 'calendars']
+  )
+
   const eventIsWholeDay = useMemo(() => {
     return (
       dayjs(event.start).format('HH:mm') === '00:00' &&
