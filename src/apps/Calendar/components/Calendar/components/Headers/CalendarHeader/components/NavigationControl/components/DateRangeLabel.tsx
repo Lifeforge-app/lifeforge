@@ -12,9 +12,20 @@ function DateRangeLabel({ label }: { label: string }) {
 
   if (label.match(/^\d/)) {
     const parts = label.split(' – ')
-    console.log(parts)
-    const start = dayjs(parts[0]).format('MMM D')
-    const end = dayjs(parts[1]).format('MMM D')
+
+    if (parts.length !== 2) {
+      return label
+    }
+
+    const startDate = dayjs(parts[0])
+    const endDate = dayjs(parts[1])
+
+    if (!startDate.isValid() || !endDate.isValid()) {
+      return label
+    }
+
+    const start = startDate.format('MMM D')
+    const end = endDate.format('MMM D')
 
     return (
       <>
