@@ -12,6 +12,7 @@ import ViewSelector from './components/ViewSelector'
 interface CalendarHeaderProps {
   label: string
   view: View
+  setSidebarOpen: (value: boolean) => void
   onNavigate: (direction: NavigateAction) => void
   onView: (view: View) => void
 }
@@ -19,6 +20,7 @@ interface CalendarHeaderProps {
 function CalendarHeader({
   label,
   view: currentView,
+  setSidebarOpen,
   onNavigate,
   onView
 }: CalendarHeaderProps) {
@@ -42,7 +44,7 @@ function CalendarHeader({
 
   return (
     <>
-      <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 md:flex-row">
+      <div className="mb-4 flex w-full items-end justify-between gap-4">
         <NavigationControl label={label} onNavigate={onNavigate} />
         <div className="flex hidden gap-2 md:flex">
           <Button
@@ -83,6 +85,14 @@ function CalendarHeader({
             </MenuItems>
           </Menu>
         </div>
+        <Button
+          className="xl:hidden"
+          icon="tabler:menu"
+          variant="plain"
+          onClick={() => {
+            setSidebarOpen(true)
+          }}
+        />
       </div>
       <ViewSelector currentView={currentView} onView={onView} />
     </>

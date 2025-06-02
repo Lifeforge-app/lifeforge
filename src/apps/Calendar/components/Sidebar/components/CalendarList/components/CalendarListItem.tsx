@@ -3,19 +3,19 @@ import { useCallback, useMemo } from 'react'
 import { SidebarItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
-import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
+import { type ICalendarCalendar } from '../../../../../interfaces/calendar_interfaces'
 import ActionMenu from './ActionMenu'
 
-function CategoryListItem({
+function CalendarListItem({
   item,
   isSelected,
   onSelect,
   onCancelSelect,
   modifiable = true
 }: {
-  item: ICalendarCategory
+  item: ICalendarCalendar
   isSelected: boolean
-  onSelect: (item: ICalendarCategory) => void
+  onSelect: (item: ICalendarCalendar) => void
   onCancelSelect: () => void
   modifiable?: boolean
 }) {
@@ -24,7 +24,7 @@ function CategoryListItem({
   const handleEdit = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      open('calendar.modifyCategory', {
+      open('calendar.modifyCalendar', {
         existedData: item,
         type: 'update'
       })
@@ -36,12 +36,12 @@ function CategoryListItem({
     (e: React.MouseEvent) => {
       e.stopPropagation()
       open('deleteConfirmation', {
-        apiEndpoint: 'calendar/categories',
-        confirmationText: 'Delete this category',
+        apiEndpoint: 'calendar/calendars',
+        confirmationText: 'Delete this calendar',
         data: item,
-        itemName: 'category',
+        itemName: 'calendar',
         nameKey: 'name',
-        queryKey: ['calendar', 'categories']
+        queryKey: ['calendar', 'calendars']
       })
     },
     [item]
@@ -73,4 +73,4 @@ function CategoryListItem({
   )
 }
 
-export default CategoryListItem
+export default CalendarListItem

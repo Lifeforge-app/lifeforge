@@ -6,6 +6,7 @@ interface ICalendarEvent extends RecordModel {
   start: string | Date
   end: string | Date
   category: string
+  calendar: string
   use_google_map: boolean
   location: string
   reference_link: string
@@ -22,6 +23,7 @@ type ICalendarEventFormState = {
   end: Date | null
   use_google_map: boolean
   category: string
+  calendar: string
   location: string
   reference_link: string
   description: string
@@ -44,9 +46,21 @@ type ICalendarCategoryFormState = {
   name: string
 }
 
+interface ICalendarCalendar extends RecordModel {
+  name: string
+  color: string
+}
+
+interface ICalendarCalendarFormState {
+  name: string
+  color: string
+}
+
 export type {
   ICalendarCategory,
   ICalendarEventFormState,
   ICalendarEvent,
-  ICalendarCategoryFormState
+  ICalendarCategoryFormState,
+  ICalendarCalendar,
+  ICalendarCalendarFormState
 }

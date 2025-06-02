@@ -10,10 +10,7 @@ import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '../../interfaces/calendar_interfaces'
+import { type ICalendarEvent } from '../../interfaces/calendar_interfaces'
 import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import EventItem from './components/EventItem'
@@ -25,14 +22,16 @@ const DnDCalendar = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
   events: ICalendarEvent[]
-  categories: ICalendarCategory[]
+  setSidebarOpen: (value: boolean) => void
   selectedCategory: string | undefined
+  selectedCalendar: string | undefined
 }
 
 function CalendarComponent({
   events,
-  categories,
-  selectedCategory
+  setSidebarOpen,
+  selectedCategory,
+  selectedCalendar
 }: CalendarComponentProps) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
@@ -40,13 +39,12 @@ function CalendarComponent({
 
   const filteredEvents = useMemo(
     () =>
-      events.filter(event => {
-        if (selectedCategory) {
-          return event.category === selectedCategory
-        }
-        return true
-      }),
-    [events, selectedCategory]
+      events.filter(
+        event =>
+          (selectedCalendar ? event.calendar === selectedCalendar : true) &&
+          (selectedCategory ? event.category === selectedCategory : true)
+      ),
+    [events, selectedCategory, selectedCalendar]
   )
 
   const handleDateRangeChange = useCallback(
@@ -77,7 +75,7 @@ function CalendarComponent({
   const calendarComponents = useMemo(
     () => ({
       toolbar: (props: any) => {
-        return <CalendarHeader {...props} />
+        return <CalendarHeader setSidebarOpen={setSidebarOpen} {...props} />
       },
       event: ({
         event
@@ -85,9 +83,7 @@ function CalendarComponent({
         event: ICalendarEvent | Record<string, unknown>
         props: any
       }) => {
-        return (
-          <EventItem categories={categories} event={event as ICalendarEvent} />
-        )
+        return <EventItem event={event as ICalendarEvent} />
       },
       week: {
         header: WeekHeader
@@ -95,14 +91,11 @@ function CalendarComponent({
       agenda: {
         date: AgendaDate,
         event: ({ event }: { event: ICalendarEvent }) => (
-          <AgendaEventItem
-            categories={categories}
-            event={event as ICalendarEvent}
-          />
+          <AgendaEventItem event={event as ICalendarEvent} />
         )
       }
     }),
-    [categories]
+    []
   )
 
   const updateEvent = useCallback(

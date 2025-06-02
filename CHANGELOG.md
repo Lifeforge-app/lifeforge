@@ -1,5 +1,9 @@
 # Change Log
 
+### 📌 **dev 25w22 (5/26/2025 - 6/2/2025)**
+- **Wallet**: Fixed a bug where the percentage calculation in the statement is having rounding issues.
+- **Wallet**: Utilized the aggregation feature of PocketBase views through SQL query to derive the current balance of an asset 
+
 ### 📌 **dev 25w21 (5/19/2025 - 5/26/2025)**
 - **Account Settings**: Renamed the folder from `Account` to `Account Settings` for better clarity.
 - **Account Settings**: Fixed a bug where the input box in the modification modal is overflowing.

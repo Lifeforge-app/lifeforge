@@ -8,7 +8,13 @@ import { Button } from '@lifeforge/ui'
 
 import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 
+import useAPIQuery from '@hooks/useAPIQuery'
+
 function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
+  const calendarsQuery = useAPIQuery<ICalendarEvent[]>('calendar/calendars', [
+    'calendar',
+    'calendars'
+  ])
   const eventIsWholeDay = useMemo(() => {
     return (
       dayjs(event.start).format('HH:mm') === '00:00' &&
@@ -27,10 +33,14 @@ function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
       : `${dayjs(event.start).format('h:mm A')} - ${dayjs(event.end).format('h:mm A')}`
   }, [event.start, event.end, eventIsWholeDay])
 
+  const eventCalendar = useMemo(() => {
+    return calendarsQuery.data?.find(calendar => calendar.id === event.calendar)
+  }, [calendarsQuery.data, event.calendar])
+
   return (
     <>
       <div className="mt-4 space-y-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Icon
             className="text-bg-500 size-4 shrink-0"
             icon="tabler:clock-hour-3"
@@ -38,12 +48,27 @@ function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
           <span className="text-bg-500">{eventTime}</span>
         </div>
         {event.location && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Icon
               className="text-bg-500 size-4 shrink-0"
               icon="tabler:map-pin"
             />
             <span className="text-bg-500">{event.location}</span>
+          </div>
+        )}
+        {eventCalendar && (
+          <div className="flex items-center gap-3">
+            <Icon
+              className="text-bg-500 size-4 shrink-0"
+              icon={eventCalendar.icon ?? 'tabler:calendar'}
+            />
+            <div className="flex items-center gap-2">
+              <span
+                className="block h-4 w-1 rounded-md"
+                style={{ backgroundColor: eventCalendar.color }}
+              />
+              <span className="text-bg-500">{eventCalendar.name}</span>
+            </div>
           </div>
         )}
         {event.description && (

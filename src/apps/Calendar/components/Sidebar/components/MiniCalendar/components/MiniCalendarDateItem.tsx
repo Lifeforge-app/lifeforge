@@ -1,8 +1,10 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
+
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
   type ICalendarCategory,
@@ -18,7 +20,6 @@ interface MiniCalendarDateItemProps {
   lastDate: number
   date: Date
   events: ICalendarEvent[]
-  categories: ICalendarCategory[]
 }
 
 function MiniCalendarDateItem({
@@ -27,9 +28,13 @@ function MiniCalendarDateItem({
   firstDay,
   lastDate,
   date,
-  events,
-  categories
+  events
 }: MiniCalendarDateItemProps) {
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories']
+  )
+
   const isInThisMonth = useMemo(
     () => !(firstDay > index || index - firstDay + 1 > lastDate),
     [firstDay, index, lastDate]
@@ -63,13 +68,16 @@ function MiniCalendarDateItem({
     [date, firstDay, index, lastDate, actualIndex]
   )
 
-  function getCategory(event: ICalendarEvent): ICalendarCategory | undefined {
-    return event.category.startsWith('_')
-      ? (INTERNAL_CATEGORIES[
-          event.category as keyof typeof INTERNAL_CATEGORIES
-        ] as ICalendarCategory)
-      : categories.find(category => category.id === event.category)
-  }
+  const getCategory = useCallback(
+    (event: ICalendarEvent): ICalendarCategory | undefined => {
+      return event.category.startsWith('_')
+        ? (INTERNAL_CATEGORIES[
+            event.category as keyof typeof INTERNAL_CATEGORIES
+          ] as ICalendarCategory)
+        : categoriesQuery.data?.find(category => category.id === event.category)
+    },
+    [categoriesQuery.data]
+  )
 
   return (
     <>

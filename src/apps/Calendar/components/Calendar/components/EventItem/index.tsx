@@ -2,6 +2,8 @@ import { memo, useMemo } from 'react'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
+import useAPIQuery from '@hooks/useAPIQuery.ts'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -9,13 +11,11 @@ import {
 import EventItemButton from './components/EventItemButton.tsx'
 import EventItemTooltip from './components/EventItemTooltip.tsx'
 
-function EventItem({
-  event,
-  categories
-}: {
-  event: ICalendarEvent
-  categories: ICalendarCategory[]
-}) {
+function EventItem({ event }: { event: ICalendarEvent }) {
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories']
+  )
   const category = useMemo<ICalendarCategory | undefined>(() => {
     if (event.category.startsWith('_')) {
       return (INTERNAL_CATEGORIES[
@@ -23,8 +23,10 @@ function EventItem({
       ] ?? {}) as ICalendarCategory
     }
 
-    return categories.find(category => category.id === event.category)
-  }, [categories, event.category])
+    return categoriesQuery.data?.find(
+      category => category.id === event.category
+    )
+  }, [categoriesQuery, event.category])
 
   return (
     <>
