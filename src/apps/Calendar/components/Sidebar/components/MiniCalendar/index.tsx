@@ -5,14 +5,11 @@ import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import {
-  type ICalendarCategory,
-  ICalendarEvent
-} from '../../../../interfaces/calendar_interfaces'
+import { ICalendarEvent } from '../../../../interfaces/calendar_interfaces'
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 
-function MiniCalendar({ categories }: { categories: ICalendarCategory[] }) {
+function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
   const [currentYear, setCurrentYear] = useState(dayjs().year())
   const startDate = dayjs()
@@ -43,7 +40,6 @@ function MiniCalendar({ categories }: { categories: ICalendarCategory[] }) {
         <QueryWrapper query={eventsQuery}>
           {events => (
             <MiniCalendarContent
-              categories={categories}
               currentMonth={currentMonth}
               currentYear={currentYear}
               events={events}

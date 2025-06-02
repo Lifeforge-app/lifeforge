@@ -48,6 +48,6 @@ div[data-rmiz-modal-overlay] {
   @apply size-6 shrink-0;
 }
 
-aside .sidebar-item .bg-bg-200\/50 svg {
+aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
   @apply text-custom-500!;
 }
