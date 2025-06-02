@@ -64,7 +64,7 @@ function GuitarTabs() {
     `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
       debouncedSearchQuery.trim()
     )}&category=${selectedCategory ?? 'all'}${
-      isStarred !== null ? '&starred=true' : ''
+      isStarred ? '&starred=true' : ''
     }&author=${selectedAuthor ?? 'all'}&sort=${selectedSortType}`,
     queryKey
   )
