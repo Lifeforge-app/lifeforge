@@ -19,7 +19,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
     retry: 5
   })
 
-  return OGQuery.isSuccess && OGQuery.data !== undefined ? (
+  return OGQuery.isSuccess && OGQuery.data ? (
     <button
       className={clsx(
         'shadow-custom w-full cursor-pointer space-y-2 rounded-md p-2 text-left',
