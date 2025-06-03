@@ -9,10 +9,10 @@ import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
 import TagItem from './components/TagItem'
 
 const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {
-  if (a.count === b.count) {
+  if (a.amount === b.amount) {
     return a.name.localeCompare(b.name)
   }
-  return b.count - a.count
+  return b.amount - a.amount
 }
 
 function TagsSelector() {
@@ -93,14 +93,14 @@ function TagsSelector() {
         {tags.map(tag => {
           const tagCount =
             path === '' && debouncedSearchQuery.trim().length === 0
-              ? tag.count
+              ? tag.amount
               : (countHashMap.get(tag.name) ?? 0)
 
           return (
             <TagItem
               key={tag.id}
+              amount={tagCount}
               color={tag.color}
-              count={tagCount}
               icon={tag.icon}
               id={tag.id}
               isSelected={selectedTags.includes(tag.name)}

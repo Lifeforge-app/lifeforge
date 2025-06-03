@@ -64,7 +64,7 @@ function SortBySelector({
         </div>
         <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
       </ListboxButton>
-      <ListboxOrComboboxOptions>
+      <ListboxOrComboboxOptions customWidth="min-w-48">
         {SORT_TYPE.map(([icon, value]) => (
           <ListboxOrComboboxOption
             key={value}

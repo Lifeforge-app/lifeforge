@@ -5,6 +5,9 @@
 - **Calendar**: Sidebar is now a thing in mobile view.
 - **Calendar**: Made the borders of the calendar more subtle.
 - **Calendar**: Minor UI improvements.
+- **Code Time**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
+- **Guitar Tabs**: Removed the "Download All" button since it doesn't work anymore after the migration to S3.
+- **Movies**: Fixed the layout of hte movie ticket modal.
 - **API**: Major refactoring of the codebase by introducing zod validation library to streamline API request validation.
 - **API**: Removed all the inconsistently written middlewares and replaced it with zod validation.
 - **Code**: Minor bug fixes here and there

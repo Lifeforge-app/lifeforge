@@ -16,7 +16,7 @@ function ShowTicketModal({
   onClose: () => void
 }) {
   return (
-    <div className="max-w-[20rem]">
+    <div className="lg:max-w-[20rem]">
       <ModalHeader
         icon="tabler:ticket"
         namespace="apps.movies"
@@ -25,8 +25,14 @@ function ShowTicketModal({
       />
       {entry && (
         <>
-          <div className="flex aspect-square h-auto w-full items-center justify-center rounded-lg bg-white p-8">
-            <QRCodeSVG className="h-full w-full" value={entry.ticket_number} />,
+          <div className="flex-center w-full">
+            <div className="flex aspect-square h-auto w-full max-w-[20rem] items-center justify-center rounded-lg bg-white p-8">
+              <QRCodeSVG
+                className="h-full w-full"
+                value={entry.ticket_number}
+              />
+              ,
+            </div>
           </div>
           <h2 className="mt-6 text-xl font-medium">{entry.title}</h2>
           <div className="text-bg-500 mt-6 space-y-4">

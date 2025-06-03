@@ -54,7 +54,7 @@ interface IIdeaBoxTag extends RecordModel {
   color: string
   icon: string
   container: string
-  count: number
+  amount: number
 }
 
 interface IIdeaBoxTagFormState extends IFormState {

@@ -1,14 +1,10 @@
 import { t } from 'i18next'
-import { useCallback } from 'react'
-import { toast } from 'react-toastify'
 
 import {
   HamburgerMenuSelectorWrapper,
   MenuItem,
   SidebarDivider
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
@@ -28,24 +24,8 @@ function ActionMenu({
   sortType: string
   setSortType: React.Dispatch<React.SetStateAction<string>>
 }) {
-  const downloadAll = useCallback(async () => {
-    try {
-      await fetchAPI('guitar-tabs/entries/download-all')
-
-      toast.success('Guitar tabs are being downloaded!')
-    } catch {
-      toast.error('Failed to download guitar tabs!')
-    }
-  }, [])
-
   return (
     <>
-      <MenuItem
-        icon="tabler:download"
-        namespace="apps.guitarTabs"
-        text="Download All"
-        onClick={downloadAll}
-      />
       <div className="block md:hidden">
         <SidebarDivider noMargin />
         <HamburgerMenuSelectorWrapper
