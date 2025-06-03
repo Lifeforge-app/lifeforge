@@ -20,6 +20,7 @@ import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import fetchAPI from '@utils/fetchAPI'
 import IntervalManager from '@utils/intervalManager'
 
 import Header from './components/Header'
@@ -142,27 +143,14 @@ function GuitarTabs() {
       }
 
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/upload`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${parseCookie(document.cookie).session}`
-            },
-            body: formData
-          }
-        )
+        const res = await fetchAPI<boolean>(`guitar-tabs/entries/upload`, {
+          body: formData
+        })
 
-        if (res.status === 202) {
-          const data = await res.json()
-          if (data.state === 'accepted') {
-            startInterval()
-          }
+        if (res) {
+          startInterval()
         } else {
-          const data = await res.json()
-          throw new Error(
-            `Failed to upload guitar tabs. Error: ${data.message}`
-          )
+          throw new Error(`Failed to upload guitar tabs.`)
         }
       } catch (error) {
         console.error(error)
