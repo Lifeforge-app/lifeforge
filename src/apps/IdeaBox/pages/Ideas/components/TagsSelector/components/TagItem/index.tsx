@@ -11,7 +11,7 @@ function TagItem({
   name,
   icon,
   color,
-  count,
+  amount,
   isSelected,
   onSelect,
   onUpdate
@@ -20,7 +20,7 @@ function TagItem({
   name: string
   icon: string
   color: string
-  count: number
+  amount: number
   isSelected: boolean
   onSelect: (tagName: string) => void
   onUpdate: (id: string) => void
@@ -79,7 +79,7 @@ function TagItem({
         />
       )}
       <span className="shrink-0 text-sm">{name}</span>
-      <ItemCount isSelected={isSelected} tagColor={color} tagCount={count} />
+      <ItemCount isSelected={isSelected} tagColor={color} tagCount={amount} />
       <HamburgerButton
         isSelected={isSelected}
         tagColor={color}
@@ -93,6 +93,6 @@ export default memo(TagItem, (prevProps, nextProps) => {
   return (
     prevProps.id === nextProps.id &&
     prevProps.isSelected === nextProps.isSelected &&
-    prevProps.count === nextProps.count
+    prevProps.amount === nextProps.amount
   )
 })

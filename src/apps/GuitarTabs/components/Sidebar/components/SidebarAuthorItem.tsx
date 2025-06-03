@@ -19,7 +19,7 @@ function SidebarAuthorItem({
   const { t } = useTranslation('apps.guitarTabs')
 
   const handleClick = useCallback(() => {
-    onSelect(author)
+    onSelect(author || '[na]')
   }, [])
 
   return (
