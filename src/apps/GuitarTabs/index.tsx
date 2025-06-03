@@ -61,11 +61,23 @@ function GuitarTabs() {
     page: number
     items: IGuitarTabsEntry[]
   }>(
-    `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
-      debouncedSearchQuery.trim()
-    )}&category=${selectedCategory ?? 'all'}${
-      isStarred ? '&starred=true' : ''
-    }&author=${selectedAuthor ?? 'all'}&sort=${selectedSortType}`,
+    (() => {
+      const searchParams = new URLSearchParams()
+
+      searchParams.set('sort', selectedSortType)
+      searchParams.set('page', String(page))
+
+      if (debouncedSearchQuery.trim())
+        searchParams.set('query', debouncedSearchQuery.trim())
+
+      if (selectedCategory) searchParams.set('category', selectedCategory)
+
+      if (isStarred) searchParams.set('starred', 'true')
+
+      if (selectedAuthor) searchParams.set('author', selectedAuthor)
+
+      return `guitar-tabs/entries?${searchParams.toString()}`
+    })(),
     queryKey
   )
 
@@ -262,7 +274,6 @@ function GuitarTabs() {
                 ({entriesQuery.data?.totalItems ?? 0})
               </span>
             </div>
-
             <Button
               className="lg:hidden"
               icon="tabler:menu"
