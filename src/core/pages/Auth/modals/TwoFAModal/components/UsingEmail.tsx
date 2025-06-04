@@ -9,7 +9,7 @@ import ResendOTPButton from '@security/components/OTPScreen/components/ResendOTP
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../../../providers/AuthProvider'
+import { useAuth } from '../../../../../providers/AuthProvider'
 
 function UsingEmail({
   callback

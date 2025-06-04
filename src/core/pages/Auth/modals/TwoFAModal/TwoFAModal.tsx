@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 
 import { Button, ModalHeader } from '@lifeforge/ui'
 
-import { useAuth } from '../../providers/AuthProvider'
+import { useAuth } from '../../../../providers/AuthProvider'
 import UsingAuthApp from './components/UsingAuthApp'
 import UsingEmail from './components/UsingEmail'
 

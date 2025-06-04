@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { TextInput } from '@lifeforge/ui'
 
-import { useAuth } from '../providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm({ providers }: { providers: string[] }) {
@@ -78,6 +78,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       })
       .catch(() => {
         toast.error(t(`messages.unknownError`))
+        setFormDisabled(false)
       })
       .finally(() => {
         setLoading(false)

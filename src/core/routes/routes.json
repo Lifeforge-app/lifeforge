@@ -35,8 +35,7 @@
     "items": [
       "@apps/BooksLibrary",
       "@apps/Music",
-      "@apps/GuitarTabs",
-      "@apps/YoutubeVideos"
+      "@apps/GuitarTabs"
     ]
   },
   {
@@ -64,8 +63,7 @@
     "title": "Settings",
     "items": [
       "@core/Personalization",
-      "@core/Modules",
-      "@core/ServerStatus"
+      "@core/Modules"
     ]
   },
   {

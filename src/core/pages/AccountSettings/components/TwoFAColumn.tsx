@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { ConfigColumn, Switch } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
-import { useAuth } from '../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 
 function TwoFAColumn() {
   const open = useModalStore(state => state.open)

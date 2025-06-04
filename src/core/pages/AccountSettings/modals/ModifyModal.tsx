@@ -7,7 +7,7 @@ import { Button, DateInput, ModalHeader, TextInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 
 function ModifyModal({
   data: { type, title, id, icon },

@@ -46,7 +46,7 @@ function FontFamilyList({
             <span
               className="-mt-px block truncate"
               style={{
-                fontFamily
+                fontFamily: `"${fontFamily}", sans-serif`
               }}
             >
               {fontFamily || (

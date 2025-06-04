@@ -67,14 +67,6 @@ const DASHBOARD_WIDGETS: Record<
   },
   assetsBalance: {
     icon: 'tabler:coin'
-  },
-  serverStatus: {
-    icon: 'tabler:server',
-    minW: 2,
-    minH: 2
-  },
-  storageStatus: {
-    icon: 'tabler:database'
   }
 }
 

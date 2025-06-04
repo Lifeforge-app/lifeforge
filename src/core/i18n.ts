@@ -26,7 +26,19 @@ function initLocale() {
         return JSON.stringify({ key, value, options })
       },
       backend: {
-        loadPath: `${import.meta.env.VITE_API_HOST}/locales/{{lng}}/{{ns}}`
+        loadPath: (langs: string[], namespaces: string[]) => {
+          if (
+            !['en', 'zh', 'zh-TW', 'zh-CN', 'ms'].includes(langs[0]) ||
+            !namespaces.filter(e => e && e !== 'undefined').length
+          ) {
+            return
+          }
+
+          return `${import.meta.env.VITE_API_HOST}/locales/${langs[0]}/${namespaces[0].split('.').join('/')}`
+        },
+        parse: (data: string) => {
+          return JSON.parse(data).data
+        }
       }
     })
     .catch(() => {
