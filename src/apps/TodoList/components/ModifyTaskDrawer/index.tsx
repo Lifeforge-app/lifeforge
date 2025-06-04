@@ -20,17 +20,11 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import useAPIQuery from '@hooks/useAPIQuery'
-
 import fetchAPI from '@utils/fetchAPI'
 
-import {
-  ITodoListEntry,
-  type ITodoSubtask
-} from '../../interfaces/todo_list_interfaces'
+import { ITodoListEntry } from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'
 import PrioritySelector from './components/PrioritySelector'
-import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
 
 function ModifyTaskDrawer() {
@@ -46,12 +40,6 @@ function ModifyTaskDrawer() {
   } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
-  const [subtasks, setSubtasks] = useState<ITodoSubtask[]>([])
-  const subTasksQuery = useAPIQuery<ITodoSubtask[]>(
-    `todo-list/subtasks/list/${selectedTask?.id}`,
-    ['todo-list', 'subtasks', selectedTask?.id],
-    (selectedTask?.subtasks.length ?? 0) > 0 && openType === 'update'
-  )
 
   const [notes, setNotes] = useState('')
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
@@ -79,7 +67,6 @@ function ModifyTaskDrawer() {
     const task = {
       summary: summary.trim(),
       notes: notes.trim(),
-      subtasks: subtasks,
       due_date: dueDate ?? '',
       due_date_has_time: dueDateHasTime,
       priority: priority ?? null,
@@ -169,12 +156,6 @@ function ModifyTaskDrawer() {
   }, [openType])
 
   useEffect(() => {
-    if (subTasksQuery.data && !subTasksQuery.isLoading) {
-      setSubtasks(subTasksQuery.data)
-    }
-  }, [subTasksQuery.data, subTasksQuery.isLoading])
-
-  useEffect(() => {
     if (selectedTask !== null) {
       setSummary(selectedTask.summary)
       setNotes(selectedTask.notes)
@@ -252,12 +233,6 @@ function ModifyTaskDrawer() {
               placeholder="An urgent task"
               setValue={setSummary}
               value={summary}
-            />
-            <SubtaskBox
-              notes={notes}
-              setSubtasks={setSubtasks}
-              subtasks={subtasks}
-              summary={summary}
             />
             <div className="flex items-center justify-between py-2">
               <div className="flex items-center gap-2">

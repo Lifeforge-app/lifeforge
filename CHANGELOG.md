@@ -5,10 +5,12 @@
 - **Calendar**: Sidebar is now a thing in mobile view.
 - **Calendar**: Made the borders of the calendar more subtle.
 - **Calendar**: Minor UI improvements.
+- **Idea Box**: Container entry counts are now calculated dynamically in database using PocketBase views.
 - **Code Time**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
 - **Guitar Tabs**: Removed the "Download All" button since it doesn't work anymore after the migration to S3.
 - **Music**: Removed the feature to import music from NAS and replacement will be added later.
 - **Movies**: Fixed the layout of hte movie ticket modal.
+- **Todo List**: Removed subtask feature due to the messy implementation and will be replaced with a better solution later.
 - **API**: Major refactoring of the codebase by introducing zod validation library to streamline API request validation.
 - **API**: Removed all the inconsistently written middlewares and replaced it with zod validation.
 - **API**: Removed `/quotes` endpoint.
