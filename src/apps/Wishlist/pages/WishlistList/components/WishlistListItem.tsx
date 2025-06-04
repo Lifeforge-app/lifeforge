@@ -56,25 +56,32 @@ function WishlistListItem({ list }: { list: IWishlistList }) {
       <div className="text-right">
         <div className="flex-between text-bg-500 text-sm whitespace-nowrap">
           <p>{list.bought_count} bought</p>
-          <p>{list.item_count} items</p>
+          <p>{list.total_count} items</p>
         </div>
         <progress
           className="progress bg-bg-200 dark:bg-bg-700 h-2 w-full rounded-lg"
           max="100"
           value={
             list.bought_count !== 0
-              ? (list.bought_count / list.item_count) * 100
+              ? (list.bought_count / list.total_count) * 100
               : 0
           }
         ></progress>
         <div className="flex-between text-bg-500 text-sm">
           <p>
-            {list.bought_count === 0
-              ? '0'
-              : Math.round((list.bought_count / list.item_count) * 100)}
-            %
+            Spent{' '}
+            {new Intl.NumberFormat('en-MY', {
+              style: 'currency',
+              currency: 'MYR'
+            }).format(list.bought_amount)}
           </p>
-          <p>total RM{list.total_amount.toFixed(2)}</p>
+          <p>
+            Total{' '}
+            {new Intl.NumberFormat('en-MY', {
+              style: 'currency',
+              currency: 'MYR'
+            }).format(list.total_amount)}
+          </p>
         </div>
       </div>
       <HamburgerMenu
