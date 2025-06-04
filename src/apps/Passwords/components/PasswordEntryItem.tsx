@@ -62,7 +62,7 @@ function PasswordEntryITem({
 
   const handleDeletePassword = useCallback(() => {
     open('deleteConfirmation', {
-      apiEndpoint: 'passwords/password',
+      apiEndpoint: 'passwords/entries',
       confirmationText: 'Delete this password',
       customText: `Are you sure you want to delete the password for ${password.name}? This action is irreversible.`,
       data: password,

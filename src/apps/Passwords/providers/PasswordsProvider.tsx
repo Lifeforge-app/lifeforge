@@ -30,7 +30,7 @@ export default function PasswordsProvider() {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
   const passwordListQuery = useAPIQuery<IPasswordEntry[]>(
-    'passwords/password',
+    'passwords/entries',
     ['passwords', 'entries'],
     masterPassword !== ''
   )

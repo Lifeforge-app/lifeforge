@@ -9,15 +9,16 @@ export async function getDecryptedPassword(
   masterPassword: string,
   id: string
 ): Promise<string> {
-  const challenge = await fetchAPI<string>('passwords/password/challenge')
+  const challenge = await fetchAPI<string>('passwords/entries/challenge')
 
   const encryptedMaster = encrypt(masterPassword, challenge)
 
   const decrypted = await fetch(
-    `${import.meta.env.VITE_API_HOST}/passwords/password/decrypt/${id}`,
+    `${import.meta.env.VITE_API_HOST}/passwords/entries/decrypt/${id}?master=${encodeURIComponent(
+      encryptedMaster
+    )}`,
     {
       method: 'POST',
-      body: JSON.stringify({ master: encryptedMaster }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${parseCookie(document.cookie).session}`

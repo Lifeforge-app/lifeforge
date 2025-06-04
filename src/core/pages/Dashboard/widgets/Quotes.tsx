@@ -8,7 +8,12 @@ import { QueryWrapper } from '@lifeforge/ui'
 import useAPIQuery from '@hooks/useAPIQuery'
 
 export default function Quotes() {
-  const quoteQuery = useAPIQuery<string>('quotes', ['quotes'])
+  const quoteQuery = useAPIQuery<
+    {
+      q: string
+      a: string
+    }[]
+  >('cors-anywhere?url=https://zenquotes.io/api/random', ['quote'])
   const { themeColor } = usePersonalization()
 
   return (
@@ -29,7 +34,9 @@ export default function Quotes() {
               tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50'
             )}
           >
-            {quote}
+            {quote[0].q}
+            <br />
+            <span className="mt-4 block text-base">- {quote[0].a}</span>
           </div>
         )}
       </QueryWrapper>
