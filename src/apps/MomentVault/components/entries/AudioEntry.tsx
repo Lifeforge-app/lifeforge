@@ -63,7 +63,7 @@ function AudioEntry({
 
     try {
       const data = await fetchAPI<string>(
-        `moment-vault/transcribe-existed/${entry.id}`,
+        `moment-vault/transcribe/${entry.id}`,
         {
           method: 'POST'
         }
