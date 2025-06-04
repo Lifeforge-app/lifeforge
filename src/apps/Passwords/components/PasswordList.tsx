@@ -26,7 +26,7 @@ function PasswordList() {
     }
 
     try {
-      await fetchAPI(`passwords/password/pin/${id}`, {
+      await fetchAPI(`passwords/entries/pin/${id}`, {
         method: 'POST'
       })
 

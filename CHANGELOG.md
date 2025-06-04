@@ -7,9 +7,13 @@
 - **Calendar**: Minor UI improvements.
 - **Code Time**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
 - **Guitar Tabs**: Removed the "Download All" button since it doesn't work anymore after the migration to S3.
+- **Music**: Removed the feature to import music from NAS and replacement will be added later.
 - **Movies**: Fixed the layout of hte movie ticket modal.
 - **API**: Major refactoring of the codebase by introducing zod validation library to streamline API request validation.
 - **API**: Removed all the inconsistently written middlewares and replaced it with zod validation.
+- **API**: Removed `/quotes` endpoint.
+- **API**: Added `/cors-anywhere` endpoint to allow the system to make cross-origin requests.
+- **Dashboard**: The quote of the day widget is now using the `/cors-anywhere` endpoint to fetch quotes from external sources.
 - **Code**: Minor bug fixes here and there
 
 ### 📌 **dev 25w22 (5/26/2025 - 6/2/2025)**
