@@ -62,8 +62,8 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
       open('wishlist.entries.modifyEntry', {
         type: 'create',
         existedData: {
-          name: name ?? '',
-          price: price ?? 0,
+          name,
+          price,
           image,
           url,
           list: id
