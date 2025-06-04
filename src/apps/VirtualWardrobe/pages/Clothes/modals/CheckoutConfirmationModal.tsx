@@ -38,12 +38,15 @@ function CheckoutConfirmationModal({
       )
 
       queryClient.invalidateQueries({ queryKey })
-      onClose()
     } catch {
       toast.error('Failed to checkout')
     } finally {
       setLoading(false)
       onClose()
+
+      setTimeout(() => {
+        onClose()
+      }, 500)
     }
   }
 

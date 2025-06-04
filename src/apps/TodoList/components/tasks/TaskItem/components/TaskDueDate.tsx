@@ -7,7 +7,7 @@ function TaskDueDate({ entry }: { entry: ITodoListEntry }) {
   return (
     <>
       {entry.done && entry.completed_at !== '' ? (
-        <div className="text-bg-500 text-sm">
+        <div className="text-bg-500 text-sm whitespace-nowrap">
           Completed: {dayjs(entry.completed_at).fromNow()}
         </div>
       ) : (
