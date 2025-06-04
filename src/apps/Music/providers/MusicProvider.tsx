@@ -15,7 +15,7 @@ import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { useAuth } from '../../../core/pages/Auth/providers/AuthProvider'
+import { useAuth } from '../../../core/providers/AuthProvider'
 
 interface IMusicContext {
   // Audio related

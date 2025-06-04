@@ -10,7 +10,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
-import AuthProvider from '../pages/Auth/providers/AuthProvider'
+import AuthProvider from './AuthProvider'
 
 const queryClient = new QueryClient()
 

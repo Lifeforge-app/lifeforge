@@ -9,12 +9,10 @@ function useFontFamily(fontFamily: string) {
       styleTagId
     ) as HTMLStyleElement | null
 
-    // Remove previous style tag if exists
     if (styleTag) {
       styleTag.remove()
     }
 
-    // Create new style tag
     styleTag = document.createElement('style')
     styleTag.id = styleTagId
     document.head.appendChild(styleTag)
@@ -36,7 +34,7 @@ function useFontFamily(fontFamily: string) {
           data.items.forEach(font => {
             Object.entries(font.files).forEach(([variant, url]) => {
               const fontFace = `@font-face {
-                font-family: '${font.family}';
+                font-family: "${font.family}";
                 src: url('${url}');
                 ${
                   !['regular', 'italic'].includes(variant)
@@ -48,7 +46,7 @@ function useFontFamily(fontFamily: string) {
               }`
               css += fontFace + '\n'
             })
-            document.body.style.fontFamily = `${font.family}, sans-serif`
+            document.body.style.fontFamily = `"${font.family}", sans-serif`
           })
         }
 
@@ -61,7 +59,6 @@ function useFontFamily(fontFamily: string) {
 
     updateFontFamily()
 
-    // Cleanup when unmounted or font changes
     return () => {
       styleTag?.remove()
     }

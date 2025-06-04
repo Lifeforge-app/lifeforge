@@ -142,7 +142,7 @@ export default function AuthProvider({
         .then(async res => {
           const data = await res.json()
           if (res.ok && data.state === 'success') {
-            return { success: true, userData: data.userData }
+            return { success: true, userData: data.data.userData }
           } else {
             return { success: false, userData: null }
           }
@@ -170,38 +170,43 @@ export default function AuthProvider({
         body: JSON.stringify({ email, password })
       })
         .then(async res => {
-          const data = await res.json()
+          if (!res.ok) {
+            try {
+              const data = await res.json()
+              if (data.message) {
+                if (data.message === 'Invalid credentials') {
+                  return 'invalid'
+                }
 
-          if (res.ok) {
-            if (data.state === 'success') {
-              window.localStorage.setItem('quota', '5')
-              window.localStorage.removeItem('lastQuotaExceeded')
-
-              document.cookie = `session=${data.session}; path=/; expires=${new Date(
-                Date.now() + 7 * 24 * 60 * 60 * 1000
-              ).toUTCString()}`
-
-              setUserData(data.userData)
-              setAuth(true)
-
-              return 'success: ' + data.userData.name
-            } else if (data.state === '2fa_required') {
-              handleTwoFAModalOpen()
-              tid.current = data.tid
-              return '2FA required'
-            } else {
-              throw new Error()
+                throw new Error(data.message)
+              }
+            } catch {
+              throw new Error('Unknown error')
             }
-          } else {
-            if (data.message === 'Invalid credentials') {
-              return 'invalid'
-            }
+          }
 
-            throw new Error()
+          const { data } = await res.json()
+
+          if (data.state === 'success') {
+            window.localStorage.setItem('quota', '5')
+            window.localStorage.removeItem('lastQuotaExceeded')
+
+            document.cookie = `session=${data.session}; path=/; expires=${new Date(
+              Date.now() + 7 * 24 * 60 * 60 * 1000
+            ).toUTCString()}`
+
+            setUserData(data.userData)
+            setAuth(true)
+
+            return 'success: ' + data.userData.name
+          } else if (data.state === '2fa_required') {
+            handleTwoFAModalOpen()
+            tid.current = data.tid
+            return '2FA required'
           }
         })
-        .catch(() => {
-          toast.error(t('messages.unknownError'))
+        .catch(err => {
+          toast.error(err)
         })
 
       return await res
@@ -235,14 +240,14 @@ export default function AuthProvider({
           window.localStorage.setItem('quota', '5')
           window.localStorage.removeItem('lastQuotaExceeded')
 
-          document.cookie = `session=${data.session}; path=/; expires=${new Date(
+          document.cookie = `session=${data.data.session}; path=/; expires=${new Date(
             Date.now() + 7 * 24 * 60 * 60 * 1000
           ).toUTCString()}`
 
-          setUserData(data.userData)
+          setUserData(data.data.userData)
           setAuth(true)
 
-          return data.userData.name
+          return data.data.userData.name
         } else {
           throw new Error('Invalid OTP')
         }
@@ -275,7 +280,7 @@ export default function AuthProvider({
               state: string
               tid: string
             }
-        >('user/auth/oauth-verify', {
+        >('user/oauth/verify', {
           method: 'POST',
           body: { code, provider: storedProvider }
         })

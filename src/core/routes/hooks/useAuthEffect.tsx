@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
-import { useAuth } from '../../pages/Auth/providers/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 
 function useAuthEffect() {
   const { auth, authLoading } = useAuth()

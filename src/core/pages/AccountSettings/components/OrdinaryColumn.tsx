@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, ConfigColumn } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
-import { useAuth } from '../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 
 function OrdinaryColumn({
   title,

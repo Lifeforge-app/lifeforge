@@ -11,7 +11,7 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')

@@ -7,7 +7,7 @@ import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../Auth/providers/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 import ModuleItem from './components/ModuleItem'
 
 function Modules() {

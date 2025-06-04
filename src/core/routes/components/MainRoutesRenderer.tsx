@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router'
 import { NotFoundScreen } from '@lifeforge/ui'
 
 import Auth from '../../pages/Auth'
-import { useAuth } from '../../pages/Auth/providers/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 import ROUTES from '../Routes'
 import ChildRoutesRenderer from './ChildRoutesRenderer'
 

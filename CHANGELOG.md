@@ -11,6 +11,8 @@
 - **Music**: Removed the feature to import music from NAS and replacement will be added later.
 - **Movies**: Fixed the layout of hte movie ticket modal.
 - **Todo List**: Removed subtask feature due to the messy implementation and will be replaced with a better solution later.
+- **Server Status**: Removed this module due to being too system specific and will be replaced with a better solution later (hopefully).
+- **Personalization**: Fixed a bug where the font family with numbers in the name will not be applied correctly.
 - **API**: Major refactoring of the codebase by introducing zod validation library to streamline API request validation.
 - **API**: Removed all the inconsistently written middlewares and replaced it with zod validation.
 - **API**: Removed `/quotes` endpoint.
