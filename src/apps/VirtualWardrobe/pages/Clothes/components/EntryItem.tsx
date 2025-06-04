@@ -142,7 +142,7 @@ function EntryItem<T extends boolean = false>({
             <p className="text-custom-500 text-xs font-semibold">
               {entry.brand === '' ? 'Unbranded' : entry.brand}
             </p>
-            <p className="text-lg font-medium">{entry.name}</p>
+            <p className="text-lg font-medium break-all">{entry.name}</p>
           </div>
           {!isCartItem && (
             <div className="shrink-0">
