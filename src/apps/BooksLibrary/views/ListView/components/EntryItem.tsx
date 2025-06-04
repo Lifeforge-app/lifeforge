@@ -67,7 +67,10 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
     >
       <div className="absolute top-4 right-3 z-20 flex">
         <Button
-          className={clsx('p-2!', item.is_favourite && 'text-red-500!')}
+          className={clsx(
+            'aspect-square size-12',
+            item.is_favourite && 'text-red-500!'
+          )}
           icon={(() => {
             if (addToFavouritesLoading) {
               return 'svg-spinners:180-ring'
@@ -126,7 +129,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
             })()}
           </div>
         )}
-        <div className="mr-20 line-clamp-3 text-lg font-semibold">
+        <div className="mr-24 line-clamp-3 text-lg font-semibold">
           {item.title}{' '}
           {item.edition !== '' && (
             <span className="text-bg-500 text-sm">({item.edition} ed)</span>
