@@ -10,14 +10,6 @@ interface ITodoListEntry extends RecordModel {
   tags: string[]
   done: boolean
   completed_at: string
-  subtasks: ITodoSubtask[]
-}
-
-interface ITodoSubtask {
-  id: string
-  title: string
-  done: boolean
-  hasChanged?: boolean
 }
 
 interface ITodoPriority extends RecordModel {
@@ -52,6 +44,5 @@ export type {
   ITodoListList,
   ITodoListStatusCounter,
   ITodoListTag,
-  ITodoPriority,
-  ITodoSubtask
+  ITodoPriority
 }
