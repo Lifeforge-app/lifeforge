@@ -12,7 +12,7 @@ import {
 import { useModalsEffect } from '@lifeforge/ui'
 
 import Auth from '../pages/Auth'
-import { useAuth } from '../pages/Auth/providers/AuthProvider'
+import { useAuth } from '../providers/AuthProvider'
 import useAuthEffect from './hooks/useAuthEffect'
 import useTitleEffect from './hooks/useTitleEffect'
 

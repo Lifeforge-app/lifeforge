@@ -9,7 +9,7 @@ import { encrypt } from '@security/utils/encryption'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 import { IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 import EntryItem from './EntryItem'
 

@@ -16,7 +16,7 @@ function FontFamilyItem({ family }: { family: string }) {
             <span
               className="flex items-center gap-2 text-base"
               style={{
-                fontFamily: family
+                fontFamily: `"${family}", sans-serif`
               }}
             >
               {family}

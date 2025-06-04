@@ -7,7 +7,7 @@ import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 
-import { useAuth } from '../../../core/pages/Auth/providers/AuthProvider'
+import { useAuth } from '../../../core/providers/AuthProvider'
 import { usePasswordContext } from '../providers/PasswordsProvider'
 import PasswordList from './PasswordList'
 

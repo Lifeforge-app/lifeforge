@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
 
-import { useAuth } from '../../../providers/AuthProvider'
+import { useAuth } from '../../../../../providers/AuthProvider'
 
 function SigninWithProviderButton({
   provider,
@@ -21,7 +21,7 @@ function SigninWithProviderButton({
     const providerInstance = await fetch(
       `${
         import.meta.env.VITE_API_HOST
-      }/user/auth/oauth-endpoint?provider=${provider}`
+      }/user/oauth/endpoint?provider=${provider}`
     )
       .then(async res => {
         const data = await res.json()

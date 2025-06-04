@@ -9,7 +9,7 @@ import OTPScreen from '@security/components/OTPScreen'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { useAuth } from '../../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../../providers/AuthProvider'
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 
 function EnableTwoFAModal({

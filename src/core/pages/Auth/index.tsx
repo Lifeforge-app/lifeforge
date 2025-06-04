@@ -7,19 +7,20 @@ import { useModalsEffect } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import { useAuth } from '../../providers/AuthProvider'
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
 import { AuthModals } from './modals'
-import { useAuth } from './providers/AuthProvider'
 
 function Auth() {
   const { verifyOAuth } = useAuth()
   const [searchParams] = useSearchParams()
-  const oauthProvidersQuery = useAPIQuery<string[]>(
-    '/user/auth/oauth-providers',
-    ['auth', 'oauth', 'providers']
-  )
+  const oauthProvidersQuery = useAPIQuery<string[]>('/user/oauth/providers', [
+    'auth',
+    'oauth',
+    'providers'
+  ])
 
   useModalsEffect(AuthModals)
 

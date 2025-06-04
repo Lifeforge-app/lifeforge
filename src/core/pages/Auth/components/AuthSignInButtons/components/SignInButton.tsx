@@ -2,7 +2,7 @@ import { memo } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
-import { useAuth } from '../../../providers/AuthProvider'
+import { useAuth } from '../../../../../providers/AuthProvider'
 
 function SignInButton({
   loading,

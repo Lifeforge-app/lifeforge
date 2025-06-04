@@ -8,7 +8,7 @@ import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { useAuth } from '../../Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 
 function AvatarColumn() {
   const open = useModalStore(state => state.open)

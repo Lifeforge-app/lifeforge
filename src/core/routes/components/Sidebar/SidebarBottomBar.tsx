@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 
 import { MenuItem } from '@lifeforge/ui'
 
-import { useAuth } from '../../../pages/Auth/providers/AuthProvider'
+import { useAuth } from '../../../providers/AuthProvider'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()

@@ -25,9 +25,7 @@ import PomodoroTimer from '../widgets/PomodoroTimer'
 import QuickActions from '../widgets/QuickActions'
 import Quotes from '../widgets/Quotes'
 import RecentTransactions from '../widgets/RecentTransactions'
-import ServerStatus from '../widgets/ServerStatus'
 import Spotify from '../widgets/Spotify'
-import StorageStatus from '../widgets/StorageStatus'
 import TodaysEvent from '../widgets/TodaysEvent'
 import TodoList from '../widgets/TodoList'
 
@@ -43,8 +41,6 @@ const COMPONENTS = {
   incomeExpenses: IncomeAndExpenses,
   recentTransactions: RecentTransactions,
   assetsBalance: AssetsBalance,
-  storageStatus: StorageStatus,
-  serverStatus: ServerStatus,
   todoList: TodoList,
   spotify: Spotify,
   miniCalendar: MiniCalendar,

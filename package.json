@@ -85,6 +85,7 @@
     "three": "^0.167.1",
     "tinycolor2": "^1.6.0",
     "use-resize-observer": "^9.1.0",
+    "zod": "^3.25.51",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
