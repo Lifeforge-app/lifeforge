@@ -5,9 +5,10 @@ interface IWishlistList extends RecordModel {
   description: string
   icon: string
   color: string
-  item_count: number
+  total_count: number
   total_amount: number
   bought_count: number
+  bought_amount: number
 }
 
 interface IWishlistEntry extends RecordModel {
