@@ -10,9 +10,10 @@ function ThumbnailAndHashes({ data }: { data: BookDetailProps }) {
           alt=""
           className="size-full max-w-64 object-contain"
           referrerPolicy="no-referrer"
-          src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${
-            data.image
-          }`}
+          src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${data.image.replace(
+            /^\/covers\//,
+            '/cover/'
+          )}`}
         />
       ) : (
         <Icon
