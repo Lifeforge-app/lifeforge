@@ -34,9 +34,10 @@ function SearchResultItem({
             alt=""
             className="relative z-10 border-none object-cover"
             referrerPolicy="no-referrer"
-            src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${
-              book.image
-            }`}
+            src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${book.image.replace(
+              /^\/covers\//,
+              '/cover/'
+            )}`}
           />
         )}
       </div>
@@ -82,7 +83,7 @@ function SearchResultItem({
         </div>
         <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-4">
           <Button
-            className="w-full lg:w-1/2"
+            className="w-full lg:w-1/2!"
             icon="tabler:eye"
             namespace="apps.booksLibrary"
             variant="secondary"
