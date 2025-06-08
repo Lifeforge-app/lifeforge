@@ -12,5 +12,6 @@ export default {
       return <Navigate to="/" />
     }
   },
-  togglable: false
+  togglable: false,
+  forceDisable: !import.meta.env.VITE_LOCALIZATION_MANAGER_URL
 } as ModuleConfig

@@ -35,16 +35,7 @@ ChartJS.register(
 
 function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   const { t } = useTranslation('apps.codeTime')
-  const { bgTempPalette, theme } = usePersonalization()
-  const finalTheme = useMemo(() => {
-    if (theme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-    }
-
-    return theme
-  }, [theme])
+  const { bgTempPalette, derivedTheme } = usePersonalization()
   const [lastFor, setLastFor] = useState<7 | 30>(7)
   const dataQuery = useAPIQuery<any[]>(
     `code-time/last-x-days?days=${lastFor}`,
@@ -216,7 +207,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                     label: 'Total minutes',
                     data: data.map(e => e.total_minutes),
                     borderColor:
-                      finalTheme === 'dark'
+                      derivedTheme === 'dark'
                         ? bgTempPalette[100]
                         : bgTempPalette[500],
                     lineTension: 0.3,

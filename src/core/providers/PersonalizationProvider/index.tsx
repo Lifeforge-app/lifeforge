@@ -10,6 +10,7 @@ import { useAuth } from '../AuthProvider'
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
 import useBgTempEffect from './hooks/useBgTempEffect'
+import useFaviconEffect from './hooks/useFaviconEffect'
 import useFontFamily from './hooks/useFontFamilyEffect'
 import useLanguageEffect from './hooks/useLanguageEffect'
 import useRawThemeColorEffect from './hooks/useRawThemeColorEffect'
@@ -65,6 +66,15 @@ export default function PersonalizationProvider({
   })
   const [languageLoaded, setLanguageLoaded] = useState(false)
 
+  const derivedTheme = useMemo(() => {
+    if (theme === 'system') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    }
+    return theme
+  }, [theme])
+
   const themeColor = useMemo(
     () =>
       !rawThemeColor.startsWith('#')
@@ -80,19 +90,7 @@ export default function PersonalizationProvider({
   const bgTempPalette = useMemo(() => {
     return !bgTemp.startsWith('#')
       ? BG_THEME[bgTemp.replace('bg-', '') as keyof typeof BG_THEME]
-      : getColorPalette(
-          bgTemp,
-          'bg',
-          (() => {
-            if (theme === 'system') {
-              return window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light'
-            }
-
-            return theme
-          })()
-        )
+      : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
 
   useEffect(() => {
@@ -144,10 +142,11 @@ export default function PersonalizationProvider({
   }, [userData])
 
   useFontFamily(fontFamily)
-  useThemeEffect(theme, rawThemeColor, bgTemp)
-  useRawThemeColorEffect(rawThemeColor, theme)
-  useBgTempEffect(bgTemp, theme)
+  useThemeEffect(derivedTheme, rawThemeColor, bgTemp)
+  useRawThemeColorEffect(rawThemeColor, derivedTheme)
+  useBgTempEffect(bgTemp, derivedTheme)
   useLanguageEffect(language, setLanguageLoaded)
+  useFaviconEffect(themeColor)
 
   async function changeFontFamily(font: string) {
     setFontFamily(font)
@@ -188,8 +187,9 @@ export default function PersonalizationProvider({
     () => ({
       fontFamily,
       theme,
+      derivedTheme,
       rawThemeColor,
-      themeColor,
+      derivedThemeColor: themeColor,
       bgTemp,
       bgTempPalette,
       bgImage,

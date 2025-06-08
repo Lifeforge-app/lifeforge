@@ -5,7 +5,7 @@ import {
   interpolateColors
 } from '../utils/themeColors'
 
-function useBgTempEffect(bgTemp: string, theme: 'light' | 'dark' | 'system') {
+function useBgTempEffect(bgTemp: string, theme: 'light' | 'dark') {
   useEffect(() => {
     if (bgTemp) {
       document.body.classList.remove(
