@@ -6,12 +6,12 @@ import { Button } from '@lifeforge/ui'
 function ResendOTPButton({
   otpCooldown,
   sendOtpLoading,
-  requestOTP,
+  onClick: requestOTP,
   buttonFullWidth
 }: {
   otpCooldown: number
   sendOtpLoading: boolean
-  requestOTP: () => void
+  onClick: () => void
   buttonFullWidth?: boolean
 }) {
   const { t } = useTranslation('common.vault')

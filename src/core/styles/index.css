@@ -1,0 +1,6 @@
+@import "./themes/index.css";
+@import "./abbreviations.css";
+@import "./global.css";
+@import "./prose.css";
+@import "./daisyui.css";
+@import "./utils.css";

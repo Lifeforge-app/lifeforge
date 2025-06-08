@@ -19,12 +19,7 @@ layer(base);
 @source "../../node_modules/@lifeforge/ui/dist";
 
 /* Local utility styles */
-@import './styles/themes/index.css';
-@import './styles/abbreviations.css';
-@import './styles/global.css';
-@import './styles/prose.css';
-@import './styles/daisyui.css';
-@import './styles/utils.css';
+@import './styles/index.css';
 
 /* App styles */
 @import '@core/pages/Dashboard/index.css';

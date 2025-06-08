@@ -31,23 +31,11 @@ export function getColorPalette(
 }
 
 export function interpolateColors(
-  theme: 'light' | 'dark' | 'system',
+  theme: 'light' | 'dark',
   color: string,
   type: 'bg' | 'theme'
 ) {
-  const colorPalette = getColorPalette(
-    color,
-    type,
-    (() => {
-      if (theme === 'system') {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light'
-      }
-
-      return theme
-    })()
-  )
+  const colorPalette = getColorPalette(color, type, theme)
 
   Object.entries(colorPalette).forEach(([key, value]) => {
     document.body.style.setProperty(

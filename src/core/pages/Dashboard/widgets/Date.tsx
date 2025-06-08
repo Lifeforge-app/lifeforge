@@ -8,7 +8,7 @@ import tinycolor from 'tinycolor2'
 import { arabicToChinese } from '../utils/arabicToChineseNumber'
 
 export default function DateWidget() {
-  const { language, themeColor } = usePersonalization()
+  const { language, derivedThemeColor: themeColor } = usePersonalization()
   const ref = useRef<HTMLDivElement>(null)
 
   return (

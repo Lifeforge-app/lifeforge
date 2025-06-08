@@ -13,7 +13,7 @@ import {
 } from '../utils/renderUtils'
 
 export const useRailwayMapRenderer = () => {
-  const { theme, bgTempPalette } = usePersonalization()
+  const { derivedTheme, bgTempPalette } = usePersonalization()
   const {
     filteredLines: filteredLinesCode,
     lines,
@@ -25,15 +25,6 @@ export const useRailwayMapRenderer = () => {
     setSelectedStation,
     centerStation
   } = useRailwayMapContext()
-  const finalTheme = useMemo(() => {
-    if (theme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-    }
-
-    return theme
-  }, [theme])
 
   const isInitializedRef = useRef(false)
 
@@ -89,7 +80,7 @@ export const useRailwayMapRenderer = () => {
       shortestRoute,
       lines,
       bgTempPalette,
-      finalTheme,
+      derivedTheme,
       selectedStation,
       setSelectedStation,
       svgRef,
@@ -109,10 +100,10 @@ export const useRailwayMapRenderer = () => {
           g,
           selectedStation,
           lines,
-          bgTempPalette[finalTheme === 'dark' ? 900 : 50]
+          bgTempPalette[derivedTheme === 'dark' ? 900 : 50]
         )
       } else {
-        clearSelection(g, bgTempPalette[finalTheme === 'dark' ? 900 : 50])
+        clearSelection(g, bgTempPalette[derivedTheme === 'dark' ? 900 : 50])
       }
     } catch (error) {
       console.error('Error updating station selection:', error)

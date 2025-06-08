@@ -21,8 +21,9 @@ function MainRoutesRenderer() {
           ROUTES.flatMap(e => e.items)
             .filter(
               item =>
-                !item.togglable ||
-                userData.enabledModules.includes(_.kebabCase(item.name))
+                (!item.togglable ||
+                  userData.enabledModules.includes(_.kebabCase(item.name))) &&
+                !item.forceDisable
             )
             .map(item =>
               item.provider !== undefined

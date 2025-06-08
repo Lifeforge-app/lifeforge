@@ -1,5 +1,14 @@
 # Change Log
 
+### 📌 **dev 25w24 (6/9/2025 - 6/16/2025)**
+- **Personalization**: Favicon is now dynamically generated based on the theme color.
+- **Personalization**: Added attribute `derivedTheme` to the `usePersonalization` context provider so that it doesn't have to be recalculated on every use.
+- **Authentication**: Fixed a bug where resend OTP button of email OTP in 2FA screen doesn't work when page is refreshed.
+- **Code**: Added attribute `forceDisable` to `Route` interface to allow the route to be explicitly disabled.
+- **Code**: Created `style/index.css` file to import all the stylesheets in one place.
+- **API Explorer**: Started complete rewrite of the API Explorer module as a separate app that can be accessed through SSO.
+- **API Explorer**: The theme and language config of the API Explorer is synced with the main system.
+
 ### 📌 **dev 25w23 (6/2/2025 - 6/9/2025)**
 - **Calendar**: User can now group events by different calendars like Work, Personal, etc. in the calendar sidebar.
 - **Calendar**: Sidebar is now a thing in mobile view.

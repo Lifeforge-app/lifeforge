@@ -30,9 +30,9 @@ function AudioType({
 }) {
   const { t } = useTranslation('apps.momentVault')
   const {
-    theme: lightOrDarkTheme,
+    derivedTheme,
     bgTempPalette,
-    themeColor
+    derivedThemeColor: themeColor
   } = usePersonalization()
 
   const [recording, setRecording] = useState(false)
@@ -184,11 +184,7 @@ function AudioType({
                   progressColor={themeColor}
                   url={audioURL}
                   waveColor={
-                    (lightOrDarkTheme === 'system' &&
-                      window.matchMedia &&
-                      window.matchMedia('(prefers-color-scheme: dark)')
-                        .matches) ||
-                    lightOrDarkTheme === 'dark'
+                    derivedTheme === 'dark'
                       ? bgTempPalette[700]
                       : bgTempPalette[400]
                   }

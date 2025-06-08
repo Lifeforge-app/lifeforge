@@ -92,7 +92,7 @@ function GuitarTabs() {
 
   const queryClient = useQueryClient()
   const toastId = useRef<Id>(null)
-  const { themeColor } = usePersonalization()
+  const { derivedThemeColor: themeColor } = usePersonalization()
 
   const startInterval = useCallback(() => {
     intervalManager.setInterval(async () => {

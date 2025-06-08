@@ -6,17 +6,12 @@ import {
 } from '../utils/themeColors'
 
 function useThemeEffect(
-  theme: 'light' | 'dark' | 'system',
+  theme: 'light' | 'dark',
   rawThemeColor: string,
   bgTemp: string
 ) {
   useEffect(() => {
-    if (
-      (theme === 'system' &&
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-      theme === 'dark'
-    ) {
+    if (theme === 'dark') {
       document.body.classList.add('dark')
     } else {
       document.body.classList.remove('dark')

@@ -29,9 +29,9 @@ function AudioEntry({
 }) {
   const stack = useModalStore(state => state.stack)
   const {
-    theme: lightOrDarkTheme,
+    derivedTheme,
     bgTempPalette,
-    themeColor
+    derivedThemeColor: themeColor
   } = usePersonalization()
 
   const queryClient = useQueryClient()
@@ -132,12 +132,7 @@ function AudioEntry({
             progressColor={themeColor}
             url={`${import.meta.env.VITE_API_HOST}/media/${entry.file?.[0]}`}
             waveColor={
-              (lightOrDarkTheme === 'system' &&
-                window.matchMedia &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-              lightOrDarkTheme === 'dark'
-                ? bgTempPalette[700]
-                : bgTempPalette[400]
+              derivedTheme === 'dark' ? bgTempPalette[700] : bgTempPalette[400]
             }
             width="100%"
             onPause={() => setIsPlaying(false)}

@@ -6,7 +6,7 @@ import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
 function BackgroundProvider({ children }: { children: React.ReactNode }) {
   const {
     bgImage,
-    theme,
+    derivedTheme,
     backdropFilters: { brightness, blur, contrast, saturation, overlayOpacity }
   } = usePersonalization()
 
@@ -29,11 +29,7 @@ function BackgroundProvider({ children }: { children: React.ReactNode }) {
           className="absolute top-0 left-0 z-[-1] size-full"
           style={{
             backgroundColor: `color-mix(in oklab, var(--color-bg-${
-              (theme === 'system' &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-              theme === 'dark'
-                ? '950'
-                : '50'
+              derivedTheme === 'dark' ? '950' : '50'
             }) ${overlayOpacity}%, transparent)`,
             backdropFilter:
               bgImage !== ''

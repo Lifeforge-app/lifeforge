@@ -69,6 +69,7 @@
   {
     "title": "sso",
     "items": [
+      "@core/APIExplorer",
       "@core/LocalizationManager"
     ]
   },

@@ -32,7 +32,7 @@ ChartJS.register(
 )
 
 export default function ConversionRatesHistoryGraph() {
-  const { themeColor } = usePersonalization()
+  const { derivedThemeColor: themeColor } = usePersonalization()
   const [supportedCurrencies, setSupportedCurrencies] = useState<string[]>([])
   const [chartData, setChartData] = useState<any>({})
   const [fromCurrency, setFromCurrency] = useState('USD')

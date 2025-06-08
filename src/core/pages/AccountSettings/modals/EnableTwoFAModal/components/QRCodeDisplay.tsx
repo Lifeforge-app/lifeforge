@@ -2,7 +2,7 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import { parse as parseCookie } from 'cookie'
 import { QRCodeSVG } from 'qrcode.react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { LoadingScreen } from '@lifeforge/ui'
@@ -15,16 +15,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 function QRCodeDisplay() {
   const { componentBgLighter } = useComponentBg()
-  const { bgTempPalette, theme } = usePersonalization()
-  const finalTheme = useMemo(() => {
-    if (theme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-    }
-
-    return theme
-  }, [theme])
+  const { bgTempPalette, derivedTheme } = usePersonalization()
   const [link, setLink] = useState('')
 
   async function fetchLink() {
@@ -61,7 +52,7 @@ function QRCodeDisplay() {
             bgColor="transparent"
             className="size-full"
             fgColor={
-              finalTheme === 'dark' ? bgTempPalette[100] : bgTempPalette[800]
+              derivedTheme === 'dark' ? bgTempPalette[100] : bgTempPalette[800]
             }
             value={link}
           />

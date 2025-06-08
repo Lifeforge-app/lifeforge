@@ -24,12 +24,10 @@ function SidebarItems({ query }: { query: string }) {
           e.items.some(
             subItem =>
               subItem.name.toLowerCase().includes(query.toLowerCase()) &&
-              subItem.hidden !== true &&
+              !subItem.forceDisable &&
+              !subItem.hidden &&
               (!subItem.togglable ||
-                userData?.enabledModules.includes(_.kebabCase(subItem.name))) &&
-              (subItem.name === 'Localization Manager'
-                ? import.meta.env.VITE_LOCALIZATION_MANAGER_URL !== undefined
-                : true)
+                userData?.enabledModules.includes(_.kebabCase(subItem.name)))
           )
       ),
     [query, userData]
@@ -46,12 +44,10 @@ function SidebarItems({ query }: { query: string }) {
                   userData?.enabledModules.includes(
                     _.kebabCase(subItem.name)
                   ) === true) &&
-                subItem.hidden !== true &&
+                !subItem.forceDisable &&
+                !subItem.hidden &&
                 (item.title.toLowerCase().includes(query.toLowerCase()) ||
-                  subItem.name.toLowerCase().includes(query.toLowerCase())) &&
-                (subItem.name === 'Localization Manager'
-                  ? import.meta.env.VITE_LOCALIZATION_MANAGER_URL !== undefined
-                  : true)
+                  subItem.name.toLowerCase().includes(query.toLowerCase()))
             )
 
             return (

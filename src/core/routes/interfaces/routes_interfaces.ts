@@ -18,6 +18,7 @@ export interface ModuleConfig {
     path: string
   }[]
   hidden?: boolean
+  forceDisable?: boolean
 }
 
 export interface ModuleCategory {

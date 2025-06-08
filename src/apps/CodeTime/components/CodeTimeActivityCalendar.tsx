@@ -12,7 +12,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 function CodeTimeActivityCalendar() {
   const { t } = useTranslation('apps.codeTime')
-  const { theme, themeColor } = usePersonalization()
+  const { derivedTheme, derivedThemeColor: themeColor } = usePersonalization()
   const [year, setYear] = useState(new Date().getFullYear())
   const dataQuery = useAPIQuery<{
     data: Array<{
@@ -101,11 +101,7 @@ function CodeTimeActivityCalendar() {
                   }
                   theme={{
                     dark: [
-                      (theme === 'system' &&
-                        window.matchMedia &&
-                        window.matchMedia('(prefers-color-scheme: dark)')
-                          .matches) ||
-                      theme === 'dark'
+                      derivedTheme === 'dark'
                         ? 'rgb(38, 38, 38)'
                         : 'rgb(229, 229, 229)',
                       themeColor

@@ -107,8 +107,14 @@ function UsingEmail({
             <ResendOTPButton
               buttonFullWidth
               otpCooldown={otpCooldown}
-              requestOTP={requestOTP}
               sendOtpLoading={sendOtpLoading}
+              onClick={() => {
+                setEmail('')
+                setOtpSent(false)
+                setOtpCooldown(0)
+                localStorage.removeItem(`otpId:2fa`)
+                localStorage.removeItem(`otpCooldown:2fa`)
+              }}
             />
           </div>
         ) : (

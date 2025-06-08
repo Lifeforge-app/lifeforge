@@ -14,7 +14,7 @@ export default function Quotes() {
       a: string
     }[]
   >('cors-anywhere?url=https://zenquotes.io/api/random', ['quote'])
-  const { themeColor } = usePersonalization()
+  const { derivedThemeColor: themeColor } = usePersonalization()
 
   return (
     <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-6">
