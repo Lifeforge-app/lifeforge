@@ -94,7 +94,7 @@ const CodeTime = () => {
     'code-time',
     'each-day'
   ])
-  const { themeColor } = usePersonalization()
+  const { derivedThemeColor: themeColor } = usePersonalization()
 
   const chartData = useMemo(() => {
     const data = dataQuery.data

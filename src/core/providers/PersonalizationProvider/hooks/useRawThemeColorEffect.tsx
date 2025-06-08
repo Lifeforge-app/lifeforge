@@ -7,7 +7,7 @@ import {
 
 function useRawThemeColorEffect(
   rawThemeColor: string,
-  theme: 'light' | 'dark' | 'system'
+  theme: 'light' | 'dark'
 ) {
   useEffect(() => {
     if (rawThemeColor) {

@@ -139,7 +139,7 @@ function OTPScreen({
             <ResendOTPButton
               buttonFullWidth={buttonsFullWidth}
               otpCooldown={otpCooldown}
-              requestOTP={requestOTP}
+              onClick={requestOTP}
               sendOtpLoading={sendOtpLoading}
             />
           </>
