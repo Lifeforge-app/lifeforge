@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 
 import {
   Button,
@@ -52,7 +58,8 @@ export default function APIOnlineStatusProvider({
     'production' | 'development' | null
   >(null)
 
-  useEffect(() => {
+  const onClickRetry = useCallback(() => {
+    setIsOnline('loading')
     checkAPIStatus()
       .then(status => {
         if (status !== false) {
@@ -64,6 +71,10 @@ export default function APIOnlineStatusProvider({
       .catch(() => {
         setIsOnline(false)
       })
+  }, [])
+
+  useEffect(() => {
+    onClickRetry()
   }, [])
 
   if (isOnline === 'loading') {
@@ -78,20 +89,7 @@ export default function APIOnlineStatusProvider({
             <Button
               className="bg-black! text-white!"
               icon="tabler:refresh"
-              onClick={() => {
-                setIsOnline('loading')
-                checkAPIStatus()
-                  .then(status => {
-                    if (status !== false) {
-                      initLocale()
-                    }
-                    setEnvironment(status === false ? null : status)
-                    setIsOnline(status !== false)
-                  })
-                  .catch(() => {
-                    setIsOnline(false)
-                  })
-              }}
+              onClick={onClickRetry}
             >
               Retry
             </Button>
