@@ -18,7 +18,7 @@
 - **Code Time**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
 - **Guitar Tabs**: Removed the "Download All" button since it doesn't work anymore after the migration to S3.
 - **Music**: Removed the feature to import music from NAS and replacement will be added later.
-- **Movies**: Fixed the layout of hte movie ticket modal.
+- **Movies**: Fixed the layout of the movie ticket modal.
 - **Todo List**: Removed subtask feature due to the messy implementation and will be replaced with a better solution later.
 - **Server Status**: Removed this module due to being too system specific and will be replaced with a better solution later (hopefully).
 - **Personalization**: Fixed a bug where the font family with numbers in the name will not be applied correctly.
