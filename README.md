@@ -91,7 +91,7 @@ explore and discover within the project.
 ## ⌨️ Setup
 
 Setting up Lifeforge can be a bit challenging and may require some technical
-expertise and your own hardware. A docker file is hopefully on the way, but for now, you have to install in manually.
+expertise and your own hardware. A docker file is hopefully on the way, but for now, you have to install it manually.
 Visit the [Documentation](https://docs.lifeforge.melvinchia.dev)
 to see how to install and setup.
 
