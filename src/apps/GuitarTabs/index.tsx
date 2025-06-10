@@ -40,7 +40,7 @@ function GuitarTabs() {
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null)
   const [isStarred, setStarred] = useState<boolean>(false)

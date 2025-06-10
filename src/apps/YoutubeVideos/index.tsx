@@ -31,7 +31,7 @@ function YoutubeVideos() {
 
   const [needsProgressCheck, setNeedsProgressCheck] = useState(true)
   const [query, setQuery] = useState('')
-  const debouncedQuery = useDebounce(query, 500)
+  const debouncedQuery = useDebounce(query, 300)
   const [filteredVideos, setFilteredVideos] = useState<
     IYoutubeVideosStorageEntry[]
   >([])

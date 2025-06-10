@@ -48,7 +48,7 @@ export default function IdeaBoxProvider() {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [viewArchived, setViewArchived] = useState(
     searchParams.get('archived') === 'true'

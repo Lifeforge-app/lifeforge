@@ -31,7 +31,7 @@ function PlaylistSection({
   setIsVideoDownloading: (value: boolean) => void
 }) {
   const [playlistUrl, setPlaylistUrl] = useState<string>('')
-  const debouncedPlaylistUrl = useDebounce(playlistUrl, 500)
+  const debouncedPlaylistUrl = useDebounce(playlistUrl, 300)
   const playlistInfoQuery = useAPIQuery<IYoutubePlaylistEntry>(
     `/youtube-videos/playlist/get-info/${
       debouncedPlaylistUrl.match(URL_REGEX)?.groups?.list

@@ -67,7 +67,7 @@ function Header({
             <div className="flex items-end gap-2 text-2xl font-medium sm:text-3xl">
               <span>{wishlistListDetails.name}</span>
               <div className="text-bg-500 text-lg!">
-                ({wishlistListDetails.item_count} items)
+                ({wishlistListDetails.total_count} items)
               </div>
             </div>
             <span className="text-bg-500 block w-full min-w-0 truncate text-base">

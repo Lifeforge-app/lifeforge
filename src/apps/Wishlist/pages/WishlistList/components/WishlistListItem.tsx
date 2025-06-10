@@ -88,6 +88,10 @@ function WishlistListItem({ list }: { list: IWishlistList }) {
         classNames={{
           wrapper: 'absolute right-4 top-4'
         }}
+        onClick={e => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}
       >
         <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateList} />
         <MenuItem
