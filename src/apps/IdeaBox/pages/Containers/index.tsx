@@ -54,32 +54,31 @@ function IdeaBox() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:bulb" title="Idea Box" />
-      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col">
-        <SearchInput
-          namespace="apps.ideaBox"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="container"
-        />
-        <QueryWrapper query={query}>
-          {data =>
-            data.length > 0 ? (
-              <ContainerList filteredList={filteredList} />
-            ) : (
-              <EmptyStateScreen
-                ctaContent="new"
-                ctaTProps={{
-                  item: t('items.container')
-                }}
-                icon="tabler:cube-off"
-                name="container"
-                namespace="apps.ideaBox"
-                onCTAClick={handleCreateContainer}
-              />
-            )
-          }
-        </QueryWrapper>
-      </div>
+      <SearchInput
+        className="mt-6"
+        namespace="apps.ideaBox"
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        stuffToSearch="container"
+      />
+      <QueryWrapper query={query}>
+        {data =>
+          data.length > 0 ? (
+            <ContainerList filteredList={filteredList} />
+          ) : (
+            <EmptyStateScreen
+              ctaContent="new"
+              ctaTProps={{
+                item: t('items.container')
+              }}
+              icon="tabler:cube-off"
+              name="container"
+              namespace="apps.ideaBox"
+              onCTAClick={handleCreateContainer}
+            />
+          )
+        }
+      </QueryWrapper>
     </ModuleWrapper>
   )
 }

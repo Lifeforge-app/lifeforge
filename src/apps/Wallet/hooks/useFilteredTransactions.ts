@@ -16,7 +16,7 @@ export function useFilteredTransactions(transactions: IWalletTransaction[]) {
     searchQuery
   } = useWalletStore()
 
-  const debouncedQuery = useDebounce(searchQuery.trim(), 500)
+  const debouncedQuery = useDebounce(searchQuery.trim(), 300)
 
   return useMemo(() => {
     return transactions

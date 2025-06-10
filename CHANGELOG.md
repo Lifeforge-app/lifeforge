@@ -1,11 +1,17 @@
 # Change Log
 
 ### 📌 **dev 25w24 (6/9/2025 - 6/16/2025)**
+- **Wishlist**: Added search bar.
 - **Personalization**: Favicon is now dynamically generated based on the theme color.
 - **Personalization**: Added attribute `derivedTheme` to the `usePersonalization` context provider so that it doesn't have to be recalculated on every use.
 - **Authentication**: Fixed a bug where resend OTP button of email OTP in 2FA screen doesn't work when page is refreshed.
 - **Code**: Added attribute `forceDisable` to `Route` interface to allow the route to be explicitly disabled.
 - **Code**: Created `style/index.css` file to import all the stylesheets in one place.
+- **Code**: Changed all the timeout for `useDebounce` hook from `500ms` to `300ms` for better responsiveness.
+- **UI**: Fixed a bug in `FormModal` where the default API logic is still fired when custom `onSubmit` function is provided.
+- **Localization**: The theme and language config of the localization manager is now synced with the main system.
+- **Localization**: Updated modals logic in localization manager to adapt to the new `@lifeforge/ui` package
+- **Localization**: Loading screen is not shown when the user is being authenticated in the localization manager.
 - **API Explorer**: Started complete rewrite of the API Explorer module as a separate app that can be accessed through SSO.
 - **API Explorer**: The theme and language config of the API Explorer is synced with the main system.
 

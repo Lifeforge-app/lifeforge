@@ -28,7 +28,7 @@ export default function PasswordsProvider() {
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState('')
   const [query, setQuery] = useState('')
-  const debouncedQuery = useDebounce(query, 500)
+  const debouncedQuery = useDebounce(query, 300)
   const passwordListQuery = useAPIQuery<IPasswordEntry[]>(
     'passwords/entries',
     ['passwords', 'entries'],

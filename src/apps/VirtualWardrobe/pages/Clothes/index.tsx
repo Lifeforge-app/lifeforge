@@ -35,7 +35,7 @@ function VirtualWardrobeClothes() {
   const { t } = useTranslation('apps.virtualWardrobe')
   const [searchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const queryKey = [

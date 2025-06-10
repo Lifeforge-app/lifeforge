@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useDebounce } from '@uidotdev/usehooks'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
@@ -6,11 +7,10 @@ import { toast } from 'react-toastify'
 
 import {
   Button,
-  EmptyStateScreen,
   MenuItem,
   ModuleWrapper,
   QueryWrapper,
-  Scrollbar,
+  SearchInput,
   Tabs
 } from '@lifeforge/ui'
 import { useModalsEffect } from '@lifeforge/ui'
@@ -22,7 +22,7 @@ import {
   IWishlistEntry,
   IWishlistList
 } from '../../interfaces/wishlist_interfaces'
-import EntryItem from './components/EntryItem'
+import EntryList from './components/EntryList'
 import Header from './components/Header'
 import { wishlistEntriesModals } from './modals'
 
@@ -52,6 +52,14 @@ function WishlistEntries() {
     queryKey,
     validQuery.data === true
   )
+  const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
+  const filteredEntries = useMemo(() => {
+    return entriesQuery.data?.filter(entry =>
+      entry.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+    )
+  }, [entriesQuery.data, debouncedSearchQuery])
 
   const handleAddManually = useCallback(() => {
     open('wishlist.entries.modifyEntry', {
@@ -94,62 +102,35 @@ function WishlistEntries() {
                         id: 'wishlist',
                         name: t('tabs.wishlist'),
                         icon: 'tabler:heart',
-                        amount: (() => {
-                          if (
-                            typeof entries === 'string' ||
-                            typeof wishlistListDetails === 'string'
-                          ) {
-                            return 0
-                          }
-
-                          return activeTab === 'wishlist'
+                        amount:
+                          activeTab === 'wishlist'
                             ? entries.length
-                            : wishlistListDetails.item_count - entries.length
-                        })()
+                            : wishlistListDetails.total_count - entries.length
                       },
                       {
                         id: 'bought',
                         name: t('tabs.bought'),
                         icon: 'tabler:check',
-                        amount: (() => {
-                          if (
-                            typeof entries === 'string' ||
-                            typeof wishlistListDetails === 'string'
-                          ) {
-                            return 0
-                          }
-
-                          return activeTab === 'bought'
+                        amount:
+                          activeTab === 'bought'
                             ? entries.length
-                            : wishlistListDetails.item_count - entries.length
-                        })()
+                            : wishlistListDetails.bought_count
                       }
                     ]}
                     onNavClick={setActiveTab}
                   />
-                  {entries.length === 0 ? (
-                    <EmptyStateScreen
-                      ctaContent="new"
-                      ctaTProps={{
-                        item: t('items.entry')
-                      }}
-                      icon="tabler:shopping-cart-off"
-                      name="entries"
-                      namespace="apps.wishlist"
-                    />
-                  ) : (
-                    <Scrollbar>
-                      <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
-                        {entries.map(entry => (
-                          <EntryItem
-                            key={entry.id}
-                            entry={entry}
-                            queryKey={queryKey}
-                          />
-                        ))}
-                      </ul>
-                    </Scrollbar>
-                  )}
+                  <SearchInput
+                    className="mt-0! mb-6"
+                    namespace="apps.wishlist"
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    stuffToSearch="entry"
+                  />
+                  <EntryList
+                    filteredEntries={filteredEntries || []}
+                    isTotallyEmpty={!!entriesQuery.data?.length}
+                    queryKey={queryKey}
+                  />
                 </>
               )}
             </QueryWrapper>

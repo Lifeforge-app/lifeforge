@@ -68,7 +68,7 @@ function EntryItem({
       data: entry,
       itemName: 'entry',
       nameKey: 'name',
-      queryKey: queryKey
+      queryKey
     })
   }, [entry])
 
