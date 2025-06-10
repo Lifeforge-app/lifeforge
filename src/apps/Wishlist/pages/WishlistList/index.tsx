@@ -1,4 +1,5 @@
-import { useCallback } from 'react'
+import { useDebounce } from '@uidotdev/usehooks'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -7,7 +8,8 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  QueryWrapper,
+  SearchInput
 } from '@lifeforge/ui'
 import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
@@ -21,10 +23,20 @@ import { wishlistListsModals } from './modals'
 function Wishlist() {
   const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wishlist')
+
   const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
     'wishlist',
     'lists'
   ])
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
+  const filteredLists = useMemo(() => {
+    return listsQuery.data?.filter(list =>
+      list.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+    )
+  }, [listsQuery.data, debouncedSearchQuery])
 
   const handleCreateWishlistList = useCallback(() => {
     open('wishlist.lists.modifyWishlistList', {
@@ -51,21 +63,43 @@ function Wishlist() {
         icon="tabler:heart"
         title="Wishlist"
       />
+      <SearchInput
+        className="mt-6!"
+        namespace="apps.wishlist"
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        stuffToSearch="wishlist"
+      />
       <QueryWrapper query={listsQuery}>
         {lists =>
-          lists.length ? (
-            <div className="mt-6 mb-14 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
-              {lists.map(list => (
-                <WishlistListItem key={list.id} list={list} />
-              ))}
-            </div>
-          ) : (
-            <EmptyStateScreen
-              icon="tabler:box-off"
-              name="wishlists"
-              namespace="apps.wishlist"
-            />
-          )
+          (() => {
+            if (!lists.length) {
+              return (
+                <EmptyStateScreen
+                  icon="tabler:box-off"
+                  name="wishlists"
+                  namespace="apps.wishlist"
+                />
+              )
+            }
+
+            if (!filteredLists?.length) {
+              return (
+                <EmptyStateScreen
+                  icon="tabler:search-off"
+                  name="search"
+                  namespace="apps.wishlist"
+                />
+              )
+            }
+            return (
+              <div className="mt-6 mb-14 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
+                {filteredLists.map(list => (
+                  <WishlistListItem key={list.id} list={list} />
+                ))}
+              </div>
+            )
+          })()
         }
       </QueryWrapper>
       <FAB

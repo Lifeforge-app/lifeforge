@@ -39,7 +39,7 @@ function ModifyIdeaModal({
   const [ideaImage, setIdeaImage] = useState<File | null>(null)
   const [imageLink, setImageLink] = useState<string>('')
   const [ideaTags, setIdeaTags] = useState<string[]>([])
-  const debouncedImageLink = useDebounce(imageLink, 500)
+  const debouncedImageLink = useDebounce(imageLink, 300)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const [loading, setLoading] = useState(false)
   const queryClient = useQueryClient()

@@ -23,7 +23,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
   const [loading, setLoading] = useState(false)
   const [videoURLinput, setVideoURLInput] = useState('')
-  const videoURL = useDebounce(videoURLinput, 500)
+  const videoURL = useDebounce(videoURLinput, 300)
   const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
     `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
     ['music', 'youtube', 'get-info', videoURL.match(URL_REGEX)?.groups?.id],

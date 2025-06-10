@@ -21,7 +21,7 @@ import { MusicModals } from './modals'
 function Music() {
   const { searchQuery, setSearchQuery, musicsQuery, currentMusic, togglePlay } =
     useMusicContext()
-  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {

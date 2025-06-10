@@ -93,28 +93,6 @@ function ModifyEntryModal({
     }
   ]
 
-  function updateDataList(data: IWishlistEntry | 'removed') {
-    if (type === 'update') {
-      queryClient.setQueryData<IWishlistEntry[]>(queryKey, prev => {
-        if (!prev) return prev
-
-        if (data === 'removed') {
-          return prev.filter(entry => entry.id !== existedData?.id)
-        }
-        return prev.map(entry => (entry.id === existedData?.id ? data : entry))
-      })
-    } else {
-      queryClient.setQueryData<IWishlistEntry[]>(queryKey, prev => {
-        if (!prev) return prev
-
-        if (data === 'removed') {
-          return prev
-        }
-        return [...prev, data]
-      })
-    }
-  }
-
   async function onSubmitButtonClick() {
     const { list, url, name, price, image } = data
     if (
@@ -147,7 +125,7 @@ function ModifyEntryModal({
     )
 
     try {
-      const data = await fetchAPI<IWishlistEntry>(
+      await fetchAPI<IWishlistEntry>(
         'wishlist/entries' + (type === 'update' ? `/${existedData?.id}` : ''),
         {
           method: type === 'create' ? 'POST' : 'PATCH',
@@ -155,10 +133,15 @@ function ModifyEntryModal({
         }
       )
 
-      updateDataList(data)
+      queryClient.refetchQueries({
+        queryKey: queryKey ?? ['wishlist', 'entries']
+      })
+    } finally {
       onClose()
-    } catch {
-      onClose()
+
+      setTimeout(() => {
+        onClose()
+      }, 500)
     }
   }
 

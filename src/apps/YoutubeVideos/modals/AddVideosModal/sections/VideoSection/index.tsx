@@ -25,7 +25,7 @@ function VideoSection({
   setIsVideoDownloading: (value: boolean) => void
 }) {
   const [videoUrl, setVideoUrl] = useState<string>('')
-  const debouncedVideoUrl = useDebounce(videoUrl, 500)
+  const debouncedVideoUrl = useDebounce(videoUrl, 300)
   const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
     `youtube-videos/video/get-info/${
       debouncedVideoUrl.match(URL_REGEX)?.groups?.id

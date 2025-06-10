@@ -33,7 +33,7 @@ function BooksLibrary() {
     fileTypesQuery,
     miscellaneous: { searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
-  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [filteredEntries, setFilteredEntries] = useState<IBooksLibraryEntry[]>(
     []
   )

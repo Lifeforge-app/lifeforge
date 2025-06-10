@@ -35,7 +35,7 @@ function Movies() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
   const entriesQuery = useAPIQuery<IMovieEntry[]>('movies/entries', [
     'movies',
     'entries'
