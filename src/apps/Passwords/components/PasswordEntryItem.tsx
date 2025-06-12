@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
+import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -21,6 +23,7 @@ function PasswordEntryITem({
   password: IPasswordEntry
   pinPassword: (id: string) => Promise<void>
 }) {
+  const { t } = useTranslation('apps.passwords')
   const open = useModalStore(state => state.open)
 
   const { masterPassword } = usePasswordContext()
@@ -103,27 +106,32 @@ function PasswordEntryITem({
             <p className="text-bg-500 truncate">{password.username}</p>
           </div>
         </div>
-        <div className="ml-8 flex shrink-0 items-center gap-2">
-          <p
-            className={clsx(
-              'mr-4 select-text',
-              decryptedPassword === null
-                ? 'hidden text-5xl tracking-tighter md:flex'
-                : 'hidden text-lg lg:flex'
-            )}
-            style={decryptedPassword === null ? { fontFamily: 'Arial' } : {}}
-          >
-            {decryptedPassword ?? (
-              <span className="flex items-center gap-1.5">
-                {Array.from({ length: 12 }, (_, i) => (
-                  <span
-                    key={i}
-                    className="bg-bg-500 dark:bg-bg-100 size-1.5 rounded-full"
-                  ></span>
-                ))}
-              </span>
-            )}
-          </p>
+        <div className="ml-8 flex shrink-0 items-center gap-2 pt-2">
+          <div className="mr-4 flex flex-col items-end gap-2">
+            <p
+              className={clsx(
+                'select-text',
+                decryptedPassword === null
+                  ? 'hidden text-5xl tracking-tighter md:flex'
+                  : 'hidden text-lg lg:flex'
+              )}
+              style={decryptedPassword === null ? { fontFamily: 'Arial' } : {}}
+            >
+              {decryptedPassword ?? (
+                <span className="flex items-center gap-1.5">
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <span
+                      key={i}
+                      className="bg-bg-500 dark:bg-bg-100 size-1.5 rounded-full"
+                    ></span>
+                  ))}
+                </span>
+              )}
+            </p>
+            <p className="text-bg-500 text-sm">
+              {t('lastUpdated')}: {dayjs(password.updated).fromNow()}
+            </p>
+          </div>
           <Button
             className="hidden p-2! sm:flex"
             icon={(() => {
