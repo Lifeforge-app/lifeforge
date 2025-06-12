@@ -128,7 +128,14 @@ function PasswordEntryITem({
                 </span>
               )}
             </p>
-            <p className="text-bg-500 text-sm">
+            <p
+              className={clsx(
+                'text-sm',
+                dayjs(password.updated).isBefore(dayjs().subtract(3, 'months'))
+                  ? 'text-red-500'
+                  : 'text-bg-500'
+              )}
+            >
               {t('lastUpdated')}: {dayjs(password.updated).fromNow()}
             </p>
           </div>
