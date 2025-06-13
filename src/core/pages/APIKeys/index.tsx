@@ -11,7 +11,7 @@ import { APIKeyModals } from './modals'
 function APIKeys() {
   const open = useModalStore(state => state.open)
   const { t } = useTranslation(['common.buttons', 'core.apiKeys'])
-  const [otpSuccess, setOtpSuccess] = useState(true)
+  const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
 
   const handleCreateAPIKey = useCallback(async () => {
