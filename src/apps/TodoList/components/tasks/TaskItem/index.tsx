@@ -68,11 +68,11 @@ function TaskItem({
     <li
       key={entry.id}
       className={clsx(
-        'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pr-6 pl-5 transition-all',
+        'flex-between shadow-custom relative isolate flex gap-3 rounded-lg p-4 pr-6 pl-5 transition-all',
         lighter ? componentBgLighter : componentBgWithHover
       )}
     >
-      <div className="flex w-full min-w-0 items-center gap-4">
+      <div className="flex w-full min-w-0 items-center gap-3">
         {typeof lists !== 'string' && entry.list !== '' && (
           <span
             className="h-10 w-1 shrink-0 rounded-full"

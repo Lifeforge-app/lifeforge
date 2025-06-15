@@ -17,7 +17,7 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
         <ul className="divide-bg-800/50 flex flex-col divide-y lg:hidden">
           {transactions.slice(0, 20).map(transaction => (
             <li key={transaction.id} className="flex-between flex gap-8 p-4">
-              <div className="flex w-full min-w-0 items-center gap-4">
+              <div className="flex w-full min-w-0 items-center gap-3">
                 <div
                   className={clsx(
                     'rounded-md p-2',

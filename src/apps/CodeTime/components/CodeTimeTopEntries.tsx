@@ -23,7 +23,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
 
   return (
     <div className="space-y-6 pb-8">
-      <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-8">
+      <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center lg:gap-8">
         <h1 className="mb-2 flex shrink gap-2 text-2xl font-semibold">
           <Icon
             className="mt-0.5 shrink-0 text-3xl"
@@ -109,7 +109,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                         componentBg
                       )}
                     >
-                      <div className="flex items-center gap-4 text-lg font-medium break-all">
+                      <div className="flex items-center gap-3 text-lg font-medium break-all">
                         <div
                           className={clsx(
                             'size-4 shrink-0 rounded-full rounded-md border',

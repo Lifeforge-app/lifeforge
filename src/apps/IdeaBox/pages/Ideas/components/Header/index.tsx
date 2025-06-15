@@ -28,7 +28,7 @@ function Header() {
       >
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
         <div className="flex-between relative z-9999 flex w-full">
-          <h1 className="text-bg-100 flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
+          <h1 className="text-bg-100 flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
             {(() => {
               if (pathDetailsLoading) {
                 return (

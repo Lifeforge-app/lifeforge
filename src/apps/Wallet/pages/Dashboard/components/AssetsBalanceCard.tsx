@@ -47,12 +47,12 @@ function AssetsBalanceCard() {
                   <Link
                     key={asset.id}
                     className={clsx(
-                      'flex-between shadow-custom flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 transition-all [@media(min-width:400px)]:flex-row',
+                      'flex-between shadow-custom flex w-full min-w-0 flex-1 flex-col gap-3 rounded-lg p-6 transition-all [@media(min-width:400px)]:flex-row',
                       componentBgLighterWithHover
                     )}
                     to={`/wallet/transactions?asset=${asset.id}`}
                   >
-                    <div className="flex w-full min-w-0 items-center gap-4">
+                    <div className="flex w-full min-w-0 items-center gap-3">
                       <Icon className="size-6 shrink-0" icon={asset.icon} />
                       <div className="w-full min-w-0 truncate font-semibold">
                         {asset.name}

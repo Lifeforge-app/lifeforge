@@ -33,8 +33,8 @@ function ModuleItem({
         componentBg
       )}
     >
-      <div className="flex-between flex w-full gap-4">
-        <div className="flex items-center gap-4">
+      <div className="flex-between flex w-full gap-3">
+        <div className="flex items-center gap-3">
           <div className={clsx('rounded-lg p-3', componentBgLighter)}>
             {typeof module.icon === 'string' ? (
               <Icon
@@ -52,7 +52,7 @@ function ModuleItem({
             <p className="text-bg-500">{t('description')}</p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Switch
             checked={enabled}
             onChange={() => {

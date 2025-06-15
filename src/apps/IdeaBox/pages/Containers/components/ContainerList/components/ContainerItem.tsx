@@ -72,7 +72,7 @@ function ContainerItem({ container }: { container: IIdeaBoxContainer }) {
           </div>
         </div>
         <div className="text-center text-2xl font-medium">{container.name}</div>
-        <div className="mt-auto flex items-center gap-4">
+        <div className="mt-auto flex items-center gap-3">
           <div className="flex items-center gap-2">
             <Icon className="text-bg-500 size-5" icon="tabler:article" />
             <span className="text-bg-500">{container.text_count}</span>

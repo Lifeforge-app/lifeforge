@@ -11,6 +11,8 @@ import { useModalStore } from '@lifeforge/ui'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
+import useComponentBg from '@hooks/useComponentBg'
+
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 
 function TransactionListItem({
@@ -20,11 +22,18 @@ function TransactionListItem({
 }) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
+  const { componentBgWithHover } = useComponentBg()
 
   const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
   const categories = categoriesQuery.data ?? []
   const ledgers = ledgersQuery.data ?? []
   const assets = assetsQuery.data ?? []
+
+  const handleViewTransaction = useCallback(() => {
+    open('wallet.transactions.viewTransaction', {
+      transaction
+    })
+  }, [transaction])
 
   const handleEditTransaction = useCallback(() => {
     open('wallet.transactions.modifyTransaction', {
@@ -56,8 +65,22 @@ function TransactionListItem({
   }, [transaction])
 
   return (
-    <div className="flex-between border-bg-200 dark:border-bg-800/50 relative flex gap-12 border-b py-4 pl-2">
-      <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
+    <div
+      className={clsx(
+        'flex-between relative flex gap-12 p-4',
+        componentBgWithHover
+      )}
+      role="button"
+      tabIndex={0}
+      onClick={handleViewTransaction}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          handleViewTransaction()
+        }
+      }}
+    >
+      <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-3">
         <div
           className="h-12 w-1 shrink-0 rounded-full"
           style={{
@@ -164,7 +187,7 @@ function TransactionListItem({
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-2 text-lg font-medium">
+      <div className="flex items-center gap-3 text-lg font-medium">
         <span
           className={clsx('text-lg font-medium', {
             'text-green-500': transaction.side === 'debit',

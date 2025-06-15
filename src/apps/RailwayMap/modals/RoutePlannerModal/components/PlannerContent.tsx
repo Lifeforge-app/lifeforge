@@ -76,7 +76,7 @@ function PlannerContent({
 
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-4">
+      <div className="flex w-full flex-col items-center gap-3">
         <StationSelector
           className="w-full"
           filteredStations={filteredStart}

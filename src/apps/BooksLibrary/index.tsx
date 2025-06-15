@@ -107,7 +107,7 @@ function BooksLibrary() {
         icon="tabler:books"
         title="Books Library"
       />
-      <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
+      <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
           <Header

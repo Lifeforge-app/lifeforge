@@ -16,7 +16,7 @@ function MiniCalendarContent({
   const { language } = usePersonalization()
 
   return (
-    <div className="grid grid-cols-7 gap-4">
+    <div className="grid grid-cols-7 gap-3">
       {{
         en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         'zh-CN': ['日', '一', '二', '三', '四', '五', '六'],

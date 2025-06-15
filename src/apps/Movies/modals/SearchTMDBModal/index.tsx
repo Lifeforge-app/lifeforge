@@ -99,7 +99,6 @@ function SearchTMDBModal({
       />
       <div className="flex flex-col items-center gap-2 sm:flex-row">
         <SearchInput
-          hasTopMargin={false}
           namespace="apps.movies"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

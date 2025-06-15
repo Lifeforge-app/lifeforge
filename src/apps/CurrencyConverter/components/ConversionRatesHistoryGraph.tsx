@@ -138,7 +138,7 @@ export default function ConversionRatesHistoryGraph() {
 
   return (
     <>
-      <div className="flex-center flex flex-col gap-4 sm:flex-row">
+      <div className="flex-center flex flex-col gap-3 sm:flex-row">
         <ListboxOrComboboxInput
           buttonContent={
             <div className="flex items-center gap-2">

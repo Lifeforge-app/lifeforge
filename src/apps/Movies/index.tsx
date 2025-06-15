@@ -112,7 +112,7 @@ function Movies() {
         icon="tabler:movie"
         title="Movies"
       />
-      <div className="mt-6 flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <SearchInput
           namespace="apps.movies"
           searchQuery={searchQuery}

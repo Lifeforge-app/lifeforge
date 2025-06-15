@@ -13,7 +13,7 @@ function NavigationControl({
   onNavigate: (direction: NavigateAction) => void
 }) {
   return (
-    <div className="flex w-full items-center gap-4">
+    <div className="flex w-full items-center gap-3">
       <div className="flex-between flex justify-start gap-0">
         <Button
           icon="tabler:chevron-left"

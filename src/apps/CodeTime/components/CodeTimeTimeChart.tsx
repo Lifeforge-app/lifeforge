@@ -137,8 +137,8 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   )
 
   return (
-    <div className="flex w-full flex-col gap-4">
-      <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-8">
+    <div className="flex w-full flex-col gap-3">
+      <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center lg:gap-8">
         <h1 className="mb-2 flex shrink gap-2 text-2xl font-semibold">
           <Icon
             className="mt-0.5 shrink-0 text-3xl"

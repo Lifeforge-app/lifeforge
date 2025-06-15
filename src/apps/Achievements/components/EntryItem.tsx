@@ -26,11 +26,11 @@ function EntryItem({ entry }: { entry: IAchievementEntry }) {
   return (
     <div
       className={clsx(
-        'shadow-custom flex items-start justify-between gap-4 rounded-lg p-4',
+        'shadow-custom flex items-start justify-between gap-3 rounded-lg p-4',
         componentBg
       )}
     >
-      <div className="flex h-full items-center gap-4">
+      <div className="flex h-full items-center gap-3">
         <div
           className={clsx(
             'flex-center size-12 shrink-0 rounded-md',

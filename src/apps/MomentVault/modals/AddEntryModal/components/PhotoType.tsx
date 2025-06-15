@@ -111,7 +111,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
           componentBgLighter
         )}
       >
-        <div className="text-bg-500 flex items-center gap-4">
+        <div className="text-bg-500 flex items-center gap-3">
           <Icon className="size-6" icon="tabler:photo" />
           <span className="font-medium">
             {t(`inputs.photos`)} <span className="text-red-500">*</span>

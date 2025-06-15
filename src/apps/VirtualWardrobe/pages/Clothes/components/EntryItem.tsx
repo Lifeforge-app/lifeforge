@@ -124,7 +124,7 @@ function EntryItem<T extends boolean = false>({
       <div className="flex w-full flex-1 flex-col">
         <div
           className={clsx(
-            'flex items-end justify-between gap-4',
+            'flex items-end justify-between gap-3',
             !isCartItem && 'mt-4'
           )}
         >

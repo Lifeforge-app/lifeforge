@@ -95,7 +95,6 @@ function YoutubeSummarizer() {
     <ModuleWrapper>
       <ModuleHeader icon="tabler:brand-youtube" title="Youtube Summarizer" />
       <TextInput
-        className="mt-6"
         disabled={summarizeLoading}
         icon="tabler:link"
         name="video URL"

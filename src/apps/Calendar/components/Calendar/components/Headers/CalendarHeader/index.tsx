@@ -44,7 +44,7 @@ function CalendarHeader({
 
   return (
     <>
-      <div className="mb-4 flex w-full items-end justify-between gap-4">
+      <div className="mb-4 flex w-full items-end justify-between gap-3">
         <NavigationControl label={label} onNavigate={onNavigate} />
         <div className="flex hidden gap-2 md:flex">
           <Button

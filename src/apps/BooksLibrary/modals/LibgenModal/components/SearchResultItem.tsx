@@ -81,7 +81,7 @@ function SearchResultItem({
               </div>
             ))}
         </div>
-        <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-4">
+        <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-3">
           <Button
             className="w-full lg:w-1/2!"
             icon="tabler:eye"

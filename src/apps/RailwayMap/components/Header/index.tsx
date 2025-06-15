@@ -76,7 +76,7 @@ function Header() {
         icon="uil:subway"
         title="Railway Map"
       />
-      <div className="mt-6 flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <ViewTypeSwitcher setViewType={setViewType} viewType={viewType} />
         <SearchBar />
       </div>

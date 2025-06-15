@@ -52,7 +52,7 @@ function YearMonthInput({
   }, [monthsOptions])
 
   return (
-    <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row">
+    <div className="flex flex-col items-center gap-3 sm:flex-row">
       <ListboxOrComboboxInput
         buttonContent={
           <>

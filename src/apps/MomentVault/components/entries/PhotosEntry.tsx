@@ -67,7 +67,7 @@ function PhotosEntry({
         componentBg
       )}
     >
-      <div className="flex w-full items-start gap-4">
+      <div className="flex w-full items-start gap-3">
         {loading ? (
           <div className="flex-center h-96 w-full">
             <div className="loader" />

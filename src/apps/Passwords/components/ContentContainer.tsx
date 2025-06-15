@@ -24,7 +24,7 @@ function ContentContainer() {
   } = usePasswordContext()
 
   const handleCreatePassword = useCallback(() => {
-    open('apps.passwords.modifyPassword', {
+    open('passwords.modifyPassword', {
       type: 'create',
       existedData: null
     })

@@ -36,6 +36,7 @@ function PasswordEntryITem({
 
   async function copyPassword() {
     setCopyLoading(true)
+
     if (decryptedPassword !== null) {
       copy(decryptedPassword)
       toast.success('Password copied!')
@@ -48,7 +49,7 @@ function PasswordEntryITem({
     }
   }
 
-  async function onEdit() {
+  async function handleEdit() {
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
       open('passwords.modifyPassword', {
@@ -62,6 +63,25 @@ function PasswordEntryITem({
       toast.error('Couldn’t fetch the password. Please try again.')
     }
   }
+
+  const decryptPassword = useCallback(async () => {
+    if (decryptedPassword !== null) {
+      setDecryptedPassword(null)
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const decrypted = await getDecryptedPassword(masterPassword, password.id)
+      setDecryptedPassword(decrypted)
+    } catch {
+      toast.error('Couldn’t decrypt the password. Please try again.')
+      setDecryptedPassword(null)
+    } finally {
+      setLoading(false)
+    }
+  }, [masterPassword, password.id, decryptedPassword])
 
   const handleDeletePassword = useCallback(() => {
     open('deleteConfirmation', {
@@ -77,7 +97,7 @@ function PasswordEntryITem({
   return (
     <div
       className={clsx(
-        'shadow-custom relative flex flex-col items-center gap-4 rounded-md p-4',
+        'shadow-custom relative flex flex-col items-center gap-3 rounded-md p-4',
         componentBg
       )}
     >
@@ -87,8 +107,8 @@ function PasswordEntryITem({
           icon="tabler:pin-filled"
         />
       )}
-      <div className="flex w-full items-center gap-4">
-        <div className="flex w-full min-w-0 items-center gap-4">
+      <div className="flex w-full items-center gap-3">
+        <div className="flex w-full min-w-0 items-center gap-3">
           <div
             className="rounded-md p-4 shadow-md"
             style={{ backgroundColor: password.color + '50' }}
@@ -102,18 +122,18 @@ function PasswordEntryITem({
             />
           </div>
           <div className="flex min-w-0 flex-1 flex-col">
-            <h3 className="text-xl font-semibold">{password.name}</h3>
+            <h3 className="truncate text-xl font-semibold">{password.name}</h3>
             <p className="text-bg-500 truncate">{password.username}</p>
           </div>
         </div>
         <div className="ml-8 flex shrink-0 items-center gap-2 pt-2">
           <div className="mr-4 flex flex-col items-end gap-2">
-            <p
+            <code
               className={clsx(
                 'select-text',
                 decryptedPassword === null
-                  ? 'hidden text-5xl tracking-tighter md:flex'
-                  : 'hidden text-lg lg:flex'
+                  ? 'hidden text-5xl tracking-tighter md:block'
+                  : 'hidden max-w-96 min-w-0 truncate text-lg lg:block'
               )}
               style={decryptedPassword === null ? { fontFamily: 'Arial' } : {}}
             >
@@ -127,10 +147,10 @@ function PasswordEntryITem({
                   ))}
                 </span>
               )}
-            </p>
+            </code>
             <p
               className={clsx(
-                'text-sm',
+                'hidden text-sm md:block',
                 dayjs(password.updated).isBefore(dayjs().subtract(3, 'months'))
                   ? 'text-red-500'
                   : 'text-bg-500'
@@ -141,33 +161,11 @@ function PasswordEntryITem({
           </div>
           <Button
             className="hidden p-2! sm:flex"
-            icon={(() => {
-              if (loading) {
-                return 'svg-spinners:180-ring'
-              }
-
-              return decryptedPassword === null
-                ? 'tabler:eye'
-                : 'tabler:eye-off'
-            })()}
+            icon={decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'}
             iconClassName="size-6"
             loading={loading}
             variant="plain"
-            onClick={() => {
-              if (decryptedPassword === null) {
-                ;(() => {
-                  setLoading(true)
-                  getDecryptedPassword(masterPassword, password.id)
-                    .then(setDecryptedPassword)
-                    .catch(() => {})
-                    .finally(() => {
-                      setLoading(false)
-                    })
-                })()
-              } else {
-                setDecryptedPassword(null)
-              }
-            }}
+            onClick={decryptPassword}
           />
           <Button
             className="hidden p-2! sm:flex"
@@ -178,13 +176,24 @@ function PasswordEntryITem({
           />
           <HamburgerMenu>
             <MenuItem
+              className="flex sm:hidden"
+              icon={
+                decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'
+              }
+              loading={loading}
+              text={
+                decryptedPassword === null ? 'Show Password' : 'Hide Password'
+              }
+              onClick={decryptPassword}
+            />
+            <MenuItem
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
               text={password.pinned ? 'Unpin' : 'Pin'}
               onClick={() => {
                 pinPassword(password.id)
               }}
             />
-            <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
+            <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
             <MenuItem
               isRed
               icon="tabler:trash"
@@ -195,19 +204,10 @@ function PasswordEntryITem({
         </div>
       </div>
       {decryptedPassword !== null && (
-        <p className="bg-bg-800 block w-full rounded-md p-4 text-center lg:hidden">
+        <code className="bg-bg-800 block w-full rounded-md p-4 break-all lg:hidden">
           {decryptedPassword}
-        </p>
+        </code>
       )}
-      <Button
-        className="w-full sm:hidden"
-        icon="tabler:copy"
-        loading={copyLoading}
-        variant="secondary"
-        onClick={copyPassword}
-      >
-        Copy
-      </Button>
     </div>
   )
 }

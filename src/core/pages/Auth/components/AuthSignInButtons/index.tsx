@@ -27,7 +27,7 @@ function AuthSignInButton({
             </div>
             <div className="bg-bg-500 h-[2px] w-full"></div>
           </div>
-          <div className="flex w-full gap-4">
+          <div className="flex w-full gap-3">
             {providers.map(provider => (
               <SigninWithProviderButton
                 key={provider}

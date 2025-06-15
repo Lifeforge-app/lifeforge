@@ -1,5 +1,6 @@
-import 'leaflet/dist/leaflet.css'
 import { memo, useMemo, useRef } from 'react'
+
+import 'leaflet/dist/leaflet.css'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useEarthMapRenderer } from './hooks/useEarthMapRenderer'
@@ -34,7 +35,7 @@ function EarthMap() {
   })
 
   return (
-    <div className="flex-1 overflow-hidden py-8">
+    <div className="flex-1 overflow-hidden pb-8">
       <div className="shadow-custom h-full w-full overflow-hidden rounded-lg">
         <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
       </div>

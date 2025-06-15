@@ -20,7 +20,7 @@ function Clock() {
     <div
       ref={ref}
       className={clsx(
-        'shadow-custom flex size-full gap-4 rounded-lg p-4',
+        'shadow-custom flex size-full gap-3 rounded-lg p-4',
         componentBg,
         (ref.current?.offsetHeight ?? 0) < 160
           ? 'flex-between flex-row'

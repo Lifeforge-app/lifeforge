@@ -19,7 +19,7 @@ function ListView({ books }: { books: IBooksLibraryEntry[] }) {
         {Object.entries(processes).map(([key, value]) => (
           <li
             key={key}
-            className="bg-bg-50 shadow-custom dark:bg-bg-900 relative flex items-center gap-4 rounded-lg p-4"
+            className="bg-bg-50 shadow-custom dark:bg-bg-900 relative flex items-center gap-3 rounded-lg p-4"
           >
             <div className="flex-center bg-bg-50/50 dark:bg-bg-900/70 absolute top-0 left-0 size-full rounded-lg text-center font-medium">
               Downloading... {value.percentage}

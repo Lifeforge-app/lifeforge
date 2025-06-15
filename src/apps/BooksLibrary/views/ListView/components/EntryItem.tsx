@@ -61,7 +61,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
     <li
       key={item.id}
       className={clsx(
-        'shadow-custom relative flex gap-4 rounded-lg p-4 transition-all',
+        'shadow-custom relative flex gap-3 rounded-lg p-4 transition-all',
         componentBgWithHover
       )}
     >

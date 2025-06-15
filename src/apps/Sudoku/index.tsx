@@ -26,7 +26,7 @@ function Sudoku() {
       <ModuleHeader icon="uil:table" title="Sudoku" />
       <QueryWrapper query={dataQuery}>
         {data => (
-          <div className="mt-6 space-y-2">
+          <div className="space-y-2">
             <Button
               className="w-full"
               icon="uil:print"

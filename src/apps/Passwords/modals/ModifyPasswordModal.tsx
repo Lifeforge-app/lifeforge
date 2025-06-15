@@ -140,12 +140,7 @@ function ModifyPasswordModal({
         title={`password.${type}`}
         onClose={onClose}
       />
-      <form
-        className="flex w-full flex-col"
-        onSubmit={e => {
-          e.preventDefault()
-        }}
-      >
+      <div className="flex w-full flex-col space-y-3">
         <input className="hidden" type="password" />
         <TextInput
           darker
@@ -171,7 +166,6 @@ function ModifyPasswordModal({
         <TextInput
           darker
           noAutoComplete
-          className="mt-6"
           icon="tabler:link"
           name="Website"
           namespace="apps.passwords"
@@ -182,7 +176,6 @@ function ModifyPasswordModal({
         <TextInput
           darker
           noAutoComplete
-          className="mt-6"
           icon="tabler:user"
           name="Username or Email"
           namespace="apps.passwords"
@@ -194,7 +187,6 @@ function ModifyPasswordModal({
           darker
           isPassword
           noAutoComplete
-          className="mt-6"
           icon="tabler:key"
           name="Password"
           namespace="apps.passwords"
@@ -202,17 +194,17 @@ function ModifyPasswordModal({
           setValue={handleChange('password')}
           value={formState.password}
         />
-        <Button
-          className="mt-6"
-          icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          loading={loading}
-          onClick={() => {
-            onSubmit().catch(console.error)
-          }}
-        >
-          {type === 'create' ? 'Create' : 'Update'}
-        </Button>
-      </form>
+      </div>
+      <Button
+        className="mt-6 w-full"
+        icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+        loading={loading}
+        onClick={() => {
+          onSubmit().catch(console.error)
+        }}
+      >
+        {type === 'create' ? 'Create' : 'Update'}
+      </Button>
     </div>
   )
 }

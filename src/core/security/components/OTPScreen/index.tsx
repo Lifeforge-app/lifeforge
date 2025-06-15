@@ -119,7 +119,7 @@ function OTPScreen({
 
   return (
     <>
-      <div className="flex-center size-full flex-1 flex-col gap-4">
+      <div className="flex-center size-full flex-1 flex-col gap-3">
         <Icon className="size-28" icon="tabler:shield-lock" />
         <h2 className="text-center text-4xl font-semibold">
           {t('otp.messages.required.title')}

@@ -29,12 +29,12 @@ function DetailBox() {
   return (
     <div
       className={clsx(
-        'shadow-custom flex-between flex w-full gap-4 overflow-hidden rounded-md px-6 transition-all duration-500',
+        'shadow-custom flex-between flex w-full gap-3 overflow-hidden rounded-md px-6 transition-all duration-500',
         componentBg,
         selectedStation ? 'mt-6 max-h-64 py-4' : 'mt-0 max-h-0 py-0'
       )}
     >
-      <div className="flex items-center gap-6 md:gap-4">
+      <div className="flex items-center gap-6 md:gap-3">
         <Icon
           className="size-6 shrink-0"
           icon={
@@ -43,7 +43,7 @@ function DetailBox() {
               : 'uil:subway'
           }
         />
-        <div className="flex flex-col-reverse gap-2 md:flex-row md:items-center md:gap-4">
+        <div className="flex flex-col-reverse gap-2 md:flex-row md:items-center md:gap-3">
           <div className="text-2xl font-semibold">
             {innerSelectedStation?.name}
           </div>

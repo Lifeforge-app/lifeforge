@@ -152,7 +152,7 @@ function VirtualWardrobeClothes() {
 
               return (
                 <Scrollbar className="mt-6 pb-16">
-                  <ul className="mb-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+                  <ul className="mb-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3">
                     {entries
                       .sort((a, b) => {
                         const catA = VW_CATEGORIES.findIndex(

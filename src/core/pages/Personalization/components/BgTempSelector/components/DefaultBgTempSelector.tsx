@@ -15,7 +15,7 @@ function DefaultBgTempSelector({
 
   return (
     <div className="flex w-full flex-col items-center gap-2 xl:w-auto">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {COLORS.map((color, index) => (
           <button
             key={index}

@@ -43,7 +43,7 @@ function Header({
       <div className="flex-between w-full min-w-0 gap-8">
         <h1
           className={clsx(
-            'flex w-full min-w-0 items-center gap-4 font-semibold',
+            'flex w-full min-w-0 items-center gap-3 font-semibold',
             typeof wishlistListDetails !== 'string'
               ? 'text-2xl sm:text-3xl'
               : 'text-2xl'

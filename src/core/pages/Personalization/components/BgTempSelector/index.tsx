@@ -23,7 +23,7 @@ function BgTempSelector() {
       icon="tabler:temperature"
       title={t('bgTempSelector.title')}
     >
-      <div className="flex w-full min-w-0 flex-col items-center gap-4 lg:flex-row">
+      <div className="flex w-full min-w-0 flex-col items-center gap-3 lg:flex-row">
         <DefaultBgTempSelector bgTemp={bgTemp} setBgTemp={setBgTemp} />
         <button
           className={clsx(
@@ -46,7 +46,6 @@ function BgTempSelector() {
             <ColorInput
               className="w-full lg:w-min"
               color={customBgTemp}
-              hasTopMargin={false}
               name="Color Hex"
               namespace="core.personalization"
               setColor={setCustomBgTemp}

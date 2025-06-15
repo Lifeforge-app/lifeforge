@@ -20,7 +20,7 @@ function ThemeColorSelector() {
       title={t('themeColorSelector.title')}
       wrapWhen="lg"
     >
-      <div className="flex w-full flex-col items-center gap-4 md:flex-row">
+      <div className="flex w-full flex-col items-center gap-3 md:flex-row">
         <DefaultThemeColorSelector
           customThemeColor={customThemeColor}
           setThemeColor={setThemeColor}
@@ -31,7 +31,6 @@ function ThemeColorSelector() {
             <ColorInput
               className="w-full md:w-min"
               color={customThemeColor}
-              hasTopMargin={false}
               name="Color Hex"
               namespace="core.personalization"
               setColor={setCustomThemeColor}

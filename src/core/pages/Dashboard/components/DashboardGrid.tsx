@@ -104,7 +104,7 @@ function DashboardGrid({
     </div>
   ) : (
     <RGL
-      className={clsx('pt-6', canLayoutChange && 'pb-64')}
+      className={canLayoutChange && 'pb-64'}
       cols={
         {
           lg: 8,

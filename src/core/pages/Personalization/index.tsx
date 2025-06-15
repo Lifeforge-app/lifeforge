@@ -11,7 +11,7 @@ function Personalization() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:palette" title="Personalization" />
-      <div className="my-8">
+      <div className="mb-8">
         <LanguageSelector />
         <ThemeSelector />
         <ThemeColorSelector />

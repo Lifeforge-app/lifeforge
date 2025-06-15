@@ -119,7 +119,7 @@ function MovieGridItem({
                 <Icon className="size-5" icon="tabler:flag" />
                 Countries
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 {data.countries.map((country, index) => (
                   <div
                     key={`country-${index}-${country}`}

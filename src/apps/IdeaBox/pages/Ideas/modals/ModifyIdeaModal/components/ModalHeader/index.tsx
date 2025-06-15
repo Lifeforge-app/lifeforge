@@ -24,7 +24,7 @@ function ModalHeader({
 
   return (
     <>
-      <div className="flex-between flex w-full gap-4 sm:mb-6">
+      <div className="flex-between flex w-full gap-3 sm:mb-6">
         <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
           <Icon
             key={innerOpenType}

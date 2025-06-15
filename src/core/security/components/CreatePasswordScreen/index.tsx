@@ -41,7 +41,7 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
 
   return (
     <>
-      <div className="flex-center size-full flex-1 flex-col gap-4">
+      <div className="flex-center size-full flex-1 flex-col gap-3">
         <Icon className="size-28" icon="tabler:lock-plus" />
         <h2 className="text-4xl font-semibold">
           {t('vault.createPassword.title')}
