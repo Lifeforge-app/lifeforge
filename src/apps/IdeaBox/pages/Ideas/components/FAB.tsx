@@ -67,7 +67,7 @@ function FAB() {
                 <MenuItem key={name}>
                   <div
                     className={
-                      'group flex w-full items-center justify-end gap-4 rounded-md py-2 pr-2 whitespace-nowrap'
+                      'group flex w-full items-center justify-end gap-3 rounded-md py-2 pr-2 whitespace-nowrap'
                     }
                   >
                     <span className="text-bg-50 group-data-focus:text-bg-200 transition-all">

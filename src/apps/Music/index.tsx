@@ -50,7 +50,7 @@ function Music() {
         title="Music"
         totalItems={musicsQuery.data?.length}
       />
-      <div className="music relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
+      <div className="music relative flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
           namespace="apps.music"
           searchQuery={searchQuery}

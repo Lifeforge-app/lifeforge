@@ -35,7 +35,7 @@ function BreakdownDoughnutChart({
   const { isAmountHidden } = useWalletStore()
 
   return (
-    <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
+    <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-3">
       <div className="absolute top-1/2 left-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
         <div
           className={clsx(

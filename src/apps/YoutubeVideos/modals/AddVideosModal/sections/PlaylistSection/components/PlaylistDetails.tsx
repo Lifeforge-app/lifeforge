@@ -30,7 +30,7 @@ function PlaylistDetails({
   return (
     <div className="flex flex-col space-y-2">
       <PlaylistInfo playlistInfo={playlistInfo} />
-      <div className="mt-4 grid grid-cols-1 gap-4">
+      <div className="mt-4 grid grid-cols-1 gap-3">
         {playlistInfo.entries.map(video => (
           <PlaylistVideoEntry
             key={video.id}

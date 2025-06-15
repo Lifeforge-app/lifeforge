@@ -64,7 +64,6 @@ function Wishlist() {
         title="Wishlist"
       />
       <SearchInput
-        className="mt-6!"
         namespace="apps.wishlist"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -93,7 +92,7 @@ function Wishlist() {
               )
             }
             return (
-              <div className="mt-6 mb-14 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
+              <div className="mt-6 mb-14 grid grid-cols-1 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
                 {filteredLists.map(list => (
                   <WishlistListItem key={list.id} list={list} />
                 ))}

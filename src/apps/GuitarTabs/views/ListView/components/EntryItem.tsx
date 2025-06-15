@@ -66,14 +66,14 @@ function EntryItem({
     >
       <a
         key={entry.id}
-        className="flex items-center justify-between gap-4 p-4"
+        className="flex items-center justify-between gap-3 p-4"
         href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
           entry.id
         }/${entry.pdf}`}
         rel="noreferrer"
         target="_blank"
       >
-        <div className="flex w-full min-w-0 items-center gap-4">
+        <div className="flex w-full min-w-0 items-center gap-3">
           <div className="flex-center bg-bg-200 dark:bg-bg-800 w-12 rounded-lg">
             <img
               alt=""

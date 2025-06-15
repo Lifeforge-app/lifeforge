@@ -116,13 +116,13 @@ function AudioEntry({
       )}
       id={`audio-entry-${entry.id}`}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Button
           className="mb-6 sm:mb-0"
           icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
           onClick={onPlayPause}
         />
-        <div className="mr-16 flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-4">
+        <div className="mr-16 flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-3">
           <WavesurferPlayer
             barGap={2}
             barRadius={100}

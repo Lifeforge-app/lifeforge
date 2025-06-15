@@ -15,7 +15,7 @@ function DifficultySelector({
   const { t } = useTranslation('apps.achievements')
 
   return (
-    <div className="mt-6 flex items-center">
+    <div className="flex items-center">
       {(
         [
           ['easy', 'border-green-500 text-green-500'],

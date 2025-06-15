@@ -75,12 +75,12 @@ function EntryItem({
   return (
     <li
       className={clsx(
-        'relative flex flex-col justify-between gap-4 rounded-md p-4 sm:pr-8 md:flex-row md:items-center',
+        'relative flex flex-col justify-between gap-3 rounded-md p-4 sm:pr-8 md:flex-row md:items-center',
         componentBg
       )}
     >
       <div className="flex-between gap-8">
-        <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
           <div
             className={clsx(
               'relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20',
@@ -121,7 +121,7 @@ function EntryItem({
           }}
         />
       </div>
-      <div className="flex-between gap-4">
+      <div className="flex-between gap-3">
         <Button
           iconAtEnd
           as="a"

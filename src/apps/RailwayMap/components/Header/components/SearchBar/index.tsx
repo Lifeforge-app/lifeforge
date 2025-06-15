@@ -21,7 +21,6 @@ function SearchBar() {
   return (
     <div className="relative z-[500] w-full">
       <SearchInput
-        hasTopMargin={false}
         namespace="apps.railwayMap"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

@@ -48,7 +48,7 @@ function Modules() {
     <ModuleWrapper>
       <ModuleHeader icon="tabler:plug" title="Modules" />
       {userData ? (
-        <ul className="my-8 space-y-12">
+        <ul className="mb-8 space-y-12">
           {ROUTES.map(
             route =>
               route.items.filter(route => route.togglable).length > 0 && (

@@ -71,7 +71,7 @@ function YoutubeVideos() {
         setQuery={setQuery}
         videosLength={videosQuery.data?.length ?? 0}
       />
-      <Scrollbar className="mt-6">
+      <Scrollbar>
         <QueryWrapper query={videosQuery}>
           {videos =>
             videos.length === 0 ? (

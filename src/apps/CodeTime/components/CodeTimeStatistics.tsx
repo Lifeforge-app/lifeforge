@@ -19,7 +19,7 @@ function CodeTimeStatistics() {
   )
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-3">
       <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
         <Icon className="text-3xl" icon="tabler:chart-bar" />
         <span className="ml-2">{t('headers.statistics')}</span>
@@ -27,7 +27,7 @@ function CodeTimeStatistics() {
 
       <QueryWrapper query={statsQuery}>
         {stats => (
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-3">
             {Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}

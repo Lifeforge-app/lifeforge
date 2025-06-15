@@ -55,7 +55,6 @@ function IdeaBox() {
     <ModuleWrapper>
       <ModuleHeader icon="tabler:bulb" title="Idea Box" />
       <SearchInput
-        className="mt-6"
         namespace="apps.ideaBox"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

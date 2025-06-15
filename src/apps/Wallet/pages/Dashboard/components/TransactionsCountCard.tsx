@@ -47,12 +47,12 @@ function TransactionsCountCard() {
                 <Link
                   key={type}
                   className={clsx(
-                    'flex-between flex flex-col gap-4 rounded-md p-4 transition-all sm:flex-row',
+                    'flex-between flex flex-col gap-3 rounded-md p-4 transition-all sm:flex-row',
                     componentBgLighterWithHover
                   )}
                   to={`/wallet/transactions?type=${type}`}
                 >
-                  <div className="flex w-full items-center gap-4">
+                  <div className="flex w-full items-center gap-3">
                     <div
                       className={clsx('size-4 shrink-0 rounded-md', color)}
                     ></div>
