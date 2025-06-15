@@ -42,7 +42,6 @@ function SidebarHeader({
         <div className="px-4">
           <SearchInput
             className="mb-4"
-            hasTopMargin={false}
             namespace="common.sidebar"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}

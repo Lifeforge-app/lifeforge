@@ -95,7 +95,6 @@ function WishlistEntries() {
                 <>
                   <Tabs
                     active={activeTab}
-                    className="mt-6"
                     enabled={['wishlist', 'bought']}
                     items={[
                       {

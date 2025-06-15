@@ -230,7 +230,7 @@ function RecurringSelector({
           ))}
         </ListboxOrComboboxInput>
         {endType !== 'never' && (
-          <div className="flex flex-1 items-center gap-4">
+          <div className="flex flex-1 items-center gap-3">
             {endType === 'after' && (
               <>
                 <TextInput

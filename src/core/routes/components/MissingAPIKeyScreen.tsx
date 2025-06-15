@@ -12,7 +12,7 @@ function MissingAPIKeyScreen({
   const { t } = useTranslation('core.apiKeys')
 
   return (
-    <div className="flex-center size-full flex-1 flex-col gap-4">
+    <div className="flex-center size-full flex-1 flex-col gap-3">
       <Icon className="size-28" icon="tabler:key-off" />
       <h2 className="text-4xl font-semibold">{t('missing.title')}</h2>
       <p className="text-bg-500 text-center text-lg">

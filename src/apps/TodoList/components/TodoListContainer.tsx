@@ -70,7 +70,7 @@ function TodoListContainer() {
 
   return (
     <>
-      <div className="mt-6 flex size-full min-h-0 flex-1">
+      <div className="flex size-full min-h-0 flex-1">
         <Sidebar isOpen={sidebarOpen} setOpen={setSidebarOpen} />
         <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
           <Header setSidebarOpen={setSidebarOpen} />

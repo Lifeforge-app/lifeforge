@@ -160,7 +160,7 @@ function AudioType({
   return (
     <>
       <div className="bg-bg-200/50 shadow-custom dark:bg-bg-800/50 flex w-full flex-col rounded-md p-6">
-        <div className="text-bg-500 flex items-center gap-4">
+        <div className="text-bg-500 flex items-center gap-3">
           <Icon className="size-6" icon="tabler:microphone" />
           <span className="font-medium">
             {t(`apps.momentVault:inputs.audio`)}{' '}
@@ -169,12 +169,12 @@ function AudioType({
         </div>
         {audioURL && (
           <>
-            <div className="bg-bg-300/50 dark:bg-bg-800 shadow-custom mt-6 flex w-full items-center gap-4 rounded-md p-4 md:pr-8 [&>*:nth-child(2)]:w-full">
+            <div className="bg-bg-300/50 dark:bg-bg-800 shadow-custom mt-6 flex w-full items-center gap-3 rounded-md p-4 md:pr-8 [&>*:nth-child(2)]:w-full">
               <Button
                 icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
                 onClick={onPlayPause}
               />
-              <div className="flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-4">
+              <div className="flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-3">
                 <WavesurferPlayer
                   barGap={2}
                   barRadius={100}

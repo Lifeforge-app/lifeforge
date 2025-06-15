@@ -26,7 +26,7 @@ function WeeklyForm({
 
   return (
     <>
-      <div className="flex w-full items-center gap-4">
+      <div className="flex w-full items-center gap-3">
         <TextInput
           darker
           required

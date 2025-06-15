@@ -56,7 +56,7 @@ function PasswordList() {
             namespace="apps.passwords"
           />
         ) : (
-          <div className="my-8 flex w-full flex-col gap-4">
+          <div className="my-8 flex w-full flex-col gap-3">
             {filteredPasswordList.map(password => (
               <PasswordEntryItem
                 key={password.id}

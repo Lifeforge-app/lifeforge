@@ -137,7 +137,7 @@ function Transactions() {
         title="Transactions"
         tKey="subsectionsTitleAndDesc"
       />
-      <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
+      <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <InnerHeader />

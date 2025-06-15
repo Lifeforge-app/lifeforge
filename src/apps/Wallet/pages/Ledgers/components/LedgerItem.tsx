@@ -23,7 +23,7 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
     <div
       aria-label={`View ${ledger.name} transactions`}
       className={clsx(
-        'flex-between shadow-custom relative flex w-full cursor-pointer gap-4 rounded-lg p-4 transition-all',
+        'flex-between shadow-custom relative flex w-full cursor-pointer gap-3 rounded-lg p-4 transition-all',
         componentBgWithHover
       )}
       role="button"

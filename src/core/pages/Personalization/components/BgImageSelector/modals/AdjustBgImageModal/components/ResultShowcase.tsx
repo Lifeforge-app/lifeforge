@@ -43,7 +43,7 @@ function ResultShowcase({
         />
         <div
           className={clsx(
-            'shadow-custom flex size-full flex-col gap-4 rounded-lg p-4',
+            'shadow-custom flex size-full flex-col gap-3 rounded-lg p-4',
             componentBg
           )}
         >
@@ -54,10 +54,10 @@ function ResultShowcase({
           <p className="text-bg-500">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac.
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             <div
               className={clsx(
-                'flex w-full flex-col items-start gap-4 rounded-lg p-4 sm:flex-row sm:items-center',
+                'flex w-full flex-col items-start gap-3 rounded-lg p-4 sm:flex-row sm:items-center',
                 componentBgLighter
               )}
             >

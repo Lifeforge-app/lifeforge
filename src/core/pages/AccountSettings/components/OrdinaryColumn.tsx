@@ -39,7 +39,7 @@ function OrdinaryColumn({
         icon={icon}
         title={t(`settings.title.${_.camelCase(title)}`)}
       >
-        <div className="flex-between w-full gap-4">
+        <div className="flex-between w-full gap-3">
           <span className="text-bg-500 whitespace-nowrap">
             {(() => {
               if (userData[id] === '') {

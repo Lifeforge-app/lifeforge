@@ -29,7 +29,7 @@ function CategorySection({ categories, type, iconName }: CategorySectionProps) {
 
   return (
     <>
-      <div className="flex-between flex gap-4">
+      <div className="flex-between flex gap-3">
         <h2 className="text-bg-500 flex items-center gap-2 text-lg font-medium">
           <Icon className="size-6" icon={iconName} />
           {t('transactionTypes.' + type)}

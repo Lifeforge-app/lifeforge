@@ -27,7 +27,7 @@ function CurrencySelector({
   const { filteredCurrencies, setQueries } = useCurrencies()
 
   return (
-    <div className="mb-6 flex flex-col items-center gap-4 sm:flex-row">
+    <div className="mb-6 flex flex-col items-center gap-3 sm:flex-row">
       <div className="w-full">
         <ListboxOrComboboxInput
           displayValue={value => {

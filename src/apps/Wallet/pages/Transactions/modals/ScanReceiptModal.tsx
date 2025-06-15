@@ -84,7 +84,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
           setPreview(preview)
         }}
       />
-      <div className="flex-between mt-4 gap-4">
+      <div className="flex-between mt-4 gap-3">
         <div className="flex w-full min-w-0 items-center gap-2">
           <Icon className="size-5 shrink-0" icon="tabler:file-check" />
           <span className="w-full min-w-0 truncate">

@@ -30,7 +30,7 @@ function SearchResultItem({ station }: { station: IRailwayMapStation }) {
       className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800/50 flex w-full p-4 px-6 transition-all"
       onClick={onClick}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Icon
           className="size-7"
           icon={

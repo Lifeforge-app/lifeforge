@@ -33,10 +33,10 @@ function BreakdownDetails({
           {expensesCategories.map(category => (
             <Link
               key={category.id}
-              className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800/50 flex gap-4 rounded-md p-4 transition-all"
+              className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800/50 flex gap-3 rounded-md p-4 transition-all"
               to={`/wallet/transactions?type=expenses&category=${category.id}`}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <div
                   className="rounded-md bg-blue-500/20 p-2"
                   style={{

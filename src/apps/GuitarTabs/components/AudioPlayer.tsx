@@ -33,7 +33,7 @@ function AudioPlayer({ url }: { url: string }) {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-3">
       <Button
         className="p-2!"
         icon={(() => {

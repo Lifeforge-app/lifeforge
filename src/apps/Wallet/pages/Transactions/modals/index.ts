@@ -5,8 +5,10 @@ import ManageCategoriesModal from './ManageCategoriesModal'
 import ModifyCategory from './ModifyCategoryModal'
 import ModifyTransactionsModal from './ModifyTransactionsModal'
 import ScanReceiptModal from './ScanReceiptModal'
+import ViewTransactionModal from './ViewTransactionModal'
 
 export const walletTransactionsModals: Record<string, ModalComponent> = {
+  'wallet.transactions.viewTransaction': ViewTransactionModal,
   'wallet.transactions.manageCategories': ManageCategoriesModal,
   'wallet.transactions.modifyCategory': ModifyCategory,
   'wallet.transactions.modifyTransaction': ModifyTransactionsModal,

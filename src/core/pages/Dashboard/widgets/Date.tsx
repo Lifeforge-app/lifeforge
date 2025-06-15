@@ -15,7 +15,7 @@ export default function DateWidget() {
     <div
       ref={ref}
       className={clsx(
-        'bg-custom-500 shadow-custom flex size-full gap-4 rounded-lg p-4',
+        'bg-custom-500 shadow-custom flex size-full gap-3 rounded-lg p-4',
         tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50',
         (ref.current?.offsetHeight ?? 0) < 240
           ? 'flex-row items-end'
