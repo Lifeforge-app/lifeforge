@@ -56,13 +56,19 @@ function TransactionListItem({
     })
   }, [transaction])
 
-  const handleViewReceipt = useCallback(() => {
-    open('wallet.transactions.viewReceipt', {
-      src: `${import.meta.env.VITE_API_HOST}/media/${
-        transaction.collectionId
-      }/${transaction.id}/${transaction.receipt}`
-    })
-  }, [transaction])
+  const handleViewReceipt = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      e.preventDefault()
+
+      open('wallet.transactions.viewReceipt', {
+        src: `${import.meta.env.VITE_API_HOST}/media/${
+          transaction.collectionId
+        }/${transaction.id}/${transaction.receipt}`
+      })
+    },
+    [transaction]
+  )
 
   return (
     <div
