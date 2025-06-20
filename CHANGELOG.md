@@ -1,5 +1,10 @@
 # Change Log
 
+### 📌 **dev 25w25 (6/16/2025 - 6/23/2025)**
+- **UI**: Added file icon to the file input component and modal.
+- **UI**: Fixed a bug in the tailwind color palette where the palette is not scrollable.
+- **UI**: Minor UI improvements to the file input component and modal.
+
 ### 📌 **dev 25w24 (6/9/2025 - 6/16/2025)**
 - **Wishlist**: Added search bar.
 - **Personalization**: Favicon is now dynamically generated based on the theme color.

@@ -17,7 +17,7 @@
     "@headlessui/react": "^2.2.2",
     "@iconify/react": "^5.2.1",
     "@iconify/types": "^2.0.0",
-    "@lifeforge/ui": "^0.25.25-7",
+    "@lifeforge/ui": "^0.25.25-8",
     "@million/lint": "^1.0.14",
     "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/postcss": "^4.1.5",
