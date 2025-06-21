@@ -48,16 +48,14 @@ function CalendarList({
     <QueryWrapper query={calendarsQuery}>
       {calendars => (
         <section className="flex w-full min-w-0 flex-1 flex-col">
-          <div className="mt-4">
-            <SidebarTitle
-              actionButtonIcon="tabler:plus"
-              actionButtonOnClick={handleCreate}
-              name="Calendars"
-              namespace="apps.calendar"
-            />
-          </div>
+          <SidebarTitle
+            actionButtonIcon="tabler:plus"
+            actionButtonOnClick={handleCreate}
+            name="Calendars"
+            namespace="apps.calendar"
+          />
           {calendars.length > 0 ? (
-            <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
+            <ul className="-mt-2 flex h-full min-w-0 flex-col">
               {calendars.map(item => (
                 <CalendarListItem
                   key={item.id}
