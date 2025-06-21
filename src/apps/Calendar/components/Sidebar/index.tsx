@@ -1,4 +1,4 @@
-import { SidebarWrapper } from '@lifeforge/ui'
+import { SidebarDivider, SidebarWrapper } from '@lifeforge/ui'
 
 import CalendarList from './components/CalendarList'
 import CategoryList from './components/CategoryList'
@@ -22,11 +22,13 @@ function Sidebar({
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <MiniCalendar />
+      <SidebarDivider />
       <CalendarList
         selectedCalendar={selectedCalendar}
         setSelectedCalendar={setSelectedCalendar}
         setSidebarOpen={setSidebarOpen}
       />
+      <SidebarDivider />
       <CategoryList
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

@@ -47,16 +47,14 @@ function CategoryList({
     <QueryWrapper query={categoriesQuery}>
       {categories => (
         <section className="flex w-full min-w-0 flex-1 flex-col">
-          <div className="mt-4">
-            <SidebarTitle
-              actionButtonIcon="tabler:plus"
-              actionButtonOnClick={handleCreate}
-              name="Categories"
-              namespace="apps.calendar"
-            />
-          </div>
+          <SidebarTitle
+            actionButtonIcon="tabler:plus"
+            actionButtonOnClick={handleCreate}
+            name="Categories"
+            namespace="apps.calendar"
+          />
           {[...categories, ...Object.keys(INTERNAL_CATEGORIES)].length > 0 ? (
-            <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
+            <ul className="-mt-2 flex h-full min-w-0 flex-col">
               {Object.entries(INTERNAL_CATEGORIES).map(([key, value]) => (
                 <CategoryListItem
                   key={key}
