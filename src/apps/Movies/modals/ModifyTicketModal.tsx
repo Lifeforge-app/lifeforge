@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -32,7 +33,7 @@ function ModifyTicketModal({
     theatre_location: '',
     theatre_number: '',
     theatre_seat: '',
-    theatre_showtime: ''
+    theatre_showtime: undefined
   })
   const modalRef = useRef<HTMLDivElement | null>(null)
 
@@ -123,7 +124,7 @@ function ModifyTicketModal({
         theatre_location: '',
         theatre_number: '',
         theatre_seat: '',
-        theatre_showtime: ''
+        theatre_showtime: undefined
       }))
       return
     }
@@ -135,7 +136,7 @@ function ModifyTicketModal({
         theatre_location: existedData.theatre_location,
         theatre_number: existedData.theatre_number,
         theatre_seat: existedData.theatre_seat,
-        theatre_showtime: existedData.theatre_showtime
+        theatre_showtime: dayjs(existedData.theatre_showtime).toDate()
       })
     }
   }, [type, existedData])
@@ -143,12 +144,24 @@ function ModifyTicketModal({
   function updateDataList(newData: IMovieEntry) {
     queryClient.setQueryData<IMovieEntry[]>(['movies', 'entries'], oldData => {
       if (!oldData) return oldData
-      return oldData.map(entry => {
-        if (entry.id === newData.id) {
-          return newData
-        }
-        return entry
-      })
+      return oldData
+        .map(entry => {
+          if (entry.id === newData.id) {
+            return newData
+          }
+          return entry
+        })
+        .sort((a, b) => {
+          const aIsWatched = a.is_watched ? 1 : 0
+          const bIsWatched = b.is_watched ? 1 : 0
+          if (aIsWatched !== bIsWatched) {
+            return aIsWatched - bIsWatched
+          }
+          if (a.ticket_number !== b.ticket_number) {
+            return b.ticket_number.localeCompare(a.ticket_number)
+          }
+          return a.title.localeCompare(b.title)
+        })
     })
   }
 
