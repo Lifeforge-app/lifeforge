@@ -2,6 +2,7 @@
 
 ### 📌 **dev 25w25 (6/16/2025 - 6/23/2025)**
 - **Calendar**: Added divider to the calendar sidebar that I have been missing for a long time.
+- **Movies**: Fixed a bug where the date picker will crash every time the user tries to modify a ticket entry.
 - **UI**: Added file icon to the file input component and modal.
 - **UI**: Fixed a bug in the tailwind color palette where the palette is not scrollable.
 - **UI**: Minor UI improvements to the file input component and modal.
