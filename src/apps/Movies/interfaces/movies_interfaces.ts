@@ -52,7 +52,7 @@ interface IMovieTicketFormState extends IFormState {
   ticket_number: string
   theatre_seat: string
   theatre_location: string
-  theatre_showtime: string
+  theatre_showtime?: Date
   theatre_number: string
 }
 
