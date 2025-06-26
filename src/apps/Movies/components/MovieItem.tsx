@@ -10,7 +10,7 @@ import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function MovieGridItem({
+function MovieItem({
   data,
   onToggleWatched,
   type
@@ -42,7 +42,8 @@ function MovieGridItem({
       data: data,
       itemName: 'movie',
       nameKey: 'title',
-      queryKey: ['movies', 'entries']
+      queryKey: ['movies', 'entries'],
+      queryUpdateType: 'invalidate'
     })
   }, [data])
 
@@ -142,18 +143,7 @@ function MovieGridItem({
             type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
           )}
         >
-          {data.is_watched ? (
-            <Button
-              disabled
-              className="w-full"
-              icon="tabler:check"
-              loading={toggleWatchedLoading}
-              namespace="apps.movies"
-              variant="secondary"
-            >
-              Watched
-            </Button>
-          ) : (
+          {!data.is_watched && (
             <Button
               className="w-full"
               icon="tabler:check"
@@ -175,6 +165,7 @@ function MovieGridItem({
               className="w-full"
               icon="tabler:ticket"
               namespace="apps.movies"
+              variant={data.is_watched ? 'secondary' : 'primary'}
               onClick={handleShowTicket}
             >
               Show Ticket
@@ -217,4 +208,4 @@ function MovieGridItem({
   )
 }
 
-export default MovieGridItem
+export default MovieItem

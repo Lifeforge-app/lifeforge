@@ -20,13 +20,7 @@ import fetchAPI from '@utils/fetchAPI'
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'
 
-function SearchTMDBModal({
-  data: { entriesIDs, queryKey },
-  onClose
-}: {
-  data: { entriesIDs: number[]; queryKey: unknown[] }
-  onClose: () => void
-}) {
+function SearchTMDBModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchLoading, setSearchLoading] = useState(false)
@@ -56,14 +50,30 @@ function SearchTMDBModal({
 
   async function addToLibrary(id: number) {
     try {
-      const data = await fetchAPI<IMovieEntry>(`movies/entries/${id}`, {
+      await fetchAPI<IMovieEntry>(`movies/entries/${id}`, {
         method: 'POST'
       })
 
-      queryClient.setQueryData<IMovieEntry[]>(queryKey, oldData => {
-        if (!oldData) return oldData
-        return [data, ...oldData]
+      queryClient.invalidateQueries({
+        queryKey: ['movies', 'entries', 'unwatched']
       })
+
+      setSearchResults(prevResults => {
+        if (!prevResults) return null
+        return {
+          ...prevResults,
+          results: prevResults.results.map(entry => {
+            if (entry.id === id) {
+              return {
+                ...entry,
+                existed: true // Mark the movie as added
+              }
+            }
+            return entry
+          })
+        }
+      })
+
       toast.success('Movie added to library!')
     } catch {
       toast.error('An error occurred while adding the movie to your library!')
@@ -150,7 +160,6 @@ function SearchTMDBModal({
 
           return (
             <TMDBResultsList
-              entriesIDs={entriesIDs}
               page={page}
               results={searchResults}
               setPage={(page: number) => {

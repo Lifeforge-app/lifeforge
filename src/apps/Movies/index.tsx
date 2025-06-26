@@ -13,6 +13,7 @@ import {
   ModuleWrapper,
   QueryWrapper,
   SearchInput,
+  Tabs,
   ViewModeSelector
 } from '@lifeforge/ui'
 import { useModalsEffect } from '@lifeforge/ui'
@@ -36,16 +37,24 @@ function Movies() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
-  const entriesQuery = useAPIQuery<IMovieEntry[]>('movies/entries', [
+  const [currentTab, setCurrentTab] = useState<'unwatched' | 'watched'>(
+    'unwatched'
+  )
+
+  const entriesQuery = useAPIQuery<{
+    entries: IMovieEntry[]
+    total: number
+  }>(`movies/entries?watched=${currentTab === 'watched'}`, [
     'movies',
-    'entries'
+    'entries',
+    currentTab
   ])
 
   useEffect(() => {
     if (!entriesQuery.data) return
 
     if (searchParams.get('show-ticket')) {
-      const target = entriesQuery.data.find(
+      const target = entriesQuery.data.entries.find(
         entry => entry.id === searchParams.get('show-ticket')
       )
       if (!target) return
@@ -66,22 +75,9 @@ function Movies() {
         }
       )
 
-      queryClient.setQueryData<IMovieEntry[]>(
-        ['movies', 'entries'],
-        oldData => {
-          if (!oldData) return []
-
-          return oldData.map(entry => {
-            if (entry.id === id) {
-              return {
-                ...entry,
-                is_watched: !entry.is_watched
-              }
-            }
-            return entry
-          })
-        }
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['movies', 'entries']
+      })
     } catch (error) {
       console.error('Error marking movie as watched:', error)
       toast.error('Failed to mark movie as watched.')
@@ -89,9 +85,7 @@ function Movies() {
   }
 
   const handleOpenTMDBModal = useCallback(() => {
-    open('movies.searchTMDB', {
-      entriesIDs: entriesQuery.data?.map(entry => entry.id) ?? []
-    })
+    open('movies.searchTMDB', {})
   }, [entriesQuery.data])
 
   useModalsEffect(moviesModals)
@@ -131,7 +125,7 @@ function Movies() {
       </div>
       <QueryWrapper query={entriesQuery}>
         {data => {
-          if (!data.length) {
+          if (!data.entries.length) {
             return (
               <EmptyStateScreen
                 ctaContent={t('common.buttons:new', {
@@ -148,14 +142,47 @@ function Movies() {
 
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
           return (
-            <FinalComponent
-              data={data.filter(entry =>
-                entry.title
-                  .toLowerCase()
-                  .includes(debouncedSearchQuery.toLowerCase())
-              )}
-              onToggleWatched={async id => toggleWatched(id)}
-            />
+            <>
+              <Tabs
+                active={currentTab}
+                enabled={['unwatched', 'watched']}
+                items={[
+                  {
+                    id: 'unwatched',
+                    name: t('tabs.unwatched'),
+                    icon: 'tabler:eye-off',
+                    amount:
+                      currentTab === 'unwatched'
+                        ? data.entries.length
+                        : data.total - data.entries.length
+                  },
+                  {
+                    id: 'watched',
+                    name: t('tabs.watched'),
+                    icon: 'tabler:eye',
+                    amount:
+                      currentTab === 'watched'
+                        ? data.entries.length
+                        : data.total - data.entries.length
+                  }
+                ]}
+                onNavClick={setCurrentTab}
+              />
+              <FinalComponent
+                data={data.entries.filter(entry => {
+                  const matchesSearch = entry.title
+                    .toLowerCase()
+                    .includes(debouncedSearchQuery.toLowerCase())
+                  const matchesTab =
+                    currentTab === 'unwatched'
+                      ? !entry.is_watched
+                      : entry.is_watched
+
+                  return matchesSearch && matchesTab
+                })}
+                onToggleWatched={async id => toggleWatched(id)}
+              />
+            </>
           )
         }}
       </QueryWrapper>

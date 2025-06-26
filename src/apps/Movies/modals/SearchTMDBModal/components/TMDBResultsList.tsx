@@ -8,14 +8,12 @@ function TMDBResultsList({
   results,
   page,
   setPage,
-  onAddToLibrary,
-  entriesIDs
+  onAddToLibrary
 }: {
   results: IMovieSearchResults | null
   page: number
   setPage: (page: number) => void
   onAddToLibrary: (id: number) => Promise<void>
-  entriesIDs: number[]
 }) {
   if (results === null) {
     return <></>
@@ -46,7 +44,7 @@ function TMDBResultsList({
           <TMDBResultItem
             key={entry.id}
             data={entry}
-            isAdded={entriesIDs.includes(entry.id)}
+            isAdded={entry.existed}
             onAddToLibrary={onAddToLibrary}
           />
         ))}

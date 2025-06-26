@@ -1,6 +1,6 @@
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
-import MovieGridItem from './MovieGridItem'
+import MovieItem from './MovieItem'
 
 function MovieGrid({
   data,
@@ -10,9 +10,9 @@ function MovieGrid({
   onToggleWatched: (id: string) => Promise<void>
 }) {
   return (
-    <div className="mt-6 mb-24 grid grid-cols-[repeat(auto-fit,minmax(24rem,1fr))] gap-3 md:mb-6">
+    <div className="mb-32 grid grid-cols-[repeat(auto-fill,minmax(24rem,1fr))] gap-3 md:mb-12">
       {data.map(item => (
-        <MovieGridItem
+        <MovieItem
           key={item.id}
           data={item}
           type="grid"
