@@ -1,6 +1,6 @@
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
-import MovieGridItem from './MovieGridItem'
+import MovieItem from './MovieItem'
 
 function MovieList({
   data,
@@ -10,9 +10,9 @@ function MovieList({
   onToggleWatched: (id: string) => Promise<void>
 }) {
   return (
-    <div className="mt-6 mb-24 space-y-4 md:mb-6">
+    <div className="mb-24 space-y-4 md:mb-12">
       {data.map(item => (
-        <MovieGridItem
+        <MovieItem
           key={item.id}
           data={item}
           type="list"
