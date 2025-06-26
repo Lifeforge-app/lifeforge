@@ -23,6 +23,12 @@ function AssetItem({ asset }: { asset: IWalletAsset }) {
     })
   }, [asset])
 
+  const handleOpenBalanceChart = useCallback(() => {
+    open('wallet.assets.balanceChart', {
+      existedData: asset
+    })
+  }, [asset])
+
   const handleDeleteAsset = useCallback(() => {
     open('deleteConfirmation', {
       apiEndpoint: 'wallet/assets',
@@ -62,7 +68,7 @@ function AssetItem({ asset }: { asset: IWalletAsset }) {
         )}
       </p>
       <Button
-        className="mt-2 w-full"
+        className="mt-4 w-full"
         icon="tabler:eye"
         namespace="apps.wallet"
         variant="secondary"
@@ -77,6 +83,11 @@ function AssetItem({ asset }: { asset: IWalletAsset }) {
           wrapper: 'absolute right-4 top-4'
         }}
       >
+        <MenuItem
+          icon="tabler:chart-line"
+          text="View Balance Chart"
+          onClick={handleOpenBalanceChart}
+        />
         <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEditAsset} />
         <MenuItem
           isRed
