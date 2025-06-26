@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
@@ -21,6 +22,7 @@ import AssetItem from './components/AssetItem'
 import { walletAssetsModals } from './modals'
 
 function Assets() {
+  const queryClient = useQueryClient()
   const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.wallet')
   const { assetsQuery } = useWalletData()
@@ -67,6 +69,9 @@ function Assets() {
               icon="tabler:refresh"
               text="Refresh"
               onClick={() => {
+                queryClient.invalidateQueries({
+                  queryKey: ['wallet', 'assets']
+                })
                 assetsQuery.refetch()
               }}
             />

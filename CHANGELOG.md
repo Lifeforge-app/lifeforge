@@ -1,5 +1,11 @@
 # Change Log
 
+## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
+- **Movies**: Added tab selector to separate watched and unwatched movies.
+- **Movies**: Fixed bugs where the query data is not properly updated when user adds a movie to the library.
+- **Movies**: Improved movie sorting logic.
+- **Wallet**: Added assets balance chart modal to visualize the asset balance over time.
+
 ### 📌 **dev 25w25 (6/16/2025 - 6/23/2025)**
 - **Calendar**: Added divider to the calendar sidebar that I have been missing for a long time.
 - **Movies**: Fixed a bug where the date picker will crash every time the user tries to modify a ticket entry.
