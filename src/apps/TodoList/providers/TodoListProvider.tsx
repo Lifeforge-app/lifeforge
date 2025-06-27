@@ -41,7 +41,7 @@ export const TodoListContext = createContext<ITodoListData | undefined>(
 export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams()
   const statusCounterQuery = useAPIQuery<ITodoListStatusCounter>(
-    'todo-list/entries/status-counter',
+    'todo-list/entries/utils/status-counter',
     ['todo-list', 'entries', 'status-counter']
   )
   const prioritiesQuery = useAPIQuery<ITodoPriority[]>('todo-list/priorities', [
