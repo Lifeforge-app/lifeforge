@@ -1,10 +1,14 @@
 # Change Log
 
+## 📌 **dev 25w27 (6/30/2025 - 7/7/2025)**
+- **Books Library**: Fixed a bug in the API logic where the error is not properly handled when the book fail to be added to the library.
+
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 - **Movies**: Added tab selector to separate watched and unwatched movies.
 - **Movies**: Fixed bugs where the query data is not properly updated when user adds a movie to the library.
 - **Movies**: Improved movie sorting logic.
 - **Wallet**: Added assets balance chart modal to visualize the asset balance over time.
+- **API**: Major refactoring of the API codebase to use chained controller architecture.
 
 ### 📌 **dev 25w25 (6/16/2025 - 6/23/2025)**
 - **Calendar**: Added divider to the calendar sidebar that I have been missing for a long time.
