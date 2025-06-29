@@ -50,6 +50,7 @@ function Searchbar({
     <div className="flex gap-2">
       <SortBySelector setSortType={setSortType} sortType={sortType} />
       <SearchInput
+        className="mt-4"
         namespace="apps.guitarTabs"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
