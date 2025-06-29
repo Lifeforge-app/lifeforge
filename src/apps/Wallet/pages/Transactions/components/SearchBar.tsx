@@ -14,6 +14,7 @@ function SearchBar({
   return (
     <div className="flex items-center gap-2">
       <SearchInput
+        className="mt-4"
         namespace="apps.wallet"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
