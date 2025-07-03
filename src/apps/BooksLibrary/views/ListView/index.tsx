@@ -10,7 +10,7 @@ import EntryItem from './components/EntryItem'
 function ListView({ books }: { books: IBooksLibraryEntry[] }) {
   const {
     miscellaneous: { processes },
-    categoriesQuery
+    collectionsQuery
   } = useBooksLibraryContext()
 
   return (
@@ -32,9 +32,9 @@ function ListView({ books }: { books: IBooksLibraryEntry[] }) {
             </div>
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="text-bg-500 flex items-center gap-1 text-sm font-medium">
-                {categoriesQuery.data &&
+                {collectionsQuery.data &&
                   (() => {
-                    const category = categoriesQuery.data.find(
+                    const category = collectionsQuery.data.find(
                       category => category.id === value.metadata.category
                     )
 

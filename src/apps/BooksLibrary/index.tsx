@@ -58,8 +58,8 @@ function BooksLibrary() {
         entry.title
           .toLowerCase()
           .includes(debouncedSearchQuery.toLowerCase()) &&
-        (searchParams.get('category') !== null
-          ? entry.category === searchParams.get('category')
+        (searchParams.get('collection') !== null
+          ? entry.collection === searchParams.get('collection')
           : true) &&
         (searchParams.get('language') !== null
           ? entry.languages.includes(searchParams.get('language') as string)
@@ -117,6 +117,7 @@ function BooksLibrary() {
           />
           <div className="flex items-center gap-2">
             <SearchInput
+              className="mt-4"
               namespace="apps.booksLibrary"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}

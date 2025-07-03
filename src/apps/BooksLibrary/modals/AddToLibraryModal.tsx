@@ -19,7 +19,7 @@ function AddToLibraryModal({
     md5: string | null
   }
 }) {
-  const { categoriesQuery, languagesQuery } = useBooksLibraryContext()
+  const { collectionsQuery, languagesQuery } = useBooksLibraryContext()
   const fetchedDataQuery = useAPIQuery<{
     md5: string
     thumbnail: string
@@ -40,7 +40,7 @@ function AddToLibraryModal({
 
   const [data, setData] = useState<IBooksLibraryFormSate>({
     authors: '',
-    category: '',
+    collection: '',
     edition: '',
     extension: '',
     isbn: '',
@@ -56,7 +56,7 @@ function AddToLibraryModal({
   useEffect(() => {
     setData({
       authors: '',
-      category: '',
+      collection: '',
       edition: '',
       extension: '',
       isbn: '',
@@ -87,14 +87,14 @@ function AddToLibraryModal({
       type: 'text'
     },
     {
-      id: 'category',
-      label: 'Category',
-      icon: 'tabler:category',
+      id: 'collection',
+      label: 'Collection',
+      icon: 'heroicons-outline:collection',
       type: 'listbox',
       nullOption: 'None',
       options:
-        !categoriesQuery.isLoading && categoriesQuery.data
-          ? categoriesQuery.data.map(({ id, name, icon }) => ({
+        !collectionsQuery.isLoading && collectionsQuery.data
+          ? collectionsQuery.data.map(({ id, name, icon }) => ({
               text: name[0].toUpperCase() + name.slice(1),
               value: id,
               icon
@@ -202,7 +202,7 @@ function AddToLibraryModal({
             fetchedDataQuery.data.languages.some(name => name === lang.name)
           )
           .map(lang => lang.id),
-        category: ''
+        collection: ''
       })
     }
   }, [fetchedDataQuery.data, languagesQuery.data])

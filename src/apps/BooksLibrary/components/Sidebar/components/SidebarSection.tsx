@@ -14,14 +14,14 @@ function SidebarSection({
   hasActionButton = true,
   hasHamburgerMenu = true
 }: {
-  stuff: 'categories' | 'languages' | 'fileTypes'
+  stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasActionButton?: boolean
   hasHamburgerMenu?: boolean
 }) {
   const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.booksLibrary')
-  const { categoriesQuery, languagesQuery, fileTypesQuery } =
+  const { collectionsQuery, languagesQuery, fileTypesQuery } =
     useBooksLibraryContext()
 
   const handleCreateItem = useCallback(() => {
@@ -35,11 +35,11 @@ function SidebarSection({
   const dataQuery = useMemo(
     () =>
       ({
-        categories: categoriesQuery,
+        collections: collectionsQuery,
         languages: languagesQuery,
         fileTypes: fileTypesQuery
       })[stuff],
-    [stuff, categoriesQuery, languagesQuery, fileTypesQuery]
+    [stuff, collectionsQuery, languagesQuery, fileTypesQuery]
   )
 
   return (
@@ -69,9 +69,7 @@ function SidebarSection({
               ))}
             </>
           ) : (
-            <p className="text-bg-500 text-center">
-              {t(`emptyState.${stuff}`)}
-            </p>
+            <p className="text-bg-500 text-center">{t(`empty.${stuff}`)}</p>
           )
         }
       </QueryWrapper>

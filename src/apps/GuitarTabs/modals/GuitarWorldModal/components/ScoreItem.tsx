@@ -58,7 +58,8 @@ function ScoreItem({
           category: entry.category,
           mainArtist: entry.mainArtist,
           audioUrl: entry.audioUrl
-        }
+        },
+        timeout: 9999999999
       })
     } catch {
       toast.error('Failed to download score')

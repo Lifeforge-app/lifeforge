@@ -5,7 +5,7 @@ import type { IFormState } from '@lifeforge/ui'
 interface IBooksLibraryEntry extends RecordModel {
   md5: string
   authors: string
-  category: string
+  collection: string
   edition: string
   extension: string
   file: string
@@ -17,11 +17,12 @@ interface IBooksLibraryEntry extends RecordModel {
   title: string
   year_published: number
   is_favourite: boolean
+  is_read: boolean
 }
 
 interface IBooksLibraryFormSate extends IFormState {
   authors: string
-  category: string
+  collection: string
   edition: string
   extension: string
   isbn: string
@@ -34,7 +35,7 @@ interface IBooksLibraryFormSate extends IFormState {
   year_published: string
 }
 
-interface IBooksLibraryCategory extends RecordModel {
+interface IBooksLibraryCollection extends RecordModel {
   name: string
   icon: string
   amount: number
@@ -55,7 +56,7 @@ interface IBooksLibraryFileType extends RecordModel {
 export type {
   IBooksLibraryEntry,
   IBooksLibraryFormSate,
-  IBooksLibraryCategory,
+  IBooksLibraryCollection,
   IBooksLibraryLanguage,
   IBooksLibraryFileType
 }

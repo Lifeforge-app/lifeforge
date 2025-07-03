@@ -23,11 +23,11 @@ function ModifyBookModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-  const { languagesQuery, categoriesQuery } = useBooksLibraryContext()
+  const { languagesQuery, collectionsQuery } = useBooksLibraryContext()
 
   const [data, setData] = useState<IBooksLibraryFormSate>({
     authors: '',
-    category: '',
+    collection: '',
     edition: '',
     extension: '',
     isbn: '',
@@ -57,14 +57,14 @@ function ModifyBookModal({
       type: 'text'
     },
     {
-      id: 'category',
-      label: 'Category',
-      icon: 'tabler:category',
+      id: 'collection',
+      label: 'Collection',
+      icon: 'heroicons-outline:collection',
       type: 'listbox',
       nullOption: 'None',
       options:
-        !categoriesQuery.isLoading && categoriesQuery.data
-          ? categoriesQuery.data.map(({ id, name, icon }) => ({
+        !collectionsQuery.isLoading && collectionsQuery.data
+          ? collectionsQuery.data.map(({ id, name, icon }) => ({
               text: name[0].toUpperCase() + name.slice(1),
               value: id,
               icon
@@ -171,7 +171,7 @@ function ModifyBookModal({
       setData({
         ...data,
         authors: existedData.authors,
-        category: existedData.category,
+        collection: existedData.collection,
         edition: existedData.edition,
         extension: existedData.extension,
         isbn: existedData.isbn,
@@ -194,7 +194,7 @@ function ModifyBookModal({
       data={data}
       fields={FIELDS}
       icon="tabler:pencil"
-      loading={languagesQuery.isLoading || categoriesQuery.isLoading}
+      loading={languagesQuery.isLoading || collectionsQuery.isLoading}
       namespace="apps.booksLibrary"
       openType="update"
       setData={setData}

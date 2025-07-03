@@ -17,13 +17,13 @@ function ModifyModal({
   data: {
     type: 'create' | 'update'
     existedData: any
-    stuff: 'categories' | 'languages'
+    stuff: 'collections' | 'languages'
   }
 }) {
   const queryClient = useQueryClient()
   const { t } = useTranslation('apps.booksLibrary')
   const singleStuff = {
-    categories: 'category',
+    collections: 'collection',
     languages: 'language'
   }[stuff]
   const [data, setData] = useState({
