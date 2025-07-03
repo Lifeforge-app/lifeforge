@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import tinycolor from 'tinycolor2'
 
 import { Button, HamburgerMenu } from '@lifeforge/ui'
 
@@ -16,9 +19,11 @@ import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
 export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
+  const { t } = useTranslation('apps.booksLibrary')
+  const { derivedThemeColor } = usePersonalization()
   const queryClient = useQueryClient()
   const { componentBgWithHover, componentBgLighter } = useComponentBg()
-  const { categoriesQuery } = useBooksLibraryContext()
+  const { collectionsQuery } = useBooksLibraryContext()
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 
@@ -61,7 +66,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
     <li
       key={item.id}
       className={clsx(
-        'shadow-custom relative flex gap-3 rounded-lg p-4 transition-all',
+        'shadow-custom relative flex gap-4 rounded-lg p-4 transition-all',
         componentBgWithHover
       )}
     >
@@ -97,7 +102,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
       />
       <div
         className={clsx(
-          'flex-center aspect-10/12 h-min w-24 rounded-lg p-2',
+          'flex-center aspect-10/12 h-min w-28 rounded-lg p-2',
           componentBgLighter
         )}
       >
@@ -109,19 +114,32 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
           }/${item.thumbnail}`}
         />
       </div>
-
       <div className="flex min-w-0 flex-1 flex-col">
-        {categoriesQuery.data && (
-          <div className="text-bg-500 flex items-center gap-1 text-sm font-medium">
+        {item.is_read && (
+          <span
+            className={clsx(
+              'bg-custom-500 mb-2 flex w-min items-center gap-1 rounded-full py-1 pr-3 pl-2.5 text-xs font-semibold tracking-wide whitespace-nowrap',
+              tinycolor(derivedThemeColor).isDark()
+                ? 'text-bg-100'
+                : 'text-bg-800'
+            )}
+            data-tooltip-id={`read-label-${item.id}`}
+          >
+            <Icon className="size-4" icon="tabler:check" />
+            {t('readLabel')}
+          </span>
+        )}
+        {collectionsQuery.data && (
+          <div className="text-bg-500 mb-1 flex items-center gap-1 text-sm font-medium">
             {(() => {
-              const category = categoriesQuery.data.find(
-                category => category.id === item.category
+              const collection = collectionsQuery.data.find(
+                collection => collection.id === item.collection
               )
 
-              return category !== undefined ? (
+              return collection !== undefined ? (
                 <>
-                  <Icon className="text-bg-500 size-4" icon={category.icon} />{' '}
-                  {category.name}
+                  <Icon className="text-bg-500 size-4" icon={collection.icon} />{' '}
+                  {collection.name}
                 </>
               ) : (
                 ''

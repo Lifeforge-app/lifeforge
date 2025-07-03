@@ -2,6 +2,9 @@
 
 ## 📌 **dev 25w27 (6/30/2025 - 7/7/2025)**
 - **Books Library**: Fixed a bug in the API logic where the error is not properly handled when the book fail to be added to the library.
+- **Books Library**: Renamed `category` to `collection` for better clarity.
+- **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
+- **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
 
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 - **Movies**: Added tab selector to separate watched and unwatched movies.

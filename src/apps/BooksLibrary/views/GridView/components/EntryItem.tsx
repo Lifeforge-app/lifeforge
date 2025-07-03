@@ -1,5 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
+import { usePersonalization } from '@providers/PersonalizationProvider'
+import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
+import tinycolor from 'tinycolor2'
 
 import { HamburgerMenu } from '@lifeforge/ui'
 
@@ -9,7 +13,9 @@ import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
 function EntryItem({ item }: { item: IBooksLibraryEntry }) {
-  const { categoriesQuery } = useBooksLibraryContext()
+  const { derivedThemeColor } = usePersonalization()
+  const { collectionsQuery } = useBooksLibraryContext()
+  const { t } = useTranslation('apps.booksLibrary')
 
   return (
     <li
@@ -40,34 +46,46 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }) {
           }/${item.thumbnail}`}
         />
       </div>
-      <div className="text-bg-500 mt-4 flex items-center gap-1 text-sm font-medium">
-        {categoriesQuery.data &&
+      <div className="mt-4">
+        {item.is_read && (
+          <span
+            className={clsx(
+              'bg-custom-500 mb-3 rounded-full px-3 py-1 text-xs font-semibold tracking-wide',
+              tinycolor(derivedThemeColor).isDark()
+                ? 'text-bg-100'
+                : 'text-bg-800'
+            )}
+          >
+            {t('readLabel')}
+          </span>
+        )}
+        {collectionsQuery.data &&
           (() => {
-            const category = categoriesQuery.data.find(
-              category => category.id === item.category
+            const collection = collectionsQuery.data.find(
+              collection => collection.id === item.collection
             )
 
-            return category !== undefined ? (
-              <>
-                <Icon className="text-bg-500 size-4" icon={category.icon} />{' '}
-                {category.name}
-              </>
+            return collection !== undefined ? (
+              <div className="text-bg-500 mt-2 flex items-center gap-1 text-sm font-medium">
+                <Icon className="text-bg-500 size-4" icon={collection.icon} />{' '}
+                {collection.name}
+              </div>
             ) : (
               ''
             )
           })()}
-      </div>
-      <div className="mt-1 line-clamp-3 w-full min-w-0 text-xl font-medium">
-        {item.title}{' '}
-        {item.edition !== '' && (
-          <span className="text-bg-500 text-sm">({item.edition} ed)</span>
-        )}
-      </div>
-      <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
-        {item.authors}
-      </div>
-      <div className="mt-auto w-full min-w-0">
-        <BookMeta isGridView item={item} />
+        <div className="mt-1 line-clamp-3 w-full min-w-0 text-xl font-medium">
+          {item.title}{' '}
+          {item.edition !== '' && (
+            <span className="text-bg-500 text-sm">({item.edition} ed)</span>
+          )}
+        </div>
+        <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
+          {item.authors}
+        </div>
+        <div className="mt-auto w-full min-w-0">
+          <BookMeta isGridView item={item} />
+        </div>
       </div>
     </li>
   )

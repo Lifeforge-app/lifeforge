@@ -15,7 +15,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 import fetchAPI from '@utils/fetchAPI'
 
 import {
-  type IBooksLibraryCategory,
+  type IBooksLibraryCollection,
   type IBooksLibraryEntry,
   type IBooksLibraryFileType,
   type IBooksLibraryLanguage
@@ -23,7 +23,7 @@ import {
 
 interface IBooksLibraryData {
   entriesQuery: UseQueryResult<IBooksLibraryEntry[]>
-  categoriesQuery: UseQueryResult<IBooksLibraryCategory[]>
+  collectionsQuery: UseQueryResult<IBooksLibraryCollection[]>
   languagesQuery: UseQueryResult<IBooksLibraryLanguage[]>
   fileTypesQuery: UseQueryResult<IBooksLibraryFileType[]>
   miscellaneous: {
@@ -58,9 +58,9 @@ export default function BooksLibraryProvider() {
     'books-library/entries',
     ['books-library', 'entries']
   )
-  const categoriesQuery = useAPIQuery<IBooksLibraryCategory[]>(
-    'books-library/categories',
-    ['books-library', 'categories']
+  const collectionsQuery = useAPIQuery<IBooksLibraryCollection[]>(
+    'books-library/collections',
+    ['books-library', 'collections']
   )
   const languagesQuery = useAPIQuery<IBooksLibraryLanguage[]>(
     'books-library/languages',
@@ -141,7 +141,7 @@ export default function BooksLibraryProvider() {
   const value = useMemo(
     () => ({
       entriesQuery,
-      categoriesQuery,
+      collectionsQuery,
       languagesQuery,
       fileTypesQuery,
       miscellaneous: {
@@ -156,7 +156,7 @@ export default function BooksLibraryProvider() {
     }),
     [
       entriesQuery,
-      categoriesQuery,
+      collectionsQuery,
       languagesQuery,
       fileTypesQuery,
       processes,
