@@ -5,9 +5,9 @@ import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
 import {
-  type ICalendarCategory,
+  ICalendarCategory,
   ICalendarCategoryFormState
-} from '../interfaces/calendar_interfaces'
+} from '@apps/Calendar/interfaces/calendar_interfaces'
 
 function ModifyCategoryModal({
   data: { type, existedData },

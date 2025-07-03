@@ -1,8 +1,10 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { MenuItem, SidebarItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, MenuItem, SidebarItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
 import {
   type IBooksLibraryCollection,
@@ -34,15 +36,15 @@ function _SidebarItem({
   )
 
   const handleUpdateStuff = useCallback(() => {
-    open(`booksLibrary.modify`, {
+    open(ModifyModal, {
       type: 'update',
       existedData: item,
-      stuff
+      stuff: stuff as 'collections' | 'languages'
     })
   }, [item, stuff])
 
   const handleDeleteStuff = useCallback(() => {
-    open(`deleteConfirmation`, {
+    open(DeleteConfirmationModal, {
       apiEndpoint: `books-library/${stuff}`,
       data: item,
       itemName: singleStuff,

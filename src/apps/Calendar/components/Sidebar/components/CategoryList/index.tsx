@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -37,7 +38,7 @@ function CategoryList({
   }, [])
 
   const handleCreate = useCallback(() => {
-    open('calendar.modifyCategory', {
+    open(ModifyCategoryModal, {
       existedData: null,
       type: 'create'
     })

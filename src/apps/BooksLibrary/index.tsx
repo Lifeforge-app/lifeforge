@@ -14,13 +14,12 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import { IBooksLibraryEntry } from './interfaces/books_library_interfaces'
-import { booksLibraryModals } from './modals'
+import LibgenModal from './modals/LibgenModal'
 import { useBooksLibraryContext } from './providers/BooksLibraryProvider'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
@@ -40,7 +39,7 @@ function BooksLibrary() {
   const [view, setView] = useState<'list' | 'grid'>('list')
 
   const handleOpenLibgenModal = useCallback(() => {
-    open('booksLibrary.libgen', {})
+    open(LibgenModal, {})
   }, [])
 
   useEffect(() => {
@@ -82,8 +81,6 @@ function BooksLibrary() {
     searchParams,
     fileTypesQuery.data
   ])
-
-  useModalsEffect(booksLibraryModals)
 
   return (
     <ModuleWrapper>

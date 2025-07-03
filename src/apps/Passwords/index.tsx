@@ -2,13 +2,12 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import ContentContainer from './components/ContentContainer'
-import { PasswordsModals } from './modals'
+import ModifyPasswordModal from './modals/ModifyPasswordModal'
 
 function Passwords() {
   const open = useModalStore(state => state.open)
@@ -16,13 +15,11 @@ function Passwords() {
   const { masterPassword, otpSuccess } = usePasswordContext()
 
   const handleCreatePassword = useCallback(() => {
-    open('passwords.modifyPassword', {
+    open(ModifyPasswordModal, {
       type: 'create',
       existedData: null
     })
   }, [])
-
-  useModalsEffect(PasswordsModals)
 
   return (
     <ModuleWrapper>

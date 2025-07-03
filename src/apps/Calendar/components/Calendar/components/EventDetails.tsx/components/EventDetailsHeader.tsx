@@ -4,9 +4,10 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
 import {
   ICalendarCategory,
   ICalendarEvent
@@ -47,14 +48,14 @@ function EventDetailsHeader({
   }, [event.id])
 
   const handleEdit = useCallback(() => {
-    open('calendar.modifyEvent', {
+    open(ModifyEventModal, {
       existedData: event,
       type: 'update'
     })
   }, [event])
 
   const handleDelete = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'calendar/events',
       confirmationText: 'Delete this event',
       data: { ...event, id: event.id.split('-')[0] ?? '' },

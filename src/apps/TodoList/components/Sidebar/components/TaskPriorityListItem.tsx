@@ -1,8 +1,10 @@
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { MenuItem, SidebarItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, MenuItem, SidebarItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
 
 import { type ITodoPriority } from '../../../interfaces/todo_list_interfaces'
 
@@ -17,14 +19,14 @@ function TaskPriorityListItem({
   const [searchParams, setSearchParams] = useSearchParams()
 
   const handleUpdatePriority = useCallback(() => {
-    open('todoList.modifyPriority', {
+    open(ModifyPriorityModal, {
       type: 'update',
       existedData: item
     })
   }, [item])
 
   const handleDeletePriority = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'todo-list/priorities',
       confirmationText: 'Delete this priority',
       customText:

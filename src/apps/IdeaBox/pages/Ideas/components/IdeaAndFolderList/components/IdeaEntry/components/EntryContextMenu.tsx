@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
@@ -11,6 +11,7 @@ import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
+import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'
 
 function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const open = useModalStore(state => state.open)
@@ -84,7 +85,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   }, [entry, id, path, viewArchived])
 
   const handleUpdateIdea = useCallback(() => {
-    open('ideaBox.ideas.modifyIdea', {
+    open(ModifyIdeaModal, {
       type: 'update',
       ideaType: entry.type,
       existedData: entry
@@ -92,7 +93,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   }, [entry])
 
   const handleDeleteIdea = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       multiQueryKey: true,
       apiEndpoint: 'idea-box/ideas',
       data: entry,

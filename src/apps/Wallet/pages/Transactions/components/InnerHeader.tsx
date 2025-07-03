@@ -9,6 +9,9 @@ import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransacti
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
+import ModifyTransactionsModal from '../modals/ModifyTransactionsModal'
+import ScanReceiptModal from '../modals/ScanReceiptModal'
+
 function InnerHeader() {
   const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =
     useWalletData()
@@ -35,14 +38,14 @@ function InnerHeader() {
   )
 
   const handleCreateTransaction = useCallback(() => {
-    open('wallet.transactions.modifyTransaction', {
+    open(ModifyTransactionsModal, {
       type: 'create',
       existedData: null
     })
   }, [])
 
   const handleUploadReceipt = useCallback(() => {
-    open('wallet.transactions.scanReceipt', {})
+    open(ScanReceiptModal, {})
   }, [])
 
   return (

@@ -7,7 +7,7 @@ import { type IFieldProps } from '@lifeforge/ui'
 import {
   IIdeaBoxFolder,
   IIdeaBoxFolderFormState
-} from '../../../interfaces/ideabox_interfaces'
+} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 function ModifyFolderModal({
   data: { type, existedData },

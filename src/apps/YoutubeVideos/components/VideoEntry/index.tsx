@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -17,7 +17,7 @@ function VideoEntry({ video }: { video: IYoutubeVideosStorageEntry }) {
   const { componentBgWithHover } = useComponentBg()
 
   const handleDeleteVideo = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'youtube-videos/video',
       customCallback: async () => {
         queryClient.setQueryData<IYoutubeVideosStorageEntry[]>(

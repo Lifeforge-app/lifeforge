@@ -37,7 +37,9 @@ function BalanceChartModal({
   data: { existedData },
   onClose
 }: {
-  data: IWalletAsset
+  data: {
+    existedData: IWalletAsset
+  }
   onClose: () => void
 }) {
   const { derivedThemeColor } = usePersonalization()

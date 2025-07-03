@@ -1,7 +1,9 @@
 import { useCallback, useMemo } from 'react'
 
-import { SidebarItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, SidebarItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 
 import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
 import ActionMenu from './ActionMenu'
@@ -24,7 +26,7 @@ function CategoryListItem({
   const handleEdit = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      open('calendar.modifyCategory', {
+      open(ModifyCategoryModal, {
         existedData: item,
         type: 'update'
       })
@@ -35,7 +37,7 @@ function CategoryListItem({
   const handleDelete = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      open('deleteConfirmation', {
+      open(DeleteConfirmationModal, {
         apiEndpoint: 'calendar/categories',
         confirmationText: 'Delete this category',
         data: item,

@@ -14,11 +14,10 @@ import {
 import { useCallback, useRef, useState } from 'react'
 
 import { MenuItem, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
-import { DashboardModals } from './modals'
+import ManageWidgetsModal from './modals/ManageWidgetsModal'
 
 ChartJS.register(
   ArcElement,
@@ -42,12 +41,10 @@ function Dashboard() {
   const [isReady, setReady] = useState(true)
 
   const handleManageWidget = useCallback(() => {
-    open('dashboard.manageWidgets', {
+    open(ManageWidgetsModal, {
       setReady
     })
   }, [])
-
-  useModalsEffect(DashboardModals)
 
   return (
     <ModuleWrapper>

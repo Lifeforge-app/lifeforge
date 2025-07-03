@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskPriorityListItem from './TaskPriorityListItem'
@@ -18,7 +19,7 @@ function TaskPriorityList({
   const { prioritiesQuery } = useTodoListContext()
 
   const handleCreatePriority = useCallback(() => {
-    open('todoList.modifyPriority', {
+    open(ModifyPriorityModal, {
       type: 'create',
       existedData: null
     })

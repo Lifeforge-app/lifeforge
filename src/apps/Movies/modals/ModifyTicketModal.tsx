@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { FormModal } from '@lifeforge/ui'
+import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
@@ -166,7 +166,7 @@ function ModifyTicketModal({
   }
 
   const handleDeleteTicket = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       customOnClick: deleteTicket,
       itemName: 'ticket'
     })

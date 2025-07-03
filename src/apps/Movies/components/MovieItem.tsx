@@ -3,12 +3,20 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 
-import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import {
+  Button,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
+
+import ModifyTicketModal from '../modals/ModifyTicketModal'
+import ShowTicketModal from '../modals/ShowTicketModal'
 
 function MovieItem({
   data,
@@ -24,20 +32,20 @@ function MovieItem({
   const [toggleWatchedLoading, setToggleWatchedLoading] = useState(false)
 
   const handleShowTicket = useCallback(() => {
-    open('movies.showTicket', {
+    open(ShowTicketModal, {
       entry: data
     })
   }, [data, open])
 
   const handleUpdateTicket = useCallback(() => {
-    open('movies.modifyTicket', {
+    open(ModifyTicketModal, {
       existedData: data,
       type: data.ticket_number ? 'update' : 'create'
     })
   }, [data])
 
   const handleDeleteTicket = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: '/movies/entries',
       data: data,
       itemName: 'movie',

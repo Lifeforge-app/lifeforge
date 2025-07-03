@@ -6,7 +6,13 @@ import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import {
+  Button,
+  Checkbox,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -15,6 +21,7 @@ import useComponentBg from '@hooks/useComponentBg'
 import fetchAPI from '@utils/fetchAPI'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
+import ModifyEntryModal from '../modals/ModifyEntryModal'
 
 function EntryItem({
   entry,
@@ -55,15 +62,14 @@ function EntryItem({
   }
 
   const handleEdit = useCallback(() => {
-    open('wishlist.entries.modifyEntry', {
+    open(ModifyEntryModal, {
       type: 'update',
-      existedData: entry,
-      queryKey
+      existedData: entry
     })
   }, [entry])
 
   const handleDelete = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'wishlist/entries',
       data: entry,
       itemName: 'entry',

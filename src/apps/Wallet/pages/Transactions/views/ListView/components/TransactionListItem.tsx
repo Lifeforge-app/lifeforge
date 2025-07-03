@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { useCallback } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
@@ -14,6 +14,9 @@ import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 import useComponentBg from '@hooks/useComponentBg'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
+import ModifyTransactionsModal from '../../../modals/ModifyTransactionsModal'
+import ViewTransactionModal from '../../../modals/ViewTransactionModal'
+import ViewReceiptModal from './ViewReceiptModal'
 
 function TransactionListItem({
   transaction
@@ -30,20 +33,20 @@ function TransactionListItem({
   const assets = assetsQuery.data ?? []
 
   const handleViewTransaction = useCallback(() => {
-    open('wallet.transactions.viewTransaction', {
+    open(ViewTransactionModal, {
       transaction
     })
   }, [transaction])
 
   const handleEditTransaction = useCallback(() => {
-    open('wallet.transactions.modifyTransaction', {
+    open(ModifyTransactionsModal, {
       type: 'update',
       existedData: transaction
     })
   }, [transaction])
 
   const handleDeleteTransaction = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'wallet/transactions',
       data: transaction,
       itemName: 'transaction',
@@ -61,7 +64,7 @@ function TransactionListItem({
       e.stopPropagation()
       e.preventDefault()
 
-      open('wallet.transactions.viewReceipt', {
+      open(ViewReceiptModal, {
         src: `${import.meta.env.VITE_API_HOST}/media/${
           transaction.collectionId
         }/${transaction.id}/${transaction.receipt}`

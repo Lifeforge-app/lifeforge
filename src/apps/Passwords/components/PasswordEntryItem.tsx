@@ -6,7 +6,12 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import {
+  Button,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
@@ -14,6 +19,7 @@ import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 import useComponentBg from '@hooks/useComponentBg'
 
 import { type IPasswordEntry } from '../interfaces/password_interfaces'
+import ModifyPasswordModal from '../modals/ModifyPasswordModal'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 
 function PasswordEntryITem({
@@ -52,7 +58,7 @@ function PasswordEntryITem({
   async function handleEdit() {
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
-      open('passwords.modifyPassword', {
+      open(ModifyPasswordModal, {
         type: 'update',
         existedData: {
           ...password,
@@ -84,7 +90,7 @@ function PasswordEntryITem({
   }, [masterPassword, password.id, decryptedPassword])
 
   const handleDeletePassword = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'passwords/entries',
       confirmationText: 'Delete this password',
       customText: `Are you sure you want to delete the password for ${password.name}? This action is irreversible.`,

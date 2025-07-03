@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import {
   Button,
   DateInput,
+  DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem,
   Scrollbar,
@@ -125,13 +126,13 @@ function ModifyTaskDrawer() {
   }
 
   const handleDeleteTask = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'todo-list/entries',
-      data: selectedTask,
+      data: selectedTask ?? undefined,
       itemName: 'task',
       nameKey: 'summary',
       queryKey: entriesQueryKey,
-      customCallback: () => {
+      customCallback: async () => {
         queryClient.invalidateQueries({
           queryKey: ['todo-list', 'priorities']
         })

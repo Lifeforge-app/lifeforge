@@ -15,6 +15,8 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
+import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
+
 interface IIdeaBoxData {
   pathValid: boolean
   pathValidLoading: boolean
@@ -148,7 +150,7 @@ export default function IdeaBoxProvider() {
 
     reader.onload = function () {
       if (file !== null) {
-        open('ideaBox.ideas.modifyIdea', {
+        open(ModifyIdeaModal, {
           type: 'paste',
           ideaType: 'image',
           pastedData: {

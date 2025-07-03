@@ -16,13 +16,12 @@ import {
 } from '../../../interfaces/wishlist_interfaces'
 
 function ModifyEntryModal({
-  data: { type, existedData, queryKey },
+  data: { type, existedData },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | null
     existedData: Partial<IWishlistEntry> | null
-    queryKey: unknown[]
   }
   onClose: () => void
 }) {
@@ -134,7 +133,7 @@ function ModifyEntryModal({
       )
 
       queryClient.refetchQueries({
-        queryKey: queryKey ?? ['wishlist', 'entries']
+        queryKey: ['wishlist', 'entries']
       })
     } finally {
       onClose()

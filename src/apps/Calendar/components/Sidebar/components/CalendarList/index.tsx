@@ -4,6 +4,8 @@ import { useCallback } from 'react'
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
+
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type ICalendarCalendar } from '../../../../interfaces/calendar_interfaces'
@@ -38,7 +40,7 @@ function CalendarList({
   }, [setSelectedCalendar, setSidebarOpen])
 
   const handleCreate = useCallback(() => {
-    open('calendar.modifyCalendar', {
+    open(ModifyCalendarModal, {
       existedData: null,
       type: 'create'
     })

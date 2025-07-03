@@ -1,7 +1,6 @@
 import { useParams } from 'react-router'
 
 import { ModuleWrapper, SearchInput } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
@@ -9,13 +8,10 @@ import FAB from './components/FAB'
 import Header from './components/Header'
 import IdeaAndFolderList from './components/IdeaAndFolderList'
 import TagsSelector from './components/TagsSelector'
-import { ideaBoxIdeasModals } from './modals'
 
 function Ideas() {
   const { '*': path } = useParams<{ '*': string }>()
   const { searchQuery, setSearchQuery, viewArchived } = useIdeaBoxContext()
-
-  useModalsEffect(ideaBoxIdeasModals)
 
   return (
     <ModuleWrapper>

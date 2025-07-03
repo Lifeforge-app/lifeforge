@@ -4,6 +4,7 @@ import React, { useCallback } from 'react'
 import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ManageCategoriesModal from '../modals/ManageCategoriesModal'
 import ColumnVisibilityToggle from '../views/TableView/components/ColumnVisibilityToggle'
 
 function HeaderMenu({
@@ -27,7 +28,7 @@ function HeaderMenu({
   }, [queryClient])
 
   const handleManageCategories = useCallback(() => {
-    open('wallet.transactions.manageCategories', {})
+    open(ManageCategoriesModal, {})
   }, [])
 
   const handleViewChange = useCallback(

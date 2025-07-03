@@ -14,6 +14,8 @@ import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import ModifyEntryModal from './ModifyEntryModal'
+
 const PROVIDERS = [
   {
     id: 'shopee',
@@ -59,7 +61,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
       })
 
       const { name, price, image } = data
-      open('wishlist.entries.modifyEntry', {
+      open(ModifyEntryModal, {
         type: 'create',
         existedData: {
           name,

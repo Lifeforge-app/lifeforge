@@ -3,13 +3,20 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import {
+  Button,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
+import BalanceChartModal from '../modals/BalanceChartModal'
+import ModifyAssetModal from '../modals/ModifyAssetModal'
 
 function AssetItem({ asset }: { asset: IWalletAsset }) {
   const open = useModalStore(state => state.open)
@@ -17,20 +24,20 @@ function AssetItem({ asset }: { asset: IWalletAsset }) {
   const navigate = useNavigate()
 
   const handleEditAsset = useCallback(() => {
-    open('wallet.assets.modifyAsset', {
+    open(ModifyAssetModal, {
       type: 'update',
       existedData: asset
     })
   }, [asset])
 
   const handleOpenBalanceChart = useCallback(() => {
-    open('wallet.assets.balanceChart', {
+    open(BalanceChartModal, {
       existedData: asset
     })
   }, [asset])
 
   const handleDeleteAsset = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'wallet/assets',
       confirmationText: 'Delete this asset account',
       data: asset,

@@ -11,14 +11,13 @@ import {
   QueryWrapper,
   SearchInput
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type IWishlistList } from '../../interfaces/wishlist_interfaces'
 import WishlistListItem from './components/WishlistListItem'
-import { wishlistListsModals } from './modals'
+import ModifyWishlistListModal from './modals/ModifyWishlistModal'
 
 function Wishlist() {
   const open = useModalStore(state => state.open)
@@ -39,13 +38,11 @@ function Wishlist() {
   }, [listsQuery.data, debouncedSearchQuery])
 
   const handleCreateWishlistList = useCallback(() => {
-    open('wishlist.lists.modifyWishlistList', {
+    open(ModifyWishlistListModal, {
       type: 'create',
       existedData: null
     })
   }, [])
-
-  useModalsEffect(wishlistListsModals)
 
   return (
     <ModuleWrapper>

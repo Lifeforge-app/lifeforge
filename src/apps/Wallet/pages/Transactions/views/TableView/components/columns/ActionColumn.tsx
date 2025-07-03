@@ -1,8 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyTransactionsModal from '@apps/Wallet/pages/Transactions/modals/ModifyTransactionsModal'
 
 import { type IWalletTransaction } from '../../../../../../interfaces/wallet_interfaces'
 
@@ -11,14 +13,14 @@ function ActionColumn({ transaction }: { transaction: IWalletTransaction }) {
   const open = useModalStore(state => state.open)
 
   const handleEditTransaction = useCallback(() => {
-    open('wallet.transactions.modifyTransaction', {
+    open(ModifyTransactionsModal, {
       type: 'update',
       existedData: transaction
     })
   }, [transaction])
 
   const handleDeleteTransaction = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'wallet/transactions',
       data: transaction,
       itemName: 'transaction',

@@ -10,15 +10,15 @@ import {
   ModuleWrapper,
   Scrollbar
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
+import ModifyEventModal from './components/modals/ModifyEventModal'
+import ScanImageModal from './components/modals/ScanImageModal'
 import { type ICalendarEvent } from './interfaces/calendar_interfaces'
-import { calendarModals } from './modals'
 import { useCalendarStore } from './stores/useCalendarStore'
 
 function CalendarModule() {
@@ -50,17 +50,15 @@ function CalendarModule() {
   }, [rawEventsQuery.data])
 
   const handleScanImageModalOpen = useCallback(() => {
-    open('calendar.scanImage', {})
+    open(ScanImageModal, {})
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open('calendar.modifyEvent', {
+    open(ModifyEventModal, {
       existedData: null,
       type: 'create'
     })
   }, [])
-
-  useModalsEffect(calendarModals)
 
   return (
     <>

@@ -9,6 +9,7 @@ import { useModalStore } from '@lifeforge/ui'
 import fetchAPI from '@utils/fetchAPI'
 
 import { IWalletReceiptScanResult } from '../../../interfaces/wallet_interfaces'
+import ModifyTransactionsModal from './ModifyTransactionsModal'
 
 function ScanReceiptModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
@@ -39,7 +40,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
       )
 
       onClose()
-      open('wallet.transactions.modifyTransaction', {
+      open(ModifyTransactionsModal, {
         type: 'create',
         existedData: {
           ...data,

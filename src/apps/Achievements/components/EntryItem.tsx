@@ -2,19 +2,20 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 import { type IAchievementEntry } from '../interfaces/achievements_interfaces'
+import ModifyAchievementModal from './ModifyAchievementModal'
 
 function EntryItem({ entry }: { entry: IAchievementEntry }) {
   const open = useModalStore(state => state.open)
   const { componentBg } = useComponentBg()
 
   const handleDeleteEntry = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'achievements/entries',
       data: entry,
       itemName: 'achievement',
@@ -56,7 +57,7 @@ function EntryItem({ entry }: { entry: IAchievementEntry }) {
           icon="tabler:pencil"
           text="Edit"
           onClick={() => {
-            open('achievements.modifyAchievement', {
+            open(ModifyAchievementModal, {
               type: 'update',
               existedData: entry,
               currentDifficulty: entry.difficulty

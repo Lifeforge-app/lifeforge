@@ -4,8 +4,10 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -39,14 +41,14 @@ function EntryItem({
   }
 
   const handleUpdateEntry = useCallback(() => {
-    open('guitarTabs.modifyEntry', {
-      type: 'update',
-      existedData: entry
+    open(ModifyEntryModal, {
+      existedData: entry,
+      queryKey
     })
   }, [entry])
 
   const handleDeleteEntry = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'guitar-tabs/entries',
       confirmationText: 'Delete this guitar tab',
       data: entry,

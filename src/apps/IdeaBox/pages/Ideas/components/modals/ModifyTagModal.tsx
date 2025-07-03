@@ -7,7 +7,7 @@ import { type IFieldProps } from '@lifeforge/ui'
 import {
   IIdeaBoxTag,
   IIdeaBoxTagFormState
-} from '../../../interfaces/ideabox_interfaces'
+} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 function ModifyTagModal({
   data: { type, existedData },

@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router'
 import { Button, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import LibgenModal from '../modals/LibgenModal'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }) {
@@ -20,7 +21,7 @@ function Header({ itemCount }: { itemCount: number }) {
   const [searchParams] = useSearchParams()
 
   const handleOpenLibgenModal = useCallback(() => {
-    open('booksLibrary.libgen', {})
+    open(LibgenModal, {})
   }, [])
 
   return (

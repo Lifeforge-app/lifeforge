@@ -22,8 +22,8 @@ function ModifyIdeaModal({
   data: {
     type: 'create' | 'update' | 'paste'
     ideaType: IIdeaBoxEntry['type']
-    existedData: IIdeaBoxEntry | null
-    pastedData: { file: File; preview: string } | null
+    existedData?: IIdeaBoxEntry | null
+    pastedData?: { file: File; preview: string } | null
   }
   onClose: () => void
 }) {
@@ -73,7 +73,7 @@ function ModifyIdeaModal({
       setPreview(null)
       setIdeaTags([])
     } else if (innerOpenType === 'update') {
-      if (existedData !== null) {
+      if (existedData) {
         setIdeaTitle(existedData.title)
         setIdeaContent(existedData.content)
         setIdeaLink(existedData.content)
@@ -82,7 +82,7 @@ function ModifyIdeaModal({
         setPreview(null)
         setIdeaTags(existedData.tags ?? [])
       }
-    } else if (innerOpenType === 'paste' && pastedData !== null) {
+    } else if (innerOpenType === 'paste' && pastedData) {
       setIdeaTitle('')
       setIdeaContent('')
       setIdeaLink('')

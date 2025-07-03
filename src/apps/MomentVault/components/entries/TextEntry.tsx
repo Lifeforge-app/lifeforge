@@ -7,6 +7,7 @@ import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import ModifyTextEntryModal from '@apps/MomentVault/modals/ModifyTextEntryModal'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -23,7 +24,7 @@ function TextEntry({
   const { componentBg } = useComponentBg()
 
   const handleUpdateEntry = useCallback(() => {
-    open('momentVault.modifyTextEntry', {
+    open(ModifyTextEntryModal, {
       existedData: entry,
       queryKey: ['moment-vault', 'entries', page]
     })

@@ -1,10 +1,11 @@
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
+import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 
 function FolderContextMenu({
   folder,
@@ -20,14 +21,14 @@ function FolderContextMenu({
   const open = useModalStore(state => state.open)
 
   const handleUpdateFolder = useCallback(() => {
-    open('ideaBox.ideas.modifyFolder', {
+    open(ModifyFolderModal, {
       type: 'update',
       existedData: folder
     })
   }, [folder])
 
   const handleDeleteFolder = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'idea-box/folders',
       confirmationText: 'Delete this folder',
       data: folder,

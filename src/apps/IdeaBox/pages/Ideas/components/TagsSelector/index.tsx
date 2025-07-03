@@ -6,6 +6,7 @@ import { useModalStore } from '@lifeforge/ui'
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
+import ModifyTagModal from '../modals/ModifyTagModal'
 import TagItem from './components/TagItem'
 
 const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {
@@ -78,7 +79,7 @@ function TagsSelector() {
     (id: string) => {
       const tag = tags.find(tag => tag.id === id)
       if (tag) {
-        open('ideaBox.ideas.modifyTag', {
+        open(ModifyTagModal, {
           type: 'update',
           existedData: tag
         })

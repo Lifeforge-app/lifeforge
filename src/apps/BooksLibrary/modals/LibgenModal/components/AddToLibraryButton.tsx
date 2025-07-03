@@ -5,6 +5,7 @@ import { Button } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
+import AddToLibraryModal from '../../AddToLibraryModal'
 
 function AddToLibraryButton({
   md5,
@@ -45,7 +46,7 @@ function AddToLibraryButton({
   }, [entriesQuery.data, md5, processes])
 
   const handleAddToLibrary = useCallback(() => {
-    open('booksLibrary.addToLibrary', { md5 })
+    open(AddToLibraryModal, { md5 })
   }, [md5])
 
   return (

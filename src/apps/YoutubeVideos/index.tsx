@@ -10,7 +10,6 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -18,7 +17,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 import Header from './components/Header'
 import VideoList from './components/VideoList'
 import { type IYoutubeVideosStorageEntry } from './interfaces/youtube_video_storage_interfaces'
-import { YoutubeVideosModals } from './modals'
+import AddVideosModal from './modals/AddVideosModal'
 
 function YoutubeVideos() {
   const open = useModalStore(state => state.open)
@@ -41,7 +40,7 @@ function YoutubeVideos() {
       queryKey: ['youtube-videos', 'video']
     })
 
-    open('youtubeVideos/addVideo', { videos: videosQuery.data })
+    open(AddVideosModal, { videos: videosQuery.data ?? [] })
   }, [videosQuery.data])
 
   useEffect(() => {
@@ -58,8 +57,6 @@ function YoutubeVideos() {
       )
     )
   }, [videosQuery.data, debouncedQuery])
-
-  useModalsEffect(YoutubeVideosModals)
 
   return (
     <ModuleWrapper>

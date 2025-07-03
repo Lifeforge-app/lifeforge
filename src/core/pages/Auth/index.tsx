@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { ModalManager, QueryWrapper } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -11,7 +10,6 @@ import { useAuth } from '../../providers/AuthProvider'
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
-import { AuthModals } from './modals'
 
 function Auth() {
   const { verifyOAuth } = useAuth()
@@ -21,8 +19,6 @@ function Auth() {
     'oauth',
     'providers'
   ])
-
-  useModalsEffect(AuthModals)
 
   useEffect(() => {
     const code = searchParams.get('code')
