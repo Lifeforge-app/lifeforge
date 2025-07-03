@@ -11,6 +11,7 @@ import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 import fetchAPI from '@utils/fetchAPI'
 
 import { type ICalendarEvent } from '../../interfaces/calendar_interfaces'
+import ModifyEventModal from '../modals/ModifyEventModal'
 import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import EventItem from './components/EventItem'
@@ -157,7 +158,7 @@ function CalendarComponent({
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
-      open('calendar.modifyEvent', {
+      open(ModifyEventModal, {
         type: 'create',
         existedData: {
           id: '',

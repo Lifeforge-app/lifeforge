@@ -17,13 +17,12 @@ import UploadPhotoSection from './components/UploadPhotoSection'
 
 function ModifyItemModal({
   onClose,
-  data: { type, existedData, queryKey }
+  data: { type, existedData }
 }: {
   onClose: () => void
   data: {
     type: 'create' | 'update'
     existedData: IVirtualWardrobeEntry | null
-    queryKey: unknown[]
   }
 }) {
   const queryClient = useQueryClient()
@@ -93,13 +92,16 @@ function ModifyItemModal({
         }
       )
 
-      queryClient.setQueryData<IVirtualWardrobeEntry[]>(queryKey, old => {
-        if (type === 'create') {
-          return old ? [...old, data] : [data]
-        } else {
-          return old?.map(item => (item.id === data.id ? data : item)) ?? []
+      queryClient.setQueryData<IVirtualWardrobeEntry[]>(
+        ['virtual-wardrobe'],
+        old => {
+          if (type === 'create') {
+            return old ? [...old, data] : [data]
+          } else {
+            return old?.map(item => (item.id === data.id ? data : item)) ?? []
+          }
         }
-      })
+      )
       queryClient.invalidateQueries({
         queryKey: ['virtual-wardrobe', 'sidebar-data']
       })

@@ -5,12 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { Button, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import YoutubeDownloaderModal from '../modals/YoutubeDownloaderModal'
+
 function AddMusicButton() {
   const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.music')
 
   const handleYoutubeDownloaderOpen = useCallback(() => {
-    open('music.youtubeDownloader', {})
+    open(YoutubeDownloaderModal, {})
   }, [])
 
   return (

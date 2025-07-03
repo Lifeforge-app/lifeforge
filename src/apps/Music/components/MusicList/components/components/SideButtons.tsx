@@ -3,9 +3,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import UpdateMusicModal from '@apps/Music/modals/UpdateMusicModal'
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import forceDown from '@utils/forceDown'
@@ -18,13 +19,13 @@ function SideButtons({ music }: { music: IMusicEntry }) {
   const { toggleFavourite } = useMusicContext()
 
   const handleUpdateEntry = useCallback(() => {
-    open('music.updateMusic', {
+    open(UpdateMusicModal, {
       existedData: music
     })
   }, [music])
 
   const handleDeleteEntry = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'music/entries',
       data: music,
       itemName: 'music',

@@ -11,7 +11,6 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
@@ -24,7 +23,8 @@ import HeaderMenu from './components/HeaderMenu'
 import InnerHeader from './components/InnerHeader'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
-import { walletTransactionsModals } from './modals'
+import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
+import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
 import TableView from './views/TableView'
 
@@ -76,26 +76,26 @@ function Transactions() {
   )
 
   const handleCreateTransaction = useCallback(() => {
-    open('wallet.transactions.modifyTransaction', {
+    open(ModifyTransactionsModal, {
       type: 'create',
       existedData: null
     })
   }, [])
 
   const handleUploadReceipt = useCallback(() => {
-    open('wallet.transactions.scanReceipt', {})
+    open(ScanReceiptModal, {})
   }, [])
 
   useEffect(() => {
     if (hash === '#new') {
-      open('wallet.transactions.modifyTransaction', {
+      open(ModifyTransactionsModal, {
         type: 'create',
         existedData: null
       })
     }
 
     if (hash === '#scan') {
-      open('wallet.transactions.scanReceipt', {})
+      open(ScanReceiptModal, {})
     }
   }, [hash])
 
@@ -125,8 +125,6 @@ function Transactions() {
       replace: true
     })
   }, [searchParams])
-
-  useModalsEffect(walletTransactionsModals)
 
   return (
     <ModuleWrapper>

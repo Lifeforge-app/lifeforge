@@ -16,7 +16,6 @@ import {
   Tabs,
   ViewModeSelector
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
@@ -27,7 +26,8 @@ import fetchAPI from '@utils/fetchAPI'
 
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
-import { moviesModals } from './modals'
+import ShowTicketModal from './modals/ShowTicketModal'
+import SearchTMDBModal from './modals/SearchTMDBModal'
 
 function Movies() {
   const open = useModalStore(state => state.open)
@@ -59,7 +59,7 @@ function Movies() {
       )
       if (!target) return
 
-      open('movies.showTicket', {
+      open(ShowTicketModal, {
         entry: target
       })
       setSearchParams({}, { replace: true })
@@ -85,10 +85,8 @@ function Movies() {
   }
 
   const handleOpenTMDBModal = useCallback(() => {
-    open('movies.searchTMDB', {})
+    open(SearchTMDBModal, {})
   }, [entriesQuery.data])
-
-  useModalsEffect(moviesModals)
 
   return (
     <ModuleWrapper>

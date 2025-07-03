@@ -3,9 +3,10 @@ import { toast } from 'react-toastify'
 
 import { Button, ModalHeader, TextInput } from '@lifeforge/ui'
 
+import { IGuitarTabsGuitarWorldScores } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
+
 import fetchAPI from '@utils/fetchAPI'
 
-import { type IGuitarTabsGuitarWorldScores } from '../../interfaces/guitar_tabs_interfaces'
 import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({ onClose }: { onClose: () => void }) {

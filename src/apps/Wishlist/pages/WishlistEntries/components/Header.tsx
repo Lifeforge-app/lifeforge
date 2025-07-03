@@ -9,6 +9,8 @@ import { Button, GoBackButton, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IWishlistList } from '../../../interfaces/wishlist_interfaces'
+import FromOtherAppsModal from '../modals/FromOtherAppsModal'
+import ModifyEntryModal from '../modals/ModifyEntryModal'
 
 function Header({
   wishlistListDetails
@@ -21,7 +23,7 @@ function Header({
   const navigate = useNavigate()
 
   const handleAddManually = useCallback(() => {
-    open('wishlist.entries.modifyEntry', {
+    open(ModifyEntryModal, {
       type: 'create',
       existedData: {
         list: id as string
@@ -30,7 +32,7 @@ function Header({
   }, [id])
 
   const handleAddFromOtherApps = useCallback(() => {
-    open('wishlist.entries.fromOtherApps', {})
+    open(FromOtherAppsModal, {})
   }, [])
 
   return (

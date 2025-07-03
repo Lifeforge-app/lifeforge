@@ -6,6 +6,7 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
+import ModifyIdeaModal from '../modals/ModifyIdeaModal'
 import FolderList from './components/FolderList'
 import IdeaList from './components/IdeaList'
 
@@ -22,7 +23,7 @@ function IdeaAndFolderList() {
   } = useIdeaBoxContext()
 
   const handleIdeaCreation = useCallback(() => {
-    open('ideaBox.ideas.modifyIdea', {
+    open(ModifyIdeaModal, {
       type: 'create',
       ideaType: 'text',
       existedData: null

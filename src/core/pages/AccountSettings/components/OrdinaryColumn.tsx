@@ -7,6 +7,7 @@ import { Button, ConfigColumn } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useAuth } from '../../../providers/AuthProvider'
+import ModifyModal from '../modals/ModifyModal'
 
 function OrdinaryColumn({
   title,
@@ -24,7 +25,7 @@ function OrdinaryColumn({
   const { t } = useTranslation('core.accountSettings')
 
   const handleOpenModifyModal = useCallback(() => {
-    open('accountSettings.modify', {
+    open(ModifyModal, {
       type,
       title,
       id,

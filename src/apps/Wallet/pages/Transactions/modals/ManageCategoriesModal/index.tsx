@@ -6,6 +6,7 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
+import ModifyCategoryModal from '../ModifyCategoryModal'
 import CategorySection from './components/CategorySection'
 
 function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
@@ -14,7 +15,7 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
   const { categoriesQuery } = useWalletData()
 
   const handleCreateIncomeCategory = useCallback(() => {
-    open('wallet.transactions.modifyCategory', {
+    open(ModifyCategoryModal, {
       type: 'income',
       existedData: null
     })

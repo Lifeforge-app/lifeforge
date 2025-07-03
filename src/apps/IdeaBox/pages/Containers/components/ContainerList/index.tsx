@@ -2,12 +2,11 @@ import { Icon } from '@iconify/react'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
-import { ideaBoxContainerModals } from '../../modals'
+import ModifyContainerModal from '../ModifyContainerModal'
 import ContainerItem from './components/ContainerItem'
 
 function ContainerList({
@@ -19,13 +18,11 @@ function ContainerList({
   const { t } = useTranslation(['apps.ideaBox', 'common.buttons'])
 
   const handleCreateContainer = useCallback(() => {
-    open('ideaBox.containers.modifyContainer', {
+    open(ModifyContainerModal, {
       type: 'create',
       existedData: null
     })
   }, [])
-
-  useModalsEffect(ideaBoxContainerModals)
 
   return (
     <div className="mt-6 grid w-full grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-6 px-3 pb-12">

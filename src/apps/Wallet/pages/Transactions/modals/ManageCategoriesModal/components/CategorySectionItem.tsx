@@ -1,23 +1,25 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useCallback } from 'react'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
+
+import ModifyCategoryModal from '../../ModifyCategoryModal'
 
 function CategorySectionItem({ category }: { category: IWalletCategory }) {
   const open = useModalStore(state => state.open)
 
   const handleEditCategory = useCallback(() => {
-    open('wallet.transactions.modifyCategory', {
+    open(ModifyCategoryModal, {
       type: 'update',
       existedData: category
     })
   }, [category])
 
   const handleDeleteCategory = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'wallet/categories',
       confirmationText: 'Delete this category',
       data: category,

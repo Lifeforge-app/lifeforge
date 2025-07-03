@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyListModal from '@apps/TodoList/modals/ModifyListModal'
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskListListItem from './TaskListListItem'
@@ -18,7 +19,7 @@ function TaskListList({
   const { listsQuery } = useTodoListContext()
 
   const handleCreateList = useCallback(() => {
-    open('todoList.modifyList', {
+    open(ModifyListModal, {
       type: 'create',
       existedData: null
     })

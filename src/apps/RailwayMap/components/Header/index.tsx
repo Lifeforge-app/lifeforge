@@ -11,6 +11,8 @@ import {
 } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import RoutePlannerModal from '@apps/RailwayMap/modals/RoutePlannerModal'
+
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import DetailBox from './components/DetailBox'
 import LineFilter from './components/LineFilter'
@@ -31,7 +33,7 @@ function Header() {
     if (hasRoute) {
       setShortestRoute([])
     } else {
-      open('railwayMap.routePlanner', {})
+      open(RoutePlannerModal, {})
     }
   }, [hasRoute])
 

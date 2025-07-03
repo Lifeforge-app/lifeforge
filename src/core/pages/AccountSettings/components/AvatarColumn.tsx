@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { Button, ConfigColumn } from '@lifeforge/ui'
+import { Button, ConfigColumn, DeleteConfirmationModal } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
@@ -46,7 +46,7 @@ function AvatarColumn() {
   }
 
   const handleDeleteAvatar = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: '/user/settings/avatar',
       customText: 'Are you sure you want to remove your profile picture?',
       itemName: 'avatar',

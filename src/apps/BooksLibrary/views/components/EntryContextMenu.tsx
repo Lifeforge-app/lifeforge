@@ -1,8 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 
-import { MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
+import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
 
 import fetchAPI from '@utils/fetchAPI'
 import forceDown from '@utils/forceDown'
@@ -55,20 +58,20 @@ export default function EntryContextMenu({
   }, [item, queryClient])
 
   const handleSendToKindle = useCallback(() => {
-    open('booksLibrary.sendToKindle', {
+    open(SendToKindleModal, {
       bookId: item.id
     })
   }, [item])
 
   const handleUpdateEntry = useCallback(() => {
-    open('booksLibrary.modifyBook', {
+    open(ModifyBookModal, {
       type: 'update',
       existedData: item
     })
   }, [item])
 
   const handleDeleteEntry = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'books-library/entries',
       data: item,
       itemName: 'book',

@@ -6,6 +6,8 @@ import { useCallback } from 'react'
 import { Button } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import RoutePlannerModal from '@apps/RailwayMap/modals/RoutePlannerModal'
+
 import useComponentBg from '@hooks/useComponentBg'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
@@ -23,7 +25,7 @@ function DetailBox() {
   const handleRoutePlannerOpen = useCallback(() => {
     if (!selectedStation) return
     setRoutePlannerStart(selectedStation.id)
-    open('railwayMap.routePlanner', {})
+    open(RoutePlannerModal, {})
   }, [selectedStation])
 
   return (

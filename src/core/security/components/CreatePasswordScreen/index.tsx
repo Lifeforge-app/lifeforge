@@ -5,10 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, TextInput } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
-import { CreatePasswordModals } from './modals'
+import CreatePasswordConfirmationModal from './modals/CreatePasswordConfirmationModal'
 
 function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
   const open = useModalStore(state => state.open)
@@ -30,14 +29,12 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
       return
     }
 
-    open('createPassword.confirm', {
+    open(CreatePasswordConfirmationModal, {
       newPassword,
       confirmPassword,
       endpoint
     })
   }
-
-  useModalsEffect(CreatePasswordModals)
 
   return (
     <>

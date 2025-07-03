@@ -9,15 +9,14 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
+import ModifyAchievementModal from './components/ModifyAchievementModal'
 import { type IAchievementEntry } from './interfaces/achievements_interfaces'
-import { achievementsModals } from './modals'
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
@@ -28,8 +27,6 @@ function Achievements() {
     `achievements/entries/${selectedDifficulty}`,
     ['achievements/entries', selectedDifficulty]
   )
-
-  useModalsEffect(achievementsModals)
 
   return (
     <ModuleWrapper>
@@ -42,7 +39,7 @@ function Achievements() {
               item: t('items.achievement')
             }}
             onClick={() => {
-              open('achievements.modifyAchievement', {
+              open(ModifyAchievementModal, {
                 type: 'create',
                 existedData: null,
                 currentDifficulty: selectedDifficulty
@@ -75,7 +72,7 @@ function Achievements() {
               name="achievement"
               namespace="apps.achievements"
               onCTAClick={() => {
-                open('achievements.modifyAchievement', {
+                open(ModifyAchievementModal, {
                   type: 'create',
                   existedData: null,
                   currentDifficulty: selectedDifficulty
@@ -89,7 +86,7 @@ function Achievements() {
         <FAB
           hideWhen="md"
           onClick={() => {
-            open('achievements.modifyAchievement', {
+            open(ModifyAchievementModal, {
               type: 'create',
               existedData: null,
               currentDifficulty: selectedDifficulty

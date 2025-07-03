@@ -14,7 +14,6 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
@@ -28,7 +27,8 @@ import useAPIQuery from '@hooks/useAPIQuery'
 import EntryItem from './components/EntryItem'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
-import { virtualWardrobeClothesModals } from './modals'
+import ModifyItemModal from './modals/ModifyItemModal'
+import SessionCartModal from './modals/SessionCartModal'
 
 function VirtualWardrobeClothes() {
   const open = useModalStore(state => state.open)
@@ -59,21 +59,18 @@ function VirtualWardrobeClothes() {
   )
 
   const handleOpenSessionCart = useCallback(() => {
-    open('virtualWardrobe.clothes.sessionCart', {
+    open(SessionCartModal, {
       cartItems: sessionCartItemsQuery.data ?? [],
       queryKey
     })
   }, [sessionCartItemsQuery.data, queryKey])
 
   const handleCreateItem = useCallback(() => {
-    open('virtualWardrobe.clothes.modifyItem', {
+    open(ModifyItemModal, {
       type: 'create',
-      existedData: null,
-      queryKey
+      existedData: null
     })
   }, [queryKey])
-
-  useModalsEffect(virtualWardrobeClothesModals)
 
   return (
     <ModuleWrapper>

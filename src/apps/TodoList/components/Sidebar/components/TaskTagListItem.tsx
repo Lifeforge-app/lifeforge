@@ -1,8 +1,10 @@
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { MenuItem, SidebarItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, MenuItem, SidebarItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
+
+import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
 
 import { type ITodoListTag } from '../../../interfaces/todo_list_interfaces'
 
@@ -17,14 +19,14 @@ function TaskTagListItem({
   const [searchParams, setSearchParams] = useSearchParams()
 
   const handleUpdateTag = useCallback(() => {
-    open('todoList.modifyTag', {
+    open(ModifyTagModal, {
       type: 'update',
       existedData: item
     })
   }, [item])
 
   const handleDeleteTag = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'todo-list/tags',
       confirmationText: 'Delete this tag',
       customText:

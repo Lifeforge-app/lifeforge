@@ -15,7 +15,6 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -26,11 +25,11 @@ import IntervalManager from '@utils/intervalManager'
 import Header from './components/Header'
 import Searchbar from './components/Searchbar'
 import Sidebar from './components/Sidebar'
+import GuitarWorldModal from './components/modals/GuitarWorldModal'
 import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
 } from './interfaces/guitar_tabs_interfaces'
-import { guitarTabsModals } from './modals'
 import Views from './views'
 
 const intervalManager = IntervalManager.getInstance()
@@ -217,12 +216,10 @@ function GuitarTabs() {
     setPage(1)
   }, [selectedCategory, selectedAuthor, isStarred, selectedSortType])
 
-  useModalsEffect(guitarTabsModals)
-
   return (
     <ModuleWrapper>
       <Header
-        setGuitarWorldModalOpen={() => open('guitarTabs.guitarWorld', null)}
+        setGuitarWorldModalOpen={() => open(GuitarWorldModal, null)}
         setSortType={setSelectedSortType}
         setView={setView}
         sortType={selectedSortType}

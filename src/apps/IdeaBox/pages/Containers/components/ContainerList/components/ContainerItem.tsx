@@ -3,26 +3,28 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import ModifyContainerModal from '../../ModifyContainerModal'
+
 function ContainerItem({ container }: { container: IIdeaBoxContainer }) {
   const open = useModalStore(state => state.open)
   const { componentBgWithHover } = useComponentBg()
 
   const handleUpdateContainer = useCallback(() => {
-    open('ideaBox.containers.modifyContainer', {
+    open(ModifyContainerModal, {
       type: 'update',
       existedData: container
     })
   }, [container])
 
   const handleDeleteContainer = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'idea-box/containers',
       confirmationText: 'Delete this container',
       data: container,

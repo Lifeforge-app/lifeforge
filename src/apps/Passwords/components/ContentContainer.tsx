@@ -8,6 +8,7 @@ import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 
 import { useAuth } from '../../../core/providers/AuthProvider'
+import ModifyPasswordModal from '../modals/ModifyPasswordModal'
 import { usePasswordContext } from '../providers/PasswordsProvider'
 import PasswordList from './PasswordList'
 
@@ -24,7 +25,7 @@ function ContentContainer() {
   } = usePasswordContext()
 
   const handleCreatePassword = useCallback(() => {
-    open('passwords.modifyPassword', {
+    open(ModifyPasswordModal, {
       type: 'create',
       existedData: null
     })

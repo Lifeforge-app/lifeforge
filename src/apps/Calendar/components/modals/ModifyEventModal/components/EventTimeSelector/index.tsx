@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next'
 
 import { Button, DateInput } from '@lifeforge/ui'
 
+import { ICalendarEventFormState } from '@apps/Calendar/interfaces/calendar_interfaces'
+
 import useComponentBg from '@hooks/useComponentBg'
 
-import { ICalendarEventFormState } from '../../../../interfaces/calendar_interfaces'
 import RecurringSelector from './components/RecurringSelector'
 
 function EventTimeSelector({
