@@ -15,6 +15,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type IIdeaBoxContainer } from '../../interfaces/ideabox_interfaces'
 import ContainerList from './components/ContainerList'
+import ModifyContainerModal from './components/ModifyContainerModal'
 
 function IdeaBox() {
   const open = useModalStore(state => state.open)
@@ -45,7 +46,7 @@ function IdeaBox() {
   }, [debouncedSearchQuery, query.data])
 
   const handleCreateContainer = useCallback(() => {
-    open('ideaBox.containers.modifyContainer', {
+    open(ModifyContainerModal, {
       type: 'create',
       existedData: null
     })

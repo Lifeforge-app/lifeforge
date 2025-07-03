@@ -10,7 +10,6 @@ import {
   ModuleHeader,
   ModuleWrapper
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
@@ -18,7 +17,7 @@ import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_int
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import EntryList from './components/EntryList'
-import { MomentVaultModals } from './modals'
+import AddEntryModal from './modals/AddEntryModal'
 
 function MomentVault() {
   const open = useModalStore(state => state.open)
@@ -31,15 +30,13 @@ function MomentVault() {
 
   const handleAddEntry = useCallback(
     (type: string) => () => {
-      open('momentVault.addEntry', {
-        type,
+      open(AddEntryModal, {
+        type: type as 'text' | 'audio' | 'photos' | 'video',
         entriesQueryKey: ['moment-vault', 'entries', page]
       })
     },
     [page]
   )
-
-  useModalsEffect(MomentVaultModals)
 
   return (
     <ModuleWrapper>

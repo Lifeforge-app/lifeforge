@@ -5,16 +5,16 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
+import {
+  ICalendarCalendar,
+  ICalendarCategory,
+  ICalendarEvent,
+  ICalendarEventFormState
+} from '@apps/Calendar/interfaces/calendar_interfaces'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import {
-  ICalendarCalendar,
-  type ICalendarCategory,
-  type ICalendarEvent,
-  ICalendarEventFormState
-} from '../../interfaces/calendar_interfaces'
 import EventTimeSelector from './components/EventTimeSelector'
 
 function ModifyEventModal({

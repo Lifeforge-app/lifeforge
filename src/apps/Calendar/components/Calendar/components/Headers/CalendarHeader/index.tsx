@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { Button, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
+import ScanImageModal from '@apps/Calendar/components/modals/ScanImageModal'
+
 import NavigationControl from './components/NavigationControl'
 import ViewSelector from './components/ViewSelector'
 
@@ -28,11 +31,11 @@ function CalendarHeader({
   const { t } = useTranslation('apps.calendar')
 
   const handleScanImageModalOpen = useCallback(() => {
-    open('calendar.scanImage', {})
+    open(ScanImageModal, {})
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open('calendar.modifyEvent', {
+    open(ModifyEventModal, {
       existedData: null,
       type: 'create'
     })

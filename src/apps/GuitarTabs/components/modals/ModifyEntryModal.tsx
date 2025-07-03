@@ -6,9 +6,9 @@ import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
 import {
-  type IGuitarTabsEntry,
+  IGuitarTabsEntry,
   IGuitarTabsEntryFormState
-} from '../interfaces/guitar_tabs_interfaces'
+} from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
 
 const TYPES = [
   { id: 'fingerstyle', icon: 'mingcute:guitar-line' },

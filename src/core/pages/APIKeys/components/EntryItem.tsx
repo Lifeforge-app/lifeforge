@@ -4,13 +4,20 @@ import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import {
+  Button,
+  ConfigColumn,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
+import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 
 function EntryItem({
   entry,
@@ -48,7 +55,7 @@ function EntryItem({
   }
 
   const handleUpdateEntry = useCallback(async () => {
-    open('apiKeys.modifyEntry', {
+    open(ModifyAPIKeyModal, {
       type: 'update',
       existedData: entry,
       masterPassword
@@ -56,7 +63,7 @@ function EntryItem({
   }, [entry, masterPassword])
 
   const handleDeleteEntry = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'api-keys/entries',
       confirmationText: 'Delete this API key',
       data: entry,

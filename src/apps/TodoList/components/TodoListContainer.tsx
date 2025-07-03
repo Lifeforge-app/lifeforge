@@ -4,14 +4,12 @@ import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { EmptyStateScreen, FAB, QueryWrapper, SearchInput } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { ITodoListEntry } from '../interfaces/todo_list_interfaces'
-import { todoListModals } from '../modals'
 import Header from './Header'
 import ModifyTaskDrawer from './ModifyTaskDrawer'
 import Sidebar from './Sidebar'
@@ -65,8 +63,6 @@ function TodoListContainer() {
       })
     }
   }, [searchParams, entriesQuery.data])
-
-  useModalsEffect(todoListModals)
 
   return (
     <>

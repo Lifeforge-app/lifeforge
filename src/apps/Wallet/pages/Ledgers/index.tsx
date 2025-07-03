@@ -10,13 +10,12 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import LedgerItem from './components/LedgerItem'
-import { walletLedgersModals } from './modals'
+import ModifyLedgerModal from './modals/ModifyLedgerModal'
 
 function Ledgers() {
   const { t } = useTranslation('apps.wallet')
@@ -25,7 +24,7 @@ function Ledgers() {
   const open = useModalStore(state => state.open)
 
   const handleCreateLedger = () => {
-    open('wallet.ledgers.modifyLedger', {
+    open(ModifyLedgerModal, {
       type: 'create',
       existedData: null
     })
@@ -33,14 +32,12 @@ function Ledgers() {
 
   useEffect(() => {
     if (hash === '#new') {
-      open('wallet.ledgers.modifyLedger', {
+      open(ModifyLedgerModal, {
         type: 'create',
         existedData: null
       })
     }
   }, [hash])
-
-  useModalsEffect(walletLedgersModals)
 
   return (
     <ModuleWrapper>

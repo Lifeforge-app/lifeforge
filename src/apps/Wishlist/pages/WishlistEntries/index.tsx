@@ -13,7 +13,6 @@ import {
   SearchInput,
   Tabs
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
@@ -24,7 +23,8 @@ import {
 } from '../../interfaces/wishlist_interfaces'
 import EntryList from './components/EntryList'
 import Header from './components/Header'
-import { wishlistEntriesModals } from './modals'
+import FromOtherAppsModal from './modals/FromOtherAppsModal'
+import ModifyEntryModal from './modals/ModifyEntryModal'
 
 function WishlistEntries() {
   const open = useModalStore(state => state.open)
@@ -62,17 +62,16 @@ function WishlistEntries() {
   }, [entriesQuery.data, debouncedSearchQuery])
 
   const handleAddManually = useCallback(() => {
-    open('wishlist.entries.modifyEntry', {
+    open(ModifyEntryModal, {
       type: 'create',
       existedData: {
         list: id as string
-      },
-      queryKey
+      }
     })
   }, [id])
 
   const handleAddFromOtherApps = useCallback(() => {
-    open('wishlist.entries.fromOtherApps', {})
+    open(FromOtherAppsModal, {})
   }, [])
 
   useEffect(() => {
@@ -81,8 +80,6 @@ function WishlistEntries() {
       navigate('/wishlist')
     }
   }, [validQuery.data])
-
-  useModalsEffect(wishlistEntriesModals)
 
   return (
     <ModuleWrapper>

@@ -1,3 +1,4 @@
+import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
 import { cookieParse } from 'pocketbase'
 import {
   RefObject,
@@ -66,7 +67,7 @@ export default function AuthProvider({
   const tid = useRef('')
 
   const handleTwoFAModalOpen = useCallback(() => {
-    open('auth.authWith2fa', {})
+    open(TwoFAModal, {})
   }, [])
 
   const setAuth = useCallback(

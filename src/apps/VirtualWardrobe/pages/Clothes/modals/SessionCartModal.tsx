@@ -10,6 +10,7 @@ import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_
 import fetchAPI from '@utils/fetchAPI'
 
 import EntryItem from '../components/EntryItem'
+import CheckoutConfirmationModal from './CheckoutConfirmationModal'
 
 function SessionCartModal({
   onClose,
@@ -40,7 +41,7 @@ function SessionCartModal({
   }
 
   const handleOpenConfirmationModal = useCallback(() => {
-    open('virtualWardrobe.clothes.checkoutConfirmation', {
+    open(CheckoutConfirmationModal, {
       queryKey
     })
   }, [queryKey])

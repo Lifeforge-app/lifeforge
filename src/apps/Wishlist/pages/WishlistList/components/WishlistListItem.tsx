@@ -3,26 +3,28 @@ import clsx from 'clsx'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IWishlistList } from '@apps/Wishlist/interfaces/wishlist_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
+
 function WishlistListItem({ list }: { list: IWishlistList }) {
   const open = useModalStore(state => state.open)
   const { componentBgWithHover } = useComponentBg()
 
   const handleUpdateList = useCallback(() => {
-    open('wishlist.lists.modifyWishlistList', {
+    open(ModifyWishlistListModal, {
       type: 'update',
       existedData: list
     })
   }, [list])
 
   const handleDeleteList = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'wishlist/lists',
       confirmationText: 'Delete this wishlist',
       data: list,

@@ -5,6 +5,8 @@ import { ConfigColumn, Switch } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useAuth } from '../../../providers/AuthProvider'
+import DisableTwoFAModal from '../modals/DisableTwoFAModal'
+import EnableTwoFAModal from '../modals/EnableTwoFAModal'
 
 function TwoFAColumn() {
   const open = useModalStore(state => state.open)
@@ -13,9 +15,9 @@ function TwoFAColumn() {
 
   const handleToggle2FAModal = useCallback(() => {
     if (userData.twoFAEnabled) {
-      open('accountSettings.disable2FA', {})
+      open(DisableTwoFAModal, {})
     } else {
-      open('accountSettings.enable2FA', {})
+      open(EnableTwoFAModal, {})
     }
   }, [userData.twoFAEnabled])
 

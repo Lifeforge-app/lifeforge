@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskTagListItem from './TaskTagListItem'
@@ -18,7 +19,7 @@ function TaskTagList({
   const { tagsListQuery } = useTodoListContext()
 
   const handleCreateTag = useCallback(() => {
-    open('todoList.modifyTag', {
+    open(ModifyTagModal, {
       type: 'create',
       existedData: null
     })

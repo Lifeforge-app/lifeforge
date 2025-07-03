@@ -3,15 +3,21 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { Button, ConfigColumn, QueryWrapper, Tooltip } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
+import {
+  Button,
+  ConfigColumn,
+  DeleteConfirmationModal,
+  FileAndImagePickerModal,
+  QueryWrapper,
+  Tooltip
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { personalizationBgImageSelectorModals } from './modals'
+import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
 function BgImageSelector() {
   const open = useModalStore(state => state.open)
@@ -27,11 +33,11 @@ function BgImageSelector() {
   )
 
   const handleAdjustBgImage = useCallback(() => {
-    open('personalization.bgImageSelector.adjustBgImage', {})
+    open(AdjustBgImageModal, {})
   }, [])
 
   const handleDeleteBgImage = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'user/personalization/bg-image',
       customCallback: async () => {
         setBgImage('')
@@ -71,7 +77,7 @@ function BgImageSelector() {
   }
 
   const handleOpenImageSelector = useCallback(() => {
-    open('fileAndImagePicker', {
+    open(FileAndImagePickerModal, {
       enableUrl: true,
       acceptedMimeTypes: {
         'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
@@ -81,8 +87,6 @@ function BgImageSelector() {
       onSelect: onSubmit
     })
   }, [imageGenAPIKeyExistsQuery.data, pixabayEnabledQuery.data])
-
-  useModalsEffect(personalizationBgImageSelectorModals)
 
   return (
     <>

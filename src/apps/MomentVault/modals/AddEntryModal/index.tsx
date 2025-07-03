@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
+  DeleteConfirmationModal,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   ModalHeader
@@ -53,7 +54,7 @@ function AddEntryModal({
   >(type)
 
   const handleOverrideAudioConfirm = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       customConfirmButtonIcon: 'tabler:reload',
       customConfirmButtonText: 'Overwrite',
       customOnClick: async (close: () => void) => {

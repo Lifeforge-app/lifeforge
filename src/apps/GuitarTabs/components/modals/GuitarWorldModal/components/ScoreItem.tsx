@@ -5,9 +5,9 @@ import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IGuitarTabsGuitarWorldScoreEntry } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
 
-import { type IGuitarTabsGuitarWorldScoreEntry } from '../../../interfaces/guitar_tabs_interfaces'
+import fetchAPI from '@utils/fetchAPI'
 
 function ScoreItem({
   entry,

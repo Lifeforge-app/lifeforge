@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
@@ -11,6 +11,7 @@ import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import useComponentBg from '@hooks/useComponentBg'
 
 import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
+import ModifyLedgerModal from '../modals/ModifyLedgerModal'
 
 function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
   const { t } = useTranslation('apps.wallet')
@@ -69,7 +70,7 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
           icon="tabler:pencil"
           text="Edit"
           onClick={() => {
-            open('wallet.ledgers.modifyLedger', {
+            open(ModifyLedgerModal, {
               type: 'update',
               existedData: ledger
             })
@@ -80,7 +81,7 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
           icon="tabler:trash"
           text="Delete"
           onClick={() => {
-            open('deleteConfirmation', {
+            open(DeleteConfirmationModal, {
               apiEndpoint: 'wallet/ledgers',
               confirmationText: 'Delete this ledger',
               data: ledger,

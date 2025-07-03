@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useModalStore } from '@lifeforge/ui'
 
 import { type IWalletCategory } from '../../../../../interfaces/wallet_interfaces'
+import ModifyCategoryModal from '../../ModifyCategoryModal'
 import CategorySectionItem from './CategorySectionItem'
 
 interface CategorySectionProps {
@@ -21,7 +22,7 @@ function CategorySection({ categories, type, iconName }: CategorySectionProps) {
   )
 
   const handleCreateCategoryOfType = useCallback(() => {
-    open('wallet.transactions.modifyCategory', {
+    open(ModifyCategoryModal, {
       type,
       existedData: null
     })

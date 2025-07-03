@@ -20,7 +20,6 @@ function ModifyAPIKeyModal({
     type: 'create' | 'update'
     existedData: IAPIKeyEntry | null
     masterPassword: string
-    challenge: string
   }
   onClose: () => void
 }) {

@@ -2,7 +2,11 @@ import { UseQueryResult } from '@tanstack/react-query'
 import { ListResult } from 'pocketbase'
 import { useCallback, useEffect } from 'react'
 
-import { Pagination, QueryWrapper } from '@lifeforge/ui'
+import {
+  DeleteConfirmationModal,
+  Pagination,
+  QueryWrapper
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
@@ -23,7 +27,7 @@ function EntryList({
   const open = useModalStore(state => state.open)
   const handleDeleteEntry = useCallback(
     (entry: IMomentVaultEntry) => () => {
-      open('deleteConfirmation', {
+      open(DeleteConfirmationModal, {
         apiEndpoint: '/moment-vault/entries',
         data: entry,
         itemName: 'entry',

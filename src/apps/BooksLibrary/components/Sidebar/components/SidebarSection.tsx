@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 import { useBooksLibraryContext } from '@apps/BooksLibrary/providers/BooksLibraryProvider'
 
 import SidebarItem from './SidebarItem'
@@ -25,10 +26,10 @@ function SidebarSection({
     useBooksLibraryContext()
 
   const handleCreateItem = useCallback(() => {
-    open(`booksLibrary.modify`, {
+    open(ModifyModal, {
       type: 'create',
       existedData: null,
-      stuff
+      stuff: stuff as 'collections' | 'languages'
     })
   }, [stuff])
 

@@ -7,6 +7,7 @@ import { useModalStore } from '@lifeforge/ui'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
+import ModifyCategoryModal from '../../../modals/ModifyCategoryModal'
 import CategoriesSectionItem from './CategoriesSectionItem'
 
 function CategoriesSection() {
@@ -41,8 +42,8 @@ function CategoriesSection() {
   )
 
   const handleActionButtonClick = useCallback(() => {
-    open('wallet.transactions.modifyCategory', {
-      type: 'create',
+    open(ModifyCategoryModal, {
+      type: 'income',
       existedData: null
     })
   }, [])

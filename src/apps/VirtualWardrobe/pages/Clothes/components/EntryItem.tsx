@@ -5,7 +5,12 @@ import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import {
+  Button,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
@@ -15,6 +20,8 @@ import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_
 import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
+
+import ModifyItemModal from '../modals/ModifyItemModal'
 
 interface IEntryItemCommonProps<T extends boolean> {
   entry: IVirtualWardrobeEntry
@@ -75,14 +82,14 @@ function EntryItem<T extends boolean = false>({
   }
 
   const handleUpdateItem = useCallback(() => {
-    open('virtualWardrobe.modifyEntry', {
+    open(ModifyItemModal, {
       type: 'update',
       existedData: entry
     })
   }, [entry])
 
   const handleDeleteItem = useCallback(() => {
-    open('deleteConfirmation', {
+    open(DeleteConfirmationModal, {
       apiEndpoint: 'virtual-wardrobe/entries',
       data: entry,
       itemName: 'item',

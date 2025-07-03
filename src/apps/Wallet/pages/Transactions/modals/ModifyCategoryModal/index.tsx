@@ -6,7 +6,7 @@ import { type IFieldProps } from '@lifeforge/ui'
 
 import { type IWalletCategory } from '../../../../interfaces/wallet_interfaces'
 
-function ModifyCategory({
+function ModifyCategoryModal({
   data: { type, existedData },
   onClose
 }: {
@@ -113,4 +113,4 @@ function ModifyCategory({
   )
 }
 
-export default ModifyCategory
+export default ModifyCategoryModal

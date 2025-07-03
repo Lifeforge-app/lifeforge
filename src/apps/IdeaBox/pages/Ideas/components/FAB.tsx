@@ -10,6 +10,9 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
+import ModifyFolderModal from './modals/ModifyFolderModal'
+import ModifyIdeaModal from './modals/ModifyIdeaModal'
+
 function FAB() {
   const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.ideaBox')
@@ -18,14 +21,14 @@ function FAB() {
   const handleEntryCreation = useCallback(
     (name: string) => () => {
       if (name === 'Folder') {
-        open('ideaBox.ideas.modifyFolder', {
+        open(ModifyFolderModal, {
           type: 'create',
           existedData: null
         })
       } else {
-        open('ideaBox.ideas.modifyIdea', {
+        open(ModifyIdeaModal, {
           type: 'create',
-          ideaType: name.toLowerCase(),
+          ideaType: name.toLowerCase() as 'text' | 'link' | 'image',
           existedData: null
         })
       }

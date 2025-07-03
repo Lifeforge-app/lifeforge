@@ -4,9 +4,11 @@ import { toast } from 'react-toastify'
 import { Button, ImageAndFileInput, ModalHeader } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+
 import fetchAPI from '@utils/fetchAPI'
 
-import { ICalendarEvent } from '../interfaces/calendar_interfaces'
+import ModifyEventModal from './ModifyEventModal'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
@@ -32,7 +34,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
       )
       onClose()
 
-      open('calendar.modifyEvent', {
+      open(ModifyEventModal, {
         type: 'create',
         existedData: {
           ...data,

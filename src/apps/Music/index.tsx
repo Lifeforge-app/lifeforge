@@ -9,14 +9,12 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'
 import MusicList from './components/MusicList'
-import { MusicModals } from './modals'
 
 function Music() {
   const { searchQuery, setSearchQuery, musicsQuery, currentMusic, togglePlay } =
@@ -39,8 +37,6 @@ function Music() {
       window.removeEventListener('keydown', handleKeyPress)
     }
   })
-
-  useModalsEffect(MusicModals)
 
   return (
     <ModuleWrapper>

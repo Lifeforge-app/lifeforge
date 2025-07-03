@@ -12,14 +12,13 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import AssetItem from './components/AssetItem'
-import { walletAssetsModals } from './modals'
+import ModifyAssetModal from './modals/ModifyAssetModal'
 
 function Assets() {
   const queryClient = useQueryClient()
@@ -30,7 +29,7 @@ function Assets() {
   const { hash } = useLocation()
 
   const handleCreateCategory = useCallback(() => {
-    open('wallet.assets.modifyAsset', {
+    open(ModifyAssetModal, {
       type: 'create',
       existedData: null
     })
@@ -41,8 +40,6 @@ function Assets() {
       handleCreateCategory()
     }
   }, [hash])
-
-  useModalsEffect(walletAssetsModals)
 
   return (
     <ModuleWrapper>

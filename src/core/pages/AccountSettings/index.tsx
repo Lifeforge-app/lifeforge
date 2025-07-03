@@ -1,15 +1,11 @@
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-import { useModalsEffect } from '@lifeforge/ui'
 
 import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from './components/OrdinaryColumn'
 import PasswordColumn from './components/PasswordColumn'
 import TwoFAColumn from './components/TwoFAColumn'
-import { AccountSettingsModals } from './modals'
 
 function AccountSettings() {
-  useModalsEffect(AccountSettingsModals)
-
   return (
     <ModuleWrapper>
       <ModuleHeader title="Account Settings" />
