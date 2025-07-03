@@ -5,7 +5,7 @@ import { MenuItem, SidebarItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import {
-  type IBooksLibraryCategory,
+  type IBooksLibraryCollection,
   type IBooksLibraryFileType,
   type IBooksLibraryLanguage
 } from '../../../interfaces/books_library_interfaces'
@@ -17,8 +17,8 @@ function _SidebarItem({
   fallbackIcon,
   hasHamburgerMenu = true
 }: {
-  item: IBooksLibraryCategory | IBooksLibraryLanguage | IBooksLibraryFileType
-  stuff: 'categories' | 'languages' | 'fileTypes'
+  item: IBooksLibraryCollection | IBooksLibraryLanguage | IBooksLibraryFileType
+  stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasHamburgerMenu?: boolean
 }) {
@@ -47,7 +47,7 @@ function _SidebarItem({
       data: item,
       itemName: singleStuff,
       nameKey: 'name',
-      queryKey: ['booksLibrary', stuff]
+      queryKey: ['books-library', stuff]
     })
   }, [item, stuff])
 

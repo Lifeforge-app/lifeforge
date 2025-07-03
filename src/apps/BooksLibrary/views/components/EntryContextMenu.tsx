@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react'
 import { MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
+import fetchAPI from '@utils/fetchAPI'
 import forceDown from '@utils/forceDown'
 
 import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
@@ -16,6 +17,7 @@ export default function EntryContextMenu({
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
   const [downloadLoading, setDownloadLoading] = useState(false)
+  const [readStatusChangeLoading, setReadStatusChangeLoading] = useState(false)
 
   const handleDownload = useCallback(() => {
     setDownloadLoading(true)
@@ -30,6 +32,27 @@ export default function EntryContextMenu({
       })
       .catch(console.error)
   }, [item])
+
+  const handleReadStatusChange = useCallback(async () => {
+    setReadStatusChangeLoading(true)
+
+    try {
+      await fetchAPI<IBooksLibraryEntry>(
+        `books-library/entries/read/${item.id}`,
+        {
+          method: 'POST'
+        }
+      )
+
+      queryClient.invalidateQueries({
+        queryKey: ['books-library', 'entries']
+      })
+    } catch (error) {
+      console.error('Failed to update read status:', error)
+    } finally {
+      setReadStatusChangeLoading(false)
+    }
+  }, [item, queryClient])
 
   const handleSendToKindle = useCallback(() => {
     open('booksLibrary.sendToKindle', {
@@ -64,16 +87,23 @@ export default function EntryContextMenu({
   return (
     <>
       <MenuItem
-        disabled={downloadLoading}
-        icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
-        text="Download"
-        onClick={handleDownload}
+        icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
+        loading={readStatusChangeLoading}
+        namespace="apps.booksLibrary"
+        text={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
+        onClick={handleReadStatusChange}
       />
       <MenuItem
         icon="tabler:brand-amazon"
         namespace="apps.booksLibrary"
         text="Send to Kindle"
         onClick={handleSendToKindle}
+      />
+      <MenuItem
+        disabled={downloadLoading}
+        icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
+        text="Download"
+        onClick={handleDownload}
       />
       <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateEntry} />
       <MenuItem

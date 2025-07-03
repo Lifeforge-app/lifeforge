@@ -35,7 +35,7 @@ function Sidebar() {
         }}
       />
       <SidebarDivider />
-      <SidebarSection stuff="categories" />
+      <SidebarSection stuff="collections" />
       <SidebarDivider />
       <SidebarSection stuff="languages" />
       <SidebarDivider />

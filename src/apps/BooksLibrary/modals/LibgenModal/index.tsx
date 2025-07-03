@@ -130,6 +130,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
         <>
           <div className="flex flex-col items-center gap-2 sm:flex-row">
             <SearchInput
+              lighter
               namespace="apps.booksLibrary"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
