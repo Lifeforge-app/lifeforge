@@ -105,7 +105,6 @@ export default function BooksLibraryProvider() {
           }
         >
       ) => {
-        console.log(processes)
         if (data.module !== 'booksLibrary') return
 
         if (!processes[data.taskId]) {
