@@ -54,7 +54,7 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
                         ))}
                     </div>
                   </div>
-                  <AddToLibraryButton md5={id} />
+                  <AddToLibraryButton book={data} />
                 </div>
                 <DataTable data={data} />
                 <TOC data={data} />

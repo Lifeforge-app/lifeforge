@@ -1,28 +1,20 @@
-import { QueryWrapper, Scrollbar } from '@lifeforge/ui'
+import { Scrollbar } from '@lifeforge/ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { ITodoListEntry } from '@apps/TodoList/interfaces/todo_list_interfaces'
 
 import TaskItem from './TaskItem'
 
-function TaskList() {
-  const { entriesQuery } = useTodoListContext()
-
+function TaskList({ entries }: { entries: ITodoListEntry[] }) {
   return (
-    <QueryWrapper query={entriesQuery}>
-      {entries => (
-        <div className="mt-4 flex flex-1 flex-col">
-          <Scrollbar>
-            {typeof entries !== 'string' && entries.length > 0 && (
-              <ul className="flex flex-1 flex-col gap-2 px-4 pb-8">
-                {entries.map(entry => (
-                  <TaskItem key={entry.id} entry={entry} />
-                ))}
-              </ul>
-            )}
-          </Scrollbar>
-        </div>
-      )}
-    </QueryWrapper>
+    <div className="mt-4 flex flex-1 flex-col">
+      <Scrollbar>
+        <ul className="flex flex-1 flex-col gap-2 px-4 pb-8">
+          {entries.map(entry => (
+            <TaskItem key={entry.id} entry={entry} />
+          ))}
+        </ul>
+      </Scrollbar>
+    </div>
   )
 }
 

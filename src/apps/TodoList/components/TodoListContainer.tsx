@@ -1,3 +1,4 @@
+import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
@@ -22,6 +23,8 @@ function TodoListContainer() {
     useTodoListContext()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+  const [filteredEntries, setFilteredEntries] = useState<ITodoListEntry[]>([])
 
   const { hash } = useLocation()
 
@@ -64,6 +67,19 @@ function TodoListContainer() {
     }
   }, [searchParams, entriesQuery.data])
 
+  useEffect(() => {
+    if (debouncedSearchQuery.trim() === '') {
+      setFilteredEntries(entriesQuery.data ?? [])
+      return
+    }
+
+    const lowerCaseQuery = debouncedSearchQuery.toLowerCase()
+    const filtered = (entriesQuery.data ?? []).filter(entry =>
+      entry.summary.toLowerCase().includes(lowerCaseQuery)
+    )
+    setFilteredEntries(filtered)
+  }, [debouncedSearchQuery, entriesQuery.data])
+
   return (
     <>
       <div className="flex size-full min-h-0 flex-1">
@@ -72,6 +88,7 @@ function TodoListContainer() {
           <Header setSidebarOpen={setSidebarOpen} />
           <div className="w-full px-4">
             <SearchInput
+              className="mt-4"
               namespace="apps.todoList"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -79,9 +96,9 @@ function TodoListContainer() {
             />
           </div>
           <QueryWrapper query={entriesQuery}>
-            {entries =>
-              entries.length > 0 ? (
-                <TaskList />
+            {() =>
+              filteredEntries.length > 0 ? (
+                <TaskList entries={filteredEntries} />
               ) : (
                 <EmptyStateScreen
                   ctaContent="new"

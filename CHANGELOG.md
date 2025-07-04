@@ -4,6 +4,9 @@
 - **Books Library**: Fixed a bug in the API logic where the error is not properly handled when the book fail to be added to the library.
 - **Books Library**: Renamed `category` to `collection` for better clarity.
 - **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
+- **Books Library**: Download process is now handled by the task pool mechanism.
+- **Guitar Tabs**: Download process is now handled by the task pool mechanism.
+- **API**: Implemented task pool mechanism using socketIO to handle long-running tasks like downloading books from Libgen.
 - **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
 - **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.
 

@@ -18,6 +18,7 @@ function Ideas() {
       <Header />
       {!viewArchived && (
         <SearchInput
+          className="mt-4"
           namespace="apps.ideaBox"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
