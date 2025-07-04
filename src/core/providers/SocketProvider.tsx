@@ -9,6 +9,8 @@ export interface ISocketEvent<
   P extends string | number | Record<string, string | number> = string
 > {
   taskId: string
+  module: string
+  description: string
   status: 'pending' | 'running' | 'completed' | 'failed'
   data?: T
   error?: string
@@ -42,8 +44,9 @@ export default function SocketProvider({
 
 export function useSocketContext(): Socket {
   const context = useContext(SocketContext)
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useSocketContext must be used within a SocketProvider')
   }
+
   return context
 }
