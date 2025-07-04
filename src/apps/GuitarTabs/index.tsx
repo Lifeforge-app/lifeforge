@@ -288,7 +288,6 @@ function GuitarTabs() {
                 <Views
                   debouncedSearchQuery={debouncedSearchQuery}
                   entries={entries.items}
-                  queryKey={queryKey}
                   totalItems={entries.totalItems}
                   view={view}
                 />

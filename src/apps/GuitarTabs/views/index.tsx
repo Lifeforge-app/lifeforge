@@ -6,13 +6,11 @@ import ListView from './ListView'
 
 function Views({
   entries,
-  queryKey,
   view,
   debouncedSearchQuery,
   totalItems
 }: {
   entries: IGuitarTabsEntry[]
-  queryKey: unknown[]
   view: 'grid' | 'list'
   debouncedSearchQuery: string
   totalItems: number
@@ -39,9 +37,9 @@ function Views({
 
   switch (view) {
     case 'grid':
-      return <GridView entries={entries} queryKey={queryKey} />
+      return <GridView entries={entries} />
     case 'list':
-      return <ListView entries={entries} queryKey={queryKey} />
+      return <ListView entries={entries} />
   }
 }
 

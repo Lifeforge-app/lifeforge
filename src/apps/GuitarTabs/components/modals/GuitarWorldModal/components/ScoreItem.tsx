@@ -1,11 +1,16 @@
 import { Icon } from '@iconify/react'
+import { ISocketEvent, useSocketContext } from '@providers/SocketProvider'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
 
-import { IGuitarTabsGuitarWorldScoreEntry } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
+import {
+  IGuitarTabsEntry,
+  IGuitarTabsGuitarWorldScoreEntry
+} from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -16,6 +21,8 @@ function ScoreItem({
   entry: IGuitarTabsGuitarWorldScoreEntry
   cookie: string
 }) {
+  const queryClient = useQueryClient()
+  const socket = useSocketContext()
   const [audioInstance, setAudioInstance] = useState<HTMLAudioElement | null>(
     null
   )
@@ -49,7 +56,7 @@ function ScoreItem({
     setIsDownloading(true)
 
     try {
-      await fetchAPI('guitar-tabs/guitar-world/download', {
+      const taskId = await fetchAPI('guitar-tabs/guitar-world/download', {
         method: 'POST',
         body: {
           cookie,
@@ -58,12 +65,27 @@ function ScoreItem({
           category: entry.category,
           mainArtist: entry.mainArtist,
           audioUrl: entry.audioUrl
-        },
-        timeout: 9999999999
+        }
+      })
+
+      socket.on('taskPoolUpdate', (data: ISocketEvent<IGuitarTabsEntry>) => {
+        if (!data || data.taskId !== taskId) return
+
+        if (data.status === 'failed') {
+          throw new Error('Download failed')
+        }
+
+        if (data.status === 'completed') {
+          toast.success('Score downloaded successfully')
+          setIsDownloading(false)
+
+          queryClient.invalidateQueries({
+            queryKey: ['guitar-tabs', 'entries']
+          })
+        }
       })
     } catch {
       toast.error('Failed to download score')
-    } finally {
       setIsDownloading(false)
     }
   }
