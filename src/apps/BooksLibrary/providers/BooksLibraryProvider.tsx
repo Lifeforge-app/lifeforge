@@ -105,8 +105,14 @@ export default function BooksLibraryProvider() {
           }
         >
       ) => {
-        if (!(data.taskId in processes)) {
-          return
+        console.log(processes)
+        if (data.module !== 'booksLibrary') return
+
+        if (!processes[data.taskId]) {
+          setProcesses(prev => ({
+            ...prev,
+            [data.taskId]: data
+          }))
         }
 
         if (data.status === 'failed') {
@@ -127,10 +133,7 @@ export default function BooksLibraryProvider() {
             return newProcesses
           })
           queryClient.invalidateQueries({
-            queryKey: ['books-library', 'entries']
-          })
-          queryClient.invalidateQueries({
-            queryKey: ['books-library', 'file-types']
+            queryKey: ['books-library']
           })
           return
         }

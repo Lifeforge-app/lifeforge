@@ -26,7 +26,7 @@ function BookMeta({
       {languagesQuery.data &&
         (() => {
           const langs = languagesQuery.data.filter(language =>
-            item.languages.includes(language.id)
+            item.languages?.includes(language.id)
           )
 
           return (
@@ -91,7 +91,7 @@ function BookMeta({
       )}
       <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
         <Icon className="mr-1 size-4" icon="tabler:dimensions" />
-        {prettyBytes(+item.size)}
+        {prettyBytes(+item.size || 0)}
       </p>
       <Icon
         className={clsx('size-1', isGridView && 'hidden sm:block')}

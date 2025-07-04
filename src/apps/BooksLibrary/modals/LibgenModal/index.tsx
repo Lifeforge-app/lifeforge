@@ -1,3 +1,4 @@
+import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
@@ -6,6 +7,8 @@ import { toast } from 'react-toastify'
 import {
   Button,
   EmptyStateScreen,
+  ListboxOrComboboxOption,
+  ListboxOrComboboxOptions,
   LoadingScreen,
   ModalHeader,
   Pagination,
@@ -14,18 +17,30 @@ import {
   SearchInput
 } from '@lifeforge/ui'
 
+import useComponentBg from '@hooks/useComponentBg'
+
 import fetchAPI from '@utils/fetchAPI'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
 
+const PROVIDERS = [
+  'libgen.is',
+  'libgen.li',
+  'libgen.gs',
+  'libgen.vg',
+  'libgen.pg',
+  'libgen.gl'
+] as const
+
 function LibgenModal({ onClose }: { onClose: () => void }) {
-  const [libgenOnline, setLibgenOnline] = useState<'loading' | boolean>(
-    'loading'
-  )
+  const { componentBgLighterWithHover } = useComponentBg()
+  const [provider, setProvider] =
+    useState<(typeof PROVIDERS)[number]>('libgen.is')
   const [searchQuery, setSearchQuery] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
   const [data, setData] = useState<{
+    provider: (typeof PROVIDERS)[number]
     query: string
     resultsCount: string
     page: number
@@ -36,14 +51,32 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
   const [qrcodeScannerOpen, setQrcodeScannerOpen] = useState(false)
 
+  const [providerOnlineStatuses, setProviderOnlineStatuses] = useState<
+    Record<(typeof PROVIDERS)[number], boolean | 'loading'>
+  >(() =>
+    PROVIDERS.reduce(
+      (acc, endpoint) => ({ ...acc, [endpoint]: 'loading' }),
+      {} as Record<(typeof PROVIDERS)[number], boolean | 'loading'>
+    )
+  )
+
   async function checkLibgenOnlineStatus() {
-    try {
-      const isOnline = await fetchAPI<boolean>('books-library/libgen/status', {
-        timeout: 5000
-      })
-      setLibgenOnline(isOnline)
-    } catch {
-      setLibgenOnline(false)
+    for (const endpoint of PROVIDERS) {
+      try {
+        await fetchAPI(`cors-anywhere?url=https://${endpoint}`, {
+          timeout: 5000
+        })
+
+        setProviderOnlineStatuses(prev => ({
+          ...prev,
+          [endpoint]: true
+        }))
+      } catch {
+        setProviderOnlineStatuses(prev => ({
+          ...prev,
+          [endpoint]: false
+        }))
+      }
     }
   }
 
@@ -52,12 +85,13 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
 
     try {
       const response = await fetchAPI<{
+        provider: (typeof PROVIDERS)[number]
         query: string
         resultsCount: string
         page: number
         data: Array<Record<string, any>>
       }>(
-        `books-library/libgen/search?req=${searchQuery}&lg_topic=libgen&open=0&view=detailed&res=25&column=def&phrase=0&sort=year&sortmode=DESC&page=${
+        `books-library/libgen/search?provider=${provider}&req=${searchQuery}&page=${
           page ?? 1
         }`
       )
@@ -73,7 +107,13 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   }
 
   async function searchBooks() {
-    if (loading) return
+    if (
+      loading ||
+      providerOnlineStatuses[provider] === 'loading' ||
+      !providerOnlineStatuses[provider]
+    ) {
+      return
+    }
 
     if (searchQuery.trim() === '') {
       toast.error('Please enter a search query')
@@ -88,7 +128,12 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   }
 
   useEffect(() => {
-    setLibgenOnline('loading')
+    setProviderOnlineStatuses(() =>
+      PROVIDERS.reduce(
+        (acc, endpoint) => ({ ...acc, [endpoint]: 'loading' }),
+        {} as Record<(typeof PROVIDERS)[number], boolean | 'loading'>
+      )
+    )
     checkLibgenOnlineStatus()
     setHasSearched(false)
     setSearchQuery('')
@@ -97,23 +142,6 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex min-h-[80vh] min-w-[70vw] flex-col">
       <ModalHeader
-        appendTitle={
-          libgenOnline === 'loading' ? (
-            <Icon className="text-bg-500 size-4" icon="svg-spinners:180-ring" />
-          ) : (
-            <div
-              className={clsx(
-                'flex-center gap-1 rounded-full px-2 py-0.5 text-sm font-medium',
-                libgenOnline
-                  ? 'bg-green-500/20 text-green-500'
-                  : 'bg-red-500/20 text-red-500'
-              )}
-            >
-              <Icon className="size-2" icon="tabler:circle-filled" />
-              <span>{libgenOnline === true ? 'Online' : 'Offline'}</span>
-            </div>
-          )
-        }
         icon="tabler:books"
         namespace="apps.booksLibrary"
         title="Library Genesis"
@@ -129,6 +157,75 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
       ) : (
         <>
           <div className="flex flex-col items-center gap-2 sm:flex-row">
+            <Listbox
+              as="div"
+              className="relative w-full sm:w-auto"
+              value={provider}
+              onChange={value => {
+                setProvider(value)
+              }}
+            >
+              <ListboxButton
+                className={clsx(
+                  'flex-between shadow-custom flex w-full gap-2 rounded-md p-4 sm:w-48',
+                  componentBgLighterWithHover
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  {(() => {
+                    if (providerOnlineStatuses[provider] === 'loading') {
+                      return (
+                        <Icon
+                          className="text-bg-500 size-5"
+                          icon="svg-spinners:180-ring"
+                        />
+                      )
+                    }
+
+                    return (
+                      <span
+                        className={clsx(
+                          'inline-block size-3 rounded-full',
+                          providerOnlineStatuses[provider]
+                            ? 'bg-green-500'
+                            : 'bg-red-500'
+                        )}
+                      />
+                    )
+                  })()}
+                  <span className="font-medium whitespace-nowrap">
+                    {PROVIDERS.find(value => value === provider) ?? 'Unknown'}
+                  </span>
+                </div>
+                <Icon
+                  className="text-bg-500 size-5"
+                  icon="tabler:chevron-down"
+                />
+              </ListboxButton>
+              <ListboxOrComboboxOptions customWidth="min-w-48 w-[var(--button-width)]">
+                {PROVIDERS.map(value => (
+                  <ListboxOrComboboxOption
+                    key={value}
+                    color={(() => {
+                      if (providerOnlineStatuses[value] === 'loading') {
+                        return 'oklch(70.8% 0 0)'
+                      }
+
+                      return providerOnlineStatuses[value]
+                        ? 'oklch(79.2% 0.209 151.711)'
+                        : 'oklch(63.7% 0.237 25.331)'
+                    })()}
+                    icon={
+                      providerOnlineStatuses[value] === 'loading'
+                        ? 'svg-spinners:180-ring'
+                        : undefined
+                    }
+                    text={value}
+                    value={value}
+                  />
+                ))}
+              </ListboxOrComboboxOptions>
+            </Listbox>
             <SearchInput
               lighter
               namespace="apps.booksLibrary"
@@ -148,8 +245,11 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
             <Button
               iconAtEnd
               className="w-full sm:w-auto"
+              disabled={providerOnlineStatuses[provider] === false}
               icon="tabler:arrow-right"
-              loading={loading}
+              loading={
+                loading || providerOnlineStatuses[provider] === 'loading'
+              }
               onClick={() => {
                 searchBooks().catch(console.error)
               }}
@@ -159,8 +259,18 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
           </div>
           <Scrollbar className="mt-4 flex-1">
             {(() => {
-              if (loading) {
+              if (loading || providerOnlineStatuses[provider] === 'loading') {
                 return <LoadingScreen />
+              }
+
+              if (!providerOnlineStatuses[provider]) {
+                return (
+                  <EmptyStateScreen
+                    icon="tabler:cloud-off"
+                    name="libgenOffline"
+                    namespace="apps.booksLibrary"
+                  />
+                )
               }
 
               if (hasSearched) {
@@ -200,6 +310,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                         <SearchResultItem
                           key={book.id}
                           book={book}
+                          isLibgenIS={data.provider === 'libgen.is'}
                           setViewDetailsFor={setViewDetailsFor}
                         />
                       ))}

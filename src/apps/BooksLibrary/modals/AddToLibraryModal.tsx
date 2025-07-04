@@ -12,18 +12,22 @@ import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function AddToLibraryModal({
   onClose,
-  data: { md5 }
+  data: { isLibgenIS, book }
 }: {
   onClose: () => void
   data: {
-    md5: string | null
+    isLibgenIS: boolean
+    book: Record<string, any>
   }
 }) {
+  const md5 = book.md5 || null
+
   const {
     collectionsQuery,
     languagesQuery,
     miscellaneous: { addToProcesses }
   } = useBooksLibraryContext()
+
   const fetchedDataQuery = useAPIQuery<{
     md5: string
     thumbnail: string
@@ -39,7 +43,7 @@ function AddToLibraryModal({
   }>(
     `books-library/libgen/local-library-data/${md5}`,
     ['books-library', 'libgen', 'local-library-data', md5],
-    md5 !== null
+    md5 !== null && isLibgenIS
   )
 
   const [data, setData] = useState<IBooksLibraryFormSate>({
@@ -58,6 +62,28 @@ function AddToLibraryModal({
   })
 
   useEffect(() => {
+    if (!isLibgenIS) {
+      setData({
+        authors: book['Author(s)'],
+        collection: '',
+        edition: book['Edition'],
+        extension: book['Extension'],
+        isbn: book['ISBN'],
+        languages: [
+          languagesQuery.data?.find(lang => lang.name === book['Language'])
+            ?.id || ''
+        ],
+        md5: book.md5,
+        publisher: book['Publisher'],
+        size: book['Size'].toString(),
+        thumbnail: book['image'],
+        title: book['Title'],
+        year_published: book['Year']
+      })
+
+      return
+    }
+
     setData({
       authors: '',
       collection: '',
@@ -72,7 +98,7 @@ function AddToLibraryModal({
       title: '',
       year_published: ''
     })
-  }, [md5])
+  }, [isLibgenIS, book, languagesQuery.data])
 
   const FIELDS: IFieldProps<IBooksLibraryFormSate>[] = [
     {
