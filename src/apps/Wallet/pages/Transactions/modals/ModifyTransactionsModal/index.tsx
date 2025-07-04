@@ -9,6 +9,7 @@ import {
   Button,
   CurrencyInput,
   DateInput,
+  ILocationEntry,
   ImageAndFileInput,
   LocationInput,
   ModalHeader,
@@ -43,7 +44,7 @@ function ModifyTransactionsModal({
 
   const [transactionDate, setTransactionDate] = useState<Date | null>(null)
   const [amount, setAmount] = useState<string>()
-  const [location, setLocation] = useState<string | null>(null)
+  const [location, setLocation] = useState<ILocationEntry | null>(null)
   const [category, setCategory] = useState<string | null>(null)
   const [transactionAsset, setTransactionAsset] = useState<string | null>(null)
   const [ledger, setLedger] = useState<string | null>(null)
@@ -80,7 +81,26 @@ function ModifyTransactionsModal({
         )
         setAmount(`${existedData.amount}`)
         setCategory(existedData.category || '')
-        setLocation(existedData.location || '')
+        setLocation(
+          existedData.location_name
+            ? {
+                displayName: {
+                  text: existedData.location_name,
+                  languageCode: ''
+                },
+                location: existedData.location_coords
+                  ? {
+                      latitude: existedData.location_coords.lat,
+                      longitude: existedData.location_coords.lon
+                    }
+                  : {
+                      latitude: 0,
+                      longitude: 0
+                    },
+                formattedAddress: ''
+              }
+            : null
+        )
         setTransactionAsset(existedData.asset || '')
         setLedger(existedData.ledger || '')
         setReceipt(
@@ -104,7 +124,7 @@ function ModifyTransactionsModal({
         setTransactionType('income')
         setTransactionDate(dayjs().toDate())
         setAmount(undefined)
-        setLocation('')
+        setLocation(null)
         setCategory(null)
         setTransactionAsset(null)
         setLedger(null)
@@ -140,8 +160,8 @@ function ModifyTransactionsModal({
     data.append('date', dayjs(transactionDate).format('YYYY-MM-DD'))
     data.append('amount', parseFloat(`${amount}` || '0').toString())
     data.append('category', category ?? '')
-    data.append('location', location ?? '')
-
+    data.append('location_name', location?.displayName.text ?? '')
+    data.append('location_coords', JSON.stringify(location?.location))
     data.append('asset', transactionAsset ?? '')
     data.append('ledger', ledger ?? '')
     data.append('type', transactionType)

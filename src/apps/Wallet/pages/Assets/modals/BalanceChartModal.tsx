@@ -137,7 +137,9 @@ function BalanceChartModal({
   return (
     <div className="min-w-[50vw]">
       <ModalHeader
-        appendTitle={<> - {existedData.name}</>}
+        appendTitle={
+          <p className="hidden truncate sm:block"> - {existedData.name}</p>
+        }
         icon="tabler:chart-line"
         namespace="apps.wallet"
         title="assetsBalanceChart"

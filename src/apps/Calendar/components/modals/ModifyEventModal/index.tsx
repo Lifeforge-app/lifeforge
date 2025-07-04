@@ -45,7 +45,7 @@ function ModifyEventModal({
     use_google_map: false,
     category: '',
     calendar: '',
-    location: '',
+    location: null,
     reference_link: '',
     description: '',
     recurring_rrule: '',

@@ -5,10 +5,12 @@
 - **Books Library**: Renamed `category` to `collection` for better clarity.
 - **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
 - **Books Library**: Download process is now handled by the task pool mechanism.
+- **Books Library**: User can now download books from different mirrors of Libgen.
 - **Guitar Tabs**: Download process is now handled by the task pool mechanism.
 - **API**: Implemented task pool mechanism using socketIO to handle long-running tasks like downloading books from Libgen.
 - **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
 - **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.
+- **UI**: Fixed a bug in combobox input where the input will not be focused when the user click the area outside of the input itself in the container.
 
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 - **Movies**: Added tab selector to separate watched and unwatched movies.
