@@ -11,6 +11,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 import AuthProvider from './AuthProvider'
+import SocketProvider from './SocketProvider'
 
 const queryClient = new QueryClient()
 
@@ -25,7 +26,9 @@ function Providers({ children }: { children: React.ReactNode }) {
                 <ToastProvider>
                   <LifeforgeUIProviderWrapper>
                     <BackgroundProvider>
-                      <MusicProvider>{children}</MusicProvider>
+                      <SocketProvider>
+                        <MusicProvider>{children}</MusicProvider>
+                      </SocketProvider>
                     </BackgroundProvider>
                   </LifeforgeUIProviderWrapper>
                 </ToastProvider>

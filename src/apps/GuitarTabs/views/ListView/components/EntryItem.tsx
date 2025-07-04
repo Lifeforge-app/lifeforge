@@ -17,13 +17,7 @@ import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
 import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
-function EntryItem({
-  entry,
-  queryKey
-}: {
-  entry: IGuitarTabsEntry
-  queryKey: unknown[]
-}) {
+function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
   const { componentBgWithHover } = useComponentBg()
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
@@ -34,7 +28,7 @@ function EntryItem({
         method: 'POST'
       })
 
-      queryClient.invalidateQueries({ queryKey: ['guitar-tabs', 'entries'] })
+      queryClient.invalidateQueries({ queryKey: ['guitar-tabs'] })
     } catch {
       toast.error('Failed to add to favourites')
     }
@@ -43,7 +37,7 @@ function EntryItem({
   const handleUpdateEntry = useCallback(() => {
     open(ModifyEntryModal, {
       existedData: entry,
-      queryKey
+      queryKey: ['guitar-tabs']
     })
   }, [entry])
 
@@ -54,7 +48,7 @@ function EntryItem({
       data: entry,
       itemName: 'guitar tab',
       nameKey: 'name',
-      queryKey
+      queryKey: ['guitar-tabs']
     })
   }, [entry])
 

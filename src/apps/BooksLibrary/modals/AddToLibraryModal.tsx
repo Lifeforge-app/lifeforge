@@ -19,7 +19,11 @@ function AddToLibraryModal({
     md5: string | null
   }
 }) {
-  const { collectionsQuery, languagesQuery } = useBooksLibraryContext()
+  const {
+    collectionsQuery,
+    languagesQuery,
+    miscellaneous: { addToProcesses }
+  } = useBooksLibraryContext()
   const fetchedDataQuery = useAPIQuery<{
     md5: string
     thumbnail: string
@@ -176,12 +180,18 @@ function AddToLibraryModal({
 
   async function onSubmit() {
     try {
-      await fetchAPI(`books-library/libgen/add-to-library/${md5}`, {
-        method: 'POST',
-        body: {
-          metadata: data
+      const taskId = await fetchAPI<string>(
+        `books-library/libgen/add-to-library/${md5}`,
+        {
+          method: 'POST',
+          body: {
+            metadata: data
+          }
         }
-      })
+      )
+
+      addToProcesses(taskId)
+
       onClose()
       toast.success('Book added to download queue')
     } catch {
