@@ -5,6 +5,7 @@
 - **Books Library**: Renamed `category` to `collection` for better clarity.
 - **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
 - **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
+- **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.
 
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 - **Movies**: Added tab selector to separate watched and unwatched movies.

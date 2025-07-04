@@ -1,18 +1,13 @@
-import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react'
+  ISocketEvent,
+  useSocketContext as useSocket
+} from '@providers/SocketProvider'
+import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IBooksLibraryCollection,
@@ -29,15 +24,19 @@ interface IBooksLibraryData {
   miscellaneous: {
     processes: Record<
       string,
-      {
-        downloaded: string
-        total: string
-        percentage: string
-        speed: string
-        ETA: string
-        metadata: Record<string, any>
-      }
+      | ISocketEvent<
+          Record<string, any>,
+          {
+            downloaded: string
+            total: string
+            percentage: string
+            speed: string
+            ETA: string
+          }
+        >
+      | undefined
     >
+    addToProcesses: (taskId: string) => void
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     sidebarOpen: boolean
@@ -50,6 +49,7 @@ export const BooksLibraryContext = createContext<IBooksLibraryData | undefined>(
 )
 
 export default function BooksLibraryProvider() {
+  const socket = useSocket()
   const queryClient = useQueryClient()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
@@ -70,73 +70,84 @@ export default function BooksLibraryProvider() {
     'books-library/file-types',
     ['books-library', 'fileTypes']
   )
-  const lastProcessesLength = useRef<number | null>(null)
-  const lastProcessesData = useRef<string | null>(null)
-  const [isFirstTime, setIsFirstTime] = useState(true)
 
   const [processes, setProcesses] = useState<
     Record<
       string,
-      {
-        downloaded: string
-        total: string
-        percentage: string
-        speed: string
-        ETA: string
-        metadata: Record<string, any>
-      }
-    >
-  >({})
-
-  async function checkProgress() {
-    try {
-      const data = await fetchAPI<
-        Record<
-          string,
+      | ISocketEvent<
+          Record<string, any>,
           {
             downloaded: string
             total: string
             percentage: string
             speed: string
             ETA: string
-            metadata: Record<string, any>
           }
         >
-      >('books-library/libgen/download-progresses')
-
-      const processes = data
-
-      if (JSON.stringify(processes) !== lastProcessesData.current) {
-        setProcesses(processes)
-        lastProcessesData.current = JSON.stringify(processes)
-      }
-
-      if (
-        !isFirstTime &&
-        lastProcessesLength !== null &&
-        lastProcessesLength.current !== Object.keys(processes).length
-      ) {
-        queryClient.invalidateQueries({
-          queryKey: ['books-library', 'entries']
-        })
-        queryClient.invalidateQueries({
-          queryKey: ['books-library', 'file-types']
-        })
-      }
-      lastProcessesLength.current = Object.keys(processes).length
-      setIsFirstTime(false)
-    } catch {
-      toast.error('Failed to fetch download progress')
-    }
-  }
+      | undefined
+    >
+  >({})
 
   useEffect(() => {
-    const interval = setInterval(checkProgress, 1000)
+    if (socket === null) return
+
+    socket.on(
+      'taskPoolUpdate',
+      (
+        data: ISocketEvent<
+          Record<string, any>,
+          {
+            downloaded: string
+            total: string
+            percentage: string
+            speed: string
+            ETA: string
+          }
+        >
+      ) => {
+        if (!(data.taskId in processes)) {
+          return
+        }
+
+        if (data.status === 'failed') {
+          toast.error(`Download failed: ${data.error || 'Unknown error'}`)
+          setProcesses(prev => {
+            const newProcesses = { ...prev }
+            delete newProcesses[data.taskId]
+            return newProcesses
+          })
+          return
+        }
+
+        if (data.status === 'completed') {
+          toast.success('Download completed successfully')
+          setProcesses(prev => {
+            const newProcesses = { ...prev }
+            delete newProcesses[data.taskId]
+            return newProcesses
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['books-library', 'entries']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['books-library', 'file-types']
+          })
+          return
+        }
+
+        setProcesses(prev => ({
+          ...prev,
+          [data.taskId]: {
+            ...data
+          }
+        }))
+      }
+    )
 
     return () => {
-      clearInterval(interval)
+      socket.off('taskPoolUpdate')
     }
-  }, [isFirstTime])
+  }, [socket, processes, queryClient])
 
   const value = useMemo(
     () => ({
@@ -146,6 +157,14 @@ export default function BooksLibraryProvider() {
       fileTypesQuery,
       miscellaneous: {
         processes,
+        addToProcesses: (taskId: string) => {
+          if (!processes[taskId]) {
+            setProcesses(prev => ({
+              ...prev,
+              [taskId]: undefined
+            }))
+          }
+        },
         searchQuery,
         setSearchQuery,
         sidebarOpen,
