@@ -7,10 +7,13 @@
 - **Books Library**: Download process is now handled by the task pool mechanism.
 - **Books Library**: User can now download books from different mirrors of Libgen.
 - **Guitar Tabs**: Download process is now handled by the task pool mechanism.
+- **Wallet**: User can now view the details of a transaction by clicking on the transaction entry,
+- **Wallet**: Coordinates of the transaction location are now recorded and displayed as a map in the transaction details.
 - **API**: Implemented task pool mechanism using socketIO to handle long-running tasks like downloading books from Libgen.
 - **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
 - **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.
 - **UI**: Fixed a bug in combobox input where the input will not be focused when the user click the area outside of the input itself in the container.
+- **UI**: Migrated to the new Google Places API for the `locationInput` component.
 
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 - **Movies**: Added tab selector to separate watched and unwatched movies.
@@ -47,8 +50,8 @@
 - **Calendar**: Made the borders of the calendar more subtle.
 - **Calendar**: Minor UI improvements.
 - **Idea Box**: Container entry counts are now calculated dynamically in database using PocketBase views.
-- **Code Time**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
-- **Guitar Tabs**: Removed the "Download All" button since it doesn't work anymore after the migration to S3.
+- **Codetime**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
+- **Guitar Tabs**: Removed the "Download All" button since it doesn't work any more after the migration to S3.
 - **Music**: Removed the feature to import music from NAS and replacement will be added later.
 - **Movies**: Fixed the layout of the movie ticket modal.
 - **Todo List**: Removed subtask feature due to the messy implementation and will be replaced with a better solution later.
@@ -77,8 +80,8 @@
 - **Wallet**: Reduced border radius for date items in the sidebar mini calendar.
 - **Calendar**: Moved the calendar display mode selector to the bottom of the calendar header for better responsiveness.
 - **Calendar**: Added a button in the calendar header to quickly navigate to the current date.
-- **Caleandar**: Minor design improvements to the page.
-- **Code Time**: Removed the chart type selector from the dashboard widget as bar chart better than line chart.
+- **Calendar**: Minor design improvements to the page.
+- **Codetime**: Removed the chart type selector from the dashboard widget as bar chart better than line chart.
 - **Code**: Module route configs are now stored in a separate file in each module directory and loaded dynamically in the routing mechanism.
 - **Code**: Massive mechanism refactor to load module routes dynamically.
 - **Code**: Renamed `layout` folder to `routes` for better clarity.
@@ -106,7 +109,7 @@
 - **UI**: Removed a suspicious `console.log` statement in the code.
 
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
-- **Code**: Created universal portal component to render modals and popups outside of the main app tree.
+- **Code**: Created universal portal component to render modals and pop-ups outside of the main app tree.
 - **Code**: Migrated all modals to the new universal portal component.
 - **API**: Fixed a few stupid mistakes.
 - **UI**: Fixed some silly but fatal bugs related to `useCallback`.
@@ -128,13 +131,13 @@
 
 ### 📌 **dev 25w17 (4/20/2025 - 4/27/2025)**
 
-- **Code Time**: Published custom extension for Code Time to allow users to track their coding time in the system.
+- **Codetime**: Published custom extension for Codetime to allow users to track their coding time in the system.
 
 ### 📌 **dev 25w16 (4/13/2025 - 4/19/2025)**
 
 - **Calendar**: Recurring events are now displayed in the calendar.
 - **Books Library**: Added indicator in libgen modal to show whether the host is online or offline.
-- **Code Time**: Added an endpoint in the API to generate code time summary image for the user to display in their Github profile.
+- **Codetime**: Added an endpoint in the API to generate Codetime summary image for the user to display in their Github profile.
 - **Authentication**: Renamed `token` key in cookies to `session` for better clarity.
 - **Code**: Performance optimization by removing unnecessary re-renders.
 - **API**: Moved puppeteer executable path variable to the `.env` file for better configurability.
@@ -243,7 +246,7 @@
 
 - **Documentation**: Resolved an issue where section detection and highlighting in the right navigation bar were inconsistent when scrolling.
 - **Documentation**: Updated the installation and configuration guide to align with the latest codebase structure.
-- **Idea Box**: Fixed text overflow issues caused by unspaced long strings.
+- **Idea Box**: Fixed text overflow issues caused by long words.
 - **Idea Box**: Fixed bugs where link content doesn't get updated, and OG data remains the same after updating the link.
 - **Change Log**: All change log entries were moved from the local database to a public GitHub repository for better accessibility.
 - **Railway Map**: Introduced this module.
@@ -253,7 +256,7 @@
 - **Railway Map**: Enhanced user interactions with smoother animations for route navigation.
 - **Calendar**: Data is now fetched based on the selected date range instead of everything.
 - **Change Log**: Asked ChatGPT to help refine all the change log entries from 25w01 until now.
-- **Authentication**: Two-factor authentication via an external authenticator app has been added as a toggable security mechanism.
+- **Authentication**: Two-factor authentication via an external authenticator app has been added as a togglable security mechanism.
 - **Authentication**: If a user doesn't have an authenticator app available, they can now choose to perform 2FA with email OTP.
 - **Authentication**: Improved error handling logic.
 - **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
@@ -274,13 +277,13 @@
 - **UI**: Renamed `no-bg` variant of button to `plain`.
 - **UI**: Added `tertiary` variant to button.
 - **UI**: Improved styling for button component.
-- **UI**: Started integrating Storybook for visualizing and documenting the deisgn system.
+- **UI**: Started integrating Storybook for visualizing and documenting the design system.
 - **UI**: Removed `CreateOrUpdateButton` component.
 - **UI**: Restructured the props of `HamburgerMenu` and remove redundant props.
 - **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
 - **UI**: Main sidebar item with a subsection will now open the subsection menu without navigating anywhere.
-- **API**: Renamed `uplaods` folder to `medium`.
-- **API**: Splitted the subroutes for `/users` route into multiple files.
+- **API**: Renamed `uploads` folder to `medium`.
+- **API**: Split the subroutes for `/users` route into multiple files.
 - **API**: Continued working on Controller + Service refactoring.
 
 ---
@@ -296,8 +299,8 @@
 - **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.
 - **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.
 - **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.
-- **Code Time**: Introduced time charts to track project and language usage trends.
-- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.
+- **Codetime**: Introduced time charts to track project and language usage trends.
+- **API Keys**: Moved this module from the "Settings" section to the "Confidential" section for better organization.
 - **API Keys**: Added a copy button for API keys, enhancing usability.
 - **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.
 - **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.
@@ -320,7 +323,7 @@
 - **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.
 - **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.
 - **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.
-- **Code Time**: Introduced time charts to track project and language usage trends.
+- **Codetime**: Introduced time charts to track project and language usage trends.
 - **API Keys**: Moved this module from the "Settings" section to the "Confidential" section for better organization.
 - **API Keys**: Added a copy button for API keys, enhancing usability.
 - **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.
@@ -386,7 +389,7 @@
 
 ### 📌 **dev 25w04 (1/19/2025 - 1/25/2025)**
 
-- **Music**: Added spacebar hotkey support for starting and pausing music playback.
+- **Music**: Added space bar hotkey support for starting and pausing music playback.
 - **Code**: Upgraded all project dependencies to their latest versions.
 - **Code**: Migrated from an older ESLint version to the latest release for improved linting rules and performance.
 - **Code**: Performed a large-scale folder structure refactoring, reorganizing components into a structured `components` directory.
@@ -406,7 +409,7 @@
 - **UI**: Removed the header and relocated the profile button to the sidebar for a cleaner layout.
 - **Wishlist**: Added a direct link button to visit product websites.
 - **Code**: Refactored the "Go Back" button to use a reusable button component.
-- **Code Time**: Fixed UI responsiveness issues.
+- **Codetime**: Fixed UI responsiveness issues.
 - **Books Library**: Resolved a color inconsistency issue in the Libgen modal when using light mode.
 - **UI**: Reduced module header icon and text size for better mobile optimization.
 - **UI**: Fixed minor spacing inconsistencies across the interface.
@@ -536,7 +539,7 @@
 
 ### 📌 dev 24w49 (12/1/2024 - 12/7/2024)
 
-- **Wishlist**: User can now paste a link of any shopee product and the system will automatically parse data using OCR
+- **Wishlist**: User can now paste a link of any Shopee product and the system will automatically parse data using OCR
 - **Code**: Changes made to components folder structure
 - **Code**: Made image upload modal universal and reusable so that all modules can share the same
 - **Dashboard**: Minor bug fixes to the display of Today's Event widget
@@ -560,14 +563,14 @@
 - **UI**: Added bgColors into `useThemeColors` hook that further unified the system's appearance
 - **Code**: Created reusable component for selecting view mode
 - **Code**: Fixed critical bugs on theme color
-- **Personalization**: User can now upload photo for their bg image, or enter URL that will then be downloaded by the system automatically, or find stock photos from Pixabay straightaway from inside the system
+- **Personalization**: User can now upload photo for their bg image, or enter URL that will then be downloaded by the system automatically, or find stock photos from Pixabay straight away from inside the system
 - **Airports**: Fixed bugs due to API route name changes
 - **Idea Box**: Open-graph data for link entries will now be parsed and displayed instead of the bare URL
 - **Server Status**: Added API env display showing whether it's in development or production environment
 - **Guitar Tabs**: User can now star guitar tabs
 - **UI**: Fixed minor user interface related bugs
 - **Idea Box**: UI components in image upload modal is now styled in a more consistent way
-- **Dashboard**: Fixed critical bugs related to colors in Code Time widget
+- **Dashboard**: Fixed critical bugs related to colors in Codetime widget
 - **Wishlist**: Started working on this module
 - **UI**: Fixed issue of content displaying when modal is in between the stage of opening and closing
 - **Code**: Created a reusable component for selector in hamburger menu
@@ -595,7 +598,7 @@
 - **Wallet**: Minor fixes on dashboard widget height
 - **Wallet**: Minor improvements made to date range selection
 - **Guitar Tabs**: Added select box for user to select sorting mode of their tab entries
-- **Guitar Tabs**: Added module for user to download tabs straightaway from `https://www.guitarworld.com.cn/`
+- **Guitar Tabs**: Added module for user to download tabs straight away from `https://www.guitarworld.com.cn/`
 
 ---
 
@@ -607,7 +610,7 @@
 - **UI**: Added a series of TailwindCSS color palette for user to choose from under the color picker
 - **Books Library**: Ditched CalibreDB and migrated to using main database for storing book data
 - **Books Library**: User can now explore library genesis in the system
-- **Books Library**: User can now download books from libgen straightaway in the system
+- **Books Library**: User can now download books from libgen straight away in the system
 - **Books Library**: Basic CRUD function completed
 - **Wallet**: Added calendar heatmap to the sidebar in transaction tab
 - **Wallet**: User can now select date range in calendar heatmap in transaction tab
@@ -640,7 +643,7 @@
 - **Personalization**: Fixed UI responsiveness issue
 - **UI**: Fixed minor light mode issue
 - **API**: Implemented custom function to list all routes in the API
-- **Dashboard**: Fixed date shifting error in Code Time chart widget
+- **Dashboard**: Fixed date shifting error in Codetime chart widget
 - **Wallet**: Money amounts are now hidden by default
 - **API**: Started working on API integration test for each module
 - **API**: Implemented mechanism to parse docs from JSDoc-like inline endpoint documentation inspired by Open API documentation standard
@@ -656,7 +659,7 @@
 - **Todo List**: User can now define their own set of priorities
 - **Code**: Improved consistency of sidebar items inside individual module
 - **Sidebar**: Refactored code for sidebar item
-- **Code**: The `updateValue` props can now be passed in the set state action function straightaway
+- **Code**: The `updateValue` props can now be passed in the set state action function straight away
 - **Code**: Migrated from using `yarn` to `bun` as package manager for the project
 
 ---
@@ -749,7 +752,7 @@
 - **Code**: `SidebarItem` can now display numbers as well
 - **CFOP Algorithms**: Started working on this module
 - **CFOP Algorithms**: Index page done
-- **CFOP Algorithms**: Written the code required to render rubiks cube using ThreeJS
+- **CFOP Algorithms**: Written the code required to render Rubik's cube using ThreeJS
 - **UI**: Added a banner in sidebar that will show up during national day
 - **Localization**: Changed localization manager's theme color from teal to lime
 - **CFOP Algorithms**: Written the code required to generate cube according to moves notation given
@@ -775,7 +778,7 @@
 - **Airports**: Fixed runway scraping logics
 - **Wallet**: User can now select between list view and table view in transaction page
 - **Change Log**: Tried my best to recover almost two months' worth of change log entries by looking at each Git commits
-- **Codetime**: Freed up a lot of space in database by revamping how the codetime entries are stored
+- **Codetime**: Freed up a lot of space in database by revamping how the Codetime entries are stored
 - **Documentation**: Added steps for configuring `pdf-thumbnails` in backend config section
 
 ---
@@ -823,12 +826,12 @@
 ### 📌 dev 24w26 (6/23/2024 - 6/29/2024)
 
 - **Code**: A lot more code refactoring
-- **Code**: No need to check if the data is actually the data instead of "loading" or "error" anymore every time when using `APIComponentWithFallback`
+- **Code**: No need to check if the data is actually the data instead of "loading" or "error" any more every time when using `APIComponentWithFallback`
 - **Projects (M)**: Started working on the Kanban board of each project
 - **Projects (M)**: Used context provider to reduce code for transferring states among components
 - **Airports**: Started working on this module for displaying airport data, just because I can
 - **Changi Flight Status**: Created this module for displaying arrival and departure flights in Changi Airport, just because I can
-- **Idea Box**: User can now straightaway paste image into the idea box
+- **Idea Box**: User can now straight away paste image into the idea box
 - **Journal**: Journals are now encrypted with password, just like the Password Vault
 - **Photos**: Created archived gallery, but yet to implement password functionality
 
@@ -861,7 +864,7 @@
 
 ### 📌 dev 24w24 (6/9/2024 - 6/15/2024)
 
-- **Code**: Upgraded Iconify to newest versio
+- **Code**: Upgraded Iconify to newest version
 - **Code**: Changed `w-x h-x` into `size-x` for better readability
 - **UI**: Added icon for sidebar item indicating modules with AI integration
 - **Todo List**: User can now add subtasks to individual tasks
@@ -869,7 +872,7 @@
 - **Wallet**: Added utility class for converting number to money
 - **Code**: Created import alias `@constants` for constant variables
 - **Code**: Created reusable component `ListboxTransition`
-- **Code**: Renamed all `@iconify/react/dist/iconify.js` imports to `@iconfiy/react`
+- **Code**: Renamed all `@iconify/react/dist/iconify.js` imports to `@iconify/react`
 - **Wallet**: Refactored the code for the dashboard page
 - **Wallet**: User can now create and modify transaction categories
 - **Wallet**: Refactored the code for modify transaction modal
@@ -967,7 +970,7 @@
 - **DNS Records**: Data is now properly fetched from the API and displayed in the UI
 - **DNS Records**: Filter and search functionality completed
 - **Idea Box**: User can now drag and drop their ideas into designated folders
-- **Idea Box**: Idea that is created inside a folder will now stay in the foldrr
+- **Idea Box**: Idea that is created inside a folder will now stay in the folder
 - **Calendar**: Fixed mini calendar date display problem in Safari
 - **Change Log**: Mobile UI now looks better
 - **Todo List**: Mobile sidebar z-index issue fixed
@@ -1000,8 +1003,8 @@
 - **API**: Created utils function for returning clientError
 - **Calendar**: Started working on this module, integrating the library `react-big-calendar`
 - **Calendar**: Added back small calendar in sidebar and fixed the generation logic
-- **Calendar**: There is now a dialog box for user to create event
-- **UI**: Error message is now centered
+- **Calendar**: There is now a dialogue box for user to create event
+- **UI**: Error message is now centred
 - **Codetime**: Updated endpoint logic to match the latest version of vscode plugin
 - **Calendar**: User can now create and modify categories in UI
 - **Calendar**: User can now assign category to events
@@ -1012,12 +1015,12 @@
 - **API**: Created https proxy server at `https://main--pms-api-proxy.netlify.app`
 - **API**: All the media are now piped from database endpoint in the API
 - **Public Portal**: Created a public portal for publicly available data
-- **Photos**: Albums are now sharable through the Public Portal
+- **Photos**: Albums are now shareable through the Public Portal
 - **Photos**: Added modal to toggle visibility/publicity of album
 - **Books Library**: Renamed Reference Books module to Books Library
 - **Books Library**: Finished setting up local Calibre DB and linked the data in UI to it
 - **Music**: Created this module
-- **Music**: User can straightaway download music from Youtube or import from NAS
+- **Music**: User can straight away download music from Youtube or import from NAS
 - **Music**: User can mark their music as favourites
 - **UI**: Fixed some light mode background color issues
 - **Music**: User can play, pause, play last, play next, play repeatedly, shuffle musics, etc. just like any other music player can do
@@ -1027,11 +1030,11 @@
 ### 📌 dev 24w19 (5/5/2024 - 5/11/2024)
 
 - **Photos**: Removed sorting stuff from API to increase loading speed
-- **Todo List**: Added date picker when creating task so user won't have to manually input anymore
+- **Todo List**: Added date picker when creating task so user won't have to manually input any more
 - **Todo List**: Increased gap between tags in task item
 - **Todo List**: Fixed problem in list counter
 - **Todo List**: Tags counter is now working
-- **Todo List**: Due date is not mandatory anymore
+- **Todo List**: Due date is not mandatory any more
 - **UI**: Made the description font size in empty state screen smaller
 - **Todo List**: Used context provider to reduce code for transferring states among components
 - **Todo List**: Sidebar task status number is now real
@@ -1052,7 +1055,7 @@
 - **Photos**: Photo dimensions data will now load as asynchronous task to prevent request from not responding for too long.
 - **API**: Deployed API to vercel
 - **API**: Changed development host from `api.lifeforge.thecodeblog.net` to `dev.lifeforge.thecodeblog.net`
-- **Todo List**: Empty state screen will now show when there is no task availabke
+- **Todo List**: Empty state screen will now show when there is no task available
 
 ---
 
@@ -1061,10 +1064,10 @@
 - **Code**: Refactored a lot of import statements by using aliases
 - **Code**: Extracted all the type declaration code into a separate folder
 - **Code**: Used ESlint to sort the import statements
-- **Photos**: Deleting photos will not cause the entire gallery to reload anymore
+- **Photos**: Deleting photos will not cause the entire gallery to reload any more
 - **Code**: Created utils folder for miscellaneous functions
 - **Personalization**: Added selector for user to choose language to be used in the system
-- **Dashboard**: Data for storage status and code time module is now real
+- **Dashboard**: Data for storage status and Codetime module is now real
 - **API**: Prevented credentials from being sent through the API
 - **Repositories**: Decided to integrate Gitea into the system for repositories and projects management
 - **Repositories **: Completed setup for Gitea in the server
@@ -1081,7 +1084,7 @@
 - **UI**: Dashboard responsive fixed albeit still not working
 - **Passwords**: Started working on the module
 - **Passwords**: User can now create a master password in the UI that will soon be used to encrypt and decrypt the passwords stored in the vault.
-- **Passwords**: Master password is hashed using Bcrypt function that cannot be decryped and can only be verified
+- **Passwords**: Master password is hashed using Bcrypt function that cannot be decrypted and can only be verified
 - **Passwords**: User can now store passwords in the vault that will be encrypted using AES SHA256 with their master password
 - **Passwords**: User can now view and copy their passwords through the UI
 - **UI**: Changed font used in the UI to `Wix Madefor Font`
@@ -1234,7 +1237,7 @@
 - **Codetime**: Fixed dark mode UI
 - **Codetime**: Frequency calendar theme color is now in sync with personalized theme color
 - **Code**: Replace all data fetching code logics with custom useFetch hook
-- **Todo List**: Added priorites to sidebar
+- **Todo List**: Added priorities to sidebar
 - **Sidebar**: Moved Pomodoro Timer to Productivity category
 - **Code**: Converted color input into reusable component
 - **Hardware**: Bought a double-slot HDD docking station and utilized with Raspberry Pi
@@ -1288,7 +1291,7 @@
 - **Idea Box**: Pin ideas to the top.
 - **Change Log**: Added this change log with the naming convention of `Ver. [year]w[week number]`
 - **API**: Added API explorer at the root of the API.
-- **API**: Integrated Code Time API into the main API.
+- **API**: Integrated Codetime API into the main API.
 - **UI**: Added backdrop blur when modals are open.
 - **Code**: Moved API host into `.env ` file.
 
