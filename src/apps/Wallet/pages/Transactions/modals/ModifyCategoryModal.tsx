@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
-import { type IWalletCategory } from '../../../../interfaces/wallet_interfaces'
+import { type IWalletCategory } from '../../../interfaces/wallet_interfaces'
 
 function ModifyCategoryModal({
   data: { type, existedData },
