@@ -8,12 +8,15 @@ import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import AddToLibraryModal from '../../AddToLibraryModal'
 
 function AddToLibraryButton({
-  md5,
-  fullWidth = false
+  book,
+  fullWidth = false,
+  isLibgenIS = false
 }: {
-  md5: string
+  book: Record<string, any>
   fullWidth?: boolean
+  isLibgenIS?: boolean
 }) {
+  const md5 = book.md5
   const open = useModalStore(state => state.open)
   const { t } = useTranslation('apps.booksLibrary')
   const {
@@ -21,8 +24,15 @@ function AddToLibraryButton({
     miscellaneous: { processes }
   } = useBooksLibraryContext()
 
+  const targetProcess = useMemo(() => {
+    return Object.values(processes).find(
+      process =>
+        process?.data?.md5 === md5 && process?.module === 'booksLibrary'
+    )
+  }, [md5, processes])
+
   const icon = useMemo(() => {
-    if (Object.keys(processes).includes(md5)) {
+    if (targetProcess) {
       return 'svg-spinners:180-ring'
     }
 
@@ -34,8 +44,8 @@ function AddToLibraryButton({
   }, [entriesQuery.data, md5, processes])
 
   const text = useMemo(() => {
-    if (Object.keys(processes).includes(md5)) {
-      return `${t('buttons.downloading')} (${processes[md5].percentage})`
+    if (targetProcess) {
+      return `${t('buttons.downloading')} (${targetProcess.progress?.percentage || 0}%)`
     }
 
     if (entriesQuery.data?.some(entry => entry.md5 === md5)) {
@@ -46,21 +56,19 @@ function AddToLibraryButton({
   }, [entriesQuery.data, md5, processes])
 
   const handleAddToLibrary = useCallback(() => {
-    open(AddToLibraryModal, { md5 })
+    open(AddToLibraryModal, { isLibgenIS, book })
   }, [md5])
 
   return (
     <Button
-      className={fullWidth ? 'w-full lg:w-1/2' : ''}
+      className={fullWidth ? `w-full ${isLibgenIS && 'lg:w-1/2'}` : ''}
       disabled={
-        Object.keys(processes).includes(md5) ||
-        entriesQuery.data?.some(entry => entry.md5 === md5)
+        !!targetProcess || entriesQuery.data?.some(entry => entry.md5 === md5)
       }
       icon={icon}
       namespace="apps.booksLibrary"
       variant={
-        Object.keys(processes).includes(md5) ||
-        entriesQuery.data?.some(entry => entry.md5 === md5)
+        targetProcess || entriesQuery.data?.some(entry => entry.md5 === md5)
           ? 'plain'
           : 'primary'
       }
