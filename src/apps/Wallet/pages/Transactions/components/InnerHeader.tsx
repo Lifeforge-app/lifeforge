@@ -64,7 +64,7 @@ function InnerHeader() {
             }Transactions`
           )}{' '}
           <span className="text-bg-500 text-base">
-            ({filteredTransactions.length})
+            ({filteredTransactions.length.toLocaleString()})
           </span>
         </h1>
         <HeaderFilter
