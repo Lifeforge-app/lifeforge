@@ -3,7 +3,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback } from 'react'
-import { Tooltip } from 'react-tooltip'
 
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
@@ -108,10 +107,10 @@ function TransactionListItem({
           <div className="flex w-full min-w-0 items-center gap-2">
             <div className="min-w-0 truncate text-lg font-medium">
               {transaction.particulars}{' '}
-              {transaction.location !== '' && (
+              {transaction.location_name !== '' && (
                 <>
                   <span className="text-bg-500">@</span>{' '}
-                  {`${transaction.location.split(',')[0]}`}
+                  {transaction.location_name}
                 </>
               )}
             </div>
@@ -119,25 +118,6 @@ function TransactionListItem({
               <button onClick={handleViewReceipt}>
                 <Icon className="text-bg-500 size-5" icon="tabler:file-text" />
               </button>
-            )}
-            {transaction.location !== '' && (
-              <>
-                <span data-tooltip-id={`tooltip-location-${transaction.id}`}>
-                  <Icon className="text-bg-500 size-5" icon="tabler:map-pin" />
-                </span>
-                <Tooltip
-                  className="bg-bg-50 text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50 z-9999 rounded-md! p-4! text-base!"
-                  classNameArrow="size-6!"
-                  id={`tooltip-location-${transaction.id}`}
-                  opacity={1}
-                  place="top-start"
-                  positionStrategy="fixed"
-                >
-                  <div className="relative z-10 max-w-sm">
-                    {transaction.location}
-                  </div>
-                </Tooltip>
-              </>
             )}
           </div>
           <div className="text-bg-500 flex items-center gap-2 text-sm font-medium">
