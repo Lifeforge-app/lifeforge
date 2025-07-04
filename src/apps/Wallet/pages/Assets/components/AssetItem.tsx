@@ -92,6 +92,7 @@ function AssetItem({ asset }: { asset: IWalletAsset }) {
       >
         <MenuItem
           icon="tabler:chart-line"
+          namespace="apps.wallet"
           text="View Balance Chart"
           onClick={handleOpenBalanceChart}
         />

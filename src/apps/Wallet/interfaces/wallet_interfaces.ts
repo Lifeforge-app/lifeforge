@@ -44,7 +44,11 @@ interface IWalletTransaction extends RecordModel {
   side: 'debit' | 'credit'
   particulars: string
   amount: number
-  location: string
+  location_name: string
+  location_coords: {
+    lat: number
+    lon: number
+  }
   date: string
   category: string
   asset: string
