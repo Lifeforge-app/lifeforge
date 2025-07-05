@@ -17,8 +17,6 @@ import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_cate
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
 import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import ModifyItemModal from '../modals/ModifyItemModal'
@@ -52,7 +50,7 @@ function EntryItem<T extends boolean = false>({
 }: IEntryItemProps<T>) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
-  const { componentBg, componentBgLighter } = useComponentBg()
+
   const [addToCartLoading, setAddToCartLoading] = useState(false)
   const [removeFromCartLoading, setRemoveFromCartLoading] = useState(false)
 
@@ -115,7 +113,7 @@ function EntryItem<T extends boolean = false>({
       className={clsx(
         'group relative flex rounded-md p-4',
         isCartItem ? 'flex-row items-center gap-6' : 'flex-col',
-        isCartItem ? componentBgLighter : componentBg
+        isCartItem ? 'component-bg-lighter' : 'component-bg'
       )}
     >
       <img

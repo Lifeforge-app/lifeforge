@@ -1,6 +1,5 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
@@ -10,8 +9,6 @@ import {
 } from '@lifeforge/ui'
 
 import { IRailwayMapViewType } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 export const VIEW_TYPES = [
   ['tabler:route-alt-left', 'Route Map', 'route'],
@@ -25,7 +22,6 @@ interface ViewTypeSwitcherProps {
 }
 
 function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
-  const { componentBgWithHover } = useComponentBg()
   const { t } = useTranslation('apps.railwayMap')
 
   return (
@@ -37,12 +33,7 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
         setViewType(value)
       }}
     >
-      <ListboxButton
-        className={clsx(
-          'flex-between shadow-custom flex gap-2 gap-12 rounded-md p-4',
-          componentBgWithHover
-        )}
-      >
+      <ListboxButton className="flex-between shadow-custom component-bg-with-hover flex gap-2 gap-12 rounded-md p-4">
         <div className="flex items-center gap-2">
           <Icon
             className="size-6"

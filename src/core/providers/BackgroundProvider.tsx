@@ -14,7 +14,7 @@ function BackgroundProvider({ children }: { children: React.ReactNode }) {
     <div
       className={clsx(
         'relative isolate flex h-dvh w-full',
-        bgImage !== '' && 'bg-cover bg-center bg-no-repeat'
+        bgImage !== '' && 'has-bg-image bg-cover bg-center bg-no-repeat'
       )}
       style={
         bgImage !== ''

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -12,8 +11,6 @@ import {
   MenuItem,
   useModalStore
 } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -28,7 +25,7 @@ function BackupItem({
 }) {
   const queryClient = useQueryClient()
   const open = useModalStore(state => state.open)
-  const { componentBg } = useComponentBg()
+
   const [downloadLoading, setDownloadLoading] = useState(false)
 
   const handleDownloadBackup = useCallback(async () => {
@@ -67,12 +64,7 @@ function BackupItem({
   }, [backup.key])
 
   return (
-    <div
-      className={clsx(
-        'shadow-custom flex items-center justify-between gap-6 rounded-lg p-4',
-        componentBg
-      )}
-    >
+    <div className="shadow-custom component-bg flex items-center justify-between gap-6 rounded-lg p-4">
       <div className="flex w-full min-w-0 items-center gap-3">
         <Icon
           className="text-bg-500 ml-2 size-7 shrink-0"

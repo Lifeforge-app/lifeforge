@@ -10,8 +10,6 @@ import { useModalStore } from '@lifeforge/ui'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 import ModifyTransactionsModal from '../../../modals/ModifyTransactionsModal'
 import ViewTransactionModal from '../../../modals/ViewTransactionModal'
@@ -24,7 +22,6 @@ function TransactionListItem({
 }) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
-  const { componentBgWithHover } = useComponentBg()
 
   const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
   const categories = categoriesQuery.data ?? []
@@ -75,8 +72,7 @@ function TransactionListItem({
   return (
     <div
       className={clsx(
-        'flex-between relative flex gap-12 p-4',
-        componentBgWithHover
+        'flex-between component-bg-with-hover relative flex gap-12 p-4'
       )}
       role="button"
       tabIndex={0}

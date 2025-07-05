@@ -9,10 +9,7 @@ import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 function TransactionsCountCard() {
-  const { componentBgLighterWithHover } = useComponentBg()
   const { transactionsQuery, typesCountQuery } = useWalletData()
   const { isAmountHidden } = useWalletStore()
   const { t } = useTranslation('apps.wallet')
@@ -46,10 +43,7 @@ function TransactionsCountCard() {
               ).map(([type, color]) => (
                 <Link
                   key={type}
-                  className={clsx(
-                    'flex-between flex flex-col gap-3 rounded-md p-4 transition-all sm:flex-row',
-                    componentBgLighterWithHover
-                  )}
+                  className="flex-between component-bg-lighter-with-hover flex flex-col gap-3 rounded-md p-4 transition-all sm:flex-row"
                   to={`/wallet/transactions?type=${type}`}
                 >
                   <div className="flex w-full items-center gap-3">

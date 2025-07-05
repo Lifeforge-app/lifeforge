@@ -1,13 +1,10 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -24,7 +21,7 @@ async function getNaturalHeightWidth(file: File) {
 
 function PhotoType({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('apps.momentVault')
-  const { componentBgLighter } = useComponentBg()
+
   const [photos, setPhotos] = useState<
     {
       file: File
@@ -105,12 +102,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <>
-      <div
-        className={clsx(
-          `shadow-custom flex w-full flex-col rounded-md p-6`,
-          componentBgLighter
-        )}
-      >
+      <div className="shadow-custom component-bg-lighter flex w-full flex-col rounded-md p-6">
         <div className="text-bg-500 flex items-center gap-3">
           <Icon className="size-6" icon="tabler:photo" />
           <span className="font-medium">

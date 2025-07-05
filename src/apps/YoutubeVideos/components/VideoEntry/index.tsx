@@ -1,11 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'
@@ -14,7 +11,6 @@ import VideoThumbnail from './components/VideoThumbnail'
 function VideoEntry({ video }: { video: IYoutubeVideosStorageEntry }) {
   const queryClient = useQueryClient()
   const open = useModalStore(state => state.open)
-  const { componentBgWithHover } = useComponentBg()
 
   const handleDeleteVideo = useCallback(() => {
     open(DeleteConfirmationModal, {
@@ -38,10 +34,7 @@ function VideoEntry({ video }: { video: IYoutubeVideosStorageEntry }) {
   return (
     <a
       key={video.id}
-      className={clsx(
-        'shadow-custom relative flex w-full items-center justify-between gap-8 rounded-md p-4 transition-all',
-        componentBgWithHover
-      )}
+      className="shadow-custom component-bg-with-hover relative flex w-full items-center justify-between gap-8 rounded-md p-4 transition-all"
       href={`${import.meta.env.VITE_API_HOST}/youtube-videos/video/stream/${
         video.youtube_id
       }`}

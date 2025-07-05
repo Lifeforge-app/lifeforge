@@ -8,14 +8,12 @@ import { useModalStore } from '@lifeforge/ui'
 
 import RoutePlannerModal from '@apps/RailwayMap/modals/RoutePlannerModal'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'
 
 function DetailBox() {
   const open = useModalStore(state => state.open)
-  const { componentBg } = useComponentBg()
+
   const { selectedStation, setRoutePlannerStart } = useRailwayMapContext()
   const innerSelectedStation = useDebounce(
     selectedStation,
@@ -31,8 +29,7 @@ function DetailBox() {
   return (
     <div
       className={clsx(
-        'shadow-custom flex-between flex w-full gap-3 overflow-hidden rounded-md px-6 transition-all duration-500',
-        componentBg,
+        'shadow-custom flex-between component-bg flex w-full gap-3 overflow-hidden rounded-md px-6 transition-all duration-500',
         selectedStation ? 'mt-6 max-h-64 py-4' : 'mt-0 max-h-0 py-0'
       )}
     >

@@ -9,10 +9,8 @@ import {
 } from '@apps/Calendar/interfaces/calendar_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useComponentBg from '@hooks/useComponentBg'
 
 function AgendaEventItem({ event }: { event: ICalendarEvent }) {
-  const { componentBg } = useComponentBg()
   const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
     'calendar/categories',
     ['calendar', 'categories']
@@ -33,7 +31,7 @@ function AgendaEventItem({ event }: { event: ICalendarEvent }) {
   return (
     <div
       className={clsx(
-        componentBg,
+        'component-bg',
         'shadow-custom relative min-w-96 rounded-md p-4 pl-9 before:absolute before:top-4 before:left-4 before:h-[calc(100%-2rem)] before:w-1 before:rounded-full before:bg-[var(--bg-color)]'
       )}
       style={{

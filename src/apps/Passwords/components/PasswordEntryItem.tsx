@@ -16,8 +16,6 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IPasswordEntry } from '../interfaces/password_interfaces'
 import ModifyPasswordModal from '../modals/ModifyPasswordModal'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
@@ -33,7 +31,7 @@ function PasswordEntryITem({
   const open = useModalStore(state => state.open)
 
   const { masterPassword } = usePasswordContext()
-  const { componentBg } = useComponentBg()
+
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
@@ -101,12 +99,7 @@ function PasswordEntryITem({
   }, [password])
 
   return (
-    <div
-      className={clsx(
-        'shadow-custom relative flex flex-col items-center gap-3 rounded-md p-4',
-        componentBg
-      )}
-    >
+    <div className="shadow-custom component-bg relative flex flex-col items-center gap-3 rounded-md p-4">
       {password.pinned && (
         <Icon
           className="text-custom-500 absolute top-0 left-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90"

@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
@@ -7,11 +6,9 @@ import { Button, DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 export default function AssetsBalance() {
   const { assetsQuery } = useWalletData()
-  const { componentBgLighterWithHover } = useComponentBg()
+
   const [showBalance, setShowBalance] = useState(false)
 
   return (
@@ -35,10 +32,7 @@ export default function AssetsBalance() {
             {assets.map(asset => (
               <Link
                 key={asset.id}
-                className={clsx(
-                  'flex-between bg-bg-100 flex h-full gap-3 rounded-lg p-2 pr-0 pl-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
-                  componentBgLighterWithHover
-                )}
+                className="flex-between bg-bg-100 component-bg-lighter-with-hover flex h-full gap-3 rounded-lg p-2 pr-0 pl-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all"
                 to={'/wallet/assets'}
               >
                 <div className="flex w-full min-w-0 items-center gap-3">

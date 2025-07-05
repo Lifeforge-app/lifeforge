@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -16,7 +15,6 @@ import {
 import { useModalStore } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -36,7 +34,7 @@ function EntryItem({
     'wishlist/entries/collection-id',
     ['wishlist', 'entries', 'collection-id']
   )
-  const { componentBg, componentBgLighter } = useComponentBg()
+
   const [bought, setBought] = useState(entry.bought)
 
   const toggleBought = () =>
@@ -79,20 +77,10 @@ function EntryItem({
   }, [entry])
 
   return (
-    <li
-      className={clsx(
-        'relative flex flex-col justify-between gap-3 rounded-md p-4 sm:pr-8 md:flex-row md:items-center',
-        componentBg
-      )}
-    >
+    <li className="component-bg relative flex flex-col justify-between gap-3 rounded-md p-4 sm:pr-8 md:flex-row md:items-center">
       <div className="flex-between gap-8">
         <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
-          <div
-            className={clsx(
-              'relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20',
-              componentBgLighter
-            )}
-          >
+          <div className="component-bg-lighter relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20">
             <Icon
               className="text-bg-200 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
               icon="tabler:shopping-bag"

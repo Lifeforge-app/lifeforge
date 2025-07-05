@@ -11,8 +11,6 @@ import { useTranslation } from 'react-i18next'
 
 import { ConfigColumn } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 const LANGUAGES: Array<{
   name: string
   code: string
@@ -41,7 +39,6 @@ const LANGUAGES: Array<{
 ]
 
 function LanguageSelector() {
-  const { componentBgWithHover } = useComponentBg()
   const { language, setLanguage } = usePersonalization()
   const { t } = useTranslation('core.personalization')
 
@@ -60,8 +57,7 @@ function LanguageSelector() {
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'shadow-custom flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden',
-              componentBgWithHover
+              'shadow-custom component-bg-with-hover flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden'
             )}
           >
             <Icon
