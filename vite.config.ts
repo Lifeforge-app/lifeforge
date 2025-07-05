@@ -44,6 +44,9 @@ export default defineConfig({
     alias
   },
   build: {
+    commonjsOptions: {
+      transformMixedEsModules: true
+    },
     target: 'esnext',
     sourcemap: false,
     rollupOptions: {
