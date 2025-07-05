@@ -62,7 +62,13 @@ function TableView({ categories }: { categories: IWalletCategory[] }) {
                     </Link>
                   </td>
                   <td className="max-w-64 truncate py-2">
-                    {transaction.particulars}
+                    {transaction.particulars}{' '}
+                    {transaction.location_name && (
+                      <>
+                        <span className="text-bg-500">@</span>{' '}
+                        {transaction.location_name}
+                      </>
+                    )}
                   </td>
                   <td className="py-2 text-center">
                     {transaction.category !== '' ? (
