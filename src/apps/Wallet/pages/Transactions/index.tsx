@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
 import {
+  Button,
   EmptyStateScreen,
   FAB,
   MenuItem,
@@ -129,6 +130,40 @@ function Transactions() {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        actionButton={
+          (transactionsQuery.data?.length || 0) > 0 && (
+            <Menu as="div" className="relative z-50 hidden md:block">
+              <Button
+                as={MenuButton}
+                className="hidden md:flex"
+                icon="tabler:plus"
+                onClick={() => {}}
+              >
+                {t('common.buttons:new', {
+                  item: t('apps.wallet:items.transaction')
+                })}
+              </Button>
+              <MenuItems
+                transition
+                anchor="bottom end"
+                className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+              >
+                <MenuItem
+                  icon="tabler:plus"
+                  namespace="apps.wallet"
+                  text="Add Manually"
+                  onClick={handleCreateTransaction}
+                />
+                <MenuItem
+                  icon="tabler:scan"
+                  namespace="apps.wallet"
+                  text="Scan Receipt"
+                  onClick={handleUploadReceipt}
+                />
+              </MenuItems>
+            </Menu>
+          )
+        }
         hamburgerMenuItems={memoizedHeaderMenu}
         icon="tabler:arrows-exchange"
         namespace="apps.wallet"

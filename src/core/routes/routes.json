@@ -63,7 +63,8 @@
     "title": "Settings",
     "items": [
       "@core/Personalization",
-      "@core/Modules"
+      "@core/Modules",
+      "@core/Backups"
     ]
   },
   {

@@ -33,7 +33,7 @@ export function useFilteredTransactions(transactions: IWalletTransaction[]) {
           tx.particulars
             ?.toLowerCase()
             .includes(debouncedQuery.toLowerCase()) ||
-          tx.location?.toLowerCase().includes(debouncedQuery.toLowerCase())
+          tx.location_name?.toLowerCase().includes(debouncedQuery.toLowerCase())
       )
       .filter(tx => {
         const start = (
