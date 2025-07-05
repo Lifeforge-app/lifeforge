@@ -1,11 +1,8 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import prettyBytes from 'pretty-bytes'
 
 import { Button } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import AddToLibraryButton from './AddToLibraryButton'
 
@@ -18,15 +15,8 @@ function SearchResultItem({
   isLibgenIS: boolean
   setViewDetailsFor: (id: string) => void
 }) {
-  const { componentBgLighterWithHover } = useComponentBg()
-
   return (
-    <li
-      className={clsx(
-        'flex flex-col gap-6 rounded-md p-6 md:flex-row',
-        componentBgLighterWithHover
-      )}
-    >
+    <li className="component-bg-lighter-with-hover flex flex-col gap-6 rounded-md p-6 md:flex-row">
       <div className="flex-center bg-bg-200 dark:bg-bg-800 relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md">
         <Icon
           className="text-bg-700 absolute top-1/2 left-1/2 size-24 -translate-x-1/2 -translate-y-1/2"

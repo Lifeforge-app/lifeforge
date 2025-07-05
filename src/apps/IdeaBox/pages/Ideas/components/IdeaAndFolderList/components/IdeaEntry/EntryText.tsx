@@ -6,8 +6,6 @@ import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IIdeaBoxEntry } from '../../../../../../interfaces/ideabox_interfaces'
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
@@ -16,7 +14,7 @@ import TagChip from './components/TagChip'
 function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
   const { t } = useTranslation('apps.ideaBox')
   const [expanded, setExpanded] = useState(false)
-  const { componentBg } = useComponentBg()
+
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'IDEA',
@@ -38,8 +36,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
         dragRef(node)
       }}
       className={clsx(
-        'shadow-custom group relative my-4 flex w-full cursor-pointer items-start justify-between gap-2 rounded-lg p-4 text-left',
-        componentBg,
+        'shadow-custom group component-bg relative my-4 flex w-full cursor-pointer items-start justify-between gap-2 rounded-lg p-4 text-left',
         isDragging && 'cursor-move'
       )}
       style={{

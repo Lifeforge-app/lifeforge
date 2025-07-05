@@ -8,10 +8,7 @@ import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
 import ControlButtons from '@apps/Music/components/Bottombar/components/ControlButtons'
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 export default function MusicPlayer() {
-  const { componentBgLighter } = useComponentBg()
   const { currentMusic, isPlaying } = useMusicContext()
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
@@ -34,9 +31,7 @@ export default function MusicPlayer() {
       <div className="flex min-h-0 flex-1 flex-col">
         {currentMusic !== null ? (
           <>
-            <div
-              className={`shadow-custom flex w-full flex-1 items-center justify-center rounded-md ${componentBgLighter}`}
-            >
+            <div className="shadow-custom component-bg-lighter flex w-full flex-1 items-center justify-center rounded-md">
               <Icon
                 className={clsx(
                   'aspect-square h-full w-1/2',

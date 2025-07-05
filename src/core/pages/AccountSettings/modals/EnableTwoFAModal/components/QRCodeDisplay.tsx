@@ -1,5 +1,4 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import clsx from 'clsx'
 import { parse as parseCookie } from 'cookie'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
@@ -9,12 +8,9 @@ import { LoadingScreen } from '@lifeforge/ui'
 
 import { decrypt } from '@security/utils/encryption'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 function QRCodeDisplay() {
-  const { componentBgLighter } = useComponentBg()
   const { bgTempPalette, derivedTheme } = usePersonalization()
   const [link, setLink] = useState('')
 
@@ -41,12 +37,7 @@ function QRCodeDisplay() {
 
   return (
     <>
-      <div
-        className={clsx(
-          'flex-center mt-6 aspect-square w-full rounded-lg p-12',
-          componentBgLighter
-        )}
-      >
+      <div className="flex-center component-bg-lighter mt-6 aspect-square w-full rounded-lg p-12">
         {link ? (
           <QRCodeSVG
             bgColor="transparent"

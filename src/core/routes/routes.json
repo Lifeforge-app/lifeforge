@@ -18,9 +18,10 @@
     "title": "Lifestyle",
     "items": [
       "@apps/MomentVault",
-      "@apps/VirtualWardrobe",
+      "@apps/Blog",
       "@apps/Movies",
-      "@apps/Achievements"
+      "@apps/Achievements",
+      "@apps/VirtualWardrobe"
     ]
   },
   {

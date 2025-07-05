@@ -13,8 +13,6 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import ModifyTicketModal from '../modals/ModifyTicketModal'
 import ShowTicketModal from '../modals/ShowTicketModal'
 
@@ -28,7 +26,7 @@ function MovieItem({
   type: 'grid' | 'list'
 }) {
   const open = useModalStore(state => state.open)
-  const { componentBg } = useComponentBg()
+
   const [toggleWatchedLoading, setToggleWatchedLoading] = useState(false)
 
   const handleShowTicket = useCallback(() => {
@@ -58,8 +56,7 @@ function MovieItem({
   return (
     <div
       className={clsx(
-        componentBg,
-        'shadow-custom relative flex items-center gap-6 rounded-md p-6',
+        'shadow-custom component-bg relative flex items-center gap-6 rounded-md p-6',
         type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >

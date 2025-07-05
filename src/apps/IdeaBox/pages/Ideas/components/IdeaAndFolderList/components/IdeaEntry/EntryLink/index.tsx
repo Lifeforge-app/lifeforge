@@ -4,8 +4,6 @@ import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 import EntryContextMenu from '../components/EntryContextMenu'
 import InFolderChip from '../components/InFolderChip'
@@ -14,7 +12,6 @@ import EntryContent from './components/EntryContent'
 
 function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
   const { t } = useTranslation('apps.ideaBox')
-  const { componentBg } = useComponentBg()
 
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
@@ -37,8 +34,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
         dragRef(node)
       }}
       className={clsx(
-        'shadow-custom group relative my-4 space-y-4 rounded-lg p-4',
-        componentBg,
+        'shadow-custom group component-bg relative my-4 space-y-4 rounded-lg p-4',
         isDragging && 'cursor-move'
       )}
       style={{
@@ -62,7 +58,9 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
       <EntryContent key={entry.content} entry={entry} />
       {entry.tags !== null && entry.tags?.length !== 0 && (
         <div className="flex gap-2">
-          {entry.tags?.map((tag, index) => <TagChip key={index} text={tag} />)}
+          {entry.tags?.map((tag, index) => (
+            <TagChip key={index} text={tag} />
+          ))}
         </div>
       )}
       <div className="text-bg-500 text-sm">

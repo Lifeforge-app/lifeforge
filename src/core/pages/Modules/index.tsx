@@ -29,11 +29,8 @@ function Modules() {
     })
 
     try {
-      await fetchAPI('user/module', {
-        method: 'PATCH',
-        body: {
-          data: newEnabledModules
-        }
+      await fetchAPI(`modules/toggle/${_.kebabCase(moduleName)}`, {
+        method: 'POST'
       })
     } catch {
       toast.error('Failed to update modules')

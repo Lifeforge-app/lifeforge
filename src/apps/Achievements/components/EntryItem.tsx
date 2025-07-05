@@ -5,14 +5,11 @@ import { useCallback } from 'react'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IAchievementEntry } from '../interfaces/achievements_interfaces'
 import ModifyAchievementModal from './ModifyAchievementModal'
 
 function EntryItem({ entry }: { entry: IAchievementEntry }) {
   const open = useModalStore(state => state.open)
-  const { componentBg } = useComponentBg()
 
   const handleDeleteEntry = useCallback(() => {
     open(DeleteConfirmationModal, {
@@ -25,12 +22,7 @@ function EntryItem({ entry }: { entry: IAchievementEntry }) {
   }, [entry])
 
   return (
-    <div
-      className={clsx(
-        'shadow-custom flex items-start justify-between gap-3 rounded-lg p-4',
-        componentBg
-      )}
-    >
+    <div className="shadow-custom component-bg flex items-start justify-between gap-3 rounded-lg p-4">
       <div className="flex h-full items-center gap-3">
         <div
           className={clsx(

@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
@@ -8,13 +7,10 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import ModifyContainerModal from '../../ModifyContainerModal'
 
 function ContainerItem({ container }: { container: IIdeaBoxContainer }) {
   const open = useModalStore(state => state.open)
-  const { componentBgWithHover } = useComponentBg()
 
   const handleUpdateContainer = useCallback(() => {
     open(ModifyContainerModal, {
@@ -34,12 +30,7 @@ function ContainerItem({ container }: { container: IIdeaBoxContainer }) {
   }, [container])
 
   return (
-    <div
-      className={clsx(
-        'shadow-custom group relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg',
-        componentBgWithHover
-      )}
-    >
+    <div className="shadow-custom group component-bg-with-hover relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg">
       <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-video w-full">
         {container.cover !== '' ? (
           <img

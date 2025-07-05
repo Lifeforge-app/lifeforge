@@ -2,8 +2,6 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { BG_BLURS } from '../../../../../../../providers/PersonalizationProvider/constants/bg_blurs'
 
 function ResultShowcase({
@@ -20,7 +18,6 @@ function ResultShowcase({
   overlayOpacity: number
 }) {
   const { bgImage } = usePersonalization()
-  const { componentBgLighter, componentBg } = useComponentBg()
 
   return (
     <div
@@ -43,8 +40,7 @@ function ResultShowcase({
         />
         <div
           className={clsx(
-            'shadow-custom flex size-full flex-col gap-3 rounded-lg p-4',
-            componentBg
+            'shadow-custom component-bg flex size-full flex-col gap-3 rounded-lg p-4'
           )}
         >
           <h1 className="flex items-center gap-2 text-2xl font-semibold">
@@ -57,8 +53,7 @@ function ResultShowcase({
           <div className="flex gap-3">
             <div
               className={clsx(
-                'flex w-full flex-col items-start gap-3 rounded-lg p-4 sm:flex-row sm:items-center',
-                componentBgLighter
+                'component-bg-lighter flex w-full flex-col items-start gap-3 rounded-lg p-4 sm:flex-row sm:items-center'
               )}
             >
               <span className="bg-custom-500/20 text-custom-500 block rounded-md p-4">

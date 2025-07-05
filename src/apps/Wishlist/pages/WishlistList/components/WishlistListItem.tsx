@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
@@ -8,13 +7,10 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { IWishlistList } from '@apps/Wishlist/interfaces/wishlist_interfaces'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
 function WishlistListItem({ list }: { list: IWishlistList }) {
   const open = useModalStore(state => state.open)
-  const { componentBgWithHover } = useComponentBg()
 
   const handleUpdateList = useCallback(() => {
     open(ModifyWishlistListModal, {
@@ -36,10 +32,7 @@ function WishlistListItem({ list }: { list: IWishlistList }) {
 
   return (
     <Link
-      className={clsx(
-        'group relative flex w-full flex-col gap-6 rounded-md p-4',
-        componentBgWithHover
-      )}
+      className="group component-bg-with-hover relative flex w-full flex-col gap-6 rounded-md p-4"
       to={`/wishlist/${list.id}`}
     >
       <div

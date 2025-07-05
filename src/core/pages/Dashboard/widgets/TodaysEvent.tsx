@@ -23,7 +23,6 @@ import {
 } from '@apps/Calendar/interfaces/calendar_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useComponentBg from '@hooks/useComponentBg'
 
 function EventItem({
   categories,
@@ -32,7 +31,6 @@ function EventItem({
   categories: ICalendarCategory[]
   event: ICalendarEvent
 }) {
-  const { componentBgLighter } = useComponentBg()
   const { sidebarExpanded } = useSidebarState()
   const [width, setWidth] = useState(0)
   const ref = useRef<HTMLLIElement>(null)
@@ -67,8 +65,7 @@ function EventItem({
         key={event.id}
         ref={ref}
         className={clsx(
-          'flex-between shadow-custom flex cursor-pointer gap-3 rounded-lg p-4',
-          componentBgLighter
+          'flex-between shadow-custom component-bg-lighter flex cursor-pointer gap-3 rounded-lg p-4'
         )}
         data-tooltip-id={`calendar-event-${event.id}`}
       >

@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import WavesurferPlayer from '@wavesurfer/react'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import type { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
@@ -13,8 +12,6 @@ import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -35,7 +32,7 @@ function AudioEntry({
   } = usePersonalization()
 
   const queryClient = useQueryClient()
-  const { componentBg } = useComponentBg()
+
   const [totalTime, setTotalTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
@@ -110,10 +107,7 @@ function AudioEntry({
 
   return (
     <div
-      className={clsx(
-        'shadow-custom relative w-full rounded-md p-6',
-        componentBg
-      )}
+      className="shadow-custom component-bg relative w-full rounded-md p-6"
       id={`audio-entry-${entry.id}`}
     >
       <div className="flex items-center gap-3">

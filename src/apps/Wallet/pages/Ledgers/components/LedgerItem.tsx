@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
@@ -8,14 +7,12 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 import ModifyLedgerModal from '../modals/ModifyLedgerModal'
 
 function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
   const { t } = useTranslation('apps.wallet')
-  const { componentBgWithHover } = useComponentBg()
+
   const navigate = useNavigate()
   const { transactionsQuery } = useWalletData()
   const open = useModalStore(state => state.open)
@@ -23,10 +20,7 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
   return (
     <div
       aria-label={`View ${ledger.name} transactions`}
-      className={clsx(
-        'flex-between shadow-custom relative flex w-full cursor-pointer gap-3 rounded-lg p-4 transition-all',
-        componentBgWithHover
-      )}
+      className="flex-between shadow-custom component-bg-with-hover relative flex w-full cursor-pointer gap-3 rounded-lg p-4 transition-all"
       role="button"
       tabIndex={0}
       onClick={() => {
