@@ -1,6 +1,5 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -8,8 +7,6 @@ import {
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions
 } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
@@ -25,7 +22,6 @@ function SortBySelector({
   sortType: string
   setSortType: (sortType: string) => void
 }) {
-  const { componentBgWithHover } = useComponentBg()
   const { t } = useTranslation('apps.guitarTabs')
 
   const handleChange = useCallback((value: string) => {
@@ -39,12 +35,7 @@ function SortBySelector({
       value={sortType}
       onChange={handleChange}
     >
-      <ListboxButton
-        className={clsx(
-          'flex-between shadow-custom mt-4 flex w-48 gap-2 rounded-md p-4',
-          componentBgWithHover
-        )}
-      >
+      <ListboxButton className="flex-between shadow-custom component-bg-with-hover mt-4 flex w-48 gap-2 rounded-md p-4">
         <div className="flex items-center gap-2">
           <Icon
             className="size-6"

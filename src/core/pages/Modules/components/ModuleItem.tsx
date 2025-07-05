@@ -1,13 +1,10 @@
 import { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Switch } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function ModuleItem({
   module,
@@ -18,7 +15,6 @@ function ModuleItem({
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }) {
-  const { componentBg, componentBgLighter } = useComponentBg()
   const [expandConfig, setExpandConfig] = useState(false)
   const { t } = useTranslation(`apps.${_.camelCase(module.name)}`)
 
@@ -27,15 +23,10 @@ function ModuleItem({
   }
 
   return (
-    <li
-      className={clsx(
-        'shadow-custom flex flex-col items-center rounded-lg p-4',
-        componentBg
-      )}
-    >
+    <li className="shadow-custom component-bg flex flex-col items-center rounded-lg p-4">
       <div className="flex-between flex w-full gap-3">
         <div className="flex items-center gap-3">
-          <div className={clsx('rounded-lg p-3', componentBgLighter)}>
+          <div className="component-bg-lighter rounded-lg p-3">
             {typeof module.icon === 'string' ? (
               <Icon
                 className="text-custom-500 dark:text-bg-50 text-2xl"

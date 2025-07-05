@@ -5,8 +5,6 @@ import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import { type IIdeaBoxEntry } from '../../../../../../interfaces/ideabox_interfaces'
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
@@ -15,7 +13,6 @@ import TagChip from './components/TagChip'
 
 function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
   const { t } = useTranslation('apps.ideaBox')
-  const { componentBg } = useComponentBg()
 
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
@@ -38,8 +35,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
         dragRef(node)
       }}
       className={clsx(
-        'shadow-custom group relative my-4 cursor-pointer space-y-4 rounded-lg p-4',
-        componentBg,
+        'shadow-custom group component-bg relative my-4 cursor-pointer space-y-4 rounded-lg p-4',
         isDragging && 'cursor-move'
       )}
       style={{
@@ -80,7 +76,9 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
       </Zoom>
       {entry.tags !== null && entry.tags?.length !== 0 && (
         <div className="mb-2 flex flex-wrap gap-1">
-          {entry.tags?.map((tag, index) => <TagChip key={index} text={tag} />)}
+          {entry.tags?.map((tag, index) => (
+            <TagChip key={index} text={tag} />
+          ))}
         </div>
       )}
       <span className="text-bg-500 block text-sm">

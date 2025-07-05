@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
@@ -9,8 +8,6 @@ import { useModalStore } from '@lifeforge/ui'
 
 import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import AudioPlayer from '../../../components/AudioPlayer'
@@ -18,7 +15,6 @@ import DownloadMenu from '../../../components/DownloadMenu'
 import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
 function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
-  const { componentBgWithHover } = useComponentBg()
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
 
@@ -55,10 +51,7 @@ function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
   return (
     <li
       key={entry.id}
-      className={clsx(
-        'shadow-custom relative rounded-lg transition-all',
-        componentBgWithHover
-      )}
+      className="shadow-custom component-bg-with-hover relative rounded-lg transition-all"
     >
       <a
         key={entry.id}

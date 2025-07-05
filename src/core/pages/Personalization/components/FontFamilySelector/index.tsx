@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next'
 
 import { ConfigColumn } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import FontFamilyList from './components/FontFamilyList'
@@ -46,7 +44,7 @@ const addFontsToStylesheet = (fonts: any[]) => {
 function FontFamilySelector() {
   const { t } = useTranslation('core.personalization')
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
-  const { componentBgWithHover } = useComponentBg()
+
   const { fontFamily, setFontFamily } = usePersonalization()
   const [allFonts, setAllFonts] = useState<any[]>([])
 
@@ -89,7 +87,6 @@ function FontFamilySelector() {
     >
       <FontFamilyList
         allFonts={allFonts}
-        componentBgWithHover={componentBgWithHover}
         enabled={enabled}
         fontFamily={fontFamily}
         setFontFamily={setFontFamily}

@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics() {
   const { t } = useTranslation('apps.codeTime')
-  const { componentBg, componentBgLighter } = useComponentBg()
+
   const statsQuery = useAPIQuery<Record<string, number>>(
     'code-time/statistics',
     ['code-time', 'statistics']
@@ -31,18 +30,10 @@ function CodeTimeStatistics() {
             {Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}
-                className={clsx(
-                  'flex-between shadow-custom flex w-full flex-col gap-2 rounded-lg p-3 sm:items-start sm:p-6',
-                  componentBg
-                )}
+                className="flex-between shadow-custom component-bg flex w-full flex-col gap-2 rounded-lg p-3 sm:items-start sm:p-6"
               >
                 <div className="flex w-full flex-row items-center gap-2 sm:flex-col sm:items-start">
-                  <div
-                    className={clsx(
-                      'shadow-custom flex rounded-lg p-2 sm:p-4',
-                      componentBgLighter
-                    )}
-                  >
+                  <div className="shadow-custom component-bg-lighter flex rounded-lg p-2 sm:p-4">
                     <Icon
                       className={clsx(
                         'text-2xl sm:text-3xl',

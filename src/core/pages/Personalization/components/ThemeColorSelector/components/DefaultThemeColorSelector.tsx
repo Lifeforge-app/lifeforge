@@ -9,8 +9,6 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 const COLORS = [
   'red',
   'pink',
@@ -42,7 +40,6 @@ function DefaultThemeColorSelector({
   customThemeColor: string
 }) {
   const { t } = useTranslation('core.personalization')
-  const { componentBgWithHover } = useComponentBg()
 
   return (
     <Listbox
@@ -54,9 +51,8 @@ function DefaultThemeColorSelector({
       <div className="relative mt-1 w-full lg:w-56">
         <ListboxButton
           className={clsx(
-            'shadow-custom flex w-full items-center gap-2 rounded-lg text-left outline-hidden transition-all focus:outline-hidden',
-            !themeColor.startsWith('#') ? 'py-4 pr-10 pl-4' : 'py-6 pr-12 pl-6',
-            componentBgWithHover
+            'shadow-custom component-bg-with-hover flex w-full items-center gap-2 rounded-lg text-left outline-hidden transition-all focus:outline-hidden',
+            !themeColor.startsWith('#') ? 'py-4 pr-10 pl-4' : 'py-6 pr-12 pl-6'
           )}
         >
           <span

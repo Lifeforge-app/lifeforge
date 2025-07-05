@@ -6,6 +6,7 @@
 - **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
 - **Books Library**: Download process is now handled by the task pool mechanism.
 - **Books Library**: User can now download books from different mirrors of Libgen.
+- **Books Library**: User can now mark books as read or unread.
 - **Guitar Tabs**: Download process is now handled by the task pool mechanism.
 - **Wallet**: User can now view the details of a transaction by clicking on the transaction entry,
 - **Wallet**: Coordinates of the transaction location are now recorded and displayed as a map in the transaction details.
@@ -18,6 +19,7 @@
 - **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.
 - **UI**: Fixed a bug in combobox input where the input will not be focused when the user click the area outside of the input itself in the container.
 - **UI**: Migrated to the new Google Places API for the `locationInput` component.
+- **UI**: Removed `useComponentsBg` hook and moved them into CSS files.
 
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 - **Movies**: Added tab selector to separate watched and unwatched movies.

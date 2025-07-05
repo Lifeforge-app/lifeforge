@@ -1,15 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { memo } from 'react'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
 
 function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
-  const { componentBgLighterWithHover } = useComponentBg()
   const OGQuery = useQuery<Record<string, any>>({
     queryKey: ['idea-box', 'og', entry.id, entry.content],
     queryFn: () =>
@@ -21,10 +17,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
 
   return OGQuery.isSuccess && OGQuery.data ? (
     <button
-      className={clsx(
-        'shadow-custom w-full cursor-pointer space-y-2 rounded-md p-2 text-left',
-        componentBgLighterWithHover
-      )}
+      className="shadow-custom component-bg-lighter-with-hover w-full cursor-pointer space-y-2 rounded-md p-2 text-left"
       onClick={() => {
         const a = document.createElement('a')
         a.href = entry.content

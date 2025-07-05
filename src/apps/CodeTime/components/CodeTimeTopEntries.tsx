@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
   const { t } = useTranslation('apps.codeTime')
-  const { componentBg } = useComponentBg()
+
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
   )
@@ -104,10 +103,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className={clsx(
-                        'flex-between shadow-custom relative flex gap-8 rounded-lg p-6',
-                        componentBg
-                      )}
+                      className="flex-between shadow-custom component-bg relative flex gap-8 rounded-lg p-6"
                     >
                       <div className="flex items-center gap-3 text-lg font-medium break-all">
                         <div

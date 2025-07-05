@@ -9,8 +9,6 @@ import tinycolor from 'tinycolor2'
 
 import { Button, HamburgerMenu } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
@@ -22,7 +20,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   const { t } = useTranslation('apps.booksLibrary')
   const { derivedThemeColor } = usePersonalization()
   const queryClient = useQueryClient()
-  const { componentBgWithHover, componentBgLighter } = useComponentBg()
+
   const { collectionsQuery } = useBooksLibraryContext()
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
@@ -65,10 +63,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   return (
     <li
       key={item.id}
-      className={clsx(
-        'shadow-custom relative flex gap-4 rounded-lg p-4 transition-all',
-        componentBgWithHover
-      )}
+      className="shadow-custom component-bg-with-hover relative flex gap-4 rounded-lg p-4"
     >
       <div className="absolute top-4 right-3 z-20 flex">
         <Button
@@ -100,12 +95,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
         rel="noreferrer"
         target="_blank"
       />
-      <div
-        className={clsx(
-          'flex-center aspect-10/12 h-min w-28 rounded-lg p-2',
-          componentBgLighter
-        )}
-      >
+      <div className="flex-center component-bg-lighter aspect-10/12 h-min w-28 rounded-lg p-2">
         <img
           alt=""
           className="h-full object-cover"

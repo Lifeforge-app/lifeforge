@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -7,8 +6,6 @@ import { Button, ModalHeader } from '@lifeforge/ui'
 
 import OTPScreen from '@security/components/OTPScreen'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import { useAuth } from '../../../providers/AuthProvider'
@@ -16,7 +13,7 @@ import { useAuth } from '../../../providers/AuthProvider'
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
   const { setUserData } = useAuth()
-  const { componentBgLighter } = useComponentBg()
+
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -49,12 +46,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
         onClose={onClose}
       />
       {!otpSuccess ? (
-        <div
-          className={clsx(
-            'shadow-custom mt-6 rounded-lg p-6',
-            componentBgLighter
-          )}
-        >
+        <div className="shadow-custom component-bg-lighter mt-6 rounded-lg p-6">
           <OTPScreen
             buttonsFullWidth
             callback={() => {

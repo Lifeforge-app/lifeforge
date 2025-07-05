@@ -2,8 +2,6 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 function DetailItem({
   icon,
   name,
@@ -16,13 +14,11 @@ function DetailItem({
   children: React.ReactElement
 }) {
   const { t } = useTranslation('apps.wallet')
-  const { componentBgLighter } = useComponentBg()
 
   return (
     <div
       className={clsx(
-        'rounded-lg p-4',
-        componentBgLighter,
+        'component-bg-lighter rounded-lg p-4',
         vertical ? 'space-y-4' : 'flex-between'
       )}
     >

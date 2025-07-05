@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
@@ -8,8 +7,6 @@ import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
 import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -19,7 +16,7 @@ import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
 function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
   const queryClient = useQueryClient()
-  const { componentBgWithHover } = useComponentBg()
+
   const open = useModalStore(state => state.open)
 
   async function favouriteTab() {
@@ -56,10 +53,7 @@ function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
   return (
     <a
       key={entry.id}
-      className={clsx(
-        'shadow-custom block rounded-lg p-4 transition-all',
-        componentBgWithHover
-      )}
+      className="shadow-custom component-bg-with-hover block rounded-lg p-4 transition-all"
       href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
         entry.id
       }/${entry.pdf}`}

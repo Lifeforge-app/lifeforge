@@ -1,14 +1,9 @@
-import clsx from 'clsx'
-
 import { LoadingScreen } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useRailwayMapRenderer } from './hooks/useRailwayMapRenderer'
 
 function RouteMap() {
-  const { componentBg } = useComponentBg()
   const {
     routeMapSVGRef: svgRef,
     routeMapGRef: gRef,
@@ -33,12 +28,7 @@ function RouteMap() {
       {typeof shortestRoute === 'string' ? (
         <LoadingScreen />
       ) : (
-        <div
-          className={clsx(
-            'shadow-custom h-full w-full rounded-lg',
-            componentBg
-          )}
-        >
+        <div className="shadow-custom component-bg h-full w-full rounded-lg">
           <svg ref={svgRef} height="100%" width="100%" onClick={handleMapClick}>
             <g ref={gRef}></g>
           </svg>

@@ -1,8 +1,5 @@
-import clsx from 'clsx'
 import { memo } from 'react'
 import { View } from 'react-big-calendar'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import ChangeViewButton from './components/ChangeViewButton'
 
@@ -13,15 +10,8 @@ function ViewSelector({
   currentView: View
   onView: (view: View) => void
 }) {
-  const { componentBg } = useComponentBg()
-
   return (
-    <div
-      className={clsx(
-        'shadow-custom mb-4 flex w-full gap-1 rounded-md p-2',
-        componentBg
-      )}
-    >
+    <div className="shadow-custom component-bg mb-4 flex w-full gap-1 rounded-md p-2">
       {['Month', 'Week', 'Day', 'Agenda'].map(view => (
         <ChangeViewButton
           key={view}

@@ -8,8 +8,6 @@ import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 async function getNaturalHeightWidth(file: string) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {
     const img = new Image()
@@ -28,7 +26,6 @@ function PhotosEntry({
   entry: IMomentVaultEntry
   onDelete: () => void
 }) {
-  const { componentBg } = useComponentBg()
   const [loading, setLoading] = useState(true)
   const [photos, setPhotos] = useState<
     {
@@ -63,8 +60,7 @@ function PhotosEntry({
   return (
     <div
       className={clsx(
-        'shadow-custom relative w-full rounded-md p-6',
-        componentBg
+        'shadow-custom component-bg relative w-full rounded-md p-6'
       )}
     >
       <div className="flex w-full items-start gap-3">

@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback } from 'react'
 
@@ -8,8 +7,6 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 import ModifyTextEntryModal from '@apps/MomentVault/modals/ModifyTextEntryModal'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function TextEntry({
   entry,
@@ -21,7 +18,6 @@ function TextEntry({
   onDelete: () => void
 }) {
   const open = useModalStore(state => state.open)
-  const { componentBg } = useComponentBg()
 
   const handleUpdateEntry = useCallback(() => {
     open(ModifyTextEntryModal, {
@@ -32,10 +28,7 @@ function TextEntry({
 
   return (
     <div
-      className={clsx(
-        'shadow-custom relative w-full gap-6 rounded-md p-6',
-        componentBg
-      )}
+      className="shadow-custom component-bg relative w-full gap-6 rounded-md p-6"
       id={`audio-entry-${entry.id}`}
     >
       <div className="mr-16">

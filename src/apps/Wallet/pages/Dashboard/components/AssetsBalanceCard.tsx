@@ -14,10 +14,7 @@ import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 function AssetsBalanceCard() {
-  const { componentBgLighterWithHover } = useComponentBg()
   const navigate = useNavigate()
   const { assetsQuery } = useWalletData()
   const { isAmountHidden } = useWalletStore()
@@ -46,10 +43,7 @@ function AssetsBalanceCard() {
                 {assets.map(asset => (
                   <Link
                     key={asset.id}
-                    className={clsx(
-                      'flex-between shadow-custom flex w-full min-w-0 flex-1 flex-col gap-3 rounded-lg p-6 transition-all [@media(min-width:400px)]:flex-row',
-                      componentBgLighterWithHover
-                    )}
+                    className="flex-between shadow-custom component-bg-lighter-with-hover flex w-full min-w-0 flex-1 flex-col gap-3 rounded-lg p-6 transition-all [@media(min-width:400px)]:flex-row"
                     to={`/wallet/transactions?asset=${asset.id}`}
                   >
                     <div className="flex w-full min-w-0 items-center gap-3">

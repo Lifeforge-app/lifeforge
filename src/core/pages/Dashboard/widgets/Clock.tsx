@@ -1,12 +1,8 @@
-/* eslint-disable react-compiler/react-compiler */
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useRef, useState } from 'react'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 function Clock() {
-  const { componentBg } = useComponentBg()
   const [time, setTime] = useState(dayjs().format('HH:mm'))
   const [second, setSecond] = useState(dayjs().format('ss') as any)
   const ref = useRef<HTMLDivElement>(null)
@@ -20,8 +16,7 @@ function Clock() {
     <div
       ref={ref}
       className={clsx(
-        'shadow-custom flex size-full gap-3 rounded-lg p-4',
-        componentBg,
+        'shadow-custom component-bg flex size-full gap-3 rounded-lg p-4',
         (ref.current?.offsetHeight ?? 0) < 160
           ? 'flex-between flex-row'
           : 'flex-col'

@@ -1,12 +1,9 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import { Button, DateInput } from '@lifeforge/ui'
 
 import { ICalendarEventFormState } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import RecurringSelector from './components/RecurringSelector'
 
@@ -20,16 +17,13 @@ function EventTimeSelector({
   type: 'create' | 'update' | null
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
-  const { componentBgLighter } = useComponentBg()
 
   if (type === 'update') {
     return <></>
   }
 
   return (
-    <div
-      className={clsx('shadow-custom mt-4 rounded-lg p-6', componentBgLighter)}
-    >
+    <div className="shadow-custom component-bg-lighter mt-4 rounded-lg p-6">
       <div className="flex w-full items-center gap-5">
         <Icon
           className="text-bg-500 size-6 shrink-0"

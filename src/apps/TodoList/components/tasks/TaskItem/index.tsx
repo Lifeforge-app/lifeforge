@@ -5,8 +5,6 @@ import { Checkbox } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
@@ -24,7 +22,7 @@ function TaskItem({
   isInDashboardWidget?: boolean
 }) {
   const queryClient = useQueryClient()
-  const { componentBgWithHover, componentBgLighter } = useComponentBg()
+
   const {
     entriesQueryKey,
     entriesQuery,
@@ -69,7 +67,7 @@ function TaskItem({
       key={entry.id}
       className={clsx(
         'flex-between shadow-custom relative isolate flex gap-3 rounded-lg p-4 pr-6 pl-5 transition-all',
-        lighter ? componentBgLighter : componentBgWithHover
+        lighter ? 'component-bg-lighter' : 'component-bg-with-hover'
       )}
     >
       <div className="flex w-full min-w-0 items-center gap-3">

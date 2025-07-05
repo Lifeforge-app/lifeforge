@@ -17,8 +17,6 @@ import {
   SearchInput
 } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import Details from './components/Details'
@@ -34,7 +32,6 @@ const PROVIDERS = [
 ] as const
 
 function LibgenModal({ onClose }: { onClose: () => void }) {
-  const { componentBgLighterWithHover } = useComponentBg()
   const [provider, setProvider] =
     useState<(typeof PROVIDERS)[number]>('libgen.is')
   const [searchQuery, setSearchQuery] = useState('')
@@ -165,12 +162,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                 setProvider(value)
               }}
             >
-              <ListboxButton
-                className={clsx(
-                  'flex-between shadow-custom flex w-full gap-2 rounded-md p-4 sm:w-48',
-                  componentBgLighterWithHover
-                )}
-              >
+              <ListboxButton className="flex-between shadow-custom component-bg-lighter-with-hover flex w-full gap-2 rounded-md p-4 sm:w-48">
                 <div className="flex items-center gap-2">
                   {(() => {
                     if (providerOnlineStatuses[provider] === 'loading') {

@@ -3,8 +3,6 @@ import OtpInput from 'react-otp-input'
 
 import { Button } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
-
 function OTPInputBox({
   otp,
   setOtp,
@@ -20,7 +18,6 @@ function OTPInputBox({
   buttonFullWidth?: boolean
   lighter?: boolean
 }) {
-  const { componentBgLighter, componentBg } = useComponentBg()
   return (
     <>
       <OtpInput
@@ -31,7 +28,7 @@ function OTPInputBox({
             {...props}
             className={clsx(
               'border-bg-200 text-bg-800 shadow-custom dark:border-bg-800 dark:text-bg-200 mx-2 size-12! rounded-md border-[1.5px] text-lg md:size-16! md:text-2xl',
-              lighter ? componentBgLighter : componentBg
+              lighter ? 'component-bg-lighter' : 'component-bg'
             )}
             inputMode="numeric"
             onKeyDown={e => {
