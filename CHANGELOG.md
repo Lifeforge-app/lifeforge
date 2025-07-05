@@ -9,6 +9,10 @@
 - **Guitar Tabs**: Download process is now handled by the task pool mechanism.
 - **Wallet**: User can now view the details of a transaction by clicking on the transaction entry,
 - **Wallet**: Coordinates of the transaction location are now recorded and displayed as a map in the transaction details.
+- **Wallet**: Location of each transaction is now displayed in the recent transaction widget in the dashboard.
+- **Wallet**: Moved the create transaction button to the `ModuleHeader` component for better consistency.
+- **Wallet**: Replaced receipt thumbnail in transaction table view with a button to open the receipt image in a modal.
+- **Backups**: Added a new module to allow users to create and manage backups of their data right from the system without needing to use the PocketBase admin UI.
 - **API**: Implemented task pool mechanism using socketIO to handle long-running tasks like downloading books from Libgen.
 - **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
 - **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.

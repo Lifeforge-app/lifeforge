@@ -1,16 +1,10 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+import { Button, HeaderFilter } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
-
-import ModifyTransactionsModal from '../modals/ModifyTransactionsModal'
-import ScanReceiptModal from '../modals/ScanReceiptModal'
 
 function InnerHeader() {
   const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =
@@ -27,26 +21,13 @@ function InnerHeader() {
     setSelectedLedger,
     setSidebarOpen
   } = useWalletStore()
-  const open = useModalStore(state => state.open)
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
   const assets = assetsQuery.data ?? []
   const categories = categoriesQuery.data ?? []
   const ledgers = ledgersQuery.data ?? []
-  const transactions = transactionsQuery.data ?? []
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
   )
-
-  const handleCreateTransaction = useCallback(() => {
-    open(ModifyTransactionsModal, {
-      type: 'create',
-      existedData: null
-    })
-  }, [])
-
-  const handleUploadReceipt = useCallback(() => {
-    open(ScanReceiptModal, {})
-  }, [])
 
   return (
     <div className="flex-between flex">
@@ -118,48 +99,14 @@ function InnerHeader() {
           }}
         />
       </div>
-      <div className="flex items-center gap-6">
-        {typeof transactions !== 'string' && transactions.length > 0 && (
-          <Menu as="div" className="relative z-50 hidden md:block">
-            <Button
-              as={MenuButton}
-              className="hidden md:flex"
-              icon="tabler:plus"
-              onClick={() => {}}
-            >
-              {t('common.buttons:new', {
-                item: t('apps.wallet:items.transaction')
-              })}
-            </Button>
-            <MenuItems
-              transition
-              anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-            >
-              <MenuItem
-                icon="tabler:plus"
-                namespace="apps.wallet"
-                text="Add Manually"
-                onClick={handleCreateTransaction}
-              />
-              <MenuItem
-                icon="tabler:scan"
-                namespace="apps.wallet"
-                text="Scan Receipt"
-                onClick={handleUploadReceipt}
-              />
-            </MenuItems>
-          </Menu>
-        )}
-        <Button
-          className="xl:hidden"
-          icon="tabler:menu"
-          variant="plain"
-          onClick={() => {
-            setSidebarOpen(true)
-          }}
-        />
-      </div>
+      <Button
+        className="xl:hidden"
+        icon="tabler:menu"
+        variant="plain"
+        onClick={() => {
+          setSidebarOpen(true)
+        }}
+      />
     </div>
   )
 }

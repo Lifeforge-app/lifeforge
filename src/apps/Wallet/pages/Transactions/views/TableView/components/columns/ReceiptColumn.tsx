@@ -1,4 +1,6 @@
-import Zoom from 'react-medium-image-zoom'
+import { Button, useModalStore } from '@lifeforge/ui'
+
+import ViewReceiptModal from '../../../ListView/components/ViewReceiptModal'
 
 function ReceiptColumn({
   collectionId,
@@ -9,22 +11,23 @@ function ReceiptColumn({
   id: string
   receipt: string
 }) {
+  const open = useModalStore(state => state.open)
   return (
     <td className="p-2 text-center">
       {receipt !== '' ? (
-        <Zoom zoomMargin={100}>
-          <img
-            alt=""
-            className={
-              'bg-bg-200 dark:bg-bg-800 mx-auto size-12 rounded-lg object-cover'
-            }
-            src={`${
-              import.meta.env.VITE_API_HOST
-            }/media/${collectionId}/${id}/${receipt}`}
-          />
-        </Zoom>
+        <Button
+          icon="tabler:eye"
+          variant="plain"
+          onClick={() => {
+            open(ViewReceiptModal, {
+              src: `${
+                import.meta.env.VITE_API_HOST
+              }/media/${collectionId}/${id}/${receipt}`
+            })
+          }}
+        />
       ) : (
-        '-'
+        <></>
       )}
     </td>
   )

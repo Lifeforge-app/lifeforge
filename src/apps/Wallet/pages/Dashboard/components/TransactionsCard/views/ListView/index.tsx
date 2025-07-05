@@ -47,7 +47,13 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
                 </div>
                 <div className="flex w-full min-w-0 flex-col">
                   <div className="w-full min-w-0 truncate font-semibold">
-                    {transaction.particulars}
+                    {transaction.particulars}{' '}
+                    {transaction.location_name && (
+                      <>
+                        <span className="text-bg-500">@</span>{' '}
+                        {transaction.location_name}
+                      </>
+                    )}
                   </div>
                   <div className="text-bg-500 text-sm">
                     {transaction.type[0].toUpperCase() +

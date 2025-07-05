@@ -27,13 +27,22 @@ async function handleResponse<T>(
     return (await response.json()) as T
   }
 
-  const data = (await response.json()) as ApiResponse<T>
-  if (data.state === 'error') {
-    throw new Error(data.message || 'API returned an error')
+  if (response.headers.get('Content-Type')?.includes('application/json')) {
+    const data = (await response.json()) as ApiResponse<T>
+    if (data.state === 'error') {
+      throw new Error(data.message || 'API returned an error')
+    }
+    if (data.state === 'success') {
+      return data.data as T
+    }
+  } else if (response.headers.get('x-lifeforge-downloadable') === 'true') {
+    const buffer = await response.arrayBuffer()
+    return new Uint8Array(buffer) as unknown as T
+  } else if (response.headers.get('Content-Type')?.includes('text/plain')) {
+    const text = await response.text()
+    return text as unknown as T
   }
-  if (data.state === 'success') {
-    return data.data as T
-  }
+
   throw new Error('Unexpected API response format')
 }
 

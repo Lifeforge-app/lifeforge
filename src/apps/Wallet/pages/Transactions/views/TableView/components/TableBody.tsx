@@ -46,7 +46,7 @@ function TableBody({ visibleColumn }: { visibleColumn: string[] }) {
                 [
                   'Location',
                   LocationColumn,
-                  { location: transaction.location }
+                  { location: transaction.location_name }
                 ],
                 [
                   'Category',
