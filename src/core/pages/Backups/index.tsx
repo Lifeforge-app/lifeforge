@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Button,
   EmptyStateScreen,
+  FAB,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper,
@@ -30,6 +31,7 @@ function Backups() {
       <ModuleHeader
         actionButton={
           <Button
+            className="hidden sm:flex"
             icon="tabler:plus"
             tProps={{
               item: t('items.backup')
@@ -64,6 +66,11 @@ function Backups() {
           }
         </QueryWrapper>
       </div>
+      <FAB
+        onClick={() => {
+          open(CreateBackupModal, {})
+        }}
+      />
     </ModuleWrapper>
   )
 }
