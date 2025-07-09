@@ -5,7 +5,9 @@ export default {
   name: 'Blog',
   icon: <IconPencilHeart />,
   routes: {
-    blog: lazy(() => import('.'))
+    blog: lazy(() => import('.')),
+    'blog/compose/:id': lazy(() => import('./pages/Compose')),
+    'blog/compose': lazy(() => import('./pages/Compose'))
   },
   togglable: true
 }

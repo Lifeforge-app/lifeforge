@@ -1,5 +1,11 @@
 # Change Log
 
+## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
+- **API**: Moved all the `<module>_interface.ts` files to `schema.ts` files for better organization.
+- **API**: All the schemas are now generated from the database schema instead of being hardcoded in the codebase.
+- **API**: Added a new command to the `package.json` being `schema:generate` for the schema generation.
+- **API**: Fixed a lot of hidden typescript bugs in the codebase.
+
 ## 📌 **dev 25w27 (6/30/2025 - 7/7/2025)**
 - **Books Library**: Fixed a bug in the API logic where the error is not properly handled when the book fail to be added to the library.
 - **Books Library**: Renamed `category` to `collection` for better clarity.
