@@ -1,18 +1,57 @@
-import { useQuill } from 'react-quilljs'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
-import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+import {
+  Button,
+  EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper,
+  QueryWrapper
+} from '@lifeforge/ui'
+
+import useAPIQuery from '@hooks/useAPIQuery'
+
+import { IBlogEntry } from './interfaces/blog_interfaces'
 
 function Blog() {
-  const { quillRef } = useQuill({
-    placeholder: 'Write your blog post here...'
-  })
+  const { t } = useTranslation('apps.blog')
+  const entriesQuery = useAPIQuery<IBlogEntry[]>('blog/entries', [
+    'blog',
+    'entries'
+  ])
 
   return (
     <ModuleWrapper>
-      <ModuleHeader icon="tabler:pencil-heart" title="Blog" />
-      <div className="mb-8 flex h-[90%] w-full flex-1 flex-col">
-        <div ref={quillRef} className="flex-1" />
-      </div>
+      <ModuleHeader
+        actionButton={
+          <Button
+            as={Link}
+            icon="tabler:plus"
+            to="/blog/compose"
+            tProps={{
+              item: t('items.post')
+            }}
+            variant="primary"
+          >
+            New
+          </Button>
+        }
+        icon="tabler:pencil-heart"
+        title="Blog"
+      />
+      <QueryWrapper query={entriesQuery}>
+        {entries =>
+          entries.length > 0 ? (
+            <></>
+          ) : (
+            <EmptyStateScreen
+              icon="tabler:article-off"
+              name="entries"
+              namespace="apps.blog"
+            />
+          )
+        }
+      </QueryWrapper>
     </ModuleWrapper>
   )
 }
