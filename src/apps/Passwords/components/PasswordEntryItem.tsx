@@ -186,6 +186,13 @@ function PasswordEntryITem({
               onClick={decryptPassword}
             />
             <MenuItem
+              className="flex sm:hidden"
+              icon="tabler:copy"
+              loading={copyLoading}
+              text="Copy Password"
+              onClick={copyPassword}
+            />
+            <MenuItem
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
               text={password.pinned ? 'Unpin' : 'Pin'}
               onClick={() => {
