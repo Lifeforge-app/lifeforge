@@ -132,7 +132,7 @@ function Sidebar({
             }))
           }}
         />
-        <ListboxOrComboboxInput
+        {/* <ListboxOrComboboxInput
           icon="tabler:category"
           name="Category"
           namespace="apps.blog"
@@ -141,7 +141,7 @@ function Sidebar({
           }}
           type="listbox"
           value={data.category}
-        />
+        /> */}
         <TagsInput
           darker
           icon="tabler:tags"
