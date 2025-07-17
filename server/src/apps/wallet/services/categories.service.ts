@@ -1,30 +1,33 @@
 import PocketBase from "pocketbase";
+import { WalletSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IWalletCategory } from "../schema";
-
 export const getAllCategories = (
   pb: PocketBase,
-): Promise<WithPB<IWalletCategory>[]> =>
+): Promise<WithPB<WalletSchemas.ICategoryAggregated>[]> =>
   pb
     .collection("wallet__categories_aggregated")
-    .getFullList<WithPB<IWalletCategory>>({
+    .getFullList<WithPB<WalletSchemas.ICategoryAggregated>>({
       sort: "name",
     });
 
 export const createCategory = (
   pb: PocketBase,
-  data: Omit<IWalletCategory, "amount">,
-): Promise<WithPB<IWalletCategory>> =>
-  pb.collection("wallet__categories").create<WithPB<IWalletCategory>>(data);
+  data: Omit<WalletSchemas.ICategory, "amount">,
+): Promise<WithPB<WalletSchemas.ICategory>> =>
+  pb
+    .collection("wallet__categories")
+    .create<WithPB<WalletSchemas.ICategory>>(data);
 
 export const updateCategory = (
   pb: PocketBase,
   id: string,
-  data: Omit<IWalletCategory, "amount">,
-): Promise<WithPB<IWalletCategory>> =>
-  pb.collection("wallet__categories").update<WithPB<IWalletCategory>>(id, data);
+  data: Omit<WalletSchemas.ICategory, "amount">,
+): Promise<WithPB<WalletSchemas.ICategory>> =>
+  pb
+    .collection("wallet__categories")
+    .update<WithPB<WalletSchemas.ICategory>>(id, data);
 
 export const deleteCategory = async (
   pb: PocketBase,

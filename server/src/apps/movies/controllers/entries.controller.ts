@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { MoviesSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { MoviesEntrySchema } from "../schema";
 import * as entriesService from "../services/entries.service";
 
 const moviesEntriesRouter = express.Router();
@@ -24,7 +24,7 @@ const getAllEntries = forgeController
         .transform((val) => (val === "true" ? true : false)),
     }),
     response: z.object({
-      entries: z.array(WithPBSchema(MoviesEntrySchema)),
+      entries: z.array(WithPBSchema(MoviesSchemas.EntrySchema)),
       total: z.number(),
     }),
   })
@@ -39,7 +39,7 @@ const createEntryFromTMDB = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(MoviesEntrySchema),
+    response: WithPBSchema(MoviesSchemas.EntrySchema),
   })
   .callback(({ pb, params: { id } }) =>
     entriesService.createEntryFromTMDB(pb, id),
@@ -68,7 +68,7 @@ const toggleWatchStatus = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(MoviesEntrySchema),
+    response: WithPBSchema(MoviesSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "movies__entries",

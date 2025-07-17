@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { IdeaBoxSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { IdeaBoxTagSchema } from "../schema";
 import * as tagsService from "../services/tags.service";
 
 const ideaBoxTagsRouter = express.Router();
@@ -19,7 +19,7 @@ const getTags = forgeController
     params: z.object({
       container: z.string(),
     }),
-    response: z.array(WithPBSchema(IdeaBoxTagSchema)),
+    response: z.array(WithPBSchema(IdeaBoxSchemas.TagSchema)),
   })
   .existenceCheck("params", {
     container: "idea_box__containers",
@@ -33,11 +33,11 @@ const createTag = forgeController
   .route("POST /:container")
   .description("Create a new tag")
   .schema({
-    body: IdeaBoxTagSchema,
+    body: IdeaBoxSchemas.TagSchema,
     params: z.object({
       container: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxTagSchema),
+    response: WithPBSchema(IdeaBoxSchemas.TagSchema),
   })
   .existenceCheck("params", {
     container: "idea_box__containers",
@@ -52,11 +52,11 @@ const updateTag = forgeController
   .route("PATCH /:id")
   .description("Update a tag")
   .schema({
-    body: IdeaBoxTagSchema,
+    body: IdeaBoxSchemas.TagSchema,
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxTagSchema),
+    response: WithPBSchema(IdeaBoxSchemas.TagSchema),
   })
   .existenceCheck("params", {
     id: "idea_box__tags",

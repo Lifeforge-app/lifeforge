@@ -1,16 +1,17 @@
 import PocketBase from "pocketbase";
+import { IdeaBoxSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { IIdeaBoxTag } from "../schema";
 
 export const getTags = (
   pb: PocketBase,
   container: string,
-): Promise<WithPB<IIdeaBoxTag>[]> =>
-  pb.collection("idea_box__tags_aggregated").getFullList<WithPB<IIdeaBoxTag>>({
-    filter: `container = "${container}"`,
-  });
+): Promise<WithPB<IdeaBoxSchemas.ITag>[]> =>
+  pb
+    .collection("idea_box__tags_aggregated")
+    .getFullList<WithPB<IdeaBoxSchemas.ITag>>({
+      filter: `container = "${container}"`,
+    });
 
 export const createTag = (
   pb: PocketBase,
@@ -25,7 +26,7 @@ export const createTag = (
     color: string;
   },
 ) =>
-  pb.collection("idea_box__tags").create<WithPB<IIdeaBoxTag>>({
+  pb.collection("idea_box__tags").create<WithPB<IdeaBoxSchemas.ITag>>({
     name,
     icon,
     color,
@@ -44,7 +45,7 @@ export const updateTag = (
     icon: string;
     color: string;
   },
-): Promise<WithPB<IIdeaBoxTag>> =>
+): Promise<WithPB<IdeaBoxSchemas.ITag>> =>
   pb.collection("idea_box__tags").update(id, {
     name,
     icon,

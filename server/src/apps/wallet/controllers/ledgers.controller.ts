@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { WalletSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { WalletLedgerSchema } from "../schema";
 import * as LedgersService from "../services/ledgers.service";
 
 const walletLedgersRouter = express.Router();
@@ -16,7 +16,7 @@ const getAllLedgers = forgeController
   .route("GET /")
   .description("Get all wallet ledgers")
   .schema({
-    response: z.array(WithPBSchema(WalletLedgerSchema)),
+    response: z.array(WithPBSchema(WalletSchemas.LedgerSchema)),
   })
   .callback(async ({ pb }) => await LedgersService.getAllLedgers(pb));
 
@@ -24,8 +24,8 @@ const createLedger = forgeController
   .route("POST /")
   .description("Create a new wallet ledger")
   .schema({
-    body: WalletLedgerSchema,
-    response: WithPBSchema(WalletLedgerSchema),
+    body: WalletSchemas.LedgerSchema,
+    response: WithPBSchema(WalletSchemas.LedgerSchema),
   })
   .statusCode(201)
   .callback(
@@ -39,8 +39,8 @@ const updateLedger = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: WalletLedgerSchema,
-    response: WithPBSchema(WalletLedgerSchema),
+    body: WalletSchemas.LedgerSchema,
+    response: WithPBSchema(WalletSchemas.LedgerSchema),
   })
   .existenceCheck("params", {
     id: "wallet__ledgers",

@@ -4,13 +4,13 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import fs from "fs";
+import { IdeaBoxSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
 import { singleUploadMiddlewareOfKey } from "@middlewares/uploadMiddleware";
 
-import { IdeaBoxContainerSchema } from "../schema";
 import * as containersService from "../services/containers.service";
 
 const ideaBoxContainersRouter = express.Router();
@@ -33,7 +33,7 @@ const getContainers = forgeController
   .route("GET /")
   .description("Get all containers")
   .schema({
-    response: z.array(WithPBSchema(IdeaBoxContainerSchema)),
+    response: z.array(WithPBSchema(IdeaBoxSchemas.ContainerSchema)),
   })
   .callback(async ({ pb }) => await containersService.getContainers(pb));
 
@@ -41,8 +41,8 @@ const createContainer = forgeController
   .route("POST /")
   .description("Create a new container")
   .schema({
-    body: IdeaBoxContainerSchema,
-    response: WithPBSchema(IdeaBoxContainerSchema),
+    body: IdeaBoxSchemas.ContainerSchema,
+    response: WithPBSchema(IdeaBoxSchemas.ContainerSchema),
   })
   .middlewares(singleUploadMiddlewareOfKey("cover"))
   .callback(async ({ pb, body: { name, color, icon, cover }, req }) => {
@@ -94,7 +94,7 @@ const updateContainer = forgeController
       icon: z.string(),
       cover: z.string().optional(),
     }),
-    response: WithPBSchema(IdeaBoxContainerSchema),
+    response: WithPBSchema(IdeaBoxSchemas.ContainerSchema),
   })
   .middlewares(singleUploadMiddlewareOfKey("cover"))
   .existenceCheck("params", {

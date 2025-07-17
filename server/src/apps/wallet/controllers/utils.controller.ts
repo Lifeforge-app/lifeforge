@@ -3,9 +3,9 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { WalletSchemas } from "shared";
 import { z } from "zod/v4";
 
-import { WalletIncomeExpensesSummarySchema } from "../schema";
 import * as UtilsService from "../services/utils.service";
 
 const walletUtilsRouter = express.Router();
@@ -32,7 +32,7 @@ const getIncomeExpensesSummary = forgeController
       year: z.string(),
       month: z.string(),
     }),
-    response: WalletIncomeExpensesSummarySchema,
+    response: WalletSchemas.WalletIncomeExpensesSummarySchema,
   })
   .callback(
     async ({ pb, query: { year, month } }) =>

@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { MoviesSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { MoviesEntrySchema } from "../schema";
 import * as TicketService from "../services/ticket.service";
 
 const moviesTicketRouter = express.Router();
@@ -16,7 +16,7 @@ const updateTicket = forgeController
   .route("POST /")
   .description("Update ticket information for a movie entry")
   .schema({
-    body: MoviesEntrySchema.pick({
+    body: MoviesSchemas.EntrySchema.pick({
       ticket_number: true,
       theatre_number: true,
       theatre_seat: true,
@@ -34,7 +34,7 @@ const updateTicket = forgeController
         }),
       }),
     }),
-    response: WithPBSchema(MoviesEntrySchema),
+    response: WithPBSchema(MoviesSchemas.EntrySchema),
   })
   .existenceCheck("body", {
     entry_id: "movies__entries",
@@ -48,7 +48,7 @@ const updateTicketPatch = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: MoviesEntrySchema.pick({
+    body: MoviesSchemas.EntrySchema.pick({
       ticket_number: true,
       theatre_number: true,
       theatre_seat: true,
@@ -65,7 +65,7 @@ const updateTicketPatch = forgeController
         }),
       }),
     }),
-    response: WithPBSchema(MoviesEntrySchema),
+    response: WithPBSchema(MoviesSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "movies__entries",

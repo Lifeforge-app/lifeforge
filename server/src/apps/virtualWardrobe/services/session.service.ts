@@ -1,12 +1,11 @@
 import PocketBase from "pocketbase";
+import { VirtualWardrobeSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IVirtualWardrobeEntry } from "../schema";
+const sessionCart = new Set<WithPB<VirtualWardrobeSchemas.IEntry>>();
 
-const sessionCart = new Set<WithPB<IVirtualWardrobeEntry>>();
-
-export const getSessionCart = (): WithPB<IVirtualWardrobeEntry>[] => {
+export const getSessionCart = (): WithPB<VirtualWardrobeSchemas.IEntry>[] => {
   return Array.from(sessionCart);
 };
 
@@ -20,7 +19,7 @@ export const addToCart = async (
 
   const item = await pb
     .collection("virtual_wardrobe__entries")
-    .getOne<WithPB<IVirtualWardrobeEntry>>(entryId);
+    .getOne<WithPB<VirtualWardrobeSchemas.IEntry>>(entryId);
 
   const processedItem = {
     ...item,

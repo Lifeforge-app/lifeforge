@@ -3,6 +3,7 @@ import fs from "fs";
 import pdfPageCounter from "pdf-page-counter";
 import pdfThumbnail from "pdf-thumbnail";
 import PocketBase, { ListResult } from "pocketbase";
+import { GuitarTabsSchemas } from "shared";
 import { Server } from "socket.io";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
@@ -13,33 +14,27 @@ import {
   updateTaskInPool,
 } from "@middlewares/taskPoolMiddleware";
 
-import {
-  IGuitarTabsAuthorAggregated,
-  IGuitarTabsEntry,
-  IGuitarTabsSidebarData,
-} from "../schema";
-
 let left = 0;
 
 export const getRandomEntry = async (
   pb: PocketBase,
-): Promise<WithPB<IGuitarTabsEntry>> => {
+): Promise<WithPB<GuitarTabsSchemas.IEntry>> => {
   const allScores = await pb
     .collection("guitar_tabs__entries")
-    .getFullList<WithPB<IGuitarTabsEntry>>();
+    .getFullList<WithPB<GuitarTabsSchemas.IEntry>>();
 
   return allScores[Math.floor(Math.random() * allScores.length)];
 };
 
 export const getSidebarData = async (
   pb: PocketBase,
-): Promise<IGuitarTabsSidebarData> => {
+): Promise<GuitarTabsSchemas.IGuitarTabsSidebarData> => {
   const allScores = await pb
     .collection("guitar_tabs__entries")
-    .getFullList<WithPB<IGuitarTabsEntry>>();
+    .getFullList<WithPB<GuitarTabsSchemas.IEntry>>();
   const allAuthors = await pb
     .collection("guitar_tabs__authors_aggregated")
-    .getFullList<WithPB<IGuitarTabsAuthorAggregated>>();
+    .getFullList<WithPB<GuitarTabsSchemas.IAuthorAggregated>>();
 
   return {
     total: allScores.length,
@@ -53,7 +48,7 @@ export const getSidebarData = async (
     authors: Object.fromEntries(
       allAuthors.map((author) => [author.name, author.amount]),
     ),
-  } satisfies IGuitarTabsSidebarData;
+  } satisfies GuitarTabsSchemas.IGuitarTabsSidebarData;
 };
 
 export const getEntries = (
@@ -73,10 +68,10 @@ export const getEntries = (
     starred: boolean;
     sort: "name" | "author" | "newest" | "oldest";
   },
-): Promise<ListResult<WithPB<IGuitarTabsEntry>>> => {
+): Promise<ListResult<WithPB<GuitarTabsSchemas.IEntry>>> => {
   return pb
     .collection("guitar_tabs__entries")
-    .getList<WithPB<IGuitarTabsEntry>>(page, 20, {
+    .getList<WithPB<GuitarTabsSchemas.IEntry>>(page, 20, {
       filter: `(name~"${query}" || author~"${query}") 
         ${category ? `&& type="${category === "uncategorized" ? "" : category}"` : ""} 
         ${author ? `&& ${author === "[na]" ? "author = ''" : `author~"${author}"`}` : ""} 
@@ -240,7 +235,7 @@ const processFiles = async (
 
             await pb
               .collection("guitar_tabs__entries")
-              .create<WithPB<IGuitarTabsEntry>>(
+              .create<WithPB<GuitarTabsSchemas.IEntry>>(
                 {
                   name,
                   thumbnail: new File([thumbnailBuffer], `${decodedName}.jpeg`),
@@ -322,13 +317,19 @@ const processFiles = async (
 export const updateEntry = (
   pb: PocketBase,
   id: string,
-  { name, author, type }: Pick<IGuitarTabsEntry, "name" | "author" | "type">,
-): Promise<WithPB<IGuitarTabsEntry>> =>
-  pb.collection("guitar_tabs__entries").update<WithPB<IGuitarTabsEntry>>(id, {
+  {
     name,
     author,
     type,
-  });
+  }: Pick<GuitarTabsSchemas.IEntry, "name" | "author" | "type">,
+): Promise<WithPB<GuitarTabsSchemas.IEntry>> =>
+  pb
+    .collection("guitar_tabs__entries")
+    .update<WithPB<GuitarTabsSchemas.IEntry>>(id, {
+      name,
+      author,
+      type,
+    });
 
 export const deleteEntry = async (pb: PocketBase, id: string) => {
   await pb.collection("guitar_tabs__entries").delete(id);
@@ -337,14 +338,14 @@ export const deleteEntry = async (pb: PocketBase, id: string) => {
 export const toggleFavorite = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<IGuitarTabsEntry>> => {
+): Promise<WithPB<GuitarTabsSchemas.IEntry>> => {
   const entry = await pb
     .collection("guitar_tabs__entries")
-    .getOne<WithPB<IGuitarTabsEntry>>(id);
+    .getOne<WithPB<GuitarTabsSchemas.IEntry>>(id);
 
   return await pb
     .collection("guitar_tabs__entries")
-    .update<WithPB<IGuitarTabsEntry>>(id, {
+    .update<WithPB<GuitarTabsSchemas.IEntry>>(id, {
       isFavourite: !entry.isFavourite,
     });
 };

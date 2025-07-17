@@ -39,4 +39,32 @@ export type {
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-// Add your custom schemas here. They will not be overwritten by this script.
+const GuitarTabsSidebarDataSchema = z.object({
+  total: z.number(),
+  favourites: z.number(),
+  categories: z.object({
+    fingerstyle: z.number(),
+    singalong: z.number(),
+    uncategorized: z.number(),
+  }),
+  authors: z.record(z.string(), z.number()),
+});
+
+const GuitarTabsGuitarWorldEntrySchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  subtitle: z.string(),
+  category: z.string(),
+  mainArtist: z.string(),
+  uploader: z.string(),
+  audioUrl: z.string(),
+});
+
+type IGuitarTabsSidebarData = z.infer<typeof GuitarTabsSidebarDataSchema>;
+type IGuitarTabsGuitarWorldEntry = z.infer<
+  typeof GuitarTabsGuitarWorldEntrySchema
+>;
+
+export { GuitarTabsSidebarDataSchema, GuitarTabsGuitarWorldEntrySchema };
+
+export type { IGuitarTabsSidebarData, IGuitarTabsGuitarWorldEntry };

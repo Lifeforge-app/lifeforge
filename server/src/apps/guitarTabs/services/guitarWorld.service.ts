@@ -2,6 +2,7 @@ import fs from "fs";
 import { JSDOM } from "jsdom";
 import PDFDocument from "pdfkit";
 import PocketBase from "pocketbase";
+import { GuitarTabsSchemas } from "shared";
 import sharp from "sharp";
 import { Server } from "socket.io";
 
@@ -12,13 +13,11 @@ import {
   updateTaskInPool,
 } from "@middlewares/taskPoolMiddleware";
 
-import { IGuitarTabsEntry, IGuitarTabsGuitarWorldEntry } from "../schema";
-
 export const getTabsList = async (
   cookie: string,
   page: number,
 ): Promise<{
-  data: IGuitarTabsGuitarWorldEntry[];
+  data: GuitarTabsSchemas.IGuitarTabsGuitarWorldEntry[];
   totalItems: number;
   perPage: number;
 }> => {
@@ -163,7 +162,7 @@ export const downloadTab = async (
 
         const newEntry = await pb
           .collection("guitar_tabs__entries")
-          .create<WithPB<IGuitarTabsEntry>>({
+          .create<WithPB<GuitarTabsSchemas.IEntry>>({
             name,
             author: mainArtist,
             pageCount: images.length,

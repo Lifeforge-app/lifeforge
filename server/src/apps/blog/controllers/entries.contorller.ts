@@ -3,11 +3,10 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { BlogSchemas } from "shared";
 import z from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
-
-import { BlogEntrySchema } from "../schema";
 
 const blogEntriesRouter = express.Router();
 
@@ -15,7 +14,7 @@ const getAllEntries = forgeController
   .route("GET /")
   .description("Get all blog entries")
   .schema({
-    response: z.array(WithPBSchema(BlogEntrySchema)),
+    response: z.array(WithPBSchema(BlogSchemas.EntrySchema)),
   })
   .callback(({ pb }) => pb.collection("blog__entries").getFullList());
 

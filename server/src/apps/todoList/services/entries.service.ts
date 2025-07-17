@@ -1,15 +1,16 @@
 import moment from "moment";
 import PocketBase from "pocketbase";
+import { TodoListSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { ITodoListEntry, ITodoListStatusCounter } from "../schema";
 
 export const getEntryById = (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<ITodoListEntry>> =>
-  pb.collection("todo_list__entries").getOne<WithPB<ITodoListEntry>>(id);
+): Promise<WithPB<TodoListSchemas.IEntry>> =>
+  pb
+    .collection("todo_list__entries")
+    .getOne<WithPB<TodoListSchemas.IEntry>>(id);
 
 export const getAllEntries = async (
   pb: PocketBase,
@@ -17,7 +18,7 @@ export const getAllEntries = async (
   tag?: string,
   list?: string,
   priority?: string,
-): Promise<WithPB<ITodoListEntry>[]> => {
+): Promise<WithPB<TodoListSchemas.IEntry>[]> => {
   const filters = {
     all: "done = false",
     today: `done = false && due_date >= "${moment()
@@ -45,7 +46,7 @@ export const getAllEntries = async (
 
   return await pb
     .collection("todo_list__entries")
-    .getFullList<WithPB<ITodoListEntry>>({
+    .getFullList<WithPB<TodoListSchemas.IEntry>>({
       filter: finalFilter,
       sort: "-created",
     });
@@ -53,7 +54,7 @@ export const getAllEntries = async (
 
 export const getStatusCounter = async (
   pb: PocketBase,
-): Promise<ITodoListStatusCounter> => {
+): Promise<TodoListSchemas.ITodoListStatusCounter> => {
   const filters = {
     all: "done = false",
     today: `done = false && due_date >= "${moment()
@@ -73,7 +74,7 @@ export const getStatusCounter = async (
     completed: "done = true",
   };
 
-  const counters: ITodoListStatusCounter = {
+  const counters: TodoListSchemas.ITodoListStatusCounter = {
     all: 0,
     today: 0,
     scheduled: 0,
@@ -96,10 +97,13 @@ export const getStatusCounter = async (
 
 export const createEntry = async (
   pb: PocketBase,
-  data: Omit<ITodoListEntry, "completed_at" | "done" | "due_date_has_time"> & {
+  data: Omit<
+    TodoListSchemas.IEntry,
+    "completed_at" | "done" | "due_date_has_time"
+  > & {
     due_date_has_time?: boolean;
   },
-): Promise<WithPB<ITodoListEntry>> => {
+): Promise<WithPB<TodoListSchemas.IEntry>> => {
   if (data.due_date && !data.due_date_has_time) {
     data.due_date = moment(data.due_date).endOf("day").toISOString();
   }
@@ -108,16 +112,19 @@ export const createEntry = async (
 
   return await pb
     .collection("todo_list__entries")
-    .create<WithPB<ITodoListEntry>>(data);
+    .create<WithPB<TodoListSchemas.IEntry>>(data);
 };
 
 export const updateEntry = async (
   pb: PocketBase,
   id: string,
-  data: Omit<ITodoListEntry, "completed_at" | "done" | "due_date_has_time"> & {
+  data: Omit<
+    TodoListSchemas.IEntry,
+    "completed_at" | "done" | "due_date_has_time"
+  > & {
     due_date_has_time?: boolean;
   },
-): Promise<WithPB<ITodoListEntry>> => {
+): Promise<WithPB<TodoListSchemas.IEntry>> => {
   if (data.due_date && !data.due_date_has_time) {
     data.due_date = moment(data.due_date).endOf("day").toISOString();
   }
@@ -137,14 +144,14 @@ export const deleteEntry = async (
 export const toggleEntry = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<ITodoListEntry>> => {
+): Promise<WithPB<TodoListSchemas.IEntry>> => {
   const entry = await pb
     .collection("todo_list__entries")
-    .getOne<WithPB<ITodoListEntry>>(id);
+    .getOne<WithPB<TodoListSchemas.IEntry>>(id);
 
   return await pb
     .collection("todo_list__entries")
-    .update<WithPB<ITodoListEntry>>(id, {
+    .update<WithPB<TodoListSchemas.IEntry>>(id, {
       done: !entry.done,
       completed_at: entry.done
         ? null

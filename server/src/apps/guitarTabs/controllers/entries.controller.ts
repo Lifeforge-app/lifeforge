@@ -4,6 +4,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { GuitarTabsSchemas } from "shared";
 import { z } from "zod/v4";
 
 import {
@@ -13,7 +14,6 @@ import {
 
 import { uploadMiddleware } from "@middlewares/uploadMiddleware";
 
-import { GuitarTabsEntrySchema, GuitarTabsSidebarDataSchema } from "../schema";
 import * as entriesService from "../services/entries.service";
 
 const guitarTabsEntriesRouter = express.Router();
@@ -22,7 +22,7 @@ const getSidebarData = forgeController
   .route("GET /sidebar-data")
   .description("Get sidebar data for guitar tabs")
   .schema({
-    response: GuitarTabsSidebarDataSchema,
+    response: GuitarTabsSchemas.GuitarTabsSidebarDataSchema,
   })
   .callback(async ({ pb }) => await entriesService.getSidebarData(pb));
 
@@ -47,7 +47,7 @@ const getEntries = forgeController
         .optional()
         .default("newest"),
     }),
-    response: PBListResultSchema(WithPBSchema(GuitarTabsEntrySchema)),
+    response: PBListResultSchema(WithPBSchema(GuitarTabsSchemas.EntrySchema)),
   })
   .callback(
     async ({ pb, query }) => await entriesService.getEntries(pb, query),
@@ -57,7 +57,7 @@ const getRandomEntry = forgeController
   .route("GET /random")
   .description("Get a random guitar tab entry")
   .schema({
-    response: WithPBSchema(GuitarTabsEntrySchema),
+    response: WithPBSchema(GuitarTabsSchemas.EntrySchema),
   })
   .callback(async ({ pb }) => await entriesService.getRandomEntry(pb));
 
@@ -90,12 +90,12 @@ const updateEntry = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: GuitarTabsEntrySchema.pick({
+    body: GuitarTabsSchemas.EntrySchema.pick({
       name: true,
       author: true,
       type: true,
     }),
-    response: WithPBSchema(GuitarTabsEntrySchema),
+    response: WithPBSchema(GuitarTabsSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "guitar_tabs__entries",
@@ -129,7 +129,7 @@ const toggleFavorite = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(GuitarTabsEntrySchema),
+    response: WithPBSchema(GuitarTabsSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "guitar_tabs__entries",

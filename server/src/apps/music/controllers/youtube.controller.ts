@@ -3,9 +3,9 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { MusicSchemas } from "shared";
 import { z } from "zod/v4";
 
-import { YoutubeDataSchema } from "../schema";
 import * as YoutubeService from "../services/youtube.service";
 
 const musicYoutubeRouter = express.Router();
@@ -17,7 +17,7 @@ const getVideoInfo = forgeController
     params: z.object({
       id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, "Invalid YouTube video ID"),
     }),
-    response: YoutubeDataSchema,
+    response: MusicSchemas.YoutubeDataSchema,
   })
   .callback(
     async ({ params: { id } }) => await YoutubeService.getVideoInfo(id),

@@ -4,13 +4,13 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { CalendarSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
-import { CalendarEventSchema } from "../schema";
 import * as EventsService from "../services/events.service";
 
 const calendarEventsRouter = express.Router();
@@ -23,7 +23,7 @@ const getEventsByDateRange = forgeController
       start: z.string(),
       end: z.string(),
     }),
-    response: z.array(WithPBSchema(CalendarEventSchema.partial())),
+    response: z.array(WithPBSchema(CalendarSchemas.EventSchema.partial())),
   })
   .callback(
     async ({ pb, query: { start, end } }) =>
@@ -34,7 +34,7 @@ const getEventsToday = forgeController
   .route("GET /today")
   .description("Get today's events")
   .schema({
-    response: z.array(WithPBSchema(CalendarEventSchema.partial())),
+    response: z.array(WithPBSchema(CalendarSchemas.EventSchema.partial())),
   })
   .callback(async ({ pb }) => await EventsService.getTodayEvents(pb));
 
@@ -45,7 +45,7 @@ const getEventById = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(CalendarEventSchema),
+    response: WithPBSchema(CalendarSchemas.EventSchema),
   })
   .existenceCheck("params", {
     id: "calendar__events",
@@ -58,7 +58,7 @@ const createEvent = forgeController
   .route("POST /")
   .description("Create a new event")
   .schema({
-    body: CalendarEventSchema.omit({
+    body: CalendarSchemas.EventSchema.omit({
       exceptions: true,
     }).extend({
       location: z
@@ -72,7 +72,7 @@ const createEvent = forgeController
         ])
         .optional(),
     }),
-    response: WithPBSchema(CalendarEventSchema),
+    response: WithPBSchema(CalendarSchemas.EventSchema),
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => {
@@ -88,7 +88,7 @@ const scanImage = forgeController
   .description("Scan an image to extract event data")
   .middlewares(singleUploadMiddleware)
   .schema({
-    response: CalendarEventSchema.partial(),
+    response: CalendarSchemas.EventSchema.partial(),
   })
   .callback(async ({ pb, req }) => {
     const { file } = req;
@@ -133,10 +133,10 @@ const updateEvent = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: CalendarEventSchema.partial().omit({
+    body: CalendarSchemas.EventSchema.partial().omit({
       exceptions: true,
     }),
-    response: WithPBSchema(CalendarEventSchema),
+    response: WithPBSchema(CalendarSchemas.EventSchema),
   })
   .existenceCheck("params", {
     id: "calendar__events",

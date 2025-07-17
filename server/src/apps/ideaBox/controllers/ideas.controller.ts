@@ -5,11 +5,11 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import multer from "multer";
+import { IdeaBoxSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { IIdeaBoxEntry, IdeaBoxEntrySchema } from "../schema";
 import * as ideasService from "../services/ideas.service";
 
 const ideaBoxIdeasRouter = express.Router();
@@ -28,7 +28,7 @@ const getIdeas = forgeController
         .optional()
         .transform((val) => val === "true"),
     }),
-    response: z.array(WithPBSchema(IdeaBoxEntrySchema)),
+    response: z.array(WithPBSchema(IdeaBoxSchemas.EntrySchema)),
   })
   .existenceCheck("params", {
     container: "idea_box__containers",
@@ -58,7 +58,7 @@ const createIdea = forgeController
   .route("POST /")
   .description("Create a new idea")
   .schema({
-    body: IdeaBoxEntrySchema.pick({
+    body: IdeaBoxSchemas.EntrySchema.pick({
       type: true,
       container: true,
       folder: true,
@@ -69,7 +69,7 @@ const createIdea = forgeController
       imageLink: z.string().optional(),
       tags: z.string().transform((val) => JSON.parse(val)),
     }),
-    response: WithPBSchema(IdeaBoxEntrySchema),
+    response: WithPBSchema(IdeaBoxSchemas.EntrySchema),
   })
   .middlewares(multer().single("image") as any)
   .existenceCheck("body", {
@@ -83,7 +83,7 @@ const createIdea = forgeController
     }) => {
       const { file } = req;
 
-      let data: Omit<IIdeaBoxEntry, "image" | "archived" | "pinned"> & {
+      let data: Omit<IdeaBoxSchemas.IEntry, "image" | "archived" | "pinned"> & {
         image?: File;
       } = {
         title: "",
@@ -141,7 +141,7 @@ const updateIdea = forgeController
       type: z.enum(["text", "link", "image"]),
       tags: z.array(z.string()).optional(),
     }),
-    response: WithPBSchema(IdeaBoxEntrySchema),
+    response: WithPBSchema(IdeaBoxSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "idea_box__entries",
@@ -196,7 +196,7 @@ const pinIdea = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxEntrySchema),
+    response: WithPBSchema(IdeaBoxSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "idea_box__entries",
@@ -213,7 +213,7 @@ const archiveIdea = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxEntrySchema),
+    response: WithPBSchema(IdeaBoxSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "idea_box__entries",
@@ -233,7 +233,7 @@ const moveIdea = forgeController
     query: z.object({
       target: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxEntrySchema),
+    response: WithPBSchema(IdeaBoxSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "idea_box__entries",
@@ -253,7 +253,7 @@ const removeFromFolder = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxEntrySchema),
+    response: WithPBSchema(IdeaBoxSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "idea_box__entries",

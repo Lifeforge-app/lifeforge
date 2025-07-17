@@ -1,6 +1,7 @@
 import { spawn } from "child_process";
 import fs from "fs";
 import Pocketbase from "pocketbase";
+import { BooksLibrarySchemas } from "shared";
 import { Server } from "socket.io";
 
 import {
@@ -8,14 +9,12 @@ import {
   updateTaskInPool,
 } from "@middlewares/taskPoolMiddleware";
 
-import { IBooksLibraryEntry } from "../../../schema";
-
 export const addToLibrary = async (
   io: Server,
   pb: Pocketbase,
   md5: string,
   metadata: Omit<
-    IBooksLibraryEntry,
+    BooksLibrarySchemas.IEntry,
     "thumbnail" | "file" | "is_favourite" | "is_read" | "time_finished"
   > & {
     thumbnail: string;
@@ -140,7 +139,7 @@ const processDownloadedFiles = async (
   pb: Pocketbase,
   md5: string,
   metadata: Omit<
-    IBooksLibraryEntry,
+    BooksLibrarySchemas.IEntry,
     "thumbnail" | "file" | "is_favourite" | "is_read" | "time_finished"
   > & {
     thumbnail: string | File;

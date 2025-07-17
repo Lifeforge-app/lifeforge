@@ -3,19 +3,16 @@ import fs from "fs";
 import moment from "moment";
 import PocketBase from "pocketbase";
 import rrule from "rrule";
+import { CalendarSchemas, MoviesSchemas, TodoListSchemas } from "shared";
 import { z } from "zod";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { IMoviesEntry } from "../../movies/schema";
-import { ITodoListEntry } from "../../todoList/schema";
-import { ICalendarCategory, ICalendarEvent } from "../schema";
 
 export const getEventsByDateRange = async (
   pb: PocketBase,
   startDate: string,
   endDate: string,
-): Promise<WithPB<Partial<ICalendarEvent>>[]> => {
+): Promise<WithPB<Partial<CalendarSchemas.IEvent>>[]> => {
   const start = moment(startDate).startOf("day").toISOString();
   const end = moment(endDate).endOf("day").toISOString();
 
@@ -23,7 +20,7 @@ export const getEventsByDateRange = async (
 
   const singleCalendarEvents = await pb
     .collection("calendar__events")
-    .getFullList<WithPB<ICalendarEvent>>({
+    .getFullList<WithPB<CalendarSchemas.IEvent>>({
       filter: `(start >= '${start}' || end >= '${start}') && (start <= '${end}' || end <= '${end}') && type="single"`,
     });
 
@@ -31,7 +28,7 @@ export const getEventsByDateRange = async (
 
   const recurringCalendarEvents = await pb
     .collection("calendar__events")
-    .getFullList<WithPB<ICalendarEvent>>({
+    .getFullList<WithPB<CalendarSchemas.IEvent>>({
       filter: "type='recurring'",
     });
 
@@ -85,7 +82,7 @@ export const getEventsByDateRange = async (
   const todoEntries = (
     await pb
       .collection("todo_list__entries")
-      .getFullList<WithPB<ITodoListEntry>>({
+      .getFullList<WithPB<TodoListSchemas.IEntry>>({
         filter: `due_date >= '${start}' && due_date <= '${end}'`,
       })
       .catch(() => [])
@@ -99,7 +96,7 @@ export const getEventsByDateRange = async (
       description: entry.notes,
       reference_link: `/todo-list?entry=${entry.id}`,
       is_strikethrough: entry.done,
-    } as Partial<WithPB<ICalendarEvent>>;
+    } as Partial<WithPB<CalendarSchemas.IEvent>>;
   });
 
   allEvents.push(...todoEntries);
@@ -107,7 +104,7 @@ export const getEventsByDateRange = async (
   const movieEntries = (
     await pb
       .collection("movies__entries")
-      .getFullList<WithPB<IMoviesEntry>>({
+      .getFullList<WithPB<MoviesSchemas.IEntry>>({
         filter: `theatre_showtime >= '${start}' && theatre_showtime <= '${end}'`,
       })
       .catch(() => [])
@@ -132,7 +129,7 @@ ${entry.theatre_number}
 ${entry.theatre_seat}
       `,
       reference_link: `/movies?show-ticket=${entry.id}`,
-    } as WithPB<ICalendarEvent>;
+    } as WithPB<CalendarSchemas.IEvent>;
   });
 
   allEvents.push(...movieEntries);
@@ -142,7 +139,7 @@ ${entry.theatre_seat}
 
 export const getTodayEvents = async (
   pb: PocketBase,
-): Promise<WithPB<Partial<ICalendarEvent>>[]> => {
+): Promise<WithPB<Partial<CalendarSchemas.IEvent>>[]> => {
   const day = moment().format("YYYY-MM-DD");
 
   const events = await getEventsByDateRange(pb, day, day);
@@ -153,12 +150,12 @@ export const getTodayEvents = async (
 export const createEvent = async (
   pb: PocketBase,
   eventData: Omit<
-    ICalendarEvent,
+    CalendarSchemas.IEvent,
     "is_strikethrough" | "exceptions" | "location"
   > & {
     location?: string | { displayName: { text: string } };
   },
-): Promise<WithPB<ICalendarEvent>> => {
+): Promise<WithPB<CalendarSchemas.IEvent>> => {
   if (eventData.type === "recurring") {
     eventData.end = "";
   } else {
@@ -173,16 +170,16 @@ export const createEvent = async (
 
   return await pb
     .collection("calendar__events")
-    .create<WithPB<ICalendarEvent>>(eventData);
+    .create<WithPB<CalendarSchemas.IEvent>>(eventData);
 };
 
 export const scanImage = async (
   pb: PocketBase,
   filePath: string,
-): Promise<Partial<ICalendarEvent> | null> => {
+): Promise<Partial<CalendarSchemas.IEvent> | null> => {
   const categories = await pb
     .collection("calendar__categories")
-    .getFullList<WithPB<ICalendarCategory>>();
+    .getFullList<WithPB<CalendarSchemas.ICategory>>();
 
   const categoryList = categories.map((category) => category.name);
 
@@ -245,21 +242,24 @@ export const scanImage = async (
     return null;
   }
 
-  (response as Partial<ICalendarEvent>).category = categories.find(
+  (response as Partial<CalendarSchemas.IEvent>).category = categories.find(
     (category) => category.name === response.category,
   )?.id;
 
-  return response as Partial<ICalendarEvent>;
+  return response as Partial<CalendarSchemas.IEvent>;
 };
 
 export const updateEvent = (
   pb: PocketBase,
   id: string,
-  eventData: Omit<Partial<ICalendarEvent>, "is_strikethrough" | "exceptions">,
-): Promise<WithPB<ICalendarEvent>> =>
+  eventData: Omit<
+    Partial<CalendarSchemas.IEvent>,
+    "is_strikethrough" | "exceptions"
+  >,
+): Promise<WithPB<CalendarSchemas.IEvent>> =>
   pb
     .collection("calendar__events")
-    .update<WithPB<ICalendarEvent>>(id, eventData);
+    .update<WithPB<CalendarSchemas.IEvent>>(id, eventData);
 
 export const deleteEvent = async (pb: PocketBase, id: string) => {
   await pb.collection("calendar__events").delete(id);
@@ -268,8 +268,8 @@ export const deleteEvent = async (pb: PocketBase, id: string) => {
 export const getEventById = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<ICalendarEvent>> =>
-  pb.collection("calendar__events").getOne<WithPB<ICalendarEvent>>(id);
+): Promise<WithPB<CalendarSchemas.IEvent>> =>
+  pb.collection("calendar__events").getOne<WithPB<CalendarSchemas.IEvent>>(id);
 
 export const addException = async (
   pb: PocketBase,
@@ -278,7 +278,7 @@ export const addException = async (
 ): Promise<boolean> => {
   const event = await pb
     .collection("calendar__events")
-    .getOne<WithPB<ICalendarEvent>>(id);
+    .getOne<WithPB<CalendarSchemas.IEvent>>(id);
 
   const exceptions = event.exceptions || [];
 
@@ -290,7 +290,7 @@ export const addException = async (
 
   await pb
     .collection("calendar__events")
-    .update<WithPB<ICalendarEvent>>(id, { exceptions });
+    .update<WithPB<CalendarSchemas.IEvent>>(id, { exceptions });
 
   return true;
 };

@@ -1,14 +1,9 @@
 import moment from "moment";
 import PocketBase from "pocketbase";
 import puppeteer from "puppeteer-core";
+import { CodeTimeSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import {
-  ICodeTimeActivities,
-  ICodeTimeDailyEntry,
-  ICodeTimeStatistics,
-} from "../schema";
 
 export const addDays = (date: Date, days: number): Date => {
   const newDate = new Date(date.valueOf());
@@ -29,12 +24,12 @@ export const getDates = (startDate: Date, stopDate: Date): Date[] => {
 export const getActivities = async (
   pb: PocketBase,
   year?: number,
-): Promise<ICodeTimeActivities> => {
+): Promise<CodeTimeSchemas.ICodeTimeActivities> => {
   const yearValue = Number(year) || new Date().getFullYear();
 
   const data = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<ICodeTimeDailyEntry>>({
+    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
       filter: `date >= "${yearValue}-01-01 00:00:00.000Z" && date <= "${yearValue}-12-31 23:59:59.999Z"`,
     });
 
@@ -86,7 +81,7 @@ export const getActivities = async (
 
   const firstRecordEver = await pb
     .collection("code_time__daily_entries")
-    .getList<WithPB<ICodeTimeDailyEntry>>(1, 1, {
+    .getList<WithPB<CodeTimeSchemas.IDailyEntry>>(1, 1, {
       sort: "+date",
     });
 
@@ -98,7 +93,7 @@ export const getActivities = async (
 
 export const getStatistics = async (
   pb: PocketBase,
-): Promise<ICodeTimeStatistics> => {
+): Promise<CodeTimeSchemas.ICodeTimeStatistics> => {
   const everything = await pb
     .collection("code_time__daily_entries")
     .getFullList({
@@ -198,12 +193,12 @@ export const getStatistics = async (
 export const getLastXDays = async (
   pb: PocketBase,
   days: number,
-): Promise<WithPB<ICodeTimeDailyEntry>[]> => {
+): Promise<WithPB<CodeTimeSchemas.IDailyEntry>[]> => {
   const lastXDays = moment().subtract(days, "days").format("YYYY-MM-DD");
 
   const data = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<ICodeTimeDailyEntry>>({
+    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
       filter: `date >= "${lastXDays} 00:00:00.000Z"`,
     });
 
@@ -294,7 +289,7 @@ export const getEachDay = async (
 
   const data = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<ICodeTimeDailyEntry>>({
+    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
       filter: `date >= "${firstDay} 00:00:00.000Z" && date <= "${lastDay} 23:59:59.999Z"`,
     });
 
@@ -319,7 +314,7 @@ export const getUserMinutes = async (
 
   const items = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<ICodeTimeDailyEntry>>({
+    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
       filter: `date >= "${minTime}"`,
     });
 
