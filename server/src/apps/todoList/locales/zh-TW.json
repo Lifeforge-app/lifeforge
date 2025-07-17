@@ -1,0 +1,82 @@
+{
+  "title": "待辦清單",
+  "description": "再也不會忘記待辦事項（除了可能是洗衣服）。",
+  "header": {
+    "allTasks": "所有任務",
+    "todaysTasks": "今天的任務",
+    "scheduledTasks": "已排程的任務",
+    "overdueTasks": "逾期的任務",
+    "completedTasks": "已完成的任務",
+    "filteredTasks": "已篩選的任務"
+  },
+  "sidebar": {
+    "all": "所有任務",
+    "today": "今天的任務",
+    "completed": "已完成",
+    "scheduled": "已排程",
+    "overdue": "逾期",
+    "tasks": "任務",
+    "lists": "清單",
+    "tags": "標籤",
+    "priorities": "優先級"
+  },
+  "headers": {
+    "allTasks": "所有任務",
+    "todaysTasks": "今天的任務",
+    "scheduledTasks": "已排程的任務",
+    "overdueTasks": "逾期的任務",
+    "completedTasks": "已完成的任務",
+    "filteredTasks": "已篩選的任務"
+  },
+  "modals": {
+    "tasks": {
+      "create": "創建任務",
+      "update": "更新任務"
+    },
+    "list": {
+      "create": "創建清單",
+      "update": "更新清單"
+    },
+    "tag": {
+      "create": "創建標籤",
+      "update": "更新標籤"
+    },
+    "priority": {
+      "create": "創建優先級",
+      "update": "更新優先級"
+    }
+  },
+  "inputs": {
+    "dueDate": "截止日期",
+    "notes": "備註",
+    "priority": "優先級",
+    "tags": "標籤",
+    "list": "清單",
+    "subtasks": "子任務",
+    "summary": "摘要",
+    "priorityName": "優先級名稱",
+    "priorityIcon": "優先級圖標",
+    "priorityColor": "優先級顏色",
+    "listName": "清單名稱",
+    "listIcon": "清單圖標",
+    "listColor": "清單顏色",
+    "tagName": "標籤名稱",
+    "hasTime": "包含時間"
+  },
+  "items": {
+    "task": "任務"
+  },
+  "empty": {
+    "todaysTask": {
+      "title": "今天沒有任務",
+      "description": "今天的任務是空的。添加一個新任務開始吧！"
+    },
+    "tasks": {
+      "title": "目前沒有任務",
+      "description": "沒有可用的任務。添加一個新任務來開始吧！"
+    },
+    "lists": "目前沒有清單",
+    "tags": "目前沒有標籤",
+    "priorities": "目前沒有優先級"
+  }
+}

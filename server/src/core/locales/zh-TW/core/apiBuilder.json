@@ -1,0 +1,83 @@
+{
+  "title": "API 建構器",
+  "inputs": {
+    "schemaName": "架構名稱",
+    "fieldName": "欄位名稱",
+    "fieldType": "欄位類型",
+    "optional": "可選",
+    "addField": "新增欄位",
+    "groupName": "群組名稱",
+    "groupIcon": "群組圖標"
+  },
+  "modals": {
+    "editSchemaBlock": "編輯架構區塊",
+    "newNode": "新增節點",
+    "groupConfiguration": "群組配置"
+  },
+  "nodes": {
+    "route": "路由",
+    "router": "路由器",
+    "schema": "架構",
+    "withPocketBaseSchema": "帶有 PocketBase 的架構",
+    "controller": "控制器",
+    "schemaArray": "架構數組",
+    "pickFieldsFromSchema": "從架構中選擇字段",
+    "requestSchema": "請求架構",
+    "service": "服務",
+    "collection": "集合",
+    "getFullList": "獲取完整列表",
+    "databaseCrudAction": "資料庫CRUD操作",
+    "filter": "過濾器",
+    "value": "值",
+    "sorter": "排序器",
+    "collectionPickFields": "字段選擇器",
+    "valueFromRequest": "來自請求的值",
+    "createRecord": "建立記錄",
+    "deriveSchemaFromCollection": "從集合推導架構",
+    "updateRecord": "更新記錄",
+    "deleteRecord": "刪除記錄"
+  },
+  "items": {
+    "node": "節點"
+  },
+  "nodeColumns": {
+    "httpMethod": "HTTP 方法",
+    "routePath": "路由路徑",
+    "routerPath": "路由器路徑",
+    "params": "參數",
+    "query": "查詢",
+    "body": "主體",
+    "response": "回應",
+    "schemaName": "架構名稱",
+    "fields": "欄位",
+    "responseSchema": "回應架構",
+    "action": "操作",
+    "databaseAction": "資料庫操作",
+    "field": "欄位",
+    "comparator": "比較器",
+    "fieldIDs": "欄位 ID",
+    "direction": "方向",
+    "typeScriptInterfaceName": "TypeScript 介面名稱",
+    "recordId": "記錄 ID"
+  },
+  "empty": {
+    "noFields": "沒有可用的欄位",
+    "noCollectionConnected": "未連接任何集合",
+    "pleaseSelect": "請選擇一個選項",
+    "noSchemaConnected": "未連接任何架構",
+    "noFieldsInSchema": "架構中沒有可用字段",
+    "noRequestSchemaConnected": "未連接任何請求架構",
+    "noFieldSelected": "尚未選擇字段"
+  },
+  "nodeCategories": {
+    "database": "資料庫",
+    "schema": "架構",
+    "routing": "路由",
+    "action": "行動",
+    "variables": "變數"
+  },
+  "misc": {
+    "asc": "升序",
+    "desc": "降序"
+  }
+}

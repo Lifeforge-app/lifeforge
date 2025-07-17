@@ -1,0 +1,196 @@
+{
+  "title": "Wallet",
+  "description": "Become your own financial superhero.",
+  "subsections": {
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "assets": "Assets",
+    "ledgers": "Ledgers",
+    "financialStatements": "Financial Statements",
+    "spendingHeatmap": "Spending Heatmap"
+  },
+  "header": {
+    "allTransactions": "All Transactions",
+    "filteredTransactions": "Filtered Transactions"
+  },
+  "widgets": {
+    "expensesBreakdown": {
+      "title": "Expenses Breakdown",
+      "thisMonthsSpending": "This Month's Spending"
+    },
+    "income": {
+      "title": "Income"
+    },
+    "assetsBalance": {
+      "title": "Assets Balance"
+    },
+    "statistics": {
+      "title": "Statistics"
+    },
+    "expenses": {
+      "title": "Expenses"
+    },
+    "recentTransactions": {
+      "title": "Recent Transactions"
+    },
+    "transactionsCount": {
+      "title": "Transactions Count"
+    }
+  },
+  "transactionCount": "Transactions",
+  "receiptUploadInfo": "Only PDF and image files are accepted",
+  "empty": {
+    "transactions": {
+      "title": "No Transactions Found",
+      "description": "You haven't recorded any transactions yet. Click the button above to add one."
+    },
+    "categories": {
+      "title": "No Categories Found",
+      "description": "You haven't created any categories yet. Click the button below to add one."
+    },
+    "results": {
+      "title": "No Results Found",
+      "description": "No transactions found, please try other keywords."
+    },
+    "assets": {
+      "title": "No Assets Found",
+      "description": "You haven't created any assets yet. Click the button above to add one."
+    },
+    "ledger": {
+      "title": "No Ledgers Found",
+      "description": "You haven't created any ledgers yet. Click the button above to add one."
+    },
+    "location": {
+      "title": "No Location Available",
+      "description": "No location data found in any transactions. Please add a transaction with a location."
+    }
+  },
+  "sidebar": {
+    "allTransactions": "All Transactions",
+    "allType": "All Types",
+    "allLedgers": "All Ledgers",
+    "allAssets": "All Assets",
+    "allCategories": "All Categories",
+    "allTypes": "All Types",
+    "transactionTypes": "Transaction Types",
+    "ledgers": "Ledgers",
+    "assets": "Assets",
+    "categories": "Categories",
+    "dateRange": "Date Range",
+    "calendarHeatmap": "Calendar Heatmap"
+  },
+  "table": {
+    "date": "Date",
+    "type": "Type",
+    "asset": "Asset",
+    "ledger": "Ledger",
+    "particulars": "Particulars",
+    "category": "Category",
+    "amount": "Amount",
+    "receipt": "Receipt",
+    "location": "Location"
+  },
+  "buttons": {
+    "scanReceipt": "Scan Receipt",
+    "removeReceipt": "Remove Receipt",
+    "uploadReceipt": "Upload Receipt",
+    "viewTransactions": "View Transactions",
+    "hideAmount": "Hide Amount",
+    "showStatement": "Show Statement",
+    "hideStatement": "Hide Statement",
+    "addManually": "Add Manually",
+    "manageCategories": "Manage Categories",
+    "viewBalanceChart": "View Balance Chart",
+    "viewReceipt": "View Receipt"
+  },
+  "modals": {
+    "transactions": {
+      "create": "Create Transaction",
+      "update": "Update Transaction",
+      "view": "Transaction Details"
+    },
+    "assets": {
+      "create": "Create Asset",
+      "update": "Update Asset"
+    },
+    "ledgers": {
+      "create": "Create Ledger",
+      "update": "Update Ledger"
+    },
+    "categories": {
+      "create": "Create Category",
+      "update": "Update Category",
+      "manage": "Manage Categories"
+    },
+    "receipts": {
+      "scan": "Scan Receipt",
+      "view": "View Receipt"
+    },
+    "assetsBalanceChart": "Assets Balance Chart"
+  },
+  "transactionTypes": {
+    "income": "Income",
+    "expenses": "Expenses",
+    "transfer": "Transfer"
+  },
+  "inputs": {
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "assetIcon": "Asset Icon",
+    "ledgerIcon": "Ledger Icon",
+    "date": "Date",
+    "amount": "Amount",
+    "transactionType": "Transaction Type",
+    "location": "Location",
+    "asset": "Asset",
+    "ledger": "Ledger",
+    "category": "Category",
+    "receipt": "Receipt",
+    "balance": "Balance",
+    "particulars": "Particulars",
+    "ledgerColor": "Ledger Color",
+    "assetName": "Asset Name",
+    "ledgerName": "Ledger Name",
+    "categoryName": "Category Name",
+    "categoryIcon": "Category Icon",
+    "categoryColor": "Category Color",
+    "categoryType": "Category Type",
+    "initialBalance": "Initial Balance",
+    "fromAsset": "From Asset",
+    "toAsset": "To Asset",
+    "month": "Month",
+    "year": "Year"
+  },
+  "items": {
+    "transaction": "Transaction",
+    "asset": "Asset",
+    "ledger": "Ledger",
+    "category": "Category",
+    "receipt": "Receipt"
+  },
+  "receipts": {
+    "keepAfterScan": "Keep Receipt After Scan"
+  },
+  "subsectionsTitleAndDesc": {
+    "assets": {
+      "title": "Assets",
+      "description": "Manage your assets securely and efficiently in your wallet."
+    },
+    "ledgers": {
+      "title": "Ledgers",
+      "description": "Manage and view your financial transactions and accounts in the ledger."
+    },
+    "transactions": {
+      "title": "Transactions",
+      "description": "View your transaction history and details."
+    },
+    "financialStatements": {
+      "title": "Financial Statements",
+      "description": "View detailed financial statements that provide insights into your account's transactions and balances."
+    },
+    "spendingHeatmap": {
+      "title": "Spending Heatmap",
+      "description": "Visual representation of your spending habits over time."
+    }
+  }
+}

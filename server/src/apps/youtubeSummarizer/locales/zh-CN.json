@@ -1,0 +1,39 @@
+{
+  "title": "YouTube 摘要器",
+  "description": "无需观看整个视频即可获得 YouTube 视频的简洁摘要。",
+  "empty": {
+    "videoURL": {
+      "title": "未提供视频链接",
+      "description": "首先在上面的输入框中粘贴您想总结的视频的URL。"
+    },
+    "captions": {
+      "title": "没有可用的字幕",
+      "description": "此视频没有{{type}}的可用字幕。请尝试另一个字幕种类或另一条视频。"
+    }
+  },
+  "inputs": {
+    "videoUrl": "视频网址",
+    "captionType": "字幕类型",
+    "language": "语言"
+  },
+  "widgets": {
+    "videoInfo": {
+      "title": "视频信息"
+    },
+    "selectLanguage": {
+      "title": "选择语言"
+    },
+    "videoSummary": {
+      "title": "视频摘要"
+    }
+  },
+  "captionTypes": {
+    "auto": "自动生成",
+    "manual": "手动",
+    "any": "任何"
+  },
+  "buttons": {
+    "downloadCaptions": "下载字幕",
+    "summarizeThisVideo": "总结此视频"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "deleteConfirmation": {
+    "title": "Adakah anda pasti mahu memadam {{itemName}}?",
+    "desc": "Ini akan memadam {{itemName}} dan semua kandungan yang berkaitan. Tindakan ini tidak boleh dipulihkan!",
+    "inputs": {
+      "confirmation": {
+        "placeholder": "Sila taip \"{{text}}\" untuk mengesahkan pemadaman",
+        "label": "Sahkan Pembuangan"
+      }
+    }
+  },
+  "searchFilters": "Penapis Carian",
+  "iconPicker": {
+    "title": "Pilih Ikon",
+    "items": {
+      "icon": "Ikon",
+      "iconSet": "Set Ikon"
+    },
+    "empty": {
+      "icon": {
+        "title": "Tiada ikon",
+        "description": "Tiada ikon ditemui, sila cuba kata kunci lain."
+      }
+    }
+  },
+  "imagePicker": {
+    "title": "Pilih Imej",
+    "local": "Muat naik imej tempatan",
+    "url": "URL Imej",
+    "pixabay": "Muat turun dari Pixabay",
+    "orPasteLink": "Atau tampal pautan imej",
+    "inputs": {
+      "imageLink": "Pautan imej",
+      "imageType": "Jenis imej",
+      "imageCategory": "Kategori imej",
+      "imageColor": "Warna imej",
+      "editorsChoice": "Pilihan Editor",
+      "prompt": "Teks Prompt AI"
+    },
+    "imageType": {
+      "all": "Semua",
+      "photo": "Foto",
+      "vector": "Vektor",
+      "illustration": "Ilustrasi"
+    },
+    "items": {
+      "pixabay": "Pixabay"
+    },
+    "empty": {
+      "result": {
+        "title": "Tiada hasil",
+        "description": "Tiada imej ditemui, sila cuba kata kunci lain."
+      },
+      "pixabay": {
+        "title": "Disediakan oleh Pixabay",
+        "description": "Cari lebih daripada 13 juta imej percuma berkualiti tinggi."
+      }
+    },
+    "ai": "Penjanaan Imej AI"
+  },
+  "colorPicker": {
+    "title": "Pilih Warna",
+    "modals": {
+      "morandiColorPalette": "Palet Warna Morandi",
+      "tailwindCssColorPalette": "Palet Warna Tailwind CSS"
+    },
+    "buttons": {
+      "morandiColorPalette": "Palet Warna Morandi",
+      "tailwindCssColorPalette": "Palet Warna Tailwind CSS"
+    }
+  },
+  "imagePreview": "Pratonton Imej",
+  "qrCodeScanner": "Pengimbas Kod QR"
+}

@@ -1,0 +1,80 @@
+{
+  "title": "創意盒",
+  "description": "在靈感飛走之前抓住它們！",
+  "entryType": {
+    "text": "文字",
+    "image": "圖片",
+    "link": "連結",
+    "folder": "資料夾"
+  },
+  "empty": {
+    "container": {
+      "title": "沒有創意盒",
+      "description": "您還沒有創建任何創意盒。點擊下面的按鈕創建一個。"
+    },
+    "folder": {
+      "title": "沒有資料夾",
+      "description": "您還沒有創建任何資料夾。點擊下面的按鈕創建一個。"
+    },
+    "idea": {
+      "title": "沒有創意",
+      "description": "您還沒有添加任何創意。點擊下面的按鈕添加一個。"
+    },
+    "archived": {
+      "title": "沒有已歸檔的創意",
+      "description": "您還沒有歸檔任何創意。"
+    },
+    "result": {
+      "title": "沒有結果",
+      "description": "找不到與您的搜索條件匹配的創意。"
+    }
+  },
+  "modals": {
+    "container": {
+      "create": "創建創意盒",
+      "update": "更新創意盒"
+    },
+    "folder": {
+      "create": "創建資料夾",
+      "update": "更新資料夾"
+    },
+    "tag": {
+      "create": "創建標籤",
+      "update": "更新標籤"
+    },
+    "idea": {
+      "create": "新增",
+      "update": "編輯"
+    }
+  },
+  "buttons": {
+    "unpin": "取消置頂",
+    "pin": "置頂",
+    "viewArchived": "查看已歸檔",
+    "archive": "歸檔",
+    "removeFromFolder": "從資料夾中移除"
+  },
+  "inputs": {
+    "containerName": "創意盒名稱",
+    "folderName": "資料夾名稱",
+    "ideaTitle": "創意標題",
+    "imageLink": "圖片連結",
+    "coverImage": "封面圖片",
+    "ideaTags": "創意標籤",
+    "ideaContent": "創意內容",
+    "ideaLink": "創意連結",
+    "tagName": "標籤名稱",
+    "tagIcon": "標籤圖示",
+    "tagColor": "標籤顏色",
+    "containerColor": "創意盒顏色",
+    "folderColor": "資料夾顏色",
+    "containerIcon": "創意盒圖示",
+    "folderIcon": "資料夾圖示"
+  },
+  "items": {
+    "idea": "創意",
+    "container": "創意盒",
+    "folder": "資料夾",
+    "ideaInFolder": "資料夾中的創意"
+  }
+}

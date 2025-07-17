@@ -1,0 +1,30 @@
+{
+  "title": "Achievements",
+  "description": "Celebrate your victories big and small.",
+  "difficulties": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "impossible": "Impossible"
+  },
+  "empty": {
+    "achievement": {
+      "title": "No Achievements",
+      "description": "You haven't added any achievements yet. Click the button below to add one."
+    }
+  },
+  "modals": {
+    "achievement": {
+      "create": "Create Achievement",
+      "update": "Update Achievement"
+    }
+  },
+  "inputs": {
+    "achievementTitle": "Achievement Title",
+    "achievementDifficulty": "Achievement Difficulty",
+    "achievementThoughts": "Achievement Thoughts"
+  },
+  "items": {
+    "achievement": "Achievement"
+  }
+}

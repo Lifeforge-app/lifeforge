@@ -1,0 +1,161 @@
+{
+  "title": "日曆",
+  "description": "不要錯過與命運（或牙醫）的約會。",
+  "view": {
+    "day": "日視圖",
+    "month": "月視圖",
+    "week": "週視圖",
+    "agenda": "議程"
+  },
+  "sidebar": {
+    "categories": "類別",
+    "calendars": "日曆"
+  },
+  "modals": {
+    "event": {
+      "create": "創建事件",
+      "update": "更新事件"
+    },
+    "category": {
+      "create": "創建類別",
+      "update": "更新類別"
+    },
+    "scanImage": {
+      "title": "掃描圖片"
+    },
+    "calendar": {
+      "create": "創建日曆",
+      "update": "更新日曆"
+    }
+  },
+  "inputs": {
+    "startTime": "開始時間",
+    "endTime": "結束時間",
+    "eventCategory": "事件類別",
+    "eventTitle": "事件標題",
+    "categoryName": "類別名稱",
+    "categoryColor": "類別顏色",
+    "categoryIcon": "類別圖標",
+    "location": "地點",
+    "referenceLink": "參考鏈接",
+    "description": "描述",
+    "image": "影像",
+    "eventType": "事件類型",
+    "eventTime": "事件時間",
+    "frequency": "頻率",
+    "yearly": {
+      "exactDate": {
+        "title": "在確切日期",
+        "inputs": {
+          "month": "月份",
+          "date": "日期"
+        }
+      },
+      "relativeDay": {
+        "title": "在相對日",
+        "inputs": {
+          "onThe": "在",
+          "onTheDay": "天",
+          "ofTheMonth": "月份"
+        }
+      }
+    },
+    "monthly": {
+      "inputs": {
+        "every": "每",
+        "months": "個月"
+      },
+      "exactDate": {
+        "title": "在確切日期",
+        "inputs": {
+          "date": "日期"
+        }
+      },
+      "relativeDay": {
+        "title": "在相對的日子",
+        "inputs": {
+          "onThe": "在",
+          "onTheDay": "天"
+        }
+      }
+    },
+    "weekly": {
+      "inputs": {
+        "every": "每",
+        "weeks": "週",
+        "onDays": "星期幾"
+      }
+    },
+    "daily": {
+      "inputs": {
+        "every": "每",
+        "days": "天"
+      }
+    },
+    "hourly": {
+      "inputs": {
+        "every": "每",
+        "hours": "小時"
+      }
+    },
+    "endType": "結束於",
+    "useGoogleMap": "使用 Google 地圖",
+    "calendar": "日曆",
+    "calendarName": "日曆名稱",
+    "calendarColor": "日曆顏色"
+  },
+  "items": {
+    "event": "事件",
+    "category": "類別"
+  },
+  "buttons": {
+    "inputManually": "手動輸入",
+    "scanFromImage": "從圖像掃描",
+    "today": "今天"
+  },
+  "eventTypes": {
+    "single": "單一事件",
+    "recurring": "重複事件"
+  },
+  "recurring": {
+    "freqs": {
+      "yearly": "每年",
+      "monthly": "每月",
+      "weekly": "每週",
+      "daily": "每日",
+      "hourly": "每小時"
+    },
+    "onThe": {
+      "first": "第一個",
+      "second": "第二個",
+      "third": "第三個",
+      "fourth": "第四個",
+      "last": "最後一個"
+    },
+    "onTheDay": {
+      "weekday": "工作日",
+      "day": "天",
+      "weekendDay": "週末的日子"
+    },
+    "endTypes": {
+      "never": "從不",
+      "after": "在執行了",
+      "on": "在日期"
+    },
+    "inputs": {
+      "on": "日期",
+      "after": "數量",
+      "executions": "次後",
+      "durationUnit": "持續時間單位",
+      "durationAmount": "持續時間數量"
+    },
+    "durationUnits": {
+      "minute": "分鐘",
+      "hour": "小時",
+      "day": "天",
+      "week": "週",
+      "month": "月份",
+      "year": "年"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "title": "API Explorer",
+  "description": "Explore and test the APIs of the system",
+  "items": {
+    "endpoints": "API Endpoints"
+  },
+  "empty": {
+    "search": {
+      "title": "No Endpoints Found",
+      "description": "No results found. Try another query."
+    }
+  }
+}

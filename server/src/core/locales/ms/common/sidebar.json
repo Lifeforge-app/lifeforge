@@ -1,0 +1,25 @@
+{
+  "categories": {
+    "productivity": "Produktiviti",
+    "storage": "Penyimpanan",
+    "study": "Pembelajaran",
+    "finance": "Kewangan",
+    "confidential": "Sulit",
+    "settings": "Tetapan",
+    "technologies": "Teknologi",
+    "utilities": "Utiliti",
+    "information": "Maklumat",
+    "sso": "Log Masuk Tunggal",
+    "references": "Rujukan",
+    "lifestyle": "Gaya Hidup",
+    "externalManagement": "Pengurusan Luaran",
+    "healthFitness": "Kesihatan & Kecergasan"
+  },
+  "buttons": {
+    "signOut": "Log Keluar",
+    "accountSettings": "Tetapan Akaun"
+  },
+  "items": {
+    "module": "Modul"
+  }
+}

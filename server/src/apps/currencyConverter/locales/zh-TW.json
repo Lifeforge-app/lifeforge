@@ -1,0 +1,20 @@
+{
+  "title": "貨幣轉換器",
+  "description": "使用實時匯率在各種貨幣之間進行轉換。",
+  "inputs": {
+    "from": "從貨幣",
+    "to": "目標貨幣",
+    "amount": "金額"
+  },
+  "widgets": {
+    "conversionResult": {
+      "title": "轉換結果"
+    },
+    "conversionRatesHistory": {
+      "title": "匯率歷史"
+    }
+  },
+  "misc": {
+    "updatedMsg": "最後更新於"
+  }
+}

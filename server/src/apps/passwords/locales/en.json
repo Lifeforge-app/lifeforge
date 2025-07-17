@@ -1,0 +1,32 @@
+{
+  "title": "Password",
+  "description": "Protect your secrets, sometimes even from yourself.",
+  "modals": {
+    "password": {
+      "create": "Create Password",
+      "update": "Update Password"
+    }
+  },
+  "inputs": {
+    "serviceColor": "Service Color",
+    "serviceName": "Service Name",
+    "website": "Website",
+    "password": "Password",
+    "usernameOrEmail": "Username or Email",
+    "serviceIcon": "Service Icon"
+  },
+  "items": {
+    "password": "Password"
+  },
+  "empty": {
+    "password": {
+      "title": "No Passwords",
+      "description": "You haven't added any passwords yet. Click the button below to add one."
+    },
+    "search": {
+      "title": "No Entries Found",
+      "description": "No entries found for your search query. Please try another one."
+    }
+  },
+  "lastUpdated": "Last Updated"
+}
