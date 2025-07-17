@@ -36,7 +36,8 @@ function Transactions() {
     setSelectedType,
     setSelectedLedger,
     setSelectedAsset,
-    setSelectedCategory
+    setSelectedCategory,
+    setSearchQuery
   } = useWalletStore()
 
   const navigate = useNavigate()
@@ -101,10 +102,15 @@ function Transactions() {
   }, [hash])
 
   useEffect(() => {
+    const query = searchParams.get('query')
     const type = searchParams.get('type')
     const ledger = searchParams.get('ledger')
     const asset = searchParams.get('asset')
     const category = searchParams.get('category')
+
+    if (query) {
+      setSearchQuery(query)
+    }
 
     if (type && ['income', 'expenses', 'transfer'].includes(type)) {
       setSelectedType(type as IWalletTransaction['type'])
