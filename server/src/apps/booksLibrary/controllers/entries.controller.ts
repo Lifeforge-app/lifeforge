@@ -5,11 +5,11 @@ import {
 } from "@functions/forgeController";
 import { getAPIKey } from "@functions/getAPIKey";
 import express from "express";
+import { BooksLibrarySchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { BooksLibraryEntrySchema } from "../schema";
 import * as EntriesService from "../services/entries.service";
 
 const booksLibraryEntriesRouter = express.Router();
@@ -18,7 +18,7 @@ const getAllEntries = forgeController
   .route("GET /")
   .description("Get all entries in the books library")
   .schema({
-    response: z.array(WithPBSchema(BooksLibraryEntrySchema)),
+    response: z.array(WithPBSchema(BooksLibrarySchemas.EntrySchema)),
   })
   .callback(({ pb }) => EntriesService.getAllEntries(pb));
 
@@ -29,7 +29,7 @@ const updateEntry = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: BooksLibraryEntrySchema.pick({
+    body: BooksLibrarySchemas.EntrySchema.pick({
       title: true,
       authors: true,
       collection: true,
@@ -44,7 +44,7 @@ const updateEntry = forgeController
         return isNaN(year) ? 0 : year;
       }),
     }),
-    response: WithPBSchema(BooksLibraryEntrySchema),
+    response: WithPBSchema(BooksLibrarySchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "books_library__entries",
@@ -64,7 +64,7 @@ const toggleFavouriteStatus = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(BooksLibraryEntrySchema),
+    response: WithPBSchema(BooksLibrarySchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "books_library__entries",
@@ -80,7 +80,7 @@ const toggleReadStatus = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(BooksLibraryEntrySchema),
+    response: WithPBSchema(BooksLibrarySchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "books_library__entries",

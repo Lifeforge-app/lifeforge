@@ -4,15 +4,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { CodeTimeSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import {
-  CodeTimeActivitiesSchema,
-  CodeTimeDailyEntrySchema,
-  CodeTimeStatisticsSchema,
-} from "../schema";
 import * as CodeTimeService from "../services/codeTime.service";
 
 const codeTimeRouter = express.Router();
@@ -29,7 +25,7 @@ const getActivities = forgeController
           val ? parseInt(val, 10) : new Date().getFullYear(),
         ),
     }),
-    response: CodeTimeActivitiesSchema,
+    response: CodeTimeSchemas.CodeTimeActivitiesSchema,
   })
   .callback(
     async ({ pb, query: { year } }) =>
@@ -40,7 +36,7 @@ const getStatistics = forgeController
   .route("GET /statistics")
   .description("Get code time statistics")
   .schema({
-    response: CodeTimeStatisticsSchema,
+    response: CodeTimeSchemas.CodeTimeStatisticsSchema,
   })
   .callback(async ({ pb }) => await CodeTimeService.getStatistics(pb));
 
@@ -51,7 +47,7 @@ const getLastXDays = forgeController
     query: z.object({
       days: z.string().transform((val) => parseInt(val, 10)),
     }),
-    response: z.array(WithPBSchema(CodeTimeDailyEntrySchema)),
+    response: z.array(WithPBSchema(CodeTimeSchemas.DailyEntrySchema)),
   })
   .callback(async ({ pb, query: { days } }) => {
     if (days > 30) {

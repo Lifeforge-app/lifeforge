@@ -1,14 +1,13 @@
 import PocketBase from "pocketbase";
+import { BooksLibrarySchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IBooksLibraryFileType } from "../schema";
-
 export const getAllFileTypes = (
   pb: PocketBase,
-): Promise<WithPB<IBooksLibraryFileType>[]> =>
+): Promise<WithPB<BooksLibrarySchemas.IFileType>[]> =>
   pb
     .collection("books_library__file_types_aggregated")
-    .getFullList<WithPB<IBooksLibraryFileType>>({
+    .getFullList<WithPB<BooksLibrarySchemas.IFileType>>({
       sort: "name",
     });

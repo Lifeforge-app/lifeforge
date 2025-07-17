@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { WalletSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { WalletAssetSchema } from "../schema";
 import * as AssetsService from "../services/assets.service";
 
 const walletAssetsRouter = express.Router();
@@ -16,7 +16,7 @@ const getAllAssets = forgeController
   .route("GET /")
   .description("Get all wallet assets")
   .schema({
-    response: z.array(WithPBSchema(WalletAssetSchema)),
+    response: z.array(WithPBSchema(WalletSchemas.AssetAggregatedSchema)),
   })
   .callback(async ({ pb }) => await AssetsService.getAllAssets(pb));
 
@@ -24,7 +24,7 @@ const createAsset = forgeController
   .route("POST /")
   .description("Create a new wallet asset")
   .schema({
-    body: WalletAssetSchema.pick({
+    body: WalletSchemas.AssetSchema.pick({
       name: true,
       icon: true,
       starting_balance: true,
@@ -34,7 +34,7 @@ const createAsset = forgeController
         return isNaN(balance) ? 0 : balance;
       }),
     }),
-    response: WithPBSchema(WalletAssetSchema),
+    response: WithPBSchema(WalletSchemas.AssetSchema),
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => await AssetsService.createAsset(pb, body));
@@ -63,7 +63,7 @@ const updateAsset = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: WalletAssetSchema.pick({
+    body: WalletSchemas.AssetSchema.pick({
       name: true,
       icon: true,
       starting_balance: true,
@@ -73,7 +73,7 @@ const updateAsset = forgeController
         return isNaN(balance) ? 0 : balance;
       }),
     }),
-    response: WithPBSchema(WalletAssetSchema),
+    response: WithPBSchema(WalletSchemas.AssetSchema),
   })
   .existenceCheck("params", {
     id: "wallet__assets",

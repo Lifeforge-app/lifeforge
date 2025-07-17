@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { TodoListSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { TodoListEntrySchema, TodoListStatusCounterSchema } from "../schema";
 import * as entriesService from "../services/entries.service";
 
 const todoListEntriesRouter = express.Router();
@@ -16,7 +16,7 @@ const getStatusCounter = forgeController
   .route("GET /utils/status-counter")
   .description("Get status counter for todo entries")
   .schema({
-    response: TodoListStatusCounterSchema,
+    response: TodoListSchemas.TodoListStatusCounterSchema,
   })
   .callback(async ({ pb }) => await entriesService.getStatusCounter(pb));
 
@@ -27,7 +27,7 @@ const getEntryById = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(TodoListEntrySchema),
+    response: WithPBSchema(TodoListSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "todo_list__entries",
@@ -47,7 +47,7 @@ const getAllEntries = forgeController
       tag: z.string().optional(),
       query: z.string().optional(),
     }),
-    response: z.array(WithPBSchema(TodoListEntrySchema)),
+    response: z.array(WithPBSchema(TodoListSchemas.EntrySchema)),
   })
   .existenceCheck("query", {
     tag: "[todo_list_tags]",
@@ -63,11 +63,11 @@ const createEntry = forgeController
   .route("POST /")
   .description("Create a new todo entry")
   .schema({
-    body: TodoListEntrySchema.omit({
+    body: TodoListSchemas.EntrySchema.omit({
       completed_at: true,
       done: true,
     }),
-    response: WithPBSchema(TodoListEntrySchema),
+    response: WithPBSchema(TodoListSchemas.EntrySchema),
   })
   .existenceCheck("body", {
     list: "[todo_list_lists]",
@@ -84,11 +84,11 @@ const updateEntry = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListEntrySchema.omit({
+    body: TodoListSchemas.EntrySchema.omit({
       completed_at: true,
       done: true,
     }),
-    response: WithPBSchema(TodoListEntrySchema),
+    response: WithPBSchema(TodoListSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "todo_list__entries",
@@ -127,7 +127,7 @@ const toggleEntry = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(TodoListEntrySchema),
+    response: WithPBSchema(TodoListSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "todo_list__entries",

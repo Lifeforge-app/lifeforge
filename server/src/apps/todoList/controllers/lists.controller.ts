@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { TodoListSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { TodoListListSchema } from "../schema";
 import * as listsService from "../services/lists.service";
 
 const todoListListsRouter = express.Router();
@@ -17,7 +17,7 @@ const getAllLists = forgeController
   .description("Get all todo lists")
   .schema({
     response: z.array(
-      WithPBSchema(TodoListListSchema.extend({ amount: z.number() })),
+      WithPBSchema(TodoListSchemas.ListSchema.extend({ amount: z.number() })),
     ),
   })
   .callback(({ pb }) => listsService.getAllLists(pb));
@@ -26,8 +26,14 @@ const createList = forgeController
   .route("POST /")
   .description("Create a new todo list")
   .schema({
-    body: TodoListListSchema.pick({ name: true, icon: true, color: true }),
-    response: WithPBSchema(TodoListListSchema.extend({ amount: z.number() })),
+    body: TodoListSchemas.ListSchema.pick({
+      name: true,
+      icon: true,
+      color: true,
+    }),
+    response: WithPBSchema(
+      TodoListSchemas.ListSchema.extend({ amount: z.number() }),
+    ),
   })
   .statusCode(201)
   .callback(({ pb, body }) => listsService.createList(pb, body));
@@ -39,8 +45,14 @@ const updateList = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListListSchema.pick({ name: true, icon: true, color: true }),
-    response: WithPBSchema(TodoListListSchema.extend({ amount: z.number() })),
+    body: TodoListSchemas.ListSchema.pick({
+      name: true,
+      icon: true,
+      color: true,
+    }),
+    response: WithPBSchema(
+      TodoListSchemas.ListSchema.extend({ amount: z.number() }),
+    ),
   })
   .existenceCheck("params", {
     id: "todo_list__lists",

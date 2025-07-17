@@ -3,12 +3,9 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { BooksLibrarySchemas } from "shared";
 import { z } from "zod/v4";
 
-import {
-  BooksLibraryEntrySchema,
-  BooksLibraryLibgenSearchResultSchema,
-} from "../schema";
 import * as libgenService from "../services/libgen.service";
 
 const booksLibraryLibgenRouter = express.Router();
@@ -30,7 +27,7 @@ const searchBooks = forgeController
       req: z.string(),
       page: z.string(),
     }),
-    response: BooksLibraryLibgenSearchResultSchema,
+    response: BooksLibrarySchemas.BooksLibraryLibgenSearchResultSchema,
   })
   .callback(async ({ query }) => await libgenService.searchBooks(query));
 
@@ -55,7 +52,7 @@ const getLocalLibraryData = forgeController
       provider: z.string(),
       md5: z.string(),
     }),
-    response: BooksLibraryEntrySchema.omit({
+    response: BooksLibrarySchemas.EntrySchema.omit({
       collection: true,
       file: true,
       is_favourite: true,

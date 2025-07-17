@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { WalletSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { WalletCategorySchema } from "../schema";
 import * as CategoriesService from "../services/categories.service";
 
 const walletCategoriesRouter = express.Router();
@@ -16,7 +16,7 @@ const getAllCategories = forgeController
   .route("GET /")
   .description("Get all wallet categories")
   .schema({
-    response: z.array(WithPBSchema(WalletCategorySchema)),
+    response: z.array(WithPBSchema(WalletSchemas.CategoryAggregatedSchema)),
   })
   .callback(async ({ pb }) => await CategoriesService.getAllCategories(pb));
 
@@ -24,8 +24,8 @@ const createCategory = forgeController
   .route("POST /")
   .description("Create a new wallet category")
   .schema({
-    body: WalletCategorySchema,
-    response: WithPBSchema(WalletCategorySchema),
+    body: WalletSchemas.CategorySchema,
+    response: WithPBSchema(WalletSchemas.CategorySchema),
   })
   .statusCode(201)
   .callback(
@@ -39,8 +39,8 @@ const updateCategory = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: WalletCategorySchema,
-    response: WithPBSchema(WalletCategorySchema),
+    body: WalletSchemas.CategorySchema,
+    response: WithPBSchema(WalletSchemas.CategorySchema),
   })
   .existenceCheck("params", {
     id: "wallet__categories",

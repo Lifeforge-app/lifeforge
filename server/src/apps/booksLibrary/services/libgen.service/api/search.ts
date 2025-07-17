@@ -1,12 +1,11 @@
 import { JSDOM } from "jsdom";
-
-import { IBooksLibraryLibgenSearchResult } from "../../../schema";
+import { BooksLibrarySchemas } from "shared";
 
 export const searchBooks = async (queries: {
   provider: string;
   req: string;
   page: string;
-}): Promise<IBooksLibraryLibgenSearchResult> => {
+}): Promise<BooksLibrarySchemas.IBooksLibraryLibgenSearchResult> => {
   const target = new URL(
     queries.provider === "libgen.is"
       ? "http://libgen.is/search.php?lg_topic=libgen&open=0&view=detailed&res=25&column=def&phrase=0&sort=year&sortmode=DESC"
@@ -19,7 +18,7 @@ export const searchBooks = async (queries: {
     const data = await fetch(target.href).then((res) => res.text());
     const dom = new JSDOM(data);
     const document = dom.window.document;
-    let final: IBooksLibraryLibgenSearchResult["data"] = [];
+    let final: BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["data"] = [];
     let resultsCount = "";
 
     if (queries.provider === "libgen.is") {
@@ -49,8 +48,8 @@ export const searchBooks = async (queries: {
 function parseLibgenIS(
   document: Document,
 ): [
-  IBooksLibraryLibgenSearchResult["data"],
-  IBooksLibraryLibgenSearchResult["resultsCount"],
+  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["data"],
+  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["resultsCount"],
 ] {
   const table = Array.from(
     document.querySelectorAll('body > table[rules="cols"]'),
@@ -98,8 +97,8 @@ function parseLibgenMirror(
   provider: string,
   document: Document,
 ): [
-  IBooksLibraryLibgenSearchResult["data"],
-  IBooksLibraryLibgenSearchResult["resultsCount"],
+  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["data"],
+  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["resultsCount"],
 ] {
   return [
     Array.from(document.querySelectorAll("#tablelibgen tbody tr")).map((e) => ({

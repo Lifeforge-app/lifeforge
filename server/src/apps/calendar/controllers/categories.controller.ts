@@ -4,11 +4,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { CalendarSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { CalendarCategorySchema } from "../schema";
 import * as CategoriesService from "../services/categories.service";
 
 const calendarCategoriesRouter = express.Router();
@@ -17,7 +17,7 @@ const getAllCategories = forgeController
   .route("GET /")
   .description("Get all calendar categories")
   .schema({
-    response: z.array(WithPBSchema(CalendarCategorySchema)),
+    response: z.array(WithPBSchema(CalendarSchemas.CategorySchema)),
   })
   .callback(async ({ pb }) => await CategoriesService.getAllCategories(pb));
 
@@ -28,7 +28,7 @@ const getCategoryById = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(CalendarCategorySchema),
+    response: WithPBSchema(CalendarSchemas.CategorySchema),
   })
   .existenceCheck("params", {
     id: "calendar__categories",
@@ -42,8 +42,8 @@ const createCategory = forgeController
   .route("POST /")
   .description("Create a new calendar category")
   .schema({
-    body: CalendarCategorySchema,
-    response: WithPBSchema(CalendarCategorySchema),
+    body: CalendarSchemas.CategorySchema,
+    response: WithPBSchema(CalendarSchemas.CategorySchema),
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => {
@@ -70,8 +70,8 @@ const updateCategory = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: CalendarCategorySchema,
-    response: WithPBSchema(CalendarCategorySchema),
+    body: CalendarSchemas.CategorySchema,
+    response: WithPBSchema(CalendarSchemas.CategorySchema),
   })
   .existenceCheck("params", {
     id: "calendar__categories",

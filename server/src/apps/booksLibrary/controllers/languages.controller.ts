@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { BooksLibrarySchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { BooksLibraryLanguageSchema } from "../schema";
 import * as LanguagesService from "../services/languages.service";
 
 const booksLibraryLanguagesRouter = express.Router();
@@ -16,7 +16,7 @@ const getAllLanguages = forgeController
   .route("GET /")
   .description("Get all languages for the books library")
   .schema({
-    response: z.array(BooksLibraryLanguageSchema),
+    response: z.array(BooksLibrarySchemas.LanguageSchema),
   })
   .callback(({ pb }) => LanguagesService.getAllLanguages(pb));
 
@@ -24,8 +24,8 @@ const createLanguage = forgeController
   .route("POST /")
   .description("Create a new language for the books library")
   .schema({
-    body: BooksLibraryLanguageSchema,
-    response: WithPBSchema(BooksLibraryLanguageSchema),
+    body: BooksLibrarySchemas.LanguageSchema,
+    response: WithPBSchema(BooksLibrarySchemas.LanguageSchema),
   })
   .statusCode(201)
   .callback(
@@ -39,8 +39,8 @@ const updateLanguage = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: BooksLibraryLanguageSchema,
-    response: WithPBSchema(BooksLibraryLanguageSchema),
+    body: BooksLibrarySchemas.LanguageSchema,
+    response: WithPBSchema(BooksLibrarySchemas.LanguageSchema),
   })
   .existenceCheck("params", {
     id: "books_library__languages",

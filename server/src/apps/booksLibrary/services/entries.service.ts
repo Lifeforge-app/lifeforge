@@ -1,17 +1,16 @@
 import ClientError from "@functions/ClientError";
 import mailer from "nodemailer";
 import Pocketbase from "pocketbase";
+import { BooksLibrarySchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IBooksLibraryEntry } from "../schema";
-
 export const getAllEntries = (
   pb: Pocketbase,
-): Promise<WithPB<IBooksLibraryEntry>[]> =>
+): Promise<WithPB<BooksLibrarySchemas.IEntry>[]> =>
   pb
     .collection("books_library__entries")
-    .getFullList<WithPB<IBooksLibraryEntry>>({
+    .getFullList<WithPB<BooksLibrarySchemas.IEntry>>({
       sort: "-is_favourite,-created",
     });
 
@@ -19,7 +18,7 @@ export const updateEntry = (
   pb: Pocketbase,
   id: string,
   data: Pick<
-    IBooksLibraryEntry,
+    BooksLibrarySchemas.IEntry,
     | "title"
     | "authors"
     | "collection"
@@ -29,22 +28,22 @@ export const updateEntry = (
     | "publisher"
     | "year_published"
   >,
-): Promise<WithPB<IBooksLibraryEntry>> =>
+): Promise<WithPB<BooksLibrarySchemas.IEntry>> =>
   pb
     .collection("books_library__entries")
-    .update<WithPB<IBooksLibraryEntry>>(id, data);
+    .update<WithPB<BooksLibrarySchemas.IEntry>>(id, data);
 
 export const toggleFavouriteStatus = async (
   pb: Pocketbase,
   id: string,
-): Promise<WithPB<IBooksLibraryEntry>> => {
+): Promise<WithPB<BooksLibrarySchemas.IEntry>> => {
   const book = await pb
     .collection("books_library__entries")
-    .getOne<WithPB<IBooksLibraryEntry>>(id);
+    .getOne<WithPB<BooksLibrarySchemas.IEntry>>(id);
 
   return await pb
     .collection("books_library__entries")
-    .update<WithPB<IBooksLibraryEntry>>(id, {
+    .update<WithPB<BooksLibrarySchemas.IEntry>>(id, {
       is_favourite: !book.is_favourite,
     });
 };
@@ -52,14 +51,14 @@ export const toggleFavouriteStatus = async (
 export const toggleReadStatus = async (
   pb: Pocketbase,
   id: string,
-): Promise<WithPB<IBooksLibraryEntry>> => {
+): Promise<WithPB<BooksLibrarySchemas.IEntry>> => {
   const book = await pb
     .collection("books_library__entries")
-    .getOne<WithPB<IBooksLibraryEntry>>(id);
+    .getOne<WithPB<BooksLibrarySchemas.IEntry>>(id);
 
   return await pb
     .collection("books_library__entries")
-    .update<WithPB<IBooksLibraryEntry>>(id, {
+    .update<WithPB<BooksLibrarySchemas.IEntry>>(id, {
       is_read: !book.is_read,
       time_finished: !book.is_read ? new Date().toISOString() : "",
     });
@@ -86,7 +85,7 @@ export const sendToKindle = async (
 
   const entry = await pb
     .collection("books_library__entries")
-    .getOne<IBooksLibraryEntry>(id);
+    .getOne<BooksLibrarySchemas.IEntry>(id);
 
   const fileLink = pb.files.getURL(entry, entry.file);
   const content = await fetch(fileLink).then((res) => res.arrayBuffer());

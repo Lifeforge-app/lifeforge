@@ -4,6 +4,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { MomentVaultSchemas } from "shared";
 import { z } from "zod/v4";
 
 import {
@@ -13,7 +14,6 @@ import {
 
 import { uploadMiddleware } from "@middlewares/uploadMiddleware";
 
-import { MomentVaultEntrySchema } from "../schema";
 import * as EntriesServices from "../services/entries.service";
 
 const momentVaultEntriesRouter = express.Router();
@@ -28,7 +28,7 @@ const getEntries = forgeController
         .optional()
         .transform((val) => parseInt(val ?? "1", 10) || 1),
     }),
-    response: PBListResultSchema(WithPBSchema(MomentVaultEntrySchema)),
+    response: PBListResultSchema(WithPBSchema(MomentVaultSchemas.EntrySchema)),
   })
   .callback(
     async ({ pb, query }) =>
@@ -44,7 +44,7 @@ const createEntry = forgeController
       content: z.string().optional(),
       transcription: z.string().optional(),
     }),
-    response: WithPBSchema(MomentVaultEntrySchema),
+    response: WithPBSchema(MomentVaultSchemas.EntrySchema),
   })
   .middlewares(uploadMiddleware)
   .callback(async ({ pb, body: { type, content, transcription }, req }) => {
@@ -101,7 +101,7 @@ const updateEntry = forgeController
     body: z.object({
       content: z.string(),
     }),
-    response: WithPBSchema(MomentVaultEntrySchema),
+    response: WithPBSchema(MomentVaultSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "moment_vault__entries",

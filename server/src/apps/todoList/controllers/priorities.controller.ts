@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { TodoListSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { TodoListPrioritySchema } from "../schema";
 import * as prioritiesService from "../services/priorities.service";
 
 const todoListPrioritiesRouter = express.Router();
@@ -17,7 +17,9 @@ const getAllPriorities = forgeController
   .description("Get all todo priorities")
   .schema({
     response: z.array(
-      WithPBSchema(TodoListPrioritySchema.extend({ amount: z.number() })),
+      WithPBSchema(
+        TodoListSchemas.PrioritySchema.extend({ amount: z.number() }),
+      ),
     ),
   })
   .callback(({ pb }) => prioritiesService.getAllPriorities(pb));
@@ -26,9 +28,9 @@ const createPriority = forgeController
   .route("POST /")
   .description("Create a new todo priority")
   .schema({
-    body: TodoListPrioritySchema,
+    body: TodoListSchemas.PrioritySchema,
     response: WithPBSchema(
-      TodoListPrioritySchema.extend({ amount: z.number() }),
+      TodoListSchemas.PrioritySchema.extend({ amount: z.number() }),
     ),
   })
   .statusCode(201)
@@ -41,9 +43,9 @@ const updatePriority = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListPrioritySchema.pick({ name: true, color: true }),
+    body: TodoListSchemas.PrioritySchema.pick({ name: true, color: true }),
     response: WithPBSchema(
-      TodoListPrioritySchema.extend({ amount: z.number() }),
+      TodoListSchemas.PrioritySchema.extend({ amount: z.number() }),
     ),
   })
   .existenceCheck("params", {
