@@ -1,0 +1,80 @@
+{
+  "title": "创意盒",
+  "description": "在灵感飞走之前抓住它们！",
+  "entryType": {
+    "text": "文字",
+    "image": "图片",
+    "link": "连结",
+    "folder": "资料夹"
+  },
+  "empty": {
+    "container": {
+      "title": "没有创意盒",
+      "description": "您还没有创建任何创意盒。点击下面的按钮创建一个。"
+    },
+    "folder": {
+      "title": "没有资料夹",
+      "description": "您还没有创建任何资料夹。点击下面的按钮创建一个。"
+    },
+    "idea": {
+      "title": "没有创意",
+      "description": "您还没有添加任何创意。点击下面的按钮添加一个。"
+    },
+    "archived": {
+      "title": "没有已归档的创意",
+      "description": "您还没有归档任何创意。"
+    },
+    "result": {
+      "title": "没有结果",
+      "description": "找不到与您的搜索条件匹配的创意。"
+    }
+  },
+  "modals": {
+    "container": {
+      "create": "创建创意盒",
+      "update": "更新创意盒"
+    },
+    "folder": {
+      "create": "创建资料夹",
+      "update": "更新资料夹"
+    },
+    "tag": {
+      "create": "创建标签",
+      "update": "更新标签"
+    },
+    "idea": {
+      "create": "新增",
+      "update": "编辑"
+    }
+  },
+  "buttons": {
+    "unpin": "取消置顶",
+    "pin": "置顶",
+    "viewArchived": "查看已归档",
+    "archive": "归档",
+    "removeFromFolder": "从资料夹中移除"
+  },
+  "inputs": {
+    "containerName": "创意盒名称",
+    "folderName": "资料夹名称",
+    "ideaTitle": "创意标题",
+    "imageLink": "图片连结",
+    "coverImage": "封面图片",
+    "ideaTags": "创意标签",
+    "ideaContent": "创意内容",
+    "ideaLink": "创意连结",
+    "tagName": "标签名称",
+    "tagIcon": "标签图示",
+    "tagColor": "标签颜色",
+    "containerColor": "创意盒颜色",
+    "folderColor": "资料夹颜色",
+    "containerIcon": "创意盒图示",
+    "folderIcon": "资料夹图示"
+  },
+  "items": {
+    "idea": "创意",
+    "container": "创意盒",
+    "folder": "资料夹",
+    "ideaInFolder": "资料夹中的创意"
+  }
+}

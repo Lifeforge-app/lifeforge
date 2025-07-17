@@ -1,0 +1,32 @@
+{
+  "title": "Kata Laluan",
+  "description": "Lindungi rahsia anda, kadang-kadang walaupun dari diri sendiri.",
+  "modals": {
+    "password": {
+      "create": "Cipta Kata Laluan",
+      "update": "Kemas Kini Kata Laluan"
+    }
+  },
+  "inputs": {
+    "serviceColor": "Warna Perkhidmatan",
+    "serviceName": "Nama Perkhidmatan",
+    "website": "Laman Web",
+    "password": "Kata Laluan",
+    "usernameOrEmail": "Nama Pengguna atau E-mel",
+    "serviceIcon": "Ikon Perkhidmatan"
+  },
+  "items": {
+    "password": "Kata Laluan"
+  },
+  "empty": {
+    "password": {
+      "title": "Tiada Kata Laluan",
+      "description": "Anda belum menambah sebarang kata laluan lagi. Klik butang di bawah untuk menambah satu."
+    },
+    "search": {
+      "title": "Tiada Entri Ditemui",
+      "description": "Tiada entri ditemukan untuk carian anda. Sila cuba lagi."
+    }
+  },
+  "lastUpdated": "Terakhir Dikemas kini"
+}

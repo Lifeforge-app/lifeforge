@@ -1,0 +1,11 @@
+{
+  "/locales": "locales",
+  "/user": "user",
+  "/api-keys": "apiKeys",
+  "/pixabay": "pixabay",
+  "/locations": "locations",
+  "/ai": "ai",
+  "/modules": "modules",
+  "/backups": "backups",
+  "/database": "database"
+}

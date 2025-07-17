@@ -1,26 +1,24 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
-    // Environment settings
-    "lib": ["ESNext"],
     "target": "ESNext",
+    "outDir": "./dist",
     "module": "ESNext",
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
-
-    // Types
-    "types": ["bun-types"],
-
-    // Output settings
-    "declaration": true,
-    "outDir": "dist",
-    "noEmit": false,
-    "emitDecoratorMetadata": true,
-
-    // Module resolution
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": false
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "allowUnusedLabels": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,
+    "noUnusedLocals": true,
+    "paths": {
+      "@functions/*": ["./src/core/functions/*"],
+      "@typescript/*": ["./src/core/typescript/*"],
+      "@middlewares/*": ["./src/core/middlewares/*"]
+    }
+  }
 }

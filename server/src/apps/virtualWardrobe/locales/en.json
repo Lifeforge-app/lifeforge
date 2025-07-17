@@ -1,0 +1,73 @@
+{
+  "title": "Virtual Wardrobe",
+  "description": "Create and manage a digital collection of personal styles, clothing, and accessories.",
+  "subsections": {
+    "virtualWardrobeClothes": "Clothes",
+    "virtualWardrobeOutfits": "Outfits"
+  },
+  "sidebar": {
+    "allClothes": "All Clothes",
+    "favourites": "Favourite Clothes",
+    "categories": "Categories",
+    "subcategories": "Subcategories",
+    "sizes": "Sizes",
+    "colors": "Colors",
+    "brands": "Brands",
+    "labels": "Labels"
+  },
+  "modals": {
+    "item": {
+      "create": "Create Item",
+      "update": "Update Item"
+    },
+    "sessionCart": "Session Cart",
+    "checkout": {
+      "title": "Checkout",
+      "desc": "By clicking checkout, this set of items will be added to your wardrobe history. You can view them on the 'Histories' page."
+    }
+  },
+  "buttons": {
+    "addToCart": "Add to Cart",
+    "removeFromCart": "Remove from Cart",
+    "checkout": "Checkout"
+  },
+  "inputs": {
+    "itemName": "Item Name",
+    "brand": "Brand",
+    "color": "Color",
+    "size": "Size",
+    "price": "Price",
+    "category": "Category",
+    "subcategory": "Subcategory",
+    "frontImage": "Front Image",
+    "backImage": "Back Image",
+    "notes": "Notes"
+  },
+  "items": {
+    "clothes": "Clothes",
+    "outfit": "Outfit"
+  },
+  "steps": {
+    "uploadPhotos": "Upload Photos",
+    "basicInfo": "Basic Info",
+    "appearanceAndDetails": "Appearance and Details"
+  },
+  "empty": {
+    "clothes": {
+      "title": "No Clothes",
+      "description": "You haven't added any clothes yet. Click the button below to add one."
+    },
+    "outfits": {
+      "title": "No Outfits",
+      "description": "You haven't added any outfits yet. Click the button below to add one."
+    },
+    "results": {
+      "title": "No Results",
+      "description": "No items found, please try different keywords."
+    },
+    "sessionCart": {
+      "title": "Cart is Empty",
+      "description": "Your cart is currently empty. Please add some items."
+    }
+  }
+}

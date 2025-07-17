@@ -1,0 +1,20 @@
+{
+  "/todo-list": "todoList",
+  "/calendar": "calendar",
+  "/idea-box": "ideaBox",
+  "/code-time": "codeTime",
+  "/books-library": "booksLibrary",
+  "/wallet": "wallet",
+  "/wishlist": "wishlist",
+  "/music": "music",
+  "/guitar-tabs": "guitarTabs",
+  "/passwords": "passwords",
+  "/sudoku": "sudoku",
+  "/virtual-wardrobe": "virtualWardrobe",
+  "/moment-vault": "momentVault",
+  "/movies": "movies",
+  "/railway-map": "railwayMap",
+  "/youtube-summarizer": "youtubeSummarizer",
+  "/achievements": "achievements",
+  "/blog": "blog"
+}

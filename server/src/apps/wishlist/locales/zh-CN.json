@@ -1,0 +1,54 @@
+{
+  "title": "愿望清单",
+  "description": "梦想大，计划实现它。",
+  "modals": {
+    "wishlist": {
+      "create": "建立愿望清单",
+      "update": "编辑愿望清单"
+    },
+    "entry": {
+      "create": "新增项目",
+      "update": "编辑项目"
+    },
+    "importFromOtherApps": "从其他应用程式汇入"
+  },
+  "buttons": {
+    "visitWebsite": "访问网站",
+    "addManually": "手动添加",
+    "fromOtherApps": "从其他应用程式",
+    "markAsBought": "标记为已购买"
+  },
+  "inputs": {
+    "wishlistName": "愿望清单名称",
+    "wishlistDescription": "愿望清单描述",
+    "wishlistIcon": "愿望清单图标",
+    "wishlistColor": "愿望清单颜色",
+    "productUrl": "产品链接",
+    "productPrice": "产品价格",
+    "productName": "产品名称",
+    "productImage": "产品图片",
+    "provider": "提供者"
+  },
+  "items": {
+    "wishlist": "愿望清单",
+    "entry": "条目"
+  },
+  "empty": {
+    "wishlists": {
+      "title": "没有愿望清单",
+      "description": "您还没有添加任何愿望清单。点击上面的按钮添加一个。"
+    },
+    "entries": {
+      "title": "没有项目",
+      "description": "您还没有添加任何项目。点击上面的按钮添加一个。"
+    },
+    "search": {
+      "title": "未找到任何内容",
+      "description": "您的愿望清单中没有找到项目。 请尝试其他搜索。"
+    }
+  },
+  "tabs": {
+    "wishlist": "愿望清单",
+    "bought": "已购买"
+  }
+}

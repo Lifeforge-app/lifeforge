@@ -1,0 +1,49 @@
+{
+  "title": "伺服器狀態",
+  "description": "監控和管理伺服器效能和資源。",
+  "sections": {
+    "systemResources": "系統資源",
+    "activeServices": "活躍服務",
+    "recentLogs": "最近日誌",
+    "networkStatus": "網絡狀態"
+  },
+  "metrics": {
+    "cpu": "CPU使用率",
+    "memory": "記憶體使用率",
+    "disk": "硬碟空間",
+    "network": "網絡流量",
+    "uptime": "運行時間"
+  },
+  "buttons": {
+    "refreshStatus": "刷新狀態",
+    "viewDetailedStats": "查看詳細統計",
+    "downloadLogs": "下載日誌",
+    "restartService": "重啟服務"
+  },
+  "modals": {
+    "serviceDetails": {
+      "title": "服務詳情",
+      "description": "關於該服務的詳細資訊。"
+    },
+    "confirmRestart": {
+      "title": "重啟服務",
+      "description": "您確定要重啟此服務嗎？"
+    }
+  },
+  "messages": {
+    "serviceRestarted": "服務已成功重啟。",
+    "refreshSuccess": "伺服器狀態已成功刷新。"
+  },
+  "statuses": {
+    "online": "線上",
+    "offline": "離線",
+    "warning": "警告",
+    "critical": "危險"
+  },
+  "empty": {
+    "storageStatus": {
+      "title": "未找到儲存空間",
+      "description": "未找到儲存，請檢查您的API配置或伺服器設置。"
+    }
+  }
+}

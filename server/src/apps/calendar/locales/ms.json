@@ -1,0 +1,161 @@
+{
+  "title": "Kalendar",
+  "description": "Jangan terlepas janji temu dengan takdir (atau doktor gigi).",
+  "view": {
+    "day": "Harian",
+    "month": "Bulanan",
+    "week": "Mingguan",
+    "agenda": "Agenda"
+  },
+  "sidebar": {
+    "categories": "Kategori",
+    "calendars": "Kalendar"
+  },
+  "modals": {
+    "event": {
+      "create": "Cipta Acara",
+      "update": "Kemas Kini Acara"
+    },
+    "category": {
+      "create": "Cipta Kategori",
+      "update": "Kemas Kini Kategori"
+    },
+    "scanImage": {
+      "title": "Imbas Imej"
+    },
+    "calendar": {
+      "create": "Cipta Kalendar",
+      "update": "Kemaskini Kalendar"
+    }
+  },
+  "inputs": {
+    "startTime": "Masa Mula",
+    "endTime": "Masa Tamat",
+    "eventCategory": "Kategori Acara",
+    "eventTitle": "Tajuk Acara",
+    "categoryName": "Nama Kategori",
+    "categoryColor": "Warna Kategori",
+    "categoryIcon": "Ikon Kategori",
+    "location": "Lokasi",
+    "referenceLink": "Pautan Rujukan",
+    "description": "Deskripsi",
+    "image": "Imej",
+    "eventType": "Jenis Acara",
+    "eventTime": "Waktu Acara",
+    "frequency": "Kekerapan",
+    "yearly": {
+      "exactDate": {
+        "title": "Pada Tarikh Tepat",
+        "inputs": {
+          "month": "Bulan",
+          "date": "Tarikh"
+        }
+      },
+      "relativeDay": {
+        "title": "Pada Hari Relatif",
+        "inputs": {
+          "onThe": "Pada",
+          "onTheDay": "Hari",
+          "ofTheMonth": "Dalam Bulan"
+        }
+      }
+    },
+    "monthly": {
+      "inputs": {
+        "every": "Setiap",
+        "months": "Bulan"
+      },
+      "exactDate": {
+        "title": "Pada Tarikh Tepat",
+        "inputs": {
+          "date": "Tarikh"
+        }
+      },
+      "relativeDay": {
+        "title": "Pada Hari Relatif",
+        "inputs": {
+          "onThe": "Pada",
+          "onTheDay": "Hari"
+        }
+      }
+    },
+    "weekly": {
+      "inputs": {
+        "every": "Setiap",
+        "weeks": "Minggu",
+        "onDays": "Pada Hari"
+      }
+    },
+    "daily": {
+      "inputs": {
+        "every": "Setiap",
+        "days": "Hari"
+      }
+    },
+    "hourly": {
+      "inputs": {
+        "every": "Setiap",
+        "hours": "Jam"
+      }
+    },
+    "endType": "Tamat",
+    "useGoogleMap": "Gunakan Peta Google",
+    "calendar": "Kalendar",
+    "calendarName": "Nama Kalendar",
+    "calendarColor": "Warna Kalendar"
+  },
+  "items": {
+    "event": "Acara",
+    "category": "Kategori"
+  },
+  "buttons": {
+    "inputManually": "Masukkan Secara Manual",
+    "scanFromImage": "Imbas dari Imej",
+    "today": "Hari Ini"
+  },
+  "eventTypes": {
+    "single": "Acara Tunggal",
+    "recurring": "Acara Berulang"
+  },
+  "recurring": {
+    "freqs": {
+      "yearly": "Tahunan",
+      "monthly": "Bulanan",
+      "weekly": "Mingguan",
+      "daily": "Harian",
+      "hourly": "Setiap Jam"
+    },
+    "onThe": {
+      "first": "Pertama",
+      "second": "Kedua",
+      "third": "KetigK",
+      "fourth": "Keempat",
+      "last": "Terakhir"
+    },
+    "onTheDay": {
+      "weekday": "Hari Minggu",
+      "day": "Hari",
+      "weekendDay": "Hari Weekend"
+    },
+    "endTypes": {
+      "never": "Tidak pernah",
+      "after": "Selepas",
+      "on": "Pada Tarikh"
+    },
+    "inputs": {
+      "on": "Tarikh",
+      "after": "Jumlah",
+      "executions": "Pelaksanaan",
+      "durationUnit": "Unit Tempoh",
+      "durationAmount": "Jumlah Tempoh"
+    },
+    "durationUnits": {
+      "minute": "Minit",
+      "hour": "Jam",
+      "day": "Hari",
+      "week": "Minggu",
+      "month": "Bulan",
+      "year": "Tahun"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "title": "密码",
+  "description": "保护您的秘密，甚至有时连自己都不知道。",
+  "modals": {
+    "password": {
+      "create": "创建密码",
+      "update": "更新密码"
+    }
+  },
+  "inputs": {
+    "serviceColor": "服务颜色",
+    "serviceName": "服务名称",
+    "website": "网站",
+    "password": "密码",
+    "usernameOrEmail": "用户名或电子邮件",
+    "serviceIcon": "服务图标"
+  },
+  "items": {
+    "password": "密码"
+  },
+  "empty": {
+    "password": {
+      "title": "没有密码",
+      "description": "您还没有添加任何密码。点击下面的按钮添加一个。"
+    },
+    "search": {
+      "title": "未找到条目",
+      "description": "未找到您搜索查询的任何条目。请尝试其他查询。"
+    }
+  },
+  "lastUpdated": "最后更新"
+}

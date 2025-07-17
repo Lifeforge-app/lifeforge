@@ -1,0 +1,100 @@
+{
+  "title": "Personalization",
+  "description": "Make it yours! Who wants a boring system?",
+  "themeSelector": {
+    "title": "Theme",
+    "desc": "Choose a theme that suits your style.",
+    "theme": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "customBgColor": "Custom Background Color"
+  },
+  "themeColorSelector": {
+    "title": "Theme Color",
+    "desc": "Choose the color that best fits your interface.",
+    "colors": {
+      "red": "Red",
+      "pink": "Pink",
+      "purple": "Purple",
+      "deepPurple": "Deep Purple",
+      "indigo": "Indigo",
+      "blue": "Blue",
+      "lightBlue": "Light Blue",
+      "cyan": "Cyan",
+      "teal": "Teal",
+      "green": "Green",
+      "lightGreen": "Light Green",
+      "lime": "Lime",
+      "yellow": "Yellow",
+      "amber": "Amber",
+      "orange": "Orange",
+      "deepOrange": "Deep Orange",
+      "brown": "Brown",
+      "grey": "Grey",
+      "custom": "Custom Color"
+    }
+  },
+  "languageSelector": {
+    "title": "Language",
+    "desc": "Choose your preferred language."
+  },
+  "bgTempSelector": {
+    "title": "Background Temperature",
+    "desc": "Choose a background temperature that suits your mood.",
+    "cool": "Cool",
+    "warm": "Warm",
+    "customBgTemp": "Custom Background Temperature"
+  },
+  "fontFamily": {
+    "title": "Font Style",
+    "desc": "Choose a font that matches your preference",
+    "tooltip": "For detailed information on all fonts, visit the Google Fonts website.",
+    "tooltipTitle": "Powered by Google Fonts",
+    "disabled": {
+      "title": "Not Available",
+      "tooltip": "To enable this feature, please add the Google Cloud API key to your API vault. For more information, refer to"
+    }
+  },
+  "bgImageSelector": {
+    "title": "Background Image",
+    "desc": "Upload or search for a background image",
+    "pixabayDisabled": {
+      "tooltip": "To search for images from Pixabay, please add your Pixabay API key to the API vault. For more information, refer to"
+    },
+    "modals": {
+      "adjustBackground": {
+        "title": "Adjust Background Image",
+        "modals": {
+          "adjustBackgroundImage": "Adjust Background Image"
+        },
+        "columns": {
+          "blur": {
+            "title": "Blur Effect",
+            "desc": "Adjust the blur level of the background image."
+          },
+          "brightness": {
+            "title": "Brightness",
+            "desc": "Adjust the brightness of the background image."
+          },
+          "contrast": {
+            "title": "Contrast",
+            "desc": "Adjust the contrast of your background image."
+          },
+          "saturation": {
+            "title": "Saturation",
+            "desc": "Adjust the intensity of colors in the background image."
+          },
+          "overlayOpacity": {
+            "title": "Overlay Opacity",
+            "desc": "Adjust the transparency of the background overlay."
+          }
+        }
+      }
+    }
+  },
+  "inputs": {
+    "colorHex": "Color Hex"
+  }
+}

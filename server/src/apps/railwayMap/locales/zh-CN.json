@@ -1,0 +1,25 @@
+{
+  "title": "铁路地图",
+  "description": "马来西亚和新加坡MRT和LRT的终极地图",
+  "viewTypes": {
+    "routeMap": "路线图",
+    "earthMap": "地球地图",
+    "stationList": "车站列表",
+    "selectorTitle": "视图类型"
+  },
+  "inputs": {
+    "boardingAt": "登车站点",
+    "alightingAt": "下车站点"
+  },
+  "items": {
+    "station": "车站"
+  },
+  "railwayLinesSelectorTitle": "铁路线路",
+  "buttons": {
+    "planRoute": "规划路线",
+    "clearRoute": "清除路线"
+  },
+  "modals": {
+    "routePlanner": "路线规划器"
+  }
+}

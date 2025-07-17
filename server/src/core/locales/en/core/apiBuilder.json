@@ -1,0 +1,83 @@
+{
+  "title": "API Builder",
+  "inputs": {
+    "schemaName": "Schema Name",
+    "fieldName": "Field Name",
+    "fieldType": "Field Type",
+    "optional": "Optional",
+    "addField": "Add Field",
+    "groupName": "Group Name",
+    "groupIcon": "Group Icon"
+  },
+  "modals": {
+    "editSchemaBlock": "Edit Schema Block",
+    "newNode": "Add New Node",
+    "groupConfiguration": "Group Configuration"
+  },
+  "nodes": {
+    "route": "Route",
+    "router": "Router",
+    "schema": "Schema",
+    "withPocketBaseSchema": "Schema with PocketBase",
+    "controller": "Controller",
+    "schemaArray": "Schema Array",
+    "pickFieldsFromSchema": "Select Fields from Schema",
+    "requestSchema": "Request Schema",
+    "service": "Service",
+    "collection": "Collection",
+    "getFullList": "Get Full List",
+    "databaseCrudAction": "Database CRUD Action",
+    "filter": "Filter",
+    "value": "Value",
+    "sorter": "Sorter",
+    "collectionPickFields": "Field Selector",
+    "valueFromRequest": "Value from Request",
+    "createRecord": "Create Record",
+    "deriveSchemaFromCollection": "Derive Schema from Collection",
+    "updateRecord": "Update Record",
+    "deleteRecord": "Delete Record"
+  },
+  "items": {
+    "node": "Node"
+  },
+  "nodeColumns": {
+    "httpMethod": "HTTP Method",
+    "routePath": "Route Path",
+    "routerPath": "Router Path",
+    "params": "Parameters",
+    "query": "Query",
+    "body": "Body",
+    "response": "Response",
+    "schemaName": "Schema Name",
+    "fields": "Fields",
+    "responseSchema": "Response Schema",
+    "action": "Action",
+    "databaseAction": "Database Action",
+    "field": "Field",
+    "comparator": "Comparator",
+    "fieldIDs": "Field IDs",
+    "direction": "Direction",
+    "typeScriptInterfaceName": "TypeScript Interface Name",
+    "recordId": "Record ID"
+  },
+  "empty": {
+    "noFields": "No fields available",
+    "noCollectionConnected": "No collection connected",
+    "pleaseSelect": "Please select an option",
+    "noSchemaConnected": "No schema connected",
+    "noFieldsInSchema": "No available fields in the schema",
+    "noRequestSchemaConnected": "No request schema connected",
+    "noFieldSelected": "No field selected"
+  },
+  "nodeCategories": {
+    "database": "Database",
+    "schema": "Schema",
+    "routing": "Routing",
+    "action": "Action",
+    "variables": "Variables"
+  },
+  "misc": {
+    "asc": "Ascending",
+    "desc": "Descending"
+  }
+}

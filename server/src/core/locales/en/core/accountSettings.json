@@ -1,0 +1,63 @@
+{
+  "title": "Account Settings",
+  "description": "The place to manage all your account details",
+  "settings": {
+    "title": {
+      "profilePicture": "Profile Picture",
+      "username": "Username",
+      "displayName": "Display Name",
+      "email": "Email Address",
+      "password": "Password",
+      "dateOfBirth": "Date of Birth",
+      "twoFA": "Two-Factor Authentication"
+    },
+    "desc": {
+      "profilePicture": "Upload a profile picture to personalize your account.",
+      "username": "The name that identifies you on the platform.",
+      "displayName": "The name displayed to other users.",
+      "email": "The email address you use to log in to your account.",
+      "password": "Set a strong password to protect your account.",
+      "dateOfBirth": "Set your date of birth, and we'll give you a surprise!",
+      "twoFA": "Enable two-factor authentication when logging into the system."
+    },
+    "empty": "Not Set"
+  },
+  "modals": {
+    "username": {
+      "update": "Update Username"
+    },
+    "email": {
+      "update": "Update Email"
+    },
+    "displayName": {
+      "update": "Update Display Name"
+    },
+    "dateOfBirth": {
+      "update": "Update Date of Birth"
+    },
+    "enable2FA": {
+      "title": "Enable Two-Factor Authentication",
+      "description": "Please scan the QR code below with your preferred authenticator app, such as Google Authenticator, and click proceed.",
+      "confirmationDescription": "Please enter the OTP shown in your authenticator app to confirm enabling 2FA."
+    },
+    "disable2FA": {
+      "title": "Disable Two-Factor Authentication",
+      "description": "Are you sure you want to disable two-factor authentication?"
+    }
+  },
+  "buttons": {
+    "changePassword": "Change Password"
+  },
+  "inputs": {
+    "dateOfBirth": "Date of Birth",
+    "username": "Username",
+    "email": "Email Address",
+    "displayName": "Display Name"
+  },
+  "messages": {
+    "twoFA": {
+      "enableSuccess": "Two-factor authentication enabled successfully.",
+      "disableSuccess": "Two-factor authentication disabled successfully."
+    }
+  }
+}

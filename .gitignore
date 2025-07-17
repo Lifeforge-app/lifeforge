@@ -39,3 +39,5 @@ pnpm-debug.log*
 
 # Bun
 bun.lockb
+
+database

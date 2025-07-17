@@ -1,0 +1,20 @@
+{
+  "title": "Penukar Mata Wang",
+  "description": "Tukar antara mata wang dengan kadar pertukaran masa nyata.",
+  "inputs": {
+    "from": "Dari Mata Wang",
+    "to": "Ke Mata Wang",
+    "amount": "Jumlah"
+  },
+  "widgets": {
+    "conversionResult": {
+      "title": "Keputusan Penukaran"
+    },
+    "conversionRatesHistory": {
+      "title": "Sejarah Kadar Penukaran"
+    }
+  },
+  "misc": {
+    "updatedMsg": "Terakhir dikemas kini"
+  }
+}

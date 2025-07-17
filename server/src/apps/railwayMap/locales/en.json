@@ -1,0 +1,25 @@
+{
+  "title": "Railway Map",
+  "description": "The ultimate map for MRT and LRT in Malaysia and Singapore",
+  "viewTypes": {
+    "routeMap": "Route Map",
+    "earthMap": "Earth Map",
+    "stationList": "Station List",
+    "selectorTitle": "View Types"
+  },
+  "inputs": {
+    "boardingAt": "Boarding At",
+    "alightingAt": "Alighting At"
+  },
+  "items": {
+    "station": "Station"
+  },
+  "railwayLinesSelectorTitle": "Railway Lines",
+  "buttons": {
+    "planRoute": "Plan Route",
+    "clearRoute": "Clear Route"
+  },
+  "modals": {
+    "routePlanner": "Route Planner"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Peta Kereta Api",
+  "description": "Peta utama untuk MRT dan LRT di Malaysia dan Singapura",
+  "viewTypes": {
+    "routeMap": "Peta Laluan",
+    "earthMap": "Peta Bumi",
+    "stationList": "Senarai Stesen",
+    "selectorTitle": "Jenis Paparan"
+  },
+  "inputs": {
+    "boardingAt": "Menaiki Di",
+    "alightingAt": "Turun Di"
+  },
+  "items": {
+    "station": "Stesen"
+  },
+  "railwayLinesSelectorTitle": "Laluan Kereta Api",
+  "buttons": {
+    "planRoute": "Rancang Laluan",
+    "clearRoute": "Bersihkan Laluan"
+  },
+  "modals": {
+    "routePlanner": "Perancang Laluan"
+  }
+}

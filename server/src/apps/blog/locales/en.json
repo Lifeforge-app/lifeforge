@@ -1,0 +1,20 @@
+{
+  "title": "Blog",
+  "description": "Cherish every moments in your life through the power of blogging.",
+  "items": {
+    "post": "Post"
+  },
+  "inputs": {
+    "excerpt": "Excerpt",
+    "visibility": "Visibility",
+    "featuredImage": "Featured Image",
+    "category": "Category",
+    "labels": "Labels"
+  },
+  "empty": {
+    "entries": {
+      "title": "No Posts Available",
+      "description": "No posts found. Create one using the button above."
+    }
+  }
+}

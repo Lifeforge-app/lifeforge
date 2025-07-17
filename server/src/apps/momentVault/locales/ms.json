@@ -1,0 +1,29 @@
+{
+  "title": "Peti Detik",
+  "description": "Rakam setiap detik, hargai hidupmu, imbas bila-bila masa.",
+  "items": {
+    "entry": "Entri"
+  },
+  "buttons": {
+    "text": "Teks",
+    "audio": "Audio",
+    "photo": "Foto",
+    "video": "Video",
+    "transcribeToText": "Transkrip ke Teks"
+  },
+  "modals": {
+    "addEntry": "Tambah Entri"
+  },
+  "inputs": {
+    "entryType": "Jenis Entri",
+    "audio": "Audio",
+    "transcription": "Transkripsi",
+    "textContent": "Kandungan Teks"
+  },
+  "entryTypes": {
+    "audio": "Audio",
+    "video": "Video",
+    "text": "Teks",
+    "photos": "Gambar"
+  }
+}

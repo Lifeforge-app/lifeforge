@@ -1,0 +1,25 @@
+{
+  "title": "Backups",
+  "description": "Manage your database backups.",
+  "items": {
+    "backup": "Backup"
+  },
+  "empty": {
+    "noBackups": {
+      "title": "No Backups Found",
+      "description": "No backups available. Create a new one using the button above."
+    }
+  },
+  "modals": {
+    "createBackup": "Initialize New Backup"
+  },
+  "inputs": {
+    "backupName": {
+      "label": "Backup Name",
+      "placeholder": "Enter Backup Name (leave empty to autogenerate)"
+    }
+  },
+  "buttons": {
+    "startBackup": "Start Backup"
+  }
+}

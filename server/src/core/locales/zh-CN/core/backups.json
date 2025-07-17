@@ -1,0 +1,25 @@
+{
+  "title": "备份",
+  "description": "管理您的数据库备份。",
+  "items": {
+    "backup": "备份"
+  },
+  "empty": {
+    "noBackups": {
+      "title": "未找到备份",
+      "description": "没有可用的备份。请使用上面的按钮创建一个新的备份。"
+    }
+  },
+  "modals": {
+    "createBackup": "初始化新备份"
+  },
+  "inputs": {
+    "backupName": {
+      "label": "备份名称",
+      "placeholder": "输入备份名称（留空以自动生成）"
+    }
+  },
+  "buttons": {
+    "startBackup": "开始备份"
+  }
+}

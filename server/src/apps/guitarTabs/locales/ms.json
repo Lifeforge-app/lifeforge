@@ -1,0 +1,62 @@
+{
+  "title": "Tab Gitar",
+  "description": "Simpan dan susun tab gitar anda dengan mudah.",
+  "sidebar": {
+    "allScores": "Semua Tab",
+    "starred": "Tab Berbintang",
+    "singAlong": "Nyanyi Bersama",
+    "fingerStyle": "Gaya Jari",
+    "uncategorized": "Tidak Dikategorikan",
+    "authors": "Pengarang",
+    "categories": "Kategori"
+  },
+  "headers": {
+    "all": "Semua",
+    "starred": "Berbintang",
+    "singalong": "Nyanyi Bersama",
+    "fingerstyle": "Gaya Jari",
+    "uncategorized": "Tidak Dikategorikan"
+  },
+  "scoreTypes": {
+    "singalong": "Nyanyi Bersama",
+    "fingerstyle": "Gaya Jari",
+    "uncategorized": "Tidak Dikategorikan"
+  },
+  "sortTypes": {
+    "newest": "Terbaru Dahulu",
+    "oldest": "Terdahulu Dahulu",
+    "author": "Pengarang",
+    "name": "Tajuk"
+  },
+  "unknownAuthor": "Pengarang Tidak Dikenali",
+  "modals": {
+    "guitarWorld": "Dunia Gitar",
+    "guitarTabs": {
+      "update": "Kemas Kini Tab Gitar"
+    }
+  },
+  "buttons": {
+    "downloadFromGuitarWorld": "Muat Turun dari Dunia Gitar",
+    "uploadFromLocal": "Muat Naik dari Tempatan",
+    "downloadAll": "Muat Turun Semua"
+  },
+  "inputs": {
+    "scoreType": "Jenis Tab",
+    "cookie": "Kuki Sesi",
+    "author": "Pengarang",
+    "musicName": "Nama Muzik"
+  },
+  "items": {
+    "score": "Tab Gitar"
+  },
+  "empty": {
+    "score": {
+      "title": "Tiada Tab Gitar",
+      "description": "Anda belum menambah sebarang tab gitar lagi. Klik butang di bawah untuk menambah satu."
+    },
+    "result": {
+      "title": "Tiada Keputusan",
+      "description": "Tiada item ditemui, sila cuba kata kunci lain."
+    }
+  }
+}

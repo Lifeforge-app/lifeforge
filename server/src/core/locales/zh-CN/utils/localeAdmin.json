@@ -1,0 +1,53 @@
+{
+  "inputs": {
+    "namespace": {
+      "placeholder": "选择一个命名空间",
+      "label": "命名空间"
+    },
+    "subNamespace": {
+      "placeholder": "选择一个子命名空间",
+      "label": "子命名空间"
+    },
+    "languages": {
+      "en": "英语 (en)",
+      "ms": "马来语 (ms)",
+      "zh-cn": "简体中文 (zh-CN)",
+      "zh-tw": "繁体中文 (zh-TW)"
+    },
+    "translationPlaceholder": "{{key}} 的翻译",
+    "parent": "父条目",
+    "type": "条目类型",
+    "name": "条目名称"
+  },
+  "namespaces": {
+    "common": "通用",
+    "utils": "工具",
+    "core": "核心",
+    "apps": "模块"
+  },
+  "buttons": {
+    "syncWithServer": "与服务器同步"
+  },
+  "warnings": {
+    "unsavedChanges": "您有未保存的更改。您确定要更改命名空间吗？"
+  },
+  "items": {
+    "entry": "条目"
+  },
+  "empty": {
+    "namespace": {
+      "title": "未选择命名空间",
+      "description": "没有选择命名空间。请从上面选择命名空间。"
+    },
+    "subNamespace": {
+      "title": "未选择子命名空间",
+      "description": "未选择子命名空间。请从上方选择一个子命名空间。"
+    }
+  },
+  "modals": {
+    "entry": {
+      "create": "创建条目"
+    }
+  },
+  "title": "本地化管理器"
+}

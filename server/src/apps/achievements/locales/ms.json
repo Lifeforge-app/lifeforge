@@ -1,0 +1,30 @@
+{
+  "title": "Pencapaian",
+  "description": "Raikan kemenangan anda besar dan kecil.",
+  "difficulties": {
+    "easy": "Mudah",
+    "medium": "Sederhana",
+    "hard": "Sukar",
+    "impossible": "Mustahil"
+  },
+  "empty": {
+    "achievement": {
+      "title": "Tiada Pencapaian",
+      "description": "Anda belum menambah sebarang pencapaian lagi. Klik butang di bawah untuk menambah satu."
+    }
+  },
+  "modals": {
+    "achievement": {
+      "create": "Cipta Pencapaian",
+      "update": "Kemaskini Pencapaian"
+    }
+  },
+  "inputs": {
+    "achievementTitle": "Tajuk Pencapaian",
+    "achievementDifficulty": "Kesukaran Pencapaian",
+    "achievementThoughts": "Pemikiran Pencapaian"
+  },
+  "items": {
+    "achievement": "Pencapaian"
+  }
+}

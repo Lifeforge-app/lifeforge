@@ -1,0 +1,39 @@
+{
+  "title": "Peringkas YouTube",
+  "description": "Dapatkan ringkasan padat video YouTube tanpa perlu menontonnya secara keseluruhan.",
+  "empty": {
+    "videoURL": {
+      "title": "Tiada URL Video Disediakan",
+      "description": "Mulakan dengan menampal URL video yang ingin anda ringkaskan dalam kotak input di atas."
+    },
+    "captions": {
+      "title": "Tiada Capaian Tersedia",
+      "description": "Tiada kapsyen {{type}} tersedia untuk video ini. Sila cuba jenis kapsyen lain."
+    }
+  },
+  "inputs": {
+    "videoUrl": "URL Video",
+    "captionType": "Jenis Sarikata",
+    "language": "Bahasa"
+  },
+  "widgets": {
+    "videoInfo": {
+      "title": "Maklumat Video"
+    },
+    "selectLanguage": {
+      "title": "Pilih Bahasa"
+    },
+    "videoSummary": {
+      "title": "Ringkasan Video"
+    }
+  },
+  "captionTypes": {
+    "auto": "Dihasilkan secara automatik",
+    "manual": "Manual",
+    "any": "apa-apa"
+  },
+  "buttons": {
+    "downloadCaptions": "Muat Turun Sarikata",
+    "summarizeThisVideo": "Ringkaskan Video Ini"
+  }
+}

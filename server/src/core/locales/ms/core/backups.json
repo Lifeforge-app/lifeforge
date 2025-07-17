@@ -1,0 +1,25 @@
+{
+  "title": "Sandaran",
+  "description": "Urus sandaran pangkalan data anda.",
+  "items": {
+    "backup": "Sandaran"
+  },
+  "empty": {
+    "noBackups": {
+      "title": "Tiada Sandaran Ditemui",
+      "description": "Tiada salinan tersedia. Buat yang baru menggunakan butang di atas."
+    }
+  },
+  "modals": {
+    "createBackup": "Inisialisasi Sandaran Baru"
+  },
+  "inputs": {
+    "backupName": {
+      "label": "Nama Sandaran",
+      "placeholder": "Masukkan Nama Sandaran (biarkan kosong untuk menjana secara automatik)"
+    }
+  },
+  "buttons": {
+    "startBackup": "Mula Sandaran"
+  }
+}
