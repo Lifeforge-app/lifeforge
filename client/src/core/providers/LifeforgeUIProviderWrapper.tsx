@@ -1,4 +1,4 @@
-import { LifeforgeUIProvider } from '@lifeforge/ui'
+import { LifeforgeUIProvider } from 'lifeforge-ui'
 
 import { usePersonalization } from './PersonalizationProvider'
 import { useSidebarState } from './SidebarStateProvider'

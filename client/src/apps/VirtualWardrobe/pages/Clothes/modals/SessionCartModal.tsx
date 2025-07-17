@@ -1,9 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { Button, EmptyStateScreen, ModalHeader } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
-
-import { Button, EmptyStateScreen, ModalHeader } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 

@@ -1,4 +1,4 @@
-import { GoBackButton, QueryWrapper } from '@lifeforge/ui'
+import { GoBackButton, QueryWrapper } from 'lifeforge-ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

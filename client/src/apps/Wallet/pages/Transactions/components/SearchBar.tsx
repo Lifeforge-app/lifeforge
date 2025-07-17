@@ -1,4 +1,4 @@
-import { SearchInput, ViewModeSelector } from '@lifeforge/ui'
+import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

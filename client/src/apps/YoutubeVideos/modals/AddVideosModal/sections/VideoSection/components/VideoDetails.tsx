@@ -1,6 +1,5 @@
 import { UseQueryResult } from '@tanstack/react-query'
-
-import { Button, QueryWrapper } from '@lifeforge/ui'
+import { Button, QueryWrapper } from 'lifeforge-ui'
 
 import VideoInfo from '../../../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 import { type IYoutubeVideoInfo } from '../../../../../interfaces/youtube_video_storage_interfaces'

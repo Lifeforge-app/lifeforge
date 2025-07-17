@@ -1,9 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { Button, ModalHeader, TextInput } from 'lifeforge-ui'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button, ModalHeader, TextInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

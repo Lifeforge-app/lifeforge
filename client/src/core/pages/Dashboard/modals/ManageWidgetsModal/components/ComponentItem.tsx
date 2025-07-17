@@ -2,10 +2,9 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { DashboardLayoutType } from '@providers/PersonalizationProvider/interfaces/personalization_provider_interfaces'
 import clsx from 'clsx'
+import { Switch } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Switch } from '@lifeforge/ui'
 
 function ComponentListItem({
   id,

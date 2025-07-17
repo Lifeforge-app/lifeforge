@@ -1,6 +1,5 @@
+import type { IFormState } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
-
-import type { IFormState } from '@lifeforge/ui'
 
 interface IBooksLibraryEntry extends RecordModel {
   md5: string

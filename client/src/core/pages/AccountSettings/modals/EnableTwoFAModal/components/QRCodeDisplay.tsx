@@ -1,10 +1,9 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { parse as parseCookie } from 'cookie'
+import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { LoadingScreen } from '@lifeforge/ui'
 
 import { decrypt } from '@security/utils/encryption'
 

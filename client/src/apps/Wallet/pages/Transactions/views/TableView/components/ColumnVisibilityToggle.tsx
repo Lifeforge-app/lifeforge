@@ -1,11 +1,10 @@
-import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
-
 import {
   HamburgerMenuSelectorWrapper,
   MenuItem,
   SidebarDivider
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 
 function ColumnVisibilityToggle({
   visibleColumn,

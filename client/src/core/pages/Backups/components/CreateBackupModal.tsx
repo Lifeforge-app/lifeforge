@@ -1,8 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { FormModal, type IFieldProps } from '@lifeforge/ui'
 
 function CreateBackupModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.backups')

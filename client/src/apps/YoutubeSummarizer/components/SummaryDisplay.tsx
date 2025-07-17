@@ -1,6 +1,5 @@
+import { DashboardItem } from 'lifeforge-ui'
 import Markdown from 'react-markdown'
-
-import { DashboardItem } from '@lifeforge/ui'
 
 interface SummaryDisplayProps {
   summary: string | null

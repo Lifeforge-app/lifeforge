@@ -1,8 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { Button, MenuItem } from 'lifeforge-ui'
 import { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Button, MenuItem } from '@lifeforge/ui'
 
 function UploadTabButton({
   uploadFiles,

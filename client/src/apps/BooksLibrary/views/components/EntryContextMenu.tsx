@@ -1,8 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
-
-import { DeleteConfirmationModal, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'

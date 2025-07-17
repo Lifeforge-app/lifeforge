@@ -1,9 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import { FormModal } from 'lifeforge-ui'
+import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
-
-import { FormModal } from '@lifeforge/ui'
-import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   ICalendarCalendar,

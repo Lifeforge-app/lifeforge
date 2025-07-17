@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
+import { QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
-
-import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,14 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   EmptyStateScreen,
   LoadingScreen,
   ModalHeader,
   SearchInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import {
   IMovieEntry,

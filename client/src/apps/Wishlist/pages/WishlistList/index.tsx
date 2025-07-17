@@ -1,7 +1,4 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   Button,
   EmptyStateScreen,
@@ -10,8 +7,10 @@ import {
   ModuleWrapper,
   QueryWrapper,
   SearchInput
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

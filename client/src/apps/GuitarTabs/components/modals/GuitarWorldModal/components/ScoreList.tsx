@@ -1,4 +1,4 @@
-import { ErrorScreen, LoadingScreen, Pagination } from '@lifeforge/ui'
+import { ErrorScreen, LoadingScreen, Pagination } from 'lifeforge-ui'
 
 import { IGuitarTabsGuitarWorldScores } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
 

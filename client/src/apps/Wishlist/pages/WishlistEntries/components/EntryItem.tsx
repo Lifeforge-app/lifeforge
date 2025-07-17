@@ -2,17 +2,16 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   Checkbox,
   DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

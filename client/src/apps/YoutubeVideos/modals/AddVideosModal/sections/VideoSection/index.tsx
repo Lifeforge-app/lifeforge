@@ -1,10 +1,9 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 import { useDebounce } from '@uidotdev/usehooks'
 import { parse as parseCookie } from 'cookie'
+import { TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { TextInput } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

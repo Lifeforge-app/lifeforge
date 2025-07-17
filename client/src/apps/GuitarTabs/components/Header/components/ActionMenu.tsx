@@ -1,10 +1,9 @@
 import { t } from 'i18next'
-
 import {
   HamburgerMenuSelectorWrapper,
   MenuItem,
   SidebarDivider
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],

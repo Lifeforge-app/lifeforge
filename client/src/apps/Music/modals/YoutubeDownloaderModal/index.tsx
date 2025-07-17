@@ -1,10 +1,9 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { Button, ModalHeader, QueryWrapper, TextInput } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

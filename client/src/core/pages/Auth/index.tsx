@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
+import { ModalManager, QueryWrapper } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
-
-import { ModalManager, QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,4 +1,4 @@
-import { type ModalComponent } from '@lifeforge/ui'
+import { type ModalComponent } from 'lifeforge-ui'
 
 import CheckoutConfirmationModal from './CheckoutConfirmationModal'
 import ModifyItemModal from './ModifyItemModal'

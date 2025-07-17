@@ -11,6 +11,7 @@
   "main": "src/index.ts",
   "type": "module",
   "dependencies": {
+    "shared": "workspace:*",
     "@ts-rest/express": "^3.52.1",
     "@zodios/express": "^10.6.1",
     "aewx-metar-parser": "^1.0.0",

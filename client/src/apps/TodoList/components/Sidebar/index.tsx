@@ -1,4 +1,4 @@
-import { SidebarDivider, SidebarTitle, SidebarWrapper } from '@lifeforge/ui'
+import { SidebarDivider, SidebarTitle, SidebarWrapper } from 'lifeforge-ui'
 
 import TaskListList from './components/TaskListList'
 import TaskPriorityList from './components/TaskPriorityList'

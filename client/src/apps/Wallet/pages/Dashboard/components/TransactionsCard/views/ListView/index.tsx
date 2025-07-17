@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-
-import { QueryWrapper } from '@lifeforge/ui'
+import { QueryWrapper } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'

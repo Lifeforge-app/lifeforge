@@ -1,10 +1,9 @@
-import { useTranslation } from 'react-i18next'
-
 import {
   HamburgerMenu,
   HamburgerMenuSelectorWrapper,
   MenuItem
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
 
 import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
 

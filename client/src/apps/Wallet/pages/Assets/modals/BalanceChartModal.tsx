@@ -10,11 +10,10 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
+import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
-
-import { ModalHeader, QueryWrapper } from '@lifeforge/ui'
 
 import { IWalletAsset } from '@apps/Wallet/interfaces/wallet_interfaces'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'

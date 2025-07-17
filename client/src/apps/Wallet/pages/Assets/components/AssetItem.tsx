@@ -1,15 +1,14 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { useCallback } from 'react'
-import { useNavigate } from 'react-router'
-
 import {
   Button,
   DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'

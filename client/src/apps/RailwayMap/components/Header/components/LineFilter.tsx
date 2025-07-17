@@ -1,7 +1,6 @@
+import { HamburgerMenuSelectorWrapper, MenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
 
 import { IRailwayMapLine } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 

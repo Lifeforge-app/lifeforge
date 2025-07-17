@@ -1,11 +1,10 @@
-import { useTranslation } from 'react-i18next'
-
 import {
   DnDContainer,
   PreviewContainer,
   TextAreaInput,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
 
 import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 

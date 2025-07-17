@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
-import { Link } from 'react-router'
-
 import {
   DashboardItem,
   EmptyStateScreen,
   QueryWrapper,
   Scrollbar
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { Link } from 'react-router'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

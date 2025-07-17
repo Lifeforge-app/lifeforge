@@ -1,7 +1,6 @@
+import { SidebarItem } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { SidebarItem } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

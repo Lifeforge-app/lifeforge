@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { Button } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import { hsvaToHex, hsvaToRgbaString } from '@uiw/react-color'
 import {
   BarElement,
   CategoryScale,
@@ -14,11 +13,11 @@ import {
 } from 'chart.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { QueryWrapper } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-
-import { QueryWrapper } from '@lifeforge/ui'
+import tinycolor from 'tinycolor2'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -94,7 +93,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
         tooltip: {
           callbacks: {
             labelColor: (context: any) => ({
-              borderColor: hsvaToHex({
+              borderColor: tinycolor({
                 h:
                   (projectsData.findIndex(
                     e => e.label === context.dataset.label
@@ -105,7 +104,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                 v: 100,
                 a: 1
               }),
-              backgroundColor: hsvaToRgbaString({
+              backgroundColor: tinycolor({
                 h:
                   (projectsData.findIndex(
                     e => e.label === context.dataset.label
@@ -115,7 +114,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                 s: 100,
                 v: 100,
                 a: 0.8
-              })
+              }).toRgbString()
             }),
             label: (context: any) => {
               if (context.parsed.y === 0) {
@@ -186,13 +185,13 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                     type: 'bar' as any,
                     label: project.label,
                     data: project.data,
-                    backgroundColor: hsvaToRgbaString({
+                    backgroundColor: tinycolor({
                       h: (index * 360) / projectsData.length,
                       s: 100,
                       v: 100,
                       a: 0.4
                     }),
-                    borderColor: hsvaToHex({
+                    borderColor: tinycolor({
                       h: (index * 360) / projectsData.length,
                       s: 100,
                       v: 100,

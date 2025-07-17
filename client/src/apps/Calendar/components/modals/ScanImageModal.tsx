@@ -1,8 +1,7 @@
+import { Button, ImageAndFileInput, ModalHeader } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { Button, ImageAndFileInput, ModalHeader } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 

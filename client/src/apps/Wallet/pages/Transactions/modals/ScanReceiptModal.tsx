@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
+import { Button, ImageAndFileInput, ModalHeader, Switch } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button, ImageAndFileInput, ModalHeader, Switch } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

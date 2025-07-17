@@ -1,6 +1,4 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect } from 'react'
-
 import {
   EmptyStateScreen,
   ModuleHeader,
@@ -8,7 +6,8 @@ import {
   QueryWrapper,
   Scrollbar,
   SearchInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect } from 'react'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 

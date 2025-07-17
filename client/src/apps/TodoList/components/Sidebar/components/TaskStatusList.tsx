@@ -1,6 +1,5 @@
+import { QueryWrapper, SidebarItem } from 'lifeforge-ui'
 import { useSearchParams } from 'react-router'
-
-import { QueryWrapper, SidebarItem } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 

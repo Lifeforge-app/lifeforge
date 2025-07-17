@@ -1,8 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyTransactionsModal from '@apps/Wallet/pages/Transactions/modals/ModifyTransactionsModal'
 

@@ -1,5 +1,3 @@
-import { useTranslation } from 'react-i18next'
-
 import {
   Button,
   EmptyStateScreen,
@@ -8,7 +6,8 @@ import {
   ModuleWrapper,
   QueryWrapper,
   useModalStore
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,11 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import { Button, QueryWrapper, TagsInput } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-
-import { Button, QueryWrapper, TagsInput } from '@lifeforge/ui'
 
 import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'

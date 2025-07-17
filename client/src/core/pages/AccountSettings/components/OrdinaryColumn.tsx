@@ -1,10 +1,9 @@
 import dayjs from 'dayjs'
+import { Button, ConfigColumn } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Button, ConfigColumn } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import ModifyModal from '../modals/ModifyModal'

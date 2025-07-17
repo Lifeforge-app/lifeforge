@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 
 import { TodoListProvider } from '@apps/TodoList/providers/TodoListProvider'
 

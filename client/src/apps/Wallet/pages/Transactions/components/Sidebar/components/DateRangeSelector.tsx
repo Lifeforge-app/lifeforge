@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { DateInput, SidebarTitle } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { DateInput, SidebarTitle } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

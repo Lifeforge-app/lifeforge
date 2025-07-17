@@ -1,7 +1,6 @@
+import { FAB, SearchInput } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { FAB, SearchInput } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'

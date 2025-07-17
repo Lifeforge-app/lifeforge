@@ -1,8 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router'
-
 import {
   Button,
   EmptyStateScreen,
@@ -11,8 +7,11 @@ import {
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

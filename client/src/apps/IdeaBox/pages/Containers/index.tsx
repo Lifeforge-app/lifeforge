@@ -1,15 +1,14 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper,
   SearchInput
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,16 +1,15 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import prettyBytes from 'pretty-bytes'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import prettyBytes from 'pretty-bytes'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
 

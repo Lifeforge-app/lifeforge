@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { Button, DashboardItem, EmptyStateScreen } from 'lifeforge-ui'
 import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router'
-
-import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
 
 import ControlButtons from '@apps/Music/components/Bottombar/components/ControlButtons'
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'

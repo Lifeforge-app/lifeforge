@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   EmptyStateScreen,
   LoadingScreen,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
 

@@ -1,6 +1,5 @@
+import { ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
-
-import { ModalHeader } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '@apps/RailwayMap/providers/RailwayMapProvider'
 

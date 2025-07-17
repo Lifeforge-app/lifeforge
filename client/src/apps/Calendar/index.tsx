@@ -1,6 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useCallback, useMemo, useState } from 'react'
-
 import {
   ContentWrapperWithSidebar,
   FAB,
@@ -9,8 +7,9 @@ import {
   ModuleHeader,
   ModuleWrapper,
   Scrollbar
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useMemo, useState } from 'react'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

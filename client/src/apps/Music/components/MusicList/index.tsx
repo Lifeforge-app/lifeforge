@@ -1,8 +1,7 @@
+import { QueryWrapper } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-
-import { QueryWrapper } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 

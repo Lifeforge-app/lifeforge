@@ -1,4 +1,4 @@
-import { SidebarDivider, SidebarWrapper } from '@lifeforge/ui'
+import { SidebarDivider, SidebarWrapper } from 'lifeforge-ui'
 
 import CalendarList from './components/CalendarList'
 import CategoryList from './components/CategoryList'

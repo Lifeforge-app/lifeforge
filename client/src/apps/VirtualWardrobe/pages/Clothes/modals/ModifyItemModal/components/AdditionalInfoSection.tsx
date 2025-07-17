@@ -5,7 +5,7 @@ import {
   ListboxOrComboboxOption,
   TextAreaInput,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
 
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
 import { IVirtualWardrobeFormState } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'

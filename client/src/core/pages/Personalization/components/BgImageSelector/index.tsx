@@ -1,8 +1,4 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   ConfigColumn,
@@ -10,8 +6,11 @@ import {
   FileAndImagePickerModal,
   QueryWrapper,
   Tooltip
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

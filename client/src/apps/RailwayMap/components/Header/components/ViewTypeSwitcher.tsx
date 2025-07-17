@@ -1,12 +1,8 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { ListboxOrComboboxOption, ListboxOrComboboxOptions } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
-
-import {
-  ListboxOrComboboxOption,
-  ListboxOrComboboxOptions
-} from '@lifeforge/ui'
 
 import { IRailwayMapViewType } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
