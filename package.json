@@ -78,7 +78,7 @@
     "react-quilljs": "^2.0.5",
     "react-router": "^7.5.3",
     "react-to-print": "^3.1.0",
-    "react-toastify": "^10.0.6",
+    "react-toastify": "^11.0.5",
     "react-tooltip": "^5.28.1",
     "react-virtualized": "^9.22.6",
     "rrule": "^2.8.1",
