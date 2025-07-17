@@ -1,7 +1,6 @@
 import clsx from 'clsx'
+import { EmptyStateScreen, Scrollbar, SearchInput } from 'lifeforge-ui'
 import { useMemo } from 'react'
-
-import { EmptyStateScreen, Scrollbar, SearchInput } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import SearchResultItem from './components/SearchResultItem'

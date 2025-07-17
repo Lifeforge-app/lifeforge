@@ -1,8 +1,7 @@
+import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-
-import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

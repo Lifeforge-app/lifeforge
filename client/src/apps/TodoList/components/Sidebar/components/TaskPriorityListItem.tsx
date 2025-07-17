@@ -1,8 +1,7 @@
+import { DeleteConfirmationModal, MenuItem, SidebarItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
-
-import { DeleteConfirmationModal, MenuItem, SidebarItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
 

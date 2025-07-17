@@ -1,7 +1,6 @@
+import { Scrollbar } from 'lifeforge-ui'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-
-import { Scrollbar } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'

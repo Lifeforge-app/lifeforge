@@ -1,8 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useCallback, useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router'
-
 import {
   Button,
   EmptyStateScreen,
@@ -13,8 +10,10 @@ import {
   QueryWrapper,
   SearchInput,
   ViewModeSelector
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'

@@ -1,11 +1,10 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
+import { Button, TextInput } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button, TextInput } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import CreatePasswordConfirmationModal from './modals/CreatePasswordConfirmationModal'
 

@@ -2,11 +2,10 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
+import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
-
-import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
 
 import Achievements from '../widgets/Achievements'
 import AssetsBalance from '../widgets/AssetsBalance'

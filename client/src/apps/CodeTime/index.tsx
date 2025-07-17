@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 
 import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
 import CodeTimeStatistics from './components/CodeTimeStatistics'

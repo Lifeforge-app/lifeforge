@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
 import { useEffect, useMemo } from 'react'
-
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

@@ -1,5 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
-
+import { Icon } from '@iconify/react'
 import {
   Button,
   ImageAndFileInput,
@@ -9,7 +8,7 @@ import {
   TagsInput,
   TextAreaInput,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
 
 import { IBlogEntryFormState } from '@apps/Blog/interfaces/blog_interfaces'
 

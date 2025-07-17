@@ -1,12 +1,11 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import { useSearchParams } from 'react-router'
-
 import {
   QueryWrapper,
   SidebarDivider,
   SidebarItem,
   SidebarWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useSearchParams } from 'react-router'
 
 import { type IVirtualWardrobeSidebarData } from '../../../../interfaces/virtual_wardrobe_interfaces'
 import BrandsSection from './components/BrandsSection'

@@ -1,10 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { Button, MenuItem, ModuleHeader, SearchInput } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button, MenuItem, ModuleHeader, SearchInput } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

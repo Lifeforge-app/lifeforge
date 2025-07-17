@@ -1,4 +1,4 @@
-import { ModalHeader } from '@lifeforge/ui'
+import { ModalHeader } from 'lifeforge-ui'
 
 import ContentContainer from './components/ContentContainer'
 

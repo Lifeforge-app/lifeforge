@@ -1,9 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { MenuItem } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { MenuItem } from '@lifeforge/ui'
 
 import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 

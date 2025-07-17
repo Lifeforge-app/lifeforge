@@ -1,8 +1,7 @@
+import { EmptyStateScreen, ModalHeader, QueryWrapper } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { EmptyStateScreen, ModalHeader, QueryWrapper } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

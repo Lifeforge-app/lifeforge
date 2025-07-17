@@ -1,6 +1,5 @@
+import { DashboardItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
-
-import { DashboardItem, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import ConversionRatesHistoryGraph from './components/ConversionRatesHistoryGraph'
 import ConversionResult from './components/ConversionResult'

@@ -1,10 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { parse } from 'file-type-mime'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   CurrencyInput,
@@ -14,7 +10,10 @@ import {
   LocationInput,
   ModalHeader,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
 

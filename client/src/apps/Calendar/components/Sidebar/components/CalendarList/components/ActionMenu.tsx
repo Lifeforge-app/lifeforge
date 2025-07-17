@@ -1,6 +1,5 @@
+import { MenuItem } from 'lifeforge-ui'
 import React from 'react'
-
-import { MenuItem } from '@lifeforge/ui'
 
 function ActionMenu({
   onEdit,

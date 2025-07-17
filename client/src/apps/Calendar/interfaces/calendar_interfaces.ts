@@ -1,6 +1,5 @@
+import { ILocationEntry } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
-
-import { ILocationEntry } from '@lifeforge/ui'
 
 interface ICalendarEvent extends RecordModel {
   type: 'single' | 'recurring'

@@ -1,13 +1,8 @@
 import { UseQueryResult } from '@tanstack/react-query'
+import { DeleteConfirmationModal, Pagination, QueryWrapper } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { ListResult } from 'pocketbase'
 import { useCallback, useEffect } from 'react'
-
-import {
-  DeleteConfirmationModal,
-  Pagination,
-  QueryWrapper
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 

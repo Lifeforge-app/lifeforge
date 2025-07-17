@@ -1,14 +1,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router'
-
 import {
   DashboardItem,
   EmptyStateScreen,
   QueryWrapper,
   Scrollbar
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

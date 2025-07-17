@@ -1,8 +1,7 @@
 import MainRoutesRenderer from '@core/routes/components/MainRoutesRenderer'
+import { LoadingScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-
-import { LoadingScreen } from '@lifeforge/ui'
 
 import Auth from '../pages/Auth'
 import { useAuth } from '../providers/AuthProvider'

@@ -1,0 +1,16 @@
+.w-color-editable-input {
+  @apply px-0!;
+}
+
+.w-color-editable-input input {
+  box-shadow: none !important;
+  font-size: 1rem !important;
+  color: rgb(244 244 245) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1rem !important;
+  @apply rounded-lg! py-2! focus:outline-hidden text-center;
+}
+
+.w-color-editable-input span {
+  font-size: 0.9rem !important;
+}

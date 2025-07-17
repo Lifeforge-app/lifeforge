@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
-
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 

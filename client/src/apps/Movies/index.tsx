@@ -1,10 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   EmptyStateScreen,
@@ -15,8 +10,12 @@ import {
   SearchInput,
   Tabs,
   ViewModeSelector
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 
@@ -26,8 +25,8 @@ import fetchAPI from '@utils/fetchAPI'
 
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
-import ShowTicketModal from './modals/ShowTicketModal'
 import SearchTMDBModal from './modals/SearchTMDBModal'
+import ShowTicketModal from './modals/ShowTicketModal'
 
 function Movies() {
   const open = useModalStore(state => state.open)

@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   ModalHeader
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'

@@ -2,23 +2,28 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     // Environment setup
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "target": "ESNext",
     "module": "ESNext",
-
     // Output configuration
     "declaration": true,
     "outDir": "./dist",
     "noEmit": false,
-
     // Type checking
     "strict": true,
     "skipLibCheck": true,
-
     // Additional checks
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts", "dist"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "dist"
+  ]
 }

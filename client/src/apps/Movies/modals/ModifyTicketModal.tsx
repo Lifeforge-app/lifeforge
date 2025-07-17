@@ -1,11 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import { DeleteConfirmationModal, FormModal } from 'lifeforge-ui'
+import { type IFieldProps } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
-import { type IFieldProps } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import {
   IMovieEntry,

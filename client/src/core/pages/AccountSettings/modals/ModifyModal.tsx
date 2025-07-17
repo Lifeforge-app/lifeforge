@@ -1,9 +1,8 @@
 import dayjs from 'dayjs'
+import { Button, DateInput, ModalHeader, TextInput } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { Button, DateInput, ModalHeader, TextInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

@@ -1,7 +1,6 @@
 import clsx from 'clsx'
+import { Button } from 'lifeforge-ui'
 import OtpInput from 'react-otp-input'
-
-import { Button } from '@lifeforge/ui'
 
 function OTPInputBox({
   otp,

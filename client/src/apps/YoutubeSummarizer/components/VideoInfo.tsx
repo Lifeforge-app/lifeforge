@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import humanNumber from 'human-number'
-
-import { DashboardItem } from '@lifeforge/ui'
+import { DashboardItem } from 'lifeforge-ui'
 
 import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 

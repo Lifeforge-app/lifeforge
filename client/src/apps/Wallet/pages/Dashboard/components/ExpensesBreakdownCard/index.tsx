@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
-
-import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'

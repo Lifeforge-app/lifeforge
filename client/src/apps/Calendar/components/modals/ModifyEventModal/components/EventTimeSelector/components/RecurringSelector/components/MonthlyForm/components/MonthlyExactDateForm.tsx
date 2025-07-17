@@ -1,6 +1,5 @@
+import { TextInput } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { TextInput } from '@lifeforge/ui'
 
 function MonthlyExactDateForm({
   monthlyOnDate,

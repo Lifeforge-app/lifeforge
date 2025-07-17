@@ -1,16 +1,15 @@
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   ModalHeader,
   TextInput
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
 

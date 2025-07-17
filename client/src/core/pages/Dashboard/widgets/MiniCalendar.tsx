@@ -1,8 +1,7 @@
 import dayjs from 'dayjs'
+import { Button, DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Link } from 'react-router'
-
-import { Button, DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import MiniCalendarContent from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'

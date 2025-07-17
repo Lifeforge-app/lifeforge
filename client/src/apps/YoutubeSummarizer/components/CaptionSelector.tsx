@@ -1,14 +1,13 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
+import { Icon } from '@iconify/react'
 import {
   Button,
   DashboardItem,
   EmptyStateScreen,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import forceDown from '@utils/forceDown'
 

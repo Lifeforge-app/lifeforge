@@ -1,4 +1,4 @@
-import { ModalHeader } from '@lifeforge/ui'
+import { ModalHeader } from 'lifeforge-ui'
 
 function ViewReceiptModal({
   data: { src },

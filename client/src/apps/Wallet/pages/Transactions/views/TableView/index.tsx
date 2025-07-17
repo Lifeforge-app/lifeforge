@@ -1,4 +1,4 @@
-import { Scrollbar } from '@lifeforge/ui'
+import { Scrollbar } from 'lifeforge-ui'
 
 import TableBody from './components/TableBody'
 import TableHeader from './components/TableHeader'

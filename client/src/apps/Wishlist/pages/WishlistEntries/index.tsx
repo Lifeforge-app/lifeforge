@@ -1,10 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   MenuItem,
@@ -12,8 +7,12 @@ import {
   QueryWrapper,
   SearchInput,
   Tabs
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

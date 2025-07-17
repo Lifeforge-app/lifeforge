@@ -1,6 +1,5 @@
+import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { EmptyStateScreen, Scrollbar } from '@lifeforge/ui'
 
 import { IWishlistEntry } from '@apps/Wishlist/interfaces/wishlist_interfaces'
 

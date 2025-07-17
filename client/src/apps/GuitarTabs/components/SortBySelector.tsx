@@ -1,12 +1,8 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { ListboxOrComboboxOption, ListboxOrComboboxOptions } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import {
-  ListboxOrComboboxOption,
-  ListboxOrComboboxOptions
-} from '@lifeforge/ui'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],

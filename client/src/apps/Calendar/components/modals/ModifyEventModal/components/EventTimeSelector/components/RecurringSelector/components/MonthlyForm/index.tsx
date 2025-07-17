@@ -1,7 +1,6 @@
+import { TextInput } from 'lifeforge-ui'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { TextInput } from '@lifeforge/ui'
 
 import SelectableFormWrapper from '../SelectableFormWrapper'
 import MonthlyExactDateForm from './components/MonthlyExactDateForm'

@@ -1,6 +1,5 @@
+import type { IFormState } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
-
-import type { IFormState } from '@lifeforge/ui'
 
 interface IIdeaBoxContainer extends RecordModel {
   name: string

@@ -1,7 +1,6 @@
+import { Button } from 'lifeforge-ui'
 import { memo } from 'react'
 import { NavigateAction } from 'react-big-calendar'
-
-import { Button } from '@lifeforge/ui'
 
 import DateRangeLabel from './components/DateRangeLabel'
 

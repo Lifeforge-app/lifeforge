@@ -1,10 +1,9 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { Button, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-
-import { Button, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import LibgenModal from '../modals/LibgenModal'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'

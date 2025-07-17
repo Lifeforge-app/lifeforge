@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 
 import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 

@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { Button } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { Button } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import fetchShortestRoute from '../utils/fetchShortestRoute'

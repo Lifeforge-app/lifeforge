@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import { useQuill } from 'react-quilljs'
-import { useNavigate } from 'react-router'
-
 import {
   ContentWrapperWithSidebar,
   GoBackButton,
   LayoutWithSidebar,
   ModuleWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useState } from 'react'
+import { useQuill } from 'react-quilljs'
+import { useNavigate } from 'react-router'
 
 import { IBlogEntryFormState } from '@apps/Blog/interfaces/blog_interfaces'
 

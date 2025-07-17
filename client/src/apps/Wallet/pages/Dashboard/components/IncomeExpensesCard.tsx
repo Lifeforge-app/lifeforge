@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-
-import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
+import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 
 import { IWalletIncomeExpenses } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

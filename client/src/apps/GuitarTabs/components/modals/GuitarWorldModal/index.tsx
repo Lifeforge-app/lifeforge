@@ -1,7 +1,6 @@
+import { Button, ModalHeader, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { Button, ModalHeader, TextInput } from '@lifeforge/ui'
 
 import { IGuitarTabsGuitarWorldScores } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
 

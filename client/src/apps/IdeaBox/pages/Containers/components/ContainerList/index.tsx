@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 

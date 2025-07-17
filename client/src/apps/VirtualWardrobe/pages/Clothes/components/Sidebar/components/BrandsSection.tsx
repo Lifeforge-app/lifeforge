@@ -1,6 +1,5 @@
+import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
 import { useSearchParams } from 'react-router'
-
-import { SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 import { IVirtualWardrobeSidebarData } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 

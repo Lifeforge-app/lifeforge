@@ -1,4 +1,4 @@
-import { Button, useModalStore } from '@lifeforge/ui'
+import { Button, useModalStore } from 'lifeforge-ui'
 
 import ViewReceiptModal from '../../../ListView/components/ViewReceiptModal'
 

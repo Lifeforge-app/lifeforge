@@ -1,16 +1,15 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { ListResult } from 'pocketbase'
-import { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   Button,
   FAB,
   MenuItem,
   ModuleHeader,
   ModuleWrapper
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { ListResult } from 'pocketbase'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 

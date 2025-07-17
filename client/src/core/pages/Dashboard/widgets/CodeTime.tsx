@@ -1,18 +1,17 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import dayjs, { Dayjs } from 'dayjs'
-import { useMemo } from 'react'
-import { Bar } from 'react-chartjs-2'
-import { Link } from 'react-router'
-import tinycolor from 'tinycolor2'
-
 import {
   Button,
   DashboardItem,
   EmptyStateScreen,
   LoadingScreen,
   QueryWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useMemo } from 'react'
+import { Bar } from 'react-chartjs-2'
+import { Link } from 'react-router'
+import tinycolor from 'tinycolor2'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

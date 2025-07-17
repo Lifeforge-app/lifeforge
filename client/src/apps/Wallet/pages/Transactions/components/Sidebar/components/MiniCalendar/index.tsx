@@ -1,8 +1,7 @@
 import dayjs from 'dayjs'
+import { SidebarTitle } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { SidebarTitle } from '@lifeforge/ui'
 
 import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
 

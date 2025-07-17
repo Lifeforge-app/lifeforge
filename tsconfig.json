@@ -22,6 +22,9 @@
       ],
       "@shared/*": [
         "./shared/src/*"
+      ],
+      "@ui/*": [
+        "./packages/lifeforge-ui/src/*"
       ]
     },
     // Module resolution
@@ -43,8 +46,9 @@
     "noPropertyAccessFromIndexSignature": false
   },
   "include": [
-    "server/src",
-    "client/src",
-    "shared/src"
+    "./server/src/**/*",
+    "./client/src/**/*",
+    "./shared/src/**/*",
+    "./packages/lifeforge-ui/src/**/*"
   ],
 }

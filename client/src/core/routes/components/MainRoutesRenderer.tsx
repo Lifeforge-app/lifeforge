@@ -1,9 +1,8 @@
 import MainApplication from '@core/routes/components/Layout'
+import { NotFoundScreen } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router'
-
-import { NotFoundScreen } from '@lifeforge/ui'
 
 import Auth from '../../pages/Auth'
 import { useAuth } from '../../providers/AuthProvider'

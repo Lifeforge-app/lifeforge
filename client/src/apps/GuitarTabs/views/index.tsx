@@ -1,4 +1,4 @@
-import { EmptyStateScreen } from '@lifeforge/ui'
+import { EmptyStateScreen } from 'lifeforge-ui'
 
 import { IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
 import GridView from './GridView'

@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-
-import { EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
+import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
 
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'

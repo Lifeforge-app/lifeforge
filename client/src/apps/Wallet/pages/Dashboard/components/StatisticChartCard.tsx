@@ -1,10 +1,9 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { DashboardItem, EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-
-import { DashboardItem, EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

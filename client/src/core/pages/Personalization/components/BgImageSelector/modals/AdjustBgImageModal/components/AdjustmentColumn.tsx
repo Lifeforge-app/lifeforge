@@ -1,7 +1,6 @@
+import { ConfigColumn } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
-
-import { ConfigColumn } from '@lifeforge/ui'
 
 function AdjustmentColumn({
   icon,

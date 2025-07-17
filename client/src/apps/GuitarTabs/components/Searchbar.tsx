@@ -1,7 +1,6 @@
+import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { SearchInput, ViewModeSelector } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

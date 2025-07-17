@@ -1,7 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-
-import { Checkbox } from '@lifeforge/ui'
+import { Checkbox } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 

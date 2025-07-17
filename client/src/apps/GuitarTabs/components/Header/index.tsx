@@ -1,6 +1,5 @@
+import { FAB, ModuleHeader } from 'lifeforge-ui'
 import { useMemo } from 'react'
-
-import { FAB, ModuleHeader } from '@lifeforge/ui'
 
 import ActionMenu from './components/ActionMenu'
 import UploadTabButton from './components/UploadTabButton'

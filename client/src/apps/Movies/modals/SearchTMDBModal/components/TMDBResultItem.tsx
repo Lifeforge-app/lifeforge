@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
-
-import { Button } from '@lifeforge/ui'
 
 import { IMovieSearchResult } from '@apps/Movies/interfaces/movies_interfaces'
 

@@ -1,10 +1,9 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
-
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 

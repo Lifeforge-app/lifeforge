@@ -1,9 +1,6 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   EmptyStateScreen,
@@ -15,7 +12,9 @@ import {
   QRCodeScanner,
   Scrollbar,
   SearchInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
 

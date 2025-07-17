@@ -1,24 +1,23 @@
-import { Suspense } from "react";
-import { Route } from "react-router";
+import { LoadingScreen, ModalManager } from 'lifeforge-ui'
+import { Suspense } from 'react'
+import { Route } from 'react-router'
 
-import { LoadingScreen, ModalManager } from "@lifeforge/ui";
-
-import { ModuleConfig } from "../interfaces/routes_interfaces";
-import APIKeyStatusProvider from "../providers/APIKeyStatusProvider";
+import { ModuleConfig } from '../interfaces/routes_interfaces'
+import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
 
 function ChildRoutesRenderer({
   routes,
   isNested = false,
   APIKeys = [],
-  t,
+  t
 }: {
-  routes: ModuleConfig["routes"];
-  t: any;
-  isNested?: boolean;
-  APIKeys?: string[];
+  routes: ModuleConfig['routes']
+  t: any
+  isNested?: boolean
+  APIKeys?: string[]
 }) {
   return Object.entries(routes).map(([path, component]) => {
-    const Comp = component;
+    const Comp = component
 
     return (
       <Route
@@ -27,17 +26,17 @@ function ChildRoutesRenderer({
           <APIKeyStatusProvider APIKeys={APIKeys}>
             <Suspense
               key={`path-${path}`}
-              fallback={<LoadingScreen customMessage={t("loadingModule")} />}
+              fallback={<LoadingScreen customMessage={t('loadingModule')} />}
             >
               <Comp />
             </Suspense>
             <ModalManager />
           </APIKeyStatusProvider>
         }
-        path={(!isNested ? "/" : "") + path}
+        path={(!isNested ? '/' : '') + path}
       />
-    );
-  });
+    )
+  })
 }
 
-export default ChildRoutesRenderer;
+export default ChildRoutesRenderer

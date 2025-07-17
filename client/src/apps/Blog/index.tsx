@@ -1,14 +1,13 @@
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
-import { BlogSchemas } from 'shared'
-
 import {
   Button,
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
+import { BlogSchemas } from 'shared'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

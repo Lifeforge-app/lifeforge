@@ -1,8 +1,7 @@
+import { Button, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Button, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 

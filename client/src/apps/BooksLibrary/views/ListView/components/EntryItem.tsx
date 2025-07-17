@@ -3,11 +3,10 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { Button, HamburgerMenu } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
-
-import { Button, HamburgerMenu } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

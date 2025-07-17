@@ -1,17 +1,16 @@
 import {
+  Button,
+  EmptyStateScreen,
+  LifeforgeUIProvider,
+  LoadingScreen
+} from 'lifeforge-ui'
+import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState
 } from 'react'
-
-import {
-  Button,
-  EmptyStateScreen,
-  LifeforgeUIProvider,
-  LoadingScreen
-} from '@lifeforge/ui'
 
 import { initLocale } from '../i18n'
 

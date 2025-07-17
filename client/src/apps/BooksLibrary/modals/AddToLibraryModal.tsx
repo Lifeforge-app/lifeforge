@@ -1,7 +1,6 @@
+import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { FormModal, type IFieldProps } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,4 +1,4 @@
-import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 
 import forceDown from '@utils/forceDown'
 

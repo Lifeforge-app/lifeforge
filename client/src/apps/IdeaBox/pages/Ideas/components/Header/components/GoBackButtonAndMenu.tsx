@@ -1,7 +1,6 @@
+import { GoBackButton, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
 import { useNavigate } from 'react-router'
-
-import { GoBackButton, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 

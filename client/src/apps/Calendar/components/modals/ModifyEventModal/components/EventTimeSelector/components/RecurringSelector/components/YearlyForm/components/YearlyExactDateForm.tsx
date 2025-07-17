@@ -1,10 +1,9 @@
-import { useTranslation } from 'react-i18next'
-
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
 
 function YearlyExactDateForm({
   yearlyMonth,

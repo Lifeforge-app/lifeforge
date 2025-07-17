@@ -1,13 +1,12 @@
-import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router'
-
 import {
   Button,
   DashboardItem,
   EmptyStateScreen,
   QueryWrapper,
   Scrollbar
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router'
 
 import TaskItem from '@apps/TodoList/components/tasks/TaskItem'
 import {

@@ -1,14 +1,13 @@
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps'
-import { useMemo } from 'react'
-import { useNavigate } from 'react-router'
-import colors from 'tailwindcss/colors'
-
 import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useMemo } from 'react'
+import { useNavigate } from 'react-router'
+import colors from 'tailwindcss/colors'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'

@@ -1,7 +1,3 @@
-import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router'
-
 import {
   Button,
   EmptyStateScreen,
@@ -9,8 +5,11 @@ import {
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

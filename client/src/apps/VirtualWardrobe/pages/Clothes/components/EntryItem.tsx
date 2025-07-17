@@ -2,16 +2,15 @@ import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'

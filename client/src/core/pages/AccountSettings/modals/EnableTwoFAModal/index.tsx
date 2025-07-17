@@ -1,8 +1,7 @@
+import { ModalHeader } from 'lifeforge-ui'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { ModalHeader } from '@lifeforge/ui'
 
 import OTPScreen from '@security/components/OTPScreen'
 

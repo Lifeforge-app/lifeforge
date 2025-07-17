@@ -1,10 +1,6 @@
 import { ISocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Id, toast } from 'react-toastify'
-
 import {
   Button,
   ContentWrapperWithSidebar,
@@ -13,8 +9,11 @@ import {
   Pagination,
   QueryWrapper,
   Scrollbar
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Id, toast } from 'react-toastify'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

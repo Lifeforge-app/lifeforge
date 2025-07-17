@@ -1,6 +1,5 @@
+import { Button, HeaderFilter } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { Button, HeaderFilter } from '@lifeforge/ui'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'

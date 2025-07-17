@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
+import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'

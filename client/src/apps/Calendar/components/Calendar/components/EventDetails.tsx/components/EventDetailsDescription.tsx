@@ -1,10 +1,9 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import { Button } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import { Link } from 'react-router'
-
-import { Button } from '@lifeforge/ui'
 
 import {
   ICalendarCalendar,

@@ -1,7 +1,6 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { Button, DateInput } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { Button, DateInput } from '@lifeforge/ui'
 
 import { ICalendarEventFormState } from '@apps/Calendar/interfaces/calendar_interfaces'
 

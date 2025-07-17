@@ -10,14 +10,13 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { useEffect, useMemo, useState } from 'react'
-import { Line } from 'react-chartjs-2'
-
 import {
   Button,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useMemo, useState } from 'react'
+import { Line } from 'react-chartjs-2'
 
 import { CURRENCIES } from '../constants/currencies'
 

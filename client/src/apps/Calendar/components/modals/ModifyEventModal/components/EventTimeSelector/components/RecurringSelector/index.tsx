@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   DateInput,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { ICalendarEventFormState } from '@apps/Calendar/interfaces/calendar_interfaces'
 

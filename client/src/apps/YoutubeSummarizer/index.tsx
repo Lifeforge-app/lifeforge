@@ -1,15 +1,14 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-
 import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 

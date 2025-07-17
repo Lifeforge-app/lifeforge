@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
+import { Button, ConfigColumn, DeleteConfirmationModal } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button, ConfigColumn, DeleteConfirmationModal } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

@@ -1,9 +1,8 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { Scrollbar } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-
-import { Scrollbar } from '@lifeforge/ui'
 
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

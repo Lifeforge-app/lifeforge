@@ -1,7 +1,6 @@
 import clsx from 'clsx'
+import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { Button } from '@lifeforge/ui'
 
 function ResendOTPButton({
   otpCooldown,

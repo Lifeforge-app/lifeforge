@@ -12,16 +12,15 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
-
 import {
   Button,
   FAB,
   MenuItem,
   ModuleHeader,
   ModuleWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

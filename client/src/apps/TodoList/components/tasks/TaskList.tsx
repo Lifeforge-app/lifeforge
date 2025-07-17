@@ -1,4 +1,4 @@
-import { Scrollbar } from '@lifeforge/ui'
+import { Scrollbar } from 'lifeforge-ui'
 
 import { ITodoListEntry } from '@apps/TodoList/interfaces/todo_list_interfaces'
 

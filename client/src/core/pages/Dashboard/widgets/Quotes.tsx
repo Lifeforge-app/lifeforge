@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
+import { QueryWrapper } from 'lifeforge-ui'
 import tinycolor from 'tinycolor2'
-
-import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

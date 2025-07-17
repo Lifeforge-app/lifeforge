@@ -1,8 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate, useSearchParams } from 'react-router'
-
 import {
   Button,
   EmptyStateScreen,
@@ -11,8 +7,11 @@ import {
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

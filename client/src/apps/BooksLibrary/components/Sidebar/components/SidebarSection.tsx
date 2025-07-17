@@ -1,8 +1,7 @@
+import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 import { useBooksLibraryContext } from '@apps/BooksLibrary/providers/BooksLibraryProvider'

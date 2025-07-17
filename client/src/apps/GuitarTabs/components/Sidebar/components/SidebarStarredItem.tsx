@@ -1,6 +1,5 @@
+import { SidebarItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { SidebarItem } from '@lifeforge/ui'
 
 function SidebarStarredItem({
   count,
