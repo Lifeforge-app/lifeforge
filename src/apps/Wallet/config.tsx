@@ -4,6 +4,7 @@ import {
   IconCurrencyDollar,
   IconDashboard,
   IconFileText,
+  IconMapPin,
   IconWallet
 } from '@tabler/icons-react'
 import { lazy } from 'react'
@@ -24,6 +25,11 @@ export default {
     { name: 'Assets', icon: <IconWallet />, path: 'assets' },
     { name: 'Ledgers', icon: <IconBook />, path: 'ledgers' },
     {
+      name: 'Spending Heatmap',
+      icon: <IconMapPin />,
+      path: 'spending-heatmap'
+    },
+    {
       name: 'Financial Statements',
       icon: <IconFileText />,
       path: 'statements'
@@ -34,6 +40,7 @@ export default {
     'wallet/transactions': lazy(() => import('./pages/Transactions')),
     'wallet/assets': lazy(() => import('./pages/Assets')),
     'wallet/ledgers': lazy(() => import('./pages/Ledgers')),
+    'wallet/spending-heatmap': lazy(() => import('./pages/SpendingHeatmap')),
     'wallet/statements': lazy(() => import('./pages/Statements'))
   },
   togglable: true
