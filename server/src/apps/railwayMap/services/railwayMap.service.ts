@@ -1,29 +1,33 @@
 import ClientError from "@functions/ClientError";
 import PocketBase from "pocketbase";
+import { RailwayMapSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IRailwayMapLine, IRailwayMapStation } from "../schema";
 import dijkstraWithTransfers from "../utils/pathFinding";
 
-export const getLines = (pb: PocketBase): Promise<WithPB<IRailwayMapLine>[]> =>
-  pb.collection("railway_map__lines").getFullList<WithPB<IRailwayMapLine>>();
+export const getLines = (
+  pb: PocketBase,
+): Promise<WithPB<RailwayMapSchemas.ILine>[]> =>
+  pb
+    .collection("railway_map__lines")
+    .getFullList<WithPB<RailwayMapSchemas.ILine>>();
 
 export const getStations = (
   pb: PocketBase,
-): Promise<WithPB<IRailwayMapStation>[]> =>
+): Promise<WithPB<RailwayMapSchemas.IStation>[]> =>
   pb
     .collection("railway_map__stations")
-    .getFullList<WithPB<IRailwayMapStation>>();
+    .getFullList<WithPB<RailwayMapSchemas.IStation>>();
 
 export const getShortestPath = async (
   pb: PocketBase,
   start: string,
   end: string,
-): Promise<WithPB<IRailwayMapStation>[]> => {
+): Promise<WithPB<RailwayMapSchemas.IStation>[]> => {
   const allStations = await pb
     .collection("railway_map__stations")
-    .getFullList<WithPB<IRailwayMapStation>>();
+    .getFullList<WithPB<RailwayMapSchemas.IStation>>();
 
   if (
     ![start, end].every((station) => allStations.some((s) => s.id === station))

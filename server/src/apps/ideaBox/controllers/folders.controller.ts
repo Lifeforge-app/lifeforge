@@ -4,11 +4,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { IdeaBoxSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { IdeaBoxFolderSchema } from "../schema";
 import * as foldersService from "../services/folders.service";
 
 const ideaBoxFoldersRouter = express.Router();
@@ -21,7 +21,7 @@ const getFolders = forgeController
       container: z.string(),
       "0": z.string(),
     }),
-    response: z.array(WithPBSchema(IdeaBoxFolderSchema)),
+    response: z.array(WithPBSchema(IdeaBoxSchemas.FolderSchema)),
   })
   .existenceCheck("params", {
     container: "idea_box__containers",
@@ -53,7 +53,7 @@ const createFolder = forgeController
       icon: z.string(),
       color: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxFolderSchema),
+    response: WithPBSchema(IdeaBoxSchemas.FolderSchema),
   })
   .existenceCheck("body", {
     container: "idea_box__containers",
@@ -73,7 +73,7 @@ const updateFolder = forgeController
       icon: z.string(),
       color: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxFolderSchema),
+    response: WithPBSchema(IdeaBoxSchemas.FolderSchema),
   })
   .existenceCheck("params", {
     id: "idea_box__folders",
@@ -93,7 +93,7 @@ const moveFolder = forgeController
     query: z.object({
       target: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxFolderSchema),
+    response: WithPBSchema(IdeaBoxSchemas.FolderSchema),
   })
   .existenceCheck("params", {
     id: "idea_box__folders",
@@ -113,7 +113,7 @@ const removeFromFolder = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(IdeaBoxFolderSchema),
+    response: WithPBSchema(IdeaBoxSchemas.FolderSchema),
   })
   .existenceCheck("params", {
     id: "idea_box__folders",

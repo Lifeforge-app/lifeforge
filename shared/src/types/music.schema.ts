@@ -5,26 +5,37 @@
  * Generated at: 2025-07-17T08:55:29.692Z
  * Contains: music__entries
  */
+import { z } from 'zod/v4'
 
-import { z } from "zod/v4";
 const EntrySchema = z.object({
   name: z.string(),
   duration: z.string(),
   author: z.string(),
   file: z.string(),
-  is_favourite: z.boolean(),
-});
+  is_favourite: z.boolean()
+})
 
-type IEntry = z.infer<typeof EntrySchema>;
+type IEntry = z.infer<typeof EntrySchema>
 
-export {
-  EntrySchema,
-};
+export { EntrySchema }
 
-export type {
-  IEntry,
-};
+export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-// Add your custom schemas here. They will not be overwritten by this script.
+const YoutubeDataSchema = z.object({
+  title: z.string(),
+  uploadDate: z.string(),
+  uploader: z.string(),
+  uploaderUrl: z.string().optional(),
+  duration: z.string(),
+  viewCount: z.number(),
+  likeCount: z.number(),
+  thumbnail: z.string()
+})
+
+type IYoutubeData = z.infer<typeof YoutubeDataSchema>
+
+export { YoutubeDataSchema }
+
+export type { IYoutubeData }

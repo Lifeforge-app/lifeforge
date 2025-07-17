@@ -4,16 +4,13 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import fs from "fs";
+import { VirtualWardrobeSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
 import { fieldsUploadMiddleware } from "@middlewares/uploadMiddleware";
 
-import {
-  VirtualWardrobeEntrySchema,
-  VirtualWardrobeSidebarDataSchema,
-} from "../schema";
 import * as entriesService from "../services/entries.service";
 import * as visionService from "../services/vision.service";
 
@@ -23,7 +20,7 @@ const getSidebarData = forgeController
   .route("GET /sidebar-data")
   .description("Get sidebar data for virtual wardrobe")
   .schema({
-    response: VirtualWardrobeSidebarDataSchema,
+    response: VirtualWardrobeSchemas.VirtualWardrobeSidebarDataSchema,
   })
   .callback(async ({ pb }) => await entriesService.getSidebarData(pb));
 
@@ -43,7 +40,7 @@ const getEntries = forgeController
         .transform((val) => val === "true"),
       q: z.string().optional(),
     }),
-    response: z.array(WithPBSchema(VirtualWardrobeEntrySchema)),
+    response: z.array(WithPBSchema(VirtualWardrobeSchemas.EntrySchema)),
   })
   .callback(
     async ({ pb, query }) => await entriesService.getEntries(pb, query),
@@ -63,7 +60,7 @@ const createEntry = forgeController
       price: z.string().transform((val) => parseFloat(val)),
       notes: z.string(),
     }),
-    response: WithPBSchema(VirtualWardrobeEntrySchema),
+    response: WithPBSchema(VirtualWardrobeSchemas.EntrySchema),
   })
   .middlewares(
     fieldsUploadMiddleware.bind({
@@ -120,7 +117,7 @@ const updateEntry = forgeController
       price: z.number().optional(),
       notes: z.string().optional(),
     }),
-    response: WithPBSchema(VirtualWardrobeEntrySchema),
+    response: WithPBSchema(VirtualWardrobeSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",
@@ -154,7 +151,7 @@ const toggleFavourite = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(VirtualWardrobeEntrySchema),
+    response: WithPBSchema(VirtualWardrobeSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",

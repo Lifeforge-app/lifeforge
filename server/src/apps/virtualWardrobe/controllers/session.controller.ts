@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { VirtualWardrobeSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { VirtualWardrobeEntrySchema } from "../schema";
 import * as sessionService from "../services/session.service";
 
 const virtualWardrobeSessionRouter = express.Router();
@@ -16,7 +16,7 @@ const getCart = forgeController
   .route("GET /cart")
   .description("Get session cart items")
   .schema({
-    response: z.array(WithPBSchema(VirtualWardrobeEntrySchema)),
+    response: z.array(WithPBSchema(VirtualWardrobeSchemas.EntrySchema)),
   })
   .callback(async () => sessionService.getSessionCart());
 

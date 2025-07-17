@@ -1,14 +1,18 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { useCallback } from 'react'
+import { AchievementsSchemas, ISchemaWithPB } from 'shared'
 
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { useModalStore } from '@lifeforge/ui'
 
-import { type IAchievementEntry } from '../interfaces/achievements_interfaces'
 import ModifyAchievementModal from './ModifyAchievementModal'
 
-function EntryItem({ entry }: { entry: IAchievementEntry }) {
+function EntryItem({
+  entry
+}: {
+  entry: ISchemaWithPB<AchievementsSchemas.IEntry>
+}) {
   const open = useModalStore(state => state.open)
 
   const handleDeleteEntry = useCallback(() => {
@@ -16,7 +20,7 @@ function EntryItem({ entry }: { entry: IAchievementEntry }) {
       apiEndpoint: 'achievements/entries',
       data: entry,
       itemName: 'achievement',
-      nameKey: 'title',
+      nameKey: 'title' as const,
       queryKey: ['achievements/entries', entry.difficulty]
     })
   }, [entry])

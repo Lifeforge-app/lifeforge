@@ -1,15 +1,14 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-
-import { IAchievementEntry } from '../interfaces/achievements_interfaces'
+import { AchievementsSchemas } from 'shared'
 
 function DifficultySelector({
   selectedDifficulty,
   setSelectedDifficulty
 }: {
-  selectedDifficulty: IAchievementEntry['difficulty']
+  selectedDifficulty: AchievementsSchemas.IEntry['difficulty']
   setSelectedDifficulty: React.Dispatch<
-    React.SetStateAction<IAchievementEntry['difficulty']>
+    React.SetStateAction<AchievementsSchemas.IEntry['difficulty']>
   >
 }) {
   const { t } = useTranslation('apps.achievements')

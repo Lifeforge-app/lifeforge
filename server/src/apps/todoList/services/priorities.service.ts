@@ -1,21 +1,20 @@
 import PocketBase from "pocketbase";
+import { TodoListSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { ITodoListPriority } from "../schema";
 
 export const getAllPriorities = (
   pb: PocketBase,
 ): Promise<
   WithPB<
-    ITodoListPriority & {
+    TodoListSchemas.IPriority & {
       amount: number;
     }
   >[]
 > =>
   pb.collection("todo_list__priorities_aggregated").getFullList<
     WithPB<
-      ITodoListPriority & {
+      TodoListSchemas.IPriority & {
         amount: number;
       }
     >
@@ -23,41 +22,41 @@ export const getAllPriorities = (
 
 export const createPriority = async (
   pb: PocketBase,
-  data: Omit<ITodoListPriority, "amount">,
+  data: Omit<TodoListSchemas.IPriority, "amount">,
 ): Promise<
   WithPB<
-    ITodoListPriority & {
+    TodoListSchemas.IPriority & {
       amount: number;
     }
   >
 > => {
   const created = await pb
     .collection("todo_list__priorities")
-    .create<WithPB<ITodoListPriority>>(data);
+    .create<WithPB<TodoListSchemas.IPriority>>(data);
 
   return pb
     .collection("todo_list__priorities_aggregated")
-    .getOne<WithPB<ITodoListPriority & { amount: number }>>(created.id);
+    .getOne<WithPB<TodoListSchemas.IPriority & { amount: number }>>(created.id);
 };
 
 export const updatePriority = async (
   pb: PocketBase,
   id: string,
-  data: Omit<ITodoListPriority, "amount">,
+  data: Omit<TodoListSchemas.IPriority, "amount">,
 ): Promise<
   WithPB<
-    ITodoListPriority & {
+    TodoListSchemas.IPriority & {
       amount: number;
     }
   >
 > => {
   const updated = await pb
     .collection("todo_list__priorities")
-    .update<WithPB<ITodoListPriority>>(id, data);
+    .update<WithPB<TodoListSchemas.IPriority>>(id, data);
 
   return pb
     .collection("todo_list__priorities_aggregated")
-    .getOne<WithPB<ITodoListPriority & { amount: number }>>(updated.id);
+    .getOne<WithPB<TodoListSchemas.IPriority & { amount: number }>>(updated.id);
 };
 
 export const deletePriority = async (

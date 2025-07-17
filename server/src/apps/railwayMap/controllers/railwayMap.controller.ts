@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { RailwayMapSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { RailwayMapLineSchema, RailwayMapStationSchema } from "../schema";
 import * as RailwayMapServices from "../services/railwayMap.service";
 
 const railwayMapRouter = express.Router();
@@ -16,7 +16,7 @@ const getLines = forgeController
   .route("GET /lines")
   .description("Get all railway lines")
   .schema({
-    response: z.array(WithPBSchema(RailwayMapLineSchema)),
+    response: z.array(WithPBSchema(RailwayMapSchemas.LineSchema)),
   })
   .callback(async ({ pb }) => await RailwayMapServices.getLines(pb));
 
@@ -24,7 +24,7 @@ const getStations = forgeController
   .route("GET /stations")
   .description("Get all railway stations")
   .schema({
-    response: z.array(WithPBSchema(RailwayMapStationSchema)),
+    response: z.array(WithPBSchema(RailwayMapSchemas.StationSchema)),
   })
   .callback(async ({ pb }) => RailwayMapServices.getStations(pb));
 
@@ -36,7 +36,7 @@ const getShortestPath = forgeController
       start: z.string(),
       end: z.string(),
     }),
-    response: z.array(WithPBSchema(RailwayMapStationSchema)),
+    response: z.array(WithPBSchema(RailwayMapSchemas.StationSchema)),
   })
   .callback(
     async ({ pb, query: { start, end } }) =>

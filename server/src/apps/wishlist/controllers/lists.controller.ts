@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { WishlistSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { WishlistListSchema } from "../schema";
 import * as listsService from "../services/lists.service";
 
 const wishlistListsRouter = express.Router();
@@ -19,7 +19,7 @@ const getList = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(WishlistListSchema),
+    response: WithPBSchema(WishlistSchemas.ListAggregatedSchema),
   })
   .existenceCheck("params", {
     id: "wishlist__lists",
@@ -46,16 +46,7 @@ const getAllLists = forgeController
   .route("GET /")
   .description("Get all wishlists with statistics")
   .schema({
-    response: z.array(
-      WithPBSchema(
-        WishlistListSchema.extend({
-          total_count: z.number(),
-          bought_count: z.number(),
-          total_amount: z.number(),
-          bought_amount: z.number(),
-        }),
-      ),
-    ),
+    response: z.array(WithPBSchema(WishlistSchemas.ListAggregatedSchema)),
   })
   .callback(async ({ pb }) => await listsService.getAllLists(pb));
 
@@ -63,8 +54,8 @@ const createList = forgeController
   .route("POST /")
   .description("Create a new wishlist")
   .schema({
-    body: WishlistListSchema,
-    response: WithPBSchema(WishlistListSchema),
+    body: WishlistSchemas.ListSchema,
+    response: WithPBSchema(WishlistSchemas.ListSchema),
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => await listsService.createList(pb, body));
@@ -76,8 +67,8 @@ const updateList = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: WishlistListSchema,
-    response: WithPBSchema(WishlistListSchema),
+    body: WishlistSchemas.ListSchema,
+    response: WithPBSchema(WishlistSchemas.ListSchema),
   })
   .existenceCheck("params", {
     id: "wishlist__lists",

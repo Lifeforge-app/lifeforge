@@ -1,9 +1,8 @@
 import { exec } from "child_process";
 import { readFileSync, readdirSync, unlinkSync } from "fs";
 import Pocketbase from "pocketbase";
+import { MusicSchemas } from "shared";
 import { v4 } from "uuid";
-
-import { IYoutubeData } from "../schema";
 
 let downloadStatus: "empty" | "in_progress" | "completed" | "failed" = "empty";
 
@@ -17,7 +16,9 @@ export const setDownloadStatus = (
   downloadStatus = status;
 };
 
-export const getVideoInfo = (videoId: string): Promise<IYoutubeData> => {
+export const getVideoInfo = (
+  videoId: string,
+): Promise<MusicSchemas.IYoutubeData> => {
   return new Promise((resolve, reject) => {
     exec(
       `${process.cwd()}/src/core/bin/yt-dlp --skip-download --print "title,upload_date,uploader,duration,view_count,like_count,thumbnail" "https://www.youtube.com/watch?v=${videoId}"`,
@@ -37,7 +38,7 @@ export const getVideoInfo = (videoId: string): Promise<IYoutubeData> => {
           thumbnail,
         ] = stdout.split("\n");
 
-        const response: IYoutubeData = {
+        const response: MusicSchemas.IYoutubeData = {
           title,
           uploadDate,
           uploader,

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
+import { BlogSchemas } from 'shared'
 
 import {
   Button,
@@ -11,11 +12,9 @@ import {
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { IBlogEntry } from './interfaces/blog_interfaces'
-
 function Blog() {
   const { t } = useTranslation('apps.blog')
-  const entriesQuery = useAPIQuery<IBlogEntry[]>('blog/entries', [
+  const entriesQuery = useAPIQuery<BlogSchemas.IEntry[]>('blog/entries', [
     'blog',
     'entries'
   ])

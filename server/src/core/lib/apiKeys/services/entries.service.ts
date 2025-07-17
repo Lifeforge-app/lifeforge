@@ -2,10 +2,10 @@ import ClientError from "@functions/ClientError";
 import { decrypt2, encrypt2 } from "@functions/encryption";
 import bcrypt from "bcrypt";
 import PocketBase from "pocketbase";
+import { ApiKeysSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IApiKeysEntry } from "../schema";
 import { challenge } from "./auth.service";
 
 export default async function getDecryptedMaster(
@@ -32,10 +32,10 @@ export default async function getDecryptedMaster(
 
 export const getAllEntries = async (
   pb: PocketBase,
-): Promise<WithPB<IApiKeysEntry>[]> => {
+): Promise<WithPB<ApiKeysSchemas.IEntry>[]> => {
   const entries = await pb
     .collection("api_keys__entries")
-    .getFullList<WithPB<IApiKeysEntry>>({
+    .getFullList<WithPB<ApiKeysSchemas.IEntry>>({
       sort: "name",
     });
 
@@ -94,13 +94,13 @@ export const createEntry = async (
     key: string;
     decryptedMaster: string;
   },
-): Promise<WithPB<IApiKeysEntry>> => {
+): Promise<WithPB<ApiKeysSchemas.IEntry>> => {
   const decryptedKey = decrypt2(key, decryptedMaster);
   const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!);
 
   const entry = await pb
     .collection("api_keys__entries")
-    .create<WithPB<IApiKeysEntry>>({
+    .create<WithPB<ApiKeysSchemas.IEntry>>({
       keyId,
       name,
       description,
@@ -131,13 +131,13 @@ export const updateEntry = async (
     key: string;
     decryptedMaster: string;
   },
-): Promise<WithPB<IApiKeysEntry>> => {
+): Promise<WithPB<ApiKeysSchemas.IEntry>> => {
   const decryptedKey = decrypt2(key, decryptedMaster);
   const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!);
 
   const updatedEntry = await pb
     .collection("api_keys__entries")
-    .update<WithPB<IApiKeysEntry>>(id, {
+    .update<WithPB<ApiKeysSchemas.IEntry>>(id, {
       keyId,
       name,
       description,

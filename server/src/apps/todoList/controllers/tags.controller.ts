@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { TodoListSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { TodoListTagSchema } from "../schema";
 import * as tagsService from "../services/tags.service";
 
 const todoListTagsRouter = express.Router();
@@ -17,7 +17,7 @@ const getAllTags = forgeController
   .description("Get all todo tags")
   .schema({
     response: z.array(
-      WithPBSchema(TodoListTagSchema.extend({ amount: z.number() })),
+      WithPBSchema(TodoListSchemas.TagSchema.extend({ amount: z.number() })),
     ),
   })
   .callback(({ pb }) => tagsService.getAllTags(pb));
@@ -26,8 +26,10 @@ const createTag = forgeController
   .route("POST /")
   .description("Create a new todo tag")
   .schema({
-    body: TodoListTagSchema,
-    response: WithPBSchema(TodoListTagSchema.extend({ amount: z.number() })),
+    body: TodoListSchemas.TagSchema,
+    response: WithPBSchema(
+      TodoListSchemas.TagSchema.extend({ amount: z.number() }),
+    ),
   })
   .statusCode(201)
   .callback(({ pb, body }) => tagsService.createTag(pb, body));
@@ -39,8 +41,10 @@ const updateTag = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListTagSchema,
-    response: WithPBSchema(TodoListTagSchema.extend({ amount: z.number() })),
+    body: TodoListSchemas.TagSchema,
+    response: WithPBSchema(
+      TodoListSchemas.TagSchema.extend({ amount: z.number() }),
+    ),
   })
   .existenceCheck("params", {
     id: "todo_list__tags",

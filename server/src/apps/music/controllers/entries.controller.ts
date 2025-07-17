@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { MusicSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { MusicEntrySchema } from "../schema";
 import * as EntriesService from "../services/entries.service";
 
 const musicEntriesRouter = express.Router();
@@ -16,7 +16,7 @@ const getAllEntries = forgeController
   .route("GET /")
   .description("Get all music entries")
   .schema({
-    response: z.array(WithPBSchema(MusicEntrySchema)),
+    response: z.array(WithPBSchema(MusicSchemas.EntrySchema)),
   })
   .callback(async ({ pb }) => await EntriesService.getAllEntries(pb));
 
@@ -27,8 +27,8 @@ const updateEntry = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: MusicEntrySchema.pick({ name: true, author: true }),
-    response: WithPBSchema(MusicEntrySchema),
+    body: MusicSchemas.EntrySchema.pick({ name: true, author: true }),
+    response: WithPBSchema(MusicSchemas.EntrySchema),
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
@@ -59,7 +59,7 @@ const toggleFavorite = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(MusicEntrySchema),
+    response: WithPBSchema(MusicSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "music__entries",

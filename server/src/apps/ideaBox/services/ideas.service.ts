@@ -1,21 +1,22 @@
 import PocketBase from "pocketbase";
+import { IdeaBoxSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { IIdeaBoxEntry, IIdeaBoxFolder } from "../schema";
 
 export const getIdeas = (
   pb: PocketBase,
   container: string,
   folder: string,
   archived: boolean,
-): Promise<WithPB<IIdeaBoxEntry>[]> =>
-  pb.collection("idea_box__entries").getFullList<WithPB<IIdeaBoxEntry>>({
-    filter: `container = "${container}" && archived = ${archived} ${
-      folder ? `&& folder = "${folder}"` : "&& folder=''"
-    }`,
-    sort: "-pinned,-created",
-  });
+): Promise<WithPB<IdeaBoxSchemas.IEntry>[]> =>
+  pb
+    .collection("idea_box__entries")
+    .getFullList<WithPB<IdeaBoxSchemas.IEntry>>({
+      filter: `container = "${container}" && archived = ${archived} ${
+        folder ? `&& folder = "${folder}"` : "&& folder=''"
+      }`,
+      sort: "-pinned,-created",
+    });
 
 export const validateFolderPath = async (
   pb: PocketBase,
@@ -32,7 +33,7 @@ export const validateFolderPath = async (
     try {
       const folderEntry = await pb
         .collection("idea_box__folders")
-        .getOne<IIdeaBoxFolder>(folder);
+        .getOne<IdeaBoxSchemas.IFolder>(folder);
 
       if (
         folderEntry.parent !== lastFolder ||
@@ -54,18 +55,22 @@ export const validateFolderPath = async (
 
 export const createIdea = (
   pb: PocketBase,
-  data: Omit<IIdeaBoxEntry, "image" | "pinned" | "archived"> & {
+  data: Omit<IdeaBoxSchemas.IEntry, "image" | "pinned" | "archived"> & {
     image?: File;
   },
-): Promise<WithPB<IIdeaBoxEntry>> =>
-  pb.collection("idea_box__entries").create<WithPB<IIdeaBoxEntry>>(data);
+): Promise<WithPB<IdeaBoxSchemas.IEntry>> =>
+  pb
+    .collection("idea_box__entries")
+    .create<WithPB<IdeaBoxSchemas.IEntry>>(data);
 
 export const updateIdea = async (
   pb: PocketBase,
   id: string,
-  data: Partial<IIdeaBoxEntry>,
-): Promise<WithPB<IIdeaBoxEntry>> =>
-  pb.collection("idea_box__entries").update<WithPB<IIdeaBoxEntry>>(id, data);
+  data: Partial<IdeaBoxSchemas.IEntry>,
+): Promise<WithPB<IdeaBoxSchemas.IEntry>> =>
+  pb
+    .collection("idea_box__entries")
+    .update<WithPB<IdeaBoxSchemas.IEntry>>(id, data);
 
 export const deleteIdea = async (pb: PocketBase, id: string) => {
   await pb.collection("idea_box__entries").delete(id);
@@ -74,11 +79,11 @@ export const deleteIdea = async (pb: PocketBase, id: string) => {
 export const updatePinStatus = async (pb: PocketBase, id: string) => {
   const idea = await pb
     .collection("idea_box__entries")
-    .getOne<WithPB<IIdeaBoxEntry>>(id);
+    .getOne<WithPB<IdeaBoxSchemas.IEntry>>(id);
 
   const entry = await pb
     .collection("idea_box__entries")
-    .update<WithPB<IIdeaBoxEntry>>(id, {
+    .update<WithPB<IdeaBoxSchemas.IEntry>>(id, {
       pinned: !idea.pinned,
     });
 
@@ -88,11 +93,11 @@ export const updatePinStatus = async (pb: PocketBase, id: string) => {
 export const updateArchiveStatus = async (pb: PocketBase, id: string) => {
   const idea = await pb
     .collection("idea_box__entries")
-    .getOne<WithPB<IIdeaBoxEntry>>(id);
+    .getOne<WithPB<IdeaBoxSchemas.IEntry>>(id);
 
   const entry = await pb
     .collection("idea_box__entries")
-    .update<WithPB<IIdeaBoxEntry>>(id, {
+    .update<WithPB<IdeaBoxSchemas.IEntry>>(id, {
       archived: !idea.archived,
       pinned: false,
     });
@@ -104,15 +109,15 @@ export const moveIdea = async (
   pb: PocketBase,
   id: string,
   target: string,
-): Promise<WithPB<IIdeaBoxEntry>> =>
-  pb.collection("idea_box__entries").update<WithPB<IIdeaBoxEntry>>(id, {
+): Promise<WithPB<IdeaBoxSchemas.IEntry>> =>
+  pb.collection("idea_box__entries").update<WithPB<IdeaBoxSchemas.IEntry>>(id, {
     folder: target,
   });
 
 export const removeFromFolder = (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<IIdeaBoxEntry>> =>
-  pb.collection("idea_box__entries").update<WithPB<IIdeaBoxEntry>>(id, {
+): Promise<WithPB<IdeaBoxSchemas.IEntry>> =>
+  pb.collection("idea_box__entries").update<WithPB<IdeaBoxSchemas.IEntry>>(id, {
     folder: "",
   });

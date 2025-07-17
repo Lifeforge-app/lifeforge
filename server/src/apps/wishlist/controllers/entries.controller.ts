@@ -4,13 +4,13 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import fs from "fs";
+import { WishlistSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
-import { WishlistEntrySchema } from "../schema";
 import * as entriesService from "../services/entries.service";
 
 const wishlistEntriesRouter = express.Router();
@@ -36,7 +36,7 @@ const getEntriesByListId = forgeController
         .optional()
         .transform((val) => val === "true"),
     }),
-    response: z.array(WithPBSchema(WishlistEntrySchema)),
+    response: z.array(WithPBSchema(WishlistSchemas.EntrySchema)),
   })
   .existenceCheck("params", {
     id: "wishlist__lists",
@@ -72,7 +72,7 @@ const createEntry = forgeController
       list: z.string(),
       image: z.any().optional(),
     }),
-    response: WithPBSchema(WishlistEntrySchema),
+    response: WithPBSchema(WishlistSchemas.EntrySchema),
   })
   .middlewares(singleUploadMiddleware)
   .existenceCheck("body", {
@@ -118,7 +118,7 @@ const updateEntry = forgeController
       imageRemoved: z.string().optional(),
     }),
     response: z.union([
-      WithPBSchema(WishlistEntrySchema),
+      WithPBSchema(WishlistSchemas.EntrySchema),
       z.literal("removed"),
     ]),
   })
@@ -170,7 +170,7 @@ const updateEntryBoughtStatus = forgeController
     params: z.object({
       id: z.string(),
     }),
-    response: WithPBSchema(WishlistEntrySchema),
+    response: WithPBSchema(WishlistSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "wishlist__entries",

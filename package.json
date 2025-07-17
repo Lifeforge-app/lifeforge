@@ -19,6 +19,11 @@
     "build:shared": "cd shared && bun run build",
     "build:server": "cd server && bun run build",
     "build": "bun run build:shared && bun run build:server && bun run build:client",
+    "types:client": "cd client && bun run tsc --noEmit",
+    "types:shared": "cd shared && bun run tsc --noEmit",
+    "types:server": "cd server && bun run tsc --noEmit",
+    "types": "bun run types:shared && bun run types:server && bun run types:client",
+    "lint:client": "cd client && bun run lint",
     "postinstall": "bun run build:shared && bun run build:server",
     "schema:generate": "bun run scripts/generateSchema.ts"
   },

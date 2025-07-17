@@ -3,9 +3,9 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { GuitarTabsSchemas } from "shared";
 import { z } from "zod/v4";
 
-import { GuitarTabsGuitarWorldEntrySchema } from "../schema";
 import * as guitarWorldService from "../services/guitarWorld.service";
 
 const guitarTabsGuitarWorldRouter = express.Router();
@@ -19,7 +19,7 @@ const getTabsList = forgeController
       page: z.number().optional().default(1),
     }),
     response: z.object({
-      data: z.array(GuitarTabsGuitarWorldEntrySchema),
+      data: z.array(GuitarTabsSchemas.GuitarTabsGuitarWorldEntrySchema),
       totalItems: z.number(),
       perPage: z.number(),
     }),

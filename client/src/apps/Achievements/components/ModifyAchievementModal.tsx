@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AchievementsSchemas, ISchemaWithPB } from 'shared'
 import COLOR from 'tailwindcss/colors'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import {
-  type IAchievementEntry,
-  IAchievementEntryFormState
-} from '../interfaces/achievements_interfaces'
 
 const difficulties = [
   ['easy', 'green'],
@@ -23,19 +19,19 @@ function ModifyAchievementModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: IAchievementEntry | null
-    currentDifficulty: IAchievementEntry['difficulty']
+    existedData: ISchemaWithPB<AchievementsSchemas.IEntry> | null
+    currentDifficulty: AchievementsSchemas.IEntry['difficulty']
   }
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.achievements')
-  const [formState, setFormState] = useState<IAchievementEntryFormState>({
+  const [formState, setFormState] = useState<AchievementsSchemas.IEntry>({
     title: '',
     thoughts: '',
     difficulty: 'easy'
   })
 
-  const FIELDS: IFieldProps<IAchievementEntryFormState>[] = [
+  const FIELDS: IFieldProps<AchievementsSchemas.IEntry>[] = [
     {
       id: 'title',
       required: true,

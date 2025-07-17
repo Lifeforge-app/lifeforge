@@ -3,11 +3,10 @@ import parseOCR from "@functions/parseOCR";
 import fs from "fs";
 import { fromPath } from "pdf2pic";
 import Pocketbase from "pocketbase";
+import { WalletSchemas } from "shared";
 import { z } from "zod";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { IWalletReceiptScanResult, IWalletTransaction } from "../schema";
 
 function convertPDFToImage(path: string): Promise<File | undefined> {
   return new Promise(async (resolve, reject) => {
@@ -53,16 +52,19 @@ function convertPDFToImage(path: string): Promise<File | undefined> {
 
 export const getAllTransactions = (
   pb: Pocketbase,
-): Promise<WithPB<IWalletTransaction>[]> =>
+): Promise<WithPB<WalletSchemas.ITransaction>[]> =>
   pb
     .collection("wallet__transactions")
-    .getFullList<WithPB<IWalletTransaction>>({
+    .getFullList<WithPB<WalletSchemas.ITransaction>>({
       sort: "-date,-created",
     });
 
 export const createTransaction = async (
   pb: Pocketbase,
-  data: Pick<IWalletTransaction, "particulars" | "date" | "amount" | "type"> & {
+  data: Pick<
+    WalletSchemas.ITransaction,
+    "particulars" | "date" | "amount" | "type"
+  > & {
     asset?: string;
     ledger?: string;
     category?: string;
@@ -75,7 +77,7 @@ export const createTransaction = async (
     };
   },
   file: Express.Multer.File | undefined,
-): Promise<WithPB<IWalletTransaction>[]> => {
+): Promise<WithPB<WalletSchemas.ITransaction>[]> => {
   async function processFile(): Promise<
     [Express.Multer.File | File | undefined, string | undefined]
   > {
@@ -110,10 +112,10 @@ export const createTransaction = async (
   }
 
   async function createIncomeOrExpensesTransactions(): Promise<
-    WithPB<IWalletTransaction>[]
+    WithPB<WalletSchemas.ITransaction>[]
   > {
     const newData: Omit<
-      IWalletTransaction,
+      WalletSchemas.ITransaction,
       "receipt" | "fromAsset" | "toAsset"
     > & {
       receipt: File | string;
@@ -133,19 +135,19 @@ export const createTransaction = async (
 
     const transaction = await pb
       .collection("wallet__transactions")
-      .create<WithPB<IWalletTransaction>>(newData);
+      .create<WithPB<WalletSchemas.ITransaction>>(newData);
 
     return [transaction];
   }
 
   async function createTransferTransactions(): Promise<
-    WithPB<IWalletTransaction>[]
+    WithPB<WalletSchemas.ITransaction>[]
   > {
     const _from = await pb.collection("wallet__assets").getOne(fromAsset!);
     const _to = await pb.collection("wallet__assets").getOne(toAsset!);
 
     const baseTransferData: Omit<
-      IWalletTransaction,
+      WalletSchemas.ITransaction,
       | "receipt"
       | "category"
       | "ledger"
@@ -169,14 +171,14 @@ export const createTransaction = async (
     baseTransferData.asset = toAsset!;
     const debit = await pb
       .collection("wallet__transactions")
-      .create<WithPB<IWalletTransaction>>(baseTransferData);
+      .create<WithPB<WalletSchemas.ITransaction>>(baseTransferData);
 
     baseTransferData.particulars = `Transfer to ${_to.name}`;
     baseTransferData.side = "credit";
     baseTransferData.asset = fromAsset!;
     const credit = await pb
       .collection("wallet__transactions")
-      .create<WithPB<IWalletTransaction>>(baseTransferData);
+      .create<WithPB<WalletSchemas.ITransaction>>(baseTransferData);
 
     return [debit, credit];
   }
@@ -195,7 +197,7 @@ export const createTransaction = async (
 
   let [targetFile, fileName] = await processFile();
 
-  let created: WithPB<IWalletTransaction>[] = [];
+  let created: WithPB<WalletSchemas.ITransaction>[] = [];
 
   switch (type) {
     case "income":
@@ -217,7 +219,10 @@ export const createTransaction = async (
 export const updateTransaction = async (
   pb: Pocketbase,
   id: string,
-  data: Pick<IWalletTransaction, "particulars" | "date" | "amount" | "type"> & {
+  data: Pick<
+    WalletSchemas.ITransaction,
+    "particulars" | "date" | "amount" | "type"
+  > & {
     asset?: string;
     ledger?: string;
     category?: string;
@@ -229,7 +234,7 @@ export const updateTransaction = async (
   },
   file: Express.Multer.File | undefined,
   toRemoveReceipt: boolean,
-): Promise<WithPB<IWalletTransaction>> => {
+): Promise<WithPB<WalletSchemas.ITransaction>> => {
   async function processFile(): Promise<
     [Express.Multer.File | File | undefined, string | undefined]
   > {
@@ -281,7 +286,7 @@ export const updateTransaction = async (
 
   const foundTransaction = await pb
     .collection("wallet__transactions")
-    .getOne<WithPB<IWalletTransaction>>(id);
+    .getOne<WithPB<WalletSchemas.ITransaction>>(id);
 
   const [targetFile, fileName] = await processFile();
 
@@ -292,7 +297,7 @@ export const updateTransaction = async (
   }
 
   const updatedData: Omit<
-    IWalletTransaction,
+    WalletSchemas.ITransaction,
     "receipt" | "fromAsset" | "toAsset"
   > & {
     receipt: File | string;
@@ -312,7 +317,7 @@ export const updateTransaction = async (
 
   const transaction = await pb
     .collection("wallet__transactions")
-    .update<WithPB<IWalletTransaction>>(id, updatedData);
+    .update<WithPB<WalletSchemas.ITransaction>>(id, updatedData);
 
   if (file && fs.existsSync(file.path)) {
     fs.unlinkSync(file.path);
@@ -331,8 +336,8 @@ export const deleteTransaction = async (
 export const scanReceipt = async (
   pb: Pocketbase,
   file: Express.Multer.File,
-): Promise<IWalletReceiptScanResult> => {
-  async function getTransactionDetails(): Promise<IWalletReceiptScanResult> {
+): Promise<WalletSchemas.IWalletReceiptScanResult> => {
+  async function getTransactionDetails(): Promise<WalletSchemas.IWalletReceiptScanResult> {
     const TransactionDetails = z.object({
       date: z.string(),
       particulars: z.string(),

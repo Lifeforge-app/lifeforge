@@ -1,17 +1,17 @@
 import { decrypt, decrypt2, encrypt, encrypt2 } from "@functions/encryption";
 import PocketBase from "pocketbase";
+import { PasswordsSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
-import { IPasswordsEntry } from "../schema";
 import { getDecryptedMaster } from "./master.service";
 
 export const getAllEntries = async (
   pb: PocketBase,
-): Promise<WithPB<IPasswordsEntry>[]> =>
+): Promise<WithPB<PasswordsSchemas.IEntry>[]> =>
   await pb
     .collection("passwords__entries")
-    .getFullList<WithPB<IPasswordsEntry>>({
+    .getFullList<WithPB<PasswordsSchemas.IEntry>>({
       sort: "-pinned, name",
     });
 
@@ -25,9 +25,9 @@ export const createEntry = async (
     username,
     password,
     master,
-  }: Omit<IPasswordsEntry, "decrypted" | "pinned"> & { master: string },
+  }: Omit<PasswordsSchemas.IEntry, "decrypted" | "pinned"> & { master: string },
   challenge: string,
-): Promise<WithPB<IPasswordsEntry>> => {
+): Promise<WithPB<PasswordsSchemas.IEntry>> => {
   const decryptedMaster = await getDecryptedMaster(pb, master, challenge);
 
   const decryptedPassword = decrypt2(password, challenge);
@@ -38,7 +38,7 @@ export const createEntry = async (
 
   const entry = await pb
     .collection("passwords__entries")
-    .create<WithPB<IPasswordsEntry>>({
+    .create<WithPB<PasswordsSchemas.IEntry>>({
       name,
       icon,
       color,
@@ -61,9 +61,9 @@ export const updateEntry = async (
     username,
     password,
     master,
-  }: Omit<IPasswordsEntry, "decrypted" | "pinned"> & { master: string },
+  }: Omit<PasswordsSchemas.IEntry, "decrypted" | "pinned"> & { master: string },
   challenge: string,
-): Promise<WithPB<IPasswordsEntry>> => {
+): Promise<WithPB<PasswordsSchemas.IEntry>> => {
   const decryptedMaster = await getDecryptedMaster(pb, master, challenge);
 
   const decryptedPassword = decrypt2(password, challenge);
@@ -74,7 +74,7 @@ export const updateEntry = async (
 
   const entry = await pb
     .collection("passwords__entries")
-    .update<WithPB<IPasswordsEntry>>(id, {
+    .update<WithPB<PasswordsSchemas.IEntry>>(id, {
       name,
       icon,
       color,
@@ -94,7 +94,7 @@ export const decryptEntry = async (
 ): Promise<string> => {
   const decryptedMaster = await getDecryptedMaster(pb, master, challenge);
 
-  const password: IPasswordsEntry = await pb
+  const password: PasswordsSchemas.IEntry = await pb
     .collection("passwords__entries")
     .getOne(id);
 
@@ -113,14 +113,14 @@ export const deleteEntry = async (pb: PocketBase, id: string) => {
 export const togglePin = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<IPasswordsEntry>> => {
+): Promise<WithPB<PasswordsSchemas.IEntry>> => {
   const entry = await pb
     .collection("passwords__entries")
-    .getOne<WithPB<IPasswordsEntry>>(id);
+    .getOne<WithPB<PasswordsSchemas.IEntry>>(id);
 
   return await pb
     .collection("passwords__entries")
-    .update<WithPB<IPasswordsEntry>>(id, {
+    .update<WithPB<PasswordsSchemas.IEntry>>(id, {
       pinned: !entry.pinned,
     });
 };

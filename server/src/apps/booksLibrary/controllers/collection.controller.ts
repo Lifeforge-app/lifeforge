@@ -3,11 +3,11 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { BooksLibrarySchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
-import { BooksLibraryCollectionSchema } from "../schema";
 import * as CollectionsService from "../services/collections.service";
 
 const booksLibraryCollectionsRouter = express.Router();
@@ -16,7 +16,9 @@ const getAllCollections = forgeController
   .route("GET /")
   .description("Get all collections for the books library")
   .schema({
-    response: z.array(WithPBSchema(BooksLibraryCollectionSchema)),
+    response: z.array(
+      WithPBSchema(BooksLibrarySchemas.CollectionAggregatedSchema),
+    ),
   })
   .callback(({ pb }) => CollectionsService.getAllCollections(pb));
 
@@ -24,8 +26,8 @@ const createCollection = forgeController
   .route("POST /")
   .description("Create a new collection for the books library")
   .schema({
-    body: BooksLibraryCollectionSchema,
-    response: WithPBSchema(BooksLibraryCollectionSchema),
+    body: BooksLibrarySchemas.CollectionSchema,
+    response: WithPBSchema(BooksLibrarySchemas.CollectionSchema),
   })
   .statusCode(201)
   .callback(({ pb, body }) => CollectionsService.createCollection(pb, body));
@@ -37,8 +39,8 @@ const updateCollection = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: BooksLibraryCollectionSchema,
-    response: WithPBSchema(BooksLibraryCollectionSchema),
+    body: BooksLibrarySchemas.CollectionSchema,
+    response: WithPBSchema(BooksLibrarySchemas.CollectionAggregatedSchema),
   })
   .existenceCheck("params", {
     id: "books_library__collections",

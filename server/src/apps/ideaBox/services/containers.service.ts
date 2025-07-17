@@ -1,8 +1,7 @@
 import PocketBase from "pocketbase";
+import { IdeaBoxSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { IIdeaBoxContainer } from "../schema";
 
 export const checkContainerExists = async (
   pb: PocketBase,
@@ -15,11 +14,11 @@ export const checkContainerExists = async (
 
 export const getContainers = async (
   pb: PocketBase,
-): Promise<WithPB<IIdeaBoxContainer>[]> =>
+): Promise<WithPB<IdeaBoxSchemas.IContainer>[]> =>
   (
     await pb.collection("idea_box__containers_aggregated").getFullList<
       WithPB<
-        IIdeaBoxContainer & {
+        IdeaBoxSchemas.IContainer & {
           text_count: number;
           link_count: number;
           image_count: number;
@@ -43,8 +42,11 @@ export const createContainer = async (
   color: string,
   icon: string,
   coverFile?: File,
-): Promise<WithPB<IIdeaBoxContainer>> => {
-  const containerData: Pick<IIdeaBoxContainer, "name" | "color" | "icon"> & {
+): Promise<WithPB<IdeaBoxSchemas.IContainer>> => {
+  const containerData: Pick<
+    IdeaBoxSchemas.IContainer,
+    "name" | "color" | "icon"
+  > & {
     cover?: File | string;
   } = {
     name,
@@ -60,7 +62,7 @@ export const createContainer = async (
 
   return await pb
     .collection("idea_box__containers")
-    .create<WithPB<IIdeaBoxContainer>>(containerData);
+    .create<WithPB<IdeaBoxSchemas.IContainer>>(containerData);
 };
 
 export const updateContainer = async (
@@ -70,8 +72,11 @@ export const updateContainer = async (
   color: string,
   icon: string,
   coverFile?: File | "keep",
-): Promise<WithPB<IIdeaBoxContainer>> => {
-  const containerData: Pick<IIdeaBoxContainer, "name" | "color" | "icon"> & {
+): Promise<WithPB<IdeaBoxSchemas.IContainer>> => {
+  const containerData: Pick<
+    IdeaBoxSchemas.IContainer,
+    "name" | "color" | "icon"
+  > & {
     cover?: File | string;
   } = {
     name,
@@ -85,7 +90,7 @@ export const updateContainer = async (
 
   return await pb
     .collection("idea_box__containers")
-    .update<WithPB<IIdeaBoxContainer>>(id, containerData);
+    .update<WithPB<IdeaBoxSchemas.IContainer>>(id, containerData);
 };
 
 export const deleteContainer = async (pb: PocketBase, id: string) => {

@@ -4,10 +4,9 @@ import { clientError } from "@functions/response";
 import { Request, Response } from "express";
 import ogs from "open-graph-scraper";
 import PocketBase from "pocketbase";
+import { IdeaBoxSchemas } from "shared";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
-
-import { IIdeaBoxContainer, IIdeaBoxEntry, IIdeaBoxFolder } from "../schema";
 
 const OGCache = new Map<string, any>();
 
@@ -18,8 +17,8 @@ export const getPath = async (
   req: Request,
   res: Response,
 ): Promise<{
-  container: WithPB<IIdeaBoxContainer>;
-  path: WithPB<IIdeaBoxFolder>[];
+  container: WithPB<IdeaBoxSchemas.IContainer>;
+  path: WithPB<IdeaBoxSchemas.IFolder>[];
 } | null> => {
   const containerExists = await checkExistence(
     req,
@@ -32,14 +31,14 @@ export const getPath = async (
 
   const containerEntry = await pb
     .collection("idea_box__containers")
-    .getOne<WithPB<IIdeaBoxContainer>>(container);
+    .getOne<WithPB<IdeaBoxSchemas.IContainer>>(container);
 
   containerEntry.cover = pb.files
     .getURL(containerEntry, containerEntry.cover)
     .replace(`${pb.baseURL}/api/files`, "");
 
   let lastFolder = "";
-  const fullPath: WithPB<IIdeaBoxFolder>[] = [];
+  const fullPath: WithPB<IdeaBoxSchemas.IFolder>[] = [];
 
   for (const folder of path) {
     if (!(await checkExistence(req, res, "idea_box__folders", folder))) {
@@ -48,7 +47,7 @@ export const getPath = async (
 
     const folderEntry = await pb
       .collection("idea_box__folders")
-      .getOne<WithPB<IIdeaBoxFolder>>(folder);
+      .getOne<WithPB<IdeaBoxSchemas.IFolder>>(folder);
 
     if (
       folderEntry.parent !== lastFolder ||
@@ -98,7 +97,7 @@ export const checkValid = async (
 
     const folderEntry = await pb
       .collection("idea_box__folders")
-      .getOne<IIdeaBoxFolder>(folder);
+      .getOne<IdeaBoxSchemas.IFolder>(folder);
 
     if (
       folderEntry.parent !== lastFolder ||
@@ -120,7 +119,7 @@ export const getOgData = async (
 ): Promise<any | null> => {
   const data = await pb
     .collection("idea_box__entries")
-    .getOne<IIdeaBoxEntry>(id);
+    .getOne<IdeaBoxSchemas.IEntry>(id);
 
   if (data.type !== "link") {
     throw new ClientError(
@@ -159,26 +158,26 @@ async function recursivelySearchFolder(
   parents: string,
   pb: PocketBase,
 ): Promise<
-  (Omit<WithPB<IIdeaBoxEntry>, "folder"> & {
-    folder: WithPB<IIdeaBoxFolder>;
+  (Omit<WithPB<IdeaBoxSchemas.IEntry>, "folder"> & {
+    folder: WithPB<IdeaBoxSchemas.IFolder>;
     expand?: {
-      folder: WithPB<IIdeaBoxFolder>;
+      folder: WithPB<IdeaBoxSchemas.IFolder>;
     };
     fullPath: string;
   })[]
 > {
   const folderInsideFolder = await pb
     .collection("idea_box__folders")
-    .getFullList<WithPB<IIdeaBoxFolder>>({
+    .getFullList<WithPB<IdeaBoxSchemas.IFolder>>({
       filter: `parent = "${folderId}"`,
     });
 
   const allResults = (
     await pb.collection("idea_box__entries").getFullList<
-      Omit<WithPB<IIdeaBoxEntry>, "folder"> & {
-        folder: WithPB<IIdeaBoxFolder>;
+      Omit<WithPB<IdeaBoxSchemas.IEntry>, "folder"> & {
+        folder: WithPB<IdeaBoxSchemas.IFolder>;
         expand?: {
-          folder: WithPB<IIdeaBoxFolder>;
+          folder: WithPB<IdeaBoxSchemas.IFolder>;
         };
       }
     >({
@@ -225,10 +224,10 @@ export const search = async (
   req: Request,
   res: Response,
 ): Promise<
-  | (Omit<WithPB<IIdeaBoxEntry>, "folder"> & {
-      folder: WithPB<IIdeaBoxFolder>;
+  | (Omit<WithPB<IdeaBoxSchemas.IEntry>, "folder"> & {
+      folder: WithPB<IdeaBoxSchemas.IFolder>;
       expand?: {
-        folder: WithPB<IIdeaBoxFolder>;
+        folder: WithPB<IdeaBoxSchemas.IFolder>;
       };
       fullPath: string;
     })[]

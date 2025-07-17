@@ -5,8 +5,8 @@
  * Generated at: 2025-07-17T08:55:29.691Z
  * Contains: virtual_wardrobe__entries, virtual_wardrobe__histories
  */
+import { z } from 'zod/v4'
 
-import { z } from "zod/v4";
 const EntrySchema = z.object({
   name: z.string(),
   category: z.string(),
@@ -21,27 +21,37 @@ const EntrySchema = z.object({
   purchase_date: z.string(),
   price: z.number(),
   notes: z.string(),
-  is_favourite: z.boolean(),
-});
+  is_favourite: z.boolean()
+})
 
 const HistorySchema = z.object({
   entries: z.array(z.string()),
-  notes: z.string(),
-});
+  notes: z.string()
+})
 
-type IEntry = z.infer<typeof EntrySchema>;
-type IHistory = z.infer<typeof HistorySchema>;
+type IEntry = z.infer<typeof EntrySchema>
+type IHistory = z.infer<typeof HistorySchema>
 
-export {
-  EntrySchema,
-  HistorySchema,
-};
+export { EntrySchema, HistorySchema }
 
-export type {
-  IEntry,
-  IHistory,
-};
+export type { IEntry, IHistory }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-// Add your custom schemas here. They will not be overwritten by this script.
+const VirtualWardrobeSidebarDataSchema = z.object({
+  total: z.number(),
+  favourites: z.number(),
+  categories: z.record(z.string(), z.number()),
+  subcategories: z.record(z.string(), z.number()),
+  brands: z.record(z.string(), z.number()),
+  sizes: z.record(z.string(), z.number()),
+  colors: z.record(z.string(), z.number())
+})
+
+type IVirtualWardrobeSidebarData = z.infer<
+  typeof VirtualWardrobeSidebarDataSchema
+>
+
+export { VirtualWardrobeSidebarDataSchema }
+
+export type { IVirtualWardrobeSidebarData }

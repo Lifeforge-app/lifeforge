@@ -4,8 +4,7 @@ import fs from "fs";
 import Groq from "groq-sdk";
 import PocketBase from "pocketbase";
 import request from "request";
-
-import { IMomentVaultEntry } from "../schema";
+import { MomentVaultSchemas } from "shared";
 
 const getTranscription = async (
   filePath: string,
@@ -35,7 +34,7 @@ export const transcribeExisted = async (
 
   const entry = await pb
     .collection("moment_vault__entries")
-    .getOne<IMomentVaultEntry>(id);
+    .getOne<MomentVaultSchemas.IEntry>(id);
 
   if (!entry.file) {
     throw new ClientError("No audio file found in entry");
@@ -61,9 +60,11 @@ export const transcribeExisted = async (
       throw new Error("Transcription failed");
     }
 
-    await pb.collection("moment_vault__entries").update<IMomentVaultEntry>(id, {
-      transcription: response,
-    });
+    await pb
+      .collection("moment_vault__entries")
+      .update<MomentVaultSchemas.IEntry>(id, {
+        transcription: response,
+      });
 
     return response;
   } catch (err) {

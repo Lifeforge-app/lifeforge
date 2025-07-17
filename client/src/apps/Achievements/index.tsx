@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IAchievementsEntry, SchemaWithPB } from 'shared'
+import { AchievementsSchemas, ISchemaWithPB } from 'shared'
 
 import {
   Button,
@@ -22,8 +22,8 @@ function Achievements() {
   const { t } = useTranslation('apps.achievements')
   const open = useModalStore(state => state.open)
   const [selectedDifficulty, setSelectedDifficulty] =
-    useState<IAchievementsEntry['difficulty']>('impossible')
-  const entriesQuery = useAPIQuery<SchemaWithPB<IAchievementsEntry>[]>(
+    useState<AchievementsSchemas.IEntry['difficulty']>('impossible')
+  const entriesQuery = useAPIQuery<ISchemaWithPB<AchievementsSchemas.IEntry>[]>(
     `achievements/entries/${selectedDifficulty}`,
     ['achievements/entries', selectedDifficulty]
   )
