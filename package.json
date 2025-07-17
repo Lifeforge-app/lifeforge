@@ -18,6 +18,7 @@
     "build:client": "cd client && bun run build",
     "build:shared": "cd shared && bun run build",
     "build:server": "cd server && bun run build",
+    "start:server": "cd server && bun run start",
     "build": "bun run build:shared && bun run build:server && bun run build:client",
     "types:client": "cd client && bun run tsc --noEmit",
     "types:shared": "cd shared && bun run tsc --noEmit",

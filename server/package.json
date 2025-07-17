@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "export NODE_ENV=development && forever stopall && tsx watch --env-file=./env/.env.local ./src/index.ts",
     "build": "bun build --target bun --minify --production --outfile=./dist/server.js ./src/index.ts",
-    "start": "export NODE_ENV=production && forever stopall && tsc && bun build --target bun --minify --production --outfile=./dist/server.js ./src/index.ts && export $(grep -v '^#' ./env/.env.local | xargs) && forever start -c \"bun\" dist/server.js",
+    "start": "export NODE_ENV=production && forever stopall && tsc && bun build --target bun --minify --production --outfile=./dist/server.js ./src/index.ts && bun --env-file ./env/.env.local forever start -c 'bun' dist/server.js",
     "test": "jest",
     "schema:generate": "bun ./scripts/generateSchema.ts"
   },
