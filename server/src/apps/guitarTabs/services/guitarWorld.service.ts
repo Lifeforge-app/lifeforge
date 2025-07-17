@@ -1,5 +1,4 @@
 import fs from "fs";
-import { JSDOM } from "jsdom";
 import PDFDocument from "pdfkit";
 import PocketBase from "pocketbase";
 import { GuitarTabsSchemas } from "shared";
@@ -107,10 +106,11 @@ export const downloadTab = async (
         },
       ).then((res) => res.text());
 
-      const dom = new JSDOM(rawHTML);
-      const pics = Array.from(
-        dom.window.document.querySelectorAll(".pic img"),
-      ).map((e) => (e as HTMLImageElement).src);
+      const picObject = JSON.parse(
+        rawHTML.match(/window\.(?:picList|picObj) = (.*?);/)?.[1] || "[]",
+      );
+
+      const pics = Array.isArray(picObject[0]) ? picObject[0] : picObject;
 
       if (pics.length === 0) {
         throw new Error("No pictures found for this tab");
@@ -193,6 +193,7 @@ export const downloadTab = async (
         });
       });
     } catch (error) {
+      console.log(error);
       updateTaskInPool(io, taskId, {
         status: "failed",
         error: error instanceof Error ? error.message : "Unknown error",

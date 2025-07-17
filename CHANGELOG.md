@@ -2,6 +2,7 @@
 
 ## 📌 **dev 25w29 (7/14/2025 - 7/21/2025)**
 - **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
+- **Guitar Tabs**: Improved web scraping logic to handle more edge cases.
 - **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
 - **UI**: Fixed a bug where the toast progressbar color is not properly applied.
 - **Code**: Migrated the entire codebase to a monorepo structure using `bun` as the package manager.
