@@ -1,0 +1,39 @@
+{
+  "title": "文檔",
+  "description": "存取系統的指南、教程和參考資料。",
+  "sections": {
+    "gettingStarted": "入門指南",
+    "userGuides": "用戶指南",
+    "apiReference": "API參考",
+    "troubleshooting": "疑難排解",
+    "faq": "常見問題"
+  },
+  "buttons": {
+    "search": "搜尋文檔",
+    "downloadPdf": "下載PDF",
+    "reportIssue": "報告問題",
+    "suggestEdit": "建議編輯"
+  },
+  "navigation": {
+    "previous": "上一頁",
+    "next": "下一頁",
+    "tableOfContents": "目錄",
+    "relatedTopics": "相關主題"
+  },
+  "modals": {
+    "feedback": {
+      "title": "文檔反饋",
+      "description": "請提供您的反饋，幫助我們改進我們的文檔。"
+    }
+  },
+  "messages": {
+    "pdfDownloaded": "文檔PDF已成功下載。",
+    "feedbackSubmitted": "感謝您的反饋！"
+  },
+  "empty": {
+    "searchResults": {
+      "title": "未找到結果",
+      "description": "嘗試使用不同的關鍵字或瀏覽分類。"
+    }
+  }
+}

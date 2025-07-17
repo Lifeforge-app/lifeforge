@@ -1,0 +1,22 @@
+{
+  "title": "Masa Kod",
+  "description": "Lihat berapa banyak sihir kod yang telah anda cipta.",
+  "statisticType": {
+    "mostTimeSpent": "Masa Paling Banyak Dihabiskan",
+    "totalTimeSpent": "Jumlah Masa Dihabiskan",
+    "averageTimeSpent": "Purata Masa Dihabiskan",
+    "longestStreak": "Rentetan Terpanjang",
+    "currentStreak": "Rentetan Semasa"
+  },
+  "headers": {
+    "statistics": "Statistik",
+    "activitiesCalendar": "Kalendar Aktiviti",
+    "projects": "Projek Teratas Yang Dikerjakan",
+    "projectsTimeGraph": "Graf Masa Projek",
+    "languages": "Bahasa Teratas Yang Digunakan",
+    "languagesTimeGraph": "Graf Masa Bahasa"
+  },
+  "labels": {
+    "inThePast": "Pada Masa Lalu"
+  }
+}

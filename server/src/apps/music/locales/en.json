@@ -1,0 +1,30 @@
+{
+  "title": "Music",
+  "description": "The personal soundtrack to the best moments of your life.",
+  "buttons": {
+    "importFromNas": "Import from NAS",
+    "downloadFromYoutube": "Download from YouTube",
+    "selectMusic": "Select Music"
+  },
+  "inputs": {
+    "musicName": "Music Name",
+    "author": "Author",
+    "videoUrl": "Video URL"
+  },
+  "items": {
+    "music": "Music"
+  },
+  "empty": {
+    "music": {
+      "title": "No Music",
+      "description": "You haven't added any music yet. Click the button below to add one."
+    },
+    "result": {
+      "title": "No Results",
+      "description": "No items found, please try other keywords."
+    }
+  },
+  "modals": {
+    "downloadFromYoutube": "Download from YouTube"
+  }
+}

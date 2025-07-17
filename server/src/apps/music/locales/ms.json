@@ -1,0 +1,30 @@
+{
+  "title": "Muzik",
+  "description": "Lagu peribadi untuk detik-detik terbaik dalam hidup anda.",
+  "buttons": {
+    "importFromNas": "Import dari NAS",
+    "downloadFromYoutube": "Muat Turun dari YouTube",
+    "selectMusic": "Pilih Muzik"
+  },
+  "inputs": {
+    "musicName": "Nama Muzik",
+    "author": "Pengarang",
+    "videoUrl": "URL Video"
+  },
+  "items": {
+    "music": "Muzik"
+  },
+  "empty": {
+    "music": {
+      "title": "Tiada Muzik",
+      "description": "Anda belum menambah sebarang muzik lagi. Klik butang di bawah untuk menambah satu."
+    },
+    "result": {
+      "title": "Tiada Keputusan",
+      "description": "Tiada item ditemui, sila cuba kata kunci lain."
+    }
+  },
+  "modals": {
+    "downloadFromYoutube": "Muat Turun dari YouTube"
+  }
+}

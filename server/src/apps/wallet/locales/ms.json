@@ -1,0 +1,196 @@
+{
+  "title": "Dompet",
+  "description": "Jadilah wira kewangan anda sendiri.",
+  "subsections": {
+    "dashboard": "Papan Pemuka",
+    "transactions": "Transaksi",
+    "assets": "Aset",
+    "ledgers": "Lejar",
+    "financialStatements": "Penyata Kewangan",
+    "spendingHeatmap": "Peta Suhu Perbelanjaan"
+  },
+  "header": {
+    "allTransactions": "Semua Transaksi",
+    "filteredTransactions": "Transaksi Ditapis"
+  },
+  "widgets": {
+    "expensesBreakdown": {
+      "title": "Pecahan Perbelanjaan",
+      "thisMonthsSpending": "telah Dilanja"
+    },
+    "income": {
+      "title": "Pendapatan"
+    },
+    "assetsBalance": {
+      "title": "Baki Aset"
+    },
+    "statistics": {
+      "title": "Statistik"
+    },
+    "expenses": {
+      "title": "Perbelanjaan"
+    },
+    "recentTransactions": {
+      "title": "Transaksi Terkini"
+    },
+    "transactionsCount": {
+      "title": "Bilangan Transaksi"
+    }
+  },
+  "transactionCount": "Transaksi",
+  "receiptUploadInfo": "Hanya fail PDF dan imej diterima",
+  "empty": {
+    "transactions": {
+      "title": "Tiada Transaksi Dijumpai",
+      "description": "Anda belum merekodkan sebarang transaksi lagi. Klik butang di atas untuk menambah satu."
+    },
+    "categories": {
+      "title": "Tiada Kategori Dijumpai",
+      "description": "Anda belum mencipta sebarang kategori lagi. Klik butang di bawah untuk menambah satu."
+    },
+    "results": {
+      "title": "Tiada Keputusan Dijumpai",
+      "description": "Tiada transaksi dijumpai, sila cuba kata kunci lain."
+    },
+    "assets": {
+      "title": "Tiada Aset Dijumpai",
+      "description": "Anda belum mencipta sebarang aset lagi. Klik butang di atas untuk menambah satu."
+    },
+    "ledger": {
+      "title": "Tiada Lejar Dijumpai",
+      "description": "Anda belum mencipta sebarang lejar lagi. Klik butang di atas untuk menambah satu."
+    },
+    "location": {
+      "title": "Tiada Lokasi Tersedia",
+      "description": "Tiada data lokasi dijumpai dalam mana-mana transaksi. Sila tambah transaksi dengan lokasi."
+    }
+  },
+  "sidebar": {
+    "allTransactions": "Semua Transaksi",
+    "allType": "Semua Jenis",
+    "allLedgers": "Semua Lejar",
+    "allAssets": "Semua Aset",
+    "allCategories": "Semua Kategori",
+    "allTypes": "Semua Jenis",
+    "transactionTypes": "Jenis Transaksi",
+    "ledgers": "Lejar",
+    "assets": "Aset",
+    "categories": "Kategori",
+    "dateRange": "Julat Tarikh",
+    "calendarHeatmap": "Peta Panas Kalendar"
+  },
+  "table": {
+    "date": "Tarikh",
+    "type": "Jenis",
+    "asset": "Aset",
+    "ledger": "Lejar",
+    "particulars": "Butiran",
+    "category": "Kategori",
+    "amount": "Jumlah",
+    "receipt": "Resit",
+    "location": "Lokasi"
+  },
+  "buttons": {
+    "scanReceipt": "Imbas Resit",
+    "removeReceipt": "Buang Resit",
+    "uploadReceipt": "Muat Naik Resit",
+    "viewTransactions": "Lihat Transaksi",
+    "hideAmount": "Sembunyikan Jumlah",
+    "showStatement": "Tunjukkan Penyata",
+    "hideStatement": "Sembunyikan Penyata",
+    "addManually": "Tambah Secara Manual",
+    "manageCategories": "Urus Kategori",
+    "viewBalanceChart": "Lihat Carta Saldo",
+    "viewReceipt": "Lihat Resit"
+  },
+  "modals": {
+    "transactions": {
+      "create": "Cipta Transaksi",
+      "update": "Kemas Kini Transaksi",
+      "view": "Butiran Transaksi"
+    },
+    "assets": {
+      "create": "Cipta Aset",
+      "update": "Kemas Kini Aset"
+    },
+    "ledgers": {
+      "create": "Cipta Lejar",
+      "update": "Kemas Kini Lejar"
+    },
+    "categories": {
+      "create": "Cipta Kategori",
+      "update": "Kemas Kini Kategori",
+      "manage": "Urus Kategori"
+    },
+    "receipts": {
+      "scan": "Imbas Resit",
+      "view": "Lihat Resit"
+    },
+    "assetsBalanceChart": "Carta Baki Asset"
+  },
+  "transactionTypes": {
+    "income": "Pendapatan",
+    "expenses": "Perbelanjaan",
+    "transfer": "Pindahan"
+  },
+  "inputs": {
+    "startDate": "Tarikh Mula",
+    "endDate": "Tarikh Tamat",
+    "assetIcon": "Ikon Aset",
+    "ledgerIcon": "Ikon Lejar",
+    "date": "Tarikh",
+    "amount": "Jumlah",
+    "transactionType": "Jenis Transaksi",
+    "location": "Lokasi",
+    "asset": "Aset",
+    "ledger": "Lejar",
+    "category": "Kategori",
+    "receipt": "Resit",
+    "balance": "Baki",
+    "particulars": "Butiran",
+    "ledgerColor": "Warna Lejar",
+    "assetName": "Nama Aset",
+    "ledgerName": "Nama Lejar",
+    "categoryName": "Nama Kategori",
+    "categoryIcon": "Ikon Kategori",
+    "categoryColor": "Warna Kategori",
+    "categoryType": "Jenis Kategori",
+    "initialBalance": "Baki Permulaan",
+    "fromAsset": "Dari Aset",
+    "toAsset": "Ke Aset",
+    "month": "Bulan",
+    "year": "Tahun"
+  },
+  "items": {
+    "transaction": "Transaksi",
+    "asset": "Aset",
+    "ledger": "Lejar",
+    "category": "Kategori",
+    "receipt": "Resit"
+  },
+  "receipts": {
+    "keepAfterScan": "Simpan Resit Selepas Imbasan"
+  },
+  "subsectionsTitleAndDesc": {
+    "assets": {
+      "title": "Aset",
+      "description": "Urus aset anda dengan selamat dan cekap dalam dompet anda."
+    },
+    "ledgers": {
+      "title": "Buku Tunai",
+      "description": "Urus dan lihat transaksi kewangan dan akaun anda dalam lejer."
+    },
+    "transactions": {
+      "title": "Transaksi",
+      "description": "Lihat sejarah transaksi dan butiran."
+    },
+    "financialStatements": {
+      "title": "Penyata Kewangan",
+      "description": "Lihat penyata kewangan terperinci yang memberikan pandangan mengenai transaksi dan baki akaun anda."
+    },
+    "spendingHeatmap": {
+      "title": "Peta Panas Perbelanjaan",
+      "description": "Representasi visual tentang tabiat perbelanjaan anda dari semasa ke semasa."
+    }
+  }
+}

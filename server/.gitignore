@@ -1,2 +1,7 @@
-# deps
-node_modules/
+node_modules
+dist
+localScripts
+database
+
+*.local
+src/constants/corsAllowedOrigins.ts

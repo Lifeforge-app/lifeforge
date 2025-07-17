@@ -1,0 +1,80 @@
+{
+  "title": "Idea Box",
+  "description": "Capture them before the inspiration flies away!",
+  "entryType": {
+    "text": "Text",
+    "image": "Image",
+    "link": "Link",
+    "folder": "Folder"
+  },
+  "empty": {
+    "container": {
+      "title": "No Idea Box",
+      "description": "You haven't created any idea boxes yet. Click the button below to create one."
+    },
+    "folder": {
+      "title": "No Folder",
+      "description": "You haven't created any folders yet. Click the button below to create one."
+    },
+    "idea": {
+      "title": "No Ideas",
+      "description": "You haven't added any ideas yet. Click the button below to add one."
+    },
+    "archived": {
+      "title": "No Archived Ideas",
+      "description": "You haven't archived any ideas yet."
+    },
+    "result": {
+      "title": "No Results",
+      "description": "No ideas match your search criteria."
+    }
+  },
+  "modals": {
+    "container": {
+      "create": "Create Idea Box",
+      "update": "Update Idea Box"
+    },
+    "folder": {
+      "create": "Create Folder",
+      "update": "Update Folder"
+    },
+    "tag": {
+      "create": "Create Tag",
+      "update": "Update Tag"
+    },
+    "idea": {
+      "create": "Add",
+      "update": "Edit"
+    }
+  },
+  "buttons": {
+    "unpin": "Unpin",
+    "pin": "Pin",
+    "viewArchived": "View Archived",
+    "archive": "Archive",
+    "removeFromFolder": "Remove from Folder"
+  },
+  "inputs": {
+    "containerName": "Idea Box Name",
+    "folderName": "Folder Name",
+    "ideaTitle": "Idea Title",
+    "imageLink": "Image Link",
+    "coverImage": "Cover Image",
+    "ideaTags": "Idea Tags",
+    "ideaContent": "Idea Content",
+    "ideaLink": "Idea Link",
+    "tagName": "Tag Name",
+    "tagIcon": "Tag Icon",
+    "tagColor": "Tag Color",
+    "containerColor": "Idea Box Color",
+    "folderColor": "Folder Color",
+    "containerIcon": "Idea Box Icon",
+    "folderIcon": "Folder Icon"
+  },
+  "items": {
+    "idea": "Idea",
+    "container": "Idea Box",
+    "folder": "Folder",
+    "ideaInFolder": "Idea in Folder"
+  }
+}

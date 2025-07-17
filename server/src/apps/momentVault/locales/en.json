@@ -1,0 +1,29 @@
+{
+  "title": "Moment Vault",
+  "description": "Capture every moment, cherish your life, revisit anytime.",
+  "items": {
+    "entry": "Entry"
+  },
+  "buttons": {
+    "text": "Text",
+    "audio": "Audio",
+    "photo": "Photo",
+    "video": "Video",
+    "transcribeToText": "Transcribe to Text"
+  },
+  "modals": {
+    "addEntry": "Add Entry"
+  },
+  "inputs": {
+    "entryType": "Entry Type",
+    "audio": "Audio",
+    "transcription": "Transcription",
+    "textContent": "Text Content"
+  },
+  "entryTypes": {
+    "audio": "Audio",
+    "video": "Video",
+    "text": "Text",
+    "photos": "Photos"
+  }
+}

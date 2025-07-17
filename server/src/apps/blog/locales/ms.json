@@ -1,0 +1,20 @@
+{
+  "title": "Blog",
+  "description": "Hargai setiap momen dalam hidup anda melalui kekuatan blogging.",
+  "items": {
+    "post": "Siarkan"
+  },
+  "inputs": {
+    "excerpt": "Petikan",
+    "visibility": "Keterlihatan",
+    "featuredImage": "Imej Pilihan",
+    "category": "Kategori",
+    "labels": "Label"
+  },
+  "empty": {
+    "entries": {
+      "title": "Tiada Pos Tersedia",
+      "description": "Tiada catatan dijumpai. Cipta satu menggunakan butang di atas."
+    }
+  }
+}

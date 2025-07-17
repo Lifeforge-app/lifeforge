@@ -1,0 +1,39 @@
+{
+  "title": "Dokumentasi",
+  "description": "Akses panduan, tutorial, dan bahan rujukan untuk sistem.",
+  "sections": {
+    "gettingStarted": "Memulakan",
+    "userGuides": "Panduan Pengguna",
+    "apiReference": "Rujukan API",
+    "troubleshooting": "Penyelesaian Masalah",
+    "faq": "Soalan Lazim"
+  },
+  "buttons": {
+    "search": "Cari Dokumentasi",
+    "downloadPdf": "Muat Turun sebagai PDF",
+    "reportIssue": "Laporkan Masalah",
+    "suggestEdit": "Cadangkan Suntingan"
+  },
+  "navigation": {
+    "previous": "Sebelumnya",
+    "next": "Seterusnya",
+    "tableOfContents": "Jadual Kandungan",
+    "relatedTopics": "Topik Berkaitan"
+  },
+  "modals": {
+    "feedback": {
+      "title": "Maklum Balas Dokumentasi",
+      "description": "Bantu kami meningkatkan dokumentasi kami dengan memberikan maklum balas anda."
+    }
+  },
+  "messages": {
+    "pdfDownloaded": "PDF dokumentasi berjaya dimuat turun.",
+    "feedbackSubmitted": "Terima kasih atas maklum balas anda!"
+  },
+  "empty": {
+    "searchResults": {
+      "title": "Tiada Hasil Ditemui",
+      "description": "Cuba gunakan kata kunci berbeza atau melayari kategori."
+    }
+  }
+}

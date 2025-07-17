@@ -1,0 +1,73 @@
+{
+  "title": "虚拟衣橱",
+  "description": "创建和管理个人造型的数字化服装和配饰收藏。",
+  "subsections": {
+    "virtualWardrobeClothes": "衣服",
+    "virtualWardrobeOutfits": "套装"
+  },
+  "sidebar": {
+    "allClothes": "所有衣服",
+    "favourites": "最爱衣服",
+    "categories": "类别",
+    "subcategories": "子类别",
+    "sizes": "尺寸",
+    "colors": "颜色",
+    "brands": "品牌",
+    "labels": "标签"
+  },
+  "modals": {
+    "item": {
+      "create": "创建项目",
+      "update": "更新项目"
+    },
+    "sessionCart": "会话购物车",
+    "checkout": {
+      "title": "结账",
+      "desc": "点击结账后，这一组物品将被添加到你的衣橱历史中。你可以在“历史”页面查看它们。"
+    }
+  },
+  "buttons": {
+    "addToCart": "加入购物车",
+    "removeFromCart": "从购物车移除",
+    "checkout": "结帐"
+  },
+  "inputs": {
+    "itemName": "项目名称",
+    "brand": "品牌",
+    "color": "颜色",
+    "size": "尺寸",
+    "price": "价格",
+    "category": "类别",
+    "subcategory": "子类别",
+    "frontImage": "正面图片",
+    "backImage": "背面图片",
+    "notes": "备注"
+  },
+  "items": {
+    "clothes": "衣服",
+    "outfit": "套装"
+  },
+  "steps": {
+    "uploadPhotos": "上传照片",
+    "basicInfo": "基本信息",
+    "appearanceAndDetails": "外观和细节"
+  },
+  "empty": {
+    "clothes": {
+      "title": "没有衣服",
+      "description": "您还没有添加任何衣服。点击下面的按钮添加一个。"
+    },
+    "outfits": {
+      "title": "没有套装",
+      "description": "您还没有添加任何套装。点击下面的按钮添加一个。"
+    },
+    "results": {
+      "title": "没有结果",
+      "description": "找不到项目, 请尝试其他关键字。"
+    },
+    "sessionCart": {
+      "title": "购物车为空",
+      "description": "您的购物车目前是空的。请添加一些项目。"
+    }
+  }
+}

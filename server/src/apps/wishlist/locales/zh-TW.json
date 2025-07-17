@@ -1,0 +1,54 @@
+{
+  "title": "願望清單",
+  "description": "夢想大，計劃實現它。",
+  "modals": {
+    "wishlist": {
+      "create": "建立願望清單",
+      "update": "編輯願望清單"
+    },
+    "entry": {
+      "create": "新增項目",
+      "update": "編輯項目"
+    },
+    "importFromOtherApps": "從其他應用程式匯入"
+  },
+  "buttons": {
+    "visitWebsite": "訪問網站",
+    "addManually": "手動添加",
+    "fromOtherApps": "從其他應用程式",
+    "markAsBought": "標記為已購買"
+  },
+  "inputs": {
+    "wishlistName": "願望清單名稱",
+    "wishlistDescription": "願望清單描述",
+    "wishlistIcon": "願望清單圖標",
+    "wishlistColor": "願望清單顏色",
+    "productUrl": "產品鏈接",
+    "productPrice": "產品價格",
+    "productName": "產品名稱",
+    "productImage": "產品圖片",
+    "provider": "提供者"
+  },
+  "items": {
+    "wishlist": "願望清單",
+    "entry": "條目"
+  },
+  "empty": {
+    "wishlists": {
+      "title": "沒有願望清單",
+      "description": "您還沒有添加任何願望清單。點擊上面的按鈕添加一個。"
+    },
+    "entries": {
+      "title": "沒有項目",
+      "description": "您還沒有添加任何項目。點擊上面的按鈕添加一個。"
+    },
+    "search": {
+      "title": "未找到任何內容",
+      "description": "您的願望清單中沒有找到項目。請嘗試其他搜尋。"
+    }
+  },
+  "tabs": {
+    "wishlist": "願望清單",
+    "bought": "已購買"
+  }
+}

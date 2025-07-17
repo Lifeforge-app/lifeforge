@@ -1,0 +1,20 @@
+{
+  "title": "部落格",
+  "description": "透過部落格的力量珍惜你生活中的每一個瞬間。",
+  "items": {
+    "post": "發佈"
+  },
+  "inputs": {
+    "excerpt": "摘錄",
+    "visibility": "可見性",
+    "featuredImage": "特色圖片",
+    "category": "類別",
+    "labels": "標籤"
+  },
+  "empty": {
+    "entries": {
+      "title": "沒有可用的文章",
+      "description": "未找到文章。請使用上面的按鈕創建一個。"
+    }
+  }
+}

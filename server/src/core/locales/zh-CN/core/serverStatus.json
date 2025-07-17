@@ -1,0 +1,49 @@
+{
+  "title": "服务器状态",
+  "description": "监控和管理服务器性能和资源。",
+  "sections": {
+    "systemResources": "系统资源",
+    "activeServices": "活跃服务",
+    "recentLogs": "最近日志",
+    "networkStatus": "网络状态"
+  },
+  "metrics": {
+    "cpu": "CPU使用率",
+    "memory": "内存使用率",
+    "disk": "磁盘空间",
+    "network": "网络流量",
+    "uptime": "运行时间"
+  },
+  "buttons": {
+    "refreshStatus": "刷新状态",
+    "viewDetailedStats": "查看详细统计",
+    "downloadLogs": "下载日志",
+    "restartService": "重启服务"
+  },
+  "modals": {
+    "serviceDetails": {
+      "title": "服务详情",
+      "description": "关于该服务的详细信息。"
+    },
+    "confirmRestart": {
+      "title": "重启服务",
+      "description": "您确定要重启此服务吗？"
+    }
+  },
+  "messages": {
+    "serviceRestarted": "服务已成功重启。",
+    "refreshSuccess": "服务器状态已成功刷新。"
+  },
+  "statuses": {
+    "online": "在线",
+    "offline": "离线",
+    "warning": "警告",
+    "critical": "危险"
+  },
+  "empty": {
+    "storageStatus": {
+      "title": "未找到存储",
+      "description": "未找到存储，请检查您的API配置或服务器设置。"
+    }
+  }
+}

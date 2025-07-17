@@ -1,0 +1,29 @@
+{
+  "title": "回憶金庫",
+  "description": "記錄每一刻，珍藏你的生活，隨時回顧。",
+  "items": {
+    "entry": "條目"
+  },
+  "buttons": {
+    "text": "文字",
+    "audio": "音訊",
+    "photo": "相片",
+    "video": "影片",
+    "transcribeToText": "轉錄為文字"
+  },
+  "modals": {
+    "addEntry": "添加條目"
+  },
+  "inputs": {
+    "entryType": "條目類型",
+    "audio": "音訊",
+    "transcription": "轉錄內容",
+    "textContent": "文本內容"
+  },
+  "entryTypes": {
+    "audio": "音頻",
+    "video": "影片",
+    "text": "文本",
+    "photos": "照片"
+  }
+}

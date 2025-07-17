@@ -1,0 +1,29 @@
+{
+  "title": "回忆金库",
+  "description": "记录每一刻，珍藏你的生活，随时回顾。",
+  "items": {
+    "entry": "条目"
+  },
+  "buttons": {
+    "text": "文字",
+    "audio": "音频",
+    "photo": "照片",
+    "video": "影片",
+    "transcribeToText": "转录为文字"
+  },
+  "modals": {
+    "addEntry": "添加条目"
+  },
+  "inputs": {
+    "entryType": "条目类型",
+    "audio": "音频",
+    "transcription": "转录內容",
+    "textContent": "文本内容"
+  },
+  "entryTypes": {
+    "audio": "音频",
+    "video": "视频",
+    "text": "文本",
+    "photos": "照片"
+  }
+}
