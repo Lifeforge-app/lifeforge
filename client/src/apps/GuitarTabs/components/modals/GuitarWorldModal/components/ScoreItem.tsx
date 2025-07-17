@@ -72,7 +72,8 @@ function ScoreItem({
         if (!data || data.taskId !== taskId) return
 
         if (data.status === 'failed') {
-          throw new Error('Download failed')
+          toast.error(`Failed to download score: ${data.error}`)
+          setIsDownloading(false)
         }
 
         if (data.status === 'completed') {
@@ -104,13 +105,10 @@ function ScoreItem({
             className={clsx(
               'mt-2 inline-block rounded-full px-3 py-1 text-[12px] font-medium',
               {
-                'bg-green-500/20 text-green-500':
-                  entry.category === '弹唱吉他谱',
-                'bg-blue-500/20 text-blue-500': entry.category === '指弹吉他谱',
-                'bg-bg-500/20 text-bg-500':
-                  entry.category !== '弹唱吉他谱' &&
-                  entry.category !== '指弹吉他谱'
-              }
+                弹唱吉他谱: 'bg-green-500/20 text-green-500',
+                指弹吉他谱: 'bg-blue-500/20 text-blue-500',
+                独奏钢琴谱: 'bg-purple-500/20 text-purple-500'
+              }[entry.category] || 'bg-gray-500/20 text-gray-500'
             )}
           >
             {entry.category}
