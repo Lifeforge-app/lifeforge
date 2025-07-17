@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IAchievementsEntry, SchemaWithPB } from 'shared'
 
 import {
   Button,
@@ -16,14 +17,13 @@ import useAPIQuery from '@hooks/useAPIQuery'
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './components/ModifyAchievementModal'
-import { type IAchievementEntry } from './interfaces/achievements_interfaces'
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
   const open = useModalStore(state => state.open)
   const [selectedDifficulty, setSelectedDifficulty] =
-    useState<IAchievementEntry['difficulty']>('impossible')
-  const entriesQuery = useAPIQuery<IAchievementEntry[]>(
+    useState<IAchievementsEntry['difficulty']>('impossible')
+  const entriesQuery = useAPIQuery<SchemaWithPB<IAchievementsEntry>[]>(
     `achievements/entries/${selectedDifficulty}`,
     ['achievements/entries', selectedDifficulty]
   )

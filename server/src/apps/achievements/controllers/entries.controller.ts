@@ -3,11 +3,10 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
+import { AchievementsSchemas } from "shared";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";
-
-import { AchievementsEntrySchema } from "../schema";
 
 const achievementsEntriesRouter = express.Router();
 
@@ -15,10 +14,10 @@ const getAllEntriesByDifficulty = forgeController
   .route("GET /:difficulty")
   .description("Get all achievements entries by difficulty")
   .schema({
-    params: z.object({
-      difficulty: AchievementsEntrySchema.shape.difficulty,
+    params: AchievementsSchemas.EntrySchema.pick({
+      difficulty: true,
     }),
-    response: z.array(WithPBSchema(AchievementsEntrySchema)),
+    response: z.array(WithPBSchema(AchievementsSchemas.EntrySchema)),
   })
   .callback(({ pb, params: { difficulty } }) =>
     pb.collection("achievements__entries").getFullList({
@@ -31,8 +30,8 @@ const createEntry = forgeController
   .route("POST /")
   .description("Create a new achievements entry")
   .schema({
-    body: AchievementsEntrySchema,
-    response: WithPBSchema(AchievementsEntrySchema),
+    body: AchievementsSchemas.EntrySchema,
+    response: WithPBSchema(AchievementsSchemas.EntrySchema),
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -46,8 +45,8 @@ const updateEntry = forgeController
     params: z.object({
       id: z.string(),
     }),
-    body: AchievementsEntrySchema,
-    response: WithPBSchema(AchievementsEntrySchema),
+    body: AchievementsSchemas.EntrySchema,
+    response: WithPBSchema(AchievementsSchemas.EntrySchema),
   })
   .existenceCheck("params", {
     id: "achievements__entries",

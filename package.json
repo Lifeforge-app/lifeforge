@@ -19,7 +19,8 @@
     "build:shared": "cd shared && bun run build",
     "build:server": "cd server && bun run build",
     "build": "bun run build:shared && bun run build:server && bun run build:client",
-    "postinstall": "bun run build:shared && bun run build:server"
+    "postinstall": "bun run build:shared && bun run build:server",
+    "schema:generate": "bun run scripts/generateSchema.ts"
   },
   "keywords": [
     "bun",
