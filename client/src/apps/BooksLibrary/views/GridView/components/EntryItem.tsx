@@ -2,10 +2,9 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
+import { HamburgerMenu } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
-
-import { HamburgerMenu } from '@lifeforge/ui'
 
 import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'

@@ -1,9 +1,8 @@
 import ROUTES from '@core/routes/Routes'
+import { LoadingScreen, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

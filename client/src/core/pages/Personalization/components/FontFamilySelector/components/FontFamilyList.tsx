@@ -1,9 +1,8 @@
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { Tooltip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { Tooltip } from '@lifeforge/ui'
 
 import FontFamilyItem from './FontFamilyItem'
 

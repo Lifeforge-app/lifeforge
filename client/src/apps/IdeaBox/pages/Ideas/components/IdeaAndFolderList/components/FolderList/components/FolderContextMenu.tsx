@@ -1,8 +1,7 @@
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
-
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'

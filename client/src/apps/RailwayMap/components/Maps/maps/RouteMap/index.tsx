@@ -1,4 +1,4 @@
-import { LoadingScreen } from '@lifeforge/ui'
+import { LoadingScreen } from 'lifeforge-ui'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useRailwayMapRenderer } from './hooks/useRailwayMapRenderer'

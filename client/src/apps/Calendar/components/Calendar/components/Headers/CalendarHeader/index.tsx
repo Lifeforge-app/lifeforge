@@ -1,10 +1,9 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { Button, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
-
-import { Button, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
 import ScanImageModal from '@apps/Calendar/components/modals/ScanImageModal'

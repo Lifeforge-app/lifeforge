@@ -1,10 +1,9 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
+import { SidebarItem } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import colors from 'tailwindcss/colors'
-
-import { SidebarItem } from '@lifeforge/ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

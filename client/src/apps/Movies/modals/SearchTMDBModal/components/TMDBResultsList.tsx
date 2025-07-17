@@ -1,4 +1,4 @@
-import { EmptyStateScreen, Pagination } from '@lifeforge/ui'
+import { EmptyStateScreen, Pagination } from 'lifeforge-ui'
 
 import { IMovieSearchResults } from '@apps/Movies/interfaces/movies_interfaces'
 

@@ -1,4 +1,4 @@
-import { ModalHeader } from '@lifeforge/ui'
+import { ModalHeader } from 'lifeforge-ui'
 
 import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
 

@@ -1,6 +1,5 @@
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 function YearlyRelativeDayForm({
   yearlyOnThe,

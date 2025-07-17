@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import { type IWalletCategory } from '../../../../../interfaces/wallet_interfaces'
 import ModifyCategoryModal from '../../ModifyCategoryModal'

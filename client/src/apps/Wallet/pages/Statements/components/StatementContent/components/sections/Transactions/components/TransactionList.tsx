@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'

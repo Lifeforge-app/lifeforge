@@ -1,7 +1,6 @@
+import { FormModal } from 'lifeforge-ui'
+import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
-
-import { FormModal } from '@lifeforge/ui'
-import { type IFieldProps } from '@lifeforge/ui'
 
 import { IWishlistList } from '@apps/Wishlist/interfaces/wishlist_interfaces'
 

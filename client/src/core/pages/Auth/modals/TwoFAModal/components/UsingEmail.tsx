@@ -1,8 +1,7 @@
+import { Button, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { Button, TextInput } from '@lifeforge/ui'
 
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import ResendOTPButton from '@security/components/OTPScreen/components/ResendOTPButton'

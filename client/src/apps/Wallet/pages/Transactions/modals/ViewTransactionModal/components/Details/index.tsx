@@ -1,9 +1,8 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-
-import { Button, useModalStore } from '@lifeforge/ui'
+import { Button, useModalStore } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'

@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
+import { ConfigColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { ConfigColumn } from '@lifeforge/ui'
 
 function ThemeSelector() {
   const { theme, setTheme } = usePersonalization()

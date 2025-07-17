@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
-
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
 

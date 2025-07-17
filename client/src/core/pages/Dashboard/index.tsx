@@ -11,10 +11,9 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
+import { MenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
-
-import { MenuItem, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'

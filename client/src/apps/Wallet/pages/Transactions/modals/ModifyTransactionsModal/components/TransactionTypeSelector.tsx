@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 const TRANSACTION_TYPES = [
   { name: 'Income', color: '#10B981', id: 'income', icon: 'tabler:login-2' },

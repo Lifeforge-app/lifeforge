@@ -1,14 +1,13 @@
 import { useSidebarState } from '@providers/SidebarStateProvider'
-import _ from 'lodash'
-import { Fragment, useMemo } from 'react'
-
 import {
   EmptyStateScreen,
   Scrollbar,
   SidebarDivider,
   SidebarItem,
   SidebarTitle
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import _ from 'lodash'
+import { Fragment, useMemo } from 'react'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import ROUTES from '../../Routes'

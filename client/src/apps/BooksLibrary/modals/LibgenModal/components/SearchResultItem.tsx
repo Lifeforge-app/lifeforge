@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import { Button } from 'lifeforge-ui'
 import prettyBytes from 'pretty-bytes'
-
-import { Button } from '@lifeforge/ui'
 
 import AddToLibraryButton from './AddToLibraryButton'
 

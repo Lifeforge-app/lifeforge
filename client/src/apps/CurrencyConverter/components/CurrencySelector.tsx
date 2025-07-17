@@ -2,7 +2,7 @@ import {
   Button,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
 
 import { useCurrencies } from '../hooks/useCurrencies'
 import { Currency } from '../interfaces/currency_converter_interfaces'

@@ -1,9 +1,8 @@
 // import * as webauthn from '@passwordless-id/webauthn'
+import { TextInput } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { TextInput } from '@lifeforge/ui'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'

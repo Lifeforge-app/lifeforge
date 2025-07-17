@@ -1,4 +1,4 @@
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
 
 import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 

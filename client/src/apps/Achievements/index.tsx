@@ -1,7 +1,3 @@
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { AchievementsSchemas, ISchemaWithPB } from 'shared'
-
 import {
   Button,
   EmptyStateScreen,
@@ -9,8 +5,11 @@ import {
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AchievementsSchemas, ISchemaWithPB } from 'shared'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

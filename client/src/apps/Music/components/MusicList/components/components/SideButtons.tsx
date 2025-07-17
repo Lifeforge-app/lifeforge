@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import UpdateMusicModal from '@apps/Music/modals/UpdateMusicModal'
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'

@@ -1,8 +1,7 @@
+import { LoadingScreen } from 'lifeforge-ui'
 import _ from 'lodash'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { LoadingScreen } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 

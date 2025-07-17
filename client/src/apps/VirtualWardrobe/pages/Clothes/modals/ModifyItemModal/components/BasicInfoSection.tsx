@@ -1,13 +1,12 @@
 import { Icon } from '@iconify/react'
-import { useState } from 'react'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import { IVirtualWardrobeFormState } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'

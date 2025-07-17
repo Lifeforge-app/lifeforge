@@ -1,19 +1,18 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
-import { Link } from 'react-router'
-import { Tooltip } from 'react-tooltip'
-
 import {
   Button,
   DashboardItem,
   EmptyStateScreen,
   QueryWrapper,
   Scrollbar
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { Link } from 'react-router'
+import { Tooltip } from 'react-tooltip'
 
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'

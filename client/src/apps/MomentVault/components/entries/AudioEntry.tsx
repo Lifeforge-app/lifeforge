@@ -3,13 +3,12 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
+import { Button, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import type { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
-
-import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 

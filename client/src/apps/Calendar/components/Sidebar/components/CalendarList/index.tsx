@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
+import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 

@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { QueryWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
-
-import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
-
 import {
   ListboxNullOption,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

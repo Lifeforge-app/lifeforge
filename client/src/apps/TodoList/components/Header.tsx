@@ -1,7 +1,6 @@
+import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-
-import { Button } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 

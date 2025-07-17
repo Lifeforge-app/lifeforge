@@ -1,4 +1,4 @@
-import { SidebarDivider, SidebarWrapper } from '@lifeforge/ui'
+import { SidebarDivider, SidebarWrapper } from 'lifeforge-ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

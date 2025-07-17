@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import { ModalHeader } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
-
-import { ModalHeader } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 

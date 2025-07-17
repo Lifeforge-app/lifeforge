@@ -1,8 +1,7 @@
+import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { QueryWrapper, SidebarTitle } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'

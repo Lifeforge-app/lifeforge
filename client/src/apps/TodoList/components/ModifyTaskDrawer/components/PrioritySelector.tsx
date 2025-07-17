@@ -1,5 +1,5 @@
 // PriorityListbox.tsx
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 

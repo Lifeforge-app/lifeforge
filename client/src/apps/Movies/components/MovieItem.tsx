@@ -1,15 +1,14 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useCallback, useState } from 'react'
-
 import {
   Button,
   DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useState } from 'react'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
 

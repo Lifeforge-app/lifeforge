@@ -1,7 +1,6 @@
+import { DeleteConfirmationModal, SidebarItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
-
-import { DeleteConfirmationModal, SidebarItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 

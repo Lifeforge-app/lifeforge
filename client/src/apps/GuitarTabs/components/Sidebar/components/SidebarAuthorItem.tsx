@@ -1,7 +1,6 @@
+import { SidebarItem } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { SidebarItem } from '@lifeforge/ui'
 
 function SidebarAuthorItem({
   author,

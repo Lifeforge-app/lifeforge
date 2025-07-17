@@ -1,4 +1,4 @@
-import { Button, ImageAndFileInput } from '@lifeforge/ui'
+import { Button, ImageAndFileInput } from 'lifeforge-ui'
 
 function UploadPhotoSection({
   step,

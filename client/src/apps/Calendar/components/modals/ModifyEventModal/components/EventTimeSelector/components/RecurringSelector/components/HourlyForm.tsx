@@ -1,7 +1,6 @@
+import { TextInput } from 'lifeforge-ui'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { TextInput } from '@lifeforge/ui'
 
 function HourlyForm({
   hourlyEvery,

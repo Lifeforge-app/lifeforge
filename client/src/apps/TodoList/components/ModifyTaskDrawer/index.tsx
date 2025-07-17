@@ -2,10 +2,6 @@ import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   DateInput,
@@ -16,8 +12,11 @@ import {
   Switch,
   TextAreaInput,
   TextInput
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 

@@ -1,15 +1,14 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   DeleteConfirmationModal,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   ModalHeader
-} from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import AudioType from './components/AudioType'
 import PhotoType from './components/PhotoType'

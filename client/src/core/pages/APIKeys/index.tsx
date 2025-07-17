@@ -1,8 +1,7 @@
+import { Button, FAB, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Button, FAB, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import ContentContainer from './components/ContentContainer'
 import ModifyAPIKeyModal from './modals/ModifyAPIKeyModal'

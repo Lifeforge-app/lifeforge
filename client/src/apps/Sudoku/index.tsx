@@ -1,12 +1,6 @@
+import { Button, ModuleHeader, ModuleWrapper, QueryWrapper } from 'lifeforge-ui'
 import { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
-
-import {
-  Button,
-  ModuleHeader,
-  ModuleWrapper,
-  QueryWrapper
-} from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

@@ -1,10 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 

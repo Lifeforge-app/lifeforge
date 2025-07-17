@@ -1,13 +1,12 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import { useCallback, useMemo } from 'react'
-
 import {
   QueryWrapper,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useCallback, useMemo } from 'react'
 
 import { type IGuitarTabsSidebarData } from '../../interfaces/guitar_tabs_interfaces'
 import SidebarAuthorItem from './components/SidebarAuthorItem'

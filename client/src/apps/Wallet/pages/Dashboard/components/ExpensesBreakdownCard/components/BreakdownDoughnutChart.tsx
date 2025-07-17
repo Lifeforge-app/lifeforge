@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'

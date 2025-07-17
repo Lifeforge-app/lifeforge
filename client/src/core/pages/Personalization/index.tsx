@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 
 import BgImageSelector from './components/BgImageSelector'
 import BgTempSelector from './components/BgTempSelector'

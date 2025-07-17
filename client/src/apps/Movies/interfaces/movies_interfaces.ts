@@ -1,6 +1,5 @@
+import type { IFormState } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
-
-import type { IFormState } from '@lifeforge/ui'
 
 interface IMovieSearchResult {
   adult: boolean

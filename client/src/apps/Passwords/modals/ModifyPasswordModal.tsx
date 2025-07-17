@@ -1,15 +1,14 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-
 import {
   Button,
   ColorInput,
   IconInput,
   ModalHeader,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 

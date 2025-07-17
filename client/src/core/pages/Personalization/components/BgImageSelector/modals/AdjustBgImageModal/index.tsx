@@ -1,8 +1,7 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
+import { Button, ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Button, ModalHeader } from '@lifeforge/ui'
 
 import { BG_BLURS } from '../../../../../../providers/PersonalizationProvider/constants/bg_blurs'
 import AdjustmentColumn from './components/AdjustmentColumn'

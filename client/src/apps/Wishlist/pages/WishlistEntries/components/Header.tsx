@@ -1,12 +1,11 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { Button, GoBackButton, MenuItem } from 'lifeforge-ui'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
-
-import { Button, GoBackButton, MenuItem } from '@lifeforge/ui'
-import { useModalStore } from '@lifeforge/ui'
 
 import { IWishlistList } from '../../../interfaces/wishlist_interfaces'
 import FromOtherAppsModal from '../modals/FromOtherAppsModal'

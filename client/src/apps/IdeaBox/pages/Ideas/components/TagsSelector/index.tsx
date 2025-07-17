@@ -1,7 +1,6 @@
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useParams } from 'react-router'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 

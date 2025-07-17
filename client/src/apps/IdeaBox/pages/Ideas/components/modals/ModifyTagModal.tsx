@@ -1,8 +1,7 @@
+import { FormModal } from 'lifeforge-ui'
+import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-
-import { FormModal } from '@lifeforge/ui'
-import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   IIdeaBoxTag,

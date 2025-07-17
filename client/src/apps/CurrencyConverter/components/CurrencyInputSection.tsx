@@ -1,4 +1,4 @@
-import { CurrencyInput } from '@lifeforge/ui'
+import { CurrencyInput } from 'lifeforge-ui'
 
 interface CurrencyInputSectionProps {
   amount: string

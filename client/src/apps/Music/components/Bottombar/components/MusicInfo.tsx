@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-
-import { HamburgerMenu } from '@lifeforge/ui'
+import { HamburgerMenu } from 'lifeforge-ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 

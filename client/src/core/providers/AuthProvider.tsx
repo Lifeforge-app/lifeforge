@@ -1,4 +1,5 @@
 import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
+import { useModalStore } from 'lifeforge-ui'
 import { cookieParse } from 'pocketbase'
 import {
   RefObject,
@@ -13,8 +14,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
