@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "bun --watch run src/index.ts && tsc --watch"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
