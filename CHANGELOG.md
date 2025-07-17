@@ -4,6 +4,8 @@
 - **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
 - **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
 - **UI**: Fixed a bug where the toast progressbar color is not properly applied.
+- **Code**: Migrated the entire codebase to a monorepo structure using `bun` as the package manager.
+- **Code**: Typescript interfaces are now generated and put into the `shared` package, allowing the frontend and backend to share the same types.
 
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
 - **API**: Moved all the `<module>_interface.ts` files to `schema.ts` files for better organization.
