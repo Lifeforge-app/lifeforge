@@ -1,14 +1,14 @@
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
 import { Tooltip } from '../utilities'
 
@@ -113,7 +113,7 @@ function LocationInput({
           ))}
       </ListboxOrComboboxInput>
       {!enabled && (
-        <div className="flex-center text-bg-500 absolute right-6 top-1/2 -translate-y-1/2 gap-2">
+        <div className="flex-center text-bg-500 absolute top-1/2 right-6 -translate-y-1/2 gap-2">
           {t('locationDisabled.title')}
           <Tooltip
             icon="tabler:info-circle"

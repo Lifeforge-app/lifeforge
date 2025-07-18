@@ -1,9 +1,10 @@
-import { z } from "zod/v4";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
 
-const ALLOWED_NAMESPACE = ["apps", "common", "utils", "core"] as const;
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
-const ALLOWED_LANG = ["en", "ms", "zh-CN", "zh-TW", "zh"] as const;
+const ALLOWED_NAMESPACE = ['apps', 'common', 'utils', 'core'] as const
+
+const ALLOWED_LANG = ['en', 'ms', 'zh-CN', 'zh-TW', 'zh'] as const
 
 const LocalesManager = {
   /**
@@ -12,9 +13,9 @@ const LocalesManager = {
    */
   listSubnamespaces: {
     params: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE),
+      namespace: z.enum(ALLOWED_NAMESPACE)
     }),
-    response: z.array(z.string()),
+    response: z.array(z.string())
   },
 
   /**
@@ -24,9 +25,9 @@ const LocalesManager = {
   listLocales: {
     params: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
+      subnamespace: z.string()
     }),
-    response: z.record(z.enum(ALLOWED_LANG).exclude(["zh"]), z.string()),
+    response: z.record(z.enum(ALLOWED_LANG).exclude(['zh']), z.string())
   },
 
   /**
@@ -37,14 +38,14 @@ const LocalesManager = {
     body: z.object({
       data: z.record(
         z.string(),
-        z.record(z.enum(ALLOWED_LANG).exclude(["zh"]), z.string())
-      ),
+        z.record(z.enum(ALLOWED_LANG).exclude(['zh']), z.string())
+      )
     }),
     params: z.object({
-      namespace: z.enum(["apps", "common", "utils", "core"]),
-      subnamespace: z.string(),
+      namespace: z.enum(['apps', 'common', 'utils', 'core']),
+      subnamespace: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -53,14 +54,14 @@ const LocalesManager = {
    */
   createLocale: {
     params: z.object({
-      type: z.enum(["entry", "folder"]),
+      type: z.enum(['entry', 'folder']),
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
+      subnamespace: z.string()
     }),
     body: z.object({
-      path: z.string().optional().default(""),
+      path: z.string().optional().default('')
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -70,13 +71,13 @@ const LocalesManager = {
   renameLocale: {
     params: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
+      subnamespace: z.string()
     }),
     body: z.object({
-      path: z.string().optional().default(""),
-      newName: z.string().optional().default(""),
+      path: z.string().optional().default(''),
+      newName: z.string().optional().default('')
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -86,12 +87,12 @@ const LocalesManager = {
   deleteLocale: {
     params: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
+      subnamespace: z.string()
     }),
     body: z.object({
-      path: z.string().optional().default(""),
+      path: z.string().optional().default('')
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -101,20 +102,20 @@ const LocalesManager = {
   getTranslationSuggestions: {
     params: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
+      subnamespace: z.string()
     }),
     body: z.object({
       path: z.string(),
-      hint: z.string().optional().default(""),
+      hint: z.string().optional().default('')
     }),
     response: z.object({
       en: z.string(),
       ms: z.string(),
-      "zh-CN": z.string(),
-      "zh-TW": z.string(),
-    }),
-  },
-};
+      'zh-CN': z.string(),
+      'zh-TW': z.string()
+    })
+  }
+}
 
 const Locales = {
   /**
@@ -125,15 +126,15 @@ const Locales = {
     params: z.object({
       lang: z.enum(ALLOWED_LANG),
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
+      subnamespace: z.string()
     }),
-    response: z.any(),
-  },
-};
+    response: z.any()
+  }
+}
 
-type ILocalesManager = InferApiESchemaDynamic<typeof LocalesManager>;
-type ILocales = InferApiESchemaDynamic<typeof Locales>;
+type ILocalesManager = InferApiESchemaDynamic<typeof LocalesManager>
+type ILocales = InferApiESchemaDynamic<typeof Locales>
 
-export type { ILocalesManager, ILocales };
+export type { ILocalesManager, ILocales }
 
-export { LocalesManager, Locales };
+export { LocalesManager, Locales }

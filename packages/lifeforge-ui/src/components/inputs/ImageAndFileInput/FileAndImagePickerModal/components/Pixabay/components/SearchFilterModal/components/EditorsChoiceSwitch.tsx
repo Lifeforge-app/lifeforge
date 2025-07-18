@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react'
-import { useTranslation } from 'react-i18next'
-
 import { Switch } from '@components/buttons'
 import { type PixabaySearchFilterAction } from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
+import { Icon } from '@iconify/react'
+import { useTranslation } from 'react-i18next'
 
 interface EditorsChoiceSwitchProps {
   isEditorsChoice: boolean

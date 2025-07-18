@@ -1,31 +1,32 @@
-import { exec } from "child_process";
-import { readFileSync, readdirSync, unlinkSync } from "fs";
-import Pocketbase from "pocketbase";
-import { MusicCollectionsSchemas } from "shared/types/collections";
-import { v4 } from "uuid";
+import { exec } from 'child_process'
+import { readFileSync, readdirSync, unlinkSync } from 'fs'
+import Pocketbase from 'pocketbase'
+import { v4 } from 'uuid'
 
-let downloadStatus: "empty" | "in_progress" | "completed" | "failed" = "empty";
+import { MusicCollectionsSchemas } from 'shared/types/collections'
+
+let downloadStatus: 'empty' | 'in_progress' | 'completed' | 'failed' = 'empty'
 
 export const getDownloadStatus = () => ({
-  status: downloadStatus,
-});
+  status: downloadStatus
+})
 
 export const setDownloadStatus = (
-  status: "empty" | "in_progress" | "completed" | "failed",
+  status: 'empty' | 'in_progress' | 'completed' | 'failed'
 ) => {
-  downloadStatus = status;
-};
+  downloadStatus = status
+}
 
 export const getVideoInfo = (
-  videoId: string,
+  videoId: string
 ): Promise<MusicCollectionsSchemas.IYoutubeData> => {
   return new Promise((resolve, reject) => {
     exec(
       `${process.cwd()}/src/core/bin/yt-dlp --skip-download --print "title,upload_date,uploader,duration,view_count,like_count,thumbnail" "https://www.youtube.com/watch?v=${videoId}"`,
       (err, stdout) => {
         if (err) {
-          reject(err);
-          return;
+          reject(err)
+          return
         }
 
         const [
@@ -35,8 +36,8 @@ export const getVideoInfo = (
           duration,
           viewCount,
           likeCount,
-          thumbnail,
-        ] = stdout.split("\n");
+          thumbnail
+        ] = stdout.split('\n')
 
         const response: MusicCollectionsSchemas.IYoutubeData = {
           title,
@@ -45,59 +46,59 @@ export const getVideoInfo = (
           duration,
           viewCount: +viewCount,
           likeCount: +likeCount,
-          thumbnail,
-        };
+          thumbnail
+        }
 
-        resolve(response);
-      },
-    );
-  });
-};
+        resolve(response)
+      }
+    )
+  })
+}
 
 export const downloadVideo = (
   pb: Pocketbase,
   videoId: string,
   metadata: {
-    title: string;
-    uploader: string;
-    duration: number;
-  },
+    title: string
+    uploader: string
+    duration: number
+  }
 ) => {
-  const downloadID = v4();
+  const downloadID = v4()
 
   exec(
     `${process.cwd()}/src/core/bin/yt-dlp -f bestaudio -o "${process.cwd()}/medium/${downloadID}-%(title)s.%(ext)s" --extract-audio --audio-format mp3 --audio-quality 0 "https://www.youtube.com/watch?v=${videoId}"`,
-    async (err) => {
+    async err => {
       if (err) {
-        downloadStatus = "failed";
-        return;
+        downloadStatus = 'failed'
+        return
       }
 
       try {
-        const allFiles = readdirSync(`${process.cwd()}/medium`);
+        const allFiles = readdirSync(`${process.cwd()}/medium`)
 
-        const mp3File = allFiles.find((file) => file.startsWith(downloadID));
+        const mp3File = allFiles.find(file => file.startsWith(downloadID))
 
         if (!mp3File) {
-          downloadStatus = "failed";
-          return;
+          downloadStatus = 'failed'
+          return
         }
 
-        const fileBuffer = readFileSync(`${process.cwd()}/medium/${mp3File}`);
+        const fileBuffer = readFileSync(`${process.cwd()}/medium/${mp3File}`)
 
-        await pb.collection("music__entries").create({
+        await pb.collection('music__entries').create({
           name: metadata.title,
           author: metadata.uploader,
           duration: metadata.duration,
-          file: new File([fileBuffer], mp3File.split("-").slice(1).join("-")),
-        });
+          file: new File([fileBuffer], mp3File.split('-').slice(1).join('-'))
+        })
 
-        unlinkSync(`${process.cwd()}/medium/${mp3File}`);
+        unlinkSync(`${process.cwd()}/medium/${mp3File}`)
 
-        downloadStatus = "completed";
+        downloadStatus = 'completed'
       } catch (error) {
-        downloadStatus = "failed";
+        downloadStatus = 'failed'
       }
-    },
-  );
-};
+    }
+  )
+}

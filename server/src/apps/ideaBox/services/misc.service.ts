@@ -1,154 +1,154 @@
-import ClientError from "@functions/ClientError";
-import { checkExistence } from "@functions/PBRecordValidator";
-import { clientError } from "@functions/response";
-import { Request, Response } from "express";
-import ogs from "open-graph-scraper";
-import PocketBase from "pocketbase";
-import { IdeaBoxCollectionsSchemas } from "shared/types/collections";
+import ClientError from '@functions/ClientError'
+import { checkExistence } from '@functions/PBRecordValidator'
+import { clientError } from '@functions/response'
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import { Request, Response } from 'express'
+import ogs from 'open-graph-scraper'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
-const OGCache = new Map<string, any>();
+const OGCache = new Map<string, any>()
 
 export const getPath = async (
   pb: PocketBase,
   container: string,
   path: string[],
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<{
-  container: WithPB<IdeaBoxCollectionsSchemas.IContainer>;
-  path: WithPB<IdeaBoxCollectionsSchemas.IFolder>[];
+  container: WithPB<IdeaBoxCollectionsSchemas.IContainer>
+  path: WithPB<IdeaBoxCollectionsSchemas.IFolder>[]
 } | null> => {
   const containerExists = await checkExistence(
     req,
     res,
-    "idea_box__containers",
-    container,
-  );
+    'idea_box__containers',
+    container
+  )
 
-  if (!containerExists) return null;
+  if (!containerExists) return null
 
   const containerEntry = await pb
-    .collection("idea_box__containers")
-    .getOne<WithPB<IdeaBoxCollectionsSchemas.IContainer>>(container);
+    .collection('idea_box__containers')
+    .getOne<WithPB<IdeaBoxCollectionsSchemas.IContainer>>(container)
 
   containerEntry.cover = pb.files
     .getURL(containerEntry, containerEntry.cover)
-    .replace(`${pb.baseURL}/api/files`, "");
+    .replace(`${pb.baseURL}/api/files`, '')
 
-  let lastFolder = "";
+  let lastFolder = ''
 
-  const fullPath: WithPB<IdeaBoxCollectionsSchemas.IFolder>[] = [];
+  const fullPath: WithPB<IdeaBoxCollectionsSchemas.IFolder>[] = []
 
   for (const folder of path) {
-    if (!(await checkExistence(req, res, "idea_box__folders", folder))) {
-      return null;
+    if (!(await checkExistence(req, res, 'idea_box__folders', folder))) {
+      return null
     }
 
     const folderEntry = await pb
-      .collection("idea_box__folders")
-      .getOne<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(folder);
+      .collection('idea_box__folders')
+      .getOne<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(folder)
 
     if (
       folderEntry.parent !== lastFolder ||
       folderEntry.container !== container
     ) {
-      clientError(res, "Invalid path");
-      return null;
+      clientError(res, 'Invalid path')
+      return null
     }
 
-    lastFolder = folder;
-    fullPath.push(folderEntry);
+    lastFolder = folder
+    fullPath.push(folderEntry)
   }
 
   return {
     container: containerEntry,
-    path: fullPath,
-  };
-};
+    path: fullPath
+  }
+}
 
 export const checkValid = async (
   pb: PocketBase,
   container: string,
   path: string[],
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<boolean> => {
   const containerExists = await checkExistence(
     req,
     res,
-    "idea_box__containers",
+    'idea_box__containers',
     container,
-    false,
-  );
+    false
+  )
 
   if (!containerExists) {
-    return false;
+    return false
   }
 
-  let folderExists = true;
-  let lastFolder = "";
+  let folderExists = true
+  let lastFolder = ''
 
   for (const folder of path) {
-    if (!(await checkExistence(req, res, "idea_box__folders", folder, false))) {
-      folderExists = false;
-      break;
+    if (!(await checkExistence(req, res, 'idea_box__folders', folder, false))) {
+      folderExists = false
+      break
     }
 
     const folderEntry = await pb
-      .collection("idea_box__folders")
-      .getOne<IdeaBoxCollectionsSchemas.IFolder>(folder);
+      .collection('idea_box__folders')
+      .getOne<IdeaBoxCollectionsSchemas.IFolder>(folder)
 
     if (
       folderEntry.parent !== lastFolder ||
       folderEntry.container !== container
     ) {
-      folderExists = false;
-      break;
+      folderExists = false
+      break
     }
 
-    lastFolder = folder;
+    lastFolder = folder
   }
 
-  return containerExists && folderExists;
-};
+  return containerExists && folderExists
+}
 
 export const getOgData = async (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<any | null> => {
   const data = await pb
-    .collection("idea_box__entries")
-    .getOne<IdeaBoxCollectionsSchemas.IEntry>(id);
+    .collection('idea_box__entries')
+    .getOne<IdeaBoxCollectionsSchemas.IEntry>(id)
 
-  if (data.type !== "link") {
+  if (data.type !== 'link') {
     throw new ClientError(
-      "Open Graph data can only be fetched for entries of type 'link'",
-    );
+      "Open Graph data can only be fetched for entries of type 'link'"
+    )
   }
 
   if (OGCache.has(id) && OGCache.get(id)?.requestUrl === data.content) {
-    return OGCache.get(id);
+    return OGCache.get(id)
   }
 
   const { result } = await ogs({
     url: data.content,
     fetchOptions: {
       headers: {
-        "User-Agent":
-          "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
-      },
-    },
+        'User-Agent':
+          'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)'
+      }
+    }
   }).catch(() => {
-    console.error("Error fetching Open Graph data:", data.content);
-    return { result: null };
-  });
+    console.error('Error fetching Open Graph data:', data.content)
+    return { result: null }
+  })
 
-  OGCache.set(id, result);
+  OGCache.set(id, result)
 
-  return result;
-};
+  return result
+}
 
 async function recursivelySearchFolder(
   folderId: string,
@@ -157,46 +157,46 @@ async function recursivelySearchFolder(
   tags: string,
   req: Request,
   parents: string,
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<
-  (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, "folder"> & {
-    folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>;
+  (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
+    folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
     expand?: {
-      folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>;
-    };
-    fullPath: string;
+      folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+    }
+    fullPath: string
   })[]
 > {
   const folderInsideFolder = await pb
-    .collection("idea_box__folders")
+    .collection('idea_box__folders')
     .getFullList<WithPB<IdeaBoxCollectionsSchemas.IFolder>>({
-      filter: `parent = "${folderId}"`,
-    });
+      filter: `parent = "${folderId}"`
+    })
 
   const allResults = (
-    await pb.collection("idea_box__entries").getFullList<
-      Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, "folder"> & {
-        folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>;
+    await pb.collection('idea_box__entries').getFullList<
+      Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
+        folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
         expand?: {
-          folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>;
-        };
+          folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+        }
       }
     >({
       filter: `(content ~ "${q}" || title ~ "${q}") && container = "${container}" && archived = false ${
         tags
-          ? "&& " +
+          ? '&& ' +
             tags
-              .split(",")
-              .map((tag) => `tags ~ "${tag}"`)
-              .join(" && ")
-          : ""
+              .split(',')
+              .map(tag => `tags ~ "${tag}"`)
+              .join(' && ')
+          : ''
       } && folder = "${folderId}"`,
-      expand: "folder",
+      expand: 'folder'
     })
-  ).map((result) => ({ ...result, fullPath: parents }));
+  ).map(result => ({ ...result, fullPath: parents }))
 
   if (folderInsideFolder.length === 0) {
-    return allResults;
+    return allResults
   }
 
   for (const folder of folderInsideFolder) {
@@ -206,14 +206,14 @@ async function recursivelySearchFolder(
       container,
       tags,
       req,
-      parents + "/" + folder.id,
-      pb,
-    );
+      parents + '/' + folder.id,
+      pb
+    )
 
-    allResults.push(...results);
+    allResults.push(...results)
   }
 
-  return allResults;
+  return allResults
 }
 
 export const search = async (
@@ -223,14 +223,14 @@ export const search = async (
   tags: string,
   folder: string,
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<
-  | (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, "folder"> & {
-      folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>;
+  | (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
+      folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
       expand?: {
-        folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>;
-      };
-      fullPath: string;
+        folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+      }
+      fullPath: string
     })[]
   | null
 > => {
@@ -238,12 +238,12 @@ export const search = async (
     const containerExists = await checkExistence(
       req,
       res,
-      "idea_box__containers",
+      'idea_box__containers',
       container,
-      false,
-    );
+      false
+    )
 
-    if (!containerExists) return null;
+    if (!containerExists) return null
   }
 
   const results = await recursivelySearchFolder(
@@ -252,16 +252,16 @@ export const search = async (
     container,
     tags,
     req,
-    "",
-    pb,
-  );
+    '',
+    pb
+  )
 
   for (const result of results) {
     if (result.expand?.folder) {
-      result.folder = result.expand.folder;
-      delete result.expand;
+      result.folder = result.expand.folder
+      delete result.expand
     }
   }
 
-  return results;
-};
+  return results
+}

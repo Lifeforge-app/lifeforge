@@ -1,7 +1,3 @@
-import { useReducer, useState } from 'react'
-import { toast } from 'react-toastify'
-import { fetchAPI, useAPIEndpoint } from 'shared/lib'
-
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import {
@@ -9,6 +5,10 @@ import {
   ErrorScreen,
   LoadingScreen
 } from '@components/screens'
+import { useReducer, useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
 import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'

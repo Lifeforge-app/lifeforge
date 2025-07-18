@@ -1,42 +1,42 @@
-import PocketBase from "pocketbase";
-import { CalendarCollectionsSchemas } from "shared/types/collections";
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllCalendars = (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>[]> =>
   pb
-    .collection("calendar__calendars")
+    .collection('calendar__calendars')
     .getFullList<WithPB<CalendarCollectionsSchemas.ICalendar>>({
-      sort: "+name",
-    });
+      sort: '+name'
+    })
 
 export const getCalendarById = (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>> =>
   pb
-    .collection("calendar__calendars")
-    .getOne<WithPB<CalendarCollectionsSchemas.ICalendar>>(id);
+    .collection('calendar__calendars')
+    .getOne<WithPB<CalendarCollectionsSchemas.ICalendar>>(id)
 
 export const createCalendar = (
   pb: PocketBase,
-  calendarData: CalendarCollectionsSchemas.ICalendar,
+  calendarData: CalendarCollectionsSchemas.ICalendar
 ): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>> =>
   pb
-    .collection("calendar__calendars")
-    .create<WithPB<CalendarCollectionsSchemas.ICalendar>>(calendarData);
+    .collection('calendar__calendars')
+    .create<WithPB<CalendarCollectionsSchemas.ICalendar>>(calendarData)
 
 export const updateCalendar = (
   pb: PocketBase,
   id: string,
-  calendarData: CalendarCollectionsSchemas.ICalendar,
+  calendarData: CalendarCollectionsSchemas.ICalendar
 ): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>> =>
   pb
-    .collection("calendar__calendars")
-    .update<WithPB<CalendarCollectionsSchemas.ICalendar>>(id, calendarData);
+    .collection('calendar__calendars')
+    .update<WithPB<CalendarCollectionsSchemas.ICalendar>>(id, calendarData)
 
 export const deleteCalendar = async (pb: PocketBase, id: string) => {
-  await pb.collection("calendar__calendars").delete(id);
-};
+  await pb.collection('calendar__calendars').delete(id)
+}

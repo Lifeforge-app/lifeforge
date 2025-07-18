@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
 
-import imageGenerationRouter from "./controllers/imageGeneration.controller";
+import imageGenerationRouter from './controllers/imageGeneration.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/image-generation", imageGenerationRouter);
+router.use('/image-generation', imageGenerationRouter)
 
-export default router;
+export default router

@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express'
 
-import momentVaultEntriesRouter from "./controllers/entries.controller";
-import momentVaultTranscriptionRouter from "./controllers/transcription.controller";
+import momentVaultEntriesRouter from './controllers/entries.controller'
+import momentVaultTranscriptionRouter from './controllers/transcription.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/entries", momentVaultEntriesRouter);
-router.use("/transcribe", momentVaultTranscriptionRouter);
+router.use('/entries', momentVaultEntriesRouter)
+router.use('/transcribe', momentVaultTranscriptionRouter)
 
-export default router;
+export default router

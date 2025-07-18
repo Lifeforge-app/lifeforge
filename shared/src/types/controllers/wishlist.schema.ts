@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { WishlistCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { WishlistCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Entries = {
   /**
@@ -9,7 +10,7 @@ const Entries = {
    * @description Get wishlist entries collection ID
    */
   getCollectionId: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -18,15 +19,15 @@ const Entries = {
    */
   getEntriesByListId: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     query: z.object({
       bought: z
         .string()
         .optional()
-        .transform((val) => val === "true"),
+        .transform(val => val === 'true')
     }),
-    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.Entry))
   },
 
   /**
@@ -36,9 +37,9 @@ const Entries = {
   scrapeExternal: {
     body: z.object({
       url: z.string(),
-      provider: z.string(),
+      provider: z.string()
     }),
-    response: z.any(),
+    response: z.any()
   },
 
   /**
@@ -49,11 +50,11 @@ const Entries = {
     body: z.object({
       name: z.string(),
       url: z.string(),
-      price: z.string().transform((val) => parseFloat(val) || 0 || 0),
+      price: z.string().transform(val => parseFloat(val) || 0 || 0),
       list: z.string(),
-      image: z.any().optional(),
+      image: z.any().optional()
     }),
-    response: SchemaWithPB(WishlistCollectionsSchemas.Entry),
+    response: SchemaWithPB(WishlistCollectionsSchemas.Entry)
   },
 
   /**
@@ -62,19 +63,19 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
       name: z.string(),
       url: z.string(),
-      price: z.string().transform((val) => parseFloat(val) || 0 || 0),
+      price: z.string().transform(val => parseFloat(val) || 0 || 0),
       list: z.string(),
-      imageRemoved: z.string().optional(),
+      imageRemoved: z.string().optional()
     }),
     response: z.union([
       SchemaWithPB(WishlistCollectionsSchemas.Entry),
-      z.literal("removed"),
-    ]),
+      z.literal('removed')
+    ])
   },
 
   /**
@@ -83,9 +84,9 @@ const Entries = {
    */
   updateEntryBoughtStatus: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(WishlistCollectionsSchemas.Entry),
+    response: SchemaWithPB(WishlistCollectionsSchemas.Entry)
   },
 
   /**
@@ -94,11 +95,11 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Lists = {
   /**
@@ -107,9 +108,9 @@ const Lists = {
    */
   getList: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(WishlistCollectionsSchemas.ListAggregated),
+    response: SchemaWithPB(WishlistCollectionsSchemas.ListAggregated)
   },
 
   /**
@@ -118,9 +119,9 @@ const Lists = {
    */
   checkListExists: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -128,7 +129,7 @@ const Lists = {
    * @description Get all wishlists with statistics
    */
   getAllLists: {
-    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.ListAggregated)),
+    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.ListAggregated))
   },
 
   /**
@@ -137,7 +138,7 @@ const Lists = {
    */
   createList: {
     body: WishlistCollectionsSchemas.List,
-    response: SchemaWithPB(WishlistCollectionsSchemas.List),
+    response: SchemaWithPB(WishlistCollectionsSchemas.List)
   },
 
   /**
@@ -146,10 +147,10 @@ const Lists = {
    */
   updateList: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: WishlistCollectionsSchemas.List,
-    response: SchemaWithPB(WishlistCollectionsSchemas.List),
+    response: SchemaWithPB(WishlistCollectionsSchemas.List)
   },
 
   /**
@@ -158,15 +159,15 @@ const Lists = {
    */
   deleteList: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
-type ILists = InferApiESchemaDynamic<typeof Lists>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>
+type ILists = InferApiESchemaDynamic<typeof Lists>
 
-export type { IEntries, ILists };
+export type { IEntries, ILists }
 
-export { Entries, Lists };
+export { Entries, Lists }

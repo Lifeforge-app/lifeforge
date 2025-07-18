@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
 
-import railwayMapRouter from "./controllers/railwayMap.controller";
+import railwayMapRouter from './controllers/railwayMap.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/", railwayMapRouter);
+router.use('/', railwayMapRouter)
 
-export default router;
+export default router

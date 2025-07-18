@@ -1,70 +1,70 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { WishlistControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as listsService from "../services/lists.service";
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
-const wishlistListsRouter = express.Router();
+import * as listsService from '../services/lists.service'
+
+const wishlistListsRouter = express.Router()
 
 const getList = forgeController
-  .route("GET /:id")
-  .description("Get wishlist by ID")
+  .route('GET /:id')
+  .description('Get wishlist by ID')
   .schema(WishlistControllersSchemas.Lists.getList)
-  .existenceCheck("params", {
-    id: "wishlist__lists",
+  .existenceCheck('params', {
+    id: 'wishlist__lists'
   })
   .callback(
-    async ({ pb, params: { id } }) => await listsService.getList(pb, id),
-  );
+    async ({ pb, params: { id } }) => await listsService.getList(pb, id)
+  )
 
 const checkListExists = forgeController
-  .route("GET /valid/:id")
-  .description("Check if wishlist exists")
+  .route('GET /valid/:id')
+  .description('Check if wishlist exists')
   .schema(WishlistControllersSchemas.Lists.checkListExists)
   .callback(
-    async ({ pb, params: { id } }) =>
-      await listsService.checkListExists(pb, id),
-  );
+    async ({ pb, params: { id } }) => await listsService.checkListExists(pb, id)
+  )
 
 const getAllLists = forgeController
-  .route("GET /")
-  .description("Get all wishlists with statistics")
+  .route('GET /')
+  .description('Get all wishlists with statistics')
   .schema(WishlistControllersSchemas.Lists.getAllLists)
-  .callback(async ({ pb }) => await listsService.getAllLists(pb));
+  .callback(async ({ pb }) => await listsService.getAllLists(pb))
 
 const createList = forgeController
-  .route("POST /")
-  .description("Create a new wishlist")
+  .route('POST /')
+  .description('Create a new wishlist')
   .schema(WishlistControllersSchemas.Lists.createList)
   .statusCode(201)
-  .callback(async ({ pb, body }) => await listsService.createList(pb, body));
+  .callback(async ({ pb, body }) => await listsService.createList(pb, body))
 
 const updateList = forgeController
-  .route("PATCH /:id")
-  .description("Update an existing wishlist")
+  .route('PATCH /:id')
+  .description('Update an existing wishlist')
   .schema(WishlistControllersSchemas.Lists.updateList)
-  .existenceCheck("params", {
-    id: "wishlist__lists",
+  .existenceCheck('params', {
+    id: 'wishlist__lists'
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
-      await listsService.updateList(pb, id, body),
-  );
+      await listsService.updateList(pb, id, body)
+  )
 
 const deleteList = forgeController
-  .route("DELETE /:id")
-  .description("Delete a wishlist")
+  .route('DELETE /:id')
+  .description('Delete a wishlist')
   .schema(WishlistControllersSchemas.Lists.deleteList)
-  .existenceCheck("params", {
-    id: "wishlist__lists",
+  .existenceCheck('params', {
+    id: 'wishlist__lists'
   })
   .statusCode(204)
   .callback(
-    async ({ pb, params: { id } }) => await listsService.deleteList(pb, id),
-  );
+    async ({ pb, params: { id } }) => await listsService.deleteList(pb, id)
+  )
 
 bulkRegisterControllers(wishlistListsRouter, [
   getList,
@@ -72,7 +72,7 @@ bulkRegisterControllers(wishlistListsRouter, [
   getAllLists,
   createList,
   updateList,
-  deleteList,
-]);
+  deleteList
+])
 
-export default wishlistListsRouter;
+export default wishlistListsRouter

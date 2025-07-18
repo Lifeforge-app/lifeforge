@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { MomentVaultCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { MomentVaultCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Transcription = {
   /**
@@ -10,9 +11,9 @@ const Transcription = {
    */
   transcribeExisted: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -20,9 +21,9 @@ const Transcription = {
    * @description Transcribe a new audio file
    */
   transcribeNew: {
-    response: z.string(),
-  },
-};
+    response: z.string()
+  }
+}
 
 const Entries = {
   /**
@@ -34,15 +35,15 @@ const Entries = {
       page: z
         .string()
         .optional()
-        .transform((val) => parseInt(val ?? "1", 10) || 1),
+        .transform(val => parseInt(val ?? '1', 10) || 1)
     }),
     response: z.object({
       items: z.array(SchemaWithPB(MomentVaultCollectionsSchemas.Entry)),
       page: z.number(),
       perPage: z.number(),
       totalItems: z.number(),
-      totalPages: z.number(),
-    }),
+      totalPages: z.number()
+    })
   },
 
   /**
@@ -51,11 +52,11 @@ const Entries = {
    */
   createEntry: {
     body: z.object({
-      type: z.enum(["text", "audio", "photos"]),
+      type: z.enum(['text', 'audio', 'photos']),
       content: z.string().optional(),
-      transcription: z.string().optional(),
+      transcription: z.string().optional()
     }),
-    response: SchemaWithPB(MomentVaultCollectionsSchemas.Entry),
+    response: SchemaWithPB(MomentVaultCollectionsSchemas.Entry)
   },
 
   /**
@@ -64,12 +65,12 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
-      content: z.string(),
+      content: z.string()
     }),
-    response: SchemaWithPB(MomentVaultCollectionsSchemas.Entry),
+    response: SchemaWithPB(MomentVaultCollectionsSchemas.Entry)
   },
 
   /**
@@ -78,15 +79,15 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type ITranscription = InferApiESchemaDynamic<typeof Transcription>;
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type ITranscription = InferApiESchemaDynamic<typeof Transcription>
+type IEntries = InferApiESchemaDynamic<typeof Entries>
 
-export type { ITranscription, IEntries };
+export type { ITranscription, IEntries }
 
-export { Transcription, Entries };
+export { Transcription, Entries }

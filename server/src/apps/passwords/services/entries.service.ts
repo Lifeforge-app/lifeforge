@@ -1,19 +1,19 @@
-import { decrypt, decrypt2, encrypt, encrypt2 } from "@functions/encryption";
-import PocketBase from "pocketbase";
-import { PasswordsCollectionsSchemas } from "shared/types/collections";
+import { decrypt, decrypt2, encrypt, encrypt2 } from '@functions/encryption'
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { PasswordsCollectionsSchemas } from 'shared/types/collections'
 
-import { getDecryptedMaster } from "./master.service";
+import { getDecryptedMaster } from './master.service'
 
 export const getAllEntries = async (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<WithPB<PasswordsCollectionsSchemas.IEntry>[]> =>
   await pb
-    .collection("passwords__entries")
+    .collection('passwords__entries')
     .getFullList<WithPB<PasswordsCollectionsSchemas.IEntry>>({
-      sort: "-pinned, name",
-    });
+      sort: '-pinned, name'
+    })
 
 export const createEntry = async (
   pb: PocketBase,
@@ -24,34 +24,34 @@ export const createEntry = async (
     website,
     username,
     password,
-    master,
-  }: Omit<PasswordsCollectionsSchemas.IEntry, "decrypted" | "pinned"> & {
-    master: string;
+    master
+  }: Omit<PasswordsCollectionsSchemas.IEntry, 'decrypted' | 'pinned'> & {
+    master: string
   },
-  challenge: string,
+  challenge: string
 ): Promise<WithPB<PasswordsCollectionsSchemas.IEntry>> => {
-  const decryptedMaster = await getDecryptedMaster(pb, master, challenge);
+  const decryptedMaster = await getDecryptedMaster(pb, master, challenge)
 
-  const decryptedPassword = decrypt2(password, challenge);
+  const decryptedPassword = decrypt2(password, challenge)
 
   const encryptedPassword = encrypt(
     Buffer.from(decryptedPassword),
-    decryptedMaster,
-  );
+    decryptedMaster
+  )
 
   const entry = await pb
-    .collection("passwords__entries")
+    .collection('passwords__entries')
     .create<WithPB<PasswordsCollectionsSchemas.IEntry>>({
       name,
       icon,
       color,
       website,
       username,
-      password: encryptedPassword.toString("base64"),
-    });
+      password: encryptedPassword.toString('base64')
+    })
 
-  return entry;
-};
+  return entry
+}
 
 export const updateEntry = async (
   pb: PocketBase,
@@ -63,70 +63,70 @@ export const updateEntry = async (
     website,
     username,
     password,
-    master,
-  }: Omit<PasswordsCollectionsSchemas.IEntry, "decrypted" | "pinned"> & {
-    master: string;
+    master
+  }: Omit<PasswordsCollectionsSchemas.IEntry, 'decrypted' | 'pinned'> & {
+    master: string
   },
-  challenge: string,
+  challenge: string
 ): Promise<WithPB<PasswordsCollectionsSchemas.IEntry>> => {
-  const decryptedMaster = await getDecryptedMaster(pb, master, challenge);
+  const decryptedMaster = await getDecryptedMaster(pb, master, challenge)
 
-  const decryptedPassword = decrypt2(password, challenge);
+  const decryptedPassword = decrypt2(password, challenge)
 
   const encryptedPassword = encrypt(
     Buffer.from(decryptedPassword),
-    decryptedMaster,
-  );
+    decryptedMaster
+  )
 
   const entry = await pb
-    .collection("passwords__entries")
+    .collection('passwords__entries')
     .update<WithPB<PasswordsCollectionsSchemas.IEntry>>(id, {
       name,
       icon,
       color,
       website,
       username,
-      password: encryptedPassword.toString("base64"),
-    });
+      password: encryptedPassword.toString('base64')
+    })
 
-  return entry;
-};
+  return entry
+}
 
 export const decryptEntry = async (
   pb: PocketBase,
   id: string,
   master: string,
-  challenge: string,
+  challenge: string
 ): Promise<string> => {
-  const decryptedMaster = await getDecryptedMaster(pb, master, challenge);
+  const decryptedMaster = await getDecryptedMaster(pb, master, challenge)
 
   const password: PasswordsCollectionsSchemas.IEntry = await pb
-    .collection("passwords__entries")
-    .getOne(id);
+    .collection('passwords__entries')
+    .getOne(id)
 
   const decryptedPassword = decrypt(
-    Buffer.from(password.password, "base64"),
-    decryptedMaster,
-  );
+    Buffer.from(password.password, 'base64'),
+    decryptedMaster
+  )
 
-  return encrypt2(decryptedPassword.toString(), challenge);
-};
+  return encrypt2(decryptedPassword.toString(), challenge)
+}
 
 export const deleteEntry = async (pb: PocketBase, id: string) => {
-  await pb.collection("passwords__entries").delete(id);
-};
+  await pb.collection('passwords__entries').delete(id)
+}
 
 export const togglePin = async (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<WithPB<PasswordsCollectionsSchemas.IEntry>> => {
   const entry = await pb
-    .collection("passwords__entries")
-    .getOne<WithPB<PasswordsCollectionsSchemas.IEntry>>(id);
+    .collection('passwords__entries')
+    .getOne<WithPB<PasswordsCollectionsSchemas.IEntry>>(id)
 
   return await pb
-    .collection("passwords__entries")
+    .collection('passwords__entries')
     .update<WithPB<PasswordsCollectionsSchemas.IEntry>>(id, {
-      pinned: !entry.pinned,
-    });
-};
+      pinned: !entry.pinned
+    })
+}

@@ -2,10 +2,9 @@ import type { Preview } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-import './index.css'
-
 import ModalManager from '../src/components/modals/core/ModalManager'
 import { LifeforgeUIProvider } from '../src/providers/LifeforgeUIProvider'
+import './index.css'
 
 const queryClient = new QueryClient()
 

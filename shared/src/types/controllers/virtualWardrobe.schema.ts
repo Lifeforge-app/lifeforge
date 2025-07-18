@@ -1,8 +1,9 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { VirtualWardrobeCollectionsSchemas } from "../collections";
-import { VirtualWardrobeSidebarDataSchema } from "../collections/virtualWardrobe.schema";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { VirtualWardrobeCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import { VirtualWardrobeSidebarDataSchema } from '../collections/virtualWardrobe.schema'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Entries = {
   /**
@@ -10,7 +11,7 @@ const Entries = {
    * @description Get sidebar data for virtual wardrobe
    */
   getSidebarData: {
-    response: VirtualWardrobeSidebarDataSchema,
+    response: VirtualWardrobeSidebarDataSchema
   },
 
   /**
@@ -27,10 +28,10 @@ const Entries = {
       favourite: z
         .string()
         .optional()
-        .transform((val) => val === "true"),
-      q: z.string().optional(),
+        .transform(val => val === 'true'),
+      q: z.string().optional()
     }),
-    response: z.array(SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry))
   },
 
   /**
@@ -45,10 +46,10 @@ const Entries = {
       brand: z.string(),
       size: z.string(),
       colors: z.array(z.string()),
-      price: z.string().transform((val) => parseFloat(val)),
-      notes: z.string(),
+      price: z.string().transform(val => parseFloat(val)),
+      notes: z.string()
     }),
-    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry),
+    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)
   },
 
   /**
@@ -57,7 +58,7 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
       name: z.string().optional(),
@@ -67,9 +68,9 @@ const Entries = {
       size: z.string().optional(),
       colors: z.array(z.string()).optional(),
       price: z.number().optional(),
-      notes: z.string().optional(),
+      notes: z.string().optional()
     }),
-    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry),
+    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)
   },
 
   /**
@@ -78,9 +79,9 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -89,9 +90,9 @@ const Entries = {
    */
   toggleFavourite: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry),
+    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)
   },
 
   /**
@@ -103,10 +104,10 @@ const Entries = {
       name: z.string(),
       category: z.string(),
       subcategory: z.string(),
-      colors: z.array(z.string()),
-    }),
-  },
-};
+      colors: z.array(z.string())
+    })
+  }
+}
 
 const Session = {
   /**
@@ -114,7 +115,7 @@ const Session = {
    * @description Get session cart items
    */
   getCart: {
-    response: z.array(SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry))
   },
 
   /**
@@ -123,9 +124,9 @@ const Session = {
    */
   addToCart: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -134,9 +135,9 @@ const Session = {
    */
   removeFromCart: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -145,9 +146,9 @@ const Session = {
    */
   checkout: {
     body: z.object({
-      notes: z.string(),
+      notes: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -155,13 +156,13 @@ const Session = {
    * @description Clear session cart
    */
   clearCart: {
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
-type ISession = InferApiESchemaDynamic<typeof Session>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>
+type ISession = InferApiESchemaDynamic<typeof Session>
 
-export type { IEntries, ISession };
+export type { IEntries, ISession }
 
-export { Entries, Session };
+export { Entries, Session }

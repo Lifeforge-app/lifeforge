@@ -1,5 +1,6 @@
-import { z } from "zod/v4";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Auth = {
   /**
@@ -9,9 +10,9 @@ const Auth = {
   validateOtp: {
     body: z.object({
       otp: z.string(),
-      otpId: z.string(),
+      otpId: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -19,7 +20,7 @@ const Auth = {
    * @description Generate OTP
    */
   generateOtp: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -29,19 +30,19 @@ const Auth = {
   login: {
     body: z.object({
       email: z.string(),
-      password: z.string(),
+      password: z.string()
     }),
     response: z.union([
       z.object({
-        state: z.literal("2fa_required"),
-        tid: z.string(),
+        state: z.literal('2fa_required'),
+        tid: z.string()
       }),
       z.object({
-        state: z.literal("success"),
+        state: z.literal('success'),
         session: z.string(),
-        userData: z.record(z.string(), z.any()),
-      }),
-    ]),
+        userData: z.record(z.string(), z.any())
+      })
+    ])
   },
 
   /**
@@ -51,10 +52,10 @@ const Auth = {
   verifySessionToken: {
     response: z.object({
       session: z.string(),
-      userData: z.record(z.string(), z.any()),
-    }),
-  },
-};
+      userData: z.record(z.string(), z.any())
+    })
+  }
+}
 
 const TwoFa = {
   /**
@@ -62,7 +63,7 @@ const TwoFa = {
    * @description Get 2FA challenge
    */
   getChallenge: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -71,9 +72,9 @@ const TwoFa = {
    */
   requestOtp: {
     query: z.object({
-      email: z.email(),
+      email: z.email()
     }),
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -83,9 +84,9 @@ const TwoFa = {
   validateOtp: {
     body: z.object({
       otp: z.string(),
-      otpId: z.string(),
+      otpId: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -93,7 +94,7 @@ const TwoFa = {
    * @description Generate authenticator link for 2FA
    */
   generateAuthtenticatorLink: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -102,9 +103,9 @@ const TwoFa = {
    */
   verifyAndEnable2Fa: {
     body: z.object({
-      otp: z.string(),
+      otp: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -112,7 +113,7 @@ const TwoFa = {
    * @description Disable 2FA
    */
   disable2Fa: {
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -123,14 +124,14 @@ const TwoFa = {
     body: z.object({
       otp: z.string(),
       tid: z.string(),
-      type: z.enum(["email", "app"]),
+      type: z.enum(['email', 'app'])
     }),
     response: z.object({
       session: z.string(),
-      userData: z.record(z.string(), z.any()),
-    }),
-  },
-};
+      userData: z.record(z.string(), z.any())
+    })
+  }
+}
 
 const Oauth = {
   /**
@@ -138,7 +139,7 @@ const Oauth = {
    * @description List available OAuth providers
    */
   listOAuthProviders: {
-    response: z.array(z.string()),
+    response: z.array(z.string())
   },
 
   /**
@@ -147,9 +148,9 @@ const Oauth = {
    */
   getOAuthEndpoint: {
     query: z.object({
-      provider: z.string(),
+      provider: z.string()
     }),
-    response: z.record(z.string(), z.any()),
+    response: z.record(z.string(), z.any())
   },
 
   /**
@@ -159,17 +160,17 @@ const Oauth = {
   oauthVerify: {
     body: z.object({
       provider: z.string(),
-      code: z.string(),
+      code: z.string()
     }),
     response: z.union([
       z.string(),
       z.object({
         state: z.string(),
-        tid: z.string(),
-      }),
-    ]),
-  },
-};
+        tid: z.string()
+      })
+    ])
+  }
+}
 
 const Personalization = {
   /**
@@ -179,8 +180,8 @@ const Personalization = {
   listGoogleFonts: {
     response: z.object({
       enabled: z.boolean(),
-      items: z.array(z.any()).optional(),
-    }),
+      items: z.array(z.any()).optional()
+    })
   },
 
   /**
@@ -189,12 +190,12 @@ const Personalization = {
    */
   getGoogleFont: {
     query: z.object({
-      family: z.string(),
+      family: z.string()
     }),
     response: z.object({
       enabled: z.boolean(),
-      items: z.array(z.any()).optional(),
-    }),
+      items: z.array(z.any()).optional()
+    })
   },
 
   /**
@@ -203,9 +204,9 @@ const Personalization = {
    */
   updateBgImage: {
     body: z.object({
-      url: z.string().optional(),
+      url: z.string().optional()
     }),
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -213,7 +214,7 @@ const Personalization = {
    * @description Delete background image
    */
   deleteBgImage: {
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -229,12 +230,12 @@ const Personalization = {
         bgTemp: z.string().optional(),
         language: z.string().optional(),
         dashboardLayout: z.record(z.string(), z.any()).optional(),
-        backdropFilters: z.record(z.string(), z.any()).optional(),
-      }),
+        backdropFilters: z.record(z.string(), z.any()).optional()
+      })
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Settings = {
   /**
@@ -242,7 +243,7 @@ const Settings = {
    * @description Update user avatar
    */
   updateAvatar: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -250,7 +251,7 @@ const Settings = {
    * @description Delete user avatar
    */
   deleteAvatar: {
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -266,10 +267,10 @@ const Settings = {
           .optional(),
         email: z.email().optional(),
         name: z.string().optional(),
-        dateOfBirth: z.string().optional(),
-      }),
+        dateOfBirth: z.string().optional()
+      })
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -277,16 +278,16 @@ const Settings = {
    * @description Request password reset
    */
   requestPasswordReset: {
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IAuth = InferApiESchemaDynamic<typeof Auth>;
-type ITwoFa = InferApiESchemaDynamic<typeof TwoFa>;
-type IOauth = InferApiESchemaDynamic<typeof Oauth>;
-type IPersonalization = InferApiESchemaDynamic<typeof Personalization>;
-type ISettings = InferApiESchemaDynamic<typeof Settings>;
+type IAuth = InferApiESchemaDynamic<typeof Auth>
+type ITwoFa = InferApiESchemaDynamic<typeof TwoFa>
+type IOauth = InferApiESchemaDynamic<typeof Oauth>
+type IPersonalization = InferApiESchemaDynamic<typeof Personalization>
+type ISettings = InferApiESchemaDynamic<typeof Settings>
 
-export type { IAuth, ITwoFa, IOauth, IPersonalization, ISettings };
+export type { IAuth, ITwoFa, IOauth, IPersonalization, ISettings }
 
-export { Auth, TwoFa, Oauth, Personalization, Settings };
+export { Auth, TwoFa, Oauth, Personalization, Settings }

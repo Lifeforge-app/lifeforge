@@ -1,10 +1,9 @@
+import { Button } from '@components/buttons'
 import { Select } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { range } from 'lodash'
 import React from 'react'
-
-import { Button } from '@components/buttons'
 
 function CalendarHeader({
   date,
@@ -43,7 +42,7 @@ function CalendarHeader({
   return (
     <div className="flex-between text-bg-800 dark:text-bg-100 px-4 py-2">
       <Button
-        className="p-2! dark:hover:bg-bg-700/30!"
+        className="dark:hover:bg-bg-700/30! p-2!"
         disabled={prevMonthButtonDisabled}
         icon="tabler:chevron-left"
         variant="plain"
@@ -63,7 +62,7 @@ function CalendarHeader({
             ))}
           </Select>
           <Icon
-            className="text-bg-500 size-4.5 absolute right-3 top-1/2 -translate-y-1/2"
+            className="text-bg-500 absolute top-1/2 right-3 size-4.5 -translate-y-1/2"
             icon="uil:angle-down"
           />
         </div>
@@ -82,13 +81,13 @@ function CalendarHeader({
             ))}
           </Select>
           <Icon
-            className="text-bg-500 size-4.5 absolute right-3 top-1/2 -translate-y-1/2"
+            className="text-bg-500 absolute top-1/2 right-3 size-4.5 -translate-y-1/2"
             icon="uil:angle-down"
           />
         </div>
       </div>
       <Button
-        className="p-2! dark:hover:bg-bg-700/30!"
+        className="dark:hover:bg-bg-700/30! p-2!"
         disabled={nextMonthButtonDisabled}
         icon="tabler:chevron-right"
         variant="plain"

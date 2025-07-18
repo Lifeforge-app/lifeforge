@@ -5,12 +5,10 @@
   "arrowParens": "avoid",
   "endOfLine": "auto",
   "plugins": [
-    "@trivago/prettier-plugin-sort-imports"
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
   ],
-  "importOrder": [
-    "^shared/(.*)$",
-    "^[./]"
-  ],
+  "importOrder": ["^shared/(.*)$", "@apps/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }

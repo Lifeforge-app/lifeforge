@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express'
 
-import guitarTabsEntriesRouter from "./controllers/entries.controller";
-import guitarTabsGuitarWorldRouter from "./controllers/guitarWorld.controller";
+import guitarTabsEntriesRouter from './controllers/entries.controller'
+import guitarTabsGuitarWorldRouter from './controllers/guitarWorld.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/entries", guitarTabsEntriesRouter);
-router.use("/guitar-world", guitarTabsGuitarWorldRouter);
+router.use('/entries', guitarTabsEntriesRouter)
+router.use('/guitar-world', guitarTabsGuitarWorldRouter)
 
-export default router;
+export default router

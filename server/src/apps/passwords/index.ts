@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express'
 
-import passwordsEntriesRouter from "./controllers/entries.controller";
-import passwordsMasterRouter from "./controllers/master.controller";
+import passwordsEntriesRouter from './controllers/entries.controller'
+import passwordsMasterRouter from './controllers/master.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/master", passwordsMasterRouter);
-router.use("/entries", passwordsEntriesRouter);
+router.use('/master', passwordsMasterRouter)
+router.use('/entries', passwordsEntriesRouter)
 
-export default router;
+export default router

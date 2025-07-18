@@ -1,9 +1,8 @@
+import OTPScreen from '@security/components/OTPScreen'
 import { ModalHeader } from 'lifeforge-ui'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import OTPScreen from '@security/components/OTPScreen'
 
 import { useAuth } from '../../../../providers/AuthProvider'
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'

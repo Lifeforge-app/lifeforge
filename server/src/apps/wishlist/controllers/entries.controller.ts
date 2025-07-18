@@ -1,151 +1,151 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import fs from "fs";
-import { WishlistControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
+import express from 'express'
+import fs from 'fs'
 
-import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
-import * as entriesService from "../services/entries.service";
+import * as entriesService from '../services/entries.service'
 
-const wishlistEntriesRouter = express.Router();
+const wishlistEntriesRouter = express.Router()
 
 const getCollectionId = forgeController
-  .route("GET /collection-id")
-  .description("Get wishlist entries collection ID")
+  .route('GET /collection-id')
+  .description('Get wishlist entries collection ID')
   .schema(WishlistControllersSchemas.Entries.getCollectionId)
-  .callback(async ({ pb }) => await entriesService.getCollectionId(pb));
+  .callback(async ({ pb }) => await entriesService.getCollectionId(pb))
 
 const getEntriesByListId = forgeController
-  .route("GET /:id")
-  .description("Get wishlist entries by list ID")
+  .route('GET /:id')
+  .description('Get wishlist entries by list ID')
   .schema(WishlistControllersSchemas.Entries.getEntriesByListId)
-  .existenceCheck("params", {
-    id: "wishlist__lists",
+  .existenceCheck('params', {
+    id: 'wishlist__lists'
   })
   .callback(
     async ({ pb, params: { id }, query: { bought } }) =>
-      await entriesService.getEntriesByListId(pb, id, bought),
-  );
+      await entriesService.getEntriesByListId(pb, id, bought)
+  )
 
 const scrapeExternal = forgeController
-  .route("POST /external")
-  .description("Scrape external website for wishlist entry data")
+  .route('POST /external')
+  .description('Scrape external website for wishlist entry data')
   .schema(WishlistControllersSchemas.Entries.scrapeExternal)
   .callback(
     async ({ pb, body: { url, provider } }) =>
-      await entriesService.scrapeExternal(pb, provider, url),
-  );
+      await entriesService.scrapeExternal(pb, provider, url)
+  )
 
 const createEntry = forgeController
-  .route("POST /")
-  .description("Create a new wishlist entry")
+  .route('POST /')
+  .description('Create a new wishlist entry')
   .schema(WishlistControllersSchemas.Entries.createEntry)
   .middlewares(singleUploadMiddleware)
-  .existenceCheck("body", {
-    list: "wishlist__lists",
+  .existenceCheck('body', {
+    list: 'wishlist__lists'
   })
   .statusCode(201)
   .callback(async ({ pb, body, req }) => {
-    const { file } = req;
+    const { file } = req
 
-    let imageFile: File | undefined;
+    let imageFile: File | undefined
     if (file) {
-      const fileBuffer = fs.readFileSync(file.path);
+      const fileBuffer = fs.readFileSync(file.path)
 
-      imageFile = new File([fileBuffer], file.originalname);
-      fs.unlinkSync(file.path);
-    } else if (typeof body.image === "string") {
-      const response = await fetch(body.image);
+      imageFile = new File([fileBuffer], file.originalname)
+      fs.unlinkSync(file.path)
+    } else if (typeof body.image === 'string') {
+      const response = await fetch(body.image)
 
-      const buffer = await response.arrayBuffer();
+      const buffer = await response.arrayBuffer()
 
-      imageFile = new File([buffer], "image.jpg");
+      imageFile = new File([buffer], 'image.jpg')
     }
 
     const data = {
       ...body,
       bought: false,
-      image: imageFile,
-    };
+      image: imageFile
+    }
 
-    return await entriesService.createEntry(pb, data);
-  });
+    return await entriesService.createEntry(pb, data)
+  })
 
 const updateEntry = forgeController
-  .route("PATCH /:id")
-  .description("Update an existing wishlist entry")
+  .route('PATCH /:id')
+  .description('Update an existing wishlist entry')
   .schema(WishlistControllersSchemas.Entries.updateEntry)
   .middlewares(singleUploadMiddleware)
-  .existenceCheck("params", {
-    id: "wishlist__entries",
+  .existenceCheck('params', {
+    id: 'wishlist__entries'
   })
-  .existenceCheck("body", {
-    list: "wishlist__lists",
+  .existenceCheck('body', {
+    list: 'wishlist__lists'
   })
   .callback(
     async ({
       pb,
       params: { id },
       body: { list, name, url, price, imageRemoved },
-      req,
+      req
     }) => {
-      const { file } = req;
+      const { file } = req
 
-      let finalFile: null | File = null;
-      if (imageRemoved === "true") {
-        finalFile = null;
+      let finalFile: null | File = null
+      if (imageRemoved === 'true') {
+        finalFile = null
       }
       if (file) {
-        const fileBuffer = fs.readFileSync(file.path);
+        const fileBuffer = fs.readFileSync(file.path)
 
-        finalFile = new File([fileBuffer], file.originalname);
-        fs.unlinkSync(file.path);
+        finalFile = new File([fileBuffer], file.originalname)
+        fs.unlinkSync(file.path)
       }
 
-      const oldEntry = await entriesService.getEntry(pb, id);
+      const oldEntry = await entriesService.getEntry(pb, id)
 
       const entry = await entriesService.updateEntry(pb, id, {
         list,
         name,
         url,
         price,
-        ...(imageRemoved === "true" || finalFile
+        ...(imageRemoved === 'true' || finalFile
           ? {
-              image: finalFile,
+              image: finalFile
             }
-          : {}),
-      });
+          : {})
+      })
 
-      return oldEntry.list === list ? entry : "removed";
-    },
-  );
+      return oldEntry.list === list ? entry : 'removed'
+    }
+  )
 
 const updateEntryBoughtStatus = forgeController
-  .route("PATCH /bought/:id")
-  .description("Update wishlist entry bought status")
+  .route('PATCH /bought/:id')
+  .description('Update wishlist entry bought status')
   .schema(WishlistControllersSchemas.Entries.updateEntryBoughtStatus)
-  .existenceCheck("params", {
-    id: "wishlist__entries",
+  .existenceCheck('params', {
+    id: 'wishlist__entries'
   })
   .callback(
     async ({ pb, params: { id } }) =>
-      await entriesService.updateEntryBoughtStatus(pb, id),
-  );
+      await entriesService.updateEntryBoughtStatus(pb, id)
+  )
 
 const deleteEntry = forgeController
-  .route("DELETE /:id")
-  .description("Delete a wishlist entry")
+  .route('DELETE /:id')
+  .description('Delete a wishlist entry')
   .schema(WishlistControllersSchemas.Entries.deleteEntry)
-  .existenceCheck("params", {
-    id: "wishlist__entries",
+  .existenceCheck('params', {
+    id: 'wishlist__entries'
   })
   .statusCode(204)
   .callback(
-    async ({ pb, params: { id } }) => await entriesService.deleteEntry(pb, id),
-  );
+    async ({ pb, params: { id } }) => await entriesService.deleteEntry(pb, id)
+  )
 
 bulkRegisterControllers(wishlistEntriesRouter, [
   getCollectionId,
@@ -154,7 +154,7 @@ bulkRegisterControllers(wishlistEntriesRouter, [
   createEntry,
   updateEntry,
   updateEntryBoughtStatus,
-  deleteEntry,
-]);
+  deleteEntry
+])
 
-export default wishlistEntriesRouter;
+export default wishlistEntriesRouter

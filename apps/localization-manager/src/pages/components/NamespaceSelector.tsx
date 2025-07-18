@@ -5,6 +5,7 @@ import {
 } from 'lifeforge-ui'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { useAPIQuery } from 'shared/lib'
 
 function NamespaceSelector({

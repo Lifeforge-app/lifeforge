@@ -1,8 +1,9 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { TodoListCollectionsSchemas } from "../collections";
-import { TodoListStatusCounterSchema } from "../collections/todoList.schema";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { TodoListCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import { TodoListStatusCounterSchema } from '../collections/todoList.schema'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Entries = {
   /**
@@ -10,7 +11,7 @@ const Entries = {
    * @description Get status counter for todo entries
    */
   getStatusCounter: {
-    response: TodoListStatusCounterSchema,
+    response: TodoListStatusCounterSchema
   },
 
   /**
@@ -19,9 +20,9 @@ const Entries = {
    */
   getEntryById: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry)
   },
 
   /**
@@ -31,12 +32,12 @@ const Entries = {
   getAllEntries: {
     query: z.object({
       list: z.string().optional(),
-      status: z.string().optional().default("all"),
+      status: z.string().optional().default('all'),
       priority: z.string().optional(),
       tag: z.string().optional(),
-      query: z.string().optional(),
+      query: z.string().optional()
     }),
-    response: z.array(SchemaWithPB(TodoListCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(TodoListCollectionsSchemas.Entry))
   },
 
   /**
@@ -46,9 +47,9 @@ const Entries = {
   createEntry: {
     body: TodoListCollectionsSchemas.Entry.omit({
       completed_at: true,
-      done: true,
+      done: true
     }),
-    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry)
   },
 
   /**
@@ -57,13 +58,13 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: TodoListCollectionsSchemas.Entry.omit({
       completed_at: true,
-      done: true,
+      done: true
     }),
-    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry)
   },
 
   /**
@@ -72,9 +73,9 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -83,11 +84,11 @@ const Entries = {
    */
   toggleEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
-  },
-};
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry)
+  }
+}
 
 const Tags = {
   /**
@@ -98,10 +99,10 @@ const Tags = {
     response: z.array(
       SchemaWithPB(
         TodoListCollectionsSchemas.Tag.extend({
-          amount: z.number(),
+          amount: z.number()
         })
       )
-    ),
+    )
   },
 
   /**
@@ -112,9 +113,9 @@ const Tags = {
     body: TodoListCollectionsSchemas.Tag,
     response: SchemaWithPB(
       TodoListCollectionsSchemas.Tag.extend({
-        amount: z.number(),
+        amount: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -123,14 +124,14 @@ const Tags = {
    */
   updateTag: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: TodoListCollectionsSchemas.Tag,
     response: SchemaWithPB(
       TodoListCollectionsSchemas.Tag.extend({
-        amount: z.number(),
+        amount: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -139,11 +140,11 @@ const Tags = {
    */
   deleteTag: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Lists = {
   /**
@@ -154,10 +155,10 @@ const Lists = {
     response: z.array(
       SchemaWithPB(
         TodoListCollectionsSchemas.List.extend({
-          amount: z.number(),
+          amount: z.number()
         })
       )
-    ),
+    )
   },
 
   /**
@@ -168,13 +169,13 @@ const Lists = {
     body: TodoListCollectionsSchemas.List.pick({
       name: true,
       icon: true,
-      color: true,
+      color: true
     }),
     response: SchemaWithPB(
       TodoListCollectionsSchemas.List.extend({
-        amount: z.number(),
+        amount: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -183,18 +184,18 @@ const Lists = {
    */
   updateList: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: TodoListCollectionsSchemas.List.pick({
       name: true,
       icon: true,
-      color: true,
+      color: true
     }),
     response: SchemaWithPB(
       TodoListCollectionsSchemas.List.extend({
-        amount: z.number(),
+        amount: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -203,11 +204,11 @@ const Lists = {
    */
   deleteList: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Priorities = {
   /**
@@ -218,10 +219,10 @@ const Priorities = {
     response: z.array(
       SchemaWithPB(
         TodoListCollectionsSchemas.Priority.extend({
-          amount: z.number(),
+          amount: z.number()
         })
       )
-    ),
+    )
   },
 
   /**
@@ -232,9 +233,9 @@ const Priorities = {
     body: TodoListCollectionsSchemas.Priority,
     response: SchemaWithPB(
       TodoListCollectionsSchemas.Priority.extend({
-        amount: z.number(),
+        amount: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -243,17 +244,17 @@ const Priorities = {
    */
   updatePriority: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: TodoListCollectionsSchemas.Priority.pick({
       name: true,
-      color: true,
+      color: true
     }),
     response: SchemaWithPB(
       TodoListCollectionsSchemas.Priority.extend({
-        amount: z.number(),
+        amount: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -262,17 +263,17 @@ const Priorities = {
    */
   deletePriority: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
-type ITags = InferApiESchemaDynamic<typeof Tags>;
-type ILists = InferApiESchemaDynamic<typeof Lists>;
-type IPriorities = InferApiESchemaDynamic<typeof Priorities>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>
+type ITags = InferApiESchemaDynamic<typeof Tags>
+type ILists = InferApiESchemaDynamic<typeof Lists>
+type IPriorities = InferApiESchemaDynamic<typeof Priorities>
 
-export type { IEntries, ITags, ILists, IPriorities };
+export type { IEntries, ITags, ILists, IPriorities }
 
-export { Entries, Tags, Lists, Priorities };
+export { Entries, Tags, Lists, Priorities }

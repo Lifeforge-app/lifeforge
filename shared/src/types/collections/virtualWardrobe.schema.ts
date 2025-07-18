@@ -6,8 +6,7 @@
  * Generated at: 2025-07-18T12:15:50.180Z
  * Contains: virtual_wardrobe__entries, virtual_wardrobe__histories
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
   name: z.string(),
@@ -23,26 +22,20 @@ const Entry = z.object({
   purchase_date: z.string(),
   price: z.number(),
   notes: z.string(),
-  is_favourite: z.boolean(),
-});
+  is_favourite: z.boolean()
+})
 
 const History = z.object({
   entries: z.array(z.string()),
-  notes: z.string(),
-});
+  notes: z.string()
+})
 
-type IEntry = z.infer<typeof Entry>;
-type IHistory = z.infer<typeof History>;
+type IEntry = z.infer<typeof Entry>
+type IHistory = z.infer<typeof History>
 
-export {
-  Entry,
-  History,
-};
+export { Entry, History }
 
-export type {
-  IEntry,
-  IHistory,
-};
+export type { IEntry, IHistory }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
@@ -53,13 +46,13 @@ const VirtualWardrobeSidebarDataSchema = z.object({
   subcategories: z.record(z.string(), z.number()),
   brands: z.record(z.string(), z.number()),
   sizes: z.record(z.string(), z.number()),
-  colors: z.record(z.string(), z.number()),
-});
+  colors: z.record(z.string(), z.number())
+})
 
 type IVirtualWardrobeSidebarData = z.infer<
   typeof VirtualWardrobeSidebarDataSchema
->;
+>
 
-export { VirtualWardrobeSidebarDataSchema };
+export { VirtualWardrobeSidebarDataSchema }
 
-export type { IVirtualWardrobeSidebarData };
+export type { IVirtualWardrobeSidebarData }

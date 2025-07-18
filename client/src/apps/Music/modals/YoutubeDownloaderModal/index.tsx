@@ -1,4 +1,3 @@
- 
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'

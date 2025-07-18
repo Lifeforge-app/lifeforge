@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express'
 
-import virtualWardrobeEntriesRouter from "./controllers/entries.controller";
-import virtualWardrobeSessionRouter from "./controllers/session.controller";
+import virtualWardrobeEntriesRouter from './controllers/entries.controller'
+import virtualWardrobeSessionRouter from './controllers/session.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/entries", virtualWardrobeEntriesRouter);
-router.use("/session", virtualWardrobeSessionRouter);
+router.use('/entries', virtualWardrobeEntriesRouter)
+router.use('/session', virtualWardrobeSessionRouter)
 
-export default router;
+export default router

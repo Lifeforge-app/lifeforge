@@ -1,14 +1,13 @@
+import { Button } from '@components/buttons'
 import dayjs from 'dayjs'
 import _ from 'lodash'
 import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared/lib'
 import tinycolor from 'tinycolor2'
 
-import 'react-datepicker/dist/react-datepicker.css'
-
-import { Button } from '@components/buttons'
+import { usePersonalization } from 'shared/lib'
 
 import InputIcon from '../shared/InputIcon'
 import InputLabel from '../shared/InputLabel'
@@ -75,7 +74,7 @@ function DateInput({
               ? 'theme-light'
               : 'theme-dark'
           }
-          className="h-13 outline-hidden focus:outline-hidden focus:placeholder:text-bg-500 mt-6 w-full rounded-lg border-none bg-transparent px-4 tracking-wider placeholder:text-transparent"
+          className="focus:placeholder:text-bg-500 mt-6 h-13 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-hidden placeholder:text-transparent focus:outline-hidden"
           dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}
           formatWeekDay={(date: string) => {
             return date.slice(0, 3)
@@ -104,7 +103,7 @@ function DateInput({
         />
         {!!date && (
           <Button
-            className="p-2! hover:bg-bg-300 dark:hover:bg-bg-700/30! mr-4"
+            className="hover:bg-bg-300 dark:hover:bg-bg-700/30! mr-4 p-2!"
             icon="tabler:x"
             variant="plain"
             onClick={() => {

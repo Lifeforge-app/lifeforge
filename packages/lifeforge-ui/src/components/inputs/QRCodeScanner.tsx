@@ -1,6 +1,5 @@
-import { Scanner } from '@yudiel/react-qr-scanner'
-
 import { ModalHeader, ModalWrapper } from '@components/modals'
+import { Scanner } from '@yudiel/react-qr-scanner'
 
 function QRCodeScanner({
   isOpen,

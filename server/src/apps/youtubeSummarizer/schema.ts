@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const YoutubeInfoSchema = z.object({
   title: z.string(),
@@ -10,11 +10,11 @@ const YoutubeInfoSchema = z.object({
   likeCount: z.number(),
   thumbnail: z.string(),
   captions: z.record(z.string(), z.any()).optional(),
-  auto_captions: z.record(z.string(), z.any()).optional(),
-});
+  auto_captions: z.record(z.string(), z.any()).optional()
+})
 
-type IYoutubeInfo = z.infer<typeof YoutubeInfoSchema>;
+type IYoutubeInfo = z.infer<typeof YoutubeInfoSchema>
 
-export { YoutubeInfoSchema };
+export { YoutubeInfoSchema }
 
-export type { IYoutubeInfo };
+export type { IYoutubeInfo }

@@ -1,7 +1,6 @@
+import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-
-import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 
 import Index from './index'
 import FormModal from './index'
