@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { MoviesCollectionsCollectionsSchemas } from "../collections";
+import { MoviesCollectionsSchemas } from "../collections";
 
 const Tmdb = {
   /**

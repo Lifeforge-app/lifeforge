@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { TodoListCollectionsCollectionsSchemas } from "../collections";
+import { TodoListCollectionsSchemas } from "../collections";
 import { TodoListStatusCounterSchema } from "../collections/todoList.schema";
 
 const Entries = {

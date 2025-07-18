@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { MomentVaultCollectionsCollectionsSchemas } from "../collections";
+import { MomentVaultCollectionsSchemas } from "../collections";
 
 const Transcription = {
   /**

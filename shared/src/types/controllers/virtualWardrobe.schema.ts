@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { VirtualWardrobeCollectionsCollectionsSchemas } from "../collections";
+import { VirtualWardrobeCollectionsSchemas } from "../collections";
 import { VirtualWardrobeSidebarDataSchema } from "../collections/virtualWardrobe.schema";
 
 const Entries = {
