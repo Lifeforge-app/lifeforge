@@ -6,7 +6,6 @@
  * Contains schemas for all modules.
  */
 
-export * as SchemaWithPbTsCollectionsSchemas from "./schemaWithPB";
 export * as VirtualWardrobeCollectionsSchemas from "./virtualWardrobe.schema";
 export * as MusicCollectionsSchemas from "./music.schema";
 export * as CalendarCollectionsSchemas from "./calendar.schema";

@@ -2,6 +2,7 @@ import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { TodoListCollectionsSchemas } from "../collections";
 import { TodoListStatusCounterSchema } from "../collections/todoList.schema";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Entries = {
   /**
@@ -267,10 +268,10 @@ const Priorities = {
   },
 };
 
-type IEntries = z.infer<typeof Entries>;
-type ITags = z.infer<typeof Tags>;
-type ILists = z.infer<typeof Lists>;
-type IPriorities = z.infer<typeof Priorities>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type ITags = InferApiESchemaDynamic<typeof Tags>;
+type ILists = InferApiESchemaDynamic<typeof Lists>;
+type IPriorities = InferApiESchemaDynamic<typeof Priorities>;
 
 export type { IEntries, ITags, ILists, IPriorities };
 export { Entries, Tags, Lists, Priorities };

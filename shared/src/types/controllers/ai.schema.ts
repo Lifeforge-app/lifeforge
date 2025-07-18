@@ -1,4 +1,5 @@
 import { z } from "zod/v4";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const ImageGeneration = {
   /**
@@ -21,7 +22,7 @@ const ImageGeneration = {
   },
 };
 
-type IImageGeneration = z.infer<typeof ImageGeneration>;
+type IImageGeneration = InferApiESchemaDynamic<typeof ImageGeneration>;
 
 export type { IImageGeneration };
 export { ImageGeneration };

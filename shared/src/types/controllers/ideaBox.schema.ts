@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { IdeaBoxCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Ideas = {
   /**
@@ -354,11 +355,11 @@ const Tags = {
   },
 };
 
-type IIdeas = z.infer<typeof Ideas>;
-type IMisc = z.infer<typeof Misc>;
-type IContainers = z.infer<typeof Containers>;
-type IFolders = z.infer<typeof Folders>;
-type ITags = z.infer<typeof Tags>;
+type IIdeas = InferApiESchemaDynamic<typeof Ideas>;
+type IMisc = InferApiESchemaDynamic<typeof Misc>;
+type IContainers = InferApiESchemaDynamic<typeof Containers>;
+type IFolders = InferApiESchemaDynamic<typeof Folders>;
+type ITags = InferApiESchemaDynamic<typeof Tags>;
 
 export type { IIdeas, IMisc, IContainers, IFolders, ITags };
 export { Ideas, Misc, Containers, Folders, Tags };

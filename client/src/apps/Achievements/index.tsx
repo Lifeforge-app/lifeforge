@@ -11,7 +11,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
-import { AchievementsCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import { AchievementsCollectionsSchemas } from 'shared/types/collections'
+import { AchievementsControllersSchemas } from 'shared/types/controllers'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
@@ -23,7 +24,7 @@ function Achievements() {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<AchievementsCollectionsSchemas.IEntry['difficulty']>('impossible')
   const entriesQuery = useAPIQuery<
-    ISchemaWithPB<AchievementsCollectionsSchemas.IEntry>[]
+    AchievementsControllersSchemas.IEntries['getAllEntriesByDifficulty']['response']
   >(`achievements/entries/${selectedDifficulty}`, [
     'achievements/entries',
     selectedDifficulty

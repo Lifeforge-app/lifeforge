@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { MoviesCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Tmdb = {
   /**
@@ -140,9 +141,9 @@ const Entries = {
   },
 };
 
-type ITmdb = z.infer<typeof Tmdb>;
-type ITicket = z.infer<typeof Ticket>;
-type IEntries = z.infer<typeof Entries>;
+type ITmdb = InferApiESchemaDynamic<typeof Tmdb>;
+type ITicket = InferApiESchemaDynamic<typeof Ticket>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { ITmdb, ITicket, IEntries };
 export { Tmdb, Ticket, Entries };
