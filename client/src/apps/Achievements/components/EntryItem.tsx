@@ -4,14 +4,14 @@ import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import { AchievementsSchemas, ISchemaWithPB } from 'shared/types'
+import { AchievementsCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 
 function EntryItem({
   entry
 }: {
-  entry: ISchemaWithPB<AchievementsSchemas.IEntry>
+  entry: ISchemaWithPB<AchievementsCollectionsSchemas.IEntry>
 }) {
   const open = useModalStore(state => state.open)
 

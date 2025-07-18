@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
 
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 
@@ -10,7 +10,9 @@ function BookMeta({
   item,
   isGridView = false
 }: {
-  item: ISchemaWithPB<BooksLibrarySchemas.IEntry> | Record<string, any>
+  item:
+    | ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
+    | Record<string, any>
   isGridView?: boolean
 }) {
   const { languagesQuery } = useBooksLibraryContext()

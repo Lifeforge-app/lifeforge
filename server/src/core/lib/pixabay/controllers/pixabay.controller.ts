@@ -5,82 +5,20 @@ import {
 } from "@functions/forgeController";
 import { getAPIKey } from "@functions/getAPIKey";
 import express from "express";
-import { z } from "zod/v4";
-
-import { PixabaySearchResultSchema } from "../schema";
+import { PixabayControllersSchemas } from "shared/types/controllers";
 
 const pixabayRouter = express.Router();
 
 const checkKeyExists = forgeController
   .route("GET /key-exists")
   .description("Check if Pixabay API key exists")
-  .schema({
-    response: z.boolean(),
-  })
+  .schema(PixabayControllersSchemas.Pixabay.checkKeyExists)
   .callback(async ({ pb }) => !!(await getAPIKey("pixabay", pb)));
 
 const searchImages = forgeController
   .route("GET /search")
   .description("Search images on Pixabay")
-  .schema({
-    query: z.object({
-      q: z.string().min(1),
-      page: z
-        .string()
-        .optional()
-        .default("1")
-        .transform((val) => parseInt(val, 10) || 1),
-      type: z.enum(["all", "photo", "illustration", "vector"]).default("all"),
-      category: z
-        .enum([
-          "backgrounds",
-          "fashion",
-          "nature",
-          "science",
-          "education",
-          "feelings",
-          "health",
-          "people",
-          "religion",
-          "places",
-          "animals",
-          "industry",
-          "computer",
-          "food",
-          "sports",
-          "transportation",
-          "travel",
-          "buildings",
-          "business",
-          "music",
-        ])
-        .optional(),
-      colors: z
-        .enum([
-          "grayscale",
-          "transparent",
-          "red",
-          "orange",
-          "yellow",
-          "green",
-          "turquoise",
-          "blue",
-          "lilac",
-          "pink",
-          "white",
-          "gray",
-          "black",
-          "brown",
-        ])
-        .optional()
-        .nullable(),
-      editors_choice: z
-        .enum(["true", "false"])
-        .default("false")
-        .transform((val) => val === "true"),
-    }),
-    response: PixabaySearchResultSchema,
-  })
+  .schema(PixabayControllersSchemas.Pixabay.searchImages)
   .callback(
     async ({
       query: { q, page, type, category, colors, editors_choice },

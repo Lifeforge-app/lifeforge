@@ -8,18 +8,20 @@ import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 interface IBooksLibraryData {
-  entriesQuery: UseQueryResult<ISchemaWithPB<BooksLibrarySchemas.IEntry>[]>
+  entriesQuery: UseQueryResult<
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
+  >
   collectionsQuery: UseQueryResult<
-    ISchemaWithPB<BooksLibrarySchemas.ICollectionAggregated>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>[]
   >
   languagesQuery: UseQueryResult<
-    ISchemaWithPB<BooksLibrarySchemas.ILanguageAggregated>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>[]
   >
   fileTypesQuery: UseQueryResult<
-    ISchemaWithPB<BooksLibrarySchemas.IFileTypeAggregated>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.IFileTypeAggregated>[]
   >
   miscellaneous: {
     processes: Record<
@@ -54,18 +56,17 @@ export default function BooksLibraryProvider() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const entriesQuery = useAPIQuery<ISchemaWithPB<BooksLibrarySchemas.IEntry>[]>(
-    'books-library/entries',
-    ['books-library', 'entries']
-  )
+  const entriesQuery = useAPIQuery<
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
+  >('books-library/entries', ['books-library', 'entries'])
   const collectionsQuery = useAPIQuery<
-    ISchemaWithPB<BooksLibrarySchemas.ICollectionAggregated>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>[]
   >('books-library/collections', ['books-library', 'collections'])
   const languagesQuery = useAPIQuery<
-    ISchemaWithPB<BooksLibrarySchemas.ILanguageAggregated>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>[]
   >('books-library/languages', ['books-library', 'languages'])
   const fileTypesQuery = useAPIQuery<
-    ISchemaWithPB<BooksLibrarySchemas.IFileTypeAggregated>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.IFileTypeAggregated>[]
   >('books-library/file-types', ['books-library', 'fileTypes'])
 
   const [processes, setProcesses] = useState<

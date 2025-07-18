@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { IdeaBoxSchemas } from "shared/types";
+import { IdeaBoxCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
@@ -7,10 +7,10 @@ export const getFolders = (
   pb: PocketBase,
   container: string,
   lastFolder: string,
-): Promise<WithPB<IdeaBoxSchemas.IFolder>[]> =>
+): Promise<WithPB<IdeaBoxCollectionsSchemas.IFolder>[]> =>
   pb
     .collection("idea_box__folders")
-    .getFullList<WithPB<IdeaBoxSchemas.IFolder>>({
+    .getFullList<WithPB<IdeaBoxCollectionsSchemas.IFolder>>({
       filter: `container = "${container}" && parent = "${lastFolder}"`,
       sort: "name",
     });
@@ -30,23 +30,25 @@ export const createFolder = async (
     icon: string;
     color: string;
   },
-): Promise<WithPB<IdeaBoxSchemas.IFolder>> =>
-  pb.collection("idea_box__folders").create<WithPB<IdeaBoxSchemas.IFolder>>({
-    name,
-    container,
-    parent,
-    icon,
-    color,
-  });
+): Promise<WithPB<IdeaBoxCollectionsSchemas.IFolder>> =>
+  pb
+    .collection("idea_box__folders")
+    .create<WithPB<IdeaBoxCollectionsSchemas.IFolder>>({
+      name,
+      container,
+      parent,
+      icon,
+      color,
+    });
 
 export const updateFolder = (
   pb: PocketBase,
   id: string,
   { name, icon, color }: { name: string; icon: string; color: string },
-): Promise<WithPB<IdeaBoxSchemas.IFolder>> =>
+): Promise<WithPB<IdeaBoxCollectionsSchemas.IFolder>> =>
   pb
     .collection("idea_box__folders")
-    .update<WithPB<IdeaBoxSchemas.IFolder>>(id, {
+    .update<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(id, {
       name,
       icon,
       color,
@@ -56,20 +58,20 @@ export const moveFolder = (
   pb: PocketBase,
   id: string,
   target: string,
-): Promise<WithPB<IdeaBoxSchemas.IFolder>> =>
+): Promise<WithPB<IdeaBoxCollectionsSchemas.IFolder>> =>
   pb
     .collection("idea_box__folders")
-    .update<WithPB<IdeaBoxSchemas.IFolder>>(id, {
+    .update<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(id, {
       parent: target,
     });
 
 export const removeFromFolder = (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<IdeaBoxSchemas.IFolder>> =>
+): Promise<WithPB<IdeaBoxCollectionsSchemas.IFolder>> =>
   pb
     .collection("idea_box__folders")
-    .update<WithPB<IdeaBoxSchemas.IFolder>>(id, {
+    .update<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(id, {
       parent: "",
     });
 
@@ -91,7 +93,7 @@ export const validateFolderPath = async (
     try {
       const folderEntry = await pb
         .collection("idea_box__folders")
-        .getOne<WithPB<IdeaBoxSchemas.IFolder>>(folder);
+        .getOne<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(folder);
 
       if (
         folderEntry.parent !== lastFolder ||

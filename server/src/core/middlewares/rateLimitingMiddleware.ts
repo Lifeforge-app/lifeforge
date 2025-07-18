@@ -28,6 +28,7 @@ export default rateLimit({
     }
 
     const bearerToken = req.headers.authorization?.split(" ")[1];
+
     const pb = new Pocketbase(process.env.PB_HOST);
 
     if (!bearerToken) {

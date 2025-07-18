@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { Scrollbar } from 'lifeforge-ui'
 
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import BookMeta from '../components/BookMeta'
@@ -10,7 +10,7 @@ import EntryItem from './components/EntryItem'
 function ListView({
   books
 }: {
-  books: ISchemaWithPB<BooksLibrarySchemas.IEntry>[]
+  books: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
 }) {
   const {
     miscellaneous: { processes },

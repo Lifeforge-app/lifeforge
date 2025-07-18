@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { BooksLibraryCollectionsCollectionsSchemas } from "../collections";
 
 const Languages = {
   /**
@@ -7,7 +8,7 @@ const Languages = {
    * @description Get all languages for the books library
    */
   getAllLanguages: {
-    response: z.array(BooksLibrarySchemas.LanguageSchema),
+    response: z.array(BooksLibraryCollectionsSchemas.Language),
   },
 
   /**
@@ -15,8 +16,8 @@ const Languages = {
    * @description Create a new language for the books library
    */
   createLanguage: {
-    body: BooksLibrarySchemas.LanguageSchema,
-    response: SchemaWithPB(BooksLibrarySchemas.LanguageSchema),
+    body: BooksLibraryCollectionsSchemas.Language,
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Language),
   },
 
   /**
@@ -27,8 +28,8 @@ const Languages = {
     params: z.object({
       id: z.string(),
     }),
-    body: BooksLibrarySchemas.LanguageSchema,
-    response: SchemaWithPB(BooksLibrarySchemas.LanguageSchema),
+    body: BooksLibraryCollectionsSchemas.Language,
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Language),
   },
 
   /**
@@ -49,7 +50,7 @@ const FileTypes = {
    * @description Get all file types for the books library
    */
   getAllFileTypes: {
-    response: z.array(SchemaWithPB(BooksLibrarySchemas.FileTypeSchema)),
+    response: z.array(SchemaWithPB(BooksLibraryCollectionsSchemas.FileType)),
   },
 };
 
@@ -60,7 +61,7 @@ const Collection = {
    */
   getAllCollections: {
     response: z.array(
-      SchemaWithPB(BooksLibrarySchemas.CollectionAggregatedSchema),
+      SchemaWithPB(BooksLibraryCollectionsSchemas.CollectionAggregated)
     ),
   },
 
@@ -69,8 +70,8 @@ const Collection = {
    * @description Create a new collection for the books library
    */
   createCollection: {
-    body: BooksLibrarySchemas.CollectionSchema,
-    response: SchemaWithPB(BooksLibrarySchemas.CollectionSchema),
+    body: BooksLibraryCollectionsSchemas.Collection,
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Collection),
   },
 
   /**
@@ -81,8 +82,8 @@ const Collection = {
     params: z.object({
       id: z.string(),
     }),
-    body: BooksLibrarySchemas.CollectionSchema,
-    response: SchemaWithPB(BooksLibrarySchemas.CollectionAggregatedSchema),
+    body: BooksLibraryCollectionsSchemas.Collection,
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.CollectionAggregated),
   },
 
   /**
@@ -103,7 +104,7 @@ const Entries = {
    * @description Get all entries in the books library
    */
   getAllEntries: {
-    response: z.array(SchemaWithPB(BooksLibrarySchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(BooksLibraryCollectionsSchemas.Entry)),
   },
 
   /**
@@ -114,7 +115,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    body: BooksLibrarySchemas.EntrySchema.pick({
+    body: BooksLibraryCollectionsSchemas.Entry.pick({
       title: true,
       authors: true,
       collection: true,
@@ -129,7 +130,7 @@ const Entries = {
         return isNaN(year) ? 0 : year;
       }),
     }),
-    response: SchemaWithPB(BooksLibrarySchemas.EntrySchema),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry),
   },
 
   /**
@@ -140,7 +141,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(BooksLibrarySchemas.EntrySchema),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry),
   },
 
   /**
@@ -151,7 +152,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(BooksLibrarySchemas.EntrySchema),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry),
   },
 
   /**
@@ -199,7 +200,8 @@ const Libgen = {
       req: z.string(),
       page: z.string(),
     }),
-    response: BooksLibrarySchemas.BooksLibraryLibgenSearchResultSchema,
+    response:
+      BooksLibraryCollectionsSchemas.BooksLibraryLibgenSearchResultSchema,
   },
 
   /**
@@ -222,7 +224,7 @@ const Libgen = {
       provider: z.string(),
       md5: z.string(),
     }),
-    response: BooksLibrarySchemas.EntrySchema.omit({
+    response: BooksLibraryCollectionsSchemas.Entry.omit({
       collection: true,
       file: true,
       is_favourite: true,

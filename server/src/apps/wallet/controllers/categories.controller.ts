@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { WalletSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { WalletControllersSchemas } from "shared/types/controllers";
 
 import * as CategoriesService from "../services/categories.service";
 
@@ -15,18 +12,13 @@ const walletCategoriesRouter = express.Router();
 const getAllCategories = forgeController
   .route("GET /")
   .description("Get all wallet categories")
-  .schema({
-    response: z.array(WithPBSchema(WalletSchemas.CategoryAggregatedSchema)),
-  })
+  .schema(WalletControllersSchemas.Categories.getAllCategories)
   .callback(async ({ pb }) => await CategoriesService.getAllCategories(pb));
 
 const createCategory = forgeController
   .route("POST /")
   .description("Create a new wallet category")
-  .schema({
-    body: WalletSchemas.CategorySchema,
-    response: WithPBSchema(WalletSchemas.CategorySchema),
-  })
+  .schema(WalletControllersSchemas.Categories.createCategory)
   .statusCode(201)
   .callback(
     async ({ pb, body }) => await CategoriesService.createCategory(pb, body),
@@ -35,13 +27,7 @@ const createCategory = forgeController
 const updateCategory = forgeController
   .route("PATCH /:id")
   .description("Update an existing wallet category")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: WalletSchemas.CategorySchema,
-    response: WithPBSchema(WalletSchemas.CategorySchema),
-  })
+  .schema(WalletControllersSchemas.Categories.updateCategory)
   .existenceCheck("params", {
     id: "wallet__categories",
   })
@@ -53,12 +39,7 @@ const updateCategory = forgeController
 const deleteCategory = forgeController
   .route("DELETE /:id")
   .description("Delete a wallet category")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(WalletControllersSchemas.Categories.deleteCategory)
   .existenceCheck("params", {
     id: "wallet__categories",
   })

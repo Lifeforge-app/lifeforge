@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { WishlistSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { WishlistControllersSchemas } from "shared/types/controllers";
 
 import * as listsService from "../services/lists.service";
 
@@ -15,12 +12,7 @@ const wishlistListsRouter = express.Router();
 const getList = forgeController
   .route("GET /:id")
   .description("Get wishlist by ID")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(WishlistSchemas.ListAggregatedSchema),
-  })
+  .schema(WishlistControllersSchemas.Lists.getList)
   .existenceCheck("params", {
     id: "wishlist__lists",
   })
@@ -31,12 +23,7 @@ const getList = forgeController
 const checkListExists = forgeController
   .route("GET /valid/:id")
   .description("Check if wishlist exists")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.boolean(),
-  })
+  .schema(WishlistControllersSchemas.Lists.checkListExists)
   .callback(
     async ({ pb, params: { id } }) =>
       await listsService.checkListExists(pb, id),
@@ -45,31 +32,20 @@ const checkListExists = forgeController
 const getAllLists = forgeController
   .route("GET /")
   .description("Get all wishlists with statistics")
-  .schema({
-    response: z.array(WithPBSchema(WishlistSchemas.ListAggregatedSchema)),
-  })
+  .schema(WishlistControllersSchemas.Lists.getAllLists)
   .callback(async ({ pb }) => await listsService.getAllLists(pb));
 
 const createList = forgeController
   .route("POST /")
   .description("Create a new wishlist")
-  .schema({
-    body: WishlistSchemas.ListSchema,
-    response: WithPBSchema(WishlistSchemas.ListSchema),
-  })
+  .schema(WishlistControllersSchemas.Lists.createList)
   .statusCode(201)
   .callback(async ({ pb, body }) => await listsService.createList(pb, body));
 
 const updateList = forgeController
   .route("PATCH /:id")
   .description("Update an existing wishlist")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: WishlistSchemas.ListSchema,
-    response: WithPBSchema(WishlistSchemas.ListSchema),
-  })
+  .schema(WishlistControllersSchemas.Lists.updateList)
   .existenceCheck("params", {
     id: "wishlist__lists",
   })
@@ -81,12 +57,7 @@ const updateList = forgeController
 const deleteList = forgeController
   .route("DELETE /:id")
   .description("Delete a wishlist")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(WishlistControllersSchemas.Lists.deleteList)
   .existenceCheck("params", {
     id: "wishlist__lists",
   })

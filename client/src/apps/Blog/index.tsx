@@ -9,14 +9,14 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { useAPIQuery } from 'shared/lib'
-import { BlogSchemas } from 'shared/types'
+import { BlogCollectionsSchemas } from 'shared/types'
 
 function Blog() {
   const { t } = useTranslation('apps.blog')
-  const entriesQuery = useAPIQuery<BlogSchemas.IEntry[]>('blog/entries', [
-    'blog',
-    'entries'
-  ])
+  const entriesQuery = useAPIQuery<BlogCollectionsSchemas.IEntry[]>(
+    'blog/entries',
+    ['blog', 'entries']
+  )
 
   return (
     <ModuleWrapper>

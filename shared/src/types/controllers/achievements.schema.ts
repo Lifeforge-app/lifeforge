@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { AchievementsCollectionsCollectionsSchemas } from "../collections";
 
 const Entries = {
   /**
@@ -7,10 +8,10 @@ const Entries = {
    * @description Get all achievements entries by difficulty
    */
   getAllEntriesByDifficulty: {
-    params: AchievementsSchemas.EntrySchema.pick({
+    params: AchievementsCollectionsSchemas.Entry.pick({
       difficulty: true,
     }),
-    response: z.array(SchemaWithPB(AchievementsSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(AchievementsCollectionsSchemas.Entry)),
   },
 
   /**
@@ -18,8 +19,8 @@ const Entries = {
    * @description Create a new achievements entry
    */
   createEntry: {
-    body: AchievementsSchemas.EntrySchema,
-    response: SchemaWithPB(AchievementsSchemas.EntrySchema),
+    body: AchievementsCollectionsSchemas.Entry,
+    response: SchemaWithPB(AchievementsCollectionsSchemas.Entry),
   },
 
   /**
@@ -30,8 +31,8 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    body: AchievementsSchemas.EntrySchema,
-    response: SchemaWithPB(AchievementsSchemas.EntrySchema),
+    body: AchievementsCollectionsSchemas.Entry,
+    response: SchemaWithPB(AchievementsCollectionsSchemas.Entry),
   },
 
   /**

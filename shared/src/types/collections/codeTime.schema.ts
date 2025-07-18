@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: codeTime
- * Generated at: 2025-07-18T10:36:14.106Z
+ * Generated at: 2025-07-18T12:15:50.186Z
  * Contains: code_time__projects, code_time__languages, code_time__daily_entries
  */
 
 import { z } from "zod/v4";
+
 const Project = z.object({
   name: z.string(),
   duration: z.number(),
@@ -47,4 +48,28 @@ export type {
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-// Add your custom schemas here. They will not be overwritten by this script.
+const CodeTimeActivitiesSchema = z.object({
+  data: z.array(
+    z.object({
+      date: z.string(),
+      count: z.number(),
+      level: z.number(),
+    })
+  ),
+  firstYear: z.number(),
+});
+
+const CodeTimeStatisticsSchema = z.object({
+  "Most time spent": z.number(),
+  "Total time spent": z.number(),
+  "Average time spent": z.number(),
+  "Longest streak": z.number(),
+  "Current streak": z.number(),
+});
+
+type ICodeTimeActivities = z.infer<typeof CodeTimeActivitiesSchema>;
+type ICodeTimeStatistics = z.infer<typeof CodeTimeStatisticsSchema>;
+
+export { CodeTimeActivitiesSchema, CodeTimeStatisticsSchema };
+
+export type { ICodeTimeActivities, ICodeTimeStatistics };

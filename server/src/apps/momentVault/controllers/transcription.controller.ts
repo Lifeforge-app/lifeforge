@@ -4,7 +4,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import z from "zod/v4";
+import { MomentVaultControllersSchemas } from "shared/types/controllers";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
@@ -16,12 +16,7 @@ const momentVaultTranscriptionRouter = express.Router();
 const transcribeExisted = forgeController
   .route("POST /:id")
   .description("Transcribe an existing audio entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.string(),
-  })
+  .schema(MomentVaultControllersSchemas.Transcription.transcribeExisted)
   .existenceCheck("params", {
     id: "moment_vault__entries",
   })
@@ -33,20 +28,17 @@ const transcribeExisted = forgeController
 const transcribeNew = forgeController
   .route("POST /")
   .description("Transcribe a new audio file")
-  .schema({
-    response: z.string(),
-  })
+  .schema(MomentVaultControllersSchemas.Transcription.transcribeNew)
   .middlewares(singleUploadMiddleware)
   .callback(async ({ pb, req }) => {
     const { file } = req;
+
     if (!file) {
       throw new ClientError("No file uploaded");
     }
-
     if (file.mimetype !== "audio/mp3") {
       file.path = await convertToMp3(file.path);
     }
-
     return await TranscriptionService.transcribeNew(pb, file.path);
   });
 

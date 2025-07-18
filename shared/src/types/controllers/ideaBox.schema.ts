@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { IdeaBoxCollectionsCollectionsSchemas } from "../collections";
 
 const Ideas = {
   /**
@@ -17,7 +18,7 @@ const Ideas = {
         .optional()
         .transform((val) => val === "true"),
     }),
-    response: z.array(SchemaWithPB(IdeaBoxSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)),
   },
 
   /**
@@ -25,7 +26,7 @@ const Ideas = {
    * @description Create a new idea
    */
   createIdea: {
-    body: IdeaBoxSchemas.EntrySchema.pick({
+    body: IdeaBoxCollectionsSchemas.Entry.pick({
       type: true,
       container: true,
       folder: true,
@@ -36,7 +37,7 @@ const Ideas = {
       imageLink: z.string().optional(),
       tags: z.string().transform((val) => JSON.parse(val)),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.EntrySchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
   },
 
   /**
@@ -53,7 +54,7 @@ const Ideas = {
       type: z.enum(["text", "link", "image"]),
       tags: z.array(z.string()).optional(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.EntrySchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
   },
 
   /**
@@ -75,7 +76,7 @@ const Ideas = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.EntrySchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
   },
 
   /**
@@ -86,7 +87,7 @@ const Ideas = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.EntrySchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
   },
 
   /**
@@ -100,7 +101,7 @@ const Ideas = {
     query: z.object({
       target: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.EntrySchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
   },
 
   /**
@@ -111,7 +112,7 @@ const Ideas = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.EntrySchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
   },
 };
 
@@ -183,7 +184,7 @@ const Containers = {
    * @description Get all containers
    */
   getContainers: {
-    response: z.array(SchemaWithPB(IdeaBoxSchemas.ContainerSchema)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Container)),
   },
 
   /**
@@ -191,8 +192,8 @@ const Containers = {
    * @description Create a new container
    */
   createContainer: {
-    body: IdeaBoxSchemas.ContainerSchema,
-    response: SchemaWithPB(IdeaBoxSchemas.ContainerSchema),
+    body: IdeaBoxCollectionsSchemas.Container,
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container),
   },
 
   /**
@@ -209,7 +210,7 @@ const Containers = {
       icon: z.string(),
       cover: z.string().optional(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.ContainerSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container),
   },
 
   /**
@@ -234,7 +235,7 @@ const Folders = {
       container: z.string(),
       "0": z.string(),
     }),
-    response: z.array(SchemaWithPB(IdeaBoxSchemas.FolderSchema)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Folder)),
   },
 
   /**
@@ -249,7 +250,7 @@ const Folders = {
       icon: z.string(),
       color: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.FolderSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
   },
 
   /**
@@ -265,7 +266,7 @@ const Folders = {
       icon: z.string(),
       color: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.FolderSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
   },
 
   /**
@@ -279,7 +280,7 @@ const Folders = {
     query: z.object({
       target: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.FolderSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
   },
 
   /**
@@ -290,7 +291,7 @@ const Folders = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.FolderSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
   },
 
   /**
@@ -314,7 +315,7 @@ const Tags = {
     params: z.object({
       container: z.string(),
     }),
-    response: z.array(SchemaWithPB(IdeaBoxSchemas.TagSchema)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Tag)),
   },
 
   /**
@@ -322,11 +323,11 @@ const Tags = {
    * @description Create a new tag
    */
   createTag: {
-    body: IdeaBoxSchemas.TagSchema,
+    body: IdeaBoxCollectionsSchemas.Tag,
     params: z.object({
       container: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.TagSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Tag),
   },
 
   /**
@@ -334,11 +335,11 @@ const Tags = {
    * @description Update a tag
    */
   updateTag: {
-    body: IdeaBoxSchemas.TagSchema,
+    body: IdeaBoxCollectionsSchemas.Tag,
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(IdeaBoxSchemas.TagSchema),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Tag),
   },
 
   /**

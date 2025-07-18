@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { YoutubeSummarizerCustomCollectionsSchemas } from "../collections";
 
 const YoutubeSummarizer = {
   /**
@@ -10,7 +11,7 @@ const YoutubeSummarizer = {
     params: z.object({
       id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, "Invalid YouTube video ID"),
     }),
-    response: YoutubeInfoSchema,
+    response: YoutubeSummarizerCustomCollectionsSchemas.YoutubeInfoSchema,
   },
 
   /**

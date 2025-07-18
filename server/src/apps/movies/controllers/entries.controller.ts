@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { MoviesSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { MoviesControllersSchemas } from "shared/types/controllers";
 
 import * as entriesService from "../services/entries.service";
 
@@ -15,19 +12,7 @@ const moviesEntriesRouter = express.Router();
 const getAllEntries = forgeController
   .route("GET /")
   .description("Get all movie entries")
-  .schema({
-    query: z.object({
-      watched: z
-        .enum(["true", "false"])
-        .optional()
-        .default("false")
-        .transform((val) => (val === "true" ? true : false)),
-    }),
-    response: z.object({
-      entries: z.array(WithPBSchema(MoviesSchemas.EntrySchema)),
-      total: z.number(),
-    }),
-  })
+  .schema(MoviesControllersSchemas.Entries.getAllEntries)
   .callback(({ pb, query: { watched } }) =>
     entriesService.getAllEntries(pb, watched),
   );
@@ -35,12 +20,7 @@ const getAllEntries = forgeController
 const createEntryFromTMDB = forgeController
   .route("POST /:id")
   .description("Create a movie entry from TMDB")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(MoviesSchemas.EntrySchema),
-  })
+  .schema(MoviesControllersSchemas.Entries.createEntryFromTmdb)
   .callback(({ pb, params: { id } }) =>
     entriesService.createEntryFromTMDB(pb, id),
   )
@@ -49,12 +29,7 @@ const createEntryFromTMDB = forgeController
 const deleteEntry = forgeController
   .route("DELETE /:id")
   .description("Delete a movie entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(MoviesControllersSchemas.Entries.deleteEntry)
   .existenceCheck("params", {
     id: "movies__entries",
   })
@@ -64,12 +39,7 @@ const deleteEntry = forgeController
 const toggleWatchStatus = forgeController
   .route("PATCH /watch-status/:id")
   .description("Toggle watch status of a movie entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(MoviesSchemas.EntrySchema),
-  })
+  .schema(MoviesControllersSchemas.Entries.toggleWatchStatus)
   .existenceCheck("params", {
     id: "movies__entries",
   })

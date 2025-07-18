@@ -1,41 +1,41 @@
 import PocketBase from "pocketbase";
-import { CalendarSchemas } from "shared/types";
+import { CalendarCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
 export const getAllCalendars = (
   pb: PocketBase,
-): Promise<WithPB<CalendarSchemas.ICalendar>[]> =>
+): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>[]> =>
   pb
     .collection("calendar__calendars")
-    .getFullList<WithPB<CalendarSchemas.ICalendar>>({
+    .getFullList<WithPB<CalendarCollectionsSchemas.ICalendar>>({
       sort: "+name",
     });
 
 export const getCalendarById = (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<CalendarSchemas.ICalendar>> =>
+): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>> =>
   pb
     .collection("calendar__calendars")
-    .getOne<WithPB<CalendarSchemas.ICalendar>>(id);
+    .getOne<WithPB<CalendarCollectionsSchemas.ICalendar>>(id);
 
 export const createCalendar = (
   pb: PocketBase,
-  calendarData: CalendarSchemas.ICalendar,
-): Promise<WithPB<CalendarSchemas.ICalendar>> =>
+  calendarData: CalendarCollectionsSchemas.ICalendar,
+): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>> =>
   pb
     .collection("calendar__calendars")
-    .create<WithPB<CalendarSchemas.ICalendar>>(calendarData);
+    .create<WithPB<CalendarCollectionsSchemas.ICalendar>>(calendarData);
 
 export const updateCalendar = (
   pb: PocketBase,
   id: string,
-  calendarData: CalendarSchemas.ICalendar,
-): Promise<WithPB<CalendarSchemas.ICalendar>> =>
+  calendarData: CalendarCollectionsSchemas.ICalendar,
+): Promise<WithPB<CalendarCollectionsSchemas.ICalendar>> =>
   pb
     .collection("calendar__calendars")
-    .update<WithPB<CalendarSchemas.ICalendar>>(id, calendarData);
+    .update<WithPB<CalendarCollectionsSchemas.ICalendar>>(id, calendarData);
 
 export const deleteCalendar = async (pb: PocketBase, id: string) => {
   await pb.collection("calendar__calendars").delete(id);

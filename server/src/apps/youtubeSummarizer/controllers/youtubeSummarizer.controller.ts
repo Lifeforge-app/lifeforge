@@ -3,9 +3,8 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { z } from "zod/v4";
+import { YoutubeSummarizerControllersSchemas } from "shared/types/controllers";
 
-import { YoutubeInfoSchema } from "../schema";
 import * as YoutubeSummarizerService from "../services/youtubeSummarizer.service";
 
 const youtubeSummarizerRouter = express.Router();
@@ -13,12 +12,9 @@ const youtubeSummarizerRouter = express.Router();
 const getYoutubeVideoInfo = forgeController
   .route("GET /info/:id")
   .description("Get YouTube video information by video ID")
-  .schema({
-    params: z.object({
-      id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, "Invalid YouTube video ID"),
-    }),
-    response: YoutubeInfoSchema,
-  })
+  .schema(
+    YoutubeSummarizerControllersSchemas.YoutubeSummarizer.getYoutubeVideoInfo,
+  )
   .callback(
     async ({ params: { id } }) =>
       await YoutubeSummarizerService.getYoutubeVideoInfo(id),
@@ -27,12 +23,7 @@ const getYoutubeVideoInfo = forgeController
 const summarizeVideo = forgeController
   .route("POST /summarize")
   .description("Summarize a YouTube video from URL")
-  .schema({
-    body: z.object({
-      url: z.string().url("Invalid URL"),
-    }),
-    response: z.string(),
-  })
+  .schema(YoutubeSummarizerControllersSchemas.YoutubeSummarizer.summarizeVideo)
   .callback(({ body: { url }, pb }) =>
     YoutubeSummarizerService.summarizeVideo(url, pb),
   );

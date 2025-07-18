@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { WishlistSchemas } from "shared/types";
+import { WishlistCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
@@ -18,34 +18,36 @@ export const checkListExists = async (
 export const getList = (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<WishlistSchemas.IListAggregated>> =>
+): Promise<WithPB<WishlistCollectionsSchemas.IListAggregated>> =>
   pb
     .collection("wishlist__lists_aggregated")
-    .getOne<WithPB<WishlistSchemas.IListAggregated>>(id);
+    .getOne<WithPB<WishlistCollectionsSchemas.IListAggregated>>(id);
 
 export const getAllLists = (
   pb: PocketBase,
-): Promise<WithPB<WishlistSchemas.IListAggregated>[]> =>
+): Promise<WithPB<WishlistCollectionsSchemas.IListAggregated>[]> =>
   pb
     .collection("wishlist__lists_aggregated")
-    .getFullList<WithPB<WishlistSchemas.IListAggregated>>({
+    .getFullList<WithPB<WishlistCollectionsSchemas.IListAggregated>>({
       sort: "name",
     });
 
 export const createList = (
   pb: PocketBase,
-  data: WishlistSchemas.IList,
-): Promise<WithPB<WishlistSchemas.IList>> =>
-  pb.collection("wishlist__lists").create<WithPB<WishlistSchemas.IList>>(data);
+  data: WishlistCollectionsSchemas.IList,
+): Promise<WithPB<WishlistCollectionsSchemas.IList>> =>
+  pb
+    .collection("wishlist__lists")
+    .create<WithPB<WishlistCollectionsSchemas.IList>>(data);
 
 export const updateList = async (
   pb: PocketBase,
   id: string,
-  data: WishlistSchemas.IList,
-): Promise<WithPB<WishlistSchemas.IList>> =>
+  data: WishlistCollectionsSchemas.IList,
+): Promise<WithPB<WishlistCollectionsSchemas.IList>> =>
   pb
     .collection("wishlist__lists")
-    .update<WithPB<WishlistSchemas.IList>>(id, data);
+    .update<WithPB<WishlistCollectionsSchemas.IList>>(id, data);
 
 export const deleteList = async (pb: PocketBase, id: string): Promise<void> => {
   await pb.collection("wishlist__lists").delete(id);

@@ -6,6 +6,7 @@ export async function convertToMp3(filePath: string) {
 
   return new Promise<string>((resolve, reject) => {
     const newPath = filePath.split(".").slice(0, -1).join(".") + ".mp3";
+
     ffmpeg(filePath)
       .output(newPath)
       .on("end", () => {

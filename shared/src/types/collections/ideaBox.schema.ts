@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: ideaBox
- * Generated at: 2025-07-18T10:36:14.104Z
+ * Generated at: 2025-07-18T12:15:50.184Z
  * Contains: idea_box__containers, idea_box__entries, idea_box__folders, idea_box__tags, idea_box__tags_aggregated, idea_box__containers_aggregated
  */
 
 import { z } from "zod/v4";
+
 const Container = z.object({
   icon: z.string(),
   color: z.string(),

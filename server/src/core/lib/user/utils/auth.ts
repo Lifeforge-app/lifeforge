@@ -1,7 +1,7 @@
 import Pocketbase from "pocketbase";
 
 export function removeSensitiveData(userData: Record<string, any>): void {
-  for (let key in userData) {
+  for (const key in userData) {
     if (key.includes("webauthn")) {
       delete userData[key];
     }
