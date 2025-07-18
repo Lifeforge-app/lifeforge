@@ -8,6 +8,10 @@ layer(base);
 @plugin 'daisyui';
 @plugin '@tailwindcss/typography';
 
+/* Core styles */
+@import 'lifeforge-ui/dist/index.css';
+@source '../../../node_modules/lifeforge-ui/dist';
+
 /* NPM package styles */
 @import 'leaflet/dist/leaflet.css';
 @import 'react-grid-layout/css/styles.css';
@@ -17,10 +21,6 @@ layer(base);
 @import 'react-virtualized/styles.css';
 @import 'lifeforge-ui/dist/index.css';
 @import 'quill/dist/quill.snow.css';
-@source "../../../node_modules/lifeforge-ui/dist";
-
-/* Local utility styles */
-@import './styles/index.css';
 
 /* App styles */
 @import '@core/pages/Dashboard/index.css';
