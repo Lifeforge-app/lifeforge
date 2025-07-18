@@ -2,7 +2,7 @@ import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
 import SortBySelector from './SortBySelector'
@@ -29,6 +29,7 @@ function Searchbar({
 
     try {
       const entry = await fetchAPI<IGuitarTabsEntry>(
+        import.meta.env.VITE_API_URL,
         '/guitar-tabs/entries/random'
       )
 

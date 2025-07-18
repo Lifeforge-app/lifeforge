@@ -4,10 +4,10 @@ import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import BreakdownChartLegend from './components/BreakdownChartLegend'
 import BreakdownDetails from './components/BreakdownDetails'

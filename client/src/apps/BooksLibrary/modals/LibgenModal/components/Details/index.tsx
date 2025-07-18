@@ -1,6 +1,6 @@
 import { GoBackButton, QueryWrapper } from 'lifeforge-ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import AddToLibraryButton from '../AddToLibraryButton'
 import DataTable from './components/DataTable'

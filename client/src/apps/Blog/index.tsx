@@ -7,9 +7,9 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { BlogSchemas } from 'shared'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
+import { BlogSchemas } from 'shared/types'
 
 function Blog() {
   const { t } = useTranslation('apps.blog')

@@ -13,7 +13,7 @@ import { Bar } from 'react-chartjs-2'
 import { Link } from 'react-router'
 import tinycolor from 'tinycolor2'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 const getDatesBetween = (start: Dayjs, end: Dayjs): Dayjs[] => {
   if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {

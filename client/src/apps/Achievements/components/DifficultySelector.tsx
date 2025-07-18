@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-import { AchievementsSchemas } from 'shared'
+
+import { AchievementsSchemas } from 'shared/types'
 
 function DifficultySelector({
   selectedDifficulty,

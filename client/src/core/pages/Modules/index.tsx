@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { useAuth } from '../../providers/AuthProvider'
 import ModuleItem from './components/ModuleItem'
@@ -28,9 +28,13 @@ function Modules() {
     })
 
     try {
-      await fetchAPI(`modules/toggle/${_.kebabCase(moduleName)}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `modules/toggle/${_.kebabCase(moduleName)}`,
+        {
+          method: 'POST'
+        }
+      )
     } catch {
       toast.error('Failed to update modules')
       setUserData({

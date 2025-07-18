@@ -2,7 +2,7 @@
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: guitarTabs
- * Generated at: 2025-07-17T08:55:29.693Z
+ * Generated at: 2025-07-18T00:32:55.272Z
  * Contains: guitar_tabs__entries, guitar_tabs__authors_aggregated
  */
 
@@ -39,32 +39,4 @@ export type {
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-const GuitarTabsSidebarDataSchema = z.object({
-  total: z.number(),
-  favourites: z.number(),
-  categories: z.object({
-    fingerstyle: z.number(),
-    singalong: z.number(),
-    uncategorized: z.number(),
-  }),
-  authors: z.record(z.string(), z.number()),
-});
-
-const GuitarTabsGuitarWorldEntrySchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  subtitle: z.string(),
-  category: z.string(),
-  mainArtist: z.string(),
-  uploader: z.string(),
-  audioUrl: z.string(),
-});
-
-type IGuitarTabsSidebarData = z.infer<typeof GuitarTabsSidebarDataSchema>;
-type IGuitarTabsGuitarWorldEntry = z.infer<
-  typeof GuitarTabsGuitarWorldEntrySchema
->;
-
-export { GuitarTabsSidebarDataSchema, GuitarTabsGuitarWorldEntrySchema };
-
-export type { IGuitarTabsSidebarData, IGuitarTabsGuitarWorldEntry };
+// Add your custom schemas here. They will not be overwritten by this script.

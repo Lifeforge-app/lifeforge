@@ -11,7 +11,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'

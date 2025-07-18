@@ -12,9 +12,8 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
 
 import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
@@ -56,17 +55,21 @@ function BgImageSelector() {
 
   async function onSubmit(url: string | File) {
     try {
-      const data = await fetchAPI<string>('user/personalization/bg-image', {
-        method: 'PUT',
-        body:
-          typeof url === 'string'
-            ? { url }
-            : (() => {
-                const formData = new FormData()
-                formData.append('file', url)
-                return formData
-              })()
-      })
+      const data = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
+        'user/personalization/bg-image',
+        {
+          method: 'PUT',
+          body:
+            typeof url === 'string'
+              ? { url }
+              : (() => {
+                  const formData = new FormData()
+                  formData.append('file', url)
+                  return formData
+                })()
+        }
+      )
 
       setBgImage(`${import.meta.env.VITE_API_HOST}/${data}`)
       toast.success('Background image updated')

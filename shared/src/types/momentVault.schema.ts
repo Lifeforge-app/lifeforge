@@ -2,7 +2,7 @@
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: momentVault
- * Generated at: 2025-07-17T08:55:29.693Z
+ * Generated at: 2025-07-18T00:32:55.271Z
  * Contains: moment_vault__entries
  */
 

@@ -8,6 +8,7 @@ import Pocketbase, { type CollectionModel } from 'pocketbase'
 
 const CUSTOM_SCHEMAS_DELIMITER =
   '// -------------------- CUSTOM SCHEMAS --------------------'
+const TARGET_PATH = path.resolve(__dirname, '../shared/src/types')
 
 dotenv.config({
   path: path.resolve(__dirname, '../server/env/.env.local')
@@ -16,6 +17,14 @@ dotenv.config({
 if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
   console.error(
     'Please provide PB_HOST, PB_EMAIL, and PB_PASSWORD in your environment variables.'
+  )
+  process.exit(1)
+}
+
+if (!fs.existsSync(TARGET_PATH)) {
+  console.error(
+    chalk.red('[ERROR]') +
+      ` Target path ${TARGET_PATH} does not exist. Please make sure the monorepo is set up correctly.`
   )
   process.exit(1)
 }
@@ -32,9 +41,34 @@ try {
     process.exit(1)
   }
 } catch {
-  console.error('Invalid credentials.')
+  console.error('Server is not reachable or credentials are invalid.')
   process.exit(1)
 }
+
+fs.rmdirSync(TARGET_PATH, { recursive: true })
+fs.mkdirSync(TARGET_PATH, { recursive: true })
+
+fs.writeFileSync(
+  path.resolve(TARGET_PATH, 'schemaWithPB.ts'),
+  `
+import { z } from 'zod/v4'
+
+const BasePBSchema = z.object({
+  id: z.string(),
+  collectionId: z.string(),
+  collectionName: z.string(),
+  created: z.string(),
+  updated: z.string()
+})
+
+export const SchemaWithPB = <T extends z.ZodTypeAny>(schema: T) => {
+  return z.intersection(schema, BasePBSchema)
+}
+
+export type ISchemaWithPB<T> = T & z.infer<typeof BasePBSchema>
+`,
+  'utf-8'
+)
 
 const allModules = [
   ...fs.readdirSync('./server/src/apps', { withFileTypes: true }),
@@ -250,7 +284,8 @@ ${Object.keys(modulesMap)
   )
   .join('\n')}
 
-export type { SchemaWithPB } from './utils/schemaWithPB.types'
+export { SchemaWithPB } from './types/schemaWithPB'
+export type { ISchemaWithPB } from './types/schemaWithPB'
 `
 
 const indexPath = path.resolve('./shared/src/index.ts')

@@ -4,13 +4,12 @@ import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { fetchAPI } from 'shared/lib'
 
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { Tooltip } from '../utilities'
 

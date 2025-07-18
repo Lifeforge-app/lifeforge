@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function useFontFamily(fontFamily: string) {
   useEffect(() => {
@@ -20,6 +20,7 @@ function useFontFamily(fontFamily: string) {
     async function updateFontFamily() {
       try {
         const data = await fetchAPI<{ enabled: boolean; items: any[] }>(
+          import.meta.env.VITE_API_URL,
           `/user/personalization/font?family=${fontFamily.replace(/ /g, '+')}`
         )
 

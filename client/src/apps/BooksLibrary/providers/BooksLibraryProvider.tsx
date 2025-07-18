@@ -7,7 +7,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import {
   type IBooksLibraryCollection,

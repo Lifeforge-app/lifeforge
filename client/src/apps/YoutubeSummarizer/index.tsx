@@ -10,11 +10,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
+
 import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import CaptionSelector from './components/CaptionSelector'
 import SummaryDisplay from './components/SummaryDisplay'
@@ -73,10 +72,14 @@ function YoutubeSummarizer() {
     setSummarizeLoading(true)
 
     try {
-      const response = await fetchAPI<string>('/youtube-summarizer/summarize', {
-        body: { url },
-        method: 'POST'
-      })
+      const response = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
+        '/youtube-summarizer/summarize',
+        {
+          body: { url },
+          method: 'POST'
+        }
+      )
 
       setSummarizeResult(response)
     } catch {

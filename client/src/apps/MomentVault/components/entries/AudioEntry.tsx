@@ -10,9 +10,9 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 function AudioEntry({
   entriesQueryKey,
@@ -59,6 +59,7 @@ function AudioEntry({
 
     try {
       const data = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
         `moment-vault/transcribe/${entry.id}`,
         {
           method: 'POST'

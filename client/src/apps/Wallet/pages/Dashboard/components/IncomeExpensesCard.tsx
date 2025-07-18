@@ -2,11 +2,11 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 
+import { useAPIQuery } from 'shared/lib'
+
 import { IWalletIncomeExpenses } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const isIncome = title.toLowerCase() === 'income'

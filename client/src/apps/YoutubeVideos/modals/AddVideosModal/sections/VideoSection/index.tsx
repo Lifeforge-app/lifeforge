@@ -5,7 +5,7 @@ import { TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import IntervalManager from '@utils/intervalManager'
 

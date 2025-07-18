@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import { encrypt } from '@security/utils/encryption'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('core.accountSettings')
@@ -22,16 +22,23 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
     setVerifyOtpLoading(true)
 
     try {
-      const challenge = await fetchAPI<string>(`/user/2fa/challenge`)
-      await fetchAPI(`/user/2fa/verify-and-enable`, {
-        method: 'POST',
-        body: {
-          otp: encrypt(
-            encrypt(otp, challenge),
-            parseCookie(document.cookie).session ?? ''
-          )
+      const challenge = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
+        `/user/2fa/challenge`
+      )
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `/user/2fa/verify-and-enable`,
+        {
+          method: 'POST',
+          body: {
+            otp: encrypt(
+              encrypt(otp, challenge),
+              parseCookie(document.cookie).session ?? ''
+            )
+          }
         }
-      })
+      )
 
       onSuccess()
     } catch {

@@ -1,12 +1,12 @@
 import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
+import { useAPIQuery } from 'shared/lib'
+
 import {
   IIdeaBoxContainer,
   IIdeaBoxContainerFormState
 } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function ModifyContainerModal({
   data: { type, existedData },

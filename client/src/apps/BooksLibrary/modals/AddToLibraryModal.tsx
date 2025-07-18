@@ -2,9 +2,8 @@ import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
 
 import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
@@ -206,6 +205,7 @@ function AddToLibraryModal({
   async function onSubmit() {
     try {
       const taskId = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
         `books-library/libgen/add-to-library/${md5}`,
         {
           method: 'POST',
