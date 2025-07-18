@@ -9,3 +9,8 @@ export { default as PersonalizationProvider } from "./providers/PersonalizationP
 export { default as BackgroundProvider } from "./providers/BackgroundProvider";
 export { default as APIOnlineStatusProvider } from "./providers/APIOnlineStatusProvider";
 export { default as SidebarStateProvider } from "./providers/SidebarStateProvider";
+
+export type {
+  IDashboardLayout,
+  IBackdropFilters,
+} from "./providers/PersonalizationProvider/interfaces/personalization_provider_interfaces";

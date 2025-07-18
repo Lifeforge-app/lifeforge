@@ -1,14 +1,10 @@
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-import { fetchAPI } from 'shared/lib'
+import { IBackdropFilters, IDashboardLayout, fetchAPI } from 'shared/lib'
 import { usePersonalization } from 'shared/lib'
 
 import { useAuth } from './AuthProvider'
-import {
-  DashboardLayoutType,
-  IBackdropFilters
-} from './PersonalizationProvider/interfaces/personalization_provider_interfaces'
 
 const UserPersonalizationContext = createContext<{
   changeFontFamily: (font: string) => Promise<void>
@@ -17,7 +13,7 @@ const UserPersonalizationContext = createContext<{
   changeBgTemp: (color: string) => Promise<void>
   changeBackdropFilters: (filters: IBackdropFilters) => Promise<void>
   changeLanguage: (language: string) => Promise<void>
-  changeDashboardLayout: (layout: DashboardLayoutType) => Promise<void>
+  changeDashboardLayout: (layout: IDashboardLayout) => Promise<void>
 }>({} as any)
 
 async function syncUserData(data: Record<string, unknown>) {
@@ -80,7 +76,7 @@ function UserPersonalizationProvider({
     await syncUserData({ language })
   }
 
-  async function changeDashboardLayout(layout: DashboardLayoutType) {
+  async function changeDashboardLayout(layout: IDashboardLayout) {
     setDashboardLayout(layout)
     await syncUserData({ dashboardLayout: layout })
   }
