@@ -7,6 +7,7 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 function DateRangeSelector() {
   const { t } = useTranslation('apps.wallet')
+
   const { startDate, endDate, setStartDate, setEndDate } = useWalletStore()
 
   const handleDateChange = (
@@ -19,6 +20,7 @@ function DateRangeSelector() {
       } else {
         setEndDate(null)
       }
+
       return
     }
 

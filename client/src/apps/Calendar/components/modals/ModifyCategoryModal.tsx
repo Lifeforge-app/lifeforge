@@ -19,7 +19,9 @@ function ModifyCategoryModal({
   onClose: () => void
 }) {
   const modalRef = useRef<HTMLDivElement>(null)
+
   const innerOpenType = useDebounce(type, type === null ? 300 : 0)
+
   const [data, setData] = useState<ICalendarCategoryFormState>({
     name: '',
     icon: '',

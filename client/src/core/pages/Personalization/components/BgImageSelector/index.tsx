@@ -19,13 +19,18 @@ import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
 function BgImageSelector() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('core.personalization')
+
   const pixabayEnabledQuery = useAPIQuery<boolean>('/pixabay/key-exists', [
     'pixabay',
     'key-exists'
   ])
+
   const { bgImage } = usePersonalization()
+
   const { setBgImage, setBackdropFilters } = usePersonalization()
+
   const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
     'ai/image-generation/key-exists',
     ['ai', 'image-generation', 'key-exists']
@@ -66,7 +71,9 @@ function BgImageSelector() {
               ? { url }
               : (() => {
                   const formData = new FormData()
+
                   formData.append('file', url)
+
                   return formData
                 })()
         }

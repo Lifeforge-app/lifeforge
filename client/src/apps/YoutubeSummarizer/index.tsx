@@ -21,9 +21,13 @@ import VideoInfo from './components/VideoInfo'
 
 function YoutubeSummarizer() {
   const { t } = useTranslation('apps.youtubeSummarizer')
+
   const [videoUrl, setVideoUrl] = useState<string>('')
+
   const debouncedVideoUrl = useDebounce(videoUrl, 300)
+
   const [summarizeLoading, setSummarizeLoading] = useState(false)
+
   const [summarizeResult, setSummarizeResult] = useState<string | null>(null)
 
   const videoID = useMemo(() => {
@@ -66,6 +70,7 @@ function YoutubeSummarizer() {
   async function summarizeVideo(url: string) {
     if (!url) {
       toast.error(t('errors.noCaptions'))
+
       return
     }
 

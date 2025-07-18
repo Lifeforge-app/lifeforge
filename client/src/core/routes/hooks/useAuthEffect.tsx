@@ -5,6 +5,7 @@ import { useAuth } from '../../providers/AuthProvider'
 
 function useAuthEffect() {
   const { auth, authLoading } = useAuth()
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -18,6 +19,7 @@ function useAuthEffect() {
       } else if (auth) {
         if (location.pathname === '/auth') {
           const redirect = new URLSearchParams(location.search).get('redirect')
+
           if (redirect !== null) {
             navigate(redirect)
           } else {

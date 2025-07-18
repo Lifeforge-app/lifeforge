@@ -11,6 +11,7 @@ import { decrypt } from '@security/utils/encryption'
 
 function QRCodeDisplay() {
   const { bgTempPalette, derivedTheme } = usePersonalization()
+
   const [link, setLink] = useState('')
 
   async function fetchLink() {
@@ -19,6 +20,7 @@ function QRCodeDisplay() {
         import.meta.env.VITE_API_HOST,
         '/user/2fa/challenge'
       )
+
       const link = await fetchAPI<string>(
         import.meta.env.VITE_API_HOST,
         '/user/2fa/link'
@@ -28,6 +30,7 @@ function QRCodeDisplay() {
         link,
         parseCookie(document.cookie).session ?? ''
       )
+
       const decrypted2 = decrypt(decrypted1, challenge)
 
       setLink(decrypted2)

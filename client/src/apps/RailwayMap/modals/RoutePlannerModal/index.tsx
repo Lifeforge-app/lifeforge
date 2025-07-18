@@ -9,6 +9,7 @@ function RoutePlannerModal({ onClose }: { onClose: () => void }) {
   const { setShortestRoute } = useRailwayMapContext()
 
   const [startQuery, setStartQuery] = useState('')
+
   const [endQuery, setEndQuery] = useState('')
 
   useEffect(() => {

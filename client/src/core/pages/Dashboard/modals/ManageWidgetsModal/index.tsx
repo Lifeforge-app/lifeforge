@@ -37,4 +37,5 @@ function ManageWidgetsModal({
     </div>
   )
 }
+
 export default ManageWidgetsModal

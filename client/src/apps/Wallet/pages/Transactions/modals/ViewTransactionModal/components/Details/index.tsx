@@ -12,11 +12,15 @@ import DetailItem from './components/DetailItem'
 
 function Details({ transaction }: { transaction: IWalletTransaction }) {
   const { assetsQuery, categoriesQuery, ledgersQuery } = useWalletData()
+
   const open = useModalStore(state => state.open)
+
   const asset = assetsQuery.data?.find(asset => asset.id === transaction.asset)
+
   const category = categoriesQuery.data?.find(
     category => category.id === transaction.category
   )
+
   const ledger = ledgersQuery.data?.find(
     ledger => ledger.id === transaction.ledger
   )

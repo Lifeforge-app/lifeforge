@@ -15,7 +15,9 @@ import ROUTES from '../../Routes'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
+
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
+
   const filteredRoutes = useMemo(
     () =>
       ROUTES.filter(

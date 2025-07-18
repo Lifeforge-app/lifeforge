@@ -32,6 +32,7 @@ function CurrencySelector({
         <ListboxOrComboboxInput
           displayValue={value => {
             const currency = currencies.find(c => c.code === value)
+
             return currency ? `${currency.code} - ${currency.name}` : ''
           }}
           icon="tabler:arrow-up"
@@ -63,6 +64,7 @@ function CurrencySelector({
         <ListboxOrComboboxInput
           displayValue={value => {
             const currency = currencies.find(c => c.code === value)
+
             return currency ? `${currency.code} - ${currency.name}` : ''
           }}
           icon="tabler:arrow-down"

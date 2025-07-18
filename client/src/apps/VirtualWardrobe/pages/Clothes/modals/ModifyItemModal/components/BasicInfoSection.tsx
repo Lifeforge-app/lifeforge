@@ -46,6 +46,7 @@ function BasicInfoSection({
     setVisionLoading(true)
 
     const formData = new FormData()
+
     formData.append('frontImage', frontImage)
     formData.append('backImage', backImage)
 
@@ -61,6 +62,7 @@ function BasicInfoSection({
       })
 
       const { name, category, subcategory, colors } = data
+
       setFormState({ ...formState, name, category, subcategory, colors })
     } catch {
       toast.error('Failed to identify item')

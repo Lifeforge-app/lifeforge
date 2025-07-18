@@ -7,6 +7,7 @@ function useFontFamily(fontFamily: string) {
 
   useEffect(() => {
     const styleTagId = "dynamic-font-style";
+
     let styleTag = document.getElementById(
       styleTagId
     ) as HTMLStyleElement | null;
@@ -28,6 +29,7 @@ function useFontFamily(fontFamily: string) {
 
         if (!data.enabled) {
           document.body.style.fontFamily = "Onest, sans-serif";
+
           return;
         }
 
@@ -47,6 +49,7 @@ function useFontFamily(fontFamily: string) {
                 font-style: ${variant.includes("italic") ? "italic" : "normal"};
                 font-display: swap;
               }`;
+
               css += fontFace + "\n";
             });
             document.body.style.fontFamily = `"${font.family}", sans-serif`;

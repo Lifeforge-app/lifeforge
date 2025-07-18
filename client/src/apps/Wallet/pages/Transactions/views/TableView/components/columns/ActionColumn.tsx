@@ -9,6 +9,7 @@ import { type IWalletTransaction } from '../../../../../../interfaces/wallet_int
 
 function ActionColumn({ transaction }: { transaction: IWalletTransaction }) {
   const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const handleEditTransaction = useCallback(() => {

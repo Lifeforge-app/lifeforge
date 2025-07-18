@@ -19,6 +19,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
       className="shadow-custom component-bg-lighter-with-hover w-full cursor-pointer space-y-2 rounded-md p-2 text-left"
       onClick={() => {
         const a = document.createElement('a')
+
         a.href = entry.content
         a.target = '_blank'
         a.rel = 'noreferrer noopener'

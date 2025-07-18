@@ -15,9 +15,13 @@ import TypeColumn from './columns/TypeColumn'
 function TableBody({ visibleColumn }: { visibleColumn: string[] }) {
   const { assetsQuery, ledgersQuery, categoriesQuery, transactionsQuery } =
     useWalletData()
+
   const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
+
   const ledgers = ledgersQuery.data ?? []
+
   const assets = assetsQuery.data ?? []
+
   const categories = categoriesQuery.data ?? []
 
   return (
@@ -71,6 +75,7 @@ function TableBody({ visibleColumn }: { visibleColumn: string[] }) {
 
             return columns.map(([columnId, Component, props]) => {
               if (!visibleColumn.includes(columnId)) return <></>
+
               return <Component key={columnId} {...props} />
             })
           })()}

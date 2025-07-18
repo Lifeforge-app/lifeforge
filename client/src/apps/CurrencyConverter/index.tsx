@@ -10,12 +10,19 @@ import { ExchangeRates } from './interfaces/currency_converter_interfaces'
 
 function CurrencyConverter() {
   const [amount, setAmount] = useState<string>('1')
+
   const [fromCurrency, setFromCurrency] = useState<string>('MYR')
+
   const [toCurrency, setToCurrency] = useState<string>('SGD')
+
   const [result, setResult] = useState<number | null>(null)
+
   const [ratesData, setRatesData] = useState<ExchangeRates | null>(null)
+
   const [isLoading, setIsLoading] = useState<boolean>(true)
+
   const [error, setError] = useState<Error | null>(null)
+
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
 
   const { currencies } = useCurrencies()
@@ -31,6 +38,7 @@ function CurrencyConverter() {
         if (!res.ok) {
           throw new Error(`API responded with status: ${res.status}`)
         }
+
         return res.json()
       })
       .then(data => {
@@ -61,8 +69,10 @@ function CurrencyConverter() {
   useEffect(() => {
     if (ratesData && ratesData.rates && amount) {
       const parsedAmount = parseFloat(amount)
+
       if (!isNaN(parsedAmount) && ratesData.rates[toCurrency]) {
         const convertedValue = parsedAmount * ratesData.rates[toCurrency]
+
         setResult(convertedValue)
       }
     }

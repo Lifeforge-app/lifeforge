@@ -20,16 +20,22 @@ import AddVideosModal from './modals/AddVideosModal'
 
 function YoutubeVideos() {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.youtubeVideos')
+
   const videosQuery = useAPIQuery<IYoutubeVideosStorageEntry[]>(
     'youtube-videos/video',
     ['youtube-videos', 'video']
   )
 
   const [needsProgressCheck, setNeedsProgressCheck] = useState(true)
+
   const [query, setQuery] = useState('')
+
   const debouncedQuery = useDebounce(query, 300)
+
   const [filteredVideos, setFilteredVideos] = useState<
     IYoutubeVideosStorageEntry[]
   >([])
@@ -45,6 +51,7 @@ function YoutubeVideos() {
   useEffect(() => {
     if (!videosQuery.data) {
       setFilteredVideos([])
+
       return
     }
 

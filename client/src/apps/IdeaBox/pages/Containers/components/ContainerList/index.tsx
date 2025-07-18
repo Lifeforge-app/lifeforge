@@ -14,6 +14,7 @@ function ContainerList({
   filteredList: IIdeaBoxContainer[]
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation(['apps.ideaBox', 'common.buttons'])
 
   const handleCreateContainer = useCallback(() => {

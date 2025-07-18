@@ -10,6 +10,7 @@ import TagsSelector from './components/TagsSelector'
 
 function Ideas() {
   const { '*': path } = useParams<{ '*': string }>()
+
   const { searchQuery, setSearchQuery, viewArchived } = useIdeaBoxContext()
 
   return (

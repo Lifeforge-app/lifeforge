@@ -27,6 +27,7 @@ interface SpendingLocationData {
 
 function SpendingHeatmap() {
   const { transactionsQuery } = useWalletData()
+
   const navigate = useNavigate()
 
   const spendingData = useMemo((): SpendingLocationData[] => {
@@ -47,6 +48,7 @@ function SpendingHeatmap() {
 
       if (locationGroups[key]) {
         const existing = locationGroups[key]
+
         existing.amount += transaction.amount
         existing.transactions.push({
           id: transaction.id,
@@ -111,6 +113,7 @@ function SpendingHeatmap() {
         (sum, data: SpendingLocationData) => sum + data.lat,
         0
       ) / spendingData.length
+
     const avgLng =
       spendingData.reduce(
         (sum, data: SpendingLocationData) => sum + data.lng,

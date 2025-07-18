@@ -31,7 +31,9 @@ function EventItem({
   event: ICalendarEvent
 }) {
   const { sidebarExpanded } = useSidebarState()
+
   const [width, setWidth] = useState(0)
+
   const ref = useRef<HTMLLIElement>(null)
 
   const handleResize = () => {
@@ -43,6 +45,7 @@ function EventItem({
   useEffect(() => {
     handleResize()
     window.addEventListener('resize', handleResize)
+
     return () => {
       window.removeEventListener('resize', handleResize)
     }
@@ -127,10 +130,12 @@ export default function TodaysEvent() {
     'calendar/events/today',
     ['calendar', 'events', 'today']
   )
+
   const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
     'calendar/categories',
     ['calendar', 'categories']
   )
+
   const filteredEvents = useMemo(
     () =>
       rawEventsQuery.data?.filter(event =>

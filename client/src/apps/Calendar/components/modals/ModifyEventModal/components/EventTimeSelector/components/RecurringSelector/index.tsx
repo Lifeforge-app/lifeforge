@@ -32,21 +32,31 @@ function RecurringSelector({
   const [yearlyType, setYearlyType] = useState<'exactDate' | 'relativeDay'>(
     'exactDate'
   )
+
   const [monthlyType, setMonthlyType] = useState<'exactDate' | 'relativeDay'>(
     'exactDate'
   )
+
   const [yearlyMonth, setYearlyMonth] = useState(0)
+
   const [yearlyDate, setYearlyDate] = useState<string>('1')
+
   const [yearlyOnThe, setYearlyOnThe] = useState<string>('first')
+
   const [yearlyOnTheDay, setYearlyOnTheDay] = useState<string>('mon')
+
   const [yearlyOnTheDayOfMonth, setYearlyOnTheDayOfMonth] = useState(0)
 
   const [monthlyEvery, setMonthlyEvery] = useState('1')
+
   const [monthlyOnDate, setMonthlyOnDate] = useState('1')
+
   const [monthlyOnThe, setMonthlyOnThe] = useState<string>('first')
+
   const [monthlyOnTheDay, setMonthlyOnTheDay] = useState<string>('mon')
 
   const [weeklyEvery, setWeeklyEvery] = useState('1')
+
   const [weeklyOn, setWeeklyOn] = useState<
     ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[]
   >([])
@@ -56,7 +66,9 @@ function RecurringSelector({
   const [hourlyEvery, setHourlyEvery] = useState('1')
 
   const [endType, setEndType] = useState<'never' | 'after' | 'on'>('never')
+
   const [endAfter, setEndAfter] = useState('1')
+
   const [endOn, setEndOn] = useState<Date | null>(null)
 
   const forms = {
@@ -186,6 +198,7 @@ function RecurringSelector({
         namespace="apps.calendar"
         setValue={(value: string) => {
           setFreq(value as any)
+
           if (value === 'hourly') {
             setFormState({
               ...formState,

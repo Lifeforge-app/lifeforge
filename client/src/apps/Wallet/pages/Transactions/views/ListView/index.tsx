@@ -8,10 +8,12 @@ import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import TransactionListItem from './components/TransactionListItem'
 
 const AS = AutoSizer as any
+
 const L = List as any
 
 function ListView() {
   const { transactionsQuery } = useWalletData()
+
   const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
 
   return (

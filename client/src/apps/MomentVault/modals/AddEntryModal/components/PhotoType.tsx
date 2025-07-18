@@ -10,6 +10,7 @@ import { fetchAPI } from 'shared/lib'
 async function getNaturalHeightWidth(file: File) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {
     const img = new Image()
+
     img.onload = () => {
       resolve({ height: img.height, width: img.width })
     }
@@ -29,17 +30,21 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
       width: number
     }[]
   >([])
+
   const [submitLoading, setSubmitLoading] = useState(false)
 
   async function onSubmit() {
     if (!photos.length) {
       toast.error('Please select a photo')
+
       return
     }
 
     setSubmitLoading(true)
+
     try {
       const formData = new FormData()
+
       formData.append('type', 'photos')
       photos.forEach(photo => {
         formData.append('files', photo.file)
@@ -61,6 +66,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
 
   function selectPhotos() {
     const input = document.createElement('input')
+
     input.type = 'file'
     input.accept = 'image/*'
     input.multiple = true
@@ -72,9 +78,11 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
 
     input.onchange = async () => {
       const files = input.files
+
       if (files) {
         if (files.length > 25) {
           toast.error('You can only select up to 25 photos')
+
           return
         }
 
@@ -83,6 +91,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
             .slice(0, 25)
             .map(async file => {
               const { height, width } = await getNaturalHeightWidth(file)
+
               return {
                 file,
                 preview: URL.createObjectURL(file),

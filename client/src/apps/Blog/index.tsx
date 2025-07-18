@@ -13,6 +13,7 @@ import { BlogControllersSchemas } from 'shared/types/controllers'
 
 function Blog() {
   const { t } = useTranslation('apps.blog')
+
   const entriesQuery = useAPIQuery<
     BlogControllersSchemas.IEntries['getAllEntries']['response']
   >('blog/entries', ['blog', 'entries'])

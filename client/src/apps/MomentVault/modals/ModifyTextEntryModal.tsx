@@ -19,8 +19,11 @@ function ModifyTextEntryModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
   const [text, setText] = useState('')
+
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
+
   const [submitLoading, setSubmitLoading] = useState(false)
 
   async function onSubmit() {

@@ -34,7 +34,9 @@ const options = {
 
 function StatisticChardCard() {
   const { transactionsQuery } = useWalletData()
+
   const { t } = useTranslation('apps.wallet')
+
   const transactions = transactionsQuery.data ?? []
 
   const dates = useMemo(() => {

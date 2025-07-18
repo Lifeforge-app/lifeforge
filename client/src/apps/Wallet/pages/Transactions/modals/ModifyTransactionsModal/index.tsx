@@ -35,32 +35,47 @@ function ModifyTransactionsModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.wallet')
+
   const queryClient = useQueryClient()
+
   const [particular, setParticular] = useState('')
+
   const [transactionType, setTransactionType] = useState<
     'income' | 'expenses' | 'transfer'
   >('income')
 
   const [transactionDate, setTransactionDate] = useState<Date | null>(null)
+
   const [amount, setAmount] = useState<string>()
+
   const [location, setLocation] = useState<ILocationEntry | null>(null)
+
   const [category, setCategory] = useState<string | null>(null)
+
   const [transactionAsset, setTransactionAsset] = useState<string | null>(null)
+
   const [ledger, setLedger] = useState<string | null>(null)
+
   const [fromAsset, setFromAsset] = useState<string | null>(null)
+
   const [toAsset, setToAsset] = useState<string | null>(null)
+
   const [loading, setLoading] = useState(false)
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
+
   const [receipt, setReceipt] = useState<File | string | null>(null)
+
   const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
 
   const ref = useRef<HTMLInputElement>(null)
 
   async function getImagePreview(file: File) {
     const mime = parse(await file.arrayBuffer())
+
     if (mime?.mime.includes('image')) {
       const reader = new FileReader()
+
       reader.onload = () => {
         setImagePreviewUrl(reader.result as string)
       }
@@ -105,6 +120,7 @@ function ModifyTransactionsModal({
         setReceipt(
           existedData.receipt instanceof File ? existedData.receipt : null
         )
+
         if (existedData.receipt instanceof File) {
           getImagePreview(existedData.receipt).catch(console.error)
         } else {
@@ -139,6 +155,7 @@ function ModifyTransactionsModal({
     if (transactionType === 'transfer') {
       if (!fromAsset || !toAsset) {
         toast.error('Please fill in the from and to assets.')
+
         return
       }
     } else {
@@ -150,11 +167,13 @@ function ModifyTransactionsModal({
         !transactionAsset
       ) {
         toast.error('Please fill in required fields.')
+
         return
       }
     }
 
     const data = new FormData()
+
     data.append('particulars', particular)
     data.append('date', dayjs(transactionDate).format('YYYY-MM-DD'))
     data.append('amount', parseFloat(`${amount}` || '0').toString())
@@ -206,6 +225,7 @@ function ModifyTransactionsModal({
               if (item.id === (res as IWalletTransaction).id) {
                 return res as IWalletTransaction
               }
+
               return item
             })
             .sort((a, b) => {

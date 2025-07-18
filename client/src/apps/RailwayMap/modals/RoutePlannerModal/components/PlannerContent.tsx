@@ -30,6 +30,7 @@ function PlannerContent({
     setSelectedStation,
     setShortestRoute
   } = useRailwayMapContext()
+
   const [loading, setLoading] = useState(false)
 
   const filteredStart = useMemo(
@@ -45,16 +46,19 @@ function PlannerContent({
   const handleSubmit = useCallback(async () => {
     if (!start || !end) {
       toast.error('Please select a start and end station.')
+
       return
     }
 
     setLoading(true)
     setShortestRoute('loading')
+
     try {
       const data = await fetchShortestRoute(start, end)
 
       if (!data) {
         toast.error('No route found.')
+
         return
       }
 

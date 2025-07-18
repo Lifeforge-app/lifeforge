@@ -11,6 +11,7 @@ function SignInButton({
   signIn: () => void
 }) {
   const { auth } = useAuth()
+
   return (
     <Button
       iconAtEnd

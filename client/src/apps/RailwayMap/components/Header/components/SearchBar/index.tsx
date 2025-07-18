@@ -7,6 +7,7 @@ import SearchResultItem from './components/SearchResultItem'
 
 function SearchBar() {
   const { searchQuery, setSearchQuery, stations } = useRailwayMapContext()
+
   const searchResults = useMemo(() => {
     return stations
       .filter(station =>

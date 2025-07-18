@@ -88,4 +88,5 @@ type ITranscription = InferApiESchemaDynamic<typeof Transcription>;
 type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { ITranscription, IEntries };
+
 export { Transcription, Entries };

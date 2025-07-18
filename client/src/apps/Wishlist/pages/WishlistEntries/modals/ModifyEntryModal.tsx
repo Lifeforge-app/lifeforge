@@ -24,15 +24,19 @@ function ModifyEntryModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.wishlist')
+
   const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
     'wishlist',
     'lists'
   ])
+
   const collectionIdQuery = useAPIQuery<string>(
     'wishlist/entries/collection-id',
     ['wishlist', 'entries', 'collection-id']
   )
+
   const [data, setData] = useState({
     list: '',
     url: '',
@@ -92,6 +96,7 @@ function ModifyEntryModal({
 
   async function onSubmitButtonClick() {
     const { list, url, name, price, image } = data
+
     if (
       list.trim().length === 0 ||
       url.trim().length === 0 ||
@@ -99,10 +104,12 @@ function ModifyEntryModal({
       price.trim().length === 0
     ) {
       toast.error(t('input.error.fieldEmpty'))
+
       return
     }
 
     const formData = new FormData()
+
     formData.append('list', list)
     formData.append('url', url)
     formData.append('name', name)

@@ -9,6 +9,7 @@ function TaskStatusList({
   setSidebarOpen: (value: boolean) => void
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
+
   const { statusCounterQuery } = useTodoListContext()
 
   return (
@@ -40,6 +41,7 @@ function TaskStatusList({
                   searchParams.delete('status')
                   setSearchParams(searchParams)
                   setSidebarOpen(false)
+
                   return
                 }
                 setSearchParams({

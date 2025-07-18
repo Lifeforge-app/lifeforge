@@ -18,7 +18,9 @@ function TypeSectionItem({
   amount: number | undefined
 }) {
   const { t } = useTranslation('apps.wallet')
+
   const { bgTempPalette } = usePersonalization()
+
   const { selectedType, setSelectedType, setSelectedCategory, setSidebarOpen } =
     useWalletStore()
 

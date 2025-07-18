@@ -10,13 +10,17 @@ export const setupZooming = (
   centerStation: IRailwayMapStation
 ) => {
   const svgNode = svg.node()
+
   if (!svgNode) return
 
   const { width, height } = svgNode.getBoundingClientRect()
+
   const { x: centerX, y: centerY } = centerStation.map_data
 
   const initialScale = window.innerWidth < 1280 ? 0.5 : 0.7
+
   const centerTx = width / 2 - centerX * initialScale
+
   const centerTy = height / 2 - centerY * initialScale
 
   zoomBehavior = d3
@@ -57,23 +61,29 @@ export const centerMapOnStation = (
   if (!station.map_data || !svgRef.current || !gRef.current) return
 
   const svg = d3.select(svgRef.current)
+
   const g = d3.select(gRef.current)
 
   if (svg.empty() || g.empty()) return
 
   const { x, y } = station.map_data
+
   const { x: centerX, y: centerY } = centerStation.map_data
 
   const svgNode = svg.node()
+
   if (!svgNode) return
 
   const { width, height } = svgNode.getBoundingClientRect()
 
   const initialScale = window.innerWidth < 1280 ? 0.5 : 0.7
+
   const centerTx = width / 2 - centerX * initialScale
+
   const centerTy = height / 2 - centerY * initialScale
 
   const targetTx = width / 2 - x * scale
+
   const targetTy = height / 2 - y * scale
 
   if (needZoom) {

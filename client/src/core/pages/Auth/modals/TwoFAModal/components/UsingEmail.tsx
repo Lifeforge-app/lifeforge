@@ -16,12 +16,19 @@ function UsingEmail({
   callback: (otp: string) => Promise<void>
 }) {
   const { tid } = useAuth()
+
   const { t } = useTranslation('common.auth')
+
   const [otp, setOTP] = useState('')
+
   const [email, setEmail] = useState('')
+
   const [sendOtpLoading, setSendOtpLoading] = useState(false)
+
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
+
   const [otpSent, setOtpSent] = useState(false)
+
   const [otpCooldown, setOtpCooldown] = useState(
     localStorage.getItem(`otpCooldown:2fa`)
       ? Math.floor(
@@ -35,6 +42,7 @@ function UsingEmail({
   async function requestOTP(): Promise<void> {
     if (otpCooldown > 0) {
       toast.error(t('otp.messages.cooldown'))
+
       return
     }
 
@@ -53,7 +61,9 @@ function UsingEmail({
       tid.current = res
       setOtpSent(true)
       setOtpCooldown(60)
+
       const coolDown = new Date().getTime() + 60000
+
       localStorage.setItem(`otpId:2fa`, res)
       localStorage.setItem(`otpCooldown:2fa`, coolDown.toString())
       toast.success(t('messages.otpSent'))
@@ -67,10 +77,13 @@ function UsingEmail({
   useEffect(() => {
     if (otpCooldown > 0) {
       setOtpSent(true)
+
       const existedTid = localStorage.getItem(`otpId:2fa`)
+
       if (existedTid) {
         tid.current = existedTid
       }
+
       const interval = setInterval(() => {
         setOtpCooldown(prev => prev - 1)
 
@@ -79,6 +92,7 @@ function UsingEmail({
           clearInterval(interval)
         }
       }, 1000)
+
       return () => {
         clearInterval(interval)
       }

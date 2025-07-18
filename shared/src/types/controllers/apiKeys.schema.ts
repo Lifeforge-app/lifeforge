@@ -125,4 +125,5 @@ type IAuth = InferApiESchemaDynamic<typeof Auth>;
 type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IAuth, IEntries };
+
 export { Auth, Entries };

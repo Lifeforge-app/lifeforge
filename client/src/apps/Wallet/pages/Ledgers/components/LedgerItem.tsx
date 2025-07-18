@@ -13,7 +13,9 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
   const { t } = useTranslation('apps.wallet')
 
   const navigate = useNavigate()
+
   const { transactionsQuery } = useWalletData()
+
   const open = useModalStore(state => state.open)
 
   return (

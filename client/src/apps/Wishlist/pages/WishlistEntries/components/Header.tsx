@@ -17,8 +17,11 @@ function Header({
   wishlistListDetails: IWishlistList
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wishlist')
+
   const { id } = useParams<{ id: string }>()
+
   const navigate = useNavigate()
 
   const handleAddManually = useCallback(() => {

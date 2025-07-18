@@ -51,4 +51,5 @@ const Entries = {
 type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IEntries };
+
 export { Entries };

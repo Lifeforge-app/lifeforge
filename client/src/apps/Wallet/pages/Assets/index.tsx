@@ -21,10 +21,15 @@ import ModifyAssetModal from './modals/ModifyAssetModal'
 
 function Assets() {
   const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wallet')
+
   const { assetsQuery } = useWalletData()
+
   const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
+
   const { hash } = useLocation()
 
   const handleCreateCategory = useCallback(() => {

@@ -11,15 +11,19 @@ import { useAuth } from '../../../providers/AuthProvider'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']
+
   const v = number % 100
+
   return number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
 }
 
 const getEventType = (userDOB: string): string => {
   const today = dayjs().format('MM-DD')
+
   if (today === '08-31') return 'merdeka'
   if (today === '12-25') return 'christmas'
   if (dayjs(userDOB).format('MM-DD') === today) return 'birthday'
+
   return ''
 }
 
@@ -52,12 +56,15 @@ const getEventIcon = (eventType: string) => {
     christmas: 'tabler:christmas-ball',
     birthday: 'mingcute:gift-2-line'
   }
+
   return iconMap[eventType] || ''
 }
 
 const SidebarEventBanner = () => {
   const { sidebarExpanded } = useSidebarState()
+
   const { derivedThemeColor: themeColor } = usePersonalization()
+
   const { userData } = useAuth()
 
   const eventType = useMemo(
@@ -70,6 +77,7 @@ const SidebarEventBanner = () => {
   const textColor = tinycolor(themeColor).isLight()
     ? 'text-bg-800'
     : 'text-bg-50'
+
   const bgColor =
     eventType === 'christmas' ? 'bg-[#f14e63] text-bg-100!' : 'bg-custom-500'
 

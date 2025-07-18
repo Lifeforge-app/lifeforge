@@ -27,15 +27,19 @@ function ModifyEventModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
   const calendarsQuery = useAPIQuery<ICalendarCalendar[]>(
     'calendar/calendars',
     ['calendar', 'calendars']
   )
+
   const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
     'calendar/categories',
     ['calendar', 'categories']
   )
+
   const { eventQueryKey } = useCalendarStore()
+
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     type: 'single',
     title: '',
@@ -51,6 +55,7 @@ function ModifyEventModal({
     recurring_duration_amount: '1',
     recurring_duration_unit: 'day'
   })
+
   const ref = useRef<HTMLInputElement>(null)
 
   const FIELDS: IFieldProps<ICalendarEventFormState>[] = useMemo(
@@ -221,7 +226,9 @@ function ModifyEventModal({
         const data: Omit<ICalendarEvent, 'use_google_map'> = {
           ...originalData
         }
+
         delete data.use_google_map
+
         return data
       }}
       icon={

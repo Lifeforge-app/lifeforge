@@ -41,7 +41,9 @@ const LANGUAGES: Array<{
 
 function LanguageSelector() {
   const { language } = usePersonalization()
+
   const { changeLanguage } = useUserPersonalization()
+
   const { t } = useTranslation('core.personalization')
 
   return (

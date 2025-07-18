@@ -10,13 +10,16 @@ import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.booksLibrary')
+
   const {
     // categories: { dataQuery: categoriesQuery },
     // languages: { dataQuery: languagesQuery },
     // fileTypes: { dataQuery: fileTypesQuery },
     miscellaneous: { setSidebarOpen, searchQuery }
   } = useBooksLibraryContext()
+
   const [searchParams] = useSearchParams()
 
   const handleOpenLibgenModal = useCallback(() => {

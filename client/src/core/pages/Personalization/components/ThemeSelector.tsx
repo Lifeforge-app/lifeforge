@@ -8,7 +8,9 @@ import { usePersonalization } from 'shared/lib'
 
 function ThemeSelector() {
   const { theme } = usePersonalization()
+
   const { t } = useTranslation('core.personalization')
+
   const { changeTheme } = useUserPersonalization()
 
   return (

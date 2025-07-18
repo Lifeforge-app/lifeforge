@@ -26,9 +26,13 @@ export const PasswordsContext = createContext<IPasswordsData | undefined>(
 
 export default function PasswordsProvider() {
   const [otpSuccess, setOtpSuccess] = useState(false)
+
   const [masterPassword, setMasterPassword] = useState('')
+
   const [query, setQuery] = useState('')
+
   const debouncedQuery = useDebounce(query, 300)
+
   const passwordListQuery = useAPIQuery<IPasswordEntry[]>(
     'passwords/entries',
     ['passwords', 'entries'],
@@ -37,12 +41,15 @@ export default function PasswordsProvider() {
 
   const filteredPasswordList = useMemo(() => {
     const passwordList = passwordListQuery.data
+
     if (!passwordList) {
       return []
     }
+
     if (debouncedQuery === '') {
       return passwordList
     }
+
     return passwordList.filter(
       password =>
         password.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
@@ -75,10 +82,12 @@ export default function PasswordsProvider() {
 
 export function usePasswordContext(): IPasswordsData {
   const context = useContext(PasswordsContext)
+
   if (context === undefined) {
     throw new Error(
       'usePasswordContext must be used within a PasswordsProvider'
     )
   }
+
   return context
 }

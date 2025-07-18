@@ -21,13 +21,17 @@ function ScoreItem({
   cookie: string
 }) {
   const queryClient = useQueryClient()
+
   const socket = useSocketContext()
+
   const [audioInstance, setAudioInstance] = useState<HTMLAudioElement | null>(
     null
   )
+
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean | 'loading'>(
     false
   )
+
   const [isDownloading, setIsDownloading] = useState<boolean>(false)
 
   async function toggleMusicPlay() {
@@ -35,16 +39,19 @@ function ScoreItem({
       if (isAudioPlaying === true) {
         audioInstance.pause()
         setIsAudioPlaying(false)
+
         return
       }
 
       setIsAudioPlaying('loading')
       await audioInstance.play()
       setIsAudioPlaying(true)
+
       return
     }
 
     const audio = new Audio(entry.audioUrl)
+
     setAudioInstance(audio)
     setIsAudioPlaying('loading')
     await audio.play()

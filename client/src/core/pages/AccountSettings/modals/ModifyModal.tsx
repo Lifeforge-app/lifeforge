@@ -16,8 +16,11 @@ function ModifyModal({
   onClose: () => void
 }) {
   const { userData, setUserData } = useAuth()
+
   const [value, setValue] = useState(userData[id])
+
   const [loading, setLoading] = useState(false)
+
   const modalRef = useRef<HTMLDivElement>(null)
 
   async function onSubmit() {

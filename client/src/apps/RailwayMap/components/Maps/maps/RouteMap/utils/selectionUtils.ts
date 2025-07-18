@@ -12,6 +12,7 @@ export const clearSelection = (
   initialFill: string
 ) => {
   const elements = g.selectAll('circle, rect')
+
   if (elements.empty()) return
 
   elements
@@ -32,6 +33,7 @@ export const updateSelection = (
   clearSelection(g, initialFill)
 
   const stationElement = g.select(`#station-${selectedStation.id}`)
+
   if (stationElement.empty()) return
 
   stationElement.transition().duration(100).attr('stroke-width', 5)
@@ -45,6 +47,7 @@ export const updateSelection = (
       })
   } else {
     const line = getLine(selectedStation, lines)
+
     stationElement
       .transition()
       .duration(100)

@@ -11,6 +11,7 @@ import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function TableView({ categories }: { categories: IWalletCategory[] }) {
   const { t } = useTranslation('apps.wallet')
+
   const { transactionsQuery } = useWalletData()
 
   return (

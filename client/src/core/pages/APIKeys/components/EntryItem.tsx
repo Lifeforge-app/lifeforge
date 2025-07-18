@@ -28,12 +28,15 @@ function EntryItem({
   masterPassword: string
 }) {
   const open = useModalStore(state => state.open)
+
   const [isCopying, setIsCopying] = useState(false)
+
   async function copyKey() {
     const challenge = await fetchAPI<string>(
       import.meta.env.VITE_API_HOST,
       'api-keys/auth/challenge'
     )
+
     setIsCopying(true)
 
     try {
@@ -45,6 +48,7 @@ function EntryItem({
       )
 
       const decryptedKey = decrypt(data, challenge)
+
       const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
 
       copy(decryptedSecondTime)

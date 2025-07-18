@@ -10,12 +10,15 @@ import { encrypt } from '@security/utils/encryption'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('core.accountSettings')
+
   const [otp, setOtp] = useState('')
+
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
 
   async function verifyOTP() {
     if (otp.length !== 6) {
       toast.error(t('otp.messages.invalid'))
+
       return
     }
 
@@ -26,6 +29,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
         import.meta.env.VITE_API_HOST,
         `/user/2fa/challenge`
       )
+
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
         `/user/2fa/verify-and-enable`,

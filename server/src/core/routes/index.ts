@@ -34,7 +34,7 @@ for (const [route, module] of Object.entries(LIB_ROUTES)) {
         .default,
     );
   } catch (error) {
-    console.error(`Failed to load module for route ${route}:`);
+    console.error(`Failed to load module for route ${route}: `, error);
   }
 }
 
@@ -102,11 +102,11 @@ const corsAnywhere = forgeController
   .description("Proxy request to bypass CORS")
   .schema({
     query: z.object({
-      url: z.string().url(),
+      url: z.url(),
     }),
     response: z.any(),
   })
-  .callback(async ({ query: { url }, res }) => {
+  .callback(async ({ query: { url } }) => {
     const response = await fetch(url, {
       headers: {
         "User-Agent":

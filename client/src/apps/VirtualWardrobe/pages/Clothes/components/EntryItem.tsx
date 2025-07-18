@@ -48,14 +48,17 @@ function EntryItem<T extends boolean = false>({
   onRemoveFromCart
 }: IEntryItemProps<T>) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
 
   const [addToCartLoading, setAddToCartLoading] = useState(false)
+
   const [removeFromCartLoading, setRemoveFromCartLoading] = useState(false)
 
   async function handleAddToCart() {
     if (isInCart) {
       toast.info('Item already in cart')
+
       return
     }
 
@@ -72,6 +75,7 @@ function EntryItem<T extends boolean = false>({
         ['virtual-wardrobe', 'session-cart-items'],
         prev => {
           if (!prev) return prev
+
           return [...prev, entry]
         }
       )
@@ -101,6 +105,7 @@ function EntryItem<T extends boolean = false>({
           ['virtual-wardrobe', 'session-cart-items'],
           prev => {
             if (!prev) return prev
+
             return prev.filter(e => e.id !== entry.id)
           }
         )

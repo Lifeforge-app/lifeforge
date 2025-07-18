@@ -13,7 +13,9 @@ import { centerMapOnStation } from './zoomUtils'
 export type StationSelectionCallback = (
   station: IRailwayMapStation | null
 ) => void
+
 export type Theme = 'light' | 'dark'
+
 export type ColorMap = { [key: number]: string }
 
 export const addStationInteraction = (
@@ -45,6 +47,7 @@ export const drawText = (
     .attr('font-family', 'LTAIdentityMedium')
     .each(function () {
       const textElement = d3.select(this)
+
       const lines = station.map_data.text.split('\n')
 
       lines.forEach((line, i) => {
@@ -85,6 +88,7 @@ export const drawInterchange = (
   }
 
   const item = g.append('rect')
+
   Object.entries(attributes).forEach(([key, value]) => {
     item.attr(key, value)
   })
@@ -149,6 +153,7 @@ export const drawStation = (
   }
 
   const item = g.append('circle')
+
   Object.entries(attributes).forEach(([key, value]) => {
     item.attr(key, value)
   })
@@ -192,15 +197,18 @@ export const drawStations = (
     if (ignoreStation(station, shortestRoute)) return
 
     const isSelected = station.id === selectedStation?.id
+
     const isInRoute =
       typeof shortestRoute !== 'string'
         ? shortestRoute.some(s => s.id === station.id)
         : false
 
     const textColor = bgTemp[finalTheme === 'dark' ? 200 : 800]
+
     drawText(g, station, textColor)
 
     const line = getLine(station, lines)
+
     const fill = (() => {
       if (isInRoute || isSelected) {
         return line ? line.color : bgTemp[200]
@@ -221,6 +229,7 @@ export const drawStations = (
         gRef,
         centerStation
       )
+
       return
     }
 
@@ -265,6 +274,7 @@ export const drawLines = (
       }
 
       const item = g.append('path')
+
       Object.entries(attributes).forEach(([key, value]) => {
         item.attr(key, value)
       })

@@ -49,6 +49,7 @@ function MiniCalendarContent({
             ).toDate()
 
             const firstDay = dayjs(date).startOf('month').day()
+
             const lastDate = dayjs(date).endOf('month').date()
 
             const lastDateOfPrevMonth = dayjs(date)

@@ -19,6 +19,7 @@ function FontFamilyList({
   allFonts
 }: FontFamilyListProps) {
   const { t } = useTranslation('core.personalization')
+
   const { changeFontFamily } = useUserPersonalization()
 
   if (enabled === 'loading') {

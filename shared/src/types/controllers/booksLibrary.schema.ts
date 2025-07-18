@@ -131,6 +131,7 @@ const Entries = {
     }).extend({
       year_published: z.string().transform((val) => {
         const year = parseInt(val, 10);
+
         return isNaN(year) ? 0 : year;
       }),
     }),
@@ -272,4 +273,5 @@ type IEntries = InferApiESchemaDynamic<typeof Entries>;
 type ILibgen = InferApiESchemaDynamic<typeof Libgen>;
 
 export type { ILanguages, IFileTypes, ICollection, IEntries, ILibgen };
+
 export { Languages, FileTypes, Collection, Entries, Libgen };

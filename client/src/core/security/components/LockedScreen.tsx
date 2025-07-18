@@ -17,12 +17,15 @@ function LockedScreen({
 }) {
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
+
   const [loading, setLoading] = useState(false)
+
   const { t } = useTranslation('common.vault')
 
   async function onSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
       toast.error('Please fill in all the field')
+
       return
     }
 

@@ -6,6 +6,7 @@ import SidebarSection from './components/SidebarSection'
 
 function Sidebar() {
   const [searchParams, setSearchParams] = useSearchParams()
+
   const {
     miscellaneous: { sidebarOpen, setSidebarOpen }
   } = useBooksLibraryContext()

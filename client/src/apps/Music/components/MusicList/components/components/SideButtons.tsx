@@ -14,7 +14,9 @@ import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 
 function SideButtons({ music }: { music: IMusicEntry }) {
   const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
+
   const { toggleFavourite } = useMusicContext()
 
   const handleUpdateEntry = useCallback(() => {

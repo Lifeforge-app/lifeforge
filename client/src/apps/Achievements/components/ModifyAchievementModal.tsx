@@ -29,6 +29,7 @@ function ModifyAchievementModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.achievements')
+
   const [formState, setFormState] = useState<
     AchievementsControllersSchemas.IEntries['createEntry']['body']
   >({

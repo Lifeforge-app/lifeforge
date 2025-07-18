@@ -18,6 +18,7 @@ function HeaderMenu({
   setVisibleColumn: React.Dispatch<React.SetStateAction<string[]>>
 }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
 
   const handleRefresh = useCallback(() => {

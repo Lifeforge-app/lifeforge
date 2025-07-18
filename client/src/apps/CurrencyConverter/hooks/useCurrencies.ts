@@ -5,6 +5,7 @@ import { Currency } from '../interfaces/currency_converter_interfaces'
 
 export function useCurrencies() {
   const [fromQuery, setFromQuery] = useState<string>('')
+
   const [toQuery, setToQuery] = useState<string>('')
 
   const currencies = useMemo<Currency[]>(() => {
@@ -18,7 +19,9 @@ export function useCurrencies() {
 
   const filteredFromCurrencies = useMemo(() => {
     if (!fromQuery.trim()) return currencies
+
     const query = fromQuery.toLowerCase()
+
     return currencies.filter(
       currency =>
         currency.code.toLowerCase().includes(query) ||
@@ -28,7 +31,9 @@ export function useCurrencies() {
 
   const filteredToCurrencies = useMemo(() => {
     if (!toQuery.trim()) return currencies
+
     const query = toQuery.toLowerCase()
+
     return currencies.filter(
       currency =>
         currency.code.toLowerCase().includes(query) ||

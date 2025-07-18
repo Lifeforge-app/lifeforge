@@ -21,10 +21,12 @@ function ComponentListItem({
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const { t } = useTranslation('core.dashboard')
+
   const {
     dashboardLayout: enabledWidgets,
     setDashboardLayout: setEnabledWidgets
   } = usePersonalization()
+
   const { changeDashboardLayout: setDashboardLayout } = useUserPersonalization()
 
   const isEnabled = useMemo(() => {
@@ -84,6 +86,7 @@ function ComponentListItem({
         JSON.parse(JSON.stringify(enabledWidgets)) as IDashboardLayout
       ).map(([k, value]) => [k, value.filter(i => i.i !== id)])
     )
+
     if (Object.values(newEnabledWidgets).every(e => e.length === 0)) {
       setDashboardLayout({})
     } else {
@@ -100,6 +103,7 @@ function ComponentListItem({
 
     if (isEnabled) {
       removeComponent()
+
       return
     }
 

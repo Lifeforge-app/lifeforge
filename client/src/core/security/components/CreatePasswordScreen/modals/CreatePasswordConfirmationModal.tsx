@@ -17,6 +17,7 @@ function CreatePasswordConfirmationModal({
   onClose: () => void
 }) {
   const [loading, setLoading] = useState(false)
+
   const { t } = useTranslation('common.vault')
 
   async function onSubmit(): Promise<void> {
@@ -25,6 +26,7 @@ function CreatePasswordConfirmationModal({
 
       return
     }
+
     if (newPassword.trim() !== confirmPassword.trim()) {
       toast.error('Passwords do not match')
 

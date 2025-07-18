@@ -25,10 +25,15 @@ function ModifyItemModal({
   }
 }) {
   const queryClient = useQueryClient()
+
   const [step, setStep] = useState<number>(1)
+
   const [frontImage, setFrontImage] = useState<File | null>(null)
+
   const [backImage, setBackImage] = useState<File | null>(null)
+
   const [frontPreview, setFrontPreview] = useState<string | null>(null)
+
   const [backPreview, setBackPreview] = useState<string | null>(null)
 
   const [formState, setFormState] = useState<IVirtualWardrobeFormState>({
@@ -41,6 +46,7 @@ function ModifyItemModal({
     price: '',
     notes: ''
   })
+
   const [submitButtonLoading, setSubmitButtonLoading] = useState<boolean>(false)
 
   function handleChange(field: keyof IVirtualWardrobeFormState) {
@@ -60,6 +66,7 @@ function ModifyItemModal({
       (type === 'create' && (frontImage === null || backImage === null))
     ) {
       toast.error('Please fill in all required fields')
+
       return
     }
 

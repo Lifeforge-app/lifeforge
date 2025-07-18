@@ -18,12 +18,14 @@ import MusicList from './components/MusicList'
 function Music() {
   const { searchQuery, setSearchQuery, musicsQuery, currentMusic, togglePlay } =
     useMusicContext()
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.code === 'Space' && (e.target as HTMLElement).tagName !== 'INPUT') {
         e.preventDefault()
+
         if (currentMusic !== null) {
           togglePlay(currentMusic).catch(console.error)
         }

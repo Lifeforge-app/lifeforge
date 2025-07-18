@@ -29,12 +29,19 @@ import ShowTicketModal from './modals/ShowTicketModal'
 
 function Movies() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.movies')
+
   const queryClient = useQueryClient()
+
   const [searchParams, setSearchParams] = useSearchParams()
+
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
+
   const [currentTab, setCurrentTab] = useState<'unwatched' | 'watched'>(
     'unwatched'
   )
@@ -55,6 +62,7 @@ function Movies() {
       const target = entriesQuery.data.entries.find(
         entry => entry.id === searchParams.get('show-ticket')
       )
+
       if (!target) return
 
       open(ShowTicketModal, {
@@ -138,6 +146,7 @@ function Movies() {
           }
 
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
+
           return (
             <>
               <Tabs
@@ -170,6 +179,7 @@ function Movies() {
                   const matchesSearch = entry.title
                     .toLowerCase()
                     .includes(debouncedSearchQuery.toLowerCase())
+
                   const matchesTab =
                     currentTab === 'unwatched'
                       ? !entry.is_watched

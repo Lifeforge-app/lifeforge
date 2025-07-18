@@ -27,6 +27,7 @@ function ConversionResult({
   lastUpdated
 }: ConversionResultProps) {
   const { t } = useTranslation('apps.currencyConverter')
+
   const { currencies } = useCurrencies()
 
   if (isLoading) {

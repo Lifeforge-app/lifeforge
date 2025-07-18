@@ -33,6 +33,7 @@ ChartJS.register(
 
 function Dashboard() {
   const open = useModalStore(state => state.open)
+
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const [canLayoutChange, setCanLayoutChange] = useState(false)

@@ -9,7 +9,9 @@ import AssetsSectionItem from './AssetsSectionItem'
 
 function AssetsSection() {
   const { t } = useTranslation('apps.wallet')
+
   const { assetsQuery } = useWalletData()
+
   const navigate = useNavigate()
 
   const handleActionButtonClick = useCallback(() => {

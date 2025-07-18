@@ -10,6 +10,7 @@ function Header({
   setSidebarOpen: (value: boolean) => void
 }) {
   const { t } = useTranslation('apps.todoList')
+
   const {
     entriesQuery,
     // prioritiesQuery,
@@ -18,6 +19,7 @@ function Header({
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
+
   const [searchParams] = useSearchParams()
 
   const entries = entriesQuery.data ?? []
@@ -32,13 +34,16 @@ function Header({
           {`${t(
             `headers.${(() => {
               const status = searchParams.get('status')
+
               const hasFilter =
                 searchParams.has('list') ||
                 searchParams.has('tag') ||
                 searchParams.has('priority')
+
               if (status === null || status === '') {
                 return hasFilter ? 'filtered' : 'all'
               }
+
               return status === 'today' ? 'todays' : status
             })().toLowerCase()}Tasks`
           )}`.trim()}{' '}

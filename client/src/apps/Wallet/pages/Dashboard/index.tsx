@@ -46,7 +46,9 @@ ChartJS.register(
 
 function WalletDashboard() {
   const navigate = useNavigate()
+
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
+
   const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
 
   return (

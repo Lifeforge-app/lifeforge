@@ -41,10 +41,13 @@ export function useFilteredTransactions(transactions: IWalletTransaction[]) {
             ? dayjs(startDate)
             : dayjs('1900-01-01')
         ).startOf('day')
+
         const end = (
           endDate && dayjs(endDate).isValid() ? dayjs(endDate) : dayjs()
         ).endOf('day')
+
         const date = dayjs(tx.date)
+
         return date.isSameOrAfter(start) && date.isSameOrBefore(end)
       })
   }, [

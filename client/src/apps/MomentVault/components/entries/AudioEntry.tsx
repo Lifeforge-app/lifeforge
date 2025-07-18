@@ -24,6 +24,7 @@ function AudioEntry({
   onDelete: () => void
 }) {
   const stack = useModalStore(state => state.stack)
+
   const {
     derivedTheme,
     bgTempPalette,
@@ -33,9 +34,13 @@ function AudioEntry({
   const queryClient = useQueryClient()
 
   const [totalTime, setTotalTime] = useState(0)
+
   const [currentTime, setCurrentTime] = useState(0)
+
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
+
   const [isPlaying, setIsPlaying] = useState(false)
+
   const [transcriptionLoading, setTranscriptionLoading] = useState(false)
 
   const onReady = (ws: any) => {
@@ -78,8 +83,10 @@ function AudioEntry({
                 transcription: data
               }
             }
+
             return item
           })
+
           return {
             ...prev,
             items: newData
@@ -99,6 +106,7 @@ function AudioEntry({
     // Force rerender the component
     // This is a workaround for the issue where the component does not rerender properly for some reason
     const el = document.getElementById(`audio-entry-${entry.id}`)
+
     if (el) {
       el.style.willChange = 'opacity, transform'
       el.getBoundingClientRect()
