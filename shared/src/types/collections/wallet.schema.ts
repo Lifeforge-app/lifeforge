@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: wallet
- * Generated at: 2025-07-18T10:36:14.105Z
+ * Generated at: 2025-07-18T12:15:50.185Z
  * Contains: wallet__assets, wallet__ledgers, wallet__categories, wallet__transactions, wallet__categories_aggregated, wallet__assets_aggregated, wallet__ledgers_aggregated, wallet__transaction_types_aggregated
  */
 
 import { z } from "zod/v4";
+
 const Asset = z.object({
   name: z.string(),
   icon: z.string(),

@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: virtualWardrobe
- * Generated at: 2025-07-18T10:36:14.100Z
+ * Generated at: 2025-07-18T12:15:50.180Z
  * Contains: virtual_wardrobe__entries, virtual_wardrobe__histories
  */
 
 import { z } from "zod/v4";
+
 const Entry = z.object({
   name: z.string(),
   category: z.string(),

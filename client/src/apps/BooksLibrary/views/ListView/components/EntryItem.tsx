@@ -9,7 +9,7 @@ import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
@@ -18,7 +18,7 @@ import EntryContextMenu from '../../components/EntryContextMenu'
 export default function EntryItem({
   item
 }: {
-  item: ISchemaWithPB<BooksLibrarySchemas.IEntry>
+  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const { t } = useTranslation('apps.booksLibrary')
   const { derivedThemeColor } = usePersonalization()
@@ -32,7 +32,7 @@ export default function EntryItem({
     setAddToFavouritesLoading(true)
 
     try {
-      await fetchAPI<ISchemaWithPB<BooksLibrarySchemas.IEntry>>(
+      await fetchAPI<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(
         import.meta.env.VITE_API_HOST,
         `books-library/entries/favourite/${item.id}`,
         {
@@ -40,23 +40,22 @@ export default function EntryItem({
         }
       )
 
-      queryClient.setQueryData<ISchemaWithPB<BooksLibrarySchemas.IEntry>[]>(
-        ['books-library', 'entries'],
-        prevEntries => {
-          if (!prevEntries) return []
+      queryClient.setQueryData<
+        ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
+      >(['books-library', 'entries'], prevEntries => {
+        if (!prevEntries) return []
 
-          return prevEntries.map(entry => {
-            if (entry.id === item.id) {
-              return {
-                ...entry,
-                is_favourite: !entry.is_favourite
-              }
+        return prevEntries.map(entry => {
+          if (entry.id === item.id) {
+            return {
+              ...entry,
+              is_favourite: !entry.is_favourite
             }
+          }
 
-            return entry
-          })
-        }
-      )
+          return entry
+        })
+      })
     } catch {
       console.error('Failed to add to favourites')
     } finally {

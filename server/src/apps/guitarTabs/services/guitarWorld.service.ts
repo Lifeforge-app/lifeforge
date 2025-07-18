@@ -1,7 +1,7 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
 import PocketBase from "pocketbase";
-import { GuitarTabsSchemas } from "shared/types";
+import { GuitarTabsCollectionsSchemas } from "shared/types/collections";
 import sharp from "sharp";
 import { Server } from "socket.io";
 
@@ -16,7 +16,7 @@ export const getTabsList = async (
   cookie: string,
   page: number,
 ): Promise<{
-  data: GuitarTabsSchemas.IGuitarTabsGuitarWorldEntry[];
+  data: GuitarTabsCollectionsSchemas.IGuitarTabsGuitarWorldEntry[];
   totalItems: number;
   perPage: number;
 }> => {
@@ -117,6 +117,7 @@ export const downloadTab = async (
       }
 
       const folder = `./medium/${id}`;
+
       if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
       }
@@ -133,7 +134,9 @@ export const downloadTab = async (
       }
 
       const doc = new PDFDocument({ autoFirstPage: false });
+
       const writeStream = fs.createWriteStream("./medium/" + id + ".pdf");
+
       doc.pipe(writeStream);
 
       const images = fs
@@ -143,6 +146,7 @@ export const downloadTab = async (
 
       for (const image of images) {
         const imageBuffer = await sharp(image).png().toBuffer();
+
         const { width, height } = await sharp(imageBuffer).metadata();
 
         doc.addPage({ size: [width!, height!] });
@@ -162,7 +166,7 @@ export const downloadTab = async (
 
         const newEntry = await pb
           .collection("guitar_tabs__entries")
-          .create<WithPB<GuitarTabsSchemas.IEntry>>({
+          .create<WithPB<GuitarTabsCollectionsSchemas.IEntry>>({
             name,
             author: mainArtist,
             pageCount: images.length,

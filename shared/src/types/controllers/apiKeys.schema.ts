@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { ApiKeysCollectionsCollectionsSchemas } from "../collections";
 
 const Auth = {
   /**
@@ -54,7 +55,7 @@ const Entries = {
     query: z.object({
       master: z.string(),
     }),
-    response: z.array(SchemaWithPB(ApiKeysSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(ApiKeysCollectionsSchemas.Entry)),
   },
 
   /**
@@ -90,7 +91,7 @@ const Entries = {
     body: z.object({
       data: z.string(),
     }),
-    response: SchemaWithPB(ApiKeysSchemas.EntrySchema),
+    response: SchemaWithPB(ApiKeysCollectionsSchemas.Entry),
   },
 
   /**
@@ -104,7 +105,7 @@ const Entries = {
     body: z.object({
       data: z.string(),
     }),
-    response: SchemaWithPB(ApiKeysSchemas.EntrySchema),
+    response: SchemaWithPB(ApiKeysCollectionsSchemas.Entry),
   },
 
   /**

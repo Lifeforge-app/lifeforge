@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
@@ -15,7 +15,7 @@ import EntryContextMenu from '../../components/EntryContextMenu'
 function EntryItem({
   item
 }: {
-  item: ISchemaWithPB<BooksLibrarySchemas.IEntry>
+  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const { derivedThemeColor } = usePersonalization()
   const { collectionsQuery } = useBooksLibraryContext()

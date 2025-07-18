@@ -56,6 +56,7 @@ export async function fetchAI<
     });
 
     const parsedResponse = completion.choices[0]?.message?.parsed;
+
     if (!parsedResponse) {
       return null;
     }

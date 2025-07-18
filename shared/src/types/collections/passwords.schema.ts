@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: passwords
- * Generated at: 2025-07-18T10:36:14.103Z
+ * Generated at: 2025-07-18T12:15:50.183Z
  * Contains: passwords__entries
  */
 
 import { z } from "zod/v4";
+
 const Entry = z.object({
   name: z.string(),
   website: z.string(),

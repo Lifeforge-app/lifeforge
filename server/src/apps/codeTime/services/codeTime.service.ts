@@ -1,18 +1,20 @@
 import moment from "moment";
 import PocketBase from "pocketbase";
 import puppeteer from "puppeteer-core";
-import { CodeTimeSchemas } from "shared/types";
+import { CodeTimeCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
 export const addDays = (date: Date, days: number): Date => {
   const newDate = new Date(date.valueOf());
+
   newDate.setDate(newDate.getDate() + days);
   return newDate;
 };
 
 export const getDates = (startDate: Date, stopDate: Date): Date[] => {
   const dateArray = [];
+
   let currentDate = startDate;
   while (currentDate <= stopDate) {
     dateArray.push(new Date(currentDate));
@@ -24,18 +26,19 @@ export const getDates = (startDate: Date, stopDate: Date): Date[] => {
 export const getActivities = async (
   pb: PocketBase,
   year?: number,
-): Promise<CodeTimeSchemas.ICodeTimeActivities> => {
+): Promise<CodeTimeCollectionsSchemas.ICodeTimeActivities> => {
   const yearValue = Number(year) || new Date().getFullYear();
 
   const data = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
+    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${yearValue}-01-01 00:00:00.000Z" && date <= "${yearValue}-12-31 23:59:59.999Z"`,
     });
 
   const groupByDate = data.reduce(
     (acc, item) => {
       const dateKey = moment(item.date).format("YYYY-MM-DD");
+
       acc[dateKey] = item.total_minutes;
       return acc;
     },
@@ -47,6 +50,7 @@ export const getActivities = async (
     count: totalMinutes,
     level: (() => {
       const hours = totalMinutes / 60;
+
       if (hours < 1) {
         return 1;
       }
@@ -81,7 +85,7 @@ export const getActivities = async (
 
   const firstRecordEver = await pb
     .collection("code_time__daily_entries")
-    .getList<WithPB<CodeTimeSchemas.IDailyEntry>>(1, 1, {
+    .getList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>(1, 1, {
       sort: "+date",
     });
 
@@ -93,7 +97,7 @@ export const getActivities = async (
 
 export const getStatistics = async (
   pb: PocketBase,
-): Promise<CodeTimeSchemas.ICodeTimeStatistics> => {
+): Promise<CodeTimeCollectionsSchemas.ICodeTimeStatistics> => {
   const everything = await pb
     .collection("code_time__daily_entries")
     .getFullList({
@@ -103,8 +107,10 @@ export const getStatistics = async (
   let groupByDate: { date: string; count: number }[] = [];
 
   const dateMap: { [key: string]: number } = {};
+
   for (const item of everything) {
     const dateKey = moment(item.date).format("YYYY-MM-DD");
+
     dateMap[dateKey] = item.total_minutes;
   }
 
@@ -124,7 +130,9 @@ export const getStatistics = async (
   });
 
   const mostTimeSpent = groupByDate.length > 0 ? groupByDate[0].count : 0;
+
   const total = everything.reduce((acc, curr) => acc + curr.total_minutes, 0);
+
   const average = groupByDate.length > 0 ? total / groupByDate.length : 0;
 
   groupByDate = groupByDate.sort((a, b) => a.date.localeCompare(b.date));
@@ -138,6 +146,7 @@ export const getStatistics = async (
     let longest = 0;
 
     const firstDate = new Date(allDates[0]);
+
     const lastDate = new Date(allDates[allDates.length - 1]);
 
     const dates = getDates(firstDate, lastDate);
@@ -146,6 +155,7 @@ export const getStatistics = async (
       const dateKey = `${date.getFullYear()}-${String(
         date.getMonth() + 1,
       ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
       if (allDates.includes(dateKey)) {
         streak += 1;
       } else {
@@ -165,6 +175,7 @@ export const getStatistics = async (
     let streak = 0;
 
     const firstDate = new Date(allDates[0]);
+
     const lastDate = new Date(allDates[allDates.length - 1]);
 
     const dates = getDates(firstDate, lastDate).reverse();
@@ -173,6 +184,7 @@ export const getStatistics = async (
       const dateKey = `${date.getFullYear()}-${String(
         date.getMonth() + 1,
       ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
       if (!allDates.includes(dateKey)) break;
 
       streak += 1;
@@ -193,12 +205,12 @@ export const getStatistics = async (
 export const getLastXDays = async (
   pb: PocketBase,
   days: number,
-): Promise<WithPB<CodeTimeSchemas.IDailyEntry>[]> => {
+): Promise<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>[]> => {
   const lastXDays = moment().subtract(days, "days").format("YYYY-MM-DD");
 
   const data = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
+    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${lastXDays} 00:00:00.000Z"`,
     });
 
@@ -285,11 +297,12 @@ export const getEachDay = async (
   pb: PocketBase,
 ): Promise<{ date: string; duration: number }[]> => {
   const lastDay = moment().format("YYYY-MM-DD");
+
   const firstDay = moment().subtract(30, "days").format("YYYY-MM-DD");
 
   const data = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
+    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${firstDay} 00:00:00.000Z" && date <= "${lastDay} 23:59:59.999Z"`,
     });
 
@@ -297,6 +310,7 @@ export const getEachDay = async (
 
   for (const item of data) {
     const dateKey = moment(item.date).format("YYYY-MM-DD");
+
     groupByDate[dateKey] = item.total_minutes;
   }
 
@@ -314,7 +328,7 @@ export const getUserMinutes = async (
 
   const items = await pb
     .collection("code_time__daily_entries")
-    .getFullList<WithPB<CodeTimeSchemas.IDailyEntry>>({
+    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${minTime}"`,
     });
 
@@ -360,6 +374,7 @@ export const logEvent = async (
     }
 
     const projects = lastRecord.projects;
+
     if (projects[data.project]) {
       projects[data.project] += 1;
     } else {
@@ -367,6 +382,7 @@ export const logEvent = async (
     }
 
     const relativeFiles = lastRecord.relative_files;
+
     if (relativeFiles[data.relativeFile]) {
       relativeFiles[data.relativeFile] += 1;
     } else {
@@ -374,6 +390,7 @@ export const logEvent = async (
     }
 
     const languages = lastRecord.languages;
+
     if (languages[data.language]) {
       languages[data.language] += 1;
     } else {
@@ -396,13 +413,17 @@ export const getReadmeImage = async (
   pb: PocketBase,
 ): Promise<Uint8Array<ArrayBufferLike>> => {
   const statistics = await getStatistics(pb);
+
   const today = moment().format("YYYY-MM-DD");
+
   const todayRecord = await pb
     .collection("code_time__daily_entries")
     .getList(1, 1, {
       filter: `date="${today} 00:00:00.000Z"`,
     });
+
   const todayData = todayRecord.items[0];
+
   const todayTime = todayData ? todayData.total_minutes : 0;
 
   const html = `
@@ -592,6 +613,7 @@ export const getReadmeImage = async (
   });
 
   const page = await browser.newPage();
+
   await page.setViewport({
     width: 1080,
     height: 430,
@@ -602,6 +624,7 @@ export const getReadmeImage = async (
   });
 
   const buffer = await page.screenshot({ type: "png" });
+
   await browser.close();
 
   return buffer;

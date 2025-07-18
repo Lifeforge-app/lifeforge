@@ -38,9 +38,7 @@
     "types:server": "cd server && bun run tsc --noEmit",
     "types:shared": "cd shared && bun run tsc --noEmit",
     "types:ui": "cd packages/lifeforge-ui && bun run tsc --noEmit",
-    "schema:generate:collections": "bun run ./scripts/generateCollectionSchemas.ts",
-    "schema:generate:controllers": "bun run ./scripts/generateControllerSchemas.ts",
-    "schema:generate": "bun run schema:generate:collections && bun run schema:generate:controllers"
+    "schema:generate:collections": "bun run ./scripts/generateCollectionsSchemas.ts"
   },
   "keywords": [
     "bun",
@@ -60,6 +58,8 @@
     "@types/crypto-js": "^4.2.2",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.7.4",
+    "@types/pdf-thumbnail": "^1.0.4",
+    "@types/pdfkit": "^0.17.0",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
     "@typescript-eslint/eslint-plugin": "^7.18.0",

@@ -50,6 +50,7 @@ export const summarizeVideo = async (
   pb: Pocketbase,
 ): Promise<string> => {
   const rawCaptions = await fetch(url).then((res) => res.text());
+
   const captionText = rawCaptions
     .replace(/\n/g, " ")
     .replace(/ +/g, " ")

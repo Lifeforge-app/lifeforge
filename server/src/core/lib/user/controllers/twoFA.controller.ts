@@ -5,7 +5,7 @@ import {
 } from "@functions/forgeController";
 import { default as _validateOTP } from "@functions/validateOTP";
 import express from "express";
-import { z } from "zod/v4";
+import { UserControllersSchemas } from "shared/types/controllers";
 
 import * as twoFAService from "../services/twoFA.service";
 
@@ -16,20 +16,13 @@ export let canDisable2FA = false;
 const getChallenge = forgeController
   .route("GET /challenge")
   .description("Get 2FA challenge")
-  .schema({
-    response: z.string(),
-  })
+  .schema(UserControllersSchemas.TwoFa.getChallenge)
   .callback(async () => twoFAService.getChallenge());
 
 const requestOTP = forgeController
   .route("GET /otp")
   .description("Request OTP for 2FA")
-  .schema({
-    query: z.object({
-      email: z.email(),
-    }),
-    response: z.string(),
-  })
+  .schema(UserControllersSchemas.TwoFa.requestOtp)
   .callback(
     async ({ pb, query: { email } }) =>
       await twoFAService.requestOTP(pb, email),
@@ -38,36 +31,25 @@ const requestOTP = forgeController
 const validateOTP = forgeController
   .route("POST /otp")
   .description("Validate OTP for 2FA")
-  .schema({
-    body: z.object({
-      otp: z.string(),
-      otpId: z.string(),
-    }),
-    response: z.boolean(),
-  })
+  .schema(UserControllersSchemas.TwoFa.validateOtp)
   .callback(async ({ pb, body }) => {
     if (await _validateOTP(pb, body, twoFAService.challenge)) {
       canDisable2FA = true;
-
       setTimeout(
         () => {
           canDisable2FA = false;
         },
         1000 * 60 * 5,
       );
-
       return true;
     }
-
     return false;
   });
 
 const generateAuthtenticatorLink = forgeController
   .route("GET /link")
   .description("Generate authenticator link for 2FA")
-  .schema({
-    response: z.string(),
-  })
+  .schema(UserControllersSchemas.TwoFa.generateAuthtenticatorLink)
   .callback(
     async ({
       pb,
@@ -84,12 +66,7 @@ const generateAuthtenticatorLink = forgeController
 const verifyAndEnable2FA = forgeController
   .route("POST /verify-and-enable")
   .description("Verify and enable 2FA")
-  .schema({
-    body: z.object({
-      otp: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(UserControllersSchemas.TwoFa.verifyAndEnable2Fa)
   .callback(
     async ({
       pb,
@@ -108,9 +85,7 @@ const verifyAndEnable2FA = forgeController
 const disable2FA = forgeController
   .route("POST /disable")
   .description("Disable 2FA")
-  .schema({
-    response: z.void(),
-  })
+  .schema(UserControllersSchemas.TwoFa.disable2Fa)
   .callback(async ({ pb }) => {
     if (!canDisable2FA) {
       throw new ClientError(
@@ -118,7 +93,6 @@ const disable2FA = forgeController
         403,
       );
     }
-
     await twoFAService.disable2FA(pb);
     canDisable2FA = false;
   });
@@ -126,17 +100,7 @@ const disable2FA = forgeController
 const verify2FA = forgeController
   .route("POST /verify")
   .description("Verify 2FA code")
-  .schema({
-    body: z.object({
-      otp: z.string(),
-      tid: z.string(),
-      type: z.enum(["email", "app"]),
-    }),
-    response: z.object({
-      session: z.string(),
-      userData: z.record(z.string(), z.any()),
-    }),
-  })
+  .schema(UserControllersSchemas.TwoFa.verify2Fa)
   .callback(async ({ body: { otp, tid, type } }) =>
     twoFAService.verify2FA(otp, tid, type),
   );

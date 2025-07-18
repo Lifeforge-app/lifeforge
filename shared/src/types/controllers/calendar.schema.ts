@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { CalendarCollectionsCollectionsSchemas } from "../collections";
 
 const Calendars = {
   /**
@@ -7,7 +8,7 @@ const Calendars = {
    * @description Get all calendars
    */
   getAllCalendars: {
-    response: z.array(SchemaWithPB(CalendarSchemas.CalendarSchema)),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Calendar)),
   },
 
   /**
@@ -18,7 +19,7 @@ const Calendars = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(CalendarSchemas.CalendarSchema),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar),
   },
 
   /**
@@ -26,8 +27,8 @@ const Calendars = {
    * @description Create a new calendar
    */
   createCalendar: {
-    body: CalendarSchemas.CalendarSchema,
-    response: SchemaWithPB(CalendarSchemas.CalendarSchema),
+    body: CalendarCollectionsSchemas.Calendar,
+    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar),
   },
 
   /**
@@ -38,8 +39,8 @@ const Calendars = {
     params: z.object({
       id: z.string(),
     }),
-    body: CalendarSchemas.CalendarSchema,
-    response: SchemaWithPB(CalendarSchemas.CalendarSchema),
+    body: CalendarCollectionsSchemas.Calendar,
+    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar),
   },
 
   /**
@@ -60,39 +61,39 @@ const Categories = {
    * @description Get all calendar categories
    */
   getAllCategories: {
-    response: z.array(SchemaWithPB(CalendarSchemas.CategorySchema)),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Category)),
   },
 
   /**
    * @route       GET /:id
-   * @description Get a calendar category by ID
+   * @description Get a category by ID
    */
   getCategoryById: {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(CalendarSchemas.CategorySchema),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Category),
   },
 
   /**
    * @route       POST /
-   * @description Create a new calendar category
+   * @description Create a new category
    */
   createCategory: {
-    body: CalendarSchemas.CategorySchema,
-    response: SchemaWithPB(CalendarSchemas.CategorySchema),
+    body: CalendarCollectionsSchemas.Category,
+    response: SchemaWithPB(CalendarCollectionsSchemas.Category),
   },
 
   /**
    * @route       PATCH /:id
-   * @description Update an existing calendar category
+   * @description Update an existing category
    */
   updateCategory: {
     params: z.object({
       id: z.string(),
     }),
-    body: CalendarSchemas.CategorySchema,
-    response: SchemaWithPB(CalendarSchemas.CategorySchema),
+    body: CalendarCollectionsSchemas.Category,
+    response: SchemaWithPB(CalendarCollectionsSchemas.Category),
   },
 
   /**
@@ -117,7 +118,7 @@ const Events = {
       start: z.string(),
       end: z.string(),
     }),
-    response: z.array(SchemaWithPB(CalendarSchemas.EventSchema.partial())),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial())),
   },
 
   /**
@@ -125,7 +126,7 @@ const Events = {
    * @description Get today's events
    */
   getEventsToday: {
-    response: z.array(SchemaWithPB(CalendarSchemas.EventSchema.partial())),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial())),
   },
 
   /**
@@ -136,7 +137,7 @@ const Events = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(CalendarSchemas.EventSchema),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Event),
   },
 
   /**
@@ -144,7 +145,7 @@ const Events = {
    * @description Create a new event
    */
   createEvent: {
-    body: CalendarSchemas.EventSchema.omit({
+    body: CalendarCollectionsSchemas.Event.omit({
       exceptions: true,
     }).extend({
       location: z
@@ -158,7 +159,7 @@ const Events = {
         ])
         .optional(),
     }),
-    response: SchemaWithPB(CalendarSchemas.EventSchema),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Event),
   },
 
   /**
@@ -166,7 +167,7 @@ const Events = {
    * @description Scan an image to extract event data
    */
   scanImage: {
-    response: CalendarSchemas.EventSchema.partial(),
+    response: CalendarCollectionsSchemas.Event.partial(),
   },
 
   /**
@@ -191,10 +192,10 @@ const Events = {
     params: z.object({
       id: z.string(),
     }),
-    body: CalendarSchemas.EventSchema.partial().omit({
+    body: CalendarCollectionsSchemas.Event.partial().omit({
       exceptions: true,
     }),
-    response: SchemaWithPB(CalendarSchemas.EventSchema),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Event),
   },
 
   /**

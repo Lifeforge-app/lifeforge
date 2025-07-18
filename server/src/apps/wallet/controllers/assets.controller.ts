@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { WalletSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { WalletControllersSchemas } from "shared/types/controllers";
 
 import * as AssetsService from "../services/assets.service";
 
@@ -15,39 +12,20 @@ const walletAssetsRouter = express.Router();
 const getAllAssets = forgeController
   .route("GET /")
   .description("Get all wallet assets")
-  .schema({
-    response: z.array(WithPBSchema(WalletSchemas.AssetAggregatedSchema)),
-  })
+  .schema(WalletControllersSchemas.Assets.getAllAssets)
   .callback(async ({ pb }) => await AssetsService.getAllAssets(pb));
 
 const createAsset = forgeController
   .route("POST /")
   .description("Create a new wallet asset")
-  .schema({
-    body: WalletSchemas.AssetSchema.pick({
-      name: true,
-      icon: true,
-      starting_balance: true,
-    }).extend({
-      starting_balance: z.string().transform((val) => {
-        const balance = parseFloat(val);
-        return isNaN(balance) ? 0 : balance;
-      }),
-    }),
-    response: WithPBSchema(WalletSchemas.AssetSchema),
-  })
+  .schema(WalletControllersSchemas.Assets.createAsset)
   .statusCode(201)
   .callback(async ({ pb, body }) => await AssetsService.createAsset(pb, body));
 
 const getAssetAccumulatedBalance = forgeController
   .route("GET /balance/:id")
   .description("Get accumulated balance for a wallet asset")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.record(z.string(), z.number()),
-  })
+  .schema(WalletControllersSchemas.Assets.getAssetAccumulatedBalance)
   .existenceCheck("params", {
     id: "wallet__assets",
   })
@@ -59,22 +37,7 @@ const getAssetAccumulatedBalance = forgeController
 const updateAsset = forgeController
   .route("PATCH /:id")
   .description("Update an existing wallet asset")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: WalletSchemas.AssetSchema.pick({
-      name: true,
-      icon: true,
-      starting_balance: true,
-    }).extend({
-      starting_balance: z.string().transform((val) => {
-        const balance = parseFloat(val);
-        return isNaN(balance) ? 0 : balance;
-      }),
-    }),
-    response: WithPBSchema(WalletSchemas.AssetSchema),
-  })
+  .schema(WalletControllersSchemas.Assets.updateAsset)
   .existenceCheck("params", {
     id: "wallet__assets",
   })
@@ -86,12 +49,7 @@ const updateAsset = forgeController
 const deleteAsset = forgeController
   .route("DELETE /:id")
   .description("Delete a wallet asset")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(WalletControllersSchemas.Assets.deleteAsset)
   .existenceCheck("params", {
     id: "wallet__assets",
   })

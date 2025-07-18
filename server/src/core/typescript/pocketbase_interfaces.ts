@@ -25,4 +25,5 @@ const PBListResultSchema = <T extends z.ZodTypeAny>(schema: T) => {
 };
 
 export type { WithPB };
+
 export { WithPBSchema, PBListResultSchema };

@@ -1,5 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { TodoListCollectionsCollectionsSchemas } from "../collections";
+import { TodoListStatusCounterSchema } from "../collections/todoList.schema";
 
 const Entries = {
   /**
@@ -7,7 +9,7 @@ const Entries = {
    * @description Get status counter for todo entries
    */
   getStatusCounter: {
-    response: TodoListSchemas.TodoListStatusCounterSchema,
+    response: TodoListStatusCounterSchema,
   },
 
   /**
@@ -18,7 +20,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(TodoListSchemas.EntrySchema),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
   },
 
   /**
@@ -33,7 +35,7 @@ const Entries = {
       tag: z.string().optional(),
       query: z.string().optional(),
     }),
-    response: z.array(SchemaWithPB(TodoListSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(TodoListCollectionsSchemas.Entry)),
   },
 
   /**
@@ -41,11 +43,11 @@ const Entries = {
    * @description Create a new todo entry
    */
   createEntry: {
-    body: TodoListSchemas.EntrySchema.omit({
+    body: TodoListCollectionsSchemas.Entry.omit({
       completed_at: true,
       done: true,
     }),
-    response: SchemaWithPB(TodoListSchemas.EntrySchema),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
   },
 
   /**
@@ -56,11 +58,11 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListSchemas.EntrySchema.omit({
+    body: TodoListCollectionsSchemas.Entry.omit({
       completed_at: true,
       done: true,
     }),
-    response: SchemaWithPB(TodoListSchemas.EntrySchema),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
   },
 
   /**
@@ -82,7 +84,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(TodoListSchemas.EntrySchema),
+    response: SchemaWithPB(TodoListCollectionsSchemas.Entry),
   },
 };
 
@@ -94,10 +96,10 @@ const Tags = {
   getAllTags: {
     response: z.array(
       SchemaWithPB(
-        TodoListSchemas.TagSchema.extend({
+        TodoListCollectionsSchemas.Tag.extend({
           amount: z.number(),
-        }),
-      ),
+        })
+      )
     ),
   },
 
@@ -106,11 +108,11 @@ const Tags = {
    * @description Create a new todo tag
    */
   createTag: {
-    body: TodoListSchemas.TagSchema,
+    body: TodoListCollectionsSchemas.Tag,
     response: SchemaWithPB(
-      TodoListSchemas.TagSchema.extend({
+      TodoListCollectionsSchemas.Tag.extend({
         amount: z.number(),
-      }),
+      })
     ),
   },
 
@@ -122,11 +124,11 @@ const Tags = {
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListSchemas.TagSchema,
+    body: TodoListCollectionsSchemas.Tag,
     response: SchemaWithPB(
-      TodoListSchemas.TagSchema.extend({
+      TodoListCollectionsSchemas.Tag.extend({
         amount: z.number(),
-      }),
+      })
     ),
   },
 
@@ -150,10 +152,10 @@ const Lists = {
   getAllLists: {
     response: z.array(
       SchemaWithPB(
-        TodoListSchemas.ListSchema.extend({
+        TodoListCollectionsSchemas.List.extend({
           amount: z.number(),
-        }),
-      ),
+        })
+      )
     ),
   },
 
@@ -162,15 +164,15 @@ const Lists = {
    * @description Create a new todo list
    */
   createList: {
-    body: TodoListSchemas.ListSchema.pick({
+    body: TodoListCollectionsSchemas.List.pick({
       name: true,
       icon: true,
       color: true,
     }),
     response: SchemaWithPB(
-      TodoListSchemas.ListSchema.extend({
+      TodoListCollectionsSchemas.List.extend({
         amount: z.number(),
-      }),
+      })
     ),
   },
 
@@ -182,15 +184,15 @@ const Lists = {
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListSchemas.ListSchema.pick({
+    body: TodoListCollectionsSchemas.List.pick({
       name: true,
       icon: true,
       color: true,
     }),
     response: SchemaWithPB(
-      TodoListSchemas.ListSchema.extend({
+      TodoListCollectionsSchemas.List.extend({
         amount: z.number(),
-      }),
+      })
     ),
   },
 
@@ -214,10 +216,10 @@ const Priorities = {
   getAllPriorities: {
     response: z.array(
       SchemaWithPB(
-        TodoListSchemas.PrioritySchema.extend({
+        TodoListCollectionsSchemas.Priority.extend({
           amount: z.number(),
-        }),
-      ),
+        })
+      )
     ),
   },
 
@@ -226,11 +228,11 @@ const Priorities = {
    * @description Create a new todo priority
    */
   createPriority: {
-    body: TodoListSchemas.PrioritySchema,
+    body: TodoListCollectionsSchemas.Priority,
     response: SchemaWithPB(
-      TodoListSchemas.PrioritySchema.extend({
+      TodoListCollectionsSchemas.Priority.extend({
         amount: z.number(),
-      }),
+      })
     ),
   },
 
@@ -242,14 +244,14 @@ const Priorities = {
     params: z.object({
       id: z.string(),
     }),
-    body: TodoListSchemas.PrioritySchema.pick({
+    body: TodoListCollectionsSchemas.Priority.pick({
       name: true,
       color: true,
     }),
     response: SchemaWithPB(
-      TodoListSchemas.PrioritySchema.extend({
+      TodoListCollectionsSchemas.Priority.extend({
         amount: z.number(),
-      }),
+      })
     ),
   },
 

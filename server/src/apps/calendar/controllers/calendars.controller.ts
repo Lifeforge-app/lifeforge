@@ -4,10 +4,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { CalendarSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { CalendarControllersSchemas } from "shared/types/controllers";
 
 import * as CalendarsService from "../services/calendars.service";
 
@@ -16,20 +13,13 @@ const calendarCalendarsRouter = express.Router();
 const getAllCalendars = forgeController
   .route("GET /")
   .description("Get all calendars")
-  .schema({
-    response: z.array(WithPBSchema(CalendarSchemas.CalendarSchema)),
-  })
+  .schema(CalendarControllersSchemas.Calendars.getAllCalendars)
   .callback(async ({ pb }) => await CalendarsService.getAllCalendars(pb));
 
 const getCalendarById = forgeController
   .route("GET /:id")
   .description("Get a calendar by ID")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(CalendarSchemas.CalendarSchema),
-  })
+  .schema(CalendarControllersSchemas.Calendars.getCalendarById)
   .existenceCheck("params", {
     id: "calendar__calendars",
   })
@@ -41,10 +31,7 @@ const getCalendarById = forgeController
 const createCalendar = forgeController
   .route("POST /")
   .description("Create a new calendar")
-  .schema({
-    body: CalendarSchemas.CalendarSchema,
-    response: WithPBSchema(CalendarSchemas.CalendarSchema),
-  })
+  .schema(CalendarControllersSchemas.Calendars.createCalendar)
   .statusCode(201)
   .callback(async ({ pb, body }) => {
     if (
@@ -55,20 +42,13 @@ const createCalendar = forgeController
     ) {
       throw new ClientError("Calendar with this name already exists");
     }
-
     return await CalendarsService.createCalendar(pb, body);
   });
 
 const updateCalendar = forgeController
   .route("PATCH /:id")
   .description("Update an existing calendar")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: CalendarSchemas.CalendarSchema,
-    response: WithPBSchema(CalendarSchemas.CalendarSchema),
-  })
+  .schema(CalendarControllersSchemas.Calendars.updateCalendar)
   .existenceCheck("params", {
     id: "calendar__calendars",
   })
@@ -81,19 +61,13 @@ const updateCalendar = forgeController
     ) {
       throw new ClientError("Calendar with this name already exists");
     }
-
     return await CalendarsService.updateCalendar(pb, id, body);
   });
 
 const deleteCalendar = forgeController
   .route("DELETE /:id")
   .description("Delete an existing calendar")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(CalendarControllersSchemas.Calendars.deleteCalendar)
   .existenceCheck("params", {
     id: "calendar__calendars",
   })

@@ -15,7 +15,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -34,7 +34,7 @@ function BooksLibrary() {
   } = useBooksLibraryContext()
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [filteredEntries, setFilteredEntries] = useState<
-    ISchemaWithPB<BooksLibrarySchemas.IEntry>[]
+    ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
   >([])
   const [view, setView] = useState<'list' | 'grid'>('list')
 

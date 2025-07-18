@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: railwayMap
- * Generated at: 2025-07-18T10:36:14.105Z
+ * Generated at: 2025-07-18T12:15:50.185Z
  * Contains: railway_map__lines, railway_map__stations
  */
 
 import { z } from "zod/v4";
+
 const Line = z.object({
   country: z.string(),
   type: z.string(),

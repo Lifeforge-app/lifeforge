@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
-import { AchievementsSchemas, ISchemaWithPB } from 'shared/types'
+import { AchievementsCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
@@ -21,11 +21,13 @@ function Achievements() {
   const { t } = useTranslation('apps.achievements')
   const open = useModalStore(state => state.open)
   const [selectedDifficulty, setSelectedDifficulty] =
-    useState<AchievementsSchemas.IEntry['difficulty']>('impossible')
-  const entriesQuery = useAPIQuery<ISchemaWithPB<AchievementsSchemas.IEntry>[]>(
-    `achievements/entries/${selectedDifficulty}`,
-    ['achievements/entries', selectedDifficulty]
-  )
+    useState<AchievementsCollectionsSchemas.IEntry['difficulty']>('impossible')
+  const entriesQuery = useAPIQuery<
+    ISchemaWithPB<AchievementsCollectionsSchemas.IEntry>[]
+  >(`achievements/entries/${selectedDifficulty}`, [
+    'achievements/entries',
+    selectedDifficulty
+  ])
 
   return (
     <ModuleWrapper>

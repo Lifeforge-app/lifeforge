@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { MoviesCollectionsCollectionsSchemas } from "../collections";
 
 const Tmdb = {
   /**
@@ -25,7 +26,7 @@ const Ticket = {
    * @description Update ticket information for a movie entry
    */
   updateTicket: {
-    body: MoviesSchemas.EntrySchema.pick({
+    body: MoviesCollectionsSchemas.Entry.pick({
       ticket_number: true,
       theatre_number: true,
       theatre_seat: true,
@@ -43,7 +44,7 @@ const Ticket = {
         }),
       }),
     }),
-    response: SchemaWithPB(MoviesSchemas.EntrySchema),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
   },
 
   /**
@@ -54,7 +55,7 @@ const Ticket = {
     params: z.object({
       id: z.string(),
     }),
-    body: MoviesSchemas.EntrySchema.pick({
+    body: MoviesCollectionsSchemas.Entry.pick({
       ticket_number: true,
       theatre_number: true,
       theatre_seat: true,
@@ -71,7 +72,7 @@ const Ticket = {
         }),
       }),
     }),
-    response: SchemaWithPB(MoviesSchemas.EntrySchema),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
   },
 
   /**
@@ -100,7 +101,7 @@ const Entries = {
         .transform((val) => (val === "true" ? true : false)),
     }),
     response: z.object({
-      entries: z.array(SchemaWithPB(MoviesSchemas.EntrySchema)),
+      entries: z.array(SchemaWithPB(MoviesCollectionsSchemas.Entry)),
       total: z.number(),
     }),
   },
@@ -113,7 +114,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(MoviesSchemas.EntrySchema),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
   },
 
   /**
@@ -135,7 +136,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(MoviesSchemas.EntrySchema),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
   },
 };
 

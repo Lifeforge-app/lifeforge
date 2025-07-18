@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
-import { AchievementsSchemas, ISchemaWithPB } from 'shared/types'
+import { AchievementsCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 const difficulties = [
   ['easy', 'green'],
@@ -19,19 +19,20 @@ function ModifyAchievementModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ISchemaWithPB<AchievementsSchemas.IEntry> | null
-    currentDifficulty: AchievementsSchemas.IEntry['difficulty']
+    existedData: ISchemaWithPB<AchievementsCollectionsSchemas.IEntry> | null
+    currentDifficulty: AchievementsCollectionsSchemas.IEntry['difficulty']
   }
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.achievements')
-  const [formState, setFormState] = useState<AchievementsSchemas.IEntry>({
-    title: '',
-    thoughts: '',
-    difficulty: 'easy'
-  })
+  const [formState, setFormState] =
+    useState<AchievementsCollectionsSchemas.IEntry>({
+      title: '',
+      thoughts: '',
+      difficulty: 'easy'
+    })
 
-  const FIELDS: IFieldProps<AchievementsSchemas.IEntry>[] = [
+  const FIELDS: IFieldProps<AchievementsCollectionsSchemas.IEntry>[] = [
     {
       id: 'title',
       required: true,

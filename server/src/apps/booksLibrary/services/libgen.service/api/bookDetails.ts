@@ -4,10 +4,13 @@ import { zip } from "../utils/parsing";
 
 export const getBookDetails = async (md5: string) => {
   const target = new URL("http://libgen.is/book/index.php");
+
   target.searchParams.set("md5", md5);
 
   const data = await fetch(target.href).then((res) => res.text());
+
   const dom = new JSDOM(data);
+
   const document = dom.window.document;
 
   const final = parseLibgenISBookDetailsPage(document);
@@ -21,10 +24,13 @@ export const getLocalLibraryData = async (provider: string, md5: string) => {
       ? "http://libgen.is/book/index.php"
       : `https://${provider}/edition.php`,
   );
+
   target.searchParams.set("md5", md5);
 
   const data = await fetch(target.href).then((res) => res.text());
+
   const dom = new JSDOM(data);
+
   const document = dom.window.document;
 
   if (provider === "libgen.is") {
@@ -47,6 +53,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
           ? Array.from(e.querySelectorAll("td"))
               .reduce((all: HTMLTableCellElement[][], one, i) => {
                 const ch = Math.floor(i / 2);
+
                 all[ch] = ([] as HTMLTableCellElement[]).concat(
                   all[ch] || [],
                   one as HTMLTableCellElement,
@@ -55,6 +62,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
               }, [])
               .map((e) => {
                 const key = e[0]?.textContent?.trim().replace(/:$/, "") || "";
+
                 if (e[1]?.querySelector("a")) {
                   return [
                     "islink|" + key,
@@ -63,6 +71,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
                         e.textContent?.trim() || "",
                         (() => {
                           const href = e.href;
+
                           switch (key) {
                             case "BibTeX":
                               return href.replace("bibtex.php", "/bibtex");

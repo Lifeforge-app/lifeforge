@@ -7,11 +7,15 @@ import PocketBase from "pocketbase";
 
 function traverse(path: string, rootPath: string, zip: JSZip) {
   const listing = fs.readdirSync(path);
-  for (let item of listing) {
+
+  for (const item of listing) {
     const itemPath = `${path}/${item}`;
+
     const isDirectory = fs.lstatSync(itemPath).isDirectory();
+
     if (isDirectory) {
       const childZip = zip.folder(item);
+
       traverse(itemPath, rootPath, childZip!);
     } else {
       zip.file(item, fs.readFileSync(itemPath));
@@ -21,15 +25,18 @@ function traverse(path: string, rootPath: string, zip: JSZip) {
 
 export const toggleModule = async (pb: PocketBase, id: string) => {
   const user = pb.authStore.record;
+
   if (!user) {
     throw new ClientError("Unauthorized to toggle module");
   }
 
   const modules = user.enabledModules || [];
+
   if (!modules.includes(id)) {
     modules.push(id);
   } else {
     const index = modules.indexOf(id);
+
     if (index > -1) {
       modules.splice(index, 1);
     }
@@ -56,6 +63,7 @@ export const listAppPaths = (): string[] => {
 
 export const packageModule = async (id: string) => {
   const appDir = path.resolve(process.cwd(), "src/apps");
+
   const moduleDir = path.join(appDir, id);
 
   if (!fs.existsSync(moduleDir)) {
@@ -63,6 +71,7 @@ export const packageModule = async (id: string) => {
   }
 
   const backendZip = JSZip();
+
   traverse(moduleDir, moduleDir, backendZip);
 
   return await backendZip.generateAsync({
@@ -83,9 +92,11 @@ export const installModule = async (
   }
 
   const folderName = _.camelCase(name);
+
   const pathName = _.kebabCase(name);
 
   const appsDir = path.resolve(process.cwd(), "src/apps");
+
   const moduleDir = path.join(appsDir, folderName);
 
   if (fs.existsSync(moduleDir)) {
@@ -93,16 +104,22 @@ export const installModule = async (
   }
 
   fs.mkdirSync(moduleDir, { recursive: true });
+
   const zipFileBuffer = fs.readFileSync(file.path);
+
   const backendzip = await JSZip.loadAsync(zipFileBuffer);
+
   const filePromises = Object.keys(backendzip.files).map(async (filename) => {
     const fileData = await backendzip.file(filename)?.async("nodebuffer");
+
     if (fileData) {
       const outputPath = path.join(moduleDir, filename);
+
       fs.mkdirSync(path.dirname(outputPath), { recursive: true });
       fs.writeFileSync(outputPath, fileData);
     }
   });
+
   await Promise.all(filePromises);
 
   const appHasAPIIndex = fs.existsSync(path.join(moduleDir, "index.ts"));

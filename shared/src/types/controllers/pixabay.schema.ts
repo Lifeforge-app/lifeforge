@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
+import { PixabayCustomCollectionsSchemas } from "../collections";
 
 const Pixabay = {
   /**
@@ -71,7 +71,7 @@ const Pixabay = {
         .default("false")
         .transform((val) => val === "true"),
     }),
-    response: PixabaySearchResultSchema,
+    response: PixabayCustomCollectionsSchemas.PixabaySearchResultSchema,
   },
 };
 

@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { TodoListSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { TodoListControllersSchemas } from "shared/types/controllers";
 
 import * as prioritiesService from "../services/priorities.service";
 
@@ -15,39 +12,20 @@ const todoListPrioritiesRouter = express.Router();
 const getAllPriorities = forgeController
   .route("GET /")
   .description("Get all todo priorities")
-  .schema({
-    response: z.array(
-      WithPBSchema(
-        TodoListSchemas.PrioritySchema.extend({ amount: z.number() }),
-      ),
-    ),
-  })
+  .schema(TodoListControllersSchemas.Priorities.getAllPriorities)
   .callback(({ pb }) => prioritiesService.getAllPriorities(pb));
 
 const createPriority = forgeController
   .route("POST /")
   .description("Create a new todo priority")
-  .schema({
-    body: TodoListSchemas.PrioritySchema,
-    response: WithPBSchema(
-      TodoListSchemas.PrioritySchema.extend({ amount: z.number() }),
-    ),
-  })
+  .schema(TodoListControllersSchemas.Priorities.createPriority)
   .statusCode(201)
   .callback(({ pb, body }) => prioritiesService.createPriority(pb, body));
 
 const updatePriority = forgeController
   .route("PATCH /:id")
   .description("Update an existing todo priority")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: TodoListSchemas.PrioritySchema.pick({ name: true, color: true }),
-    response: WithPBSchema(
-      TodoListSchemas.PrioritySchema.extend({ amount: z.number() }),
-    ),
-  })
+  .schema(TodoListControllersSchemas.Priorities.updatePriority)
   .existenceCheck("params", {
     id: "todo_list__priorities",
   })
@@ -58,12 +36,7 @@ const updatePriority = forgeController
 const deletePriority = forgeController
   .route("DELETE /:id")
   .description("Delete a todo priority")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(TodoListControllersSchemas.Priorities.deletePriority)
   .existenceCheck("params", {
     id: "todo_list__priorities",
   })

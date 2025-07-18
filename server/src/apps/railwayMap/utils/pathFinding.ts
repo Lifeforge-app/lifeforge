@@ -4,36 +4,41 @@ export default function dijkstraWithTransfers(
   start: string,
   end: string,
 ) {
-  let distances: Record<string, number> = {};
-  let prev: Record<string, string | null> = {};
-  let unvisited = new Set(Object.keys(graph));
+  const distances: Record<string, number> = {};
 
-  for (let node of unvisited) {
+  const prev: Record<string, string | null> = {};
+
+  const unvisited = new Set(Object.keys(graph));
+
+  for (const node of unvisited) {
     distances[node] = Infinity;
     prev[node] = null;
   }
   distances[start] = 0;
 
   while (unvisited.size > 0) {
-    let minNode = [...unvisited].reduce((a, b) =>
+    const minNode = [...unvisited].reduce((a, b) =>
       distances[a] < distances[b] ? a : b,
     );
 
     if (minNode === end) break;
     unvisited.delete(minNode);
 
-    for (let neighbor in graph[minNode]) {
+    for (const neighbor in graph[minNode]) {
       let newDist = distances[minNode] + graph[minNode][neighbor];
 
-      let prevStation = prev[minNode];
-      let nextStation = neighbor;
+      const prevStation = prev[minNode];
+
+      const nextStation = neighbor;
 
       if (prevStation && nextStation) {
-        let prevLines = lines[prevStation] || [];
-        let currLines = lines[minNode] || [];
-        let nextLines = lines[nextStation] || [];
+        const prevLines = lines[prevStation] || [];
 
-        let sameLine = currLines.some(
+        const currLines = lines[minNode] || [];
+
+        const nextLines = lines[nextStation] || [];
+
+        const sameLine = currLines.some(
           (line) => prevLines.includes(line) && nextLines.includes(line),
         );
 
@@ -49,7 +54,8 @@ export default function dijkstraWithTransfers(
     }
   }
 
-  let path = [];
+  const path = [];
+
   let temp: string | null = end;
   while (temp) {
     path.unshift(temp);

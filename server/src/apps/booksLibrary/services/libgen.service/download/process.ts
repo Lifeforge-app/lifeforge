@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import fs from "fs";
 import Pocketbase from "pocketbase";
-import { BooksLibrarySchemas } from "shared/types";
+import { BooksLibraryCollectionsSchemas } from "shared/types/collections";
 import { Server } from "socket.io";
 
 import {
@@ -14,7 +14,7 @@ export const addToLibrary = async (
   pb: Pocketbase,
   md5: string,
   metadata: Omit<
-    BooksLibrarySchemas.IEntry,
+    BooksLibraryCollectionsSchemas.IEntry,
     "thumbnail" | "file" | "is_favourite" | "is_read" | "time_finished"
   > & {
     thumbnail: string;
@@ -43,6 +43,7 @@ export const addToLibrary = async (
   (async () => {
     try {
       const data = await fetch(target).then((res) => res.text());
+
       const link = data.match(
         /<a href="(get\.php\?md5=.*?&key=.*?)"><h2>GET<\/h2><\/a>/,
       )?.[1];
@@ -139,7 +140,7 @@ const processDownloadedFiles = async (
   pb: Pocketbase,
   md5: string,
   metadata: Omit<
-    BooksLibrarySchemas.IEntry,
+    BooksLibraryCollectionsSchemas.IEntry,
     "thumbnail" | "file" | "is_favourite" | "is_read" | "time_finished"
   > & {
     thumbnail: string | File;
@@ -149,6 +150,7 @@ const processDownloadedFiles = async (
   await fetch(metadata.thumbnail as string).then(async (response) => {
     if (response.ok) {
       const buffer = await response.arrayBuffer();
+
       metadata.thumbnail = new File([buffer], "image.jpg", {
         type: "image/jpeg",
       });
@@ -156,6 +158,7 @@ const processDownloadedFiles = async (
   });
 
   const file = fs.readFileSync("./medium/" + md5 + "." + metadata.extension);
+
   if (!file) throw new Error("Failed to read file");
   metadata.file = new File([file], `${md5}.${metadata.extension}`);
   metadata.size = file.byteLength;

@@ -20,7 +20,6 @@
     "schema:generate": "bun ./scripts/generateSchema.ts"
   },
   "dependencies": {
-    "shared": "workspace:*",
     "@ts-rest/express": "^3.52.1",
     "@zodios/express": "^10.6.1",
     "aewx-metar-parser": "^1.0.0",
@@ -32,6 +31,7 @@
     "crypto-js": "^4.2.0",
     "dompurify": "^3.2.3",
     "dotenv": "^16.5.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "exifreader": "^4.23.7",
     "express": "^4.21.2",
     "express-lazy-router": "^1.0.6",
@@ -69,6 +69,7 @@
     "reflect-metadata": "^0.2.2",
     "request": "^2.88.2",
     "rrule": "^2.8.1",
+    "shared": "workspace:*",
     "sharp": "^0.33.5",
     "socket.io": "^4.8.1",
     "speakeasy": "^2.0.0",
@@ -82,6 +83,7 @@
     "zod-to-ts": "^1.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
     "@types/bcrypt": "^5.0.2",
     "@types/chai-http": "^4.2.0",
     "@types/cors": "^2.8.17",
@@ -102,11 +104,14 @@
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
     "chai": "^5.1.1",
+    "eslint": "^9.31.0",
     "forever": "^4.0.3",
+    "globals": "^16.3.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
-    "tsx": "^4.19.1"
+    "tsx": "^4.19.1",
+    "typescript-eslint": "^8.37.0"
   }
 }

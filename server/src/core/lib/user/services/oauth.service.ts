@@ -44,6 +44,7 @@ export const oauthVerify = async (
   }: { provider: string; code: string; origin: string },
 ): Promise<string | { state: string; tid: string }> => {
   const providers = await pb.collection("users").listAuthMethods();
+
   const provider = providers.oauth2.providers.find(
     (item) => item.name === providerName,
   );

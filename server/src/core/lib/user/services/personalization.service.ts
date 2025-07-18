@@ -15,7 +15,9 @@ export const listGoogleFonts = async (
   }
 
   const target = `https://www.googleapis.com/webfonts/v1/webfonts?key=${key}`;
+
   const response = await fetch(target);
+
   const data = await response.json();
 
   return {
@@ -37,7 +39,9 @@ export const getGoogleFont = async (
   }
 
   const target = `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(family)}&key=${key}`;
+
   const response = await fetch(target);
+
   const data = await response.json();
 
   return {
@@ -83,6 +87,7 @@ export const updateBgImage = async (
 ): Promise<string> => {
   if (file) {
     const fileBuffer = fs.readFileSync(file.path);
+
     const result = await updateBgImageFromFile(
       pb,
       fileBuffer,
@@ -99,6 +104,7 @@ export const updateBgImage = async (
 
   try {
     const response = await fetch(url);
+
     const fileBuffer = await response.arrayBuffer();
 
     return await updateBgImageFromUrl(pb, new Uint8Array(fileBuffer));

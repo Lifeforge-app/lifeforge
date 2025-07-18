@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { RailwayMapCollectionsCollectionsSchemas } from "../collections";
 
 const RailwayMap = {
   /**
@@ -7,7 +8,7 @@ const RailwayMap = {
    * @description Get all railway lines
    */
   getLines: {
-    response: z.array(SchemaWithPB(RailwayMapSchemas.LineSchema)),
+    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Line)),
   },
 
   /**
@@ -15,7 +16,7 @@ const RailwayMap = {
    * @description Get all railway stations
    */
   getStations: {
-    response: z.array(SchemaWithPB(RailwayMapSchemas.StationSchema)),
+    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Station)),
   },
 
   /**
@@ -27,7 +28,7 @@ const RailwayMap = {
       start: z.string(),
       end: z.string(),
     }),
-    response: z.array(SchemaWithPB(RailwayMapSchemas.StationSchema)),
+    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Station)),
   },
 };
 

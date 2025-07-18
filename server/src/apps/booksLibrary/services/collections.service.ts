@@ -1,40 +1,44 @@
 import PocketBase from "pocketbase";
-import { BooksLibrarySchemas } from "shared/types";
+import { BooksLibraryCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
 export const getAllCollections = (pb: PocketBase) =>
   pb
     .collection("books_library__collections_aggregated")
-    .getFullList<WithPB<BooksLibrarySchemas.ICollectionAggregated>>({
+    .getFullList<WithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>>({
       sort: "name",
     });
 
 export const createCollection = async (
   pb: PocketBase,
-  data: Omit<BooksLibrarySchemas.ICollection, "amount">,
+  data: Omit<BooksLibraryCollectionsSchemas.ICollection, "amount">,
 ) => {
   const collection = await pb
     .collection("books_library__collections")
-    .create<WithPB<BooksLibrarySchemas.ICollection>>(data);
+    .create<WithPB<BooksLibraryCollectionsSchemas.ICollection>>(data);
 
   return pb
     .collection("books_library__collections_aggregated")
-    .getOne<WithPB<BooksLibrarySchemas.ICollectionAggregated>>(collection.id);
+    .getOne<
+      WithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
+    >(collection.id);
 };
 
 export const updateCollection = async (
   pb: PocketBase,
   id: string,
-  data: Omit<BooksLibrarySchemas.ICollectionAggregated, "amount">,
+  data: Omit<BooksLibraryCollectionsSchemas.ICollectionAggregated, "amount">,
 ) => {
   const collection = await pb
     .collection("books_library__collections")
-    .update<WithPB<BooksLibrarySchemas.ICollection>>(id, data);
+    .update<WithPB<BooksLibraryCollectionsSchemas.ICollection>>(id, data);
 
   return pb
     .collection("books_library__collections_aggregated")
-    .getOne<WithPB<BooksLibrarySchemas.ICollectionAggregated>>(collection.id);
+    .getOne<
+      WithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
+    >(collection.id);
 };
 
 export const deleteCollection = async (pb: PocketBase, id: string) => {

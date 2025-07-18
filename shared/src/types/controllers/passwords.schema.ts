@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { PasswordsCollectionsCollectionsSchemas } from "../collections";
 
 const Entries = {
   /**
@@ -15,7 +16,7 @@ const Entries = {
    * @description Get all password entries
    */
   getAllEntries: {
-    response: z.array(SchemaWithPB(PasswordsSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(PasswordsCollectionsSchemas.Entry)),
   },
 
   /**
@@ -23,12 +24,12 @@ const Entries = {
    * @description Create a new password entry
    */
   createEntry: {
-    body: PasswordsSchemas.EntrySchema.omit({
+    body: PasswordsCollectionsSchemas.Entry.omit({
       pinned: true,
     }).extend({
       master: z.string(),
     }),
-    response: SchemaWithPB(PasswordsSchemas.EntrySchema),
+    response: SchemaWithPB(PasswordsCollectionsSchemas.Entry),
   },
 
   /**
@@ -39,12 +40,12 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    body: PasswordsSchemas.EntrySchema.omit({
+    body: PasswordsCollectionsSchemas.Entry.omit({
       pinned: true,
     }).extend({
       master: z.string(),
     }),
-    response: SchemaWithPB(PasswordsSchemas.EntrySchema),
+    response: SchemaWithPB(PasswordsCollectionsSchemas.Entry),
   },
 
   /**
@@ -80,7 +81,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(PasswordsSchemas.EntrySchema),
+    response: SchemaWithPB(PasswordsCollectionsSchemas.Entry),
   },
 };
 

@@ -76,6 +76,7 @@ class ForgeControllerBuilder<
 
   route(routeString: string) {
     const parts = routeString.split(" ");
+
     if (parts.length !== 2) {
       throw new Error(
         "Route string must be in the format 'METHOD /path'. Example: 'GET /users'",
@@ -168,6 +169,7 @@ class ForgeControllerBuilder<
     >,
   ) {
     const schema = this._schema;
+
     const options = {
       statusCode: this._statusCode,
       noDefaultResponse: this._noDefaultResponse,
@@ -188,8 +190,10 @@ class ForgeControllerBuilder<
       try {
         for (const type of ["body", "query", "params"] as const) {
           const validator = schema[type];
+
           if (validator) {
             const result = validator.safeParse(req[type]);
+
             if (!result.success) {
               return clientError(res, {
                 location: type,
@@ -211,10 +215,12 @@ class ForgeControllerBuilder<
               options.existenceCheck[type],
             ) as Array<[string, string]>) {
               const optional = collection.match(/\^?\[(.*)\]$/);
+
               const value = (req[type] as any)[key] as
                 | string
                 | string[]
                 | undefined;
+
               if (optional && !value) continue;
 
               if (Array.isArray(value)) {

@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { TodoListSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { TodoListControllersSchemas } from "shared/types/controllers";
 
 import * as entriesService from "../services/entries.service";
 
@@ -15,20 +12,13 @@ const todoListEntriesRouter = express.Router();
 const getStatusCounter = forgeController
   .route("GET /utils/status-counter")
   .description("Get status counter for todo entries")
-  .schema({
-    response: TodoListSchemas.TodoListStatusCounterSchema,
-  })
+  .schema(TodoListControllersSchemas.Entries.getStatusCounter)
   .callback(async ({ pb }) => await entriesService.getStatusCounter(pb));
 
 const getEntryById = forgeController
   .route("GET /:id")
   .description("Get todo entry by ID")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(TodoListSchemas.EntrySchema),
-  })
+  .schema(TodoListControllersSchemas.Entries.getEntryById)
   .existenceCheck("params", {
     id: "todo_list__entries",
   })
@@ -39,16 +29,7 @@ const getEntryById = forgeController
 const getAllEntries = forgeController
   .route("GET /")
   .description("Get all todo entries with optional filters")
-  .schema({
-    query: z.object({
-      list: z.string().optional(),
-      status: z.string().optional().default("all"),
-      priority: z.string().optional(),
-      tag: z.string().optional(),
-      query: z.string().optional(),
-    }),
-    response: z.array(WithPBSchema(TodoListSchemas.EntrySchema)),
-  })
+  .schema(TodoListControllersSchemas.Entries.getAllEntries)
   .existenceCheck("query", {
     tag: "[todo_list_tags]",
     list: "[todo_list_lists]",
@@ -62,13 +43,7 @@ const getAllEntries = forgeController
 const createEntry = forgeController
   .route("POST /")
   .description("Create a new todo entry")
-  .schema({
-    body: TodoListSchemas.EntrySchema.omit({
-      completed_at: true,
-      done: true,
-    }),
-    response: WithPBSchema(TodoListSchemas.EntrySchema),
-  })
+  .schema(TodoListControllersSchemas.Entries.createEntry)
   .existenceCheck("body", {
     list: "[todo_list_lists]",
     priority: "[todo_list_priorities]",
@@ -80,16 +55,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route("PATCH /:id")
   .description("Update an existing todo entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: TodoListSchemas.EntrySchema.omit({
-      completed_at: true,
-      done: true,
-    }),
-    response: WithPBSchema(TodoListSchemas.EntrySchema),
-  })
+  .schema(TodoListControllersSchemas.Entries.updateEntry)
   .existenceCheck("params", {
     id: "todo_list__entries",
   })
@@ -106,12 +72,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route("DELETE /:id")
   .description("Delete a todo entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(TodoListControllersSchemas.Entries.deleteEntry)
   .existenceCheck("params", {
     id: "todo_list__entries",
   })
@@ -123,12 +84,7 @@ const deleteEntry = forgeController
 const toggleEntry = forgeController
   .route("POST /toggle/:id")
   .description("Toggle completion status of a todo entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(TodoListSchemas.EntrySchema),
-  })
+  .schema(TodoListControllersSchemas.Entries.toggleEntry)
   .existenceCheck("params", {
     id: "todo_list__entries",
   })

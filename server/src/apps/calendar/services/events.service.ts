@@ -3,7 +3,11 @@ import fs from "fs";
 import moment from "moment";
 import PocketBase from "pocketbase";
 import rrule from "rrule";
-import { CalendarSchemas, MoviesSchemas, TodoListSchemas } from "shared/types";
+import {
+  CalendarCollectionsSchemas,
+  MoviesCollectionsSchemas,
+  TodoListCollectionsSchemas,
+} from "shared/types/collections";
 import { z } from "zod";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
@@ -12,15 +16,16 @@ export const getEventsByDateRange = async (
   pb: PocketBase,
   startDate: string,
   endDate: string,
-): Promise<WithPB<Partial<CalendarSchemas.IEvent>>[]> => {
+): Promise<WithPB<Partial<CalendarCollectionsSchemas.IEvent>>[]> => {
   const start = moment(startDate).startOf("day").toISOString();
+
   const end = moment(endDate).endOf("day").toISOString();
 
   const allEvents = [];
 
   const singleCalendarEvents = await pb
     .collection("calendar__events")
-    .getFullList<WithPB<CalendarSchemas.IEvent>>({
+    .getFullList<WithPB<CalendarCollectionsSchemas.IEvent>>({
       filter: `(start >= '${start}' || end >= '${start}') && (start <= '${end}' || end <= '${end}') && type="single"`,
     });
 
@@ -28,12 +33,13 @@ export const getEventsByDateRange = async (
 
   const recurringCalendarEvents = await pb
     .collection("calendar__events")
-    .getFullList<WithPB<CalendarSchemas.IEvent>>({
+    .getFullList<WithPB<CalendarCollectionsSchemas.IEvent>>({
       filter: "type='recurring'",
     });
 
   for (const event of recurringCalendarEvents) {
     const parsed = rrule.RRule.fromString(event.recurring_rrule);
+
     const eventsInRange = parsed.between(
       moment(start)
         .subtract(
@@ -82,7 +88,7 @@ export const getEventsByDateRange = async (
   const todoEntries = (
     await pb
       .collection("todo_list__entries")
-      .getFullList<WithPB<TodoListSchemas.IEntry>>({
+      .getFullList<WithPB<TodoListCollectionsSchemas.IEntry>>({
         filter: `due_date >= '${start}' && due_date <= '${end}'`,
       })
       .catch(() => [])
@@ -96,7 +102,7 @@ export const getEventsByDateRange = async (
       description: entry.notes,
       reference_link: `/todo-list?entry=${entry.id}`,
       is_strikethrough: entry.done,
-    } as Partial<WithPB<CalendarSchemas.IEvent>>;
+    } as Partial<WithPB<CalendarCollectionsSchemas.IEvent>>;
   });
 
   allEvents.push(...todoEntries);
@@ -104,7 +110,7 @@ export const getEventsByDateRange = async (
   const movieEntries = (
     await pb
       .collection("movies__entries")
-      .getFullList<WithPB<MoviesSchemas.IEntry>>({
+      .getFullList<WithPB<MoviesCollectionsSchemas.IEntry>>({
         filter: `theatre_showtime >= '${start}' && theatre_showtime <= '${end}'`,
       })
       .catch(() => [])
@@ -129,7 +135,7 @@ ${entry.theatre_number}
 ${entry.theatre_seat}
       `,
       reference_link: `/movies?show-ticket=${entry.id}`,
-    } as WithPB<CalendarSchemas.IEvent>;
+    } as WithPB<CalendarCollectionsSchemas.IEvent>;
   });
 
   allEvents.push(...movieEntries);
@@ -139,7 +145,7 @@ ${entry.theatre_seat}
 
 export const getTodayEvents = async (
   pb: PocketBase,
-): Promise<WithPB<Partial<CalendarSchemas.IEvent>>[]> => {
+): Promise<WithPB<Partial<CalendarCollectionsSchemas.IEvent>>[]> => {
   const day = moment().format("YYYY-MM-DD");
 
   const events = await getEventsByDateRange(pb, day, day);
@@ -150,12 +156,12 @@ export const getTodayEvents = async (
 export const createEvent = async (
   pb: PocketBase,
   eventData: Omit<
-    CalendarSchemas.IEvent,
+    CalendarCollectionsSchemas.IEvent,
     "is_strikethrough" | "exceptions" | "location"
   > & {
     location?: string | { displayName: { text: string } };
   },
-): Promise<WithPB<CalendarSchemas.IEvent>> => {
+): Promise<WithPB<CalendarCollectionsSchemas.IEvent>> => {
   if (eventData.type === "recurring") {
     eventData.end = "";
   } else {
@@ -170,16 +176,16 @@ export const createEvent = async (
 
   return await pb
     .collection("calendar__events")
-    .create<WithPB<CalendarSchemas.IEvent>>(eventData);
+    .create<WithPB<CalendarCollectionsSchemas.IEvent>>(eventData);
 };
 
 export const scanImage = async (
   pb: PocketBase,
   filePath: string,
-): Promise<Partial<CalendarSchemas.IEvent> | null> => {
+): Promise<Partial<CalendarCollectionsSchemas.IEvent> | null> => {
   const categories = await pb
     .collection("calendar__categories")
-    .getFullList<WithPB<CalendarSchemas.ICategory>>();
+    .getFullList<WithPB<CalendarCollectionsSchemas.ICategory>>();
 
   const categoryList = categories.map((category) => category.name);
 
@@ -242,24 +248,23 @@ export const scanImage = async (
     return null;
   }
 
-  (response as Partial<CalendarSchemas.IEvent>).category = categories.find(
-    (category) => category.name === response.category,
-  )?.id;
+  (response as Partial<CalendarCollectionsSchemas.IEvent>).category =
+    categories.find((category) => category.name === response.category)?.id;
 
-  return response as Partial<CalendarSchemas.IEvent>;
+  return response as Partial<CalendarCollectionsSchemas.IEvent>;
 };
 
 export const updateEvent = (
   pb: PocketBase,
   id: string,
   eventData: Omit<
-    Partial<CalendarSchemas.IEvent>,
+    Partial<CalendarCollectionsSchemas.IEvent>,
     "is_strikethrough" | "exceptions"
   >,
-): Promise<WithPB<CalendarSchemas.IEvent>> =>
+): Promise<WithPB<CalendarCollectionsSchemas.IEvent>> =>
   pb
     .collection("calendar__events")
-    .update<WithPB<CalendarSchemas.IEvent>>(id, eventData);
+    .update<WithPB<CalendarCollectionsSchemas.IEvent>>(id, eventData);
 
 export const deleteEvent = async (pb: PocketBase, id: string) => {
   await pb.collection("calendar__events").delete(id);
@@ -268,8 +273,10 @@ export const deleteEvent = async (pb: PocketBase, id: string) => {
 export const getEventById = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<CalendarSchemas.IEvent>> =>
-  pb.collection("calendar__events").getOne<WithPB<CalendarSchemas.IEvent>>(id);
+): Promise<WithPB<CalendarCollectionsSchemas.IEvent>> =>
+  pb
+    .collection("calendar__events")
+    .getOne<WithPB<CalendarCollectionsSchemas.IEvent>>(id);
 
 export const addException = async (
   pb: PocketBase,
@@ -278,7 +285,7 @@ export const addException = async (
 ): Promise<boolean> => {
   const event = await pb
     .collection("calendar__events")
-    .getOne<WithPB<CalendarSchemas.IEvent>>(id);
+    .getOne<WithPB<CalendarCollectionsSchemas.IEvent>>(id);
 
   const exceptions = event.exceptions || [];
 
@@ -290,7 +297,7 @@ export const addException = async (
 
   await pb
     .collection("calendar__events")
-    .update<WithPB<CalendarSchemas.IEvent>>(id, { exceptions });
+    .update<WithPB<CalendarCollectionsSchemas.IEvent>>(id, { exceptions });
 
   return true;
 };

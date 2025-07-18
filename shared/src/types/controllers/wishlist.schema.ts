@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { WishlistCollectionsCollectionsSchemas } from "../collections";
 
 const Entries = {
   /**
@@ -24,7 +25,7 @@ const Entries = {
         .optional()
         .transform((val) => val === "true"),
     }),
-    response: z.array(SchemaWithPB(WishlistSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.Entry)),
   },
 
   /**
@@ -51,7 +52,7 @@ const Entries = {
       list: z.string(),
       image: z.any().optional(),
     }),
-    response: SchemaWithPB(WishlistSchemas.EntrySchema),
+    response: SchemaWithPB(WishlistCollectionsSchemas.Entry),
   },
 
   /**
@@ -70,7 +71,7 @@ const Entries = {
       imageRemoved: z.string().optional(),
     }),
     response: z.union([
-      SchemaWithPB(WishlistSchemas.EntrySchema),
+      SchemaWithPB(WishlistCollectionsSchemas.Entry),
       z.literal("removed"),
     ]),
   },
@@ -83,7 +84,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(WishlistSchemas.EntrySchema),
+    response: SchemaWithPB(WishlistCollectionsSchemas.Entry),
   },
 
   /**
@@ -107,7 +108,7 @@ const Lists = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(WishlistSchemas.ListAggregatedSchema),
+    response: SchemaWithPB(WishlistCollectionsSchemas.ListAggregated),
   },
 
   /**
@@ -126,7 +127,7 @@ const Lists = {
    * @description Get all wishlists with statistics
    */
   getAllLists: {
-    response: z.array(SchemaWithPB(WishlistSchemas.ListAggregatedSchema)),
+    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.ListAggregated)),
   },
 
   /**
@@ -134,8 +135,8 @@ const Lists = {
    * @description Create a new wishlist
    */
   createList: {
-    body: WishlistSchemas.ListSchema,
-    response: SchemaWithPB(WishlistSchemas.ListSchema),
+    body: WishlistCollectionsSchemas.List,
+    response: SchemaWithPB(WishlistCollectionsSchemas.List),
   },
 
   /**
@@ -146,8 +147,8 @@ const Lists = {
     params: z.object({
       id: z.string(),
     }),
-    body: WishlistSchemas.ListSchema,
-    response: SchemaWithPB(WishlistSchemas.ListSchema),
+    body: WishlistCollectionsSchemas.List,
+    response: SchemaWithPB(WishlistCollectionsSchemas.List),
   },
 
   /**
