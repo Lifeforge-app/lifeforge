@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { oklchToHex } from '@utils/colors'
+import { oklchToHex } from '../utils/colors'
 
 function ColorItem({
   name,

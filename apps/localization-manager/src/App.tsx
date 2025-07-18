@@ -98,7 +98,7 @@ const LocaleAdmin = (): React.ReactElement => {
   }, [])
 
   return (
-    <APIEndpointProvider endpoint={import.meta.env.VITE_API_URL}>
+    <APIEndpointProvider endpoint={import.meta.env.VITE_API_HOST}>
       <PersonalizationProvider
         isAuthed={isAuthed === true}
         config={themeConfig}

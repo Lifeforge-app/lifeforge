@@ -30,7 +30,7 @@ function ModifyTextEntryModal({
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `moment-vault/entries/${existedData.id}`,
         {
           method: 'PATCH',

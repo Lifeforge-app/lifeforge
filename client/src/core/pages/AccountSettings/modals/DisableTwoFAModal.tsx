@@ -19,7 +19,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   async function onConfirm() {
     try {
       setLoading(true)
-      await fetchAPI(import.meta.env.VITE_API_URL, `/user/2fa/disable`, {
+      await fetchAPI(import.meta.env.VITE_API_HOST, `/user/2fa/disable`, {
         method: 'POST'
       })
 

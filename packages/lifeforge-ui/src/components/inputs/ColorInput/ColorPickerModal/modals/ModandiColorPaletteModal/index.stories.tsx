@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { ModalWrapper } from '@components/modals'
 
-import MorandiColorPaletteModal from './MorandiColorPaletteModal'
+import MorandiColorPaletteModal from '.'
 
 const meta = {
   component: MorandiColorPaletteModal

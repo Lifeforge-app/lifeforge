@@ -31,7 +31,7 @@ function AvatarColumn() {
 
         try {
           const data = await fetchAPI<string>(
-            import.meta.env.VITE_API_URL,
+            import.meta.env.VITE_API_HOST,
             '/user/settings/avatar',
             {
               method: 'PUT',

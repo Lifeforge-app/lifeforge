@@ -3,13 +3,12 @@ import _ from 'lodash'
 import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared/lib'
 import tinycolor from 'tinycolor2'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 import { Button } from '@components/buttons'
-
-import useThemeColors from '@hooks/useThemeColor'
 
 import InputIcon from '../shared/InputIcon'
 import InputLabel from '../shared/InputLabel'
@@ -42,8 +41,8 @@ function DateInput({
   disabled
 }: DateInputProps) {
   const { t } = useTranslation(namespace ? namespace : undefined)
+  const { derivedThemeColor } = usePersonalization()
   const ref = useRef<HTMLInputElement | null>(null)
-  const { theme } = useThemeColors()
   const [isCalendarOpen, setCalendarOpen] = useState(false)
 
   return (
@@ -69,7 +68,9 @@ function DateInput({
         <DatePicker
           shouldCloseOnSelect
           calendarClassName={
-            tinycolor(theme).isLight() ? 'theme-light' : 'theme-dark'
+            tinycolor(derivedThemeColor).isLight()
+              ? 'theme-light'
+              : 'theme-dark'
           }
           className="h-13 outline-hidden focus:outline-hidden focus:placeholder:text-bg-500 mt-6 w-full rounded-lg border-none bg-transparent px-4 tracking-wider placeholder:text-transparent"
           dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}

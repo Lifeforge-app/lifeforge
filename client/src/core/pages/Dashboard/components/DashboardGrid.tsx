@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
-import { useSidebarState } from '@providers/SidebarStateProvider'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
+
+import { useSidebarState } from 'shared/lib'
+import { usePersonalization } from 'shared/lib'
 
 import Achievements from '../widgets/Achievements'
 import AssetsBalance from '../widgets/AssetsBalance'
@@ -63,8 +65,8 @@ function DashboardGrid({
   const { t } = useTranslation('core.dashboard')
   const { sidebarExpanded } = useSidebarState()
   const [width, setWidth] = useState(0)
-  const { dashboardLayout: enabledWidgets, setDashboardLayout } =
-    usePersonalization()
+  const { dashboardLayout: enabledWidgets } = usePersonalization()
+  const { changeDashboardLayout } = useUserPersonalization()
 
   function handleResize() {
     if (wrapperRef.current !== null) {
@@ -86,7 +88,7 @@ function DashboardGrid({
   }, [wrapperRef.current])
 
   const onLayoutChange = (_: any, layouts: any) => {
-    setDashboardLayout(layouts)
+    changeDashboardLayout(layouts)
   }
 
   if (width === 0) {

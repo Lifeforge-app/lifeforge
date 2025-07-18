@@ -37,7 +37,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
     setSearchLoading(true)
     try {
       const data = await fetchAPI<IMovieSearchResults>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `movies/tmdb/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
       )
       setSearchResults(data)
@@ -51,7 +51,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
   async function addToLibrary(id: number) {
     try {
       await fetchAPI<IMovieEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `movies/entries/${id}`,
         {
           method: 'POST'

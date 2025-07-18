@@ -280,7 +280,7 @@ export default function AuthProvider({
               state: string
               tid: string
             }
-        >('user/oauth/verify', {
+        >(import.meta.env.VITE_API_HOST, 'user/oauth/verify', {
           method: 'POST',
           body: { code, provider: storedProvider }
         })
@@ -392,8 +392,10 @@ export default function AuthProvider({
 
 export function useAuth(): IAuthData {
   const context = useContext(AuthContext)
+
   if (!context) {
     throw new Error('useAuthContext must be used within an AuthProvider')
   }
+
   return context
 }

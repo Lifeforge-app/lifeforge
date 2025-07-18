@@ -77,7 +77,7 @@ function ModifyTicketModal({
   async function deleteTicket() {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/movies/entries/ticket/${existedData?.id}`,
         {
           method: 'DELETE'

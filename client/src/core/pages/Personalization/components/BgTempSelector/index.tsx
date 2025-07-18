@@ -1,14 +1,17 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from 'shared/lib'
+
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 
 function BgTempSelector() {
-  const { bgTemp, setBgTemp } = usePersonalization()
+  const { bgTemp } = usePersonalization()
+  const { changeBgTemp } = useUserPersonalization()
   const [customBgTemp, setCustomBgTemp] = useState<string>(
     bgTemp.startsWith('#') ? bgTemp : '#000000'
   )
@@ -23,7 +26,7 @@ function BgTempSelector() {
       title={t('bgTempSelector.title')}
     >
       <div className="flex w-full min-w-0 flex-col items-center gap-3 lg:flex-row">
-        <DefaultBgTempSelector bgTemp={bgTemp} setBgTemp={setBgTemp} />
+        <DefaultBgTempSelector bgTemp={bgTemp} />
         <button
           className={clsx(
             'border-bg-500 ring-offset-bg-50 dark:ring-offset-bg-950 ml-4 flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border-2 ring-offset-2 transition-all lg:w-12',
@@ -32,7 +35,7 @@ function BgTempSelector() {
               : 'hover:ring-bg-500 hover:ring-2'
           )}
           onClick={() => {
-            setBgTemp(customBgTemp)
+            changeBgTemp(customBgTemp)
           }}
         >
           <Icon className="text-bg-500 size-6" icon="tabler:palette" />
@@ -56,14 +59,14 @@ function BgTempSelector() {
                     className="hidden w-full lg:flex"
                     icon="uil:save"
                     onClick={() => {
-                      setBgTemp(customBgTemp)
+                      changeBgTemp(customBgTemp)
                     }}
                   ></Button>
                   <Button
                     className="w-full lg:hidden"
                     icon="uil:save"
                     onClick={() => {
-                      setBgTemp(customBgTemp)
+                      changeBgTemp(customBgTemp)
                     }}
                   >
                     save

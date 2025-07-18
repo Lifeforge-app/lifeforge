@@ -111,7 +111,7 @@ function GuitarTabs() {
 
       try {
         const taskId = await fetchAPI<string>(
-          import.meta.env.VITE_API_URL,
+          import.meta.env.VITE_API_HOST,
           `guitar-tabs/entries/upload`,
           {
             method: 'POST',

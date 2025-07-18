@@ -47,7 +47,7 @@ function EntryItem({
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `wishlist/entries/bought/${entry.id}`,
         {
           method: 'PATCH'

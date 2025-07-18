@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
-import { IFieldProps, ITextInputFieldProps } from '@interfaces/modal_interfaces'
-
 import { QRCodeScanner, TextInput } from '@components/inputs'
+import {
+  IFieldProps,
+  ITextInputFieldProps
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormTextInputProps<T> {
   field: IFieldProps<T> & ITextInputFieldProps

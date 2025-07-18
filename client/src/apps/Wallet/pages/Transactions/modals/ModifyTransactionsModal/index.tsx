@@ -178,7 +178,7 @@ function ModifyTransactionsModal({
 
     try {
       const res = await fetchAPI<IWalletTransaction[] | IWalletTransaction>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `wallet/transactions${type === 'update' ? '/' + existedData?.id : ''}`,
         {
           method: type === 'create' ? 'POST' : 'PATCH',

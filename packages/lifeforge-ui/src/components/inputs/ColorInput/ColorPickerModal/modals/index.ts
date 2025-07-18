@@ -1,6 +1,6 @@
 import { ModalComponent } from '@components/modals'
 
-import MorandiColorPaletteModal from './MorandiColorPaletteModal'
+import MorandiColorPaletteModal from './ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './TailwindCSSColorsModal'
 
 export const ColorPickerModals: Record<string, ModalComponent> = {

@@ -5,10 +5,12 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { ConfigColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import { usePersonalization } from 'shared/lib'
 
 const LANGUAGES: Array<{
   name: string
@@ -38,7 +40,8 @@ const LANGUAGES: Array<{
 ]
 
 function LanguageSelector() {
-  const { language, setLanguage } = usePersonalization()
+  const { language } = usePersonalization()
+  const { changeLanguage } = useUserPersonalization()
   const { t } = useTranslation('core.personalization')
 
   return (
@@ -50,7 +53,7 @@ function LanguageSelector() {
       <Listbox
         value={language}
         onChange={language => {
-          setLanguage(language)
+          changeLanguage(language)
         }}
       >
         <div className="relative mt-1 w-full md:w-64">

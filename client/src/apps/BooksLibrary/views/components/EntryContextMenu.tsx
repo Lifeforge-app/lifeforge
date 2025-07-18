@@ -41,7 +41,7 @@ export default function EntryContextMenu({
 
     try {
       await fetchAPI<IBooksLibraryEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `books-library/entries/read/${item.id}`,
         {
           method: 'POST'
