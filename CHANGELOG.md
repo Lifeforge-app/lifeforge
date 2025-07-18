@@ -7,6 +7,10 @@
 - **UI**: Fixed a bug where the toast progressbar color is not properly applied.
 - **Code**: Migrated the entire codebase to a monorepo structure using `bun` as the package manager.
 - **Code**: Typescript interfaces are now generated and put into the `shared` package, allowing the frontend and backend to share the same types.
+- **Code**: Shared CSS are now part of the `lifeforge-ui` package, allowing the main app and side apps to share the same styles.
+- **Code**: Shared components like `PersonalizationProvider`, `APIOnlineStatusProvider`, etc. are moved into the `shared` package under `lib` folder, allowing the main app and side apps to share the same providers.
+- **Code**: Huge refactoring of the codebase to improve modularity and maintainability.
+- **Code**: Removed a lot of unused and legacy imports, variables, and functions.
 
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
 - **API**: Moved all the `<module>_interface.ts` files to `schema.ts` files for better organization.
