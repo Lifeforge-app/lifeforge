@@ -4,7 +4,7 @@ import { clientError } from "@functions/response";
 import { Request, Response } from "express";
 import ogs from "open-graph-scraper";
 import PocketBase from "pocketbase";
-import { IdeaBoxSchemas } from "shared";
+import { IdeaBoxSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

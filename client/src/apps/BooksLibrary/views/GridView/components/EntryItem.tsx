@@ -6,13 +6,17 @@ import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
+import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
 
-import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-function EntryItem({ item }: { item: IBooksLibraryEntry }) {
+function EntryItem({
+  item
+}: {
+  item: ISchemaWithPB<BooksLibrarySchemas.IEntry>
+}) {
   const { derivedThemeColor } = usePersonalization()
   const { collectionsQuery } = useBooksLibraryContext()
   const { t } = useTranslation('apps.booksLibrary')

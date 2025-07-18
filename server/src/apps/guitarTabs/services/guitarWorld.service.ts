@@ -1,7 +1,7 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
 import PocketBase from "pocketbase";
-import { GuitarTabsSchemas } from "shared";
+import { GuitarTabsSchemas } from "shared/types";
 import sharp from "sharp";
 import { Server } from "socket.io";
 

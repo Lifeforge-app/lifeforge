@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { PasswordsSchemas } from "shared";
+import { PasswordsSchemas } from "shared/types";
 import { v4 } from "uuid";
 import { z } from "zod/v4";
 

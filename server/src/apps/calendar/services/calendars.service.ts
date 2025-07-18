@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { CalendarSchemas } from "shared";
+import { CalendarSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

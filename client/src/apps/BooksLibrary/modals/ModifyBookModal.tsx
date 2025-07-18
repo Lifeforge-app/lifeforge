@@ -5,11 +5,9 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
 
-import {
-  IBooksLibraryEntry,
-  IBooksLibraryFormSate
-} from '../interfaces/books_library_interfaces'
+import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal({
@@ -17,7 +15,7 @@ function ModifyBookModal({
   onClose
 }: {
   data: {
-    existedData: IBooksLibraryEntry | null
+    existedData: ISchemaWithPB<BooksLibrarySchemas.IEntry> | null
   }
   onClose: () => void
 }) {

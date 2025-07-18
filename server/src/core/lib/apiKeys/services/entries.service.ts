@@ -2,7 +2,7 @@ import ClientError from "@functions/ClientError";
 import { decrypt2, encrypt2 } from "@functions/encryption";
 import bcrypt from "bcrypt";
 import PocketBase from "pocketbase";
-import { ApiKeysSchemas } from "shared";
+import { ApiKeysSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

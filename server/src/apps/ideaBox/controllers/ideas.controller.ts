@@ -5,7 +5,7 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import multer from "multer";
-import { IdeaBoxSchemas } from "shared";
+import { IdeaBoxSchemas } from "shared/types";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";

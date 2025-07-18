@@ -2,14 +2,15 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
 
-import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
+import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 
 function BookMeta({
   item,
   isGridView = false
 }: {
-  item: IBooksLibraryEntry | Record<string, any>
+  item: ISchemaWithPB<BooksLibrarySchemas.IEntry> | Record<string, any>
   isGridView?: boolean
 }) {
   const { languagesQuery } = useBooksLibraryContext()

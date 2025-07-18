@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { MusicSchemas } from "shared";
+import { MusicSchemas } from "shared/types";
 import { z } from "zod/v4";
 
 import * as YoutubeService from "../services/youtube.service";

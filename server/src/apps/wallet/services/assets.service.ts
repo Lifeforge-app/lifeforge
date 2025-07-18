@@ -1,7 +1,7 @@
 import Moment from "moment";
 import MomentRange from "moment-range";
 import PocketBase from "pocketbase";
-import { WalletSchemas } from "shared";
+import { WalletSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

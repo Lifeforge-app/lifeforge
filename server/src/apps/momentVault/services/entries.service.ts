@@ -1,7 +1,7 @@
 import fs from "fs";
 import { ListResult } from "pocketbase";
 import Client from "pocketbase";
-import { MomentVaultSchemas } from "shared";
+import { MomentVaultSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

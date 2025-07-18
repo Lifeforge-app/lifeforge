@@ -1,6 +1,6 @@
 import { decrypt, decrypt2, encrypt, encrypt2 } from "@functions/encryption";
 import PocketBase from "pocketbase";
-import { PasswordsSchemas } from "shared";
+import { PasswordsSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

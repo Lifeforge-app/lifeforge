@@ -3,7 +3,7 @@ import parseOCR from "@functions/parseOCR";
 import fs from "fs";
 import { fromPath } from "pdf2pic";
 import Pocketbase from "pocketbase";
-import { WalletSchemas } from "shared";
+import { WalletSchemas } from "shared/types";
 import { z } from "zod";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";

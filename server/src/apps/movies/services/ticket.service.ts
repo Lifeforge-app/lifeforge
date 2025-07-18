@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { MoviesSchemas } from "shared";
+import { MoviesSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

@@ -1,7 +1,7 @@
 import moment from "moment";
 import PocketBase from "pocketbase";
 import puppeteer from "puppeteer-core";
-import { CodeTimeSchemas } from "shared";
+import { CodeTimeSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibrarySchemas } from "shared/types";
 
 export const searchBooks = async (queries: {
   provider: string;

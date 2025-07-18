@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { VirtualWardrobeSchemas } from "shared";
+import { VirtualWardrobeSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

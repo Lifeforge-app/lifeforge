@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { MoviesSchemas } from "shared";
+import { MoviesSchemas } from "shared/types";
 import { z } from "zod/v4";
 
 import { WithPBSchema } from "@typescript/pocketbase_interfaces";

@@ -3,7 +3,7 @@ import fs from "fs";
 import moment from "moment";
 import PocketBase from "pocketbase";
 import rrule from "rrule";
-import { CalendarSchemas, MoviesSchemas, TodoListSchemas } from "shared";
+import { CalendarSchemas, MoviesSchemas, TodoListSchemas } from "shared/types";
 import { z } from "zod";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";

@@ -1,6 +1,6 @@
 import moment from "moment";
 import PocketBase from "pocketbase";
-import { TodoListSchemas } from "shared";
+import { TodoListSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

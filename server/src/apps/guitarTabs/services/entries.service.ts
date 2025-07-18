@@ -3,7 +3,7 @@ import fs from "fs";
 import pdfPageCounter from "pdf-page-counter";
 import pdfThumbnail from "pdf-thumbnail";
 import PocketBase, { ListResult } from "pocketbase";
-import { GuitarTabsSchemas } from "shared";
+import { GuitarTabsSchemas } from "shared/types";
 import { Server } from "socket.io";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";

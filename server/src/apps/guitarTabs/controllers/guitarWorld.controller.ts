@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { GuitarTabsSchemas } from "shared";
+import { GuitarTabsSchemas } from "shared/types";
 import { z } from "zod/v4";
 
 import * as guitarWorldService from "../services/guitarWorld.service";

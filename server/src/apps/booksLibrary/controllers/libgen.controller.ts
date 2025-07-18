@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibrarySchemas } from "shared/types";
 import { z } from "zod/v4";
 
 import * as libgenService from "../services/libgen.service";
