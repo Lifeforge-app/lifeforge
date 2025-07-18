@@ -18,6 +18,12 @@ export default [
   // Core ESLint configurations
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    parserOptions: {
+      project: './tsconfig.json',
+      tsconfigRootDir: __dirname
+    }
+  },
 
   // React configurations
   pluginReact.configs.flat.recommended,

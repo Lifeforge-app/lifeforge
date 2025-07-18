@@ -5,6 +5,7 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
@@ -32,20 +33,19 @@ const COLORS = [
 
 function DefaultThemeColorSelector({
   themeColor,
-  setThemeColor,
   customThemeColor
 }: {
   themeColor: string
-  setThemeColor: (color: string) => void
   customThemeColor: string
 }) {
   const { t } = useTranslation('core.personalization')
+  const { changeThemeColor } = useUserPersonalization()
 
   return (
     <Listbox
       value={themeColor.startsWith('#') ? 'theme-custom' : themeColor}
       onChange={color => {
-        setThemeColor(color === 'theme-custom' ? customThemeColor : color)
+        changeThemeColor(color === 'theme-custom' ? customThemeColor : color)
       }}
     >
       <div className="relative mt-1 w-full lg:w-56">

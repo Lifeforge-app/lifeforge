@@ -3,9 +3,9 @@ import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 
 import ModifyEventModal from './ModifyEventModal'
 
@@ -25,6 +25,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
     formData.append('file', file)
     try {
       const data = await fetchAPI<ICalendarEvent>(
+        import.meta.env.VITE_API_HOST,
         'calendar/events/scan-image',
         {
           method: 'POST',

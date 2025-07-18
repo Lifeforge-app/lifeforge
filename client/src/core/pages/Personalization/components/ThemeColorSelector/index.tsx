@@ -1,12 +1,15 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from 'shared/lib'
+
 import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 
 function ThemeColorSelector() {
-  const { rawThemeColor: themeColor, setThemeColor } = usePersonalization()
+  const { rawThemeColor: themeColor } = usePersonalization()
+  const { changeThemeColor } = useUserPersonalization()
   const [customThemeColor, setCustomThemeColor] = useState<string>(
     themeColor.startsWith('#') ? themeColor : '#000000'
   )
@@ -22,7 +25,6 @@ function ThemeColorSelector() {
       <div className="flex w-full flex-col items-center gap-3 md:flex-row">
         <DefaultThemeColorSelector
           customThemeColor={customThemeColor}
-          setThemeColor={setThemeColor}
           themeColor={themeColor}
         />
         {themeColor.startsWith('#') && (
@@ -40,7 +42,7 @@ function ThemeColorSelector() {
                   className="w-full lg:w-auto"
                   icon="uil:save"
                   onClick={() => {
-                    setThemeColor(customThemeColor)
+                    changeThemeColor(customThemeColor)
                   }}
                 >
                   <span className="inline lg:hidden">{t('buttons.save')}</span>

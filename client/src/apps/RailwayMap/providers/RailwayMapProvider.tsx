@@ -8,13 +8,13 @@ import {
 } from 'react'
 import { Outlet } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import {
   IRailwayMapLine,
   IRailwayMapStation,
   IRailwayMapViewType
 } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IRailwayMapData {
   viewType: IRailwayMapViewType

@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
@@ -59,9 +59,13 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   async function checkLibgenOnlineStatus() {
     for (const endpoint of PROVIDERS) {
       try {
-        await fetchAPI(`cors-anywhere?url=https://${endpoint}`, {
-          timeout: 5000
-        })
+        await fetchAPI(
+          import.meta.env.VITE_API_HOST,
+          `cors-anywhere?url=https://${endpoint}`,
+          {
+            timeout: 5000
+          }
+        )
 
         setProviderOnlineStatuses(prev => ({
           ...prev,
@@ -87,6 +91,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
         page: number
         data: Array<Record<string, any>>
       }>(
+        import.meta.env.VITE_API_HOST,
         `books-library/libgen/search?provider=${provider}&req=${searchQuery}&page=${
           page ?? 1
         }`

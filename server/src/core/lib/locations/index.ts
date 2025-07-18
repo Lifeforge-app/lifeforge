@@ -52,6 +52,7 @@ const checkIsEnabled = forgeController
   })
   .callback(async ({ pb }) => {
     const key = await getAPIKey("gcloud", pb);
+
     return !!key;
   });
 

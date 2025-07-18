@@ -26,6 +26,7 @@ export const createMaster = async (
   password: string,
 ): Promise<void> => {
   const salt = await bcrypt.genSalt(10);
+
   const masterPasswordHash = await bcrypt.hash(password, salt);
 
   await pb.collection("users").update(pb.authStore.record!.id, {
@@ -41,6 +42,7 @@ export const verifyMaster = async (
   const decryptedMaster = decrypt2(password, challenge);
 
   const user = await pb.collection("users").getOne(pb.authStore.record!.id);
+
   const { masterPasswordHash } = user;
 
   return await bcrypt.compare(decryptedMaster, masterPasswordHash);

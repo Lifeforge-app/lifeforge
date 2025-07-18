@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { VirtualWardrobeSchemas } from "shared";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { VirtualWardrobeControllersSchemas } from "shared/types/controllers";
 
 import * as sessionService from "../services/session.service";
 
@@ -15,20 +12,13 @@ const virtualWardrobeSessionRouter = express.Router();
 const getCart = forgeController
   .route("GET /cart")
   .description("Get session cart items")
-  .schema({
-    response: z.array(WithPBSchema(VirtualWardrobeSchemas.EntrySchema)),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Session.getCart)
   .callback(async () => sessionService.getSessionCart());
 
 const addToCart = forgeController
   .route("POST /cart/:id")
   .description("Add item to session cart")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Session.addToCart)
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",
   })
@@ -39,12 +29,7 @@ const addToCart = forgeController
 const removeFromCart = forgeController
   .route("DELETE /cart/:id")
   .description("Remove item from session cart")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Session.removeFromCart)
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",
   })
@@ -55,12 +40,7 @@ const removeFromCart = forgeController
 const checkout = forgeController
   .route("POST /checkout")
   .description("Checkout session cart")
-  .schema({
-    body: z.object({
-      notes: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Session.checkout)
   .callback(async ({ pb, body: { notes } }) => {
     await sessionService.checkout(pb, notes);
   });
@@ -68,9 +48,7 @@ const checkout = forgeController
 const clearCart = forgeController
   .route("DELETE /cart")
   .description("Clear session cart")
-  .schema({
-    response: z.void(),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Session.clearCart)
   .callback(async () => {
     sessionService.clearCart();
   });

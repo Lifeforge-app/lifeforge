@@ -10,7 +10,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import { type IIdeaBoxContainer } from '../../interfaces/ideabox_interfaces'
 import ContainerList from './components/ContainerList'

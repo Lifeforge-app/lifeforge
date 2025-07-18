@@ -29,6 +29,7 @@ export const updateAvatar = async (
 
 export const deleteAvatar = async (pb: PocketBase) => {
   const { id } = pb.authStore.record!;
+
   await pb.collection("users").update(id, {
     avatar: null,
   });

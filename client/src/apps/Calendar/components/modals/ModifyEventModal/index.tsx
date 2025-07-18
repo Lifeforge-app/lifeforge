@@ -4,6 +4,8 @@ import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { useAPIQuery } from 'shared/lib'
+
 import {
   ICalendarCalendar,
   ICalendarCategory,
@@ -11,8 +13,6 @@ import {
   ICalendarEventFormState
 } from '@apps/Calendar/interfaces/calendar_interfaces'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import EventTimeSelector from './components/EventTimeSelector'
 

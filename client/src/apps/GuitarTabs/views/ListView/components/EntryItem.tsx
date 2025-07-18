@@ -5,9 +5,9 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
 
 import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
@@ -19,9 +19,13 @@ function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
 
   async function favouriteTab() {
     try {
-      await fetchAPI(`guitar-tabs/entries/favourite/${entry.id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `guitar-tabs/entries/favourite/${entry.id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       queryClient.invalidateQueries({ queryKey: ['guitar-tabs'] })
     } catch {

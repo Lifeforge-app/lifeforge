@@ -18,16 +18,19 @@ export const analyzeClothingImages = async (
 ): Promise<VisionAnalysisResult> => {
   // Read and resize images
   const frontImageBuffer = fs.readFileSync(frontImagePath);
+
   const backImageBuffer = fs.readFileSync(backImagePath);
 
   const resizedFrontImageBuffer = await sharp(frontImageBuffer)
     .resize(1024)
     .toBuffer();
+
   const resizedBackImageBuffer = await sharp(backImageBuffer)
     .resize(1024)
     .toBuffer();
 
   const base64FrontImage = resizedFrontImageBuffer.toString("base64");
+
   const base64BackImage = resizedBackImageBuffer.toString("base64");
 
   // Define response structure

@@ -1,6 +1,6 @@
 import { getAPIKey } from "@functions/getAPIKey";
 import PocketBase from "pocketbase";
-import { MoviesSchemas } from "shared";
+import { MoviesCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
@@ -8,19 +8,19 @@ export const getAllEntries = async (
   pb: PocketBase,
   watched: boolean,
 ): Promise<{
-  entries: WithPB<MoviesSchemas.IEntry>[];
+  entries: WithPB<MoviesCollectionsSchemas.IEntry>[];
   total: number;
 }> => {
   const entries = await pb
     .collection("movies__entries")
-    .getFullList<WithPB<MoviesSchemas.IEntry>>({
+    .getFullList<WithPB<MoviesCollectionsSchemas.IEntry>>({
       filter: `is_watched = ${watched}`,
     });
 
   const total = (
     await pb
       .collection("movies__entries")
-      .getList<WithPB<MoviesSchemas.IEntry>>(1, 1)
+      .getList<WithPB<MoviesCollectionsSchemas.IEntry>>(1, 1)
   ).totalItems;
 
   return {
@@ -45,15 +45,18 @@ export const getAllEntries = async (
 export const createEntryFromTMDB = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<MoviesSchemas.IEntry>> => {
+): Promise<WithPB<MoviesCollectionsSchemas.IEntry>> => {
   const apiKey = await getAPIKey("tmdb", pb);
+
   if (!apiKey) {
     throw new Error("API key not found");
   }
 
   const existedData = await pb
     .collection("movies__entries")
-    .getFirstListItem<WithPB<MoviesSchemas.IEntry>>(`tmdb_id = ${id}`)
+    .getFirstListItem<WithPB<MoviesCollectionsSchemas.IEntry>>(
+      `tmdb_id = ${id}`,
+    )
     .catch(() => null);
 
   if (existedData) {
@@ -85,7 +88,7 @@ export const createEntryFromTMDB = async (
 
   return await pb
     .collection("movies__entries")
-    .create<WithPB<MoviesSchemas.IEntry>>(entryData);
+    .create<WithPB<MoviesCollectionsSchemas.IEntry>>(entryData);
 };
 
 export const deleteEntry = async (
@@ -98,14 +101,14 @@ export const deleteEntry = async (
 export const toggleWatchStatus = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<MoviesSchemas.IEntry>> => {
+): Promise<WithPB<MoviesCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection("movies__entries")
-    .getOne<WithPB<MoviesSchemas.IEntry>>(id);
+    .getOne<WithPB<MoviesCollectionsSchemas.IEntry>>(id);
 
   const updatedEntry = await pb
     .collection("movies__entries")
-    .update<WithPB<MoviesSchemas.IEntry>>(id, {
+    .update<WithPB<MoviesCollectionsSchemas.IEntry>>(id, {
       is_watched: !entry.is_watched,
     });
 

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useMemo } from 'react'

@@ -1,17 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import { HamburgerMenu } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
-import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
+import { usePersonalization } from 'shared/lib'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-function EntryItem({ item }: { item: IBooksLibraryEntry }) {
+function EntryItem({
+  item
+}: {
+  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
+}) {
   const { derivedThemeColor } = usePersonalization()
   const { collectionsQuery } = useBooksLibraryContext()
   const { t } = useTranslation('apps.booksLibrary')

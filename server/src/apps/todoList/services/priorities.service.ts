@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { TodoListSchemas } from "shared";
+import { TodoListCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
@@ -7,14 +7,14 @@ export const getAllPriorities = (
   pb: PocketBase,
 ): Promise<
   WithPB<
-    TodoListSchemas.IPriority & {
+    TodoListCollectionsSchemas.IPriority & {
       amount: number;
     }
   >[]
 > =>
   pb.collection("todo_list__priorities_aggregated").getFullList<
     WithPB<
-      TodoListSchemas.IPriority & {
+      TodoListCollectionsSchemas.IPriority & {
         amount: number;
       }
     >
@@ -22,41 +22,45 @@ export const getAllPriorities = (
 
 export const createPriority = async (
   pb: PocketBase,
-  data: Omit<TodoListSchemas.IPriority, "amount">,
+  data: Omit<TodoListCollectionsSchemas.IPriority, "amount">,
 ): Promise<
   WithPB<
-    TodoListSchemas.IPriority & {
+    TodoListCollectionsSchemas.IPriority & {
       amount: number;
     }
   >
 > => {
   const created = await pb
     .collection("todo_list__priorities")
-    .create<WithPB<TodoListSchemas.IPriority>>(data);
+    .create<WithPB<TodoListCollectionsSchemas.IPriority>>(data);
 
   return pb
     .collection("todo_list__priorities_aggregated")
-    .getOne<WithPB<TodoListSchemas.IPriority & { amount: number }>>(created.id);
+    .getOne<
+      WithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
+    >(created.id);
 };
 
 export const updatePriority = async (
   pb: PocketBase,
   id: string,
-  data: Omit<TodoListSchemas.IPriority, "amount">,
+  data: Omit<TodoListCollectionsSchemas.IPriority, "amount">,
 ): Promise<
   WithPB<
-    TodoListSchemas.IPriority & {
+    TodoListCollectionsSchemas.IPriority & {
       amount: number;
     }
   >
 > => {
   const updated = await pb
     .collection("todo_list__priorities")
-    .update<WithPB<TodoListSchemas.IPriority>>(id, data);
+    .update<WithPB<TodoListCollectionsSchemas.IPriority>>(id, data);
 
   return pb
     .collection("todo_list__priorities_aggregated")
-    .getOne<WithPB<TodoListSchemas.IPriority & { amount: number }>>(updated.id);
+    .getOne<
+      WithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
+    >(updated.id);
 };
 
 export const deletePriority = async (

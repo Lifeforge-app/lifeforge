@@ -1,9 +1,9 @@
+// @ts-ignore
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useState } from 'react'
 
-import { type IIconSet } from '@interfaces/icon_selector_interfaces'
-
+import { type IIconSet } from '@components/inputs/IconInput/IconPickerModal/typescript/icon_selector_interfaces'
 import { Scrollbar } from '@components/utilities'
 
 import CategoryEntry from './components/CategoryEntry'

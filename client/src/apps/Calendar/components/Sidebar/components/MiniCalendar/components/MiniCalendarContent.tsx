@@ -1,5 +1,6 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import dayjs from 'dayjs'
+
+import { usePersonalization } from 'shared/lib'
 
 import { type ICalendarEvent } from '../../../../../interfaces/calendar_interfaces'
 import MiniCalendarDateItem from './MiniCalendarDateItem'

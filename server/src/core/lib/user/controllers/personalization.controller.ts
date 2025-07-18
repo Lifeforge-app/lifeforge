@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { z } from "zod/v4";
+import { UserControllersSchemas } from "shared/types/controllers";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
@@ -14,26 +14,13 @@ const userPersonalizationRouter = express.Router();
 const listGoogleFonts = forgeController
   .route("GET /fonts")
   .description("List available Google Fonts")
-  .schema({
-    response: z.object({
-      enabled: z.boolean(),
-      items: z.array(z.any()).optional(),
-    }),
-  })
+  .schema(UserControllersSchemas.Personalization.listGoogleFonts)
   .callback(async ({ pb }) => PersonalizationService.listGoogleFonts(pb));
 
 const getGoogleFont = forgeController
   .route("GET /font")
   .description("Get specific Google Font details")
-  .schema({
-    query: z.object({
-      family: z.string(),
-    }),
-    response: z.object({
-      enabled: z.boolean(),
-      items: z.array(z.any()).optional(),
-    }),
-  })
+  .schema(UserControllersSchemas.Personalization.getGoogleFont)
   .callback(async ({ pb, query: { family } }) =>
     PersonalizationService.getGoogleFont(pb, family),
   );
@@ -42,12 +29,7 @@ const updateBgImage = forgeController
   .route("PUT /bg-image")
   .description("Update background image")
   .middlewares(singleUploadMiddleware)
-  .schema({
-    body: z.object({
-      url: z.string().optional(),
-    }),
-    response: z.string(),
-  })
+  .schema(UserControllersSchemas.Personalization.updateBgImage)
   .callback(async ({ pb, body: { url }, req }) =>
     PersonalizationService.updateBgImage(pb, req.file, url),
   );
@@ -55,9 +37,7 @@ const updateBgImage = forgeController
 const deleteBgImage = forgeController
   .route("DELETE /bg-image")
   .description("Delete background image")
-  .schema({
-    response: z.void(),
-  })
+  .schema(UserControllersSchemas.Personalization.deleteBgImage)
   .statusCode(204)
   .callback(
     async ({ pb }) =>
@@ -67,20 +47,7 @@ const deleteBgImage = forgeController
 const updatePersonalization = forgeController
   .route("PATCH /")
   .description("Update personalization settings")
-  .schema({
-    body: z.object({
-      data: z.object({
-        fontFamily: z.string().optional(),
-        theme: z.string().optional(),
-        color: z.string().optional(),
-        bgTemp: z.string().optional(),
-        language: z.string().optional(),
-        dashboardLayout: z.record(z.string(), z.any()).optional(),
-        backdropFilters: z.record(z.string(), z.any()).optional(),
-      }),
-    }),
-    response: z.void(),
-  })
+  .schema(UserControllersSchemas.Personalization.updatePersonalization)
   .statusCode(204)
   .callback(
     async ({ pb, body: { data } }) =>

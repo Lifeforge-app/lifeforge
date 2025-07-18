@@ -1,11 +1,9 @@
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import type { RecordModel } from 'pocketbase'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
 import Button from '../../buttons/Button'
 import { TextInput } from '../../inputs'
@@ -49,7 +47,7 @@ function DeleteConfirmationModal<T extends RecordModel>({
     confirmationText?: string
   }
 }) {
-  const { apiHost } = useLifeforgeUIContext()
+  const apiHost = useAPIEndpoint()
   const { t } = useTranslation('common.modals')
   const [loading, setLoading] = useState(false)
   const queryClient = useQueryClient()

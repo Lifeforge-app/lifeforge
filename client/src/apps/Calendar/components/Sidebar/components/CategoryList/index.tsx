@@ -3,10 +3,10 @@ import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
+import { useAPIQuery } from 'shared/lib'
+
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type ICalendarCategory } from '../../../../interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'

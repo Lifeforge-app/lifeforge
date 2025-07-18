@@ -4,10 +4,7 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import fs from "fs";
-import { VirtualWardrobeSchemas } from "shared";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { VirtualWardrobeControllersSchemas } from "shared/types/controllers";
 
 import { fieldsUploadMiddleware } from "@middlewares/uploadMiddleware";
 
@@ -19,29 +16,13 @@ const virtualWardrobeEntriesRouter = express.Router();
 const getSidebarData = forgeController
   .route("GET /sidebar-data")
   .description("Get sidebar data for virtual wardrobe")
-  .schema({
-    response: VirtualWardrobeSchemas.VirtualWardrobeSidebarDataSchema,
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.getSidebarData)
   .callback(async ({ pb }) => await entriesService.getSidebarData(pb));
 
 const getEntries = forgeController
   .route("GET /")
   .description("Get virtual wardrobe entries with optional filters")
-  .schema({
-    query: z.object({
-      category: z.string().optional(),
-      subcategory: z.string().optional(),
-      brand: z.string().optional(),
-      size: z.string().optional(),
-      color: z.string().optional(),
-      favourite: z
-        .string()
-        .optional()
-        .transform((val) => val === "true"),
-      q: z.string().optional(),
-    }),
-    response: z.array(WithPBSchema(VirtualWardrobeSchemas.EntrySchema)),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.getEntries)
   .callback(
     async ({ pb, query }) => await entriesService.getEntries(pb, query),
   );
@@ -49,30 +30,27 @@ const getEntries = forgeController
 const createEntry = forgeController
   .route("POST /")
   .description("Create a new virtual wardrobe entry")
-  .schema({
-    body: z.object({
-      name: z.string(),
-      category: z.string(),
-      subcategory: z.string(),
-      brand: z.string(),
-      size: z.string(),
-      colors: z.array(z.string()),
-      price: z.string().transform((val) => parseFloat(val)),
-      notes: z.string(),
-    }),
-    response: WithPBSchema(VirtualWardrobeSchemas.EntrySchema),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.createEntry)
   .middlewares(
     fieldsUploadMiddleware.bind({
       fields: [
-        { name: "backImage", maxCount: 1 },
-        { name: "frontImage", maxCount: 1 },
+        {
+          name: "backImage",
+          maxCount: 1,
+        },
+        {
+          name: "frontImage",
+          maxCount: 1,
+        },
       ],
     }),
   )
   .statusCode(201)
   .callback(async ({ pb, body, req }) => {
-    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const files = req.files as {
+      [fieldname: string]: Express.Multer.File[];
+    };
+
     const {
       backImage: [backImage],
       frontImage: [frontImage],
@@ -81,9 +59,9 @@ const createEntry = forgeController
     if (!frontImage || !backImage) {
       throw new Error("Both front and back images are required");
     }
-
     try {
       const frontImageBuffer = fs.readFileSync(frontImage.path);
+
       const backImageBuffer = fs.readFileSync(backImage.path);
 
       const result = await entriesService.createEntry(pb, {
@@ -103,22 +81,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route("PATCH /:id")
   .description("Update an existing virtual wardrobe entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: z.object({
-      name: z.string().optional(),
-      category: z.string().optional(),
-      subcategory: z.string().optional(),
-      brand: z.string().optional(),
-      size: z.string().optional(),
-      colors: z.array(z.string()).optional(),
-      price: z.number().optional(),
-      notes: z.string().optional(),
-    }),
-    response: WithPBSchema(VirtualWardrobeSchemas.EntrySchema),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.updateEntry)
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",
   })
@@ -130,12 +93,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route("DELETE /:id")
   .description("Delete a virtual wardrobe entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.deleteEntry)
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",
   })
@@ -147,12 +105,7 @@ const deleteEntry = forgeController
 const toggleFavourite = forgeController
   .route("PATCH /favourite/:id")
   .description("Toggle favourite status of a virtual wardrobe entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(VirtualWardrobeSchemas.EntrySchema),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.toggleFavourite)
   .existenceCheck("params", {
     id: "virtual_wardrobe__entries",
   })
@@ -164,24 +117,26 @@ const toggleFavourite = forgeController
 const analyzeVision = forgeController
   .route("POST /vision")
   .description("Analyze clothing images using AI vision")
-  .schema({
-    response: z.object({
-      name: z.string(),
-      category: z.string(),
-      subcategory: z.string(),
-      colors: z.array(z.string()),
-    }),
-  })
+  .schema(VirtualWardrobeControllersSchemas.Entries.analyzeVision)
   .middlewares(
     fieldsUploadMiddleware.bind({
       fields: [
-        { name: "frontImage", maxCount: 1 },
-        { name: "backImage", maxCount: 1 },
+        {
+          name: "frontImage",
+          maxCount: 1,
+        },
+        {
+          name: "backImage",
+          maxCount: 1,
+        },
       ],
     }),
   )
   .callback(async ({ pb, req }) => {
-    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const files = req.files as {
+      [fieldname: string]: Express.Multer.File[];
+    };
+
     const {
       frontImage: [frontImage],
       backImage: [backImage],
@@ -190,7 +145,6 @@ const analyzeVision = forgeController
     if (!frontImage || !backImage) {
       throw new Error("Both front and back images are required");
     }
-
     try {
       const result = await visionService.analyzeClothingImages(
         pb,

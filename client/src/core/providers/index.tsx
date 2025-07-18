@@ -1,43 +1,36 @@
-import APIOnlineStatusProvider from '@providers/APIOnlineStatusProvider'
-import BackgroundProvider from '@providers/BackgroundProvider'
-import LifeforgeUIProviderWrapper from '@providers/LifeforgeUIProviderWrapper'
-import PersonalizationProvider from '@providers/PersonalizationProvider'
-import SidebarStateProvider from '@providers/SidebarStateProvider'
-import ToastProvider from '@providers/ToastProvider'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import {
+  APIOnlineStatusProvider,
+  BackgroundProvider,
+  PersonalizationProvider,
+  SidebarStateProvider,
+  ToastProvider
+} from 'shared/lib'
 
 import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 import AuthProvider from './AuthProvider'
 import SocketProvider from './SocketProvider'
-
-const queryClient = new QueryClient()
+import UserPersonalizationProvider from './UserPersonalizationProvider'
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <APIOnlineStatusProvider>
+    <APIOnlineStatusProvider>
+      <AuthProvider>
         <SidebarStateProvider>
-          <AuthProvider>
-            <DndProvider backend={HTML5Backend}>
-              <PersonalizationProvider>
-                <ToastProvider>
-                  <LifeforgeUIProviderWrapper>
-                    <BackgroundProvider>
-                      <SocketProvider>
-                        <MusicProvider>{children}</MusicProvider>
-                      </SocketProvider>
-                    </BackgroundProvider>
-                  </LifeforgeUIProviderWrapper>
-                </ToastProvider>
-              </PersonalizationProvider>
-            </DndProvider>
-          </AuthProvider>
+          <PersonalizationProvider>
+            <UserPersonalizationProvider>
+              <ToastProvider>
+                <BackgroundProvider>
+                  <SocketProvider>
+                    <MusicProvider>{children}</MusicProvider>
+                  </SocketProvider>
+                </BackgroundProvider>
+              </ToastProvider>
+            </UserPersonalizationProvider>
+          </PersonalizationProvider>
         </SidebarStateProvider>
-      </APIOnlineStatusProvider>
-    </QueryClientProvider>
+      </AuthProvider>
+    </APIOnlineStatusProvider>
   )
 }
 

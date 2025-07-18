@@ -15,9 +15,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Id, toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
 
 import Header from './components/Header'
 import Searchbar from './components/Searchbar'
@@ -111,10 +110,14 @@ function GuitarTabs() {
       }
 
       try {
-        const taskId = await fetchAPI<string>(`guitar-tabs/entries/upload`, {
-          method: 'POST',
-          body: formData
-        })
+        const taskId = await fetchAPI<string>(
+          import.meta.env.VITE_API_HOST,
+          `guitar-tabs/entries/upload`,
+          {
+            method: 'POST',
+            body: formData
+          }
+        )
 
         socket.on(
           'taskPoolUpdate',

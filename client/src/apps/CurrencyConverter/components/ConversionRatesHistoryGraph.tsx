@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -17,6 +16,8 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useMemo, useState } from 'react'
 import { Line } from 'react-chartjs-2'
+
+import { usePersonalization } from 'shared/lib'
 
 import { CURRENCIES } from '../constants/currencies'
 

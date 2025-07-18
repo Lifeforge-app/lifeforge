@@ -1,9 +1,9 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+import { useSidebarState } from 'shared/lib'
 
 import { Button } from '@components/buttons'
 
@@ -38,7 +38,7 @@ function ModuleHeader({
     'common.misc',
     namespace ?? ''
   ])
-  const { toggleSidebar, sidebarExpanded } = useLifeforgeUIContext()
+  const { toggleSidebar, sidebarExpanded } = useSidebarState()
 
   return (
     <header className="z-80 flex-between mb-6 flex w-full min-w-0 gap-8">

@@ -2,9 +2,9 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useMemo } from 'react'
 
-import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
+import { useAPIQuery } from 'shared/lib'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
 import {
   type ICalendarCategory,

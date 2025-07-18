@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import ResendOTPButton from '@security/components/OTPScreen/components/ResendOTPButton'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { useAuth } from '../../../../../providers/AuthProvider'
 
@@ -43,6 +43,7 @@ function UsingEmail({
 
     try {
       const res = await fetchAPI<string>(
+        import.meta.env.VITE_API_HOST,
         `user/2fa/otp?email=${encodeURIComponent(email)}`,
         {
           method: 'GET'

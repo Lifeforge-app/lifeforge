@@ -8,10 +8,12 @@ import { globalTaskPool } from "@middlewares/taskPoolMiddleware";
 import app from "./core/app";
 
 const server = createServer(app);
+
 const io = new Server(server);
 
 io.use(async (socket, next) => {
   const bearerToken = socket.handshake.auth.token as string;
+
   const pb = new Pocketbase(process.env.PB_HOST);
 
   if (!bearerToken) {

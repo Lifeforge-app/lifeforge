@@ -1,16 +1,17 @@
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import type { RecordModel } from 'pocketbase'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import type { IFieldProps, IFormState } from '@interfaces/modal_interfaces'
+import { useAPIEndpoint } from 'shared/lib'
 
 import { Button } from '@components/buttons'
+import useModifyMutation from '@components/modals/features/FormModal/hooks/useModifyMutation'
+import type {
+  IFieldProps,
+  IFormState
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import { LoadingScreen } from '@components/screens'
-
-import useModifyMutation from '@hooks/useModifyMutation'
 
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
@@ -79,7 +80,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
     update?: (newData: U) => void
   }
 }) {
-  const { apiHost } = useLifeforgeUIContext()
+  const apiHost = useAPIEndpoint()
   const queryClient = useQueryClient()
   const [submitLoading, setSubmitLoading] = useState(false)
   const entryCreateMutation = useModifyMutation<U>(

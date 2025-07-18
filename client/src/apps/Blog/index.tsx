@@ -7,16 +7,16 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { BlogSchemas } from 'shared'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
+import { BlogCollectionsSchemas } from 'shared/types'
 
 function Blog() {
   const { t } = useTranslation('apps.blog')
-  const entriesQuery = useAPIQuery<BlogSchemas.IEntry[]>('blog/entries', [
-    'blog',
-    'entries'
-  ])
+  const entriesQuery = useAPIQuery<BlogCollectionsSchemas.IEntry[]>(
+    'blog/entries',
+    ['blog', 'entries']
+  )
 
   return (
     <ModuleWrapper>

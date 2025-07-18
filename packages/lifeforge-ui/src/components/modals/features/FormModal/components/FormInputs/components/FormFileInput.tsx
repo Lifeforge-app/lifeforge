@@ -1,9 +1,8 @@
+import { ImageAndFileInput } from '@components/inputs'
 import {
   IFieldProps,
   IImageAndFileInputFieldProps
-} from '@interfaces/modal_interfaces'
-
-import { ImageAndFileInput } from '@components/inputs'
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormFileInputProps<T> {
   field: IFieldProps<T> & IImageAndFileInputFieldProps

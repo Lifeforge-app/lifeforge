@@ -1,6 +1,6 @@
 import moment from "moment";
 import Pocketbase from "pocketbase";
-import { WalletSchemas } from "shared";
+import { WalletCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
@@ -14,7 +14,7 @@ export const getTypesCount = async (
 }> => {
   const types = await pb
     .collection("wallet__transaction_types_aggregated")
-    .getFullList<WithPB<WalletSchemas.ITransactionTypeAggregated>>();
+    .getFullList<WithPB<WalletCollectionsSchemas.ITransactionTypeAggregated>>();
 
   const typesCount: {
     [key: string]: {
@@ -37,15 +37,16 @@ export const getIncomeExpensesSummary = async (
   pb: Pocketbase,
   year: string,
   month: string,
-): Promise<WalletSchemas.IWalletIncomeExpensesSummary> => {
+): Promise<WalletCollectionsSchemas.IWalletIncomeExpensesSummary> => {
   const start = moment(`${year}-${month}-01`)
     .startOf("month")
     .format("YYYY-MM-DD");
+
   const end = moment(`${year}-${month}-01`).endOf("month").format("YYYY-MM-DD");
 
   const transactions = await pb
     .collection("wallet__transactions")
-    .getFullList<WithPB<WalletSchemas.ITransaction>>({
+    .getFullList<WithPB<WalletCollectionsSchemas.ITransaction>>({
       filter: "type = 'income' || type = 'expenses'",
       sort: "-date,-created",
     });
@@ -117,6 +118,7 @@ export const getExpensesBreakdown = async (
     .month(month - 1)
     .startOf("month")
     .format("YYYY-MM-DD");
+
   const endDate = moment()
     .year(year)
     .month(month - 1)
@@ -124,8 +126,8 @@ export const getExpensesBreakdown = async (
     .format("YYYY-MM-DD");
 
   const expenses = await pb.collection("wallet__transactions").getFullList<
-    WithPB<WalletSchemas.ITransaction> & {
-      expand?: { category: WithPB<WalletSchemas.ICategory> };
+    WithPB<WalletCollectionsSchemas.ITransaction> & {
+      expand?: { category: WithPB<WalletCollectionsSchemas.ICategory> };
     }
   >({
     filter: `date >= '${startDate}' && date <= '${endDate}' && type = 'expenses'`,
@@ -143,6 +145,7 @@ export const getExpensesBreakdown = async (
 
   for (const expense of expenses) {
     const categoryId = expense.expand?.category.id;
+
     if (!categoryId) {
       continue;
     }

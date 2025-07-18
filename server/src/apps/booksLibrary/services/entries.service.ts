@@ -1,16 +1,16 @@
 import ClientError from "@functions/ClientError";
 import mailer from "nodemailer";
 import Pocketbase from "pocketbase";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibraryCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
 export const getAllEntries = (
   pb: Pocketbase,
-): Promise<WithPB<BooksLibrarySchemas.IEntry>[]> =>
+): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>[]> =>
   pb
     .collection("books_library__entries")
-    .getFullList<WithPB<BooksLibrarySchemas.IEntry>>({
+    .getFullList<WithPB<BooksLibraryCollectionsSchemas.IEntry>>({
       sort: "-is_favourite,-created",
     });
 
@@ -18,7 +18,7 @@ export const updateEntry = (
   pb: Pocketbase,
   id: string,
   data: Pick<
-    BooksLibrarySchemas.IEntry,
+    BooksLibraryCollectionsSchemas.IEntry,
     | "title"
     | "authors"
     | "collection"
@@ -28,22 +28,22 @@ export const updateEntry = (
     | "publisher"
     | "year_published"
   >,
-): Promise<WithPB<BooksLibrarySchemas.IEntry>> =>
+): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> =>
   pb
     .collection("books_library__entries")
-    .update<WithPB<BooksLibrarySchemas.IEntry>>(id, data);
+    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, data);
 
 export const toggleFavouriteStatus = async (
   pb: Pocketbase,
   id: string,
-): Promise<WithPB<BooksLibrarySchemas.IEntry>> => {
+): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
   const book = await pb
     .collection("books_library__entries")
-    .getOne<WithPB<BooksLibrarySchemas.IEntry>>(id);
+    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id);
 
   return await pb
     .collection("books_library__entries")
-    .update<WithPB<BooksLibrarySchemas.IEntry>>(id, {
+    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
       is_favourite: !book.is_favourite,
     });
 };
@@ -51,14 +51,14 @@ export const toggleFavouriteStatus = async (
 export const toggleReadStatus = async (
   pb: Pocketbase,
   id: string,
-): Promise<WithPB<BooksLibrarySchemas.IEntry>> => {
+): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
   const book = await pb
     .collection("books_library__entries")
-    .getOne<WithPB<BooksLibrarySchemas.IEntry>>(id);
+    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id);
 
   return await pb
     .collection("books_library__entries")
-    .update<WithPB<BooksLibrarySchemas.IEntry>>(id, {
+    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
       is_read: !book.is_read,
       time_finished: !book.is_read ? new Date().toISOString() : "",
     });
@@ -85,10 +85,12 @@ export const sendToKindle = async (
 
   const entry = await pb
     .collection("books_library__entries")
-    .getOne<BooksLibrarySchemas.IEntry>(id);
+    .getOne<BooksLibraryCollectionsSchemas.IEntry>(id);
 
   const fileLink = pb.files.getURL(entry, entry.file);
+
   const content = await fetch(fileLink).then((res) => res.arrayBuffer());
+
   const fileName = `${entry.title}.${entry.extension}`;
 
   const mail = {

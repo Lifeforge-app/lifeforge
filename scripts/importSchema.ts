@@ -3,7 +3,7 @@ import Pocketbase from "pocketbase";
 
 if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
   console.error(
-    "Please provide PB_HOST, PB_EMAIL, and PB_PASSWORD in your environment variables.",
+    "Please provide PB_HOST, PB_EMAIL, and PB_PASSWORD in your environment variables."
   );
   process.exit(1);
 }
@@ -30,12 +30,12 @@ const schemaFiles = fs
 
 console.log(`Found ${schemaFiles.length} schema files. Importing...`);
 
-const allSchemas = schemaFiles
+const allCollectionsSchemas = schemaFiles
   .map((file) => {
     return JSON.parse(fs.readFileSync(`./src/${file}`, { encoding: "utf-8" }));
   })
   .flat();
 
-await pb.collections.import(allSchemas);
+await pb.collections.import(allCollectionsSchemas);
 
 console.log("Done.");

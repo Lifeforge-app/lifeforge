@@ -1,6 +1,6 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 export default async function fetchShortestRoute(
   start: string,
@@ -11,6 +11,7 @@ export default async function fetchShortestRoute(
   }
 
   const data = await fetchAPI<IRailwayMapStation[]>(
+    import.meta.env.VITE_API_HOST,
     `railway-map/shortest?start=${start}&end=${end}`
   )
 

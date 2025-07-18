@@ -1,9 +1,8 @@
+import { Button } from '@components/buttons'
 import {
   type IPixabaySearchFilter,
   type PixabaySearchFilterAction
-} from '@interfaces/pixabay_interfaces'
-
-import { Button } from '@components/buttons'
+} from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
 import { ModalHeader, ModalWrapper } from '@components/modals'
 
 import {

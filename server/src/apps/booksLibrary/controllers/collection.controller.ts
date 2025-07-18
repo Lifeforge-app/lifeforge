@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { BooksLibrarySchemas } from "shared";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { BooksLibraryControllersSchemas } from "shared/types/controllers";
 
 import * as CollectionsService from "../services/collections.service";
 
@@ -15,33 +12,20 @@ const booksLibraryCollectionsRouter = express.Router();
 const getAllCollections = forgeController
   .route("GET /")
   .description("Get all collections for the books library")
-  .schema({
-    response: z.array(
-      WithPBSchema(BooksLibrarySchemas.CollectionAggregatedSchema),
-    ),
-  })
+  .schema(BooksLibraryControllersSchemas.Collection.getAllCollections)
   .callback(({ pb }) => CollectionsService.getAllCollections(pb));
 
 const createCollection = forgeController
   .route("POST /")
   .description("Create a new collection for the books library")
-  .schema({
-    body: BooksLibrarySchemas.CollectionSchema,
-    response: WithPBSchema(BooksLibrarySchemas.CollectionSchema),
-  })
+  .schema(BooksLibraryControllersSchemas.Collection.createCollection)
   .statusCode(201)
   .callback(({ pb, body }) => CollectionsService.createCollection(pb, body));
 
 const updateCollection = forgeController
   .route("PATCH /:id")
   .description("Update an existing collection for the books library")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: BooksLibrarySchemas.CollectionSchema,
-    response: WithPBSchema(BooksLibrarySchemas.CollectionAggregatedSchema),
-  })
+  .schema(BooksLibraryControllersSchemas.Collection.updateCollection)
   .existenceCheck("params", {
     id: "books_library__collections",
   })
@@ -52,12 +36,7 @@ const updateCollection = forgeController
 const deleteCollection = forgeController
   .route("DELETE /:id")
   .description("Delete an existing collection for the books library")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(BooksLibraryControllersSchemas.Collection.deleteCollection)
   .existenceCheck("params", {
     id: "books_library__collections",
   })

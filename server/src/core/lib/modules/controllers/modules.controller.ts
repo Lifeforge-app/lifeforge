@@ -4,7 +4,7 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import _ from "lodash";
-import { z } from "zod/v4";
+import { ModulesControllersSchemas } from "shared/types/controllers";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
@@ -15,20 +15,13 @@ const modulesRouter = express.Router();
 const listAppPaths = forgeController
   .route("GET /paths")
   .description("List all application paths")
-  .schema({
-    response: z.array(z.string()),
-  })
+  .schema(ModulesControllersSchemas.Modules.listAppPaths)
   .callback(async () => ModuleService.listAppPaths());
 
 const toggleModule = forgeController
   .route("POST /toggle/:id")
   .description("Toggle a module on/off")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(ModulesControllersSchemas.Modules.toggleModule)
   .callback(
     async ({ pb, params: { id } }) => await ModuleService.toggleModule(pb, id),
   );
@@ -36,12 +29,7 @@ const toggleModule = forgeController
 const packageModule = forgeController
   .route("POST /package/:id")
   .description("Package a module into a zip file")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(ModulesControllersSchemas.Modules.packageModule)
   .noDefaultResponse()
   .callback(async ({ params: { id }, res }) => {
     const backendZip = await ModuleService.packageModule(id);
@@ -61,12 +49,7 @@ const installModule = forgeController
   .route("POST /install")
   .description("Install a module from uploaded file")
   .middlewares(singleUploadMiddleware)
-  .schema({
-    body: z.object({
-      name: z.string().min(1, "Name is required"),
-    }),
-    response: z.void(),
-  })
+  .schema(ModulesControllersSchemas.Modules.installModule)
   .callback(async ({ body: { name }, req: { file } }) =>
     ModuleService.installModule(name, file),
   );

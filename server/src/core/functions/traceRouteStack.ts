@@ -31,6 +31,7 @@ export default function traceRouteStack(
 
     if (layer.handle.name === "bound dispatch") {
       const method = layer.route?.methods || {};
+
       const methods = Object.keys(method).filter((m) => method[m]);
 
       const routePath = [path, layer.route?.path || ""]
@@ -51,7 +52,9 @@ export default function traceRouteStack(
       routes.push(route);
 
       const stack = layer.route?.stack || [];
+
       const controllerLayerMeta = stack[stack.length - 1].handle.meta;
+
       if (!controllerLayerMeta) {
         continue;
       }

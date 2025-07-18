@@ -4,8 +4,26 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types/collections": {
+      "import": "./dist/types/collections/index.js",
+      "types": "./dist/types/collections/index.d.ts"
+    },
+    "./types/controllers": {
+      "import": "./dist/types/controllers/index.js",
+      "types": "./dist/types/controllers/index.d.ts"
+    },
+    "./lib": {
+      "import": "./dist/lib/index.js",
+      "types": "./dist/lib/index.d.ts"
+    }
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "dev": "tsc --watch"
   },
   "devDependencies": {

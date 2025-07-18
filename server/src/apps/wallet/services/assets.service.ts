@@ -1,16 +1,16 @@
 import Moment from "moment";
 import MomentRange from "moment-range";
 import PocketBase from "pocketbase";
-import { WalletSchemas } from "shared";
+import { WalletCollectionsSchemas } from "shared/types/collections";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
 export const getAllAssets = (
   pb: PocketBase,
-): Promise<WithPB<WalletSchemas.IAssetAggregated>[]> =>
+): Promise<WithPB<WalletCollectionsSchemas.IAssetAggregated>[]> =>
   pb
     .collection("wallet__assets_aggregated")
-    .getFullList<WithPB<WalletSchemas.IAssetAggregated>>({
+    .getFullList<WithPB<WalletCollectionsSchemas.IAssetAggregated>>({
       sort: "name",
     });
 
@@ -23,14 +23,19 @@ export const getAssetAccumulatedBalance = async (
 ): Promise<Record<string, number>> => {
   const asset = await pb
     .collection("wallet__assets")
-    .getOne<Pick<WithPB<WalletSchemas.IAsset>, "starting_balance">>(assetId, {
+    .getOne<
+      Pick<WithPB<WalletCollectionsSchemas.IAsset>, "starting_balance">
+    >(assetId, {
       fields: "starting_balance",
     });
 
   const allTransactions = await pb
     .collection("wallet__transactions")
     .getFullList<
-      Pick<WithPB<WalletSchemas.ITransaction>, "amount" | "date" | "side">
+      Pick<
+        WithPB<WalletCollectionsSchemas.ITransaction>,
+        "amount" | "date" | "side"
+      >
     >({
       filter: `asset = '${assetId}'`,
       sort: "-date",
@@ -38,6 +43,7 @@ export const getAssetAccumulatedBalance = async (
     });
 
   let currentBalance = asset.starting_balance;
+
   const accumulatedBalance: Record<string, number> = {};
 
   const allDateInBetween = moment
@@ -46,6 +52,7 @@ export const getAssetAccumulatedBalance = async (
 
   for (const date of allDateInBetween) {
     const dateStr = date.format("YYYY-MM-DD");
+
     accumulatedBalance[dateStr] = parseFloat(currentBalance.toFixed(2));
 
     const transactionsOnDate = allTransactions.filter((t) =>
@@ -68,18 +75,26 @@ export const getAssetAccumulatedBalance = async (
 
 export const createAsset = (
   pb: PocketBase,
-  data: Pick<WalletSchemas.IAsset, "name" | "icon" | "starting_balance">,
-): Promise<WithPB<WalletSchemas.IAsset>> =>
-  pb.collection("wallet__assets").create<WithPB<WalletSchemas.IAsset>>(data);
+  data: Pick<
+    WalletCollectionsSchemas.IAsset,
+    "name" | "icon" | "starting_balance"
+  >,
+): Promise<WithPB<WalletCollectionsSchemas.IAsset>> =>
+  pb
+    .collection("wallet__assets")
+    .create<WithPB<WalletCollectionsSchemas.IAsset>>(data);
 
 export const updateAsset = (
   pb: PocketBase,
   id: string,
-  data: Pick<WalletSchemas.IAsset, "name" | "icon" | "starting_balance">,
-): Promise<WithPB<WalletSchemas.IAsset>> =>
+  data: Pick<
+    WalletCollectionsSchemas.IAsset,
+    "name" | "icon" | "starting_balance"
+  >,
+): Promise<WithPB<WalletCollectionsSchemas.IAsset>> =>
   pb
     .collection("wallet__assets")
-    .update<WithPB<WalletSchemas.IAsset>>(id, data);
+    .update<WithPB<WalletCollectionsSchemas.IAsset>>(id, data);
 
 export const deleteAsset = async (
   pb: PocketBase,

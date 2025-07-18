@@ -1,6 +1,6 @@
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -10,15 +10,13 @@ import {
   LoadingScreen
 } from '@components/screens'
 
-import fetchAPI from '@utils/fetchAPI'
-
+import SearchFilterModal from './components/SearchFilterModal'
+import SearchResults from './components/SearchResults'
 import {
   type IPixabaySearchFilter,
   type IPixabaySearchResult,
   PixabaySearchFilterAction
-} from '../../../../../../interfaces/pixabay_interfaces'
-import SearchFilterModal from './components/SearchFilterModal'
-import SearchResults from './components/SearchResults'
+} from './typescript/pixabay_interfaces'
 
 const initialFilter: IPixabaySearchFilter = {
   imageType: 'all',
@@ -54,7 +52,7 @@ function Pixabay({
   setFile: React.Dispatch<React.SetStateAction<string | File | null>>
   setPreview: React.Dispatch<React.SetStateAction<string | null>>
 }) {
-  const { apiHost } = useLifeforgeUIContext()
+  const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
 
   const [results, setResults] = useState<'error' | IPixabaySearchResult | null>(

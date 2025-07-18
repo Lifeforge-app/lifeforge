@@ -6,10 +6,10 @@ import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
@@ -163,6 +163,7 @@ function ModifyIdeaModal({
 
     try {
       await fetchAPI<IIdeaBoxEntry>(
+        import.meta.env.VITE_API_HOST,
         `idea-box/ideas/${innerOpenType === 'update' ? existedData?.id : ''}`,
         {
           method: innerOpenType === 'update' ? 'PATCH' : 'POST',

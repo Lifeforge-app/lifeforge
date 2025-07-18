@@ -8,7 +8,7 @@ import userTwoFARouter from "./controllers/twoFA.controller";
 
 const router = express.Router();
 
-export let currentSession = {
+export const currentSession = {
   token: "",
   tokenId: "",
   tokenExpireAt: "",

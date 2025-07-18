@@ -3,9 +3,9 @@ import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import { IPasswordEntry } from '../interfaces/password_interfaces'
 import PasswordEntryItem from './PasswordEntryItem'
@@ -25,9 +25,13 @@ function PasswordList() {
     }
 
     try {
-      await fetchAPI(`passwords/entries/pin/${id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `passwords/entries/pin/${id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       queryClient.setQueryData<IPasswordEntry[]>(
         ['passwords', 'entries'],

@@ -15,13 +15,13 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import {
   type IVirtualWardrobeEntry,
   type IVirtualWardrobeSidebarData
 } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import EntryItem from './components/EntryItem'
 import Header from './components/Header'

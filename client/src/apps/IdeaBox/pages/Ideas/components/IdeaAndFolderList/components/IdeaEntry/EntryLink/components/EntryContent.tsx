@@ -1,19 +1,18 @@
-import { useQuery } from '@tanstack/react-query'
 import { memo } from 'react'
 
-import fetchAPI from '@utils/fetchAPI'
+import { useAPIQuery } from 'shared/lib'
 
 import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
 
 function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
-  const OGQuery = useQuery<Record<string, any>>({
-    queryKey: ['idea-box', 'og', entry.id, entry.content],
-    queryFn: () =>
-      fetchAPI(`idea-box/og-data/${entry.id}`, {
-        raiseError: false
-      }),
-    retry: 5
-  })
+  const OGQuery = useAPIQuery<Record<string, any>>(
+    `idea-box/og-data/${entry.id}`,
+    ['idea-box', 'og', entry.id, entry.content],
+    true,
+    {
+      retry: 5
+    }
+  )
 
   return OGQuery.isSuccess && OGQuery.data ? (
     <button

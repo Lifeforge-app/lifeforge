@@ -3,18 +3,18 @@ import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
+import { fetchAPI } from 'shared/lib'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
 
-import fetchAPI from '@utils/fetchAPI'
 import forceDown from '@utils/forceDown'
-
-import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
 
 export default function EntryContextMenu({
   item
 }: {
-  item: IBooksLibraryEntry
+  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
@@ -39,7 +39,8 @@ export default function EntryContextMenu({
     setReadStatusChangeLoading(true)
 
     try {
-      await fetchAPI<IBooksLibraryEntry>(
+      await fetchAPI<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(
+        import.meta.env.VITE_API_HOST,
         `books-library/entries/read/${item.id}`,
         {
           method: 'POST'
@@ -74,7 +75,7 @@ export default function EntryContextMenu({
       apiEndpoint: 'books-library/entries',
       data: item,
       itemName: 'book',
-      nameKey: 'title',
+      nameKey: 'title' as const,
       updateDataList: () => {
         queryClient.invalidateQueries({
           queryKey: ['books-library', 'entries']

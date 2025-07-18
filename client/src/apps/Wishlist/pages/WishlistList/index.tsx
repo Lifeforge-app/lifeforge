@@ -12,7 +12,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import { type IWishlistList } from '../../interfaces/wishlist_interfaces'
 import WishlistListItem from './components/WishlistListItem'

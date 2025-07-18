@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -24,7 +24,7 @@ function ModifyModal({
     setLoading(true)
 
     try {
-      await fetchAPI('/user/settings', {
+      await fetchAPI(import.meta.env.VITE_API_HOST, '/user/settings', {
         method: 'PATCH',
         body: {
           data: {
