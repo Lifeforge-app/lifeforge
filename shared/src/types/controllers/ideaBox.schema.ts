@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { IdeaBoxCollectionsCollectionsSchemas } from "../collections";
+import { IdeaBoxCollectionsSchemas } from "../collections";
 
 const Ideas = {
   /**

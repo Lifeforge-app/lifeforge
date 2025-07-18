@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { RailwayMapCollectionsCollectionsSchemas } from "../collections";
+import { RailwayMapCollectionsSchemas } from "../collections";
 
 const RailwayMap = {
   /**

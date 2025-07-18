@@ -38,6 +38,7 @@
     "types:server": "cd server && bun run tsc --noEmit",
     "types:shared": "cd shared && bun run tsc --noEmit",
     "types:ui": "cd packages/lifeforge-ui && bun run tsc --noEmit",
+    "postinstall": "bun run build:shared && bun run build:ui",
     "schema:generate:collections": "bun run ./scripts/generateCollectionsSchemas.ts"
   },
   "keywords": [

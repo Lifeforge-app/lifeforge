@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { ApiKeysCollectionsCollectionsSchemas } from "../collections";
+import { ApiKeysCollectionsSchemas } from "../collections";
 
 const Auth = {
   /**

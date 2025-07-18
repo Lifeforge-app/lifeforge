@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { GuitarTabsCollectionsCollectionsSchemas } from "../collections";
+import { GuitarTabsCollectionsSchemas } from "../collections";
 import {
   GuitarTabsSidebarDataSchema,
   GuitarTabsGuitarWorldEntrySchema,

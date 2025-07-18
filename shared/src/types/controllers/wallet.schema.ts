@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { WalletCollectionsCollectionsSchemas } from "../collections";
+import { WalletCollectionsSchemas } from "../collections";
 import {
   WalletIncomeExpensesSummarySchema,
   WalletReceiptScanResultSchema,

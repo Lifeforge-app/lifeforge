@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { BooksLibraryCollectionsCollectionsSchemas } from "../collections";
+import { BooksLibraryCollectionsSchemas } from "../collections";
 
 const Languages = {
   /**

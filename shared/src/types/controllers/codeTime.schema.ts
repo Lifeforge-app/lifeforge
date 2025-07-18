@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { CodeTimeCollectionsCollectionsSchemas } from "../collections";
+import { CodeTimeCollectionsSchemas } from "../collections";
 
 const CodeTime = {
   /**

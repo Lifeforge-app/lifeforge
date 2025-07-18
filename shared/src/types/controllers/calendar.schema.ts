@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { CalendarCollectionsCollectionsSchemas } from "../collections";
+import { CalendarCollectionsSchemas } from "../collections";
 
 const Calendars = {
   /**

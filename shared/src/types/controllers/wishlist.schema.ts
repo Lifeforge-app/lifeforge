@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { WishlistCollectionsCollectionsSchemas } from "../collections";
+import { WishlistCollectionsSchemas } from "../collections";
 
 const Entries = {
   /**

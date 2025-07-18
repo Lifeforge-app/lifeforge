@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { BlogCollectionsCollectionsSchemas } from "../collections";
+import { BlogCollectionsSchemas } from "../collections";
 
 const Entries = {
   /**
