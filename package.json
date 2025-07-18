@@ -31,7 +31,6 @@
     "dev:shared": "cd shared && bun run dev",
     "dev:ui": "cd packages/lifeforge-ui && bun run dev",
     "lint:client": "cd client && bun run lint",
-    "postinstall": "bun run build:shared && bun run build:ui",
     "schema:generate": "cd server && bun run schema:generate",
     "start:server": "cd server && bun run start",
     "types": "bun run types:shared && bun run types:ui && bun run types:server && bun run types:client && bun run types:apps:localization-manager",
