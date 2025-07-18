@@ -5,6 +5,7 @@ import { APIEndpointProvider, PersonalizationProvider } from 'shared/lib'
 import './index.css'
 
 import App from './App.tsx'
+import './i18n'
 
 const queryClient = new QueryClient()
 
