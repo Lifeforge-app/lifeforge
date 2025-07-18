@@ -10,7 +10,7 @@ import useLanguageEffect from "./hooks/useLanguageEffect";
 import useRawThemeColorEffect from "./hooks/useRawThemeColorEffect";
 import useThemeEffect from "./hooks/useThemeEffect";
 import type {
-  DashboardLayoutType,
+  IDashboardLayout,
   IBackdropFilters,
   IPersonalizationData,
 } from "./interfaces/personalization_provider_interfaces";
@@ -33,9 +33,7 @@ export default function PersonalizationProvider({
   >("bg-neutral");
   const [bgImage, setBgImage] = useState("");
   const [language, setLanguage] = useState("en");
-  const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
-    {}
-  );
+  const [dashboardLayout, setDashboardLayout] = useState<IDashboardLayout>({});
   const [backdropFilters, setBackdropFilters] = useState<IBackdropFilters>({
     blur: "none",
     brightness: 100,

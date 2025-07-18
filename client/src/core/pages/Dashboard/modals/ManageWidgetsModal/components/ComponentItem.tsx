@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
-import { DashboardLayoutType } from '@providers/PersonalizationProvider/interfaces/personalization_provider_interfaces'
 import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { Switch } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from 'shared/lib'
+import { IDashboardLayout, usePersonalization } from 'shared/lib'
 
 function ComponentListItem({
   id,
@@ -82,7 +81,7 @@ function ComponentListItem({
   function removeComponent() {
     const newEnabledWidgets = Object.fromEntries(
       Object.entries(
-        JSON.parse(JSON.stringify(enabledWidgets)) as DashboardLayoutType
+        JSON.parse(JSON.stringify(enabledWidgets)) as IDashboardLayout
       ).map(([k, value]) => [k, value.filter(i => i.i !== id)])
     )
     if (Object.values(newEnabledWidgets).every(e => e.length === 0)) {
