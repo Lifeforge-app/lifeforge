@@ -8,7 +8,7 @@
     "./server",
     "./client",
     "./shared",
-    "./packages/*"
+    "./apps/*"
   ],
   "scripts": {
     "dev:client": "cd client && bun run dev",
