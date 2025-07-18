@@ -12,6 +12,8 @@
 - **Code**: Shared components like `PersonalizationProvider`, `APIOnlineStatusProvider`, etc. are moved into the `shared` package under `lib` folder, allowing the main app and side apps to share the same providers.
 - **Code**: Huge refactoring of the codebase to improve modularity and maintainability.
 - **Code**: Removed a lot of unused and legacy imports, variables, and functions.
+- **Code**: ESLint and Prettier configurations are now in the root of the monorepo, allowing all packages to share the same configurations.
+- **Code**: Added some more rules to the ESLint configuration to improve code quality.
 
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
 
@@ -304,7 +306,7 @@
 - **Code**: Centralized theme-related states by moving them from the `useThemeColors` hook into the `usePersonalization` context provider.
 - **Code**: Renamed `useThemeColors` hook to `useComponentsBg` for better semantic alignment with its functionality.
 - **Code**: Migrated `VITE_GOOGLE_API_KEY` from `.env` file to the API key vault.
-- **Code**: Removed unused typescript declarations like `function Component(): React.ReactElement {}`, etc.
+- **Code**: Removed unused typescript declarations like `function Component() {}`, etc.
 - **Code**: Refactored `PersonalizationProvider`.
 - **Code**: Moved routing logics and related files into `core/routes`.
 - **Code**: Refactored and modularized components into an independent package, `lifeforge-ui`, to improve maintainability.

@@ -29,7 +29,7 @@ function CreateEntryModal({
       React.SetStateAction<Record<string, any> | 'loading' | 'error'>
     >
   }
-}): React.ReactElement {
+}) {
   const [selectedType, setSelectedType] = useState<'folder' | 'entry'>('entry')
 
   const [name, setName] = useState('')

@@ -13,7 +13,7 @@ function Pagination({
   currentPage: number
   className?: string
 }): React.ReactElement {
-  const renderPageNumbers = (): React.ReactElement[] => {
+  const renderPageNumbers = () => {
     const pageNumbers: React.ReactElement[] = []
 
     const pagesToShow = 5

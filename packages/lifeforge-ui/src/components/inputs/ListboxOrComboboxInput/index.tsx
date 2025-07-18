@@ -38,9 +38,7 @@ interface IComboboxProps<T> extends IGeneralProps<T> {
 
 type IListboxOrComboboxInputProps<T> = IListboxProps<T> | IComboboxProps<T>
 
-function ListboxOrComboboxInput<T>(
-  props: IListboxOrComboboxInputProps<T>
-): React.ReactElement {
+function ListboxOrComboboxInput<T>(props: IListboxOrComboboxInputProps<T>) {
   const {
     name,
     icon,
