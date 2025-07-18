@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { MusicCollectionsCollectionsSchemas } from "../collections";
+import { MusicCollectionsSchemas } from "../collections";
 
 const Youtube = {
   /**

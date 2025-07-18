@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
-import { AchievementsCollectionsCollectionsSchemas } from "../collections";
+import { AchievementsCollectionsSchemas } from "../collections";
 
 const Entries = {
   /**
