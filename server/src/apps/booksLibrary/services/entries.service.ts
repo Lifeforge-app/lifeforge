@@ -1,7 +1,7 @@
 import ClientError from "@functions/ClientError";
 import mailer from "nodemailer";
 import Pocketbase from "pocketbase";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibrarySchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

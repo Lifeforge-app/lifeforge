@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibrarySchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

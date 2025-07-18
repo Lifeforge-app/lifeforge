@@ -3,13 +3,10 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
+import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
-import {
-  type IBooksLibraryCollection,
-  type IBooksLibraryFileType,
-  type IBooksLibraryLanguage
-} from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 
 function _SidebarItem({
@@ -18,7 +15,10 @@ function _SidebarItem({
   fallbackIcon,
   hasHamburgerMenu = true
 }: {
-  item: IBooksLibraryCollection | IBooksLibraryLanguage | IBooksLibraryFileType
+  item:
+    | ISchemaWithPB<BooksLibrarySchemas.ICollectionAggregated>
+    | ISchemaWithPB<BooksLibrarySchemas.ILanguageAggregated>
+    | ISchemaWithPB<BooksLibrarySchemas.IFileTypeAggregated>
   stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasHamburgerMenu?: boolean
@@ -47,7 +47,7 @@ function _SidebarItem({
       apiEndpoint: `books-library/${stuff}`,
       data: item,
       itemName: singleStuff,
-      nameKey: 'name',
+      nameKey: 'name' as const,
       queryKey: ['books-library', stuff]
     })
   }, [item, stuff])
@@ -73,7 +73,7 @@ function _SidebarItem({
             </>
           ) : undefined
         }
-        icon={item.icon ?? fallbackIcon}
+        icon={'icon' in item ? item.icon : fallbackIcon}
         name={item.name}
         number={item.amount}
         onCancelButtonClick={() => {

@@ -4,7 +4,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { MomentVaultSchemas } from "shared";
+import { MomentVaultSchemas } from "shared/types";
 import { z } from "zod/v4";
 
 import {

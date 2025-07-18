@@ -1,6 +1,6 @@
 import ClientError from "@functions/ClientError";
 import PocketBase from "pocketbase";
-import { RailwayMapSchemas } from "shared";
+import { RailwayMapSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

@@ -1,5 +1,5 @@
 import Pocketbase from "pocketbase";
-import { MusicSchemas } from "shared";
+import { MusicSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
