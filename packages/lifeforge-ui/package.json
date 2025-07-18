@@ -4,13 +4,13 @@
   "version": "0.25.29-1",
   "sideEffects": false,
   "scripts": {
-    "build": "rm -rf dist && bunx tsc --noEmit && bunx tsup src/index.ts",
-    "dev": "bunx tsup src/index.ts --watch",
-    "lint": "bunx eslint ./src --ext .ts,.tsx",
-    "lint:fix": "bunx eslint ./src --ext .ts,.tsx --fix",
-    "format": "bunx prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "storybook": "bunx storybook dev -p 6006",
-    "build-storybook": "bunx storybook build"
+    "build": "rm -rf dist && tsc --noEmit && tsup src/index.ts",
+    "dev": "tsup src/index.ts --watch",
+    "lint": "eslint ./src --ext .ts,.tsx",
+    "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "files": [
     "dist",
