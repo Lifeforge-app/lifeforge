@@ -53,14 +53,19 @@ function Pixabay({
   setPreview: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const apiHost = useAPIEndpoint()
+
   const [query, setQuery] = useState('')
 
   const [results, setResults] = useState<'error' | IPixabaySearchResult | null>(
     null
   )
+
   const [page, setPage] = useState(1)
+
   const [loading, setLoading] = useState(false)
+
   const [filters, updateFilters] = useReducer(reducer, initialFilter)
+
   const [isSearchFilterModalOpen, setIsSearchFilterModalOpen] = useState(false)
 
   async function onSearch(page: number): Promise<void> {
@@ -68,6 +73,7 @@ function Pixabay({
 
     if (query === '') {
       toast.error('Please enter a search query')
+
       return
     }
 
@@ -90,6 +96,7 @@ function Pixabay({
         apiHost,
         `pixabay/search?${new URLSearchParams(params).toString()}`
       )
+
       setResults(data)
     } catch {
       setResults('error')

@@ -45,13 +45,17 @@ async function getIconSet(
     const res = await fetch(
       `https://api.iconify.design/search?query=${searchTerm}&limit=9999`
     )
+
     const data = await res.json()
+
     let iconList = []
+
     if (data.icons.length > 0) {
       iconList = data.icons
     } else {
       iconList = []
     }
+
     const iconSets = data.collections
 
     return {
@@ -60,6 +64,7 @@ async function getIconSet(
     }
   } catch (err) {
     console.error(err)
+
     return null
   }
 }
@@ -79,8 +84,11 @@ function Search({
   onIconSelected: (icon: string) => void
 }) {
   const [currentIconSet, setCurrentIconSet] = useState<string | null>(null)
+
   const [iconData, setIconData] = useState<IIconSearchResult | null>(null)
+
   const [filteredIconList, setFilteredIconList] = useState<string[]>([])
+
   const [searchQuery, setSearchQuery] = useState(searchTerm ?? '')
 
   useEffect(() => {
@@ -164,6 +172,7 @@ function Search({
                     style: React.CSSProperties
                   }) => {
                     const fromIndex = index * itemsPerRow
+
                     const toIndex = fromIndex + itemsPerRow
 
                     return (

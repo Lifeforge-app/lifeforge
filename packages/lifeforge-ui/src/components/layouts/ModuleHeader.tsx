@@ -38,6 +38,7 @@ function ModuleHeader({
     'common.misc',
     namespace ?? ''
   ])
+
   const { toggleSidebar, sidebarExpanded } = useSidebarState()
 
   return (

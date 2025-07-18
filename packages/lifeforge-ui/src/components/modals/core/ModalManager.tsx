@@ -5,7 +5,9 @@ import { useModalStore } from './useModalStore'
 
 function FinalElement({ index }: { index: number }) {
   const { stack, close } = useModalStore()
+
   const item = stack[index]
+
   const { data, component: ModalComponent } = item || {}
 
   if (!ModalComponent) {
@@ -17,8 +19,11 @@ function FinalElement({ index }: { index: number }) {
 
 function StackModal({ index }: { index: number }) {
   const { stack, remove } = useModalStore()
+
   const item = stack[index]
+
   const { isClosing } = item || {}
+
   const [localOpen, setLocalOpen] = useState(false)
 
   useEffect(() => {

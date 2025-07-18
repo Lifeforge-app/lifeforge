@@ -50,6 +50,7 @@ function ImageAndFileInput({
   acceptedMimeTypes: Record<string, string[]>
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation([namespace, 'common.buttons'])
 
   const handleImagePickerOpen = useCallback(() => {

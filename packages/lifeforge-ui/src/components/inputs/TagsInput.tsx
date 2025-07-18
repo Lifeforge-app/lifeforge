@@ -45,7 +45,9 @@ function TagsInput({
   tKey = ''
 }: ITagsInputProps) {
   const { t } = useTranslation(namespace)
+
   const [currentTag, setCurrentTag] = useState<string>('')
+
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const addTag = (): void => {
@@ -57,6 +59,7 @@ function TagsInput({
 
   const removeTag = (index: number): void => {
     const newTags = value.filter((_, i) => i !== index)
+
     setValue(newTags)
   }
 

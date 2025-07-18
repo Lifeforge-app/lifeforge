@@ -25,17 +25,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@components/*": [
-        "./src/components/*"
-      ],
       "@providers/*": [
         "./src/core/providers/*"
-      ],
-      "@hooks/*": [
-        "./src/core/hooks/*"
-      ],
-      "@interfaces/*": [
-        "./src/core/interfaces/*"
       ],
       "@utils/*": [
         "./src/core/utils/*"

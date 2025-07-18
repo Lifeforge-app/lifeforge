@@ -24,6 +24,7 @@ async function getIconSet(prefix: string): Promise<IIconSetData | null> {
     return res
   } catch (err) {
     console.error(err)
+
     return null
   }
 }
@@ -36,7 +37,9 @@ function IconSet({
   onIconSelected: (icon: string) => void
 }) {
   const [searchTerm, setSearchTerm] = useState('')
+
   const [currentTag, setCurrentTag] = useState<string | null>(null)
+
   const [iconData, setIconData] = useState<IIconSetData | null>(null)
 
   const filteredIconList = useMemo(() => {
@@ -106,6 +109,7 @@ function IconSet({
                     style: React.CSSProperties
                   }) => {
                     const fromIndex = index * itemsPerRow
+
                     const toIndex = fromIndex + itemsPerRow
 
                     return (

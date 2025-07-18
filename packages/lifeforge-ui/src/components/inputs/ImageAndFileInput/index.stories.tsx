@@ -23,6 +23,7 @@ export const Default: Story = {
   },
   render: args => {
     const [image, setImage] = useState<string | File | null>(null)
+
     const [preview, setPreview] = useState<string | null>(null)
 
     return (

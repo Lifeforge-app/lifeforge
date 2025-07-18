@@ -28,23 +28,29 @@ export const useModalStore = create<ModalState>((set, get) => ({
   },
   close: () => {
     const { stack } = get()
+
     if (stack.length === 0) return
     set(state => {
       const newStack = [...state.stack]
+
       const lastIndex = newStack.length - 1
+
       if (lastIndex >= 0) {
         newStack[lastIndex] = {
           ...newStack[lastIndex],
           isClosing: true
         }
       }
+
       return { stack: newStack }
     })
   },
   remove: (index: number) =>
     set(state => {
       const newStack = [...state.stack]
+
       newStack.splice(index, 1)
+
       return { stack: newStack }
     })
 }))

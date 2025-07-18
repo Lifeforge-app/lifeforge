@@ -42,6 +42,7 @@ function HeaderFilter({
         return typeof data !== 'string' && Boolean(values[query])
           ? (() => {
               const target = data.find(item => item.id === values[query])
+
               if (target === undefined) {
                 return null
               }

@@ -17,20 +17,29 @@ import NamespaceSelector from './components/NamespaceSelector'
 
 function MainContent(): React.ReactElement {
   const { t } = useTranslation('utils.localeAdmin')
+
   const open = useModalStore(state => state.open)
+
   const [namespace, setNamespace] = useState<
     null | 'common' | 'core' | 'apps' | 'utils'
   >(null)
+
   const [subNamespace, setSubNamespace] = useState<string | null>(null)
+
   const [oldLocales, setOldLocales] = useState<
     Record<string, any> | 'loading' | 'error'
   >({})
+
   const [locales, setLocales] = useState<
     Record<string, any> | 'loading' | 'error'
   >({})
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
+
   const [changedKeys, setChangedKeys] = useState<string[]>([])
+
   const [syncLoading, setSyncLoading] = useState(false)
 
   async function syncWithServer() {
@@ -39,13 +48,16 @@ function MainContent(): React.ReactElement {
     }
 
     setSyncLoading(true)
+
     try {
       const data = Object.fromEntries(
         changedKeys.map(key => {
           const final: Record<string, string> = {}
+
           for (const lng of Object.keys(locales)) {
             final[lng] = key.split('.').reduce((acc, k) => acc[k], locales[lng])
           }
+
           return [key, final]
         })
       )
@@ -72,10 +84,13 @@ function MainContent(): React.ReactElement {
     if (typeof locales === 'string') {
       return
     }
+
     const newData = { ...locales }
+
     const target = path
       .slice(0, -1)
       .reduce((acc, key) => acc[key], newData[lng])
+
     target[path[path.length - 1]] = value
 
     setLocales(newData)
@@ -84,10 +99,12 @@ function MainContent(): React.ReactElement {
   async function renameEntry(path: string) {
     if (changedKeys.includes(path)) {
       alert('Please sync changes with the server before renaming')
+
       return
     }
 
     const newName = prompt('Enter the new name')
+
     if (!newName) {
       return
     }
@@ -114,7 +131,9 @@ function MainContent(): React.ReactElement {
 
           for (const lng in newData) {
             let targetObject = newData[lng]
+
             const pathArray = path.split('.')
+
             for (let i = 0; i < pathArray.length; i++) {
               if (i === pathArray.length - 1) {
                 targetObject[newName] = targetObject[pathArray[i]]
@@ -163,7 +182,9 @@ function MainContent(): React.ReactElement {
 
           for (const lng in newData) {
             let targetObject = newData[lng]
+
             const pathArray = path.split('.')
+
             for (let i = 0; i < pathArray.length; i++) {
               if (i === pathArray.length - 1) {
                 delete targetObject[pathArray[i]]
@@ -210,7 +231,9 @@ function MainContent(): React.ReactElement {
 
         for (const lng in data) {
           let targetObject = newData[lng]
+
           const pathArray = path.split('.')
+
           for (let i = 0; i < pathArray.length; i++) {
             if (i === pathArray.length - 1) {
               targetObject[pathArray[i]] = data[lng]
@@ -237,11 +260,13 @@ function MainContent(): React.ReactElement {
 
   const fetchLocales = useCallback(async () => {
     setLocales('loading')
+
     try {
       const data = await fetchAPI<Record<string, any>>(
         import.meta.env.VITE_API_HOST,
         `/locales/manager/${namespace}/${subNamespace}`
       )
+
       setLocales(data)
       setOldLocales(JSON.parse(JSON.stringify(data)))
     } catch {
@@ -276,8 +301,8 @@ function MainContent(): React.ReactElement {
       <header className="flex w-full items-center justify-between">
         <h1 className="flex items-center gap-2">
           <Icon
-            icon="mingcute:translate-line"
             className="text-custom-400 text-5xl"
+            icon="mingcute:translate-line"
           />
           <div>
             <div className="text-2xl font-semibold">
@@ -301,11 +326,11 @@ function MainContent(): React.ReactElement {
               new
             </Button>
             <Button
+              disabled={changedKeys.length === 0}
               icon="tabler:refresh"
               loading={syncLoading}
-              onClick={syncWithServer}
-              disabled={changedKeys.length === 0}
               namespace="utils.localeAdmin"
+              onClick={syncWithServer}
             >
               Sync with Server
             </Button>
@@ -315,32 +340,32 @@ function MainContent(): React.ReactElement {
       <NamespaceSelector
         namespace={namespace}
         setNamespace={setNamespace}
-        subNamespace={subNamespace}
         setSubNamespace={setSubNamespace}
         showWarning={changedKeys.length > 0}
+        subNamespace={subNamespace}
       />
 
       {namespace && subNamespace ? (
         <div className="mt-3 flex h-full flex-1 flex-col">
           <SearchInput
             namespace="utils.localeAdmin"
-            stuffToSearch="entry"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            stuffToSearch="entry"
           />
           <LocaleEditor
-            oldLocales={oldLocales}
-            locales={locales}
-            setValue={setValue}
             changedKeys={changedKeys}
-            setChangedKeys={setChangedKeys}
+            fetchSuggestions={fetchSuggestions}
+            locales={locales}
+            oldLocales={oldLocales}
             searchQuery={debouncedSearchQuery}
+            setChangedKeys={setChangedKeys}
+            setValue={setValue}
             onCreateEntry={parent => {
               handleCreateEntryModalOpen(parent)
             }}
-            onRenameEntry={renameEntry}
             onDeleteEntry={deleteEntry}
-            fetchSuggestions={fetchSuggestions}
+            onRenameEntry={renameEntry}
           />
         </div>
       ) : (

@@ -15,10 +15,12 @@ const COLLECTIONS = Object.entries(collections).reduce<
   Record<string, IIconSet[]>
 >((acc, [key, value]) => {
   const cat = value.category ?? 'Uncategorized'
+
   if (acc[cat] === undefined) {
     acc[cat] = []
   }
   acc[cat].push({ ...value, prefix: key })
+
   return acc
 }, {})
 
@@ -33,7 +35,9 @@ export default function IconSetList({
   >
 }) {
   const [searchQuery, setSearchQuery] = useState('')
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+
   const [iconFilterTerm, setIconFilterTerm] = useState('')
 
   return (

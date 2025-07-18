@@ -30,6 +30,7 @@ function SidebarItemContent({
   needTranslate?: boolean
 }): React.ReactElement {
   const { t } = useTranslation([namespace, 'common.sidebar'])
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (

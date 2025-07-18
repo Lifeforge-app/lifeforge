@@ -41,8 +41,11 @@ function DateInput({
   disabled
 }: DateInputProps) {
   const { t } = useTranslation(namespace ? namespace : undefined)
+
   const { derivedThemeColor } = usePersonalization()
+
   const ref = useRef<HTMLInputElement | null>(null)
+
   const [isCalendarOpen, setCalendarOpen] = useState(false)
 
   return (
@@ -88,6 +91,7 @@ function DateInput({
           showTimeSelect={hasTime}
           weekDayClassName={(date: Date) => {
             const isWeekend = date.getDay() === 0
+
             return isWeekend ? 'text-red-500!' : 'text-bg-500!'
           }}
           onCalendarClose={() => {
