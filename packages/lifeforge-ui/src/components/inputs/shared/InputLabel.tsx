@@ -26,6 +26,7 @@ function InputLabel({
           : 'group-focus-within:top-5 group-focus-within:text-[14px]'
       }`
     }
+
     return 'top-5 -translate-y-1/2 text-[14px]'
   }, [active, isListboxOrCombobox, isCombobox])
 

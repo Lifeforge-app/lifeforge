@@ -22,6 +22,7 @@ function DnDContainer({
   const pasteFromClipboard = async (e: React.MouseEvent) => {
     if (!navigator.clipboard) {
       console.error('Clipboard API not supported')
+
       return
     }
 
@@ -30,14 +31,18 @@ function DnDContainer({
 
     try {
       const clipboardItems = await navigator.clipboard.read()
+
       const items = Array.from(clipboardItems)
+
       const imageItem = items.find(item =>
         item.types.some(type => type.startsWith('image/'))
       )
 
       if (imageItem) {
         const blob = await imageItem.getType('image/png')
+
         const file = new File([blob], 'pasted-image.png', { type: 'image/png' })
+
         setFile(file)
         setPreview(URL.createObjectURL(file))
       }

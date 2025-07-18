@@ -22,6 +22,7 @@ function InputWrapper({
 
       if (inputRef?.current !== undefined && inputRef.current !== null) {
         inputRef.current.focus()
+
         if (
           !['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)
         ) {
@@ -39,6 +40,7 @@ function InputWrapper({
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault()
+
         if (inputRef?.current !== undefined && inputRef.current !== null) {
           inputRef.current.focus()
         }

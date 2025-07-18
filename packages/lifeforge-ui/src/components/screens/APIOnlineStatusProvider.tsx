@@ -10,7 +10,7 @@ export default function APIOnlineStatusWrapper({
 }: {
   children: React.ReactNode
 }) {
-  const { isOnline, environment, retry } = useAPIOnlineStatus()
+  const { isOnline, retry } = useAPIOnlineStatus()
 
   if (isOnline === 'loading') {
     return <LoadingScreen customMessage="Checking API status..." />

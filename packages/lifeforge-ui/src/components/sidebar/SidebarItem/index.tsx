@@ -122,6 +122,7 @@ function SidebarItem({
   const handleNavigation = useCallback(() => {
     if (onClick !== undefined) {
       onClick()
+
       return
     }
 

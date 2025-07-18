@@ -25,6 +25,7 @@ export const Default: Story = {
   },
   render: props => {
     const [value, setValue] = useState('')
+
     return (
       <Index
         {...props}

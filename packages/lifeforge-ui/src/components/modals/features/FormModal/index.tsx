@@ -81,8 +81,11 @@ function FormModal<T extends IFormState, U extends RecordModel>({
   }
 }) {
   const apiHost = useAPIEndpoint()
+
   const queryClient = useQueryClient()
+
   const [submitLoading, setSubmitLoading] = useState(false)
+
   const entryCreateMutation = useModifyMutation<U>(
     'create',
     apiHost,
@@ -103,8 +106,10 @@ function FormModal<T extends IFormState, U extends RecordModel>({
                 if (sortMode === 'asc') {
                   return a[sortBy] > b[sortBy] ? 1 : -1
                 }
+
                 return a[sortBy] < b[sortBy] ? 1 : -1
               }
+
               return 0
             })
           })
@@ -113,6 +118,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
       }
     }
   )
+
   const entryUpdateMutation = useModifyMutation<U>(
     'update',
     apiHost,
@@ -133,6 +139,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
                 if (entry.id === newData.id) {
                   return newData
                 }
+
                 return entry
               })
               .sort((a, b) => {
@@ -140,8 +147,10 @@ function FormModal<T extends IFormState, U extends RecordModel>({
                   if (sortMode === 'asc') {
                     return a[sortBy] > b[sortBy] ? 1 : -1
                   }
+
                   return a[sortBy] < b[sortBy] ? 1 : -1
                 }
+
                 return 0
               })
           })
@@ -153,8 +162,10 @@ function FormModal<T extends IFormState, U extends RecordModel>({
 
   async function onSubmitButtonClick(): Promise<void> {
     const requiredFields = fields.filter(field => field.required)
+
     const missingFields = requiredFields.filter(field => {
       const value = data[field.id]
+
       return (
         !value ||
         (typeof value === 'string' && !value.trim()) ||
@@ -171,6 +182,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
           .map(field => field.label)
           .join(', ')}`
       )
+
       return
     }
 
@@ -186,6 +198,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
           if (typeof value === 'object' && 'image' in (value ?? {})) {
             return [key, (value as { image: string | File | null }).image]
           }
+
           return JSON.parse(JSON.stringify([key, value]))
         }
       )
@@ -194,6 +207,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
     if (onSubmit) {
       await onSubmit()
       setSubmitLoading(false)
+
       return
     }
 

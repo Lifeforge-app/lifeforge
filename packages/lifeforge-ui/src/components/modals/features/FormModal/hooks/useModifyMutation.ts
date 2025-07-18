@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/use-type-alias */
+ 
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared/lib'
@@ -25,6 +25,7 @@ function useModifyMutation<T>(
         )
       ) {
         const formData = new FormData()
+
         Object.entries(data).forEach(([key, value]) => {
           if (value instanceof File) {
             formData.append(key, value)

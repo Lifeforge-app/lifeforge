@@ -18,12 +18,15 @@ function AIImageGenerator({
   defaultPrompt: string
 }) {
   const apiHost = useAPIEndpoint()
+
   const [prompt, setPrompt] = useState('')
+
   const [loading, setLoading] = useState(false)
 
   async function onSubmit() {
     if (prompt === '') {
       toast.error('Please enter a prompt')
+
       return
     }
 

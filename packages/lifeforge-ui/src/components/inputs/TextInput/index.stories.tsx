@@ -23,6 +23,7 @@ export const Default: Story = {
   },
   render: args => {
     const [value, setValue] = useState('')
+
     return <TextInput {...args} setValue={setValue} value={value} />
   }
 }

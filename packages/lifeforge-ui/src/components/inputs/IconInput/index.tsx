@@ -27,7 +27,9 @@ function IconInput({
   required?: boolean
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation(namespace)
+
   const ref = useRef<HTMLInputElement | null>(null)
 
   function updateIcon(e: React.ChangeEvent<HTMLInputElement>): void {

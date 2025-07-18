@@ -37,23 +37,24 @@ function LocaleInput({
 
   return (
     <TextInput
+      darker
+      className="w-full"
+      icon={`circle-flags:${LANG_FLAG[name as keyof typeof LANG_FLAG]}`}
+      name={t(`inputs.languages.${_.camelCase(name)}`)}
+      namespace={false}
       placeholder={t(`inputs.translationPlaceholder`, {
         key: path.join('.')
       })}
-      name={t(`inputs.languages.${_.camelCase(name)}`)}
-      namespace={false}
-      value={value}
-      darker
       setValue={value => {
         setValue(name, path, value)
+
         if (value !== originalValue) {
           setChangedKeys(keys => [...keys, path.join('.')])
         } else {
           setChangedKeys(keys => keys.filter(key => key !== path.join('.')))
         }
       }}
-      className="w-full"
-      icon={`circle-flags:${LANG_FLAG[name as keyof typeof LANG_FLAG]}`}
+      value={value}
     />
   )
 }

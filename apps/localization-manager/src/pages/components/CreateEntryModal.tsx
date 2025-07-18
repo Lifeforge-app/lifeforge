@@ -7,6 +7,7 @@ import {
   TextInput
 } from 'lifeforge-ui'
 import React, { useState } from 'react'
+
 import { fetchAPI } from 'shared/lib'
 
 const TYPES = [
@@ -30,12 +31,15 @@ function CreateEntryModal({
   }
 }): React.ReactElement {
   const [selectedType, setSelectedType] = useState<'folder' | 'entry'>('entry')
+
   const [name, setName] = useState('')
+
   const [loading, setLoading] = useState(false)
 
   async function onSubmit() {
     if (!name.trim()) {
       alert('Name is required')
+
       return
     }
 
@@ -64,7 +68,9 @@ function CreateEntryModal({
 
           for (const lng in newData) {
             let targetObject = newData[lng]
+
             const path = target[2].split('.')
+
             for (let i = 0; i < path.length; i++) {
               if (!targetObject[path[i]]) {
                 targetObject[path[i]] = {}
@@ -89,96 +95,96 @@ function CreateEntryModal({
   return (
     <div className="min-w-[40vw]">
       <ModalHeader
-        title="entry.create"
-        namespace="utils.localeAdmin"
         icon="tabler:plus"
+        namespace="utils.localeAdmin"
+        title="entry.create"
         onClose={onClose}
       />
       <div className="space-y-4">
         <TextInput
+          darker
+          disabled
+          className="w-full"
+          icon="tabler:category-2"
           name="namespace"
           namespace="utils.localeAdmin"
-          icon="tabler:category-2"
-          className="w-full"
-          value={target[0]}
-          setValue={() => {}}
-          disabled
-          darker
           placeholder=""
+          setValue={() => {}}
+          value={target[0]}
         />
         <TextInput
+          darker
+          disabled
+          className="w-full"
+          icon="tabler:cube"
           name="sub namespace"
           namespace="utils.localeAdmin"
-          icon="tabler:cube"
-          className="w-full"
-          value={target[1]}
-          setValue={() => {}}
-          disabled
-          darker
           placeholder=""
+          setValue={() => {}}
+          value={target[1]}
         />
         <TextInput
+          darker
+          disabled
+          className="w-full"
+          icon="tabler:folder"
           name="parent"
           namespace="utils.localeAdmin"
-          icon="tabler:folder"
-          className="w-full"
-          value={target[2] || 'root'}
-          setValue={() => {}}
-          disabled
-          darker
           placeholder=""
+          setValue={() => {}}
+          value={target[2] || 'root'}
         />
         <ListboxOrComboboxInput
-          type="listbox"
-          name="type"
-          namespace="utils.localeAdmin"
-          icon="tabler:category-2"
-          className="w-full"
-          value={target[0]}
-          setValue={value => {
-            setSelectedType(value.toLowerCase() as 'folder' | 'entry')
-          }}
           buttonContent={
             <div className="flex items-center gap-2">
               <Icon
+                className="size-4"
                 icon={
                   TYPES.find(type => type[1].toLowerCase() === selectedType)![0]
                 }
-                className="size-4"
               />
               {selectedType[0].toUpperCase() + selectedType.slice(1)}
             </div>
           }
+          className="w-full"
+          icon="tabler:category-2"
+          name="type"
+          namespace="utils.localeAdmin"
+          setValue={value => {
+            setSelectedType(value.toLowerCase() as 'folder' | 'entry')
+          }}
+          type="listbox"
+          value={target[0]}
         >
           {TYPES.map(type => (
             <ListboxOrComboboxOption
               key={type[1]}
-              value={type[1]}
-              text={type[1]}
               icon={type[0]}
+              text={type[1]}
+              value={type[1]}
             />
           ))}
         </ListboxOrComboboxInput>
         <TextInput
+          darker
+          className="w-full"
+          icon="tabler:file-text"
           name="name"
           namespace="utils.localeAdmin"
-          icon="tabler:file-text"
-          className="w-full"
-          value={name}
+          placeholder="nameOfTheEntry"
           setValue={setName}
-          darker
+          value={name}
           onKeyDown={e => {
             if (e.key === 'Enter') {
               e.preventDefault()
               onSubmit()
             }
           }}
-          placeholder="nameOfTheEntry"
         />
       </div>
       <Button
-        icon="tabler:plus"
         className="mt-6 w-full"
+        icon="tabler:plus"
         loading={loading}
         onClick={onSubmit}
       >

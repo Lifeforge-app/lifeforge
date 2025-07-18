@@ -47,7 +47,9 @@ function Button<C extends React.ElementType = 'button'>({
   const { derivedThemeColor } = usePersonalization()
 
   const Component = as || 'button'
+
   const finalProps = useMemo(() => ({ ...defaultProps, ...props }), [props])
+
   const finalClassName = generateClassName(
     derivedThemeColor,
     Boolean(children),
@@ -56,6 +58,7 @@ function Button<C extends React.ElementType = 'button'>({
     finalProps.variant,
     finalProps.className
   )
+
   const { t } = useTranslation(finalProps.namespace)
 
   return (

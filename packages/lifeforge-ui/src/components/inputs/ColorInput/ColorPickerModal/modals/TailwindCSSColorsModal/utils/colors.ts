@@ -1,5 +1,5 @@
-/* eslint-disable sonarjs/no-nested-conditional */
-/* eslint-disable sonarjs/slow-regex */
+ 
+ 
 /* eslint-disable prefer-const */
 import Gradient from 'javascript-color-gradient'
 
@@ -18,17 +18,23 @@ export function rgbToHsl(r: number, g: number, b: number): number[] {
   r /= 255
   g /= 255
   b /= 255
+
   const max = Math.max(r, g, b)
+
   const min = Math.min(r, g, b)
+
   let h
   let s
+
   const l = (max + min) / 2
 
   if (max === min) {
     h = s = 0 // achromatic
   } else {
     const d = max - min
+
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
     switch (max) {
       case r:
         h = (g - b) / d + (g < b ? 6 : 0)
@@ -58,11 +64,14 @@ export function hslToRgb(h: number, s: number, l: number): number[] {
       if (t < 1 / 6) return p + (q - p) * 6 * t
       if (t < 1 / 2) return q
       if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+
       return p
     }
 
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s
+
     const p = 2 * l - q
+
     r = hue2rgb(p, q, h + 1 / 3)
     g = hue2rgb(p, q, h)
     b = hue2rgb(p, q, h - 1 / 3)
@@ -77,6 +86,7 @@ export function rgbToHex(r: number, g: number, b: number): string {
     [r, g, b]
       .map(x => {
         const hex = Math.floor(x).toString(16)
+
         return hex.length === 1 ? '0' + hex : hex
       })
       .join('')
@@ -112,7 +122,9 @@ const oklab2xyz = (lab: number[]) => {
     ],
     lab
   )
+
   const LMS = LMSg.map(val => val ** 3)
+
   return multiplyMatrices(
     [
       1.2268798758459243, -0.5578149944602171, 0.2813910456659647,
@@ -139,9 +151,12 @@ const oklch2rgb = (lch: number[]) =>
 
 export function oklchToHex(oklch: string): string {
   const numbersInParentheses = oklch.match(/\(([^)]+)\)/)![1]
+
   let [l, c, h] = numbersInParentheses.split(' ').map(x => parseFloat(x))
   l /= 100
+
   const rgb = oklch2rgb([l, c, h]).map(x => Math.max(0, Math.min(1, x)))
+
   return rgbToHex(
     Math.round(rgb[0] * 255),
     Math.round(rgb[1] * 255),
@@ -158,9 +173,12 @@ export function getColorPalette(
 
   if (type === 'bg') {
     const [r, g, b] = hexToRgb(color)
+
     let [h, s, l] = rgbToHsl(r, g, b)
     l = theme === 'dark' ? 0.4 : 0.7
+
     const [r2, g2, b2] = hslToRgb(h, s, l)
+
     finalColor = rgbToHex(r2, g2, b2)
   }
 
@@ -174,6 +192,7 @@ export function getColorPalette(
 
   return number.reduce<Record<number, string>>((acc, cur, idx) => {
     acc[cur] = gradientArray[idx]
+
     return acc
   }, {})
 }

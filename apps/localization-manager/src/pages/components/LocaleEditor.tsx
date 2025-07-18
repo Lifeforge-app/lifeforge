@@ -46,6 +46,7 @@ function LocaleEditor({
           let target = final
 
           const toBeTraversed = path.concat(key)
+
           for (let i = 0; i < toBeTraversed.length; i++) {
             if (!target[toBeTraversed[i]]) {
               target[toBeTraversed[i]] = {}
@@ -68,6 +69,7 @@ function LocaleEditor({
             let target = final
 
             const toBeTraversed = path
+
             for (let i = 0; i < toBeTraversed.length; i++) {
               if (!target[toBeTraversed[i]]) {
                 target[toBeTraversed[i]] = {}
@@ -101,6 +103,7 @@ function LocaleEditor({
       {Object.entries(reconstructedLocales)
         .sort((a, b) => {
           const aIsFolder = isFolder(a[1])
+
           const bIsFolder = isFolder(b[1])
 
           if (aIsFolder === bIsFolder) {
@@ -113,18 +116,18 @@ function LocaleEditor({
         .map(([key, value]) => (
           <NestedItem
             key={key}
-            name={key}
-            value={value}
-            path={[key]}
-            setValue={setValue}
             changedKeys={changedKeys}
-            setChangedKeys={setChangedKeys}
-            oldLocales={oldLocales}
-            searchQuery={searchQuery}
-            onCreateEntry={onCreateEntry}
-            onRenameEntry={onRenameEntry}
-            onDeleteEntry={onDeleteEntry}
             fetchSuggestions={fetchSuggestions}
+            name={key}
+            oldLocales={oldLocales}
+            path={[key]}
+            searchQuery={searchQuery}
+            setChangedKeys={setChangedKeys}
+            setValue={setValue}
+            value={value}
+            onCreateEntry={onCreateEntry}
+            onDeleteEntry={onDeleteEntry}
+            onRenameEntry={onRenameEntry}
           />
         ))}
     </ul>

@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/no-internal-api-use */
+ 
 import {
   Menu,
   MenuButton,
@@ -33,6 +33,7 @@ function HamburgerMenu(props: MenuProps) {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
       e.stopPropagation()
+
       if (onClick !== undefined) {
         onClick(e)
       }

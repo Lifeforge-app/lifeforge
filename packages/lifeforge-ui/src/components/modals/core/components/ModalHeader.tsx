@@ -33,7 +33,9 @@ function ModalHeader({
   namespace?: string
 }): React.ReactElement {
   const { t } = useTranslation(namespace)
+
   const innerTitle = useDebounce(title, 100)
+
   const innerIcon = useDebounce(icon, 100)
 
   return (
