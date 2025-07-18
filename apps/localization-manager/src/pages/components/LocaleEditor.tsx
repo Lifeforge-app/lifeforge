@@ -27,7 +27,7 @@ function LocaleEditor({
   onRenameEntry: (path: string) => void
   onDeleteEntry: (path: string) => void
   fetchSuggestions: (path: string) => Promise<void>
-}): React.ReactElement {
+}) {
   const reconstructedLocales = useMemo<Record<string, any>>(() => {
     if (typeof locales === 'string') {
       return {}

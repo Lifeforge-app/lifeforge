@@ -3,7 +3,6 @@ import {
   ListboxOrComboboxOption,
   QueryWrapper
 } from 'lifeforge-ui'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
@@ -20,7 +19,7 @@ function NamespaceSelector({
   subNamespace: string | null
   setSubNamespace: (value: string | null) => void
   showWarning: boolean
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('utils.localeAdmin')
 
   const subNamespacesQuery = useAPIQuery<string[]>(
