@@ -13,8 +13,7 @@ i18n
     initImmediate: true,
     maxRetries: 1,
     react: {
-      useSuspense: true,
-      bindI18n: 'languageChanged loaded'
+      useSuspense: true
     },
     cleanCode: true,
     debug: false,

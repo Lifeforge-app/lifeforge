@@ -4,7 +4,6 @@ import { LoadingScreen, ModalManager } from 'lifeforge-ui'
 import React, { Suspense, useEffect, useState } from 'react'
 import { usePersonalization } from 'shared/lib'
 
-import './i18n'
 import MainContent from './pages/MainContent'
 
 const LocaleAdmin = (): React.ReactElement => {
