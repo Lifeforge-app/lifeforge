@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { CalendarCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { CalendarCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Calendars = {
   /**
@@ -9,7 +10,7 @@ const Calendars = {
    * @description Get all calendars
    */
   getAllCalendars: {
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Calendar)),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Calendar))
   },
 
   /**
@@ -18,9 +19,9 @@ const Calendars = {
    */
   getCalendarById: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar)
   },
 
   /**
@@ -29,7 +30,7 @@ const Calendars = {
    */
   createCalendar: {
     body: CalendarCollectionsSchemas.Calendar,
-    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar)
   },
 
   /**
@@ -38,10 +39,10 @@ const Calendars = {
    */
   updateCalendar: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: CalendarCollectionsSchemas.Calendar,
-    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Calendar)
   },
 
   /**
@@ -50,11 +51,11 @@ const Calendars = {
    */
   deleteCalendar: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Categories = {
   /**
@@ -62,7 +63,7 @@ const Categories = {
    * @description Get all calendar categories
    */
   getAllCategories: {
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Category)),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Category))
   },
 
   /**
@@ -71,9 +72,9 @@ const Categories = {
    */
   getCategoryById: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Category),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Category)
   },
 
   /**
@@ -82,7 +83,7 @@ const Categories = {
    */
   createCategory: {
     body: CalendarCollectionsSchemas.Category,
-    response: SchemaWithPB(CalendarCollectionsSchemas.Category),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Category)
   },
 
   /**
@@ -91,10 +92,10 @@ const Categories = {
    */
   updateCategory: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: CalendarCollectionsSchemas.Category,
-    response: SchemaWithPB(CalendarCollectionsSchemas.Category),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Category)
   },
 
   /**
@@ -103,11 +104,11 @@ const Categories = {
    */
   deleteCategory: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Events = {
   /**
@@ -117,9 +118,9 @@ const Events = {
   getEventsByDateRange: {
     query: z.object({
       start: z.string(),
-      end: z.string(),
+      end: z.string()
     }),
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial())),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial()))
   },
 
   /**
@@ -127,7 +128,7 @@ const Events = {
    * @description Get today's events
    */
   getEventsToday: {
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial())),
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial()))
   },
 
   /**
@@ -136,9 +137,9 @@ const Events = {
    */
   getEventById: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Event),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Event)
   },
 
   /**
@@ -147,20 +148,20 @@ const Events = {
    */
   createEvent: {
     body: CalendarCollectionsSchemas.Event.omit({
-      exceptions: true,
+      exceptions: true
     }).extend({
       location: z
         .union([
           z.object({
             displayName: z.object({
-              text: z.string(),
-            }),
+              text: z.string()
+            })
           }),
-          z.string(),
+          z.string()
         ])
-        .optional(),
+        .optional()
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Event),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Event)
   },
 
   /**
@@ -168,7 +169,7 @@ const Events = {
    * @description Scan an image to extract event data
    */
   scanImage: {
-    response: CalendarCollectionsSchemas.Event.partial(),
+    response: CalendarCollectionsSchemas.Event.partial()
   },
 
   /**
@@ -177,12 +178,12 @@ const Events = {
    */
   addException: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
-      date: z.string(),
+      date: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -191,12 +192,12 @@ const Events = {
    */
   updateEvent: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: CalendarCollectionsSchemas.Event.partial().omit({
-      exceptions: true,
+      exceptions: true
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Event),
+    response: SchemaWithPB(CalendarCollectionsSchemas.Event)
   },
 
   /**
@@ -205,16 +206,16 @@ const Events = {
    */
   deleteEvent: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type ICalendars = InferApiESchemaDynamic<typeof Calendars>;
-type ICategories = InferApiESchemaDynamic<typeof Categories>;
-type IEvents = InferApiESchemaDynamic<typeof Events>;
+type ICalendars = InferApiESchemaDynamic<typeof Calendars>
+type ICategories = InferApiESchemaDynamic<typeof Categories>
+type IEvents = InferApiESchemaDynamic<typeof Events>
 
-export type { ICalendars, ICategories, IEvents };
+export type { ICalendars, ICategories, IEvents }
 
-export { Calendars, Categories, Events };
+export { Calendars, Categories, Events }

@@ -1,56 +1,56 @@
-import PocketBase from "pocketbase";
-import { CalendarCollectionsSchemas } from "shared/types/collections";
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllCategories = (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<WithPB<CalendarCollectionsSchemas.ICategory>[]> =>
   pb
-    .collection("calendar__categories_aggregated")
+    .collection('calendar__categories_aggregated')
     .getFullList<WithPB<CalendarCollectionsSchemas.ICategory>>({
-      sort: "+name",
-    });
+      sort: '+name'
+    })
 
 export const createCategory = async (
   pb: PocketBase,
-  categoryData: Omit<CalendarCollectionsSchemas.ICategory, "amount">,
+  categoryData: Omit<CalendarCollectionsSchemas.ICategory, 'amount'>
 ): Promise<WithPB<CalendarCollectionsSchemas.ICategory>> => {
   const createdEntry = await pb
-    .collection("calendar__categories")
+    .collection('calendar__categories')
     .create<
-      WithPB<Omit<CalendarCollectionsSchemas.ICategory, "amount">>
-    >(categoryData);
+      WithPB<Omit<CalendarCollectionsSchemas.ICategory, 'amount'>>
+    >(categoryData)
 
   return await pb
-    .collection("calendar__categories_aggregated")
-    .getOne<WithPB<CalendarCollectionsSchemas.ICategory>>(createdEntry.id);
-};
+    .collection('calendar__categories_aggregated')
+    .getOne<WithPB<CalendarCollectionsSchemas.ICategory>>(createdEntry.id)
+}
 
 export const updateCategory = async (
   pb: PocketBase,
   id: string,
-  categoryData: Omit<CalendarCollectionsSchemas.ICategory, "amount">,
+  categoryData: Omit<CalendarCollectionsSchemas.ICategory, 'amount'>
 ): Promise<WithPB<CalendarCollectionsSchemas.ICategory>> => {
   const updatedEntry = await pb
-    .collection("calendar__categories")
+    .collection('calendar__categories')
     .update<
-      WithPB<Omit<CalendarCollectionsSchemas.ICategory, "amount">>
-    >(id, categoryData);
+      WithPB<Omit<CalendarCollectionsSchemas.ICategory, 'amount'>>
+    >(id, categoryData)
 
   return await pb
-    .collection("calendar__categories_aggregated")
-    .getOne<WithPB<CalendarCollectionsSchemas.ICategory>>(updatedEntry.id);
-};
+    .collection('calendar__categories_aggregated')
+    .getOne<WithPB<CalendarCollectionsSchemas.ICategory>>(updatedEntry.id)
+}
 
 export const deleteCategory = async (pb: PocketBase, id: string) => {
-  await pb.collection("calendar__categories").delete(id);
-};
+  await pb.collection('calendar__categories').delete(id)
+}
 
 export const getCategoryById = (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<WithPB<CalendarCollectionsSchemas.ICategory>> =>
   pb
-    .collection("calendar__categories")
-    .getOne<WithPB<CalendarCollectionsSchemas.ICategory>>(id);
+    .collection('calendar__categories')
+    .getOne<WithPB<CalendarCollectionsSchemas.ICategory>>(id)

@@ -1,37 +1,37 @@
-import PocketBase from "pocketbase";
-import { WalletCollectionsSchemas } from "shared/types/collections";
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { WalletCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllLedgers = (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<WithPB<WalletCollectionsSchemas.ILedger>[]> =>
   pb
-    .collection("wallet__ledgers_aggregated")
+    .collection('wallet__ledgers_aggregated')
     .getFullList<WithPB<WalletCollectionsSchemas.ILedger>>({
-      sort: "name",
-    });
+      sort: 'name'
+    })
 
 export const createLedger = (
   pb: PocketBase,
-  data: Omit<WalletCollectionsSchemas.ILedger, "amount">,
+  data: Omit<WalletCollectionsSchemas.ILedger, 'amount'>
 ): Promise<WithPB<WalletCollectionsSchemas.ILedger>> =>
   pb
-    .collection("wallet__ledgers")
-    .create<WithPB<WalletCollectionsSchemas.ILedger>>(data);
+    .collection('wallet__ledgers')
+    .create<WithPB<WalletCollectionsSchemas.ILedger>>(data)
 
 export const updateLedger = (
   pb: PocketBase,
   id: string,
-  data: Omit<WalletCollectionsSchemas.ILedger, "amount">,
+  data: Omit<WalletCollectionsSchemas.ILedger, 'amount'>
 ): Promise<WithPB<WalletCollectionsSchemas.ILedger>> =>
   pb
-    .collection("wallet__ledgers")
-    .update<WithPB<WalletCollectionsSchemas.ILedger>>(id, data);
+    .collection('wallet__ledgers')
+    .update<WithPB<WalletCollectionsSchemas.ILedger>>(id, data)
 
 export const deleteLedger = async (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<void> => {
-  await pb.collection("wallet__ledgers").delete(id);
-};
+  await pb.collection('wallet__ledgers').delete(id)
+}

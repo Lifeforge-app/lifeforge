@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
 
-import youtubeSummarizerRouter from "./controllers/youtubeSummarizer.controller";
+import youtubeSummarizerRouter from './controllers/youtubeSummarizer.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/", youtubeSummarizerRouter);
+router.use('/', youtubeSummarizerRouter)
 
-export default router;
+export default router

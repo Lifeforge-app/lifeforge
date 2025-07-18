@@ -16,15 +16,9 @@
     "useDefineForClassFields": false,
     "noUnusedLocals": true,
     "paths": {
-      "@functions/*": [
-        "./src/core/functions/*"
-      ],
-      "@typescript/*": [
-        "./src/core/typescript/*"
-      ],
-      "@middlewares/*": [
-        "./src/core/middlewares/*"
-      ]
+      "@functions/*": ["./src/core/functions/*"],
+      "@typescript/*": ["./src/core/typescript/*"],
+      "@middlewares/*": ["./src/core/middlewares/*"]
     }
   }
 }

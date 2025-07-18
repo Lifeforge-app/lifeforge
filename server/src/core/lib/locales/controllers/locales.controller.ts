@@ -1,24 +1,25 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { LocalesControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as LocalesService from "../services/locales.service";
+import { LocalesControllersSchemas } from 'shared/types/controllers'
 
-const localesRouter = express.Router();
+import * as LocalesService from '../services/locales.service'
+
+const localesRouter = express.Router()
 
 const getLocales = forgeController
-  .route("GET /:lang/:namespace/:subnamespace")
+  .route('GET /:lang/:namespace/:subnamespace')
   .description(
-    "Get locales for a specific language, namespace, and subnamespace",
+    'Get locales for a specific language, namespace, and subnamespace'
   )
   .schema(LocalesControllersSchemas.Locales.getLocales)
   .callback(async ({ params: { lang, namespace, subnamespace } }) =>
-    LocalesService.getLocales(lang, namespace, subnamespace),
-  );
+    LocalesService.getLocales(lang, namespace, subnamespace)
+  )
 
-bulkRegisterControllers(localesRouter, [getLocales]);
+bulkRegisterControllers(localesRouter, [getLocales])
 
-export default localesRouter;
+export default localesRouter

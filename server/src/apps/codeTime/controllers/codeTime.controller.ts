@@ -1,101 +1,102 @@
-import ClientError from "@functions/ClientError";
+import ClientError from '@functions/ClientError'
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { CodeTimeControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as CodeTimeService from "../services/codeTime.service";
+import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
-const codeTimeRouter = express.Router();
+import * as CodeTimeService from '../services/codeTime.service'
+
+const codeTimeRouter = express.Router()
 
 const getActivities = forgeController
-  .route("GET /activities")
-  .description("Get activities by year")
+  .route('GET /activities')
+  .description('Get activities by year')
   .schema(CodeTimeControllersSchemas.CodeTime.getActivities)
   .callback(
     async ({ pb, query: { year } }) =>
-      await CodeTimeService.getActivities(pb, year),
-  );
+      await CodeTimeService.getActivities(pb, year)
+  )
 
 const getStatistics = forgeController
-  .route("GET /statistics")
-  .description("Get code time statistics")
+  .route('GET /statistics')
+  .description('Get code time statistics')
   .schema(CodeTimeControllersSchemas.CodeTime.getStatistics)
-  .callback(async ({ pb }) => await CodeTimeService.getStatistics(pb));
+  .callback(async ({ pb }) => await CodeTimeService.getStatistics(pb))
 
 const getLastXDays = forgeController
-  .route("GET /last-x-days")
-  .description("Get last X days of code time data")
+  .route('GET /last-x-days')
+  .description('Get last X days of code time data')
   .schema(CodeTimeControllersSchemas.CodeTime.getLastXDays)
   .callback(async ({ pb, query: { days } }) => {
     if (days > 30) {
-      throw new ClientError("days must be less than or equal to 30");
+      throw new ClientError('days must be less than or equal to 30')
     }
-    return await CodeTimeService.getLastXDays(pb, days);
-  });
+    return await CodeTimeService.getLastXDays(pb, days)
+  })
 
 const getProjects = forgeController
-  .route("GET /projects")
-  .description("Get projects statistics")
+  .route('GET /projects')
+  .description('Get projects statistics')
   .schema(CodeTimeControllersSchemas.CodeTime.getProjects)
   .callback(
     async ({ pb, query: { last } }) =>
-      await CodeTimeService.getProjectsStats(pb, last),
-  );
+      await CodeTimeService.getProjectsStats(pb, last)
+  )
 
 const getLanguages = forgeController
-  .route("GET /languages")
-  .description("Get languages statistics")
+  .route('GET /languages')
+  .description('Get languages statistics')
   .schema(CodeTimeControllersSchemas.CodeTime.getLanguages)
   .callback(
     async ({ pb, query: { last } }) =>
-      await CodeTimeService.getLanguagesStats(pb, last),
-  );
+      await CodeTimeService.getLanguagesStats(pb, last)
+  )
 
 const getEachDay = forgeController
-  .route("GET /each-day")
-  .description("Get each day code time data")
+  .route('GET /each-day')
+  .description('Get each day code time data')
   .schema(CodeTimeControllersSchemas.CodeTime.getEachDay)
-  .callback(async ({ pb }) => await CodeTimeService.getEachDay(pb));
+  .callback(async ({ pb }) => await CodeTimeService.getEachDay(pb))
 
 const getUserMinutes = forgeController
-  .route("GET /user/minutes")
-  .description("Get user minutes")
+  .route('GET /user/minutes')
+  .description('Get user minutes')
   .schema(CodeTimeControllersSchemas.CodeTime.getUserMinutes)
   .callback(
     async ({ pb, query: { minutes } }) =>
-      await CodeTimeService.getUserMinutes(pb, minutes),
-  );
+      await CodeTimeService.getUserMinutes(pb, minutes)
+  )
 
 const logEvent = forgeController
-  .route("POST /eventLog")
-  .description("Log a code time event")
+  .route('POST /eventLog')
+  .description('Log a code time event')
   .schema(CodeTimeControllersSchemas.CodeTime.logEvent as any)
   .callback(async ({ pb, body }) => {
-    await CodeTimeService.logEvent(pb, body);
+    await CodeTimeService.logEvent(pb, body)
     return {
-      status: "ok",
+      status: 'ok',
       data: [],
-      message: "success",
-    };
-  });
+      message: 'success'
+    }
+  })
 
 const getReadmeImage = forgeController
-  .route("GET /readme")
-  .description("Get readme image")
+  .route('GET /readme')
+  .description('Get readme image')
   .schema(CodeTimeControllersSchemas.CodeTime.getReadmeImage)
   .noDefaultResponse()
   .callback(async ({ pb, res }) => {
-    const imageBuffer = await CodeTimeService.getReadmeImage(pb);
+    const imageBuffer = await CodeTimeService.getReadmeImage(pb)
 
-    res.set("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.set("Content-Type", "image/png");
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+    res.set('Content-Type', 'image/png')
 
     // @ts-expect-error - Custom response
-    res.status(200).send(imageBuffer);
-  });
+    res.status(200).send(imageBuffer)
+  })
 
 bulkRegisterControllers(codeTimeRouter, [
   getActivities,
@@ -106,7 +107,7 @@ bulkRegisterControllers(codeTimeRouter, [
   getEachDay,
   getUserMinutes,
   logEvent,
-  getReadmeImage,
-]);
+  getReadmeImage
+])
 
-export default codeTimeRouter;
+export default codeTimeRouter

@@ -1,84 +1,84 @@
-import chalk from "chalk";
-import dotenv from "dotenv";
-import fs from "fs";
-import _ from "lodash";
-import path from "path";
-import { singular } from "pluralize";
-import Pocketbase, { type CollectionModel } from "pocketbase";
+import chalk from 'chalk'
+import dotenv from 'dotenv'
+import fs from 'fs'
+import _ from 'lodash'
+import path from 'path'
+import { singular } from 'pluralize'
+import Pocketbase, { type CollectionModel } from 'pocketbase'
 
-const toBeWritten: Record<string, string> = {};
+const toBeWritten: Record<string, string> = {}
 
 const CUSTOM_SCHEMAS_DELIMITER =
-  "// -------------------- CUSTOM SCHEMAS --------------------";
-const TARGET_PATH = path.resolve(__dirname, "../shared/src/types/collections");
+  '// -------------------- CUSTOM SCHEMAS --------------------'
+const TARGET_PATH = path.resolve(__dirname, '../shared/src/types/collections')
 
 dotenv.config({
-  path: path.resolve(__dirname, "../server/env/.env.local"),
-});
+  path: path.resolve(__dirname, '../server/env/.env.local')
+})
 
 if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
   console.error(
-    "Please provide PB_HOST, PB_EMAIL, and PB_PASSWORD in your environment variables."
-  );
-  process.exit(1);
+    'Please provide PB_HOST, PB_EMAIL, and PB_PASSWORD in your environment variables.'
+  )
+  process.exit(1)
 }
 
-const pb = new Pocketbase(process.env.PB_HOST);
+const pb = new Pocketbase(process.env.PB_HOST)
 
 try {
   await pb
-    .collection("_superusers")
-    .authWithPassword(process.env.PB_EMAIL, process.env.PB_PASSWORD);
+    .collection('_superusers')
+    .authWithPassword(process.env.PB_EMAIL, process.env.PB_PASSWORD)
 
   if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
-    console.error("Invalid credentials.");
-    process.exit(1);
+    console.error('Invalid credentials.')
+    process.exit(1)
   }
 } catch {
-  console.error("Server is not reachable or credentials are invalid.");
-  process.exit(1);
+  console.error('Server is not reachable or credentials are invalid.')
+  process.exit(1)
 }
 
 const allModules = [
-  ...fs.readdirSync("./server/src/apps", { withFileTypes: true }),
-  ...fs.readdirSync("./server/src/core/lib", { withFileTypes: true }),
-];
+  ...fs.readdirSync('./server/src/apps', { withFileTypes: true }),
+  ...fs.readdirSync('./server/src/core/lib', { withFileTypes: true })
+]
 
-const modulesMap: Record<string, CollectionModel[]> = {};
+const modulesMap: Record<string, CollectionModel[]> = {}
 
-const allCollections = await pb.collections.getFullList();
-const collections = allCollections.filter((e) => !e.system);
+const allCollections = await pb.collections.getFullList()
+const collections = allCollections.filter(e => !e.system)
 for (const collection of collections) {
-  const module = allModules.find((e) =>
+  const module = allModules.find(e =>
     collection.name.startsWith(_.snakeCase(e.name))
-  );
+  )
   if (!module) {
     console.log(
-      chalk.yellow("[WARNING]") +
+      chalk.yellow('[WARNING]') +
         ` Collection ${collection.name} does not have a corresponding module.`
-    );
+    )
 
-    continue;
+    continue
   }
 
   if (!modulesMap[module.name]) {
-    modulesMap[module.name] = [];
+    modulesMap[module.name] = []
   }
-  modulesMap[module.name]?.push(collection);
+  modulesMap[module.name]?.push(collection)
 }
 
 console.log(
-  chalk.green("[INFO]") +
+  chalk.green('[INFO]') +
     ` Found ${Object.values(modulesMap).flat().length} collections across ${Object.keys(modulesMap).length} modules.`
-);
+)
 
 for (const module of allModules) {
   if (!modulesMap[module.name]) {
-    continue;
+    continue
   }
 
-  const moduleName = _.camelCase(module.name);
-  const collections = modulesMap[module.name];
+  const moduleName = _.camelCase(module.name)
+  const collections = modulesMap[module.name]
 
   let finalString = `/**
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
@@ -86,168 +86,165 @@ for (const module of allModules) {
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: ${moduleName}
  * Generated at: ${new Date().toISOString()}
- * Contains: ${collections?.map((e) => e.name).join(", ")}
+ * Contains: ${collections?.map(e => e.name).join(', ')}
  */
 
 import { z } from "zod/v4";
 
-`;
+`
 
   for (const collection of collections ?? []) {
     console.log(
-      chalk.blue("[INFO]") +
+      chalk.blue('[INFO]') +
         ` Found ${collection.fields.length} fields in collection ${chalk.bold(
           collection.name
         )} in module ${chalk.bold(moduleName)}.`
-    );
-    const zodSchemaObject: Record<string, string> = {};
+    )
+    const zodSchemaObject: Record<string, string> = {}
 
     for (const field of collection.fields) {
-      if (["id", "created", "updated"].includes(field.name)) {
+      if (['id', 'created', 'updated'].includes(field.name)) {
         // Skip fields that are auto-generated by PocketBase
-        continue;
+        continue
       }
 
       switch (field.type) {
-        case "text":
-          zodSchemaObject[field.name] = "z.string()";
-          break;
-        case "richtext":
-          zodSchemaObject[field.name] = "z.string()";
-          break;
-        case "number":
-          zodSchemaObject[field.name] = "z.number()";
-          break;
-        case "bool":
-          zodSchemaObject[field.name] = "z.boolean()";
-          break;
-        case "email":
-          zodSchemaObject[field.name] = "z.email()";
-          break;
-        case "url":
-          zodSchemaObject[field.name] = "z.url()";
-          break;
-        case "date":
-          zodSchemaObject[field.name] = "z.string()";
-          break;
-        case "autodate":
-          zodSchemaObject[field.name] = "z.string()";
-          break;
-        case "select":
-          const value = [...field.values, ...(field.required ? [] : [""])];
+        case 'text':
+          zodSchemaObject[field.name] = 'z.string()'
+          break
+        case 'richtext':
+          zodSchemaObject[field.name] = 'z.string()'
+          break
+        case 'number':
+          zodSchemaObject[field.name] = 'z.number()'
+          break
+        case 'bool':
+          zodSchemaObject[field.name] = 'z.boolean()'
+          break
+        case 'email':
+          zodSchemaObject[field.name] = 'z.email()'
+          break
+        case 'url':
+          zodSchemaObject[field.name] = 'z.url()'
+          break
+        case 'date':
+          zodSchemaObject[field.name] = 'z.string()'
+          break
+        case 'autodate':
+          zodSchemaObject[field.name] = 'z.string()'
+          break
+        case 'select':
+          const value = [...field.values, ...(field.required ? [] : [''])]
           zodSchemaObject[field.name] =
             field.maxSelect > 1
               ? `z.array(z.enum(${JSON.stringify(value)}))`
-              : `z.enum(${JSON.stringify(value)})`;
-          break;
-        case "file":
+              : `z.enum(${JSON.stringify(value)})`
+          break
+        case 'file':
           zodSchemaObject[field.name] =
-            field.maxSelect > 1 ? "z.array(z.string())" : "z.string()";
-          break;
-        case "relation":
+            field.maxSelect > 1 ? 'z.array(z.string())' : 'z.string()'
+          break
+        case 'relation':
           zodSchemaObject[field.name] =
-            field.maxSelect > 1 ? `z.array(z.string())` : `z.string()`;
-          break;
-        case "json":
-          zodSchemaObject[field.name] = "z.any()";
-          break;
-        case "geoPoint":
+            field.maxSelect > 1 ? `z.array(z.string())` : `z.string()`
+          break
+        case 'json':
+          zodSchemaObject[field.name] = 'z.any()'
+          break
+        case 'geoPoint':
           zodSchemaObject[field.name] =
-            "z.object({ lat: z.number(), lon: z.number() })";
-          break;
-        case "password":
-          zodSchemaObject[field.name] = "z.string()";
-          break;
+            'z.object({ lat: z.number(), lon: z.number() })'
+          break
+        case 'password':
+          zodSchemaObject[field.name] = 'z.string()'
+          break
         default:
           console.warn(
-            chalk.yellow("[WARNING]") +
+            chalk.yellow('[WARNING]') +
               ` Unknown field type ${field.type} for field ${field.name} in collection ${collection.name}.`
-          );
-          continue;
+          )
+          continue
       }
     }
 
-    if (collection.name.endsWith("_aggregated")) {
+    if (collection.name.endsWith('_aggregated')) {
       collection.name =
-        singular(collection.name.replace(/_aggregated$/, "")) + "_aggregated";
+        singular(collection.name.replace(/_aggregated$/, '')) + '_aggregated'
     } else {
-      collection.name = singular(collection.name);
+      collection.name = singular(collection.name)
     }
 
-    collection.name = `${collection.name.split("__").pop() ?? collection.name}`;
+    collection.name = `${collection.name.split('__').pop() ?? collection.name}`
 
     const zodSchemaString = `const ${_.upperFirst(
       _.camelCase(collection.name)
     )} = z.object({\n${Object.entries(zodSchemaObject)
       .map(([key, value]) => `  ${key}: ${value},`)
-      .join("\n")}\n});`;
-    finalString += `${zodSchemaString}\n\n`;
+      .join('\n')}\n});`
+    finalString += `${zodSchemaString}\n\n`
 
     console.log(
-      chalk.green("[INFO]") +
+      chalk.green('[INFO]') +
         ` Generated Zod schema for collection ${chalk.bold(
           collection.name
         )} in module ${chalk.bold(moduleName)}.`
-    );
+    )
   }
 
   if (!collections) {
     console.warn(
-      chalk.yellow("[WARNING]") +
+      chalk.yellow('[WARNING]') +
         ` No collections found for module ${chalk.bold(moduleName)}.`
-    );
-    continue;
+    )
+    continue
   }
 
   finalString += `${collections
     .map(
-      (e) =>
+      e =>
         `type I${_.upperFirst(_.camelCase(e.name))} = z.infer<typeof ${_.upperFirst(
           _.camelCase(singular(e.name))
         )}>;`
     )
-    .join("\n")}\n\nexport {\n${collections
-    .map((e) => `  ${_.upperFirst(_.camelCase(e.name))},`)
-    .join("\n")}\n};\n\nexport type {\n${collections
-    .map((e) => `  I${_.upperFirst(_.camelCase(e.name))},`)
-    .join("\n")}\n};\n`;
+    .join('\n')}\n\nexport {\n${collections
+    .map(e => `  ${_.upperFirst(_.camelCase(e.name))},`)
+    .join('\n')}\n};\n\nexport type {\n${collections
+    .map(e => `  I${_.upperFirst(_.camelCase(e.name))},`)
+    .join('\n')}\n};\n`
 
-  const outputPath = path.resolve(TARGET_PATH, `${moduleName}.schema.ts`);
+  const outputPath = path.resolve(TARGET_PATH, `${moduleName}.schema.ts`)
 
   const originalContent = fs.existsSync(outputPath)
-    ? fs.readFileSync(outputPath, "utf-8")
-    : "";
+    ? fs.readFileSync(outputPath, 'utf-8')
+    : ''
 
   if (originalContent.includes(CUSTOM_SCHEMAS_DELIMITER)) {
     const customCollectionsSchemas = originalContent
       .split(CUSTOM_SCHEMAS_DELIMITER)
-      .pop()!;
+      .pop()!
 
     finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n${customCollectionsSchemas
-      .replace(/\/\/\s*$/, "")
-      .replace(/^\n+/, "")
-      .replace(/\n+$/, "")}\n`;
+      .replace(/\/\/\s*$/, '')
+      .replace(/^\n+/, '')
+      .replace(/\n+$/, '')}\n`
   } else {
-    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n// Add your custom schemas here. They will not be overwritten by this script.\n`;
+    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n// Add your custom schemas here. They will not be overwritten by this script.\n`
   }
 
-  toBeWritten[`${moduleName}.schema.ts`] = finalString;
+  toBeWritten[`${moduleName}.schema.ts`] = finalString
 }
 
 if (fs.existsSync(TARGET_PATH) && fs.lstatSync(TARGET_PATH).isDirectory()) {
-  const files = fs.readdirSync(TARGET_PATH);
+  const files = fs.readdirSync(TARGET_PATH)
   for (const file of files) {
-    if (file.endsWith(".custom.schema.ts")) {
-      toBeWritten[file] = fs.readFileSync(
-        path.join(TARGET_PATH, file),
-        "utf-8"
-      );
+    if (file.endsWith('.custom.schema.ts')) {
+      toBeWritten[file] = fs.readFileSync(path.join(TARGET_PATH, file), 'utf-8')
     }
   }
-  fs.rmdirSync(TARGET_PATH, { recursive: true });
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  fs.rmdirSync(TARGET_PATH, { recursive: true })
+  await new Promise(resolve => setTimeout(resolve, 1000))
 }
-fs.mkdirSync(TARGET_PATH, { recursive: true });
+fs.mkdirSync(TARGET_PATH, { recursive: true })
 
 const indexString = `
 /**
@@ -260,18 +257,18 @@ const indexString = `
 
 ${Object.keys(toBeWritten)
   .map(
-    (moduleName) =>
-      `export * as ${_.upperFirst(_.camelCase(moduleName.replace(/(?:\.custom)?\.schema\.ts$/, moduleName.endsWith(".custom.schema.ts") ? "Custom" : "Collections")))}CollectionsSchemas from './${moduleName.replace(/\.ts$/, "")}';`
+    moduleName =>
+      `export * as ${_.upperFirst(_.camelCase(moduleName.replace(/(?:\.custom)?\.schema\.ts$/, moduleName.endsWith('.custom.schema.ts') ? 'Custom' : 'Collections')))}CollectionsSchemas from './${moduleName.replace(/\.ts$/, '')}';`
   )
-  .join("\n")}
+  .join('\n')}
 
 export { SchemaWithPB } from './schemaWithPB'
 export type { ISchemaWithPB } from './schemaWithPB'
-`;
+`
 
-toBeWritten["index.ts"] = indexString;
+toBeWritten['index.ts'] = indexString
 
-toBeWritten["schemaWithPB.ts"] = `
+toBeWritten['schemaWithPB.ts'] = `
 import { z } from 'zod/v4'
 
 const BasePBSchema = z.object({
@@ -287,9 +284,9 @@ export const SchemaWithPB = <T extends z.ZodTypeAny>(schema: T) => {
 }
 
 export type ISchemaWithPB<T> = T & z.infer<typeof BasePBSchema>
-`;
+`
 
 for (const [fileName, content] of Object.entries(toBeWritten)) {
-  const filePath = path.resolve(TARGET_PATH, fileName);
-  fs.writeFileSync(filePath, content, "utf-8");
+  const filePath = path.resolve(TARGET_PATH, fileName)
+  fs.writeFileSync(filePath, content, 'utf-8')
 }

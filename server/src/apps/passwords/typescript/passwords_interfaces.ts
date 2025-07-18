@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const PasswordsEntrySchema = z.object({
   color: z.string(),
@@ -8,11 +8,11 @@ const PasswordsEntrySchema = z.object({
   username: z.string(),
   website: z.string(),
   decrypted: z.string().optional(),
-  pinned: z.boolean(),
-});
+  pinned: z.boolean()
+})
 
-type IPasswordsEntry = z.infer<typeof PasswordsEntrySchema>;
+type IPasswordsEntry = z.infer<typeof PasswordsEntrySchema>
 
-export type { IPasswordsEntry };
+export type { IPasswordsEntry }
 
-export { PasswordsEntrySchema };
+export { PasswordsEntrySchema }

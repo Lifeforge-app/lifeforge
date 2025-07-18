@@ -1,10 +1,9 @@
+import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useModalStore } from '@components/modals'
 
 import InputIcon from '../shared/InputIcon'
 import InputLabel from '../shared/InputLabel'
@@ -51,7 +50,7 @@ function IconInput({
           label={t([`inputs.${_.camelCase(name)}`, name])}
           required={required}
         />
-        <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
+        <div className="mt-6 mr-12 flex w-full items-center gap-2 pl-4">
           <div className="icon-input-icon size-4 shrink-0">
             <Icon
               className={clsx(
@@ -64,14 +63,14 @@ function IconInput({
           </div>
           <input
             ref={ref}
-            className="focus:outline-hidden focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent"
+            className="focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden"
             placeholder="tabler:cube"
             value={icon}
             onChange={updateIcon}
           />
         </div>
         <button
-          className="text-bg-500 hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200 mr-4 shrink-0 rounded-lg p-2 transition-all"
+          className="text-bg-500 hover:bg-bg-300 hover:text-bg-800 dark:hover:bg-bg-700/70 dark:hover:text-bg-200 mr-4 shrink-0 rounded-lg p-2 transition-all focus:outline-hidden"
           onClick={handleIconSelectorOpen}
         >
           <Icon className="size-5" icon="tabler:chevron-down" />

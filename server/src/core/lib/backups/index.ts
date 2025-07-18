@@ -1,3 +1,3 @@
-import BackupsRouter from "./controllers/backups.controller";
+import BackupsRouter from './controllers/backups.controller'
 
-export default BackupsRouter;
+export default BackupsRouter

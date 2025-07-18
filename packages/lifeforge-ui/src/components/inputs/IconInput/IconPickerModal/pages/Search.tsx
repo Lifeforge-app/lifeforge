@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
-import { AutoSizer, List } from 'react-virtualized'
-
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import { EmptyStateScreen } from '@components/screens'
+import { useEffect, useState } from 'react'
+import { AutoSizer, List } from 'react-virtualized'
 
 import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'

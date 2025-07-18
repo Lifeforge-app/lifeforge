@@ -1,6 +1,5 @@
-import { memo, useMemo, useRef } from 'react'
-
 import 'leaflet/dist/leaflet.css'
+import { memo, useMemo, useRef } from 'react'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useEarthMapRenderer } from './hooks/useEarthMapRenderer'

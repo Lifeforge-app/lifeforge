@@ -1,7 +1,6 @@
+import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-
-import { Button } from '@components/buttons'
 
 function Pagination({
   currentPage,

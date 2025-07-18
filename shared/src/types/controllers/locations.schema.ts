@@ -1,4 +1,3 @@
+export type {}
 
-export type {};
-
-export {};
+export {}

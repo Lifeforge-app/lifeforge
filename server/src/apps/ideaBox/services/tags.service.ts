@@ -1,17 +1,17 @@
-import PocketBase from "pocketbase";
-import { IdeaBoxCollectionsSchemas } from "shared/types/collections";
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
 export const getTags = (
   pb: PocketBase,
-  container: string,
+  container: string
 ): Promise<WithPB<IdeaBoxCollectionsSchemas.ITag>[]> =>
   pb
-    .collection("idea_box__tags_aggregated")
+    .collection('idea_box__tags_aggregated')
     .getFullList<WithPB<IdeaBoxCollectionsSchemas.ITag>>({
-      filter: `container = "${container}"`,
-    });
+      filter: `container = "${container}"`
+    })
 
 export const createTag = (
   pb: PocketBase,
@@ -19,21 +19,21 @@ export const createTag = (
   {
     name,
     icon,
-    color,
+    color
   }: {
-    name: string;
-    icon: string;
-    color: string;
-  },
+    name: string
+    icon: string
+    color: string
+  }
 ) =>
   pb
-    .collection("idea_box__tags")
+    .collection('idea_box__tags')
     .create<WithPB<IdeaBoxCollectionsSchemas.ITag>>({
       name,
       icon,
       color,
-      container,
-    });
+      container
+    })
 
 export const updateTag = (
   pb: PocketBase,
@@ -41,19 +41,19 @@ export const updateTag = (
   {
     name,
     icon,
-    color,
+    color
   }: {
-    name: string;
-    icon: string;
-    color: string;
-  },
+    name: string
+    icon: string
+    color: string
+  }
 ): Promise<WithPB<IdeaBoxCollectionsSchemas.ITag>> =>
-  pb.collection("idea_box__tags").update(id, {
+  pb.collection('idea_box__tags').update(id, {
     name,
     icon,
-    color,
-  });
+    color
+  })
 
 export const deleteTag = async (pb: PocketBase, id: string) => {
-  await pb.collection("idea_box__tags").delete(id);
-};
+  await pb.collection('idea_box__tags').delete(id)
+}

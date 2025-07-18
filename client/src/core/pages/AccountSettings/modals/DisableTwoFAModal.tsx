@@ -1,11 +1,10 @@
+import OTPScreen from '@security/components/OTPScreen'
 import { Button, ModalHeader } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
-import OTPScreen from '@security/components/OTPScreen'
 
 import { useAuth } from '../../../providers/AuthProvider'
 

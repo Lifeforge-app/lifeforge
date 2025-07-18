@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { BooksLibraryCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { BooksLibraryCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Languages = {
   /**
@@ -11,7 +12,7 @@ const Languages = {
   getAllLanguages: {
     response: z.array(
       SchemaWithPB(BooksLibraryCollectionsSchemas.LanguageAggregated)
-    ),
+    )
   },
 
   /**
@@ -20,7 +21,7 @@ const Languages = {
    */
   createLanguage: {
     body: BooksLibraryCollectionsSchemas.Language,
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Language),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Language)
   },
 
   /**
@@ -29,10 +30,10 @@ const Languages = {
    */
   updateLanguage: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: BooksLibraryCollectionsSchemas.Language,
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Language),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Language)
   },
 
   /**
@@ -41,11 +42,11 @@ const Languages = {
    */
   deleteLanguage: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const FileTypes = {
   /**
@@ -55,9 +56,9 @@ const FileTypes = {
   getAllFileTypes: {
     response: z.array(
       SchemaWithPB(BooksLibraryCollectionsSchemas.FileTypeAggregated)
-    ),
-  },
-};
+    )
+  }
+}
 
 const Collection = {
   /**
@@ -67,7 +68,7 @@ const Collection = {
   getAllCollections: {
     response: z.array(
       SchemaWithPB(BooksLibraryCollectionsSchemas.CollectionAggregated)
-    ),
+    )
   },
 
   /**
@@ -76,7 +77,7 @@ const Collection = {
    */
   createCollection: {
     body: BooksLibraryCollectionsSchemas.Collection,
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Collection),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Collection)
   },
 
   /**
@@ -85,10 +86,10 @@ const Collection = {
    */
   updateCollection: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: BooksLibraryCollectionsSchemas.Collection,
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.CollectionAggregated),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.CollectionAggregated)
   },
 
   /**
@@ -97,11 +98,11 @@ const Collection = {
    */
   deleteCollection: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Entries = {
   /**
@@ -109,7 +110,7 @@ const Entries = {
    * @description Get all entries in the books library
    */
   getAllEntries: {
-    response: z.array(SchemaWithPB(BooksLibraryCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(BooksLibraryCollectionsSchemas.Entry))
   },
 
   /**
@@ -118,7 +119,7 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: BooksLibraryCollectionsSchemas.Entry.pick({
       title: true,
@@ -127,15 +128,15 @@ const Entries = {
       edition: true,
       languages: true,
       isbn: true,
-      publisher: true,
+      publisher: true
     }).extend({
-      year_published: z.string().transform((val) => {
-        const year = parseInt(val, 10);
+      year_published: z.string().transform(val => {
+        const year = parseInt(val, 10)
 
-        return isNaN(year) ? 0 : year;
-      }),
+        return isNaN(year) ? 0 : year
+      })
     }),
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry)
   },
 
   /**
@@ -144,9 +145,9 @@ const Entries = {
    */
   toggleFavouriteStatus: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry)
   },
 
   /**
@@ -155,9 +156,9 @@ const Entries = {
    */
   toggleReadStatus: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry),
+    response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry)
   },
 
   /**
@@ -166,12 +167,12 @@ const Entries = {
    */
   sendToKindle: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
-      target: z.string().email().endsWith("@kindle.com"),
+      target: z.string().email().endsWith('@kindle.com')
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -180,11 +181,11 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Libgen = {
   /**
@@ -192,7 +193,7 @@ const Libgen = {
    * @description Get libgen service status
    */
   getStatus: {
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -203,10 +204,10 @@ const Libgen = {
     query: z.object({
       provider: z.string(),
       req: z.string(),
-      page: z.string(),
+      page: z.string()
     }),
     response:
-      BooksLibraryCollectionsSchemas.BooksLibraryLibgenSearchResultSchema,
+      BooksLibraryCollectionsSchemas.BooksLibraryLibgenSearchResultSchema
   },
 
   /**
@@ -215,9 +216,9 @@ const Libgen = {
    */
   getBookDetails: {
     params: z.object({
-      md5: z.string(),
+      md5: z.string()
     }),
-    response: z.record(z.string(), z.any()),
+    response: z.record(z.string(), z.any())
   },
 
   /**
@@ -227,15 +228,15 @@ const Libgen = {
   getLocalLibraryData: {
     params: z.object({
       provider: z.string(),
-      md5: z.string(),
+      md5: z.string()
     }),
     response: BooksLibraryCollectionsSchemas.Entry.omit({
       collection: true,
       file: true,
       is_favourite: true,
       is_read: true,
-      time_finished: true,
-    }),
+      time_finished: true
+    })
   },
 
   /**
@@ -244,7 +245,7 @@ const Libgen = {
    */
   addToLibrary: {
     params: z.object({
-      md5: z.string(),
+      md5: z.string()
     }),
     body: z.object({
       metadata: z.object({
@@ -256,22 +257,22 @@ const Libgen = {
         languages: z.array(z.string()),
         md5: z.string(),
         publisher: z.string(),
-        size: z.string().transform((val) => parseInt(val, 10)),
+        size: z.string().transform(val => parseInt(val, 10)),
         thumbnail: z.string(),
         title: z.string(),
-        year_published: z.string().transform((val) => parseInt(val, 10) || 0),
-      }),
+        year_published: z.string().transform(val => parseInt(val, 10) || 0)
+      })
     }),
-    response: z.string(),
-  },
-};
+    response: z.string()
+  }
+}
 
-type ILanguages = InferApiESchemaDynamic<typeof Languages>;
-type IFileTypes = InferApiESchemaDynamic<typeof FileTypes>;
-type ICollection = InferApiESchemaDynamic<typeof Collection>;
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
-type ILibgen = InferApiESchemaDynamic<typeof Libgen>;
+type ILanguages = InferApiESchemaDynamic<typeof Languages>
+type IFileTypes = InferApiESchemaDynamic<typeof FileTypes>
+type ICollection = InferApiESchemaDynamic<typeof Collection>
+type IEntries = InferApiESchemaDynamic<typeof Entries>
+type ILibgen = InferApiESchemaDynamic<typeof Libgen>
 
-export type { ILanguages, IFileTypes, ICollection, IEntries, ILibgen };
+export type { ILanguages, IFileTypes, ICollection, IEntries, ILibgen }
 
-export { Languages, FileTypes, Collection, Entries, Libgen };
+export { Languages, FileTypes, Collection, Entries, Libgen }

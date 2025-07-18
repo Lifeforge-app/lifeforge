@@ -1,15 +1,15 @@
-import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
 
-import { useAPIEndpoint } from "../providers/APIEndpointProvider";
-import fetchAPI from "../utils/fetchAPI";
+import { useAPIEndpoint } from '../providers/APIEndpointProvider'
+import fetchAPI from '../utils/fetchAPI'
 
 function useAPIQuery<T>(
   endpoint: string,
   key: unknown[],
   enabled = true,
-  options: Omit<UseQueryOptions<T>, "queryKey" | "queryFn"> = {},
+  options: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'> = {}
 ) {
-  const APIEndpoint = useAPIEndpoint();
+  const APIEndpoint = useAPIEndpoint()
 
   return useQuery<T>({
     ...options,
@@ -17,8 +17,8 @@ function useAPIQuery<T>(
     staleTime: Infinity,
     queryKey: key,
     queryFn: () => fetchAPI<T>(APIEndpoint, endpoint),
-    enabled,
-  });
+    enabled
+  })
 }
 
-export default useAPIQuery;
+export default useAPIQuery

@@ -57,7 +57,7 @@ function ConfigColumn({
         <div className="flex shrink items-center gap-3">
           <Icon className="text-bg-500 size-6 shrink-0" icon={icon} />
           <div>
-            <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
+            <h3 className="flex w-full items-center gap-2 text-xl leading-normal font-medium md:w-auto">
               {title}
               {tooltip !== undefined && (
                 <Tooltip icon="tabler:info-circle" id={title?.toString() || ''}>

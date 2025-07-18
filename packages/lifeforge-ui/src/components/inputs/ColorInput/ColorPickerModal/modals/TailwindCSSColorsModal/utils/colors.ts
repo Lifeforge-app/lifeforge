@@ -1,5 +1,3 @@
- 
- 
 /* eslint-disable prefer-const */
 import Gradient from 'javascript-color-gradient'
 

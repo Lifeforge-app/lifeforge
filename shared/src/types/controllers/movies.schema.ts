@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { MoviesCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { MoviesCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Tmdb = {
   /**
@@ -10,16 +11,16 @@ const Tmdb = {
    */
   searchMovies: {
     query: z.object({
-      q: z.string().min(1, "Query must not be empty"),
+      q: z.string().min(1, 'Query must not be empty'),
       page: z
         .string()
         .optional()
-        .default("1")
-        .transform((val) => parseInt(val) || 1),
+        .default('1')
+        .transform(val => parseInt(val) || 1)
     }),
-    response: z.any(),
-  },
-};
+    response: z.any()
+  }
+}
 
 const Ticket = {
   /**
@@ -31,21 +32,21 @@ const Ticket = {
       ticket_number: true,
       theatre_number: true,
       theatre_seat: true,
-      theatre_showtime: true,
+      theatre_showtime: true
     }).extend({
       entry_id: z.string(),
       theatre_location: z.object({
         displayName: z.object({
           text: z.string(),
-          languageCode: z.string(),
+          languageCode: z.string()
         }),
         location: z.object({
           latitude: z.number(),
-          longitude: z.number(),
-        }),
-      }),
+          longitude: z.number()
+        })
+      })
     }),
-    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
   },
 
   /**
@@ -54,26 +55,26 @@ const Ticket = {
    */
   updateTicketPatch: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: MoviesCollectionsSchemas.Entry.pick({
       ticket_number: true,
       theatre_number: true,
       theatre_seat: true,
-      theatre_showtime: true,
+      theatre_showtime: true
     }).extend({
       theatre_location: z.object({
         displayName: z.object({
           text: z.string(),
-          languageCode: z.string(),
+          languageCode: z.string()
         }),
         location: z.object({
           latitude: z.number(),
-          longitude: z.number(),
-        }),
-      }),
+          longitude: z.number()
+        })
+      })
     }),
-    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
   },
 
   /**
@@ -82,11 +83,11 @@ const Ticket = {
    */
   clearTicket: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Entries = {
   /**
@@ -96,15 +97,15 @@ const Entries = {
   getAllEntries: {
     query: z.object({
       watched: z
-        .enum(["true", "false"])
+        .enum(['true', 'false'])
         .optional()
-        .default("false")
-        .transform((val) => (val === "true" ? true : false)),
+        .default('false')
+        .transform(val => (val === 'true' ? true : false))
     }),
     response: z.object({
       entries: z.array(SchemaWithPB(MoviesCollectionsSchemas.Entry)),
-      total: z.number(),
-    }),
+      total: z.number()
+    })
   },
 
   /**
@@ -113,9 +114,9 @@ const Entries = {
    */
   createEntryFromTmdb: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
   },
 
   /**
@@ -124,9 +125,9 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -135,16 +136,16 @@ const Entries = {
    */
   toggleWatchStatus: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(MoviesCollectionsSchemas.Entry),
-  },
-};
+    response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
+  }
+}
 
-type ITmdb = InferApiESchemaDynamic<typeof Tmdb>;
-type ITicket = InferApiESchemaDynamic<typeof Ticket>;
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type ITmdb = InferApiESchemaDynamic<typeof Tmdb>
+type ITicket = InferApiESchemaDynamic<typeof Ticket>
+type IEntries = InferApiESchemaDynamic<typeof Entries>
 
-export type { ITmdb, ITicket, IEntries };
+export type { ITmdb, ITicket, IEntries }
 
-export { Tmdb, Ticket, Entries };
+export { Tmdb, Ticket, Entries }

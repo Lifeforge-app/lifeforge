@@ -1,53 +1,54 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { TodoListControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as listsService from "../services/lists.service";
+import { TodoListControllersSchemas } from 'shared/types/controllers'
 
-const todoListListsRouter = express.Router();
+import * as listsService from '../services/lists.service'
+
+const todoListListsRouter = express.Router()
 
 const getAllLists = forgeController
-  .route("GET /")
-  .description("Get all todo lists")
+  .route('GET /')
+  .description('Get all todo lists')
   .schema(TodoListControllersSchemas.Lists.getAllLists)
-  .callback(({ pb }) => listsService.getAllLists(pb));
+  .callback(({ pb }) => listsService.getAllLists(pb))
 
 const createList = forgeController
-  .route("POST /")
-  .description("Create a new todo list")
+  .route('POST /')
+  .description('Create a new todo list')
   .schema(TodoListControllersSchemas.Lists.createList)
   .statusCode(201)
-  .callback(({ pb, body }) => listsService.createList(pb, body));
+  .callback(({ pb, body }) => listsService.createList(pb, body))
 
 const updateList = forgeController
-  .route("PATCH /:id")
-  .description("Update an existing todo list")
+  .route('PATCH /:id')
+  .description('Update an existing todo list')
   .schema(TodoListControllersSchemas.Lists.updateList)
-  .existenceCheck("params", {
-    id: "todo_list__lists",
+  .existenceCheck('params', {
+    id: 'todo_list__lists'
   })
   .callback(({ pb, params: { id }, body }) =>
-    listsService.updateList(pb, id, body),
-  );
+    listsService.updateList(pb, id, body)
+  )
 
 const deleteList = forgeController
-  .route("DELETE /:id")
-  .description("Delete a todo list")
+  .route('DELETE /:id')
+  .description('Delete a todo list')
   .schema(TodoListControllersSchemas.Lists.deleteList)
-  .existenceCheck("params", {
-    id: "todo_list__lists",
+  .existenceCheck('params', {
+    id: 'todo_list__lists'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) => listsService.deleteList(pb, id));
+  .callback(({ pb, params: { id } }) => listsService.deleteList(pb, id))
 
 bulkRegisterControllers(todoListListsRouter, [
   getAllLists,
   createList,
   updateList,
-  deleteList,
-]);
+  deleteList
+])
 
-export default todoListListsRouter;
+export default todoListListsRouter

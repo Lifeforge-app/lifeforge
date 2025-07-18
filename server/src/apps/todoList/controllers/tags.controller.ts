@@ -1,53 +1,54 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { TodoListControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as tagsService from "../services/tags.service";
+import { TodoListControllersSchemas } from 'shared/types/controllers'
 
-const todoListTagsRouter = express.Router();
+import * as tagsService from '../services/tags.service'
+
+const todoListTagsRouter = express.Router()
 
 const getAllTags = forgeController
-  .route("GET /")
-  .description("Get all todo tags")
+  .route('GET /')
+  .description('Get all todo tags')
   .schema(TodoListControllersSchemas.Tags.getAllTags)
-  .callback(({ pb }) => tagsService.getAllTags(pb));
+  .callback(({ pb }) => tagsService.getAllTags(pb))
 
 const createTag = forgeController
-  .route("POST /")
-  .description("Create a new todo tag")
+  .route('POST /')
+  .description('Create a new todo tag')
   .schema(TodoListControllersSchemas.Tags.createTag)
   .statusCode(201)
-  .callback(({ pb, body }) => tagsService.createTag(pb, body));
+  .callback(({ pb, body }) => tagsService.createTag(pb, body))
 
 const updateTag = forgeController
-  .route("PATCH /:id")
-  .description("Update an existing todo tag")
+  .route('PATCH /:id')
+  .description('Update an existing todo tag')
   .schema(TodoListControllersSchemas.Tags.updateTag)
-  .existenceCheck("params", {
-    id: "todo_list__tags",
+  .existenceCheck('params', {
+    id: 'todo_list__tags'
   })
   .callback(({ pb, params: { id }, body }) =>
-    tagsService.updateTag(pb, id, body),
-  );
+    tagsService.updateTag(pb, id, body)
+  )
 
 const deleteTag = forgeController
-  .route("DELETE /:id")
-  .description("Delete a todo tag")
+  .route('DELETE /:id')
+  .description('Delete a todo tag')
   .schema(TodoListControllersSchemas.Tags.deleteTag)
-  .existenceCheck("params", {
-    id: "todo_list__tags",
+  .existenceCheck('params', {
+    id: 'todo_list__tags'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) => tagsService.deleteTag(pb, id));
+  .callback(({ pb, params: { id } }) => tagsService.deleteTag(pb, id))
 
 bulkRegisterControllers(todoListTagsRouter, [
   getAllTags,
   createTag,
   updateTag,
-  deleteTag,
-]);
+  deleteTag
+])
 
-export default todoListTagsRouter;
+export default todoListTagsRouter

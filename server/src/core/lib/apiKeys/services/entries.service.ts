@@ -1,85 +1,85 @@
-import ClientError from "@functions/ClientError";
-import { decrypt2, encrypt2 } from "@functions/encryption";
-import bcrypt from "bcrypt";
-import PocketBase from "pocketbase";
-import { ApiKeysCollectionsSchemas } from "shared/types/collections";
+import ClientError from '@functions/ClientError'
+import { decrypt2, encrypt2 } from '@functions/encryption'
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import bcrypt from 'bcrypt'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { ApiKeysCollectionsSchemas } from 'shared/types/collections'
 
-import { challenge } from "./auth.service";
+import { challenge } from './auth.service'
 
 export default async function getDecryptedMaster(
   pb: PocketBase,
-  master: string,
+  master: string
 ): Promise<string> {
   if (!pb.authStore.record) {
-    throw new ClientError("Auth store not initialized", 401);
+    throw new ClientError('Auth store not initialized', 401)
   }
 
-  const { APIKeysMasterPasswordHash } = pb.authStore.record;
+  const { APIKeysMasterPasswordHash } = pb.authStore.record
 
-  const decryptedMaster = decrypt2(master, challenge);
+  const decryptedMaster = decrypt2(master, challenge)
 
   const isMatch = await bcrypt.compare(
     decryptedMaster,
-    APIKeysMasterPasswordHash,
-  );
+    APIKeysMasterPasswordHash
+  )
 
   if (!isMatch) {
-    throw new ClientError("Invalid master password", 401);
+    throw new ClientError('Invalid master password', 401)
   }
 
-  return decryptedMaster;
+  return decryptedMaster
 }
 
 export const getAllEntries = async (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<WithPB<ApiKeysCollectionsSchemas.IEntry>[]> => {
   const entries = await pb
-    .collection("api_keys__entries")
+    .collection('api_keys__entries')
     .getFullList<WithPB<ApiKeysCollectionsSchemas.IEntry>>({
-      sort: "name",
-    });
+      sort: 'name'
+    })
 
-  entries.forEach((entry) => {
+  entries.forEach(entry => {
     entry.key = decrypt2(entry.key, process.env.MASTER_KEY!)
       .toString()
-      .slice(-4);
-  });
+      .slice(-4)
+  })
 
-  return entries;
-};
+  return entries
+}
 
 export const checkKeys = async (
   pb: PocketBase,
-  keys: string,
+  keys: string
 ): Promise<boolean> => {
-  const allEntries = await pb.collection("api_keys__entries").getFullList();
+  const allEntries = await pb.collection('api_keys__entries').getFullList()
 
   return keys
-    .split(",")
-    .every((key) => allEntries.some((entry) => entry.keyId === key));
-};
+    .split(',')
+    .every(key => allEntries.some(entry => entry.keyId === key))
+}
 
 export const getEntryById = async (
   pb: PocketBase,
   id: string,
-  decryptedMaster: string,
+  decryptedMaster: string
 ): Promise<string> => {
-  const entry = await pb.collection("api_keys__entries").getOne(id);
+  const entry = await pb.collection('api_keys__entries').getOne(id)
 
   if (!entry) {
-    throw new Error("Entry not found");
+    throw new Error('Entry not found')
   }
 
-  const decryptedKey = decrypt2(entry.key, process.env.MASTER_KEY!);
+  const decryptedKey = decrypt2(entry.key, process.env.MASTER_KEY!)
 
-  const encryptedKey = encrypt2(decryptedKey, decryptedMaster);
+  const encryptedKey = encrypt2(decryptedKey, decryptedMaster)
 
-  const encryptedSecondTime = encrypt2(encryptedKey, challenge);
+  const encryptedSecondTime = encrypt2(encryptedKey, challenge)
 
-  return encryptedSecondTime;
-};
+  return encryptedSecondTime
+}
 
 export const createEntry = async (
   pb: PocketBase,
@@ -89,34 +89,34 @@ export const createEntry = async (
     description,
     icon,
     key,
-    decryptedMaster,
+    decryptedMaster
   }: {
-    keyId: string;
-    name: string;
-    description: string;
-    icon: string;
-    key: string;
-    decryptedMaster: string;
-  },
+    keyId: string
+    name: string
+    description: string
+    icon: string
+    key: string
+    decryptedMaster: string
+  }
 ): Promise<WithPB<ApiKeysCollectionsSchemas.IEntry>> => {
-  const decryptedKey = decrypt2(key, decryptedMaster);
+  const decryptedKey = decrypt2(key, decryptedMaster)
 
-  const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!);
+  const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!)
 
   const entry = await pb
-    .collection("api_keys__entries")
+    .collection('api_keys__entries')
     .create<WithPB<ApiKeysCollectionsSchemas.IEntry>>({
       keyId,
       name,
       description,
       icon,
-      key: encryptedKey,
-    });
+      key: encryptedKey
+    })
 
-  entry.key = decryptedKey.slice(-4);
+  entry.key = decryptedKey.slice(-4)
 
-  return entry;
-};
+  return entry
+}
 
 export const updateEntry = async (
   pb: PocketBase,
@@ -127,38 +127,38 @@ export const updateEntry = async (
     description,
     icon,
     key,
-    decryptedMaster,
+    decryptedMaster
   }: {
-    keyId: string;
-    name: string;
-    description: string;
-    icon: string;
-    key: string;
-    decryptedMaster: string;
-  },
+    keyId: string
+    name: string
+    description: string
+    icon: string
+    key: string
+    decryptedMaster: string
+  }
 ): Promise<WithPB<ApiKeysCollectionsSchemas.IEntry>> => {
-  const decryptedKey = decrypt2(key, decryptedMaster);
+  const decryptedKey = decrypt2(key, decryptedMaster)
 
-  const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!);
+  const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!)
 
   const updatedEntry = await pb
-    .collection("api_keys__entries")
+    .collection('api_keys__entries')
     .update<WithPB<ApiKeysCollectionsSchemas.IEntry>>(id, {
       keyId,
       name,
       description,
       icon,
-      key: encryptedKey,
-    });
+      key: encryptedKey
+    })
 
-  updatedEntry.key = decryptedKey.slice(-4);
+  updatedEntry.key = decryptedKey.slice(-4)
 
-  return updatedEntry;
-};
+  return updatedEntry
+}
 
 export const deleteEntry = async (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<void> => {
-  await pb.collection("api_keys__entries").delete(id);
-};
+  await pb.collection('api_keys__entries').delete(id)
+}

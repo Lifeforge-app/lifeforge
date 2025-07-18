@@ -64,7 +64,7 @@ function EmptyStateScreen({
       </h2>
       <p
         className={clsx(
-          'text-bg-500 -mt-2 whitespace-pre-wrap px-6 text-center',
+          'text-bg-500 -mt-2 px-6 text-center whitespace-pre-wrap',
           smaller ? 'text-base' : 'text-lg'
         )}
       >

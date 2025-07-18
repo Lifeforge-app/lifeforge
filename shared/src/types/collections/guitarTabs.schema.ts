@@ -6,38 +6,31 @@
  * Generated at: 2025-07-18T12:15:50.183Z
  * Contains: guitar_tabs__entries, guitar_tabs__authors_aggregated
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
   name: z.string(),
-  type: z.enum(["fingerstyle","singalong",""]),
+  type: z.enum(['fingerstyle', 'singalong', '']),
   pageCount: z.string(),
   thumbnail: z.string(),
   author: z.string(),
   pdf: z.string(),
   audio: z.string(),
   musescore: z.string(),
-  isFavourite: z.boolean(),
-});
+  isFavourite: z.boolean()
+})
 
 const AuthorAggregated = z.object({
   name: z.string(),
-  amount: z.number(),
-});
+  amount: z.number()
+})
 
-type IEntry = z.infer<typeof Entry>;
-type IAuthorAggregated = z.infer<typeof AuthorAggregated>;
+type IEntry = z.infer<typeof Entry>
+type IAuthorAggregated = z.infer<typeof AuthorAggregated>
 
-export {
-  Entry,
-  AuthorAggregated,
-};
+export { Entry, AuthorAggregated }
 
-export type {
-  IEntry,
-  IAuthorAggregated,
-};
+export type { IEntry, IAuthorAggregated }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
@@ -47,10 +40,10 @@ const GuitarTabsSidebarDataSchema = z.object({
   categories: z.object({
     fingerstyle: z.number(),
     singalong: z.number(),
-    uncategorized: z.number(),
+    uncategorized: z.number()
   }),
-  authors: z.record(z.string(), z.number()),
-});
+  authors: z.record(z.string(), z.number())
+})
 
 const GuitarTabsGuitarWorldEntrySchema = z.object({
   id: z.number(),
@@ -59,14 +52,14 @@ const GuitarTabsGuitarWorldEntrySchema = z.object({
   category: z.string(),
   mainArtist: z.string(),
   uploader: z.string(),
-  audioUrl: z.string(),
-});
+  audioUrl: z.string()
+})
 
-type IGuitarTabsSidebarData = z.infer<typeof GuitarTabsSidebarDataSchema>;
+type IGuitarTabsSidebarData = z.infer<typeof GuitarTabsSidebarDataSchema>
 type IGuitarTabsGuitarWorldEntry = z.infer<
   typeof GuitarTabsGuitarWorldEntrySchema
->;
+>
 
-export { GuitarTabsSidebarDataSchema, GuitarTabsGuitarWorldEntrySchema };
+export { GuitarTabsSidebarDataSchema, GuitarTabsGuitarWorldEntrySchema }
 
-export type { IGuitarTabsSidebarData, IGuitarTabsGuitarWorldEntry };
+export type { IGuitarTabsSidebarData, IGuitarTabsGuitarWorldEntry }

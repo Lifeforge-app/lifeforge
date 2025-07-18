@@ -1,57 +1,58 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { MoviesControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as entriesService from "../services/entries.service";
+import { MoviesControllersSchemas } from 'shared/types/controllers'
 
-const moviesEntriesRouter = express.Router();
+import * as entriesService from '../services/entries.service'
+
+const moviesEntriesRouter = express.Router()
 
 const getAllEntries = forgeController
-  .route("GET /")
-  .description("Get all movie entries")
+  .route('GET /')
+  .description('Get all movie entries')
   .schema(MoviesControllersSchemas.Entries.getAllEntries)
   .callback(({ pb, query: { watched } }) =>
-    entriesService.getAllEntries(pb, watched),
-  );
+    entriesService.getAllEntries(pb, watched)
+  )
 
 const createEntryFromTMDB = forgeController
-  .route("POST /:id")
-  .description("Create a movie entry from TMDB")
+  .route('POST /:id')
+  .description('Create a movie entry from TMDB')
   .schema(MoviesControllersSchemas.Entries.createEntryFromTmdb)
   .callback(({ pb, params: { id } }) =>
-    entriesService.createEntryFromTMDB(pb, id),
+    entriesService.createEntryFromTMDB(pb, id)
   )
-  .statusCode(201);
+  .statusCode(201)
 
 const deleteEntry = forgeController
-  .route("DELETE /:id")
-  .description("Delete a movie entry")
+  .route('DELETE /:id')
+  .description('Delete a movie entry')
   .schema(MoviesControllersSchemas.Entries.deleteEntry)
-  .existenceCheck("params", {
-    id: "movies__entries",
+  .existenceCheck('params', {
+    id: 'movies__entries'
   })
   .callback(({ pb, params: { id } }) => entriesService.deleteEntry(pb, id))
-  .statusCode(204);
+  .statusCode(204)
 
 const toggleWatchStatus = forgeController
-  .route("PATCH /watch-status/:id")
-  .description("Toggle watch status of a movie entry")
+  .route('PATCH /watch-status/:id')
+  .description('Toggle watch status of a movie entry')
   .schema(MoviesControllersSchemas.Entries.toggleWatchStatus)
-  .existenceCheck("params", {
-    id: "movies__entries",
+  .existenceCheck('params', {
+    id: 'movies__entries'
   })
   .callback(({ pb, params: { id } }) =>
-    entriesService.toggleWatchStatus(pb, id),
-  );
+    entriesService.toggleWatchStatus(pb, id)
+  )
 
 bulkRegisterControllers(moviesEntriesRouter, [
   getAllEntries,
   createEntryFromTMDB,
   deleteEntry,
-  toggleWatchStatus,
-]);
+  toggleWatchStatus
+])
 
-export default moviesEntriesRouter;
+export default moviesEntriesRouter

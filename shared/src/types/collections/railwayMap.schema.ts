@@ -6,8 +6,7 @@
  * Generated at: 2025-07-18T12:15:50.185Z
  * Contains: railway_map__lines, railway_map__stations
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Line = z.object({
   country: z.string(),
@@ -16,8 +15,8 @@ const Line = z.object({
   name: z.string(),
   color: z.string(),
   ways: z.any(),
-  map_paths: z.any(),
-});
+  map_paths: z.any()
+})
 
 const Station = z.object({
   name: z.string(),
@@ -28,21 +27,15 @@ const Station = z.object({
   map_data: z.any(),
   type: z.string(),
   distances: z.any(),
-  map_image: z.string(),
-});
+  map_image: z.string()
+})
 
-type ILine = z.infer<typeof Line>;
-type IStation = z.infer<typeof Station>;
+type ILine = z.infer<typeof Line>
+type IStation = z.infer<typeof Station>
 
-export {
-  Line,
-  Station,
-};
+export { Line, Station }
 
-export type {
-  ILine,
-  IStation,
-};
+export type { ILine, IStation }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

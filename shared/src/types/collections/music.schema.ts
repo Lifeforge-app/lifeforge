@@ -6,26 +6,21 @@
  * Generated at: 2025-07-18T12:15:50.181Z
  * Contains: music__entries
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
   name: z.string(),
   duration: z.string(),
   author: z.string(),
   file: z.string(),
-  is_favourite: z.boolean(),
-});
+  is_favourite: z.boolean()
+})
 
-type IEntry = z.infer<typeof Entry>;
+type IEntry = z.infer<typeof Entry>
 
-export {
-  Entry,
-};
+export { Entry }
 
-export type {
-  IEntry,
-};
+export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
@@ -37,11 +32,11 @@ const YoutubeDataSchema = z.object({
   duration: z.string(),
   viewCount: z.number(),
   likeCount: z.number(),
-  thumbnail: z.string(),
-});
+  thumbnail: z.string()
+})
 
-type IYoutubeData = z.infer<typeof YoutubeDataSchema>;
+type IYoutubeData = z.infer<typeof YoutubeDataSchema>
 
-export { YoutubeDataSchema };
+export { YoutubeDataSchema }
 
-export type { IYoutubeData };
+export type { IYoutubeData }

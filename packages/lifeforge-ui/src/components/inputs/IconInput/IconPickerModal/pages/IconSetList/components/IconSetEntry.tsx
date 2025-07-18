@@ -1,6 +1,5 @@
-import { Icon } from '@iconify/react'
-
 import { type IIconSet } from '@components/inputs/IconInput/IconPickerModal/typescript/icon_selector_interfaces'
+import { Icon } from '@iconify/react'
 
 function IconSetEntry({
   iconSet,

@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { IdeaBoxCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { IdeaBoxCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Ideas = {
   /**
@@ -11,15 +12,15 @@ const Ideas = {
   getIdeas: {
     params: z.object({
       container: z.string(),
-      "0": z.string(),
+      '0': z.string()
     }),
     query: z.object({
       archived: z
         .string()
         .optional()
-        .transform((val) => val === "true"),
+        .transform(val => val === 'true')
     }),
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Entry))
   },
 
   /**
@@ -33,12 +34,12 @@ const Ideas = {
       folder: true,
       title: true,
       content: true,
-      tags: true,
+      tags: true
     }).extend({
       imageLink: z.string().optional(),
-      tags: z.string().transform((val) => JSON.parse(val)),
+      tags: z.string().transform(val => JSON.parse(val))
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)
   },
 
   /**
@@ -47,15 +48,15 @@ const Ideas = {
    */
   updateIdea: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
       title: z.string().optional(),
       content: z.string().optional(),
-      type: z.enum(["text", "link", "image"]),
-      tags: z.array(z.string()).optional(),
+      type: z.enum(['text', 'link', 'image']),
+      tags: z.array(z.string()).optional()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)
   },
 
   /**
@@ -64,9 +65,9 @@ const Ideas = {
    */
   deleteIdea: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -75,9 +76,9 @@ const Ideas = {
    */
   pinIdea: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)
   },
 
   /**
@@ -86,9 +87,9 @@ const Ideas = {
    */
   archiveIdea: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)
   },
 
   /**
@@ -97,12 +98,12 @@ const Ideas = {
    */
   moveIdea: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     query: z.object({
-      target: z.string(),
+      target: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)
   },
 
   /**
@@ -111,11 +112,11 @@ const Ideas = {
    */
   removeFromFolder: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry),
-  },
-};
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Entry)
+  }
+}
 
 const Misc = {
   /**
@@ -125,9 +126,9 @@ const Misc = {
   getPath: {
     params: z.object({
       container: z.string(),
-      "0": z.string(),
+      '0': z.string()
     }),
-    response: z.any(),
+    response: z.any()
   },
 
   /**
@@ -137,9 +138,9 @@ const Misc = {
   checkValid: {
     params: z.object({
       container: z.string(),
-      "0": z.string(),
+      '0': z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -148,9 +149,9 @@ const Misc = {
    */
   getOgData: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.record(z.string(), z.any()),
+    response: z.record(z.string(), z.any())
   },
 
   /**
@@ -162,11 +163,11 @@ const Misc = {
       q: z.string(),
       container: z.string().optional(),
       tags: z.string().optional(),
-      folder: z.string().optional(),
+      folder: z.string().optional()
     }),
-    response: z.any(),
-  },
-};
+    response: z.any()
+  }
+}
 
 const Containers = {
   /**
@@ -175,9 +176,9 @@ const Containers = {
    */
   checkContainerExists: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -185,7 +186,7 @@ const Containers = {
    * @description Get all containers
    */
   getContainers: {
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Container)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Container))
   },
 
   /**
@@ -194,7 +195,7 @@ const Containers = {
    */
   createContainer: {
     body: IdeaBoxCollectionsSchemas.Container,
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container)
   },
 
   /**
@@ -203,15 +204,15 @@ const Containers = {
    */
   updateContainer: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
       name: z.string(),
       color: z.string(),
       icon: z.string(),
-      cover: z.string().optional(),
+      cover: z.string().optional()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container)
   },
 
   /**
@@ -220,11 +221,11 @@ const Containers = {
    */
   deleteContainer: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Folders = {
   /**
@@ -234,9 +235,9 @@ const Folders = {
   getFolders: {
     params: z.object({
       container: z.string(),
-      "0": z.string(),
+      '0': z.string()
     }),
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Folder)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Folder))
   },
 
   /**
@@ -249,9 +250,9 @@ const Folders = {
       container: z.string(),
       parent: z.string(),
       icon: z.string(),
-      color: z.string(),
+      color: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder)
   },
 
   /**
@@ -260,14 +261,14 @@ const Folders = {
    */
   updateFolder: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
       name: z.string(),
       icon: z.string(),
-      color: z.string(),
+      color: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder)
   },
 
   /**
@@ -276,12 +277,12 @@ const Folders = {
    */
   moveFolder: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     query: z.object({
-      target: z.string(),
+      target: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder)
   },
 
   /**
@@ -290,9 +291,9 @@ const Folders = {
    */
   removeFromFolder: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder)
   },
 
   /**
@@ -301,11 +302,11 @@ const Folders = {
    */
   deleteFolder: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Tags = {
   /**
@@ -314,9 +315,9 @@ const Tags = {
    */
   getTags: {
     params: z.object({
-      container: z.string(),
+      container: z.string()
     }),
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Tag)),
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Tag))
   },
 
   /**
@@ -326,9 +327,9 @@ const Tags = {
   createTag: {
     body: IdeaBoxCollectionsSchemas.Tag,
     params: z.object({
-      container: z.string(),
+      container: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Tag),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Tag)
   },
 
   /**
@@ -338,9 +339,9 @@ const Tags = {
   updateTag: {
     body: IdeaBoxCollectionsSchemas.Tag,
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Tag),
+    response: SchemaWithPB(IdeaBoxCollectionsSchemas.Tag)
   },
 
   /**
@@ -349,18 +350,18 @@ const Tags = {
    */
   deleteTag: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IIdeas = InferApiESchemaDynamic<typeof Ideas>;
-type IMisc = InferApiESchemaDynamic<typeof Misc>;
-type IContainers = InferApiESchemaDynamic<typeof Containers>;
-type IFolders = InferApiESchemaDynamic<typeof Folders>;
-type ITags = InferApiESchemaDynamic<typeof Tags>;
+type IIdeas = InferApiESchemaDynamic<typeof Ideas>
+type IMisc = InferApiESchemaDynamic<typeof Misc>
+type IContainers = InferApiESchemaDynamic<typeof Containers>
+type IFolders = InferApiESchemaDynamic<typeof Folders>
+type ITags = InferApiESchemaDynamic<typeof Tags>
 
-export type { IIdeas, IMisc, IContainers, IFolders, ITags };
+export type { IIdeas, IMisc, IContainers, IFolders, ITags }
 
-export { Ideas, Misc, Containers, Folders, Tags };
+export { Ideas, Misc, Containers, Folders, Tags }

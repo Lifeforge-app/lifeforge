@@ -1,3 +1,4 @@
+import { decrypt } from '@security/utils/encryption'
 import { parse as parseCookie } from 'cookie'
 import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
@@ -6,8 +7,6 @@ import { toast } from 'react-toastify'
 
 import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
-
-import { decrypt } from '@security/utils/encryption'
 
 function QRCodeDisplay() {
   const { bgTempPalette, derivedTheme } = usePersonalization()

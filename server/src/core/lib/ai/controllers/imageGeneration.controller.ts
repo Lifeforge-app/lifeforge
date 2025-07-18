@@ -1,29 +1,30 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import { getAPIKey } from "@functions/getAPIKey";
-import express from "express";
-import { AiControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import { getAPIKey } from '@functions/getAPIKey'
+import express from 'express'
 
-import * as ImageGenerationService from "../services/imageGeneration.service";
+import { AiControllersSchemas } from 'shared/types/controllers'
 
-const imageGenerationRouter = express.Router();
+import * as ImageGenerationService from '../services/imageGeneration.service'
+
+const imageGenerationRouter = express.Router()
 
 const checkKey = forgeController
-  .route("GET /key-exists")
-  .description("Check if OpenAI API key exists")
+  .route('GET /key-exists')
+  .description('Check if OpenAI API key exists')
   .schema(AiControllersSchemas.ImageGeneration.checkKey)
-  .callback(async ({ pb }) => !!(await getAPIKey("openai", pb)));
+  .callback(async ({ pb }) => !!(await getAPIKey('openai', pb)))
 
 const generateImage = forgeController
-  .route("POST /generate-image")
-  .description("Generate an image from a text prompt")
+  .route('POST /generate-image')
+  .description('Generate an image from a text prompt')
   .schema(AiControllersSchemas.ImageGeneration.generateImage)
   .callback(async ({ pb, body: { prompt } }) =>
-    ImageGenerationService.generateImage(pb, prompt),
-  );
+    ImageGenerationService.generateImage(pb, prompt)
+  )
 
-bulkRegisterControllers(imageGenerationRouter, [checkKey, generateImage]);
+bulkRegisterControllers(imageGenerationRouter, [checkKey, generateImage])
 
-export default imageGenerationRouter;
+export default imageGenerationRouter

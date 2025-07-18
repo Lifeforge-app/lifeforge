@@ -1,10 +1,9 @@
+import { MORANDI_COLORS } from '@components/inputs/ColorInput/ColorPickerModal/modals/ModandiColorPaletteModal/constants/morandi_colors'
+import { ModalHeader } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { sortFn } from 'color-sorter'
 import tinycolor from 'tinycolor2'
-
-import { MORANDI_COLORS } from '@components/inputs/ColorInput/ColorPickerModal/modals/ModandiColorPaletteModal/constants/morandi_colors'
-import { ModalHeader } from '@components/modals'
 
 function MorandiColorPaletteModal({
   data: { color, setColor },

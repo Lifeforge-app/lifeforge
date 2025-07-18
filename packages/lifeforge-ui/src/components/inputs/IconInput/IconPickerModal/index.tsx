@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react'
-import { useCallback, useState } from 'react'
-
 import { GoBackButton } from '@components/buttons'
 import { ModalHeader } from '@components/modals'
+import { Icon } from '@iconify/react'
+import { useCallback, useState } from 'react'
 
 import IconSet from './pages/IconSet'
 import IconSetList from './pages/IconSetList/index'

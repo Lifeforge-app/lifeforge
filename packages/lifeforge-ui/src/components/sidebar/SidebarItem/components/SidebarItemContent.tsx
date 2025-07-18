@@ -1,10 +1,9 @@
+import { HamburgerMenu } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { HamburgerMenu } from '@components/buttons'
 
 function SidebarItemContent({
   name,
@@ -50,7 +49,7 @@ function SidebarItemContent({
           return (
             sidebarExpanded && (
               <span className="flex-between flex w-full gap-2 truncate">
-                <span className="min-w-0 max-w-48 truncate">
+                <span className="max-w-48 min-w-0 truncate">
                   {t(`common.sidebar:apps.${_.camelCase(name)}.title`)}
                 </span>
                 {hasAI && (

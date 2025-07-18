@@ -1,11 +1,12 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { WalletCollectionsSchemas } from "../collections";
+import { z } from 'zod/v4'
+
+import { WalletCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
 import {
   WalletIncomeExpensesSummarySchema,
-  WalletReceiptScanResultSchema,
-} from "../collections/wallet.schema";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+  WalletReceiptScanResultSchema
+} from '../collections/wallet.schema'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Transactions = {
   /**
@@ -13,7 +14,7 @@ const Transactions = {
    * @description Get all wallet transactions
    */
   getAllTransactions: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction))
   },
 
   /**
@@ -24,36 +25,36 @@ const Transactions = {
     body: z.object({
       particulars: z.string(),
       date: z.string(),
-      amount: z.string().transform((val) => parseFloat(val)),
+      amount: z.string().transform(val => parseFloat(val)),
       category: z.string().optional(),
       location_name: z.string().optional(),
       location_coords: z
         .string()
         .optional()
-        .transform((val) => {
-          if (!val) return undefined;
+        .transform(val => {
+          if (!val) return undefined
 
           try {
-            const coords = JSON.parse(val);
+            const coords = JSON.parse(val)
 
             return {
               lon: parseFloat(coords.longitude),
-              lat: parseFloat(coords.latitude),
-            };
+              lat: parseFloat(coords.latitude)
+            }
           } catch {
             return {
               lon: 0,
-              lat: 0,
-            };
+              lat: 0
+            }
           }
         }),
       asset: z.string().optional(),
       ledger: z.string().optional(),
-      type: z.enum(["income", "expenses", "transfer"]),
+      type: z.enum(['income', 'expenses', 'transfer']),
       fromAsset: z.string().optional(),
-      toAsset: z.string().optional(),
+      toAsset: z.string().optional()
     }),
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction))
   },
 
   /**
@@ -62,44 +63,44 @@ const Transactions = {
    */
   updateTransaction: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
       particulars: z.string(),
       date: z.string(),
-      amount: z.string().transform((val) => parseFloat(val)),
+      amount: z.string().transform(val => parseFloat(val)),
       category: z.string().optional(),
       location_name: z.string().optional(),
       location_coords: z
         .string()
         .optional()
-        .transform((val) => {
-          if (!val) return undefined;
+        .transform(val => {
+          if (!val) return undefined
 
           try {
-            const coords = JSON.parse(val);
+            const coords = JSON.parse(val)
 
             return {
               lon: parseFloat(coords.longitude),
-              lat: parseFloat(coords.latitude),
-            };
+              lat: parseFloat(coords.latitude)
+            }
           } catch {
             return {
               lon: 0,
-              lat: 0,
-            };
+              lat: 0
+            }
           }
         }),
       asset: z.string(),
       ledger: z.string().optional(),
-      type: z.enum(["income", "expenses", "transfer"]),
+      type: z.enum(['income', 'expenses', 'transfer']),
       removeReceipt: z
         .string()
         .optional()
-        .default("false")
-        .transform((val) => val === "true"),
+        .default('false')
+        .transform(val => val === 'true')
     }),
-    response: SchemaWithPB(WalletCollectionsSchemas.Transaction),
+    response: SchemaWithPB(WalletCollectionsSchemas.Transaction)
   },
 
   /**
@@ -108,9 +109,9 @@ const Transactions = {
    */
   deleteTransaction: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -118,9 +119,9 @@ const Transactions = {
    * @description Scan receipt to extract transaction data
    */
   scanReceipt: {
-    response: WalletReceiptScanResultSchema,
-  },
-};
+    response: WalletReceiptScanResultSchema
+  }
+}
 
 const Assets = {
   /**
@@ -128,7 +129,7 @@ const Assets = {
    * @description Get all wallet assets
    */
   getAllAssets: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.AssetAggregated)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.AssetAggregated))
   },
 
   /**
@@ -139,15 +140,15 @@ const Assets = {
     body: WalletCollectionsSchemas.Asset.pick({
       name: true,
       icon: true,
-      starting_balance: true,
+      starting_balance: true
     }).extend({
-      starting_balance: z.string().transform((val) => {
-        const balance = parseFloat(val);
+      starting_balance: z.string().transform(val => {
+        const balance = parseFloat(val)
 
-        return isNaN(balance) ? 0 : balance;
-      }),
+        return isNaN(balance) ? 0 : balance
+      })
     }),
-    response: SchemaWithPB(WalletCollectionsSchemas.Asset),
+    response: SchemaWithPB(WalletCollectionsSchemas.Asset)
   },
 
   /**
@@ -156,9 +157,9 @@ const Assets = {
    */
   getAssetAccumulatedBalance: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.record(z.string(), z.number()),
+    response: z.record(z.string(), z.number())
   },
 
   /**
@@ -167,20 +168,20 @@ const Assets = {
    */
   updateAsset: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: WalletCollectionsSchemas.Asset.pick({
       name: true,
       icon: true,
-      starting_balance: true,
+      starting_balance: true
     }).extend({
-      starting_balance: z.string().transform((val) => {
-        const balance = parseFloat(val);
+      starting_balance: z.string().transform(val => {
+        const balance = parseFloat(val)
 
-        return isNaN(balance) ? 0 : balance;
-      }),
+        return isNaN(balance) ? 0 : balance
+      })
     }),
-    response: SchemaWithPB(WalletCollectionsSchemas.Asset),
+    response: SchemaWithPB(WalletCollectionsSchemas.Asset)
   },
 
   /**
@@ -189,11 +190,11 @@ const Assets = {
    */
   deleteAsset: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Ledgers = {
   /**
@@ -201,7 +202,7 @@ const Ledgers = {
    * @description Get all wallet ledgers
    */
   getAllLedgers: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Ledger)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Ledger))
   },
 
   /**
@@ -210,7 +211,7 @@ const Ledgers = {
    */
   createLedger: {
     body: WalletCollectionsSchemas.Ledger,
-    response: SchemaWithPB(WalletCollectionsSchemas.Ledger),
+    response: SchemaWithPB(WalletCollectionsSchemas.Ledger)
   },
 
   /**
@@ -219,10 +220,10 @@ const Ledgers = {
    */
   updateLedger: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: WalletCollectionsSchemas.Ledger,
-    response: SchemaWithPB(WalletCollectionsSchemas.Ledger),
+    response: SchemaWithPB(WalletCollectionsSchemas.Ledger)
   },
 
   /**
@@ -231,11 +232,11 @@ const Ledgers = {
    */
   deleteLedger: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
 const Utils = {
   /**
@@ -247,9 +248,9 @@ const Utils = {
       z.string(),
       z.object({
         amount: z.number(),
-        accumulate: z.number(),
+        accumulate: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -259,9 +260,9 @@ const Utils = {
   getIncomeExpensesSummary: {
     query: z.object({
       year: z.string(),
-      month: z.string(),
+      month: z.string()
     }),
-    response: WalletIncomeExpensesSummarySchema,
+    response: WalletIncomeExpensesSummarySchema
   },
 
   /**
@@ -272,21 +273,21 @@ const Utils = {
     query: z.object({
       year: z
         .string()
-        .transform((val) => parseInt(val) || new Date().getFullYear()),
+        .transform(val => parseInt(val) || new Date().getFullYear()),
       month: z
         .string()
-        .transform((val) => parseInt(val) || new Date().getMonth() + 1),
+        .transform(val => parseInt(val) || new Date().getMonth() + 1)
     }),
     response: z.record(
       z.string(),
       z.object({
         amount: z.number(),
         count: z.number(),
-        percentage: z.number(),
+        percentage: z.number()
       })
-    ),
-  },
-};
+    )
+  }
+}
 
 const Categories = {
   /**
@@ -294,9 +295,7 @@ const Categories = {
    * @description Get all wallet categories
    */
   getAllCategories: {
-    response: z.array(
-      SchemaWithPB(WalletCollectionsSchemas.CategoryAggregated)
-    ),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.CategoryAggregated))
   },
 
   /**
@@ -305,7 +304,7 @@ const Categories = {
    */
   createCategory: {
     body: WalletCollectionsSchemas.Category,
-    response: SchemaWithPB(WalletCollectionsSchemas.Category),
+    response: SchemaWithPB(WalletCollectionsSchemas.Category)
   },
 
   /**
@@ -314,10 +313,10 @@ const Categories = {
    */
   updateCategory: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: WalletCollectionsSchemas.Category,
-    response: SchemaWithPB(WalletCollectionsSchemas.Category),
+    response: SchemaWithPB(WalletCollectionsSchemas.Category)
   },
 
   /**
@@ -326,18 +325,18 @@ const Categories = {
    */
   deleteCategory: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type ITransactions = InferApiESchemaDynamic<typeof Transactions>;
-type IAssets = InferApiESchemaDynamic<typeof Assets>;
-type ILedgers = InferApiESchemaDynamic<typeof Ledgers>;
-type IUtils = InferApiESchemaDynamic<typeof Utils>;
-type ICategories = InferApiESchemaDynamic<typeof Categories>;
+type ITransactions = InferApiESchemaDynamic<typeof Transactions>
+type IAssets = InferApiESchemaDynamic<typeof Assets>
+type ILedgers = InferApiESchemaDynamic<typeof Ledgers>
+type IUtils = InferApiESchemaDynamic<typeof Utils>
+type ICategories = InferApiESchemaDynamic<typeof Categories>
 
-export type { ITransactions, IAssets, ILedgers, IUtils, ICategories };
+export type { ITransactions, IAssets, ILedgers, IUtils, ICategories }
 
-export { Transactions, Assets, Ledgers, Utils, Categories };
+export { Transactions, Assets, Ledgers, Utils, Categories }

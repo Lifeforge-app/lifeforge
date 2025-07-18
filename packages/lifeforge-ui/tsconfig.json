@@ -4,15 +4,9 @@
     "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
-      "@components/*": [
-        "./src/components/*"
-      ]
+      "@components/*": ["./src/components/*"]
     },
     "declaration": true,
     "emitDeclarationOnly": false,

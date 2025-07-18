@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { ApiKeysCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { ApiKeysCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Auth = {
   /**
@@ -9,7 +10,7 @@ const Auth = {
    * @description Get authentication challenge
    */
   getChallenge: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -18,9 +19,9 @@ const Auth = {
    */
   createOrUpdateMasterPassword: {
     body: z.object({
-      password: z.string(),
+      password: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -29,9 +30,9 @@ const Auth = {
    */
   verifyMasterPassword: {
     body: z.object({
-      password: z.string(),
+      password: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -41,11 +42,11 @@ const Auth = {
   verifyOtp: {
     body: z.object({
       otp: z.string(),
-      otpId: z.string(),
+      otpId: z.string()
     }),
-    response: z.boolean(),
-  },
-};
+    response: z.boolean()
+  }
+}
 
 const Entries = {
   /**
@@ -54,9 +55,9 @@ const Entries = {
    */
   getAllEntries: {
     query: z.object({
-      master: z.string(),
+      master: z.string()
     }),
-    response: z.array(SchemaWithPB(ApiKeysCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(ApiKeysCollectionsSchemas.Entry))
   },
 
   /**
@@ -65,9 +66,9 @@ const Entries = {
    */
   checkKeys: {
     query: z.object({
-      keys: z.string(),
+      keys: z.string()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -76,12 +77,12 @@ const Entries = {
    */
   getEntryById: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     query: z.object({
-      master: z.string(),
+      master: z.string()
     }),
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -90,9 +91,9 @@ const Entries = {
    */
   createEntry: {
     body: z.object({
-      data: z.string(),
+      data: z.string()
     }),
-    response: SchemaWithPB(ApiKeysCollectionsSchemas.Entry),
+    response: SchemaWithPB(ApiKeysCollectionsSchemas.Entry)
   },
 
   /**
@@ -101,12 +102,12 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: z.object({
-      data: z.string(),
+      data: z.string()
     }),
-    response: SchemaWithPB(ApiKeysCollectionsSchemas.Entry),
+    response: SchemaWithPB(ApiKeysCollectionsSchemas.Entry)
   },
 
   /**
@@ -115,15 +116,15 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IAuth = InferApiESchemaDynamic<typeof Auth>;
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type IAuth = InferApiESchemaDynamic<typeof Auth>
+type IEntries = InferApiESchemaDynamic<typeof Entries>
 
-export type { IAuth, IEntries };
+export type { IAuth, IEntries }
 
-export { Auth, Entries };
+export { Auth, Entries }

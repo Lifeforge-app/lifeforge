@@ -1,3 +1,3 @@
-import pixabayRouter from "./controllers/pixabay.controller";
+import pixabayRouter from './controllers/pixabay.controller'
 
-export default pixabayRouter;
+export default pixabayRouter

@@ -1,6 +1,6 @@
-import { useAPIOnlineStatus } from 'shared/lib'
-
 import { Button } from '@components/buttons'
+
+import { useAPIOnlineStatus } from 'shared/lib'
 
 import EmptyStateScreen from './EmptyStateScreen'
 import LoadingScreen from './LoadingScreen'

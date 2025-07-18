@@ -1,8 +1,7 @@
+import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
-
-import { Button } from '@components/buttons'
 
 function DnDContainer({
   getRootProps,
@@ -61,22 +60,22 @@ function DnDContainer({
       <div className="text-bg-500 mt-4 text-center text-2xl font-medium">
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
       </div>
-      <div className="text-bg-500 mt-4 text-center text-lg font-semibold uppercase tracking-widest">
+      <div className="text-bg-500 mt-4 text-center text-lg font-semibold tracking-widest uppercase">
         {t('dnd.or')}
       </div>
       <Button
         as="label"
-        className="min-w-1/2 mt-4 cursor-pointer"
+        className="mt-4 min-w-1/2 cursor-pointer"
         icon="tabler:upload"
         variant="secondary"
       >
         upload
       </Button>
-      <div className="text-bg-500 mt-4 text-center text-lg font-semibold uppercase tracking-widest">
+      <div className="text-bg-500 mt-4 text-center text-lg font-semibold tracking-widest uppercase">
         {t('dnd.or')}
       </div>
       <Button
-        className="min-w-1/2 mt-2 cursor-pointer"
+        className="mt-2 min-w-1/2 cursor-pointer"
         icon="tabler:clipboard"
         namespace="common.misc"
         tKey="dnd"

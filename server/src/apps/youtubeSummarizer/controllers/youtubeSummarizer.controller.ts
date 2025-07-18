@@ -1,36 +1,37 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { YoutubeSummarizerControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as YoutubeSummarizerService from "../services/youtubeSummarizer.service";
+import { YoutubeSummarizerControllersSchemas } from 'shared/types/controllers'
 
-const youtubeSummarizerRouter = express.Router();
+import * as YoutubeSummarizerService from '../services/youtubeSummarizer.service'
+
+const youtubeSummarizerRouter = express.Router()
 
 const getYoutubeVideoInfo = forgeController
-  .route("GET /info/:id")
-  .description("Get YouTube video information by video ID")
+  .route('GET /info/:id')
+  .description('Get YouTube video information by video ID')
   .schema(
-    YoutubeSummarizerControllersSchemas.YoutubeSummarizer.getYoutubeVideoInfo,
+    YoutubeSummarizerControllersSchemas.YoutubeSummarizer.getYoutubeVideoInfo
   )
   .callback(
     async ({ params: { id } }) =>
-      await YoutubeSummarizerService.getYoutubeVideoInfo(id),
-  );
+      await YoutubeSummarizerService.getYoutubeVideoInfo(id)
+  )
 
 const summarizeVideo = forgeController
-  .route("POST /summarize")
-  .description("Summarize a YouTube video from URL")
+  .route('POST /summarize')
+  .description('Summarize a YouTube video from URL')
   .schema(YoutubeSummarizerControllersSchemas.YoutubeSummarizer.summarizeVideo)
   .callback(({ body: { url }, pb }) =>
-    YoutubeSummarizerService.summarizeVideo(url, pb),
-  );
+    YoutubeSummarizerService.summarizeVideo(url, pb)
+  )
 
 bulkRegisterControllers(youtubeSummarizerRouter, [
   getYoutubeVideoInfo,
-  summarizeVideo,
-]);
+  summarizeVideo
+])
 
-export default youtubeSummarizerRouter;
+export default youtubeSummarizerRouter

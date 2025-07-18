@@ -1,11 +1,10 @@
+import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { Button } from '@components/buttons'
 
 function ModalHeader({
   title,

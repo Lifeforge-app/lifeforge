@@ -8,7 +8,7 @@
   color: rgb(244 244 245) !important;
   font-weight: 500 !important;
   letter-spacing: 0.1rem !important;
-  @apply rounded-lg! py-2! focus:outline-hidden text-center;
+  @apply rounded-lg! py-2! text-center focus:outline-hidden;
 }
 
 .w-color-editable-input span {

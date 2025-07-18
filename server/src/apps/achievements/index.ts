@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
 
-import achievementsEntriesRouter from "./controllers/entries.controller";
+import achievementsEntriesRouter from './controllers/entries.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/entries", achievementsEntriesRouter);
+router.use('/entries', achievementsEntriesRouter)
 
-export default router;
+export default router

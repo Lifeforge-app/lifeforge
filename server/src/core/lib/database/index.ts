@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
 
-import databaseCollectionsRouter from "./controllers/collections.controller";
+import databaseCollectionsRouter from './controllers/collections.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/collections", databaseCollectionsRouter);
+router.use('/collections', databaseCollectionsRouter)
 
-export default router;
+export default router

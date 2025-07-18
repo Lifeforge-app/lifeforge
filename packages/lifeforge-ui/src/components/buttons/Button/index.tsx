@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { usePersonalization } from 'shared/lib'
 
 import { generateClassName } from './buttonUtils'

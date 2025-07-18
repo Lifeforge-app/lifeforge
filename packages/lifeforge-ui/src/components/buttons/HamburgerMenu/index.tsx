@@ -1,4 +1,3 @@
- 
 import {
   Menu,
   MenuButton,
@@ -65,7 +64,7 @@ function HamburgerMenu(props: MenuProps) {
             transition
             anchor={(anchor ?? 'bottom end') as any}
             className={clsx(
-              'z-9999 border-bg-200 bg-bg-100 text-bg-500 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:border-bg-700 dark:bg-bg-800 min-w-[var(--button-width)] overflow-auto rounded-md border text-base shadow-lg transition duration-100 ease-out [--anchor-gap:12px] empty:invisible',
+              'border-bg-200 bg-bg-100 text-bg-500 dark:border-bg-700 dark:bg-bg-800 z-9999 min-w-[var(--button-width)] overflow-auto rounded-md border text-base shadow-lg transition duration-100 ease-out [--anchor-gap:12px] empty:invisible focus:outline-hidden data-closed:scale-95 data-closed:opacity-0',
               classNames?.menu
             )}
           >

@@ -1,12 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
-import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
-
-import { fetchAPI } from 'shared/lib'
-
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 import { encrypt } from '@security/utils/encryption'
+import { useQuery } from '@tanstack/react-query'
+import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
+
+import { fetchAPI } from 'shared/lib'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import { IAPIKeyEntry } from '../interfaces/api_keys_interfaces'

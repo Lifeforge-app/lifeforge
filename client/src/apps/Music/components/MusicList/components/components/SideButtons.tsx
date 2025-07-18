@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
+import forceDown from '@utils/forceDown'
 import clsx from 'clsx'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -7,8 +8,6 @@ import { useCallback } from 'react'
 
 import UpdateMusicModal from '@apps/Music/modals/UpdateMusicModal'
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
-
-import forceDown from '@utils/forceDown'
 
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 

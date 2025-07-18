@@ -1,12 +1,11 @@
+import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
+import { encrypt } from '@security/utils/encryption'
 import { parse as parseCookie } from 'cookie'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
-import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
-import { encrypt } from '@security/utils/encryption'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('core.accountSettings')

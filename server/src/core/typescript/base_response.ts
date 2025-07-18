@@ -1,5 +1,5 @@
-export interface BaseResponse<T = ""> {
-  data?: T;
-  state: "success" | "error" | "accepted";
-  message?: string;
+export interface BaseResponse<T = ''> {
+  data?: T
+  state: 'success' | 'error' | 'accepted'
+  message?: string
 }

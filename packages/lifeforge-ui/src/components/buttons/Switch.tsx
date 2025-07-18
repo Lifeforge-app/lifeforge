@@ -1,7 +1,8 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import clsx from 'clsx'
-import { usePersonalization } from 'shared/lib'
 import tinycolor from 'tinycolor2'
+
+import { usePersonalization } from 'shared/lib'
 
 function Switch({
   checked,

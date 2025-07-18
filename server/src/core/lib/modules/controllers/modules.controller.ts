@@ -1,64 +1,64 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import _ from "lodash";
-import { ModulesControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
+import express from 'express'
+import _ from 'lodash'
 
-import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
+import { ModulesControllersSchemas } from 'shared/types/controllers'
 
-import * as ModuleService from "../services/modules.service";
+import * as ModuleService from '../services/modules.service'
 
-const modulesRouter = express.Router();
+const modulesRouter = express.Router()
 
 const listAppPaths = forgeController
-  .route("GET /paths")
-  .description("List all application paths")
+  .route('GET /paths')
+  .description('List all application paths')
   .schema(ModulesControllersSchemas.Modules.listAppPaths)
-  .callback(async () => ModuleService.listAppPaths());
+  .callback(async () => ModuleService.listAppPaths())
 
 const toggleModule = forgeController
-  .route("POST /toggle/:id")
-  .description("Toggle a module on/off")
+  .route('POST /toggle/:id')
+  .description('Toggle a module on/off')
   .schema(ModulesControllersSchemas.Modules.toggleModule)
   .callback(
-    async ({ pb, params: { id } }) => await ModuleService.toggleModule(pb, id),
-  );
+    async ({ pb, params: { id } }) => await ModuleService.toggleModule(pb, id)
+  )
 
 const packageModule = forgeController
-  .route("POST /package/:id")
-  .description("Package a module into a zip file")
+  .route('POST /package/:id')
+  .description('Package a module into a zip file')
   .schema(ModulesControllersSchemas.Modules.packageModule)
   .noDefaultResponse()
   .callback(async ({ params: { id }, res }) => {
-    const backendZip = await ModuleService.packageModule(id);
+    const backendZip = await ModuleService.packageModule(id)
 
-    res.setHeader("Content-Type", "application/zip");
+    res.setHeader('Content-Type', 'application/zip')
     res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${_.kebabCase(id)}.zip"`,
-    );
-    res.setHeader("Content-Length", backendZip.length);
+      'Content-Disposition',
+      `attachment; filename="${_.kebabCase(id)}.zip"`
+    )
+    res.setHeader('Content-Length', backendZip.length)
 
     // @ts-expect-error - Custom response
-    res.send(backendZip);
-  });
+    res.send(backendZip)
+  })
 
 const installModule = forgeController
-  .route("POST /install")
-  .description("Install a module from uploaded file")
+  .route('POST /install')
+  .description('Install a module from uploaded file')
   .middlewares(singleUploadMiddleware)
   .schema(ModulesControllersSchemas.Modules.installModule)
   .callback(async ({ body: { name }, req: { file } }) =>
-    ModuleService.installModule(name, file),
-  );
+    ModuleService.installModule(name, file)
+  )
 
 bulkRegisterControllers(modulesRouter, [
   listAppPaths,
   toggleModule,
   packageModule,
-  installModule,
-]);
+  installModule
+])
 
-export default modulesRouter;
+export default modulesRouter

@@ -1,84 +1,85 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { IdeaBoxControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as miscService from "../services/misc.service";
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
-const ideaBoxMiscRouter = express.Router();
+import * as miscService from '../services/misc.service'
+
+const ideaBoxMiscRouter = express.Router()
 
 const getPath = forgeController
-  .route("GET /path/:container/*")
-  .description("Get path information for a container")
+  .route('GET /path/:container/*')
+  .description('Get path information for a container')
   .schema(IdeaBoxControllersSchemas.Misc.getPath)
-  .callback(async ({ pb, params: { container, "0": pathParam }, req, res }) => {
+  .callback(async ({ pb, params: { container, '0': pathParam }, req, res }) => {
     const result = await miscService.getPath(
       pb,
       container,
-      pathParam.split("/").filter((p) => p !== ""),
+      pathParam.split('/').filter(p => p !== ''),
       req,
-      res,
-    );
+      res
+    )
 
     if (!result) {
-      throw new Error("Something went wrong while fetching the path");
+      throw new Error('Something went wrong while fetching the path')
     }
-    return result;
-  });
+    return result
+  })
 
 const checkValid = forgeController
-  .route("GET /valid/:container/*")
-  .description("Check if a path is valid")
+  .route('GET /valid/:container/*')
+  .description('Check if a path is valid')
   .schema(IdeaBoxControllersSchemas.Misc.checkValid)
   .callback(
-    async ({ pb, params: { container, "0": pathParam }, req, res }) =>
+    async ({ pb, params: { container, '0': pathParam }, req, res }) =>
       await miscService.checkValid(
         pb,
         container,
-        pathParam.split("/").filter((p) => p !== ""),
+        pathParam.split('/').filter(p => p !== ''),
         req,
-        res,
-      ),
-  );
+        res
+      )
+  )
 
 const getOgData = forgeController
-  .route("GET /og-data/:id")
-  .description("Get Open Graph data for an entry")
+  .route('GET /og-data/:id')
+  .description('Get Open Graph data for an entry')
   .schema(IdeaBoxControllersSchemas.Misc.getOgData)
-  .existenceCheck("params", {
-    id: "idea_box__entries",
+  .existenceCheck('params', {
+    id: 'idea_box__entries'
   })
   .callback(
-    async ({ pb, params: { id } }) => await miscService.getOgData(pb, id),
-  );
+    async ({ pb, params: { id } }) => await miscService.getOgData(pb, id)
+  )
 
 const search = forgeController
-  .route("GET /search")
-  .description("Search entries")
+  .route('GET /search')
+  .description('Search entries')
   .schema(IdeaBoxControllersSchemas.Misc.search)
-  .existenceCheck("query", {
-    container: "[idea_box_containers]",
+  .existenceCheck('query', {
+    container: '[idea_box_containers]'
   })
   .callback(
     async ({ pb, query: { q, container, tags, folder }, req, res }) =>
       await miscService.search(
         pb,
         q,
-        container || "",
-        tags || "",
-        folder || "",
+        container || '',
+        tags || '',
+        folder || '',
         req,
-        res,
-      ),
-  );
+        res
+      )
+  )
 
 bulkRegisterControllers(ideaBoxMiscRouter, [
   getPath,
   checkValid,
   getOgData,
-  search,
-]);
+  search
+])
 
-export default ideaBoxMiscRouter;
+export default ideaBoxMiscRouter

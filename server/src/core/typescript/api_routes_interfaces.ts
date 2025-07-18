@@ -1,49 +1,49 @@
 interface IRouteDocs {
-  summary: string;
-  description: string;
-  access: "public" | "protected" | "private";
+  summary: string
+  description: string
+  access: 'public' | 'protected' | 'private'
   params: {
-    name: string;
-    type: string;
-    required: boolean | string;
-    options?: string[];
-    must_exist?: boolean;
-    description: string;
-  }[];
+    name: string
+    type: string
+    required: boolean | string
+    options?: string[]
+    must_exist?: boolean
+    description: string
+  }[]
   query: {
-    name: string;
-    type: string;
-    required: boolean | string;
-    options?: string[];
-    description: string;
-  }[];
+    name: string
+    type: string
+    required: boolean | string
+    options?: string[]
+    description: string
+  }[]
   body: {
-    name: string;
-    type: string;
-    required: boolean | string;
-    options?: string[];
-    description: string;
-  }[];
+    name: string
+    type: string
+    required: boolean | string
+    options?: string[]
+    description: string
+  }[]
   response: {
-    status: number;
-    description: string;
-    body: string;
-  };
+    status: number
+    description: string
+    body: string
+  }
 }
 
 interface IRoute {
-  method: string;
-  path: string;
-  description?: string;
-  docs: IRouteDocs | null;
+  method: string
+  path: string
+  description?: string
+  docs: IRouteDocs | null
 }
 
 interface IRoutes {
-  topLevel: IRoute[];
+  topLevel: IRoute[]
   use: {
-    path: string;
-    children: IRoutes | IRoute[];
-  }[];
+    path: string
+    children: IRoutes | IRoute[]
+  }[]
 }
 
-export { IRoute, IRouteDocs, IRoutes };
+export { IRoute, IRouteDocs, IRoutes }

@@ -1,121 +1,121 @@
-import ClientError from "@functions/ClientError";
-import mailer from "nodemailer";
-import Pocketbase from "pocketbase";
-import { BooksLibraryCollectionsSchemas } from "shared/types/collections";
+import ClientError from '@functions/ClientError'
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import mailer from 'nodemailer'
+import Pocketbase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllEntries = (
-  pb: Pocketbase,
+  pb: Pocketbase
 ): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>[]> =>
   pb
-    .collection("books_library__entries")
+    .collection('books_library__entries')
     .getFullList<WithPB<BooksLibraryCollectionsSchemas.IEntry>>({
-      sort: "-is_favourite,-created",
-    });
+      sort: '-is_favourite,-created'
+    })
 
 export const updateEntry = (
   pb: Pocketbase,
   id: string,
   data: Pick<
     BooksLibraryCollectionsSchemas.IEntry,
-    | "title"
-    | "authors"
-    | "collection"
-    | "edition"
-    | "languages"
-    | "isbn"
-    | "publisher"
-    | "year_published"
-  >,
+    | 'title'
+    | 'authors'
+    | 'collection'
+    | 'edition'
+    | 'languages'
+    | 'isbn'
+    | 'publisher'
+    | 'year_published'
+  >
 ): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> =>
   pb
-    .collection("books_library__entries")
-    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, data);
+    .collection('books_library__entries')
+    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, data)
 
 export const toggleFavouriteStatus = async (
   pb: Pocketbase,
-  id: string,
+  id: string
 ): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
   const book = await pb
-    .collection("books_library__entries")
-    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id);
+    .collection('books_library__entries')
+    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
 
   return await pb
-    .collection("books_library__entries")
+    .collection('books_library__entries')
     .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
-      is_favourite: !book.is_favourite,
-    });
-};
+      is_favourite: !book.is_favourite
+    })
+}
 
 export const toggleReadStatus = async (
   pb: Pocketbase,
-  id: string,
+  id: string
 ): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
   const book = await pb
-    .collection("books_library__entries")
-    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id);
+    .collection('books_library__entries')
+    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
 
   return await pb
-    .collection("books_library__entries")
+    .collection('books_library__entries')
     .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
       is_read: !book.is_read,
-      time_finished: !book.is_read ? new Date().toISOString() : "",
-    });
-};
+      time_finished: !book.is_read ? new Date().toISOString() : ''
+    })
+}
 
 export const sendToKindle = async (
   pb: Pocketbase,
   id: string,
   credentials: { user: string; pass: string },
-  targetEmail: string,
+  targetEmail: string
 ): Promise<void> => {
   const transporter = mailer.createTransport({
-    host: "smtp.gmail.com",
+    host: 'smtp.gmail.com',
     port: 587,
     secure: false,
-    auth: credentials,
-  });
+    auth: credentials
+  })
 
   try {
-    await transporter.verify();
+    await transporter.verify()
   } catch (err) {
-    throw new ClientError("SMTP credentials are invalid");
+    throw new ClientError('SMTP credentials are invalid')
   }
 
   const entry = await pb
-    .collection("books_library__entries")
-    .getOne<BooksLibraryCollectionsSchemas.IEntry>(id);
+    .collection('books_library__entries')
+    .getOne<BooksLibraryCollectionsSchemas.IEntry>(id)
 
-  const fileLink = pb.files.getURL(entry, entry.file);
+  const fileLink = pb.files.getURL(entry, entry.file)
 
-  const content = await fetch(fileLink).then((res) => res.arrayBuffer());
+  const content = await fetch(fileLink).then(res => res.arrayBuffer())
 
-  const fileName = `${entry.title}.${entry.extension}`;
+  const fileName = `${entry.title}.${entry.extension}`
 
   const mail = {
     from: `"Lifeforge Books Library" <${credentials.user}>`,
     to: targetEmail,
-    subject: "",
+    subject: '',
     text: `Here is your book: ${entry.title}`,
     attachments: [
       {
         filename: fileName,
-        content: Buffer.from(content),
-      },
+        content: Buffer.from(content)
+      }
     ],
     headers: {
-      "X-SES-CONFIGURATION-SET": "Kindle",
-    },
-  };
+      'X-SES-CONFIGURATION-SET': 'Kindle'
+    }
+  }
 
   try {
-    await transporter.sendMail(mail);
+    await transporter.sendMail(mail)
   } catch (err) {
-    throw new Error("Failed to send email to Kindle: " + err);
+    throw new Error('Failed to send email to Kindle: ' + err)
   }
-};
+}
 
 export const deleteEntry = async (pb: Pocketbase, id: string) => {
-  await pb.collection("books_library__entries").delete(id);
-};
+  await pb.collection('books_library__entries').delete(id)
+}

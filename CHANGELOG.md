@@ -1,6 +1,7 @@
 # Change Log
 
 ## 📌 **dev 25w29 (7/14/2025 - 7/21/2025)**
+
 - **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
 - **Guitar Tabs**: Improved web scraping logic to handle more edge cases.
 - **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
@@ -13,12 +14,14 @@
 - **Code**: Removed a lot of unused and legacy imports, variables, and functions.
 
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
+
 - **API**: Moved all the `<module>_interface.ts` files to `schema.ts` files for better organization.
 - **API**: All the schemas are now generated from the database schema instead of being hardcoded in the codebase.
 - **API**: Added a new command to the `package.json` being `schema:generate` for the schema generation.
 - **API**: Fixed a lot of hidden typescript bugs in the codebase.
 
 ## 📌 **dev 25w27 (6/30/2025 - 7/7/2025)**
+
 - **Books Library**: Fixed a bug in the API logic where the error is not properly handled when the book fail to be added to the library.
 - **Books Library**: Renamed `category` to `collection` for better clarity.
 - **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
@@ -40,6 +43,7 @@
 - **UI**: Removed `useComponentsBg` hook and moved them into CSS files.
 
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
+
 - **Movies**: Added tab selector to separate watched and unwatched movies.
 - **Movies**: Fixed bugs where the query data is not properly updated when user adds a movie to the library.
 - **Movies**: Improved movie sorting logic.
@@ -47,6 +51,7 @@
 - **API**: Major refactoring of the API codebase to use chained controller architecture.
 
 ### 📌 **dev 25w25 (6/16/2025 - 6/23/2025)**
+
 - **Calendar**: Added divider to the calendar sidebar that I have been missing for a long time.
 - **Movies**: Fixed a bug where the date picker will crash every time the user tries to modify a ticket entry.
 - **UI**: Added file icon to the file input component and modal.
@@ -54,6 +59,7 @@
 - **UI**: Minor UI improvements to the file input component and modal.
 
 ### 📌 **dev 25w24 (6/9/2025 - 6/16/2025)**
+
 - **Wishlist**: Added search bar.
 - **Personalization**: Favicon is now dynamically generated based on the theme color.
 - **Personalization**: Added attribute `derivedTheme` to the `usePersonalization` context provider so that it doesn't have to be recalculated on every use.
@@ -69,6 +75,7 @@
 - **API Explorer**: The theme and language config of the API Explorer is synced with the main system.
 
 ### 📌 **dev 25w23 (6/2/2025 - 6/9/2025)**
+
 - **Calendar**: User can now group events by different calendars like Work, Personal, etc. in the calendar sidebar.
 - **Calendar**: Sidebar is now a thing in mobile view.
 - **Calendar**: Made the borders of the calendar more subtle.
@@ -89,10 +96,12 @@
 - **Code**: Minor bug fixes here and there
 
 ### 📌 **dev 25w22 (5/26/2025 - 6/2/2025)**
+
 - **Wallet**: Fixed a bug where the percentage calculation in the statement is having rounding issues.
-- **Wallet**: Utilized the aggregation feature of PocketBase views through SQL query to derive the current balance of an asset 
+- **Wallet**: Utilized the aggregation feature of PocketBase views through SQL query to derive the current balance of an asset
 
 ### 📌 **dev 25w21 (5/19/2025 - 5/26/2025)**
+
 - **Account Settings**: Renamed the folder from `Account` to `Account Settings` for better clarity.
 - **Account Settings**: Fixed a bug where the input box in the modification modal is overflowing.
 - **Todo List**: Fixed a bug where the task tags looks off in dashboard widget.
@@ -119,6 +128,7 @@
 - **UI**: Minor UI improvements to the overall design of the system.
 
 ### 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
+
 - **Wallet**: Fixed a bug where the order of the transactions doesn't update when the user update the date of a transaction.
 - **Wallet**: Fixed a critical bug where the page will crash when user tries to load the dashboard.
 - **Todo List**: Fixed a bug where the task creation will fail when user does not select a priority.
@@ -133,6 +143,7 @@
 - **UI**: Removed a suspicious `console.log` statement in the code.
 
 ### 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
+
 - **Code**: Created universal portal component to render modals and pop-ups outside of the main app tree.
 - **Code**: Migrated all modals to the new universal portal component.
 - **API**: Fixed a few stupid mistakes.

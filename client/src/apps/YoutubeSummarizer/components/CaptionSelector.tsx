@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import forceDown from '@utils/forceDown'
 import {
   Button,
   DashboardItem,
@@ -8,8 +9,6 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import forceDown from '@utils/forceDown'
 
 interface CaptionData {
   captions: Record<string, CaptionMeta[]>

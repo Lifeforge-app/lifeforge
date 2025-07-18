@@ -1,8 +1,7 @@
-import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
-import { useCallback, useEffect, useState } from 'react'
-
 import { Button } from '@components/buttons'
 import { ModalHeader, useModalStore } from '@components/modals'
+import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
+import { useCallback, useEffect, useState } from 'react'
 
 import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
@@ -99,7 +98,7 @@ function ColorPickerModal({
           Morandi Color Palette
         </Button>
         <Button
-          className="bg-teal-500! hover:bg-teal-600! w-full"
+          className="w-full bg-teal-500! hover:bg-teal-600!"
           icon="tabler:brand-tailwind"
           variant="primary"
           onClick={handleColorPaletteModalOpen('tailwind')}

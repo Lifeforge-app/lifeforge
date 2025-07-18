@@ -1,48 +1,47 @@
-import clsx from "clsx";
+import clsx from 'clsx'
 
-import { usePersonalization } from "./PersonalizationProvider";
-
-import { BG_BLURS } from "./PersonalizationProvider/constants/bg_blurs";
+import { usePersonalization } from './PersonalizationProvider'
+import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
 
 function BackgroundProvider({ children }: { children: React.ReactNode }) {
   const {
     bgImage,
     derivedTheme,
-    backdropFilters: { brightness, blur, contrast, saturation, overlayOpacity },
-  } = usePersonalization();
+    backdropFilters: { brightness, blur, contrast, saturation, overlayOpacity }
+  } = usePersonalization()
 
   return (
     <div
       className={clsx(
-        "relative isolate flex h-dvh w-full",
-        bgImage !== "" && "has-bg-image bg-cover bg-center bg-no-repeat"
+        'relative isolate flex h-dvh w-full',
+        bgImage !== '' && 'has-bg-image bg-cover bg-center bg-no-repeat'
       )}
       style={
-        bgImage !== ""
+        bgImage !== ''
           ? {
-              backgroundImage: `url(${bgImage})`,
+              backgroundImage: `url(${bgImage})`
             }
           : {}
       }
     >
-      {bgImage !== "" && (
+      {bgImage !== '' && (
         <div
           className="absolute top-0 left-0 z-[-1] size-full"
           style={{
             backgroundColor: `color-mix(in oklab, var(--color-bg-${
-              derivedTheme === "dark" ? "950" : "50"
+              derivedTheme === 'dark' ? '950' : '50'
             }) ${overlayOpacity}%, transparent)`,
             backdropFilter:
-              bgImage !== ""
+              bgImage !== ''
                 ? `brightness(${brightness}%) blur(${BG_BLURS[blur]}) contrast(${contrast}%) saturate(${saturation}%)`
-                : "",
+                : ''
           }}
         />
       )}
 
       {children}
     </div>
-  );
+  )
 }
 
-export default BackgroundProvider;
+export default BackgroundProvider

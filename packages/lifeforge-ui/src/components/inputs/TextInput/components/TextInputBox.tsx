@@ -59,7 +59,7 @@ function Text({
         aria-label={placeholder}
         autoComplete={noAutoComplete ? 'off' : 'on'}
         className={clsx(
-          'h-13 caret-custom-500 focus:outline-hidden focus:placeholder:text-bg-500 mt-6 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent',
+          'caret-custom-500 focus:placeholder:text-bg-500 mt-6 h-13 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden',
           className
         )}
         disabled={disabled}

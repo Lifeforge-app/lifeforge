@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { MusicCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { MusicCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Youtube = {
   /**
@@ -10,9 +11,9 @@ const Youtube = {
    */
   getVideoInfo: {
     params: z.object({
-      id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, "Invalid YouTube video ID"),
+      id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, 'Invalid YouTube video ID')
     }),
-    response: MusicCollectionsSchemas.YoutubeDataSchema,
+    response: MusicCollectionsSchemas.YoutubeDataSchema
   },
 
   /**
@@ -21,14 +22,14 @@ const Youtube = {
    */
   downloadVideo: {
     params: z.object({
-      id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, "Invalid YouTube video ID"),
+      id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, 'Invalid YouTube video ID')
     }),
     body: z.object({
       title: z.string(),
       uploader: z.string(),
-      duration: z.number(),
+      duration: z.number()
     }),
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -37,10 +38,10 @@ const Youtube = {
    */
   getDownloadStatus: {
     response: z.object({
-      status: z.enum(["empty", "in_progress", "completed", "failed"]),
-    }),
-  },
-};
+      status: z.enum(['empty', 'in_progress', 'completed', 'failed'])
+    })
+  }
+}
 
 const Entries = {
   /**
@@ -48,7 +49,7 @@ const Entries = {
    * @description Get all music entries
    */
   getAllEntries: {
-    response: z.array(SchemaWithPB(MusicCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(MusicCollectionsSchemas.Entry))
   },
 
   /**
@@ -57,13 +58,13 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: MusicCollectionsSchemas.Entry.pick({
       name: true,
-      author: true,
+      author: true
     }),
-    response: SchemaWithPB(MusicCollectionsSchemas.Entry),
+    response: SchemaWithPB(MusicCollectionsSchemas.Entry)
   },
 
   /**
@@ -72,9 +73,9 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -83,15 +84,15 @@ const Entries = {
    */
   toggleFavorite: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(MusicCollectionsSchemas.Entry),
-  },
-};
+    response: SchemaWithPB(MusicCollectionsSchemas.Entry)
+  }
+}
 
-type IYoutube = InferApiESchemaDynamic<typeof Youtube>;
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type IYoutube = InferApiESchemaDynamic<typeof Youtube>
+type IEntries = InferApiESchemaDynamic<typeof Entries>
 
-export type { IYoutube, IEntries };
+export type { IYoutube, IEntries }
 
-export { Youtube, Entries };
+export { Youtube, Entries }
