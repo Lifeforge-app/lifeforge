@@ -9,13 +9,17 @@ import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
+import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
 
-import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
+export default function EntryItem({
+  item
+}: {
+  item: ISchemaWithPB<BooksLibrarySchemas.IEntry>
+}) {
   const { t } = useTranslation('apps.booksLibrary')
   const { derivedThemeColor } = usePersonalization()
   const queryClient = useQueryClient()
@@ -28,7 +32,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
     setAddToFavouritesLoading(true)
 
     try {
-      await fetchAPI<IBooksLibraryEntry>(
+      await fetchAPI<ISchemaWithPB<BooksLibrarySchemas.IEntry>>(
         import.meta.env.VITE_API_HOST,
         `books-library/entries/favourite/${item.id}`,
         {
@@ -36,7 +40,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
         }
       )
 
-      queryClient.setQueryData<IBooksLibraryEntry[]>(
+      queryClient.setQueryData<ISchemaWithPB<BooksLibrarySchemas.IEntry>[]>(
         ['books-library', 'entries'],
         prevEntries => {
           if (!prevEntries) return []

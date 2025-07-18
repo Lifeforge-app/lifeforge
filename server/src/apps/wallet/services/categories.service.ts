@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { WalletSchemas } from "shared";
+import { WalletSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 

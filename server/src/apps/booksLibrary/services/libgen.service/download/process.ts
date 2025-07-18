@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import fs from "fs";
 import Pocketbase from "pocketbase";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibrarySchemas } from "shared/types";
 import { Server } from "socket.io";
 
 import {

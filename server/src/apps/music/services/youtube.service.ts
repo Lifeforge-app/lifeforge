@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import { readFileSync, readdirSync, unlinkSync } from "fs";
 import Pocketbase from "pocketbase";
-import { MusicSchemas } from "shared";
+import { MusicSchemas } from "shared/types";
 import { v4 } from "uuid";
 
 let downloadStatus: "empty" | "in_progress" | "completed" | "failed" = "empty";

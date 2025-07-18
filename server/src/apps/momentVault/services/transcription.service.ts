@@ -4,7 +4,7 @@ import fs from "fs";
 import Groq from "groq-sdk";
 import PocketBase from "pocketbase";
 import request from "request";
-import { MomentVaultSchemas } from "shared";
+import { MomentVaultSchemas } from "shared/types";
 
 const getTranscription = async (
   filePath: string,

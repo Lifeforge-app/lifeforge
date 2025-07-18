@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { WishlistSchemas } from "shared";
+import { WishlistSchemas } from "shared/types";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
 
