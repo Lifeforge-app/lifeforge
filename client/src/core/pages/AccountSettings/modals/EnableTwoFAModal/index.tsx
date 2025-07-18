@@ -14,7 +14,9 @@ function EnableTwoFAModal({
   onClose: () => void
 }): React.ReactElement {
   const { t } = useTranslation('core.accountSettings')
+
   const { setUserData } = useAuth()
+
   const [otpSuccess, setOtpSuccess] = useState(false)
 
   const handleSuccess = useCallback(() => {

@@ -124,4 +124,5 @@ type IWalletIncomeExpensesSummary = z.infer<
 type IWalletReceiptScanResult = z.infer<typeof WalletReceiptScanResultSchema>;
 
 export { WalletIncomeExpensesSummarySchema, WalletReceiptScanResultSchema };
+
 export type { IWalletIncomeExpensesSummary, IWalletReceiptScanResult };

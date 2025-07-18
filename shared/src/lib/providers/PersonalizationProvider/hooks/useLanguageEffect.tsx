@@ -8,6 +8,7 @@ function useLanguageEffect(language: string) {
   useEffect(() => {
     if (!i18n || !i18n.changeLanguage) {
       console.error("i18n instance is not available");
+
       return;
     }
 

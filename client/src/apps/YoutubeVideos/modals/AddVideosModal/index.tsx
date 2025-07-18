@@ -31,9 +31,11 @@ function AddVideosModal({
   onClose: (isVideoDownloading: boolean) => void
 }) {
   const { t } = useTranslation('apps.youtubeVideos')
+
   const [selectedResourceType, setSelectedResourceType] = useState<
     'video' | 'playlist'
   >('video')
+
   const [isVideoDownloading, setIsVideoDownloading] = useState(false)
 
   useEffect(() => {

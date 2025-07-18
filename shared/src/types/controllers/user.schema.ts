@@ -1,5 +1,4 @@
 import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
 import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Auth = {
@@ -289,4 +288,5 @@ type IPersonalization = InferApiESchemaDynamic<typeof Personalization>;
 type ISettings = InferApiESchemaDynamic<typeof Settings>;
 
 export type { IAuth, ITwoFa, IOauth, IPersonalization, ISettings };
+
 export { Auth, TwoFa, Oauth, Personalization, Settings };

@@ -12,7 +12,9 @@ import { useAuth } from '../../../providers/AuthProvider'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()
+
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
+
   const { userData, getAvatarURL, logout } = useAuth()
 
   const handleNavigateToAccountSettings = useCallback(() => {

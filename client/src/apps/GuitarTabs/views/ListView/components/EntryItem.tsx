@@ -15,6 +15,7 @@ import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interface
 
 function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
 
   async function favouriteTab() {

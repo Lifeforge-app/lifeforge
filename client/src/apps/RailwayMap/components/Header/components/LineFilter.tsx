@@ -8,6 +8,7 @@ import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 
 function LineFilter() {
   const { lines, filteredLines, setFilteredLines } = useRailwayMapContext()
+
   const { t } = useTranslation('apps.railwayMap')
 
   const onClick = useCallback((line: IRailwayMapLine) => {

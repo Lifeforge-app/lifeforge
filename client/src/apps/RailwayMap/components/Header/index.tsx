@@ -20,9 +20,12 @@ import ViewTypeSwitcher, { VIEW_TYPES } from './components/ViewTypeSwitcher'
 
 function Header() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.railwayMap')
+
   const { viewType, setViewType, shortestRoute, setShortestRoute } =
     useRailwayMapContext()
+
   const hasRoute = useMemo(
     () => typeof shortestRoute !== 'string' && shortestRoute.length > 0,
     [shortestRoute]

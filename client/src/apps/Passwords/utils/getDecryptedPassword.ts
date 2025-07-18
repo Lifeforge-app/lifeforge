@@ -30,6 +30,7 @@ export async function getDecryptedPassword(
   )
     .then(async res => {
       const data = await res.json()
+
       if (res.ok && data.state === 'success') {
         return decrypt(data.data, challenge)
       } else {

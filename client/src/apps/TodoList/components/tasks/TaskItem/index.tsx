@@ -32,6 +32,7 @@ function TaskItem({
   } = useTodoListContext()
 
   const entries = entriesQuery.data ?? []
+
   const lists = listsQuery.data ?? []
 
   async function toggleTaskCompletion() {

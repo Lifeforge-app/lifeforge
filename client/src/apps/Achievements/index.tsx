@@ -20,9 +20,12 @@ import ModifyAchievementModal from './components/ModifyAchievementModal'
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
+
   const open = useModalStore(state => state.open)
+
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<AchievementsCollectionsSchemas.IEntry['difficulty']>('impossible')
+
   const entriesQuery = useAPIQuery<
     AchievementsControllersSchemas.IEntries['getAllEntriesByDifficulty']['response']
   >(`achievements/entries/${selectedDifficulty}`, [

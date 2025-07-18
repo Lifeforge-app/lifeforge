@@ -93,4 +93,5 @@ type IYoutube = InferApiESchemaDynamic<typeof Youtube>;
 type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IYoutube, IEntries };
+
 export { Youtube, Entries };

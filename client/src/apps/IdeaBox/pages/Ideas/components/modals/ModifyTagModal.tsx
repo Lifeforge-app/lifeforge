@@ -19,6 +19,7 @@ function ModifyTagModal({
   onClose: () => void
 }) {
   const { id } = useParams<{ id: string }>()
+
   const [formState, setFormState] = useState<IIdeaBoxTagFormState>({
     name: '',
     icon: '',

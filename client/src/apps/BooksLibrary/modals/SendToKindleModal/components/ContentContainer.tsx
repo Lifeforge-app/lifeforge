@@ -18,12 +18,16 @@ function ContentContainer({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.booksLibrary')
+
   const [enabled, setEnabled] = useState<boolean | 'loading'>('loading')
+
   const [kindleEmail, setKindleEmail] = useState('')
+
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = useCallback(async () => {
     setLoading(true)
+
     try {
       fetchAPI(
         import.meta.env.VITE_API_HOST,

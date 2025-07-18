@@ -1,5 +1,4 @@
 import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
 import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Backups = {
@@ -54,4 +53,5 @@ const Backups = {
 type IBackups = InferApiESchemaDynamic<typeof Backups>;
 
 export type { IBackups };
+
 export { Backups };

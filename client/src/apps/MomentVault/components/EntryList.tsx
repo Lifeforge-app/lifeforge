@@ -20,6 +20,7 @@ function EntryList({
   setPage: (page: number) => void
 }) {
   const open = useModalStore(state => state.open)
+
   const handleDeleteEntry = useCallback(
     (entry: IMomentVaultEntry) => () => {
       open(DeleteConfirmationModal, {

@@ -22,6 +22,7 @@ function ModifyContainerModal({
     'ai/image-generation/key-exists',
     ['ai', 'image-generation', 'key-exists']
   )
+
   const [formState, setFormState] = useState<IIdeaBoxContainerFormState>({
     name: '',
     icon: '',

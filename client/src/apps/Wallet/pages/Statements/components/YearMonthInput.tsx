@@ -16,6 +16,7 @@ function YearMonthInput({
   setYear: (value: number | null) => void
 }) {
   const { transactionsQuery } = useWalletData()
+
   const transactions = transactionsQuery.data ?? []
 
   const yearsOptions = useMemo(() => {

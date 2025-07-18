@@ -44,6 +44,7 @@ function MiniCalendarDateItem({
     if (firstDay > index) {
       return lastDateOfPrevMonth - firstDay + index + 2
     }
+
     if (index - firstDay + 1 > lastDate) {
       return index - lastDate - firstDay + 1
     }
@@ -63,7 +64,9 @@ function MiniCalendarDateItem({
 
   const isFirstAndLastDay = useMemo(() => {
     const startDateParam = startDate
+
     const endDateParam = endDate
+
     const formattedDate = dayjs(
       `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
       'YYYY-M-D'
@@ -127,6 +130,7 @@ function MiniCalendarDateItem({
           setStartDate(dayjs(target, 'YYYY-M-D').format('YYYY-M-D'))
           setEndDate(dayjs(target, 'YYYY-M-D').format('YYYY-M-D'))
           setNextToSelect('end')
+
           return
         }
 
@@ -138,6 +142,7 @@ function MiniCalendarDateItem({
           setStartDate(dayjs(target, 'YYYY-M-D').format('YYYY-M-D'))
           setEndDate(dayjs(startDate).format('YYYY-M-D'))
           setNextToSelect('end')
+
           return
         }
 

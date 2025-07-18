@@ -10,7 +10,9 @@ import ModifyPasswordModal from './modals/ModifyPasswordModal'
 
 function Passwords() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.passwords')
+
   const { masterPassword, otpSuccess } = usePasswordContext()
 
   const handleCreatePassword = useCallback(() => {

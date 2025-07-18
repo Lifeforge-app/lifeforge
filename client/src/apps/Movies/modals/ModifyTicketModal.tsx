@@ -26,6 +26,7 @@ function ModifyTicketModal({
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
+
   const [formState, setFormState] = useState<IMovieTicketFormState>({
     entry_id: '',
     ticket_number: '',
@@ -34,6 +35,7 @@ function ModifyTicketModal({
     theatre_seat: '',
     theatre_showtime: undefined
   })
+
   const modalRef = useRef<HTMLDivElement | null>(null)
 
   const FIELDS: IFieldProps<IMovieTicketFormState>[] = [
@@ -88,6 +90,7 @@ function ModifyTicketModal({
         ['movies', 'entries'],
         oldData => {
           if (!oldData) return oldData
+
           return oldData.map(entry => {
             if (entry.id === existedData?.id) {
               return {
@@ -129,6 +132,7 @@ function ModifyTicketModal({
         theatre_seat: '',
         theatre_showtime: undefined
       }))
+
       return
     }
 
@@ -147,22 +151,28 @@ function ModifyTicketModal({
   function updateDataList(newData: IMovieEntry) {
     queryClient.setQueryData<IMovieEntry[]>(['movies', 'entries'], oldData => {
       if (!oldData) return oldData
+
       return oldData
         .map(entry => {
           if (entry.id === newData.id) {
             return newData
           }
+
           return entry
         })
         .sort((a, b) => {
           const aIsWatched = a.is_watched ? 1 : 0
+
           const bIsWatched = b.is_watched ? 1 : 0
+
           if (aIsWatched !== bIsWatched) {
             return aIsWatched - bIsWatched
           }
+
           if (a.ticket_number !== b.ticket_number) {
             return b.ticket_number.localeCompare(a.ticket_number)
           }
+
           return a.title.localeCompare(b.title)
         })
     })

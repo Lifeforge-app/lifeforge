@@ -9,10 +9,13 @@ import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 
 function ThemeColorSelector() {
   const { rawThemeColor: themeColor } = usePersonalization()
+
   const { changeThemeColor } = useUserPersonalization()
+
   const [customThemeColor, setCustomThemeColor] = useState<string>(
     themeColor.startsWith('#') ? themeColor : '#000000'
   )
+
   const { t } = useTranslation('core.personalization')
 
   return (

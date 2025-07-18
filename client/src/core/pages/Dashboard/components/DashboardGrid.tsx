@@ -63,9 +63,13 @@ function DashboardGrid({
   canLayoutChange: boolean
 }) {
   const { t } = useTranslation('core.dashboard')
+
   const { sidebarExpanded } = useSidebarState()
+
   const [width, setWidth] = useState(0)
+
   const { dashboardLayout: enabledWidgets } = usePersonalization()
+
   const { changeDashboardLayout } = useUserPersonalization()
 
   function handleResize() {
@@ -82,6 +86,7 @@ function DashboardGrid({
 
   useEffect(() => {
     window.addEventListener('resize', handleResize)
+
     return () => {
       window.removeEventListener('resize', handleResize)
     }
@@ -133,6 +138,7 @@ function DashboardGrid({
         <div key={widgetId} className={clsx(canLayoutChange && 'cursor-move')}>
           {(() => {
             const Component = COMPONENTS[widgetId as keyof typeof COMPONENTS]
+
             return <Component />
           })()}
           {canLayoutChange && (

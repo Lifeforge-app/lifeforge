@@ -11,9 +11,11 @@ function UploadTabButton({
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const { t } = useTranslation('apps.guitarTabs')
+
   const handleOpenGuitarWorldModal = useCallback(() => {
     setGuitarWorldModalOpen(true)
   }, [])
+
   const tProps = useMemo(
     () => ({
       item: t('items.score')

@@ -7,11 +7,14 @@ import { fetchAPI } from 'shared/lib'
 
 function TextType({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('apps.momentVault')
+
   const [text, setText] = useState('')
+
   const [submitLoading, setSubmitLoading] = useState(false)
 
   async function onSubmit() {
     setSubmitLoading(true)
+
     try {
       await fetchAPI(import.meta.env.VITE_API_HOST, 'moment-vault/entries', {
         method: 'POST',

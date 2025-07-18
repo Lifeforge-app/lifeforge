@@ -105,6 +105,7 @@ function DataTable({ data }: { data: BookDetailProps }) {
               </tr>
             )
           }
+
           return null
         })}
       </tbody>

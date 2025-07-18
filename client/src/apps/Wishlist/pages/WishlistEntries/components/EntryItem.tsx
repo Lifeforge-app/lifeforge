@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/no-useless-react-setstate */
+ 
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
@@ -27,7 +27,9 @@ function EntryItem({
   queryKey: unknown[]
 }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const collectionIdQuery = useAPIQuery<string>(
     'wishlist/entries/collection-id',
     ['wishlist', 'entries', 'collection-id']

@@ -21,25 +21,32 @@ import TMDBResultsList from './components/TMDBResultsList'
 
 function SearchTMDBModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const [searchLoading, setSearchLoading] = useState(false)
+
   const [page, setPage] = useState(1)
+
   const [searchResults, setSearchResults] =
     useState<IMovieSearchResults | null>(null)
 
   async function searchTMDB(page: number = 1) {
     if (searchQuery.trim() === '') {
       toast.error('Please enter a search query!')
+
       return
     }
 
     setSearchResults(null)
     setSearchLoading(true)
+
     try {
       const data = await fetchAPI<IMovieSearchResults>(
         import.meta.env.VITE_API_HOST,
         `movies/tmdb/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
       )
+
       setSearchResults(data)
     } catch {
       toast.error('An error occurred while searching for movies!')
@@ -64,6 +71,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
       setSearchResults(prevResults => {
         if (!prevResults) return null
+
         return {
           ...prevResults,
           results: prevResults.results.map(entry => {
@@ -73,6 +81,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
                 existed: true // Mark the movie as added
               }
             }
+
             return entry
           })
         }

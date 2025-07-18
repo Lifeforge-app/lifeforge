@@ -13,6 +13,7 @@ export default function Quotes() {
       a: string
     }[]
   >('cors-anywhere?url=https://zenquotes.io/api/random', ['quote'])
+
   const { derivedThemeColor: themeColor } = usePersonalization()
 
   return (

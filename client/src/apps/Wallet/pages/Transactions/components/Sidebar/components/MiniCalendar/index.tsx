@@ -11,8 +11,11 @@ import MiniCalendarToggleViewMenu from './components/MiniCalendarToggleViewMenu'
 
 function MiniCalendar() {
   const { t } = useTranslation('apps.wallet')
+
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
+
   const [currentYear, setCurrentYear] = useState(dayjs().year())
+
   const [viewsFilter, setViewsFilter] = useState<IWalletTransaction['type'][]>([
     'income',
     'expenses'

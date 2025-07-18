@@ -38,6 +38,7 @@ function Sidebar({
     () =>
       Object.entries(sidebarDataQuery.data?.authors ?? {}).sort((a, b) => {
         if (a[1] === b[1]) return a[0].localeCompare(b[0])
+
         return b[1] - a[1]
       }),
     [sidebarDataQuery]

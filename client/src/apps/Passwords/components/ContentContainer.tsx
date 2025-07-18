@@ -13,7 +13,9 @@ import PasswordList from './PasswordList'
 
 function ContentContainer() {
   const open = useModalStore(state => state.open)
+
   const { userData } = useAuth()
+
   const {
     masterPassword,
     setMasterPassword,

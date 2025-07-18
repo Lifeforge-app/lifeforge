@@ -19,7 +19,9 @@ import ModifyAssetModal from '../modals/ModifyAssetModal'
 
 function AssetItem({ asset }: { asset: IWalletAsset }) {
   const open = useModalStore(state => state.open)
+
   const { isAmountHidden } = useWalletStore()
+
   const navigate = useNavigate()
 
   const handleEditAsset = useCallback(() => {

@@ -57,12 +57,19 @@ export default function AuthProvider({
   children: React.ReactNode
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('common.auth')
+
   const [auth, _setAuth] = useState(false)
+
   const [userData, _setUserData] = useState<any>(null)
+
   const [quota, setQuota] = useState(5)
+
   const [authLoading, setAuthLoading] = useState(true)
+
   const navigate = useNavigate()
+
   const tid = useRef('')
 
   const handleTwoFAModalOpen = useCallback(() => {
@@ -85,27 +92,35 @@ export default function AuthProvider({
 
   const updateQuota = useCallback((): number => {
     const storedQuota = window.localStorage.getItem('quota')
+
     if (storedQuota) {
       if (storedQuota !== '0') {
         setQuota(parseInt(storedQuota, 10))
+
         return parseInt(storedQuota, 10)
       }
 
       let lastQuotaExceeded: number | string | null =
         window.localStorage.getItem('lastQuotaExceeded')
+
       if (lastQuotaExceeded) {
         lastQuotaExceeded = parseInt(lastQuotaExceeded, 10)
+
         if (Date.now() - lastQuotaExceeded > 60 * 60 * 1000) {
           setQuota(5)
           window.localStorage.setItem('quota', '5')
           window.localStorage.removeItem('lastQuotaExceeded')
+
           return 5
         }
+
         return 0
       }
+
       return 0
     } else {
       setQuota(5)
+
       return 5
     }
   }, [])
@@ -120,6 +135,7 @@ export default function AuthProvider({
     if (_quota - 1 >= 0) {
       setQuota(_quota - 1)
       window.localStorage.setItem('quota', (_quota - 1).toString())
+
       return
     }
 
@@ -141,6 +157,7 @@ export default function AuthProvider({
       })
         .then(async res => {
           const data = await res.json()
+
           if (res.ok && data.state === 'success') {
             return { success: true, userData: data.data.userData }
           } else {
@@ -173,6 +190,7 @@ export default function AuthProvider({
           if (!res.ok) {
             try {
               const data = await res.json()
+
               if (data.message) {
                 if (data.message === 'Invalid credentials') {
                   return 'invalid'
@@ -202,6 +220,7 @@ export default function AuthProvider({
           } else if (data.state === '2fa_required') {
             handleTwoFAModalOpen()
             tid.current = data.tid
+
             return '2FA required'
           }
         })
@@ -262,7 +281,9 @@ export default function AuthProvider({
     async (code: string, state: string) => {
       try {
         const storedState = localStorage.getItem('authState')
+
         const storedProvider = localStorage.getItem('authProvider')
+
         if (!state || !storedState || !storedProvider) {
           throw new Error('Invalid login attempt')
         }
@@ -291,6 +312,7 @@ export default function AuthProvider({
           }
           handleTwoFAModalOpen()
           tid.current = session.tid
+
           return
         }
 
@@ -336,12 +358,14 @@ export default function AuthProvider({
         userData.id
       }/${userData.avatar}?thumb=256x0`
     }
+
     return ''
   }, [userData])
 
   const doUseEffect = useCallback(() => {
     setAuthLoading(true)
     updateQuota()
+
     if (document.cookie.includes('session')) {
       verifySession(cookieParse(document.cookie).session)
         .then(async ({ success, userData }) => {

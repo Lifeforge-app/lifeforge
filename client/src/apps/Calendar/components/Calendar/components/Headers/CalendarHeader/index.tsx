@@ -27,6 +27,7 @@ function CalendarHeader({
   onView
 }: CalendarHeaderProps) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.calendar')
 
   const handleScanImageModalOpen = useCallback(() => {

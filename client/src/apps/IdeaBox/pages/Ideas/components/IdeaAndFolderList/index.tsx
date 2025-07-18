@@ -11,7 +11,9 @@ import IdeaList from './components/IdeaList'
 
 function IdeaAndFolderList() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.ideaBox')
+
   const {
     entriesQuery,
     foldersQuery,

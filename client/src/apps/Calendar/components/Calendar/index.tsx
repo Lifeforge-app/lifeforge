@@ -18,6 +18,7 @@ import CalendarHeader from './components/Headers/CalendarHeader'
 import WeekHeader from './components/Headers/WeekHeader'
 
 const localizer = dayjsLocalizer(dayjs)
+
 const DnDCalendar = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
@@ -34,7 +35,9 @@ function CalendarComponent({
   selectedCalendar
 }: CalendarComponentProps) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const { eventQueryKey: queryKey, setEventQueryKey } = useCalendarStore()
 
   const filteredEvents = useMemo(
@@ -58,14 +61,19 @@ function CalendarComponent({
     ) => {
       if (Array.isArray(range)) {
         const start = dayjs(range[0]).format('YYYY-MM-DD')
+
         const end = dayjs(range[range.length - 1]).format('YYYY-MM-DD')
+
         setEventQueryKey(['calendar', 'events', start, end])
+
         return
       }
 
       if (range.start && range.end) {
         const start = dayjs(range.start).format('YYYY-MM-DD')
+
         const end = dayjs(range.end).format('YYYY-MM-DD')
+
         setEventQueryKey(['calendar', 'events', start, end])
       }
     },
@@ -117,6 +125,7 @@ function CalendarComponent({
               end
             }
           }
+
           return prevEvent
         })
       })
@@ -147,6 +156,7 @@ function CalendarComponent({
                 category: event.category
               }
             }
+
             return prevEvent
           })
         })

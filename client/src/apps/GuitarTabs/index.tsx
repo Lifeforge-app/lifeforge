@@ -30,14 +30,23 @@ import Views from './views'
 
 function GuitarTabs() {
   const { t } = useTranslation('apps.guitarTabs')
+
   const [view, setView] = useState<'grid' | 'list'>('grid')
+
   const [page, setPage] = useState<number>(1)
+
   const [searchQuery, setSearchQuery] = useState<string>('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null)
+
   const [isStarred, setStarred] = useState<boolean>(false)
+
   const [selectedSortType, setSelectedSortType] = useState<string>('newest')
+
   const queryKey = [
     'guitar-tabs',
     'entries',
@@ -81,16 +90,22 @@ function GuitarTabs() {
   )
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
   const open = useModalStore(state => state.open)
+
   const socket = useSocketContext()
+
   const queryClient = useQueryClient()
+
   const toastId = useRef<Id>(null)
 
   const uploadFiles = useCallback(async () => {
     const input = document.createElement('input')
+
     input.type = 'file'
     input.multiple = true
     input.accept = '.pdf,.mp3,.mscz'
+
     input.onchange = async e => {
       const files = (e.target as HTMLInputElement).files
 
@@ -102,6 +117,7 @@ function GuitarTabs() {
 
       if (files.length > 100) {
         toast.error('You can only upload 100 files at a time!')
+
         return
       }
 
@@ -136,6 +152,7 @@ function GuitarTabs() {
             if (data.status === 'failed') {
               toastId.current = null
               toast.error('Failed to upload guitar tabs!')
+
               return
             }
 

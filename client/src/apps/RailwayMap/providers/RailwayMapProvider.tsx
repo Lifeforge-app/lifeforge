@@ -50,28 +50,38 @@ export const RailwayMapContext = createContext<IRailwayMapData | undefined>(
 
 export default function RailwayMapProvider() {
   const [viewType, setViewType] = useState<IRailwayMapViewType>('route')
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const linesQuery = useAPIQuery<IRailwayMapLine[]>('railway-map/lines', [
     'railway-map',
     'lines'
   ])
+
   const stationsQuery = useAPIQuery<IRailwayMapStation[]>(
     'railway-map/stations',
     ['railway-map', 'stations']
   )
+
   const [filteredLines, setFilteredLines] = useState<string[]>([])
+
   const [routePlannerStart, setRoutePlannerStart] = useState('')
+
   const [routePlannerEnd, setRoutePlannerEnd] = useState('')
+
   const [shortestRoute, setShortestRoute] = useState<
     IRailwayMapStation[] | 'loading' | 'error'
   >([])
+
   const [selectedStation, setSelectedStation] =
     useState<IRailwayMapStation | null>(null)
+
   const centerStation = useMemo(() => {
     return stationsQuery.data?.find(station => station.name === 'Novena')
   }, [stationsQuery.data])
 
   const routeMapSVGRef = useRef<SVGSVGElement>(null)
+
   const routeMapGRef = useRef<SVGGElement>(null)
 
   useEffect(() => {
@@ -131,10 +141,12 @@ export default function RailwayMapProvider() {
 
 export function useRailwayMapContext(): IRailwayMapData {
   const context = useContext(RailwayMapContext)
+
   if (context === undefined) {
     throw new Error(
       'useRailwayMapContext must be used within a RailwayMapProvider'
     )
   }
+
   return context
 }

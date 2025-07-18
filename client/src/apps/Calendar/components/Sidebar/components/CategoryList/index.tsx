@@ -24,6 +24,7 @@ function CategoryList({
     'calendar/categories',
     ['calendar', 'categories']
   )
+
   const open = useModalStore(state => state.open)
 
   const handleSelect = useCallback((item: ICalendarCategory) => {

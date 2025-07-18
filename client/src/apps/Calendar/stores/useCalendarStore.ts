@@ -8,6 +8,7 @@ interface CalendarState {
 
 export const useCalendarStore = create<CalendarState>()(set => {
   const start = dayjs().startOf('month').format('YYYY-MM-DD')
+
   const end = dayjs().endOf('month').format('YYYY-MM-DD')
 
   return {

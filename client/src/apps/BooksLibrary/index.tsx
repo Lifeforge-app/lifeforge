@@ -29,16 +29,21 @@ import ListView from './views/ListView'
 
 function BooksLibrary() {
   const open = useModalStore(state => state.open)
+
   const [searchParams] = useSearchParams()
+
   const {
     entriesQuery,
     fileTypesQuery,
     miscellaneous: { searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
   const [filteredEntries, setFilteredEntries] = useState<
     ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
   >([])
+
   const [view, setView] = useState<'list' | 'grid'>('list')
 
   const handleOpenLibgenModal = useCallback(() => {

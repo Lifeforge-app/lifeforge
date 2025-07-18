@@ -21,7 +21,9 @@ function EntryItem({
   item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const { derivedThemeColor } = usePersonalization()
+
   const { collectionsQuery } = useBooksLibraryContext()
+
   const { t } = useTranslation('apps.booksLibrary')
 
   return (

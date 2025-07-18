@@ -15,6 +15,7 @@ function TaskTagListItem({
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)
+
   const [searchParams, setSearchParams] = useSearchParams()
 
   const handleUpdateTag = useCallback(() => {

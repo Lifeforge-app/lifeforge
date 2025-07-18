@@ -31,10 +31,15 @@ import SessionCartModal from './modals/SessionCartModal'
 
 function VirtualWardrobeClothes() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.virtualWardrobe')
+
   const [searchParams] = useSearchParams()
+
   const [searchQuery, setSearchQuery] = useState<string>('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const queryKey = [
@@ -48,10 +53,12 @@ function VirtualWardrobeClothes() {
     'virtual-wardrobe/entries/sidebar-data',
     ['virtual-wardrobe', 'sidebar-data']
   )
+
   const entriesQuery = useAPIQuery<IVirtualWardrobeEntry[]>(
     `virtual-wardrobe/entries?${searchParams.toString()}&q=${debouncedSearchQuery}`,
     queryKey
   )
+
   const sessionCartItemsQuery = useAPIQuery<IVirtualWardrobeEntry[]>(
     'virtual-wardrobe/session',
     ['virtual-wardrobe', 'session-cart-items']
@@ -154,6 +161,7 @@ function VirtualWardrobeClothes() {
                         const catA = VW_CATEGORIES.findIndex(
                           cat => cat.name === a.category
                         )
+
                         const catB = VW_CATEGORIES.findIndex(
                           cat => cat.name === b.category
                         )
@@ -165,6 +173,7 @@ function VirtualWardrobeClothes() {
                         ].subcategories.findIndex(
                           subCat => subCat === a.subcategory
                         )
+
                         const subCatB = VW_CATEGORIES[
                           catB
                         ].subcategories.findIndex(

@@ -29,6 +29,7 @@ function ModifyAPIKeyModal({
     icon: '',
     key: ''
   })
+
   const [isFetchingKey, setIsFetchingKey] = useState(true)
 
   const FIELDS: IFieldProps<IAPIKeyFormState>[] = [
@@ -88,9 +89,12 @@ function ModifyAPIKeyModal({
       )
 
       const decryptedKey = decrypt(data, challenge)
+
       const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
+
       if (existedData === null) {
         toast.error('Failed to fetch key')
+
         return
       }
 
@@ -136,6 +140,7 @@ function ModifyAPIKeyModal({
         )
 
         const encryptedKey = encrypt(formState.key, masterPassword)
+
         const encryptedMaster = encrypt(masterPassword, challenge)
 
         const encryptedEverything = encrypt(

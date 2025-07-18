@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/use-type-alias */
+ 
 import { UseQueryResult } from '@tanstack/react-query'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
@@ -40,22 +40,27 @@ export const TodoListContext = createContext<ITodoListData | undefined>(
 
 export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams()
+
   const statusCounterQuery = useAPIQuery<ITodoListStatusCounter>(
     'todo-list/entries/utils/status-counter',
     ['todo-list', 'entries', 'status-counter']
   )
+
   const prioritiesQuery = useAPIQuery<ITodoPriority[]>('todo-list/priorities', [
     'todo-list',
     'priorities'
   ])
+
   const listsQuery = useAPIQuery<ITodoListList[]>('todo-list/lists', [
     'todo-list',
     'lists'
   ])
+
   const tagsListQuery = useAPIQuery<ITodoListTag[]>('todo-list/tags', [
     'todo-list',
     'tags'
   ])
+
   const entriesQueryKey = useMemo(
     () => [
       'todo-list',
@@ -77,11 +82,14 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
     }&priority=${searchParams.get('priority') ?? ''}`,
     entriesQueryKey
   )
+
   const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<
     'create' | 'update' | null
   >(null)
+
   const [deleteTaskConfirmationModalOpen, setDeleteTaskConfirmationModalOpen] =
     useState(false)
+
   const [selectedTask, setSelectedTask] = useState<ITodoListEntry | null>(null)
 
   const value = useMemo(
@@ -116,8 +124,10 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
 
 export function useTodoListContext(): ITodoListData {
   const context = useContext(TodoListContext)
+
   if (context === undefined) {
     throw new Error('useTodoListContext must be used within a TodoListProvider')
   }
+
   return context
 }

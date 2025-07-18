@@ -14,6 +14,7 @@ function SigninWithProviderButton({
   loading: boolean
 }) {
   const { auth } = useAuth()
+
   const [searchParams] = useSearchParams()
 
   const signInWithProvider = useCallback(async () => {
@@ -24,6 +25,7 @@ function SigninWithProviderButton({
     )
       .then(async res => {
         const data = await res.json()
+
         if (res.ok) {
           return data.data
         } else {

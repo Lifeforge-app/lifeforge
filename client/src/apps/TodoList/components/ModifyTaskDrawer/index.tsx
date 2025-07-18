@@ -29,8 +29,11 @@ import TagsSelector from './components/TagsSelector'
 
 function ModifyTaskDrawer() {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.todoList')
+
   const {
     entriesQueryKey,
     modifyTaskWindowOpenType: openType,
@@ -42,16 +45,25 @@ function ModifyTaskDrawer() {
   const [summary, setSummary] = useState('')
 
   const [notes, setNotes] = useState('')
+
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
+
   const [dueDate, setDueDate] = useState<Date | null>(null)
+
   const [priority, setPriority] = useState<string>('')
+
   const [list, setList] = useState<string>('')
+
   const [tags, setTags] = useState<string[]>([])
+
   const [innerOpenType, setInnerOpenType] = useState<
     'create' | 'update' | null
   >(openType)
+
   const [loading, setLoading] = useState(false)
+
   const summaryInputRef = useRef<HTMLInputElement>(null)
+
   const ref = useRef<HTMLInputElement>(null)
 
   async function onSubmitButtonClick() {
@@ -59,6 +71,7 @@ function ModifyTaskDrawer() {
 
     if (summary.trim().length === 0) {
       toast.error('Task summary cannot be empty.')
+
       return
     }
 
@@ -150,6 +163,7 @@ function ModifyTaskDrawer() {
   useEffect(() => {
     setTimeout(() => {
       setInnerOpenType(openType)
+
       if (summaryInputRef.current) {
         summaryInputRef.current.focus()
       }

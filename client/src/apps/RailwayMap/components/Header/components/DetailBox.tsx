@@ -14,6 +14,7 @@ function DetailBox() {
   const open = useModalStore(state => state.open)
 
   const { selectedStation, setRoutePlannerStart } = useRailwayMapContext()
+
   const innerSelectedStation = useDebounce(
     selectedStation,
     selectedStation ? 0 : 500

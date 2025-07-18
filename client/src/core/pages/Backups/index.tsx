@@ -16,7 +16,9 @@ import CreateBackupModal from './components/CreateBackupModal'
 
 function Backups() {
   const { t } = useTranslation('core.backups')
+
   const open = useModalStore(state => state.open)
+
   const backupsQuery = useAPIQuery<
     {
       key: string

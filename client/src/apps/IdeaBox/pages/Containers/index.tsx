@@ -18,14 +18,18 @@ import ModifyContainerModal from './components/ModifyContainerModal'
 
 function IdeaBox() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.ideaBox')
+
   const query = useAPIQuery<IIdeaBoxContainer[]>('idea-box/containers', [
     'idea-box',
     'containers'
   ])
 
   const [filteredList, setFilteredList] = useState<IIdeaBoxContainer[]>([])
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   useEffect(() => {

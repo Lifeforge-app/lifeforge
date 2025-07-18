@@ -27,10 +27,13 @@ function getStyle({
 }): React.CSSProperties {
   const backgroundColor = `${folderColor}${(() => {
     if (!canDrop) return '20'
+
     return isOver ? '' : '50'
   })()}`
+
   const color = (() => {
     if (!canDrop) return folderColor
+
     return isOver ? '' : folderColor
   })()
 
@@ -43,6 +46,7 @@ function getStyle({
 
 function FolderItem({ folder }: FolderItemProps) {
   const queryClient = useQueryClient()
+
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const [{ opacity, isDragging }, dragRef] = useDrag(

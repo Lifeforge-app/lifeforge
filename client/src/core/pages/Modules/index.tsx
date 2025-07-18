@@ -11,6 +11,7 @@ import ModuleItem from './components/ModuleItem'
 
 function Modules() {
   const { t } = useTranslation('common.sidebar')
+
   const { userData, setUserData } = useAuth()
 
   async function toggleModule(moduleName: string) {

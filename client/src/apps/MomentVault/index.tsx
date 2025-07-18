@@ -20,8 +20,11 @@ import AddEntryModal from './modals/AddEntryModal'
 
 function MomentVault() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.momentVault')
+
   const [page, setPage] = useState(1)
+
   const dataQuery = useAPIQuery<ListResult<IMomentVaultEntry>>(
     `/moment-vault/entries?page=${page}`,
     ['moment-vault', 'entries', page]

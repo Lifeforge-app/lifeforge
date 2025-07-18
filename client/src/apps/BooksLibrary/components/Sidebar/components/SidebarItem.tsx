@@ -27,7 +27,9 @@ function _SidebarItem({
   hasHamburgerMenu?: boolean
 }) {
   const open = useModalStore(state => state.open)
+
   const [searchParams, setSearchParams] = useSearchParams()
+
   const {
     miscellaneous: { setSidebarOpen }
   } = useBooksLibraryContext()

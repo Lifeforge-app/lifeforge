@@ -12,7 +12,9 @@ import AuthSideImage from './components/AuthSideImage'
 
 function Auth() {
   const { verifyOAuth } = useAuth()
+
   const [searchParams] = useSearchParams()
+
   const oauthProvidersQuery = useAPIQuery<string[]>('/user/oauth/providers', [
     'auth',
     'oauth',
@@ -21,6 +23,7 @@ function Auth() {
 
   useEffect(() => {
     const code = searchParams.get('code')
+
     const state = searchParams.get('state')
 
     if (!code || !state) return

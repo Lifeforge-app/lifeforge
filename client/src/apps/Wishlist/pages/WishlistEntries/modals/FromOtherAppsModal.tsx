@@ -38,9 +38,13 @@ const PROVIDERS = [
 
 function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
+
   const { id } = useParams<{ id: string }>()
+
   const [provider, setProvider] = useState('')
+
   const [url, setUrl] = useState('')
+
   const [loading, setLoading] = useState<'loading' | 'error' | false>(false)
 
   async function fetchData() {
@@ -60,6 +64,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
       })
 
       const { name, price, image } = data
+
       open(ModifyEntryModal, {
         type: 'create',
         existedData: {

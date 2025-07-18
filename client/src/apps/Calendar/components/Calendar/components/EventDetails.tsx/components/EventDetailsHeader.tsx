@@ -25,7 +25,9 @@ function EventDetailsHeader({
   editable?: boolean
 }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const { eventQueryKey } = useCalendarStore()
 
   const handleAddException = useCallback(async () => {

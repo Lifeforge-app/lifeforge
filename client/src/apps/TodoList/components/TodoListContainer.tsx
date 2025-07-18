@@ -17,12 +17,18 @@ import TaskList from './tasks/TaskList'
 
 function TodoListContainer() {
   const { t } = useTranslation('apps.todoList')
+
   const [searchParams, setSearchParams] = useSearchParams()
+
   const { entriesQuery, setModifyTaskWindowOpenType, setSelectedTask } =
     useTodoListContext()
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
   const [filteredEntries, setFilteredEntries] = useState<ITodoListEntry[]>([])
 
   const { hash } = useLocation()
@@ -51,14 +57,20 @@ function TodoListContainer() {
 
   useEffect(() => {
     const id = searchParams.get('entry')
+
     if (id) {
       fetchAndSetTask(id)
+
       const newSearchParams = new URLSearchParams(searchParams)
+
       newSearchParams.delete('entry')
       setSearchParams(newSearchParams, { replace: true })
     }
+
     const status = searchParams.get('status')
+
     if (status === null || status === '') return
+
     if (
       !['all', 'today', 'scheduled', 'overdue', 'completed'].includes(status)
     ) {
@@ -72,13 +84,16 @@ function TodoListContainer() {
   useEffect(() => {
     if (debouncedSearchQuery.trim() === '') {
       setFilteredEntries(entriesQuery.data ?? [])
+
       return
     }
 
     const lowerCaseQuery = debouncedSearchQuery.toLowerCase()
+
     const filtered = (entriesQuery.data ?? []).filter(entry =>
       entry.summary.toLowerCase().includes(lowerCaseQuery)
     )
+
     setFilteredEntries(filtered)
   }, [debouncedSearchQuery, entriesQuery.data])
 

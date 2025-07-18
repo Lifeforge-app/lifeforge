@@ -20,7 +20,9 @@ function SidebarSection({
   hasHamburgerMenu?: boolean
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.booksLibrary')
+
   const { collectionsQuery, languagesQuery, fileTypesQuery } =
     useBooksLibraryContext()
 

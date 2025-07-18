@@ -14,6 +14,7 @@ function ColumnVisibilityToggle({
   setVisibleColumn: React.Dispatch<React.SetStateAction<string[]>>
 }) {
   const { t } = useTranslation('apps.wallet')
+
   return (
     <>
       <SidebarDivider noMargin />

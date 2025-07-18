@@ -16,8 +16,11 @@ function AddToLibraryButton({
   isLibgenIS?: boolean
 }) {
   const md5 = book.md5
+
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.booksLibrary')
+
   const {
     entriesQuery,
     miscellaneous: { processes }

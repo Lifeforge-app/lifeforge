@@ -7,6 +7,7 @@ import { fetchAPI } from 'shared/lib'
 
 function PasswordColumn() {
   const { t } = useTranslation('core.accountSettings')
+
   const [loading, setLoading] = useState(false)
 
   async function onPasswordChange() {

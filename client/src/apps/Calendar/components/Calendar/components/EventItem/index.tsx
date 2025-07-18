@@ -16,6 +16,7 @@ function EventItem({ event }: { event: ICalendarEvent }) {
     'calendar/categories',
     ['calendar', 'categories']
   )
+
   const category = useMemo<ICalendarCategory | undefined>(() => {
     if (event.category.startsWith('_')) {
       return (INTERNAL_CATEGORIES[

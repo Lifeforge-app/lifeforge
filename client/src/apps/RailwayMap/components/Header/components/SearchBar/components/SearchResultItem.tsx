@@ -19,6 +19,7 @@ function SearchResultItem({ station }: { station: IRailwayMapStation }) {
   const onClick = () => {
     setSelectedStation(station)
     setSearchQuery('')
+
     if (viewType === 'route' && station.map_data && centerStation) {
       centerMapOnStation(routeMapSVGRef, routeMapGRef, station, centerStation)
     }

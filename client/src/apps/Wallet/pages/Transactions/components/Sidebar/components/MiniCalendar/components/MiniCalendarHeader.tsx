@@ -30,6 +30,7 @@ function MiniCalendarHeader({
           className="text-bg-500 hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50 rounded-lg p-2 transition-all"
           onClick={() => {
             setCurrentMonth(currentMonth - 1)
+
             if (currentMonth === 0) {
               setCurrentYear(currentYear - 1)
               setCurrentMonth(11)
@@ -42,6 +43,7 @@ function MiniCalendarHeader({
           className="text-bg-500 hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50 rounded-lg p-2 transition-all"
           onClick={() => {
             setCurrentMonth(currentMonth + 1)
+
             if (currentMonth === 11) {
               setCurrentYear(currentYear + 1)
               setCurrentMonth(0)

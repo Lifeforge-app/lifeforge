@@ -10,12 +10,15 @@ import MiniCalendarHeader from './components/MiniCalendarHeader'
 
 function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
+
   const [currentYear, setCurrentYear] = useState(dayjs().year())
+
   const startDate = dayjs()
     .year(currentYear)
     .month(currentMonth)
     .startOf('month')
     .format('YYYY-MM-DD')
+
   const endDate = dayjs()
     .year(currentYear)
     .month(currentMonth)

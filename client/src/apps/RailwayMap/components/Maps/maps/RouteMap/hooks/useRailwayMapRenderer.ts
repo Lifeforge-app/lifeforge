@@ -15,6 +15,7 @@ import {
 
 export const useRailwayMapRenderer = () => {
   const { derivedTheme, bgTempPalette } = usePersonalization()
+
   const {
     filteredLines: filteredLinesCode,
     lines,
@@ -46,9 +47,11 @@ export const useRailwayMapRenderer = () => {
     if (!svgRef.current || isInitializedRef.current || !centerStation) return
 
     const svg = d3.select(svgRef.current)
+
     svg.selectAll('*').remove()
 
     const g = svg.append('g')
+
     gRef.current = g.node() as SVGGElement
 
     setupZooming(svg, g, centerStation)
@@ -64,6 +67,7 @@ export const useRailwayMapRenderer = () => {
     if (!gRef.current || !isInitializedRef.current) return
 
     const g = d3.select(gRef.current)
+
     g.selectAll('path').remove()
 
     drawLines(g, filteredLines, shortestRoute)
@@ -73,6 +77,7 @@ export const useRailwayMapRenderer = () => {
     if (!gRef.current || !isInitializedRef.current) return
 
     const g = d3.select(gRef.current)
+
     g.selectAll('circle, rect, text').remove()
 
     drawStations(

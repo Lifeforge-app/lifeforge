@@ -15,6 +15,7 @@ function AssetsSelector({
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const { assetsQuery } = useWalletData()
+
   const assets = assetsQuery.data ?? []
 
   return (

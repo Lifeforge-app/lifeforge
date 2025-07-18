@@ -15,8 +15,11 @@ import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function AssetsBalanceCard() {
   const navigate = useNavigate()
+
   const { assetsQuery } = useWalletData()
+
   const { isAmountHidden } = useWalletStore()
+
   const { t } = useTranslation('apps.wallet')
 
   return (

@@ -7,8 +7,11 @@ import YearMonthInput from './components/YearMonthInput'
 
 function Statements() {
   const [year, setYear] = useState<number | null>(null)
+
   const [month, setMonth] = useState<number | null>(null)
+
   const [showStatement, setShowStatement] = useState(false)
+
   const contentRef = useRef<HTMLDivElement>(null)
 
   return (

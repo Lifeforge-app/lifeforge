@@ -29,4 +29,5 @@ const YoutubeSummarizer = {
 type IYoutubeSummarizer = InferApiESchemaDynamic<typeof YoutubeSummarizer>;
 
 export type { IYoutubeSummarizer };
+
 export { YoutubeSummarizer };

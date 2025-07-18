@@ -1,4 +1,4 @@
-/* eslint-disable react-compiler/react-compiler */
+ 
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
@@ -10,6 +10,7 @@ import { arabicToChinese } from '../utils/arabicToChineseNumber'
 
 export default function DateWidget() {
   const { language, derivedThemeColor: themeColor } = usePersonalization()
+
   const ref = useRef<HTMLDivElement>(null)
 
   return (

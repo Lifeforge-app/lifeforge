@@ -44,6 +44,7 @@ export default function SocketProvider({
 
 export function useSocketContext(): Socket {
   const context = useContext(SocketContext)
+
   if (!context) {
     throw new Error('useSocketContext must be used within a SocketProvider')
   }

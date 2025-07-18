@@ -15,6 +15,7 @@ function ModuleItem({
   toggleModule: (moduleName: string) => void
 }) {
   const [expandConfig, setExpandConfig] = useState(false)
+
   const { t } = useTranslation(`apps.${_.camelCase(module.name)}`)
 
   function toggleExpandConfig() {

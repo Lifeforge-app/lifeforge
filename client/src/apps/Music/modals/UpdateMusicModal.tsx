@@ -18,16 +18,21 @@ function UpdateMusicModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.music')
 
   const [musicName, setMusicName] = useState('')
+
   const [musicAuthor, setMusicAuthor] = useState('')
+
   const [loading, setLoading] = useState(false)
+
   const ref = useRef<HTMLInputElement>(null)
 
   async function onSubmitButtonClick() {
     if (musicName.trim().length === 0 || musicAuthor.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
+
       return
     }
 
@@ -59,6 +64,7 @@ function UpdateMusicModal({
               author: musicAuthor
             }
           }
+
           return music
         })
       })

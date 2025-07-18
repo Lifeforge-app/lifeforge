@@ -9,7 +9,9 @@ import OverviewSummary from './components/OverviewSummary'
 
 function Overview({ month, year }: { month: number; year: number }) {
   const { transactionsQuery } = useWalletData()
+
   const transactions = transactionsQuery.data ?? []
+
   const filteredTransactions = useMemo(() => {
     if (typeof transactions === 'string') return []
 

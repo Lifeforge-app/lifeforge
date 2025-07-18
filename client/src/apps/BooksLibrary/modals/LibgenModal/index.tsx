@@ -33,8 +33,11 @@ const PROVIDERS = [
 function LibgenModal({ onClose }: { onClose: () => void }) {
   const [provider, setProvider] =
     useState<(typeof PROVIDERS)[number]>('libgen.is')
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const [hasSearched, setHasSearched] = useState(false)
+
   const [data, setData] = useState<{
     provider: (typeof PROVIDERS)[number]
     query: string
@@ -42,9 +45,13 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
     page: number
     data: Array<Record<string, any>>
   } | null>(null)
+
   const [loading, setLoading] = useState(false)
+
   const [totalPages, setTotalPages] = useState(0)
+
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
+
   const [qrcodeScannerOpen, setQrcodeScannerOpen] = useState(false)
 
   const [providerOnlineStatuses, setProviderOnlineStatuses] = useState<
@@ -118,6 +125,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
 
     if (searchQuery.trim() === '') {
       toast.error('Please enter a search query')
+
       return
     }
 

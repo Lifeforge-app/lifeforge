@@ -19,6 +19,7 @@ function ModifyFolderModal({
   onClose: () => void
 }) {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
   const [formState, setFormState] = useState<IIdeaBoxFolderFormState>({
     name: '',
     icon: '',

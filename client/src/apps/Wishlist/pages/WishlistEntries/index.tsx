@@ -27,31 +27,41 @@ import ModifyEntryModal from './modals/ModifyEntryModal'
 
 function WishlistEntries() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wishlist')
+
   const navigate = useNavigate()
+
   const { id } = useParams<{ id: string }>()
+
   const validQuery = useAPIQuery<boolean>(`wishlist/lists/valid/${id}`, [
     `wishlist`,
     `lists`,
     `valid`,
     id
   ])
+
   const [activeTab, setActiveTab] = useState('wishlist')
+
   const wishlistListDetailsQuery = useAPIQuery<IWishlistList>(
     `wishlist/lists/${id}`,
     [`wishlist`, `lists`, id],
     validQuery.data === true
   )
+
   const queryKey = useMemo(
     () => [`wishlist`, `entries`, id, activeTab === 'bought'],
     [id, activeTab]
   )
+
   const entriesQuery = useAPIQuery<IWishlistEntry[]>(
     `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
     queryKey,
     validQuery.data === true
   )
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   const filteredEntries = useMemo(() => {

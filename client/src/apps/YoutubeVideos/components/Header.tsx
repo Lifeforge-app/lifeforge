@@ -26,9 +26,13 @@ function Header({
   handleOpenAddVideosModal: () => void
 }) {
   const stack = useModalStore(state => state.stack)
+
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.youtubeVideos')
+
   const [processes, setProcesses] = useState<
     Record<
       string,
@@ -39,6 +43,7 @@ function Header({
       }
     >
   >({})
+
   const [isFirstTime, setIsFirstTime] = useState(true)
 
   async function checkProgress() {

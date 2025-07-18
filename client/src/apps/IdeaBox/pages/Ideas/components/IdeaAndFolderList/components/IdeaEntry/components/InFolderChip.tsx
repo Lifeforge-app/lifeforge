@@ -7,6 +7,7 @@ import { IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interface
 
 function InFolderChip({ entry }: { entry: IIdeaBoxEntry }) {
   const { setSearchQuery, setSelectedTags } = useIdeaBoxContext()
+
   const { '*': path } = useParams<{ '*': string }>()
 
   return typeof entry.folder !== 'string' ? (

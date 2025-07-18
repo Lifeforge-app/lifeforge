@@ -7,6 +7,7 @@ const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 
 function DefaultBgTempSelector({ bgTemp }: { bgTemp: string }) {
   const { t } = useTranslation('core.personalization')
+
   const { changeBgTemp } = useUserPersonalization()
 
   return (

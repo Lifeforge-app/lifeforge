@@ -52,19 +52,27 @@ export const BooksLibraryContext = createContext<IBooksLibraryData | undefined>(
 
 export default function BooksLibraryProvider() {
   const socket = useSocket()
+
   const queryClient = useQueryClient()
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const entriesQuery = useAPIQuery<
     BooksLibraryControllersSchemas.IEntries['getAllEntries']['response']
   >('books-library/entries', ['books-library', 'entries'])
+
   const collectionsQuery = useAPIQuery<
     BooksLibraryControllersSchemas.ICollection['getAllCollections']['response']
   >('books-library/collections', ['books-library', 'collections'])
+
   const languagesQuery = useAPIQuery<
     BooksLibraryControllersSchemas.ILanguages['getAllLanguages']['response']
   >('books-library/languages', ['books-library', 'languages'])
+
   const fileTypesQuery = useAPIQuery<
     BooksLibraryControllersSchemas.IFileTypes['getAllFileTypes']['response']
   >('books-library/file-types', ['books-library', 'fileTypes'])
@@ -116,9 +124,12 @@ export default function BooksLibraryProvider() {
           toast.error(`Download failed: ${data.error || 'Unknown error'}`)
           setProcesses(prev => {
             const newProcesses = { ...prev }
+
             delete newProcesses[data.taskId]
+
             return newProcesses
           })
+
           return
         }
 
@@ -126,12 +137,15 @@ export default function BooksLibraryProvider() {
           toast.success('Download completed successfully')
           setProcesses(prev => {
             const newProcesses = { ...prev }
+
             delete newProcesses[data.taskId]
+
             return newProcesses
           })
           queryClient.invalidateQueries({
             queryKey: ['books-library']
           })
+
           return
         }
 
@@ -194,10 +208,12 @@ export default function BooksLibraryProvider() {
 
 export function useBooksLibraryContext(): IBooksLibraryData {
   const context = useContext(BooksLibraryContext)
+
   if (context === undefined) {
     throw new Error(
       'BooksLibraryContext must be used within a BooksLibraryProvider'
     )
   }
+
   return context
 }

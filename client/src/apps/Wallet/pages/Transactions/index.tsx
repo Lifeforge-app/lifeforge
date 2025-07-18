@@ -30,7 +30,9 @@ import TableView from './views/TableView'
 
 function Transactions() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wallet')
+
   const {
     setSelectedType,
     setSelectedLedger,
@@ -40,6 +42,7 @@ function Transactions() {
   } = useWalletStore()
 
   const navigate = useNavigate()
+
   const [visibleColumn, setVisibleColumn] = useState([
     'Date',
     'Type',
@@ -51,7 +54,9 @@ function Transactions() {
     'Amount',
     'Receipt'
   ])
+
   const [view, setView] = useState<'list' | 'table'>('list')
+
   const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
     'wallet/transactions',
     ['wallet', 'transactions']
@@ -60,6 +65,7 @@ function Transactions() {
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
   )
+
   const [searchParams] = useSearchParams()
 
   const { hash } = useLocation()
@@ -102,9 +108,13 @@ function Transactions() {
 
   useEffect(() => {
     const query = searchParams.get('query')
+
     const type = searchParams.get('type')
+
     const ledger = searchParams.get('ledger')
+
     const asset = searchParams.get('asset')
+
     const category = searchParams.get('category')
 
     if (query) {

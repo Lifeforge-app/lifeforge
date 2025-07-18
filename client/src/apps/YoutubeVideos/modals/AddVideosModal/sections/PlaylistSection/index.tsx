@@ -1,5 +1,5 @@
-/* eslint-disable sonarjs/empty-string-repetition */
-/* eslint-disable sonarjs/regex-complexity */
+ 
+ 
 // import { useDebounce } from '@uidotdev/usehooks'
 // import { parse as parseCookie } from 'cookie'
 // import { QueryWrapper, TextInput } from 'lifeforge-ui'

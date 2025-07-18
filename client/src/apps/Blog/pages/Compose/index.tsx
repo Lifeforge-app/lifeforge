@@ -14,6 +14,7 @@ import Sidebar from './components/Sidebar'
 
 function Compose() {
   const navigate = useNavigate()
+
   const { quillRef } = useQuill({
     placeholder: 'Write your blog post here...',
     formats: ['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -27,6 +28,7 @@ function Compose() {
       ]
     }
   })
+
   const [blogPost, setBlogPost] = useState<IBlogEntryFormState>({
     title: '',
     excerpt: '',
@@ -36,6 +38,7 @@ function Compose() {
     category: null,
     labels: [] as string[]
   })
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (

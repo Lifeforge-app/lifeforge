@@ -2,6 +2,7 @@ import { z } from "zod/v4";
 import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const ALLOWED_NAMESPACE = ["apps", "common", "utils", "core"] as const;
+
 const ALLOWED_LANG = ["en", "ms", "zh-CN", "zh-TW", "zh"] as const;
 
 const LocalesManager = {
@@ -134,4 +135,5 @@ type ILocalesManager = InferApiESchemaDynamic<typeof LocalesManager>;
 type ILocales = InferApiESchemaDynamic<typeof Locales>;
 
 export type { ILocalesManager, ILocales };
+
 export { LocalesManager, Locales };

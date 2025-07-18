@@ -10,14 +10,14 @@ import useLanguageEffect from "./hooks/useLanguageEffect";
 import useRawThemeColorEffect from "./hooks/useRawThemeColorEffect";
 import useThemeEffect from "./hooks/useThemeEffect";
 import type {
-  IDashboardLayout,
   IBackdropFilters,
+  IDashboardLayout,
   IPersonalizationData,
 } from "./interfaces/personalization_provider_interfaces";
 import { getColorPalette } from "./utils/themeColors";
 
 const PersonalizationContext = createContext<IPersonalizationData | undefined>(
-  undefined
+  undefined,
 );
 
 export default function PersonalizationProvider({
@@ -26,14 +26,21 @@ export default function PersonalizationProvider({
   children: React.ReactNode;
 }) {
   const [fontFamily, setFontFamily] = useState<string>("Onest");
+
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
+
   const [rawThemeColor, setRawThemeColor] = useState("theme-lime");
+
   const [bgTemp, setBgTemp] = useState<
     "bg-slate" | "bg-gray" | "bg-neutral" | "bg-zinc" | "bg-stone" | string
   >("bg-neutral");
+
   const [bgImage, setBgImage] = useState("");
+
   const [language, setLanguage] = useState("en");
+
   const [dashboardLayout, setDashboardLayout] = useState<IDashboardLayout>({});
+
   const [backdropFilters, setBackdropFilters] = useState<IBackdropFilters>({
     blur: "none",
     brightness: 100,
@@ -48,6 +55,7 @@ export default function PersonalizationProvider({
         ? "dark"
         : "light";
     }
+
     return theme;
   }, [theme]);
 
@@ -56,11 +64,11 @@ export default function PersonalizationProvider({
       !rawThemeColor.startsWith("#")
         ? THEME_COLOR_HEX[
             _.camelCase(
-              rawThemeColor.replace("theme-", "").replace(/-/g, " ")
+              rawThemeColor.replace("theme-", "").replace(/-/g, " "),
             ) as keyof typeof THEME_COLOR_HEX
           ]
         : rawThemeColor,
-    [rawThemeColor]
+    [rawThemeColor],
   );
 
   const bgTempPalette = useMemo(() => {
@@ -109,7 +117,7 @@ export default function PersonalizationProvider({
       backdropFilters,
       language,
       dashboardLayout,
-    ]
+    ],
   );
 
   return (
@@ -121,7 +129,7 @@ export default function PersonalizationProvider({
             : THEME_COLOR_HEX[
                 rawThemeColor.replace(
                   "theme-",
-                  ""
+                  "",
                 ) as keyof typeof THEME_COLOR_HEX
               ]
         }
@@ -134,10 +142,12 @@ export default function PersonalizationProvider({
 
 export function usePersonalization(): IPersonalizationData {
   const context = useContext(PersonalizationContext);
+
   if (context === undefined) {
     throw new Error(
-      "usePersonalizationContext must be used within a PersonalizationProvider"
+      "usePersonalizationContext must be used within a PersonalizationProvider",
     );
   }
+
   return context;
 }

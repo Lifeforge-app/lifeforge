@@ -12,6 +12,7 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const isIncome = title.toLowerCase() === 'income'
 
   const { isAmountHidden } = useWalletStore()
+
   const incomeExpensesQuery = useAPIQuery<IWalletIncomeExpenses>(
     `wallet/utils/income-expenses?year=${new Date().getFullYear()}&month=${
       new Date().getMonth() + 1

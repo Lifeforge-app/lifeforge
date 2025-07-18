@@ -11,9 +11,11 @@ import { useAuth } from '../../../providers/AuthProvider'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
+
   const { setUserData } = useAuth()
 
   const [otpSuccess, setOtpSuccess] = useState(false)
+
   const [loading, setLoading] = useState(false)
 
   async function onConfirm() {

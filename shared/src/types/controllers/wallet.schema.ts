@@ -32,8 +32,10 @@ const Transactions = {
         .optional()
         .transform((val) => {
           if (!val) return undefined;
+
           try {
             const coords = JSON.parse(val);
+
             return {
               lon: parseFloat(coords.longitude),
               lat: parseFloat(coords.latitude),
@@ -73,8 +75,10 @@ const Transactions = {
         .optional()
         .transform((val) => {
           if (!val) return undefined;
+
           try {
             const coords = JSON.parse(val);
+
             return {
               lon: parseFloat(coords.longitude),
               lat: parseFloat(coords.latitude),
@@ -139,6 +143,7 @@ const Assets = {
     }).extend({
       starting_balance: z.string().transform((val) => {
         const balance = parseFloat(val);
+
         return isNaN(balance) ? 0 : balance;
       }),
     }),
@@ -171,6 +176,7 @@ const Assets = {
     }).extend({
       starting_balance: z.string().transform((val) => {
         const balance = parseFloat(val);
+
         return isNaN(balance) ? 0 : balance;
       }),
     }),
@@ -333,4 +339,5 @@ type IUtils = InferApiESchemaDynamic<typeof Utils>;
 type ICategories = InferApiESchemaDynamic<typeof Categories>;
 
 export type { ITransactions, IAssets, ILedgers, IUtils, ICategories };
+
 export { Transactions, Assets, Ledgers, Utils, Categories };

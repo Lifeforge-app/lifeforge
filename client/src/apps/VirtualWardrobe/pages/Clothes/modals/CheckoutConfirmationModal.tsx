@@ -16,8 +16,11 @@ function CheckoutConfirmationModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.virtualWardrobe')
+
   const [loading, setLoading] = useState(false)
+
   const [notes, setNotes] = useState('')
 
   async function handleCheckout() {

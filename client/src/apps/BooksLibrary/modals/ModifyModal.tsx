@@ -20,15 +20,19 @@ function ModifyModal({
   }
 }) {
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.booksLibrary')
+
   const singleStuff = {
     collections: 'collection',
     languages: 'language'
   }[stuff]
+
   const [data, setData] = useState({
     name: '',
     icon: ''
   })
+
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
@@ -63,8 +67,10 @@ function ModifyModal({
 
   async function onSubmitButtonClick() {
     const { name, icon } = data
+
     if (name.trim().length === 0 || icon.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
+
       return
     }
 

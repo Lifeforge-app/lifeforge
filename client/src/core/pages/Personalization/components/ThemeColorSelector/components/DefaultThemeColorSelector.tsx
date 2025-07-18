@@ -39,6 +39,7 @@ function DefaultThemeColorSelector({
   customThemeColor: string
 }) {
   const { t } = useTranslation('core.personalization')
+
   const { changeThemeColor } = useUserPersonalization()
 
   return (

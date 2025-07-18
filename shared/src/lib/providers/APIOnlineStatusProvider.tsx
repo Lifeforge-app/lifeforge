@@ -24,8 +24,10 @@ async function checkAPIStatus(
     .then(async (res) => {
       if (res.ok) {
         const data = await res.json();
+
         return data.data.environment;
       }
+
       return false;
     })
     .catch(() => false)
@@ -50,7 +52,9 @@ export default function APIOnlineStatusProvider({
   children: React.ReactNode;
 }) {
   const apiEndpoint = useAPIEndpoint();
+
   const [isOnline, setIsOnline] = useState<boolean | "loading">("loading");
+
   const [environment, setEnvironment] = useState<
     "production" | "development" | null
   >(null);
@@ -86,10 +90,12 @@ export default function APIOnlineStatusProvider({
 
 export function useAPIOnlineStatus(): IAPIOnlineStatus {
   const context = useContext(APIOnlineStatusContext);
+
   if (context === undefined) {
     throw new Error(
       "useAPIOnlineStatus must be used within a APIOnlineStatusProvider"
     );
   }
+
   return context;
 }

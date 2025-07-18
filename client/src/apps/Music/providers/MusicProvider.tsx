@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/pseudo-random */
+ 
 import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import {
@@ -57,20 +57,31 @@ const MusicContext = createContext<IMusicContext | undefined>(undefined)
 
 export function MusicProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient()
+
   const { auth } = useAuth()
+
   const [audio] = useState(new Audio())
+
   const [searchQuery, setSearchQuery] = useState('')
+
   const [loading, setLoading] = useState(false)
+
   const musicsQuery = useAPIQuery<IMusicEntry[]>(
     'music/entries',
     ['music', 'entries'],
     auth
   )
+
   const [isPlaying, setIsPlaying] = useState(false)
+
   const [currentMusic, setCurrentMusic] = useState<IMusicEntry | null>(null)
+
   const [currentDuration, setCurrentDuration] = useState(0)
+
   const [isShuffle, setIsShuffle] = useState(false)
+
   const [isRepeat, setIsRepeat] = useState(false)
+
   const [volume, setVolume] = useState(80)
 
   const playMusic = async (music: IMusicEntry) => {
@@ -155,6 +166,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     const currentIndex = musicsQuery.data.findIndex(
       music => music.id === currentMusic?.id
     )
+
     if (currentIndex - 1 >= 0) {
       playMusic(musicsQuery.data[currentIndex - 1]).catch(err => {
         toast.error(`Failed to play music. Error: ${err}`)
@@ -168,6 +180,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     const currentIndex = musicsQuery.data.findIndex(
       music => music.id === currentMusic?.id
     )
+
     if (currentIndex + 1 < musicsQuery.data.length) {
       playMusic(musicsQuery.data[currentIndex + 1]).catch(err => {
         toast.error(`Failed to play music. Error: ${err}`)
@@ -179,7 +192,9 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   const shuffleMusic = () => {
     if (!musicsQuery.data) return
+
     const randomIndex = Math.floor(Math.random() * musicsQuery.data.length)
+
     playMusic(musicsQuery.data[randomIndex]).catch(err => {
       toast.error(`Failed to play music. Error: ${err}`)
     })
@@ -269,8 +284,10 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
 export function useMusicContext(): IMusicContext {
   const context = useContext(MusicContext)
+
   if (context === undefined) {
     throw new Error('useMusicContext must be used within a MusicProvider')
   }
+
   return context
 }

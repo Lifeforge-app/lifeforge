@@ -24,7 +24,9 @@ export default function EntryItem({
   item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const { t } = useTranslation('apps.booksLibrary')
+
   const { derivedThemeColor } = usePersonalization()
+
   const queryClient = useQueryClient()
 
   const { collectionsQuery } = useBooksLibraryContext()

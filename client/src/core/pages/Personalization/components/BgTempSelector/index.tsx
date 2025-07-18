@@ -11,10 +11,13 @@ import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 
 function BgTempSelector() {
   const { bgTemp } = usePersonalization()
+
   const { changeBgTemp } = useUserPersonalization()
+
   const [customBgTemp, setCustomBgTemp] = useState<string>(
     bgTemp.startsWith('#') ? bgTemp : '#000000'
   )
+
   const { t } = useTranslation(['core.personalization', 'common.buttons'])
 
   return (

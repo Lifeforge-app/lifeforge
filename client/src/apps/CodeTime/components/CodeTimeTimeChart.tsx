@@ -34,8 +34,11 @@ ChartJS.register(
 
 function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   const { t } = useTranslation('apps.codeTime')
+
   const { bgTempPalette, derivedTheme } = usePersonalization()
+
   const [lastFor, setLastFor] = useState<7 | 30>(7)
+
   const dataQuery = useAPIQuery<any[]>(
     `code-time/last-x-days?days=${lastFor}`,
     ['code-time', 'last-x-days', lastFor]
@@ -56,6 +59,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
     if (!dataQuery.data && !dataQuery.isSuccess) return []
 
     const days = dataQuery.data.map(e => dayjs(e.date).format('DD MMM'))
+
     const data = [...new Set(dataQuery.data.flatMap(e => Object.keys(e[type])))]
       .sort()
       .map(item => ({
@@ -123,9 +127,11 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
 
               let label = context.dataset.label || ''
               if (label) label += ': '
+
               if (context.parsed.y) {
                 label += dayjs.duration(+context.parsed.y, 'minutes').humanize()
               }
+
               return label
             }
           }

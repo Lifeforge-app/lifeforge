@@ -12,15 +12,19 @@ import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList() {
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.passwords')
+
   const { passwordListQuery, filteredPasswordList } = usePasswordContext()
 
   async function pinPassword(id: string) {
     const mapPasswords = (p: IPasswordEntry) =>
       p.id === id ? { ...p, pinned: !p.pinned } : p
+
     const sortPasswords = (a: IPasswordEntry, b: IPasswordEntry) => {
       if (a.pinned && !b.pinned) return -1
       if (!a.pinned && b.pinned) return 1
+
       return 0
     }
 

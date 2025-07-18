@@ -18,8 +18,11 @@ function MiniCalendarContent({
   viewsFilter: ('income' | 'expenses' | 'transfer')[]
 }) {
   const { language } = usePersonalization()
+
   const { transactionsQuery } = useWalletData()
+
   const [nextToSelect, setNextToSelect] = useState<'start' | 'end'>('start')
+
   const transactions = transactionsQuery.data ?? []
 
   const firstDateOfMonth = useMemo(

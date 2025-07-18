@@ -12,7 +12,9 @@ function Sudoku() {
     'sudoku',
     'evil'
   ])
+
   const boardRef = useRef<HTMLDivElement>(null)
+
   const reactToPrintFn = useReactToPrint({ contentRef: boardRef })
 
   return (

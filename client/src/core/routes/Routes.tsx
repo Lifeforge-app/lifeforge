@@ -12,6 +12,7 @@ function resolveAlias(path: string): string {
   if (path.startsWith('@apps')) {
     return path.replace('@apps', '../../apps')
   }
+
   if (path.startsWith('@core')) {
     return path.replace('@core', '../pages')
   }
@@ -24,11 +25,13 @@ const routePromises = RouteItems.map(async route => {
 
   const importPromises = items.map(async item => {
     const resolved = `${resolveAlias(item)}/config.tsx`
+
     const importer = modules[resolved]
 
     if (!importer) throw new Error(`Module not found: ${resolved}`)
 
     const mod = (await importer()) as { default: any }
+
     return mod.default
   })
 

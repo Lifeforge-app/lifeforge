@@ -7,6 +7,7 @@ import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function TagChip({ text }: { text: string }) {
   const { selectedTags, tagsQuery } = useIdeaBoxContext()
+
   const tags = tagsQuery.data ?? []
 
   const metadata = useMemo(
@@ -16,6 +17,7 @@ function TagChip({ text }: { text: string }) {
         : undefined,
     [selectedTags, text, tags]
   )
+
   const active = useMemo(
     () => selectedTags.includes(text),
     [selectedTags, text, tags]

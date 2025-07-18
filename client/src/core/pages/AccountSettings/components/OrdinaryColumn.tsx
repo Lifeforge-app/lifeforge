@@ -20,7 +20,9 @@ function OrdinaryColumn({
   type?: string
 }) {
   const open = useModalStore(state => state.open)
+
   const { userData } = useAuth()
+
   const { t } = useTranslation('core.accountSettings')
 
   const handleOpenModifyModal = useCallback(() => {

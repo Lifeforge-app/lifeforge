@@ -14,7 +14,9 @@ function TaskListList({
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.todoList')
+
   const { listsQuery } = useTodoListContext()
 
   const handleCreateList = useCallback(() => {

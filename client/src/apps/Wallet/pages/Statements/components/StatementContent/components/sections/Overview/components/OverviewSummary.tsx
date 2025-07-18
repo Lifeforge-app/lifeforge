@@ -17,6 +17,7 @@ function OverviewSummary({
           {numberToCurrency(
             filteredTransactions.reduce((acc, curr) => {
               if (curr.type === 'income') return acc + curr.amount
+
               return acc
             }, 0)
           )}
@@ -29,6 +30,7 @@ function OverviewSummary({
           {numberToCurrency(
             filteredTransactions.reduce((acc, curr) => {
               if (curr.type === 'expenses') return acc + curr.amount
+
               return acc
             }, 0)
           )}
@@ -41,6 +43,7 @@ function OverviewSummary({
           const netIncome = filteredTransactions.reduce((acc, curr) => {
             if (curr.type === 'income') return acc + curr.amount
             if (curr.type === 'expenses') return acc - curr.amount
+
             return acc
           }, 0)
 

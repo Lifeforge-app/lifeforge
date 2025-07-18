@@ -11,6 +11,7 @@ import ChildRoutesRenderer from './ChildRoutesRenderer'
 
 function MainRoutesRenderer() {
   const { t } = useTranslation('common.misc')
+
   const { userData } = useAuth()
 
   return (

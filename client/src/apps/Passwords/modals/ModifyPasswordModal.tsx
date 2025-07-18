@@ -31,7 +31,9 @@ function ModifyPasswordModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.passwords')
+
   const { masterPassword } = usePasswordContext()
 
   const [formState, setFormState] = useState<IPasswordFormState>({
@@ -58,6 +60,7 @@ function ModifyPasswordModal({
       )
     ) {
       toast.error(t('input.error.fieldEmpty'))
+
       return
     }
 
@@ -67,6 +70,7 @@ function ModifyPasswordModal({
       import.meta.env.VITE_API_HOST,
       'passwords/entries/challenge'
     )
+
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     try {
@@ -96,6 +100,7 @@ function ModifyPasswordModal({
             if (password.id === existedData?.id) {
               return data
             }
+
             return password
           })
         }

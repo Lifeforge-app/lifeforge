@@ -11,6 +11,7 @@ import { type ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfac
 
 export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
+
   const [currentYear, setCurrentYear] = useState(dayjs().year())
 
   const startDate = dayjs()
@@ -18,6 +19,7 @@ export default function MiniCalendar() {
     .month(currentMonth)
     .startOf('month')
     .format('YYYY-MM-DD')
+
   const endDate = dayjs()
     .year(currentYear)
     .month(currentMonth)

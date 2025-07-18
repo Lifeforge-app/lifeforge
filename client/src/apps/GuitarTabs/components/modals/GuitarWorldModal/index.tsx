@@ -10,9 +10,13 @@ import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({ onClose }: { onClose: () => void }) {
   const [cookie, setCookie] = useState('')
+
   const [proceedLoading, setProceedLoading] = useState(false)
+
   const [showData, setShowData] = useState(false)
+
   const [page, setPage] = useState(1)
+
   const [data, setData] = useState<
     IGuitarTabsGuitarWorldScores | 'loading' | 'error'
   >('loading')
@@ -20,6 +24,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
   async function fetchData(page: number) {
     if (cookie.trim() === '') {
       toast.error('Please enter a cookie')
+
       return
     }
 

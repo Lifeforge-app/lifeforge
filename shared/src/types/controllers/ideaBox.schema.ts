@@ -362,4 +362,5 @@ type IFolders = InferApiESchemaDynamic<typeof Folders>;
 type ITags = InferApiESchemaDynamic<typeof Tags>;
 
 export type { IIdeas, IMisc, IContainers, IFolders, ITags };
+
 export { Ideas, Misc, Containers, Folders, Tags };

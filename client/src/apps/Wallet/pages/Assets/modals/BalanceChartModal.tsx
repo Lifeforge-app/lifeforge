@@ -42,6 +42,7 @@ function BalanceChartModal({
   onClose: () => void
 }) {
   const { derivedThemeColor } = usePersonalization()
+
   const assetBalanceQuery = useAPIQuery<Record<string, number>>(
     `wallet/assets/balance/${existedData.id}`,
     ['wallet', 'assets', 'balance', existedData.id],
@@ -61,6 +62,7 @@ function BalanceChartModal({
         day: 'numeric'
       })
     )
+
     const data = sortedEntries.map(([, balance]) => balance)
 
     return {

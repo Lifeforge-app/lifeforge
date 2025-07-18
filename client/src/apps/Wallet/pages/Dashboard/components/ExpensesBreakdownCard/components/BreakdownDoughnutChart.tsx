@@ -32,6 +32,7 @@ function BreakdownDoughnutChart({
   expensesCategories: IWalletCategory[]
 }) {
   const { t } = useTranslation('apps.wallet')
+
   const { isAmountHidden } = useWalletStore()
 
   return (

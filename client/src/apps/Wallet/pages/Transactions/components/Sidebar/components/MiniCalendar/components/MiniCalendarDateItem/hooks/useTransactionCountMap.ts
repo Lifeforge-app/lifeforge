@@ -31,6 +31,7 @@ function useTransactionCountMap({
 
     transactions.forEach(transaction => {
       const transactionDate = dayjs(transaction.date, 'YYYY-M-D')
+
       if (
         !(
           transactionDate.month() === currentMonth &&

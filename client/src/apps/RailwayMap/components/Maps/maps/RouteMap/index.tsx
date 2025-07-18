@@ -10,6 +10,7 @@ function RouteMap() {
     shortestRoute,
     setSelectedStation
   } = useRailwayMapContext()
+
   useRailwayMapRenderer()
 
   const handleMapClick = (event: React.MouseEvent<SVGSVGElement>) => {

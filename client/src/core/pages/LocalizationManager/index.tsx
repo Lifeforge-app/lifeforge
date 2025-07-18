@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 
 function LocalizationManager() {
   const { t } = useTranslation('apps.localizationManager')
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function LocalizationManager() {
       window.location.href = '/'
     } else {
       const a = document.createElement('a')
+
       a.href = `${import.meta.env.VITE_LOCALIZATION_MANAGER_URL}?token=${session}`
       a.target = '_blank'
       a.click()

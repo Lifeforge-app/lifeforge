@@ -17,6 +17,7 @@ function FolderContextMenu({
 }) {
   // console.log(isOver) //TODO
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
   const open = useModalStore(state => state.open)
 
   const handleUpdateFolder = useCallback(() => {

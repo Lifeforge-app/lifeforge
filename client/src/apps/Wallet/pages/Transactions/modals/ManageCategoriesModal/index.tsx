@@ -10,7 +10,9 @@ import CategorySection from './components/CategorySection'
 
 function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wallet')
+
   const { categoriesQuery } = useWalletData()
 
   const handleCreateIncomeCategory = useCallback(() => {

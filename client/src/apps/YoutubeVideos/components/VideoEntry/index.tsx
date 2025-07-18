@@ -9,6 +9,7 @@ import VideoThumbnail from './components/VideoThumbnail'
 
 function VideoEntry({ video }: { video: IYoutubeVideosStorageEntry }) {
   const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const handleDeleteVideo = useCallback(() => {

@@ -4,6 +4,7 @@ import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 function TransactionsSummary({ month, year }: { month: number; year: number }) {
   const { transactionsQuery } = useWalletData()
+
   const transactions = transactionsQuery.data ?? []
 
   return (

@@ -25,4 +25,5 @@ const ImageGeneration = {
 type IImageGeneration = InferApiESchemaDynamic<typeof ImageGeneration>;
 
 export type { IImageGeneration };
+
 export { ImageGeneration };

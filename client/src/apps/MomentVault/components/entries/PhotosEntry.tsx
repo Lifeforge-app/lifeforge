@@ -10,6 +10,7 @@ import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_int
 async function getNaturalHeightWidth(file: string) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {
     const img = new Image()
+
     img.onload = () => {
       resolve({ height: img.height, width: img.width })
     }
@@ -26,6 +27,7 @@ function PhotosEntry({
   onDelete: () => void
 }) {
   const [loading, setLoading] = useState(true)
+
   const [photos, setPhotos] = useState<
     {
       src: string
@@ -41,6 +43,7 @@ function PhotosEntry({
           const { height, width } = await getNaturalHeightWidth(
             `${import.meta.env.VITE_API_HOST}/media/${file}`
           )
+
           return {
             src: `${import.meta.env.VITE_API_HOST}/media/${file}`,
             height,

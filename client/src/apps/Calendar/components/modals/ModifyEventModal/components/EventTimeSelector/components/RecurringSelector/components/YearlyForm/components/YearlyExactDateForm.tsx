@@ -17,6 +17,7 @@ function YearlyExactDateForm({
   setYearlyDate: React.Dispatch<React.SetStateAction<string>>
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
+
   return (
     <>
       <ListboxOrComboboxInput
