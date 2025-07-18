@@ -101,7 +101,7 @@ function SidebarItem({
   showCollapseSpacer,
   namespace,
   needTranslate = true
-}: SidebarItemProps): React.ReactElement {
+}: SidebarItemProps) {
   const navigate = useNavigate()
 
   const [subsectionExpanded, setSubsectionExpanded] = useState(

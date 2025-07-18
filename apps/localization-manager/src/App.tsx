@@ -1,13 +1,13 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { LoadingScreen, ModalManager } from 'lifeforge-ui'
-import React, { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from 'shared/lib'
 
 import MainContent from './pages/MainContent'
 
-const LocaleAdmin = (): React.ReactElement => {
+const LocaleAdmin = () => {
   const { i18n } = useTranslation()
 
   const [isAuthed, setIsAuthed] = useState<'loading' | boolean>('loading')

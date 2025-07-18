@@ -7,7 +7,7 @@ import {
   SearchInput,
   useModalStore
 } from 'lifeforge-ui'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { fetchAPI } from 'shared/lib'
@@ -16,7 +16,7 @@ import CreateEntryModal from './components/CreateEntryModal'
 import LocaleEditor from './components/LocaleEditor'
 import NamespaceSelector from './components/NamespaceSelector'
 
-function MainContent(): React.ReactElement {
+function MainContent() {
   const { t } = useTranslation('utils.localeAdmin')
 
   const open = useModalStore(state => state.open)
@@ -294,7 +294,7 @@ function MainContent(): React.ReactElement {
 
   useEffect(() => {
     setChangedKeys([])
-    setSearchQuery
+    setSearchQuery('')
   }, [namespace, subNamespace])
 
   return (

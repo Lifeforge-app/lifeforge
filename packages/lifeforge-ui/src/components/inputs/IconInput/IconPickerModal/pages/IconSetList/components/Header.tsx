@@ -1,6 +1,6 @@
-// @ts-ignore
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
+// @ts-expect-error: Iconify types are not fully compatible with the current setup
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useMemo } from 'react'

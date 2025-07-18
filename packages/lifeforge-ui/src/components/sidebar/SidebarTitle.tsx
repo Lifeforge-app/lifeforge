@@ -25,7 +25,7 @@ function SidebarTitle({
   actionButtonOnClick,
   customActionButton,
   namespace
-}: SidebarItemProps): React.ReactElement {
+}: SidebarItemProps) {
   const { t } = useTranslation([namespace, 'common.sidebar'])
 
   return (

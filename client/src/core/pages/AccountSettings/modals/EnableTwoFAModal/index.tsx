@@ -1,17 +1,13 @@
 import OTPScreen from '@security/components/OTPScreen'
 import { ModalHeader } from 'lifeforge-ui'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '../../../../providers/AuthProvider'
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 
-function EnableTwoFAModal({
-  onClose
-}: {
-  onClose: () => void
-}): React.ReactElement {
+function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
 
   const { setUserData } = useAuth()

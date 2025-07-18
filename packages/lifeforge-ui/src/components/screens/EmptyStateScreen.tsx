@@ -30,7 +30,7 @@ function EmptyStateScreen({
   smaller?: boolean
   namespace: string | false
   tKey?: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation(namespace ? namespace : undefined)
 
   return (

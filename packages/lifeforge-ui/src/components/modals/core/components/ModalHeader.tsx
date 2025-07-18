@@ -30,7 +30,7 @@ function ModalHeader({
   className?: string
   appendTitle?: React.ReactElement
   namespace?: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation(namespace)
 
   const innerTitle = useDebounce(title, 100)

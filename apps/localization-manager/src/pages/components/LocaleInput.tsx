@@ -24,7 +24,7 @@ function LocaleInput({
   setValue: (key: string, path: string[], value: string) => void
   setChangedKeys: React.Dispatch<React.SetStateAction<string[]>>
   oldLocales: Record<string, any> | 'loading' | 'error'
-}): React.ReactElement {
+}) {
   const originalValue = useMemo(() => {
     if (typeof oldLocales === 'string') {
       return ''

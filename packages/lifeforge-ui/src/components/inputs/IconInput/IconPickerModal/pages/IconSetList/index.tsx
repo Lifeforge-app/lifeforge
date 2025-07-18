@@ -1,6 +1,6 @@
-// @ts-ignore
 import { type IIconSet } from '@components/inputs/IconInput/IconPickerModal/typescript/icon_selector_interfaces'
 import { Scrollbar } from '@components/utilities'
+// @ts-expect-error: Iconify types are not fully compatible with the current setup
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useState } from 'react'

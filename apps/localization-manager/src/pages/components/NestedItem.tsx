@@ -33,7 +33,7 @@ function NestedItem({
   onDeleteEntry: (path: string) => void
   onRenameEntry: (path: string) => void
   fetchSuggestions: (path: string) => Promise<void>
-}): React.ReactElement {
+}) {
   const [suggestionsLoading, setSuggestionsLoading] = useState(false)
 
   const [collapsed, setCollapsed] = useState(true)
