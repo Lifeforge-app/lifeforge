@@ -40,10 +40,15 @@ function LocationInput({
   disabled?: boolean
 }) {
   const { t } = useTranslation('common.misc')
+
   const apiHost = useAPIEndpoint()
+
   const [query, setQuery] = useState('')
+
   const debouncedQuery = useDebounce(query, 500)
+
   const [enabled, setEnabled] = useState(false)
+
   const dataQuery = useQuery<ILocationEntry[]>({
     queryKey: ['locations', debouncedQuery],
     queryFn: () =>

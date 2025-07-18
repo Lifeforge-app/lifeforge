@@ -28,7 +28,9 @@ function ColorInput({
   disabled?: boolean
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation(namespace)
+
   const ref = useRef<HTMLInputElement | null>(null)
 
   const handleColorPickerOpen = useCallback(() => {

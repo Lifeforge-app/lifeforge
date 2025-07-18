@@ -32,9 +32,13 @@ function FileAndImagePickerModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('common.modals')
+
   const [file, setFile] = useState<File | string | null>(null)
+
   const [preview, setPreview] = useState<string | null>(null)
+
   const [mode, setMode] = useState<'local' | 'url' | 'pixabay' | 'ai'>('local')
+
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

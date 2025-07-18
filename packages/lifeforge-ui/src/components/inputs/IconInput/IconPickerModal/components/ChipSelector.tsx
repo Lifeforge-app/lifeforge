@@ -26,6 +26,7 @@ function ChipSelector({
         {options
           .sort((a, b) => {
             if (a[0] === b[0]) return a.length - b.length
+
             return a.localeCompare(b)
           })
           .map(option => (

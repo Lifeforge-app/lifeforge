@@ -1,36 +1,35 @@
-import Providers from '@providers/index'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import duration from 'dayjs/plugin/duration'
-import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
-import { useEffect } from 'react'
-import { BrowserRouter } from 'react-router'
+import Providers from "@providers/index";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import duration from "dayjs/plugin/duration";
+import isBetween from "dayjs/plugin/isBetween";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import relativeTime from "dayjs/plugin/relativeTime";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+import { useEffect } from "react";
+import { BrowserRouter } from "react-router";
 
-import './index.css'
+import "./i18n";
+import "./index.css";
+import AppRouter from "./routes";
 
-import './i18n'
-import AppRouter from './routes'
-
-dayjs.extend(duration)
-dayjs.extend(isBetween)
-dayjs.extend(relativeTime)
-dayjs.extend(isSameOrAfter)
-dayjs.extend(isSameOrBefore)
-dayjs.extend(weekOfYear)
-dayjs.extend(customParseFormat)
+dayjs.extend(duration);
+dayjs.extend(isBetween);
+dayjs.extend(relativeTime);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(weekOfYear);
+dayjs.extend(customParseFormat);
 
 function App() {
   useEffect(() => {
-    const preloader = document.querySelector('.preloader')
+    const preloader = document.querySelector(".preloader");
 
     if (preloader) {
-      preloader.remove()
+      preloader.remove();
     }
-  }, [])
+  }, []);
 
   return (
     <BrowserRouter>
@@ -43,7 +42,7 @@ function App() {
         </Providers>
       </main>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

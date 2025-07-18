@@ -1,9 +1,14 @@
 {
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "endOfLine": "auto",
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports"
+  ],
   "importOrder": [
-    "^@typescript/(.*)$",
-    "^@middlewares/(.*)$",
-    "^@utils/(.*)$",
+    "^shared/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,

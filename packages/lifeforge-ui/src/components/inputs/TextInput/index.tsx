@@ -63,15 +63,20 @@ function TextInput({
   tKey
 }: ITextInputProps) {
   const { t } = useTranslation(namespace ? namespace : undefined)
+
   const [showPassword, setShowPassword] = useState(false)
+
   const inputRef = useRef<HTMLInputElement | null>(null)
+
   const inputLabel = useMemo(() => {
     if (!namespace) return name
 
     const nameKey = _.camelCase(name)
+
     const labelKey = [tKey, 'inputs', nameKey, 'label']
       .filter(Boolean)
       .join('.')
+
     const fallbackKey = [tKey, 'inputs', nameKey].filter(Boolean).join('.')
 
     return t([labelKey, fallbackKey, name])

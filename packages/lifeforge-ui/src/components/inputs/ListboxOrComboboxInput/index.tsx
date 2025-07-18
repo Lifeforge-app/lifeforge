@@ -54,8 +54,11 @@ function ListboxOrComboboxInput<T>(
     namespace,
     tKey = ''
   } = props
+
   const selfRef = useRef<HTMLDivElement>(null)
+
   const { t } = useTranslation(namespace ? namespace : undefined)
+
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
       return customActive

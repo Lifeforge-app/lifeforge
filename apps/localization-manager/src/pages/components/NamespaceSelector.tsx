@@ -21,6 +21,7 @@ function NamespaceSelector({
   showWarning: boolean
 }): React.ReactElement {
   const { t } = useTranslation('utils.localeAdmin')
+
   const subNamespacesQuery = useAPIQuery<string[]>(
     `/locales/manager/${namespace}`,
     ['namespace', namespace],
@@ -31,12 +32,17 @@ function NamespaceSelector({
     <div className="mt-6 flex flex-col">
       <div className="flex w-full items-center gap-4">
         <ListboxOrComboboxInput
-          type="listbox"
+          buttonContent={
+            <div>
+              {namespace
+                ? t(`namespaces.${namespace}`)
+                : t(`inputs.namespace.placeholder`)}
+            </div>
+          }
+          className={namespace ? 'w-1/2' : 'w-full'}
           icon="tabler:category-2"
           name="namespace"
           namespace="utils.localeAdmin"
-          className={namespace ? 'w-1/2' : 'w-full'}
-          value={namespace}
           setValue={value => {
             if (showWarning && namespace !== value) {
               if (!window.confirm(t('warnings.unsavedChanges'))) {
@@ -46,20 +52,15 @@ function NamespaceSelector({
             setNamespace(value)
             setSubNamespace(null)
           }}
-          buttonContent={
-            <div>
-              {namespace
-                ? t(`namespaces.${namespace}`)
-                : t(`inputs.namespace.placeholder`)}
-            </div>
-          }
+          type="listbox"
+          value={namespace}
         >
           {['common', 'core', 'apps', 'utils'].map(ns => (
             <ListboxOrComboboxOption
               key={ns}
-              value={ns}
-              text={t(`namespaces.${ns}`)}
               icon="tabler:category-2"
+              text={t(`namespaces.${ns}`)}
+              value={ns}
             />
           ))}
         </ListboxOrComboboxInput>
@@ -67,12 +68,17 @@ function NamespaceSelector({
           <QueryWrapper query={subNamespacesQuery}>
             {subNamespaces => (
               <ListboxOrComboboxInput
-                type="listbox"
+                buttonContent={
+                  <div>
+                    {namespace
+                      ? subNamespace
+                      : t(`inputs.subNamespace.placeholder`)}
+                  </div>
+                }
+                className="w-1/2"
                 icon="tabler:cube"
                 name="sub namespace"
                 namespace="utils.localeAdmin"
-                className="w-1/2"
-                value={subNamespace}
                 setValue={value => {
                   if (showWarning && subNamespace !== value) {
                     if (!window.confirm(t('warnings.unsavedChanges'))) {
@@ -81,20 +87,15 @@ function NamespaceSelector({
                   }
                   setSubNamespace(value)
                 }}
-                buttonContent={
-                  <div>
-                    {namespace
-                      ? subNamespace
-                      : t(`inputs.subNamespace.placeholder`)}
-                  </div>
-                }
+                type="listbox"
+                value={subNamespace}
               >
                 {subNamespaces.map(sns => (
                   <ListboxOrComboboxOption
                     key={sns}
-                    value={sns}
-                    text={sns}
                     icon="tabler:cube"
+                    text={sns}
+                    value={sns}
                   />
                 ))}
               </ListboxOrComboboxInput>

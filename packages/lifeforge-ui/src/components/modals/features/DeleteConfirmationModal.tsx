@@ -48,9 +48,13 @@ function DeleteConfirmationModal<T extends RecordModel>({
   }
 }) {
   const apiHost = useAPIEndpoint()
+
   const { t } = useTranslation('common.modals')
+
   const [loading, setLoading] = useState(false)
+
   const queryClient = useQueryClient()
+
   const [confirmationTextState, setConfirmationTextState] = useState('')
 
   const finalItemName = useMemo(() => {
@@ -70,6 +74,7 @@ function DeleteConfirmationModal<T extends RecordModel>({
       if (!Array.isArray(data)) {
         return old.filter(item => item.id !== data!.id)
       }
+
       return old.filter(item => !data.some(d => d.id === item.id))
     },
     [data]
@@ -83,6 +88,7 @@ function DeleteConfirmationModal<T extends RecordModel>({
         if (queryUpdateType === 'mutate') {
           queryClient.setQueryData(key, updateFunc)
         }
+
         if (queryUpdateType === 'invalidate') {
           queryClient.invalidateQueries({ queryKey: key })
         }
@@ -91,6 +97,7 @@ function DeleteConfirmationModal<T extends RecordModel>({
       if (queryUpdateType === 'mutate') {
         queryClient.setQueryData(queryKey as unknown[], updateFunc)
       }
+
       if (queryUpdateType === 'invalidate') {
         queryClient.invalidateQueries({ queryKey: queryKey as unknown[] })
       }
@@ -178,6 +185,7 @@ function DeleteConfirmationModal<T extends RecordModel>({
             if (customOnClick !== undefined) {
               setLoading(true)
               customOnClick(onClose).finally(() => setLoading(false))
+
               return
             }
             deleteData().catch(console.error)

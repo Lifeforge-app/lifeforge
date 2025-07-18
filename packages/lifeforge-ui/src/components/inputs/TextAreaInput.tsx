@@ -37,6 +37,7 @@ function TextAreaInput({
   tKey
 }: ITextAreaInputProps) {
   const { t } = useTranslation(namespace ? namespace : undefined)
+
   const ref = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -80,11 +81,14 @@ function TextAreaInput({
           onKeyDown={e => {
             if (e.key === 'Enter') {
               const cursorPosition = e.currentTarget.selectionStart
+
               const text = e.currentTarget.value
+
               const newText =
                 text.slice(0, cursorPosition) +
                 '\n' +
                 text.slice(cursorPosition)
+
               setValue(newText)
               e.currentTarget.value = newText
               e.currentTarget.setSelectionRange(

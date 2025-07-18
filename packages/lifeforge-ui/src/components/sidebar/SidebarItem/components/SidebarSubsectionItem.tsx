@@ -18,7 +18,9 @@ function SidebarSubsectionItem({
   path: string
 }) {
   const location = useLocation()
+
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
+
   const { t } = useTranslation('common.sidebar')
 
   const locationDependentStyles = useMemo(

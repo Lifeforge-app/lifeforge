@@ -35,7 +35,9 @@ function NestedItem({
   fetchSuggestions: (path: string) => Promise<void>
 }): React.ReactElement {
   const [suggestionsLoading, setSuggestionsLoading] = useState(false)
+
   const [collapsed, setCollapsed] = useState(true)
+
   const filteredEntries = useMemo(
     () =>
       Object.entries(value)
@@ -49,7 +51,9 @@ function NestedItem({
           if (typeof a[1] === 'string' && typeof b[1] === 'string') {
             return 0
           }
+
           const aIsFolder = isFolder(a[1])
+
           const bIsFolder = isFolder(b[1])
 
           if (aIsFolder === bIsFolder) {
@@ -73,32 +77,36 @@ function NestedItem({
       )}
     >
       <button
+        className="flex-between hover:bg-bg-200 dark:hover:bg-bg-900 w-full gap-8 p-4 transition-all"
         onClick={() => {
           setCollapsed(!collapsed)
         }}
-        className="flex-between hover:bg-bg-200 dark:hover:bg-bg-900 w-full gap-8 p-4 transition-all"
       >
         <code className="flex items-center gap-2">
           <Icon
-            icon={!isFolder(value) ? 'tabler:file-text' : 'tabler:folder'}
             className="size-6"
+            icon={!isFolder(value) ? 'tabler:file-text' : 'tabler:folder'}
           />
           {name}
         </code>
         <div className="flex items-center gap-2">
           {isFolder(value) ? (
             <Button
+              className="p-2!"
+              icon="tabler:plus"
+              variant="plain"
               onClick={e => {
                 e.preventDefault()
                 e.stopPropagation()
                 onCreateEntry(path.join('.'))
               }}
-              variant="plain"
-              icon="tabler:plus"
-              className="p-2!"
             />
           ) : (
             <Button
+              className="p-2!"
+              icon="mage:stars-c"
+              loading={suggestionsLoading}
+              variant="plain"
               onClick={e => {
                 e.preventDefault()
                 e.stopPropagation()
@@ -107,37 +115,33 @@ function NestedItem({
                   setSuggestionsLoading(false)
                 })
               }}
-              loading={suggestionsLoading}
-              variant="plain"
-              icon="mage:stars-c"
-              className="p-2!"
             />
           )}
           <Button
+            className="p-2!"
+            icon="tabler:pencil"
+            variant="plain"
             onClick={e => {
               e.preventDefault()
               e.stopPropagation()
               onRenameEntry(path.join('.'))
             }}
-            variant="plain"
-            icon="tabler:pencil"
-            className="p-2!"
           />
           <Button
+            isRed
+            className="p-2!"
+            icon="tabler:trash"
+            variant="plain"
             onClick={e => {
               e.preventDefault()
               e.stopPropagation()
               onDeleteEntry(path.join('.'))
             }}
-            variant="plain"
-            icon="tabler:trash"
-            className="p-2!"
-            isRed
           />
           <div className="p-2">
             <Icon
-              icon={collapsed ? 'tabler:chevron-up' : 'tabler:chevron-down'}
               className="text-bg-500 size-5"
+              icon={collapsed ? 'tabler:chevron-up' : 'tabler:chevron-down'}
             />
           </div>
         </div>
@@ -152,33 +156,34 @@ function NestedItem({
                 </p>
               )
             }
+
             return filteredEntries.map(([key, value]) =>
               typeof value === 'string' ? (
                 <li key={key} className="flex items-center gap-2">
                   <LocaleInput
                     name={key}
-                    path={path}
-                    value={value}
-                    setValue={setValue}
-                    setChangedKeys={setChangedKeys}
                     oldLocales={oldLocales}
+                    path={path}
+                    setChangedKeys={setChangedKeys}
+                    setValue={setValue}
+                    value={value}
                   />
                 </li>
               ) : (
                 <NestedItem
                   key={key}
-                  name={key}
-                  value={value}
-                  path={path.concat(key)}
-                  setValue={setValue}
                   changedKeys={changedKeys}
-                  setChangedKeys={setChangedKeys}
-                  oldLocales={oldLocales}
-                  searchQuery={searchQuery}
-                  onCreateEntry={onCreateEntry}
-                  onRenameEntry={onRenameEntry}
-                  onDeleteEntry={onDeleteEntry}
                   fetchSuggestions={fetchSuggestions}
+                  name={key}
+                  oldLocales={oldLocales}
+                  path={path.concat(key)}
+                  searchQuery={searchQuery}
+                  setChangedKeys={setChangedKeys}
+                  setValue={setValue}
+                  value={value}
+                  onCreateEntry={onCreateEntry}
+                  onDeleteEntry={onDeleteEntry}
+                  onRenameEntry={onRenameEntry}
                 />
               )
             )
