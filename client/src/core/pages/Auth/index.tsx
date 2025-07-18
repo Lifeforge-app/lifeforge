@@ -3,7 +3,7 @@ import { ModalManager, QueryWrapper } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import { useAuth } from '../../providers/AuthProvider'
 import AuthForm from './components/AuthForm'

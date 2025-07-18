@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { IWalletReceiptScanResult } from '../../../interfaces/wallet_interfaces'
 import ModifyTransactionsModal from './ModifyTransactionsModal'
@@ -31,6 +31,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
 
     try {
       const data = await fetchAPI<IWalletReceiptScanResult>(
+        import.meta.env.VITE_API_URL,
         'wallet/transactions/scan-receipt',
         {
           method: 'POST',

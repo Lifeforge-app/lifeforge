@@ -4,7 +4,7 @@ import { ConfigColumn } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import FontFamilyList from './components/FontFamilyList'
 

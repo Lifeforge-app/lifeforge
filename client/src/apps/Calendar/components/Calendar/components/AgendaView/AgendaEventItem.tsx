@@ -1,14 +1,14 @@
 import clsx from 'clsx'
 import { useMemo } from 'react'
 
+import { useAPIQuery } from 'shared/lib'
+
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 import {
   ICalendarCategory,
   ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function AgendaEventItem({ event }: { event: ICalendarEvent }) {
   const categoriesQuery = useAPIQuery<ICalendarCategory[]>(

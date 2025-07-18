@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 function AudioType({
   onSuccess,
@@ -113,10 +113,14 @@ function AudioType({
     body.append('file', file)
 
     try {
-      const data = await fetchAPI<string>('moment-vault/transcribe', {
-        method: 'POST',
-        body
-      })
+      const data = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
+        'moment-vault/transcribe',
+        {
+          method: 'POST',
+          body
+        }
+      )
 
       setTranscription(data)
     } catch {
@@ -143,10 +147,14 @@ function AudioType({
     body.append('transcription', transcription ?? '')
 
     try {
-      await fetchAPI<IMomentVaultEntry>('moment-vault/entries', {
-        method: 'POST',
-        body
-      })
+      await fetchAPI<IMomentVaultEntry>(
+        import.meta.env.VITE_API_URL,
+        'moment-vault/entries',
+        {
+          method: 'POST',
+          body
+        }
+      )
 
       onSuccess()
     } catch {

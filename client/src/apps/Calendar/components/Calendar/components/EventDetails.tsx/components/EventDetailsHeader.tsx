@@ -6,14 +6,14 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
 import {
   ICalendarCategory,
   ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function EventDetailsHeader({
   event,
@@ -30,12 +30,16 @@ function EventDetailsHeader({
 
   const handleAddException = useCallback(async () => {
     try {
-      await fetchAPI(`/calendar/events/exception/${event.id.split('-')[0]}`, {
-        method: 'POST',
-        body: {
-          date: event.start
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `/calendar/events/exception/${event.id.split('-')[0]}`,
+        {
+          method: 'POST',
+          body: {
+            date: event.start
+          }
         }
-      })
+      )
 
       queryClient.setQueryData(eventQueryKey, (oldData: ICalendarEvent[]) => {
         return oldData.filter(item => item.id !== event.id)

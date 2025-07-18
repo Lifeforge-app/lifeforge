@@ -6,12 +6,12 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import {
   IMovieEntry,
   IMovieTicketFormState
 } from '@apps/Movies/interfaces/movies_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function ModifyTicketModal({
   data: { type, existedData },
@@ -76,9 +76,13 @@ function ModifyTicketModal({
 
   async function deleteTicket() {
     try {
-      await fetchAPI(`/movies/entries/ticket/${existedData?.id}`, {
-        method: 'DELETE'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `/movies/entries/ticket/${existedData?.id}`,
+        {
+          method: 'DELETE'
+        }
+      )
 
       queryClient.setQueryData<IMovieEntry[]>(
         ['movies', 'entries'],

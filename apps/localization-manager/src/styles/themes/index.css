@@ -1,0 +1,44 @@
+@import './background.css';
+@import './foreground.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --shadow-custom: var(--custom-shadow);
+
+  --color-custom-50: rgb(var(--color-custom-50));
+  --color-custom-100: rgb(var(--color-custom-100));
+  --color-custom-200: rgb(var(--color-custom-200));
+  --color-custom-300: rgb(var(--color-custom-300));
+  --color-custom-400: rgb(var(--color-custom-400));
+  --color-custom-500: rgb(var(--color-custom-500));
+  --color-custom-600: rgb(var(--color-custom-600));
+  --color-custom-700: rgb(var(--color-custom-700));
+  --color-custom-800: rgb(var(--color-custom-800));
+  --color-custom-900: rgb(var(--color-custom-900));
+
+  --color-bg-50: rgb(var(--color-bg-50)) !important;
+  --color-bg-100: rgb(var(--color-bg-100)) !important;
+  --color-bg-200: rgb(var(--color-bg-200)) !important;
+  --color-bg-300: rgb(var(--color-bg-300)) !important;
+  --color-bg-400: rgb(var(--color-bg-400)) !important;
+  --color-bg-500: rgb(var(--color-bg-500)) !important;
+  --color-bg-600: rgb(var(--color-bg-600)) !important;
+  --color-bg-700: rgb(var(--color-bg-700)) !important;
+  --color-bg-800: rgb(var(--color-bg-800)) !important;
+  --color-bg-900: rgb(var(--color-bg-900)) !important;
+  --color-bg-950: rgb(var(--color-bg-950)) !important;
+}
+
+/* Overwriting daisyUI default colours */
+.bg-neutral {
+  background-color: var(--color-bg-500);
+}
+
+#app {
+  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
+
+  .dark & {
+    --custom-shadow: 0px 0px 0px 0px var(--color-bg-800);
+  }
+}

@@ -11,7 +11,7 @@ import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function BackupItem({
   backup
@@ -29,7 +29,10 @@ function BackupItem({
 
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
-    const buffer = await fetchAPI<Buffer>(`/backups/download/${backup.key}`)
+    const buffer = await fetchAPI<Buffer>(
+      import.meta.env.VITE_API_URL,
+      `/backups/download/${backup.key}`
+    )
 
     if (!buffer) {
       toast.error('Failed to download backup')

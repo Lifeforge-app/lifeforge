@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
@@ -178,6 +178,7 @@ function ModifyTransactionsModal({
 
     try {
       const res = await fetchAPI<IWalletTransaction[] | IWalletTransaction>(
+        import.meta.env.VITE_API_URL,
         `wallet/transactions${type === 'update' ? '/' + existedData?.id : ''}`,
         {
           method: type === 'create' ? 'POST' : 'PATCH',

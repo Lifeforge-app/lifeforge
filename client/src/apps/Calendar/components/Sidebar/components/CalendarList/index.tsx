@@ -3,9 +3,9 @@ import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
+import { useAPIQuery } from 'shared/lib'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 
 import { type ICalendarCalendar } from '../../../../interfaces/calendar_interfaces'
 import CalendarListItem from './components/CalendarListItem'

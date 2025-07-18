@@ -1,0 +1,68 @@
+:root {
+  interpolate-size: allow-keywords;
+  font-size: 14px;
+}
+
+* {
+  scrollbar-color: rgba(64, 64, 64, 0.5) rgba(38, 38, 38, 0.5);
+  scrollbar-width: thin;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  interpolate-size: allow-keywords;
+  @apply selection:bg-custom-500 select-none focus:outline-none disabled:cursor-not-allowed;
+}
+
+input,
+textarea {
+  @apply border-hidden;
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+code {
+  font-family: 'Jetbrains Mono', monospace;
+}
+
+input:autofill {
+  background: transparent; /* or any other */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: black;
+  transition: background-color 5000s ease-in-out 0s;
+  @apply caret-bg-800;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #ffffff;
+}
+
+@page {
+  size: A4 portrait;
+  margin: auto;
+}
+
+@media print {
+  .print-area footer {
+    position: fixed;
+    bottom: -5rem;
+    width: 100%;
+  }
+
+  .print-area {
+    page-break-inside: avoid;
+  }
+}

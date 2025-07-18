@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function ContentContainer({
   bookId,
@@ -25,10 +25,14 @@ function ContentContainer({
   const handleSubmit = useCallback(async () => {
     setLoading(true)
     try {
-      fetchAPI(`books-library/entries/send-to-kindle/${bookId}`, {
-        method: 'POST',
-        body: { target: kindleEmail }
-      })
+      fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `books-library/entries/send-to-kindle/${bookId}`,
+        {
+          method: 'POST',
+          body: { target: kindleEmail }
+        }
+      )
 
       toast.info(t('kindleSent', { email: kindleEmail }))
       onClose()
@@ -50,7 +54,10 @@ function ContentContainer({
   )
 
   useEffect(() => {
-    fetchAPI<boolean>('api-keys/entries/check?keys=smtp-user,smtp-pass')
+    fetchAPI<boolean>(
+      import.meta.env.VITE_API_URL,
+      'api-keys/entries/check?keys=smtp-user,smtp-pass'
+    )
       .then(isEnabled => {
         setEnabled(isEnabled)
       })

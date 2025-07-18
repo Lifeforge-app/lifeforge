@@ -1,10 +1,9 @@
 import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared/lib'
 
 import { Button } from '@components/buttons'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import TextAreaInput from '../../../TextAreaInput'
 

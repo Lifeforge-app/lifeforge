@@ -18,9 +18,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import { ITodoListEntry } from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'
@@ -76,6 +76,7 @@ function ModifyTaskDrawer() {
 
     try {
       const data = await fetchAPI<ITodoListEntry>(
+        import.meta.env.VITE_API_URL,
         'todo-list/entries' +
           (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
         {

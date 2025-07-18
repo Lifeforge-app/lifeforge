@@ -11,9 +11,9 @@ import {
 } from 'react'
 import { toast } from 'react-toastify'
 
-import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
+import { useAPIQuery } from 'shared/lib'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 
 import { useAuth } from '../../../core/providers/AuthProvider'
 

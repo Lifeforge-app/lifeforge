@@ -4,7 +4,7 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import {
   IBooksLibraryEntry,
@@ -153,10 +153,14 @@ function ModifyBookModal({
     }
 
     try {
-      await fetchAPI(`books-library/entries/${existedData?.id}`, {
-        method: 'PATCH',
-        body: data
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `books-library/entries/${existedData?.id}`,
+        {
+          method: 'PATCH',
+          body: data
+        }
+      )
 
       onClose()
       queryClient.invalidateQueries({ queryKey: ['books-library', 'entries'] })

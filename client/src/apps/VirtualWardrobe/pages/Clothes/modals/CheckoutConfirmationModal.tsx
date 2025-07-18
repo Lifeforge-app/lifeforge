@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 function CheckoutConfirmationModal({
   data: { queryKey },
@@ -24,12 +24,16 @@ function CheckoutConfirmationModal({
     setLoading(true)
 
     try {
-      await fetchAPI('virtual-wardrobe/session/checkout', {
-        method: 'POST',
-        body: {
-          notes
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        'virtual-wardrobe/session/checkout',
+        {
+          method: 'POST',
+          body: {
+            notes
+          }
         }
-      })
+      )
 
       queryClient.setQueryData<IVirtualWardrobeEntry[]>(
         ['virtual-wardrobe', 'session-cart-items'],

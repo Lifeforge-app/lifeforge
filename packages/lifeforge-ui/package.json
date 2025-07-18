@@ -60,6 +60,7 @@
     "vitest": "^1.6.1"
   },
   "dependencies": {
+    "shared": "workspace:*",
     "@headlessui/react": "^2.2.2",
     "@iconify/collections": "^1.0.544",
     "@iconify/react": "^5.2.1",

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { IMusicEntry } from '../interfaces/music_interfaces'
 
@@ -39,10 +39,14 @@ function UpdateMusicModal({
     }
 
     try {
-      await fetchAPI(`music/entries/${existedData?.id}`, {
-        method: 'PATCH',
-        body: music
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `music/entries/${existedData?.id}`,
+        {
+          method: 'PATCH',
+          body: music
+        }
+      )
 
       queryClient.setQueryData<IMusicEntry[]>(['music', 'entries'], prev => {
         if (!prev) return prev

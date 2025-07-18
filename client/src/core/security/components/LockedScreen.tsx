@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { encrypt } from '../utils/encryption'
 
@@ -29,14 +29,21 @@ function LockedScreen({
     setLoading(true)
 
     try {
-      const challenge = await fetchAPI<string>(`${endpoint}/challenge`)
+      const challenge = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
+        `${endpoint}/challenge`
+      )
 
-      const data = await fetchAPI<boolean>(`${endpoint}/verify`, {
-        method: 'POST',
-        body: {
-          password: encrypt(masterPassWordInputContent, challenge)
+      const data = await fetchAPI<boolean>(
+        import.meta.env.VITE_API_URL,
+        `${endpoint}/verify`,
+        {
+          method: 'POST',
+          body: {
+            password: encrypt(masterPassWordInputContent, challenge)
+          }
         }
-      })
+      )
 
       if (data === true) {
         toast.info(

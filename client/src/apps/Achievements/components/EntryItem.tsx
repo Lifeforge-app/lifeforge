@@ -3,7 +3,8 @@ import clsx from 'clsx'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { AchievementsSchemas, ISchemaWithPB } from 'shared'
+
+import { AchievementsSchemas, ISchemaWithPB } from 'shared/types'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 

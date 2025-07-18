@@ -4,7 +4,7 @@ import { Button, ModalHeader, TextAreaInput } from 'lifeforge-ui'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { IMomentVaultEntry } from '../interfaces/moment_vault_interfaces'
 
@@ -29,12 +29,16 @@ function ModifyTextEntryModal({
     setSubmitLoading(true)
 
     try {
-      await fetchAPI(`moment-vault/entries/${existedData.id}`, {
-        method: 'PATCH',
-        body: {
-          content: text
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `moment-vault/entries/${existedData.id}`,
+        {
+          method: 'PATCH',
+          body: {
+            content: text
+          }
         }
-      })
+      )
 
       queryClient.invalidateQueries({ queryKey })
       onClose()

@@ -17,11 +17,10 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
+
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
@@ -68,6 +67,7 @@ function Movies() {
   async function toggleWatched(id: string, isWatched: boolean = false) {
     try {
       await fetchAPI<IMovieEntry>(
+        import.meta.env.VITE_API_URL,
         `/movies/entries/watch-status/${id}?watched=${isWatched}`,
         {
           method: 'PATCH'

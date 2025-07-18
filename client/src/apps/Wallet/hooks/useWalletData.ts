@@ -1,11 +1,11 @@
+import { useAPIQuery } from 'shared/lib'
+
 import type {
   IWalletAsset,
   IWalletCategory,
   IWalletLedger,
   IWalletTransaction
 } from '@apps/Wallet/interfaces/wallet_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { useFilteredTransactions } from './useFilteredTransactions'
 

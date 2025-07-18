@@ -21,6 +21,12 @@ export default [
   // React configurations
   pluginReact.configs.flat.recommended,
   {
+    parserOptions: {
+      project: './tsconfig.json',
+      tsconfigRootDir: __dirname
+    }
+  },
+  {
     plugins: {
       'react-compiler': reactCompiler
     },

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import ModifyEntryModal from './ModifyEntryModal'
 

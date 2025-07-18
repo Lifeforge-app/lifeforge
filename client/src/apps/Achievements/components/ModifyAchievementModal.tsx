@@ -2,8 +2,9 @@ import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AchievementsSchemas, ISchemaWithPB } from 'shared'
 import COLOR from 'tailwindcss/colors'
+
+import { AchievementsSchemas, ISchemaWithPB } from 'shared/types'
 
 const difficulties = [
   ['easy', 'green'],

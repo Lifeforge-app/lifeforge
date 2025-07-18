@@ -59,7 +59,7 @@
 - **Code**: Changed all the timeout for `useDebounce` hook from `500ms` to `300ms` for better responsiveness.
 - **UI**: Fixed a bug in `FormModal` where the default API logic is still fired when custom `onSubmit` function is provided.
 - **Localization**: The theme and language config of the localization manager is now synced with the main system.
-- **Localization**: Updated modals logic in localization manager to adapt to the new `@lifeforge/ui` package
+- **Localization**: Updated modals logic in localization manager to adapt to the new `lifeforge-ui` package
 - **Localization**: Loading screen is not shown when the user is being authenticated in the localization manager.
 - **API Explorer**: Started complete rewrite of the API Explorer module as a separate app that can be accessed through SSO.
 - **API Explorer**: The theme and language config of the API Explorer is synced with the main system.
@@ -110,7 +110,7 @@
 - **UI**: Added back pre-loader when the modules are being prepared.
 - **UI**: Reworked the date input component to use the new `react-datepicker` library instead of the old `react-date-picker` library.
 - **UI**: Split the main `index.css` file into multiple files for better organization.
-- **UI**: Added props sorting to ESLint configuration of the `@lifeforge/ui` package.
+- **UI**: Added props sorting to ESLint configuration of the `lifeforge-ui` package.
 - **UI**: Fixed a bug in ColorInput where the existed color is not properly passed to the color picker component.
 - **UI**: Minor UI improvements to the overall design of the system.
 
@@ -134,7 +134,7 @@
 - **API**: Fixed a few stupid mistakes.
 - **UI**: Fixed some silly but fatal bugs related to `useCallback`.
 - **UI**: Improved styling for different state of button components.
-- **UI**: Moved global modal manager components and mechanism to `@lifeforge/ui`.
+- **UI**: Moved global modal manager components and mechanism to `lifeforge-ui`.
 - **UI**: Mega performance optimization for `FormModal` component by removing unnecessary re-renders.
 - **UI**: Text will now be highlighted in the theme color when the user selects it.
 - **Account**: Fixed a bug where the remove button in the avatar column will show up even if the user doesn't have an avatar.
@@ -292,8 +292,8 @@
 - **Code**: Removed unused typescript declarations like `function Component(): React.ReactElement {}`, etc.
 - **Code**: Refactored `PersonalizationProvider`.
 - **Code**: Moved routing logics and related files into `core/routes`.
-- **Code**: Refactored and modularized components into an independent package, `@lifeforge/ui`, to improve maintainability.
-- **UI**: Abstracted and relocated reusable UI components to `@lifeforge/ui` for a more structured component architecture.
+- **Code**: Refactored and modularized components into an independent package, `lifeforge-ui`, to improve maintainability.
+- **UI**: Abstracted and relocated reusable UI components to `lifeforge-ui` for a more structured component architecture.
 - **UI**: Renamed `no-bg` variant of button to `plain`.
 - **UI**: Added `tertiary` variant to button.
 - **UI**: Improved styling for button component.

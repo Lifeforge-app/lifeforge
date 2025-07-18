@@ -2,7 +2,7 @@
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: calendar
- * Generated at: 2025-07-17T08:55:29.692Z
+ * Generated at: 2025-07-18T00:32:55.270Z
  * Contains: calendar__events, calendar__categories, calendar__categories_aggregated, calendar__calendars
  */
 

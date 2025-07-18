@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function CreatePasswordConfirmationModal({
   data: { newPassword, confirmPassword, endpoint },
@@ -34,7 +34,7 @@ function CreatePasswordConfirmationModal({
     setLoading(true)
 
     try {
-      await fetchAPI(endpoint, {
+      await fetchAPI(import.meta.env.VITE_API_URL, endpoint, {
         method: 'POST',
         body: { password: newPassword }
       })

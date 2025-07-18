@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
 import tinycolor from 'tinycolor2'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 export default function Quotes() {
   const quoteQuery = useAPIQuery<

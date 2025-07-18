@@ -10,7 +10,7 @@
   ],
   "importOrder": [
     "^.*?.css$",
-    "^@lifeforge/(.*)$",
+    "^shared/(.*)$",
     "^@security/(.*)$",
     "^@apps/(.*)$",
     "^@interfaces/(.*)$",

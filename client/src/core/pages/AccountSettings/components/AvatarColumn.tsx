@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -30,10 +30,14 @@ function AvatarColumn() {
         setLoading(true)
 
         try {
-          const data = await fetchAPI<string>('/user/settings/avatar', {
-            method: 'PUT',
-            body: formData
-          })
+          const data = await fetchAPI<string>(
+            import.meta.env.VITE_API_URL,
+            '/user/settings/avatar',
+            {
+              method: 'PUT',
+              body: formData
+            }
+          )
           setUserData({ ...userData, avatar: data })
         } catch {
           toast.error('An error occurred')

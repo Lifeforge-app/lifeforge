@@ -7,7 +7,7 @@ import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 function CodeTimeActivityCalendar() {
   const { t } = useTranslation('apps.codeTime')

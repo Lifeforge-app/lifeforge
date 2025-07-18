@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
@@ -29,6 +29,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
 
     try {
       await fetchAPI<IBooksLibraryEntry>(
+        import.meta.env.VITE_API_URL,
         `books-library/entries/favourite/${item.id}`,
         {
           method: 'POST'
