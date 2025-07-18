@@ -24,6 +24,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "../../shared/src/lib/providers/APIOnlineStatusProvider.tsx"
   ]
 }

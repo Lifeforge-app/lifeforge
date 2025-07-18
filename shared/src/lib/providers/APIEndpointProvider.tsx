@@ -9,11 +9,7 @@ export default function APIEndpointProvider({
   endpoint: string;
   children: React.ReactNode;
 }) {
-  return (
-    <APIEndpointContext.Provider value={endpoint}>
-      {children}
-    </APIEndpointContext.Provider>
-  );
+  return <APIEndpointContext value={endpoint}>{children}</APIEndpointContext>;
 }
 
 export function useAPIEndpoint() {

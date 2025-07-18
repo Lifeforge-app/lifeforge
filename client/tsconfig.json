@@ -53,7 +53,7 @@
   },
   "include": [
     "./src/**/*",
-    "../shared/src/lib/providers/APIOnlineStatusProvider.tsx",
+    "../packages/lifeforge-ui/src/components/screens/APIOnlineStatusScreen.tsx",
     "../shared/src/lib/providers/SidebarStateProvider.tsx"
   ],
   "references": [

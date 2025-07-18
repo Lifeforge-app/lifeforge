@@ -20,7 +20,8 @@
     "noUncheckedIndexedAccess": true
   },
   "include": [
-    "src"
+    "src",
+    "../packages/lifeforge-ui/src/components/screens/APIOnlineStatusScreen.tsx"
   ],
   "exclude": [
     "dist",
