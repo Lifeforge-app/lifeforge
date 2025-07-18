@@ -49,7 +49,7 @@ function OTPScreen({
 
     try {
       const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'user/auth/otp',
         {
           method: 'GET'
@@ -80,12 +80,12 @@ function OTPScreen({
 
     try {
       const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `${endpoint}/challenge`
       )
 
       const data = await fetchAPI<boolean>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `${endpoint}/otp`,
         {
           method: 'POST',

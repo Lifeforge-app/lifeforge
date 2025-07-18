@@ -123,7 +123,7 @@ function ModifyEntryModal({
 
     try {
       await fetchAPI<IWishlistEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'wishlist/entries' + (type === 'update' ? `/${existedData?.id}` : ''),
         {
           method: type === 'create' ? 'POST' : 'PATCH',

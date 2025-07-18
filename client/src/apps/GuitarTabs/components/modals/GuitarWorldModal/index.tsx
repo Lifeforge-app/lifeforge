@@ -29,7 +29,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
 
     try {
       const data = await fetchAPI<IGuitarTabsGuitarWorldScores>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'guitar-tabs/guitar-world',
         {
           method: 'POST',

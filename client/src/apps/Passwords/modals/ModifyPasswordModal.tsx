@@ -64,14 +64,14 @@ function ModifyPasswordModal({
     setLoading(true)
 
     const challenge = await fetchAPI<string>(
-      import.meta.env.VITE_API_URL,
+      import.meta.env.VITE_API_HOST,
       'passwords/entries/challenge'
     )
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     try {
       const data = await fetchAPI<IPasswordEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `passwords/entries${type === 'update' ? '/' + existedData?.id : ''}`,
         {
           method: type === 'create' ? 'POST' : 'PATCH',

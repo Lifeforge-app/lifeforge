@@ -11,7 +11,7 @@ export default async function fetchShortestRoute(
   }
 
   const data = await fetchAPI<IRailwayMapStation[]>(
-    import.meta.env.VITE_API_URL,
+    import.meta.env.VITE_API_HOST,
     `railway-map/shortest?start=${start}&end=${end}`
   )
 

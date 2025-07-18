@@ -23,11 +23,11 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
 
     try {
       const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/user/2fa/challenge`
       )
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/user/2fa/verify-and-enable`,
         {
           method: 'POST',

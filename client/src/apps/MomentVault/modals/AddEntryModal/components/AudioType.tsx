@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
@@ -8,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
+import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
@@ -114,7 +114,7 @@ function AudioType({
 
     try {
       const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'moment-vault/transcribe',
         {
           method: 'POST',
@@ -148,7 +148,7 @@ function AudioType({
 
     try {
       await fetchAPI<IMomentVaultEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'moment-vault/entries',
         {
           method: 'POST',

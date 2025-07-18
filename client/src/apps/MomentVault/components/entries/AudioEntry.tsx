@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
@@ -10,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
+import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
@@ -59,7 +59,7 @@ function AudioEntry({
 
     try {
       const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `moment-vault/transcribe/${entry.id}`,
         {
           method: 'POST'

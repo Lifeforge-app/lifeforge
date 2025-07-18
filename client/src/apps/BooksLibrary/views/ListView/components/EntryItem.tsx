@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Button, HamburgerMenu } from 'lifeforge-ui'
@@ -8,6 +7,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
+import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
 
 import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
@@ -29,7 +29,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
 
     try {
       await fetchAPI<IBooksLibraryEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `books-library/entries/favourite/${item.id}`,
         {
           method: 'POST'

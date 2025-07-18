@@ -31,14 +31,14 @@ function EntryItem({
   const [isCopying, setIsCopying] = useState(false)
   async function copyKey() {
     const challenge = await fetchAPI<string>(
-      import.meta.env.VITE_API_URL,
+      import.meta.env.VITE_API_HOST,
       'api-keys/auth/challenge'
     )
     setIsCopying(true)
 
     try {
       const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `api-keys/entries/${entry.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`

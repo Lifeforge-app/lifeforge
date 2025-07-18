@@ -34,7 +34,7 @@ function CreatePasswordConfirmationModal({
     setLoading(true)
 
     try {
-      await fetchAPI(import.meta.env.VITE_API_URL, endpoint, {
+      await fetchAPI(import.meta.env.VITE_API_HOST, endpoint, {
         method: 'POST',
         body: { password: newPassword }
       })

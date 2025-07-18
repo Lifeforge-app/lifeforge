@@ -29,7 +29,7 @@ function Modules() {
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `modules/toggle/${_.kebabCase(moduleName)}`,
         {
           method: 'POST'

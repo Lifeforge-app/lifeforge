@@ -1,5 +1,5 @@
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import clsx from 'clsx'
+import { useSidebarState } from 'shared/lib'
 
 import SidebarSubsectionItem from './SidebarSubsectionItem'
 
@@ -16,7 +16,7 @@ function SidebarItemSubsection({
   name: string
   subsectionExpanded: boolean
 }) {
-  const { sidebarExpanded } = useLifeforgeUIContext()
+  const { sidebarExpanded } = useSidebarState()
 
   return (
     <li

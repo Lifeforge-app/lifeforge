@@ -163,7 +163,7 @@ function ModifyIdeaModal({
 
     try {
       await fetchAPI<IIdeaBoxEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `idea-box/ideas/${innerOpenType === 'update' ? existedData?.id : ''}`,
         {
           method: innerOpenType === 'update' ? 'PATCH' : 'POST',

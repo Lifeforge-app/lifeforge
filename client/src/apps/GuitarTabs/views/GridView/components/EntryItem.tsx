@@ -21,7 +21,7 @@ function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
   async function favouriteTab() {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `guitar-tabs/entries/favourite/${entry.id}`,
         {
           method: 'POST'

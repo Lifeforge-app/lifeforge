@@ -55,7 +55,7 @@ function BasicInfoSection({
         category: string
         subcategory: string
         colors: string[]
-      }>('virtual-wardrobe/entries/vision', {
+      }>(import.meta.env.VITE_API_HOST, 'virtual-wardrobe/entries/vision', {
         method: 'POST',
         body: formData
       })

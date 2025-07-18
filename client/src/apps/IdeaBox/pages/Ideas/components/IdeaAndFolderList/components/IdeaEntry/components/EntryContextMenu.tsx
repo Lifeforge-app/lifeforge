@@ -23,7 +23,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const handlePinIdea = useCallback(async () => {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `idea-box/ideas/pin/${entry.id}`,
         {
           method: 'POST'
@@ -52,7 +52,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const handleArchiveIdea = useCallback(async () => {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `idea-box/ideas/archive/${entry.id}`,
         {
           method: 'POST'
@@ -80,7 +80,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const handleRemoveFromFolder = useCallback(async () => {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `idea-box/ideas/move/${entry.id}`,
         {
           method: 'DELETE'

@@ -1,7 +1,6 @@
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
 import { Button } from '@components/buttons'
 
@@ -18,7 +17,7 @@ function AIImageGenerator({
   setPreview: React.Dispatch<React.SetStateAction<string | null>>
   defaultPrompt: string
 }) {
-  const { apiHost } = useLifeforgeUIContext()
+  const apiHost = useAPIEndpoint()
   const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
 

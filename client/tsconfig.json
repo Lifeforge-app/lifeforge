@@ -52,7 +52,9 @@
     }
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "../shared/src/lib/providers/APIOnlineStatusProvider.tsx",
+    "../shared/src/lib/providers/SidebarStateProvider.tsx"
   ],
   "references": [
     {

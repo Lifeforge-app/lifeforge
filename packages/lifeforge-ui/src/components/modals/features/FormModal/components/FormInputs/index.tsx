@@ -1,6 +1,8 @@
-import { IFieldProps, IFormState } from '@interfaces/modal_interfaces'
-
 import { ILocationEntry } from '@components/inputs/LocationInput'
+import {
+  IFieldProps,
+  IFormState
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'

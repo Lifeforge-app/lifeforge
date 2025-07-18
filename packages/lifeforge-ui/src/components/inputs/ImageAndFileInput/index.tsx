@@ -1,4 +1,3 @@
-import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
@@ -7,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
 import { Button } from '@components/buttons'
+import FILE_ICONS from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/constants/file_icons'
 import { useModalStore } from '@components/modals'
 
 import FileAndImagePickerModal from './FileAndImagePickerModal'

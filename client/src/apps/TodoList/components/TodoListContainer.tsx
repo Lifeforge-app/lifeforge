@@ -30,7 +30,7 @@ function TodoListContainer() {
   async function fetchAndSetTask(id: string) {
     try {
       const data = await fetchAPI<ITodoListEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `todo-list/entries/${id}`
       )
 

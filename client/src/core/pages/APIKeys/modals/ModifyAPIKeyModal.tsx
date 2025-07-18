@@ -75,13 +75,13 @@ function ModifyAPIKeyModal({
 
   async function fetchKey() {
     const challenge = await fetchAPI<string>(
-      import.meta.env.VITE_API_URL,
+      import.meta.env.VITE_API_HOST,
       'api-keys/auth/challenge'
     )
 
     try {
       const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `api-keys/entries/${existedData?.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`
@@ -131,7 +131,7 @@ function ModifyAPIKeyModal({
       fields={FIELDS}
       getFinalData={async originalData => {
         const challenge = await fetchAPI<string>(
-          import.meta.env.VITE_API_URL,
+          import.meta.env.VITE_API_HOST,
           'api-keys/auth/challenge'
         )
 

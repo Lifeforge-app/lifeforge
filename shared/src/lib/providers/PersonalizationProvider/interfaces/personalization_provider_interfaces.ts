@@ -31,17 +31,15 @@ interface IPersonalizationData {
   bgImage: string
   language: string
   dashboardLayout: DashboardLayoutType
-  setFontFamily: (font: string) => void
-  setTheme: (theme: 'light' | 'dark' | 'system') => void
-  setThemeColor: (color: string) => void
-  setBgTemp: (color: string) => void
-  setBgImage: (image: string) => void
-  setBackdropFilters: (filters: IBackdropFilters) => void
-  setLanguage: (language: string) => void
-  setDashboardLayout: (layout: DashboardLayoutType) => void
-  setDashboardLayoutWithoutPost: React.Dispatch<
-    React.SetStateAction<DashboardLayoutType>
-  >
+
+  setFontFamily: React.Dispatch<React.SetStateAction<string>>
+  setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark' | 'system'>>
+  setRawThemeColor: React.Dispatch<React.SetStateAction<string>>
+  setBgTemp: React.Dispatch<React.SetStateAction<string>>
+  setBgImage: React.Dispatch<React.SetStateAction<string>>
+  setBackdropFilters: React.Dispatch<React.SetStateAction<IBackdropFilters>>
+  setLanguage: React.Dispatch<React.SetStateAction<string>>
+  setDashboardLayout: React.Dispatch<React.SetStateAction<DashboardLayoutType>>
 }
 
 export type { IPersonalizationData, IBackdropFilters, DashboardLayoutType }

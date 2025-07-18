@@ -55,7 +55,7 @@ function Header({
             metadata: IYoutubeVideoInfo
           }
         >
-      >('youtube-videos/video/download-status', {
+      >(import.meta.env.VITE_API_HOST, 'youtube-videos/video/download-status', {
         method: 'POST',
         body: { id: 'all' }
       })

@@ -29,7 +29,7 @@ function Searchbar({
 
     try {
       const entry = await fetchAPI<IGuitarTabsEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         '/guitar-tabs/entries/random'
       )
 

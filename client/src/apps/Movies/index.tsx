@@ -67,7 +67,7 @@ function Movies() {
   async function toggleWatched(id: string, isWatched: boolean = false) {
     try {
       await fetchAPI<IMovieEntry>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/movies/entries/watch-status/${id}?watched=${isWatched}`,
         {
           method: 'PATCH'

@@ -10,7 +10,7 @@ export async function getDecryptedPassword(
   id: string
 ): Promise<string> {
   const challenge = await fetchAPI<string>(
-    import.meta.env.VITE_API_URL,
+    import.meta.env.VITE_API_HOST,
     'passwords/entries/challenge'
   )
 

@@ -1,8 +1,7 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import clsx from 'clsx'
+import { usePersonalization } from 'shared/lib'
 import tinycolor from 'tinycolor2'
-
-import useThemeColors from '@hooks/useThemeColor'
 
 function Switch({
   checked,
@@ -11,12 +10,14 @@ function Switch({
   checked: boolean
   onChange: () => void
 }) {
-  const { theme } = useThemeColors()
+  const { derivedThemeColor } = usePersonalization()
 
   const getStateClassName = () => {
     if (checked) {
       return clsx(
-        tinycolor(theme).isLight() ? 'bg-bg-100 dark:bg-bg-800' : 'bg-bg-100',
+        tinycolor(derivedThemeColor).isLight()
+          ? 'bg-bg-100 dark:bg-bg-800'
+          : 'bg-bg-100',
         'translate-x-6'
       )
     }

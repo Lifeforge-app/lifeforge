@@ -1,19 +1,21 @@
-import APIOnlineStatusProvider from '@providers/APIOnlineStatusProvider'
-import BackgroundProvider from '@providers/BackgroundProvider'
-import LifeforgeUIProviderWrapper from '@providers/LifeforgeUIProviderWrapper'
-import PersonalizationProvider from '@providers/PersonalizationProvider'
-import SidebarStateProvider from '@providers/SidebarStateProvider'
 import ToastProvider from '@providers/ToastProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import { APIEndpointProvider } from 'shared/lib'
+import {
+  APIEndpointProvider,
+  APIOnlineStatusProvider,
+  BackgroundProvider,
+  PersonalizationProvider,
+  SidebarStateProvider
+} from 'shared/lib'
 
 import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 import AuthProvider from './AuthProvider'
 import SocketProvider from './SocketProvider'
+import UserPersonalizationProvider from './UserPersonalizationProvider'
 
 const queryClient = new QueryClient()
 
@@ -26,15 +28,15 @@ function Providers({ children }: { children: React.ReactNode }) {
             <AuthProvider>
               <DndProvider backend={HTML5Backend}>
                 <PersonalizationProvider>
-                  <ToastProvider>
-                    <LifeforgeUIProviderWrapper>
+                  <UserPersonalizationProvider>
+                    <ToastProvider>
                       <BackgroundProvider>
                         <SocketProvider>
                           <MusicProvider>{children}</MusicProvider>
                         </SocketProvider>
                       </BackgroundProvider>
-                    </LifeforgeUIProviderWrapper>
-                  </ToastProvider>
+                    </ToastProvider>
+                  </UserPersonalizationProvider>
                 </PersonalizationProvider>
               </DndProvider>
             </AuthProvider>

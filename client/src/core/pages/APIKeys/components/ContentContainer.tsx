@@ -28,12 +28,12 @@ function ContentContainer({
     queryKey: ['api-keys', 'entries', masterPassword],
     queryFn: async () => {
       const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'api-keys/auth/challenge'
       )
 
       return fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'api-keys/entries?master=' +
           encodeURIComponent(encrypt(masterPassword, challenge))
       )

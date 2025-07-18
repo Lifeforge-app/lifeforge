@@ -31,7 +31,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
 
     try {
       const data = await fetchAPI<IWalletReceiptScanResult>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'wallet/transactions/scan-receipt',
         {
           method: 'POST',

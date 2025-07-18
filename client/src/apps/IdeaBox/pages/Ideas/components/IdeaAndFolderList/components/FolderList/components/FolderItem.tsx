@@ -82,7 +82,7 @@ function FolderItem({ folder }: FolderItemProps) {
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
         {
           method: 'POST'
@@ -106,7 +106,7 @@ function FolderItem({ folder }: FolderItemProps) {
   const removeFromFolder = async () => {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `idea-box/folders/move/${folder.id}`,
         {
           method: 'DELETE'

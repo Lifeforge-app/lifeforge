@@ -24,7 +24,7 @@ function ModifyModal({
     setLoading(true)
 
     try {
-      await fetchAPI(import.meta.env.VITE_API_URL, '/user/settings', {
+      await fetchAPI(import.meta.env.VITE_API_HOST, '/user/settings', {
         method: 'PATCH',
         body: {
           data: {

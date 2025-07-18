@@ -10,29 +10,15 @@
       "esnext"
     ],
     "paths": {
-      "@providers/*": [
-        "./src/providers/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
       "@components/*": [
         "./src/components/*"
-      ],
-      "@interfaces/*": [
-        "./src/interfaces/*"
       ]
     },
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
     "esModuleInterop": true,
+    "allowUnusedLabels": false,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true

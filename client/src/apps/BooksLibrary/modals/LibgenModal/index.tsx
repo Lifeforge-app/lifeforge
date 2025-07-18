@@ -60,7 +60,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
     for (const endpoint of PROVIDERS) {
       try {
         await fetchAPI(
-          import.meta.env.VITE_API_URL,
+          import.meta.env.VITE_API_HOST,
           `cors-anywhere?url=https://${endpoint}`,
           {
             timeout: 5000
@@ -91,6 +91,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
         page: number
         data: Array<Record<string, any>>
       }>(
+        import.meta.env.VITE_API_HOST,
         `books-library/libgen/search?provider=${provider}&req=${searchQuery}&page=${
           page ?? 1
         }`

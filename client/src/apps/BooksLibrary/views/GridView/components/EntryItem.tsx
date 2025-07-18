@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import { HamburgerMenu } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
+
+import { usePersonalization } from 'shared/lib'
 
 import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'

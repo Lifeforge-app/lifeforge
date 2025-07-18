@@ -43,8 +43,8 @@ function CreateEntryModal({
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
+        import.meta.env.VITE_API_HOST,
         `/locales/manager/${selectedType}/${target[0]}/${target[1]}`,
         {
           method: 'POST',

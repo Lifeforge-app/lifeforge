@@ -14,7 +14,7 @@ function PasswordColumn() {
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         '/user/settings/request-password-reset',
         {
           method: 'POST'
