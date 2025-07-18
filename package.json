@@ -8,6 +8,7 @@
     "./server",
     "./client",
     "./shared",
+    "./packages/*",
     "./apps/*"
   ],
   "scripts": {
