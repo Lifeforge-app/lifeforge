@@ -321,7 +321,7 @@ function MainContent(): React.ReactElement {
       />
 
       {namespace && subNamespace ? (
-        <div className="flex h-full flex-1 flex-col">
+        <div className="mt-3 flex h-full flex-1 flex-col">
           <SearchInput
             namespace="utils.localeAdmin"
             stuffToSearch="entry"
