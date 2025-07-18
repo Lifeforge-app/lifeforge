@@ -14,14 +14,14 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 
+import { useAPIQuery } from 'shared/lib'
+
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function EventItem({
   categories,

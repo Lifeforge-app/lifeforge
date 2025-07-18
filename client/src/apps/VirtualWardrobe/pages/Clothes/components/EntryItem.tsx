@@ -12,11 +12,11 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
 import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import ModifyItemModal from '../modals/ModifyItemModal'
 
@@ -60,9 +60,13 @@ function EntryItem<T extends boolean = false>({
     }
 
     try {
-      await fetchAPI(`virtual-wardrobe/session/${entry.id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `virtual-wardrobe/session/${entry.id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       queryClient.setQueryData<IVirtualWardrobeEntry[]>(
         ['virtual-wardrobe', 'session-cart-items'],

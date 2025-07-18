@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 async function getNaturalHeightWidth(file: File) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {
@@ -45,7 +45,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
         formData.append('files', photo.file)
       })
 
-      await fetchAPI('moment-vault/entries', {
+      await fetchAPI(import.meta.env.VITE_API_URL, 'moment-vault/entries', {
         method: 'POST',
         body: formData
       })

@@ -3,11 +3,11 @@ import { Button, DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import MiniCalendarContent from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
 import { type ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())

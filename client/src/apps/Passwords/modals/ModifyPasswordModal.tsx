@@ -10,9 +10,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import { encrypt } from '../../../core/security/utils/encryption'
 import {
@@ -63,11 +63,15 @@ function ModifyPasswordModal({
 
     setLoading(true)
 
-    const challenge = await fetchAPI<string>('passwords/entries/challenge')
+    const challenge = await fetchAPI<string>(
+      import.meta.env.VITE_API_URL,
+      'passwords/entries/challenge'
+    )
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     try {
       const data = await fetchAPI<IPasswordEntry>(
+        import.meta.env.VITE_API_URL,
         `passwords/entries${type === 'update' ? '/' + existedData?.id : ''}`,
         {
           method: type === 'create' ? 'POST' : 'PATCH',

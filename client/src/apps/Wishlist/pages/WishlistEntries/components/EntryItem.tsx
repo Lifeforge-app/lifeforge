@@ -13,9 +13,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
@@ -47,9 +46,13 @@ function EntryItem({
     setBought(!bought)
 
     try {
-      await fetchAPI(`wishlist/entries/bought/${entry.id}`, {
-        method: 'PATCH'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `wishlist/entries/bought/${entry.id}`,
+        {
+          method: 'PATCH'
+        }
+      )
 
       setTimeout(toggleBought, 500)
     } catch {

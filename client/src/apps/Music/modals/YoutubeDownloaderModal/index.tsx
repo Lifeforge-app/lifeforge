@@ -5,9 +5,9 @@ import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
 import IntervalManager from '@utils/intervalManager'
 
 import { type IYoutubeVideoInfo } from '../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
@@ -33,6 +33,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
     setLoading(true)
     try {
       await fetchAPI<{ status: string }>(
+        import.meta.env.VITE_API_URL,
         `/music/youtube/async-download/${videoURL.match(URL_REGEX)?.groups?.id}`,
         {
           method: 'POST',
@@ -46,7 +47,10 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
 
       intervalManager.setInterval(async () => {
         const success = (
-          await fetchAPI<{ status: string }>('music/youtube/download-status')
+          await fetchAPI<{ status: string }>(
+            import.meta.env.VITE_API_URL,
+            'music/youtube/download-status'
+          )
         ).status
 
         switch (success) {

@@ -9,9 +9,9 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AchievementsSchemas, ISchemaWithPB } from 'shared'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
+import { AchievementsSchemas, ISchemaWithPB } from 'shared/types'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'

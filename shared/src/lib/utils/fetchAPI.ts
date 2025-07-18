@@ -47,6 +47,7 @@ async function handleResponse<T>(
 }
 
 export default async function fetchAPI<T>(
+  apiHost: string,
   endpoint: string,
   {
     method = 'GET',
@@ -62,7 +63,6 @@ export default async function fetchAPI<T>(
     isExternal?: boolean
   } = {}
 ): Promise<T> {
-  const apiHost = import.meta.env.VITE_API_HOST
   if (!apiHost) {
     throw new Error('VITE_API_HOST environment variable is not defined')
   }

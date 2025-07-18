@@ -1,6 +1,7 @@
 import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared/lib'
 
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -9,8 +10,6 @@ import {
   ErrorScreen,
   LoadingScreen
 } from '@components/screens'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IPixabaySearchFilter,

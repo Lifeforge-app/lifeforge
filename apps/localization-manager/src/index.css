@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Onest:wght@100..900&display=swap')
+layer(base);
+
+@import 'tailwindcss';
+@import './styles/index.css';
+@source "../../../node_modules/lifeforge-ui/dist";

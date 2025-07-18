@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
 
+import { fetchAPI } from 'shared/lib'
+
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 import { encrypt } from '@security/utils/encryption'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import { IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
@@ -27,9 +27,13 @@ function ContentContainer({
   const entriesQuery = useQuery<IAPIKeyEntry[]>({
     queryKey: ['api-keys', 'entries', masterPassword],
     queryFn: async () => {
-      const challenge = await fetchAPI<string>('api-keys/auth/challenge')
+      const challenge = await fetchAPI<string>(
+        import.meta.env.VITE_API_URL,
+        'api-keys/auth/challenge'
+      )
 
       return fetchAPI(
+        import.meta.env.VITE_API_URL,
         'api-keys/entries?master=' +
           encodeURIComponent(encrypt(masterPassword, challenge))
       )

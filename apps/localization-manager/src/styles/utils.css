@@ -1,0 +1,53 @@
+.stroke-\[2px\] > path {
+  stroke-width: 2.5px;
+}
+
+.loader {
+  width: 36px;
+  height: 36px;
+  border: 4px solid;
+  @apply border-bg-500;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+[data-rmiz],
+[data-rmiz-content] {
+  @apply h-full w-full;
+}
+
+div[data-rmiz-modal-overlay] {
+  @apply bg-black/80;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-overflow-x > div {
+  overflow-x: hidden !important;
+}
+
+.tabler-icon {
+  @apply size-6 shrink-0;
+}
+
+aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
+  @apply text-custom-500!;
+}

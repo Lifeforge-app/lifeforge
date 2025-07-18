@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import OTPScreen from '@security/components/OTPScreen'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import OTPScreen from '@security/components/OTPScreen'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -19,7 +19,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   async function onConfirm() {
     try {
       setLoading(true)
-      await fetchAPI(`/user/2fa/disable`, {
+      await fetchAPI(import.meta.env.VITE_API_URL, `/user/2fa/disable`, {
         method: 'POST'
       })
 

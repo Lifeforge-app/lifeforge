@@ -5,14 +5,14 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useAPIQuery } from 'shared/lib'
+
 import {
   IIdeaBoxContainer,
   type IIdeaBoxEntry,
   type IIdeaBoxFolder,
   type IIdeaBoxTag
 } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
 

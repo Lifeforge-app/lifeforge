@@ -2,9 +2,9 @@ import { Button, ModalHeader, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { IGuitarTabsGuitarWorldScores } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IGuitarTabsGuitarWorldScores } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
 
 import ScoreList from './components/ScoreList'
 
@@ -29,6 +29,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
 
     try {
       const data = await fetchAPI<IGuitarTabsGuitarWorldScores>(
+        import.meta.env.VITE_API_URL,
         'guitar-tabs/guitar-world',
         {
           method: 'POST',

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function TextType({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('apps.momentVault')
@@ -13,7 +13,7 @@ function TextType({ onSuccess }: { onSuccess: () => void }) {
   async function onSubmit() {
     setSubmitLoading(true)
     try {
-      await fetchAPI('moment-vault/entries', {
+      await fetchAPI(import.meta.env.VITE_API_URL, 'moment-vault/entries', {
         method: 'POST',
         body: {
           type: 'text',

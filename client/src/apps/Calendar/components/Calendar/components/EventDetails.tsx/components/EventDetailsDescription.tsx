@@ -5,12 +5,12 @@ import { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import { Link } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import {
   ICalendarCalendar,
   ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
   const calendarsQuery = useAPIQuery<ICalendarCalendar[]>(

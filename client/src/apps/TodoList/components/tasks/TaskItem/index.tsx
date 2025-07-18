@@ -2,9 +2,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Checkbox } from 'lifeforge-ui'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import TaskDueDate from './components/TaskDueDate'
@@ -48,9 +48,13 @@ function TaskItem({
     )
 
     try {
-      await fetchAPI(`todo-list/entries/toggle/${entry.id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_URL,
+        `todo-list/entries/toggle/${entry.id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: entriesQueryKey })

@@ -3,10 +3,11 @@ import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
+import { fetchAPI } from 'shared/lib'
+
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
 
-import fetchAPI from '@utils/fetchAPI'
 import forceDown from '@utils/forceDown'
 
 import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
@@ -40,6 +41,7 @@ export default function EntryContextMenu({
 
     try {
       await fetchAPI<IBooksLibraryEntry>(
+        import.meta.env.VITE_API_URL,
         `books-library/entries/read/${item.id}`,
         {
           method: 'POST'

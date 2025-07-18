@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { useAuth } from '../AuthProvider'
 import { BG_THEME } from './constants/bg_theme'
@@ -23,7 +23,7 @@ import { getColorPalette } from './utils/themeColors'
 
 async function updateUserData(data: Record<string, unknown>) {
   try {
-    await fetchAPI('/user/personalization', {
+    await fetchAPI(import.meta.env.VITE_API_URL, '/user/personalization', {
       method: 'PATCH',
       body: {
         data

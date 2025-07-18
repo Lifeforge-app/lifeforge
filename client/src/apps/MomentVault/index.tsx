@@ -11,9 +11,9 @@ import { ListResult } from 'pocketbase'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import { useAPIQuery } from 'shared/lib'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import EntryList from './components/EntryList'
 import AddEntryModal from './modals/AddEntryModal'
