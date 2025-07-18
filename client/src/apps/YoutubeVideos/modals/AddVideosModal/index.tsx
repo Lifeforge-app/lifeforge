@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'
-import VideoSection from './sections/VideoSection'
 
 const RESOURCE_TYPES = [
   {
@@ -93,7 +92,8 @@ function AddVideosModal({
         switch (selectedResourceType) {
           case 'video':
             return (
-              <VideoSection setIsVideoDownloading={setIsVideoDownloading} />
+              <></> //TODO
+              // <VideoSection setIsVideoDownloading={setIsVideoDownloading} />
             )
           case 'playlist':
             return (

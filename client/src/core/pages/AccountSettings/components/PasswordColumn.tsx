@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function PasswordColumn() {
   const { t } = useTranslation('core.accountSettings')
@@ -13,9 +13,13 @@ function PasswordColumn() {
     setLoading(true)
 
     try {
-      await fetchAPI('/user/settings/request-password-reset', {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        '/user/settings/request-password-reset',
+        {
+          method: 'POST'
+        }
+      )
       toast.info('A password reset link has been sent to your email.')
     } catch {
       toast.error('Failed to send password reset link.')

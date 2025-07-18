@@ -3,6 +3,8 @@ import { UseQueryResult } from '@tanstack/react-query'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import {
   type ITodoListEntry,
   type ITodoListList,
@@ -10,8 +12,6 @@ import {
   type ITodoListTag,
   type ITodoPriority
 } from '@apps/TodoList/interfaces/todo_list_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 interface ITodoListData {
   entriesQueryKey: unknown[]

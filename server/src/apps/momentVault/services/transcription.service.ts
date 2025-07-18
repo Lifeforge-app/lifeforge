@@ -4,7 +4,7 @@ import fs from "fs";
 import Groq from "groq-sdk";
 import PocketBase from "pocketbase";
 import request from "request";
-import { MomentVaultSchemas } from "shared";
+import { MomentVaultCollectionsSchemas } from "shared/types/collections";
 
 const getTranscription = async (
   filePath: string,
@@ -34,7 +34,7 @@ export const transcribeExisted = async (
 
   const entry = await pb
     .collection("moment_vault__entries")
-    .getOne<MomentVaultSchemas.IEntry>(id);
+    .getOne<MomentVaultCollectionsSchemas.IEntry>(id);
 
   if (!entry.file) {
     throw new ClientError("No audio file found in entry");
@@ -44,6 +44,7 @@ export const transcribeExisted = async (
 
   try {
     const filePath = `medium/${fileURL.split("/").pop()}`;
+
     const fileStream = fs.createWriteStream(filePath);
 
     request(fileURL).pipe(fileStream);
@@ -62,7 +63,7 @@ export const transcribeExisted = async (
 
     await pb
       .collection("moment_vault__entries")
-      .update<MomentVaultSchemas.IEntry>(id, {
+      .update<MomentVaultCollectionsSchemas.IEntry>(id, {
         transcription: response,
       });
 

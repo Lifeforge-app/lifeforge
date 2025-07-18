@@ -1,11 +1,12 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import { MenuItem } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+
+import { useSidebarState } from 'shared/lib'
 
 import { useAuth } from '../../../providers/AuthProvider'
 

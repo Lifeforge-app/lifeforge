@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
+import { useSidebarState } from 'shared/lib'
 
 function SidebarSubsectionItem({
   subsectionName,
@@ -18,7 +18,7 @@ function SidebarSubsectionItem({
   path: string
 }) {
   const location = useLocation()
-  const { sidebarExpanded, toggleSidebar } = useLifeforgeUIContext()
+  const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const { t } = useTranslation('common.sidebar')
 
   const locationDependentStyles = useMemo(

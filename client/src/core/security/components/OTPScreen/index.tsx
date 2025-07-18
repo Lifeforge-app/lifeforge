@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { encrypt } from '../../utils/encryption'
 import OTPInputBox from './components/OTPInputBox'
@@ -48,9 +48,13 @@ function OTPScreen({
     setSendOtpLoading(true)
 
     try {
-      const data = await fetchAPI<string>('user/auth/otp', {
-        method: 'GET'
-      })
+      const data = await fetchAPI<string>(
+        import.meta.env.VITE_API_HOST,
+        'user/auth/otp',
+        {
+          method: 'GET'
+        }
+      )
 
       setOtpSent(true)
       setOtpId(data)
@@ -75,15 +79,22 @@ function OTPScreen({
     setVerifyOtpLoading(true)
 
     try {
-      const challenge = await fetchAPI<string>(`${endpoint}/challenge`)
+      const challenge = await fetchAPI<string>(
+        import.meta.env.VITE_API_HOST,
+        `${endpoint}/challenge`
+      )
 
-      const data = await fetchAPI<boolean>(`${endpoint}/otp`, {
-        method: 'POST',
-        body: {
-          otp: encrypt(otp, challenge),
-          otpId
+      const data = await fetchAPI<boolean>(
+        import.meta.env.VITE_API_HOST,
+        `${endpoint}/otp`,
+        {
+          method: 'POST',
+          body: {
+            otp: encrypt(otp, challenge),
+            otpId
+          }
         }
-      })
+      )
 
       if (data) {
         callback()

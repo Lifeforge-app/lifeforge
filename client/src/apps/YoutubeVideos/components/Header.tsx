@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { type IYoutubeVideoInfo } from '../interfaces/youtube_video_storage_interfaces'
 import DownloadProcessModal from '../modals/DownloadProcessModal'
@@ -55,7 +55,7 @@ function Header({
             metadata: IYoutubeVideoInfo
           }
         >
-      >('youtube-videos/video/download-status', {
+      >(import.meta.env.VITE_API_HOST, 'youtube-videos/video/download-status', {
         method: 'POST',
         body: { id: 'all' }
       })

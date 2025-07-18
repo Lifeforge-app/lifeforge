@@ -2,15 +2,14 @@ import { Icon } from '@iconify/react'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
-  IFieldProps,
-  IListboxInputFieldProps
-} from '@interfaces/modal_interfaces'
-
-import {
   ListboxNullOption,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
+import {
+  IFieldProps,
+  IListboxInputFieldProps
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormListboxInputProps<T> {
   field: IFieldProps<T> & IListboxInputFieldProps

@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import PhotoAlbum from 'react-photo-album'
 
-import { type IPixabaySearchResult } from '@interfaces/pixabay_interfaces'
-
+import { type IPixabaySearchResult } from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
 import { Pagination, Scrollbar } from '@components/utilities'
 
 function SearchResults({

@@ -3,9 +3,8 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { z } from "zod/v4";
+import { LocalesControllersSchemas } from "shared/types/controllers";
 
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from "../../../constants/locales";
 import * as LocalesService from "../services/locales.service";
 
 const localesRouter = express.Router();
@@ -15,14 +14,7 @@ const getLocales = forgeController
   .description(
     "Get locales for a specific language, namespace, and subnamespace",
   )
-  .schema({
-    params: z.object({
-      lang: z.enum(ALLOWED_LANG),
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
-    }),
-    response: z.any(),
-  })
+  .schema(LocalesControllersSchemas.Locales.getLocales)
   .callback(async ({ params: { lang, namespace, subnamespace } }) =>
     LocalesService.getLocales(lang, namespace, subnamespace),
   );

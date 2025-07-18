@@ -5,9 +5,9 @@ import { useCallback } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'
@@ -22,9 +22,13 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
 
   const handlePinIdea = useCallback(async () => {
     try {
-      await fetchAPI(`idea-box/ideas/pin/${entry.id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `idea-box/ideas/pin/${entry.id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       queryClient.invalidateQueries({
         queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
@@ -47,9 +51,13 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
 
   const handleArchiveIdea = useCallback(async () => {
     try {
-      await fetchAPI(`idea-box/ideas/archive/${entry.id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `idea-box/ideas/archive/${entry.id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       queryClient.invalidateQueries({
         queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
@@ -71,9 +79,13 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
 
   const handleRemoveFromFolder = useCallback(async () => {
     try {
-      await fetchAPI(`idea-box/ideas/move/${entry.id}`, {
-        method: 'DELETE'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `idea-box/ideas/move/${entry.id}`,
+        {
+          method: 'DELETE'
+        }
+      )
 
       queryClient.invalidateQueries({
         queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]

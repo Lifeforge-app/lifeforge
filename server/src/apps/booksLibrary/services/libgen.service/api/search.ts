@@ -1,24 +1,29 @@
 import { JSDOM } from "jsdom";
-import { BooksLibrarySchemas } from "shared";
+import { BooksLibraryCollectionsSchemas } from "shared/types/collections";
 
 export const searchBooks = async (queries: {
   provider: string;
   req: string;
   page: string;
-}): Promise<BooksLibrarySchemas.IBooksLibraryLibgenSearchResult> => {
+}): Promise<BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult> => {
   const target = new URL(
     queries.provider === "libgen.is"
       ? "http://libgen.is/search.php?lg_topic=libgen&open=0&view=detailed&res=25&column=def&phrase=0&sort=year&sortmode=DESC"
       : `https://${queries.provider}/index.php?columns%5B%5D=t&columns%5B%5D=a&columns%5B%5D=s&columns%5B%5D=y&columns%5B%5D=p&columns%5B%5D=i&objects%5B%5D=f&objects%5B%5D=a&objects%5B%5D=p&topics%5B%5D=l&res=25&covers=on&filesuns=all&order=year&ordermode=desc`,
   );
+
   target.searchParams.set("req", queries.req);
   target.searchParams.set("page", queries.page);
 
   try {
     const data = await fetch(target.href).then((res) => res.text());
+
     const dom = new JSDOM(data);
+
     const document = dom.window.document;
-    let final: BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["data"] = [];
+
+    let final: BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult["data"] =
+      [];
     let resultsCount = "";
 
     if (queries.provider === "libgen.is") {
@@ -48,8 +53,8 @@ export const searchBooks = async (queries: {
 function parseLibgenIS(
   document: Document,
 ): [
-  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["data"],
-  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["resultsCount"],
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult["data"],
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult["resultsCount"],
 ] {
   const table = Array.from(
     document.querySelectorAll('body > table[rules="cols"]'),
@@ -70,6 +75,7 @@ function parseLibgenIS(
                   .map((e) =>
                     e!.reduce((all, one, i) => {
                       const ch = Math.floor(i / 2);
+
                       // @ts-ignore
                       all[ch] = [].concat(all[ch] || [], one);
                       return all;
@@ -97,8 +103,8 @@ function parseLibgenMirror(
   provider: string,
   document: Document,
 ): [
-  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["data"],
-  BooksLibrarySchemas.IBooksLibraryLibgenSearchResult["resultsCount"],
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult["data"],
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult["resultsCount"],
 ] {
   return [
     Array.from(document.querySelectorAll("#tablelibgen tbody tr")).map((e) => ({

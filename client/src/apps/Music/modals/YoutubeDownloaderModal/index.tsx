@@ -3,17 +3,15 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+// import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
-import IntervalManager from '@utils/intervalManager'
+import { useAPIQuery } from 'shared/lib'
+
+// import { fetchAPI } from 'shared/lib'
 
 import { type IYoutubeVideoInfo } from '../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 import VideoInfo from './components/VideoInfo'
-
-const intervalManager = IntervalManager.getInstance()
 
 const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
@@ -21,6 +19,7 @@ const URL_REGEX =
 function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
   const [loading, setLoading] = useState(false)
+  setLoading(false) //TODO
   const [videoURLinput, setVideoURLInput] = useState('')
   const videoURL = useDebounce(videoURLinput, 300)
   const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
@@ -30,47 +29,50 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   )
 
   async function downloadVideo() {
-    setLoading(true)
-    try {
-      await fetchAPI<{ status: string }>(
-        `/music/youtube/async-download/${videoURL.match(URL_REGEX)?.groups?.id}`,
-        {
-          method: 'POST',
-          body: {
-            title: videoInfoQuery.data?.title ?? 'Unknown Title',
-            uploader: videoInfoQuery.data?.uploader ?? 'Unknown Author',
-            duration: parseInt(videoInfoQuery.data?.duration ?? '0', 10)
-          }
-        }
-      )
-
-      intervalManager.setInterval(async () => {
-        const success = (
-          await fetchAPI<{ status: string }>('music/youtube/download-status')
-        ).status
-
-        switch (success) {
-          case 'completed':
-            toast.success('Music downloaded successfully!')
-            intervalManager.clearAllIntervals()
-            setLoading(false)
-            queryClient.invalidateQueries({
-              queryKey: ['music', 'entries']
-            })
-            onClose()
-            break
-          case 'failed':
-            toast.error('Failed to download music!')
-            intervalManager.clearAllIntervals()
-            setLoading(false)
-            break
-        }
-      }, 3000)
-    } catch (error) {
-      console.error('Error downloading video:', error)
-      toast.error('Failed to download video')
-      setLoading(false)
-    }
+    //TODO
+    // setLoading(true)
+    // try {
+    //   await fetchAPI<{ status: string }>(
+    //     import.meta.env.VITE_API_HOST,
+    //     `/music/youtube/async-download/${videoURL.match(URL_REGEX)?.groups?.id}`,
+    //     {
+    //       method: 'POST',
+    //       body: {
+    //         title: videoInfoQuery.data?.title ?? 'Unknown Title',
+    //         uploader: videoInfoQuery.data?.uploader ?? 'Unknown Author',
+    //         duration: parseInt(videoInfoQuery.data?.duration ?? '0', 10)
+    //       }
+    //     }
+    //   )
+    //   intervalManager.setInterval(async () => {
+    //     const success = (
+    //       await fetchAPI<{ status: string }>(
+    //         import.meta.env.VITE_API_HOST,
+    //         'music/youtube/download-status'
+    //       )
+    //     ).status
+    //     switch (success) {
+    //       case 'completed':
+    //         toast.success('Music downloaded successfully!')
+    //         intervalManager.clearAllIntervals()
+    //         setLoading(false)
+    //         queryClient.invalidateQueries({
+    //           queryKey: ['music', 'entries']
+    //         })
+    //         onClose()
+    //         break
+    //       case 'failed':
+    //         toast.error('Failed to download music!')
+    //         intervalManager.clearAllIntervals()
+    //         setLoading(false)
+    //         break
+    //     }
+    //   }, 3000)
+    // } catch (error) {
+    //   console.error('Error downloading video:', error)
+    //   toast.error('Failed to download video')
+    //   setLoading(false)
+    // }
   }
 
   useEffect(() => {

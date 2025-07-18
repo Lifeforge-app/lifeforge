@@ -1,0 +1,48 @@
+{
+  "name": "@lifeforge/localization-manager",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An internal tool for managing application localization and translations.",
+  "license": "MIT",
+  "author": "LifeForge (https://github.com/Lifeforge-app)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lifeforge-app/lifeforge.git",
+    "directory": "apps/localization-manager"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lifeforge-ui": "workspace:*",
+    "shared": "workspace:*",
+    "@headlessui/react": "^2.2.4",
+    "@iconify/react": "^5.2.1",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@tanstack/react-query": "^5.80.6",
+    "@uidotdev/usehooks": "^2.4.1",
+    "clsx": "^2.1.1",
+    "i18next": "24.2.3",
+    "i18next-http-backend": "2.7.3",
+    "javascript-color-gradient": "^2.5.0",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7",
+    "postcss": "^8.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-i18next": "^15.5.1",
+    "tailwindcss": "^4.1.8",
+    "tinycolor2": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/javascript-color-gradient": "^2.4.2",
+    "@types/tinycolor2": "^1.4.6",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "vite": "^5.4.19"
+  }
+}

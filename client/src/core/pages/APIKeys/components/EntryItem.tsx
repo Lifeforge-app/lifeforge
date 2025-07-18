@@ -12,7 +12,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
@@ -30,11 +30,15 @@ function EntryItem({
   const open = useModalStore(state => state.open)
   const [isCopying, setIsCopying] = useState(false)
   async function copyKey() {
-    const challenge = await fetchAPI<string>('api-keys/auth/challenge')
+    const challenge = await fetchAPI<string>(
+      import.meta.env.VITE_API_HOST,
+      'api-keys/auth/challenge'
+    )
     setIsCopying(true)
 
     try {
       const data = await fetchAPI<string>(
+        import.meta.env.VITE_API_HOST,
         `api-keys/entries/${entry.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`

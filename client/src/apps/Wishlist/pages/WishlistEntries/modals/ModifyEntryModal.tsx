@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
+import { useAPIQuery } from 'shared/lib'
+import { fetchAPI } from 'shared/lib'
 
 import {
   type IWishlistEntry,
@@ -124,6 +123,7 @@ function ModifyEntryModal({
 
     try {
       await fetchAPI<IWishlistEntry>(
+        import.meta.env.VITE_API_HOST,
         'wishlist/entries' + (type === 'update' ? `/${existedData?.id}` : ''),
         {
           method: type === 'create' ? 'POST' : 'PATCH',

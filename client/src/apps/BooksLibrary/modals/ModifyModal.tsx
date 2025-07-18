@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 function ModifyModal({
   onClose,
@@ -70,6 +70,7 @@ function ModifyModal({
 
     try {
       await fetchAPI(
+        import.meta.env.VITE_API_HOST,
         `books-library/${stuff}${
           type === 'update' ? `/${existedData?.id}` : ''
         }`,

@@ -34,6 +34,7 @@ const scrapeLazada = async (
     const { result } = await ogs(options);
 
     const imageURL = result.ogImage?.[0]?.url;
+
     final.image = imageURL || "";
 
     const prompt = `Extract the most relevant and concise product name from the given product title, removing any unnecessary words or phrases such as descriptions, locations, and promotions. The extracted product name should be a clear and accurate representation of the product being sold. If there is the brand name of the product, the result should be in the format of "{brand} - {product name}". Please provide the extracted product name without any other words other than the product name itself.
