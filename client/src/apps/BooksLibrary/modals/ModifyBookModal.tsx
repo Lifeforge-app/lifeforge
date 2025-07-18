@@ -5,7 +5,10 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'

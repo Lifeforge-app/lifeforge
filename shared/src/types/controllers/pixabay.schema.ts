@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { PixabayCustomCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Pixabay = {
   /**
@@ -75,7 +76,7 @@ const Pixabay = {
   },
 };
 
-type IPixabay = z.infer<typeof Pixabay>;
+type IPixabay = InferApiESchemaDynamic<typeof Pixabay>;
 
 export type { IPixabay };
 export { Pixabay };

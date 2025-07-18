@@ -6,7 +6,10 @@ import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
