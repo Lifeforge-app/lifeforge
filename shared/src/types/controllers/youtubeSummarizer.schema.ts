@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
 import { YoutubeSummarizerCustomCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const YoutubeSummarizer = {
   /**
@@ -26,7 +26,7 @@ const YoutubeSummarizer = {
   },
 };
 
-type IYoutubeSummarizer = z.infer<typeof YoutubeSummarizer>;
+type IYoutubeSummarizer = InferApiESchemaDynamic<typeof YoutubeSummarizer>;
 
 export type { IYoutubeSummarizer };
 export { YoutubeSummarizer };

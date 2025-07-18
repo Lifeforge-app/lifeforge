@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Backups = {
   /**
@@ -12,7 +13,7 @@ const Backups = {
         key: z.string(),
         size: z.number(),
         modified: z.string(),
-      }),
+      })
     ),
   },
 
@@ -50,7 +51,7 @@ const Backups = {
   },
 };
 
-type IBackups = z.infer<typeof Backups>;
+type IBackups = InferApiESchemaDynamic<typeof Backups>;
 
 export type { IBackups };
 export { Backups };

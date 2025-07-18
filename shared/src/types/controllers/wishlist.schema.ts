@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { WishlistCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Entries = {
   /**
@@ -163,8 +164,8 @@ const Lists = {
   },
 };
 
-type IEntries = z.infer<typeof Entries>;
-type ILists = z.infer<typeof Lists>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type ILists = InferApiESchemaDynamic<typeof Lists>;
 
 export type { IEntries, ILists };
 export { Entries, Lists };

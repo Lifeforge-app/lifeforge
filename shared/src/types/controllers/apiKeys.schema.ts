@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { ApiKeysCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Auth = {
   /**
@@ -120,8 +121,8 @@ const Entries = {
   },
 };
 
-type IAuth = z.infer<typeof Auth>;
-type IEntries = z.infer<typeof Entries>;
+type IAuth = InferApiESchemaDynamic<typeof Auth>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IAuth, IEntries };
 export { Auth, Entries };

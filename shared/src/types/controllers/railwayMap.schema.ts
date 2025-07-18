@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { RailwayMapCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const RailwayMap = {
   /**
@@ -32,7 +33,7 @@ const RailwayMap = {
   },
 };
 
-type IRailwayMap = z.infer<typeof RailwayMap>;
+type IRailwayMap = InferApiESchemaDynamic<typeof RailwayMap>;
 
 export type { IRailwayMap };
 export { RailwayMap };

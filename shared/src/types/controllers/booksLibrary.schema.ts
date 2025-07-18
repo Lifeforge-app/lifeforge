@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { BooksLibraryCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Languages = {
   /**
@@ -8,7 +9,9 @@ const Languages = {
    * @description Get all languages for the books library
    */
   getAllLanguages: {
-    response: z.array(BooksLibraryCollectionsSchemas.Language),
+    response: z.array(
+      SchemaWithPB(BooksLibraryCollectionsSchemas.LanguageAggregated)
+    ),
   },
 
   /**
@@ -50,7 +53,9 @@ const FileTypes = {
    * @description Get all file types for the books library
    */
   getAllFileTypes: {
-    response: z.array(SchemaWithPB(BooksLibraryCollectionsSchemas.FileType)),
+    response: z.array(
+      SchemaWithPB(BooksLibraryCollectionsSchemas.FileTypeAggregated)
+    ),
   },
 };
 
@@ -261,11 +266,11 @@ const Libgen = {
   },
 };
 
-type ILanguages = z.infer<typeof Languages>;
-type IFileTypes = z.infer<typeof FileTypes>;
-type ICollection = z.infer<typeof Collection>;
-type IEntries = z.infer<typeof Entries>;
-type ILibgen = z.infer<typeof Libgen>;
+type ILanguages = InferApiESchemaDynamic<typeof Languages>;
+type IFileTypes = InferApiESchemaDynamic<typeof FileTypes>;
+type ICollection = InferApiESchemaDynamic<typeof Collection>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type ILibgen = InferApiESchemaDynamic<typeof Libgen>;
 
 export type { ILanguages, IFileTypes, ICollection, IEntries, ILibgen };
 export { Languages, FileTypes, Collection, Entries, Libgen };

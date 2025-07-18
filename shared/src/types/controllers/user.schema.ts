@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Auth = {
   /**
@@ -281,11 +282,11 @@ const Settings = {
   },
 };
 
-type IAuth = z.infer<typeof Auth>;
-type ITwoFa = z.infer<typeof TwoFa>;
-type IOauth = z.infer<typeof Oauth>;
-type IPersonalization = z.infer<typeof Personalization>;
-type ISettings = z.infer<typeof Settings>;
+type IAuth = InferApiESchemaDynamic<typeof Auth>;
+type ITwoFa = InferApiESchemaDynamic<typeof TwoFa>;
+type IOauth = InferApiESchemaDynamic<typeof Oauth>;
+type IPersonalization = InferApiESchemaDynamic<typeof Personalization>;
+type ISettings = InferApiESchemaDynamic<typeof Settings>;
 
 export type { IAuth, ITwoFa, IOauth, IPersonalization, ISettings };
 export { Auth, TwoFa, Oauth, Personalization, Settings };

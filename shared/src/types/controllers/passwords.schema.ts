@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { PasswordsCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Entries = {
   /**
@@ -129,8 +130,8 @@ const Master = {
   },
 };
 
-type IEntries = z.infer<typeof Entries>;
-type IMaster = z.infer<typeof Master>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type IMaster = InferApiESchemaDynamic<typeof Master>;
 
 export type { IEntries, IMaster };
 export { Entries, Master };

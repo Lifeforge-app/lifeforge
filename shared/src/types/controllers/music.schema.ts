@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { MusicCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Youtube = {
   /**
@@ -88,8 +89,8 @@ const Entries = {
   },
 };
 
-type IYoutube = z.infer<typeof Youtube>;
-type IEntries = z.infer<typeof Entries>;
+type IYoutube = InferApiESchemaDynamic<typeof Youtube>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IYoutube, IEntries };
 export { Youtube, Entries };

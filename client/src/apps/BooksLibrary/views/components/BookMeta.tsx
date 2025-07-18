@@ -2,7 +2,10 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
 
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 

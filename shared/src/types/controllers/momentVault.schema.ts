@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { MomentVaultCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Transcription = {
   /**
@@ -83,8 +84,8 @@ const Entries = {
   },
 };
 
-type ITranscription = z.infer<typeof Transcription>;
-type IEntries = z.infer<typeof Entries>;
+type ITranscription = InferApiESchemaDynamic<typeof Transcription>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { ITranscription, IEntries };
 export { Transcription, Entries };

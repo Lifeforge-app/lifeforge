@@ -39,24 +39,6 @@ try {
   process.exit(1);
 }
 
-toBeWritten["schemaWithPB.ts"] = `
-import { z } from 'zod/v4'
-
-const BasePBSchema = z.object({
-  id: z.string(),
-  collectionId: z.string(),
-  collectionName: z.string(),
-  created: z.string(),
-  updated: z.string()
-})
-
-export const SchemaWithPB = <T extends z.ZodTypeAny>(schema: T) => {
-  return z.intersection(schema, BasePBSchema)
-}
-
-export type ISchemaWithPB<T> = T & z.infer<typeof BasePBSchema>
-`;
-
 const allModules = [
   ...fs.readdirSync("./server/src/apps", { withFileTypes: true }),
   ...fs.readdirSync("./server/src/core/lib", { withFileTypes: true }),
@@ -288,6 +270,24 @@ export type { ISchemaWithPB } from './schemaWithPB'
 `;
 
 toBeWritten["index.ts"] = indexString;
+
+toBeWritten["schemaWithPB.ts"] = `
+import { z } from 'zod/v4'
+
+const BasePBSchema = z.object({
+  id: z.string(),
+  collectionId: z.string(),
+  collectionName: z.string(),
+  created: z.string(),
+  updated: z.string()
+})
+
+export const SchemaWithPB = <T extends z.ZodTypeAny>(schema: T) => {
+  return z.intersection(schema, BasePBSchema)
+}
+
+export type ISchemaWithPB<T> = T & z.infer<typeof BasePBSchema>
+`;
 
 for (const [fileName, content] of Object.entries(toBeWritten)) {
   const filePath = path.resolve(TARGET_PATH, fileName);

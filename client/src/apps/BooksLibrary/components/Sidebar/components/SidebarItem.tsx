@@ -3,7 +3,10 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 

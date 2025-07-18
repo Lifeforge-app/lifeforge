@@ -5,6 +5,7 @@ import {
   GuitarTabsSidebarDataSchema,
   GuitarTabsGuitarWorldEntrySchema,
 } from "../collections/guitarTabs.schema";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const GuitarWorld = {
   /**
@@ -135,8 +136,8 @@ const Entries = {
   },
 };
 
-type IGuitarWorld = z.infer<typeof GuitarWorld>;
-type IEntries = z.infer<typeof Entries>;
+type IGuitarWorld = InferApiESchemaDynamic<typeof GuitarWorld>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IGuitarWorld, IEntries };
 export { GuitarWorld, Entries };

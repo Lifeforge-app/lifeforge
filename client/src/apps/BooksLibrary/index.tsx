@@ -15,7 +15,10 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'

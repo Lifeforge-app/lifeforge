@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { CodeTimeCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const CodeTime = {
   /**
@@ -108,7 +109,7 @@ const CodeTime = {
   },
 };
 
-type ICodeTime = z.infer<typeof CodeTime>;
+type ICodeTime = InferApiESchemaDynamic<typeof CodeTime>;
 
 export type { ICodeTime };
 export { CodeTime };

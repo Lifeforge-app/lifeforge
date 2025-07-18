@@ -1,7 +1,10 @@
 import { Icon } from '@iconify/react'
 import { Scrollbar } from 'lifeforge-ui'
 
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import BookMeta from '../components/BookMeta'

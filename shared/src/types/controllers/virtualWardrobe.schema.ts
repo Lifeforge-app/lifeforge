@@ -2,6 +2,7 @@ import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { VirtualWardrobeCollectionsSchemas } from "../collections";
 import { VirtualWardrobeSidebarDataSchema } from "../collections/virtualWardrobe.schema";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Entries = {
   /**
@@ -158,8 +159,8 @@ const Session = {
   },
 };
 
-type IEntries = z.infer<typeof Entries>;
-type ISession = z.infer<typeof Session>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type ISession = InferApiESchemaDynamic<typeof Session>;
 
 export type { IEntries, ISession };
 export { Entries, Session };

@@ -5,6 +5,7 @@ import {
   WalletIncomeExpensesSummarySchema,
   WalletReceiptScanResultSchema,
 } from "../collections/wallet.schema";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Transactions = {
   /**
@@ -325,11 +326,11 @@ const Categories = {
   },
 };
 
-type ITransactions = z.infer<typeof Transactions>;
-type IAssets = z.infer<typeof Assets>;
-type ILedgers = z.infer<typeof Ledgers>;
-type IUtils = z.infer<typeof Utils>;
-type ICategories = z.infer<typeof Categories>;
+type ITransactions = InferApiESchemaDynamic<typeof Transactions>;
+type IAssets = InferApiESchemaDynamic<typeof Assets>;
+type ILedgers = InferApiESchemaDynamic<typeof Ledgers>;
+type IUtils = InferApiESchemaDynamic<typeof Utils>;
+type ICategories = InferApiESchemaDynamic<typeof Categories>;
 
 export type { ITransactions, IAssets, ILedgers, IUtils, ICategories };
 export { Transactions, Assets, Ledgers, Utils, Categories };

@@ -4,7 +4,10 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
 import { fetchAPI } from 'shared/lib'
-import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
+import {
+  BooksLibraryCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'

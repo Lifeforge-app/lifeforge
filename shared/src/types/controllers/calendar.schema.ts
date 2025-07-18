@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
 import { CalendarCollectionsSchemas } from "../collections";
+import type { InferApiESchemaDynamic } from "../utils/inferSchema";
 
 const Calendars = {
   /**
@@ -210,9 +211,9 @@ const Events = {
   },
 };
 
-type ICalendars = z.infer<typeof Calendars>;
-type ICategories = z.infer<typeof Categories>;
-type IEvents = z.infer<typeof Events>;
+type ICalendars = InferApiESchemaDynamic<typeof Calendars>;
+type ICategories = InferApiESchemaDynamic<typeof Categories>;
+type IEvents = InferApiESchemaDynamic<typeof Events>;
 
 export type { ICalendars, ICategories, IEvents };
 export { Calendars, Categories, Events };
