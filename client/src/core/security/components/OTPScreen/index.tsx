@@ -21,10 +21,13 @@ function OTPScreen({
   buttonsFullWidth?: boolean
 }) {
   const { t } = useTranslation('common.vault')
+
   const [otpSent, setOtpSent] = useState(false)
+
   const [otpId, setOtpId] = useState(
     localStorage.getItem(`otpId:${endpoint}`) ?? ''
   )
+
   const [otpCooldown, setOtpCooldown] = useState(
     localStorage.getItem(`otpCooldown:${endpoint}`)
       ? Math.floor(
@@ -34,13 +37,17 @@ function OTPScreen({
         )
       : 0
   )
+
   const [sendOtpLoading, setSendOtpLoading] = useState(false)
+
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
+
   const [otp, setOtp] = useState('')
 
   async function requestOTP(): Promise<void> {
     if (otpCooldown > 0) {
       toast.error(t('otp.messages.cooldown'))
+
       return
     }
 
@@ -59,7 +66,9 @@ function OTPScreen({
       setOtpSent(true)
       setOtpId(data)
       setOtpCooldown(60)
+
       const coolDown = new Date().getTime() + 60000
+
       localStorage.setItem(`otpId:${endpoint}`, data)
       localStorage.setItem(`otpCooldown:${endpoint}`, coolDown.toString())
       toast.success(t('otp.messages.success'))
@@ -73,6 +82,7 @@ function OTPScreen({
   async function verityOTP(otp: string): Promise<void> {
     if (otp.length !== 6) {
       toast.error(t('otp.messages.invalid'))
+
       return
     }
 
@@ -113,6 +123,7 @@ function OTPScreen({
   useEffect(() => {
     if (otpCooldown > 0) {
       setOtpSent(true)
+
       const interval = setInterval(() => {
         setOtpCooldown(prev => prev - 1)
 
@@ -121,6 +132,7 @@ function OTPScreen({
           clearInterval(interval)
         }
       }, 1000)
+
       return () => {
         clearInterval(interval)
       }
@@ -149,8 +161,8 @@ function OTPScreen({
             <ResendOTPButton
               buttonFullWidth={buttonsFullWidth}
               otpCooldown={otpCooldown}
-              onClick={requestOTP}
               sendOtpLoading={sendOtpLoading}
+              onClick={requestOTP}
             />
           </>
         ) : (

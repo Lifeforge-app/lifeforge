@@ -8,6 +8,7 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 function InnerHeader() {
   const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =
     useWalletData()
+
   const {
     searchQuery,
     selectedType,
@@ -20,10 +21,15 @@ function InnerHeader() {
     setSelectedLedger,
     setSidebarOpen
   } = useWalletStore()
+
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
+
   const assets = assetsQuery.data ?? []
+
   const categories = categoriesQuery.data ?? []
+
   const ledgers = ledgersQuery.data ?? []
+
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
   )

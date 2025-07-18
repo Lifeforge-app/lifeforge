@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/pseudo-random */
+ 
 import { Icon } from '@iconify/react'
 import { Button, TextInput } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -10,10 +10,15 @@ import CreatePasswordConfirmationModal from './modals/CreatePasswordConfirmation
 
 function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('common.vault')
+
   const [newPassword, setNewPassword] = useState<string>('')
+
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+
   const inputRef = useRef<HTMLInputElement>(null)
+
   const inputRef2 = useRef<HTMLInputElement>(null)
 
   function confirmAction(): void {
@@ -22,6 +27,7 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
 
       return
     }
+
     if (newPassword.trim() !== confirmPassword.trim()) {
       toast.error('Passwords do not match')
 
@@ -62,12 +68,17 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
           value={newPassword}
           onActionButtonClick={() => {
             const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
             const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
+
             const special = '!@#$%^&*()_+'
+
             const numbers = '0123456789'
 
             const all = upperCase + lowerCase + numbers + special
+
             let password = ''
+
             for (let i = 0; i < 12; i++) {
               password += all[Math.floor(Math.random() * all.length)]
             }

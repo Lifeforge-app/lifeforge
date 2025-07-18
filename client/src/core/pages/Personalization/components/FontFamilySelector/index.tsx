@@ -42,9 +42,11 @@ const addFontsToStylesheet = (fonts: any[]) => {
 
 function FontFamilySelector() {
   const { t } = useTranslation('core.personalization')
+
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
 
   const { fontFamily } = usePersonalization()
+
   const [allFonts, setAllFonts] = useState<any[]>([])
 
   useEffect(() => {
@@ -53,6 +55,7 @@ function FontFamilySelector() {
         enabled: boolean
         items: any[]
       }>(import.meta.env.VITE_API_HOST, '/user/personalization/fonts')
+
       setEnabled(fonts.enabled)
 
       if (!fonts.enabled) {

@@ -146,4 +146,5 @@ type ITicket = InferApiESchemaDynamic<typeof Ticket>;
 type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { ITmdb, ITicket, IEntries };
+
 export { Tmdb, Ticket, Entries };

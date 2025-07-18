@@ -24,6 +24,7 @@ export const renderLines = (
 ) => {
   Object.keys(polylineLayers).forEach(id => {
     const lineExists = filteredLines.some(line => line.id === id)
+
     if (!lineExists) {
       map.removeLayer(polylineLayers[id])
       delete polylineLayers[id]
@@ -50,6 +51,7 @@ export const getLineForStationCode = (
 ): IRailwayMapLine | undefined => {
   const targetLine = station.lines.find(line => {
     const lineData = lines.find(l => l.id === line)!
+
     if (lineData.type === 'MRT') {
       return (
         code.startsWith(lineData.code.slice(0, 2)) ||
@@ -74,6 +76,7 @@ export const getLineForStationCode = (
   })
 
   if (!targetLine) return undefined
+
   return lines.find(line => line.id === targetLine)
 }
 
@@ -82,16 +85,19 @@ export const createStationMarkerContent = (
   lines: IRailwayMapLine[]
 ): HTMLDivElement => {
   const stationHtml = document.createElement('div')
+
   stationHtml.className = 'rounded-md'
 
   if (station.codes.length > 0) {
     station.codes.forEach((code, index) => {
       const stationCode = document.createElement('span')
+
       stationCode.className = `text-xs font-['LTAIdentityMedium'] font-semibold text-bg-100 bg-gray-800 px-2 py-0.5 ${
         index === 0 ? 'rounded-l-full' : ''
       } ${index === station.codes.length - 1 ? 'rounded-r-full' : ''}`
 
       const targetLine = getLineForStationCode(code, station, lines)
+
       stationCode.style.backgroundColor = targetLine ? targetLine.color : '#333'
       stationCode.textContent = code
       stationHtml.appendChild(stationCode)
@@ -109,6 +115,7 @@ export const renderStations = (
 ) => {
   Object.keys(stationMarkers).forEach(id => {
     const stationExists = filteredStations.some(station => station.id === id)
+
     if (!stationExists) {
       map.removeLayer(stationMarkers[id])
       delete stationMarkers[id]

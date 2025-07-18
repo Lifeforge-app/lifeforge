@@ -19,6 +19,7 @@ function SessionCartModal({
   data: { cartItems: IVirtualWardrobeEntry[]; queryKey: unknown[] }
 }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
 
   async function handleRemoveFromCart(entryId: string) {
@@ -35,6 +36,7 @@ function SessionCartModal({
         ['virtual-wardrobe', 'session-cart-items'],
         prev => {
           if (!prev) return []
+
           return prev.filter(entry => entry.id !== entryId)
         }
       )

@@ -274,4 +274,5 @@ type ILists = InferApiESchemaDynamic<typeof Lists>;
 type IPriorities = InferApiESchemaDynamic<typeof Priorities>;
 
 export type { IEntries, ITags, ILists, IPriorities };
+
 export { Entries, Tags, Lists, Priorities };

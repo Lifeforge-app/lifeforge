@@ -9,7 +9,9 @@ function UsingAuthApp({
   callback: (otp: string) => Promise<void>
 }) {
   const { t } = useTranslation('common.auth')
+
   const [otp, setOTP] = useState('')
+
   const [loading, setLoading] = useState(false)
 
   return (

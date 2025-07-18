@@ -20,8 +20,11 @@ export default function EntryContextMenu({
   item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
+
   const [downloadLoading, setDownloadLoading] = useState(false)
+
   const [readStatusChangeLoading, setReadStatusChangeLoading] = useState(false)
 
   const handleDownload = useCallback(() => {

@@ -12,21 +12,28 @@ import ModifyTransactionsModal from './ModifyTransactionsModal'
 
 function ScanReceiptModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wallet')
+
   const [file, setFile] = useState<File | string | null>(null)
+
   const [preview, setPreview] = useState<string | null>(null)
+
   const [keepReceiptAfterScan, setKeepReceiptAfterScan] = useState(true)
+
   const [loading, setLoading] = useState(false)
 
   async function onSubmit() {
     if (file === null) {
       toast.error('Please select a file')
+
       return
     }
 
     setLoading(true)
 
     const formData = new FormData()
+
     formData.append('file', file)
 
     try {

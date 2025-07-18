@@ -14,6 +14,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
   )
+
   const topEntriesQuery = useAPIQuery<Record<string, number>>(
     `code-time/${type}?last=${lastFor}`,
     ['code-time', 'top', type, lastFor]

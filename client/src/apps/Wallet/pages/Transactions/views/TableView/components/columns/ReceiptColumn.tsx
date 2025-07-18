@@ -12,6 +12,7 @@ function ReceiptColumn({
   receipt: string
 }) {
   const open = useModalStore(state => state.open)
+
   return (
     <td className="p-2 text-center">
       {receipt !== '' ? (

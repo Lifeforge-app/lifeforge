@@ -14,8 +14,10 @@ import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'
 
 function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const open = useModalStore(state => state.open)
+
   const { viewArchived, debouncedSearchQuery, selectedTags } =
     useIdeaBoxContext()
+
   const queryClient = useQueryClient()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()

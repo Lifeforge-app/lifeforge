@@ -24,6 +24,7 @@ function ContentContainer({
   setOtpSuccess: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const { userData } = useAuth()
+
   const entriesQuery = useQuery<IAPIKeyEntry[]>({
     queryKey: ['api-keys', 'entries', masterPassword],
     queryFn: async () => {

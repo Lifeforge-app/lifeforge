@@ -18,6 +18,7 @@ function DateRangeLabel({ label }: { label: string }) {
     }
 
     const startDate = dayjs(parts[0])
+
     const endDate = dayjs(parts[1])
 
     if (!startDate.isValid() || !endDate.isValid()) {
@@ -25,6 +26,7 @@ function DateRangeLabel({ label }: { label: string }) {
     }
 
     const start = startDate.format('MMM D')
+
     const end = endDate.format('MMM D')
 
     return (

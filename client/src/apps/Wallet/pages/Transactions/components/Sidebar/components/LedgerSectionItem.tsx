@@ -29,6 +29,7 @@ export default function LedgerSectionItem({
   const handleClick = useCallback(() => {
     if (name === 'All') {
       setSelectedLedger(null)
+
       return
     }
     setSelectedLedger(id)

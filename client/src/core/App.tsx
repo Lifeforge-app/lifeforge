@@ -26,6 +26,7 @@ dayjs.extend(customParseFormat)
 function App() {
   useEffect(() => {
     const preloader = document.querySelector('.preloader')
+
     if (preloader) {
       preloader.remove()
     }

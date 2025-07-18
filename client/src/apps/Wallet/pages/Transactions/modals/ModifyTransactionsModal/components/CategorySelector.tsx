@@ -17,6 +17,7 @@ function CategorySelector({
   transactionType: string
 }) {
   const { categoriesQuery } = useWalletData()
+
   const categories = categoriesQuery.data ?? []
 
   return (

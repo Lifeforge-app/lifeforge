@@ -14,6 +14,7 @@ const TYPES = [
 
 function TypeSection() {
   const { t } = useTranslation('apps.wallet')
+
   const { typesCountQuery } = useWalletData()
 
   return (

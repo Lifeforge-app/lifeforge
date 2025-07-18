@@ -23,12 +23,14 @@ function BackupItem({
   }
 }) {
   const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const [downloadLoading, setDownloadLoading] = useState(false)
 
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
+
     const buffer = await fetchAPI<Buffer>(
       import.meta.env.VITE_API_HOST,
       `/backups/download/${backup.key}`
@@ -37,12 +39,16 @@ function BackupItem({
     if (!buffer) {
       toast.error('Failed to download backup')
       setDownloadLoading(false)
+
       return
     }
 
     const blob = new Blob([buffer], { type: 'application/zip' })
+
     const url = URL.createObjectURL(blob)
+
     const link = document.createElement('a')
+
     link.href = url
     link.download = backup.key
     document.body.appendChild(link)

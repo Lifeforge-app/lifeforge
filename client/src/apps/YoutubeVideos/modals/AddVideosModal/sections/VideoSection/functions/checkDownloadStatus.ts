@@ -15,13 +15,16 @@ export default async function checkDownloadStatus(id: string): Promise<{
       body: JSON.stringify({ id: [id] })
     }
   )
+
   if (res.status === 200) {
     const data = await res.json()
+
     return Object.values(data.data)[0] as {
       status: 'completed' | 'failed' | 'in_progress'
       progress: number
     }
   }
+
   return {
     status: 'failed',
     progress: 0

@@ -15,6 +15,7 @@ function LedgerSelector({
   setLedger: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const { ledgersQuery } = useWalletData()
+
   const ledgers = ledgersQuery.data ?? []
 
   return (

@@ -32,6 +32,7 @@ function MiniCalendarHeader({
           variant="plain"
           onClick={() => {
             setCurrentMonth(currentMonth - 1)
+
             if (currentMonth === 0) {
               setCurrentYear(currentYear - 1)
               setCurrentMonth(11)
@@ -44,6 +45,7 @@ function MiniCalendarHeader({
           variant="plain"
           onClick={() => {
             setCurrentMonth(currentMonth + 1)
+
             if (currentMonth === 11) {
               setCurrentYear(currentYear + 1)
               setCurrentMonth(0)

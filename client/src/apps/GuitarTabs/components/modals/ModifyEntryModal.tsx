@@ -25,6 +25,7 @@ function ModifyEntryModal({
   }
 }) {
   const { t } = useTranslation('apps.guitarTabs')
+
   const queryClient = useQueryClient()
 
   const [formState, setFormState] = useState<IGuitarTabsEntryFormState>({

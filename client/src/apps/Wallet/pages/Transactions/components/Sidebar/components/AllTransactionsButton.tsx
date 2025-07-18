@@ -6,6 +6,7 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 function AllTransactionsButton() {
   const { t } = useTranslation('apps.wallet')
+
   const {
     selectedType,
     selectedAsset,

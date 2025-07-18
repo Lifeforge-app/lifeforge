@@ -15,9 +15,12 @@ import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'
 
 function ExpensesBreakdownCard() {
   const { categoriesQuery } = useWalletData()
+
   // TODO
   const [year] = useState(dayjs().year())
+
   const [month] = useState(dayjs().month() + 1)
+
   const expensesBreakdownQuery = useAPIQuery<
     Record<
       string,

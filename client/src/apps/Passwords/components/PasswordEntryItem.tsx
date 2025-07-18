@@ -27,6 +27,7 @@ function PasswordEntryITem({
   pinPassword: (id: string) => Promise<void>
 }) {
   const { t } = useTranslation('apps.passwords')
+
   const open = useModalStore(state => state.open)
 
   const { masterPassword } = usePasswordContext()
@@ -34,7 +35,9 @@ function PasswordEntryITem({
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
+
   const [loading, setLoading] = useState(false)
+
   const [copyLoading, setCopyLoading] = useState(false)
 
   async function copyPassword() {
@@ -46,6 +49,7 @@ function PasswordEntryITem({
       setCopyLoading(false)
     } else {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
+
       copy(decrypted)
       toast.success('Password copied!')
       setCopyLoading(false)
@@ -55,6 +59,7 @@ function PasswordEntryITem({
   async function handleEdit() {
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
+
       open(ModifyPasswordModal, {
         type: 'update',
         existedData: {
@@ -70,6 +75,7 @@ function PasswordEntryITem({
   const decryptPassword = useCallback(async () => {
     if (decryptedPassword !== null) {
       setDecryptedPassword(null)
+
       return
     }
 
@@ -77,6 +83,7 @@ function PasswordEntryITem({
 
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
+
       setDecryptedPassword(decrypted)
     } catch {
       toast.error('Couldn’t decrypt the password. Please try again.')

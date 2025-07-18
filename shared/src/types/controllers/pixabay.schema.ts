@@ -79,4 +79,5 @@ const Pixabay = {
 type IPixabay = InferApiESchemaDynamic<typeof Pixabay>;
 
 export type { IPixabay };
+
 export { Pixabay };

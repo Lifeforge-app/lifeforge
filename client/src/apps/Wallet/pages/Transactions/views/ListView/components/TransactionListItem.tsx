@@ -20,11 +20,15 @@ function TransactionListItem({
   transaction: IWalletTransaction
 }) {
   const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
 
   const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
+
   const categories = categoriesQuery.data ?? []
+
   const ledgers = ledgersQuery.data ?? []
+
   const assets = assetsQuery.data ?? []
 
   const handleViewTransaction = useCallback(() => {

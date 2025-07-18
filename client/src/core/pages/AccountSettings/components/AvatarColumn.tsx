@@ -11,20 +11,26 @@ import { useAuth } from '../../../providers/AuthProvider'
 
 function AvatarColumn() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('core.accountSettings')
+
   const [loading, setLoading] = useState(false)
+
   const { getAvatarURL, userData, setUserData } = useAuth()
 
   function changeAvatar() {
     const input = document.createElement('input')
+
     input.type = 'file'
     input.accept = 'image/*'
     input.click()
 
     input.onchange = async () => {
       const file = input.files?.[0]
+
       if (file !== undefined) {
         const formData = new FormData()
+
         formData.append('file', file)
 
         setLoading(true)
@@ -38,6 +44,7 @@ function AvatarColumn() {
               body: formData
             }
           )
+
           setUserData({ ...userData, avatar: data })
         } catch {
           toast.error('An error occurred')

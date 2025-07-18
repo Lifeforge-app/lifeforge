@@ -9,11 +9,17 @@ import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')
+
   const [password, setPassword] = useState('')
+
   const emailOrUsernameRef = useRef(emailOrUsername)
+
   const passwordRef = useRef(password)
+
   const [loading, setLoading] = useState(false)
+
   const [formDisabled, setFormDisabled] = useState(false)
+
   const { t } = useTranslation('common.auth')
 
   const {
@@ -41,14 +47,18 @@ function AuthForm({ providers }: { providers: string[] }) {
 
   const signIn = useCallback(() => {
     const emailOrUsername = emailOrUsernameRef.current
+
     const password = passwordRef.current
 
     if (emailOrUsername.length === 0 || password.length === 0) {
       toast.error(t('messages.invalidFields'))
+
       return
     }
+
     if (quota === 0) {
       dismissQuota()
+
       return
     }
     setLoading(true)
@@ -56,12 +66,14 @@ function AuthForm({ providers }: { providers: string[] }) {
       .then(res => {
         if (res === '2FA required' || !res) {
           setFormDisabled(true)
+
           return
         }
 
         if (res === 'invalid') {
           toast.error(t('messages.invalidCredentials'))
           dismissQuota()
+
           return
         }
 

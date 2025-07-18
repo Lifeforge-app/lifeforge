@@ -14,6 +14,8 @@ export const formatStationDisplay = (
   stationId: string
 ) => {
   const station = stations.find(s => s.id === stationId)
+
   if (!station) return ''
+
   return `${station.name} (${station.codes.join(', ')})`
 }

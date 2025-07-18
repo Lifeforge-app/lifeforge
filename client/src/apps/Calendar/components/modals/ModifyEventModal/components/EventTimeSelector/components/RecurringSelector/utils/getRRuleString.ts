@@ -3,6 +3,7 @@ import { ByWeekday, RRule, Options as RRuleOptions, datetime } from 'rrule'
 
 const createStartDate = (start: Date | null) => {
   const startDate = dayjs(start)
+
   return datetime(
     startDate.year(),
     startDate.month() + 1,

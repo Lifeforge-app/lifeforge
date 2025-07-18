@@ -20,6 +20,7 @@ import ModifyWishlistListModal from './modals/ModifyWishlistModal'
 
 function Wishlist() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wishlist')
 
   const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
@@ -28,6 +29,7 @@ function Wishlist() {
   ])
 
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   const filteredLists = useMemo(() => {
@@ -87,6 +89,7 @@ function Wishlist() {
                 />
               )
             }
+
             return (
               <div className="mt-6 mb-14 grid grid-cols-1 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
                 {filteredLists.map(list => (

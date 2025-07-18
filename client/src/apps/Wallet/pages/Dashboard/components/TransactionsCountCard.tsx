@@ -10,8 +10,11 @@ import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function TransactionsCountCard() {
   const { transactionsQuery, typesCountQuery } = useWalletData()
+
   const { isAmountHidden } = useWalletStore()
+
   const { t } = useTranslation('apps.wallet')
+
   const typesCount = typesCountQuery.data ?? {}
 
   return (

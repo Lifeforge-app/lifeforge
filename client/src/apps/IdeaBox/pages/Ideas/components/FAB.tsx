@@ -14,7 +14,9 @@ import ModifyIdeaModal from './modals/ModifyIdeaModal'
 
 function FAB() {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.ideaBox')
+
   const { viewArchived } = useIdeaBoxContext()
 
   const handleEntryCreation = useCallback(

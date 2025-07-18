@@ -10,7 +10,9 @@ import useTitleEffect from './hooks/useTitleEffect'
 
 function AppRouter() {
   const navigate = useNavigate()
+
   const { auth, authLoading } = useAuth()
+
   const location = useLocation()
 
   useEffect(() => {

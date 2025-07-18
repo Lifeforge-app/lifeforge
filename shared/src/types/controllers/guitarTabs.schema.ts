@@ -140,4 +140,5 @@ type IGuitarWorld = InferApiESchemaDynamic<typeof GuitarWorld>;
 type IEntries = InferApiESchemaDynamic<typeof Entries>;
 
 export type { IGuitarWorld, IEntries };
+
 export { GuitarWorld, Entries };

@@ -35,7 +35,9 @@ function CaptionSelector({
   onSummarize
 }: CaptionSelectorProps) {
   const { t } = useTranslation('apps.youtubeSummarizer')
+
   const [captionType, setCaptionType] = useState<'auto' | 'manual' | null>(null)
+
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null)
 
   useEffect(() => {
@@ -46,6 +48,7 @@ function CaptionSelector({
     if (!selectedLanguage) return
 
     const parsedSelection = JSON.parse(selectedLanguage)
+
     const vttUrl = parsedSelection.meta.find(
       (m: CaptionMeta) => m.ext === 'srv1'
     )?.url
@@ -59,6 +62,7 @@ function CaptionSelector({
     if (!selectedLanguage) return
 
     const parsedSelection = JSON.parse(selectedLanguage)
+
     const vtt = parsedSelection.meta.find((m: CaptionMeta) => m.ext === 'srv1')
 
     if (vtt) {

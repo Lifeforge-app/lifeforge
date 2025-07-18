@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/empty-string-repetition */
+ 
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
@@ -18,10 +18,15 @@ const URL_REGEX =
 
 function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
+
   const [loading, setLoading] = useState(false)
+
   setLoading(false) //TODO
+
   const [videoURLinput, setVideoURLInput] = useState('')
+
   const videoURL = useDebounce(videoURLinput, 300)
+
   const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
     `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
     ['music', 'youtube', 'get-info', videoURL.match(URL_REGEX)?.groups?.id],
@@ -124,4 +129,5 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
     </div>
   )
 }
+
 export default YoutubeDownloaderModal

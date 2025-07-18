@@ -28,19 +28,32 @@ function ModifyIdeaModal({
 }) {
   const { viewArchived, selectedTags, debouncedSearchQuery, tagsQuery } =
     useIdeaBoxContext()
+
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
   const innerOpenType = useDebounce(type, type === null ? 300 : 0)
+
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] =
     useState<IIdeaBoxEntry['type']>('text')
+
   const [ideaTitle, setIdeaTitle] = useState('')
+
   const [ideaContent, setIdeaContent] = useState('')
+
   const [ideaLink, setIdeaLink] = useState('')
+
   const [ideaImage, setIdeaImage] = useState<File | null>(null)
+
   const [imageLink, setImageLink] = useState<string>('')
+
   const [ideaTags, setIdeaTags] = useState<string[]>([])
+
   const debouncedImageLink = useDebounce(imageLink, 300)
+
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
+
   const [loading, setLoading] = useState(false)
+
   const queryClient = useQueryClient()
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -96,11 +109,13 @@ function ModifyIdeaModal({
     if (innerTypeOfModifyIdea === 'image') {
       if (debouncedImageLink === '') {
         setPreview(null)
+
         return
       }
 
       if (!debouncedImageLink.match(/^http(s)?:\/\/.+/)) {
         toast.error('Invalid image link.')
+
         return
       }
 
@@ -125,6 +140,7 @@ function ModifyIdeaModal({
       case 'text':
         if (ideaContent.trim().length === 0) {
           toast.error('Idea content cannot be empty.')
+
           return
         }
         break
@@ -135,12 +151,14 @@ function ModifyIdeaModal({
           debouncedImageLink.trim().length === 0
         ) {
           toast.error('Idea image cannot be empty.')
+
           return
         }
         break
       case 'link':
         if (ideaLink.trim().length === 0) {
           toast.error('Idea title and link cannot be empty.')
+
           return
         }
         break
@@ -149,6 +167,7 @@ function ModifyIdeaModal({
     setLoading(true)
 
     const formData = new FormData()
+
     formData.append('container', id ?? '')
     formData.append('title', ideaTitle.trim())
     formData.append(
@@ -223,10 +242,12 @@ function ModifyIdeaModal({
 
     if (!pastedImage.type.includes('image')) {
       toast.error('Invalid image in clipboard.')
+
       return
     }
 
     const file = pastedImage.getAsFile()
+
     const reader = new FileReader()
 
     reader.onload = function () {

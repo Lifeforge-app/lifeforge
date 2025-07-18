@@ -36,4 +36,5 @@ const RailwayMap = {
 type IRailwayMap = InferApiESchemaDynamic<typeof RailwayMap>;
 
 export type { IRailwayMap };
+
 export { RailwayMap };

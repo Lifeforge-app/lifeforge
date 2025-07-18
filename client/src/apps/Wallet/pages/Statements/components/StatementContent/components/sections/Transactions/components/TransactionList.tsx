@@ -14,8 +14,11 @@ function TransactionList({
   year: number
 }) {
   const { transactionsQuery, assetsQuery, categoriesQuery } = useWalletData()
+
   const transactions = transactionsQuery.data ?? []
+
   const assets = assetsQuery.data ?? []
+
   const categories = categoriesQuery.data ?? []
 
   return (
@@ -163,12 +166,14 @@ function TransactionList({
                         if (curr.side === 'debit') {
                           return acc + curr.amount
                         }
+
                         if (curr.side === 'credit') {
                           return acc - curr.amount
                         }
                       } else {
                         return acc + curr.amount / 2
                       }
+
                       return acc
                     }, 0)
 

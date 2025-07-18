@@ -15,7 +15,9 @@ function IncomeExpensesTable({
   type: 'income' | 'expenses'
 }) {
   const { transactionsQuery, categoriesQuery } = useWalletData()
+
   const transactions = transactionsQuery.data ?? []
+
   const categories = categoriesQuery.data ?? []
 
   return (
@@ -164,6 +166,7 @@ function IncomeExpensesTable({
                 const lastMonth = dayjs()
                   .year(year)
                   .month(month - 1)
+
                 const lastMonthAmount = transactions
                   .filter(
                     transaction =>

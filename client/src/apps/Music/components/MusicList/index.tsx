@@ -8,10 +8,12 @@ import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import MusicListItem from './components/MusicListItem'
 
 const AS = AutoSizer as any
+
 const L = List as any
 
 function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
   const { musicsQuery } = useMusicContext()
+
   const musics = musicsQuery.data ?? []
 
   const rowRenderer = useCallback(

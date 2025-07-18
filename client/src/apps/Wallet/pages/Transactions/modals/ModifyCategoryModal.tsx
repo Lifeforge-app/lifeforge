@@ -16,6 +16,7 @@ function ModifyCategoryModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.wallet')
+
   const [formState, setFormState] = useState<{
     type: 'income' | 'expenses'
     name: string

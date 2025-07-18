@@ -13,6 +13,7 @@ import TagChip from './components/TagChip'
 
 function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
   const { t } = useTranslation('apps.ideaBox')
+
   const [expanded, setExpanded] = useState(false)
 
   const [{ opacity, isDragging }, dragRef] = useDrag(

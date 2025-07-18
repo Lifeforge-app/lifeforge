@@ -23,6 +23,7 @@ function CalendarList({
     'calendar/calendars',
     ['calendar', 'calendars']
   )
+
   const open = useModalStore(state => state.open)
 
   const handleSelect = useCallback(

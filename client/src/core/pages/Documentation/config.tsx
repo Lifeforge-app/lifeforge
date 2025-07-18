@@ -9,6 +9,7 @@ export default {
     documentation: () => {
       window.location.href =
         'https://docs.lifeforge.melvinchia.dev/getting-started/introduction'
+
       return <Navigate to="/" />
     }
   },

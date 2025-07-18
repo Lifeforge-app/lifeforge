@@ -14,7 +14,9 @@ function TaskPriorityList({
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.todoList')
+
   const { prioritiesQuery } = useTodoListContext()
 
   const handleCreatePriority = useCallback(() => {

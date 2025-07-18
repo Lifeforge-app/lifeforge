@@ -4,7 +4,9 @@ import { useRef, useState } from 'react'
 
 function Clock() {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
+
   const [second, setSecond] = useState(dayjs().format('ss') as any)
+
   const ref = useRef<HTMLDivElement>(null)
 
   setInterval(() => {

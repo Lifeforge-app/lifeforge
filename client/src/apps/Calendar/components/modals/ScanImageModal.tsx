@@ -11,18 +11,25 @@ import ModifyEventModal from './ModifyEventModal'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
+
   const [file, setFile] = useState<File | string | null>(null)
+
   const [preview, setPreview] = useState<string | null>(null)
+
   const [loading, setLoading] = useState(false)
 
   async function onSubmit() {
     if (file === null) {
       toast.error('Please select a file')
+
       return
     }
     setLoading(true)
+
     const formData = new FormData()
+
     formData.append('file', file)
+
     try {
       const data = await fetchAPI<ICalendarEvent>(
         import.meta.env.VITE_API_HOST,
@@ -32,6 +39,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           body: formData
         }
       )
+
       onClose()
 
       open(ModifyEventModal, {

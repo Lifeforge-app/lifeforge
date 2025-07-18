@@ -12,12 +12,15 @@ const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {
   if (a.amount === b.amount) {
     return a.name.localeCompare(b.name)
   }
+
   return b.amount - a.amount
 }
 
 function TagsSelector() {
   const open = useModalStore(state => state.open)
+
   const { '*': path } = useParams<{ '*': string }>()
+
   const {
     tagsQuery,
     entriesQuery,
@@ -27,8 +30,11 @@ function TagsSelector() {
     selectedTags,
     setSelectedTags
   } = useIdeaBoxContext()
+
   const entries = entriesQuery.data ?? []
+
   const tags = tagsQuery.data ?? []
+
   const searchResults = searchResultsQuery.data ?? []
 
   const filteredTags = useMemo(() => {
@@ -77,6 +83,7 @@ function TagsSelector() {
   const handleUpdateTag = useCallback(
     (id: string) => {
       const tag = tags.find(tag => tag.id === id)
+
       if (tag) {
         open(ModifyTagModal, {
           type: 'update',

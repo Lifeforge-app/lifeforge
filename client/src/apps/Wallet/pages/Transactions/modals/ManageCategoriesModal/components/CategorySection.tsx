@@ -15,7 +15,9 @@ interface CategorySectionProps {
 
 function CategorySection({ categories, type, iconName }: CategorySectionProps) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wallet')
+
   const filteredCategories = categories.filter(
     category => category.type === type
   )

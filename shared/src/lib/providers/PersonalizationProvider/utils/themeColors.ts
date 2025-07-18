@@ -26,6 +26,7 @@ export function getColorPalette(
 
   return number.reduce<Record<number, string>>((acc, cur, idx) => {
     acc[cur] = gradientArray[idx]!;
+
     return acc;
   }, {});
 }

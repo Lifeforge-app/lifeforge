@@ -11,8 +11,11 @@ import { useAPIQuery } from 'shared/lib'
 
 function CodeTimeActivityCalendar() {
   const { t } = useTranslation('apps.codeTime')
+
   const { derivedTheme, derivedThemeColor: themeColor } = usePersonalization()
+
   const [year, setYear] = useState(new Date().getFullYear())
+
   const dataQuery = useAPIQuery<{
     data: Array<{
       date: string
@@ -21,11 +24,13 @@ function CodeTimeActivityCalendar() {
     }>
     firstYear: number
   }>(`code-time/activities?year=${year}`, ['code-time', 'activities', year])
+
   const [activities, setActivities] = useState<Array<{
     date: string
     count: number
     level: 0 | 1 | 2 | 3 | 4
   }> | null>(null)
+
   const [firstYear, setFirstYear] = useState<number>()
 
   useEffect(() => {

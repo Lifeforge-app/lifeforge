@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next'
 
 function CreateBackupModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.backups')
+
   const queryClient = useQueryClient()
+
   const [data, setData] = useState<{
     backupName: string
   }>({

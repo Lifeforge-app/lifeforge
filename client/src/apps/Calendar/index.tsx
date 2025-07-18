@@ -22,16 +22,20 @@ import { useCalendarStore } from './stores/useCalendarStore'
 
 function CalendarModule() {
   const open = useModalStore(state => state.open)
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
   const { eventQueryKey } = useCalendarStore()
 
   const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
     `calendar/events?start=${eventQueryKey[2]}&end=${eventQueryKey[3]}`,
     eventQueryKey
   )
+
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     undefined
   )
+
   const [selectedCalendar, setSelectedCalendar] = useState<string | undefined>(
     undefined
   )

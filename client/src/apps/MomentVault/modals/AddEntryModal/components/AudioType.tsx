@@ -28,6 +28,7 @@ function AudioType({
   setOverwriteAudioWarningModalOpen: (open: boolean) => void
 }) {
   const { t } = useTranslation('apps.momentVault')
+
   const {
     derivedTheme,
     bgTempPalette,
@@ -35,14 +36,23 @@ function AudioType({
   } = usePersonalization()
 
   const [recording, setRecording] = useState(false)
+
   const [totalTime, setTotalTime] = useState(0)
+
   const [currentTime, setCurrentTime] = useState(0)
+
   const streamRef = useRef<MediaStream | null>(null)
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+
   const audioChunksRef = useRef<Blob[]>([])
+
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
+
   const [isPlaying, setIsPlaying] = useState(false)
+
   const [transcribeLoading, setTranscribeLoading] = useState(false)
+
   const [submitLoading, setSubmitLoading] = useState(false)
 
   const startRecording = async () => {
@@ -50,8 +60,11 @@ function AudioType({
     setTotalTime(0)
 
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+
     streamRef.current = stream
+
     const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' })
+
     mediaRecorderRef.current = mediaRecorder
     audioChunksRef.current = []
 
@@ -69,7 +82,9 @@ function AudioType({
       const audioBlob = new Blob(audioChunksRef.current, {
         type: audioChunksRef.current[0].type
       })
+
       const url = URL.createObjectURL(audioBlob)
+
       setAudioURL(url)
     }
 
@@ -103,6 +118,7 @@ function AudioType({
     setTranscribeLoading(true)
 
     const body = new FormData()
+
     const file = new File(
       audioChunksRef.current,
       `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
@@ -110,6 +126,7 @@ function AudioType({
         type: audioChunksRef.current[0].type
       }
     )
+
     body.append('file', file)
 
     try {
@@ -134,6 +151,7 @@ function AudioType({
     setSubmitLoading(true)
 
     const body = new FormData()
+
     const file = new File(
       audioChunksRef.current,
       `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
@@ -230,6 +248,7 @@ function AudioType({
           onClick={() => {
             if (audioURL !== null) {
               setOverwriteAudioWarningModalOpen(true)
+
               return
             }
 

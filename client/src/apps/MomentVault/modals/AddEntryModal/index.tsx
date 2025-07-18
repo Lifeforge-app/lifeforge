@@ -44,10 +44,15 @@ function AddEntryModal({
   onClose: () => void
 }) {
   const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.momentVault')
+
   const queryClient = useQueryClient()
+
   const [audioURL, setAudioURL] = useState<string | null>(null)
+
   const [transcription, setTranscription] = useState<string | null>(null)
+
   const [innerOpenType, setInnerOpenType] = useState<
     'text' | 'audio' | 'photos' | 'video'
   >(type)
@@ -149,6 +154,7 @@ function AddEntryModal({
               />
             )
           }
+
           return components[innerOpenType as keyof typeof components] || <></>
         })()}
       </div>

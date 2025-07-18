@@ -3,7 +3,9 @@ import { useState } from 'react'
 
 function AudioPlayer({ url }: { url: string }) {
   const [audioLoading, setAudioLoading] = useState(false)
+
   const [isPlaying, setIsPlaying] = useState(false)
+
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
 
   function togglePlay() {
@@ -17,7 +19,9 @@ function AudioPlayer({ url }: { url: string }) {
       }
     } else {
       setAudioLoading(true)
+
       const newAudio = new Audio(url)
+
       newAudio.preload = 'auto'
       newAudio.addEventListener('canplaythrough', () => {
         setAudioLoading(false)

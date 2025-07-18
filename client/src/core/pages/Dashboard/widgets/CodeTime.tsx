@@ -56,9 +56,11 @@ const chartOptions: ChartOptions = {
         label: context => {
           let label = context.dataset.label || ''
           if (label) label += ': '
+
           if (context.parsed.y !== null) {
             label += msToTime(context.parsed.y * 3600000)
           }
+
           return label
         }
       },
@@ -93,10 +95,12 @@ const CodeTime = () => {
     'code-time',
     'each-day'
   ])
+
   const { derivedThemeColor: themeColor } = usePersonalization()
 
   const chartData = useMemo(() => {
     const data = dataQuery.data
+
     if (dataQuery.isLoading) return 'Loading'
     if (!data || data.length === 0) return 'No data'
 
@@ -109,6 +113,7 @@ const CodeTime = () => {
       const day = data.find(
         d => d.date === dayjs(date, 'DD MMM').format('YYYY-MM-DD')
       )
+
       return day ? day.duration / 3600000 : 0
     })
 
@@ -120,7 +125,9 @@ const CodeTime = () => {
           data: processedData,
           backgroundColor: (context: ScriptableContext<'line'>) => {
             const ctx = context.chart.ctx
+
             const gradient = ctx.createLinearGradient(0, 0, 0, 250)
+
             gradient.addColorStop(
               0,
               tinycolor(themeColor).setAlpha(0.5).toRgbString()
@@ -129,6 +136,7 @@ const CodeTime = () => {
               1,
               tinycolor(themeColor).setAlpha(0).toRgbString()
             )
+
             return gradient
           },
           fill: 'origin',

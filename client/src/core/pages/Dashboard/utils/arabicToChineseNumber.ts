@@ -3,7 +3,9 @@ export function arabicToChinese(
   format: 'simplified' | 'traditional' = 'traditional'
 ): string {
   const digits = getDigitMapping(format)
+
   const units = getUnitMapping(format)
+
   const specialTwenty = '廿'
 
   let chineseNumber = convertNumberToChinese(
@@ -40,11 +42,14 @@ function convertNumberToChinese(
   specialTwenty: string
 ): string {
   const result: string[] = []
+
   const length = numStr.length
 
   for (let i = 0; i < length; i++) {
     const digit = parseInt(numStr.charAt(i))
+
     const chineseDigit = digits[digit]
+
     const unitIndex = length - i - 1
 
     if (
@@ -79,6 +84,7 @@ function removeLeadingOne(
   if (chineseNumber.startsWith(one + ten)) {
     return chineseNumber.substring(1)
   }
+
   return chineseNumber
 }
 

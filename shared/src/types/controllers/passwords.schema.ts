@@ -134,4 +134,5 @@ type IEntries = InferApiESchemaDynamic<typeof Entries>;
 type IMaster = InferApiESchemaDynamic<typeof Master>;
 
 export type { IEntries, IMaster };
+
 export { Entries, Master };

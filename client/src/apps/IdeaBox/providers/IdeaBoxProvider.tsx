@@ -44,13 +44,19 @@ export const IdeaBoxContext = createContext<IIdeaBoxData | undefined>(undefined)
 
 export default function IdeaBoxProvider() {
   const open = useModalStore(state => state.open)
+
   const navigate = useNavigate()
+
   const [searchParams, setSearchParams] = useSearchParams()
+
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const [searchQuery, setSearchQuery] = useState('')
+
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
+
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+
   const [viewArchived, setViewArchived] = useState(
     searchParams.get('archived') === 'true'
   )
@@ -137,10 +143,12 @@ export default function IdeaBoxProvider() {
 
     if (!pastedImage.type.includes('image')) {
       toast.error('Invalid image in clipboard.')
+
       return
     }
 
     const file = pastedImage.getAsFile()
+
     const reader = new FileReader()
 
     if (file !== null) {
@@ -237,8 +245,10 @@ export default function IdeaBoxProvider() {
 
 export function useIdeaBoxContext(): IIdeaBoxData {
   const context = useContext(IdeaBoxContext)
+
   if (context === undefined) {
     throw new Error('useIdeaBoxContext must be used within a IdeaBoxProvider')
   }
+
   return context
 }

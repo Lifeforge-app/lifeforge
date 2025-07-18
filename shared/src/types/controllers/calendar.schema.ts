@@ -216,4 +216,5 @@ type ICategories = InferApiESchemaDynamic<typeof Categories>;
 type IEvents = InferApiESchemaDynamic<typeof Events>;
 
 export type { ICalendars, ICategories, IEvents };
+
 export { Calendars, Categories, Events };

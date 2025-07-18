@@ -45,9 +45,11 @@ function getAmounts({
       if (curr.side === 'debit') {
         return acc + curr.amount
       }
+
       if (curr.side === 'credit') {
         return acc - curr.amount
       }
+
       return acc
     }, 0)
 
@@ -57,9 +59,11 @@ function getAmounts({
       if (curr.side === 'debit') {
         return acc + curr.amount
       }
+
       if (curr.side === 'credit') {
         return acc - curr.amount
       }
+
       return acc
     }, 0)
 
@@ -68,6 +72,7 @@ function getAmounts({
 
 function AssetsTable({ month, year }: { month: number; year: number }) {
   const { assetsQuery, transactionsQuery } = useWalletData()
+
   const transactions = transactionsQuery.data ?? []
 
   return (
@@ -180,6 +185,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                 </td>
                 {(() => {
                   if (typeof transactions === 'string') return <></>
+
                   const balance = assets.reduce(
                     (acc, curr) => acc + curr.balance,
                     0
@@ -203,9 +209,11 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       if (curr.side === 'debit') {
                         return acc + curr.amount
                       }
+
                       if (curr.side === 'credit') {
                         return acc - curr.amount
                       }
+
                       return acc
                     }, 0)
 
@@ -215,9 +223,11 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       if (curr.side === 'debit') {
                         return acc + curr.amount
                       }
+
                       if (curr.side === 'credit') {
                         return acc - curr.amount
                       }
+
                       return acc
                     }, 0)
 
