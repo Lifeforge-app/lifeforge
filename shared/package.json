@@ -9,9 +9,13 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./types": {
-      "import": "./dist/types/index.js",
-      "types": "./dist/types/index.d.ts"
+    "./types/collections": {
+      "import": "./dist/types/collections/index.js",
+      "types": "./dist/types/collections/index.d.ts"
+    },
+    "./types/controllers": {
+      "import": "./dist/types/controllers/index.js",
+      "types": "./dist/types/controllers/index.d.ts"
     },
     "./lib": {
       "import": "./dist/lib/index.js",
