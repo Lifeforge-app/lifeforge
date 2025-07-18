@@ -1,54 +1,55 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import { default as _validateOTP } from "@functions/validateOTP";
-import express from "express";
-import { PasswordsControllersSchemas } from "shared/types/controllers";
-import { v4 } from "uuid";
+  forgeController
+} from '@functions/forgeController'
+import { default as _validateOTP } from '@functions/validateOTP'
+import express from 'express'
+import { v4 } from 'uuid'
 
-import * as MasterService from "../services/master.service";
+import { PasswordsControllersSchemas } from 'shared/types/controllers'
 
-const passwordsMasterRouter = express.Router();
+import * as MasterService from '../services/master.service'
 
-let challenge = v4();
+const passwordsMasterRouter = express.Router()
+
+let challenge = v4()
 setTimeout(() => {
-  challenge = v4();
-}, 1000 * 60);
+  challenge = v4()
+}, 1000 * 60)
 
 const getChallenge = forgeController
-  .route("GET /challenge")
-  .description("Get current challenge for master password operations")
+  .route('GET /challenge')
+  .description('Get current challenge for master password operations')
   .schema(PasswordsControllersSchemas.Master.getChallenge)
-  .callback(async () => challenge);
+  .callback(async () => challenge)
 
 const createMaster = forgeController
-  .route("POST /")
-  .description("Create a new master password")
+  .route('POST /')
+  .description('Create a new master password')
   .schema(PasswordsControllersSchemas.Master.createMaster)
   .callback(async ({ pb, body: { password } }) =>
-    MasterService.createMaster(pb, password),
-  );
+    MasterService.createMaster(pb, password)
+  )
 
 const verifyMaster = forgeController
-  .route("POST /verify")
-  .description("Verify master password")
+  .route('POST /verify')
+  .description('Verify master password')
   .schema(PasswordsControllersSchemas.Master.verifyMaster)
   .callback(async ({ pb, body: { password } }) =>
-    MasterService.verifyMaster(pb, password, challenge),
-  );
+    MasterService.verifyMaster(pb, password, challenge)
+  )
 
 const validateOTP = forgeController
-  .route("POST /otp")
-  .description("Validate OTP for master password operations")
+  .route('POST /otp')
+  .description('Validate OTP for master password operations')
   .schema(PasswordsControllersSchemas.Master.validateOtp)
-  .callback(async ({ pb, body }) => await _validateOTP(pb, body, challenge));
+  .callback(async ({ pb, body }) => await _validateOTP(pb, body, challenge))
 
 bulkRegisterControllers(passwordsMasterRouter, [
   getChallenge,
   createMaster,
   verifyMaster,
-  validateOTP,
-]);
+  validateOTP
+])
 
-export default passwordsMasterRouter;
+export default passwordsMasterRouter

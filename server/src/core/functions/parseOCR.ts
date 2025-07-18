@@ -1,23 +1,23 @@
-import { createWorker } from "tesseract.js";
+import { createWorker } from 'tesseract.js'
 
 async function parseOCR(imagePath: string): Promise<string> {
-  const worker = await createWorker("eng", 3, {
-    langPath: "./src/core/models",
-    cachePath: "./src/core/models",
-    cacheMethod: "readOnly",
-    gzip: false,
-  });
+  const worker = await createWorker('eng', 3, {
+    langPath: './src/core/models',
+    cachePath: './src/core/models',
+    cacheMethod: 'readOnly',
+    gzip: false
+  })
 
   try {
-    const ret = await worker.recognize(imagePath);
+    const ret = await worker.recognize(imagePath)
 
-    await worker.terminate();
+    await worker.terminate()
 
-    return ret.data.text;
+    return ret.data.text
   } catch {
-    await worker.terminate();
-    throw new Error("Error parsing OCR");
+    await worker.terminate()
+    throw new Error('Error parsing OCR')
   }
 }
 
-export default parseOCR;
+export default parseOCR

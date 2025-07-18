@@ -6,8 +6,7 @@
  * Generated at: 2025-07-18T12:15:50.187Z
  * Contains: users
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const User = z.object({
   password: z.string(),
@@ -19,13 +18,13 @@ const User = z.object({
   name: z.string(),
   avatar: z.string(),
   dateOfBirth: z.string(),
-  theme: z.enum(["system","light","dark"]),
+  theme: z.enum(['system', 'light', 'dark']),
   color: z.string(),
   bgTemp: z.string(),
   bgImage: z.string(),
   backdropFilters: z.any(),
   fontFamily: z.string(),
-  language: z.enum(["zh-CN","en","ms","zh-TW",""]),
+  language: z.enum(['zh-CN', 'en', 'ms', 'zh-TW', '']),
   moduleConfigs: z.any(),
   enabledModules: z.any(),
   dashboardLayout: z.any(),
@@ -35,18 +34,14 @@ const User = z.object({
   masterPasswordHash: z.string(),
   journalMasterPasswordHash: z.string(),
   APIKeysMasterPasswordHash: z.string(),
-  twoFASecret: z.string(),
-});
+  twoFASecret: z.string()
+})
 
-type IUser = z.infer<typeof User>;
+type IUser = z.infer<typeof User>
 
-export {
-  User,
-};
+export { User }
 
-export type {
-  IUser,
-};
+export type { IUser }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

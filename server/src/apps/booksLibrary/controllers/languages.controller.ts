@@ -1,59 +1,60 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { BooksLibraryControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as LanguagesService from "../services/languages.service";
+import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
-const booksLibraryLanguagesRouter = express.Router();
+import * as LanguagesService from '../services/languages.service'
+
+const booksLibraryLanguagesRouter = express.Router()
 
 const getAllLanguages = forgeController
-  .route("GET /")
-  .description("Get all languages for the books library")
+  .route('GET /')
+  .description('Get all languages for the books library')
   .schema(BooksLibraryControllersSchemas.Languages.getAllLanguages)
-  .callback(({ pb }) => LanguagesService.getAllLanguages(pb));
+  .callback(({ pb }) => LanguagesService.getAllLanguages(pb))
 
 const createLanguage = forgeController
-  .route("POST /")
-  .description("Create a new language for the books library")
+  .route('POST /')
+  .description('Create a new language for the books library')
   .schema(BooksLibraryControllersSchemas.Languages.createLanguage)
   .statusCode(201)
   .callback(
-    async ({ pb, body }) => await LanguagesService.createLanguage(pb, body),
-  );
+    async ({ pb, body }) => await LanguagesService.createLanguage(pb, body)
+  )
 
 const updateLanguage = forgeController
-  .route("PATCH /:id")
-  .description("Update an existing language for the books library")
+  .route('PATCH /:id')
+  .description('Update an existing language for the books library')
   .schema(BooksLibraryControllersSchemas.Languages.updateLanguage)
-  .existenceCheck("params", {
-    id: "books_library__languages",
+  .existenceCheck('params', {
+    id: 'books_library__languages'
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
-      await LanguagesService.updateLanguage(pb, id, body),
-  );
+      await LanguagesService.updateLanguage(pb, id, body)
+  )
 
 const deleteLanguage = forgeController
-  .route("DELETE /:id")
-  .description("Delete an existing language for the books library")
+  .route('DELETE /:id')
+  .description('Delete an existing language for the books library')
   .schema(BooksLibraryControllersSchemas.Languages.deleteLanguage)
-  .existenceCheck("params", {
-    id: "books_library__languages",
+  .existenceCheck('params', {
+    id: 'books_library__languages'
   })
   .statusCode(204)
   .callback(
     async ({ pb, params: { id } }) =>
-      await LanguagesService.deleteLanguage(pb, id),
-  );
+      await LanguagesService.deleteLanguage(pb, id)
+  )
 
 bulkRegisterControllers(booksLibraryLanguagesRouter, [
   getAllLanguages,
   createLanguage,
   updateLanguage,
-  deleteLanguage,
-]);
+  deleteLanguage
+])
 
-export default booksLibraryLanguagesRouter;
+export default booksLibraryLanguagesRouter

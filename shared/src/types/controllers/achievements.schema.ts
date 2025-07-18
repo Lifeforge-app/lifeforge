@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { AchievementsCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { AchievementsCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Entries = {
   /**
@@ -10,9 +11,9 @@ const Entries = {
    */
   getAllEntriesByDifficulty: {
     params: AchievementsCollectionsSchemas.Entry.pick({
-      difficulty: true,
+      difficulty: true
     }),
-    response: z.array(SchemaWithPB(AchievementsCollectionsSchemas.Entry)),
+    response: z.array(SchemaWithPB(AchievementsCollectionsSchemas.Entry))
   },
 
   /**
@@ -21,7 +22,7 @@ const Entries = {
    */
   createEntry: {
     body: AchievementsCollectionsSchemas.Entry,
-    response: SchemaWithPB(AchievementsCollectionsSchemas.Entry),
+    response: SchemaWithPB(AchievementsCollectionsSchemas.Entry)
   },
 
   /**
@@ -30,10 +31,10 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: AchievementsCollectionsSchemas.Entry,
-    response: SchemaWithPB(AchievementsCollectionsSchemas.Entry),
+    response: SchemaWithPB(AchievementsCollectionsSchemas.Entry)
   },
 
   /**
@@ -42,14 +43,14 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type IEntries = InferApiESchemaDynamic<typeof Entries>
 
-export type { IEntries };
+export type { IEntries }
 
-export { Entries };
+export { Entries }

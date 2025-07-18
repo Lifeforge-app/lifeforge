@@ -1,68 +1,68 @@
-import PocketBase from "pocketbase";
-import { TodoListCollectionsSchemas } from "shared/types/collections";
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { TodoListCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllLists = (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<
   WithPB<
     TodoListCollectionsSchemas.IList & {
-      amount: number;
+      amount: number
     }
   >[]
 > =>
-  pb.collection("todo_list__lists_aggregated").getFullList<
+  pb.collection('todo_list__lists_aggregated').getFullList<
     WithPB<TodoListCollectionsSchemas.IList> & {
-      amount: number;
+      amount: number
     }
-  >();
+  >()
 
 export const createList = async (
   pb: PocketBase,
-  data: TodoListCollectionsSchemas.IList,
+  data: TodoListCollectionsSchemas.IList
 ): Promise<
   WithPB<
     TodoListCollectionsSchemas.IList & {
-      amount: number;
+      amount: number
     }
   >
 > => {
   const created = await pb
-    .collection("todo_list__lists")
-    .create<WithPB<TodoListCollectionsSchemas.IList>>(data);
+    .collection('todo_list__lists')
+    .create<WithPB<TodoListCollectionsSchemas.IList>>(data)
 
-  return pb.collection("todo_list__lists_aggregated").getOne<
+  return pb.collection('todo_list__lists_aggregated').getOne<
     WithPB<TodoListCollectionsSchemas.IList> & {
-      amount: number;
+      amount: number
     }
-  >(created.id);
-};
+  >(created.id)
+}
 
 export const updateList = async (
   pb: PocketBase,
   id: string,
-  data: TodoListCollectionsSchemas.IList,
+  data: TodoListCollectionsSchemas.IList
 ): Promise<
   WithPB<
     TodoListCollectionsSchemas.IList & {
-      amount: number;
+      amount: number
     }
   >
 > => {
   const updated = await pb
-    .collection("todo_list__lists")
-    .update<WithPB<TodoListCollectionsSchemas.IList>>(id, data);
+    .collection('todo_list__lists')
+    .update<WithPB<TodoListCollectionsSchemas.IList>>(id, data)
 
-  return pb.collection("todo_list__lists_aggregated").getOne<
+  return pb.collection('todo_list__lists_aggregated').getOne<
     WithPB<
       TodoListCollectionsSchemas.IList & {
-        amount: number;
+        amount: number
       }
     >
-  >(updated.id);
-};
+  >(updated.id)
+}
 
 export const deleteList = async (pb: PocketBase, id: string): Promise<void> => {
-  await pb.collection("todo_list__lists").delete(id);
-};
+  await pb.collection('todo_list__lists').delete(id)
+}

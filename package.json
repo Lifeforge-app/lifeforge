@@ -74,9 +74,8 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-sonarjs": "^3.0.2",
-    "eslint-plugin-tailwindcss": "^4.0.0-beta.0",
     "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.12",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1"
   }

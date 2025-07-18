@@ -91,14 +91,14 @@ function TagsInput({
           ])}
           required={required === true}
         />
-        <div className="mb-4 ml-[14px] mt-12 flex flex-wrap items-center gap-2">
+        <div className="mt-12 mb-4 ml-[14px] flex flex-wrap items-center gap-2">
           {value.map((tag, index) => {
             const existedTag = existedTags?.find(t => t.name === tag)
 
             return (
               <div
                 key={index}
-                className="bg-bg-200 dark:bg-bg-700/50 flex items-center rounded-full py-1 pl-3 pr-2"
+                className="bg-bg-200 dark:bg-bg-700/50 flex items-center rounded-full py-1 pr-2 pl-3"
               >
                 {existedTag !== undefined && (
                   <Icon
@@ -125,7 +125,7 @@ function TagsInput({
           {!disabled && (
             <Text
               noAutoComplete
-              className="my-0! w-auto! pl-0! flex-1 py-0"
+              className="my-0! w-auto! flex-1 py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}
               setValue={setCurrentTag}

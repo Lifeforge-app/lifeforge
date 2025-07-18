@@ -1,5 +1,6 @@
-import { z } from "zod/v4";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const ImageGeneration = {
   /**
@@ -7,7 +8,7 @@ const ImageGeneration = {
    * @description Check if OpenAI API key exists
    */
   checkKey: {
-    response: z.boolean(),
+    response: z.boolean()
   },
 
   /**
@@ -16,14 +17,14 @@ const ImageGeneration = {
    */
   generateImage: {
     body: z.object({
-      prompt: z.string().min(1, "Prompt cannot be empty"),
+      prompt: z.string().min(1, 'Prompt cannot be empty')
     }),
-    response: z.string(),
-  },
-};
+    response: z.string()
+  }
+}
 
-type IImageGeneration = InferApiESchemaDynamic<typeof ImageGeneration>;
+type IImageGeneration = InferApiESchemaDynamic<typeof ImageGeneration>
 
-export type { IImageGeneration };
+export type { IImageGeneration }
 
-export { ImageGeneration };
+export { ImageGeneration }

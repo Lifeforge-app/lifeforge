@@ -1,6 +1,3 @@
-import { Icon } from '@iconify/react'
-import { useTranslation } from 'react-i18next'
-
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
@@ -9,6 +6,8 @@ import {
   IPixabaySearchFilter,
   type PixabaySearchFilterAction
 } from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
+import { Icon } from '@iconify/react'
+import { useTranslation } from 'react-i18next'
 
 import { IMAGE_TYPES } from '../constants/filterOptions'
 

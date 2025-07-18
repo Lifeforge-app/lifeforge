@@ -1,6 +1,5 @@
-import clsx from 'clsx'
-
 import { Scrollbar } from '@components/utilities'
+import clsx from 'clsx'
 
 function ModuleWrapper({
   children,

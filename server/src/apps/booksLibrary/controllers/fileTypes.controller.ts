@@ -1,20 +1,21 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { BooksLibraryControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as FileTypesService from "../services/fileTypes.service";
+import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
-const booksLibraryFileTypesRouter = express.Router();
+import * as FileTypesService from '../services/fileTypes.service'
+
+const booksLibraryFileTypesRouter = express.Router()
 
 const getAllFileTypes = forgeController
-  .route("GET /")
-  .description("Get all file types for the books library")
+  .route('GET /')
+  .description('Get all file types for the books library')
   .schema(BooksLibraryControllersSchemas.FileTypes.getAllFileTypes)
-  .callback(async ({ pb }) => await FileTypesService.getAllFileTypes(pb));
+  .callback(async ({ pb }) => await FileTypesService.getAllFileTypes(pb))
 
-bulkRegisterControllers(booksLibraryFileTypesRouter, [getAllFileTypes]);
+bulkRegisterControllers(booksLibraryFileTypesRouter, [getAllFileTypes])
 
-export default booksLibraryFileTypesRouter;
+export default booksLibraryFileTypesRouter

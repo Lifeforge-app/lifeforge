@@ -1,55 +1,55 @@
-import rateLimit from "express-rate-limit";
-import Pocketbase from "pocketbase";
+import rateLimit from 'express-rate-limit'
+import Pocketbase from 'pocketbase'
 
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from "../constants/locales";
+import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 export default rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 250,
-  skip: async (req) => {
+  skip: async req => {
     if (
-      req.path.startsWith("/media/") ||
+      req.path.startsWith('/media/') ||
       new RegExp(
-        `\/locales\/(?:${ALLOWED_LANG.join("|")})\/(?:${ALLOWED_NAMESPACE.join("|")})(\..+)?$`,
+        `\/locales\/(?:${ALLOWED_LANG.join('|')})\/(?:${ALLOWED_NAMESPACE.join('|')})(\..+)?$`
       ).test(req.url) ||
       [
-        "/code-time/user/minutes",
-        "/code-time/eventLog",
-        "/user/passkey/challenge",
-        "/user/passkey/login",
-        "/user/auth/verify",
-        "/user/auth/login",
-        "/books-library/cover",
-        "/status",
-        "/youtube-videos/video/thumbnail",
-      ].some((route) => req.path.trim().startsWith(route))
+        '/code-time/user/minutes',
+        '/code-time/eventLog',
+        '/user/passkey/challenge',
+        '/user/passkey/login',
+        '/user/auth/verify',
+        '/user/auth/login',
+        '/books-library/cover',
+        '/status',
+        '/youtube-videos/video/thumbnail'
+      ].some(route => req.path.trim().startsWith(route))
     ) {
-      return true;
+      return true
     }
 
-    const bearerToken = req.headers.authorization?.split(" ")[1];
+    const bearerToken = req.headers.authorization?.split(' ')[1]
 
-    const pb = new Pocketbase(process.env.PB_HOST);
+    const pb = new Pocketbase(process.env.PB_HOST)
 
     if (!bearerToken) {
-      return false;
+      return false
     }
 
     try {
-      pb.authStore.save(bearerToken, null);
+      pb.authStore.save(bearerToken, null)
 
       try {
-        await pb.collection("users").authRefresh();
-        return true;
+        await pb.collection('users').authRefresh()
+        return true
       } catch (error: any) {
         if (error.response.code === 401) {
-          return false;
+          return false
         }
       }
     } catch {
-      return false;
+      return false
     }
-    return false;
+    return false
   },
-  validate: { xForwardedForHeader: false },
-});
+  validate: { xForwardedForHeader: false }
+})

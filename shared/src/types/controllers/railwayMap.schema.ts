@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { RailwayMapCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { RailwayMapCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const RailwayMap = {
   /**
@@ -9,7 +10,7 @@ const RailwayMap = {
    * @description Get all railway lines
    */
   getLines: {
-    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Line)),
+    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Line))
   },
 
   /**
@@ -17,7 +18,7 @@ const RailwayMap = {
    * @description Get all railway stations
    */
   getStations: {
-    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Station)),
+    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Station))
   },
 
   /**
@@ -27,14 +28,14 @@ const RailwayMap = {
   getShortestPath: {
     query: z.object({
       start: z.string(),
-      end: z.string(),
+      end: z.string()
     }),
-    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Station)),
-  },
-};
+    response: z.array(SchemaWithPB(RailwayMapCollectionsSchemas.Station))
+  }
+}
 
-type IRailwayMap = InferApiESchemaDynamic<typeof RailwayMap>;
+type IRailwayMap = InferApiESchemaDynamic<typeof RailwayMap>
 
-export type { IRailwayMap };
+export type { IRailwayMap }
 
-export { RailwayMap };
+export { RailwayMap }

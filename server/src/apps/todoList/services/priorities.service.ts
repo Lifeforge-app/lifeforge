@@ -1,71 +1,71 @@
-import PocketBase from "pocketbase";
-import { TodoListCollectionsSchemas } from "shared/types/collections";
+import { WithPB } from '@typescript/pocketbase_interfaces'
+import PocketBase from 'pocketbase'
 
-import { WithPB } from "@typescript/pocketbase_interfaces";
+import { TodoListCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllPriorities = (
-  pb: PocketBase,
+  pb: PocketBase
 ): Promise<
   WithPB<
     TodoListCollectionsSchemas.IPriority & {
-      amount: number;
+      amount: number
     }
   >[]
 > =>
-  pb.collection("todo_list__priorities_aggregated").getFullList<
+  pb.collection('todo_list__priorities_aggregated').getFullList<
     WithPB<
       TodoListCollectionsSchemas.IPriority & {
-        amount: number;
+        amount: number
       }
     >
-  >();
+  >()
 
 export const createPriority = async (
   pb: PocketBase,
-  data: Omit<TodoListCollectionsSchemas.IPriority, "amount">,
+  data: Omit<TodoListCollectionsSchemas.IPriority, 'amount'>
 ): Promise<
   WithPB<
     TodoListCollectionsSchemas.IPriority & {
-      amount: number;
+      amount: number
     }
   >
 > => {
   const created = await pb
-    .collection("todo_list__priorities")
-    .create<WithPB<TodoListCollectionsSchemas.IPriority>>(data);
+    .collection('todo_list__priorities')
+    .create<WithPB<TodoListCollectionsSchemas.IPriority>>(data)
 
   return pb
-    .collection("todo_list__priorities_aggregated")
+    .collection('todo_list__priorities_aggregated')
     .getOne<
       WithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
-    >(created.id);
-};
+    >(created.id)
+}
 
 export const updatePriority = async (
   pb: PocketBase,
   id: string,
-  data: Omit<TodoListCollectionsSchemas.IPriority, "amount">,
+  data: Omit<TodoListCollectionsSchemas.IPriority, 'amount'>
 ): Promise<
   WithPB<
     TodoListCollectionsSchemas.IPriority & {
-      amount: number;
+      amount: number
     }
   >
 > => {
   const updated = await pb
-    .collection("todo_list__priorities")
-    .update<WithPB<TodoListCollectionsSchemas.IPriority>>(id, data);
+    .collection('todo_list__priorities')
+    .update<WithPB<TodoListCollectionsSchemas.IPriority>>(id, data)
 
   return pb
-    .collection("todo_list__priorities_aggregated")
+    .collection('todo_list__priorities_aggregated')
     .getOne<
       WithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
-    >(updated.id);
-};
+    >(updated.id)
+}
 
 export const deletePriority = async (
   pb: PocketBase,
-  id: string,
+  id: string
 ): Promise<void> => {
-  await pb.collection("todo_list__priorities").delete(id);
-};
+  await pb.collection('todo_list__priorities').delete(id)
+}

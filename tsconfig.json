@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     // Environment setup & latest features
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",
@@ -14,18 +10,10 @@
     // Path resolution
     "baseUrl": "./",
     "paths": {
-      "@server/*": [
-        "./server/src/*"
-      ],
-      "@client/*": [
-        "./client/src/*"
-      ],
-      "@shared/*": [
-        "./shared/src/*"
-      ],
-      "@ui/*": [
-        "./packages/lifeforge-ui/src/*"
-      ]
+      "@server/*": ["./server/src/*"],
+      "@client/*": ["./client/src/*"],
+      "@shared/*": ["./shared/src/*"],
+      "@ui/*": ["./packages/lifeforge-ui/src/*"]
     },
     // Module resolution
     "moduleResolution": "bundler",
@@ -50,5 +38,5 @@
     "./client/src/**/*",
     "./shared/src/**/*",
     "./packages/lifeforge-ui/src/**/*"
-  ],
+  ]
 }

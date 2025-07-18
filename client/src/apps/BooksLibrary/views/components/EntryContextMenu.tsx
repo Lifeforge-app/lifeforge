@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import forceDown from '@utils/forceDown'
 import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -11,8 +12,6 @@ import {
 
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
-
-import forceDown from '@utils/forceDown'
 
 export default function EntryContextMenu({
   item

@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import { Button } from '@components/buttons'
 import { ModalHeader } from '@components/modals'
 import { Tabs } from '@components/utilities'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import AIImageGenerator from './components/AIImageGenerator'
 import ImageURL from './components/ImageURL'

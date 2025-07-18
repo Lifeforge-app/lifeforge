@@ -1,11 +1,12 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { GuitarTabsCollectionsSchemas } from "../collections";
+import { z } from 'zod/v4'
+
+import { GuitarTabsCollectionsSchemas } from '../collections'
 import {
-  GuitarTabsSidebarDataSchema,
   GuitarTabsGuitarWorldEntrySchema,
-} from "../collections/guitarTabs.schema";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+  GuitarTabsSidebarDataSchema
+} from '../collections/guitarTabs.schema'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const GuitarWorld = {
   /**
@@ -15,13 +16,13 @@ const GuitarWorld = {
   getTabsList: {
     body: z.object({
       cookie: z.string(),
-      page: z.number().optional().default(1),
+      page: z.number().optional().default(1)
     }),
     response: z.object({
       data: z.array(GuitarTabsGuitarWorldEntrySchema),
       totalItems: z.number(),
-      perPage: z.number(),
-    }),
+      perPage: z.number()
+    })
   },
 
   /**
@@ -35,11 +36,11 @@ const GuitarWorld = {
       name: z.string(),
       category: z.string(),
       mainArtist: z.string(),
-      audioUrl: z.string(),
+      audioUrl: z.string()
     }),
-    response: z.string(),
-  },
-};
+    response: z.string()
+  }
+}
 
 const Entries = {
   /**
@@ -47,7 +48,7 @@ const Entries = {
    * @description Get sidebar data for guitar tabs
    */
   getSidebarData: {
-    response: GuitarTabsSidebarDataSchema,
+    response: GuitarTabsSidebarDataSchema
   },
 
   /**
@@ -59,26 +60,26 @@ const Entries = {
       page: z
         .string()
         .optional()
-        .transform((val) => parseInt(val ?? "1", 10) || 1),
+        .transform(val => parseInt(val ?? '1', 10) || 1),
       query: z.string().optional(),
       category: z.string().optional(),
       author: z.string().optional(),
       starred: z
         .string()
         .optional()
-        .transform((val) => val === "true"),
+        .transform(val => val === 'true'),
       sort: z
-        .enum(["name", "author", "newest", "oldest"])
+        .enum(['name', 'author', 'newest', 'oldest'])
         .optional()
-        .default("newest"),
+        .default('newest')
     }),
     response: z.object({
       items: z.array(SchemaWithPB(GuitarTabsCollectionsSchemas.Entry)),
       page: z.number(),
       perPage: z.number(),
       totalItems: z.number(),
-      totalPages: z.number(),
-    }),
+      totalPages: z.number()
+    })
   },
 
   /**
@@ -86,7 +87,7 @@ const Entries = {
    * @description Get a random guitar tab entry
    */
   getRandomEntry: {
-    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry),
+    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry)
   },
 
   /**
@@ -94,7 +95,7 @@ const Entries = {
    * @description Upload guitar tab files
    */
   uploadFiles: {
-    response: z.string(),
+    response: z.string()
   },
 
   /**
@@ -103,14 +104,14 @@ const Entries = {
    */
   updateEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
     body: GuitarTabsCollectionsSchemas.Entry.pick({
       name: true,
       author: true,
-      type: true,
+      type: true
     }),
-    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry),
+    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry)
   },
 
   /**
@@ -119,9 +120,9 @@ const Entries = {
    */
   deleteEntry: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -130,15 +131,15 @@ const Entries = {
    */
   toggleFavorite: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry),
-  },
-};
+    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry)
+  }
+}
 
-type IGuitarWorld = InferApiESchemaDynamic<typeof GuitarWorld>;
-type IEntries = InferApiESchemaDynamic<typeof Entries>;
+type IGuitarWorld = InferApiESchemaDynamic<typeof GuitarWorld>
+type IEntries = InferApiESchemaDynamic<typeof Entries>
 
-export type { IGuitarWorld, IEntries };
+export type { IGuitarWorld, IEntries }
 
-export { GuitarWorld, Entries };
+export { GuitarWorld, Entries }

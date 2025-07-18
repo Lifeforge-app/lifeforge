@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
 
-import codeTimeRouter from "./controllers/codeTime.controller";
+import codeTimeRouter from './controllers/codeTime.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/", codeTimeRouter);
+router.use('/', codeTimeRouter)
 
-export default router;
+export default router

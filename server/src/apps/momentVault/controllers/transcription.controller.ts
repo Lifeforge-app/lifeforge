@@ -1,50 +1,50 @@
-import ClientError from "@functions/ClientError";
+import ClientError from '@functions/ClientError'
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { MomentVaultControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
+import express from 'express'
 
-import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
+import { MomentVaultControllersSchemas } from 'shared/types/controllers'
 
-import * as TranscriptionService from "../services/transcription.service";
-import { convertToMp3 } from "../utils/convertToMP3";
+import * as TranscriptionService from '../services/transcription.service'
+import { convertToMp3 } from '../utils/convertToMP3'
 
-const momentVaultTranscriptionRouter = express.Router();
+const momentVaultTranscriptionRouter = express.Router()
 
 const transcribeExisted = forgeController
-  .route("POST /:id")
-  .description("Transcribe an existing audio entry")
+  .route('POST /:id')
+  .description('Transcribe an existing audio entry')
   .schema(MomentVaultControllersSchemas.Transcription.transcribeExisted)
-  .existenceCheck("params", {
-    id: "moment_vault__entries",
+  .existenceCheck('params', {
+    id: 'moment_vault__entries'
   })
   .callback(
     async ({ pb, params: { id } }) =>
-      await TranscriptionService.transcribeExisted(pb, id),
-  );
+      await TranscriptionService.transcribeExisted(pb, id)
+  )
 
 const transcribeNew = forgeController
-  .route("POST /")
-  .description("Transcribe a new audio file")
+  .route('POST /')
+  .description('Transcribe a new audio file')
   .schema(MomentVaultControllersSchemas.Transcription.transcribeNew)
   .middlewares(singleUploadMiddleware)
   .callback(async ({ pb, req }) => {
-    const { file } = req;
+    const { file } = req
 
     if (!file) {
-      throw new ClientError("No file uploaded");
+      throw new ClientError('No file uploaded')
     }
-    if (file.mimetype !== "audio/mp3") {
-      file.path = await convertToMp3(file.path);
+    if (file.mimetype !== 'audio/mp3') {
+      file.path = await convertToMp3(file.path)
     }
-    return await TranscriptionService.transcribeNew(pb, file.path);
-  });
+    return await TranscriptionService.transcribeNew(pb, file.path)
+  })
 
 bulkRegisterControllers(momentVaultTranscriptionRouter, [
   transcribeExisted,
-  transcribeNew,
-]);
+  transcribeNew
+])
 
-export default momentVaultTranscriptionRouter;
+export default momentVaultTranscriptionRouter

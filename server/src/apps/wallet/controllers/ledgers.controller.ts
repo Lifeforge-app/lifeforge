@@ -1,58 +1,57 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { WalletControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-import * as LedgersService from "../services/ledgers.service";
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
-const walletLedgersRouter = express.Router();
+import * as LedgersService from '../services/ledgers.service'
+
+const walletLedgersRouter = express.Router()
 
 const getAllLedgers = forgeController
-  .route("GET /")
-  .description("Get all wallet ledgers")
+  .route('GET /')
+  .description('Get all wallet ledgers')
   .schema(WalletControllersSchemas.Ledgers.getAllLedgers)
-  .callback(async ({ pb }) => await LedgersService.getAllLedgers(pb));
+  .callback(async ({ pb }) => await LedgersService.getAllLedgers(pb))
 
 const createLedger = forgeController
-  .route("POST /")
-  .description("Create a new wallet ledger")
+  .route('POST /')
+  .description('Create a new wallet ledger')
   .schema(WalletControllersSchemas.Ledgers.createLedger)
   .statusCode(201)
-  .callback(
-    async ({ pb, body }) => await LedgersService.createLedger(pb, body),
-  );
+  .callback(async ({ pb, body }) => await LedgersService.createLedger(pb, body))
 
 const updateLedger = forgeController
-  .route("PATCH /:id")
-  .description("Update an existing wallet ledger")
+  .route('PATCH /:id')
+  .description('Update an existing wallet ledger')
   .schema(WalletControllersSchemas.Ledgers.updateLedger)
-  .existenceCheck("params", {
-    id: "wallet__ledgers",
+  .existenceCheck('params', {
+    id: 'wallet__ledgers'
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
-      await LedgersService.updateLedger(pb, id, body),
-  );
+      await LedgersService.updateLedger(pb, id, body)
+  )
 
 const deleteLedger = forgeController
-  .route("DELETE /:id")
-  .description("Delete a wallet ledger")
+  .route('DELETE /:id')
+  .description('Delete a wallet ledger')
   .schema(WalletControllersSchemas.Ledgers.deleteLedger)
-  .existenceCheck("params", {
-    id: "wallet__ledgers",
+  .existenceCheck('params', {
+    id: 'wallet__ledgers'
   })
   .statusCode(204)
   .callback(
-    async ({ pb, params: { id } }) => await LedgersService.deleteLedger(pb, id),
-  );
+    async ({ pb, params: { id } }) => await LedgersService.deleteLedger(pb, id)
+  )
 
 bulkRegisterControllers(walletLedgersRouter, [
   getAllLedgers,
   createLedger,
   updateLedger,
-  deleteLedger,
-]);
+  deleteLedger
+])
 
-export default walletLedgersRouter;
+export default walletLedgersRouter

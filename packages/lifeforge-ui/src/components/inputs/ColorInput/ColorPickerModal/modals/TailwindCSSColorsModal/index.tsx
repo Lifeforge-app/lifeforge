@@ -1,6 +1,5 @@
-import colors from 'tailwindcss/colors'
-
 import { ModalHeader } from '@components/modals'
+import colors from 'tailwindcss/colors'
 
 import ColorItem from './components/ColorItem'
 

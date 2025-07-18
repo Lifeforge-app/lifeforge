@@ -3,99 +3,99 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
-} from "react";
+  useState
+} from 'react'
 
-import { useAPIEndpoint } from "./APIEndpointProvider";
+import { useAPIEndpoint } from './APIEndpointProvider'
 
 async function checkAPIStatus(
   apiEndpoint: string
-): Promise<"production" | "development" | false> {
-  const controller = new AbortController();
+): Promise<'production' | 'development' | false> {
+  const controller = new AbortController()
 
   const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 5000);
+    controller.abort()
+  }, 5000)
 
   return await fetch(`${apiEndpoint}/status`, {
     signal: controller.signal,
-    cache: "no-store",
+    cache: 'no-store'
   })
-    .then(async (res) => {
+    .then(async res => {
       if (res.ok) {
-        const data = await res.json();
+        const data = await res.json()
 
-        return data.data.environment;
+        return data.data.environment
       }
 
-      return false;
+      return false
     })
     .catch(() => false)
     .finally(() => {
-      clearTimeout(timeoutId);
-    });
+      clearTimeout(timeoutId)
+    })
 }
 
 interface IAPIOnlineStatus {
-  isOnline: boolean | "loading";
-  environment: "production" | "development" | null;
-  retry: () => void;
+  isOnline: boolean | 'loading'
+  environment: 'production' | 'development' | null
+  retry: () => void
 }
 
 const APIOnlineStatusContext = createContext<IAPIOnlineStatus | undefined>(
   undefined
-);
+)
 
 export default function APIOnlineStatusProvider({
-  children,
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const apiEndpoint = useAPIEndpoint();
+  const apiEndpoint = useAPIEndpoint()
 
-  const [isOnline, setIsOnline] = useState<boolean | "loading">("loading");
+  const [isOnline, setIsOnline] = useState<boolean | 'loading'>('loading')
 
   const [environment, setEnvironment] = useState<
-    "production" | "development" | null
-  >(null);
+    'production' | 'development' | null
+  >(null)
 
   const handleRetry = useCallback(() => {
-    setIsOnline("loading");
+    setIsOnline('loading')
     checkAPIStatus(apiEndpoint)
-      .then((status) => {
-        setEnvironment(status === false ? null : status);
-        setIsOnline(status !== false);
+      .then(status => {
+        setEnvironment(status === false ? null : status)
+        setIsOnline(status !== false)
       })
       .catch(() => {
-        setIsOnline(false);
-      });
-  }, []);
+        setIsOnline(false)
+      })
+  }, [])
 
   useEffect(() => {
-    handleRetry();
-  }, []);
+    handleRetry()
+  }, [])
 
   return (
     <APIOnlineStatusContext
       value={{
         isOnline,
         environment,
-        retry: handleRetry,
+        retry: handleRetry
       }}
     >
       {children}
     </APIOnlineStatusContext>
-  );
+  )
 }
 
 export function useAPIOnlineStatus(): IAPIOnlineStatus {
-  const context = useContext(APIOnlineStatusContext);
+  const context = useContext(APIOnlineStatusContext)
 
   if (context === undefined) {
     throw new Error(
-      "useAPIOnlineStatus must be used within a APIOnlineStatusProvider"
-    );
+      'useAPIOnlineStatus must be used within a APIOnlineStatusProvider'
+    )
   }
 
-  return context;
+  return context
 }

@@ -1,7 +1,8 @@
-import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
-import { CodeTimeCollectionsSchemas } from "../collections";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import { CodeTimeCollectionsSchemas } from '../collections'
+import { SchemaWithPB } from '../collections/schemaWithPB'
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const CodeTime = {
   /**
@@ -13,11 +14,9 @@ const CodeTime = {
       year: z
         .string()
         .optional()
-        .transform((val) =>
-          val ? parseInt(val, 10) : new Date().getFullYear()
-        ),
+        .transform(val => (val ? parseInt(val, 10) : new Date().getFullYear()))
     }),
-    response: CodeTimeCollectionsSchemas.CodeTimeActivitiesSchema,
+    response: CodeTimeCollectionsSchemas.CodeTimeActivitiesSchema
   },
 
   /**
@@ -25,7 +24,7 @@ const CodeTime = {
    * @description Get code time statistics
    */
   getStatistics: {
-    response: CodeTimeCollectionsSchemas.CodeTimeStatisticsSchema,
+    response: CodeTimeCollectionsSchemas.CodeTimeStatisticsSchema
   },
 
   /**
@@ -34,9 +33,9 @@ const CodeTime = {
    */
   getLastXDays: {
     query: z.object({
-      days: z.string().transform((val) => parseInt(val, 10)),
+      days: z.string().transform(val => parseInt(val, 10))
     }),
-    response: z.array(SchemaWithPB(CodeTimeCollectionsSchemas.DailyEntry)),
+    response: z.array(SchemaWithPB(CodeTimeCollectionsSchemas.DailyEntry))
   },
 
   /**
@@ -45,9 +44,9 @@ const CodeTime = {
    */
   getProjects: {
     query: z.object({
-      last: z.enum(["24 hours", "7 days", "30 days"]).default("7 days"),
+      last: z.enum(['24 hours', '7 days', '30 days']).default('7 days')
     }),
-    response: z.record(z.string(), z.number()),
+    response: z.record(z.string(), z.number())
   },
 
   /**
@@ -56,9 +55,9 @@ const CodeTime = {
    */
   getLanguages: {
     query: z.object({
-      last: z.enum(["24 hours", "7 days", "30 days"]).default("7 days"),
+      last: z.enum(['24 hours', '7 days', '30 days']).default('7 days')
     }),
-    response: z.record(z.string(), z.number()),
+    response: z.record(z.string(), z.number())
   },
 
   /**
@@ -69,9 +68,9 @@ const CodeTime = {
     response: z.array(
       z.object({
         date: z.string(),
-        duration: z.number(),
+        duration: z.number()
       })
-    ),
+    )
   },
 
   /**
@@ -80,11 +79,11 @@ const CodeTime = {
    */
   getUserMinutes: {
     query: z.object({
-      minutes: z.string().transform((val) => parseInt(val, 10)),
+      minutes: z.string().transform(val => parseInt(val, 10))
     }),
     response: z.object({
-      minutes: z.number(),
-    }),
+      minutes: z.number()
+    })
   },
 
   /**
@@ -96,8 +95,8 @@ const CodeTime = {
     response: z.object({
       status: z.string(),
       data: z.array(z.any()),
-      message: z.string(),
-    }),
+      message: z.string()
+    })
   },
 
   /**
@@ -105,12 +104,12 @@ const CodeTime = {
    * @description Get readme image
    */
   getReadmeImage: {
-    response: z.any(),
-  },
-};
+    response: z.any()
+  }
+}
 
-type ICodeTime = InferApiESchemaDynamic<typeof CodeTime>;
+type ICodeTime = InferApiESchemaDynamic<typeof CodeTime>
 
-export type { ICodeTime };
+export type { ICodeTime }
 
-export { CodeTime };
+export { CodeTime }

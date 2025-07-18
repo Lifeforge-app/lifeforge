@@ -1,41 +1,41 @@
-import PocketBase from "pocketbase";
+import PocketBase from 'pocketbase'
 
-import { decrypt2 } from "./encryption";
+import { decrypt2 } from './encryption'
 
 export default async (
   pb: PocketBase,
   {
     otp,
-    otpId,
+    otpId
   }: {
-    otp: string;
-    otpId: string;
+    otp: string
+    otpId: string
   },
-  challenge?: string,
+  challenge?: string
 ): Promise<boolean> => {
-  const id = pb.authStore.record?.id;
+  const id = pb.authStore.record?.id
 
   if (!id) {
-    return false;
+    return false
   }
 
-  let decryptedOTP;
+  let decryptedOTP
 
   if (challenge) {
-    decryptedOTP = decrypt2(otp, challenge);
+    decryptedOTP = decrypt2(otp, challenge)
   } else {
-    decryptedOTP = otp;
+    decryptedOTP = otp
   }
 
   const authData = await pb
-    .collection("users")
+    .collection('users')
     .authWithOTP(otpId, decryptedOTP)
-    .catch(() => null);
+    .catch(() => null)
 
   if (!authData || !pb.authStore.isValid) {
-    return false;
+    return false
   }
 
-  pb.authStore.clear();
-  return true;
-};
+  pb.authStore.clear()
+  return true
+}

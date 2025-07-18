@@ -1,5 +1,6 @@
-import { z } from "zod/v4";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Modules = {
   /**
@@ -7,7 +8,7 @@ const Modules = {
    * @description List all application paths
    */
   listAppPaths: {
-    response: z.array(z.string()),
+    response: z.array(z.string())
   },
 
   /**
@@ -16,9 +17,9 @@ const Modules = {
    */
   toggleModule: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -27,9 +28,9 @@ const Modules = {
    */
   packageModule: {
     params: z.object({
-      id: z.string(),
+      id: z.string()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -38,14 +39,14 @@ const Modules = {
    */
   installModule: {
     body: z.object({
-      name: z.string().min(1, "Name is required"),
+      name: z.string().min(1, 'Name is required')
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IModules = InferApiESchemaDynamic<typeof Modules>;
+type IModules = InferApiESchemaDynamic<typeof Modules>
 
-export type { IModules };
+export type { IModules }
 
-export { Modules };
+export { Modules }

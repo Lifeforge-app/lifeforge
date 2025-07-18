@@ -1,5 +1,6 @@
-import { z } from "zod/v4";
-import type { InferApiESchemaDynamic } from "../utils/inferSchema";
+import { z } from 'zod/v4'
+
+import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Backups = {
   /**
@@ -11,9 +12,9 @@ const Backups = {
       z.object({
         key: z.string(),
         size: z.number(),
-        modified: z.string(),
+        modified: z.string()
       })
-    ),
+    )
   },
 
   /**
@@ -22,9 +23,9 @@ const Backups = {
    */
   downloadBackup: {
     params: z.object({
-      key: z.string(),
+      key: z.string()
     }),
-    response: z.any(),
+    response: z.any()
   },
 
   /**
@@ -33,9 +34,9 @@ const Backups = {
    */
   createBackup: {
     body: z.object({
-      backupName: z.string().optional(),
+      backupName: z.string().optional()
     }),
-    response: z.void(),
+    response: z.void()
   },
 
   /**
@@ -44,14 +45,14 @@ const Backups = {
    */
   deleteBackup: {
     params: z.object({
-      key: z.string(),
+      key: z.string()
     }),
-    response: z.void(),
-  },
-};
+    response: z.void()
+  }
+}
 
-type IBackups = InferApiESchemaDynamic<typeof Backups>;
+type IBackups = InferApiESchemaDynamic<typeof Backups>
 
-export type { IBackups };
+export type { IBackups }
 
-export { Backups };
+export { Backups }

@@ -1,10 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
-import dayjs from 'dayjs'
-import type { RecordModel } from 'pocketbase'
-import { useState } from 'react'
-import { toast } from 'react-toastify'
-import { useAPIEndpoint } from 'shared/lib'
-
 import { Button } from '@components/buttons'
 import useModifyMutation from '@components/modals/features/FormModal/hooks/useModifyMutation'
 import type {
@@ -12,6 +5,13 @@ import type {
   IFormState
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import { LoadingScreen } from '@components/screens'
+import { useQueryClient } from '@tanstack/react-query'
+import dayjs from 'dayjs'
+import type { RecordModel } from 'pocketbase'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { useAPIEndpoint } from 'shared/lib'
 
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'

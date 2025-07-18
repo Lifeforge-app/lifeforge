@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express'
 
-import localesRouter from "./controllers/locales.controller";
-import localesManagerRouter from "./controllers/localesManager.controller";
+import localesRouter from './controllers/locales.controller'
+import localesManagerRouter from './controllers/localesManager.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.use("/manager", localesManagerRouter);
-router.use("/", localesRouter);
+router.use('/manager', localesManagerRouter)
+router.use('/', localesRouter)
 
-export default router;
+export default router

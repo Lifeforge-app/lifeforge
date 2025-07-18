@@ -121,10 +121,10 @@ function ListboxOrComboboxInput<T>(
               )}
               required={required === true}
             />
-            <div className="focus:outline-hidden relative mb-3 mt-10 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left">
+            <div className="relative mt-10 mb-3 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pr-10 pl-5 text-left focus:outline-hidden">
               {isActive && props.buttonContent}
             </div>
-            <span className="pointer-events-none absolute inset-y-0 right-0 mr-2 mt-1 flex items-center pr-4">
+            <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 mr-2 flex items-center pr-4">
               <Icon
                 className="size-6 text-zinc-500"
                 icon="heroicons:chevron-up-down-16-solid"
@@ -159,7 +159,7 @@ function ListboxOrComboboxInput<T>(
               required={required === true}
             />
             <ComboboxInput
-              className="bg-transparent! pl-17 focus:outline-hidden relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pr-5 text-left"
+              className="relative mt-10 mb-3 flex w-full items-center gap-2 rounded-lg bg-transparent! pr-5 pl-17 text-left focus:outline-hidden"
               displayValue={props.displayValue}
               onChange={e => {
                 props.setQuery(e.target.value)

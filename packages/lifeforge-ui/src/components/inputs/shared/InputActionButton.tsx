@@ -11,7 +11,7 @@ function InputActionButton({
 }) {
   return (
     <button
-      className="text-bg-500 hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200 mr-4 shrink-0 rounded-lg p-2 transition-all"
+      className="text-bg-500 hover:bg-bg-300 hover:text-bg-800 dark:hover:bg-bg-700/70 dark:hover:text-bg-200 mr-4 shrink-0 rounded-lg p-2 transition-all focus:outline-hidden"
       disabled={actionButtonLoading}
       tabIndex={-1}
       onClick={e => {

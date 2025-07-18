@@ -1,6 +1,5 @@
-import clsx from 'clsx'
-
 import { Button } from '@components/buttons'
+import clsx from 'clsx'
 
 function SidebarCollapseButton({
   onClick,

@@ -13,7 +13,7 @@ function Checkbox({
   return (
     <button
       className={clsx(
-        'flex-center ring-offset-bg-50 dark:ring-offset-bg-900 group relative z-50 size-5 shrink-0 cursor-pointer rounded-full ring-2 ring-offset-2 transition-all',
+        'flex-center dark:ring-offset-bg-900 ring-offset-bg-50 group relative z-50 size-5 shrink-0 cursor-pointer rounded-full ring-2 ring-offset-2 transition-all',
         checked
           ? 'ring-custom-500'
           : 'ring-bg-200 hover:ring-bg-600! dark:ring-bg-500 dark:hover:ring-bg-300!',

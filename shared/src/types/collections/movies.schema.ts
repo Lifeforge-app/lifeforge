@@ -6,8 +6,7 @@
  * Generated at: 2025-07-18T12:15:50.185Z
  * Contains: movies__entries
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
   tmdb_id: z.number(),
@@ -26,18 +25,14 @@ const Entry = z.object({
   theatre_showtime: z.string(),
   theatre_location: z.string(),
   theatre_number: z.string(),
-  is_watched: z.boolean(),
-});
+  is_watched: z.boolean()
+})
 
-type IEntry = z.infer<typeof Entry>;
+type IEntry = z.infer<typeof Entry>
 
-export {
-  Entry,
-};
+export { Entry }
 
-export type {
-  IEntry,
-};
+export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

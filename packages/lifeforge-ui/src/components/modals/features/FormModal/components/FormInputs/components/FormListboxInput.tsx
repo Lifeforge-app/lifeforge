@@ -1,6 +1,3 @@
-import { Icon } from '@iconify/react'
-import { Fragment } from 'react/jsx-runtime'
-
 import {
   ListboxNullOption,
   ListboxOrComboboxInput,
@@ -10,6 +7,8 @@ import {
   IFieldProps,
   IListboxInputFieldProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
+import { Icon } from '@iconify/react'
+import { Fragment } from 'react/jsx-runtime'
 
 interface FormListboxInputProps<T> {
   field: IFieldProps<T> & IListboxInputFieldProps

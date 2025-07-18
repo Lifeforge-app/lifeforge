@@ -1,32 +1,32 @@
-import { JSDOM } from "jsdom";
-import PocketBase from "pocketbase";
+import { JSDOM } from 'jsdom'
+import PocketBase from 'pocketbase'
 
 const scrapePuzzlePlanet = async (
   _: PocketBase,
-  url: string,
+  url: string
 ): Promise<{
-  name: string;
-  image: string;
-  price: number;
+  name: string
+  image: string
+  price: number
 } | null> => {
   try {
-    const dom = (await JSDOM.fromURL(url)).window.document;
+    const dom = (await JSDOM.fromURL(url)).window.document
 
     const structuredData = JSON.parse(
       dom
         .querySelector('script[type="application/ld+json"]')
-        ?.textContent?.trim() || "{}",
-    );
+        ?.textContent?.trim() || '{}'
+    )
 
     return {
       name: structuredData.name,
       image: structuredData.image,
-      price: +structuredData.offers.price,
-    };
+      price: +structuredData.offers.price
+    }
   } catch (error) {
-    console.error("Error scraping data", error);
-    return null;
+    console.error('Error scraping data', error)
+    return null
   }
-};
+}
 
-export default scrapePuzzlePlanet;
+export default scrapePuzzlePlanet

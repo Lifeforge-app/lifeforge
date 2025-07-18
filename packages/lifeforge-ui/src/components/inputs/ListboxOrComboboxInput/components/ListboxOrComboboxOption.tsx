@@ -27,7 +27,7 @@ function ListboxOrComboboxOption({
 
   return (
     <Element
-      className="flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer select-none gap-8 p-4 transition-all"
+      className="flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer gap-8 p-4 transition-all select-none"
       value={value}
     >
       {({ selected }: { selected: boolean }) => (

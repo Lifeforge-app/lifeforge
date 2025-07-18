@@ -1,10 +1,9 @@
 // @ts-ignore
+import { Button } from '@components/buttons'
+import { SearchInput } from '@components/inputs'
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useMemo } from 'react'
-
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
 
 import Chip from '../../../components/Chip'
 

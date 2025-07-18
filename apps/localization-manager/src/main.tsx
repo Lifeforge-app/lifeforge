@@ -1,12 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ReactDOM from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
-import { APIEndpointProvider, PersonalizationProvider } from 'shared/lib'
 
-import './index.css'
+import { APIEndpointProvider, PersonalizationProvider } from 'shared/lib'
 
 import App from './App.tsx'
 import i18n from './i18n'
+import './index.css'
 
 const queryClient = new QueryClient()
 

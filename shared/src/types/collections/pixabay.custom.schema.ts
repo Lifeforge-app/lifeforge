@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const PixabaySearchResultSchema = z.object({
   total: z.number(),
@@ -8,15 +8,15 @@ const PixabaySearchResultSchema = z.object({
       thumbnail: z.object({
         url: z.string(),
         width: z.number(),
-        height: z.number(),
+        height: z.number()
       }),
-      imageURL: z.string(),
+      imageURL: z.string()
     })
-  ),
-});
+  )
+})
 
-type IPixabaySearchResult = z.infer<typeof PixabaySearchResultSchema>;
+type IPixabaySearchResult = z.infer<typeof PixabaySearchResultSchema>
 
-export { PixabaySearchResultSchema };
+export { PixabaySearchResultSchema }
 
-export type { IPixabaySearchResult };
+export type { IPixabaySearchResult }

@@ -1,18 +1,19 @@
 import {
   bulkRegisterControllers,
-  forgeController,
-} from "@functions/forgeController";
-import express from "express";
-import { BlogControllersSchemas } from "shared/types/controllers";
+  forgeController
+} from '@functions/forgeController'
+import express from 'express'
 
-const blogEntriesRouter = express.Router();
+import { BlogControllersSchemas } from 'shared/types/controllers'
+
+const blogEntriesRouter = express.Router()
 
 const getAllEntries = forgeController
-  .route("GET /")
-  .description("Get all blog entries")
+  .route('GET /')
+  .description('Get all blog entries')
   .schema(BlogControllersSchemas.Entries.getAllEntries)
-  .callback(({ pb }) => pb.collection("blog__entries").getFullList());
+  .callback(({ pb }) => pb.collection('blog__entries').getFullList())
 
-bulkRegisterControllers(blogEntriesRouter, [getAllEntries]);
+bulkRegisterControllers(blogEntriesRouter, [getAllEntries])
 
-export default blogEntriesRouter;
+export default blogEntriesRouter

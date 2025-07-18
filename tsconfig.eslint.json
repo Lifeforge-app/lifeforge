@@ -1,10 +1,10 @@
 {
-    "extends": "./tsconfig.json",
-    "include": [
-        "apps/*/src",
-        "packages/*/src",
-        "client/src",
-        "server/src",
-        "shared/src"
-    ]
+  "extends": "./tsconfig.json",
+  "include": [
+    "apps/*/src",
+    "packages/*/src",
+    "client/src",
+    "server/src",
+    "shared/src"
+  ]
 }
