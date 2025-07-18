@@ -1,6 +1,8 @@
 export const cleanupTitle = (title: Element | null) => {
   if (title === null) return "";
+
   const el = title.querySelectorAll("font");
+
   let edition = "";
   if (el) {
     edition =

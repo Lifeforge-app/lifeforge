@@ -4,10 +4,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { CalendarSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { CalendarControllersSchemas } from "shared/types/controllers";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
@@ -18,13 +15,7 @@ const calendarEventsRouter = express.Router();
 const getEventsByDateRange = forgeController
   .route("GET /")
   .description("Get events by date range")
-  .schema({
-    query: z.object({
-      start: z.string(),
-      end: z.string(),
-    }),
-    response: z.array(WithPBSchema(CalendarSchemas.EventSchema.partial())),
-  })
+  .schema(CalendarControllersSchemas.Events.getEventsByDateRange)
   .callback(
     async ({ pb, query: { start, end } }) =>
       await EventsService.getEventsByDateRange(pb, start, end),
@@ -33,20 +24,13 @@ const getEventsByDateRange = forgeController
 const getEventsToday = forgeController
   .route("GET /today")
   .description("Get today's events")
-  .schema({
-    response: z.array(WithPBSchema(CalendarSchemas.EventSchema.partial())),
-  })
+  .schema(CalendarControllersSchemas.Events.getEventsToday)
   .callback(async ({ pb }) => await EventsService.getTodayEvents(pb));
 
 const getEventById = forgeController
   .route("GET /:id")
   .description("Get an event by ID")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(CalendarSchemas.EventSchema),
-  })
+  .schema(CalendarControllersSchemas.Events.getEventById)
   .existenceCheck("params", {
     id: "calendar__events",
   })
@@ -57,29 +41,12 @@ const getEventById = forgeController
 const createEvent = forgeController
   .route("POST /")
   .description("Create a new event")
-  .schema({
-    body: CalendarSchemas.EventSchema.omit({
-      exceptions: true,
-    }).extend({
-      location: z
-        .union([
-          z.object({
-            displayName: z.object({
-              text: z.string(),
-            }),
-          }),
-          z.string(),
-        ])
-        .optional(),
-    }),
-    response: WithPBSchema(CalendarSchemas.EventSchema),
-  })
+  .schema(CalendarControllersSchemas.Events.createEvent)
   .statusCode(201)
   .callback(async ({ pb, body }) => {
     if (body.type === "recurring" && !body.recurring_rrule) {
       throw new ClientError("Recurring events must have a recurring rule");
     }
-
     return await EventsService.createEvent(pb, body);
   });
 
@@ -87,9 +54,7 @@ const scanImage = forgeController
   .route("POST /scan-image")
   .description("Scan an image to extract event data")
   .middlewares(singleUploadMiddleware)
-  .schema({
-    response: CalendarSchemas.EventSchema.partial(),
-  })
+  .schema(CalendarControllersSchemas.Events.scanImage)
   .callback(async ({ pb, req }) => {
     const { file } = req;
 
@@ -102,22 +67,13 @@ const scanImage = forgeController
     if (!eventData) {
       throw new Error("Failed to scan image");
     }
-
     return eventData;
   });
 
 const addException = forgeController
   .route("POST /exception/:id")
   .description("Add an exception to a recurring event")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: z.object({
-      date: z.string(),
-    }),
-    response: z.boolean(),
-  })
+  .schema(CalendarControllersSchemas.Events.addException)
   .existenceCheck("params", {
     id: "calendar__events",
   })
@@ -129,15 +85,7 @@ const addException = forgeController
 const updateEvent = forgeController
   .route("PATCH /:id")
   .description("Update an existing event")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: CalendarSchemas.EventSchema.partial().omit({
-      exceptions: true,
-    }),
-    response: WithPBSchema(CalendarSchemas.EventSchema),
-  })
+  .schema(CalendarControllersSchemas.Events.updateEvent)
   .existenceCheck("params", {
     id: "calendar__events",
   })
@@ -149,12 +97,7 @@ const updateEvent = forgeController
 const deleteEvent = forgeController
   .route("DELETE /:id")
   .description("Delete an existing event")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(CalendarControllersSchemas.Events.deleteEvent)
   .existenceCheck("params", {
     id: "calendar__events",
   })

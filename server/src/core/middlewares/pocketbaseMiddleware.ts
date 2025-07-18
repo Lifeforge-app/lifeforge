@@ -14,6 +14,7 @@ const pocketbaseMiddleware = async (
   next: NextFunction,
 ) => {
   const bearerToken = req.headers.authorization?.split(" ")[1];
+
   const pb = new Pocketbase(process.env.PB_HOST);
 
   if (process.env.NODE_ENV === "test") {

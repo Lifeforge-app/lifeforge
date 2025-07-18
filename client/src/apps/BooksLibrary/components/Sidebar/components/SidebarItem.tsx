@@ -3,7 +3,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
@@ -16,9 +16,9 @@ function _SidebarItem({
   hasHamburgerMenu = true
 }: {
   item:
-    | ISchemaWithPB<BooksLibrarySchemas.ICollectionAggregated>
-    | ISchemaWithPB<BooksLibrarySchemas.ILanguageAggregated>
-    | ISchemaWithPB<BooksLibrarySchemas.IFileTypeAggregated>
+    | ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
+    | ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>
+    | ISchemaWithPB<BooksLibraryCollectionsSchemas.IFileTypeAggregated>
   stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasHamburgerMenu?: boolean

@@ -3,10 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { IdeaBoxSchemas } from "shared/types";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { IdeaBoxControllersSchemas } from "shared/types/controllers";
 
 import * as tagsService from "../services/tags.service";
 
@@ -15,12 +12,7 @@ const ideaBoxTagsRouter = express.Router();
 const getTags = forgeController
   .route("GET /:container")
   .description("Get tags for a container")
-  .schema({
-    params: z.object({
-      container: z.string(),
-    }),
-    response: z.array(WithPBSchema(IdeaBoxSchemas.TagSchema)),
-  })
+  .schema(IdeaBoxControllersSchemas.Tags.getTags)
   .existenceCheck("params", {
     container: "idea_box__containers",
   })
@@ -32,13 +24,7 @@ const getTags = forgeController
 const createTag = forgeController
   .route("POST /:container")
   .description("Create a new tag")
-  .schema({
-    body: IdeaBoxSchemas.TagSchema,
-    params: z.object({
-      container: z.string(),
-    }),
-    response: WithPBSchema(IdeaBoxSchemas.TagSchema),
-  })
+  .schema(IdeaBoxControllersSchemas.Tags.createTag)
   .existenceCheck("params", {
     container: "idea_box__containers",
   })
@@ -51,13 +37,7 @@ const createTag = forgeController
 const updateTag = forgeController
   .route("PATCH /:id")
   .description("Update a tag")
-  .schema({
-    body: IdeaBoxSchemas.TagSchema,
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(IdeaBoxSchemas.TagSchema),
-  })
+  .schema(IdeaBoxControllersSchemas.Tags.updateTag)
   .existenceCheck("params", {
     id: "idea_box__tags",
   })
@@ -69,12 +49,7 @@ const updateTag = forgeController
 const deleteTag = forgeController
   .route("DELETE /:id")
   .description("Delete a tag")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(IdeaBoxControllersSchemas.Tags.deleteTag)
   .existenceCheck("params", {
     id: "idea_box__tags",
   })

@@ -108,6 +108,7 @@ for (const module of allModules) {
  */
 
 import { z } from "zod/v4";
+
 `;
 
   for (const collection of collections ?? []) {
@@ -236,11 +237,11 @@ import { z } from "zod/v4";
     : "";
 
   if (originalContent.includes(CUSTOM_SCHEMAS_DELIMITER)) {
-    const customSchemas = originalContent
+    const customCollectionsSchemas = originalContent
       .split(CUSTOM_SCHEMAS_DELIMITER)
       .pop()!;
 
-    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n${customSchemas
+    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n${customCollectionsSchemas
       .replace(/\/\/\s*$/, "")
       .replace(/^\n+/, "")
       .replace(/\n+$/, "")}\n`;
@@ -251,6 +252,21 @@ import { z } from "zod/v4";
   toBeWritten[`${moduleName}.schema.ts`] = finalString;
 }
 
+if (fs.existsSync(TARGET_PATH) && fs.lstatSync(TARGET_PATH).isDirectory()) {
+  const files = fs.readdirSync(TARGET_PATH);
+  for (const file of files) {
+    if (file.endsWith(".custom.schema.ts")) {
+      toBeWritten[file] = fs.readFileSync(
+        path.join(TARGET_PATH, file),
+        "utf-8"
+      );
+    }
+  }
+  fs.rmdirSync(TARGET_PATH, { recursive: true });
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+}
+fs.mkdirSync(TARGET_PATH, { recursive: true });
+
 const indexString = `
 /**
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
@@ -260,11 +276,10 @@ const indexString = `
  * Contains schemas for all modules.
  */
 
-${Object.keys(modulesMap)
-
+${Object.keys(toBeWritten)
   .map(
     (moduleName) =>
-      `export * as ${_.upperFirst(_.camelCase(moduleName))}CollectionsSchemas from './${moduleName}.schema';`
+      `export * as ${_.upperFirst(_.camelCase(moduleName.replace(/(?:\.custom)?\.schema\.ts$/, moduleName.endsWith(".custom.schema.ts") ? "Custom" : "Collections")))}CollectionsSchemas from './${moduleName.replace(/\.ts$/, "")}';`
   )
   .join("\n")}
 
@@ -273,12 +288,6 @@ export type { ISchemaWithPB } from './schemaWithPB'
 `;
 
 toBeWritten["index.ts"] = indexString;
-
-if (fs.existsSync(TARGET_PATH) && fs.lstatSync(TARGET_PATH).isDirectory()) {
-  fs.rmdirSync(TARGET_PATH, { recursive: true });
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-}
-fs.mkdirSync(TARGET_PATH, { recursive: true });
 
 for (const [fileName, content] of Object.entries(toBeWritten)) {
   const filePath = path.resolve(TARGET_PATH, fileName);

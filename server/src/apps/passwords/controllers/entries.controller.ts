@@ -3,11 +3,8 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { PasswordsSchemas } from "shared/types";
+import { PasswordsControllersSchemas } from "shared/types/controllers";
 import { v4 } from "uuid";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
 
 import * as EntriesService from "../services/entries.service";
 
@@ -22,30 +19,19 @@ setTimeout(() => {
 const getChallenge = forgeController
   .route("GET /challenge")
   .description("Get current challenge for password operations")
-  .schema({
-    response: z.string(),
-  })
+  .schema(PasswordsControllersSchemas.Entries.getChallenge)
   .callback(async () => challenge);
 
 const getAllEntries = forgeController
   .route("GET /")
   .description("Get all password entries")
-  .schema({
-    response: z.array(WithPBSchema(PasswordsSchemas.EntrySchema)),
-  })
+  .schema(PasswordsControllersSchemas.Entries.getAllEntries)
   .callback(async ({ pb }) => await EntriesService.getAllEntries(pb));
 
 const createEntry = forgeController
   .route("POST /")
   .description("Create a new password entry")
-  .schema({
-    body: PasswordsSchemas.EntrySchema.omit({
-      pinned: true,
-    }).extend({
-      master: z.string(),
-    }),
-    response: WithPBSchema(PasswordsSchemas.EntrySchema),
-  })
+  .schema(PasswordsControllersSchemas.Entries.createEntry)
   .callback(
     async ({ pb, body }) =>
       await EntriesService.createEntry(pb, body, challenge),
@@ -55,17 +41,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route("PATCH /:id")
   .description("Update a password entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: PasswordsSchemas.EntrySchema.omit({
-      pinned: true,
-    }).extend({
-      master: z.string(),
-    }),
-    response: WithPBSchema(PasswordsSchemas.EntrySchema),
-  })
+  .schema(PasswordsControllersSchemas.Entries.updateEntry)
   .existenceCheck("params", {
     id: "passwords__entries",
   })
@@ -77,15 +53,7 @@ const updateEntry = forgeController
 const decryptEntry = forgeController
   .route("POST /decrypt/:id")
   .description("Decrypt a password entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    query: z.object({
-      master: z.string(),
-    }),
-    response: z.string(),
-  })
+  .schema(PasswordsControllersSchemas.Entries.decryptEntry)
   .existenceCheck("params", {
     id: "passwords__entries",
   })
@@ -97,12 +65,7 @@ const decryptEntry = forgeController
 const deleteEntry = forgeController
   .route("DELETE /:id")
   .description("Delete a password entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(PasswordsControllersSchemas.Entries.deleteEntry)
   .existenceCheck("params", {
     id: "passwords__entries",
   })
@@ -114,12 +77,7 @@ const deleteEntry = forgeController
 const togglePin = forgeController
   .route("POST /pin/:id")
   .description("Toggle pin status of a password entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(PasswordsSchemas.EntrySchema),
-  })
+  .schema(PasswordsControllersSchemas.Entries.togglePin)
   .existenceCheck("params", {
     id: "passwords__entries",
   })

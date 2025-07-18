@@ -7,9 +7,11 @@ import { createWorker } from "tesseract.js";
 const getPrice = async (imageURL: string): Promise<number> => {
   try {
     const imageBuffer = await fetch(imageURL).then((res) => res.arrayBuffer());
+
     const image = sharp(Buffer.from(imageBuffer));
 
     const { width, height } = await image.metadata();
+
     if (!width || !height) {
       throw new Error("Image metadata not found");
     }
@@ -29,7 +31,9 @@ const getPrice = async (imageURL: string): Promise<number> => {
       cacheMethod: "readOnly",
       gzip: false,
     });
+
     const ret = await worker.recognize(buffer);
+
     await worker.terminate();
 
     const numbers = ret.data.text

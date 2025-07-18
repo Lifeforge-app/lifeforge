@@ -1,5 +1,10 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { GuitarTabsCollectionsCollectionsSchemas } from "../collections";
+import {
+  GuitarTabsSidebarDataSchema,
+  GuitarTabsGuitarWorldEntrySchema,
+} from "../collections/guitarTabs.schema";
 
 const GuitarWorld = {
   /**
@@ -12,7 +17,7 @@ const GuitarWorld = {
       page: z.number().optional().default(1),
     }),
     response: z.object({
-      data: z.array(GuitarTabsSchemas.GuitarTabsGuitarWorldEntrySchema),
+      data: z.array(GuitarTabsGuitarWorldEntrySchema),
       totalItems: z.number(),
       perPage: z.number(),
     }),
@@ -41,7 +46,7 @@ const Entries = {
    * @description Get sidebar data for guitar tabs
    */
   getSidebarData: {
-    response: GuitarTabsSchemas.GuitarTabsSidebarDataSchema,
+    response: GuitarTabsSidebarDataSchema,
   },
 
   /**
@@ -66,7 +71,13 @@ const Entries = {
         .optional()
         .default("newest"),
     }),
-    response: PBListResultSchema(SchemaWithPB(GuitarTabsSchemas.EntrySchema)),
+    response: z.object({
+      items: z.array(SchemaWithPB(GuitarTabsCollectionsSchemas.Entry)),
+      page: z.number(),
+      perPage: z.number(),
+      totalItems: z.number(),
+      totalPages: z.number(),
+    }),
   },
 
   /**
@@ -74,7 +85,7 @@ const Entries = {
    * @description Get a random guitar tab entry
    */
   getRandomEntry: {
-    response: SchemaWithPB(GuitarTabsSchemas.EntrySchema),
+    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry),
   },
 
   /**
@@ -93,12 +104,12 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    body: GuitarTabsSchemas.EntrySchema.pick({
+    body: GuitarTabsCollectionsSchemas.Entry.pick({
       name: true,
       author: true,
       type: true,
     }),
-    response: SchemaWithPB(GuitarTabsSchemas.EntrySchema),
+    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry),
   },
 
   /**
@@ -120,7 +131,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(GuitarTabsSchemas.EntrySchema),
+    response: SchemaWithPB(GuitarTabsCollectionsSchemas.Entry),
   },
 };
 

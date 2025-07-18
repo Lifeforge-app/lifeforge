@@ -1,5 +1,7 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { VirtualWardrobeCollectionsCollectionsSchemas } from "../collections";
+import { VirtualWardrobeSidebarDataSchema } from "../collections/virtualWardrobe.schema";
 
 const Entries = {
   /**
@@ -7,7 +9,7 @@ const Entries = {
    * @description Get sidebar data for virtual wardrobe
    */
   getSidebarData: {
-    response: VirtualWardrobeSchemas.VirtualWardrobeSidebarDataSchema,
+    response: VirtualWardrobeSidebarDataSchema,
   },
 
   /**
@@ -27,7 +29,7 @@ const Entries = {
         .transform((val) => val === "true"),
       q: z.string().optional(),
     }),
-    response: z.array(SchemaWithPB(VirtualWardrobeSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)),
   },
 
   /**
@@ -45,7 +47,7 @@ const Entries = {
       price: z.string().transform((val) => parseFloat(val)),
       notes: z.string(),
     }),
-    response: SchemaWithPB(VirtualWardrobeSchemas.EntrySchema),
+    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry),
   },
 
   /**
@@ -66,7 +68,7 @@ const Entries = {
       price: z.number().optional(),
       notes: z.string().optional(),
     }),
-    response: SchemaWithPB(VirtualWardrobeSchemas.EntrySchema),
+    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry),
   },
 
   /**
@@ -88,7 +90,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(VirtualWardrobeSchemas.EntrySchema),
+    response: SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry),
   },
 
   /**
@@ -111,7 +113,7 @@ const Session = {
    * @description Get session cart items
    */
   getCart: {
-    response: z.array(SchemaWithPB(VirtualWardrobeSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(VirtualWardrobeCollectionsSchemas.Entry)),
   },
 
   /**

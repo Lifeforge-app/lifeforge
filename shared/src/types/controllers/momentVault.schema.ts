@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { MomentVaultCollectionsCollectionsSchemas } from "../collections";
 
 const Transcription = {
   /**
@@ -34,7 +35,13 @@ const Entries = {
         .optional()
         .transform((val) => parseInt(val ?? "1", 10) || 1),
     }),
-    response: PBListResultSchema(SchemaWithPB(MomentVaultSchemas.EntrySchema)),
+    response: z.object({
+      items: z.array(SchemaWithPB(MomentVaultCollectionsSchemas.Entry)),
+      page: z.number(),
+      perPage: z.number(),
+      totalItems: z.number(),
+      totalPages: z.number(),
+    }),
   },
 
   /**
@@ -47,7 +54,7 @@ const Entries = {
       content: z.string().optional(),
       transcription: z.string().optional(),
     }),
-    response: SchemaWithPB(MomentVaultSchemas.EntrySchema),
+    response: SchemaWithPB(MomentVaultCollectionsSchemas.Entry),
   },
 
   /**
@@ -61,7 +68,7 @@ const Entries = {
     body: z.object({
       content: z.string(),
     }),
-    response: SchemaWithPB(MomentVaultSchemas.EntrySchema),
+    response: SchemaWithPB(MomentVaultCollectionsSchemas.Entry),
   },
 
   /**

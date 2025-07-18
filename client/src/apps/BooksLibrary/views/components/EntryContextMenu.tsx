@@ -4,7 +4,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
 import { fetchAPI } from 'shared/lib'
-import { BooksLibrarySchemas, ISchemaWithPB } from 'shared/types'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
@@ -14,7 +14,7 @@ import forceDown from '@utils/forceDown'
 export default function EntryContextMenu({
   item
 }: {
-  item: ISchemaWithPB<BooksLibrarySchemas.IEntry>
+  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
 }) {
   const open = useModalStore(state => state.open)
   const queryClient = useQueryClient()
@@ -39,7 +39,7 @@ export default function EntryContextMenu({
     setReadStatusChangeLoading(true)
 
     try {
-      await fetchAPI<ISchemaWithPB<BooksLibrarySchemas.IEntry>>(
+      await fetchAPI<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(
         import.meta.env.VITE_API_HOST,
         `books-library/entries/read/${item.id}`,
         {

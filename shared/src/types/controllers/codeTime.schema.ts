@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { CodeTimeCollectionsCollectionsSchemas } from "../collections";
 
 const CodeTime = {
   /**
@@ -12,10 +13,10 @@ const CodeTime = {
         .string()
         .optional()
         .transform((val) =>
-          val ? parseInt(val, 10) : new Date().getFullYear(),
+          val ? parseInt(val, 10) : new Date().getFullYear()
         ),
     }),
-    response: CodeTimeSchemas.CodeTimeActivitiesSchema,
+    response: CodeTimeCollectionsSchemas.CodeTimeActivitiesSchema,
   },
 
   /**
@@ -23,7 +24,7 @@ const CodeTime = {
    * @description Get code time statistics
    */
   getStatistics: {
-    response: CodeTimeSchemas.CodeTimeStatisticsSchema,
+    response: CodeTimeCollectionsSchemas.CodeTimeStatisticsSchema,
   },
 
   /**
@@ -34,7 +35,7 @@ const CodeTime = {
     query: z.object({
       days: z.string().transform((val) => parseInt(val, 10)),
     }),
-    response: z.array(SchemaWithPB(CodeTimeSchemas.DailyEntrySchema)),
+    response: z.array(SchemaWithPB(CodeTimeCollectionsSchemas.DailyEntry)),
   },
 
   /**
@@ -68,7 +69,7 @@ const CodeTime = {
       z.object({
         date: z.string(),
         duration: z.number(),
-      }),
+      })
     ),
   },
 

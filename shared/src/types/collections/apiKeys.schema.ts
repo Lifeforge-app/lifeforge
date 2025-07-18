@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: apiKeys
- * Generated at: 2025-07-18T10:36:14.107Z
+ * Generated at: 2025-07-18T12:15:50.187Z
  * Contains: api_keys__entries
  */
 
 import { z } from "zod/v4";
+
 const Entry = z.object({
   keyId: z.string(),
   name: z.string(),

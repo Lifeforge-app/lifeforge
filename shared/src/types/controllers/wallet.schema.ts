@@ -1,5 +1,10 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { WalletCollectionsCollectionsSchemas } from "../collections";
+import {
+  WalletIncomeExpensesSummarySchema,
+  WalletReceiptScanResultSchema,
+} from "../collections/wallet.schema";
 
 const Transactions = {
   /**
@@ -7,7 +12,7 @@ const Transactions = {
    * @description Get all wallet transactions
    */
   getAllTransactions: {
-    response: z.array(SchemaWithPB(WalletSchemas.TransactionSchema)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction)),
   },
 
   /**
@@ -45,7 +50,7 @@ const Transactions = {
       fromAsset: z.string().optional(),
       toAsset: z.string().optional(),
     }),
-    response: z.array(SchemaWithPB(WalletSchemas.TransactionSchema)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction)),
   },
 
   /**
@@ -89,7 +94,7 @@ const Transactions = {
         .default("false")
         .transform((val) => val === "true"),
     }),
-    response: SchemaWithPB(WalletSchemas.TransactionSchema),
+    response: SchemaWithPB(WalletCollectionsSchemas.Transaction),
   },
 
   /**
@@ -108,7 +113,7 @@ const Transactions = {
    * @description Scan receipt to extract transaction data
    */
   scanReceipt: {
-    response: WalletSchemas.WalletReceiptScanResultSchema,
+    response: WalletReceiptScanResultSchema,
   },
 };
 
@@ -118,7 +123,7 @@ const Assets = {
    * @description Get all wallet assets
    */
   getAllAssets: {
-    response: z.array(SchemaWithPB(WalletSchemas.AssetAggregatedSchema)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.AssetAggregated)),
   },
 
   /**
@@ -126,7 +131,7 @@ const Assets = {
    * @description Create a new wallet asset
    */
   createAsset: {
-    body: WalletSchemas.AssetSchema.pick({
+    body: WalletCollectionsSchemas.Asset.pick({
       name: true,
       icon: true,
       starting_balance: true,
@@ -136,7 +141,7 @@ const Assets = {
         return isNaN(balance) ? 0 : balance;
       }),
     }),
-    response: SchemaWithPB(WalletSchemas.AssetSchema),
+    response: SchemaWithPB(WalletCollectionsSchemas.Asset),
   },
 
   /**
@@ -158,7 +163,7 @@ const Assets = {
     params: z.object({
       id: z.string(),
     }),
-    body: WalletSchemas.AssetSchema.pick({
+    body: WalletCollectionsSchemas.Asset.pick({
       name: true,
       icon: true,
       starting_balance: true,
@@ -168,7 +173,7 @@ const Assets = {
         return isNaN(balance) ? 0 : balance;
       }),
     }),
-    response: SchemaWithPB(WalletSchemas.AssetSchema),
+    response: SchemaWithPB(WalletCollectionsSchemas.Asset),
   },
 
   /**
@@ -189,7 +194,7 @@ const Ledgers = {
    * @description Get all wallet ledgers
    */
   getAllLedgers: {
-    response: z.array(SchemaWithPB(WalletSchemas.LedgerSchema)),
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Ledger)),
   },
 
   /**
@@ -197,8 +202,8 @@ const Ledgers = {
    * @description Create a new wallet ledger
    */
   createLedger: {
-    body: WalletSchemas.LedgerSchema,
-    response: SchemaWithPB(WalletSchemas.LedgerSchema),
+    body: WalletCollectionsSchemas.Ledger,
+    response: SchemaWithPB(WalletCollectionsSchemas.Ledger),
   },
 
   /**
@@ -209,8 +214,8 @@ const Ledgers = {
     params: z.object({
       id: z.string(),
     }),
-    body: WalletSchemas.LedgerSchema,
-    response: SchemaWithPB(WalletSchemas.LedgerSchema),
+    body: WalletCollectionsSchemas.Ledger,
+    response: SchemaWithPB(WalletCollectionsSchemas.Ledger),
   },
 
   /**
@@ -236,7 +241,7 @@ const Utils = {
       z.object({
         amount: z.number(),
         accumulate: z.number(),
-      }),
+      })
     ),
   },
 
@@ -249,7 +254,7 @@ const Utils = {
       year: z.string(),
       month: z.string(),
     }),
-    response: WalletSchemas.WalletIncomeExpensesSummarySchema,
+    response: WalletIncomeExpensesSummarySchema,
   },
 
   /**
@@ -271,7 +276,7 @@ const Utils = {
         amount: z.number(),
         count: z.number(),
         percentage: z.number(),
-      }),
+      })
     ),
   },
 };
@@ -282,7 +287,9 @@ const Categories = {
    * @description Get all wallet categories
    */
   getAllCategories: {
-    response: z.array(SchemaWithPB(WalletSchemas.CategoryAggregatedSchema)),
+    response: z.array(
+      SchemaWithPB(WalletCollectionsSchemas.CategoryAggregated)
+    ),
   },
 
   /**
@@ -290,8 +297,8 @@ const Categories = {
    * @description Create a new wallet category
    */
   createCategory: {
-    body: WalletSchemas.CategorySchema,
-    response: SchemaWithPB(WalletSchemas.CategorySchema),
+    body: WalletCollectionsSchemas.Category,
+    response: SchemaWithPB(WalletCollectionsSchemas.Category),
   },
 
   /**
@@ -302,8 +309,8 @@ const Categories = {
     params: z.object({
       id: z.string(),
     }),
-    body: WalletSchemas.CategorySchema,
-    response: SchemaWithPB(WalletSchemas.CategorySchema),
+    body: WalletCollectionsSchemas.Category,
+    response: SchemaWithPB(WalletCollectionsSchemas.Category),
   },
 
   /**

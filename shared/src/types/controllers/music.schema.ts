@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { SchemaWithPB } from "../collections/schemaWithPB";
+import { MusicCollectionsCollectionsSchemas } from "../collections";
 
 const Youtube = {
   /**
@@ -10,7 +11,7 @@ const Youtube = {
     params: z.object({
       id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, "Invalid YouTube video ID"),
     }),
-    response: MusicSchemas.YoutubeDataSchema,
+    response: MusicCollectionsSchemas.YoutubeDataSchema,
   },
 
   /**
@@ -46,7 +47,7 @@ const Entries = {
    * @description Get all music entries
    */
   getAllEntries: {
-    response: z.array(SchemaWithPB(MusicSchemas.EntrySchema)),
+    response: z.array(SchemaWithPB(MusicCollectionsSchemas.Entry)),
   },
 
   /**
@@ -57,11 +58,11 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    body: MusicSchemas.EntrySchema.pick({
+    body: MusicCollectionsSchemas.Entry.pick({
       name: true,
       author: true,
     }),
-    response: SchemaWithPB(MusicSchemas.EntrySchema),
+    response: SchemaWithPB(MusicCollectionsSchemas.Entry),
   },
 
   /**
@@ -83,7 +84,7 @@ const Entries = {
     params: z.object({
       id: z.string(),
     }),
-    response: SchemaWithPB(MusicSchemas.EntrySchema),
+    response: SchemaWithPB(MusicCollectionsSchemas.Entry),
   },
 };
 

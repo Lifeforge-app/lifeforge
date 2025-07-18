@@ -3,11 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: todoList
- * Generated at: 2025-07-18T10:36:14.104Z
+ * Generated at: 2025-07-18T12:15:50.184Z
  * Contains: todo_list__lists, todo_list__tags, todo_list__entries, todo_list__priorities, todo_list__lists_aggregated, todo_list__tags_aggregated, todo_list__priorities_aggregated
  */
 
 import { z } from "zod/v4";
+
 const List = z.object({
   name: z.string(),
   icon: z.string(),

@@ -1,5 +1,7 @@
 import { z } from "zod/v4";
-import { SchemaWithPB } from "../collections/schemaWithPB";
+
+const ALLOWED_NAMESPACE = ["apps", "common", "utils", "core"] as const;
+const ALLOWED_LANG = ["en", "ms", "zh-CN", "zh-TW", "zh"] as const;
 
 const LocalesManager = {
   /**
@@ -33,7 +35,7 @@ const LocalesManager = {
     body: z.object({
       data: z.record(
         z.string(),
-        z.record(z.enum(ALLOWED_LANG).exclude(["zh"]), z.string()),
+        z.record(z.enum(ALLOWED_LANG).exclude(["zh"]), z.string())
       ),
     }),
     params: z.object({

@@ -16,6 +16,7 @@ const LIB_ROUTES = JSON.parse(
     "utf-8",
   ),
 ) as Record<string, string>;
+
 const MODULE_ROUTES = JSON.parse(
   fs.readFileSync(
     path.resolve(process.cwd(), "src/core/routes/module.routes.json"),
@@ -125,6 +126,7 @@ const corsAnywhere = forgeController
 
     if (response.headers.get("content-type")?.includes("application/json")) {
       const json = await response.json();
+
       return json;
     }
 
@@ -133,6 +135,7 @@ const corsAnywhere = forgeController
 
 router.get("/_routes", async (req, res) => {
   const routes = traceRouteStack(router.stack);
+
   successWithBaseResponse(res, routes);
 });
 
