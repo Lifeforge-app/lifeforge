@@ -9,7 +9,7 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 import BackupItem from './components/BackupItem'
 import CreateBackupModal from './components/CreateBackupModal'

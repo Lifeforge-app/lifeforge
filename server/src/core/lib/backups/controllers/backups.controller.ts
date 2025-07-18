@@ -3,7 +3,7 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { z } from "zod/v4";
+import { BackupsControllersSchemas } from "shared/types/controllers";
 
 import * as BackupService from "../services/backups.service";
 
@@ -12,26 +12,13 @@ const backupsRouter = express.Router();
 const listBackups = forgeController
   .route("GET /")
   .description("List all backups")
-  .schema({
-    response: z.array(
-      z.object({
-        key: z.string(),
-        size: z.number(),
-        modified: z.string(),
-      }),
-    ),
-  })
+  .schema(BackupsControllersSchemas.Backups.listBackups)
   .callback(BackupService.listBackups);
 
 const downloadBackup = forgeController
   .route("GET /download/:key")
   .description("Download a specific backup")
-  .schema({
-    params: z.object({
-      key: z.string(),
-    }),
-    response: z.any(),
-  })
+  .schema(BackupsControllersSchemas.Backups.downloadBackup)
   .isDownloadable()
   .callback(async ({ res, params: { key } }) => {
     const buffer = await BackupService.downloadBackup(key);
@@ -47,12 +34,7 @@ const downloadBackup = forgeController
 const createBackup = forgeController
   .route("POST /")
   .description("Create a new backup")
-  .schema({
-    body: z.object({
-      backupName: z.string().optional(),
-    }),
-    response: z.void(),
-  })
+  .schema(BackupsControllersSchemas.Backups.createBackup)
   .statusCode(201)
   .callback(async ({ body: { backupName } }) => {
     await BackupService.createBackup(backupName);
@@ -61,12 +43,7 @@ const createBackup = forgeController
 const deleteBackup = forgeController
   .route("DELETE /:key")
   .description("Delete a specific backup")
-  .schema({
-    params: z.object({
-      key: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(BackupsControllersSchemas.Backups.deleteBackup)
   .statusCode(204)
   .callback(({ params: { key } }) => BackupService.deleteBackup(key));
 

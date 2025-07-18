@@ -9,12 +9,12 @@ import {
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import {
   IMovieEntry,
   IMovieSearchResults
 } from '@apps/Movies/interfaces/movies_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'
@@ -37,6 +37,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
     setSearchLoading(true)
     try {
       const data = await fetchAPI<IMovieSearchResults>(
+        import.meta.env.VITE_API_HOST,
         `movies/tmdb/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
       )
       setSearchResults(data)
@@ -49,9 +50,13 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
   async function addToLibrary(id: number) {
     try {
-      await fetchAPI<IMovieEntry>(`movies/entries/${id}`, {
-        method: 'POST'
-      })
+      await fetchAPI<IMovieEntry>(
+        import.meta.env.VITE_API_HOST,
+        `movies/entries/${id}`,
+        {
+          method: 'POST'
+        }
+      )
 
       queryClient.invalidateQueries({
         queryKey: ['movies', 'entries', 'unwatched']

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import ModifyEntryModal from './ModifyEntryModal'
 
@@ -51,7 +51,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
         name: string
         price: number
         image: string
-      }>('wishlist/entries/external', {
+      }>(import.meta.env.VITE_API_HOST, 'wishlist/entries/external', {
         method: 'POST',
         body: {
           provider,

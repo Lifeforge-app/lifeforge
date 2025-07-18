@@ -1,6 +1,8 @@
-import { IDateInputFieldProps, IFieldProps } from '@interfaces/modal_interfaces'
-
 import { DateInput } from '@components/inputs'
+import {
+  IDateInputFieldProps,
+  IFieldProps
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormDateInputProps<T> {
   field: IFieldProps<T> & IDateInputFieldProps

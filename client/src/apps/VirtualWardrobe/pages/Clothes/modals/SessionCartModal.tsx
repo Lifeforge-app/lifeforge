@@ -4,9 +4,9 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 import EntryItem from '../components/EntryItem'
 import CheckoutConfirmationModal from './CheckoutConfirmationModal'
@@ -23,9 +23,13 @@ function SessionCartModal({
 
   async function handleRemoveFromCart(entryId: string) {
     try {
-      await fetchAPI(`virtual-wardrobe/session/${entryId}`, {
-        method: 'DELETE'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `virtual-wardrobe/session/${entryId}`,
+        {
+          method: 'DELETE'
+        }
+      )
 
       queryClient.setQueryData<IVirtualWardrobeEntry[]>(
         ['virtual-wardrobe', 'session-cart-items'],

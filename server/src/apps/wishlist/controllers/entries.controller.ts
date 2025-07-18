@@ -4,10 +4,7 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import fs from "fs";
-import { WishlistSchemas } from "shared";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { WishlistControllersSchemas } from "shared/types/controllers";
 
 import { singleUploadMiddleware } from "@middlewares/uploadMiddleware";
 
@@ -18,26 +15,13 @@ const wishlistEntriesRouter = express.Router();
 const getCollectionId = forgeController
   .route("GET /collection-id")
   .description("Get wishlist entries collection ID")
-  .schema({
-    response: z.string(),
-  })
+  .schema(WishlistControllersSchemas.Entries.getCollectionId)
   .callback(async ({ pb }) => await entriesService.getCollectionId(pb));
 
 const getEntriesByListId = forgeController
   .route("GET /:id")
   .description("Get wishlist entries by list ID")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    query: z.object({
-      bought: z
-        .string()
-        .optional()
-        .transform((val) => val === "true"),
-    }),
-    response: z.array(WithPBSchema(WishlistSchemas.EntrySchema)),
-  })
+  .schema(WishlistControllersSchemas.Entries.getEntriesByListId)
   .existenceCheck("params", {
     id: "wishlist__lists",
   })
@@ -49,13 +33,7 @@ const getEntriesByListId = forgeController
 const scrapeExternal = forgeController
   .route("POST /external")
   .description("Scrape external website for wishlist entry data")
-  .schema({
-    body: z.object({
-      url: z.string(),
-      provider: z.string(),
-    }),
-    response: z.any(),
-  })
+  .schema(WishlistControllersSchemas.Entries.scrapeExternal)
   .callback(
     async ({ pb, body: { url, provider } }) =>
       await entriesService.scrapeExternal(pb, provider, url),
@@ -64,16 +42,7 @@ const scrapeExternal = forgeController
 const createEntry = forgeController
   .route("POST /")
   .description("Create a new wishlist entry")
-  .schema({
-    body: z.object({
-      name: z.string(),
-      url: z.string(),
-      price: z.string().transform((val) => parseFloat(val) || 0 || 0),
-      list: z.string(),
-      image: z.any().optional(),
-    }),
-    response: WithPBSchema(WishlistSchemas.EntrySchema),
-  })
+  .schema(WishlistControllersSchemas.Entries.createEntry)
   .middlewares(singleUploadMiddleware)
   .existenceCheck("body", {
     list: "wishlist__lists",
@@ -83,14 +52,16 @@ const createEntry = forgeController
     const { file } = req;
 
     let imageFile: File | undefined;
-
     if (file) {
       const fileBuffer = fs.readFileSync(file.path);
+
       imageFile = new File([fileBuffer], file.originalname);
       fs.unlinkSync(file.path);
     } else if (typeof body.image === "string") {
       const response = await fetch(body.image);
+
       const buffer = await response.arrayBuffer();
+
       imageFile = new File([buffer], "image.jpg");
     }
 
@@ -106,22 +77,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route("PATCH /:id")
   .description("Update an existing wishlist entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: z.object({
-      name: z.string(),
-      url: z.string(),
-      price: z.string().transform((val) => parseFloat(val) || 0 || 0),
-      list: z.string(),
-      imageRemoved: z.string().optional(),
-    }),
-    response: z.union([
-      WithPBSchema(WishlistSchemas.EntrySchema),
-      z.literal("removed"),
-    ]),
-  })
+  .schema(WishlistControllersSchemas.Entries.updateEntry)
   .middlewares(singleUploadMiddleware)
   .existenceCheck("params", {
     id: "wishlist__entries",
@@ -137,14 +93,14 @@ const updateEntry = forgeController
       req,
     }) => {
       const { file } = req;
-      let finalFile: null | File = null;
 
+      let finalFile: null | File = null;
       if (imageRemoved === "true") {
         finalFile = null;
       }
-
       if (file) {
         const fileBuffer = fs.readFileSync(file.path);
+
         finalFile = new File([fileBuffer], file.originalname);
         fs.unlinkSync(file.path);
       }
@@ -156,7 +112,11 @@ const updateEntry = forgeController
         name,
         url,
         price,
-        ...(imageRemoved === "true" || finalFile ? { image: finalFile } : {}),
+        ...(imageRemoved === "true" || finalFile
+          ? {
+              image: finalFile,
+            }
+          : {}),
       });
 
       return oldEntry.list === list ? entry : "removed";
@@ -166,12 +126,7 @@ const updateEntry = forgeController
 const updateEntryBoughtStatus = forgeController
   .route("PATCH /bought/:id")
   .description("Update wishlist entry bought status")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: WithPBSchema(WishlistSchemas.EntrySchema),
-  })
+  .schema(WishlistControllersSchemas.Entries.updateEntryBoughtStatus)
   .existenceCheck("params", {
     id: "wishlist__entries",
   })
@@ -183,12 +138,7 @@ const updateEntryBoughtStatus = forgeController
 const deleteEntry = forgeController
   .route("DELETE /:id")
   .description("Delete a wishlist entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(WishlistControllersSchemas.Entries.deleteEntry)
   .existenceCheck("params", {
     id: "wishlist__entries",
   })

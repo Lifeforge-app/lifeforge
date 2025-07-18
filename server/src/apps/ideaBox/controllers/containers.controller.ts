@@ -4,10 +4,7 @@ import {
 } from "@functions/forgeController";
 import express from "express";
 import fs from "fs";
-import { IdeaBoxSchemas } from "shared";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { IdeaBoxControllersSchemas } from "shared/types/controllers";
 
 import { singleUploadMiddlewareOfKey } from "@middlewares/uploadMiddleware";
 
@@ -18,12 +15,7 @@ const ideaBoxContainersRouter = express.Router();
 const checkContainerExists = forgeController
   .route("GET /valid/:id")
   .description("Check if a container exists")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.boolean(),
-  })
+  .schema(IdeaBoxControllersSchemas.Containers.checkContainerExists)
   .callback(
     async ({ pb, params: { id } }) =>
       await containersService.checkContainerExists(pb, id),
@@ -32,18 +24,13 @@ const checkContainerExists = forgeController
 const getContainers = forgeController
   .route("GET /")
   .description("Get all containers")
-  .schema({
-    response: z.array(WithPBSchema(IdeaBoxSchemas.ContainerSchema)),
-  })
+  .schema(IdeaBoxControllersSchemas.Containers.getContainers)
   .callback(async ({ pb }) => await containersService.getContainers(pb));
 
 const createContainer = forgeController
   .route("POST /")
   .description("Create a new container")
-  .schema({
-    body: IdeaBoxSchemas.ContainerSchema,
-    response: WithPBSchema(IdeaBoxSchemas.ContainerSchema),
-  })
+  .schema(IdeaBoxControllersSchemas.Containers.createContainer)
   .middlewares(singleUploadMiddlewareOfKey("cover"))
   .callback(async ({ pb, body: { name, color, icon, cover }, req }) => {
     const container = await containersService.createContainer(
@@ -55,14 +42,13 @@ const createContainer = forgeController
         if (req.file) {
           return new File([fs.readFileSync(req.file.path)], req.file.filename);
         }
-
         if (cover) {
           const response = await fetch(cover);
+
           const fileBuffer = await response.arrayBuffer();
 
           return new File([fileBuffer], "cover.jpg");
         }
-
         return undefined;
       })(),
     );
@@ -72,11 +58,9 @@ const createContainer = forgeController
         .getURL(container, container.cover)
         .replace(`${pb.baseURL}/api/files`, "");
     }
-
     if (req.file) {
       fs.unlinkSync(req.file.path);
     }
-
     return container;
   })
   .statusCode(201);
@@ -84,18 +68,7 @@ const createContainer = forgeController
 const updateContainer = forgeController
   .route("PATCH /:id")
   .description("Update a container")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: z.object({
-      name: z.string(),
-      color: z.string(),
-      icon: z.string(),
-      cover: z.string().optional(),
-    }),
-    response: WithPBSchema(IdeaBoxSchemas.ContainerSchema),
-  })
+  .schema(IdeaBoxControllersSchemas.Containers.updateContainer)
   .middlewares(singleUploadMiddlewareOfKey("cover"))
   .existenceCheck("params", {
     id: "idea_box__containers",
@@ -115,18 +88,16 @@ const updateContainer = forgeController
               req.file.filename,
             );
           }
-
           if (cover === "keep") {
             return "keep";
           }
-
           if (cover) {
             const response = await fetch(cover);
+
             const fileBuffer = await response.arrayBuffer();
 
             return new File([fileBuffer], "cover.jpg");
           }
-
           return undefined;
         })(),
       );
@@ -136,11 +107,9 @@ const updateContainer = forgeController
           .getURL(container, container.cover)
           .replace(`${pb.baseURL}/api/files`, "");
       }
-
       if (req.file) {
         fs.unlinkSync(req.file.path);
       }
-
       return container;
     },
   );
@@ -148,12 +117,7 @@ const updateContainer = forgeController
 const deleteContainer = forgeController
   .route("DELETE /:id")
   .description("Delete a container")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(IdeaBoxControllersSchemas.Containers.deleteContainer)
   .existenceCheck("params", {
     id: "idea_box__containers",
   })

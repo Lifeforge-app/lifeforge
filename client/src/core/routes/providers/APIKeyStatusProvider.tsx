@@ -1,7 +1,7 @@
 import MissingAPIKeyScreen from '@core/routes/components/MissingAPIKeyScreen'
 import { ModuleWrapper, QueryWrapper } from 'lifeforge-ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from 'shared/lib'
 
 function APIKeyStatusProvider({
   APIKeys,

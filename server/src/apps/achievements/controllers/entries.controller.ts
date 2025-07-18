@@ -3,22 +3,14 @@ import {
   forgeController,
 } from "@functions/forgeController";
 import express from "express";
-import { AchievementsSchemas } from "shared";
-import { z } from "zod/v4";
-
-import { WithPBSchema } from "@typescript/pocketbase_interfaces";
+import { AchievementsControllersSchemas } from "shared/types/controllers";
 
 const achievementsEntriesRouter = express.Router();
 
 const getAllEntriesByDifficulty = forgeController
   .route("GET /:difficulty")
   .description("Get all achievements entries by difficulty")
-  .schema({
-    params: AchievementsSchemas.EntrySchema.pick({
-      difficulty: true,
-    }),
-    response: z.array(WithPBSchema(AchievementsSchemas.EntrySchema)),
-  })
+  .schema(AchievementsControllersSchemas.Entries.getAllEntriesByDifficulty)
   .callback(({ pb, params: { difficulty } }) =>
     pb.collection("achievements__entries").getFullList({
       filter: `difficulty = "${difficulty}"`,
@@ -29,10 +21,7 @@ const getAllEntriesByDifficulty = forgeController
 const createEntry = forgeController
   .route("POST /")
   .description("Create a new achievements entry")
-  .schema({
-    body: AchievementsSchemas.EntrySchema,
-    response: WithPBSchema(AchievementsSchemas.EntrySchema),
-  })
+  .schema(AchievementsControllersSchemas.Entries.createEntry)
   .statusCode(201)
   .callback(({ pb, body }) =>
     pb.collection("achievements__entries").create(body),
@@ -41,13 +30,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route("PATCH /:id")
   .description("Update an existing achievements entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    body: AchievementsSchemas.EntrySchema,
-    response: WithPBSchema(AchievementsSchemas.EntrySchema),
-  })
+  .schema(AchievementsControllersSchemas.Entries.updateEntry)
   .existenceCheck("params", {
     id: "achievements__entries",
   })
@@ -58,12 +41,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route("DELETE /:id")
   .description("Delete an existing achievements entry")
-  .schema({
-    params: z.object({
-      id: z.string(),
-    }),
-    response: z.void(),
-  })
+  .schema(AchievementsControllersSchemas.Entries.deleteEntry)
   .existenceCheck("params", {
     id: "achievements__entries",
   })

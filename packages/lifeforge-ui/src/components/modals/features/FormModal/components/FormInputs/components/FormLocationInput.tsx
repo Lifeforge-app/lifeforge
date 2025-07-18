@@ -1,10 +1,9 @@
+import { LocationInput } from '@components/inputs'
+import { ILocationEntry } from '@components/inputs/LocationInput'
 import {
   IFieldProps,
   ILocationInputFieldProps
-} from '@interfaces/modal_interfaces'
-
-import { LocationInput } from '@components/inputs'
-import { ILocationEntry } from '@components/inputs/LocationInput'
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormLocationInputProps<T> {
   field: IFieldProps<T> & ILocationInputFieldProps

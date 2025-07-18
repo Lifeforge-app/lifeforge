@@ -14,6 +14,7 @@ export const createOrUpdateMasterPassword = async (
   password: string,
 ): Promise<void> => {
   const salt = await bcrypt.genSalt(10);
+
   const APIKeysMasterPasswordHash = await bcrypt.hash(password, salt);
 
   const id = pb.authStore.record?.id;
@@ -41,6 +42,7 @@ export const verifyMasterPassword = async (
   const decryptedMaster = decrypt2(password, challenge);
 
   const user = await pb.collection("users").getOne(id);
+
   const { APIKeysMasterPasswordHash } = user;
 
   return await bcrypt.compare(decryptedMaster, APIKeysMasterPasswordHash);

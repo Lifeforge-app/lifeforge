@@ -1,8 +1,4 @@
-import { useMemo } from 'react'
-
-import useThemeColors from '@hooks/useThemeColor'
-
-import { rgbToHex } from '@utils/colors'
+import { usePersonalization } from 'shared/lib'
 
 import FilterChip from './components/HeaderFilterChip'
 
@@ -29,14 +25,7 @@ function HeaderFilter({
   values: Record<string, string | null>
   setValues: Record<string, (value: string | null) => void>
 }) {
-  const { theme } = useThemeColors()
-  const themeColorHex = useMemo(() => {
-    if (theme.startsWith('#')) {
-      return theme
-    }
-    const [r, g, b] = theme.match(/\((\d+), (\d+), (\d+)\)/)?.slice(1) ?? []
-    return rgbToHex(Number(r), Number(g), Number(b))
-  }, [theme])
+  const { derivedThemeColor } = usePersonalization()
 
   if (
     !(
@@ -62,7 +51,7 @@ function HeaderFilter({
                   key={query}
                   color={
                     isColored === true
-                      ? (target.color ?? themeColorHex)
+                      ? (target.color ?? derivedThemeColor)
                       : undefined
                   }
                   icon={target.icon ?? ''}

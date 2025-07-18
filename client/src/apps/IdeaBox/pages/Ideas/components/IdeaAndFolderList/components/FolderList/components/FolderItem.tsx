@@ -5,7 +5,7 @@ import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { type IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
 import FolderContextMenu from './FolderContextMenu'
@@ -81,9 +81,13 @@ function FolderItem({ folder }: FolderItemProps) {
     if (type === 'folder' && targetId === folder.id) return
 
     try {
-      await fetchAPI(`idea-box/${type}s/move/${targetId}?target=${folder.id}`, {
-        method: 'POST'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
+        {
+          method: 'POST'
+        }
+      )
       queryClient.invalidateQueries({
         queryKey: (
           [
@@ -101,9 +105,13 @@ function FolderItem({ folder }: FolderItemProps) {
 
   const removeFromFolder = async () => {
     try {
-      await fetchAPI(`idea-box/folders/move/${folder.id}`, {
-        method: 'DELETE'
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `idea-box/folders/move/${folder.id}`,
+        {
+          method: 'DELETE'
+        }
+      )
       queryClient.invalidateQueries({
         queryKey: ['idea-box', 'folders', id, path]
       })

@@ -1,9 +1,8 @@
+import { ColorInput } from '@components/inputs'
 import {
   IColorInputFieldProps,
   IFieldProps
-} from '@interfaces/modal_interfaces'
-
-import { ColorInput } from '@components/inputs'
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormColorInputProps<T> {
   field: IFieldProps<T> & IColorInputFieldProps

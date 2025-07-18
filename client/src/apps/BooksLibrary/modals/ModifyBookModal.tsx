@@ -4,12 +4,10 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
+import { BooksLibraryCollectionsSchemas, ISchemaWithPB } from 'shared/types'
 
-import {
-  IBooksLibraryEntry,
-  IBooksLibraryFormSate
-} from '../interfaces/books_library_interfaces'
+import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal({
@@ -17,7 +15,7 @@ function ModifyBookModal({
   onClose
 }: {
   data: {
-    existedData: IBooksLibraryEntry | null
+    existedData: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry> | null
   }
   onClose: () => void
 }) {
@@ -153,10 +151,14 @@ function ModifyBookModal({
     }
 
     try {
-      await fetchAPI(`books-library/entries/${existedData?.id}`, {
-        method: 'PATCH',
-        body: data
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        `books-library/entries/${existedData?.id}`,
+        {
+          method: 'PATCH',
+          body: data
+        }
+      )
 
       onClose()
       queryClient.invalidateQueries({ queryKey: ['books-library', 'entries'] })

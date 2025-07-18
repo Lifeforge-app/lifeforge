@@ -1,4 +1,3 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -15,10 +14,11 @@ import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
+import { usePersonalization } from 'shared/lib'
+import { useAPIQuery } from 'shared/lib'
+
 import { IWalletAsset } from '@apps/Wallet/interfaces/wallet_interfaces'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 // Register Chart.js components
 ChartJS.register(

@@ -1,16 +1,14 @@
 import { Icon } from '@iconify/react'
-import { useLifeforgeUIContext } from '@providers/LifeforgeUIProvider'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { Tooltip } from '../utilities'
 
@@ -42,7 +40,7 @@ function LocationInput({
   disabled?: boolean
 }) {
   const { t } = useTranslation('common.misc')
-  const { apiHost } = useLifeforgeUIContext()
+  const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
   const [enabled, setEnabled] = useState(false)

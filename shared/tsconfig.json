@@ -9,6 +9,7 @@
     "module": "ESNext",
     // Output configuration
     "declaration": true,
+    "rootDir": "./src",
     "outDir": "./dist",
     "noEmit": false,
     // Type checking
@@ -19,11 +20,11 @@
     "noUncheckedIndexedAccess": true
   },
   "include": [
-    "src/**/*"
+    "src",
+    "../packages/lifeforge-ui/src/components/screens/APIOnlineStatusScreen.tsx"
   ],
   "exclude": [
-    "node_modules",
-    "**/*.test.ts",
-    "dist"
+    "dist",
+    "node_modules"
   ]
 }

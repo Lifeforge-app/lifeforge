@@ -3,7 +3,7 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import {
@@ -74,10 +74,14 @@ function ModifyAPIKeyModal({
   ]
 
   async function fetchKey() {
-    const challenge = await fetchAPI<string>('api-keys/auth/challenge')
+    const challenge = await fetchAPI<string>(
+      import.meta.env.VITE_API_HOST,
+      'api-keys/auth/challenge'
+    )
 
     try {
       const data = await fetchAPI<string>(
+        import.meta.env.VITE_API_HOST,
         `api-keys/entries/${existedData?.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`
@@ -126,7 +130,10 @@ function ModifyAPIKeyModal({
       endpoint="api-keys/entries"
       fields={FIELDS}
       getFinalData={async originalData => {
-        const challenge = await fetchAPI<string>('api-keys/auth/challenge')
+        const challenge = await fetchAPI<string>(
+          import.meta.env.VITE_API_HOST,
+          'api-keys/auth/challenge'
+        )
 
         const encryptedKey = encrypt(formState.key, masterPassword)
         const encryptedMaster = encrypt(masterPassword, challenge)

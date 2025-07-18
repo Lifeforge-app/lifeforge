@@ -1,17 +1,13 @@
 import { Icon } from '@iconify/react'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 
-function DefaultBgTempSelector({
-  bgTemp,
-  setBgTemp
-}: {
-  bgTemp: string
-  setBgTemp: (value: string) => void
-}) {
+function DefaultBgTempSelector({ bgTemp }: { bgTemp: string }) {
   const { t } = useTranslation('core.personalization')
+  const { changeBgTemp } = useUserPersonalization()
 
   return (
     <div className="flex w-full flex-col items-center gap-2 xl:w-auto">
@@ -27,7 +23,7 @@ function DefaultBgTempSelector({
                 : 'hover:ring-bg-500 hover:ring-2'
             )}
             onClick={() => {
-              setBgTemp(color)
+              changeBgTemp(color)
             }}
           >
             {bgTemp === color && (

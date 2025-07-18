@@ -1,5 +1,6 @@
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { Tooltip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -9,17 +10,16 @@ import FontFamilyItem from './FontFamilyItem'
 interface FontFamilyListProps {
   enabled: string | boolean
   fontFamily: string
-  setFontFamily: (font: string) => void
   allFonts: any[]
 }
 
 function FontFamilyList({
   enabled,
   fontFamily,
-  setFontFamily,
   allFonts
 }: FontFamilyListProps) {
   const { t } = useTranslation('core.personalization')
+  const { changeFontFamily } = useUserPersonalization()
 
   if (enabled === 'loading') {
     return <Icon className="text-bg-500 size-6" icon="svg-spinners:180-ring" />
@@ -30,7 +30,7 @@ function FontFamilyList({
       <Listbox
         value={fontFamily}
         onChange={font => {
-          setFontFamily(font)
+          changeFontFamily(font)
         }}
       >
         <div className="relative mt-1 w-full md:w-64">

@@ -3,7 +3,7 @@ import { ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import {
   type IVirtualWardrobeEntry,
@@ -80,6 +80,7 @@ function ModifyItemModal({
 
     try {
       const data = await fetchAPI<IVirtualWardrobeEntry>(
+        import.meta.env.VITE_API_HOST,
         'virtual-wardrobe/entries' +
           (type === 'update' ? `/${existedData?.id}` : ''),
         {

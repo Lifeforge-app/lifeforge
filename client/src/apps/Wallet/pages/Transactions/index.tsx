@@ -13,10 +13,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
+import { useAPIQuery } from 'shared/lib'
+
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type IWalletTransaction } from '../../interfaces/wallet_interfaces'
 import HeaderMenu from './components/HeaderMenu'

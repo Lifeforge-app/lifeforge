@@ -1,6 +1,8 @@
-import { IFieldProps, IIconInputFieldProps } from '@interfaces/modal_interfaces'
-
 import { IconInput } from '@components/inputs'
+import {
+  IFieldProps,
+  IIconInputFieldProps
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormIconInputProps<T> {
   field: IFieldProps<T> & IIconInputFieldProps

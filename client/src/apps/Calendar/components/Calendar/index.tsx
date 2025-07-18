@@ -5,9 +5,9 @@ import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
-import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
+import { fetchAPI } from 'shared/lib'
 
-import fetchAPI from '@utils/fetchAPI'
+import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import { type ICalendarEvent } from '../../interfaces/calendar_interfaces'
 import ModifyEventModal from '../modals/ModifyEventModal'
@@ -122,15 +122,19 @@ function CalendarComponent({
       })
 
       try {
-        await fetchAPI<ICalendarEvent>(`calendar/events/${event.id}`, {
-          method: 'PATCH',
-          body: {
-            title: event.title,
-            start: dayjs(start).toISOString(),
-            end: dayjs(end).toISOString(),
-            category: event.category
+        await fetchAPI<ICalendarEvent>(
+          import.meta.env.VITE_API_HOST,
+          `calendar/events/${event.id}`,
+          {
+            method: 'PATCH',
+            body: {
+              title: event.title,
+              start: dayjs(start).toISOString(),
+              end: dayjs(end).toISOString(),
+              category: event.category
+            }
           }
-        })
+        )
 
         queryClient.setQueryData<ICalendarEvent[]>(queryKey, prevEvents => {
           return prevEvents?.map(prevEvent => {

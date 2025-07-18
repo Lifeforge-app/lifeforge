@@ -13,9 +13,11 @@ export const listBackups = async (): Promise<
 
 export const downloadBackup = async (key: string): Promise<Buffer> => {
   const pb = await getPBWithSuperuser();
+
   const token = await pb.files.getToken();
 
   const downloadURL = pb.backups.getDownloadURL(token, key);
+
   const response = await fetch(downloadURL);
 
   if (!response.ok) {
@@ -23,6 +25,7 @@ export const downloadBackup = async (key: string): Promise<Buffer> => {
   }
 
   const buffer = await response.arrayBuffer();
+
   return Buffer.from(buffer);
 };
 

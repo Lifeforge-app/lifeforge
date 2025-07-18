@@ -92,6 +92,7 @@ export const syncLocales = (
     fileContent = ["en", "ms", "zh-CN", "zh-TW"].reduce<Record<string, any>>(
       (acc, lang) => {
         const path = `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`;
+
         if (fs.existsSync(path)) {
           acc[lang] = JSON.parse(fs.readFileSync(path, "utf-8"));
         } else {
@@ -106,6 +107,7 @@ export const syncLocales = (
     fileContent = ["en", "ms", "zh-CN", "zh-TW"].reduce<Record<string, any>>(
       (acc, lang) => {
         const path = `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`;
+
         if (fs.existsSync(path)) {
           acc[lang] = JSON.parse(fs.readFileSync(path, "utf-8"));
         } else {
@@ -169,8 +171,11 @@ export const createLocale = (
     const data: Record<string, any> = JSON.parse(
       fs.readFileSync(filePath, "utf-8"),
     );
+
     const splitted: string[] = path.split(".");
+
     const key = splitted.pop();
+
     const target = splitted.reduce((acc, cur) => {
       if (!acc[cur]) {
         acc[cur] = {};
@@ -205,8 +210,11 @@ export const renameLocale = (
     const data: Record<string, any> = JSON.parse(
       fs.readFileSync(filePath, "utf-8"),
     );
+
     const splitted: string[] = path.split(".");
+
     const key = splitted.pop();
+
     const target = splitted.reduce((acc, cur) => {
       if (!acc[cur]) {
         acc[cur] = {};
@@ -244,11 +252,15 @@ export const deleteLocale = (
       namespace === "apps"
         ? `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
         : `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`;
+
     const data: Record<string, any> = JSON.parse(
       fs.readFileSync(filePath, "utf-8"),
     );
+
     const splitted: string[] = path.split(".");
+
     const key = splitted.pop();
+
     const target = splitted.reduce((acc, cur) => {
       if (!acc[cur]) {
         acc[cur] = {};

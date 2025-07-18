@@ -1,3 +1,9 @@
+@import './themes/index.css';
+@import './abbreviations.css';
+@import './global.css';
+@import './prose.css';
+@import './daisyui.css';
+@import './utils.css';
+
 @import '../components/inputs/DateInput/index.css';
 @import '../components/inputs/ColorInput/ColorPickerModal/index.css';
-@import './componentBG.css';

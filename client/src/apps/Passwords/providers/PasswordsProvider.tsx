@@ -3,9 +3,9 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 
-import { IPasswordEntry } from '@apps/Passwords/interfaces/password_interfaces'
+import { useAPIQuery } from 'shared/lib'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { IPasswordEntry } from '@apps/Passwords/interfaces/password_interfaces'
 
 interface IPasswordsData {
   passwordListQuery: UseQueryResult<IPasswordEntry[]>

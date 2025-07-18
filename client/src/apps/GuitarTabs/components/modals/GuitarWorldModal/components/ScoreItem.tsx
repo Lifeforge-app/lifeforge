@@ -6,12 +6,12 @@ import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from 'shared/lib'
+
 import {
   IGuitarTabsEntry,
   IGuitarTabsGuitarWorldScoreEntry
 } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function ScoreItem({
   entry,
@@ -55,17 +55,21 @@ function ScoreItem({
     setIsDownloading(true)
 
     try {
-      const taskId = await fetchAPI('guitar-tabs/guitar-world/download', {
-        method: 'POST',
-        body: {
-          cookie,
-          id: entry.id,
-          name: entry.name,
-          category: entry.category,
-          mainArtist: entry.mainArtist,
-          audioUrl: entry.audioUrl
+      const taskId = await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        'guitar-tabs/guitar-world/download',
+        {
+          method: 'POST',
+          body: {
+            cookie,
+            id: entry.id,
+            name: entry.name,
+            category: entry.category,
+            mainArtist: entry.mainArtist,
+            audioUrl: entry.audioUrl
+          }
         }
-      })
+      )
 
       socket.on('taskPoolUpdate', (data: ISocketEvent<IGuitarTabsEntry>) => {
         if (!data || data.taskId !== taskId) return

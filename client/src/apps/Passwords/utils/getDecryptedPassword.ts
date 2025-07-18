@@ -1,7 +1,7 @@
 import { parse as parseCookie } from 'cookie'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from 'shared/lib'
 
 import { decrypt, encrypt } from '../../../core/security/utils/encryption'
 
@@ -9,7 +9,10 @@ export async function getDecryptedPassword(
   masterPassword: string,
   id: string
 ): Promise<string> {
-  const challenge = await fetchAPI<string>('passwords/entries/challenge')
+  const challenge = await fetchAPI<string>(
+    import.meta.env.VITE_API_HOST,
+    'passwords/entries/challenge'
+  )
 
   const encryptedMaster = encrypt(masterPassword, challenge)
 

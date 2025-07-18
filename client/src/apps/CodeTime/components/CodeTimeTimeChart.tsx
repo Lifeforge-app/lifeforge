@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import {
   BarElement,
   CategoryScale,
@@ -19,7 +18,8 @@ import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import tinycolor from 'tinycolor2'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { usePersonalization } from 'shared/lib'
+import { useAPIQuery } from 'shared/lib'
 
 ChartJS.register(
   CategoryScale,

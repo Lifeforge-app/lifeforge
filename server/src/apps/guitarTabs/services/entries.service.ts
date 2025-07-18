@@ -3,7 +3,7 @@ import fs from "fs";
 import pdfPageCounter from "pdf-page-counter";
 import pdfThumbnail from "pdf-thumbnail";
 import PocketBase, { ListResult } from "pocketbase";
-import { GuitarTabsSchemas } from "shared";
+import { GuitarTabsCollectionsSchemas } from "shared/types/collections";
 import { Server } from "socket.io";
 
 import { WithPB } from "@typescript/pocketbase_interfaces";
@@ -18,23 +18,24 @@ let left = 0;
 
 export const getRandomEntry = async (
   pb: PocketBase,
-): Promise<WithPB<GuitarTabsSchemas.IEntry>> => {
+): Promise<WithPB<GuitarTabsCollectionsSchemas.IEntry>> => {
   const allScores = await pb
     .collection("guitar_tabs__entries")
-    .getFullList<WithPB<GuitarTabsSchemas.IEntry>>();
+    .getFullList<WithPB<GuitarTabsCollectionsSchemas.IEntry>>();
 
   return allScores[Math.floor(Math.random() * allScores.length)];
 };
 
 export const getSidebarData = async (
   pb: PocketBase,
-): Promise<GuitarTabsSchemas.IGuitarTabsSidebarData> => {
+): Promise<GuitarTabsCollectionsSchemas.IGuitarTabsSidebarData> => {
   const allScores = await pb
     .collection("guitar_tabs__entries")
-    .getFullList<WithPB<GuitarTabsSchemas.IEntry>>();
+    .getFullList<WithPB<GuitarTabsCollectionsSchemas.IEntry>>();
+
   const allAuthors = await pb
     .collection("guitar_tabs__authors_aggregated")
-    .getFullList<WithPB<GuitarTabsSchemas.IAuthorAggregated>>();
+    .getFullList<WithPB<GuitarTabsCollectionsSchemas.IAuthorAggregated>>();
 
   return {
     total: allScores.length,
@@ -48,7 +49,7 @@ export const getSidebarData = async (
     authors: Object.fromEntries(
       allAuthors.map((author) => [author.name, author.amount]),
     ),
-  } satisfies GuitarTabsSchemas.IGuitarTabsSidebarData;
+  } satisfies GuitarTabsCollectionsSchemas.IGuitarTabsSidebarData;
 };
 
 export const getEntries = (
@@ -68,10 +69,10 @@ export const getEntries = (
     starred: boolean;
     sort: "name" | "author" | "newest" | "oldest";
   },
-): Promise<ListResult<WithPB<GuitarTabsSchemas.IEntry>>> => {
+): Promise<ListResult<WithPB<GuitarTabsCollectionsSchemas.IEntry>>> => {
   return pb
     .collection("guitar_tabs__entries")
-    .getList<WithPB<GuitarTabsSchemas.IEntry>>(page, 20, {
+    .getList<WithPB<GuitarTabsCollectionsSchemas.IEntry>>(page, 20, {
       filter: `(name~"${query}" || author~"${query}") 
         ${category ? `&& type="${category === "uncategorized" ? "" : category}"` : ""} 
         ${author ? `&& ${author === "[na]" ? "author = ''" : `author~"${author}"`}` : ""} 
@@ -115,6 +116,7 @@ export const uploadFiles = async (
 
       for (const file of files) {
         const decodedName = decodeURIComponent(file.originalname);
+
         const extension = decodedName.split(".").pop();
 
         if (!extension || !["mscz", "mp3", "pdf"].includes(extension)) continue;
@@ -188,10 +190,15 @@ const processFiles = async (
   for (let groupIdx = 0; groupIdx < Object.keys(groups).length; groupIdx++) {
     try {
       const group = groups[Object.keys(groups)[groupIdx]];
+
       const file = group.pdf!;
+
       const decodedName = decodeURIComponent(file.originalname);
+
       const name = decodedName.split(".").slice(0, -1).join(".");
+
       const path = file.path;
+
       const buffer = fs.readFileSync(path);
 
       const thumbnail = await pdfThumbnail(buffer, {
@@ -235,7 +242,7 @@ const processFiles = async (
 
             await pb
               .collection("guitar_tabs__entries")
-              .create<WithPB<GuitarTabsSchemas.IEntry>>(
+              .create<WithPB<GuitarTabsCollectionsSchemas.IEntry>>(
                 {
                   name,
                   thumbnail: new File([thumbnailBuffer], `${decodedName}.jpeg`),
@@ -305,6 +312,7 @@ const processFiles = async (
       });
 
       const allFilesLeft = fs.readdirSync("medium");
+
       for (const file of allFilesLeft) {
         fs.unlinkSync(`medium/${file}`);
       }
@@ -321,11 +329,11 @@ export const updateEntry = (
     name,
     author,
     type,
-  }: Pick<GuitarTabsSchemas.IEntry, "name" | "author" | "type">,
-): Promise<WithPB<GuitarTabsSchemas.IEntry>> =>
+  }: Pick<GuitarTabsCollectionsSchemas.IEntry, "name" | "author" | "type">,
+): Promise<WithPB<GuitarTabsCollectionsSchemas.IEntry>> =>
   pb
     .collection("guitar_tabs__entries")
-    .update<WithPB<GuitarTabsSchemas.IEntry>>(id, {
+    .update<WithPB<GuitarTabsCollectionsSchemas.IEntry>>(id, {
       name,
       author,
       type,
@@ -338,14 +346,14 @@ export const deleteEntry = async (pb: PocketBase, id: string) => {
 export const toggleFavorite = async (
   pb: PocketBase,
   id: string,
-): Promise<WithPB<GuitarTabsSchemas.IEntry>> => {
+): Promise<WithPB<GuitarTabsCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection("guitar_tabs__entries")
-    .getOne<WithPB<GuitarTabsSchemas.IEntry>>(id);
+    .getOne<WithPB<GuitarTabsCollectionsSchemas.IEntry>>(id);
 
   return await pb
     .collection("guitar_tabs__entries")
-    .update<WithPB<GuitarTabsSchemas.IEntry>>(id, {
+    .update<WithPB<GuitarTabsCollectionsSchemas.IEntry>>(id, {
       isFavourite: !entry.isFavourite,
     });
 };
