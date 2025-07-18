@@ -34,7 +34,7 @@
     "postcss": "^8.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-i18next": "15.5.1",
+    "react-i18next": "^15.5.1",
     "tailwindcss": "^4.1.8",
     "tinycolor2": "^1.6.0"
   },
