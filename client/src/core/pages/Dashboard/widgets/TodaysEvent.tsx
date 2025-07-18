@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import {
@@ -14,6 +13,7 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 
+import { useSidebarState } from 'shared/lib'
 import { useAPIQuery } from 'shared/lib'
 
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'

@@ -19,7 +19,7 @@ function useFontFamily(fontFamily: string) {
     async function updateFontFamily() {
       try {
         const data = await fetchAPI<{ enabled: boolean; items: any[] }>(
-          import.meta.env.VITE_API_URL,
+          import.meta.env.VITE_API_HOST,
           `/user/personalization/font?family=${fontFamily.replace(/ /g, '+')}`
         )
 

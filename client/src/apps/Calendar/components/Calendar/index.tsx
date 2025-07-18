@@ -123,7 +123,7 @@ function CalendarComponent({
 
       try {
         await fetchAPI<ICalendarEvent>(
-          import.meta.env.VITE_API_URL,
+          import.meta.env.VITE_API_HOST,
           `calendar/events/${event.id}`,
           {
             method: 'PATCH',

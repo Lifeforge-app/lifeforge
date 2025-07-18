@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { DashboardLayoutType } from '@providers/PersonalizationProvider/interfaces/personalization_provider_interfaces'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { Switch } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { usePersonalization } from 'shared/lib'
 
 function ComponentListItem({
   id,
@@ -22,9 +24,9 @@ function ComponentListItem({
   const { t } = useTranslation('core.dashboard')
   const {
     dashboardLayout: enabledWidgets,
-    setDashboardLayout,
-    setDashboardLayoutWithoutPost: setEnabledWidgets
+    setDashboardLayout: setEnabledWidgets
   } = usePersonalization()
+  const { changeDashboardLayout: setDashboardLayout } = useUserPersonalization()
 
   const isEnabled = useMemo(() => {
     return Object.values(

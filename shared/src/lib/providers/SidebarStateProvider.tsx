@@ -46,10 +46,11 @@ export default function SidebarStateProvider({
 
 export function useSidebarState(): ISidebarState {
   const context = useContext(SidebarStateContext)
-  if (context === undefined) {
-    throw new Error(
-      'useSidebarState must be used within a SidebarStateProvider'
-    )
-  }
-  return context
+
+  return (
+    context || {
+      sidebarExpanded: true,
+      toggleSidebar: () => {}
+    }
+  )
 }

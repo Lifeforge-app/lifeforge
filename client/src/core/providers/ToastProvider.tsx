@@ -1,6 +1,6 @@
 import { ToastContainer } from 'react-toastify'
 
-import { usePersonalization } from './PersonalizationProvider'
+import { usePersonalization } from 'shared/lib'
 
 function ToastProvider({ children }: { children: React.ReactNode }) {
   const { theme } = usePersonalization()

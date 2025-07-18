@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@components/buttons'
 import { ModalHeader, useModalStore } from '@components/modals'
 
-import MorandiColorPaletteModal from './modals/MorandiColorPaletteModal'
+import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
 
 function checkContrast(hexColor: string): string {

@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ConfigColumn } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
 
 import FontFamilyList from './components/FontFamilyList'
@@ -44,7 +44,7 @@ function FontFamilySelector() {
   const { t } = useTranslation('core.personalization')
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
 
-  const { fontFamily, setFontFamily } = usePersonalization()
+  const { fontFamily } = usePersonalization()
   const [allFonts, setAllFonts] = useState<any[]>([])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function FontFamilySelector() {
       const fonts = await fetchAPI<{
         enabled: boolean
         items: any[]
-      }>('/user/personalization/fonts')
+      }>(import.meta.env.VITE_API_HOST, '/user/personalization/fonts')
       setEnabled(fonts.enabled)
 
       if (!fonts.enabled) {
@@ -88,7 +88,6 @@ function FontFamilySelector() {
         allFonts={allFonts}
         enabled={enabled}
         fontFamily={fontFamily}
-        setFontFamily={setFontFamily}
       />
     </ConfigColumn>
   )

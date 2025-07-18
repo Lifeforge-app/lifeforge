@@ -1,12 +1,15 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { ConfigColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from 'shared/lib'
+
 function ThemeSelector() {
-  const { theme, setTheme } = usePersonalization()
+  const { theme } = usePersonalization()
   const { t } = useTranslation('core.personalization')
+  const { changeTheme } = useUserPersonalization()
 
   return (
     <ConfigColumn
@@ -46,7 +49,7 @@ function ThemeSelector() {
               )}
               type="button"
               onClick={() => {
-                setTheme(id as 'system' | 'light' | 'dark')
+                changeTheme(id as 'system' | 'light' | 'dark')
               }}
             >
               <div className="relative rounded-lg p-2 lg:rounded-2xl">

@@ -26,7 +26,7 @@ function ContentContainer({
     setLoading(true)
     try {
       fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `books-library/entries/send-to-kindle/${bookId}`,
         {
           method: 'POST',
@@ -55,7 +55,7 @@ function ContentContainer({
 
   useEffect(() => {
     fetchAPI<boolean>(
-      import.meta.env.VITE_API_URL,
+      import.meta.env.VITE_API_HOST,
       'api-keys/entries/check?keys=smtp-user,smtp-pass'
     )
       .then(isEnabled => {

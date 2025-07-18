@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import useThemeColors from '@hooks/useThemeColor'
+import { usePersonalization } from 'shared/lib'
 
 import { generateClassName } from './buttonUtils'
 import ButtonIcon from './components/ButtonIcon'
@@ -45,11 +44,12 @@ function Button<C extends React.ElementType = 'button'>({
   onClick,
   ...props
 }: ButtonComponentProps<C>) {
-  const { theme } = useThemeColors()
+  const { derivedThemeColor } = usePersonalization()
+
   const Component = as || 'button'
   const finalProps = useMemo(() => ({ ...defaultProps, ...props }), [props])
   const finalClassName = generateClassName(
-    theme,
+    derivedThemeColor,
     Boolean(children),
     finalProps.iconAtEnd,
     finalProps.isRed,

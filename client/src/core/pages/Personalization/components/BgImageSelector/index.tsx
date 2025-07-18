@@ -1,4 +1,3 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import {
   Button,
   ConfigColumn,
@@ -12,6 +11,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { usePersonalization } from 'shared/lib'
 import { useAPIQuery } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
 
@@ -24,7 +24,8 @@ function BgImageSelector() {
     'pixabay',
     'key-exists'
   ])
-  const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
+  const { bgImage } = usePersonalization()
+  const { setBgImage, setBackdropFilters } = usePersonalization()
   const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
     'ai/image-generation/key-exists',
     ['ai', 'image-generation', 'key-exists']
@@ -56,7 +57,7 @@ function BgImageSelector() {
   async function onSubmit(url: string | File) {
     try {
       const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'user/personalization/bg-image',
         {
           method: 'PUT',

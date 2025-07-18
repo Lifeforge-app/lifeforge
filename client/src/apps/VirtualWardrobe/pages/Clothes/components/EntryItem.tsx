@@ -61,7 +61,7 @@ function EntryItem<T extends boolean = false>({
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `virtual-wardrobe/session/${entry.id}`,
         {
           method: 'POST'

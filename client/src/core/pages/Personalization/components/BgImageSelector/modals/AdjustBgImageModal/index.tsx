@@ -1,15 +1,18 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import { Button, ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { BG_BLURS } from '../../../../../../providers/PersonalizationProvider/constants/bg_blurs'
+import { usePersonalization } from 'shared/lib'
+
 import AdjustmentColumn from './components/AdjustmentColumn'
 import ResultShowcase from './components/ResultShowcase'
+import { BG_BLURS } from './constants/bg_blurs'
 
 function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.personalization')
-  const { setBackdropFilters, backdropFilters } = usePersonalization()
+  const { backdropFilters } = usePersonalization()
+  const { changeBackdropFilters } = useUserPersonalization()
   const [bgBlur, setBgBlur] = useState<keyof typeof BG_BLURS>(
     backdropFilters.blur
   )
@@ -66,7 +69,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
   ]
 
   function onSaveChanges() {
-    setBackdropFilters({
+    changeBackdropFilters({
       ...backdropFilters,
       blur: bgBlur,
       brightness: bgBrightness,

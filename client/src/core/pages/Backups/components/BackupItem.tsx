@@ -30,7 +30,7 @@ function BackupItem({
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
     const buffer = await fetchAPI<Buffer>(
-      import.meta.env.VITE_API_URL,
+      import.meta.env.VITE_API_HOST,
       `/backups/download/${backup.key}`
     )
 

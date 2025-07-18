@@ -1,7 +1,7 @@
-import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
 
 import { Button } from '@components/buttons'
+import FILE_ICONS from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/constants/file_icons'
 
 function PreviewContainer({
   preview,

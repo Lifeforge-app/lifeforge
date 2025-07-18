@@ -31,7 +31,7 @@ function EventDetailsHeader({
   const handleAddException = useCallback(async () => {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/calendar/events/exception/${event.id.split('-')[0]}`,
         {
           method: 'POST',

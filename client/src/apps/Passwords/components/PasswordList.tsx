@@ -26,7 +26,7 @@ function PasswordList() {
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `passwords/entries/pin/${id}`,
         {
           method: 'POST'

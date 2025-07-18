@@ -24,7 +24,7 @@ function SessionCartModal({
   async function handleRemoveFromCart(entryId: string) {
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `virtual-wardrobe/session/${entryId}`,
         {
           method: 'DELETE'

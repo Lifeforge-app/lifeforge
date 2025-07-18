@@ -1,9 +1,8 @@
+import { TextAreaInput } from '@components/inputs'
 import {
   IFieldProps,
   ITextAreaInputFieldProps
-} from '@interfaces/modal_interfaces'
-
-import { TextAreaInput } from '@components/inputs'
+} from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
 interface FormTextAreaInputProps<T> {
   field: IFieldProps<T> & ITextAreaInputFieldProps

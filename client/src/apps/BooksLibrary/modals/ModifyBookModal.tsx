@@ -154,7 +154,7 @@ function ModifyBookModal({
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `books-library/entries/${existedData?.id}`,
         {
           method: 'PATCH',

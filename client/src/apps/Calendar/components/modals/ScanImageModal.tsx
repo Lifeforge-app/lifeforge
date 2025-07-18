@@ -25,7 +25,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
     formData.append('file', file)
     try {
       const data = await fetchAPI<ICalendarEvent>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         'calendar/events/scan-image',
         {
           method: 'POST',

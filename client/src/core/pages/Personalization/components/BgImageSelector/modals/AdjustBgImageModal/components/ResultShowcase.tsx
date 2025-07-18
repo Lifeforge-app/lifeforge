@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 
-import { BG_BLURS } from '../../../../../../../providers/PersonalizationProvider/constants/bg_blurs'
+import { usePersonalization } from 'shared/lib'
+
+import { BG_BLURS } from '../constants/bg_blurs'
 
 function ResultShowcase({
   bgBrightness,

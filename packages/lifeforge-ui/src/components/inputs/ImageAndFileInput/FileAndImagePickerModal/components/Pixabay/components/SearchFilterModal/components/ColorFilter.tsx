@@ -1,12 +1,11 @@
 import {
-  IPixabaySearchFilter,
-  type PixabaySearchFilterAction
-} from '@interfaces/pixabay_interfaces'
-
-import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
+import {
+  IPixabaySearchFilter,
+  type PixabaySearchFilterAction
+} from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
 
 import { COLORS } from '../constants/filterOptions'
 

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 
-import { usePersonalization } from './PersonalizationProvider'
+import { usePersonalization } from 'shared/lib'
+
 import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
 
 function BackgroundProvider({ children }: { children: React.ReactNode }) {

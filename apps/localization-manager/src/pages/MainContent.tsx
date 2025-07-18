@@ -51,7 +51,7 @@ function MainContent(): React.ReactElement {
       )
 
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/locales/manager/sync/${namespace}/${subNamespace}`,
         {
           method: 'POST',
@@ -94,7 +94,7 @@ function MainContent(): React.ReactElement {
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/locales/manager/${namespace}/${subNamespace}`,
         {
           method: 'PATCH',
@@ -144,7 +144,7 @@ function MainContent(): React.ReactElement {
 
     try {
       await fetchAPI(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/locales/manager/${namespace}/${subNamespace}`,
         {
           method: 'DELETE',
@@ -190,7 +190,7 @@ function MainContent(): React.ReactElement {
 
     try {
       const data = await fetchAPI<Record<string, string>>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/locales/manager/suggestions/${namespace}/${subNamespace}`,
         {
           method: 'POST',
@@ -239,7 +239,7 @@ function MainContent(): React.ReactElement {
     setLocales('loading')
     try {
       const data = await fetchAPI<Record<string, any>>(
-        import.meta.env.VITE_API_URL,
+        import.meta.env.VITE_API_HOST,
         `/locales/manager/${namespace}/${subNamespace}`
       )
       setLocales(data)
