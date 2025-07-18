@@ -9,8 +9,8 @@ import {
   BooksLibraryCollectionsSchemas,
   ISchemaWithPB
 } from 'shared/types/collections'
+import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
-import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal({
@@ -25,30 +25,20 @@ function ModifyBookModal({
   const queryClient = useQueryClient()
   const { languagesQuery, collectionsQuery } = useBooksLibraryContext()
 
-  const [data, setData] = useState<IBooksLibraryFormSate>({
+  const [data, setData] = useState<
+    BooksLibraryControllersSchemas.IEntries['updateEntry']['body']
+  >({
     authors: '',
     collection: '',
     edition: '',
-    extension: '',
     isbn: '',
     languages: [],
-    md5: '',
     publisher: '',
-    size: '',
-    thumbnail: '',
     title: '',
-    year_published: ''
+    year_published: 0
   })
 
   const FIELDS: IFieldProps<typeof data>[] = [
-    {
-      id: 'md5',
-      label: 'MD5',
-      icon: 'tabler:id',
-      placeholder: 'MD5 Hash of the file',
-      type: 'text',
-      disabled: true
-    },
     {
       id: 'isbn',
       label: 'ISBN',
@@ -125,32 +115,12 @@ function ModifyBookModal({
               icon
             }))
           : []
-    },
-    {
-      id: 'extension',
-      label: 'Extension',
-      icon: 'tabler:file-text',
-      placeholder: 'Extension',
-      type: 'text',
-      disabled: true
-    },
-    {
-      id: 'size',
-      label: 'File Size',
-      icon: 'tabler:dimensions',
-      placeholder: 'Size',
-      type: 'text',
-      disabled: true
     }
   ]
 
   async function onSubmit() {
     if (data.title.trim() === '') {
       toast.error('Title cannot be empty')
-    }
-
-    if (data.year_published === '') {
-      setData({ ...data, year_published: '' })
     }
 
     try {
@@ -177,19 +147,12 @@ function ModifyBookModal({
         authors: existedData.authors,
         collection: existedData.collection,
         edition: existedData.edition,
-        extension: existedData.extension,
         isbn: existedData.isbn,
         languages: existedData.languages,
-        md5: existedData.md5,
         publisher: existedData.publisher,
-        size: existedData.size.toString(),
-        thumbnail: existedData.thumbnail,
         title: existedData.title,
-        year_published: existedData.year_published.toString()
+        year_published: existedData.year_published
       })
-      if (existedData.year_published === 0) {
-        setData({ ...data, year_published: '' })
-      }
     }
   }, [existedData])
 

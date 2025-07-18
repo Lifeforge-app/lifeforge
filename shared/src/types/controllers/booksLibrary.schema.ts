@@ -128,7 +128,6 @@ const Entries = {
       languages: true,
       isbn: true,
       publisher: true,
-      year_published: true,
     }).extend({
       year_published: z.string().transform((val) => {
         const year = parseInt(val, 10);
