@@ -31,14 +31,16 @@
     "dev:shared": "cd shared && bun run dev",
     "dev:ui": "cd packages/lifeforge-ui && bun run dev",
     "lint:client": "cd client && bun run lint",
-    "schema:generate": "cd server && bun run schema:generate",
     "start:server": "cd server && bun run start",
     "types": "bun run types:shared && bun run types:ui && bun run types:server && bun run types:client && bun run types:apps:localization-manager",
     "types:apps:localization-manager": "cd apps/localization-manager && bun run tsc --noEmit",
     "types:client": "cd client && bun run tsc --noEmit",
     "types:server": "cd server && bun run tsc --noEmit",
     "types:shared": "cd shared && bun run tsc --noEmit",
-    "types:ui": "cd packages/lifeforge-ui && bun run tsc --noEmit"
+    "types:ui": "cd packages/lifeforge-ui && bun run tsc --noEmit",
+    "schema:generate:collections": "bun run ./scripts/generateCollectionSchemas.ts",
+    "schema:generate:controllers": "bun run ./scripts/generateControllerSchemas.ts",
+    "schema:generate": "bun run schema:generate:collections && bun run schema:generate:controllers"
   },
   "keywords": [
     "bun",
@@ -49,6 +51,10 @@
     "lifeforge"
   ],
   "devDependencies": {
+    "@babel/generator": "^7.28.0",
+    "@babel/parser": "^7.28.0",
+    "@babel/traverse": "^7.28.0",
+    "@babel/types": "^7.28.1",
     "@eslint/js": "^9.26.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/crypto-js": "^4.2.2",
@@ -67,7 +73,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-sonarjs": "^3.0.2",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.12",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1"
