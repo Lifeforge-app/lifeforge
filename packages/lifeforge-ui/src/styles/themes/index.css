@@ -1,5 +1,6 @@
 @import './background.css';
 @import './foreground.css';
+@import './componentbg.css';
 
 @custom-variant dark (&:is(.dark *));
 

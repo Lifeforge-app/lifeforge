@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-
-import { fetchAPI, useAPIEndpoint } from "shared/lib";
+import { useAPIEndpoint } from "../../APIEndpointProvider";
+import fetchAPI from "../../../utils/fetchAPI";
 
 function useFontFamily(fontFamily: string) {
   const apiEndpoint = useAPIEndpoint();

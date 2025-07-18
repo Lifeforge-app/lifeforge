@@ -1,6 +1,7 @@
 export { default as useAPIQuery } from "./hooks/useAPIQuery";
 export { default as fetchAPI } from "./utils/fetchAPI";
 export { useAPIEndpoint } from "./providers/APIEndpointProvider";
+export { useAPIOnlineStatus } from "./providers/APIOnlineStatusProvider";
 export { usePersonalization } from "./providers/PersonalizationProvider";
 export { useSidebarState } from "./providers/SidebarStateProvider";
 
@@ -9,6 +10,7 @@ export { default as PersonalizationProvider } from "./providers/PersonalizationP
 export { default as BackgroundProvider } from "./providers/BackgroundProvider";
 export { default as APIOnlineStatusProvider } from "./providers/APIOnlineStatusProvider";
 export { default as SidebarStateProvider } from "./providers/SidebarStateProvider";
+export { default as ToastProvider } from "./providers/ToastProvider";
 
 export type {
   IDashboardLayout,
