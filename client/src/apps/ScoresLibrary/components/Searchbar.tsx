@@ -30,7 +30,7 @@ function Searchbar({
     try {
       const entry = await fetchAPI<IScoresLibraryEntry>(
         import.meta.env.VITE_API_HOST,
-        '/score-library/entries/random'
+        '/scores-library/entries/random'
       )
 
       const url = `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
