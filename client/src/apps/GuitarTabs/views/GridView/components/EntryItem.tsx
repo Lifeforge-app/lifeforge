@@ -6,14 +6,21 @@ import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import {
+  GuitarTabsCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 import ModifyEntryModal from '@apps/GuitarTabs/components/modals/ModifyEntryModal'
 
 import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
-import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
-function EntryItem({ entry }: { entry: IGuitarTabsEntry }) {
+function EntryItem({
+  entry
+}: {
+  entry: ISchemaWithPB<GuitarTabsCollectionsSchemas.IEntry>
+}) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)

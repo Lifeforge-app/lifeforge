@@ -10,7 +10,7 @@ import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const GuitarWorld = {
   /**
-   * @route       POST /
+   * @route       GET /
    * @description Get tabs list from Guitar World
    */
   getTabsList: {

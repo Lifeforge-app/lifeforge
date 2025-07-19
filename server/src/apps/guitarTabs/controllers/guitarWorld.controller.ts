@@ -11,7 +11,7 @@ import * as guitarWorldService from '../services/guitarWorld.service'
 const guitarTabsGuitarWorldRouter = express.Router()
 
 const getTabsList = forgeController
-  .route('POST /')
+  .route('GET /')
   .description('Get tabs list from Guitar World')
   .schema(GuitarTabsControllersSchemas.GuitarWorld.getTabsList)
   .callback(

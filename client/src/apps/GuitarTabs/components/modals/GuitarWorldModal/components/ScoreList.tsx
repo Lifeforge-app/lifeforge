@@ -1,6 +1,6 @@
 import { ErrorScreen, LoadingScreen, Pagination } from 'lifeforge-ui'
 
-import { IGuitarTabsGuitarWorldScores } from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
+import { GuitarTabsControllersSchemas } from 'shared/types/controllers'
 
 import ScoreItem from './ScoreItem'
 
@@ -10,7 +10,10 @@ function ScoreList({
   setPage,
   cookie
 }: {
-  data: IGuitarTabsGuitarWorldScores | 'loading' | 'error'
+  data:
+    | GuitarTabsControllersSchemas.IGuitarWorld['getTabsList']['response']
+    | 'loading'
+    | 'error'
   page: number
   setPage: (page: number) => void
   cookie: string
