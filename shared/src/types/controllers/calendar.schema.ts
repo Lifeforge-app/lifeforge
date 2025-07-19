@@ -127,7 +127,7 @@ const Events = {
           start: z.string(),
           end: z.string()
         })
-        .and(CalendarCollectionsSchemas.Event.omit({ type: true }))
+        .and(CalendarCollectionsSchemas.Event)
     )
   },
 
@@ -143,7 +143,7 @@ const Events = {
           start: z.string(),
           end: z.string()
         })
-        .and(CalendarCollectionsSchemas.Event.omit({ type: true }))
+        .and(CalendarCollectionsSchemas.Event)
     )
   },
 
