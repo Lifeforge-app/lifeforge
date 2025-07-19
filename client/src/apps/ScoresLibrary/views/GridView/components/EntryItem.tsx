@@ -29,13 +29,13 @@ function EntryItem({
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `score-library/entries/favourite/${entry.id}`,
+        `scores-library/entries/favourite/${entry.id}`,
         {
           method: 'POST'
         }
       )
 
-      queryClient.invalidateQueries({ queryKey: ['score-library'] })
+      queryClient.invalidateQueries({ queryKey: ['scores-library'] })
     } catch {
       toast.error('Failed to add to favourites')
     }
@@ -44,18 +44,18 @@ function EntryItem({
   const handleUpdateEntry = useCallback(() => {
     open(ModifyEntryModal, {
       existedData: entry,
-      queryKey: ['score-library']
+      queryKey: ['scores-library']
     })
   }, [entry])
 
   const handleDeleteEntry = useCallback(() => {
     open(DeleteConfirmationModal, {
-      apiEndpoint: 'score-library/entries',
+      apiEndpoint: 'scores-library/entries',
       confirmationText: 'Delete this guitar tab',
       data: entry,
       itemName: 'guitar tab',
       nameKey: 'name',
-      queryKey: ['score-library'],
+      queryKey: ['scores-library'],
       queryUpdateType: 'invalidate'
     })
   }, [entry])
