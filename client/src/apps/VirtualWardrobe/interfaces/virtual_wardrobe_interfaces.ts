@@ -33,7 +33,7 @@ interface IVirtualWardrobeFormState extends IFormState {
   brand: string
   size: string
   colors: string[]
-  price: string
+  price: number
   notes: string
 }
 

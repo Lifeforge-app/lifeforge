@@ -69,7 +69,7 @@ function CreateEntryModal({
           for (const lng in newData) {
             let targetObject = newData[lng]
 
-            const path = target[2].split('.')
+            const path = target[2].split('.').filter(Boolean)
 
             for (let i = 0; i < path.length; i++) {
               if (!targetObject[path[i]]) {

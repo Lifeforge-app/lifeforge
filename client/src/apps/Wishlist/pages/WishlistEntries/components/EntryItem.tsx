@@ -14,15 +14,18 @@ import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
+import {
+  ISchemaWithPB,
+  WishlistCollectionsSchemas
+} from 'shared/types/collections'
 
-import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
 
 function EntryItem({
   entry,
   queryKey
 }: {
-  entry: IWishlistEntry
+  entry: ISchemaWithPB<WishlistCollectionsSchemas.IEntry>
   queryKey: unknown[]
 }) {
   const open = useModalStore(state => state.open)
@@ -37,7 +40,9 @@ function EntryItem({
   const [bought, setBought] = useState(entry.bought)
 
   const toggleBought = () =>
-    queryClient.setQueryData<IWishlistEntry[]>(queryKey, prev => {
+    queryClient.setQueryData<
+      ISchemaWithPB<WishlistCollectionsSchemas.IEntry>[]
+    >(queryKey, prev => {
       if (!prev) return prev
 
       return prev.filter(e => e.id !== entry.id)
@@ -74,7 +79,7 @@ function EntryItem({
       apiEndpoint: 'wishlist/entries',
       data: entry,
       itemName: 'entry',
-      nameKey: 'name',
+      nameKey: 'name' as const,
       queryKey
     })
   }, [entry])

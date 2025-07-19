@@ -7,11 +7,11 @@ import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
-
 import {
-  type IWishlistEntry,
-  type IWishlistList
-} from '../../../interfaces/wishlist_interfaces'
+  ISchemaWithPB,
+  WishlistCollectionsSchemas
+} from 'shared/types/collections'
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
 function ModifyEntryModal({
   data: { type, existedData },
@@ -19,7 +19,9 @@ function ModifyEntryModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: Partial<IWishlistEntry> | null
+    existedData: Partial<
+      ISchemaWithPB<WishlistCollectionsSchemas.IEntry>
+    > | null
   }
   onClose: () => void
 }) {
@@ -27,21 +29,25 @@ function ModifyEntryModal({
 
   const { t } = useTranslation('apps.wishlist')
 
-  const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
-    'wishlist',
-    'lists'
-  ])
+  const listsQuery = useAPIQuery<
+    WishlistControllersSchemas.ILists['getAllLists']['response']
+  >('wishlist/lists', ['wishlist', 'lists'])
 
-  const collectionIdQuery = useAPIQuery<string>(
-    'wishlist/entries/collection-id',
-    ['wishlist', 'entries', 'collection-id']
-  )
-
-  const [data, setData] = useState({
+  const [data, setData] = useState<
+    Omit<
+      WishlistControllersSchemas.IEntries['createEntry']['body'],
+      'image'
+    > & {
+      image: {
+        image: string | File | null
+        preview: string | null
+      }
+    }
+  >({
     list: '',
     url: '',
     name: '',
-    price: '',
+    price: 0,
     image: {
       image: null as File | string | null,
       preview: null as string | null
@@ -84,8 +90,7 @@ function ModifyEntryModal({
       id: 'price',
       label: 'Product Price',
       icon: 'tabler:currency-dollar',
-      placeholder: '0.00',
-      type: 'text'
+      type: 'currency'
     },
     {
       id: 'image',
@@ -101,7 +106,7 @@ function ModifyEntryModal({
       list.trim().length === 0 ||
       url.trim().length === 0 ||
       name.trim().length === 0 ||
-      price.trim().length === 0
+      price <= 0
     ) {
       toast.error(t('input.error.fieldEmpty'))
 
@@ -113,7 +118,7 @@ function ModifyEntryModal({
     formData.append('list', list)
     formData.append('url', url)
     formData.append('name', name)
-    formData.append('price', price)
+    formData.append('price', price.toString())
     formData.append('file', image.image instanceof File ? image.image : '')
     formData.append(
       'image',
@@ -129,7 +134,7 @@ function ModifyEntryModal({
     )
 
     try {
-      await fetchAPI<IWishlistEntry>(
+      await fetchAPI(
         import.meta.env.VITE_API_HOST,
         'wishlist/entries' + (type === 'update' ? `/${existedData?.id}` : ''),
         {
@@ -181,7 +186,7 @@ function ModifyEntryModal({
 
       setData({
         ...newData,
-        price: existedData.price?.toString() ?? '',
+        price: existedData.price ?? 0,
         image: {
           image:
             existedData.image?.startsWith('https://') === true
@@ -193,7 +198,7 @@ function ModifyEntryModal({
             if (existedData.image?.startsWith('https://'))
               return existedData.image
 
-            return `${import.meta.env.VITE_API_HOST}/media/${collectionIdQuery.data}/${
+            return `${import.meta.env.VITE_API_HOST}/media/${existedData.collectionId}/${
               existedData.id
             }/${existedData.image}`
           })()
@@ -202,7 +207,7 @@ function ModifyEntryModal({
     } else {
       setData({
         ...newData,
-        price: ''
+        price: 0
       })
     }
   }, [type, existedData])

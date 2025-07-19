@@ -7,14 +7,18 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 
-import { IWishlistList } from '../../../interfaces/wishlist_interfaces'
+import {
+  ISchemaWithPB,
+  WishlistCollectionsSchemas
+} from 'shared/types/collections'
+
 import FromOtherAppsModal from '../modals/FromOtherAppsModal'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
 
 function Header({
   wishlistListDetails
 }: {
-  wishlistListDetails: IWishlistList
+  wishlistListDetails: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated>
 }) {
   const open = useModalStore(state => state.open)
 

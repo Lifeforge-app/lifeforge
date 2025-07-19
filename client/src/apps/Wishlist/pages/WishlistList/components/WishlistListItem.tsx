@@ -4,11 +4,18 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
-import { IWishlistList } from '@apps/Wishlist/interfaces/wishlist_interfaces'
+import {
+  ISchemaWithPB,
+  WishlistCollectionsSchemas
+} from 'shared/types/collections'
 
 import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
-function WishlistListItem({ list }: { list: IWishlistList }) {
+function WishlistListItem({
+  list
+}: {
+  list: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated>
+}) {
   const open = useModalStore(state => state.open)
 
   const handleUpdateList = useCallback(() => {
@@ -24,7 +31,7 @@ function WishlistListItem({ list }: { list: IWishlistList }) {
       confirmationText: 'Delete this wishlist',
       data: list,
       itemName: 'wishlist',
-      nameKey: 'name',
+      nameKey: 'name' as const,
       queryKey: ['wishlist', 'lists']
     })
   }, [list])

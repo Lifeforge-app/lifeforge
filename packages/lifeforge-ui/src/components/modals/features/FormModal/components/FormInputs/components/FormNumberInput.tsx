@@ -5,19 +5,19 @@ import {
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import { useState } from 'react'
 
-interface FormTextInputProps<T> {
+interface FormNumberInputProps<T> {
   field: IFieldProps<T> & INumberInputFieldProps
   selectedData: number
   namespace: string
   handleChange: (value: number) => void
 }
 
-function FormTextInput<T>({
+function FormNumberInput<T>({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormTextInputProps<T>) {
+}: FormNumberInputProps<T>) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     selectedData.toString()
   )
@@ -48,4 +48,4 @@ function FormTextInput<T>({
   )
 }
 
-export default FormTextInput
+export default FormNumberInput

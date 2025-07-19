@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +10,7 @@ import InputWrapper from './shared/InputWrapper'
 function CurrencyInputComponent({
   name,
   placeholder,
+  disabled = false,
   icon,
   value,
   setValue,
@@ -19,23 +21,28 @@ function CurrencyInputComponent({
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
+  disabled?: boolean
   placeholder: string
   icon: string
-  value: string | undefined
-  setValue: (value: string) => void
+  value: number
+  setValue: (number: number) => void
   darker?: boolean
   className?: string
   required?: boolean
   namespace: string
 }) {
+  const [innerValue, setInnerValue] = useState(
+    value.toString() === '0' ? '' : value.toString()
+  )
+
   const { t } = useTranslation(namespace)
 
   return (
-    <InputWrapper className={className} darker={darker}>
-      <InputIcon active={!!value} icon={icon} />
+    <InputWrapper className={className} darker={darker} disabled={disabled}>
+      <InputIcon active={!!innerValue} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
-          active={!!value}
+          active={!!innerValue}
           label={t(`inputs.${_.camelCase(name)}`)}
           required={required === true}
         />
@@ -44,8 +51,17 @@ function CurrencyInputComponent({
           decimalsLimit={2}
           name={name}
           placeholder={placeholder}
-          value={value}
-          onValueChange={value => setValue(value ?? '')}
+          value={innerValue}
+          onBlur={() => {
+            const numericValue = parseFloat(innerValue)
+
+            if (!isNaN(numericValue)) {
+              setValue(numericValue)
+            } else {
+              setValue(0)
+            }
+          }}
+          onValueChange={value => setInnerValue(value || '')}
         />
       </div>
     </InputWrapper>

@@ -110,7 +110,7 @@ const Lists = {
     params: z.object({
       id: z.string()
     }),
-    response: WishlistCollectionsSchemas.ListAggregated
+    response: SchemaWithPB(WishlistCollectionsSchemas.ListAggregated)
   },
 
   /**

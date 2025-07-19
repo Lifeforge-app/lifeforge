@@ -46,7 +46,7 @@ function ModifyTransactionsModal({
 
   const [transactionDate, setTransactionDate] = useState<Date | null>(null)
 
-  const [amount, setAmount] = useState<string>()
+  const [amount, setAmount] = useState<number>(0)
 
   const [location, setLocation] = useState<ILocationEntry | null>(null)
 
@@ -93,7 +93,7 @@ function ModifyTransactionsModal({
         setTransactionDate(
           existedData.date ? dayjs(existedData.date).toDate() : null
         )
-        setAmount(`${existedData.amount}`)
+        setAmount(existedData.amount ?? 0)
         setCategory(existedData.category || '')
         setLocation(
           existedData.location_name
@@ -138,7 +138,7 @@ function ModifyTransactionsModal({
         setParticular('')
         setTransactionType('income')
         setTransactionDate(dayjs().toDate())
-        setAmount(undefined)
+        setAmount(0)
         setLocation(null)
         setCategory(null)
         setTransactionAsset(null)
