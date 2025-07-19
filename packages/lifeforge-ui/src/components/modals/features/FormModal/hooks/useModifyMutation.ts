@@ -27,6 +27,10 @@ function useModifyMutation<T>(
         const formData = new FormData()
 
         Object.entries(data).forEach(([key, value]) => {
+          if (value instanceof Date) {
+            formData.append(key, value.toISOString())
+          }
+
           if (value instanceof File) {
             formData.append(key, value)
           } else if (
@@ -49,6 +53,11 @@ function useModifyMutation<T>(
 
       Object.keys(data).forEach(key => {
         const value = data[key as keyof typeof data]
+
+        if (value instanceof Date) {
+          // @ts-expect-error - ignore this for now lol
+          data[key as keyof typeof data] = value.toISOString()
+        }
 
         if (
           typeof value === 'object' &&

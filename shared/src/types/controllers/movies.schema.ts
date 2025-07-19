@@ -45,7 +45,7 @@ const Ticket = {
       theatre_seat: true,
       theatre_showtime: true
     }).extend({
-      theatre_location: LocationsCustomSchemas.Location
+      theatre_location: LocationsCustomSchemas.Location.optional()
     }),
     response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
   },

@@ -16,7 +16,7 @@ const Event = z.object({
   location_coords: z.object({ lat: z.number(), lon: z.number() }),
   reference_link: z.string(),
   description: z.string(),
-  type: z.enum(['single', 'recurring', ''])
+  type: z.enum(['single', 'recurring'])
 })
 
 const Category = z.object({

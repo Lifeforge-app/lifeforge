@@ -66,7 +66,7 @@ function TagsSelector() {
       debouncedSearchQuery.trim().length > 0 ? searchResults : entries
 
     target.forEach(entry => {
-      entry.tags?.forEach(tag => {
+      entry.tags?.forEach((tag: string) => {
         hashMap.set(tag, (hashMap.get(tag) ?? 0) + 1)
       })
     })

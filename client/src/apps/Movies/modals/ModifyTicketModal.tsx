@@ -28,20 +28,18 @@ function ModifyTicketModal({
   const queryClient = useQueryClient()
 
   const [formState, setFormState] = useState<
-    MoviesControllersSchemas.ITicket['updateTicket']['body']
+    Omit<
+      MoviesControllersSchemas.ITicket['updateTicket']['body'],
+      'theatre_showtime'
+    > & {
+      theatre_showtime: Date | undefined
+    }
   >({
     ticket_number: '',
-    theatre_location: {
-      name: '',
-      formattedAddress: '',
-      location: {
-        latitude: 0,
-        longitude: 0
-      }
-    },
+    theatre_location: undefined,
     theatre_number: '',
     theatre_seat: '',
-    theatre_showtime: ''
+    theatre_showtime: undefined
   })
 
   const modalRef = useRef<HTMLDivElement | null>(null)
@@ -116,17 +114,10 @@ function ModifyTicketModal({
       setFormState(prev => ({
         ...prev,
         ticket_number: '',
-        theatre_location: {
-          name: '',
-          formattedAddress: '',
-          location: {
-            latitude: 0,
-            longitude: 0
-          }
-        },
+        theatre_location: undefined,
         theatre_number: '',
         theatre_seat: '',
-        theatre_showtime: ''
+        theatre_showtime: undefined
       }))
 
       return
@@ -146,8 +137,8 @@ function ModifyTicketModal({
         theatre_number: existedData.theatre_number,
         theatre_seat: existedData.theatre_seat,
         theatre_showtime: existedData.theatre_showtime
-          ? dayjs(existedData.theatre_showtime).toISOString()
-          : ''
+          ? dayjs(existedData.theatre_showtime).toDate()
+          : undefined
       })
     }
   }, [type, existedData])
