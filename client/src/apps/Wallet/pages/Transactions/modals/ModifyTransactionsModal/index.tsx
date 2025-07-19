@@ -5,7 +5,6 @@ import {
   Button,
   CurrencyInput,
   DateInput,
-  ILocationEntry,
   ImageAndFileInput,
   LocationInput,
   ModalHeader,
@@ -16,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { LocationsCustomSchemas } from 'shared/types/collections'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
@@ -48,7 +48,8 @@ function ModifyTransactionsModal({
 
   const [amount, setAmount] = useState<number>(0)
 
-  const [location, setLocation] = useState<ILocationEntry | null>(null)
+  const [location, setLocation] =
+    useState<LocationsCustomSchemas.ILocation | null>(null)
 
   const [category, setCategory] = useState<string | null>(null)
 
@@ -98,10 +99,7 @@ function ModifyTransactionsModal({
         setLocation(
           existedData.location_name
             ? {
-                displayName: {
-                  text: existedData.location_name,
-                  languageCode: ''
-                },
+                name: existedData.location_name,
                 location: existedData.location_coords
                   ? {
                       latitude: existedData.location_coords.lat,
@@ -178,7 +176,7 @@ function ModifyTransactionsModal({
     data.append('date', dayjs(transactionDate).format('YYYY-MM-DD'))
     data.append('amount', parseFloat(`${amount}` || '0').toString())
     data.append('category', category ?? '')
-    data.append('location_name', location?.displayName.text ?? '')
+    data.append('location_name', location?.name ?? '')
     data.append('location_coords', JSON.stringify(location?.location))
     data.append('asset', transactionAsset ?? '')
     data.append('ledger', ledger ?? '')
