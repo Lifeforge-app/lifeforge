@@ -1,6 +1,10 @@
 import { EmptyStateScreen } from 'lifeforge-ui'
 
-import { IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
+import {
+  GuitarTabsCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+
 import GridView from './GridView'
 import ListView from './ListView'
 
@@ -10,7 +14,7 @@ function Views({
   debouncedSearchQuery,
   totalItems
 }: {
-  entries: IGuitarTabsEntry[]
+  entries: ISchemaWithPB<GuitarTabsCollectionsSchemas.IEntry>[]
   view: 'grid' | 'list'
   debouncedSearchQuery: string
   totalItems: number

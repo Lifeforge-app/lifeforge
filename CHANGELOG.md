@@ -5,8 +5,10 @@
 - **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
 - **Guitar Tabs**: Improved web scraping logic to handle more edge cases.
 - **Idea Box**: Fixed a bug where the idea entry is not properly updated in the frontend when the user performs an action.
+- **Books Library**: Fixed a bug where the book entry cannot be updated due to frontend and backend schema mismatches.
 - **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
 - **UI**: Fixed a bug where the toast progressbar color is not properly applied.
+- **UI**: Added a new `FormNumberInput` component to the `FormModal` for number input fields.
 - **Code**: Migrated the entire codebase to a monorepo structure using `bun` as the package manager.
 - **Code**: Typescript interfaces are now generated and put into the `shared` package, allowing the frontend and backend to share the same types.
 - **Code**: Shared CSS are now part of the `lifeforge-ui` package, allowing the main app and side apps to share the same styles.

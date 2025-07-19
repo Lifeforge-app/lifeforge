@@ -7,17 +7,13 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
-import {
-  IGuitarTabsEntry,
-  IGuitarTabsGuitarWorldScoreEntry
-} from '@apps/GuitarTabs/interfaces/guitar_tabs_interfaces'
+import { GuitarTabsCollectionsSchemas } from 'shared/types/collections'
 
 function ScoreItem({
   entry,
   cookie
 }: {
-  entry: IGuitarTabsGuitarWorldScoreEntry
+  entry: GuitarTabsCollectionsSchemas.IGuitarTabsGuitarWorldEntry
   cookie: string
 }) {
   const queryClient = useQueryClient()
@@ -78,23 +74,26 @@ function ScoreItem({
         }
       )
 
-      socket.on('taskPoolUpdate', (data: ISocketEvent<IGuitarTabsEntry>) => {
-        if (!data || data.taskId !== taskId) return
+      socket.on(
+        'taskPoolUpdate',
+        (data: ISocketEvent<GuitarTabsCollectionsSchemas.IEntry>) => {
+          if (!data || data.taskId !== taskId) return
 
-        if (data.status === 'failed') {
-          toast.error(`Failed to download score: ${data.error}`)
-          setIsDownloading(false)
+          if (data.status === 'failed') {
+            toast.error(`Failed to download score: ${data.error}`)
+            setIsDownloading(false)
+          }
+
+          if (data.status === 'completed') {
+            toast.success('Score downloaded successfully')
+            setIsDownloading(false)
+
+            queryClient.invalidateQueries({
+              queryKey: ['guitar-tabs', 'entries']
+            })
+          }
         }
-
-        if (data.status === 'completed') {
-          toast.success('Score downloaded successfully')
-          setIsDownloading(false)
-
-          queryClient.invalidateQueries({
-            queryKey: ['guitar-tabs', 'entries']
-          })
-        }
-      })
+      )
     } catch {
       toast.error('Failed to download score')
       setIsDownloading(false)

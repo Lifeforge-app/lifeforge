@@ -1,7 +1,15 @@
-import { type IGuitarTabsEntry } from '../../interfaces/guitar_tabs_interfaces'
+import {
+  GuitarTabsCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+
 import EntryItem from './components/EntryItem'
 
-function ListView({ entries }: { entries: IGuitarTabsEntry[] }) {
+function ListView({
+  entries
+}: {
+  entries: ISchemaWithPB<GuitarTabsCollectionsSchemas.IEntry>[]
+}) {
   return (
     <ul className="mb-6 space-y-4">
       {entries.map(entry => (
