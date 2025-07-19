@@ -129,7 +129,7 @@ const Lists = {
    * @description Get all wishlists with statistics
    */
   getAllLists: {
-    response: z.array(WishlistCollectionsSchemas.ListAggregated)
+    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.ListAggregated))
   },
 
   /**

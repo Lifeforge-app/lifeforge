@@ -8,6 +8,8 @@
  */
 import { z } from 'zod/v4'
 
+import { SchemaWithPB } from './schemaWithPB'
+
 const Entry = z.object({
   name: z.string(),
   type: z.string(),
@@ -50,7 +52,7 @@ export type { IEntry, IAuthorAggregated, IType, ITypeAggregated }
 const SidebarData = z.object({
   total: z.number(),
   favourites: z.number(),
-  types: z.record(z.string(), z.number()),
+  types: z.array(SchemaWithPB(TypeAggregated)),
   authors: z.record(z.string(), z.number())
 })
 

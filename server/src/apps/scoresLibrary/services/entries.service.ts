@@ -30,7 +30,13 @@ export const getSidebarData = async (
 ): Promise<ScoresLibraryCollectionsSchemas.ISidebarData> => {
   const allScores = await pb
     .collection('scores_library__entries')
-    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>()
+    .getList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(1, 1)
+
+  const favourites = await pb
+    .collection('scores_library__entries')
+    .getList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(1, 1, {
+      filter: 'isFavourite=true'
+    })
 
   const allAuthors = await pb
     .collection('scores_library__authors_aggregated')
@@ -41,13 +47,13 @@ export const getSidebarData = async (
     .getFullList<WithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>>()
 
   return {
-    total: allScores.length,
-    favourites: allScores.filter(entry => entry.isFavourite).length,
-    types: Object.fromEntries(allTypes.map(type => [type.name, type.amount])),
+    total: allScores.totalItems,
+    favourites: favourites.totalItems,
+    types: allTypes,
     authors: Object.fromEntries(
       allAuthors.map(author => [author.name, author.amount])
     )
-  } satisfies ScoresLibraryCollectionsSchemas.ISidebarData
+  }
 }
 
 export const getEntries = (
