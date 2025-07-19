@@ -1,4 +1,5 @@
-import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
+import { ISchemaWithPB } from 'shared/types/collections'
+import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import MovieItem from './MovieItem'
 
@@ -6,7 +7,7 @@ function MovieList({
   data,
   onToggleWatched
 }: {
-  data: IMovieEntry[]
+  data: ISchemaWithPB<MoviesControllersSchemas.IEntries>[]
   onToggleWatched: (id: string) => Promise<void>
 }) {
   return (

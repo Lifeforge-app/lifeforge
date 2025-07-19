@@ -1,4 +1,7 @@
-import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
+import {
+  ISchemaWithPB,
+  MoviesCollectionsSchemas
+} from 'shared/types/collections'
 
 import MovieItem from './MovieItem'
 
@@ -6,7 +9,7 @@ function MovieGrid({
   data,
   onToggleWatched
 }: {
-  data: IMovieEntry[]
+  data: ISchemaWithPB<MoviesCollectionsSchemas.IEntry>[]
   onToggleWatched: (id: string) => Promise<void>
 }) {
   return (
