@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
 
-import { PixabayCustomCollectionsSchemas } from '../collections'
+import { PixabayCustomSchemas } from '../collections'
 import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const Pixabay = {
@@ -73,7 +73,7 @@ const Pixabay = {
         .default('false')
         .transform(val => val === 'true')
     }),
-    response: PixabayCustomCollectionsSchemas.PixabaySearchResultSchema
+    response: PixabayCustomSchemas.PixabaySearchResultSchema
   }
 }
 

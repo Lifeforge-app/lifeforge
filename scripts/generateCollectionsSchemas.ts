@@ -219,12 +219,12 @@ import { z } from "zod/v4";
     : ''
 
   if (originalContent.includes(CUSTOM_SCHEMAS_DELIMITER)) {
-    const customCollectionsSchemas = originalContent
-      .split(CUSTOM_SCHEMAS_DELIMITER)
-      .pop()!
+    const CustomSchemas = originalContent.split(CUSTOM_SCHEMAS_DELIMITER).pop()!
 
-    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n${customCollectionsSchemas
-      .replace(/\/\/\s*$/, '')
+    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n${CustomSchemas.replace(
+      /\/\/\s*$/,
+      ''
+    )
       .replace(/^\n+/, '')
       .replace(/\n+$/, '')}\n`
   } else {
@@ -258,7 +258,7 @@ const indexString = `
 ${Object.keys(toBeWritten)
   .map(
     moduleName =>
-      `export * as ${_.upperFirst(_.camelCase(moduleName.replace(/(?:\.custom)?\.schema\.ts$/, moduleName.endsWith('.custom.schema.ts') ? 'Custom' : 'Collections')))}CollectionsSchemas from './${moduleName.replace(/\.ts$/, '')}';`
+      `export * as ${_.upperFirst(_.camelCase(moduleName.replace(/(?:\.custom)?\.schema\.ts$/, moduleName.endsWith('.custom.schema.ts') ? 'Custom' : 'Collections')))}Schemas from './${moduleName.replace(/\.ts$/, '')}';`
   )
   .join('\n')}
 
