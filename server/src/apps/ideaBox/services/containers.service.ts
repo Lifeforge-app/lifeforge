@@ -14,19 +14,13 @@ export const checkContainerExists = async (
 
 export const getContainers = async (
   pb: PocketBase
-): Promise<WithPB<IdeaBoxCollectionsSchemas.IContainer>[]> =>
+): Promise<WithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>[]> =>
   (
-    await pb.collection('idea_box__containers_aggregated').getFullList<
-      WithPB<
-        IdeaBoxCollectionsSchemas.IContainer & {
-          text_count: number
-          link_count: number
-          image_count: number
-        }
-      >
-    >({
-      sort: 'name'
-    })
+    await pb
+      .collection('idea_box__containers_aggregated')
+      .getFullList<WithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>>({
+        sort: 'name'
+      })
   ).map(container => ({
     ...container,
     cover: container.cover
