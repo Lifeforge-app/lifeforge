@@ -19,7 +19,11 @@ const getTypes = forgeController
   .callback(({ pb }) =>
     pb
       .collection('scores_library__types_aggregated')
-      .getFullList<ScoresLibraryCollectionsSchemas.ITypeAggregated>()
+      .getFullList<
+        ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>
+      >({
+        sort: 'name'
+      })
   )
 
 const createType = forgeController

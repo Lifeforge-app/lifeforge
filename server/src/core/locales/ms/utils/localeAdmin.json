@@ -11,8 +11,8 @@
     "languages": {
       "en": "Inggeris (en)",
       "ms": "Melayu (ms)",
-      "zh-cn": "Cina Ringkas (zh-CN)",
-      "zh-tw": "Cina Tradisional (zh-TW)"
+      "zhCn": "Cina Ringkas (zh-CN)",
+      "zhTw": "Cina Tradisional (zh-TW)"
     },
     "translationPlaceholder": "Terjemahkan untuk {{key}}",
     "parent": "Entiti Induk",

@@ -11,8 +11,8 @@
     "languages": {
       "en": "English (en)",
       "ms": "Malay (ms)",
-      "zh-cn": "Simplified Chinese (zh-CN)",
-      "zh-tw": "Traditional Chinese (zh-TW)"
+      "zhCn": "Simplified Chinese (zh-CN)",
+      "zhTw": "Traditional Chinese (zh-TW)"
     },
     "translationPlaceholder": "Translation for {{key}}",
     "parent": "Parent Entry",
