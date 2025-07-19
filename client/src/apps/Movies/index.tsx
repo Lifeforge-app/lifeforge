@@ -128,21 +128,6 @@ function Movies() {
       </div>
       <QueryWrapper query={entriesQuery}>
         {data => {
-          if (!data.entries.length) {
-            return (
-              <EmptyStateScreen
-                ctaContent={t('common.buttons:new', {
-                  item: t('apps.movies:items.movie')
-                })}
-                ctaIcon="tabler:plus"
-                icon="tabler:movie-off"
-                name="library"
-                namespace="apps.movies"
-                onCTAClick={handleOpenTMDBModal}
-              />
-            )
-          }
-
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
 
           return (
@@ -172,21 +157,35 @@ function Movies() {
                 ]}
                 onNavClick={setCurrentTab}
               />
-              <FinalComponent
-                data={data.entries.filter(entry => {
-                  const matchesSearch = entry.title
-                    .toLowerCase()
-                    .includes(debouncedSearchQuery.toLowerCase())
 
-                  const matchesTab =
-                    currentTab === 'unwatched'
-                      ? !entry.is_watched
-                      : entry.is_watched
+              {data.entries.length === 0 ? (
+                <EmptyStateScreen
+                  ctaContent={t('common.buttons:new', {
+                    item: t('apps.movies:items.movie')
+                  })}
+                  ctaIcon="tabler:plus"
+                  icon="tabler:movie-off"
+                  name="library"
+                  namespace="apps.movies"
+                  onCTAClick={handleOpenTMDBModal}
+                />
+              ) : (
+                <FinalComponent
+                  data={data.entries.filter(entry => {
+                    const matchesSearch = entry.title
+                      .toLowerCase()
+                      .includes(debouncedSearchQuery.toLowerCase())
 
-                  return matchesSearch && matchesTab
-                })}
-                onToggleWatched={async id => toggleWatched(id)}
-              />
+                    const matchesTab =
+                      currentTab === 'unwatched'
+                        ? !entry.is_watched
+                        : entry.is_watched
+
+                    return matchesSearch && matchesTab
+                  })}
+                  onToggleWatched={async id => toggleWatched(id)}
+                />
+              )}
             </>
           )
         }}
