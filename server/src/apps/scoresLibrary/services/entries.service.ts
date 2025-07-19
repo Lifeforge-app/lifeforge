@@ -3,7 +3,6 @@ import {
   globalTaskPool,
   updateTaskInPool
 } from '@middlewares/taskPoolMiddleware'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import fs from 'fs'
 // @ts-expect-error - No types available
 import pdfPageCounter from 'pdf-page-counter'
@@ -11,16 +10,17 @@ import pdfThumbnail from 'pdf-thumbnail'
 import PocketBase, { ListResult } from 'pocketbase'
 import { Server } from 'socket.io'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { ScoresLibraryCollectionsSchemas } from 'shared/types/collections'
 
 let left = 0
 
 export const getRandomEntry = async (
   pb: PocketBase
-): Promise<WithPB<ScoresLibraryCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>> => {
   const allScores = await pb
     .collection('scores_library__entries')
-    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>()
+    .getFullList<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>()
 
   return allScores[Math.floor(Math.random() * allScores.length)]
 }
@@ -30,21 +30,25 @@ export const getSidebarData = async (
 ): Promise<ScoresLibraryCollectionsSchemas.ISidebarData> => {
   const allScores = await pb
     .collection('scores_library__entries')
-    .getList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(1, 1)
+    .getList<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(1, 1)
 
   const favourites = await pb
     .collection('scores_library__entries')
-    .getList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(1, 1, {
+    .getList<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(1, 1, {
       filter: 'isFavourite=true'
     })
 
   const allAuthors = await pb
     .collection('scores_library__authors_aggregated')
-    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.IAuthorAggregated>>()
+    .getFullList<
+      ISchemaWithPB<ScoresLibraryCollectionsSchemas.IAuthorAggregated>
+    >()
 
   const allTypes = await pb
     .collection('scores_library__types_aggregated')
-    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>>({
+    .getFullList<
+      ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>
+    >({
       sort: 'name'
     })
 
@@ -75,10 +79,12 @@ export const getEntries = (
     starred: boolean
     sort: 'name' | 'author' | 'newest' | 'oldest'
   }
-): Promise<ListResult<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>> => {
+): Promise<
+  ListResult<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>
+> => {
   return pb
     .collection('scores_library__entries')
-    .getList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(page, 20, {
+    .getList<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(page, 20, {
       filter: `(name~"${query}" || author~"${query}") 
         ${category ? `&& type="${category === 'uncategorized' ? '' : category}"` : ''} 
         ${author ? `&& ${author === '[na]' ? "author = ''" : `author~"${author}"`}` : ''} 
@@ -246,7 +252,7 @@ const processFiles = async (
 
             await pb
               .collection('scores_library__entries')
-              .create<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(
+              .create<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(
                 {
                   name,
                   thumbnail: new File([thumbnailBuffer], `${decodedName}.jpeg`),
@@ -334,10 +340,10 @@ export const updateEntry = (
     author,
     type
   }: Pick<ScoresLibraryCollectionsSchemas.IEntry, 'name' | 'author' | 'type'>
-): Promise<WithPB<ScoresLibraryCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>> =>
   pb
     .collection('scores_library__entries')
-    .update<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(id, {
       name,
       author,
       type
@@ -350,14 +356,14 @@ export const deleteEntry = async (pb: PocketBase, id: string) => {
 export const toggleFavourite = async (
   pb: PocketBase,
   id: string
-): Promise<WithPB<ScoresLibraryCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection('scores_library__entries')
-    .getOne<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(id)
 
   return await pb
     .collection('scores_library__entries')
-    .update<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>(id, {
       isFavourite: !entry.isFavourite
     })
 }

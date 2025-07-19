@@ -1,6 +1,6 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { WishlistCollectionsSchemas } from 'shared/types/collections'
 
 import scrapeProviders from '../helpers/scrapers/index'
@@ -12,10 +12,10 @@ export const getEntriesByListId = (
   pb: PocketBase,
   listId: string,
   bought?: boolean
-): Promise<WithPB<WishlistCollectionsSchemas.IEntry>[]> =>
+): Promise<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>[]> =>
   pb
     .collection('wishlist__entries')
-    .getFullList<WithPB<WishlistCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>>({
       filter: `list = "${listId}" ${
         typeof bought !== 'undefined' ? `&& bought = ${bought}` : ''
       }`
@@ -46,10 +46,10 @@ export const createEntry = async (
   data: Omit<WishlistCollectionsSchemas.IEntry, 'image' | 'bought_at'> & {
     image?: File
   }
-): Promise<WithPB<WishlistCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection('wishlist__entries')
-    .create<WithPB<WishlistCollectionsSchemas.IEntry>>(data)
+    .create<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>>(data)
 
   return entry
 }
@@ -64,10 +64,10 @@ export const updateEntry = async (
     price: number
     image?: File | null
   }
-): Promise<WithPB<WishlistCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection('wishlist__entries')
-    .update<WithPB<WishlistCollectionsSchemas.IEntry>>(id, data)
+    .update<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>>(id, data)
 
   return entry
 }
@@ -75,23 +75,23 @@ export const updateEntry = async (
 export const getEntry = async (
   pb: PocketBase,
   id: string
-): Promise<WithPB<WishlistCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>> => {
   return await pb
     .collection('wishlist__entries')
-    .getOne<WithPB<WishlistCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>>(id)
 }
 
 export const updateEntryBoughtStatus = async (
   pb: PocketBase,
   id: string
-): Promise<WithPB<WishlistCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>> => {
   const oldEntry = await pb
     .collection('wishlist__entries')
-    .getOne<WithPB<WishlistCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>>(id)
 
   const entry = await pb
     .collection('wishlist__entries')
-    .update<WithPB<WishlistCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<WishlistCollectionsSchemas.IEntry>>(id, {
       bought: !oldEntry.bought,
       bought_at: oldEntry.bought ? null : new Date().toISOString()
     })

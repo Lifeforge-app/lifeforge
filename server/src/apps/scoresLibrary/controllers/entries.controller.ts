@@ -33,8 +33,8 @@ const getRandomEntry = forgeController
 const uploadFiles = forgeController
   .route('POST /upload')
   .description('Upload score files')
-  .middlewares(uploadMiddleware)
   .schema(ScoresLibraryControllersSchemas.Entries.uploadFiles)
+  .middlewares(uploadMiddleware)
   .statusCode(202)
   .callback(async ({ io, pb, req }) => {
     const files = req.files

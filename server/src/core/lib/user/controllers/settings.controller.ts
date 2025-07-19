@@ -14,8 +14,8 @@ const userSettingsRouter = express.Router()
 const updateAvatar = forgeController
   .route('PUT /avatar')
   .description('Update user avatar')
-  .middlewares(singleUploadMiddleware)
   .schema(UserControllersSchemas.Settings.updateAvatar)
+  .middlewares(singleUploadMiddleware)
   .callback(async ({ req: { file }, pb }) =>
     SettingsService.updateAvatar(pb, file)
   )
