@@ -55,6 +55,7 @@ export const getPath = async (
       folderEntry.container !== container
     ) {
       clientError(res, 'Invalid path')
+
       return null
     }
 
@@ -142,6 +143,7 @@ export const getOgData = async (
     }
   }).catch(() => {
     console.error('Error fetching Open Graph data:', data.content)
+
     return { result: null }
   })
 
@@ -161,9 +163,6 @@ async function recursivelySearchFolder(
 ): Promise<
   (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
     folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
-    expand?: {
-      folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
-    }
     fullPath: string
   })[]
 > {
@@ -213,6 +212,13 @@ async function recursivelySearchFolder(
     allResults.push(...results)
   }
 
+  for (const result of allResults) {
+    if (result.expand?.folder) {
+      result.folder = result.expand.folder
+      delete result.expand
+    }
+  }
+
   return allResults
 }
 
@@ -227,9 +233,6 @@ export const search = async (
 ): Promise<
   | (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
       folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
-      expand?: {
-        folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
-      }
       fullPath: string
     })[]
   | null
@@ -255,13 +258,6 @@ export const search = async (
     '',
     pb
   )
-
-  for (const result of results) {
-    if (result.expand?.folder) {
-      result.folder = result.expand.folder
-      delete result.expand
-    }
-  }
 
   return results
 }

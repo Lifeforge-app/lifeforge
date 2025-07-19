@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
 import TypeSelector from './components/TypeSelector'
 
@@ -13,9 +13,9 @@ function ModalHeader({
   onClose
 }: {
   innerOpenType: 'create' | 'update' | 'paste' | null
-  innerTypeOfModifyIdea: IIdeaBoxEntry['type']
+  innerTypeOfModifyIdea: IdeaBoxCollectionsSchemas.IEntry['type']
   setInnerTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<IIdeaBoxEntry['type']>
+    React.SetStateAction<IdeaBoxCollectionsSchemas.IEntry['type']>
   >
   onClose: () => void
 }) {

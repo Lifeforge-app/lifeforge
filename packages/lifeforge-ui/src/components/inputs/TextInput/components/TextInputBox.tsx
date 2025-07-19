@@ -2,7 +2,7 @@
 import clsx from 'clsx'
 import { useCallback, useRef } from 'react'
 
-function Text({
+function TextInputBox({
   value,
   setValue,
   isPassword = false,
@@ -39,7 +39,7 @@ function Text({
   noAutoComplete?: boolean
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   className?: string
-  onBlur?: () => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }) {
   const innerRef = useRef<HTMLInputElement | null>(null)
 
@@ -71,7 +71,7 @@ function Text({
         type={isPassword && showPassword !== true ? 'password' : 'text'}
         value={value}
         onBlur={e => {
-          onBlur()
+          onBlur(e)
           setValue(e.target.value.trim())
         }}
         onChange={e => {
@@ -83,4 +83,4 @@ function Text({
   )
 }
 
-export default Text
+export default TextInputBox

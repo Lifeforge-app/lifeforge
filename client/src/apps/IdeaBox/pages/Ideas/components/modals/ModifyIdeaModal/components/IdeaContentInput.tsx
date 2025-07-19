@@ -6,45 +6,45 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IIdeaBoxEntry } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
 function IdeaContentInput({
-  ideaContent,
-  ideaImage,
-  ideaLink,
-  ideaTitle,
-  imageLink,
+  formState,
+  setFormState,
   innerOpenType,
   innerTypeOfModifyIdea,
   getInputProps,
   getRootProps,
   isDragActive,
   preview,
-  setIdeaImage,
-  setImageLink,
-  setIdeaContent,
-  setIdeaLink,
   setPreview,
-  setIdeaTitle,
   debouncedImageLink
 }: {
-  ideaContent: string
-  ideaImage: File | null
-  ideaLink: string
-  ideaTitle: string
-  imageLink: string
+  formState: {
+    content: string
+    image: File | string | null
+    link: string
+    title: string
+    imageLink: string
+    tags: string[]
+  }
   innerOpenType: 'create' | 'update' | 'paste' | null
-  innerTypeOfModifyIdea: IIdeaBoxEntry['type']
+  innerTypeOfModifyIdea: IdeaBoxCollectionsSchemas.IEntry['type']
   getInputProps: () => Record<string, unknown>
   getRootProps: () => Record<string, unknown>
   isDragActive: boolean
   preview: string | ArrayBuffer | null
-  setIdeaContent: React.Dispatch<React.SetStateAction<string>>
-  setIdeaImage: React.Dispatch<React.SetStateAction<File | null>>
-  setIdeaLink: React.Dispatch<React.SetStateAction<string>>
-  setImageLink: React.Dispatch<React.SetStateAction<string>>
-  setPreview: React.Dispatch<React.SetStateAction<string | null | ArrayBuffer>>
-  setIdeaTitle: React.Dispatch<React.SetStateAction<string>>
+  setPreview: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
+  setFormState: React.Dispatch<
+    React.SetStateAction<{
+      content: string
+      image: File | string | null
+      link: string
+      title: string
+      imageLink: string
+      tags: string[]
+    }>
+  >
   debouncedImageLink: string
 }) {
   const { t } = useTranslation('common.modals')
@@ -58,8 +58,8 @@ function IdeaContentInput({
         name="Idea Content"
         namespace="apps.ideaBox"
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
-        setValue={setIdeaContent}
-        value={ideaContent}
+        setValue={value => setFormState(prev => ({ ...prev, content: value }))}
+        value={formState.content}
       />
     )
   }
@@ -73,8 +73,8 @@ function IdeaContentInput({
           name="Idea title"
           namespace="apps.ideaBox"
           placeholder="Mind blowing idea"
-          setValue={setIdeaTitle}
-          value={ideaTitle}
+          setValue={value => setFormState(prev => ({ ...prev, title: value }))}
+          value={formState.title}
         />
         <TextInput
           darker
@@ -83,8 +83,8 @@ function IdeaContentInput({
           name="Idea link"
           namespace="apps.ideaBox"
           placeholder="https://example.com"
-          setValue={setIdeaLink}
-          value={ideaLink}
+          setValue={value => setFormState(prev => ({ ...prev, link: value }))}
+          value={formState.link}
         />
       </>
     )
@@ -96,13 +96,16 @@ function IdeaContentInput({
         {preview ? (
           <>
             <PreviewContainer
-              file={ideaImage}
+              file={formState.image}
               fileName={debouncedImageLink.split('/').pop() ?? undefined}
               preview={preview as string}
-              setFile={setIdeaImage}
-              setPreview={setPreview}
+              setFile={value =>
+                setFormState(prev => ({ ...prev, image: value }))
+              }
+              setPreview={value => setPreview(value)}
               onRemove={() => {
-                setImageLink('')
+                setFormState(prev => ({ ...prev, image: null }))
+                setPreview(null)
               }}
             />
           </>
@@ -111,11 +114,7 @@ function IdeaContentInput({
             getInputProps={getInputProps}
             getRootProps={getRootProps}
             isDragActive={isDragActive}
-            setFile={
-              setIdeaImage as React.Dispatch<
-                React.SetStateAction<File | string | null>
-              >
-            }
+            setFile={file => setFormState(prev => ({ ...prev, image: file }))}
             setPreview={
               setPreview as React.Dispatch<
                 React.SetStateAction<string | ArrayBuffer | null>
@@ -123,7 +122,7 @@ function IdeaContentInput({
             }
           />
         )}
-        {ideaImage === null && (
+        {formState.image === null && (
           <>
             <div className="text-bg-500 mt-6 text-center font-medium tracking-widest uppercase">
               {t('imagePicker.orPasteLink')}
@@ -134,8 +133,10 @@ function IdeaContentInput({
               name="Image link"
               namespace="apps.ideaBox"
               placeholder="https://example.com/image.jpg"
-              setValue={setImageLink}
-              value={imageLink}
+              setValue={value =>
+                setFormState(prev => ({ ...prev, imageLink: value }))
+              }
+              value={formState.imageLink}
             />
           </>
         )}

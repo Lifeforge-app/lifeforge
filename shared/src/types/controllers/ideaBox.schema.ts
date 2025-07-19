@@ -128,7 +128,10 @@ const Misc = {
       container: z.string(),
       '0': z.string()
     }),
-    response: z.any()
+    response: z.object({
+      container: SchemaWithPB(IdeaBoxCollectionsSchemas.Container),
+      path: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Folder))
+    })
   },
 
   /**
@@ -165,7 +168,16 @@ const Misc = {
       tags: z.string().optional(),
       folder: z.string().optional()
     }),
-    response: z.any()
+    response: z.array(
+      SchemaWithPB(
+        IdeaBoxCollectionsSchemas.Entry.omit({
+          folder: true
+        }).extend({
+          folder: SchemaWithPB(IdeaBoxCollectionsSchemas.Folder),
+          fullPath: z.string()
+        })
+      )
+    )
   }
 }
 
@@ -186,7 +198,9 @@ const Containers = {
    * @description Get all containers
    */
   getContainers: {
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Container))
+    response: z.array(
+      SchemaWithPB(IdeaBoxCollectionsSchemas.ContainerAggregated)
+    )
   },
 
   /**
@@ -194,7 +208,11 @@ const Containers = {
    * @description Create a new container
    */
   createContainer: {
-    body: IdeaBoxCollectionsSchemas.Container,
+    body: IdeaBoxCollectionsSchemas.Container.omit({
+      cover: true
+    }).extend({
+      cover: z.union([z.string(), z.file()])
+    }),
     response: SchemaWithPB(IdeaBoxCollectionsSchemas.Container)
   },
 
@@ -245,10 +263,12 @@ const Folders = {
    * @description Create a new folder
    */
   createFolder: {
+    query: z.object({
+      container: z.string(),
+      parent: z.string().optional()
+    }),
     body: z.object({
       name: z.string(),
-      container: z.string(),
-      parent: z.string(),
       icon: z.string(),
       color: z.string()
     }),
@@ -317,7 +337,7 @@ const Tags = {
     params: z.object({
       container: z.string()
     }),
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.Tag))
+    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.TagAggregated))
   },
 
   /**
@@ -325,7 +345,9 @@ const Tags = {
    * @description Create a new tag
    */
   createTag: {
-    body: IdeaBoxCollectionsSchemas.Tag,
+    body: IdeaBoxCollectionsSchemas.Tag.omit({
+      container: true
+    }),
     params: z.object({
       container: z.string()
     }),
@@ -337,7 +359,9 @@ const Tags = {
    * @description Update a tag
    */
   updateTag: {
-    body: IdeaBoxCollectionsSchemas.Tag,
+    body: IdeaBoxCollectionsSchemas.Tag.omit({
+      container: true
+    }),
     params: z.object({
       id: z.string()
     }),

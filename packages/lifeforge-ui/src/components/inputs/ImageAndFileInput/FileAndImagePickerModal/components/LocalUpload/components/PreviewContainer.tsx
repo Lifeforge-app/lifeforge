@@ -1,6 +1,7 @@
 import { Button } from '@components/buttons'
 import FILE_ICONS from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/constants/file_icons'
 import { Icon } from '@iconify/react'
+import { useMemo } from 'react'
 
 function PreviewContainer({
   preview,
@@ -12,11 +13,19 @@ function PreviewContainer({
 }: {
   preview: string | null
   setPreview: (preview: string | null) => void
-  file: File | null
+  file: File | string | null
   setFile: (file: File | null) => void
   fileName?: string
   onRemove?: () => void
 }) {
+  const finalFileName = useMemo(() => {
+    if (fileName) return fileName
+    if (typeof file === 'string') return file.split('/').pop()
+    if (file instanceof File) return file.name
+
+    return undefined
+  }, [file, fileName])
+
   return (
     <div className="flex-center flex-1">
       {preview !== null && (
@@ -27,15 +36,11 @@ function PreviewContainer({
                 className="text-bg-500 size-6 shrink-0"
                 icon={
                   FILE_ICONS[
-                    (
-                      fileName?.split('.').pop() ||
-                      file?.name.split('.').pop() ||
-                      ''
-                    ).toLowerCase() as keyof typeof FILE_ICONS
+                    finalFileName?.split('.').pop() as keyof typeof FILE_ICONS
                   ] || 'tabler:file'
                 }
               />
-              <p className="w-full truncate">{fileName ?? file?.name}</p>
+              <p className="w-full truncate">{finalFileName}</p>
             </div>
             <Button
               icon="tabler:x"
@@ -61,11 +66,11 @@ function PreviewContainer({
               className="text-bg-500 size-6"
               icon={
                 FILE_ICONS[
-                  (file.name.split('.').pop() || '') as keyof typeof FILE_ICONS
+                  finalFileName?.split('.').pop() as keyof typeof FILE_ICONS
                 ] || 'tabler:file'
               }
             />
-            <p className="w-full truncate">{file.name}</p>
+            <p className="w-full truncate">{finalFileName}</p>
           </div>
           <Button
             className="p-2!"

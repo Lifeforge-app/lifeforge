@@ -8,6 +8,7 @@ import { Tooltip } from 'react-tooltip'
 
 import { usePersonalization } from 'shared/lib'
 import { useAPIQuery } from 'shared/lib'
+import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 function CodeTimeActivityCalendar() {
   const { t } = useTranslation('apps.codeTime')
@@ -16,20 +17,14 @@ function CodeTimeActivityCalendar() {
 
   const [year, setYear] = useState(new Date().getFullYear())
 
-  const dataQuery = useAPIQuery<{
-    data: Array<{
-      date: string
-      count: number
-      level: 0 | 1 | 2 | 3 | 4
-    }>
-    firstYear: number
-  }>(`code-time/activities?year=${year}`, ['code-time', 'activities', year])
+  const dataQuery = useAPIQuery<
+    CodeTimeControllersSchemas.ICodeTime['getActivities']['response']
+  >(`code-time/activities?year=${year}`, ['code-time', 'activities', year])
 
-  const [activities, setActivities] = useState<Array<{
-    date: string
-    count: number
-    level: 0 | 1 | 2 | 3 | 4
-  }> | null>(null)
+  const [activities, setActivities] = useState<
+    | CodeTimeControllersSchemas.ICodeTime['getActivities']['response']['data']
+    | null
+  >(null)
 
   const [firstYear, setFirstYear] = useState<number>()
 

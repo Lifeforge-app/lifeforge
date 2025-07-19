@@ -15,11 +15,11 @@ export default function CodeTime() {
         {['projects', 'languages'].map(type => (
           <>
             <CodeTimeTimeChart
-              key={type}
+              key={`${type}-time-chart`}
               type={type as 'projects' | 'languages'}
             />
             <CodeTimeTopEntries
-              key={type}
+              key={`${type}-top-entries`}
               type={type as 'projects' | 'languages'}
             />
           </>

@@ -3,7 +3,11 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
 
-import { IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
+import {
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
+
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 
 function FolderContextMenu({
@@ -11,7 +15,7 @@ function FolderContextMenu({
   // isOver,
   removeFromFolder
 }: {
-  folder: IIdeaBoxFolder
+  folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
   isOver: boolean
   removeFromFolder: () => Promise<void>
 }) {

@@ -4,11 +4,18 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
-import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+import {
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
 
 import ModifyContainerModal from '../../ModifyContainerModal'
 
-function ContainerItem({ container }: { container: IIdeaBoxContainer }) {
+function ContainerItem({
+  container
+}: {
+  container: ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>
+}) {
   const open = useModalStore(state => state.open)
 
   const handleUpdateContainer = useCallback(() => {

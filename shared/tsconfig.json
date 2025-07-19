@@ -2,7 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     // Environment setup
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "target": "ESNext",
     "module": "ESNext",
     // Output configuration
@@ -19,7 +21,9 @@
   },
   "include": [
     "src",
-    "../packages/lifeforge-ui/src/components/screens/APIOnlineStatusScreen.tsx"
   ],
-  "exclude": ["dist", "node_modules"]
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

@@ -99,7 +99,7 @@ function ModifyBookModal({
       label: 'Publication Year',
       icon: 'tabler:calendar',
       placeholder: '20xx',
-      type: 'text'
+      type: 'number'
     },
     {
       id: 'languages',

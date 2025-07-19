@@ -2,11 +2,11 @@ import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
-
 import {
-  IIdeaBoxContainer,
-  IIdeaBoxContainerFormState
-} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 function ModifyContainerModal({
   data: { type, existedData },
@@ -14,7 +14,7 @@ function ModifyContainerModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: IIdeaBoxContainer | null
+    existedData: ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainer> | null
   }
   onClose: () => void
 }) {
@@ -23,7 +23,17 @@ function ModifyContainerModal({
     ['ai', 'image-generation', 'key-exists']
   )
 
-  const [formState, setFormState] = useState<IIdeaBoxContainerFormState>({
+  const [formState, setFormState] = useState<
+    Omit<
+      IdeaBoxControllersSchemas.IContainers['createContainer']['body'],
+      'cover'
+    > & {
+      cover: {
+        image: string | File | null
+        preview: string | null
+      }
+    }
+  >({
     name: '',
     icon: '',
     color: '',

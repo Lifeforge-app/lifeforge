@@ -22,11 +22,11 @@ const Language = z.object({
 
 const DailyEntry = z.object({
   date: z.string(),
-  relative_files: z.any(),
-  projects: z.any(),
+  relative_files: z.record(z.string(), z.number()),
+  projects: z.record(z.string(), z.number()),
   total_minutes: z.number(),
   last_timestamp: z.number(),
-  languages: z.any()
+  languages: z.record(z.string(), z.number())
 })
 
 type IProject = z.infer<typeof Project>

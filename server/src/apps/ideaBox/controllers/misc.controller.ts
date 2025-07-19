@@ -26,6 +26,7 @@ const getPath = forgeController
     if (!result) {
       throw new Error('Something went wrong while fetching the path')
     }
+
     return result
   })
 
@@ -62,18 +63,19 @@ const search = forgeController
   .existenceCheck('query', {
     container: '[idea_box_containers]'
   })
-  .callback(
-    async ({ pb, query: { q, container, tags, folder }, req, res }) =>
-      await miscService.search(
-        pb,
-        q,
-        container || '',
-        tags || '',
-        folder || '',
-        req,
-        res
-      )
-  )
+  .callback(async ({ pb, query: { q, container, tags, folder }, req, res }) => {
+    const results = await miscService.search(
+      pb,
+      q,
+      container || '',
+      tags || '',
+      folder || '',
+      req,
+      res
+    )
+
+    return results || []
+  })
 
 bulkRegisterControllers(ideaBoxMiscRouter, [
   getPath,
