@@ -5,10 +5,12 @@ import { CalendarCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllCategories = (
   pb: PocketBase
-): Promise<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>[]> =>
+): Promise<ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>[]> =>
   pb
     .collection('calendar__categories_aggregated')
-    .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>>({
+    .getFullList<
+      ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+    >({
       sort: '+name'
     })
 
@@ -54,7 +56,7 @@ export const deleteCategory = async (pb: PocketBase, id: string) => {
 export const getCategoryById = (
   pb: PocketBase,
   id: string
-): Promise<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>> =>
+): Promise<ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>> =>
   pb
-    .collection('calendar__categories')
-    .getOne<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>>(id)
+    .collection('calendar__categories_aggregated')
+    .getOne<ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>>(id)
