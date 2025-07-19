@@ -208,7 +208,16 @@ const Events = {
    * @description Scan an image to extract event data
    */
   scanImage: {
-    response: CalendarCollectionsSchemas.Event.partial()
+    response: CalendarCollectionsSchemas.Event.pick({
+      category: true,
+      location: true,
+      location_coords: true,
+      title: true,
+      description: true
+    }).extend({
+      start: z.string(),
+      end: z.string()
+    })
   },
 
   /**

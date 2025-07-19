@@ -3,6 +3,7 @@ import {
   bulkRegisterControllers,
   forgeController
 } from '@functions/forgeController'
+import { getAPIKey } from '@functions/getAPIKey'
 import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
 import express from 'express'
 
@@ -43,6 +44,10 @@ const createEvent = forgeController
   .description('Create a new event')
   .schema(CalendarControllersSchemas.Events.createEvent)
   .statusCode(201)
+  .existenceCheck('body', {
+    calendar: '[calendar__calendars]',
+    category: 'calendar__categories'
+  })
   .callback(async ({ pb, body }) => {
     return await EventsService.createEvent(
       pb,
@@ -62,7 +67,9 @@ const scanImage = forgeController
       throw new ClientError('No file uploaded')
     }
 
-    const eventData = await EventsService.scanImage(pb, file.path)
+    const gcloudKey = await getAPIKey('gcloud', pb)
+
+    const eventData = await EventsService.scanImage(pb, file.path, gcloudKey)
 
     if (!eventData) {
       throw new Error('Failed to scan image')
@@ -89,6 +96,10 @@ const updateEvent = forgeController
   .schema(CalendarControllersSchemas.Events.updateEvent)
   .existenceCheck('params', {
     id: 'calendar__events'
+  })
+  .existenceCheck('body', {
+    calendar: '[calendar__calendars]',
+    category: 'calendar__categories'
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
