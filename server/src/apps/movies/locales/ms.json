@@ -51,5 +51,8 @@
   "tabs": {
     "watched": "Ditonton",
     "unwatched": "Belum ditonton"
+  },
+  "misc": {
+    "watched": "Ditonton pada {{date}}"
   }
 }
