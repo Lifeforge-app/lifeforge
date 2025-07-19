@@ -24,7 +24,7 @@ export const getEventsByDateRange = async (
 
   const end = moment(endDate).endOf('day').toISOString()
 
-  const allEvents: (Omit<CalendarCollectionsSchemas.IEvent, 'type'> & {
+  const allEvents: (CalendarCollectionsSchemas.IEvent & {
     id: string
     start: string
     end: string
@@ -48,6 +48,7 @@ export const getEventsByDateRange = async (
 
     allEvents.push({
       id: event.id,
+      type: 'single',
       start: event.start,
       end: event.end,
       title: baseEvent.title,
@@ -68,7 +69,9 @@ export const getEventsByDateRange = async (
           base_event: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
         }
       }
-    >()
+    >({
+      expand: 'base_event'
+    })
 
   for (const event of recurringCalendarEvents) {
     const baseEvent = event.expand.base_event
@@ -104,6 +107,7 @@ export const getEventsByDateRange = async (
 
       allEvents.push({
         id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
+        type: 'recurring',
         start,
         end,
         title: baseEvent.title,
@@ -127,6 +131,7 @@ export const getEventsByDateRange = async (
   ).map(entry => {
     return {
       id: entry.id,
+      type: 'single',
       title: entry.summary,
       start: entry.due_date,
       end: moment(entry.due_date).add(1, 'millisecond').toISOString(),
@@ -151,6 +156,7 @@ export const getEventsByDateRange = async (
   ).map(entry => {
     return {
       id: entry.id,
+      type: 'single',
       title: entry.title,
       start: entry.theatre_showtime,
       end: moment(entry.theatre_showtime)
