@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
 
-import { YoutubeSummarizerCustomCollectionsSchemas } from '../collections'
+import { YoutubeSummarizerCustomSchemas } from '../collections'
 import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const YoutubeSummarizer = {
@@ -12,7 +12,7 @@ const YoutubeSummarizer = {
     params: z.object({
       id: z.string().regex(/^[a-zA-Z0-9_-]{11}$/, 'Invalid YouTube video ID')
     }),
-    response: YoutubeSummarizerCustomCollectionsSchemas.YoutubeInfoSchema
+    response: YoutubeSummarizerCustomSchemas.YoutubeInfoSchema
   },
 
   /**

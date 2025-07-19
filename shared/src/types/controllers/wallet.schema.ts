@@ -129,7 +129,7 @@ const Assets = {
    * @description Get all wallet assets
    */
   getAllAssets: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.AssetAggregated))
+    response: z.array(WalletCollectionsSchemas.AssetAggregated)
   },
 
   /**
@@ -295,7 +295,7 @@ const Categories = {
    * @description Get all wallet categories
    */
   getAllCategories: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.CategoryAggregated))
+    response: z.array(WalletCollectionsSchemas.CategoryAggregated)
   },
 
   /**

@@ -27,7 +27,7 @@ export const getRandomEntry = async (
 
 export const getSidebarData = async (
   pb: PocketBase
-): Promise<ScoresLibraryCollectionsSchemas.IScoresLibrarySidebarData> => {
+): Promise<ScoresLibraryCollectionsSchemas.ISidebarData> => {
   const allScores = await pb
     .collection('scores_library__entries')
     .getFullList<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>()
@@ -48,7 +48,7 @@ export const getSidebarData = async (
     authors: Object.fromEntries(
       allAuthors.map(author => [author.name, author.amount])
     )
-  } satisfies ScoresLibraryCollectionsSchemas.IScoresLibrarySidebarData
+  } satisfies ScoresLibraryCollectionsSchemas.ISidebarData
 }
 
 export const getEntries = (

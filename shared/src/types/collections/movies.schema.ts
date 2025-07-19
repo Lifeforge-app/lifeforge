@@ -3,10 +3,11 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: movies
- * Generated at: 2025-07-18T12:15:50.185Z
+ * Generated at: 2025-07-19T04:32:26.925Z
  * Contains: movies__entries
  */
-import { z } from 'zod/v4'
+
+import { z } from "zod/v4";
 
 const Entry = z.object({
   tmdb_id: z.number(),
@@ -25,14 +26,18 @@ const Entry = z.object({
   theatre_showtime: z.string(),
   theatre_location: z.string(),
   theatre_number: z.string(),
-  is_watched: z.boolean()
-})
+  is_watched: z.boolean(),
+});
 
-type IEntry = z.infer<typeof Entry>
+type IEntry = z.infer<typeof Entry>;
 
-export { Entry }
+export {
+  Entry,
+};
 
-export type { IEntry }
+export type {
+  IEntry,
+};
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

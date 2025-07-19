@@ -18,7 +18,7 @@ export * as BlogControllersSchemas from './blog.schema'
 
 export * as SudokuControllersSchemas from './sudoku.schema'
 
-export * as ScoresLibraryControllersSchemas from './scoresLibrary'
+export * as ScoresLibraryControllersSchemas from './scoresLibrary.schema'
 
 export * as TodoListControllersSchemas from './todoList.schema'
 

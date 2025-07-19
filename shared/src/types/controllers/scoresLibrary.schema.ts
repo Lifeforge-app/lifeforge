@@ -2,10 +2,6 @@ import { z } from 'zod/v4'
 
 import { ScoresLibraryCollectionsSchemas } from '../collections'
 import { SchemaWithPB } from '../collections/schemaWithPB'
-import {
-  ScoresLibraryGuitarWorldEntrySchema,
-  ScoresLibrarySidebarDataSchema
-} from '../collections/scoresLibrary'
 import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
 const GuitarWorld = {
@@ -22,7 +18,7 @@ const GuitarWorld = {
         .transform(val => parseInt(val ?? '1', 10) || 1)
     }),
     response: z.object({
-      data: z.array(ScoresLibraryGuitarWorldEntrySchema),
+      data: z.array(ScoresLibraryCollectionsSchemas.GuitarWorldEntry),
       totalItems: z.number(),
       perPage: z.number()
     })
@@ -51,7 +47,7 @@ const Entries = {
    * @description Get sidebar data for guitar tabs
    */
   getSidebarData: {
-    response: ScoresLibrarySidebarDataSchema
+    response: ScoresLibraryCollectionsSchemas.SidebarData
   },
 
   /**
@@ -140,9 +136,52 @@ const Entries = {
   }
 }
 
+const Types = {
+  /**
+   * @route       GET /types
+   * @description Get all guitar tab types
+   */
+  getTypes: {
+    response: z.array(ScoresLibraryCollectionsSchemas.TypeAggregated)
+  },
+
+  /**
+   * @route       POST /types
+   * @description Create a new guitar tab type
+   */
+  createType: {
+    body: ScoresLibraryCollectionsSchemas.Type,
+    response: SchemaWithPB(ScoresLibraryCollectionsSchemas.Type)
+  },
+
+  /**
+   * @route       PATCH /types/:id
+   * @description Update an existing guitar tab type
+   */
+  updateType: {
+    params: z.object({
+      id: z.string()
+    }),
+    body: ScoresLibraryCollectionsSchemas.Type,
+    response: SchemaWithPB(ScoresLibraryCollectionsSchemas.Type)
+  },
+
+  /**
+   * @route       DELETE /types/:id
+   * @description Delete a guitar tab type
+   */
+  deleteType: {
+    params: z.object({
+      id: z.string()
+    }),
+    response: z.void()
+  }
+}
+
 type IGuitarWorld = InferApiESchemaDynamic<typeof GuitarWorld>
 type IEntries = InferApiESchemaDynamic<typeof Entries>
+type ITypes = InferApiESchemaDynamic<typeof Types>
 
-export type { IGuitarWorld, IEntries }
+export type { IGuitarWorld, IEntries, ITypes }
 
-export { GuitarWorld, Entries }
+export { GuitarWorld, Entries, Types }
