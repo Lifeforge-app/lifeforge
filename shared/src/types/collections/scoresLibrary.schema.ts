@@ -6,8 +6,9 @@
  * Generated at: 2025-07-19T14:07:18.234Z
  * Contains: scores_library__entries, scores_library__authors_aggregated, scores_library__types, scores_library__types_aggregated
  */
+import { z } from 'zod/v4'
 
-import { z } from "zod/v4";
+import { SchemaWithPB } from './schemaWithPB'
 
 const Entry = z.object({
   name: z.string(),
@@ -18,43 +19,33 @@ const Entry = z.object({
   pdf: z.string(),
   audio: z.string(),
   musescore: z.string(),
-  isFavourite: z.boolean(),
-});
+  isFavourite: z.boolean()
+})
 
 const AuthorAggregated = z.object({
   name: z.string(),
-  amount: z.number(),
-});
+  amount: z.number()
+})
 
 const Type = z.object({
   name: z.string(),
-  icon: z.string(),
-});
+  icon: z.string()
+})
 
 const TypeAggregated = z.object({
   name: z.string(),
   icon: z.string(),
-  amount: z.number(),
-});
+  amount: z.number()
+})
 
-type IEntry = z.infer<typeof Entry>;
-type IAuthorAggregated = z.infer<typeof AuthorAggregated>;
-type IType = z.infer<typeof Type>;
-type ITypeAggregated = z.infer<typeof TypeAggregated>;
+type IEntry = z.infer<typeof Entry>
+type IAuthorAggregated = z.infer<typeof AuthorAggregated>
+type IType = z.infer<typeof Type>
+type ITypeAggregated = z.infer<typeof TypeAggregated>
 
-export {
-  Entry,
-  AuthorAggregated,
-  Type,
-  TypeAggregated,
-};
+export { Entry, AuthorAggregated, Type, TypeAggregated }
 
-export type {
-  IEntry,
-  IAuthorAggregated,
-  IType,
-  ITypeAggregated,
-};
+export type { IEntry, IAuthorAggregated, IType, ITypeAggregated }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

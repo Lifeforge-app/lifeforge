@@ -2,15 +2,10 @@ import { fetchAI } from '@functions/fetchAI'
 import fs from 'fs'
 import moment from 'moment'
 import PocketBase from 'pocketbase'
-import rrule from 'rrule'
 import { z } from 'zod'
 
 import { ISchemaWithPB } from 'shared/types/collections'
-import {
-  CalendarCollectionsSchemas,
-  MoviesCollectionsSchemas,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 export const getEventsByDateRange = async (
@@ -24,162 +19,146 @@ export const getEventsByDateRange = async (
 
   const end = moment(endDate).endOf('day').toISOString()
 
-  const allEvents: Array<
-    Pick<
-      ISchemaWithPB<CalendarCollectionsSchemas.IEvent>,
-      | 'id'
-      | 'title'
-      | 'start'
-      | 'end'
-      | 'calendar'
-      | 'category'
-      | 'description'
-      | 'location'
-      | 'reference_link'
-    >
-  > = []
+  const allEvents: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>[] = []
 
   const singleCalendarEvents = await pb
-    .collection('calendar__events')
-    .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
-      filter: `(start >= '${start}' || end >= '${start}') && (start <= '${end}' || end <= '${end}') && type="single"`
-    })
-
-  allEvents.push(
-    ...singleCalendarEvents.map(event => ({
-      id: event.id,
-      title: event.title,
-      start: event.start,
-      end: event.end,
-      calendar: event.calendar,
-      category: event.category,
-      description: event.description,
-      location: event.location,
-      reference_link: event.reference_link
-    }))
-  )
-
-  const recurringCalendarEvents = await pb
-    .collection('calendar__events')
-    .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
-      filter: "type='recurring'"
-    })
-
-  for (const event of recurringCalendarEvents) {
-    if (event.type !== 'recurring') continue
-
-    const parsed = rrule.RRule.fromString(event.recurring_rrule)
-
-    const eventsInRange = parsed.between(
-      moment(start)
-        .subtract(
-          event.recurring_duration_amount + 1,
-          event.recurring_duration_unit
-        )
-        .toDate(),
-      moment(end)
-        .add(event.recurring_duration_amount + 1, event.recurring_duration_unit)
-        .toDate(),
-      true
-    )
-
-    for (const eventDate of eventsInRange) {
-      const start = moment(eventDate).utc().format('YYYY-MM-DD HH:mm:ss')
-
-      if (
-        event.exceptions?.some(
-          (exception: string[]) =>
-            moment(exception).format('YYYY-MM-DD HH:mm:ss') === start
-        )
-      ) {
-        continue
+    .collection('calendar__events_single')
+    .getFullList<
+      ISchemaWithPB<CalendarCollectionsSchemas.IEventsSingle> & {
+        expand: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>[]
       }
+    >({
+      filter: `(start >= '${start}' || end >= '${start}') && (start <= '${end}' || end <= '${end}')`,
+      expand: 'calendar__events'
+    })
 
-      const end = moment(eventDate)
-        .add(event.recurring_duration_amount, event.recurring_duration_unit)
-        .utc()
-        .format('YYYY-MM-DD HH:mm:ss')
+  console.log(singleCalendarEvents)
 
-      allEvents.push({
-        id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
-        start,
-        end,
-        title: event.title,
-        calendar: event.calendar,
-        category: event.category,
-        description: event.description,
-        location: event.location,
-        reference_link: event.reference_link
-      })
-    }
-  }
+  allEvents.push(...singleCalendarEvents.map(event => ({})))
 
-  const todoEntries = (
-    await pb
-      .collection('todo_list__entries')
-      .getFullList<ISchemaWithPB<TodoListCollectionsSchemas.IEntry>>({
-        filter: `due_date >= '${start}' && due_date <= '${end}'`
-      })
-      .catch(() => [])
-  ).map(entry => {
-    return {
-      id: entry.id,
-      title: entry.summary,
-      start: entry.due_date,
-      end: moment(entry.due_date).add(1, 'millisecond').toISOString(),
-      category: '_todo',
-      description: entry.notes,
-      location: '',
-      reference_link: `/todo-list?entry=${entry.id}`
-    } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
-  })
+  return []
 
-  allEvents.push(...todoEntries)
+  //   const recurringCalendarEvents = await pb
+  //     .collection('calendar__events')
+  //     .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
+  //       filter: "type='recurring'"
+  //     })
 
-  const movieEntries = (
-    await pb
-      .collection('movies__entries')
-      .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
-        filter: `theatre_showtime >= '${start}' && theatre_showtime <= '${end}'`
-      })
-      .catch(() => [])
-  ).map(entry => {
-    return {
-      id: entry.id,
-      title: entry.title,
-      start: entry.theatre_showtime,
-      end: moment(entry.theatre_showtime)
-        .add(entry.duration, 'minutes')
-        .toISOString(),
-      category: '_movie',
-      location: entry.theatre_location ?? '',
-      description: `
-### Movie Description:
-${entry.overview}
+  //   for (const event of recurringCalendarEvents) {
+  //     if (event.type !== 'recurring') continue
 
-### Theatre Number:
-${entry.theatre_number}
+  //     const parsed = rrule.RRule.fromString(event.recurring_rrule)
 
-### Seat Number:
-${entry.theatre_seat}
-      `,
-      reference_link: `/movies?show-ticket=${entry.id}`
-    } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
-  })
+  //     const eventsInRange = parsed.between(
+  //       moment(start)
+  //         .subtract(
+  //           event.recurring_duration_amount + 1,
+  //           event.recurring_duration_unit
+  //         )
+  //         .toDate(),
+  //       moment(end)
+  //         .add(event.recurring_duration_amount + 1, event.recurring_duration_unit)
+  //         .toDate(),
+  //       true
+  //     )
 
-  allEvents.push(...movieEntries)
+  //     for (const eventDate of eventsInRange) {
+  //       const start = moment(eventDate).utc().format('YYYY-MM-DD HH:mm:ss')
 
-  return allEvents
-}
+  //       if (
+  //         event.exceptions?.some(
+  //           (exception: string[]) =>
+  //             moment(exception).format('YYYY-MM-DD HH:mm:ss') === start
+  //         )
+  //       ) {
+  //         continue
+  //       }
 
-export const getTodayEvents = async (
-  pb: PocketBase
-): Promise<ISchemaWithPB<Partial<CalendarCollectionsSchemas.IEvent>>[]> => {
-  const day = moment().format('YYYY-MM-DD')
+  //       const end = moment(eventDate)
+  //         .add(event.recurring_duration_amount, event.recurring_duration_unit)
+  //         .utc()
+  //         .format('YYYY-MM-DD HH:mm:ss')
 
-  const events = await getEventsByDateRange(pb, day, day)
+  //       allEvents.push({
+  //         id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
+  //         start,
+  //         end,
+  //         title: event.title,
+  //         calendar: event.calendar,
+  //         category: event.category,
+  //         description: event.description,
+  //         location: event.location,
+  //         reference_link: event.reference_link
+  //       })
+  //     }
+  //   }
 
-  return events
+  //   const todoEntries = (
+  //     await pb
+  //       .collection('todo_list__entries')
+  //       .getFullList<ISchemaWithPB<TodoListCollectionsSchemas.IEntry>>({
+  //         filter: `due_date >= '${start}' && due_date <= '${end}'`
+  //       })
+  //       .catch(() => [])
+  //   ).map(entry => {
+  //     return {
+  //       id: entry.id,
+  //       title: entry.summary,
+  //       start: entry.due_date,
+  //       end: moment(entry.due_date).add(1, 'millisecond').toISOString(),
+  //       category: '_todo',
+  //       description: entry.notes,
+  //       location: '',
+  //       reference_link: `/todo-list?entry=${entry.id}`
+  //     } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
+  //   })
+
+  //   allEvents.push(...todoEntries)
+
+  //   const movieEntries = (
+  //     await pb
+  //       .collection('movies__entries')
+  //       .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
+  //         filter: `theatre_showtime >= '${start}' && theatre_showtime <= '${end}'`
+  //       })
+  //       .catch(() => [])
+  //   ).map(entry => {
+  //     return {
+  //       id: entry.id,
+  //       title: entry.title,
+  //       start: entry.theatre_showtime,
+  //       end: moment(entry.theatre_showtime)
+  //         .add(entry.duration, 'minutes')
+  //         .toISOString(),
+  //       category: '_movie',
+  //       location: entry.theatre_location ?? '',
+  //       description: `
+  // ### Movie Description:
+  // ${entry.overview}
+
+  // ### Theatre Number:
+  // ${entry.theatre_number}
+
+  // ### Seat Number:
+  // ${entry.theatre_seat}
+  //       `,
+  //       reference_link: `/movies?show-ticket=${entry.id}`
+  //     } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
+  //   })
+
+  //   allEvents.push(...movieEntries)
+
+  //   return allEvents
+  // }
+
+  // export const getTodayEvents = async (
+  //   pb: PocketBase
+  // ): Promise<ISchemaWithPB<Partial<CalendarCollectionsSchemas.IEvent>>[]> => {
+  //   const day = moment().format('YYYY-MM-DD')
+
+  //   const events = await getEventsByDateRange(pb, day, day)
+
+  //   return events
 }
 
 export const createEvent = async (

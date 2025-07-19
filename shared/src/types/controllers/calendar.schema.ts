@@ -157,7 +157,7 @@ const Events = {
    */
   createEvent: {
     body: CalendarCollectionsSchemas.Event.omit({
-      exceptions: true
+      type: true
     }).extend({
       location: z
         .union([
@@ -204,7 +204,7 @@ const Events = {
       id: z.string()
     }),
     body: CalendarCollectionsSchemas.Event.partial().omit({
-      exceptions: true
+      type: true
     }),
     response: SchemaWithPB(CalendarCollectionsSchemas.Event)
   },
