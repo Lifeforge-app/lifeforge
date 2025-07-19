@@ -3,26 +3,15 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import { Icon } from '@iconify/react'
-import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { fetchAPI, useAPIEndpoint } from 'shared/lib'
+import { fetchAPI, useAPIEndpoint, useAPIQuery } from 'shared/lib'
+import { LocationsCustomSchemas } from 'shared/types/collections'
+import { LocationsControllersSchemas } from 'shared/types/controllers'
 
 import { Tooltip } from '../utilities'
-
-export interface ILocationEntry {
-  formattedAddress: string
-  location: {
-    longitude: number
-    latitude: number
-  }
-  displayName: {
-    text: string
-    languageCode: string
-  }
-}
 
 function LocationInput({
   location,
@@ -32,8 +21,8 @@ function LocationInput({
   required,
   disabled
 }: {
-  location: ILocationEntry | null
-  setLocation: (value: ILocationEntry | null) => void
+  location: LocationsCustomSchemas.ILocation | null
+  setLocation: (value: LocationsCustomSchemas.ILocation | null) => void
   namespace: string
   label?: string
   required?: boolean
@@ -49,12 +38,13 @@ function LocationInput({
 
   const [enabled, setEnabled] = useState(false)
 
-  const dataQuery = useQuery<ILocationEntry[]>({
-    queryKey: ['locations', debouncedQuery],
-    queryFn: () =>
-      fetchAPI<ILocationEntry[]>(apiHost, `/locations?q=${debouncedQuery}`),
-    enabled: debouncedQuery.trim() !== ''
-  })
+  const dataQuery = useAPIQuery<
+    LocationsControllersSchemas.ILocations['getLocations']['response']
+  >(
+    `/locations?q=${debouncedQuery}`,
+    [debouncedQuery],
+    debouncedQuery.trim() !== ''
+  )
 
   useEffect(() => {
     if (query.trim() === '') {
@@ -63,18 +53,18 @@ function LocationInput({
   }, [query])
 
   useEffect(() => {
-    fetchAPI<boolean>(apiHost, '/locations/enabled').then(enabled =>
-      setEnabled(enabled)
-    )
+    fetchAPI<
+      LocationsControllersSchemas.ILocations['checkIsEnabled']['response']
+    >(apiHost, '/locations/enabled').then(enabled => setEnabled(enabled))
   }, [])
 
   return (
     <div className="relative flex w-full items-center gap-3">
-      <ListboxOrComboboxInput<ILocationEntry | null>
+      <ListboxOrComboboxInput<LocationsCustomSchemas.ILocation | null>
         className="w-full"
-        customActive={Boolean(location)}
+        customActive={(location?.name.length || 0) > 0}
         disabled={!enabled || disabled}
-        displayValue={value => value?.displayName?.text ?? ''}
+        displayValue={value => value?.name ?? ''}
         icon="tabler:map-pin"
         name={label || 'Location'}
         namespace={namespace}
@@ -92,7 +82,7 @@ function LocationInput({
                   key={JSON.stringify(loc.location)}
                   text={
                     <div className="w-full min-w-0">
-                      {loc.displayName.text}
+                      {loc.name}
                       <p className="text-bg-400 dark:text-bg-600 w-full min-w-0 truncate text-sm">
                         {loc.formattedAddress}
                       </p>

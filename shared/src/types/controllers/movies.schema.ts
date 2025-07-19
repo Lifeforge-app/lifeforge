@@ -1,6 +1,9 @@
 import { z } from 'zod/v4'
 
-import { MoviesCollectionsSchemas } from '../collections'
+import {
+  LocationsCustomSchemas,
+  MoviesCollectionsSchemas
+} from '../collections'
 import { SchemaWithPB } from '../collections/schemaWithPB'
 import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
@@ -18,7 +21,12 @@ const Tmdb = {
         .default('1')
         .transform(val => parseInt(val) || 1)
     }),
-    response: z.any()
+    response: z.object({
+      page: z.number(),
+      results: z.array(MoviesCollectionsSchemas.TMDBSearchResult),
+      total_pages: z.number(),
+      total_results: z.number()
+    })
   }
 }
 
@@ -37,13 +45,7 @@ const Ticket = {
       theatre_seat: true,
       theatre_showtime: true
     }).extend({
-      theatre_location: z.object({
-        name: z.string(),
-        location: z.object({
-          latitude: z.number(),
-          longitude: z.number()
-        })
-      })
+      theatre_location: LocationsCustomSchemas.Location
     }),
     response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
   },

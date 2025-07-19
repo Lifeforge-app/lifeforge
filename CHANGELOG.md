@@ -19,6 +19,9 @@
 - **Code**: Removed a lot of unused and legacy imports, variables, and functions.
 - **Code**: ESLint and Prettier configurations are now in the root of the monorepo, allowing all packages to share the same configurations.
 - **Code**: Added some more rules to the ESLint configuration to improve code quality.
+- **API**: Written JSDoc for the `forgeController`.
+- **API**: Improved type safety of the `existenceCheck` function in the `forgeController`, now you can only pass in the params/query/body key that is defined in the schema.
+- **API**: Added another middle state class to the `forgeController`, now you are required to follow the order of `route()`, then `schema()`, then the rest of the available methods in the chain.
 
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
 

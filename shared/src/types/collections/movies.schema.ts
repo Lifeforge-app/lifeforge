@@ -37,4 +37,26 @@ export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-// Add your custom schemas here. They will not be overwritten by this script.
+const TMDBSearchResult = z.object({
+  adult: z.boolean(),
+  backdrop_path: z.string(),
+  genre_ids: z.array(z.number()),
+  existed: z.boolean(),
+  id: z.number(),
+  original_language: z.string(),
+  original_title: z.string(),
+  overview: z.string(),
+  popularity: z.number(),
+  poster_path: z.string(),
+  release_date: z.string(),
+  title: z.string(),
+  video: z.boolean(),
+  vote_average: z.number(),
+  vote_count: z.number()
+})
+
+type ITMDBSearchResult = z.infer<typeof TMDBSearchResult>
+
+export { TMDBSearchResult }
+
+export type { ITMDBSearchResult }

@@ -16,8 +16,36 @@ import type {
 } from './interfaces/personalization_provider_interfaces'
 import { getColorPalette } from './utils/themeColors'
 
+const DEFAULT_VALUE: IPersonalizationData = {
+  fontFamily: 'Onest',
+  theme: 'system',
+  derivedTheme: 'dark',
+  rawThemeColor: 'theme-lime',
+  derivedThemeColor: THEME_COLOR_HEX['lime'],
+  bgTemp: 'bg-neutral',
+  bgTempPalette: BG_THEME['zinc'],
+  bgImage: '',
+  backdropFilters: {
+    blur: 'none',
+    brightness: 100,
+    contrast: 100,
+    saturation: 100,
+    overlayOpacity: 50
+  },
+  dashboardLayout: {},
+  language: 'en',
+  setDashboardLayout: () => {},
+  setRawThemeColor: () => {},
+  setFontFamily: () => {},
+  setTheme: () => {},
+  setBgTemp: () => {},
+  setBgImage: () => {},
+  setBackdropFilters: () => {},
+  setLanguage: () => {}
+}
+
 const PersonalizationContext = createContext<IPersonalizationData | undefined>(
-  undefined
+  DEFAULT_VALUE
 )
 
 export default function PersonalizationProvider({
@@ -143,11 +171,5 @@ export default function PersonalizationProvider({
 export function usePersonalization(): IPersonalizationData {
   const context = useContext(PersonalizationContext)
 
-  if (context === undefined) {
-    throw new Error(
-      'usePersonalizationContext must be used within a PersonalizationProvider'
-    )
-  }
-
-  return context
+  return context || DEFAULT_VALUE
 }

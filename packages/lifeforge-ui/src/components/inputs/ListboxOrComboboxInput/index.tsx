@@ -145,14 +145,14 @@ function ListboxOrComboboxInput<T>(props: IListboxOrComboboxInputProps<T>) {
         >
           <div className="group relative flex w-full items-center">
             <InputIcon
-              active={!!value || customActive === true}
+              active={isActive}
               className="absolute left-6"
               icon={icon}
             />
             <InputLabel
               isCombobox
               isListboxOrCombobox
-              active={!!value || customActive === true}
+              active={isActive}
               label={t(`inputs.${_.camelCase(name)}`)}
               required={required === true}
             />
