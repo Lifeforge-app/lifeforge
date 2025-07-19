@@ -312,17 +312,15 @@ export const scanImage = async (
   return response as Partial<CalendarCollectionsSchemas.IEvent>
 }
 
-export const updateEvent = (
+export const updateEvent = async (
   pb: PocketBase,
   id: string,
-  eventData: Omit<
-    Partial<CalendarCollectionsSchemas.IEvent>,
-    'is_strikethrough' | 'exceptions'
-  >
-): Promise<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>> =>
-  pb
+  eventData: CalendarControllersSchemas.IEvents['updateEvent']['body']
+): Promise<CalendarControllersSchemas.IEvents['updateEvent']['response']> => {
+  await pb
     .collection('calendar__events')
     .update<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>(id, eventData)
+}
 
 export const deleteEvent = async (pb: PocketBase, id: string) => {
   await pb.collection('calendar__events').delete(id)
@@ -342,8 +340,10 @@ export const addException = async (
   exceptionDate: string
 ): Promise<boolean> => {
   const event = await pb
-    .collection('calendar__events')
-    .getOne<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>(id)
+    .collection('calendar__events_recurring')
+    .getFirstListItem<
+      ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>
+    >(`base_event="${id}"`)
 
   const exceptions = event.exceptions || []
 
@@ -354,9 +354,9 @@ export const addException = async (
   exceptions.push(exceptionDate)
 
   await pb
-    .collection('calendar__events')
+    .collection('calendar__events_recurring')
     .update<
-      ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
+      ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>
     >(id, { exceptions })
 
   return true

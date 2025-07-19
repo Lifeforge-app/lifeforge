@@ -44,7 +44,10 @@ const createEvent = forgeController
   .schema(CalendarControllersSchemas.Events.createEvent)
   .statusCode(201)
   .callback(async ({ pb, body }) => {
-    return await EventsService.createEvent(pb, body)
+    return await EventsService.createEvent(
+      pb,
+      body as CalendarControllersSchemas.IEvents['createEvent']['body']
+    )
   })
 
 const scanImage = forgeController
@@ -89,7 +92,11 @@ const updateEvent = forgeController
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
-      await EventsService.updateEvent(pb, id.split('-')[0], body)
+      await EventsService.updateEvent(
+        pb,
+        id.split('-')[0],
+        body as CalendarControllersSchemas.IEvents['updateEvent']['body']
+      )
   )
 
 const deleteEvent = forgeController
