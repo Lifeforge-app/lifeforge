@@ -11,8 +11,8 @@
     "languages": {
       "en": "英语 (en)",
       "ms": "马来语 (ms)",
-      "zh-cn": "简体中文 (zh-CN)",
-      "zh-tw": "繁体中文 (zh-TW)"
+      "zhCn": "简体中文 (zh-CN)",
+      "zhTw": "繁体中文 (zh-TW)"
     },
     "translationPlaceholder": "{{key}} 的翻译",
     "parent": "父条目",

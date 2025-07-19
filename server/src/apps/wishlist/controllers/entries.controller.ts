@@ -52,12 +52,13 @@ const createEntry = forgeController
     const { file } = req
 
     let imageFile: File | undefined
+
     if (file) {
       const fileBuffer = fs.readFileSync(file.path)
 
       imageFile = new File([fileBuffer], file.originalname)
       fs.unlinkSync(file.path)
-    } else if (typeof body.image === 'string') {
+    } else if (typeof body.image === 'string' && body.image) {
       const response = await fetch(body.image)
 
       const buffer = await response.arrayBuffer()
@@ -95,9 +96,11 @@ const updateEntry = forgeController
       const { file } = req
 
       let finalFile: null | File = null
+
       if (imageRemoved === 'true') {
         finalFile = null
       }
+
       if (file) {
         const fileBuffer = fs.readFileSync(file.path)
 

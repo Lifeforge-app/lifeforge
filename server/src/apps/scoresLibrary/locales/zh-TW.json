@@ -10,13 +10,6 @@
     "authors": "作者",
     "categories": "分類"
   },
-  "headers": {
-    "all": "所有",
-    "starred": "已星標",
-    "singalong": "跟唱",
-    "fingerstyle": "指彈",
-    "uncategorized": "未分類"
-  },
   "scoreTypes": {
     "singalong": "跟唱",
     "fingerstyle": "指彈",
@@ -58,5 +51,18 @@
       "title": "沒有結果",
       "description": "找不到項目, 請嘗試其他關鍵字。"
     }
+  },
+  "header": {
+    "allScores": "所有樂譜",
+    "filteredScores": "已篩選樂譜",
+    "starred": "已星標的"
+  },
+  "hamburgerMenu": {
+    "viewAs": "查看為",
+    "sortBy": "排序依據"
+  },
+  "viewTypes": {
+    "grid": "網格",
+    "list": "列表"
   }
 }
