@@ -10,7 +10,9 @@ const Languages = {
    * @description Get all languages for the books library
    */
   getAllLanguages: {
-    response: z.array(BooksLibraryCollectionsSchemas.LanguageAggregated)
+    response: z.array(
+      SchemaWithPB(BooksLibraryCollectionsSchemas.LanguageAggregated)
+    )
   },
 
   /**
@@ -52,7 +54,9 @@ const FileTypes = {
    * @description Get all file types for the books library
    */
   getAllFileTypes: {
-    response: z.array(BooksLibraryCollectionsSchemas.FileTypeAggregated)
+    response: z.array(
+      SchemaWithPB(BooksLibraryCollectionsSchemas.FileTypeAggregated)
+    )
   }
 }
 
@@ -62,7 +66,9 @@ const Collection = {
    * @description Get all collections for the books library
    */
   getAllCollections: {
-    response: z.array(BooksLibraryCollectionsSchemas.CollectionAggregated)
+    response: z.array(
+      SchemaWithPB(BooksLibraryCollectionsSchemas.CollectionAggregated)
+    )
   },
 
   /**

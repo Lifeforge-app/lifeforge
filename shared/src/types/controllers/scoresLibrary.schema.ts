@@ -142,7 +142,9 @@ const Types = {
    * @description Get all guitar tab types
    */
   getTypes: {
-    response: z.array(ScoresLibraryCollectionsSchemas.TypeAggregated)
+    response: z.array(
+      SchemaWithPB(ScoresLibraryCollectionsSchemas.TypeAggregated)
+    )
   },
 
   /**
