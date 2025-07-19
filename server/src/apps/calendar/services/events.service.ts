@@ -2,9 +2,14 @@ import { fetchAI } from '@functions/fetchAI'
 import fs from 'fs'
 import moment from 'moment'
 import PocketBase from 'pocketbase'
+import rrule from 'rrule'
 import { z } from 'zod'
 
-import { ISchemaWithPB } from 'shared/types/collections'
+import {
+  ISchemaWithPB,
+  MoviesCollectionsSchemas,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
 import { CalendarCollectionsSchemas } from 'shared/types/collections'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
@@ -19,172 +24,217 @@ export const getEventsByDateRange = async (
 
   const end = moment(endDate).endOf('day').toISOString()
 
-  const allEvents: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>[] = []
+  const allEvents: (Omit<CalendarCollectionsSchemas.IEvent, 'type'> & {
+    id: string
+    start: string
+    end: string
+  })[] = []
 
   const singleCalendarEvents = await pb
     .collection('calendar__events_single')
     .getFullList<
       ISchemaWithPB<CalendarCollectionsSchemas.IEventsSingle> & {
-        expand: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>[]
+        expand: {
+          base_event: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
+        }
       }
     >({
       filter: `(start >= '${start}' || end >= '${start}') && (start <= '${end}' || end <= '${end}')`,
-      expand: 'calendar__events'
+      expand: 'base_event'
     })
 
-  console.log(singleCalendarEvents)
+  singleCalendarEvents.forEach(event => {
+    const baseEvent = event.expand.base_event
 
-  allEvents.push(...singleCalendarEvents.map(event => ({})))
+    allEvents.push({
+      id: event.id,
+      start: event.start,
+      end: event.end,
+      title: baseEvent.title,
+      calendar: baseEvent.calendar,
+      category: baseEvent.category,
+      description: baseEvent.description,
+      location: baseEvent.location,
+      use_google_map: baseEvent.use_google_map,
+      reference_link: baseEvent.reference_link
+    })
+  })
 
-  return []
+  const recurringCalendarEvents = await pb
+    .collection('calendar__events_recurring')
+    .getFullList<
+      ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring> & {
+        expand: {
+          base_event: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
+        }
+      }
+    >()
 
-  //   const recurringCalendarEvents = await pb
-  //     .collection('calendar__events')
-  //     .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
-  //       filter: "type='recurring'"
-  //     })
+  for (const event of recurringCalendarEvents) {
+    const baseEvent = event.expand.base_event
 
-  //   for (const event of recurringCalendarEvents) {
-  //     if (event.type !== 'recurring') continue
+    const parsed = rrule.RRule.fromString(event.recurring_rule)
 
-  //     const parsed = rrule.RRule.fromString(event.recurring_rrule)
+    const eventsInRange = parsed.between(
+      moment(start)
+        .subtract(event.duration_amount + 1, event.duration_unit)
+        .toDate(),
+      moment(end)
+        .add(event.duration_amount + 1, event.duration_unit)
+        .toDate(),
+      true
+    )
 
-  //     const eventsInRange = parsed.between(
-  //       moment(start)
-  //         .subtract(
-  //           event.recurring_duration_amount + 1,
-  //           event.recurring_duration_unit
-  //         )
-  //         .toDate(),
-  //       moment(end)
-  //         .add(event.recurring_duration_amount + 1, event.recurring_duration_unit)
-  //         .toDate(),
-  //       true
-  //     )
+    for (const eventDate of eventsInRange) {
+      const start = moment(eventDate).utc().format('YYYY-MM-DD HH:mm:ss')
 
-  //     for (const eventDate of eventsInRange) {
-  //       const start = moment(eventDate).utc().format('YYYY-MM-DD HH:mm:ss')
+      if (
+        event.exceptions?.some(
+          (exception: string[]) =>
+            moment(exception).format('YYYY-MM-DD HH:mm:ss') === start
+        )
+      ) {
+        continue
+      }
 
-  //       if (
-  //         event.exceptions?.some(
-  //           (exception: string[]) =>
-  //             moment(exception).format('YYYY-MM-DD HH:mm:ss') === start
-  //         )
-  //       ) {
-  //         continue
-  //       }
+      const end = moment(eventDate)
+        .add(event.duration_amount, event.duration_unit)
+        .utc()
+        .format('YYYY-MM-DD HH:mm:ss')
 
-  //       const end = moment(eventDate)
-  //         .add(event.recurring_duration_amount, event.recurring_duration_unit)
-  //         .utc()
-  //         .format('YYYY-MM-DD HH:mm:ss')
+      allEvents.push({
+        id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
+        start,
+        end,
+        title: baseEvent.title,
+        calendar: baseEvent.calendar,
+        category: baseEvent.category,
+        description: baseEvent.description,
+        use_google_map: baseEvent.use_google_map,
+        location: baseEvent.location,
+        reference_link: baseEvent.reference_link
+      })
+    }
+  }
 
-  //       allEvents.push({
-  //         id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
-  //         start,
-  //         end,
-  //         title: event.title,
-  //         calendar: event.calendar,
-  //         category: event.category,
-  //         description: event.description,
-  //         location: event.location,
-  //         reference_link: event.reference_link
-  //       })
-  //     }
-  //   }
+  const todoEntries = (
+    await pb
+      .collection('todo_list__entries')
+      .getFullList<ISchemaWithPB<TodoListCollectionsSchemas.IEntry>>({
+        filter: `due_date >= '${start}' && due_date <= '${end}'`
+      })
+      .catch(() => [])
+  ).map(entry => {
+    return {
+      id: entry.id,
+      title: entry.summary,
+      start: entry.due_date,
+      end: moment(entry.due_date).add(1, 'millisecond').toISOString(),
+      category: '_todo',
+      calendar: '',
+      description: entry.notes,
+      use_google_map: false,
+      location: '',
+      reference_link: `/todo-list?entry=${entry.id}`
+    } satisfies (typeof allEvents)[number]
+  })
 
-  //   const todoEntries = (
-  //     await pb
-  //       .collection('todo_list__entries')
-  //       .getFullList<ISchemaWithPB<TodoListCollectionsSchemas.IEntry>>({
-  //         filter: `due_date >= '${start}' && due_date <= '${end}'`
-  //       })
-  //       .catch(() => [])
-  //   ).map(entry => {
-  //     return {
-  //       id: entry.id,
-  //       title: entry.summary,
-  //       start: entry.due_date,
-  //       end: moment(entry.due_date).add(1, 'millisecond').toISOString(),
-  //       category: '_todo',
-  //       description: entry.notes,
-  //       location: '',
-  //       reference_link: `/todo-list?entry=${entry.id}`
-  //     } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
-  //   })
+  allEvents.push(...todoEntries)
 
-  //   allEvents.push(...todoEntries)
+  const movieEntries = (
+    await pb
+      .collection('movies__entries')
+      .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
+        filter: `theatre_showtime >= '${start}' && theatre_showtime <= '${end}'`
+      })
+      .catch(() => [])
+  ).map(entry => {
+    return {
+      id: entry.id,
+      title: entry.title,
+      start: entry.theatre_showtime,
+      end: moment(entry.theatre_showtime)
+        .add(entry.duration, 'minutes')
+        .toISOString(),
+      category: '_movie',
+      calendar: '',
+      use_google_map: true,
+      location: entry.theatre_location ?? '',
+      description: `
+  ### Movie Description:
+  ${entry.overview}
 
-  //   const movieEntries = (
-  //     await pb
-  //       .collection('movies__entries')
-  //       .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
-  //         filter: `theatre_showtime >= '${start}' && theatre_showtime <= '${end}'`
-  //       })
-  //       .catch(() => [])
-  //   ).map(entry => {
-  //     return {
-  //       id: entry.id,
-  //       title: entry.title,
-  //       start: entry.theatre_showtime,
-  //       end: moment(entry.theatre_showtime)
-  //         .add(entry.duration, 'minutes')
-  //         .toISOString(),
-  //       category: '_movie',
-  //       location: entry.theatre_location ?? '',
-  //       description: `
-  // ### Movie Description:
-  // ${entry.overview}
+  ### Theatre Number:
+  ${entry.theatre_number}
 
-  // ### Theatre Number:
-  // ${entry.theatre_number}
+  ### Seat Number:
+  ${entry.theatre_seat}
+        `,
+      reference_link: `/movies?show-ticket=${entry.id}`
+    } satisfies (typeof allEvents)[number]
+  })
 
-  // ### Seat Number:
-  // ${entry.theatre_seat}
-  //       `,
-  //       reference_link: `/movies?show-ticket=${entry.id}`
-  //     } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
-  //   })
+  allEvents.push(...movieEntries)
 
-  //   allEvents.push(...movieEntries)
+  return allEvents
+}
 
-  //   return allEvents
-  // }
+export const getTodayEvents = async (
+  pb: PocketBase
+): Promise<
+  CalendarControllersSchemas.IEvents['getEventsToday']['response']
+> => {
+  const day = moment().format('YYYY-MM-DD')
 
-  // export const getTodayEvents = async (
-  //   pb: PocketBase
-  // ): Promise<ISchemaWithPB<Partial<CalendarCollectionsSchemas.IEvent>>[]> => {
-  //   const day = moment().format('YYYY-MM-DD')
+  const events = await getEventsByDateRange(pb, day, day)
 
-  //   const events = await getEventsByDateRange(pb, day, day)
-
-  //   return events
+  return events
 }
 
 export const createEvent = async (
   pb: PocketBase,
-  eventData: Omit<
-    CalendarCollectionsSchemas.IEvent,
-    'is_strikethrough' | 'exceptions' | 'location'
-  > & {
-    location?: string | { displayName: { text: string } }
-  }
-): Promise<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>> => {
-  if (eventData.type === 'recurring') {
-    eventData.end = ''
-  } else {
-    eventData.recurring_rrule = ''
-    eventData.recurring_duration_amount = 0
-    eventData.recurring_duration_unit = ''
-  }
-
+  eventData: CalendarControllersSchemas.IEvents['createEvent']['body']
+): Promise<CalendarControllersSchemas.IEvents['createEvent']['response']> => {
   if (typeof eventData.location === 'object') {
     eventData.location = (eventData.location as any).displayName.text || ''
   }
 
-  return await pb
+  const baseEvent = await pb
     .collection('calendar__events')
-    .create<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>(eventData)
+    .create<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
+      title: eventData.title,
+      category: eventData.category,
+      calendar: eventData.calendar,
+      use_google_map: eventData.use_google_map || false,
+      location: eventData.location || '',
+      reference_link: eventData.reference_link || '',
+      description: eventData.description || '',
+      type: eventData.type
+    })
+
+  if (eventData.type === 'recurring') {
+    if (!eventData.recurring_rule) {
+      throw new Error('Recurring events must have a recurring rule')
+    }
+
+    await pb
+      .collection('calendar__events_recurring')
+      .create<ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>>({
+        base_event: baseEvent.id,
+        recurring_rule: eventData.recurring_rule,
+        duration_amount: eventData.duration_amount || 1,
+        duration_unit: eventData.duration_unit || 'day',
+        exceptions: eventData.exceptions || []
+      })
+  } else {
+    await pb
+      .collection('calendar__events_single')
+      .create<ISchemaWithPB<CalendarCollectionsSchemas.IEventsSingle>>({
+        base_event: baseEvent.id,
+        start: eventData.start,
+        end: eventData.end
+      })
+  }
 }
 
 export const scanImage = async (
