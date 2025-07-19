@@ -8,6 +8,8 @@
  */
 import { z } from 'zod/v4'
 
+import { SchemaWithPB } from './schemaWithPB'
+
 const Entry = z.object({
   name: z.string(),
   type: z.string(),

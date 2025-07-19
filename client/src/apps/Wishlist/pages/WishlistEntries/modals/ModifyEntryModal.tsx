@@ -144,7 +144,7 @@ function ModifyEntryModal({
       )
 
       queryClient.refetchQueries({
-        queryKey: ['wishlist', 'entries']
+        queryKey: ['wishlist']
       })
     } finally {
       onClose()
@@ -203,11 +203,6 @@ function ModifyEntryModal({
             }/${existedData.image}`
           })()
         }
-      })
-    } else {
-      setData({
-        ...newData,
-        price: 0
       })
     }
   }, [type, existedData])

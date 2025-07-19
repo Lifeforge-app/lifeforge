@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 import { useTranslation } from 'react-i18next'
 
@@ -34,6 +34,10 @@ function CurrencyInputComponent({
   const [innerValue, setInnerValue] = useState(
     value.toString() === '0' ? '' : value.toString()
   )
+
+  useEffect(() => {
+    setInnerValue(value.toString() === '0' ? '' : value.toString())
+  }, [value])
 
   const { t } = useTranslation(namespace)
 

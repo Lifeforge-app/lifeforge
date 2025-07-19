@@ -7,11 +7,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
 import {
-  IMovieEntry,
-  IMovieTicketFormState
-} from '@apps/Movies/interfaces/movies_interfaces'
+  ISchemaWithPB,
+  MoviesCollectionsSchemas
+} from 'shared/types/collections'
+import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 function ModifyTicketModal({
   data: { type, existedData },
@@ -19,7 +19,7 @@ function ModifyTicketModal({
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: IMovieEntry | null
+    existedData: ISchemaWithPB<MoviesCollectionsSchemas.IEntry> | null
   }
   onClose: () => void
 }) {
@@ -27,18 +27,29 @@ function ModifyTicketModal({
 
   const queryClient = useQueryClient()
 
-  const [formState, setFormState] = useState<IMovieTicketFormState>({
+  const [formState, setFormState] = useState<
+    MoviesControllersSchemas.ITicket['updateTicket']['body']
+  >({
     entry_id: '',
     ticket_number: '',
-    theatre_location: '',
+    theatre_location: {
+      displayName: {
+        languageCode: 'en',
+        text: ''
+      },
+      location: {
+        latitude: 0,
+        longitude: 0
+      }
+    },
     theatre_number: '',
     theatre_seat: '',
-    theatre_showtime: undefined
+    theatre_showtime: ''
   })
 
   const modalRef = useRef<HTMLDivElement | null>(null)
 
-  const FIELDS: IFieldProps<IMovieTicketFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'ticket_number',
       required: true,
@@ -86,27 +97,9 @@ function ModifyTicketModal({
         }
       )
 
-      queryClient.setQueryData<IMovieEntry[]>(
-        ['movies', 'entries'],
-        oldData => {
-          if (!oldData) return oldData
-
-          return oldData.map(entry => {
-            if (entry.id === existedData?.id) {
-              return {
-                ...entry,
-                ticket_number: '',
-                theatre_location: '',
-                theatre_number: '',
-                theatre_seat: '',
-                theatre_showtime: ''
-              }
-            }
-
-            return entry
-          })
-        }
-      )
+      queryClient.invalidateQueries({
+        queryKey: ['movies', 'entries']
+      })
 
       toast.success('Ticket deleted successfully!')
       onClose()
@@ -127,10 +120,19 @@ function ModifyTicketModal({
         ...prev,
         entry_id: existedData.id,
         ticket_number: '',
-        theatre_location: '',
+        theatre_location: {
+          displayName: {
+            languageCode: 'en',
+            text: ''
+          },
+          location: {
+            latitude: 0,
+            longitude: 0
+          }
+        },
         theatre_number: '',
         theatre_seat: '',
-        theatre_showtime: undefined
+        theatre_showtime: ''
       }))
 
       return
@@ -140,7 +142,16 @@ function ModifyTicketModal({
       setFormState({
         entry_id: existedData.id,
         ticket_number: existedData.ticket_number,
-        theatre_location: existedData.theatre_location,
+        theatre_location: {
+          displayName: {
+            languageCode: 'en',
+            text: existedData.theatre_location.displayName.text
+          },
+          location: {
+            latitude: existedData.theatre_location.location.latitude,
+            longitude: existedData.theatre_location.location.longitude
+          }
+        },
         theatre_number: existedData.theatre_number,
         theatre_seat: existedData.theatre_seat,
         theatre_showtime: dayjs(existedData.theatre_showtime).toDate()

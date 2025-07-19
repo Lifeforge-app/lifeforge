@@ -19,8 +19,7 @@ import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
-
-import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
+import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
@@ -46,10 +45,9 @@ function Movies() {
     'unwatched'
   )
 
-  const entriesQuery = useAPIQuery<{
-    entries: IMovieEntry[]
-    total: number
-  }>(`movies/entries?watched=${currentTab === 'watched'}`, [
+  const entriesQuery = useAPIQuery<
+    MoviesControllersSchemas.IEntries['getAllEntries']['response']
+  >(`movies/entries?watched=${currentTab === 'watched'}`, [
     'movies',
     'entries',
     currentTab
@@ -74,7 +72,7 @@ function Movies() {
 
   async function toggleWatched(id: string, isWatched: boolean = false) {
     try {
-      await fetchAPI<IMovieEntry>(
+      await fetchAPI(
         import.meta.env.VITE_API_HOST,
         `/movies/entries/watch-status/${id}?watched=${isWatched}`,
         {

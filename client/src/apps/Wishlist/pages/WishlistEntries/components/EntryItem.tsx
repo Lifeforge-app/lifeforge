@@ -87,7 +87,7 @@ function EntryItem({
   return (
     <li className="component-bg relative flex flex-col justify-between gap-3 rounded-md p-4 sm:pr-8 md:flex-row md:items-center">
       <div className="flex-between gap-8">
-        <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
           <div className="component-bg-lighter relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20">
             <Icon
               className="text-bg-200 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
@@ -96,7 +96,7 @@ function EntryItem({
             {entry.image !== '' && (
               <img
                 alt=""
-                className="size-full rounded-md"
+                className="size-full rounded-md object-cover"
                 src={`${import.meta.env.VITE_API_HOST}/media/${collectionIdQuery.data}/${
                   entry.id
                 }/${entry.image}`}
