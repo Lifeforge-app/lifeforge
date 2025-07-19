@@ -43,6 +43,7 @@ const createCalendar = forgeController
     ) {
       throw new ClientError('Calendar with this name already exists')
     }
+
     return await CalendarsService.createCalendar(pb, body)
   })
 
@@ -62,6 +63,7 @@ const updateCalendar = forgeController
     ) {
       throw new ClientError('Calendar with this name already exists')
     }
+
     return await CalendarsService.updateCalendar(pb, id, body)
   })
 

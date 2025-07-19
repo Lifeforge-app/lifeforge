@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: blog
- * Generated at: 2025-07-19T14:24:04.968Z
+ * Generated at: 2025-07-19T21:52:02.420Z
  * Contains: blog__entries, blog__categories
  */
 
