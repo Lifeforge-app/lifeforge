@@ -29,7 +29,13 @@ export type ICreateEventFormState = Omit<
     end: Date | null
   }
 
-function CreateEventModal({ onClose }: { onClose: () => void }) {
+function CreateEventModal({
+  onClose,
+  data: { existedData }
+}: {
+  onClose: () => void
+  data: { existedData?: Partial<ICreateEventFormState> }
+}) {
   const queryClient = useQueryClient()
 
   const calendarsQuery = useAPIQuery<
@@ -126,6 +132,7 @@ function CreateEventModal({ onClose }: { onClose: () => void }) {
   )
 
   useEffect(() => {
+    console.log(existedData)
     setFormState({
       type: 'single',
       title: '',
@@ -138,9 +145,10 @@ function CreateEventModal({ onClose }: { onClose: () => void }) {
       description: '',
       recurring_rule: '',
       duration_amount: 1,
-      duration_unit: 'day'
+      duration_unit: 'day',
+      ...existedData
     })
-  }, [])
+  }, [existedData])
 
   return (
     <FormModal
