@@ -16,7 +16,7 @@ import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
-import ModifyEventModal from './components/modals/ModifyEventModal'
+import CreateEventModal from './components/modals/ModifyEventModal/CreateEventModal'
 import ScanImageModal from './components/modals/ScanImageModal'
 import { useCalendarStore } from './stores/useCalendarStore'
 
@@ -59,7 +59,7 @@ function CalendarModule() {
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open(ModifyEventModal, {
+    open(CreateEventModal, {
       existedData: null,
       type: 'create'
     })

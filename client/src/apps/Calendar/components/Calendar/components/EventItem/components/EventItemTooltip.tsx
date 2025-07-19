@@ -4,12 +4,12 @@ import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
 
 import { useSidebarState } from 'shared/lib'
-
 import {
-  ICalendarCategory,
-  ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces.ts'
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
+import { ICalendarEvent } from '../../../index.js'
 import EventDetails from '../../EventDetails.tsx/index.js'
 
 function EventItemTooltip({
@@ -17,7 +17,9 @@ function EventItemTooltip({
   category
 }: {
   event: ICalendarEvent
-  category: ICalendarCategory | undefined
+  category:
+    | ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+    | undefined
 }) {
   const { sidebarExpanded } = useSidebarState()
 
