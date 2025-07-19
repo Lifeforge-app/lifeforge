@@ -119,7 +119,7 @@ export const toggleWatchStatus = async (
     .collection('movies__entries')
     .update<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>(id, {
       is_watched: !entry.is_watched,
-      watched_at: !entry.is_watched
+      watch_date: !entry.is_watched
         ? entry.theatre_showtime || new Date().toISOString()
         : null
     })
