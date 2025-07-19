@@ -32,7 +32,7 @@ const Tmdb = {
 
 const Ticket = {
   /**
-   * @route       POST /
+   * @route       PATCH /:id
    * @description Update ticket information for a movie entry
    */
   updateTicket: {

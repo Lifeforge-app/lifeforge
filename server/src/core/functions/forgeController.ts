@@ -512,6 +512,7 @@ class ForgeControllerBuilder<
           err instanceof Error ? err.message : err
         )
         serverError(res, 'Internal server error')
+        throw err
       }
     }
 
@@ -630,9 +631,9 @@ class ForgeControllerBuilderWithoutSchema<
       T['params'] extends ZodObject<ZodRawShape> ? T['params'] : ParamsSchema,
       T['response'] extends ZodTypeAny ? T['response'] : ResponseSchema
     >()
+      .schema(input)
       .route(this._routeString)
       .description(this._description)
-      .schema(input)
   }
 }
 

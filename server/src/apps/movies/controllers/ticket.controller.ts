@@ -11,7 +11,7 @@ import * as TicketService from '../services/ticket.service'
 const moviesTicketRouter = express.Router()
 
 const updateTicket = forgeController
-  .route('POST /:id')
+  .route('PATCH /:id')
   .description('Update ticket information for a movie entry')
   .schema(MoviesControllersSchemas.Ticket.updateTicket)
   .existenceCheck('params', {

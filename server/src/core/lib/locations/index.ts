@@ -47,7 +47,7 @@ const getLocation = forgeController
         latitude: number
         longitude: number
       }
-    }[] = response.places
+    }[] = response.places ?? []
 
     return places.map(place => ({
       name: place.displayName.text,
