@@ -29,7 +29,7 @@ function Header({ itemCount }: { itemCount: number }) {
   return (
     <div>
       <div className="flex-between flex">
-        <h1 className="text-3xl font-semibold sm:text-4xl">
+        <h1 className="text-3xl font-semibold">
           {Array.from(searchParams.keys()).filter(e => e !== 'favourite')
             .length === 0 || searchQuery !== ''
             ? 'All'

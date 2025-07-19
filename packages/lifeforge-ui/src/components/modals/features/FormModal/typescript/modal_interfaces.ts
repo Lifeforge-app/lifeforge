@@ -15,6 +15,12 @@ interface INumberInputFieldProps {
   placeholder: string
 }
 
+interface ICurrencyInputFieldProps {
+  label: string
+  icon: string
+  type: 'currency'
+}
+
 interface ITextAreaInputFieldProps {
   label: string
   icon: string
@@ -75,6 +81,7 @@ interface IFormCheckboxFieldProps {
 type IFieldProps<T> = (
   | ITextInputFieldProps
   | INumberInputFieldProps
+  | ICurrencyInputFieldProps
   | ITextAreaInputFieldProps
   | IDateInputFieldProps
   | IListboxInputFieldProps
@@ -97,6 +104,7 @@ export type {
   IFormState,
   ITextInputFieldProps,
   INumberInputFieldProps,
+  ICurrencyInputFieldProps,
   ITextAreaInputFieldProps,
   IDateInputFieldProps,
   IListboxInputFieldProps,

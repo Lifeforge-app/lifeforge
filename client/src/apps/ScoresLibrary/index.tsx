@@ -4,6 +4,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import {
   Button,
   ContentWrapperWithSidebar,
+  HeaderFilter,
   LayoutWithSidebar,
   ModuleWrapper,
   Pagination,
@@ -81,6 +82,10 @@ function ScoresLibrary() {
   const sidebarDataQuery = useAPIQuery<
     ScoresLibraryControllersSchemas.IEntries['getSidebarData']['response']
   >('scores-library/entries/sidebar-data', ['scores-library', 'sidebar-data'])
+
+  const typesQuery = useAPIQuery<
+    ScoresLibraryControllersSchemas.ITypes['getTypes']['response']
+  >('scores-library/types', ['scores-library', 'types'])
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -165,7 +170,6 @@ function ScoresLibrary() {
 
             if (data.status === 'completed') {
               toast.done(toastId.current!)
-              // toast.success('Guitar tabs uploaded successfully!')
               toastId.current = null
               queryClient.invalidateQueries({ queryKey })
             }
@@ -213,18 +217,15 @@ function ScoresLibrary() {
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
-              <h1 className="truncate text-3xl font-semibold sm:text-4xl">
-                {`${isStarred ? t('headers.starred') : ''} ${
-                  selectedCategory !== null
-                    ? t(`headers.${selectedCategory}`)
-                    : ''
-                } ${
-                  !selectedAuthor && !selectedCategory && !isStarred
-                    ? t('headers.all')
-                    : ''
-                } ${t('items.score')} ${
-                  selectedAuthor !== null ? `by ${selectedAuthor}` : ''
-                }`.trim()}
+              <h1 className="truncate text-3xl font-semibold">
+                {[
+                  isStarred && t('header.starred'),
+                  selectedAuthor || selectedCategory
+                    ? t('header.filteredScores')
+                    : t('header.allScores')
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
               </h1>
               <span className="text-bg-500 mr-8 ml-2 text-base">
                 ({entriesQuery.data?.totalItems ?? 0})
@@ -239,6 +240,31 @@ function ScoresLibrary() {
               }}
             />
           </header>
+          <HeaderFilter
+            items={{
+              type: {
+                data: typesQuery.data ?? []
+              },
+              author: {
+                data:
+                  Object.keys(sidebarDataQuery.data?.authors ?? {}).map(
+                    author => ({
+                      id: author,
+                      name: author,
+                      icon: 'tabler:user'
+                    })
+                  ) ?? []
+              }
+            }}
+            setValues={{
+              type: setSelectedCategory,
+              author: setSelectedAuthor
+            }}
+            values={{
+              type: selectedCategory,
+              author: selectedAuthor
+            }}
+          />
           <Searchbar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}

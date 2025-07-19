@@ -13,8 +13,8 @@ import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
-import { type IWishlistList } from '../../interfaces/wishlist_interfaces'
 import WishlistListItem from './components/WishlistListItem'
 import ModifyWishlistListModal from './modals/ModifyWishlistModal'
 
@@ -23,10 +23,9 @@ function Wishlist() {
 
   const { t } = useTranslation('apps.wishlist')
 
-  const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
-    'wishlist',
-    'lists'
-  ])
+  const listsQuery = useAPIQuery<
+    WishlistControllersSchemas.ILists['getAllLists']['response']
+  >('wishlist/lists', ['wishlist', 'lists'])
 
   const [searchQuery, setSearchQuery] = useState('')
 

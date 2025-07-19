@@ -6,6 +6,7 @@ import {
 
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'
+import FormCurrencyInput from './components/FormCurrencyInput'
 import FormDateInput from './components/FormDateInput'
 import FormFileInput from './components/FormFileInput'
 import FormIconInput from './components/FormIconInput'
@@ -58,6 +59,17 @@ function FormInputs<T>({
               <FormNumberInput
                 key={field.id as string}
                 field={field as IFieldProps<T> & { type: 'number' }}
+                handleChange={handleChange(field)}
+                namespace={namespace}
+                selectedData={selectedData as number}
+              />
+            )
+
+          case 'currency':
+            return (
+              <FormCurrencyInput
+                key={field.id as string}
+                field={field as IFieldProps<T> & { type: 'currency' }}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as number}

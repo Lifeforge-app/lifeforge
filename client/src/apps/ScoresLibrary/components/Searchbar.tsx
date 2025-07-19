@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
 
-import { IScoresLibraryEntry } from '../interfaces/scores_library_interfaces'
 import SortBySelector from './SortBySelector'
 
 function Searchbar({
@@ -28,10 +28,9 @@ function Searchbar({
     setRequestRandomLoading(true)
 
     try {
-      const entry = await fetchAPI<IScoresLibraryEntry>(
-        import.meta.env.VITE_API_HOST,
-        '/scores-library/entries/random'
-      )
+      const entry = await fetchAPI<
+        ScoresLibraryControllersSchemas.IEntries['getRandomEntry']['response']
+      >(import.meta.env.VITE_API_HOST, '/scores-library/entries/random')
 
       const url = `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
         entry.id
