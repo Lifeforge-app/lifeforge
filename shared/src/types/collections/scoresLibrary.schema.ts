@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: scoresLibrary
- * Generated at: 2025-07-19T14:07:18.234Z
+ * Generated at: 2025-07-19T14:24:04.970Z
  * Contains: scores_library__entries, scores_library__authors_aggregated, scores_library__types, scores_library__types_aggregated
  */
 import { z } from 'zod/v4'

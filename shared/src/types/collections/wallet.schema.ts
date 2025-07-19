@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: wallet
- * Generated at: 2025-07-19T14:07:18.233Z
+ * Generated at: 2025-07-19T14:24:04.969Z
  * Contains: wallet__assets, wallet__ledgers, wallet__categories, wallet__transactions, wallet__categories_aggregated, wallet__assets_aggregated, wallet__ledgers_aggregated, wallet__transaction_types_aggregated
  */
 

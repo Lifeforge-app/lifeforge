@@ -121,14 +121,13 @@ const Events = {
       end: z.string()
     }),
     response: z.array(
-      SchemaWithPB(
-        CalendarCollectionsSchemas.Event.partial().extend({
+      z
+        .object({
+          id: z.string(),
           start: z.string(),
-          end: z.string(),
-          title: z.string(),
-          category: z.string()
+          end: z.string()
         })
-      )
+        .and(CalendarCollectionsSchemas.Event.omit({ type: true }))
     )
   },
 
@@ -137,7 +136,15 @@ const Events = {
    * @description Get today's events
    */
   getEventsToday: {
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event))
+    response: z.array(
+      z
+        .object({
+          id: z.string(),
+          start: z.string(),
+          end: z.string()
+        })
+        .and(CalendarCollectionsSchemas.Event.omit({ type: true }))
+    )
   },
 
   /**
@@ -158,19 +165,34 @@ const Events = {
   createEvent: {
     body: CalendarCollectionsSchemas.Event.omit({
       type: true
-    }).extend({
-      location: z
-        .union([
-          z.object({
-            displayName: z.object({
-              text: z.string()
+    })
+      .extend({
+        location: z
+          .union([
+            z.object({
+              displayName: z.object({
+                text: z.string()
+              })
+            }),
+            z.string()
+          ])
+          .optional()
+      })
+      .and(
+        z.union([
+          z
+            .object({
+              type: z.literal('single')
             })
-          }),
-          z.string()
+            .and(CalendarCollectionsSchemas.EventsSingle),
+          z
+            .object({
+              type: z.literal('recurring')
+            })
+            .and(CalendarCollectionsSchemas.EventsRecurring)
         ])
-        .optional()
-    }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Event)
+      ),
+    response: z.void()
   },
 
   /**
@@ -203,10 +225,10 @@ const Events = {
     params: z.object({
       id: z.string()
     }),
-    body: CalendarCollectionsSchemas.Event.partial().omit({
+    body: CalendarCollectionsSchemas.Event.omit({
       type: true
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Event)
+    response: z.void()
   },
 
   /**
