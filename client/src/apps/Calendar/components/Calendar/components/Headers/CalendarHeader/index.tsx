@@ -35,10 +35,7 @@ function CalendarHeader({
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open(CreateEventModal, {
-      existedData: null,
-      type: 'create'
-    })
+    open(CreateEventModal, {})
   }, [])
 
   const handleNavigateToday = useCallback(() => {
