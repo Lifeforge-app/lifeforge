@@ -63,7 +63,9 @@ const Categories = {
    * @description Get all calendar categories
    */
   getAllCategories: {
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Category))
+    response: z.array(
+      SchemaWithPB(CalendarCollectionsSchemas.CategoryAggregated)
+    )
   },
 
   /**
@@ -74,7 +76,7 @@ const Categories = {
     params: z.object({
       id: z.string()
     }),
-    response: SchemaWithPB(CalendarCollectionsSchemas.Category)
+    response: SchemaWithPB(CalendarCollectionsSchemas.CategoryAggregated)
   },
 
   /**

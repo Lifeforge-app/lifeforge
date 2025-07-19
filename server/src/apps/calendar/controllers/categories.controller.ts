@@ -38,6 +38,7 @@ const createCategory = forgeController
     if (body.name.startsWith('_')) {
       throw new ClientError('Category name cannot start with _')
     }
+
     if (
       await pb
         .collection('calendar__categories')
@@ -46,6 +47,7 @@ const createCategory = forgeController
     ) {
       throw new ClientError('Category with this name already exists')
     }
+
     return await CategoriesService.createCategory(pb, body)
   })
 
@@ -60,6 +62,7 @@ const updateCategory = forgeController
     if (body.name.startsWith('_')) {
       throw new ClientError('Category name cannot start with _')
     }
+
     if (
       await pb
         .collection('calendar__categories')
@@ -68,6 +71,7 @@ const updateCategory = forgeController
     ) {
       throw new ClientError('Category with this name already exists')
     }
+
     return await CategoriesService.updateCategory(pb, id, body)
   })
 
