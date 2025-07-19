@@ -42,13 +42,15 @@ const createContainer = forgeController
         if (req.file) {
           return new File([fs.readFileSync(req.file.path)], req.file.filename)
         }
+
         if (cover) {
-          const response = await fetch(cover)
+          const response = await fetch(cover as string) //TODO
 
           const fileBuffer = await response.arrayBuffer()
 
           return new File([fileBuffer], 'cover.jpg')
         }
+
         return undefined
       })()
     )
@@ -58,9 +60,11 @@ const createContainer = forgeController
         .getURL(container, container.cover)
         .replace(`${pb.baseURL}/api/files`, '')
     }
+
     if (req.file) {
       fs.unlinkSync(req.file.path)
     }
+
     return container
   })
   .statusCode(201)
@@ -85,9 +89,11 @@ const updateContainer = forgeController
           if (req.file) {
             return new File([fs.readFileSync(req.file.path)], req.file.filename)
           }
+
           if (cover === 'keep') {
             return 'keep'
           }
+
           if (cover) {
             const response = await fetch(cover)
 
@@ -95,6 +101,7 @@ const updateContainer = forgeController
 
             return new File([fileBuffer], 'cover.jpg')
           }
+
           return undefined
         })()
       )
@@ -104,9 +111,11 @@ const updateContainer = forgeController
           .getURL(container, container.cover)
           .replace(`${pb.baseURL}/api/files`, '')
       }
+
       if (req.file) {
         fs.unlinkSync(req.file.path)
       }
+
       return container
     }
   )

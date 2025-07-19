@@ -5,10 +5,10 @@ import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllLanguages = (
   pb: PocketBase
-): Promise<WithPB<BooksLibraryCollectionsSchemas.ILanguage>[]> =>
+): Promise<WithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>[]> =>
   pb
     .collection('books_library__languages_aggregated')
-    .getFullList<WithPB<BooksLibraryCollectionsSchemas.ILanguage>>()
+    .getFullList<WithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>>()
 
 export const createLanguage = (
   pb: PocketBase,

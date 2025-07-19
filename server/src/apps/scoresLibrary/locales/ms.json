@@ -1,0 +1,62 @@
+{
+  "title": "Perpustakaan Skor",
+  "description": "Simpan dan susun skor muzik anda dengan mudah.",
+  "sidebar": {
+    "allScores": "Semua Skor",
+    "starred": "Skor Berbintang",
+    "singAlong": "Nyanyi Bersama",
+    "fingerStyle": "Gaya Jari",
+    "uncategorized": "Tidak Dikategorikan",
+    "authors": "Pengarang",
+    "categories": "Kategori"
+  },
+  "headers": {
+    "all": "Semua",
+    "starred": "Berbintang",
+    "singalong": "Nyanyi Bersama",
+    "fingerstyle": "Gaya Jari",
+    "uncategorized": "Tidak Dikategorikan"
+  },
+  "scoreTypes": {
+    "singalong": "Nyanyi Bersama",
+    "fingerstyle": "Gaya Jari",
+    "uncategorized": "Tidak Dikategorikan"
+  },
+  "sortTypes": {
+    "newest": "Terbaru Dahulu",
+    "oldest": "Terdahulu Dahulu",
+    "author": "Pengarang",
+    "name": "Tajuk"
+  },
+  "unknownAuthor": "Pengarang Tidak Dikenali",
+  "modals": {
+    "guitarWorld": "Dunia Gitar",
+    "scoresLibrary": {
+      "update": "Kemas Kini Skor Muzik"
+    }
+  },
+  "buttons": {
+    "downloadFromGuitarWorld": "Muat Turun dari Dunia Gitar",
+    "uploadFromLocal": "Muat Naik dari Tempatan",
+    "downloadAll": "Muat Turun Semua"
+  },
+  "inputs": {
+    "scoreType": "Jenis Skor",
+    "cookie": "Kuki Sesi",
+    "author": "Pengarang",
+    "musicName": "Nama Muzik"
+  },
+  "items": {
+    "score": "Skor Muzik"
+  },
+  "empty": {
+    "score": {
+      "title": "Tiada Skor Muzik",
+      "description": "Anda belum menambah sebarang skor muzik lagi. Klik butang di bawah untuk menambah satu."
+    },
+    "result": {
+      "title": "Tiada Keputusan",
+      "description": "Tiada item ditemui, sila cuba kata kunci lain."
+    }
+  }
+}

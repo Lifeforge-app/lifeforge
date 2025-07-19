@@ -20,7 +20,7 @@ export * as MomentVaultCollectionsSchemas from './momentVault.schema'
 
 export * as BlogCollectionsSchemas from './blog.schema'
 
-export * as GuitarTabsCollectionsSchemas from './guitarTabs.schema'
+export * as ScoresLibraryCollectionsSchemas from './scoresLibrary'
 
 export * as TodoListCollectionsSchemas from './todoList.schema'
 
