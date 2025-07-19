@@ -1,6 +1,9 @@
 import { z } from 'zod/v4'
 
-import { CalendarCollectionsSchemas } from '../collections'
+import {
+  CalendarCollectionsSchemas,
+  LocationsCustomSchemas
+} from '../collections'
 import { SchemaWithPB } from '../collections/schemaWithPB'
 import type { InferApiESchemaDynamic } from '../utils/inferSchema'
 
@@ -230,7 +233,11 @@ const Events = {
       id: z.string()
     }),
     body: CalendarCollectionsSchemas.Event.omit({
-      type: true
+      type: true,
+      location: true,
+      location_coords: true
+    }).extend({
+      location: LocationsCustomSchemas.Location.optional()
     }),
     response: z.void()
   },
