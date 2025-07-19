@@ -32,6 +32,13 @@ export const getAllEntries = async (
         return a.is_watched ? 1 : -1 // Unwatched entries come first
       }
 
+      if (
+        (a.ticket_number && !b.ticket_number) ||
+        (!a.ticket_number && b.ticket_number)
+      ) {
+        return a.ticket_number ? -1 : 1 // Entries with tickets come first
+      }
+
       if (a.theatre_showtime && b.theatre_showtime) {
         return (
           new Date(b.theatre_showtime).getTime() -

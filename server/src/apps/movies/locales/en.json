@@ -51,5 +51,8 @@
   "tabs": {
     "watched": "Watched",
     "unwatched": "Unwatched"
+  },
+  "misc": {
+    "watched": "Watched on {{date}}"
   }
 }
