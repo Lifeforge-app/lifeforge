@@ -2,16 +2,25 @@ import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-import { IWishlistList } from '@apps/Wishlist/interfaces/wishlist_interfaces'
+import {
+  ISchemaWithPB,
+  WishlistCollectionsSchemas
+} from 'shared/types/collections'
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
 function ModifyWishlistListModal({
   data: { type, existedData },
   onClose
 }: {
-  data: { type: 'create' | 'update'; existedData: IWishlistList | null }
+  data: {
+    type: 'create' | 'update'
+    existedData: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated> | null
+  }
   onClose: () => void
 }) {
-  const [data, setData] = useState({
+  const [data, setData] = useState<
+    WishlistControllersSchemas.ILists['createList' | 'updateList']['body']
+  >({
     name: '',
     description: '',
     icon: '',
@@ -50,7 +59,12 @@ function ModifyWishlistListModal({
 
   useEffect(() => {
     if (type === 'update' && existedData !== null) {
-      setData(existedData)
+      setData({
+        name: existedData.name,
+        description: existedData.description,
+        icon: existedData.icon,
+        color: existedData.color
+      })
     } else {
       setData({
         name: '',

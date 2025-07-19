@@ -12,6 +12,7 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
 import ModifyEntryModal from './ModifyEntryModal'
 
@@ -51,11 +52,9 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
     setLoading('loading')
 
     try {
-      const data = await fetchAPI<{
-        name: string
-        price: number
-        image: string
-      }>(import.meta.env.VITE_API_HOST, 'wishlist/entries/external', {
+      const data = await fetchAPI<
+        WishlistControllersSchemas.IEntries['scrapeExternal']['response']
+      >(import.meta.env.VITE_API_HOST, 'wishlist/entries/external', {
         method: 'POST',
         body: {
           provider,

@@ -12,13 +12,8 @@ import {
   ViewModeSelector
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
-
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -40,55 +35,37 @@ function BooksLibrary() {
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
-  const [filteredEntries, setFilteredEntries] = useState<
-    ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
-  >([])
-
   const [view, setView] = useState<'list' | 'grid'>('list')
+
+  const filteredEntries = useMemo(
+    () =>
+      entriesQuery.data?.filter(
+        entry =>
+          entry.title
+            .toLowerCase()
+            .includes(debouncedSearchQuery.toLowerCase()) &&
+          (searchParams.get('collection') !== null
+            ? entry.collection === searchParams.get('collection')
+            : true) &&
+          (searchParams.get('language') !== null
+            ? entry.languages.includes(searchParams.get('language') as string)
+            : true) &&
+          (searchParams.get('favourite') === 'true'
+            ? entry.is_favourite
+            : true) &&
+          (searchParams.get('fileType') !== null
+            ? entry.extension ===
+              fileTypesQuery.data?.find(
+                fileType => fileType.id === searchParams.get('fileType')
+              )?.name
+            : true)
+      ) ?? [],
+    [entriesQuery.data, debouncedSearchQuery, searchParams, fileTypesQuery.data]
+  )
 
   const handleOpenLibgenModal = useCallback(() => {
     open(LibgenModal, {})
   }, [])
-
-  useEffect(() => {
-    if (
-      entriesQuery.isLoading ||
-      fileTypesQuery.isLoading ||
-      !entriesQuery.data ||
-      !fileTypesQuery.data
-    ) {
-      return
-    }
-
-    const filteredEntries = entriesQuery.data.filter(
-      entry =>
-        entry.title
-          .toLowerCase()
-          .includes(debouncedSearchQuery.toLowerCase()) &&
-        (searchParams.get('collection') !== null
-          ? entry.collection === searchParams.get('collection')
-          : true) &&
-        (searchParams.get('language') !== null
-          ? entry.languages.includes(searchParams.get('language') as string)
-          : true) &&
-        (searchParams.get('favourite') === 'true'
-          ? entry.is_favourite
-          : true) &&
-        (searchParams.get('fileType') !== null
-          ? entry.extension ===
-            fileTypesQuery.data.find(
-              fileType => fileType.id === searchParams.get('fileType')
-            )?.name
-          : true)
-    )
-
-    setFilteredEntries(filteredEntries)
-  }, [
-    entriesQuery.data,
-    debouncedSearchQuery,
-    searchParams,
-    fileTypesQuery.data
-  ])
 
   return (
     <ModuleWrapper>

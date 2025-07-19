@@ -1,15 +1,19 @@
-import { DashboardItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import {
+  CurrencyInput,
+  DashboardItem,
+  ModuleHeader,
+  ModuleWrapper
+} from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
 import ConversionRatesHistoryGraph from './components/ConversionRatesHistoryGraph'
 import ConversionResult from './components/ConversionResult'
-import CurrencyInputSection from './components/CurrencyInputSection'
 import CurrencySelector from './components/CurrencySelector'
 import { useCurrencies } from './hooks/useCurrencies'
 import { ExchangeRates } from './interfaces/currency_converter_interfaces'
 
 function CurrencyConverter() {
-  const [amount, setAmount] = useState<string>('1')
+  const [amount, setAmount] = useState<number>(1)
 
   const [fromCurrency, setFromCurrency] = useState<string>('MYR')
 
@@ -68,10 +72,8 @@ function CurrencyConverter() {
 
   useEffect(() => {
     if (ratesData && ratesData.rates && amount) {
-      const parsedAmount = parseFloat(amount)
-
-      if (!isNaN(parsedAmount) && ratesData.rates[toCurrency]) {
-        const convertedValue = parsedAmount * ratesData.rates[toCurrency]
+      if (!isNaN(amount) && ratesData.rates[toCurrency]) {
+        const convertedValue = amount * ratesData.rates[toCurrency]
 
         setResult(convertedValue)
       }
@@ -90,8 +92,17 @@ function CurrencyConverter() {
         namespace="apps.currencyConverter"
         title="Currency Converter"
       />
-
-      <CurrencyInputSection amount={amount} setAmount={setAmount} />
+      <CurrencyInput
+        darker
+        required
+        className="mb-6"
+        icon="tabler:cash"
+        name="Amount"
+        namespace="apps.currencyConverter"
+        placeholder="0.00"
+        setValue={setAmount}
+        value={amount}
+      />
       <CurrencySelector
         currencies={currencies}
         fromCurrency={fromCurrency}

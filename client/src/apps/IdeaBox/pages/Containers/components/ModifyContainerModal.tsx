@@ -25,7 +25,9 @@ function ModifyContainerModal({
 
   const [formState, setFormState] = useState<
     Omit<
-      IdeaBoxControllersSchemas.IContainers['createContainer']['body'],
+      IdeaBoxControllersSchemas.IContainers[
+        | 'createContainer'
+        | 'updateContainer']['body'],
       'cover'
     > & {
       cover: {

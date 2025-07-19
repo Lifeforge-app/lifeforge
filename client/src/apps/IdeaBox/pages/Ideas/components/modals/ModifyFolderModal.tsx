@@ -22,8 +22,7 @@ function ModifyFolderModal({
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const [formState, setFormState] = useState<
-    IdeaBoxControllersSchemas.IFolders['createFolder']['body'] &
-      IdeaBoxControllersSchemas.IFolders['updateFolder']['body']
+    IdeaBoxControllersSchemas.IFolders['createFolder' | 'updateFolder']['body']
   >({
     name: '',
     icon: '',

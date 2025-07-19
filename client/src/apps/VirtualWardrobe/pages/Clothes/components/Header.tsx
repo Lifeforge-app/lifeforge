@@ -19,9 +19,7 @@ function Header({
     <header className="flex-between flex w-full">
       <div>
         <div className="flex min-w-0 items-end">
-          <h1 className="truncate text-3xl font-semibold sm:text-4xl">
-            All Clothes
-          </h1>
+          <h1 className="truncate text-3xl font-semibold">All Clothes</h1>
           <span className="text-bg-500 mr-8 ml-2 text-base">
             ({entriesQuery.isSuccess ? entriesQuery.data.length : 0})
           </span>

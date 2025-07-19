@@ -31,16 +31,16 @@ function ModifyAchievementModal({
   const { t } = useTranslation('apps.achievements')
 
   const [formState, setFormState] = useState<
-    AchievementsControllersSchemas.IEntries['createEntry']['body']
+    AchievementsControllersSchemas.IEntries[
+      | 'createEntry'
+      | 'updateEntry']['body']
   >({
     title: '',
     thoughts: '',
     difficulty: 'easy'
   })
 
-  const FIELDS: IFieldProps<
-    AchievementsControllersSchemas.IEntries['createEntry']['body']
-  >[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'title',
       required: true,
