@@ -9,7 +9,9 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from 'shared/lib'
 import {
   ISchemaWithPB,
   MoviesCollectionsSchemas
@@ -27,6 +29,10 @@ function MovieItem({
   onToggleWatched: (id: string) => Promise<void>
   type: 'grid' | 'list'
 }) {
+  const { t } = useTranslation('apps.movies')
+
+  const { language } = usePersonalization()
+
   const open = useModalStore(state => state.open)
 
   const [toggleWatchedLoading, setToggleWatchedLoading] = useState(false)
@@ -177,6 +183,14 @@ function MovieItem({
             >
               Show Ticket
             </Button>
+          )}
+          {data.is_watched && (
+            <div className="flex-center text-bg-500 mt-4 mb-2 w-full gap-2">
+              <Icon className="size-5" icon="tabler:check" />
+              {t('misc.watched', {
+                date: dayjs(data.watch_date).locale(language).fromNow()
+              })}
+            </div>
           )}
         </div>
       </div>
