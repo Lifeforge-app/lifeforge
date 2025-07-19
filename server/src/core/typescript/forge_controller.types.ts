@@ -2,15 +2,19 @@ import { BaseResponse } from '@typescript/base_response'
 import { Request, Response } from 'express'
 import PocketBase from 'pocketbase'
 import { Server } from 'socket.io'
-import { ZodObject, ZodRawShape, ZodTypeAny, z } from 'zod/v4'
+import { ZodIntersection, ZodObject, ZodRawShape, ZodTypeAny, z } from 'zod/v4'
 
 type InferZodType<T> = T extends ZodObject<ZodRawShape> ? z.infer<T> : {}
 type InferResponseType<T> = T extends ZodTypeAny ? z.infer<T> : {}
 
+export type ZodObjectOrIntersection =
+  | ZodObject<ZodRawShape>
+  | ZodIntersection<any, any>
+
 type ForgeSchema<
-  B extends ZodObject<ZodRawShape> | undefined,
-  Q extends ZodObject<ZodRawShape> | undefined,
-  P extends ZodObject<ZodRawShape> | undefined,
+  B extends ZodObjectOrIntersection | undefined,
+  Q extends ZodObjectOrIntersection | undefined,
+  P extends ZodObjectOrIntersection | undefined,
   R extends ZodTypeAny
 > = {
   body?: B
@@ -20,9 +24,9 @@ type ForgeSchema<
 }
 
 type ControllerContext<
-  B extends ZodObject<ZodRawShape> | undefined,
-  Q extends ZodObject<ZodRawShape> | undefined,
-  P extends ZodObject<ZodRawShape> | undefined,
+  B extends ZodObjectOrIntersection | undefined,
+  Q extends ZodObjectOrIntersection | undefined,
+  P extends ZodObjectOrIntersection | undefined,
   R extends ZodTypeAny
 > = {
   req: Request<InferZodType<P>, any, InferZodType<B>, InferZodType<Q>>
@@ -35,18 +39,18 @@ type ControllerContext<
 }
 
 type ControllerCallback<
-  B extends ZodObject<ZodRawShape> | undefined,
-  Q extends ZodObject<ZodRawShape> | undefined,
-  P extends ZodObject<ZodRawShape> | undefined,
+  B extends ZodObjectOrIntersection | undefined,
+  Q extends ZodObjectOrIntersection | undefined,
+  P extends ZodObjectOrIntersection | undefined,
   R extends ZodTypeAny
 > = (context: ControllerContext<B, Q, P, R>) => Promise<InferResponseType<R>>
 
 type ExistenceCheckConfig<T> = Partial<Record<keyof InferZodType<T>, string>>
 
 type ForgeOptions<
-  B extends ZodObject<ZodRawShape> | undefined,
-  Q extends ZodObject<ZodRawShape> | undefined,
-  P extends ZodObject<ZodRawShape> | undefined
+  B extends ZodObjectOrIntersection | undefined,
+  Q extends ZodObjectOrIntersection | undefined,
+  P extends ZodObjectOrIntersection | undefined
 > = {
   existenceCheck?: {
     params?: ExistenceCheckConfig<P>

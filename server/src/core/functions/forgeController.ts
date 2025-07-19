@@ -33,13 +33,14 @@ import { BaseResponse } from '@typescript/base_response'
 import { Request, Response } from 'express'
 import PocketBase from 'pocketbase'
 import { Server } from 'socket.io'
-import { ZodObject, ZodRawShape, ZodTypeAny } from 'zod/v4'
+import { ZodTypeAny } from 'zod/v4'
 
 import {
   ControllerCallback,
   ControllerSchema,
   InferResponseType,
-  InferZodType
+  InferZodType,
+  ZodObjectOrIntersection
 } from '../typescript/forge_controller.types'
 import ClientError from './ClientError'
 import { checkExistence } from './PBRecordValidator'
@@ -70,9 +71,9 @@ import { clientError, serverError, successWithBaseResponse } from './response'
  * ```
  */
 class ForgeControllerBuilder<
-  BodySchema extends ZodObject<ZodRawShape> | undefined = undefined,
-  QuerySchema extends ZodObject<ZodRawShape> | undefined = undefined,
-  ParamsSchema extends ZodObject<ZodRawShape> | undefined = undefined,
+  BodySchema extends ZodObjectOrIntersection | undefined = undefined,
+  QuerySchema extends ZodObjectOrIntersection | undefined = undefined,
+  ParamsSchema extends ZodObjectOrIntersection | undefined = undefined,
   ResponseSchema extends ZodTypeAny = ZodTypeAny
 > {
   /** The HTTP method for this route (get, post, put, patch, delete) */
@@ -136,9 +137,9 @@ class ForgeControllerBuilder<
    * @returns New builder instance with updated types
    */
   private cloneWith<
-    NewB extends ZodObject<ZodRawShape> | undefined = BodySchema,
-    NewQ extends ZodObject<ZodRawShape> | undefined = QuerySchema,
-    NewP extends ZodObject<ZodRawShape> | undefined = ParamsSchema,
+    NewB extends ZodObjectOrIntersection | undefined = BodySchema,
+    NewQ extends ZodObjectOrIntersection | undefined = QuerySchema,
+    NewP extends ZodObjectOrIntersection | undefined = ParamsSchema,
     NewR extends ZodTypeAny = ResponseSchema
   >(overrides: Partial<ControllerSchema<any, any, any, any>>) {
     const builder = new ForgeControllerBuilder<NewB, NewQ, NewP, NewR>()
@@ -239,16 +240,16 @@ class ForgeControllerBuilder<
    */
   schema<
     T extends {
-      body?: ZodObject<ZodRawShape>
-      query?: ZodObject<ZodRawShape>
-      params?: ZodObject<ZodRawShape>
+      body?: ZodObjectOrIntersection
+      query?: ZodObjectOrIntersection
+      params?: ZodObjectOrIntersection
       response?: ZodTypeAny
     }
   >(input: T) {
     return this.cloneWith<
-      T['body'] extends ZodObject<ZodRawShape> ? T['body'] : BodySchema,
-      T['query'] extends ZodObject<ZodRawShape> ? T['query'] : QuerySchema,
-      T['params'] extends ZodObject<ZodRawShape> ? T['params'] : ParamsSchema,
+      T['body'] extends ZodObjectOrIntersection ? T['body'] : BodySchema,
+      T['query'] extends ZodObjectOrIntersection ? T['query'] : QuerySchema,
+      T['params'] extends ZodObjectOrIntersection ? T['params'] : ParamsSchema,
       T['response'] extends ZodTypeAny ? T['response'] : ResponseSchema
     >({
       ...input
@@ -563,9 +564,9 @@ class ForgeControllerBuilder<
  * @template ResponseSchema - Zod schema type for response validation
  */
 class ForgeControllerBuilderWithoutSchema<
-  BodySchema extends ZodObject<ZodRawShape> | undefined = undefined,
-  QuerySchema extends ZodObject<ZodRawShape> | undefined = undefined,
-  ParamsSchema extends ZodObject<ZodRawShape> | undefined = undefined,
+  BodySchema extends ZodObjectOrIntersection | undefined = undefined,
+  QuerySchema extends ZodObjectOrIntersection | undefined = undefined,
+  ParamsSchema extends ZodObjectOrIntersection | undefined = undefined,
   ResponseSchema extends ZodTypeAny = ZodTypeAny
 > {
   /** The route string in "METHOD /path" format */
@@ -619,16 +620,16 @@ class ForgeControllerBuilderWithoutSchema<
    */
   schema<
     T extends {
-      body?: ZodObject<ZodRawShape>
-      query?: ZodObject<ZodRawShape>
-      params?: ZodObject<ZodRawShape>
+      body?: ZodObjectOrIntersection
+      query?: ZodObjectOrIntersection
+      params?: ZodObjectOrIntersection
       response?: ZodTypeAny
     }
   >(input: T) {
     return new ForgeControllerBuilder<
-      T['body'] extends ZodObject<ZodRawShape> ? T['body'] : BodySchema,
-      T['query'] extends ZodObject<ZodRawShape> ? T['query'] : QuerySchema,
-      T['params'] extends ZodObject<ZodRawShape> ? T['params'] : ParamsSchema,
+      T['body'] extends ZodObjectOrIntersection ? T['body'] : BodySchema,
+      T['query'] extends ZodObjectOrIntersection ? T['query'] : QuerySchema,
+      T['params'] extends ZodObjectOrIntersection ? T['params'] : ParamsSchema,
       T['response'] extends ZodTypeAny ? T['response'] : ResponseSchema
     >()
       .schema(input)
@@ -669,9 +670,9 @@ export const forgeController = {
    * @returns New controller builder instance
    */
   route: <
-    BodySchema extends ZodObject<ZodRawShape> | undefined = undefined,
-    QuerySchema extends ZodObject<ZodRawShape> | undefined = undefined,
-    ParamsSchema extends ZodObject<ZodRawShape> | undefined = undefined,
+    BodySchema extends ZodObjectOrIntersection | undefined = undefined,
+    QuerySchema extends ZodObjectOrIntersection | undefined = undefined,
+    ParamsSchema extends ZodObjectOrIntersection | undefined = undefined,
     ResponseSchema extends ZodTypeAny = ZodTypeAny
   >(
     routeString: string
