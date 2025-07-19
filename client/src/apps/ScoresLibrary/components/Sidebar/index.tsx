@@ -4,13 +4,16 @@ import {
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
-  SidebarWrapper
+  SidebarWrapper,
+  useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
-import { type IScoresLibrarySidebarData } from '../../interfaces/scores_library_interfaces'
+import { ScoresLibraryCollectionsSchemas } from 'shared/types/collections'
+
+import ModifyTypeModal from '../modals/ModifyTypeModal'
 import SidebarAuthorItem from './components/SidebarAuthorItem'
-import SidebarCategoryItem from './components/SidebarCategoryItem'
+import SidebarTypeItem from './components/SidebarCategoryItem'
 import SidebarStarredItem from './components/SidebarStarredItem'
 
 function Sidebar({
@@ -21,10 +24,10 @@ function Sidebar({
   setAuthor,
   starred,
   setStarred,
-  category,
+  category: type,
   setCategory
 }: {
-  sidebarDataQuery: UseQueryResult<IScoresLibrarySidebarData>
+  sidebarDataQuery: UseQueryResult<ScoresLibraryCollectionsSchemas.ISidebarData>
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   author: string | null
@@ -34,6 +37,8 @@ function Sidebar({
   category: string | null
   setCategory: React.Dispatch<React.SetStateAction<string | null>>
 }) {
+  const open = useModalStore(state => state.open)
+
   const sortedAuthors = useMemo(
     () =>
       Object.entries(sidebarDataQuery.data?.authors ?? {}).sort((a, b) => {
@@ -71,13 +76,20 @@ function Sidebar({
     setOpen(false)
   }, [])
 
+  const handleCreate = useCallback(() => {
+    open(ModifyTypeModal, {
+      openType: 'create',
+      existedData: null
+    })
+  }, [])
+
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <QueryWrapper query={sidebarDataQuery}>
         {sidebarData => (
           <>
             <SidebarItem
-              active={category === null && author === null && !starred}
+              active={type === null && author === null && !starred}
               icon="tabler:list"
               name="All scores"
               namespace="apps.scoresLibrary"
@@ -91,23 +103,17 @@ function Sidebar({
               setOpen={setOpen}
             />
             <SidebarDivider />
-            <SidebarTitle name="categories" namespace="apps.scoresLibrary" />
-            {[
-              ['singalong', 'mdi:guitar-pick-outline', 'Sing Along'],
-              ['fingerstyle', 'mingcute:guitar-line', 'Finger Style'],
-              ['uncategorized', 'tabler:music-off', 'Uncategorized']
-            ].map(([cat, icon, name]) => (
-              <SidebarCategoryItem
-                key={cat}
-                category={cat}
-                count={
-                  sidebarData.categories[
-                    cat as keyof IScoresLibrarySidebarData['categories']
-                  ]
-                }
-                icon={icon}
-                isActive={category === cat}
-                name={name}
+            <SidebarTitle
+              actionButtonIcon="tabler:plus"
+              actionButtonOnClick={handleCreate}
+              name="categories"
+              namespace="apps.scoresLibrary"
+            />
+            {sidebarData.types.map(t => (
+              <SidebarTypeItem
+                key={t.id}
+                data={t}
+                isActive={type === t.id}
                 onCancel={handleResetCategory}
                 onSelect={handleSelectCategory}
               />

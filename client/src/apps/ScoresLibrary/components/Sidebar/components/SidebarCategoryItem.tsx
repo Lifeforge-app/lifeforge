@@ -1,39 +1,85 @@
-import { SidebarItem } from 'lifeforge-ui'
+import {
+  DeleteConfirmationModal,
+  MenuItem,
+  SidebarItem,
+  useModalStore
+} from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-function SidebarCategoryItem({
+import {
+  ISchemaWithPB,
+  ScoresLibraryCollectionsSchemas
+} from 'shared/types/collections'
+
+import ModifyTypeModal from '../../modals/ModifyTypeModal'
+
+function SidebarTypeItem({
+  data,
   isActive,
-  category,
-  icon,
-  name,
-  count,
   onCancel,
   onSelect
 }: {
+  data: ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>
   isActive: boolean
-  category: string
-  icon: string
-  name: string
-  count: number
   onCancel: () => void
   onSelect: (category: string) => void
 }) {
+  const open = useModalStore(state => state.open)
+
   const handleSelect = useCallback(() => {
-    onSelect(category)
+    onSelect(data.id)
+  }, [])
+
+  const handleUpdate = useCallback(() => {
+    open(ModifyTypeModal, {
+      openType: 'update',
+      existedData: data
+    })
+  }, [data])
+
+  const handleDelete = useCallback(() => {
+    open(DeleteConfirmationModal, {
+      apiEndpoint: 'scores-library/types',
+      queryKey: [
+        ['scores-library', 'types'],
+        ['scores-library', 'sidebar-data']
+      ],
+      queryUpdateType: 'invalidate',
+      multiQueryKey: true,
+      data,
+      nameKey: 'name' as const
+    })
   }, [])
 
   return (
     <SidebarItem
-      key={category}
+      key={data.id}
       active={isActive}
-      icon={icon}
-      name={name}
+      hamburgerMenuItems={
+        <>
+          <MenuItem
+            icon="tabler:pencil"
+            namespace="apps.scoresLibrary"
+            text="update type"
+            onClick={handleUpdate}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            namespace="apps.scoresLibrary"
+            text="delete type"
+            onClick={handleDelete}
+          />
+        </>
+      }
+      icon={data.icon}
+      name={data.name}
       namespace="apps.scoresLibrary"
-      number={count}
+      number={data.amount}
       onCancelButtonClick={onCancel}
       onClick={handleSelect}
     />
   )
 }
 
-export default SidebarCategoryItem
+export default SidebarTypeItem

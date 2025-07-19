@@ -4,16 +4,12 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   ScoresLibraryCollectionsSchemas
 } from 'shared/types/collections'
 import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
-const TYPES = [
-  { id: 'fingerstyle', icon: 'mingcute:guitar-line' },
-  { id: 'singalong', icon: 'mdi:guitar-pick-outline' }
-]
 
 function ModifyEntryModal({
   onClose,
@@ -26,6 +22,10 @@ function ModifyEntryModal({
   }
 }) {
   const { t } = useTranslation('apps.scoresLibrary')
+
+  const typesQuery = useAPIQuery<
+    ScoresLibraryControllersSchemas.ITypes['getTypes']['response']
+  >('scores-library/types', ['scores-library', 'types'])
 
   const queryClient = useQueryClient()
 
@@ -65,11 +65,11 @@ function ModifyEntryModal({
           text: t('scoreTypes.uncategorized'),
           icon: 'tabler:music-off'
         },
-        ...TYPES.map(({ id, icon }) => ({
+        ...(typesQuery.data?.map(({ id, icon, name }) => ({
           value: id,
-          text: t(`scoreTypes.${id}`),
+          text: name,
           icon
-        }))
+        })) || [])
       ]
     }
   ]
@@ -102,6 +102,7 @@ function ModifyEntryModal({
       fields={FIELDS}
       icon="tabler:pencil"
       id={existedData?.id}
+      loading={typesQuery.isLoading}
       namespace="apps.scoresLibrary"
       openType="update"
       queryKey={queryKey}
