@@ -50,11 +50,7 @@ export type { IEntry, IAuthorAggregated, IType, ITypeAggregated }
 const SidebarData = z.object({
   total: z.number(),
   favourites: z.number(),
-  categories: z.object({
-    fingerstyle: z.number(),
-    singalong: z.number(),
-    uncategorized: z.number()
-  }),
+  types: z.record(z.string(), z.number()),
   authors: z.record(z.string(), z.number())
 })
 

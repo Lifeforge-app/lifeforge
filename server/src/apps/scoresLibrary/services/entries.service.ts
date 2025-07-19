@@ -36,15 +36,14 @@ export const getSidebarData = async (
     .collection('scores_library__authors_aggregated')
     .getFullList<WithPB<ScoresLibraryCollectionsSchemas.IAuthorAggregated>>()
 
+  const allTypes = await pb
+    .collection('scores_library__types_aggregated')
+    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>>()
+
   return {
     total: allScores.length,
     favourites: allScores.filter(entry => entry.isFavourite).length,
-    categories: {
-      fingerstyle: allScores.filter(entry => entry.type === 'fingerstyle')
-        .length,
-      singalong: allScores.filter(entry => entry.type === 'singalong').length,
-      uncategorized: allScores.filter(entry => entry.type === '').length
-    },
+    types: Object.fromEntries(allTypes.map(type => [type.name, type.amount])),
     authors: Object.fromEntries(
       allAuthors.map(author => [author.name, author.amount])
     )
