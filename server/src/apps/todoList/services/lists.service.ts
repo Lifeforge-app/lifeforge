@@ -1,19 +1,19 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { TodoListCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllLists = (
   pb: PocketBase
 ): Promise<
-  WithPB<
+  ISchemaWithPB<
     TodoListCollectionsSchemas.IList & {
       amount: number
     }
   >[]
 > =>
   pb.collection('todo_list__lists_aggregated').getFullList<
-    WithPB<TodoListCollectionsSchemas.IList> & {
+    ISchemaWithPB<TodoListCollectionsSchemas.IList> & {
       amount: number
     }
   >()
@@ -22,7 +22,7 @@ export const createList = async (
   pb: PocketBase,
   data: TodoListCollectionsSchemas.IList
 ): Promise<
-  WithPB<
+  ISchemaWithPB<
     TodoListCollectionsSchemas.IList & {
       amount: number
     }
@@ -30,10 +30,10 @@ export const createList = async (
 > => {
   const created = await pb
     .collection('todo_list__lists')
-    .create<WithPB<TodoListCollectionsSchemas.IList>>(data)
+    .create<ISchemaWithPB<TodoListCollectionsSchemas.IList>>(data)
 
   return pb.collection('todo_list__lists_aggregated').getOne<
-    WithPB<TodoListCollectionsSchemas.IList> & {
+    ISchemaWithPB<TodoListCollectionsSchemas.IList> & {
       amount: number
     }
   >(created.id)
@@ -44,7 +44,7 @@ export const updateList = async (
   id: string,
   data: TodoListCollectionsSchemas.IList
 ): Promise<
-  WithPB<
+  ISchemaWithPB<
     TodoListCollectionsSchemas.IList & {
       amount: number
     }
@@ -52,10 +52,10 @@ export const updateList = async (
 > => {
   const updated = await pb
     .collection('todo_list__lists')
-    .update<WithPB<TodoListCollectionsSchemas.IList>>(id, data)
+    .update<ISchemaWithPB<TodoListCollectionsSchemas.IList>>(id, data)
 
   return pb.collection('todo_list__lists_aggregated').getOne<
-    WithPB<
+    ISchemaWithPB<
       TodoListCollectionsSchemas.IList & {
         amount: number
       }

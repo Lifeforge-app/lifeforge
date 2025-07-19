@@ -1,26 +1,28 @@
 import { getAPIKey } from '@functions/getAPIKey'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
-import { MoviesCollectionsSchemas } from 'shared/types/collections'
+import {
+  ISchemaWithPB,
+  MoviesCollectionsSchemas
+} from 'shared/types/collections'
 
 export const getAllEntries = async (
   pb: PocketBase,
   watched: boolean
 ): Promise<{
-  entries: WithPB<MoviesCollectionsSchemas.IEntry>[]
+  entries: ISchemaWithPB<MoviesCollectionsSchemas.IEntry>[]
   total: number
 }> => {
   const entries = await pb
     .collection('movies__entries')
-    .getFullList<WithPB<MoviesCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
       filter: `is_watched = ${watched}`
     })
 
   const total = (
     await pb
       .collection('movies__entries')
-      .getList<WithPB<MoviesCollectionsSchemas.IEntry>>(1, 1)
+      .getList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>(1, 1)
   ).totalItems
 
   return {
@@ -45,7 +47,7 @@ export const getAllEntries = async (
 export const createEntryFromTMDB = async (
   pb: PocketBase,
   id: string
-): Promise<WithPB<MoviesCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>> => {
   const apiKey = await getAPIKey('tmdb', pb)
 
   if (!apiKey) {
@@ -54,7 +56,7 @@ export const createEntryFromTMDB = async (
 
   const existedData = await pb
     .collection('movies__entries')
-    .getFirstListItem<WithPB<MoviesCollectionsSchemas.IEntry>>(
+    .getFirstListItem<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>(
       `tmdb_id = ${id}`
     )
     .catch(() => null)
@@ -88,7 +90,7 @@ export const createEntryFromTMDB = async (
 
   return await pb
     .collection('movies__entries')
-    .create<WithPB<MoviesCollectionsSchemas.IEntry>>(entryData)
+    .create<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>(entryData)
 }
 
 export const deleteEntry = async (
@@ -101,14 +103,14 @@ export const deleteEntry = async (
 export const toggleWatchStatus = async (
   pb: PocketBase,
   id: string
-): Promise<WithPB<MoviesCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection('movies__entries')
-    .getOne<WithPB<MoviesCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>(id)
 
   const updatedEntry = await pb
     .collection('movies__entries')
-    .update<WithPB<MoviesCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>(id, {
       is_watched: !entry.is_watched
     })
 
