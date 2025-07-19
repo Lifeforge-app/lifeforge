@@ -3,19 +3,24 @@ import dayjs from 'dayjs'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import withDragAndDrop, {
+  EventInteractionArgs
+} from 'react-big-calendar/lib/addons/dragAndDrop'
 
 import { fetchAPI } from 'shared/lib'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
-import { type ICalendarEvent } from '../../interfaces/calendar_interfaces'
 import ModifyEventModal from '../modals/ModifyEventModal'
 import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import EventItem from './components/EventItem'
 import CalendarHeader from './components/Headers/CalendarHeader'
 import WeekHeader from './components/Headers/WeekHeader'
+
+type ICalendarEvent =
+  CalendarControllersSchemas.IEvents['getEventsByDateRange']['response'][number]
 
 const localizer = dayjsLocalizer(dayjs)
 
@@ -88,10 +93,18 @@ function CalendarComponent({
       event: ({
         event
       }: {
-        event: ICalendarEvent | Record<string, unknown>
+        event:
+          | CalendarControllersSchemas.IEvents['getEventById']['response']
+          | Record<string, unknown>
         props: any
       }) => {
-        return <EventItem event={event as ICalendarEvent} />
+        return (
+          <EventItem
+            event={
+              event as CalendarControllersSchemas.IEvents['getEventById']['response']
+            }
+          />
+        )
       },
       week: {
         header: WeekHeader
@@ -107,15 +120,7 @@ function CalendarComponent({
   )
 
   const updateEvent = useCallback(
-    async ({
-      event,
-      start,
-      end
-    }: {
-      event: ICalendarEvent
-      start: Date
-      end: Date
-    }) => {
+    async ({ event, start, end }: EventInteractionArgs<ICalendarEvent>) => {
       queryClient.setQueryData(queryKey, (prevEvents: ICalendarEvent[]) => {
         return prevEvents.map(prevEvent => {
           if (prevEvent.id === event.id) {
@@ -130,41 +135,19 @@ function CalendarComponent({
         })
       })
 
-      try {
-        await fetchAPI<ICalendarEvent>(
-          import.meta.env.VITE_API_HOST,
-          `calendar/events/${event.id}`,
-          {
-            method: 'PATCH',
-            body: {
-              title: event.title,
-              start: dayjs(start).toISOString(),
-              end: dayjs(end).toISOString(),
-              category: event.category
-            }
+      await fetchAPI<ICalendarEvent>(
+        import.meta.env.VITE_API_HOST,
+        `calendar/events/${event.id}`,
+        {
+          method: 'PATCH',
+          body: {
+            title: event.title,
+            start: dayjs(start).toISOString(),
+            end: dayjs(end).toISOString(),
+            category: event.category
           }
-        )
-
-        queryClient.setQueryData<ICalendarEvent[]>(queryKey, prevEvents => {
-          return prevEvents?.map(prevEvent => {
-            if (prevEvent.id === event.id) {
-              return {
-                ...prevEvent,
-                start,
-                end,
-                title: event.title,
-                category: event.category
-              }
-            }
-
-            return prevEvent
-          })
-        })
-      } catch {
-        queryClient.invalidateQueries({
-          queryKey
-        })
-      }
+        }
+      )
     },
     [queryClient, queryKey]
   )
@@ -187,11 +170,11 @@ function CalendarComponent({
     []
   )
 
-  const handleEvenChange = useCallback((e: any) => {
-    updateEvent(e).catch(console.error)
+  const handleEventChange = useCallback((e: EventInteractionArgs<object>) => {
+    updateEvent(e as EventInteractionArgs<ICalendarEvent>).catch(console.error)
   }, [])
 
-  const draggableAccessor = useCallback((event: any) => {
+  const draggableAccessor = useCallback((event: ICalendarEvent) => {
     return !(event.category.startsWith('_') || event.type === 'recurring')
   }, [])
 
@@ -202,8 +185,8 @@ function CalendarComponent({
       draggableAccessor={draggableAccessor}
       events={filteredEvents}
       localizer={localizer}
-      onEventDrop={handleEvenChange}
-      onEventResize={handleEvenChange}
+      onEventDrop={handleEventChange}
+      onEventResize={handleEventChange}
       onRangeChange={handleDateRangeChange}
       onSelectSlot={handleSelectSlot}
     />
