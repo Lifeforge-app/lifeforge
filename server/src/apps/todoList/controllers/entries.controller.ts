@@ -32,9 +32,9 @@ const getAllEntries = forgeController
   .description('Get all todo entries with optional filters')
   .schema(TodoListControllersSchemas.Entries.getAllEntries)
   .existenceCheck('query', {
-    tag: '[todo_list_tags]',
-    list: '[todo_list_lists]',
-    priority: '[todo_list_priorities]'
+    tag: '[todo_list__tags]',
+    list: '[todo_list__lists]',
+    priority: '[todo_list__priorities]'
   })
   .callback(
     async ({ pb, query: { status, tag, list, priority } }) =>
@@ -46,9 +46,9 @@ const createEntry = forgeController
   .description('Create a new todo entry')
   .schema(TodoListControllersSchemas.Entries.createEntry)
   .existenceCheck('body', {
-    list: '[todo_list_lists]',
-    priority: '[todo_list_priorities]',
-    tags: '[todo_list_tags]'
+    list: '[todo_list__lists]',
+    priority: '[todo_list__priorities]',
+    tags: '[todo_list__tags]'
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => await entriesService.createEntry(pb, body))
@@ -61,9 +61,9 @@ const updateEntry = forgeController
     id: 'todo_list__entries'
   })
   .existenceCheck('body', {
-    list: '[todo_list_lists]',
-    priority: '[todo_list_priorities]',
-    tags: '[todo_list_tags]'
+    list: '[todo_list__lists]',
+    priority: '[todo_list__priorities]',
+    tags: '[todo_list__tags]'
   })
   .callback(
     async ({ pb, params: { id }, body }) =>
