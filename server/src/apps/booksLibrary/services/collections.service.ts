@@ -1,12 +1,14 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllCollections = (pb: PocketBase) =>
   pb
     .collection('books_library__collections_aggregated')
-    .getFullList<WithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>>({
+    .getFullList<
+      ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
+    >({
       sort: 'name'
     })
 
@@ -16,12 +18,12 @@ export const createCollection = async (
 ) => {
   const collection = await pb
     .collection('books_library__collections')
-    .create<WithPB<BooksLibraryCollectionsSchemas.ICollection>>(data)
+    .create<ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollection>>(data)
 
   return pb
     .collection('books_library__collections_aggregated')
     .getOne<
-      WithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
+      ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
     >(collection.id)
 }
 
@@ -32,12 +34,12 @@ export const updateCollection = async (
 ) => {
   const collection = await pb
     .collection('books_library__collections')
-    .update<WithPB<BooksLibraryCollectionsSchemas.ICollection>>(id, data)
+    .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollection>>(id, data)
 
   return pb
     .collection('books_library__collections_aggregated')
     .getOne<
-      WithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
+      ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
     >(collection.id)
 }
 

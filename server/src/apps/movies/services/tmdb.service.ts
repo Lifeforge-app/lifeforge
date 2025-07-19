@@ -1,7 +1,7 @@
 import { getAPIKey } from '@functions/getAPIKey'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import Pocketbase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { MoviesCollectionsSchemas } from 'shared/types/collections'
 
 export const searchMovies = async (pb: Pocketbase, q: string, page: number) => {
@@ -23,7 +23,7 @@ export const searchMovies = async (pb: Pocketbase, q: string, page: number) => {
 
   const allIds = await pb
     .collection('movies__entries')
-    .getFullList<WithPB<MoviesCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
       filter: response.results
         .map((entry: { id: number }) => `tmdb_id = ${entry.id}`)
         .join(' || '),

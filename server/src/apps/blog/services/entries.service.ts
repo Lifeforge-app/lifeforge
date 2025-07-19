@@ -1,11 +1,11 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { BlogCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllEntries = (
   pb: PocketBase
-): Promise<WithPB<BlogCollectionsSchemas.IEntry>[]> =>
+): Promise<ISchemaWithPB<BlogCollectionsSchemas.IEntry>[]> =>
   pb
     .collection('blog__entries')
-    .getFullList<WithPB<BlogCollectionsSchemas.IEntry>>()
+    .getFullList<ISchemaWithPB<BlogCollectionsSchemas.IEntry>>()
