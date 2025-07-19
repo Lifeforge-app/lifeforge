@@ -15,11 +15,8 @@ import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
+import { WishlistControllersSchemas } from 'shared/types/controllers'
 
-import {
-  IWishlistEntry,
-  IWishlistList
-} from '../../interfaces/wishlist_interfaces'
 import EntryList from './components/EntryList'
 import Header from './components/Header'
 import FromOtherAppsModal from './modals/FromOtherAppsModal'
@@ -34,27 +31,24 @@ function WishlistEntries() {
 
   const { id } = useParams<{ id: string }>()
 
-  const validQuery = useAPIQuery<boolean>(`wishlist/lists/valid/${id}`, [
-    `wishlist`,
-    `lists`,
-    `valid`,
-    id
-  ])
+  const validQuery = useAPIQuery<
+    WishlistControllersSchemas.ILists['checkListExists']['response']
+  >(`wishlist/lists/valid/${id}`, [`wishlist`, `lists`, `valid`, id])
 
   const [activeTab, setActiveTab] = useState('wishlist')
 
-  const wishlistListDetailsQuery = useAPIQuery<IWishlistList>(
-    `wishlist/lists/${id}`,
-    [`wishlist`, `lists`, id],
-    validQuery.data === true
-  )
+  const wishlistListDetailsQuery = useAPIQuery<
+    WishlistControllersSchemas.ILists['getList']['response']
+  >(`wishlist/lists/${id}`, [`wishlist`, `lists`, id], validQuery.data === true)
 
   const queryKey = useMemo(
     () => [`wishlist`, `entries`, id, activeTab === 'bought'],
     [id, activeTab]
   )
 
-  const entriesQuery = useAPIQuery<IWishlistEntry[]>(
+  const entriesQuery = useAPIQuery<
+    WishlistControllersSchemas.IEntries['getEntriesByListId']['response']
+  >(
     `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
     queryKey,
     validQuery.data === true
