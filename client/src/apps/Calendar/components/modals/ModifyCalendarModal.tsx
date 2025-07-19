@@ -4,9 +4,10 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useRef, useState } from 'react'
 
 import {
-  ICalendarCalendar,
-  ICalendarCalendarFormState
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 function ModifyCalendarModal({
   data: { type, existedData },
@@ -14,7 +15,7 @@ function ModifyCalendarModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ICalendarCalendar | null
+    existedData: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar> | null
   }
   onClose: () => void
 }) {
@@ -22,12 +23,16 @@ function ModifyCalendarModal({
 
   const innerOpenType = useDebounce(type, type === null ? 300 : 0)
 
-  const [data, setData] = useState<ICalendarCalendarFormState>({
+  const [formState, setFormState] = useState<
+    CalendarControllersSchemas.ICalendars[
+      | 'createCalendar'
+      | 'updateCalendar']['body']
+  >({
     name: '',
     color: '#FFFFFF'
   })
 
-  const FIELDS: IFieldProps<ICalendarCalendarFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       required: true,
@@ -46,9 +51,9 @@ function ModifyCalendarModal({
 
   useEffect(() => {
     if (type === 'update' && existedData !== null) {
-      setData(existedData)
+      setFormState(existedData)
     } else {
-      setData({
+      setFormState({
         name: '',
         color: '#FFFFFF'
       })
@@ -57,7 +62,7 @@ function ModifyCalendarModal({
 
   return (
     <FormModal
-      data={data}
+      data={formState}
       endpoint="calendar/calendars"
       fields={FIELDS}
       icon={
@@ -71,7 +76,7 @@ function ModifyCalendarModal({
       namespace="apps.calendar"
       openType={type}
       queryKey={['calendar', 'calendars']}
-      setData={setData}
+      setData={setFormState}
       sortBy="name"
       sortMode="asc"
       title={`calendar.${innerOpenType}`}

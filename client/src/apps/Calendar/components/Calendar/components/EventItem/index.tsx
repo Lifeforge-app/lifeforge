@@ -1,27 +1,30 @@
 import { memo, useMemo } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import {
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '../../../../interfaces/calendar_interfaces.js'
+import { ICalendarEvent } from '../../index.js'
 import EventItemButton from './components/EventItemButton.js'
 import EventItemTooltip from './components/EventItemTooltip.js'
 
 function EventItem({ event }: { event: ICalendarEvent }) {
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
-  )
+  const categoriesQuery = useAPIQuery<
+    CalendarControllersSchemas.ICategories['getAllCategories']['response']
+  >('calendar/categories', ['calendar', 'categories'])
 
-  const category = useMemo<ICalendarCategory | undefined>(() => {
+  const category = useMemo(() => {
     if (event.category.startsWith('_')) {
-      return (INTERNAL_CATEGORIES[
-        event.category as keyof typeof INTERNAL_CATEGORIES
-      ] ?? {}) as ICalendarCategory
+      return {
+        ...INTERNAL_CATEGORIES[
+          event.category as keyof typeof INTERNAL_CATEGORIES
+        ]
+      } as ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
     }
 
     return categoriesQuery.data?.find(

@@ -5,7 +5,7 @@ import { memo, useCallback } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
-import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
+import CreateEventModal from '@apps/Calendar/components/modals/ModifyEventModal/CreateEventModal'
 import ScanImageModal from '@apps/Calendar/components/modals/ScanImageModal'
 
 import NavigationControl from './components/NavigationControl'
@@ -35,7 +35,7 @@ function CalendarHeader({
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open(ModifyEventModal, {
+    open(CreateEventModal, {
       existedData: null,
       type: 'create'
     })

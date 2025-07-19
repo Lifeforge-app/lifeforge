@@ -7,7 +7,7 @@ import { fetchAPI } from 'shared/lib'
 
 import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 
-import ModifyEventModal from './ModifyEventModal'
+import CreateEventModal from './ModifyEventModal/CreateEventModal'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
@@ -42,7 +42,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
 
       onClose()
 
-      open(ModifyEventModal, {
+      open(CreateEventModal, {
         type: 'create',
         existedData: {
           ...data,
