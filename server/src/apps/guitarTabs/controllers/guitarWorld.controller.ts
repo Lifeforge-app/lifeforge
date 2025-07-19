@@ -15,7 +15,7 @@ const getTabsList = forgeController
   .description('Get tabs list from Guitar World')
   .schema(GuitarTabsControllersSchemas.GuitarWorld.getTabsList)
   .callback(
-    async ({ body: { cookie, page } }) =>
+    async ({ query: { cookie, page } }) =>
       await guitarWorldService.getTabsList(cookie, page)
   )
 
