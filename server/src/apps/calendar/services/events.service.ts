@@ -53,7 +53,7 @@ export const getEventsByDateRange = async (
       category: baseEvent.category,
       description: baseEvent.description,
       location: baseEvent.location,
-      use_google_map: baseEvent.use_google_map,
+      location_coords: baseEvent.location_coords,
       reference_link: baseEvent.reference_link
     })
   })
@@ -111,8 +111,8 @@ export const getEventsByDateRange = async (
         calendar: baseEvent.calendar,
         category: baseEvent.category,
         description: baseEvent.description,
-        use_google_map: baseEvent.use_google_map,
         location: baseEvent.location,
+        location_coords: baseEvent.location_coords,
         reference_link: baseEvent.reference_link
       })
     }
@@ -135,8 +135,8 @@ export const getEventsByDateRange = async (
       category: '_todo',
       calendar: '',
       description: entry.notes,
-      use_google_map: false,
       location: '',
+      location_coords: { lat: 0, lon: 0 },
       reference_link: `/todo-list?entry=${entry.id}`,
       is_strikethrough: entry.done
     } satisfies (typeof allEvents)[number]
@@ -162,8 +162,8 @@ export const getEventsByDateRange = async (
         .toISOString(),
       category: '_movie',
       calendar: '',
-      use_google_map: true,
       location: entry.theatre_location ?? '',
+      location_coords: entry.theatre_location_coords,
       description: `
   ### Movie Description:
   ${entry.overview}
@@ -209,8 +209,8 @@ export const createEvent = async (
       title: eventData.title,
       category: eventData.category,
       calendar: eventData.calendar,
-      use_google_map: eventData.use_google_map || false,
       location: eventData.location || '',
+      location_coords: eventData.location_coords || { lat: 0, lon: 0 },
       reference_link: eventData.reference_link || '',
       description: eventData.description || '',
       type: eventData.type
@@ -321,9 +321,26 @@ export const updateEvent = async (
   id: string,
   eventData: CalendarControllersSchemas.IEvents['updateEvent']['body']
 ): Promise<CalendarControllersSchemas.IEvents['updateEvent']['response']> => {
+  const location = eventData.location
+
+  const toBeUpdatedData: Partial<CalendarCollectionsSchemas.IEvent> = {
+    ...eventData,
+    ...(typeof location === 'object'
+      ? {
+          location: location.name,
+          location_coords: {
+            lat: location.location.latitude,
+            lon: location.location.longitude
+          }
+        }
+      : { location: undefined })
+  }
+
   await pb
     .collection('calendar__events')
-    .update<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>(id, eventData)
+    .update<
+      ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
+    >(id, toBeUpdatedData)
 }
 
 export const deleteEvent = async (pb: PocketBase, id: string) => {
