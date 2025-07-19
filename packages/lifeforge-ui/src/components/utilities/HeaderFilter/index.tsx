@@ -2,44 +2,36 @@ import { usePersonalization } from 'shared/lib'
 
 import FilterChip from './components/HeaderFilterChip'
 
-function HeaderFilter({
+function HeaderFilter<T extends Record<string, string | null>>({
   items,
   values,
   setValues
 }: {
   items: Record<
-    string,
+    keyof T,
     {
-      data:
-        | Array<{
-            id: string
-            icon?: string
-            name: string
-            color?: string
-          }>
-        | 'loading'
-        | 'error'
+      data: Array<{
+        id: string
+        icon?: string
+        name: string
+        color?: string
+      }>
       isColored?: boolean
     }
   >
-  values: Record<string, string | null>
-  setValues: Record<string, (value: string | null) => void>
+  values: T
+  setValues: Record<keyof T, (value: string | null) => void>
 }) {
   const { derivedThemeColor } = usePersonalization()
 
-  if (
-    !(
-      Object.values(items).every(({ data }) => typeof data !== 'string') &&
-      Object.keys(items).some(query => Boolean(values[query]))
-    )
-  ) {
+  if (!Object.keys(items).some(query => Boolean(values[query]))) {
     return <></>
   }
 
   return (
     <div className="mt-2 flex flex-wrap items-center gap-2">
       {Object.entries(items).map(([query, { data, isColored }]) => {
-        return typeof data !== 'string' && Boolean(values[query])
+        return values[query]
           ? (() => {
               const target = data.find(item => item.id === values[query])
 

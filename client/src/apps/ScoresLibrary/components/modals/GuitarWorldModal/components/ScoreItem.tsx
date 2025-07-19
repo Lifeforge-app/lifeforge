@@ -13,7 +13,7 @@ function ScoreItem({
   entry,
   cookie
 }: {
-  entry: ScoresLibraryCollectionsSchemas.IScoresLibraryGuitarWorldEntry
+  entry: ScoresLibraryCollectionsSchemas.IGuitarWorldEntry
   cookie: string
 }) {
   const queryClient = useQueryClient()

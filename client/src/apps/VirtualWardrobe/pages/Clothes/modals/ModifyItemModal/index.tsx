@@ -43,14 +43,14 @@ function ModifyItemModal({
     brand: '',
     size: '',
     colors: [],
-    price: '',
+    price: 0,
     notes: ''
   })
 
   const [submitButtonLoading, setSubmitButtonLoading] = useState<boolean>(false)
 
   function handleChange(field: keyof IVirtualWardrobeFormState) {
-    return (value: string | string[]) => {
+    return (value: string | string[] | number) => {
       setFormState({ ...formState, [field]: value })
     }
   }
@@ -95,7 +95,7 @@ function ModifyItemModal({
           body:
             type === 'create'
               ? formData
-              : (formState as any as Record<string, unknown>)
+              : (formState as Record<string, unknown>)
         }
       )
 
@@ -131,7 +131,7 @@ function ModifyItemModal({
         brand: '',
         size: '',
         colors: [],
-        price: '',
+        price: 0,
         notes: ''
       })
       setFrontImage(null)
@@ -149,7 +149,7 @@ function ModifyItemModal({
           brand: existedData.brand,
           size: existedData.size,
           colors: existedData.colors,
-          price: existedData.price === 0 ? '' : existedData.price.toString(),
+          price: existedData.price,
           notes: existedData.notes
         })
         setFrontImage(null)

@@ -6,7 +6,7 @@ import { useCurrencies } from '../hooks/useCurrencies'
 import { ExchangeRates } from '../interfaces/currency_converter_interfaces'
 
 interface ConversionResultProps {
-  amount: string
+  amount: number
   fromCurrency: string
   toCurrency: string
   result: number | null
@@ -48,7 +48,7 @@ function ConversionResult({
                 className="mr-1 text-2xl"
                 icon={`circle-flags:${currencies.find(c => c.code === fromCurrency)?.country.toLowerCase()}`}
               />
-              <span>{parseFloat(amount).toLocaleString()}</span>
+              <span>{amount.toLocaleString()}</span>
               <span className="text-bg-500">{fromCurrency}</span>
             </div>
             <span className="mx-4 block w-full md:w-auto">=</span>
