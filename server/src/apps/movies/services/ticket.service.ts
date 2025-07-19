@@ -11,10 +11,10 @@ export const updateTicket = (
 ): Promise<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>> => {
   const finalData: Partial<MoviesCollectionsSchemas.IEntry> = {
     ...ticketData,
-    theatre_location: ticketData.theatre_location.name,
+    theatre_location: ticketData.theatre_location?.name,
     theatre_location_coords: {
-      lat: ticketData.theatre_location.location.latitude,
-      lon: ticketData.theatre_location.location.longitude
+      lat: ticketData.theatre_location?.location.latitude || 0,
+      lon: ticketData.theatre_location?.location.longitude || 0
     }
   }
 
