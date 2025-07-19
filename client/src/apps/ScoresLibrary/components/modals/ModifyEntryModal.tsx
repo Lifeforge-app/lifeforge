@@ -95,7 +95,7 @@ function ModifyEntryModal({
         }
       }}
       data={formState}
-      endpoint="score-library/entries"
+      endpoint="scores-library/entries"
       fields={FIELDS}
       icon="tabler:pencil"
       id={existedData?.id}

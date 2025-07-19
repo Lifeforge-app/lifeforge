@@ -45,7 +45,7 @@ function ScoresLibrary() {
   const [selectedSortType, setSelectedSortType] = useState<string>('newest')
 
   const queryKey = [
-    'score-library',
+    'scores-library',
     'entries',
     page,
     debouncedSearchQuery,
@@ -73,14 +73,14 @@ function ScoresLibrary() {
 
       if (selectedAuthor) searchParams.set('author', selectedAuthor)
 
-      return `score-library/entries?${searchParams.toString()}`
+      return `scores-library/entries?${searchParams.toString()}`
     })(),
     queryKey
   )
 
   const sidebarDataQuery = useAPIQuery<
     ScoresLibraryControllersSchemas.IEntries['getSidebarData']['response']
-  >('score-library/entries/sidebar-data', ['score-library', 'sidebar-data'])
+  >('scores-library/entries/sidebar-data', ['scores-library', 'sidebar-data'])
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -121,7 +121,7 @@ function ScoresLibrary() {
       try {
         const taskId = await fetchAPI<string>(
           import.meta.env.VITE_API_HOST,
-          `score-library/entries/upload`,
+          `scores-library/entries/upload`,
           {
             method: 'POST',
             body: formData

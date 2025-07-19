@@ -60,7 +60,7 @@ function ScoreItem({
     try {
       const taskId = await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        'score-library/guitar-world/download',
+        'scores-library/guitar-world/download',
         {
           method: 'POST',
           body: {
@@ -89,7 +89,7 @@ function ScoreItem({
             setIsDownloading(false)
 
             queryClient.invalidateQueries({
-              queryKey: ['score-library', 'entries']
+              queryKey: ['scores-library', 'entries']
             })
           }
         }

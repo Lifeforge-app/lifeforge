@@ -16,8 +16,8 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
   const dataQuery = useAPIQuery<
     ScoresLibraryControllersSchemas.IGuitarWorld['getTabsList']['response']
   >(
-    `score-library/guitar-world?cookie=${finalCookie}&page=${page}`,
-    ['score-library', finalCookie, page],
+    `scores-library/guitar-world?cookie=${finalCookie}&page=${page}`,
+    ['scores-library', finalCookie, page],
     !!finalCookie,
     {}
   )
