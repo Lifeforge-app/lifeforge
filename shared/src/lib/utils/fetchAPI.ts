@@ -82,7 +82,7 @@ export default async function fetchAPI<T>(
 
   const cookies = parseCookie(document.cookie)
 
-  const session = cookies.session ?? ''
+  const session = cookies.session || cookies.token
 
   const url = isExternal ? new URL(endpoint) : new URL(endpoint, apiHost)
 
