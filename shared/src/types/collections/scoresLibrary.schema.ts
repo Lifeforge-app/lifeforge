@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: scoresLibrary
- * Generated at: 2025-07-18T12:15:50.183Z
- * Contains: scores_library__entries, scores_library__authors_aggregated
+ * Generated at: 2025-07-19T04:32:26.925Z
+ * Contains: scores_library__entries, scores_library__authors_aggregated, scores_library__types, scores_library__types_aggregated
  */
 import { z } from 'zod/v4'
 
@@ -25,16 +25,29 @@ const AuthorAggregated = z.object({
   amount: z.number()
 })
 
+const Type = z.object({
+  name: z.string(),
+  icon: z.string()
+})
+
+const TypeAggregated = z.object({
+  name: z.string(),
+  icon: z.string(),
+  amount: z.number()
+})
+
 type IEntry = z.infer<typeof Entry>
 type IAuthorAggregated = z.infer<typeof AuthorAggregated>
+type IType = z.infer<typeof Type>
+type ITypeAggregated = z.infer<typeof TypeAggregated>
 
-export { Entry, AuthorAggregated }
+export { Entry, AuthorAggregated, Type, TypeAggregated }
 
-export type { IEntry, IAuthorAggregated }
+export type { IEntry, IAuthorAggregated, IType, ITypeAggregated }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
-const ScoresLibrarySidebarDataSchema = z.object({
+const SidebarData = z.object({
   total: z.number(),
   favourites: z.number(),
   categories: z.object({
@@ -45,7 +58,7 @@ const ScoresLibrarySidebarDataSchema = z.object({
   authors: z.record(z.string(), z.number())
 })
 
-const ScoresLibraryGuitarWorldEntrySchema = z.object({
+const GuitarWorldEntry = z.object({
   id: z.number(),
   name: z.string(),
   subtitle: z.string(),
@@ -55,11 +68,9 @@ const ScoresLibraryGuitarWorldEntrySchema = z.object({
   audioUrl: z.string()
 })
 
-type IScoresLibrarySidebarData = z.infer<typeof ScoresLibrarySidebarDataSchema>
-type IScoresLibraryGuitarWorldEntry = z.infer<
-  typeof ScoresLibraryGuitarWorldEntrySchema
->
+type ISidebarData = z.infer<typeof SidebarData>
+type IGuitarWorldEntry = z.infer<typeof GuitarWorldEntry>
 
-export { ScoresLibrarySidebarDataSchema, ScoresLibraryGuitarWorldEntrySchema }
+export { SidebarData, GuitarWorldEntry }
 
-export type { IScoresLibrarySidebarData, IScoresLibraryGuitarWorldEntry }
+export type { ISidebarData, IGuitarWorldEntry }

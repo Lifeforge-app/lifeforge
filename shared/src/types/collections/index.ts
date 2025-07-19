@@ -2,7 +2,7 @@
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
  * You may regenerate it by running `npm run generate:schema:collection`.
  * This is the entry point for all schemas in the shared library.
- * Generated at: 2025-07-18T12:15:51.197Z
+ * Generated at: 2025-07-19T04:32:27.932Z
  * Contains schemas for all modules.
  */
 
@@ -20,8 +20,6 @@ export * as MomentVaultCollectionsSchemas from './momentVault.schema'
 
 export * as BlogCollectionsSchemas from './blog.schema'
 
-export * as ScoresLibraryCollectionsSchemas from './scoresLibrary'
-
 export * as TodoListCollectionsSchemas from './todoList.schema'
 
 export * as IdeaBoxCollectionsSchemas from './ideaBox.schema'
@@ -34,6 +32,8 @@ export * as WalletCollectionsSchemas from './wallet.schema'
 
 export * as BooksLibraryCollectionsSchemas from './booksLibrary.schema'
 
+export * as ScoresLibraryCollectionsSchemas from './scoresLibrary.schema'
+
 export * as CodeTimeCollectionsSchemas from './codeTime.schema'
 
 export * as WishlistCollectionsSchemas from './wishlist.schema'
@@ -42,9 +42,9 @@ export * as ApiKeysCollectionsSchemas from './apiKeys.schema'
 
 export * as UserCollectionsSchemas from './user.schema'
 
-export * as PixabayCustomCollectionsSchemas from './pixabay.custom.schema'
+export * as PixabayCustomSchemas from './pixabay.custom.schema'
 
-export * as YoutubeSummarizerCustomCollectionsSchemas from './youtubeSummarizer.custom.schema'
+export * as YoutubeSummarizerCustomSchemas from './youtubeSummarizer.custom.schema'
 
 export { SchemaWithPB } from './schemaWithPB'
 

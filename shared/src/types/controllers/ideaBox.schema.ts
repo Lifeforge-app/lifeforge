@@ -198,9 +198,7 @@ const Containers = {
    * @description Get all containers
    */
   getContainers: {
-    response: z.array(
-      SchemaWithPB(IdeaBoxCollectionsSchemas.ContainerAggregated)
-    )
+    response: z.array(IdeaBoxCollectionsSchemas.ContainerAggregated)
   },
 
   /**
@@ -337,7 +335,7 @@ const Tags = {
     params: z.object({
       container: z.string()
     }),
-    response: z.array(SchemaWithPB(IdeaBoxCollectionsSchemas.TagAggregated))
+    response: z.array(IdeaBoxCollectionsSchemas.TagAggregated)
   },
 
   /**

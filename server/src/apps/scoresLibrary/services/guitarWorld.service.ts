@@ -15,7 +15,7 @@ export const getTabsList = async (
   cookie: string,
   page: number
 ): Promise<{
-  data: ScoresLibraryCollectionsSchemas.IScoresLibraryGuitarWorldEntry[]
+  data: ScoresLibraryCollectionsSchemas.IGuitarWorldEntry[]
   totalItems: number
   perPage: number
 }> => {

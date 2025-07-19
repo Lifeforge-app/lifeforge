@@ -110,7 +110,7 @@ const Lists = {
     params: z.object({
       id: z.string()
     }),
-    response: SchemaWithPB(WishlistCollectionsSchemas.ListAggregated)
+    response: WishlistCollectionsSchemas.ListAggregated
   },
 
   /**
@@ -129,7 +129,7 @@ const Lists = {
    * @description Get all wishlists with statistics
    */
   getAllLists: {
-    response: z.array(SchemaWithPB(WishlistCollectionsSchemas.ListAggregated))
+    response: z.array(WishlistCollectionsSchemas.ListAggregated)
   },
 
   /**
