@@ -1,6 +1,6 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import Pocketbase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { MusicCollectionsSchemas } from 'shared/types/collections'
 
 let importProgress: 'in_progress' | 'completed' | 'failed' | 'empty' = 'empty'
@@ -21,10 +21,10 @@ export const setImportProgress = (
 
 export const getAllEntries = async (
   pb: Pocketbase
-): Promise<WithPB<MusicCollectionsSchemas.IEntry>[]> =>
+): Promise<ISchemaWithPB<MusicCollectionsSchemas.IEntry>[]> =>
   await pb
     .collection('music__entries')
-    .getFullList<WithPB<MusicCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<MusicCollectionsSchemas.IEntry>>({
       sort: '-is_favourite, name'
     })
 
@@ -32,10 +32,10 @@ export const updateEntry = async (
   pb: Pocketbase,
   id: string,
   data: { name: string; author: string }
-): Promise<WithPB<MusicCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<MusicCollectionsSchemas.IEntry>> =>
   await pb
     .collection('music__entries')
-    .update<WithPB<MusicCollectionsSchemas.IEntry>>(id, data)
+    .update<ISchemaWithPB<MusicCollectionsSchemas.IEntry>>(id, data)
 
 export const deleteEntry = async (pb: Pocketbase, id: string) => {
   await pb.collection('music__entries').delete(id)
@@ -44,7 +44,7 @@ export const deleteEntry = async (pb: Pocketbase, id: string) => {
 export const toggleFavorite = async (
   pb: Pocketbase,
   id: string
-): Promise<WithPB<MusicCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<MusicCollectionsSchemas.IEntry>> => {
   const entry = await pb.collection('music__entries').getOne(id)
 
   return await pb.collection('music__entries').update(id, {

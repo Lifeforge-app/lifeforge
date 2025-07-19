@@ -2,13 +2,13 @@ import {
   addToTaskPool,
   updateTaskInPool
 } from '@middlewares/taskPoolMiddleware'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import fs from 'fs'
 import PDFDocument from 'pdfkit'
 import PocketBase from 'pocketbase'
 import sharp from 'sharp'
 import { Server } from 'socket.io'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { ScoresLibraryCollectionsSchemas } from 'shared/types/collections'
 
 export const getTabsList = async (
@@ -163,7 +163,7 @@ export const downloadTab = async (
 
         const newEntry = await pb
           .collection('scores_library__entries')
-          .create<WithPB<ScoresLibraryCollectionsSchemas.IEntry>>({
+          .create<ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>>({
             name,
             author: mainArtist,
             pageCount: images.length,

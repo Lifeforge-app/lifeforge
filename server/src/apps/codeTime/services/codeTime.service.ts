@@ -1,8 +1,8 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import moment from 'moment'
 import PocketBase from 'pocketbase'
 import puppeteer from 'puppeteer-core'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { CodeTimeCollectionsSchemas } from 'shared/types/collections'
 
 export const addDays = (date: Date, days: number): Date => {
@@ -31,7 +31,7 @@ export const getActivities = async (
 
   const data = await pb
     .collection('code_time__daily_entries')
-    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
+    .getFullList<ISchemaWithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${yearValue}-01-01 00:00:00.000Z" && date <= "${yearValue}-12-31 23:59:59.999Z"`
     })
 
@@ -85,7 +85,7 @@ export const getActivities = async (
 
   const firstRecordEver = await pb
     .collection('code_time__daily_entries')
-    .getList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>(1, 1, {
+    .getList<ISchemaWithPB<CodeTimeCollectionsSchemas.IDailyEntry>>(1, 1, {
       sort: '+date'
     })
 
@@ -205,12 +205,12 @@ export const getStatistics = async (
 export const getLastXDays = async (
   pb: PocketBase,
   days: number
-): Promise<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>[]> => {
+): Promise<ISchemaWithPB<CodeTimeCollectionsSchemas.IDailyEntry>[]> => {
   const lastXDays = moment().subtract(days, 'days').format('YYYY-MM-DD')
 
   const data = await pb
     .collection('code_time__daily_entries')
-    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
+    .getFullList<ISchemaWithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${lastXDays} 00:00:00.000Z"`
     })
 
@@ -302,7 +302,7 @@ export const getEachDay = async (
 
   const data = await pb
     .collection('code_time__daily_entries')
-    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
+    .getFullList<ISchemaWithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${firstDay} 00:00:00.000Z" && date <= "${lastDay} 23:59:59.999Z"`
     })
 
@@ -328,7 +328,7 @@ export const getUserMinutes = async (
 
   const items = await pb
     .collection('code_time__daily_entries')
-    .getFullList<WithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
+    .getFullList<ISchemaWithPB<CodeTimeCollectionsSchemas.IDailyEntry>>({
       filter: `date >= "${minTime}"`
     })
 

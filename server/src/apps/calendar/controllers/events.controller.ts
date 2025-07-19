@@ -47,14 +47,15 @@ const createEvent = forgeController
     if (body.type === 'recurring' && !body.recurring_rrule) {
       throw new ClientError('Recurring events must have a recurring rule')
     }
+
     return await EventsService.createEvent(pb, body)
   })
 
 const scanImage = forgeController
   .route('POST /scan-image')
   .description('Scan an image to extract event data')
-  .middlewares(singleUploadMiddleware)
   .schema(CalendarControllersSchemas.Events.scanImage)
+  .middlewares(singleUploadMiddleware)
   .callback(async ({ pb, req }) => {
     const { file } = req
 
@@ -67,6 +68,7 @@ const scanImage = forgeController
     if (!eventData) {
       throw new Error('Failed to scan image')
     }
+
     return eventData
   })
 

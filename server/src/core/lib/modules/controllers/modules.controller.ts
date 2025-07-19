@@ -48,8 +48,8 @@ const packageModule = forgeController
 const installModule = forgeController
   .route('POST /install')
   .description('Install a module from uploaded file')
-  .middlewares(singleUploadMiddleware)
   .schema(ModulesControllersSchemas.Modules.installModule)
+  .middlewares(singleUploadMiddleware)
   .callback(async ({ body: { name }, req: { file } }) =>
     ModuleService.installModule(name, file)
   )

@@ -1,19 +1,19 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { TodoListCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllPriorities = (
   pb: PocketBase
 ): Promise<
-  WithPB<
+  ISchemaWithPB<
     TodoListCollectionsSchemas.IPriority & {
       amount: number
     }
   >[]
 > =>
   pb.collection('todo_list__priorities_aggregated').getFullList<
-    WithPB<
+    ISchemaWithPB<
       TodoListCollectionsSchemas.IPriority & {
         amount: number
       }
@@ -24,7 +24,7 @@ export const createPriority = async (
   pb: PocketBase,
   data: Omit<TodoListCollectionsSchemas.IPriority, 'amount'>
 ): Promise<
-  WithPB<
+  ISchemaWithPB<
     TodoListCollectionsSchemas.IPriority & {
       amount: number
     }
@@ -32,12 +32,12 @@ export const createPriority = async (
 > => {
   const created = await pb
     .collection('todo_list__priorities')
-    .create<WithPB<TodoListCollectionsSchemas.IPriority>>(data)
+    .create<ISchemaWithPB<TodoListCollectionsSchemas.IPriority>>(data)
 
   return pb
     .collection('todo_list__priorities_aggregated')
     .getOne<
-      WithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
+      ISchemaWithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
     >(created.id)
 }
 
@@ -46,7 +46,7 @@ export const updatePriority = async (
   id: string,
   data: Omit<TodoListCollectionsSchemas.IPriority, 'amount'>
 ): Promise<
-  WithPB<
+  ISchemaWithPB<
     TodoListCollectionsSchemas.IPriority & {
       amount: number
     }
@@ -54,12 +54,12 @@ export const updatePriority = async (
 > => {
   const updated = await pb
     .collection('todo_list__priorities')
-    .update<WithPB<TodoListCollectionsSchemas.IPriority>>(id, data)
+    .update<ISchemaWithPB<TodoListCollectionsSchemas.IPriority>>(id, data)
 
   return pb
     .collection('todo_list__priorities_aggregated')
     .getOne<
-      WithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
+      ISchemaWithPB<TodoListCollectionsSchemas.IPriority & { amount: number }>
     >(updated.id)
 }
 

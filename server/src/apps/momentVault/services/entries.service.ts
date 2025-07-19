@@ -1,8 +1,8 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import fs from 'fs'
 import { ListResult } from 'pocketbase'
 import Client from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { MomentVaultCollectionsSchemas } from 'shared/types/collections'
 
 import { convertToMp3 } from '../utils/convertToMP3'
@@ -19,10 +19,10 @@ export async function getEntryById(
 export const getAllEntries = async (
   pb: Client,
   page: number = 1
-): Promise<ListResult<WithPB<MomentVaultCollectionsSchemas.IEntry>>> => {
+): Promise<ListResult<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>>> => {
   const entries = await pb
     .collection('moment_vault__entries')
-    .getList<WithPB<MomentVaultCollectionsSchemas.IEntry>>(page, 10, {
+    .getList<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>>(page, 10, {
       sort: '-created'
     })
 
@@ -46,7 +46,7 @@ export const createAudioEntry = async (
     file: Express.Multer.File
     transcription?: string
   }
-): Promise<WithPB<MomentVaultCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>> => {
   if (file.mimetype !== 'audio/mp3') {
     file.path = await convertToMp3(file.path)
   }
@@ -55,7 +55,7 @@ export const createAudioEntry = async (
 
   const entry = await pb
     .collection('moment_vault__entries')
-    .create<WithPB<MomentVaultCollectionsSchemas.IEntry>>({
+    .create<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>>({
       type: 'audio',
       file: new File([fileBuffer], file.path.split('/').pop() || 'audio.mp3'),
       transcription
@@ -75,10 +75,10 @@ export const createAudioEntry = async (
 export const createTextEntry = async (
   pb: Client,
   content: string
-): Promise<WithPB<MomentVaultCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>> => {
   return await pb
     .collection('moment_vault__entries')
-    .create<WithPB<MomentVaultCollectionsSchemas.IEntry>>({
+    .create<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>>({
       type: 'text',
       content
     })
@@ -87,7 +87,7 @@ export const createTextEntry = async (
 export const createPhotosEntry = async (
   pb: Client,
   files: Express.Multer.File[]
-): Promise<WithPB<MomentVaultCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>> => {
   const allImages = files.map(file => {
     const fileBuffer = fs.readFileSync(file.path)
 
@@ -96,7 +96,7 @@ export const createPhotosEntry = async (
 
   const entry = await pb
     .collection('moment_vault__entries')
-    .create<WithPB<MomentVaultCollectionsSchemas.IEntry>>({
+    .create<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>>({
       type: 'photos',
       file: allImages
     })
@@ -118,10 +118,10 @@ export const updateEntry = async (
   pb: Client,
   id: string,
   content: string
-): Promise<WithPB<MomentVaultCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>> =>
   await pb
     .collection('moment_vault__entries')
-    .update<WithPB<MomentVaultCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<MomentVaultCollectionsSchemas.IEntry>>(id, {
       content
     })
 

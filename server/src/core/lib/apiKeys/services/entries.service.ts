@@ -1,9 +1,9 @@
 import ClientError from '@functions/ClientError'
 import { decrypt2, encrypt2 } from '@functions/encryption'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import bcrypt from 'bcrypt'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { ApiKeysCollectionsSchemas } from 'shared/types/collections'
 
 import { challenge } from './auth.service'
@@ -34,10 +34,10 @@ export default async function getDecryptedMaster(
 
 export const getAllEntries = async (
   pb: PocketBase
-): Promise<WithPB<ApiKeysCollectionsSchemas.IEntry>[]> => {
+): Promise<ISchemaWithPB<ApiKeysCollectionsSchemas.IEntry>[]> => {
   const entries = await pb
     .collection('api_keys__entries')
-    .getFullList<WithPB<ApiKeysCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<ApiKeysCollectionsSchemas.IEntry>>({
       sort: 'name'
     })
 
@@ -98,14 +98,14 @@ export const createEntry = async (
     key: string
     decryptedMaster: string
   }
-): Promise<WithPB<ApiKeysCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<ApiKeysCollectionsSchemas.IEntry>> => {
   const decryptedKey = decrypt2(key, decryptedMaster)
 
   const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!)
 
   const entry = await pb
     .collection('api_keys__entries')
-    .create<WithPB<ApiKeysCollectionsSchemas.IEntry>>({
+    .create<ISchemaWithPB<ApiKeysCollectionsSchemas.IEntry>>({
       keyId,
       name,
       description,
@@ -136,14 +136,14 @@ export const updateEntry = async (
     key: string
     decryptedMaster: string
   }
-): Promise<WithPB<ApiKeysCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<ApiKeysCollectionsSchemas.IEntry>> => {
   const decryptedKey = decrypt2(key, decryptedMaster)
 
   const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!)
 
   const updatedEntry = await pb
     .collection('api_keys__entries')
-    .update<WithPB<ApiKeysCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<ApiKeysCollectionsSchemas.IEntry>>(id, {
       keyId,
       name,
       description,

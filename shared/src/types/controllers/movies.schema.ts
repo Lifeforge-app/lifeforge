@@ -28,32 +28,6 @@ const Ticket = {
    * @description Update ticket information for a movie entry
    */
   updateTicket: {
-    body: MoviesCollectionsSchemas.Entry.pick({
-      ticket_number: true,
-      theatre_number: true,
-      theatre_seat: true,
-      theatre_showtime: true
-    }).extend({
-      entry_id: z.string(),
-      theatre_location: z.object({
-        displayName: z.object({
-          text: z.string(),
-          languageCode: z.string()
-        }),
-        location: z.object({
-          latitude: z.number(),
-          longitude: z.number()
-        })
-      })
-    }),
-    response: SchemaWithPB(MoviesCollectionsSchemas.Entry)
-  },
-
-  /**
-   * @route       PATCH /:id
-   * @description Update ticket information for a movie entry (PATCH)
-   */
-  updateTicketPatch: {
     params: z.object({
       id: z.string()
     }),
@@ -64,10 +38,7 @@ const Ticket = {
       theatre_showtime: true
     }).extend({
       theatre_location: z.object({
-        displayName: z.object({
-          text: z.string(),
-          languageCode: z.string()
-        }),
+        name: z.string(),
         location: z.object({
           latitude: z.number(),
           longitude: z.number()

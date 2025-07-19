@@ -28,8 +28,8 @@ const getGoogleFont = forgeController
 const updateBgImage = forgeController
   .route('PUT /bg-image')
   .description('Update background image')
-  .middlewares(singleUploadMiddleware)
   .schema(UserControllersSchemas.Personalization.updateBgImage)
+  .middlewares(singleUploadMiddleware)
   .callback(async ({ pb, body: { url }, req }) =>
     PersonalizationService.updateBgImage(pb, req.file, url)
   )

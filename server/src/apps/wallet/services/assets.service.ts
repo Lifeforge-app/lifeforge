@@ -1,16 +1,16 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import Moment from 'moment'
 import MomentRange from 'moment-range'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { WalletCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllAssets = (
   pb: PocketBase
-): Promise<WithPB<WalletCollectionsSchemas.IAssetAggregated>[]> =>
+): Promise<ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>[]> =>
   pb
     .collection('wallet__assets_aggregated')
-    .getFullList<WithPB<WalletCollectionsSchemas.IAssetAggregated>>({
+    .getFullList<ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>>({
       sort: 'name'
     })
 
@@ -24,7 +24,7 @@ export const getAssetAccumulatedBalance = async (
   const asset = await pb
     .collection('wallet__assets')
     .getOne<
-      Pick<WithPB<WalletCollectionsSchemas.IAsset>, 'starting_balance'>
+      Pick<ISchemaWithPB<WalletCollectionsSchemas.IAsset>, 'starting_balance'>
     >(assetId, {
       fields: 'starting_balance'
     })
@@ -33,7 +33,7 @@ export const getAssetAccumulatedBalance = async (
     .collection('wallet__transactions')
     .getFullList<
       Pick<
-        WithPB<WalletCollectionsSchemas.ITransaction>,
+        ISchemaWithPB<WalletCollectionsSchemas.ITransaction>,
         'amount' | 'date' | 'side'
       >
     >({
@@ -79,10 +79,10 @@ export const createAsset = (
     WalletCollectionsSchemas.IAsset,
     'name' | 'icon' | 'starting_balance'
   >
-): Promise<WithPB<WalletCollectionsSchemas.IAsset>> =>
+): Promise<ISchemaWithPB<WalletCollectionsSchemas.IAsset>> =>
   pb
     .collection('wallet__assets')
-    .create<WithPB<WalletCollectionsSchemas.IAsset>>(data)
+    .create<ISchemaWithPB<WalletCollectionsSchemas.IAsset>>(data)
 
 export const updateAsset = (
   pb: PocketBase,
@@ -91,10 +91,10 @@ export const updateAsset = (
     WalletCollectionsSchemas.IAsset,
     'name' | 'icon' | 'starting_balance'
   >
-): Promise<WithPB<WalletCollectionsSchemas.IAsset>> =>
+): Promise<ISchemaWithPB<WalletCollectionsSchemas.IAsset>> =>
   pb
     .collection('wallet__assets')
-    .update<WithPB<WalletCollectionsSchemas.IAsset>>(id, data)
+    .update<ISchemaWithPB<WalletCollectionsSchemas.IAsset>>(id, data)
 
 export const deleteAsset = async (
   pb: PocketBase,
