@@ -16,7 +16,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
   const dataQuery = useAPIQuery<
     GuitarTabsControllersSchemas.IGuitarWorld['getTabsList']['response']
   >(
-    `guitar-tabs/guitar-world`,
+    `guitar-tabs/guitar-world?cookie=${finalCookie}&page=${page}`,
     ['guitar-tabs', finalCookie, page],
     !!finalCookie,
     {}
