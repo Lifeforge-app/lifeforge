@@ -10,7 +10,10 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
-import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
+import {
+  ISchemaWithPB,
+  MoviesCollectionsSchemas
+} from 'shared/types/collections'
 
 import ModifyTicketModal from '../modals/ModifyTicketModal'
 import ShowTicketModal from '../modals/ShowTicketModal'
@@ -20,7 +23,7 @@ function MovieItem({
   onToggleWatched,
   type
 }: {
-  data: IMovieEntry
+  data: ISchemaWithPB<MoviesCollectionsSchemas.IEntry>
   onToggleWatched: (id: string) => Promise<void>
   type: 'grid' | 'list'
 }) {
@@ -125,7 +128,7 @@ function MovieItem({
                 Countries
               </div>
               <div className="flex items-center gap-3">
-                {data.countries.map((country, index) => (
+                {data.countries.map((country: string, index: number) => (
                   <div
                     key={`country-${index}-${country}`}
                     className="flex items-center gap-2"

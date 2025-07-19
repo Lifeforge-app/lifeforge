@@ -3,7 +3,7 @@ import {
   IFieldProps,
   INumberInputFieldProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface FormNumberInputProps<T> {
   field: IFieldProps<T> & INumberInputFieldProps
@@ -19,8 +19,14 @@ function FormNumberInput<T>({
   handleChange
 }: FormNumberInputProps<T>) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
-    selectedData.toString()
+    selectedData.toString() === '0' ? '' : selectedData.toString()
   )
+
+  useEffect(() => {
+    setCurrentStringValue(
+      selectedData.toString() === '0' ? '' : selectedData.toString()
+    )
+  }, [selectedData])
 
   return (
     <TextInput
