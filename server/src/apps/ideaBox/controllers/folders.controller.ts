@@ -31,6 +31,7 @@ const getFolders = forgeController
         `Folder with path "${params[0]}" does not exist in container "${container}"`
       )
     }
+
     return await foldersService.getFolders(pb, container, lastFolder)
   })
 
@@ -41,7 +42,10 @@ const createFolder = forgeController
   .existenceCheck('body', {
     container: 'idea_box__containers'
   })
-  .callback(async ({ pb, body }) => await foldersService.createFolder(pb, body))
+  .callback(
+    async ({ pb, query: { container, parent }, body }) =>
+      await foldersService.createFolder(pb, { ...body, container, parent })
+  )
   .statusCode(201)
 
 const updateFolder = forgeController

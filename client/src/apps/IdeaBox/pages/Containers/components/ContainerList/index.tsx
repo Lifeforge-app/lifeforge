@@ -3,7 +3,10 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { IIdeaBoxContainer } from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+import {
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
 
 import ModifyContainerModal from '../ModifyContainerModal'
 import ContainerItem from './components/ContainerItem'
@@ -11,7 +14,7 @@ import ContainerItem from './components/ContainerItem'
 function ContainerList({
   filteredList
 }: {
-  filteredList: IIdeaBoxContainer[]
+  filteredList: ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>[]
 }) {
   const open = useModalStore(state => state.open)
 

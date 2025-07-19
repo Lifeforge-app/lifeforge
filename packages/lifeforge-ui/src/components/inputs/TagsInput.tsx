@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from '../buttons/Button'
-import Text from './TextInput/components/TextInputBox'
+import TextInputBox from './TextInput/components/TextInputBox'
 import InputIcon from './shared/InputIcon'
 import InputLabel from './shared/InputLabel'
 import InputWrapper from './shared/InputWrapper'
@@ -123,7 +123,7 @@ function TagsInput({
             )
           })}
           {!disabled && (
-            <Text
+            <TextInputBox
               noAutoComplete
               className="my-0! w-auto! flex-1 py-0 pl-0!"
               inputRef={inputRef}

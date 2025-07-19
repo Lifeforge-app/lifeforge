@@ -45,8 +45,8 @@ const addToLibrary = forgeController
   .schema(BooksLibraryControllersSchemas.Libgen.addToLibrary)
   .statusCode(202)
   .callback(
-    async ({ io, pb, params: { md5 }, body: { metadata } }) =>
-      await libgenService.addToLibrary(io, pb, md5, metadata)
+    async ({ io, pb, params: { md5 }, body }) =>
+      await libgenService.addToLibrary(io, pb, md5, body)
   )
 
 bulkRegisterControllers(booksLibraryLibgenRouter, [

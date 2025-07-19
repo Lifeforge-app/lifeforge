@@ -5,13 +5,20 @@ import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
-import { type IIdeaBoxEntry } from '../../../../../../interfaces/ideabox_interfaces'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
+
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
-function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
+function EntryImage({
+  entry
+}: {
+  entry:
+    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
+    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
+}) {
   const { t } = useTranslation('apps.ideaBox')
 
   const [{ opacity, isDragging }, dragRef] = useDrag(

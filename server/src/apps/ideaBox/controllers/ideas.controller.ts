@@ -36,6 +36,7 @@ const getIdeas = forgeController
           `Folder with path "${pathParam}" does not exist in container "${container}"`
         )
       }
+
       return await ideasService.getIdeas(pb, container, lastFolder, archived)
     }
   )
@@ -99,6 +100,7 @@ const createIdea = forgeController
           }
           break
       }
+
       return await ideasService.createIdea(pb, data)
     }
   )
@@ -114,6 +116,7 @@ const updateIdea = forgeController
   .callback(
     async ({ pb, params: { id }, body: { title, content, type, tags } }) => {
       let data
+
       switch (type) {
         case 'text':
         case 'link':
@@ -132,6 +135,7 @@ const updateIdea = forgeController
           }
           break
       }
+
       return await ideasService.updateIdea(pb, id, data as any)
     }
   )

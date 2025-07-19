@@ -8,7 +8,8 @@ import {
   LinearScale,
   PointElement,
   Title,
-  Tooltip
+  Tooltip,
+  TooltipItem
 } from 'chart.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
@@ -20,6 +21,7 @@ import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
 import { useAPIQuery } from 'shared/lib'
+import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 ChartJS.register(
   CategoryScale,
@@ -39,10 +41,13 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
 
   const [lastFor, setLastFor] = useState<7 | 30>(7)
 
-  const dataQuery = useAPIQuery<any[]>(
-    `code-time/last-x-days?days=${lastFor}`,
-    ['code-time', 'last-x-days', lastFor]
-  )
+  const dataQuery = useAPIQuery<
+    CodeTimeControllersSchemas.ICodeTime['getLastXDays']['response']
+  >(`code-time/last-x-days?days=${lastFor}`, [
+    'code-time',
+    'last-x-days',
+    lastFor
+  ])
 
   const getDailyData = useCallback(
     (days: string[], item: string) =>
@@ -78,7 +83,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
         y: {
           beginAtZero: true,
           display: true,
-          position: 'left',
+          position: 'left' as const,
           ticks: {
             callback: (label: number | string) =>
               `${Math.round(parseInt(label.toString()) / 60)}h`,
@@ -96,7 +101,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            labelColor: (context: any) => ({
+            labelColor: (context: TooltipItem<'bar'>) => ({
               borderColor: tinycolor({
                 h:
                   (projectsData.findIndex(
@@ -107,7 +112,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                 s: 100,
                 v: 100,
                 a: 1
-              }),
+              }).toRgbString(),
               backgroundColor: tinycolor({
                 h:
                   (projectsData.findIndex(
@@ -120,7 +125,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                 a: 0.8
               }).toRgbString()
             }),
-            label: (context: any) => {
+            label: (context: TooltipItem<'bar'>) => {
               if (context.parsed.y === 0) {
                 return ''
               }
@@ -188,7 +193,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                 labels: data.map(e => dayjs(e.date).format('DD MMM')),
                 datasets: [
                   ...projectsData.map((project, index) => ({
-                    type: 'bar' as any,
+                    type: 'bar' as const,
                     label: project.label,
                     data: project.data,
                     backgroundColor: tinycolor({
@@ -196,27 +201,27 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                       s: 100,
                       v: 100,
                       a: 0.4
-                    }),
+                    }).toRgbString(),
                     borderColor: tinycolor({
                       h: (index * 360) / projectsData.length,
                       s: 100,
                       v: 100,
                       a: 1
-                    }),
+                    }).toRgbString(),
                     borderWidth: 1,
                     yAxisID: 'y',
                     stack: 'stack1'
                   })),
                   {
-                    type: 'line' as any,
+                    type: 'line' as const,
                     label: 'Total minutes',
                     data: data.map(e => e.total_minutes),
                     borderColor:
                       derivedTheme === 'dark'
                         ? bgTempPalette[100]
                         : bgTempPalette[500],
-                    lineTension: 0.3,
-                    borderWidth: 2,
+                    tension: 0.4,
+                    borderWidth: 3,
                     pointBorderColor: 'rgba(0, 0, 0, 0)',
                     pointBackgroundColor: 'rgba(0, 0, 0, 0)',
                     pointHoverBackgroundColor: '#FFFFFF80',

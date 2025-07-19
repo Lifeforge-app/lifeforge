@@ -2,13 +2,17 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useParams } from 'react-router'
 
+import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
+
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
 import ModifyTagModal from '../modals/ModifyTagModal'
 import TagItem from './components/TagItem'
 
-const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {
+const sortFunc = (
+  a: IdeaBoxCollectionsSchemas.ITagAggregated,
+  b: IdeaBoxCollectionsSchemas.ITagAggregated
+) => {
   if (a.amount === b.amount) {
     return a.name.localeCompare(b.name)
   }

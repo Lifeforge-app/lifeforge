@@ -6,13 +6,7 @@ import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
-
-import {
-  IIdeaBoxContainer,
-  type IIdeaBoxEntry,
-  type IIdeaBoxFolder,
-  type IIdeaBoxTag
-} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
 
@@ -20,17 +14,21 @@ interface IIdeaBoxData {
   pathValid: boolean
   pathValidLoading: boolean
   pathDetails:
-    | {
-        container: IIdeaBoxContainer
-        path: IIdeaBoxFolder[]
-      }
+    | IdeaBoxControllersSchemas.IMisc['getPath']['response']
     | undefined
   pathDetailsLoading: boolean
-  entriesQuery: UseQueryResult<IIdeaBoxEntry[]>
-  foldersQuery: UseQueryResult<IIdeaBoxFolder[]>
-  tagsQuery: UseQueryResult<IIdeaBoxTag[]>
-  searchResultsQuery: UseQueryResult<IIdeaBoxEntry[]>
-
+  entriesQuery: UseQueryResult<
+    IdeaBoxControllersSchemas.IIdeas['getIdeas']['response']
+  >
+  foldersQuery: UseQueryResult<
+    IdeaBoxControllersSchemas.IFolders['getFolders']['response']
+  >
+  tagsQuery: UseQueryResult<
+    IdeaBoxControllersSchemas.ITags['getTags']['response']
+  >
+  searchResultsQuery: UseQueryResult<
+    IdeaBoxControllersSchemas.IMisc['search']['response']
+  >
   searchQuery: string
   debouncedSearchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
@@ -70,10 +68,9 @@ export default function IdeaBoxProvider() {
     }
   )
 
-  const pathDetailsQuery = useAPIQuery<{
-    container: IIdeaBoxContainer
-    path: IIdeaBoxFolder[]
-  }>(
+  const pathDetailsQuery = useAPIQuery<
+    IdeaBoxControllersSchemas.IMisc['getPath']['response']
+  >(
     `idea-box/path/${id}/${path}`,
     ['idea-box', 'path', id, path],
     id !== undefined && path !== undefined && pathValidQuery.data,
@@ -82,7 +79,9 @@ export default function IdeaBoxProvider() {
     }
   )
 
-  const entriesQuery = useAPIQuery<IIdeaBoxEntry[]>(
+  const entriesQuery = useAPIQuery<
+    IdeaBoxControllersSchemas.IIdeas['getIdeas']['response']
+  >(
     `idea-box/ideas/${id}/${path}?archived=${viewArchived}`,
     ['idea-box', 'ideas', id, path, viewArchived],
     id !== undefined && path !== undefined && pathValidQuery.data,
@@ -91,7 +90,9 @@ export default function IdeaBoxProvider() {
     }
   )
 
-  const foldersQuery = useAPIQuery<IIdeaBoxFolder[]>(
+  const foldersQuery = useAPIQuery<
+    IdeaBoxControllersSchemas.IFolders['getFolders']['response']
+  >(
     `idea-box/folders/${id}/${path}`,
     ['idea-box', 'folders', id, path],
     id !== undefined && path !== undefined && pathValidQuery.data,
@@ -100,7 +101,9 @@ export default function IdeaBoxProvider() {
     }
   )
 
-  const tagsQuery = useAPIQuery<IIdeaBoxTag[]>(
+  const tagsQuery = useAPIQuery<
+    IdeaBoxControllersSchemas.ITags['getTags']['response']
+  >(
     `idea-box/tags/${id}${path !== '' ? '?folder=' + path : ''}`,
     ['idea-box', 'tags', id, path],
     id !== undefined && path !== undefined && pathValidQuery.data,
@@ -109,7 +112,9 @@ export default function IdeaBoxProvider() {
     }
   )
 
-  const searchResultsQuery = useAPIQuery<IIdeaBoxEntry[]>(
+  const searchResultsQuery = useAPIQuery<
+    IdeaBoxControllersSchemas.IMisc['search']['response']
+  >(
     `idea-box/search?q=${encodeURIComponent(
       debouncedSearchQuery.trim()
     )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
