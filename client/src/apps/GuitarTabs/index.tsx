@@ -17,15 +17,12 @@ import { Id, toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
+import { GuitarTabsControllersSchemas } from 'shared/types/controllers'
 
 import Header from './components/Header'
 import Searchbar from './components/Searchbar'
 import Sidebar from './components/Sidebar'
 import GuitarWorldModal from './components/modals/GuitarWorldModal'
-import {
-  type IGuitarTabsEntry,
-  type IGuitarTabsSidebarData
-} from './interfaces/guitar_tabs_interfaces'
 import Views from './views'
 
 function GuitarTabs() {
@@ -58,12 +55,9 @@ function GuitarTabs() {
     selectedSortType
   ]
 
-  const entriesQuery = useAPIQuery<{
-    totalItems: number
-    totalPages: number
-    page: number
-    items: IGuitarTabsEntry[]
-  }>(
+  const entriesQuery = useAPIQuery<
+    GuitarTabsControllersSchemas.IEntries['getEntries']['response']
+  >(
     (() => {
       const searchParams = new URLSearchParams()
 
@@ -84,10 +78,9 @@ function GuitarTabs() {
     queryKey
   )
 
-  const sidebarDataQuery = useAPIQuery<IGuitarTabsSidebarData>(
-    'guitar-tabs/entries/sidebar-data',
-    ['guitar-tabs', 'sidebar-data']
-  )
+  const sidebarDataQuery = useAPIQuery<
+    GuitarTabsControllersSchemas.IEntries['getSidebarData']['response']
+  >('guitar-tabs/entries/sidebar-data', ['guitar-tabs', 'sidebar-data'])
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -146,7 +139,6 @@ function GuitarTabs() {
               }
             >
           ) => {
-            console.log(data.status)
             if (!data || data.taskId !== taskId) return
 
             if (data.status === 'failed') {

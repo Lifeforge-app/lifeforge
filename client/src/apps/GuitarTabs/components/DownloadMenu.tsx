@@ -1,9 +1,16 @@
 import forceDown from '@utils/forceDown'
 import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 
-import { type IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
+import {
+  GuitarTabsCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
-function DownloadMenu({ entry }: { entry: IGuitarTabsEntry }) {
+function DownloadMenu({
+  entry
+}: {
+  entry: ISchemaWithPB<GuitarTabsCollectionsSchemas.IEntry>
+}) {
   return (
     <HamburgerMenu customIcon="tabler:download">
       <MenuItem
