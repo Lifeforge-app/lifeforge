@@ -8,24 +8,38 @@
  */
 import { z } from 'zod/v4'
 
-const Event = z.object({
-  start: z.string(),
-  end: z.string(),
+const BaseEvent = z.object({
   title: z.string(),
   category: z.string(),
   calendar: z.string(),
   location: z.string(),
   reference_link: z.string(),
   description: z.string(),
-  is_striktethrough: z.boolean(),
-  is_recurring: z.boolean(),
-  use_google_map: z.boolean(),
-  type: z.enum(['single', 'recurring', '']),
-  recurring_rrule: z.string(),
-  recurring_duration_unit: z.string(),
-  recurring_duration_amount: z.number(),
-  exceptions: z.any()
+  use_google_map: z.boolean()
 })
+
+const Event = BaseEvent.and(
+  z.union([
+    z.object({
+      type: z.literal('recurring'),
+      recurring_rrule: z.string(),
+      recurring_duration_unit: z.enum(['hour', 'day', 'week', 'month', 'year']),
+      recurring_duration_amount: z.number(),
+      exceptions: z.any(),
+      start: z.string(),
+      end: z.string()
+    }),
+    z.object({
+      start: z.string(),
+      end: z.literal(''),
+      type: z.literal('single'),
+      recurring_rrule: z.literal(''),
+      recurring_duration_unit: z.literal(''),
+      recurring_duration_amount: z.literal(0),
+      exceptions: z.literal(null)
+    })
+  ])
+)
 
 const Category = z.object({
   name: z.string(),
@@ -45,14 +59,15 @@ const Calendar = z.object({
   color: z.string()
 })
 
+type IBaseEvent = z.infer<typeof BaseEvent>
 type IEvent = z.infer<typeof Event>
 type ICategory = z.infer<typeof Category>
 type ICategoryAggregated = z.infer<typeof CategoryAggregated>
 type ICalendar = z.infer<typeof Calendar>
 
-export { Event, Category, CategoryAggregated, Calendar }
+export { BaseEvent, Event, Category, CategoryAggregated, Calendar }
 
-export type { IEvent, ICategory, ICategoryAggregated, ICalendar }
+export type { IBaseEvent, IEvent, ICategory, ICategoryAggregated, ICalendar }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

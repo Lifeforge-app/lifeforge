@@ -12,12 +12,12 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import ModifyEventModal from './components/modals/ModifyEventModal'
 import ScanImageModal from './components/modals/ScanImageModal'
-import { type ICalendarEvent } from './interfaces/calendar_interfaces'
 import { useCalendarStore } from './stores/useCalendarStore'
 
 function CalendarModule() {
@@ -27,7 +27,9 @@ function CalendarModule() {
 
   const { eventQueryKey } = useCalendarStore()
 
-  const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
+  const rawEventsQuery = useAPIQuery<
+    CalendarControllersSchemas.IEvents['getEventsByDateRange']['response']
+  >(
     `calendar/events?start=${eventQueryKey[2]}&end=${eventQueryKey[3]}`,
     eventQueryKey
   )
