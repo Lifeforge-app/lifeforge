@@ -44,7 +44,9 @@ export const getSidebarData = async (
 
   const allTypes = await pb
     .collection('scores_library__types_aggregated')
-    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>>()
+    .getFullList<WithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>>({
+      sort: 'name'
+    })
 
   return {
     total: allScores.totalItems,

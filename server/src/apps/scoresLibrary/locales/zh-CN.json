@@ -10,13 +10,6 @@
     "authors": "作者",
     "categories": "分类"
   },
-  "headers": {
-    "all": "所有",
-    "starred": "已星标",
-    "singalong": "跟唱",
-    "fingerstyle": "指弹",
-    "uncategorized": "未分类"
-  },
   "scoreTypes": {
     "singalong": "跟唱",
     "fingerstyle": "指弹",
@@ -58,5 +51,18 @@
       "title": "没有结果",
       "description": "找不到项目, 请尝试其他关键字。"
     }
+  },
+  "header": {
+    "allScores": "所有乐谱",
+    "filteredScores": "已筛选乐谱",
+    "starred": "已星标的"
+  },
+  "hamburgerMenu": {
+    "viewAs": "查看为",
+    "sortBy": "排序依据"
+  },
+  "viewTypes": {
+    "grid": "网格",
+    "list": "列表"
   }
 }

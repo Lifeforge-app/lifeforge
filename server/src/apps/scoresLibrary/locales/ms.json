@@ -10,13 +10,6 @@
     "authors": "Pengarang",
     "categories": "Kategori"
   },
-  "headers": {
-    "all": "Semua",
-    "starred": "Berbintang",
-    "singalong": "Nyanyi Bersama",
-    "fingerstyle": "Gaya Jari",
-    "uncategorized": "Tidak Dikategorikan"
-  },
   "scoreTypes": {
     "singalong": "Nyanyi Bersama",
     "fingerstyle": "Gaya Jari",
@@ -58,5 +51,18 @@
       "title": "Tiada Keputusan",
       "description": "Tiada item ditemui, sila cuba kata kunci lain."
     }
+  },
+  "header": {
+    "allScores": "Semua Skor",
+    "filteredScores": "Skor Tapis",
+    "starred": "Tergemar"
+  },
+  "hamburgerMenu": {
+    "viewAs": "Lihat Sebagai",
+    "sortBy": "Susun Mengikut"
+  },
+  "viewTypes": {
+    "grid": "Grid",
+    "list": "Senarai"
   }
 }
