@@ -22,8 +22,7 @@ function ModifyTagModal({
   const { id } = useParams<{ id: string }>()
 
   const [formState, setFormState] = useState<
-    | IdeaBoxControllersSchemas.ITags['createTag']['body']
-    | IdeaBoxControllersSchemas.ITags['updateTag']['body']
+    IdeaBoxControllersSchemas.ITags['createTag' | 'updateTag']['body']
   >({
     name: '',
     icon: '',

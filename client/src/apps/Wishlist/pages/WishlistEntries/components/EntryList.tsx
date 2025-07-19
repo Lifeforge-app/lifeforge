@@ -1,7 +1,10 @@
 import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IWishlistEntry } from '@apps/Wishlist/interfaces/wishlist_interfaces'
+import {
+  ISchemaWithPB,
+  WishlistCollectionsSchemas
+} from 'shared/types/collections'
 
 import EntryItem from './EntryItem'
 
@@ -10,7 +13,7 @@ function EntryList({
   isTotallyEmpty,
   queryKey
 }: {
-  filteredEntries: IWishlistEntry[]
+  filteredEntries: ISchemaWithPB<WishlistCollectionsSchemas.IEntry>[]
   isTotallyEmpty: boolean
   queryKey: unknown[]
 }) {

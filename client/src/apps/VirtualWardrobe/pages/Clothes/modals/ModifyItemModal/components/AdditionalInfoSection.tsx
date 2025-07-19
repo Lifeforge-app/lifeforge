@@ -27,7 +27,7 @@ function AdditionalInfoSection({
   formState: IVirtualWardrobeFormState
   handleChange: (
     field: keyof IVirtualWardrobeFormState
-  ) => (value: string | string[]) => void
+  ) => (value: string | string[] | number) => void
 }) {
   return (
     <>

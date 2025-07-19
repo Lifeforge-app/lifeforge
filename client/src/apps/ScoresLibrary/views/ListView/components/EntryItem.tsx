@@ -2,10 +2,10 @@ import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { toast } from 'react-toastify'
 
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI, useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   ScoresLibraryCollectionsSchemas
@@ -24,6 +24,14 @@ function EntryItem({
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
+
+  const typesQuery = useAPIQuery<
+    ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>[]
+  >(`scores-library/types`, ['scores-library', 'types'])
+
+  const type = useMemo(() => {
+    return typesQuery.data?.find(type => type.id === entry.type)
+  }, [typesQuery.data, entry.type])
 
   async function favouriteTab() {
     try {
@@ -73,8 +81,8 @@ function EntryItem({
         rel="noreferrer"
         target="_blank"
       >
-        <div className="flex w-full min-w-0 items-center gap-3">
-          <div className="flex-center bg-bg-200 dark:bg-bg-800 w-12 rounded-lg">
+        <div className="flex w-full min-w-0 items-center gap-5">
+          <div className="flex-center bg-bg-200 dark:bg-bg-800 w-16 overflow-hidden rounded-sm">
             <img
               alt=""
               className="h-full"
@@ -84,19 +92,19 @@ function EntryItem({
             />
           </div>
           <div className="flex w-full min-w-0 flex-1 flex-col">
+            {type && (
+              <div className="mb-2 flex items-center gap-2">
+                <Icon
+                  className="text-bg-500 size-4 shrink-0"
+                  icon={type.icon}
+                />
+                <span className="text-bg-500 truncate text-sm">
+                  {type.name}
+                </span>
+              </div>
+            )}
             <div className="flex w-full items-center gap-2">
               <h3 className="truncate text-lg font-semibold">{entry.name}</h3>
-              {entry.type !== '' && (
-                <Icon
-                  className="text-bg-500 size-5 shrink-0"
-                  icon={
-                    {
-                      fingerstyle: 'mingcute:guitar-line',
-                      singalong: 'mdi:guitar-pick-outline'
-                    }[entry.type]
-                  }
-                />
-              )}
               {entry.isFavourite && (
                 <Icon
                   className="size-4 shrink-0 text-yellow-500"

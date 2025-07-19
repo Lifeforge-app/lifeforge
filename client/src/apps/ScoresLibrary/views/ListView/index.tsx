@@ -11,7 +11,7 @@ function ListView({
   entries: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>[]
 }) {
   return (
-    <ul className="mb-6 space-y-4">
+    <ul className="mb-6 space-y-3">
       {entries.map(entry => (
         <EntryItem key={entry.id} entry={entry} />
       ))}
