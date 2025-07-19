@@ -46,6 +46,8 @@ export * as PixabayCustomSchemas from './pixabay.custom.schema'
 
 export * as YoutubeSummarizerCustomSchemas from './youtubeSummarizer.custom.schema'
 
+export * as LocationsCustomSchemas from './locations.custom.schema'
+
 export { SchemaWithPB } from './schemaWithPB'
 
 export type { ISchemaWithPB } from './schemaWithPB'

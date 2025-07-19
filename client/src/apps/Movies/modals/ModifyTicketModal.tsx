@@ -30,13 +30,9 @@ function ModifyTicketModal({
   const [formState, setFormState] = useState<
     MoviesControllersSchemas.ITicket['updateTicket']['body']
   >({
-    entry_id: '',
     ticket_number: '',
     theatre_location: {
-      displayName: {
-        languageCode: 'en',
-        text: ''
-      },
+      name: '',
       location: {
         latitude: 0,
         longitude: 0
@@ -118,13 +114,9 @@ function ModifyTicketModal({
     if (type === 'create') {
       setFormState(prev => ({
         ...prev,
-        entry_id: existedData.id,
         ticket_number: '',
         theatre_location: {
-          displayName: {
-            languageCode: 'en',
-            text: ''
-          },
+          name: '',
           location: {
             latitude: 0,
             longitude: 0
@@ -140,54 +132,22 @@ function ModifyTicketModal({
 
     if (type === 'update') {
       setFormState({
-        entry_id: existedData.id,
         ticket_number: existedData.ticket_number,
         theatre_location: {
-          displayName: {
-            languageCode: 'en',
-            text: existedData.theatre_location.displayName.text
-          },
+          name: existedData.theatre_location,
           location: {
-            latitude: existedData.theatre_location.location.latitude,
-            longitude: existedData.theatre_location.location.longitude
+            latitude: existedData.theatre_location_coords.lat,
+            longitude: existedData.theatre_location_coords.lon
           }
         },
         theatre_number: existedData.theatre_number,
         theatre_seat: existedData.theatre_seat,
-        theatre_showtime: dayjs(existedData.theatre_showtime).toDate()
+        theatre_showtime: dayjs(existedData.theatre_showtime).format(
+          'YYYY-MM-DD HH:mm'
+        )
       })
     }
   }, [type, existedData])
-
-  function updateDataList(newData: IMovieEntry) {
-    queryClient.setQueryData<IMovieEntry[]>(['movies', 'entries'], oldData => {
-      if (!oldData) return oldData
-
-      return oldData
-        .map(entry => {
-          if (entry.id === newData.id) {
-            return newData
-          }
-
-          return entry
-        })
-        .sort((a, b) => {
-          const aIsWatched = a.is_watched ? 1 : 0
-
-          const bIsWatched = b.is_watched ? 1 : 0
-
-          if (aIsWatched !== bIsWatched) {
-            return aIsWatched - bIsWatched
-          }
-
-          if (a.ticket_number !== b.ticket_number) {
-            return b.ticket_number.localeCompare(a.ticket_number)
-          }
-
-          return a.title.localeCompare(b.title)
-        })
-    })
-  }
 
   const handleDeleteTicket = useCallback(() => {
     open(DeleteConfirmationModal, {
@@ -201,8 +161,16 @@ function ModifyTicketModal({
       actionButtonIsRed
       actionButtonIcon={type === 'update' ? 'tabler:trash' : ''}
       customUpdateDataList={{
-        create: updateDataList,
-        update: updateDataList
+        create: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['movies', 'entries']
+          })
+        },
+        update: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['movies', 'entries']
+          })
+        }
       }}
       data={formState}
       endpoint="/movies/entries/ticket"

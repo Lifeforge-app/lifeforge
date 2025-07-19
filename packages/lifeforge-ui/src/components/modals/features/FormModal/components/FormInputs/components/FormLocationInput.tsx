@@ -1,15 +1,16 @@
 import { LocationInput } from '@components/inputs'
-import { ILocationEntry } from '@components/inputs/LocationInput'
 import {
   IFieldProps,
   ILocationInputFieldProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
+import { LocationsCustomSchemas } from 'shared/types/collections'
+
 interface FormLocationInputProps<T> {
   field: IFieldProps<T> & ILocationInputFieldProps
-  selectedData: ILocationEntry | null
+  selectedData: LocationsCustomSchemas.ILocation | null
   namespace: string
-  handleChange: (value: ILocationEntry | null) => void
+  handleChange: (value: LocationsCustomSchemas.ILocation | null) => void
 }
 
 function FormLocationInput<T>({

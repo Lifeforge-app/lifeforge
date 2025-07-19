@@ -10,11 +10,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
-import {
-  IMovieEntry,
-  IMovieSearchResults
-} from '@apps/Movies/interfaces/movies_interfaces'
+import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'
@@ -28,8 +24,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
   const [page, setPage] = useState(1)
 
-  const [searchResults, setSearchResults] =
-    useState<IMovieSearchResults | null>(null)
+  const [searchResults, setSearchResults] = useState<
+    MoviesControllersSchemas.ITmdb['searchMovies']['response'] | null
+  >(null)
 
   async function searchTMDB(page: number = 1) {
     if (searchQuery.trim() === '') {
@@ -42,7 +39,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
     setSearchLoading(true)
 
     try {
-      const data = await fetchAPI<IMovieSearchResults>(
+      const data = await fetchAPI<
+        MoviesControllersSchemas.ITmdb['searchMovies']['response']
+      >(
         import.meta.env.VITE_API_HOST,
         `movies/tmdb/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
       )
@@ -57,13 +56,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
   async function addToLibrary(id: number) {
     try {
-      await fetchAPI<IMovieEntry>(
-        import.meta.env.VITE_API_HOST,
-        `movies/entries/${id}`,
-        {
-          method: 'POST'
-        }
-      )
+      await fetchAPI(import.meta.env.VITE_API_HOST, `movies/entries/${id}`, {
+        method: 'POST'
+      })
 
       queryClient.invalidateQueries({
         queryKey: ['movies', 'entries', 'unwatched']
@@ -78,7 +73,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
             if (entry.id === id) {
               return {
                 ...entry,
-                existed: true // Mark the movie as added
+                existed: true
               }
             }
 
