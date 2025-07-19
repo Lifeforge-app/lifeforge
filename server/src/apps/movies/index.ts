@@ -6,8 +6,8 @@ import moviesTMDBRouter from './controllers/tmdb.controller'
 
 const router = express.Router()
 
-router.use('/entries/ticket', moviesTicketRouter)
 router.use('/entries', moviesEntriesRouter)
+router.use('/ticket', moviesTicketRouter)
 router.use('/tmdb', moviesTMDBRouter)
 
 export default router
