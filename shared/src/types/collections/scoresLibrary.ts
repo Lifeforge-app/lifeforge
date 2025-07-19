@@ -10,7 +10,7 @@ import { z } from 'zod/v4'
 
 const Entry = z.object({
   name: z.string(),
-  type: z.enum(['fingerstyle', 'singalong', '']),
+  type: z.string(),
   pageCount: z.string(),
   thumbnail: z.string(),
   author: z.string(),

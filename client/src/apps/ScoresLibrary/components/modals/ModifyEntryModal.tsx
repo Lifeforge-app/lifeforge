@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  IScoresLibraryEntry,
-  IScoresLibraryEntryFormState
-} from '@apps/ScoresLibrary/interfaces/scores_library_interfaces'
+  ISchemaWithPB,
+  ScoresLibraryCollectionsSchemas
+} from 'shared/types/collections'
+import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
 
 const TYPES = [
   { id: 'fingerstyle', icon: 'mingcute:guitar-line' },
@@ -20,7 +21,7 @@ function ModifyEntryModal({
 }: {
   onClose: () => void
   data: {
-    existedData: IScoresLibraryEntry | null
+    existedData: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry> | null
     queryKey: unknown[]
   }
 }) {
@@ -28,13 +29,15 @@ function ModifyEntryModal({
 
   const queryClient = useQueryClient()
 
-  const [formState, setFormState] = useState<IScoresLibraryEntryFormState>({
+  const [formState, setFormState] = useState<
+    ScoresLibraryControllersSchemas.IEntries['updateEntry']['body']
+  >({
     name: '',
     author: '',
     type: ''
   })
 
-  const FIELDS: IFieldProps<IScoresLibraryEntryFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       required: true,
@@ -103,7 +106,7 @@ function ModifyEntryModal({
       openType="update"
       queryKey={queryKey}
       setData={setFormState}
-      title="update"
+      title="scoresLibrary.update"
       onClose={onClose}
     />
   )
