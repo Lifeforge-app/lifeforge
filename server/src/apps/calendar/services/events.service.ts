@@ -13,6 +13,8 @@ import {
 import { CalendarCollectionsSchemas } from 'shared/types/collections'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
+import { searchLocations } from '../../../core/lib/locations/services/locations.service'
+
 export const getEventsByDateRange = async (
   pb: PocketBase,
   startDate: string,
@@ -44,7 +46,7 @@ export const getEventsByDateRange = async (
     const baseEvent = event.expand.base_event
 
     allEvents.push({
-      id: event.id,
+      id: baseEvent.id,
       type: 'single',
       start: event.start,
       end: event.end,
@@ -103,7 +105,7 @@ export const getEventsByDateRange = async (
         .format('YYYY-MM-DD HH:mm:ss')
 
       allEvents.push({
-        id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
+        id: `${baseEvent.id}-${moment(eventDate).format('YYYYMMDD')}`,
         type: 'recurring',
         start,
         end,
@@ -199,17 +201,13 @@ export const createEvent = async (
   pb: PocketBase,
   eventData: CalendarControllersSchemas.IEvents['createEvent']['body']
 ): Promise<CalendarControllersSchemas.IEvents['createEvent']['response']> => {
-  if (typeof eventData.location === 'object') {
-    eventData.location = (eventData.location as any).displayName.text || ''
-  }
-
   const baseEvent = await pb
     .collection('calendar__events')
     .create<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
       title: eventData.title,
       category: eventData.category,
       calendar: eventData.calendar,
-      location: eventData.location || '',
+      location: eventData.location?.name || '',
       location_coords: {
         lat: eventData.location?.location.latitude || 0,
         lon: eventData.location?.location.longitude || 0
@@ -246,8 +244,11 @@ export const createEvent = async (
 
 export const scanImage = async (
   pb: PocketBase,
-  filePath: string
-): Promise<Partial<CalendarCollectionsSchemas.IEvent> | null> => {
+  filePath: string,
+  gcloudKey: string | null
+): Promise<
+  CalendarControllersSchemas.IEvents['scanImage']['response'] | null
+> => {
   const categories = await pb
     .collection('calendar__categories')
     .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>>()
@@ -313,10 +314,35 @@ export const scanImage = async (
     return null
   }
 
-  ;(response as Partial<CalendarCollectionsSchemas.IEvent>).category =
-    categories.find(category => category.name === response.category)?.id
+  const finalResponse: CalendarControllersSchemas.IEvents['scanImage']['response'] =
+    {
+      title: response.title,
+      start: response.start,
+      end: response.end,
+      location: response.location || '',
+      location_coords: { lat: 0, lon: 0 },
+      description: response.description || '',
+      category:
+        categories.find(category => category.name === response.category)?.id ||
+        ''
+    }
 
-  return response as Partial<CalendarCollectionsSchemas.IEvent>
+  if (finalResponse.location && gcloudKey) {
+    const locationInGoogleMap = await searchLocations(
+      finalResponse.location,
+      gcloudKey
+    )
+
+    if (locationInGoogleMap.length > 0) {
+      finalResponse.location = locationInGoogleMap[0].name
+      finalResponse.location_coords = {
+        lat: locationInGoogleMap[0].location.latitude,
+        lon: locationInGoogleMap[0].location.longitude
+      }
+    }
+  }
+
+  return finalResponse
 }
 
 export const updateEvent = async (
