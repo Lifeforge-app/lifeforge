@@ -1,6 +1,6 @@
 import { EmptyStateScreen, Pagination } from 'lifeforge-ui'
 
-import { IMovieSearchResults } from '@apps/Movies/interfaces/movies_interfaces'
+import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import TMDBResultItem from './TMDBResultItem'
 
@@ -10,7 +10,7 @@ function TMDBResultsList({
   setPage,
   onAddToLibrary
 }: {
-  results: IMovieSearchResults | null
+  results: MoviesControllersSchemas.ITmdb['searchMovies']['response'] | null
   page: number
   setPage: (page: number) => void
   onAddToLibrary: (id: number) => Promise<void>

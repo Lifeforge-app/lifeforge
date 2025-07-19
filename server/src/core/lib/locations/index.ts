@@ -5,19 +5,15 @@ import {
 } from '@functions/forgeController'
 import { getAPIKey } from '@functions/getAPIKey'
 import express from 'express'
-import { z } from 'zod/v4'
+
+import { LocationsControllersSchemas } from 'shared/types/controllers'
 
 const router = express.Router()
 
 const getLocation = forgeController
   .route('GET /')
   .description('Search for locations')
-  .schema({
-    query: z.object({
-      q: z.string()
-    }),
-    response: z.any()
-  })
+  .schema(LocationsControllersSchemas.Locations.getLocations)
   .callback(async ({ query: { q }, pb }) => {
     const key = await getAPIKey('gcloud', pb)
 
@@ -41,15 +37,32 @@ const getLocation = forgeController
       }
     ).then(res => res.json())
 
-    return response.places
+    const places: {
+      displayName: {
+        languageCode: string
+        text: string
+      }
+      formattedAddress: string
+      location: {
+        latitude: number
+        longitude: number
+      }
+    }[] = response.places
+
+    return places.map(place => ({
+      name: place.displayName.text,
+      formattedAddress: place.formattedAddress,
+      location: {
+        latitude: place.location.latitude,
+        longitude: place.location.longitude
+      }
+    }))
   })
 
 const checkIsEnabled = forgeController
   .route('GET /enabled')
   .description('Check if Google Cloud API key exists')
-  .schema({
-    response: z.boolean()
-  })
+  .schema(LocationsControllersSchemas.Locations.checkIsEnabled)
   .callback(async ({ pb }) => {
     const key = await getAPIKey('gcloud', pb)
 

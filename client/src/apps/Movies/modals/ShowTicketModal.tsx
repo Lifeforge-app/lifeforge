@@ -3,14 +3,17 @@ import dayjs from 'dayjs'
 import { ModalHeader } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 
-import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
+import {
+  ISchemaWithPB,
+  MoviesCollectionsSchemas
+} from 'shared/types/collections'
 
 function ShowTicketModal({
   data: { entry },
   onClose
 }: {
   data: {
-    entry: IMovieEntry | null
+    entry: ISchemaWithPB<MoviesCollectionsSchemas.IEntry> | null
   }
   onClose: () => void
 }) {

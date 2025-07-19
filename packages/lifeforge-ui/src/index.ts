@@ -14,8 +14,6 @@ export * from './components/utilities'
 
 export * from './components/layouts'
 
-export type { ILocationEntry } from './components/inputs/LocationInput'
-
 export type {
   IFieldProps,
   IFormState

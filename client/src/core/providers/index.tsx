@@ -1,3 +1,5 @@
+import { APIOnlineStatusWrapper } from 'lifeforge-ui'
+
 import {
   APIOnlineStatusProvider,
   BackgroundProvider,
@@ -15,21 +17,23 @@ import UserPersonalizationProvider from './UserPersonalizationProvider'
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     <APIOnlineStatusProvider>
-      <AuthProvider>
-        <SidebarStateProvider>
-          <PersonalizationProvider>
-            <UserPersonalizationProvider>
-              <ToastProvider>
-                <BackgroundProvider>
-                  <SocketProvider>
-                    <MusicProvider>{children}</MusicProvider>
-                  </SocketProvider>
-                </BackgroundProvider>
-              </ToastProvider>
-            </UserPersonalizationProvider>
-          </PersonalizationProvider>
-        </SidebarStateProvider>
-      </AuthProvider>
+      <APIOnlineStatusWrapper>
+        <AuthProvider>
+          <SidebarStateProvider>
+            <PersonalizationProvider>
+              <UserPersonalizationProvider>
+                <ToastProvider>
+                  <BackgroundProvider>
+                    <SocketProvider>
+                      <MusicProvider>{children}</MusicProvider>
+                    </SocketProvider>
+                  </BackgroundProvider>
+                </ToastProvider>
+              </UserPersonalizationProvider>
+            </PersonalizationProvider>
+          </SidebarStateProvider>
+        </AuthProvider>
+      </APIOnlineStatusWrapper>
     </APIOnlineStatusProvider>
   )
 }
