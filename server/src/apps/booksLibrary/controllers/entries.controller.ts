@@ -26,8 +26,8 @@ const updateEntry = forgeController
     id: 'books_library__entries'
   })
   .existenceCheck('body', {
-    category: '[books_library_categories]',
-    languages: '[books_library_languages]'
+    category: '[books_library__categories]',
+    languages: '[books_library__languages]'
   })
   .callback(({ pb, params: { id }, body }) =>
     EntriesService.updateEntry(pb, id, body)
@@ -72,6 +72,7 @@ const sendToKindle = forgeController
         'SMTP user or password not found. Please set them in the API Keys module.'
       )
     }
+
     return EntriesService.sendToKindle(
       pb,
       id,
