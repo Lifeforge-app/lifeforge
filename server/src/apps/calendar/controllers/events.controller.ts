@@ -44,10 +44,6 @@ const createEvent = forgeController
   .schema(CalendarControllersSchemas.Events.createEvent)
   .statusCode(201)
   .callback(async ({ pb, body }) => {
-    if (body.type === 'recurring' && !body.recurring_rrule) {
-      throw new ClientError('Recurring events must have a recurring rule')
-    }
-
     return await EventsService.createEvent(pb, body)
   })
 

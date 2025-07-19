@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: ideaBox
- * Generated at: 2025-07-19T14:07:18.233Z
+ * Generated at: 2025-07-19T14:24:04.968Z
  * Contains: idea_box__containers, idea_box__entries, idea_box__folders, idea_box__tags, idea_box__tags_aggregated, idea_box__containers_aggregated
  */
 
