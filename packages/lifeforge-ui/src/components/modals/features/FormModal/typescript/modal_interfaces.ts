@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LocationsCustomSchemas } from 'shared/types/collections'
 
 type ITextInputFieldProps = {
   label: string
@@ -93,8 +94,8 @@ type FieldTypeMap = {
     | IColorInputFieldProps
     | IIconInputFieldProps
     | IImageAndFileInputFieldProps
-    | ILocationInputFieldProps
     | IListboxInputFieldProps
+  location: ILocationInputFieldProps
   number: INumberInputFieldProps | ICurrencyInputFieldProps
   boolean: IFormCheckboxFieldProps
   Date: IDateInputFieldProps
@@ -104,17 +105,19 @@ type FieldTypeMap = {
 
 type GetTypeKey<T> = T extends string
   ? 'string'
-  : T extends number
-    ? 'number'
-    : T extends boolean
-      ? 'boolean'
-      : T extends Date
-        ? 'Date'
-        : T extends string[]
-          ? 'string[]'
-          : T extends any[]
-            ? 'any[]'
-            : never
+  : T extends LocationsCustomSchemas.ILocation
+    ? 'location'
+    : T extends number
+      ? 'number'
+      : T extends boolean
+        ? 'boolean'
+        : T extends Date
+          ? 'Date'
+          : T extends string[]
+            ? 'string[]'
+            : T extends any[]
+              ? 'any[]'
+              : never
 
 type IFieldProps<T = any, U extends keyof T = keyof T> = U extends keyof T
   ? GetTypeKey<T[U]> extends keyof FieldTypeMap

@@ -43,6 +43,7 @@ function UpdateEventModal({
     calendar: '',
     use_google_map: false,
     location: '',
+    location_coords: { lat: 0, lon: 0 },
     reference_link: '',
     description: ''
   })
@@ -149,8 +150,11 @@ function UpdateEventModal({
         title: existedData.title ?? '',
         category: existedData.category ?? '',
         calendar: existedData.calendar ?? '',
-        use_google_map: false,
+        use_google_map: !!(
+          existedData.location_coords.lat && existedData.location_coords.lon
+        ),
         location: existedData.location ?? '',
+        location_coords: existedData.location_coords ?? { lat: 0, lon: 0 },
         reference_link: existedData.reference_link ?? '',
         description: existedData.description ?? ''
       })
