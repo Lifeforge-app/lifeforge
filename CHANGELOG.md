@@ -4,6 +4,7 @@
 
 - **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
 - **Guitar Tabs**: Improved web scraping logic to handle more edge cases.
+- **Idea Box**: Fixed a bug where the idea entry is not properly updated in the frontend when the user performs an action.
 - **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
 - **UI**: Fixed a bug where the toast progressbar color is not properly applied.
 - **Code**: Migrated the entire codebase to a monorepo structure using `bun` as the package manager.

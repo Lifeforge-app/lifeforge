@@ -10,20 +10,10 @@ import tseslint from 'typescript-eslint'
 
 export default [
   {
+    ignores: ['**/*.config.js', '**/dist/', 'dist/']
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    ignores: [
-      'eslint.config.js',
-      '*.config.js',
-      'vite.config.ts',
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/.next/**',
-      '**/out/**',
-      '**/build/**',
-      '**/coverage/**',
-      '**/*.d.ts',
-      '**/bun.lockb'
-    ],
     languageOptions: {
       globals: {
         ...globals.node,

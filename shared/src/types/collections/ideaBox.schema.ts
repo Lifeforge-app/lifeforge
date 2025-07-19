@@ -24,7 +24,7 @@ const Entry = z.object({
   folder: z.string(),
   pinned: z.boolean(),
   archived: z.boolean(),
-  tags: z.any()
+  tags: z.array(z.string())
 })
 
 const Folder = z.object({

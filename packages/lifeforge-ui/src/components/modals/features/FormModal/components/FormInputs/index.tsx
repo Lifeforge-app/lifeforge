@@ -11,6 +11,7 @@ import FormFileInput from './components/FormFileInput'
 import FormIconInput from './components/FormIconInput'
 import FormListboxInput from './components/FormListboxInput'
 import FormLocationInput from './components/FormLocationInput'
+import FormNumberInput from './components/FormNumberInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
 
@@ -51,6 +52,18 @@ function FormInputs<T>({
                 selectedData={selectedData as string}
               />
             )
+
+          case 'number':
+            return (
+              <FormNumberInput
+                key={field.id as string}
+                field={field as IFieldProps<T> & { type: 'number' }}
+                handleChange={handleChange(field)}
+                namespace={namespace}
+                selectedData={selectedData as number}
+              />
+            )
+
           case 'textarea':
             return (
               <FormTextAreaInput

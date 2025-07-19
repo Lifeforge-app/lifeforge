@@ -6,10 +6,10 @@ import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 export const getTags = (
   pb: PocketBase,
   container: string
-): Promise<WithPB<IdeaBoxCollectionsSchemas.ITag>[]> =>
+): Promise<WithPB<IdeaBoxCollectionsSchemas.ITagAggregated>[]> =>
   pb
     .collection('idea_box__tags_aggregated')
-    .getFullList<WithPB<IdeaBoxCollectionsSchemas.ITag>>({
+    .getFullList<WithPB<IdeaBoxCollectionsSchemas.ITagAggregated>>({
       filter: `container = "${container}"`
     })
 

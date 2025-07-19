@@ -26,7 +26,7 @@ export const createFolder = async (
   }: {
     name: string
     container: string
-    parent: string
+    parent: string | undefined
     icon: string
     color: string
   }
@@ -104,7 +104,7 @@ export const validateFolderPath = async (
       }
 
       lastFolder = folder
-    } catch (error) {
+    } catch {
       folderExists = false
       break
     }

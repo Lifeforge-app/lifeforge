@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
 import {
-  IIdeaBoxFolder,
-  IIdeaBoxFolderFormState
-} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 function ModifyFolderModal({
   data: { type, existedData },
@@ -14,19 +15,22 @@ function ModifyFolderModal({
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: IIdeaBoxFolder | null
+    existedData: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder> | null
   }
   onClose: () => void
 }) {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
-  const [formState, setFormState] = useState<IIdeaBoxFolderFormState>({
+  const [formState, setFormState] = useState<
+    IdeaBoxControllersSchemas.IFolders['createFolder']['body'] &
+      IdeaBoxControllersSchemas.IFolders['updateFolder']['body']
+  >({
     name: '',
     icon: '',
     color: ''
   })
 
-  const FIELDS: IFieldProps<IIdeaBoxFolderFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       required: true,

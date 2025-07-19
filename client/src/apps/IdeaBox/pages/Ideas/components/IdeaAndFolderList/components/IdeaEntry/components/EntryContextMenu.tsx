@@ -6,13 +6,19 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'
 
-function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
+function EntryContextMenu({
+  entry
+}: {
+  entry:
+    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
+    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
+}) {
   const open = useModalStore(state => state.open)
 
   const { viewArchived, debouncedSearchQuery, selectedTags } =
@@ -33,7 +39,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
       )
 
       queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
+        queryKey: ['idea-box', 'ideas']
       })
 
       queryClient.invalidateQueries({
@@ -62,22 +68,15 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
       )
 
       queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
+        queryKey: ['idea-box', 'ideas']
       })
       queryClient.invalidateQueries({
-        queryKey: [
-          'idea-box',
-          'search',
-          id,
-          path,
-          selectedTags,
-          debouncedSearchQuery
-        ]
+        queryKey: ['idea-box', 'search']
       })
     } catch {
       toast.error(`Failed to ${entry.archived ? 'unarchive' : 'archive'} idea`)
     }
-  }, [entry, id, path, viewArchived])
+  }, [entry, id, path])
 
   const handleRemoveFromFolder = useCallback(async () => {
     try {
@@ -90,12 +89,12 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
       )
 
       queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas', id!, path!, viewArchived]
+        queryKey: ['idea-box', 'ideas', id!, path!]
       })
     } catch {
       toast.error('Failed to remove idea from folder')
     }
-  }, [entry, id, path, viewArchived])
+  }, [entry, id, path])
 
   const handleUpdateIdea = useCallback(() => {
     open(ModifyIdeaModal, {

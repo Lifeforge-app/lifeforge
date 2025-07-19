@@ -44,7 +44,7 @@ export const validateFolderPath = async (
       }
 
       lastFolder = folder
-    } catch (error) {
+    } catch {
       folderExists = false
       break
     }

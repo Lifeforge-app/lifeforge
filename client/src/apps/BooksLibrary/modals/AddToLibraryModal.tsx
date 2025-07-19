@@ -4,8 +4,8 @@ import { toast } from 'react-toastify'
 
 import { useAPIQuery } from 'shared/lib'
 import { fetchAPI } from 'shared/lib'
+import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
-import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function AddToLibraryModal({
@@ -26,25 +26,17 @@ function AddToLibraryModal({
     miscellaneous: { addToProcesses }
   } = useBooksLibraryContext()
 
-  const fetchedDataQuery = useAPIQuery<{
-    md5: string
-    thumbnail: string
-    authors: string
-    edition: string
-    extension: string
-    isbn: string
-    languages: string[]
-    publisher: string
-    size: string
-    title: string
-    year_published: string
-  }>(
+  const fetchedDataQuery = useAPIQuery<
+    BooksLibraryControllersSchemas.ILibgen['getLocalLibraryData']['response']
+  >(
     `books-library/libgen/local-library-data/${md5}`,
     ['books-library', 'libgen', 'local-library-data', md5],
     md5 !== null && isLibgenIS
   )
 
-  const [data, setData] = useState<IBooksLibraryFormSate>({
+  const [data, setData] = useState<
+    BooksLibraryControllersSchemas.ILibgen['addToLibrary']['body']
+  >({
     authors: '',
     collection: '',
     edition: '',
@@ -53,10 +45,10 @@ function AddToLibraryModal({
     languages: [],
     md5: '',
     publisher: '',
-    size: '',
+    size: 0,
     thumbnail: '',
     title: '',
-    year_published: ''
+    year_published: 0
   })
 
   useEffect(() => {
@@ -91,14 +83,14 @@ function AddToLibraryModal({
       languages: [],
       md5: '',
       publisher: '',
-      size: '',
+      size: 0,
       thumbnail: '',
       title: '',
-      year_published: ''
+      year_published: 0
     })
   }, [isLibgenIS, book, languagesQuery.data])
 
-  const FIELDS: IFieldProps<IBooksLibraryFormSate>[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'md5',
       label: 'MD5',
@@ -197,7 +189,7 @@ function AddToLibraryModal({
       label: 'File Size',
       icon: 'tabler:dimensions',
       placeholder: 'Size',
-      type: 'text',
+      type: 'number',
       disabled: true
     }
   ]
@@ -209,9 +201,7 @@ function AddToLibraryModal({
         `books-library/libgen/add-to-library/${md5}`,
         {
           method: 'POST',
-          body: {
-            metadata: data
-          }
+          body: data
         }
       )
 

@@ -11,8 +11,12 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
+import {
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
-import { type IIdeaBoxContainer } from '../../interfaces/ideabox_interfaces'
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'
 
@@ -21,12 +25,13 @@ function IdeaBox() {
 
   const { t } = useTranslation('apps.ideaBox')
 
-  const query = useAPIQuery<IIdeaBoxContainer[]>('idea-box/containers', [
-    'idea-box',
-    'containers'
-  ])
+  const query = useAPIQuery<
+    IdeaBoxControllersSchemas.IContainers['getContainers']['response']
+  >('idea-box/containers', ['idea-box', 'containers'])
 
-  const [filteredList, setFilteredList] = useState<IIdeaBoxContainer[]>([])
+  const [filteredList, setFilteredList] = useState<
+    ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>[]
+  >([])
 
   const [searchQuery, setSearchQuery] = useState('')
 

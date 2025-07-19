@@ -128,13 +128,8 @@ const Entries = {
       edition: true,
       languages: true,
       isbn: true,
-      publisher: true
-    }).extend({
-      year_published: z.string().transform(val => {
-        const year = parseInt(val, 10)
-
-        return isNaN(year) ? 0 : year
-      })
+      publisher: true,
+      year_published: true
     }),
     response: SchemaWithPB(BooksLibraryCollectionsSchemas.Entry)
   },
@@ -248,20 +243,18 @@ const Libgen = {
       md5: z.string()
     }),
     body: z.object({
-      metadata: z.object({
-        authors: z.string(),
-        collection: z.string(),
-        extension: z.string(),
-        edition: z.string(),
-        isbn: z.string(),
-        languages: z.array(z.string()),
-        md5: z.string(),
-        publisher: z.string(),
-        size: z.string().transform(val => parseInt(val, 10)),
-        thumbnail: z.string(),
-        title: z.string(),
-        year_published: z.string().transform(val => parseInt(val, 10) || 0)
-      })
+      authors: z.string(),
+      collection: z.string(),
+      extension: z.string(),
+      edition: z.string(),
+      isbn: z.string(),
+      languages: z.array(z.string()),
+      md5: z.string(),
+      publisher: z.string(),
+      size: z.number().int().min(0),
+      thumbnail: z.string(),
+      title: z.string(),
+      year_published: z.number().int().min(0)
     }),
     response: z.string()
   }

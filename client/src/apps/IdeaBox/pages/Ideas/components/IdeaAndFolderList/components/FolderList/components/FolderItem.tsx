@@ -6,13 +6,12 @@ import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import {
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
 
-import { type IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
 import FolderContextMenu from './FolderContextMenu'
-
-interface FolderItemProps {
-  folder: IIdeaBoxFolder
-}
 
 function getStyle({
   isOver,
@@ -44,7 +43,11 @@ function getStyle({
   }
 }
 
-function FolderItem({ folder }: FolderItemProps) {
+function FolderItem({
+  folder
+}: {
+  folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
+}) {
   const queryClient = useQueryClient()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
@@ -92,15 +95,9 @@ function FolderItem({ folder }: FolderItemProps) {
           method: 'POST'
         }
       )
+
       queryClient.invalidateQueries({
-        queryKey: (
-          [
-            'idea-box',
-            type === 'idea' ? 'ideas' : 'folders',
-            id,
-            path
-          ] as unknown[]
-        ).concat(type === 'idea' ? [false] : [])
+        queryKey: ['idea-box', 'ideas']
       })
     } catch {
       toast.error('Failed to move item')

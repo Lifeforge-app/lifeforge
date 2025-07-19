@@ -7,7 +7,7 @@ import InputActionButton from '../shared/InputActionButton'
 import InputIcon from '../shared/InputIcon'
 import InputLabel from '../shared/InputLabel'
 import InputWrapper from '../shared/InputWrapper'
-import Text from './components/TextInputBox'
+import TextInputBox from './components/TextInputBox'
 
 export interface ITextInputProps {
   icon: string
@@ -34,6 +34,7 @@ export interface ITextInputProps {
   isPassword?: boolean
   noAutoComplete?: boolean
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   ref?: React.RefObject<HTMLInputElement | null>
   required?: boolean
@@ -53,6 +54,7 @@ function TextInput({
   name,
   noAutoComplete = true,
   onActionButtonClick = () => {},
+  onBlur,
   onKeyDown = () => {},
   placeholder,
   ref,
@@ -96,7 +98,7 @@ function TextInput({
           label={inputLabel}
           required={required === true}
         />
-        <Text
+        <TextInputBox
           disabled={disabled}
           inputMode={inputMode}
           inputRef={inputRef}
@@ -107,6 +109,7 @@ function TextInput({
           setValue={setValue}
           showPassword={showPassword}
           value={value}
+          onBlur={onBlur}
           onKeyDown={onKeyDown}
         />
         {isPassword && (

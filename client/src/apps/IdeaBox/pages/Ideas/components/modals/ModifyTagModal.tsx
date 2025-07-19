@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
 import {
-  IIdeaBoxTag,
-  IIdeaBoxTagFormState
-} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
+  ISchemaWithPB,
+  IdeaBoxCollectionsSchemas
+} from 'shared/types/collections'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 function ModifyTagModal({
   data: { type, existedData },
@@ -14,19 +15,22 @@ function ModifyTagModal({
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: IIdeaBoxTag | null
+    existedData: ISchemaWithPB<IdeaBoxCollectionsSchemas.ITag> | null
   }
   onClose: () => void
 }) {
   const { id } = useParams<{ id: string }>()
 
-  const [formState, setFormState] = useState<IIdeaBoxTagFormState>({
+  const [formState, setFormState] = useState<
+    | IdeaBoxControllersSchemas.ITags['createTag']['body']
+    | IdeaBoxControllersSchemas.ITags['updateTag']['body']
+  >({
     name: '',
     icon: '',
     color: ''
   })
 
-  const FIELDS: IFieldProps<IIdeaBoxTagFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       label: 'Tag name',

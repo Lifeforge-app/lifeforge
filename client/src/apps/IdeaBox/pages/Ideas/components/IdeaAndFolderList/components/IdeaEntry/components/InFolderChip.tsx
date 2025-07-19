@@ -1,16 +1,26 @@
 import { Icon } from '@iconify/react'
 import { Link, useParams } from 'react-router'
 
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
+
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-import { IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
-
-function InFolderChip({ entry }: { entry: IIdeaBoxEntry }) {
+function InFolderChip({
+  entry
+}: {
+  entry:
+    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
+    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
+}) {
   const { setSearchQuery, setSelectedTags } = useIdeaBoxContext()
 
   const { '*': path } = useParams<{ '*': string }>()
 
-  return typeof entry.folder !== 'string' ? (
+  if (typeof entry.folder === 'string' || !('fullPath' in entry)) {
+    return <></>
+  }
+
+  return (
     <span className="mt-3 flex items-center gap-2 text-sm">
       In
       <Link
@@ -37,8 +47,6 @@ function InFolderChip({ entry }: { entry: IIdeaBoxEntry }) {
         {entry.folder.name}
       </Link>
     </span>
-  ) : (
-    <></>
   )
 }
 

@@ -5,16 +5,16 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
+import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics() {
   const { t } = useTranslation('apps.codeTime')
 
-  const statsQuery = useAPIQuery<Record<string, number>>(
-    'code-time/statistics',
-    ['code-time', 'statistics']
-  )
+  const statsQuery = useAPIQuery<
+    CodeTimeControllersSchemas.ICodeTime['getStatistics']['response']
+  >('code-time/statistics', ['code-time', 'statistics'])
 
   return (
     <div className="flex w-full flex-col gap-3">

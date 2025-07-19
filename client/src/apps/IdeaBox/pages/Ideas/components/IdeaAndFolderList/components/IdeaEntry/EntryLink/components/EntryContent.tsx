@@ -1,11 +1,18 @@
 import { memo } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
-import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
-
-function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
-  const OGQuery = useAPIQuery<Record<string, any>>(
+function EntryContent({
+  entry
+}: {
+  entry:
+    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
+    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
+}) {
+  const OGQuery = useAPIQuery<
+    IdeaBoxControllersSchemas.IMisc['getOgData']['response']
+  >(
     `idea-box/og-data/${entry.id}`,
     ['idea-box', 'og', entry.id, entry.content],
     true,

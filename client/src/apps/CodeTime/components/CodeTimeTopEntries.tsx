@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from 'shared/lib'
+import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
@@ -15,10 +16,11 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
     '24 hours'
   )
 
-  const topEntriesQuery = useAPIQuery<Record<string, number>>(
-    `code-time/${type}?last=${lastFor}`,
-    ['code-time', 'top', type, lastFor]
-  )
+  const topEntriesQuery = useAPIQuery<
+    CodeTimeControllersSchemas.ICodeTime[
+      | 'getProjects'
+      | 'getLanguages']['response']
+  >(`code-time/${type}?last=${lastFor}`, ['code-time', 'top', type, lastFor])
 
   return (
     <div className="space-y-6 pb-8">
