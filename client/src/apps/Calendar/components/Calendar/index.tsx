@@ -91,7 +91,7 @@ function CalendarComponent({
         return <CalendarHeader setSidebarOpen={setSidebarOpen} {...props} />
       },
       event: ({ event }: { event: object }) => {
-        return <EventItem event={event} />
+        return <EventItem event={event as ICalendarEvent} />
       },
       week: {
         header: WeekHeader
@@ -99,7 +99,7 @@ function CalendarComponent({
       agenda: {
         date: AgendaDate as (props: unknown) => React.ReactElement,
         event: ({ event }: { event: object }) => (
-          <AgendaEventItem event={event} />
+          <AgendaEventItem event={event as ICalendarEvent} />
         )
       }
     }),

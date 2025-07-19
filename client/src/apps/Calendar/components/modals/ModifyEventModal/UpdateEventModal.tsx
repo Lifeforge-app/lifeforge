@@ -4,7 +4,6 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
-import { CalendarCollectionsSchemas } from 'shared/types/collections'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
@@ -33,25 +32,20 @@ function UpdateEventModal({
   const { eventQueryKey } = useCalendarStore()
 
   const [formState, setFormState] = useState<
-    CalendarCollectionsSchemas.IEvent & {
-      use_google_map: boolean
-    }
+    CalendarControllersSchemas.IEvents['updateEvent']['body']
   >({
-    type: 'single',
     title: '',
     category: '',
     calendar: '',
-    use_google_map: false,
-    location: '',
-    location_coords: { lat: 0, lon: 0 },
+    location: undefined,
     reference_link: '',
     description: ''
   })
 
   const ref = useRef<HTMLInputElement>(null)
 
-  const FIELDS: IFieldProps<typeof formState>[] = useMemo(() => {
-    const baseFields: IFieldProps<typeof formState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = useMemo(
+    () => [
       {
         id: 'title',
         required: true,
@@ -91,32 +85,11 @@ function UpdateEventModal({
         nullOption: ''
       },
       {
-        id: 'use_google_map',
-        required: false,
-        label: 'Use Google Map',
-        icon: 'tabler:brand-google-maps',
-        type: 'checkbox'
-      }
-    ]
-
-    const locationField: IFieldProps<typeof formState> =
-      formState.use_google_map
-        ? {
-            id: 'location',
-            required: true,
-            type: 'location',
-            label: 'Location'
-          }
-        : {
-            id: 'location',
-            required: false,
-            type: 'text',
-            label: 'Location',
-            icon: 'tabler:map-pin',
-            placeholder: 'Event location'
-          }
-
-    const additionalFields: IFieldProps<typeof formState>[] = [
+        id: 'location',
+        required: true,
+        type: 'location',
+        label: 'Location'
+      },
       {
         id: 'reference_link',
         required: false,
@@ -133,28 +106,27 @@ function UpdateEventModal({
         type: 'textarea',
         placeholder: 'Event description'
       }
-    ]
-
-    return [...baseFields, locationField, ...additionalFields]
-  }, [
-    formState.type,
-    categoriesQuery.data,
-    calendarsQuery.data,
-    formState.use_google_map
-  ])
+    ],
+    [categoriesQuery.data, calendarsQuery.data]
+  )
 
   useEffect(() => {
     if (existedData !== null) {
       setFormState({
-        type: existedData.type ?? 'single',
         title: existedData.title ?? '',
         category: existedData.category ?? '',
         calendar: existedData.calendar ?? '',
-        use_google_map: !!(
-          existedData.location_coords.lat && existedData.location_coords.lon
-        ),
-        location: existedData.location ?? '',
-        location_coords: existedData.location_coords ?? { lat: 0, lon: 0 },
+        location: existedData.location
+          ? {
+              name: existedData.location,
+              location: {
+                latitude: existedData.location_coords.lat,
+                longitude: existedData.location_coords.lon
+              },
+              formattedAddress: existedData.location
+            }
+          : undefined,
+
         reference_link: existedData.reference_link ?? '',
         description: existedData.description ?? ''
       })
@@ -190,25 +162,15 @@ function UpdateEventModal({
       data={formState}
       endpoint="calendar/events"
       fields={FIELDS}
-      getFinalData={async originalData => {
-        const data: CalendarControllersSchemas.IEvents['updateEvent']['body'] =
-          {
-            ...originalData
-          }
-
-        delete data.use_google_map
-
-        return data
-      }}
       icon="tabler:pencil"
       id={existedData?.id}
       loading={categoriesQuery.isLoading || calendarsQuery.isLoading}
       modalRef={ref}
       namespace="apps.calendar"
-      openType={type}
+      openType="update"
       queryKey={eventQueryKey}
       setData={setFormState}
-      title={`event.${type}`}
+      title="event.update"
       onClose={onClose}
     />
   )

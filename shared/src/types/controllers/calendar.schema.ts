@@ -171,19 +171,12 @@ const Events = {
    */
   createEvent: {
     body: CalendarCollectionsSchemas.Event.omit({
-      type: true
+      type: true,
+      location: true,
+      location_coords: true
     })
       .extend({
-        location: z
-          .union([
-            z.object({
-              displayName: z.object({
-                text: z.string()
-              })
-            }),
-            z.string()
-          ])
-          .optional()
+        location: LocationsCustomSchemas.Location.optional()
       })
       .and(
         z.union([
@@ -191,12 +184,20 @@ const Events = {
             .object({
               type: z.literal('single')
             })
-            .and(CalendarCollectionsSchemas.EventsSingle),
+            .and(
+              CalendarCollectionsSchemas.EventsSingle.omit({
+                base_event: true
+              })
+            ),
           z
             .object({
               type: z.literal('recurring')
             })
-            .and(CalendarCollectionsSchemas.EventsRecurring)
+            .and(
+              CalendarCollectionsSchemas.EventsRecurring.omit({
+                base_event: true
+              })
+            )
         ])
       ),
     response: z.void()

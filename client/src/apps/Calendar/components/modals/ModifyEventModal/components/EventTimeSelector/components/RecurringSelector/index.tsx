@@ -2,13 +2,13 @@ import {
   DateInput,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
+  NumberInput,
   TextInput
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ICalendarEventFormState } from '@apps/Calendar/interfaces/calendar_interfaces'
-
+import { ICreateEventFormState } from '../../../../CreateEventModal'
 import DailyForm from './components/DailyForm'
 import HourlyForm from './components/HourlyForm'
 import MonthlyForm from './components/MonthlyForm'
@@ -20,8 +20,8 @@ function RecurringSelector({
   formState,
   setFormState
 }: {
-  formState: ICalendarEventFormState
-  setFormState: React.Dispatch<React.SetStateAction<ICalendarEventFormState>>
+  formState: ICreateEventFormState
+  setFormState: React.Dispatch<React.SetStateAction<ICreateEventFormState>>
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
 
@@ -146,7 +146,7 @@ function RecurringSelector({
 
     setFormState({
       ...formState,
-      recurring_rrule: rrule
+      recurring_rule: rrule
     })
   }, [
     formState.start,
@@ -196,14 +196,14 @@ function RecurringSelector({
         icon="tabler:repeat"
         name="frequency"
         namespace="apps.calendar"
-        setValue={(value: string) => {
-          setFreq(value as any)
+        setValue={value => {
+          setFreq(value)
 
           if (value === 'hourly') {
             setFormState({
               ...formState,
-              recurring_duration_amount: '1',
-              recurring_duration_unit: 'hour'
+              duration_amount: 1,
+              duration_unit: 'hour'
             })
           }
         }}
@@ -277,43 +277,38 @@ function RecurringSelector({
         )}
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <TextInput
+        <NumberInput
           darker
           className="flex-1"
           icon="tabler:clock"
-          inputMode="numeric"
           name={t('recurring.inputs.durationAmount')}
           namespace={false}
           placeholder="1"
-          setValue={(value: string) => {
+          setValue={value => {
             setFormState({
               ...formState,
-              recurring_duration_amount: value
+              duration_amount: value
             })
           }}
-          value={formState.recurring_duration_amount}
+          value={formState.duration_amount}
         />
         <ListboxOrComboboxInput
           required
           buttonContent={
-            <>
-              {t(
-                `recurring.durationUnits.${formState.recurring_duration_unit}`
-              )}
-            </>
+            <>{t(`recurring.durationUnits.${formState.duration_unit}`)}</>
           }
           className="flex-1"
           icon="tabler:clock"
           name={t('recurring.inputs.durationUnit')}
           namespace={false}
-          setValue={(value: string) => {
+          setValue={value => {
             setFormState({
               ...formState,
-              recurring_duration_unit: value
+              duration_unit: value
             })
           }}
           type="listbox"
-          value={formState.recurring_duration_unit}
+          value={formState.duration_unit}
         >
           {['minute', 'hour', 'day', 'week', 'month', 'year'].map(unit => (
             <ListboxOrComboboxOption

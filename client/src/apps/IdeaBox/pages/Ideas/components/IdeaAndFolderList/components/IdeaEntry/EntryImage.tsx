@@ -83,7 +83,7 @@ function EntryImage({
       </Zoom>
       {entry.tags !== null && entry.tags?.length !== 0 && (
         <div className="mb-2 flex flex-wrap gap-1">
-          {entry.tags?.map((tag, index) => (
+          {entry.tags?.map((tag: string, index: number) => (
             <TagChip key={index} text={tag} />
           ))}
         </div>

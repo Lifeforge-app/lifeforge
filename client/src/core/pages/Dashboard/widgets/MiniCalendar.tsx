@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { useAPIQuery } from 'shared/lib'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import MiniCalendarContent from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
-import { type ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
 
 export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
@@ -26,10 +26,14 @@ export default function MiniCalendar() {
     .endOf('month')
     .format('YYYY-MM-DD')
 
-  const eventsQuery = useAPIQuery<ICalendarEvent[]>(
-    `calendar/events?start=${startDate}&end=${endDate}`,
-    ['calendar', 'events', currentYear, currentMonth]
-  )
+  const eventsQuery = useAPIQuery<
+    CalendarControllersSchemas.IEvents['getEventsByDateRange']['response']
+  >(`calendar/events?start=${startDate}&end=${endDate}`, [
+    'calendar',
+    'events',
+    currentYear,
+    currentMonth
+  ])
 
   return (
     <DashboardItem
