@@ -210,7 +210,10 @@ export const createEvent = async (
       category: eventData.category,
       calendar: eventData.calendar,
       location: eventData.location || '',
-      location_coords: eventData.location_coords || { lat: 0, lon: 0 },
+      location_coords: {
+        lat: eventData.location?.location.latitude || 0,
+        lon: eventData.location?.location.longitude || 0
+      },
       reference_link: eventData.reference_link || '',
       description: eventData.description || '',
       type: eventData.type
