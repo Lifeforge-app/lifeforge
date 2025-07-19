@@ -1,5 +1,6 @@
-import { ILocationEntry } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
+
+import { LocationsCustomSchemas } from 'shared/types/collections'
 
 interface ICalendarEvent extends RecordModel {
   type: 'single' | 'recurring'
@@ -25,7 +26,7 @@ type ICalendarEventFormState = {
   use_google_map: boolean
   category: string
   calendar: string
-  location: string | ILocationEntry | null
+  location: string | LocationsCustomSchemas.ILocation | null
   reference_link: string
   description: string
   type: 'single' | 'recurring'
