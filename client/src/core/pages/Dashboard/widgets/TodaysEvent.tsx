@@ -15,19 +15,21 @@ import { Tooltip } from 'react-tooltip'
 
 import { useSidebarState } from 'shared/lib'
 import { useAPIQuery } from 'shared/lib'
+import {
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
+import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces'
 
 function EventItem({
   categories,
   event
 }: {
-  categories: ICalendarCategory[]
+  categories: ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>[]
   event: ICalendarEvent
 }) {
   const { sidebarExpanded } = useSidebarState()
@@ -56,7 +58,7 @@ function EventItem({
       event.category.startsWith('_')
         ? (INTERNAL_CATEGORIES[
             event.category as keyof typeof INTERNAL_CATEGORIES
-          ] as ICalendarCategory)
+          ] as ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>)
         : categories.find(category => category.id === event.category),
     [event.category, categories]
   )
@@ -126,15 +128,13 @@ function EventItem({
 }
 
 export default function TodaysEvent() {
-  const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
-    'calendar/events/today',
-    ['calendar', 'events', 'today']
-  )
+  const rawEventsQuery = useAPIQuery<
+    CalendarControllersSchemas.IEvents['getEventsToday']['response']
+  >('calendar/events/today', ['calendar', 'events', 'today'])
 
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
-  )
+  const categoriesQuery = useAPIQuery<
+    CalendarControllersSchemas.ICategories['getAllCategories']['response']
+  >('calendar/categories', ['calendar', 'categories'])
 
   const filteredEvents = useMemo(
     () =>

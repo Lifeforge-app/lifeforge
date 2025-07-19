@@ -12,7 +12,7 @@ import {
   ISchemaWithPB
 } from 'shared/types/collections'
 
-import CreateEventModal from '@apps/Calendar/components/modals/ModifyEventModal/CreateEventModal'
+import UpdateEventModal from '@apps/Calendar/components/modals/ModifyEventModal/UpdateEventModal'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import { ICalendarEvent } from '../../..'
@@ -57,7 +57,7 @@ function EventDetailsHeader({
   }, [event.id])
 
   const handleEdit = useCallback(() => {
-    open(CreateEventModal, {
+    open(UpdateEventModal, {
       existedData: event,
       type: 'update'
     })

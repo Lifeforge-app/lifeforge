@@ -44,7 +44,9 @@ function ModifyTransactionsModal({
     'income' | 'expenses' | 'transfer'
   >('income')
 
-  const [transactionDate, setTransactionDate] = useState<Date | null>(null)
+  const [transactionDate, setTransactionDate] = useState<Date | undefined>(
+    undefined
+  )
 
   const [amount, setAmount] = useState<number>(0)
 
@@ -92,7 +94,7 @@ function ModifyTransactionsModal({
         setParticular(existedData.particulars ?? '')
         setTransactionType(existedData.type ?? 'income')
         setTransactionDate(
-          existedData.date ? dayjs(existedData.date).toDate() : null
+          existedData.date ? dayjs(existedData.date).toDate() : undefined
         )
         setAmount(existedData.amount ?? 0)
         setCategory(existedData.category || '')

@@ -7,8 +7,8 @@ interface WalletState {
   selectedCategory: string | null
   selectedAsset: string | null
   selectedLedger: string | null
-  startDate: string | null
-  endDate: string | null
+  startDate: string | undefined
+  endDate: string | undefined
   searchQuery: string
   nextToSelect: 'start' | 'end'
   isAmountHidden: boolean
@@ -19,8 +19,8 @@ interface WalletState {
   setSelectedCategory: (c: string | null) => void
   setSelectedAsset: (a: string | null) => void
   setSelectedLedger: (l: string | null) => void
-  setStartDate: (d: string | null) => void
-  setEndDate: (d: string | null) => void
+  setStartDate: (d: string | undefined) => void
+  setEndDate: (d: string | undefined) => void
   setSearchQuery: (q: string) => void
   setNextToSelect: (s: WalletState['nextToSelect']) => void
   toggleAmountVisibility: () => void
@@ -32,8 +32,8 @@ export const useWalletStore = create<WalletState>()(set => ({
   selectedCategory: null,
   selectedAsset: null,
   selectedLedger: null,
-  startDate: null,
-  endDate: null,
+  startDate: undefined,
+  endDate: undefined,
   searchQuery: '',
   nextToSelect: 'start',
   isAmountHidden: true,

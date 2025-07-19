@@ -6,9 +6,9 @@ import {
 
 interface FormDateInputProps<T> {
   field: IFieldProps<T> & IDateInputFieldProps
-  selectedData: Date | null
+  selectedData: Date | undefined
   namespace: string
-  handleChange: (value: Date | null) => void
+  handleChange: (value: Date | undefined) => void
 }
 
 function FormDateInput<T>({

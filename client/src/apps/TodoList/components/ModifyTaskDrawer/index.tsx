@@ -48,7 +48,7 @@ function ModifyTaskDrawer() {
 
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
 
-  const [dueDate, setDueDate] = useState<Date | null>(null)
+  const [dueDate, setDueDate] = useState<Date | undefined>(undefined)
 
   const [priority, setPriority] = useState<string>('')
 
@@ -175,7 +175,9 @@ function ModifyTaskDrawer() {
       setSummary(selectedTask.summary)
       setNotes(selectedTask.notes)
       setDueDate(
-        selectedTask.due_date ? dayjs(selectedTask.due_date).toDate() : null
+        selectedTask.due_date
+          ? dayjs(selectedTask.due_date).toDate()
+          : undefined
       )
       setDueDateHasTime(selectedTask.due_date_has_time)
       setPriority(selectedTask.priority)
@@ -184,7 +186,7 @@ function ModifyTaskDrawer() {
     } else {
       setSummary('')
       setNotes('')
-      setDueDate(null)
+      setDueDate(undefined)
       setDueDateHasTime(false)
       setPriority('')
       setList('')

@@ -65,7 +65,7 @@ function EntryLink({
       <EntryContent key={entry.content} entry={entry} />
       {entry.tags !== null && entry.tags?.length !== 0 && (
         <div className="flex gap-2">
-          {entry.tags?.map((tag, index) => (
+          {entry.tags?.map((tag: string, index: number) => (
             <TagChip key={index} text={tag} />
           ))}
         </div>

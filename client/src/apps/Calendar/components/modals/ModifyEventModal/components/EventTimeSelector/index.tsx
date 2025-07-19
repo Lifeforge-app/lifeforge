@@ -2,24 +2,17 @@ import { Icon } from '@iconify/react'
 import { Button, DateInput } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { ICalendarEventFormState } from '@apps/Calendar/interfaces/calendar_interfaces'
-
+import { ICreateEventFormState } from '../../CreateEventModal'
 import RecurringSelector from './components/RecurringSelector'
 
 function EventTimeSelector({
   formState,
-  setFormState,
-  type
+  setFormState
 }: {
-  formState: ICalendarEventFormState
-  setFormState: React.Dispatch<React.SetStateAction<ICalendarEventFormState>>
-  type: 'create' | 'update' | null
+  formState: ICreateEventFormState
+  setFormState: React.Dispatch<React.SetStateAction<ICreateEventFormState>>
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
-
-  if (type === 'update') {
-    return <></>
-  }
 
   return (
     <div className="shadow-custom component-bg-lighter mt-4 rounded-lg p-6">

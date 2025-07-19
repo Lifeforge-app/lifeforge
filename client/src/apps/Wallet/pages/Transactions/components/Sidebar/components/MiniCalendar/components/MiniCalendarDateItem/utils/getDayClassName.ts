@@ -12,8 +12,8 @@ export default function getDayClassName({
   index: number
   firstDay: number
   lastDate: number
-  startDate: string | null
-  endDate: string | null
+  startDate: string | undefined
+  endDate: string | undefined
   isFirstAndLastDay: string
   isBetweenFirstAndLastDay: boolean
 }) {

@@ -11,14 +11,14 @@ function DateRangeSelector() {
   const { startDate, endDate, setStartDate, setEndDate } = useWalletStore()
 
   const handleDateChange = (
-    date: Date | null,
+    date: Date | undefined,
     type: 'start_date' | 'end_date'
   ) => {
     if (!date) {
       if (type === 'start_date') {
-        setStartDate(null)
+        setStartDate(undefined)
       } else {
-        setEndDate(null)
+        setEndDate(undefined)
       }
 
       return
@@ -26,10 +26,10 @@ function DateRangeSelector() {
 
     const otherDate =
       type === 'start_date'
-        ? endDate !== null && dayjs(endDate).isValid()
+        ? endDate !== undefined && dayjs(endDate).isValid()
           ? dayjs(endDate)
           : dayjs()
-        : startDate !== null && dayjs(startDate).isValid()
+        : startDate !== undefined && dayjs(startDate).isValid()
           ? dayjs(startDate)
           : dayjs()
 
@@ -69,7 +69,7 @@ function DateRangeSelector() {
               (type === 'start_date' ? startDate : endDate) !== null &&
               dayjs(type === 'start_date' ? startDate : endDate).isValid()
                 ? dayjs(type === 'start_date' ? startDate : endDate).toDate()
-                : null
+                : undefined
             }
             icon={icon}
             name={name}

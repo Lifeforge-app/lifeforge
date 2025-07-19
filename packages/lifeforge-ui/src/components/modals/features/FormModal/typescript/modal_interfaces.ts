@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LocationsCustomSchemas } from 'shared/types/collections'
 
+export type IFileData = {
+  image: string | File | null
+  preview: string | null
+}
+
 type ITextInputFieldProps = {
   label: string
   icon: string
@@ -93,12 +98,12 @@ type FieldTypeMap = {
     | ITextAreaInputFieldProps
     | IColorInputFieldProps
     | IIconInputFieldProps
-    | IImageAndFileInputFieldProps
     | IListboxInputFieldProps
   location: ILocationInputFieldProps
   number: INumberInputFieldProps | ICurrencyInputFieldProps
   boolean: IFormCheckboxFieldProps
   Date: IDateInputFieldProps
+  file: IImageAndFileInputFieldProps
   'string[]': IListboxInputFieldProps
   'any[]': IListboxInputFieldProps
 }
@@ -113,11 +118,13 @@ type GetTypeKey<T> = T extends string
         ? 'boolean'
         : T extends Date
           ? 'Date'
-          : T extends string[]
-            ? 'string[]'
-            : T extends any[]
-              ? 'any[]'
-              : never
+          : T extends IFileData
+            ? 'file'
+            : T extends string[]
+              ? 'string[]'
+              : T extends any[]
+                ? 'any[]'
+                : never
 
 type IFieldProps<T = any, U extends keyof T = keyof T> = U extends keyof T
   ? GetTypeKey<T[U]> extends keyof FieldTypeMap
