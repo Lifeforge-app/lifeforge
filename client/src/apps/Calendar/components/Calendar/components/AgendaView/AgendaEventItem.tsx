@@ -2,25 +2,27 @@ import clsx from 'clsx'
 import { useMemo } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import {
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
-import {
-  ICalendarCategory,
-  ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+
+import { ICalendarEvent } from '../..'
 
 function AgendaEventItem({ event }: { event: ICalendarEvent }) {
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
-  )
+  const categoriesQuery = useAPIQuery<
+    CalendarControllersSchemas.ICategories['getAllCategories']['response']
+  >('calendar/categories', ['calendar', 'categories'])
 
-  const category = useMemo<ICalendarCategory | undefined>(() => {
+  const category = useMemo(() => {
     if (event.category.startsWith('_')) {
       return (INTERNAL_CATEGORIES[
         event.category as keyof typeof INTERNAL_CATEGORIES
-      ] ?? {}) as ICalendarCategory
+      ] ?? {}) as ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
     }
 
     return categoriesQuery.data?.find(

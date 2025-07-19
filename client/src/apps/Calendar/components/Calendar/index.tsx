@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
-import { Calendar, dayjsLocalizer } from 'react-big-calendar'
+import { Calendar, Components, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop, {
   EventInteractionArgs
 } from 'react-big-calendar/lib/addons/dragAndDrop'
@@ -12,14 +12,14 @@ import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
-import ModifyEventModal from '../modals/ModifyEventModal'
+import CreateEventModal from '../modals/ModifyEventModal/CreateEventModal'
 import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import EventItem from './components/EventItem'
 import CalendarHeader from './components/Headers/CalendarHeader'
 import WeekHeader from './components/Headers/WeekHeader'
 
-type ICalendarEvent =
+export type ICalendarEvent =
   CalendarControllersSchemas.IEvents['getEventsByDateRange']['response'][number]
 
 const localizer = dayjsLocalizer(dayjs)
@@ -86,33 +86,20 @@ function CalendarComponent({
   )
 
   const calendarComponents = useMemo(
-    () => ({
+    (): Components => ({
       toolbar: (props: any) => {
         return <CalendarHeader setSidebarOpen={setSidebarOpen} {...props} />
       },
-      event: ({
-        event
-      }: {
-        event:
-          | CalendarControllersSchemas.IEvents['getEventById']['response']
-          | Record<string, unknown>
-        props: any
-      }) => {
-        return (
-          <EventItem
-            event={
-              event as CalendarControllersSchemas.IEvents['getEventById']['response']
-            }
-          />
-        )
+      event: ({ event }: { event: object }) => {
+        return <EventItem event={event} />
       },
       week: {
         header: WeekHeader
       },
       agenda: {
-        date: AgendaDate,
-        event: ({ event }: { event: ICalendarEvent }) => (
-          <AgendaEventItem event={event as ICalendarEvent} />
+        date: AgendaDate as (props: unknown) => React.ReactElement,
+        event: ({ event }: { event: object }) => (
+          <AgendaEventItem event={event} />
         )
       }
     }),
@@ -154,7 +141,7 @@ function CalendarComponent({
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
-      open(ModifyEventModal, {
+      open(CreateEventModal, {
         type: 'create',
         existedData: {
           id: '',
@@ -181,8 +168,8 @@ function CalendarComponent({
   return (
     <DnDCalendar
       selectable
-      components={calendarComponents as any}
-      draggableAccessor={draggableAccessor}
+      components={calendarComponents}
+      draggableAccessor={draggableAccessor as (event: object) => boolean}
       events={filteredEvents}
       localizer={localizer}
       onEventDrop={handleEventChange}

@@ -7,13 +7,15 @@ import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
-import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
 import {
-  ICalendarCategory,
-  ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+
+import CreateEventModal from '@apps/Calendar/components/modals/ModifyEventModal/CreateEventModal'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
+
+import { ICalendarEvent } from '../../..'
 
 function EventDetailsHeader({
   event,
@@ -21,7 +23,9 @@ function EventDetailsHeader({
   editable = true
 }: {
   event: ICalendarEvent
-  category: ICalendarCategory | undefined
+  category:
+    | ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+    | undefined
   editable?: boolean
 }) {
   const open = useModalStore(state => state.open)
@@ -53,7 +57,7 @@ function EventDetailsHeader({
   }, [event.id])
 
   const handleEdit = useCallback(() => {
-    open(ModifyEventModal, {
+    open(CreateEventModal, {
       existedData: event,
       type: 'update'
     })

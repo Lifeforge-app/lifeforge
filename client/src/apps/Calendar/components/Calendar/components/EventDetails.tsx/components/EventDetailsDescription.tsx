@@ -6,17 +6,14 @@ import Markdown from 'react-markdown'
 import { Link } from 'react-router'
 
 import { useAPIQuery } from 'shared/lib'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
-import {
-  ICalendarCalendar,
-  ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+import { ICalendarEvent } from '../../..'
 
 function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
-  const calendarsQuery = useAPIQuery<ICalendarCalendar[]>(
-    'calendar/calendars',
-    ['calendar', 'calendars']
-  )
+  const calendarsQuery = useAPIQuery<
+    CalendarControllersSchemas.ICalendars['getAllCalendars']['response']
+  >('calendar/calendars', ['calendar', 'calendars'])
 
   const eventIsWholeDay = useMemo(() => {
     return (
@@ -63,7 +60,7 @@ function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
           <div className="flex items-center gap-3">
             <Icon
               className="text-bg-500 size-4 shrink-0"
-              icon={eventCalendar.icon ?? 'tabler:calendar'}
+              icon="tabler:calendar"
             />
             <div className="flex items-center gap-2">
               <span
