@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: calendar
- * Generated at: 2025-07-19T14:24:04.967Z
+ * Generated at: 2025-07-19T21:52:02.419Z
  * Contains: calendar__events, calendar__categories, calendar__categories_aggregated, calendar__calendars, calendar__events_single, calendar__events_recurring
  */
 import { z } from 'zod/v4'
@@ -13,6 +13,7 @@ const Event = z.object({
   category: z.string(),
   calendar: z.string(),
   location: z.string(),
+  location_coords: z.object({ lat: z.number(), lon: z.number() }),
   reference_link: z.string(),
   description: z.string(),
   type: z.enum(['single', 'recurring', ''])
