@@ -1,15 +1,15 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
 export const getTags = (
   pb: PocketBase,
   container: string
-): Promise<WithPB<IdeaBoxCollectionsSchemas.ITagAggregated>[]> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.ITagAggregated>[]> =>
   pb
     .collection('idea_box__tags_aggregated')
-    .getFullList<WithPB<IdeaBoxCollectionsSchemas.ITagAggregated>>({
+    .getFullList<ISchemaWithPB<IdeaBoxCollectionsSchemas.ITagAggregated>>({
       filter: `container = "${container}"`
     })
 
@@ -28,7 +28,7 @@ export const createTag = (
 ) =>
   pb
     .collection('idea_box__tags')
-    .create<WithPB<IdeaBoxCollectionsSchemas.ITag>>({
+    .create<ISchemaWithPB<IdeaBoxCollectionsSchemas.ITag>>({
       name,
       icon,
       color,
@@ -47,7 +47,7 @@ export const updateTag = (
     icon: string
     color: string
   }
-): Promise<WithPB<IdeaBoxCollectionsSchemas.ITag>> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.ITag>> =>
   pb.collection('idea_box__tags').update(id, {
     name,
     icon,

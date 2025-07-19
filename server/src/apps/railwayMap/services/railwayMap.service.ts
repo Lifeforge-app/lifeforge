@@ -1,33 +1,33 @@
 import ClientError from '@functions/ClientError'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { RailwayMapCollectionsSchemas } from 'shared/types/collections'
 
 import dijkstraWithTransfers from '../utils/pathFinding'
 
 export const getLines = (
   pb: PocketBase
-): Promise<WithPB<RailwayMapCollectionsSchemas.ILine>[]> =>
+): Promise<ISchemaWithPB<RailwayMapCollectionsSchemas.ILine>[]> =>
   pb
     .collection('railway_map__lines')
-    .getFullList<WithPB<RailwayMapCollectionsSchemas.ILine>>()
+    .getFullList<ISchemaWithPB<RailwayMapCollectionsSchemas.ILine>>()
 
 export const getStations = (
   pb: PocketBase
-): Promise<WithPB<RailwayMapCollectionsSchemas.IStation>[]> =>
+): Promise<ISchemaWithPB<RailwayMapCollectionsSchemas.IStation>[]> =>
   pb
     .collection('railway_map__stations')
-    .getFullList<WithPB<RailwayMapCollectionsSchemas.IStation>>()
+    .getFullList<ISchemaWithPB<RailwayMapCollectionsSchemas.IStation>>()
 
 export const getShortestPath = async (
   pb: PocketBase,
   start: string,
   end: string
-): Promise<WithPB<RailwayMapCollectionsSchemas.IStation>[]> => {
+): Promise<ISchemaWithPB<RailwayMapCollectionsSchemas.IStation>[]> => {
   const allStations = await pb
     .collection('railway_map__stations')
-    .getFullList<WithPB<RailwayMapCollectionsSchemas.IStation>>()
+    .getFullList<ISchemaWithPB<RailwayMapCollectionsSchemas.IStation>>()
 
   if (![start, end].every(station => allStations.some(s => s.id === station))) {
     throw new ClientError('Invalid start or end station')

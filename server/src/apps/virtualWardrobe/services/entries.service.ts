@@ -1,6 +1,6 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { VirtualWardrobeCollectionsSchemas } from 'shared/types/collections'
 
 export const getSidebarData = async (
@@ -8,7 +8,7 @@ export const getSidebarData = async (
 ): Promise<VirtualWardrobeCollectionsSchemas.IVirtualWardrobeSidebarData> => {
   const allEntries = await pb
     .collection('virtual_wardrobe__entries')
-    .getFullList<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>>()
+    .getFullList<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>>()
 
   const categories = allEntries.reduce(
     (acc, curr) => {
@@ -89,7 +89,7 @@ export const getEntries = async (
     favourite?: boolean
     q?: string
   }
-): Promise<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>[]> => {
+): Promise<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>[]> => {
   const filterArray = [
     filters.category && `category = '${filters.category}'`,
     filters.subcategory && `subcategory = '${filters.subcategory}'`,
@@ -103,7 +103,7 @@ export const getEntries = async (
 
   const entries = await pb
     .collection('virtual_wardrobe__entries')
-    .getFullList<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>>({
       filter: filterArray.join(' && '),
       sort: '-created'
     })
@@ -129,10 +129,10 @@ export const createEntry = async (
     front_image: File
     back_image: File
   }
-): Promise<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>> => {
   const newEntry = await pb
     .collection('virtual_wardrobe__entries')
-    .create<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>>(data)
+    .create<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>>(data)
 
   return {
     ...newEntry,
@@ -149,10 +149,10 @@ export const updateEntry = async (
   pb: PocketBase,
   id: string,
   data: Partial<VirtualWardrobeCollectionsSchemas.IEntry>
-): Promise<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>> => {
   const updatedEntry = await pb
     .collection('virtual_wardrobe__entries')
-    .update<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>>(id, data)
+    .update<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>>(id, data)
 
   return {
     ...updatedEntry,
@@ -175,10 +175,10 @@ export const deleteEntry = async (
 export const toggleFavourite = async (
   pb: PocketBase,
   id: string
-): Promise<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>> => {
   const entry = await pb
     .collection('virtual_wardrobe__entries')
-    .getOne<WithPB<VirtualWardrobeCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<VirtualWardrobeCollectionsSchemas.IEntry>>(id)
 
   return await updateEntry(pb, id, {
     is_favourite: !entry.is_favourite

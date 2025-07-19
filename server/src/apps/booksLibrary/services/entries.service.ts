@@ -1,16 +1,16 @@
 import ClientError from '@functions/ClientError'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import mailer from 'nodemailer'
 import Pocketbase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllEntries = (
   pb: Pocketbase
-): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>[]> =>
+): Promise<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]> =>
   pb
     .collection('books_library__entries')
-    .getFullList<WithPB<BooksLibraryCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>({
       sort: '-is_favourite,-created'
     })
 
@@ -28,22 +28,22 @@ export const updateEntry = (
     | 'publisher'
     | 'year_published'
   >
-): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>> =>
   pb
     .collection('books_library__entries')
-    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, data)
+    .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, data)
 
 export const toggleFavouriteStatus = async (
   pb: Pocketbase,
   id: string
-): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
   const book = await pb
     .collection('books_library__entries')
-    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
 
   return await pb
     .collection('books_library__entries')
-    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
       is_favourite: !book.is_favourite
     })
 }
@@ -51,14 +51,14 @@ export const toggleFavouriteStatus = async (
 export const toggleReadStatus = async (
   pb: Pocketbase,
   id: string
-): Promise<WithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
+): Promise<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>> => {
   const book = await pb
     .collection('books_library__entries')
-    .getOne<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
 
   return await pb
     .collection('books_library__entries')
-    .update<WithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
       is_read: !book.is_read,
       time_finished: !book.is_read ? new Date().toISOString() : ''
     })

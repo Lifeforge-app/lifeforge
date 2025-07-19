@@ -1,11 +1,11 @@
 import ClientError from '@functions/ClientError'
 import { checkExistence } from '@functions/PBRecordValidator'
 import { clientError } from '@functions/response'
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import { Request, Response } from 'express'
 import ogs from 'open-graph-scraper'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
 const OGCache = new Map<string, any>()
@@ -17,8 +17,8 @@ export const getPath = async (
   req: Request,
   res: Response
 ): Promise<{
-  container: WithPB<IdeaBoxCollectionsSchemas.IContainer>
-  path: WithPB<IdeaBoxCollectionsSchemas.IFolder>[]
+  container: ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainer>
+  path: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>[]
 } | null> => {
   const containerExists = await checkExistence(
     req,
@@ -31,7 +31,7 @@ export const getPath = async (
 
   const containerEntry = await pb
     .collection('idea_box__containers')
-    .getOne<WithPB<IdeaBoxCollectionsSchemas.IContainer>>(container)
+    .getOne<ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainer>>(container)
 
   containerEntry.cover = pb.files
     .getURL(containerEntry, containerEntry.cover)
@@ -39,7 +39,7 @@ export const getPath = async (
 
   let lastFolder = ''
 
-  const fullPath: WithPB<IdeaBoxCollectionsSchemas.IFolder>[] = []
+  const fullPath: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>[] = []
 
   for (const folder of path) {
     if (!(await checkExistence(req, res, 'idea_box__folders', folder))) {
@@ -48,7 +48,7 @@ export const getPath = async (
 
     const folderEntry = await pb
       .collection('idea_box__folders')
-      .getOne<WithPB<IdeaBoxCollectionsSchemas.IFolder>>(folder)
+      .getOne<ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>>(folder)
 
     if (
       folderEntry.parent !== lastFolder ||
@@ -161,23 +161,23 @@ async function recursivelySearchFolder(
   parents: string,
   pb: PocketBase
 ): Promise<
-  (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
-    folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+  (Omit<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
+    folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
     fullPath: string
   })[]
 > {
   const folderInsideFolder = await pb
     .collection('idea_box__folders')
-    .getFullList<WithPB<IdeaBoxCollectionsSchemas.IFolder>>({
+    .getFullList<ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>>({
       filter: `parent = "${folderId}"`
     })
 
   const allResults = (
     await pb.collection('idea_box__entries').getFullList<
-      Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
-        folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+      Omit<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
+        folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
         expand?: {
-          folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+          folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
         }
       }
     >({
@@ -231,8 +231,8 @@ export const search = async (
   req: Request,
   res: Response
 ): Promise<
-  | (Omit<WithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
-      folder: WithPB<IdeaBoxCollectionsSchemas.IFolder>
+  | (Omit<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>, 'folder'> & {
+      folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
       fullPath: string
     })[]
   | null
