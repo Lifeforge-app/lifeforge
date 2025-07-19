@@ -120,7 +120,16 @@ const Events = {
       start: z.string(),
       end: z.string()
     }),
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial()))
+    response: z.array(
+      SchemaWithPB(
+        CalendarCollectionsSchemas.Event.partial().extend({
+          start: z.string(),
+          end: z.string(),
+          title: z.string(),
+          category: z.string()
+        })
+      )
+    )
   },
 
   /**
@@ -128,7 +137,7 @@ const Events = {
    * @description Get today's events
    */
   getEventsToday: {
-    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event.partial()))
+    response: z.array(SchemaWithPB(CalendarCollectionsSchemas.Event))
   },
 
   /**
