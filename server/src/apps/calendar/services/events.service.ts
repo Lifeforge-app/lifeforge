@@ -11,17 +11,33 @@ import {
   MoviesCollectionsSchemas,
   TodoListCollectionsSchemas
 } from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 export const getEventsByDateRange = async (
   pb: PocketBase,
   startDate: string,
   endDate: string
-): Promise<ISchemaWithPB<Partial<CalendarCollectionsSchemas.IEvent>>[]> => {
+): Promise<
+  CalendarControllersSchemas.IEvents['getEventsByDateRange']['response']
+> => {
   const start = moment(startDate).startOf('day').toISOString()
 
   const end = moment(endDate).endOf('day').toISOString()
 
-  const allEvents = []
+  const allEvents: Array<
+    Pick<
+      ISchemaWithPB<CalendarCollectionsSchemas.IEvent>,
+      | 'id'
+      | 'title'
+      | 'start'
+      | 'end'
+      | 'calendar'
+      | 'category'
+      | 'description'
+      | 'location'
+      | 'reference_link'
+    >
+  > = []
 
   const singleCalendarEvents = await pb
     .collection('calendar__events')
@@ -29,7 +45,19 @@ export const getEventsByDateRange = async (
       filter: `(start >= '${start}' || end >= '${start}') && (start <= '${end}' || end <= '${end}') && type="single"`
     })
 
-  allEvents.push(...singleCalendarEvents)
+  allEvents.push(
+    ...singleCalendarEvents.map(event => ({
+      id: event.id,
+      title: event.title,
+      start: event.start,
+      end: event.end,
+      calendar: event.calendar,
+      category: event.category,
+      description: event.description,
+      location: event.location,
+      reference_link: event.reference_link
+    }))
+  )
 
   const recurringCalendarEvents = await pb
     .collection('calendar__events')
@@ -38,20 +66,19 @@ export const getEventsByDateRange = async (
     })
 
   for (const event of recurringCalendarEvents) {
+    if (event.type !== 'recurring') continue
+
     const parsed = rrule.RRule.fromString(event.recurring_rrule)
 
     const eventsInRange = parsed.between(
       moment(start)
         .subtract(
           event.recurring_duration_amount + 1,
-          event.recurring_duration_unit as any
+          event.recurring_duration_unit
         )
         .toDate(),
       moment(end)
-        .add(
-          event.recurring_duration_amount + 1,
-          event.recurring_duration_unit as any
-        )
+        .add(event.recurring_duration_amount + 1, event.recurring_duration_unit)
         .toDate(),
       true
     )
@@ -69,18 +96,20 @@ export const getEventsByDateRange = async (
       }
 
       const end = moment(eventDate)
-        .add(
-          event.recurring_duration_amount,
-          event.recurring_duration_unit as any
-        )
+        .add(event.recurring_duration_amount, event.recurring_duration_unit)
         .utc()
         .format('YYYY-MM-DD HH:mm:ss')
 
       allEvents.push({
-        ...event,
         id: `${event.id}-${moment(eventDate).format('YYYYMMDD')}`,
         start,
-        end
+        end,
+        title: event.title,
+        calendar: event.calendar,
+        category: event.category,
+        description: event.description,
+        location: event.location,
+        reference_link: event.reference_link
       })
     }
   }
@@ -100,9 +129,9 @@ export const getEventsByDateRange = async (
       end: moment(entry.due_date).add(1, 'millisecond').toISOString(),
       category: '_todo',
       description: entry.notes,
-      reference_link: `/todo-list?entry=${entry.id}`,
-      is_strikethrough: entry.done
-    } as Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
+      location: '',
+      reference_link: `/todo-list?entry=${entry.id}`
+    } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
   })
 
   allEvents.push(...todoEntries)
@@ -135,12 +164,12 @@ ${entry.theatre_number}
 ${entry.theatre_seat}
       `,
       reference_link: `/movies?show-ticket=${entry.id}`
-    } as ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
+    } satisfies Partial<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>
   })
 
   allEvents.push(...movieEntries)
 
-  return allEvents as any
+  return allEvents
 }
 
 export const getTodayEvents = async (
