@@ -28,9 +28,9 @@ const getTypes = forgeController
 
 const createType = forgeController
   .route('POST /')
-  .statusCode(201)
   .description('Create a new music score type')
   .schema(ScoresLibraryControllersSchemas.Types.createType)
+  .statusCode(201)
   .callback(({ pb, body }) =>
     pb
       .collection('scores_library__types')
@@ -51,9 +51,9 @@ const updateType = forgeController
 
 const deleteType = forgeController
   .route('DELETE /:id')
-  .statusCode(204)
   .description('Delete a music score type')
   .schema(ScoresLibraryControllersSchemas.Types.deleteType)
+  .statusCode(204)
   .callback(async ({ pb, params }) => {
     await pb.collection('scores_library__types').delete(params.id)
   })

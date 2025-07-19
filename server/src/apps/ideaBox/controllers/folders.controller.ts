@@ -39,7 +39,7 @@ const createFolder = forgeController
   .route('POST /')
   .description('Create a new folder')
   .schema(IdeaBoxControllersSchemas.Folders.createFolder)
-  .existenceCheck('body', {
+  .existenceCheck('query', {
     container: 'idea_box__containers'
   })
   .callback(

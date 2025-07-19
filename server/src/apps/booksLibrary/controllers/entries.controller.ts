@@ -20,13 +20,13 @@ const getAllEntries = forgeController
 
 const updateEntry = forgeController
   .route('PATCH /:id')
-  .description('Update an existing entry in the books library')
   .schema(BooksLibraryControllersSchemas.Entries.updateEntry)
+  .description('Update an existing entry in the books library')
   .existenceCheck('params', {
     id: 'books_library__entries'
   })
   .existenceCheck('body', {
-    category: '[books_library__categories]',
+    collection: '[books_library__categories]',
     languages: '[books_library__languages]'
   })
   .callback(({ pb, params: { id }, body }) =>

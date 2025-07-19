@@ -1,6 +1,6 @@
-import { WithPB } from '@typescript/pocketbase_interfaces'
 import PocketBase from 'pocketbase'
 
+import { ISchemaWithPB } from 'shared/types/collections'
 import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 
 export const getIdeas = (
@@ -8,10 +8,10 @@ export const getIdeas = (
   container: string,
   folder: string,
   archived: boolean
-): Promise<WithPB<IdeaBoxCollectionsSchemas.IEntry>[]> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>[]> =>
   pb
     .collection('idea_box__entries')
-    .getFullList<WithPB<IdeaBoxCollectionsSchemas.IEntry>>({
+    .getFullList<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>({
       filter: `container = "${container}" && archived = ${archived} ${
         folder ? `&& folder = "${folder}"` : "&& folder=''"
       }`,
@@ -61,19 +61,19 @@ export const createIdea = (
   > & {
     image?: File
   }
-): Promise<WithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
   pb
     .collection('idea_box__entries')
-    .create<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(data)
+    .create<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(data)
 
 export const updateIdea = async (
   pb: PocketBase,
   id: string,
   data: Partial<IdeaBoxCollectionsSchemas.IEntry>
-): Promise<WithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
   pb
     .collection('idea_box__entries')
-    .update<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, data)
+    .update<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, data)
 
 export const deleteIdea = async (pb: PocketBase, id: string) => {
   await pb.collection('idea_box__entries').delete(id)
@@ -82,11 +82,11 @@ export const deleteIdea = async (pb: PocketBase, id: string) => {
 export const updatePinStatus = async (pb: PocketBase, id: string) => {
   const idea = await pb
     .collection('idea_box__entries')
-    .getOne<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id)
 
   const entry = await pb
     .collection('idea_box__entries')
-    .update<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
       pinned: !idea.pinned
     })
 
@@ -96,11 +96,11 @@ export const updatePinStatus = async (pb: PocketBase, id: string) => {
 export const updateArchiveStatus = async (pb: PocketBase, id: string) => {
   const idea = await pb
     .collection('idea_box__entries')
-    .getOne<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id)
+    .getOne<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id)
 
   const entry = await pb
     .collection('idea_box__entries')
-    .update<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
       archived: !idea.archived,
       pinned: false
     })
@@ -112,19 +112,19 @@ export const moveIdea = async (
   pb: PocketBase,
   id: string,
   target: string
-): Promise<WithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
   pb
     .collection('idea_box__entries')
-    .update<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
       folder: target
     })
 
 export const removeFromFolder = (
   pb: PocketBase,
   id: string
-): Promise<WithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
+): Promise<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>> =>
   pb
     .collection('idea_box__entries')
-    .update<WithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
+    .update<ISchemaWithPB<IdeaBoxCollectionsSchemas.IEntry>>(id, {
       folder: ''
     })
