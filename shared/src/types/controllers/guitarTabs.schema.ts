@@ -14,9 +14,12 @@ const GuitarWorld = {
    * @description Get tabs list from Guitar World
    */
   getTabsList: {
-    body: z.object({
+    query: z.object({
       cookie: z.string(),
-      page: z.number().optional().default(1)
+      page: z
+        .string()
+        .optional()
+        .transform(val => parseInt(val ?? '1', 10) || 1)
     }),
     response: z.object({
       data: z.array(GuitarTabsGuitarWorldEntrySchema),
