@@ -33,6 +33,7 @@ function ModifyTicketModal({
     ticket_number: '',
     theatre_location: {
       name: '',
+      formattedAddress: '',
       location: {
         latitude: 0,
         longitude: 0
@@ -87,7 +88,7 @@ function ModifyTicketModal({
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `/movies/entries/ticket/${existedData?.id}`,
+        `/movies/ticket/${existedData?.id}`,
         {
           method: 'DELETE'
         }
@@ -117,6 +118,7 @@ function ModifyTicketModal({
         ticket_number: '',
         theatre_location: {
           name: '',
+          formattedAddress: '',
           location: {
             latitude: 0,
             longitude: 0
@@ -135,6 +137,7 @@ function ModifyTicketModal({
         ticket_number: existedData.ticket_number,
         theatre_location: {
           name: existedData.theatre_location,
+          formattedAddress: '',
           location: {
             latitude: existedData.theatre_location_coords.lat,
             longitude: existedData.theatre_location_coords.lon
@@ -142,9 +145,9 @@ function ModifyTicketModal({
         },
         theatre_number: existedData.theatre_number,
         theatre_seat: existedData.theatre_seat,
-        theatre_showtime: dayjs(existedData.theatre_showtime).format(
-          'YYYY-MM-DD HH:mm'
-        )
+        theatre_showtime: existedData.theatre_showtime
+          ? dayjs(existedData.theatre_showtime).toISOString()
+          : ''
       })
     }
   }, [type, existedData])
@@ -173,13 +176,13 @@ function ModifyTicketModal({
         }
       }}
       data={formState}
-      endpoint="/movies/entries/ticket"
+      endpoint="/movies/ticket"
       fields={FIELDS}
       icon="tabler:ticket"
       id={existedData?.id}
       modalRef={modalRef}
       namespace="apps.movies"
-      openType={type}
+      openType="update"
       queryKey={['movies', 'entries']}
       setData={setFormState}
       title={`ticket.${type}`}
