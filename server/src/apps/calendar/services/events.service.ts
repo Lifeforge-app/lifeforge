@@ -24,11 +24,8 @@ export const getEventsByDateRange = async (
 
   const end = moment(endDate).endOf('day').toISOString()
 
-  const allEvents: (CalendarCollectionsSchemas.IEvent & {
-    id: string
-    start: string
-    end: string
-  })[] = []
+  const allEvents: CalendarControllersSchemas.IEvents['getEventsByDateRange']['response'] =
+    []
 
   const singleCalendarEvents = await pb
     .collection('calendar__events_single')
@@ -140,7 +137,8 @@ export const getEventsByDateRange = async (
       description: entry.notes,
       use_google_map: false,
       location: '',
-      reference_link: `/todo-list?entry=${entry.id}`
+      reference_link: `/todo-list?entry=${entry.id}`,
+      is_strikethrough: entry.done
     } satisfies (typeof allEvents)[number]
   })
 

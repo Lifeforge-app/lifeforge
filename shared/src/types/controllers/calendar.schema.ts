@@ -125,7 +125,8 @@ const Events = {
         .object({
           id: z.string(),
           start: z.string(),
-          end: z.string()
+          end: z.string(),
+          is_strikethrough: z.boolean().optional()
         })
         .and(CalendarCollectionsSchemas.Event)
     )
@@ -141,7 +142,8 @@ const Events = {
         .object({
           id: z.string(),
           start: z.string(),
-          end: z.string()
+          end: z.string(),
+          is_strikethrough: z.boolean().optional()
         })
         .and(CalendarCollectionsSchemas.Event)
     )
