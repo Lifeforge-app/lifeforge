@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 
-import LocationInput, { ILocationEntry } from './LocationInput'
+import { LocationsCustomSchemas } from 'shared/types/collections'
+
+import LocationInput from './LocationInput'
 
 const meta = {
   component: LocationInput
@@ -18,7 +20,8 @@ export const Default: Story = {
     namespace: 'namespace'
   },
   render: args => {
-    const [location, setLocation] = useState<ILocationEntry | null>(null)
+    const [location, setLocation] =
+      useState<LocationsCustomSchemas.ILocation | null>(null)
 
     return (
       <div className="w-[50vw]">

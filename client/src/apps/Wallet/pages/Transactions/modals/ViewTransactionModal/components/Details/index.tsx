@@ -120,7 +120,10 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
               {ledger ? (
                 <ul className="flex flex-col gap-2">
                   {ledger.map(ledgerItem => (
-                    <li key={ledgerItem.id} className="flex items-center gap-2">
+                    <li
+                      key={ledgerItem.id}
+                      className="flex items-center justify-end gap-2"
+                    >
                       <Icon
                         className="size-5"
                         icon={ledgerItem.icon}

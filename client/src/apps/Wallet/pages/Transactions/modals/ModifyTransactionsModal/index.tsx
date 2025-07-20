@@ -1,6 +1,13 @@
+import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { FormModal, IFieldProps } from 'lifeforge-ui'
-import { SetStateAction, useCallback, useMemo, useState } from 'react'
+import {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
 import {
   LocationsCustomSchemas,
@@ -17,10 +24,17 @@ function ModifyTransactionsModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: Partial<IWalletTransaction> | null
+    existedData:
+      | ({
+          type: IWalletTransaction['type']
+          receipt: string | File | null
+        } & Partial<IWalletTransaction>)
+      | null
   }
   onClose: () => void
 }) {
+  const queryClient = useQueryClient()
+
   const { assetsQuery, categoriesQuery, ledgersQuery } = useWalletData()
 
   const assets = assetsQuery.data ?? []
@@ -52,12 +66,11 @@ function ModifyTransactionsModal({
   const [incomeExpensesFormState, setIncomeExpensesFormState] = useState<
     Omit<
       WalletCollectionsSchemas.ITransactionsIncomeExpense,
-      'location_name' | 'location_coords' | 'base_transaction'
+      'location_name' | 'location_coords' | 'base_transaction' | 'type'
     > & {
       location: LocationsCustomSchemas.ILocation | undefined
     }
   >({
-    type: 'income',
     category: '',
     asset: '',
     ledgers: [],
@@ -162,11 +175,14 @@ function ModifyTransactionsModal({
           id: 'category',
           label: 'Category',
           type: 'listbox',
-          options: categories.map(category => ({
-            text: category.name,
-            value: category.id,
-            icon: category.icon
-          })),
+          options: categories
+            .filter(cat => cat.type === baseFormState.type)
+            .map(category => ({
+              text: category.name,
+              value: category.id,
+              icon: category.icon,
+              color: category.color
+            })),
           icon: 'tabler:category',
           required: true
         },
@@ -189,7 +205,8 @@ function ModifyTransactionsModal({
           options: ledgers.map(ledger => ({
             text: ledger.name,
             value: ledger.id,
-            icon: ledger.icon
+            icon: ledger.icon,
+            color: ledger.color
           })),
           icon: 'tabler:book',
           required: false,
@@ -231,7 +248,8 @@ function ModifyTransactionsModal({
 
     return {
       ...baseFormState,
-      ...incomeExpensesFormState
+      ...incomeExpensesFormState,
+      type: baseFormState.type as 'income' | 'expenses'
     }
   }, [baseFormState, transferFormState, incomeExpensesFormState])
 
@@ -239,8 +257,12 @@ function ModifyTransactionsModal({
     (newState: SetStateAction<typeof formState>) => {
       const currentState =
         baseFormState.type === 'transfer'
-          ? { ...baseFormState, ...transferFormState }
-          : { ...baseFormState, ...incomeExpensesFormState }
+          ? { ...baseFormState, ...transferFormState, type: 'transfer' }
+          : {
+              ...baseFormState,
+              ...incomeExpensesFormState,
+              type: baseFormState.type as 'income' | 'expenses'
+            }
 
       const updatedState =
         typeof newState === 'function'
@@ -251,7 +273,8 @@ function ModifyTransactionsModal({
         ...prev,
         type: updatedState.type,
         date: updatedState.date,
-        amount: updatedState.amount
+        amount: updatedState.amount,
+        receipt: updatedState.receipt
       }))
 
       if (updatedState.type === 'transfer') {
@@ -263,7 +286,6 @@ function ModifyTransactionsModal({
 
         if (baseFormState.type !== 'transfer') {
           setIncomeExpensesFormState({
-            type: 'income',
             category: '',
             asset: '',
             ledgers: [],
@@ -293,16 +315,110 @@ function ModifyTransactionsModal({
     [baseFormState, transferFormState, incomeExpensesFormState]
   )
 
+  useEffect(() => {
+    if (existedData && type === 'update') {
+      setBaseFormState({
+        type: existedData.type ?? 'income',
+        date: dayjs(existedData.date).toDate(),
+        amount: existedData.amount || 0,
+        receipt: {
+          image: existedData.receipt || null,
+          preview: (() => {
+            if ((existedData.receipt as File | string | null) instanceof File) {
+              return URL.createObjectURL(existedData.receipt as File)
+            }
+
+            if (existedData.receipt) {
+              return `${import.meta.env.VITE_API_HOST}/media/${existedData.collectionId}/${existedData.id}/${existedData.receipt}`
+            }
+
+            return null
+          })()
+        }
+      })
+
+      if (existedData.type === 'transfer') {
+        setTransferFormState({
+          from: existedData.from || '',
+          to: existedData.to || ''
+        })
+
+        setIncomeExpensesFormState({
+          category: '',
+          asset: '',
+          ledgers: [],
+          particulars: '',
+          location: undefined
+        })
+      } else {
+        setIncomeExpensesFormState({
+          category: existedData.category || '',
+          asset: existedData.asset || '',
+          ledgers: existedData.ledgers || [],
+          particulars: existedData.particulars || '',
+          location: {
+            name: existedData.location_name || '',
+            location: {
+              latitude: existedData.location_coords?.lat || 0,
+              longitude: existedData.location_coords?.lon || 0
+            },
+            formattedAddress: existedData.location_name || ''
+          }
+        })
+      }
+    } else {
+      setBaseFormState({
+        type: 'income',
+        date: dayjs().toDate(),
+        amount: 0,
+        receipt: {
+          image: null,
+          preview: null
+        }
+      })
+
+      setIncomeExpensesFormState({
+        category: '',
+        asset: '',
+        ledgers: [],
+        particulars: '',
+        location: undefined
+      })
+
+      setTransferFormState({
+        from: '',
+        to: ''
+      })
+    }
+
+    setToRemoveReceipt(false)
+  }, [existedData, type])
+
   return (
     <FormModal
+      customUpdateDataList={{
+        create: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['wallet']
+          })
+        },
+        update: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['wallet']
+          })
+        }
+      }}
       data={formState}
       endpoint="wallet/transactions"
       fields={fields as never}
+      getFinalData={async () => ({
+        ...formState,
+        toRemoveReceipt
+      })}
       icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
       id={existedData ? existedData.id : ''}
       namespace="apps.wallet"
       openType={type}
-      queryKey={['wallet', 'transactions']}
       setData={handleChange}
       title={`transactions.${type}`}
       onClose={onClose}

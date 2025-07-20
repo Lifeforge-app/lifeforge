@@ -1,5 +1,4 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
-import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
@@ -27,23 +26,25 @@ function useModifyMutation<T>(
       ) {
         const formData = new FormData()
 
-        Object.entries(data).forEach(([key, value]) => {
-          if (value instanceof Date) {
-            formData.append(key, dayjs(value).format('YYYY-MM-DDTHH:mm:ssZ'))
-          }
+        const fileEntries: Record<string, File> = {}
 
+        Object.entries(data).forEach(([key, value]) => {
           if (value instanceof File) {
-            formData.append(key, value)
+            fileEntries[key] = value
           } else if (
             typeof value === 'object' &&
             (value as { image: File | 'string' | null })?.image instanceof File
           ) {
-            formData.append(key, (value as { image: File }).image)
+            fileEntries[key] = (value as { image: File }).image
           } else if (typeof value !== 'string') {
             formData.append(key, JSON.stringify(value))
           } else {
             formData.append(key, value)
           }
+        })
+
+        Object.entries(fileEntries).forEach(([key, file]) => {
+          formData.append(key, file)
         })
 
         return fetchAPI(apiHost, endpoint, {
@@ -54,13 +55,6 @@ function useModifyMutation<T>(
 
       Object.keys(data).forEach(key => {
         const value = data[key as keyof typeof data]
-
-        if (value instanceof Date) {
-          // @ts-expect-error - ignore this for now lol
-          data[key as keyof typeof data] = dayjs(value).format(
-            'YYYY-MM-DDTHH:mm:ssZ'
-          )
-        }
 
         if (
           typeof value === 'object' &&

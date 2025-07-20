@@ -80,7 +80,9 @@ function AssetItem({
               ))}
           </span>
         ) : (
-          numberToCurrency(asset.current_balance)
+          <span className="truncate">
+            {numberToCurrency(asset.current_balance)}
+          </span>
         )}
       </p>
       <Button
