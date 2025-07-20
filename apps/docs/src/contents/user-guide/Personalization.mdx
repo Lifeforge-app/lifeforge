@@ -1,0 +1,101 @@
+import Notes from '../../components/Notes';
+import LightAndDarkMode from './components/LightAndDarkMode';
+import BgTemp from './components/BgTemp';
+
+###### Personalization
+
+# Make LifeForge Yours
+
+LifeForge is designed to be a personal management system that adapts to your needs, both in terms of functionalities and appearance. We have covered function customization in the previous sections, and now let's talk about how you can personalize the appearance of the system.
+
+---
+
+<section id="personalization-page">
+## Personalization Page
+
+The personalization page is where you can adjust the appearance of the system to your liking. You can access the personalization page by clicking on the **Personalization** button in the sidebar, which is located at the bottommost of the sidebar under the **Settings** section.
+
+![Personalization Page](/assets/user-personalization/personalization-page.png)
+</section>
+
+<section id="languages">
+## Languages
+
+LifeForge currently supports 4 languages: English, Simplified Chinese, and Traditional Chinese, and Malay. You can choose the language you prefer to use in the system by selecting the language from the dropdown list in the **Languages** section.
+
+<Notes>
+For my fellow developers, you must provide the required locale files if you are creating custom modules. Head over to the [Localization Guide](/developer-guide/localization) to learn how to add localization support to your modules.
+</Notes>
+</section>
+
+<section id="light-and-dark-mode">
+## Light and Dark Mode
+
+Although dark mode is the trend nowadays, some people still prefer the light mode. LifeForge provides both light and dark modes for you to choose from. Take a gander at the system in both modes below and see which one you prefer.
+
+<LightAndDarkMode />
+
+If you want Lifeforge to adhere to your system's appearance settings, you can enable choose the **System** option. This way, Lifeforge will automatically switch between light and dark modes based on your system's appearance settings.
+</section>
+
+<section id="theme-colors">
+## Theme Colors
+
+There are currently 18 predefined colors inspired by Material UI that you can choose from to use as the accent color of your system. The accent color is used to highlight important elements of your system, such as buttons, links, and other interactive elements.
+
+If you think the predefined colors are not to your liking, you can also enter a custom color code to use as the accent color by choosing the **Custom Color** option at the bottom of the color list.
+
+<div className="grid grid-cols-6 gap-6 mt-8">
+{[
+  'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
+  'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange', 'brown', 'grey'
+].map((color, index) => (
+  <div key={index} className="flex flex-col items-center">
+    <div className={`w-16 h-16 rounded-full theme-${color} bg-custom-500`}></div>
+    <span className="text-sm text-gray-500 mt-2">{color}</span>
+  </div>
+))}
+</div>
+</section>
+
+<section id="background-temperature">
+## Background Temperature
+
+The background temperature allows you to set the color temperature of the system background. You can choose from 5 predefined color temperatures, ranging from cold to warm, to set the background temperature of your system. If you feel like using a custom color temperature, you can click on the color palette icon at the right side of the temperature list to enter a custom color code.
+
+Try out the different color temperatures below and if any of them catches your eye.
+
+<BgTemp />
+</section>
+
+<section id="background-image">
+## Background Image
+
+Yes, you heard it right, you can set a background image for your system. Click on the **Select** button in the **Background Image** section, and an image picker modal will pop up. You can either upload an image from your local storage or paste the image URL to set it as the background image.
+
+![Image Picker](/assets/user-personalization/image-picker.png)
+
+<Notes>
+If you have Pixabay API key set up in the system, there will be an option for you to search for images from Pixabay directly in the image picker modal. Learn more about how to set up the Pixabay API key in the [API Keys Guide](/user-guide/api-keys).
+</Notes>
+
+Once the background image is set, there will be two buttons at the right hand side of the background image config column, **Adjust** and **Remove**.
+
+![With Background](/assets/user-personalization/with-background.png)
+
+Click on **Adjust** to adjust the background image settings, such as the opacity, blur, etc., and there will be a preview of the background image at the top of the adjustment modal for you to see the changes in real-time.
+
+<div className="flex items-center justify-center mt-8">
+    <img src="/assets/user-personalization/adjust-modal.png" alt="Adjust Modal" className="w-[70%] rounded-lg" />
+</div>
+</section>
+
+<section id="font-family">
+## Font Family
+
+The font family used in the system is default to [Onest](https://fonts.google.com/specimen/Onest) from Google Fonts. If you prefer to use a different font family, feel free to choose from the dropdown list in the **Font Family** section, as long as the font family is available in Google Fonts.
+
+<Notes>
+If the Google Cloud API key is not set up in the system, the font family dropdown list will be disabled, and you won't be able to change the font family. Learn more about how to set up the Google Cloud API key in the [API Keys Guide](/user-guide/api-keys).
+</Notes>
+</section>
