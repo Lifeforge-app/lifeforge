@@ -221,14 +221,14 @@ const Events = {
   },
 
   /**
-   * @route       POST /exception/:id
+   * @route       DELETE /exception/:id
    * @description Add an exception to a recurring event
    */
   addException: {
     params: z.object({
       id: z.string()
     }),
-    body: z.object({
+    query: z.object({
       date: z.string()
     }),
     response: z.boolean()

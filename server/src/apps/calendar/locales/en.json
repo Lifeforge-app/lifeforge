@@ -26,6 +26,10 @@
     "calendar": {
       "create": "Create Calendar",
       "update": "Update Calendar"
+    },
+    "confirmAddException": {
+      "title": "Confirm Add Exception",
+      "description": "Are you sure you want to add this exception for the event?"
     }
   },
   "inputs": {
@@ -111,7 +115,8 @@
   "buttons": {
     "inputManually": "Input Manually",
     "scanFromImage": "Scan from Image",
-    "today": "Today"
+    "today": "Today",
+    "exceptThisTime": "Except This Time"
   },
   "eventTypes": {
     "single": "Single Event",

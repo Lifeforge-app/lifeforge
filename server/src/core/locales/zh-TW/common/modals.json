@@ -7,7 +7,8 @@
         "placeholder": "請輸入 \"{{text}}\" 以確認刪除",
         "label": "確認刪除"
       }
-    }
+    },
+    "error": "刪除項目時出錯。請再試一次。"
   },
   "searchFilters": "搜索過濾器",
   "iconPicker": {
