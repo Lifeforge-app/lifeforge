@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: todoList
- * Generated at: 2025-07-19T21:52:02.420Z
- * Contains: todo_list__lists, todo_list__tags, todo_list__entries, todo_list__priorities, todo_list__lists_aggregated, todo_list__tags_aggregated, todo_list__priorities_aggregated
+ * Generated at: 2025-07-20T05:23:51.733Z
+ * Contains: list, tag, entry, priority, list_aggregated, tag_aggregated, priority_aggregated
  */
 
 import { z } from "zod/v4";

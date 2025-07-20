@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: user
- * Generated at: 2025-07-19T21:52:02.422Z
- * Contains: users
+ * Generated at: 2025-07-20T05:23:51.735Z
+ * Contains: user
  */
 
 import { z } from "zod/v4";

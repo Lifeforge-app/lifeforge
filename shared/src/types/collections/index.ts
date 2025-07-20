@@ -3,7 +3,7 @@
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
  * You may regenerate it by running `npm run generate:schema:collection`.
  * This is the entry point for all schemas in the shared library.
- * Generated at: 2025-07-19T21:52:03.429Z
+ * Generated at: 2025-07-20T05:23:52.739Z
  * Contains schemas for all modules.
  */
 
