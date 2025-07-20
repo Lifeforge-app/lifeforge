@@ -30,7 +30,7 @@ function SideButtons({ music }: { music: IMusicEntry }) {
       data: music,
       itemName: 'music',
       nameKey: 'name',
-      updateDataList: () => {
+      afterDelete: async () => {
         queryClient.invalidateQueries({
           queryKey: ['music', 'entries']
         })

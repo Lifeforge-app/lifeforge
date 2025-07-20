@@ -81,8 +81,8 @@ export default function EntryContextMenu({
       data: item,
       itemName: 'book',
       nameKey: 'title' as const,
-      updateDataList: () => {
-        queryClient.invalidateQueries({
+      afterDelete: async () => {
+        await queryClient.invalidateQueries({
           queryKey: ['books-library', 'entries']
         })
         queryClient.invalidateQueries({

@@ -60,7 +60,7 @@ function AvatarColumn() {
       apiEndpoint: '/user/settings/avatar',
       customText: 'Are you sure you want to remove your profile picture?',
       itemName: 'avatar',
-      updateDataList: () => {
+      afterDelete: async () => {
         setUserData((userData: any) => ({
           ...userData,
           avatar: ''

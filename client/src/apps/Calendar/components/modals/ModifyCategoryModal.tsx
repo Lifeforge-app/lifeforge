@@ -3,10 +3,8 @@ import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useRef, useState } from 'react'
 
-import {
-  ICalendarCategory,
-  ICalendarCategoryFormState
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 function ModifyCategoryModal({
   data: { type, existedData },
@@ -14,7 +12,11 @@ function ModifyCategoryModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ICalendarCategory | null
+    existedData:
+      | (CalendarCollectionsSchemas.ICategoryAggregated & {
+          id: string
+        })
+      | null
   }
   onClose: () => void
 }) {
@@ -22,13 +24,17 @@ function ModifyCategoryModal({
 
   const innerOpenType = useDebounce(type, type === null ? 300 : 0)
 
-  const [data, setData] = useState<ICalendarCategoryFormState>({
+  const [formState, setFormState] = useState<
+    CalendarControllersSchemas.ICategories[
+      | 'createCategory'
+      | 'updateCategory']['body']
+  >({
     name: '',
     icon: '',
     color: '#FFFFFF'
   })
 
-  const FIELDS: IFieldProps<ICalendarCategoryFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       required: true,
@@ -53,9 +59,9 @@ function ModifyCategoryModal({
 
   useEffect(() => {
     if (type === 'update' && existedData !== null) {
-      setData(existedData)
+      setFormState(existedData)
     } else {
-      setData({
+      setFormState({
         name: '',
         icon: '',
         color: '#FFFFFF'
@@ -65,7 +71,7 @@ function ModifyCategoryModal({
 
   return (
     <FormModal
-      data={data}
+      data={formState}
       endpoint="calendar/categories"
       fields={FIELDS}
       icon={
@@ -79,7 +85,7 @@ function ModifyCategoryModal({
       namespace="apps.calendar"
       openType={type}
       queryKey={['calendar', 'categories']}
-      setData={setData}
+      setData={setFormState}
       sortBy="name"
       sortMode="asc"
       title={`category.${innerOpenType}`}

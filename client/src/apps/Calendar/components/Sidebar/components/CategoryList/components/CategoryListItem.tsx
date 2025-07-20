@@ -2,9 +2,10 @@ import { DeleteConfirmationModal, SidebarItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
+
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 
-import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
 import ActionMenu from './ActionMenu'
 
 function CategoryListItem({
@@ -14,9 +15,13 @@ function CategoryListItem({
   onCancelSelect,
   modifiable = true
 }: {
-  item: ICalendarCategory
+  item: CalendarCollectionsSchemas.ICategoryAggregated & {
+    id: string
+  }
   isSelected: boolean
-  onSelect: (item: ICalendarCategory) => void
+  onSelect: (
+    item: CalendarCollectionsSchemas.ICategoryAggregated & { id: string }
+  ) => void
   onCancelSelect: () => void
   modifiable?: boolean
 }) {
@@ -41,7 +46,7 @@ function CategoryListItem({
         confirmationText: 'Delete this category',
         data: item,
         itemName: 'category',
-        nameKey: 'name',
+        nameKey: 'name' as const,
         queryKey: ['calendar', 'categories']
       })
     },
