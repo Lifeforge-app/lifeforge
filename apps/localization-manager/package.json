@@ -22,7 +22,7 @@
     "lifeforge-ui": "workspace:*",
     "shared": "workspace:*",
     "@headlessui/react": "^2.2.4",
-    "@iconify/react": "^5.2.1",
+    "@iconify/react": "^6.0.0",
     "@tailwindcss/postcss": "^4.1.8",
     "@tanstack/react-query": "^5.80.6",
     "@uidotdev/usehooks": "^2.4.1",
@@ -42,6 +42,6 @@
   "devDependencies": {
     "@types/javascript-color-gradient": "^2.4.2",
     "@types/tinycolor2": "^1.4.6",
-    "vite": "^5.4.19"
+    "vite": "^7.0.5"
   }
 }

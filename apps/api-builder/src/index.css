@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600&family=Onest:wght@100;200;300;400;500;600;700&display=swap')
+layer(base);
+
+@import 'tailwindcss';
+@import './styles/index.css';
+@import '@lifeforge/ui/dist/index.css';
+@source "../node_modules/@lifeforge/ui/dist";
+
+.react-flow__node-group {
+  @apply border-bg-500! rounded-3xl! border-2! bg-transparent! p-3! transition-colors hover:shadow-none!;
+  box-shadow: none !important;
+}
+
+.react-flow__node-group.selected {
+  @apply border-none!;
+}
+
+.group-highlight {
+  @apply border-custom-500! bg-custom-500/20!;
+}

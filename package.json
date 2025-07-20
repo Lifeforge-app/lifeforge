@@ -19,7 +19,6 @@
   ],
   "scripts": {
     "forge": "bun run scripts/forge.ts",
-    "lint:client": "cd client && bun run lint",
     "start:server": "cd server && bun run start",
     "postinstall": "bun forge build shared && bun forge build ui",
     "schema:generate:collections": "bun run ./scripts/generateCollectionsSchemas.ts"
