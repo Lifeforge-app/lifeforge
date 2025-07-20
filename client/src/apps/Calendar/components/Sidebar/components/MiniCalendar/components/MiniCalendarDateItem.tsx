@@ -3,13 +3,11 @@ import dayjs from 'dayjs'
 import { useCallback, useMemo } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
+import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '../../../../../interfaces/calendar_interfaces'
 import MiniCalendarEventDetails from './MiniCalendarEventDetails'
 import MiniCalendarEventIndicator from './MiniCalendarEventIndicator'
 
@@ -30,17 +28,16 @@ function MiniCalendarDateItem({
   date,
   events
 }: MiniCalendarDateItemProps) {
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
-  )
+  const categoriesQuery = useAPIQuery<
+    CalendarControllersSchemas.ICategories['getAllCategories']['response']
+  >('calendar/categories', ['calendar', 'categories'])
 
   const isInThisMonth = useMemo(
     () => !(firstDay > index || index - firstDay + 1 > lastDate),
     [firstDay, index, lastDate]
   )
 
-  const eventsOnTheDay = useMemo<ICalendarEvent[]>(() => {
+  const eventsOnTheDay = useMemo(() => {
     return isInThisMonth
       ? events.filter(event => {
           return dayjs(
@@ -69,11 +66,11 @@ function MiniCalendarDateItem({
   )
 
   const getCategory = useCallback(
-    (event: ICalendarEvent): ICalendarCategory | undefined => {
+    (event: ICalendarEvent) => {
       return event.category.startsWith('_')
-        ? (INTERNAL_CATEGORIES[
+        ? INTERNAL_CATEGORIES[
             event.category as keyof typeof INTERNAL_CATEGORIES
-          ] as ICalendarCategory)
+          ]
         : categoriesQuery.data?.find(category => category.id === event.category)
     },
     [categoriesQuery.data]

@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import type { RecordModel } from 'pocketbase'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -9,17 +8,22 @@ import { fetchAPI, useAPIEndpoint } from 'shared/lib'
 import Button from '../../buttons/Button'
 import { TextInput } from '../../inputs'
 
-function DeleteConfirmationModal<T extends RecordModel>({
+function DeleteConfirmationModal<
+  T extends {
+    id: string
+    [key: string]: unknown
+  }
+>({
   onClose,
   data: {
     itemName,
     data,
-    updateDataList,
     apiEndpoint,
+    apiQueries,
     customTitle,
     customText,
     nameKey,
-    customCallback,
+    afterDelete,
     customConfirmButtonIcon,
     customConfirmButtonText,
     customOnClick,
@@ -33,12 +37,12 @@ function DeleteConfirmationModal<T extends RecordModel>({
   data: {
     itemName?: string
     data?: T | T[]
-    updateDataList?: () => void
     apiEndpoint?: string
+    apiQueries?: Record<string, string>
     customTitle?: string
     customText?: string
     nameKey?: keyof T
-    customCallback?: () => Promise<void>
+    afterDelete?: () => Promise<void>
     customConfirmButtonIcon?: string
     customConfirmButtonText?: string
     customOnClick?: (close: () => void) => Promise<void>
@@ -109,37 +113,28 @@ function DeleteConfirmationModal<T extends RecordModel>({
     if (data === null) return
     setLoading(true)
 
-    await fetchAPI(
-      apiHost,
-      `${apiEndpoint}/${!Array.isArray(data) ? (data?.id ?? '') : ''}`,
-      {
-        method: 'DELETE',
-        body: !Array.isArray(data) ? undefined : { ids: data }
-      }
-    )
-
     try {
-      onClose()
-      if (updateDataList) updateDataList()
+      await fetchAPI(
+        apiHost,
+        `${apiEndpoint}/${!Array.isArray(data) ? (data?.id ?? '') : ''}${apiQueries ? `?${new URLSearchParams(apiQueries).toString()}` : ''}`,
+        {
+          method: 'DELETE',
+          body: !Array.isArray(data) ? undefined : { ids: data }
+        }
+      )
 
-      if (customCallback) {
-        customCallback()
-          .then(() => {
-            setLoading(false)
-            onClose()
-          })
-          .catch(console.error)
-      }
+      if (queryKey) mutateData()
+      await afterDelete?.()
+      onClose()
     } catch {
       toast.error(t('deleteConfirmation.error'))
     } finally {
-      mutateData()
       setLoading(false)
     }
   }
 
   return (
-    <>
+    <div className="min-w-[40vw]">
       <h1 className="text-2xl font-semibold">
         {customTitle ??
           t('deleteConfirmation.title', {
@@ -195,7 +190,7 @@ function DeleteConfirmationModal<T extends RecordModel>({
           {customConfirmButtonText ?? 'Delete'}
         </Button>
       </div>
-    </>
+    </div>
   )
 }
 

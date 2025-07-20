@@ -4,7 +4,8 @@ import { useState } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
 
-import { ICalendarEvent } from '../../../../interfaces/calendar_interfaces'
+import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
+
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 

@@ -25,7 +25,7 @@ function ActionColumn({ transaction }: { transaction: IWalletTransaction }) {
       data: transaction,
       itemName: 'transaction',
       queryKey: ['wallet', 'transactions'],
-      updateDataList: () => {
+      afterDelete: async () => {
         queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
         queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
         queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })

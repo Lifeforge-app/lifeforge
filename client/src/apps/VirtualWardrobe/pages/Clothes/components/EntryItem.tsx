@@ -100,7 +100,7 @@ function EntryItem<T extends boolean = false>({
       itemName: 'item',
       nameKey: 'name',
       queryKey,
-      updateDataList: () => {
+      afterDelete: async () => {
         queryClient.setQueryData<IVirtualWardrobeEntry[]>(
           ['virtual-wardrobe', 'session-cart-items'],
           prev => {
@@ -109,6 +109,7 @@ function EntryItem<T extends boolean = false>({
             return prev.filter(e => e.id !== entry.id)
           }
         )
+
         queryClient.invalidateQueries({
           queryKey: ['virtual-wardrobe', 'sidebar-data']
         })

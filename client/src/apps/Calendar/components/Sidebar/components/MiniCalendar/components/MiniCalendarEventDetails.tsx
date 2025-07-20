@@ -4,10 +4,9 @@ import dayjs from 'dayjs'
 import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
 
-import {
-  ICalendarCategory,
-  ICalendarEvent
-} from '@apps/Calendar/interfaces/calendar_interfaces'
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
+
+import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 
 function MiniCalendarEventDetails({
   index,
@@ -20,7 +19,11 @@ function MiniCalendarEventDetails({
   actualIndex: number
   date: Date
   eventsOnTheDay: ICalendarEvent[]
-  getCategory: (event: ICalendarEvent) => ICalendarCategory | undefined
+  getCategory: (
+    event: ICalendarEvent
+  ) =>
+    | (CalendarCollectionsSchemas.ICategoryAggregated & { id: string })
+    | undefined
 }) {
   return createPortal(
     <Tooltip

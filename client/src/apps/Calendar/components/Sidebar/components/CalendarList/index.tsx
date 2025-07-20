@@ -4,10 +4,14 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import {
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 
-import { type ICalendarCalendar } from '../../../../interfaces/calendar_interfaces'
 import CalendarListItem from './components/CalendarListItem'
 
 function CalendarList({
@@ -19,15 +23,14 @@ function CalendarList({
   setSidebarOpen: (value: boolean) => void
   setSelectedCalendar: React.Dispatch<React.SetStateAction<string | undefined>>
 }) {
-  const calendarsQuery = useAPIQuery<ICalendarCalendar[]>(
-    'calendar/calendars',
-    ['calendar', 'calendars']
-  )
+  const calendarsQuery = useAPIQuery<
+    CalendarControllersSchemas.ICalendars['getAllCalendars']['response']
+  >('calendar/calendars', ['calendar', 'calendars'])
 
   const open = useModalStore(state => state.open)
 
   const handleSelect = useCallback(
-    (item: ICalendarCalendar) => {
+    (item: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>) => {
       setSelectedCalendar(item.id)
       setSidebarOpen(false)
     },

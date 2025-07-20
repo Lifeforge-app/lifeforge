@@ -4,11 +4,12 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
+import { CalendarCollectionsSchemas } from 'shared/types/collections'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
-import { type ICalendarCategory } from '../../../../interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({
@@ -20,17 +21,19 @@ function CategoryList({
   setSidebarOpen: (value: boolean) => void
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
 }) {
-  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
-    'calendar/categories',
-    ['calendar', 'categories']
-  )
+  const categoriesQuery = useAPIQuery<
+    CalendarControllersSchemas.ICategories['getAllCategories']['response']
+  >('calendar/categories', ['calendar', 'categories'])
 
   const open = useModalStore(state => state.open)
 
-  const handleSelect = useCallback((item: ICalendarCategory) => {
-    setSelectedCategory(item.id)
-    setSidebarOpen(false)
-  }, [])
+  const handleSelect = useCallback(
+    (item: CalendarCollectionsSchemas.ICalendar & { id: string }) => {
+      setSelectedCategory(item.id)
+      setSidebarOpen(false)
+    },
+    []
+  )
 
   const handleCancelSelect = useCallback(() => {
     setSelectedCategory(undefined)
@@ -60,7 +63,7 @@ function CategoryList({
                 <CategoryListItem
                   key={key}
                   isSelected={selectedCategory === key}
-                  item={value as ICalendarCategory}
+                  item={value}
                   modifiable={false}
                   onCancelSelect={handleCancelSelect}
                   onSelect={handleSelect}

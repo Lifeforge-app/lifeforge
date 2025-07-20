@@ -2,9 +2,13 @@ import { DeleteConfirmationModal, SidebarItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
+import {
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
+
 import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 
-import { type ICalendarCalendar } from '../../../../../interfaces/calendar_interfaces'
 import ActionMenu from './ActionMenu'
 
 function CalendarListItem({
@@ -14,9 +18,9 @@ function CalendarListItem({
   onCancelSelect,
   modifiable = true
 }: {
-  item: ICalendarCalendar
+  item: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>
   isSelected: boolean
-  onSelect: (item: ICalendarCalendar) => void
+  onSelect: (item: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>) => void
   onCancelSelect: () => void
   modifiable?: boolean
 }) {
@@ -41,7 +45,7 @@ function CalendarListItem({
         confirmationText: 'Delete this calendar',
         data: item,
         itemName: 'calendar',
-        nameKey: 'name',
+        nameKey: 'name' as const,
         queryKey: ['calendar', 'calendars']
       })
     },
@@ -64,9 +68,7 @@ function CalendarListItem({
     <SidebarItem
       active={isSelected}
       hamburgerMenuItems={hamburgerMenuItems}
-      icon={item.icon}
       name={item.name}
-      number={item.amount}
       sideStripColor={item.color}
       onCancelButtonClick={onCancelSelect}
       onClick={handleClick}

@@ -15,7 +15,7 @@ function VideoEntry({ video }: { video: IYoutubeVideosStorageEntry }) {
   const handleDeleteVideo = useCallback(() => {
     open(DeleteConfirmationModal, {
       apiEndpoint: 'youtube-videos/video',
-      customCallback: async () => {
+      afterDelete: async () => {
         queryClient.setQueryData<IYoutubeVideosStorageEntry[]>(
           ['youtube-videos', 'video'],
           prevVideos => {

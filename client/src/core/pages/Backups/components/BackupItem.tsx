@@ -63,7 +63,7 @@ function BackupItem({
       apiEndpoint: `/backups/${backup.key}`,
       itemName: 'backup',
       confirmationText: 'Delete this backup',
-      updateDataList: () => {
+      afterDelete: async () => {
         queryClient.invalidateQueries({
           queryKey: ['backups']
         })

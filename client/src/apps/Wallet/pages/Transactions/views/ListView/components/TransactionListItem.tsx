@@ -50,10 +50,16 @@ function TransactionListItem({
       data: transaction,
       itemName: 'transaction',
       queryKey: ['wallet', 'transactions'],
-      updateDataList: () => {
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
+      afterDelete: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ['wallet', 'categories']
+        })
+        await queryClient.invalidateQueries({
+          queryKey: ['wallet', 'ledgers']
+        })
+        await queryClient.invalidateQueries({
+          queryKey: ['wallet', 'assets']
+        })
       }
     })
   }, [transaction])
