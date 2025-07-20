@@ -19,12 +19,14 @@ function DetailItem({
     <div
       className={clsx(
         'component-bg-lighter rounded-lg p-4',
-        vertical ? 'space-y-4' : 'flex-between'
+        vertical ? 'space-y-4' : 'flex-between gap-6'
       )}
     >
       <div className="text-bg-500 flex items-center gap-3">
-        <Icon className="size-6" icon={icon} />
-        <h3 className="text-lg font-medium">{t(`inputs.${name}`)}</h3>
+        <Icon className="size-6 shrink-0" icon={icon} />
+        <h3 className="text-lg font-medium whitespace-nowrap">
+          {t(`inputs.${name}`)}
+        </h3>
       </div>
       {children}
     </div>

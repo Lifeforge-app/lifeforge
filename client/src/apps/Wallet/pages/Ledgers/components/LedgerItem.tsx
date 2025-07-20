@@ -4,17 +4,21 @@ import { useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
 
-import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 import ModifyLedgerModal from '../modals/ModifyLedgerModal'
 
-function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
+function LedgerItem({
+  ledger
+}: {
+  ledger: ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated>
+}) {
   const { t } = useTranslation('apps.wallet')
 
   const navigate = useNavigate()
-
-  const { transactionsQuery } = useWalletData()
 
   const open = useModalStore(state => state.open)
 
@@ -51,12 +55,7 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
         <div>
           <h2 className="text-xl font-medium">{ledger.name}</h2>
           <p className="text-bg-500 text-left text-sm">
-            {
-              transactionsQuery.data?.filter(
-                transaction => transaction.ledger === ledger.id
-              ).length
-            }{' '}
-            {t('transactionCount')}
+            {ledger.amount} {t('transactionCount')}
           </p>
         </div>
       </div>
@@ -81,7 +80,7 @@ function LedgerItem({ ledger }: { ledger: IWalletLedger }) {
               confirmationText: 'Delete this ledger',
               data: ledger,
               itemName: 'ledger',
-              nameKey: 'name',
+              nameKey: 'name' as const,
               queryKey: ['wallet', 'ledgers']
             })
           }}
