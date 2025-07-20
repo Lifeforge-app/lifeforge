@@ -79,14 +79,14 @@ const scanImage = forgeController
   })
 
 const addException = forgeController
-  .route('POST /exception/:id')
+  .route('DELETE /exception/:id')
   .description('Add an exception to a recurring event')
   .schema(CalendarControllersSchemas.Events.addException)
   .existenceCheck('params', {
     id: 'calendar__events'
   })
   .callback(
-    async ({ pb, params: { id }, body: { date } }) =>
+    async ({ pb, params: { id }, query: { date } }) =>
       await EventsService.addException(pb, id, date)
   )
 

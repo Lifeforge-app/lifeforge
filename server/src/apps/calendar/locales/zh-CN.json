@@ -26,6 +26,10 @@
     "calendar": {
       "create": "创建日历",
       "update": "更新日历"
+    },
+    "confirmAddException": {
+      "title": "确认添加例外",
+      "description": "您确定要为此事件添加例外吗？"
     }
   },
   "inputs": {
@@ -111,7 +115,8 @@
   "buttons": {
     "inputManually": "手动输入",
     "scanFromImage": "从图像扫描",
-    "today": "今天"
+    "today": "今天",
+    "exceptThisTime": "本次除外"
   },
   "eventTypes": {
     "single": "单个事件",
