@@ -6,92 +6,91 @@
  * Generated at: 2025-07-20T12:17:56.587Z
  * Contains: asset, ledger, category, transaction, category_aggregated, asset_aggregated, ledger_aggregated, transaction_type_aggregated, transactions_income_expense, transactions_transfer
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Asset = z.object({
   name: z.string(),
   icon: z.string(),
-  starting_balance: z.number(),
-});
+  starting_balance: z.number()
+})
 
 const Ledger = z.object({
   name: z.string(),
   icon: z.string(),
-  color: z.string(),
-});
+  color: z.string()
+})
 
 const Category = z.object({
   name: z.string(),
   icon: z.string(),
   color: z.string(),
-  type: z.enum(["income","expenses"]),
-});
+  type: z.enum(['income', 'expenses'])
+})
 
 const Transaction = z.object({
-  type: z.enum(["transfer","income_expenses"]),
+  type: z.enum(['transfer', 'income_expenses']),
   amount: z.number(),
   date: z.string(),
-  receipt: z.string(),
-});
+  receipt: z.string()
+})
 
 const CategoryAggregated = z.object({
-  type: z.enum(["income","expenses"]),
+  type: z.enum(['income', 'expenses']),
   name: z.string(),
   icon: z.string(),
   color: z.string(),
-  amount: z.number(),
-});
+  amount: z.number()
+})
 
 const AssetAggregated = z.object({
   name: z.string(),
   icon: z.string(),
   starting_balance: z.number(),
   transaction_count: z.number(),
-  current_balance: z.any(),
-});
+  current_balance: z.any()
+})
 
 const LedgerAggregated = z.object({
   name: z.string(),
   color: z.string(),
   icon: z.string(),
-  amount: z.number(),
-});
+  amount: z.number()
+})
 
 const TransactionTypeAggregated = z.object({
-  name: z.enum(["transfer","income_expenses"]),
+  name: z.enum(['transfer', 'income_expenses']),
   transaction_type: z.any(),
   transaction_count: z.number(),
-  accumulated_amount: z.any(),
-});
+  accumulated_amount: z.any()
+})
 
 const TransactionsIncomeExpense = z.object({
   base_transaction: z.string(),
-  type: z.enum(["income","expenses"]),
+  type: z.enum(['income', 'expenses']),
   particulars: z.string(),
   asset: z.string(),
   category: z.string(),
   ledgers: z.array(z.string()),
   location_name: z.string(),
-  location_coords: z.object({ lat: z.number(), lon: z.number() }),
-});
+  location_coords: z.object({ lat: z.number(), lon: z.number() })
+})
 
 const TransactionsTransfer = z.object({
   base_transaction: z.string(),
   from: z.string(),
-  to: z.string(),
-});
+  to: z.string()
+})
 
-type IAsset = z.infer<typeof Asset>;
-type ILedger = z.infer<typeof Ledger>;
-type ICategory = z.infer<typeof Category>;
-type ITransaction = z.infer<typeof Transaction>;
-type ICategoryAggregated = z.infer<typeof CategoryAggregated>;
-type IAssetAggregated = z.infer<typeof AssetAggregated>;
-type ILedgerAggregated = z.infer<typeof LedgerAggregated>;
-type ITransactionTypeAggregated = z.infer<typeof TransactionTypeAggregated>;
-type ITransactionsIncomeExpense = z.infer<typeof TransactionsIncomeExpense>;
-type ITransactionsTransfer = z.infer<typeof TransactionsTransfer>;
+type IAsset = z.infer<typeof Asset>
+type ILedger = z.infer<typeof Ledger>
+type ICategory = z.infer<typeof Category>
+type ITransaction = z.infer<typeof Transaction>
+type ICategoryAggregated = z.infer<typeof CategoryAggregated>
+type IAssetAggregated = z.infer<typeof AssetAggregated>
+type ILedgerAggregated = z.infer<typeof LedgerAggregated>
+type ITransactionTypeAggregated = z.infer<typeof TransactionTypeAggregated>
+type ITransactionsIncomeExpense = z.infer<typeof TransactionsIncomeExpense>
+type ITransactionsTransfer = z.infer<typeof TransactionsTransfer>
 
 export {
   Asset,
@@ -103,8 +102,8 @@ export {
   LedgerAggregated,
   TransactionTypeAggregated,
   TransactionsIncomeExpense,
-  TransactionsTransfer,
-};
+  TransactionsTransfer
+}
 
 export type {
   IAsset,
@@ -116,8 +115,8 @@ export type {
   ILedgerAggregated,
   ITransactionTypeAggregated,
   ITransactionsIncomeExpense,
-  ITransactionsTransfer,
-};
+  ITransactionsTransfer
+}
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
@@ -131,7 +130,7 @@ const WalletIncomeExpensesSummarySchema = z.object({
 const WalletReceiptScanResultSchema = z.object({
   date: z.string(),
   particulars: z.string(),
-  type: z.string(),
+  type: TransactionsIncomeExpense.shape.type,
   amount: z.number()
 })
 
