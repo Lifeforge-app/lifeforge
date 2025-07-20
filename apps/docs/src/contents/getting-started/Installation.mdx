@@ -1,0 +1,85 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
+import Notes from "../../components/Notes";
+
+###### Installation
+
+# Getting Started with Lifeforge.
+
+To be frank, Lifeforge is quite a complicated system, integrating many external binaries and APIs. A docker config file is hopefully on the way, maybe created by me or someone else who is more experienced in Docker and is willing to help. But for now, you'll have to install everything manually. This guide will walk you through the installation process step by step, to hopefully allow you to set up Lifeforge without any issues.
+
+---
+
+<section id="prerequisites">
+## Prerequisites
+
+Before you start, make sure you have the following items on hand:
+
+- **A Raspberry Pi 4 or any other computer in Unix-like systems:** This is the hardware that will be used to host the Lifeforge API and database.
+- **Node.js and bun:** You will need to have Node.js and bun installed on your server to run the Lifeforge API and frontend. Any recent version of these should work fine.
+- **A functional brain:** You will need to have a basic understanding of how to use a terminal and how to run a Node.js application.
+- **A cup of coffee:** This is optional, but it's always nice to have a cup of coffee by your side when you're coding.
+
+<Notes>
+If you're using Windows to host the Lifeforge system, you might run into some issues. I recommend using a Unix-like system such as Linux or macOS to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
+</Notes>
+</section>
+
+<section id="frontend-installation">
+## Frontend Installation
+
+First, clone the Lifeforge frontend repository to your local machine or your server. You can do this by running the following command in your terminal:
+
+
+```bash
+git clone https://github.com/lifeforge-app/lifeforge.git
+```
+
+Then, install the dependencies by running the following command:
+
+```bash
+cd lifeforge && bun install
+```
+</section>
+
+<section id="backend-installation">
+## Backend Installation
+
+Next, get access to your server terminal (if you haven't already) and clone the Lifeforge api repository into it.
+
+```bash
+git clone https://github.com/lifeforge-app/lifeforge-api.git
+```
+
+Then, install the dependencies as well:
+
+```bash
+cd lifeforge-api && bun install
+```
+
+After that, you'll need to create a folder named **medium** in the root directory of your server. This folder will be used to temporarily store the media files uploaded by users.
+</section>
+
+<section id="database-installation">
+## Database Installation
+
+Finally, you'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. Head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in your server using <code>sftp</code> or any other file transfer method you prefer.
+
+</section>
+
+<section id="make-sure">
+## Make Sure...
+
+Before you proceed, make sure your server directory structure looks like this:
+
+```plaintext
+lifeforge-server (or just put everything in the home directory)
+├── lifeforge (if you decided to host the frontend and backend in the same server)
+├── lifeforge-api
+├── database
+└── medium
+```
+</section>
+
+---
+
+And that's it! You're all set for the installation process. But before you can fire up the Lifeforge system, you'll need to configure it. Let's move on to the next section to learn how to do that.

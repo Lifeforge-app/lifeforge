@@ -1,0 +1,38 @@
+{
+  "name": "lifeforge-documentation",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@iconify/react": "^5.2.1",
+    "@mdx-js/mdx": "^3.1.0",
+    "@mdx-js/react": "^3.1.0",
+    "@mdx-js/rollup": "^3.1.0",
+    "@types/react-custom-scrollbars": "^4.0.13",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "react": "^19.1.0",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^6.30.1",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
+    "tailwindcss": "^4.1.11",
+    "vite-plugin-mdx": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^5.8.3",
+    "vite": "^5.4.19"
+  }
+}
