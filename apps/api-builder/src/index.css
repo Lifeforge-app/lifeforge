@@ -2,9 +2,8 @@
 layer(base);
 
 @import 'tailwindcss';
-@import './styles/index.css';
-@import '@lifeforge/ui/dist/index.css';
-@source "../node_modules/@lifeforge/ui/dist";
+@import 'lifeforge-ui/dist/index.css';
+@source "../../../node_modules/lifeforge-ui/dist";
 
 .react-flow__node-group {
   @apply border-bg-500! rounded-3xl! border-2! bg-transparent! p-3! transition-colors hover:shadow-none!;

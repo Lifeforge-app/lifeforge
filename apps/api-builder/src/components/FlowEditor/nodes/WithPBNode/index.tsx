@@ -51,7 +51,7 @@ function WithPBNode({ id }: { id: string }) {
 
   useEffect(() => {
     const inputSchemaData = JSON.parse(
-      inputSchemaDataJSON || '{}'
+      inputSchemaDataJSON || '{"fields": [], "name": ""}'
     ) as ISchemaNodeData
 
     if (!inputSchemaData) {

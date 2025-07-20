@@ -1,7 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import {
   Button,
   ListboxOrComboboxInput,
@@ -9,7 +6,9 @@ import {
   ModalHeader,
   Switch,
   TextInput
-} from '@lifeforge/ui'
+} from 'lifeforge-ui'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import FIELD_TYPES from '../constants/field_types'
 import type { ISchemaField, ISchemaNodeData } from '../types'

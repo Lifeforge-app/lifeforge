@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
 
-import { ModalHeader, QueryWrapper } from '@lifeforge/ui'
+import { useAPIQuery } from 'shared/lib'
 
-import useAPIQuery from '../../../../../hooks/useAPIQuery'
 import type { ICollectionNodeData } from '../types'
 
 function CollectionSelector({
@@ -38,7 +38,7 @@ function CollectionSelector({
                 return a.name.localeCompare(b.name)
               })
               .map(collection => (
-                <div
+                <button
                   key={collection.name}
                   className="flex-between component-bg-with-hover hover:text-bg-900 dark:hover:text-bg-100 cursor-pointer rounded p-3"
                   onClick={() => {
@@ -73,7 +73,7 @@ function CollectionSelector({
                   <span className="text-bg-500">
                     {collection.fields.length} fields
                   </span>
-                </div>
+                </button>
               ))}
           </div>
         )}

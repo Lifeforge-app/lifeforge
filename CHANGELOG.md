@@ -39,7 +39,7 @@
 
 - **Migration**: Fully migrated to the new `lifeforge-ui` package under monorepo structure
   - Deprecated legacy codebase on GitHub
-  - Removed `@lifeforge/ui` package from npm registry
+  - Removed `lifeforge-ui` package from npm registry
 - **Enhancement & Fixes**:
   - Corrected toast progress bar color application
   - Improved the callback logic for `DeleteConfirmationModal`

@@ -23,13 +23,11 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -rf dist && tsup src/index.ts",
-    "build-storybook": "storybook build",
     "dev": "tsup src/index.ts --watch",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "lint": "eslint ./src --ext .ts,.tsx",
-    "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6006",
+    "types": "tsc -b --noEmit",
+    "build": "rm -rf dist && tsup src/index.ts",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.2",

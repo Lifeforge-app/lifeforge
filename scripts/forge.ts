@@ -13,7 +13,7 @@ const PROJECTS_ALLOWED = {
 }
 
 const processType = process.argv[2]
-const projectType = process.argv[3]
+const projectTypes = process.argv.slice(3)
 
 if (!PROCESS_ALLOWED.includes(processType)) {
   console.error(
@@ -22,22 +22,33 @@ if (!PROCESS_ALLOWED.includes(processType)) {
   process.exit(1)
 }
 
-if (!Object.keys(PROJECTS_ALLOWED).includes(projectType)) {
+if (
+  !projectTypes.every(projectType =>
+    Object.keys(PROJECTS_ALLOWED).includes(projectType)
+  )
+) {
   console.error(
-    `Invalid project type: ${projectType}. Allowed projects are: ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
+    `Invalid project type: ${projectTypes.find(projectType => !Object.keys(PROJECTS_ALLOWED).includes(projectType))}. Allowed projects are: ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
   )
   process.exit(1)
 }
 
-const command = `cd ${PROJECTS_ALLOWED[projectType]} && bun run ${processType}`
+const commands = projectTypes.map(
+  projectType => `cd ${PROJECTS_ALLOWED[projectType]} && bun run ${processType}`
+)
+
+const finalCommand = `concurrently --kill-others --success first --prefix-name "${projectTypes.join(',')}" --names "${projectTypes.join(
+  ','
+)}" --prefix-colors "${projectTypes.map(() => 'cyan').join(',')}" ${commands.map(cmd => `"${cmd}"`).join(' ')}`
 try {
-  execSync(command, { stdio: 'inherit' })
+  console.log(`Executing command: ${finalCommand}`)
+  execSync(finalCommand, { stdio: 'inherit' })
   console.log(
-    `${processType.charAt(0).toUpperCase() + processType.slice(1)} completed successfully for ${projectType}.`
+    `${processType.charAt(0).toUpperCase() + processType.slice(1)} completed successfully for ${projectTypes.join(', ')}.`
   )
 } catch (error) {
   console.error(
-    `${processType.charAt(0).toUpperCase() + processType.slice(1)} failed for ${projectType}.`
+    `${processType.charAt(0).toUpperCase() + processType.slice(1)} failed for ${projectTypes.join(', ')}.`
   )
   console.error(error)
   process.exit(1)

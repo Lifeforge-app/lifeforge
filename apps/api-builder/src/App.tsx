@@ -1,31 +1,18 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { Button, LoadingScreen, ModalManager } from 'lifeforge-ui'
 import { Suspense, useEffect, useState } from 'react'
 
-import { Button, LoadingScreen } from '@lifeforge/ui'
+import { usePersonalization } from 'shared/lib'
 
 import FlowEditor from './components/FlowEditor'
 import Header from './components/Header'
 import './i18n'
-import LifeforgeUIProviderWrapper from './providers/LifeforgeUIProviderWrapper'
-import PersonalizationProvider from './providers/PersonalizationProvider'
-import ToastProvider from './providers/ToastProvider'
 
 function App() {
   const [isAuthed, setIsAuthed] = useState(false)
 
-  const [themeConfig, setThemeConfig] = useState<{
-    fontFamily: string
-    theme: 'light' | 'dark' | 'system'
-    rawThemeColor: string
-    bgTemp: string
-    language: string
-  }>({
-    fontFamily: 'Onest',
-    theme: 'system',
-    rawThemeColor: 'theme-lime',
-    bgTemp: 'bg-zinc',
-    language: 'en'
-  })
+  const { setFontFamily, setTheme, setRawThemeColor, setBgTemp, setLanguage } =
+    usePersonalization()
 
   const failAuth = () => {
     document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
@@ -64,19 +51,23 @@ function App() {
 
       const { userData } = data.data
 
-      setThemeConfig({
-        fontFamily: userData.fontFamily || 'Onest',
-        theme: userData.theme || 'system',
-        rawThemeColor:
-          (userData.color.startsWith('#')
+      setFontFamily(userData.fontFamily || 'Inter')
+      setTheme(userData.theme || 'system')
+      setRawThemeColor(
+        userData.color
+          ? userData.color.startsWith('#')
             ? userData.color
-            : `theme-${userData.color}`) || 'theme-blue',
-        bgTemp:
-          (userData.bgTemp.startsWith('#')
+            : `theme-${userData.color}`
+          : 'theme-lime'
+      )
+      setBgTemp(
+        userData.bgTemp
+          ? userData.bgTemp.startsWith('#')
             ? userData.bgTemp
-            : `bg-${userData.bgTemp}`) || 'bg-zinc',
-        language: userData.language || 'en'
-      })
+            : `bg-${userData.bgTemp}`
+          : 'bg-zinc'
+      )
+      setLanguage(userData.language || 'en')
     } else {
       failAuth()
     }
@@ -101,42 +92,37 @@ function App() {
   }, [])
 
   return (
-    <PersonalizationProvider config={themeConfig} isAuthed={isAuthed}>
-      <LifeforgeUIProviderWrapper>
-        <ToastProvider>
-          <main
-            className="bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-50 flex min-h-dvh w-full flex-col"
-            id="app"
-          >
-            <Suspense fallback={<LoadingScreen />}>
-              {isAuthed ? (
-                <FlowEditor />
-              ) : (
-                <>
-                  <Header />
-                  <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
-                    <Icon className="mb-4 text-9xl" icon="tabler:lock-access" />
-                    <h2 className="text-4xl">Unauthorized Personnel</h2>
-                    <p className="text-bg-500 mt-4 text-center text-lg">
-                      Please authenticate through single sign-on (SSO) in the
-                      system to access the locale editor.
-                    </p>
-                    <Button
-                      as="a"
-                      className="mt-16"
-                      href={import.meta.env.VITE_FRONTEND_URL}
-                      icon="tabler:hammer"
-                    >
-                      Go to System
-                    </Button>
-                  </div>
-                </>
-              )}
-            </Suspense>
-          </main>
-        </ToastProvider>
-      </LifeforgeUIProviderWrapper>
-    </PersonalizationProvider>
+    <main
+      className="bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-50 flex min-h-dvh w-full flex-col"
+      id="app"
+    >
+      <Suspense fallback={<LoadingScreen />}>
+        {isAuthed ? (
+          <FlowEditor />
+        ) : (
+          <>
+            <Header />
+            <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
+              <Icon className="mb-4 text-9xl" icon="tabler:lock-access" />
+              <h2 className="text-4xl">Unauthorized Personnel</h2>
+              <p className="text-bg-500 mt-4 text-center text-lg">
+                Please authenticate through single sign-on (SSO) in the system
+                to access the locale editor.
+              </p>
+              <Button
+                as="a"
+                className="mt-16"
+                href={import.meta.env.VITE_FRONTEND_URL}
+                icon="tabler:hammer"
+              >
+                Go to System
+              </Button>
+            </div>
+          </>
+        )}
+      </Suspense>
+      <ModalManager />
+    </main>
   )
 }
 
