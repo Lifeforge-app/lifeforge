@@ -9,7 +9,8 @@ const PROJECTS_ALLOWED = {
   ui: 'packages/lifeforge-ui',
   'apps:localization-manager': 'apps/localization-manager',
   'apps:docs': 'apps/docs',
-  'apps:api-builder': 'apps/api-builder'
+  'apps:api-builder': 'apps/api-builder',
+  'apps:api-explorer': 'apps/api-explorer'
 }
 
 const processType = process.argv[2]

@@ -1,21 +1,11 @@
 import { z } from 'zod'
 
-interface Route {
-  method: string
-  path: string
-  description: string
-  schema: {
-    response: z.ZodTypeAny
-    params?: z.ZodTypeAny
-    body?: z.ZodTypeAny
-    query?: z.ZodTypeAny
-  }
-}
+import { RouteCustomSchemas } from 'shared/types/collections'
 
 export default function traceRouteStack(
   stack: any,
   path = '',
-  routes: Route[] = []
+  routes: RouteCustomSchemas.IRoute[] = []
 ) {
   for (const layer of stack) {
     if (layer.handle.name === 'router') {
@@ -40,7 +30,7 @@ export default function traceRouteStack(
         .replace(/\/+/g, '/')
         .replace(/\\\//g, '/')
 
-      const route: Route = {
+      const route: RouteCustomSchemas.IRoute = {
         method: methods[0].toUpperCase(),
         path: routePath,
         schema: {

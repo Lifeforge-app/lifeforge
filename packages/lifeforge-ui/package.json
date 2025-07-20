@@ -35,7 +35,7 @@
     "@iconify/react": "^6.0.0",
     "@million/lint": "^1.0.14",
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/react-query": "^5.75.4",
+    "@tanstack/react-query": "^5.80.6",
     "@uidotdev/usehooks": "^2.4.1",
     "@uiw/react-color": "^2.5.3",
     "@vitejs/plugin-react": "^4.4.1",
