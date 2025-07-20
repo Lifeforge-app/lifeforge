@@ -25,15 +25,15 @@ function CodeTimeStatistics() {
       <QueryWrapper query={statsQuery}>
         {stats => (
           <>
-            <div className="flex-between component-bg shadow-custom w-full gap-6 rounded-lg p-6">
-              <div className="flex items-center gap-4">
+            <div className="flex-between component-bg shadow-custom w-full flex-col gap-6 rounded-lg p-3 pb-6 sm:flex-row sm:p-6">
+              <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-4">
                 <div className="shadow-custom component-bg-lighter flex rounded-lg p-2 sm:p-4">
                   <Icon
                     className="text-bg-500 dark:text-bg-50 text-2xl sm:text-3xl"
                     icon="tabler:calendar"
                   />
                 </div>
-                <div className="text-bg-500 text-xl font-medium whitespace-nowrap">
+                <div className="text-bg-500 text-lg font-medium whitespace-nowrap sm:text-xl">
                   {t('statisticType.timeSpentToday')}
                 </div>
               </div>
@@ -49,7 +49,7 @@ function CodeTimeStatistics() {
                 .map(([key, value], index) => (
                   <div
                     key={key}
-                    className="flex-between shadow-custom component-bg flex w-full flex-col gap-2 rounded-lg p-3 sm:items-start sm:p-6"
+                    className="flex-between shadow-custom component-bg flex w-full flex-col gap-2 rounded-lg p-3 pb-6 sm:items-start sm:p-6"
                   >
                     <div className="flex w-full flex-row items-center gap-2 sm:flex-col sm:items-start">
                       <div className="shadow-custom component-bg-lighter flex rounded-lg p-2 sm:p-4">
