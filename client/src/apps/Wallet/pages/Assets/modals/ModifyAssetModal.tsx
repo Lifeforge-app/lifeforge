@@ -2,10 +2,11 @@ import { FormModal } from 'lifeforge-ui'
 import type { IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-import type {
-  IWalletAsset,
-  IWalletAssetFormState
-} from '../../../interfaces/wallet_interfaces'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 function ModifyAssetModal({
   data: { type, existedData },
@@ -13,17 +14,19 @@ function ModifyAssetModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: IWalletAsset | null
+    existedData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated> | null | null
   }
   onClose: () => void
 }) {
-  const [formState, setFormState] = useState<IWalletAssetFormState>({
+  const [formState, setFormState] = useState<
+    WalletControllersSchemas.IAssets['createAsset' | 'updateAsset']['body']
+  >({
     name: '',
     icon: '',
-    starting_balance: ''
+    starting_balance: 0
   })
 
-  const FIELDS: IFieldProps<IWalletAssetFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       required: true,
@@ -44,7 +47,7 @@ function ModifyAssetModal({
       label: 'Initial Balance',
       icon: 'tabler:currency-dollar',
       placeholder: '0.00',
-      type: 'text'
+      type: 'number'
     }
   ]
 
@@ -55,14 +58,14 @@ function ModifyAssetModal({
           setFormState({
             name: existedData.name,
             icon: existedData.icon,
-            starting_balance: existedData.starting_balance.toString()
+            starting_balance: existedData.starting_balance
           })
         }
       } else {
         setFormState({
           name: '',
           icon: '',
-          starting_balance: ''
+          starting_balance: 0
         })
       }
     }

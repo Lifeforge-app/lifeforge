@@ -44,6 +44,8 @@ function SpendingHeatmap() {
     const locationGroups: Record<string, SpendingLocationData> = {}
 
     expenseTransactions.forEach(transaction => {
+      if (transaction.type === 'transfer') return
+
       const key = `${transaction.location_coords.lat},${transaction.location_coords.lon},${transaction.location_name}`
 
       if (locationGroups[key]) {

@@ -20,25 +20,39 @@ export function useFilteredTransactions(transactions: IWalletTransaction[]) {
 
   return useMemo(() => {
     return transactions
+      .filter(tx => (selectedType ? tx.type === selectedType : true))
+      .filter(tx => {
+        if (!selectedCategory) return true
+        if (tx.type === 'transfer') return false
+
+        return tx.category === selectedCategory
+      })
+      .filter(tx => {
+        if (!selectedAsset) return true
+
+        if (tx.type === 'transfer')
+          return tx.from === selectedAsset || tx.to === selectedAsset
+
+        return tx.asset === selectedAsset
+      })
+      .filter(tx => {
+        if (!selectedLedger) return true
+
+        if (tx.type === 'transfer') return false
+
+        return tx.ledgers.includes(selectedLedger)
+      })
       .filter(
         tx =>
-          (selectedType === null || tx.type === selectedType) &&
+          debouncedQuery === '' ||
           (tx.type !== 'transfer'
-            ? (selectedCategory === null || tx.category === selectedCategory) &&
-              (selectedAsset === null || tx.asset === selectedAsset) &&
-              (selectedLedger === null || tx.ledgers.includes(selectedLedger))
-            : true)
-      )
-      .filter(tx =>
-        tx.type !== 'transfer'
-          ? debouncedQuery === '' ||
-            tx.particulars
-              ?.toLowerCase()
-              .includes(debouncedQuery.toLowerCase()) ||
-            tx.location_name
-              ?.toLowerCase()
-              .includes(debouncedQuery.toLowerCase())
-          : true
+            ? tx.particulars
+                ?.toLowerCase()
+                .includes(debouncedQuery.toLowerCase()) ||
+              tx.location_name
+                ?.toLowerCase()
+                .includes(debouncedQuery.toLowerCase())
+            : false)
       )
       .filter(tx => {
         const start = (

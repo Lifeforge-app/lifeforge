@@ -3,12 +3,16 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { type IWalletCategory } from '../../../../../interfaces/wallet_interfaces'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+
 import ModifyCategoryModal from '../../ModifyCategoryModal'
 import CategorySectionItem from './CategorySectionItem'
 
 interface CategorySectionProps {
-  categories: IWalletCategory[]
+  categories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
   type: 'income' | 'expenses'
   iconName: string
 }

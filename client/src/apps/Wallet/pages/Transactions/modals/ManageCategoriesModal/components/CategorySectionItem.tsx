@@ -2,13 +2,23 @@ import { Icon } from '@iconify/react'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
 
 import ModifyCategoryModal from '../../ModifyCategoryModal'
 
-function CategorySectionItem({ category }: { category: IWalletCategory }) {
+function CategorySectionItem({
+  category
+}: {
+  category: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>
+}) {
   const open = useModalStore(state => state.open)
+
+  const { t } = useTranslation('apps.wallet')
 
   const handleEditCategory = useCallback(() => {
     open(ModifyCategoryModal, {
@@ -23,7 +33,7 @@ function CategorySectionItem({ category }: { category: IWalletCategory }) {
       confirmationText: 'Delete this category',
       data: category,
       itemName: 'category',
-      nameKey: 'name',
+      nameKey: 'name' as const,
       queryKey: ['wallet', 'categories']
     })
   }, [])
@@ -38,14 +48,19 @@ function CategorySectionItem({ category }: { category: IWalletCategory }) {
           }}
         >
           <Icon
-            className="size-6"
+            className="size-7"
             icon={category.icon}
             style={{
               color: category.color
             }}
           />
         </div>
-        <div className="font-semibold">{category.name}</div>
+        <div>
+          <p className="text-lg font-medium">{category.name}</p>
+          <p className="text-bg-500 text-sm">
+            {category.amount} {t('transactionCount')}
+          </p>
+        </div>
       </div>
       <HamburgerMenu>
         <MenuItem
