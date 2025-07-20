@@ -22,7 +22,6 @@ function CodeTimeStatistics() {
         <Icon className="text-3xl" icon="tabler:chart-bar" />
         <span className="ml-2">{t('headers.statistics')}</span>
       </h1>
-
       <QueryWrapper query={statsQuery}>
         {stats => (
           <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-3">
@@ -62,7 +61,7 @@ function CodeTimeStatistics() {
                     <>
                       {value}
                       <span className="text-bg-500 pl-1 text-3xl font-normal">
-                        days
+                        {t('units.days')}
                       </span>
                     </>
                   )}
