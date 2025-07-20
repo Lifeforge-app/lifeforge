@@ -179,7 +179,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
                   setLastFor(last)
                 }}
               >
-                {last} days
+                {last} {t('units.days')}
               </button>
             ))}
           </div>

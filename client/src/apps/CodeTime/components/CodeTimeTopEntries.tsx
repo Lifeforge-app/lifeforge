@@ -55,7 +55,8 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                   setLastFor(last as '24 hours' | '7 days' | '30 days')
                 }}
               >
-                {last}
+                {last.split(' ')[0]}{' '}
+                {t(`units.${last.split(' ')[1].toLowerCase()}`)}
               </button>
             ))}
           </div>
