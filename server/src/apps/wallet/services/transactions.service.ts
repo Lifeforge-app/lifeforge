@@ -10,7 +10,7 @@ import { WalletCollectionsSchemas } from 'shared/types/collections'
 import { WalletControllersSchemas } from 'shared/types/controllers'
 
 function convertPDFToImage(path: string): Promise<File | undefined> {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
       const options = {
         density: 200,
@@ -122,282 +122,139 @@ export const getAllTransactions = async (
 
 export const createTransaction = async (
   pb: Pocketbase,
-  data: Pick<
-    WalletCollectionsSchemas.ITransaction,
-    'particulars' | 'date' | 'amount' | 'type'
-  > & {
-    asset?: string
-    ledger?: string
-    category?: string
-    fromAsset?: string
-    toAsset?: string
-    location_name?: string
-    location_coords?: {
-      lon: number
-      lat: number
-    }
-  },
+  data: WalletControllersSchemas.ITransactions['createTransaction']['body'],
   file: Express.Multer.File | undefined
-): Promise<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>[]> => {
-  async function processFile(): Promise<
-    [Express.Multer.File | File | undefined, string | undefined]
-  > {
-    let targetFile: Express.Multer.File | File | undefined = file
+): Promise<
+  WalletControllersSchemas.ITransactions['createTransaction']['response']
+> => {
+  let targetFile: Express.Multer.File | File | undefined = file
+  let receipt: File | undefined = undefined
 
-    if (targetFile)
-      targetFile.originalname = decodeURIComponent(targetFile.originalname)
+  if (targetFile)
+    targetFile.originalname = decodeURIComponent(targetFile.originalname)
 
-    const path = file?.originalname.split('/') ?? []
+  const path = file?.originalname.split('/') ?? []
 
-    const name = path.pop()
+  const fileName = path.pop()
 
-    if (file?.originalname.endsWith('.pdf')) {
-      targetFile = await convertPDFToImage(file.path)
-    }
-
-    return [targetFile, name]
+  if (file?.originalname.endsWith('.pdf')) {
+    targetFile = await convertPDFToImage(file.path)
   }
 
-  function getReceipt(): File | string {
-    if (targetFile instanceof File) {
-      return targetFile
-    }
+  if (targetFile instanceof File) {
+    receipt = targetFile
+  } else if (targetFile && fs.existsSync(targetFile.path)) {
+    const fileBuffer = fs.readFileSync(targetFile.path)
 
-    if (targetFile && fs.existsSync(targetFile.path)) {
-      const fileBuffer = fs.readFileSync(targetFile.path)
+    receipt = new File([fileBuffer], fileName ?? 'receipt.jpg', {
+      type: targetFile.mimetype
+    })
+  }
 
-      return new File([fileBuffer], fileName ?? 'receipt.jpg', {
-        type: targetFile.mimetype
+  const baseTransaction = await pb
+    .collection('wallet__transactions')
+    .create<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>({
+      type: data.type,
+      amount: data.amount,
+      date: data.date,
+      receipt
+    })
+
+  if (data.type === 'transfer') {
+    await pb
+      .collection('wallet__transactions_transfer')
+      .create<ISchemaWithPB<WalletCollectionsSchemas.ITransactionsTransfer>>({
+        from: data.from,
+        to: data.to,
+        base_transaction: baseTransaction.id
       })
-    }
-
-    return ''
-  }
-
-  async function createIncomeOrExpensesTransactions(): Promise<
-    ISchemaWithPB<WalletCollectionsSchemas.ITransaction>[]
-  > {
-    const newData: Omit<
-      WalletCollectionsSchemas.ITransaction,
-      'receipt' | 'fromAsset' | 'toAsset'
-    > & {
-      receipt: File | string
-    } = {
-      particulars,
-      date,
-      amount,
-      location_name: data.location_name || '',
-      location_coords: data.location_coords ?? { lon: 0, lat: 0 },
-      category: category || '',
-      asset: asset || '',
-      ledger: ledger || '',
-      type,
-      side: type === 'income' ? 'debit' : 'credit',
-      receipt: getReceipt()
-    }
-
-    const transaction = await pb
-      .collection('wallet__transactions')
-      .create<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>(newData)
-
-    return [transaction]
-  }
-
-  async function createTransferTransactions(): Promise<
-    ISchemaWithPB<WalletCollectionsSchemas.ITransaction>[]
-  > {
-    const _from = await pb.collection('wallet__assets').getOne(fromAsset!)
-
-    const _to = await pb.collection('wallet__assets').getOne(toAsset!)
-
-    const baseTransferData: Omit<
-      WalletCollectionsSchemas.ITransaction,
-      | 'receipt'
-      | 'category'
-      | 'ledger'
-      | 'location_name'
-      | 'location_coords'
-      | 'fromAsset'
-      | 'toAsset'
-    > & {
-      receipt: File | string
-    } = {
-      type: 'transfer',
-      particulars: '',
-      date,
-      amount,
-      side: 'debit',
-      asset: '',
-      receipt: getReceipt()
-    }
-
-    baseTransferData.particulars = `Transfer from ${_from.name}`
-    baseTransferData.asset = toAsset!
-
-    const debit = await pb
-      .collection('wallet__transactions')
+  } else {
+    await pb
+      .collection('wallet__transactions_income_expenses')
       .create<
-        ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
-      >(baseTransferData)
-
-    baseTransferData.particulars = `Transfer to ${_to.name}`
-    baseTransferData.side = 'credit'
-    baseTransferData.asset = fromAsset!
-
-    const credit = await pb
-      .collection('wallet__transactions')
-      .create<
-        ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
-      >(baseTransferData)
-
-    return [debit, credit]
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense>
+      >({
+        base_transaction: baseTransaction.id,
+        type: data.type,
+        particulars: data.particulars,
+        asset: data.asset,
+        category: data.category,
+        ledgers: data.ledgers,
+        location_name: data.location_name ?? '',
+        location_coords: data.location_coords ?? { lon: 0, lat: 0 }
+      })
   }
-
-  const {
-    particulars,
-    date,
-    amount,
-    category,
-    asset,
-    ledger,
-    type,
-    fromAsset,
-    toAsset
-  } = data
-
-  const [targetFile, fileName] = await processFile()
-
-  let created: ISchemaWithPB<WalletCollectionsSchemas.ITransaction>[] = []
-
-  switch (type) {
-    case 'income':
-    case 'expenses':
-      created = await createIncomeOrExpensesTransactions()
-      break
-    case 'transfer':
-      created = await createTransferTransactions()
-      break
-  }
-
-  if (file && fs.existsSync(file.path)) {
-    fs.unlinkSync(file.path)
-  }
-
-  return created
 }
 
 export const updateTransaction = async (
   pb: Pocketbase,
   id: string,
-  data: Pick<
-    WalletCollectionsSchemas.ITransaction,
-    'particulars' | 'date' | 'amount' | 'type'
-  > & {
-    asset?: string
-    ledger?: string
-    category?: string
-    location_name?: string
-    location_coords?: {
-      lon: number
-      lat: number
-    }
-  },
-  file: Express.Multer.File | undefined,
-  toRemoveReceipt: boolean
-): Promise<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>> => {
-  async function processFile(): Promise<
-    [Express.Multer.File | File | undefined, string | undefined]
-  > {
-    let targetFile: Express.Multer.File | File | undefined = file
+  data: WalletControllersSchemas.ITransactions['updateTransaction']['body'],
+  file: Express.Multer.File | undefined
+): Promise<
+  WalletControllersSchemas.ITransactions['updateTransaction']['response']
+> => {
+  let targetFile: Express.Multer.File | File | undefined = file
+  let receipt: File | undefined = undefined
 
+  if (!data.toRemoveReceipt) {
     if (targetFile)
       targetFile.originalname = decodeURIComponent(targetFile.originalname)
 
     const path = file?.originalname.split('/') ?? []
 
-    const name = path.pop()
+    const fileName = path.pop()
 
     if (file?.originalname.endsWith('.pdf')) {
       targetFile = await convertPDFToImage(file.path)
     }
 
-    return [targetFile, name]
-  }
-
-  function getReceipt(): File | string {
     if (targetFile instanceof File) {
-      return targetFile
-    }
-
-    if (targetFile && fs.existsSync(targetFile.path)) {
+      receipt = targetFile
+    } else if (targetFile && fs.existsSync(targetFile.path)) {
       const fileBuffer = fs.readFileSync(targetFile.path)
 
-      return new File([fileBuffer], fileName ?? 'receipt.jpg', {
+      receipt = new File([fileBuffer], fileName ?? 'receipt.jpg', {
         type: targetFile.mimetype
       })
     }
-
-    if (toRemoveReceipt) {
-      return ''
-    }
-
-    return foundTransaction.receipt
   }
 
-  const {
-    particulars,
-    date,
-    amount,
-    category,
-    location_name,
-    location_coords,
-    asset,
-    ledger,
-    type
-  } = data
-
-  const foundTransaction = await pb
+  const baseTransaction = await pb
     .collection('wallet__transactions')
-    .getOne<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>(id)
+    .update<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>(id, {
+      type: data.type,
+      amount: data.amount,
+      date: data.date,
+      ...(!data.toRemoveReceipt && { receipt })
+    })
 
-  const [targetFile, fileName] = await processFile()
-
-  if (!category || !asset) {
-    throw new Error(
-      'Category and Asset are required for updating a transaction'
-    )
+  if (data.type === 'transfer') {
+    await pb
+      .collection('wallet__transactions_transfer')
+      .update<
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsTransfer>
+      >(id, {
+        from: data.from,
+        to: data.to,
+        base_transaction: baseTransaction.id
+      })
+  } else {
+    await pb
+      .collection('wallet__transactions_income_expenses')
+      .update<
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense>
+      >(id, {
+        base_transaction: baseTransaction.id,
+        type: data.type,
+        particulars: data.particulars,
+        asset: data.asset,
+        category: data.category,
+        ledgers: data.ledgers,
+        location_name: data.location_name ?? '',
+        location_coords: data.location_coords ?? { lon: 0, lat: 0 }
+      })
   }
-
-  const updatedData: Omit<
-    WalletCollectionsSchemas.ITransaction,
-    'receipt' | 'fromAsset' | 'toAsset'
-  > & {
-    receipt: File | string
-  } = {
-    particulars,
-    date,
-    amount,
-    category: category,
-    location_name: location_name || '',
-    location_coords: location_coords ?? { lon: 0, lat: 0 },
-    asset,
-    ledger: ledger ?? '',
-    type,
-    side: type === 'income' ? 'debit' : 'credit',
-    receipt: getReceipt()
-  }
-
-  const transaction = await pb
-    .collection('wallet__transactions')
-    .update<
-      ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
-    >(id, updatedData)
-
-  if (file && fs.existsSync(file.path)) {
-    fs.unlinkSync(file.path)
-  }
-
-  return transaction
 }
 
 export const deleteTransaction = async (

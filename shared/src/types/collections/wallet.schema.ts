@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: wallet
- * Generated at: 2025-07-20T05:29:45.173Z
+ * Generated at: 2025-07-20T12:17:56.587Z
  * Contains: asset, ledger, category, transaction, category_aggregated, asset_aggregated, ledger_aggregated, transaction_type_aggregated, transactions_income_expense, transactions_transfer
  */
 
@@ -29,7 +29,7 @@ const Category = z.object({
 });
 
 const Transaction = z.object({
-  type: z.enum(["income","expenses","transfer"]),
+  type: z.enum(["transfer","income_expenses"]),
   amount: z.number(),
   date: z.string(),
   receipt: z.string(),
@@ -59,9 +59,10 @@ const LedgerAggregated = z.object({
 });
 
 const TransactionTypeAggregated = z.object({
-  name: z.enum(["income","expenses","transfer"]),
-  amount: z.number(),
-  accumulate: z.any(),
+  name: z.enum(["transfer","income_expenses"]),
+  transaction_type: z.any(),
+  transaction_count: z.number(),
+  accumulated_amount: z.any(),
 });
 
 const TransactionsIncomeExpense = z.object({

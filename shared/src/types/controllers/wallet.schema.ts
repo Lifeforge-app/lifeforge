@@ -16,7 +16,9 @@ const Transactions = {
   getAllTransactions: {
     response: z.array(
       SchemaWithPB(
-        WalletCollectionsSchemas.Transaction.and(
+        WalletCollectionsSchemas.Transaction.omit({
+          type: true
+        }).and(
           z.union([
             WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
               base_transaction: true
@@ -37,39 +39,22 @@ const Transactions = {
    * @description Create a new wallet transaction
    */
   createTransaction: {
-    body: z.object({
-      particulars: z.string(),
-      date: z.string(),
-      amount: z.string().transform(val => parseFloat(val)),
-      category: z.string().optional(),
-      location_name: z.string().optional(),
-      location_coords: z
-        .string()
-        .optional()
-        .transform(val => {
-          if (!val) return undefined
-
-          try {
-            const coords = JSON.parse(val)
-
-            return {
-              lon: parseFloat(coords.longitude),
-              lat: parseFloat(coords.latitude)
-            }
-          } catch {
-            return {
-              lon: 0,
-              lat: 0
-            }
-          }
+    body: WalletCollectionsSchemas.Transaction.omit({
+      type: true,
+      receipt: true
+    }).and(
+      z.union([
+        WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
+          base_transaction: true
         }),
-      asset: z.string().optional(),
-      ledger: z.string().optional(),
-      type: z.enum(['income', 'expenses', 'transfer']),
-      fromAsset: z.string().optional(),
-      toAsset: z.string().optional()
-    }),
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction))
+        WalletCollectionsSchemas.TransactionsTransfer.omit({
+          base_transaction: true
+        }).extend({
+          type: z.literal('transfer')
+        })
+      ])
+    ),
+    response: z.void()
   },
 
   /**
@@ -80,42 +65,26 @@ const Transactions = {
     params: z.object({
       id: z.string()
     }),
-    body: z.object({
-      particulars: z.string(),
-      date: z.string(),
-      amount: z.string().transform(val => parseFloat(val)),
-      category: z.string().optional(),
-      location_name: z.string().optional(),
-      location_coords: z
-        .string()
-        .optional()
-        .transform(val => {
-          if (!val) return undefined
-
-          try {
-            const coords = JSON.parse(val)
-
-            return {
-              lon: parseFloat(coords.longitude),
-              lat: parseFloat(coords.latitude)
-            }
-          } catch {
-            return {
-              lon: 0,
-              lat: 0
-            }
-          }
-        }),
-      asset: z.string(),
-      ledger: z.string().optional(),
-      type: z.enum(['income', 'expenses', 'transfer']),
-      removeReceipt: z
-        .string()
-        .optional()
-        .default('false')
-        .transform(val => val === 'true')
-    }),
-    response: SchemaWithPB(WalletCollectionsSchemas.Transaction)
+    body: WalletCollectionsSchemas.Transaction.omit({
+      type: true,
+      receipt: true
+    })
+      .extend({
+        toRemoveReceipt: z.boolean()
+      })
+      .and(
+        z.union([
+          WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
+            base_transaction: true
+          }),
+          WalletCollectionsSchemas.TransactionsTransfer.omit({
+            base_transaction: true
+          }).extend({
+            type: z.literal('transfer')
+          })
+        ])
+      ),
+    response: z.void()
   },
 
   /**
@@ -262,8 +231,8 @@ const Utils = {
     response: z.record(
       z.string(),
       z.object({
-        amount: z.number(),
-        accumulate: z.number()
+        transactionCount: z.number(),
+        accumulatedAmount: z.number()
       })
     )
   },

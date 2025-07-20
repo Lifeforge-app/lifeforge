@@ -30,9 +30,12 @@ const createTransaction = forgeController
     toAsset: '[wallet__assets]'
   })
   .statusCode(201)
-  .callback(
-    async ({ pb, body, req }) =>
-      await TransactionsService.createTransaction(pb, body, req.file)
+  .callback(({ pb, body, req }) =>
+    TransactionsService.createTransaction(
+      pb,
+      body as WalletControllersSchemas.ITransactions['createTransaction']['body'],
+      req.file
+    )
   )
 
 const updateTransaction = forgeController
@@ -48,15 +51,13 @@ const updateTransaction = forgeController
     asset: 'wallet__assets',
     ledger: '[wallet__ledgers]'
   })
-  .callback(
-    async ({ pb, params: { id }, body, req }) =>
-      await TransactionsService.updateTransaction(
-        pb,
-        id,
-        body,
-        req.file,
-        body.removeReceipt ?? false
-      )
+  .callback(({ pb, params: { id }, body, req }) =>
+    TransactionsService.updateTransaction(
+      pb,
+      id,
+      body as WalletControllersSchemas.ITransactions['updateTransaction']['body'],
+      req.file
+    )
   )
 
 const deleteTransaction = forgeController
@@ -80,6 +81,7 @@ const scanReceipt = forgeController
     if (!req.file) {
       throw new Error('No file uploaded')
     }
+
     return await TransactionsService.scanReceipt(pb, req.file)
   })
 
