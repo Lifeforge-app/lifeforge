@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: calendar
- * Generated at: 2025-07-20T05:23:51.733Z
+ * Generated at: 2025-07-20T05:29:45.171Z
  * Contains: event, category, category_aggregated, calendar, events_single, events_recurring
  */
 
