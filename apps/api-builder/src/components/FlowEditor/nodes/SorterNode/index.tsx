@@ -19,12 +19,16 @@ const SORT_ORDER_OPTIONS = [
 
 function SorterNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { direction, field } = useMemo(
     () => getNodeData<ISorterNodeData>(id),
     [getNodeData, id]
   )
+
   const allNodes = useNodes()
+
   const allEdges = useEdges()
 
   const targetCollection = useMemo(() => {
@@ -40,6 +44,7 @@ function SorterNode({ id }: { id: string }) {
     const collectionNodeData = getNodeData<ICollectionNodeData>(
       targetCollection.id
     )
+
     return collectionNodeData.fields ?? []
   }, [targetCollection, getNodeData])
 
@@ -55,14 +60,14 @@ function SorterNode({ id }: { id: string }) {
         <>
           <NodeColumn label="Field">
             <NodeListbox
-              value={field}
               setValue={value => updateNodeData(id, { field: value })}
+              value={field}
             >
               {selectableColumns.map(f => (
                 <NodeListboxOption
                   key={f.name}
-                  value={f.name}
                   isSelected={f.name === field}
+                  value={f.name}
                 >
                   {f.name}
                 </NodeListboxOption>
@@ -71,30 +76,30 @@ function SorterNode({ id }: { id: string }) {
           </NodeColumn>
           <NodeColumn label="Direction">
             <NodeListbox
-              value={direction}
-              setValue={value => updateNodeData(id, { direction: value })}
               buttonContent={
                 <span className="flex items-center gap-2">
                   <Icon
+                    className="text-bg-500 size-5"
                     icon={
                       SORT_ORDER_OPTIONS.find(
                         option => option.value === direction
                       )?.icon || 'tabler:sort-ascending'
                     }
-                    className="text-bg-500 size-5"
                   />
                   {t(`misc.${direction.toLocaleLowerCase()}`)}
                 </span>
               }
+              setValue={value => updateNodeData(id, { direction: value })}
+              value={direction}
             >
               {SORT_ORDER_OPTIONS.map(option => (
                 <NodeListboxOption
                   key={option.value}
-                  value={option.value}
                   isSelected={option.value === direction}
+                  value={option.value}
                 >
                   <span className="flex items-center gap-2">
-                    <Icon icon={option.icon} className="text-bg-500 size-5" />
+                    <Icon className="text-bg-500 size-5" icon={option.icon} />
                     {t(`misc.${option.value.toLocaleLowerCase()}`)}
                   </span>
                 </NodeListboxOption>
@@ -107,7 +112,7 @@ function SorterNode({ id }: { id: string }) {
           {t('empty.noCollectionConnected')}
         </p>
       )}
-      <NodeColumn nodeType="sorter" handle="sorter-output" />
+      <NodeColumn handle="sorter-output" nodeType="sorter" />
     </NodeColumnWrapper>
   )
 }

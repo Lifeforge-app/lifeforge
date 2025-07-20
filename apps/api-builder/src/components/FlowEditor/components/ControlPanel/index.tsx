@@ -7,8 +7,8 @@ import { SaveButton } from './components/SaveButton'
 function ControlPanel() {
   return (
     <Panel
-      position="top-left"
       className="shadow-custom bg-bg-800 overflow-hidden rounded-lg p-2"
+      position="top-left"
     >
       <SaveButton />
       <DownloadImageButton />

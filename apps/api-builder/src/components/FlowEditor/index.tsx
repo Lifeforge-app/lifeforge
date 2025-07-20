@@ -29,33 +29,35 @@ const NODE_TYPES = createNodeTypes()
 
 function FlowEditor() {
   const { derivedTheme, bgTempPalette } = usePersonalization()
+
   const flowState = useFlowStateContext()
+
   useFlowPersistence()
   useFlowKeyboardHandlers()
 
   return (
     <div className="bg-bg-100 dark:bg-bg-950 h-screen w-screen">
       <ReactFlow
+        fitView
+        snapToGrid
         colorMode={derivedTheme}
-        nodes={flowState.nodes}
+        connectionLineComponent={ConnectionLine}
         edges={flowState.edges}
-        onNodesChange={flowState.onNodesChange}
-        onNodeDrag={flowState.onNodeDrag}
-        onNodeDragStop={flowState.onNodeDragStop}
-        onEdgesChange={flowState.onEdgesChange}
-        onConnect={flowState.onConnect}
-        nodeTypes={NODE_TYPES}
         edgeTypes={{
           default: EdgeComponent
         }}
-        connectionLineComponent={ConnectionLine}
         isValidConnection={(connection: Connection | Edge) =>
           isValidConnection(connection, flowState.nodes, flowState.edges)
         }
-        fitView
-        snapToGrid
-        snapGrid={[20, 20]}
         minZoom={0.2}
+        nodes={flowState.nodes}
+        nodeTypes={NODE_TYPES}
+        snapGrid={[20, 20]}
+        onConnect={flowState.onConnect}
+        onEdgesChange={flowState.onEdgesChange}
+        onNodeDrag={flowState.onNodeDrag}
+        onNodeDragStop={flowState.onNodeDragStop}
+        onNodesChange={flowState.onNodesChange}
       >
         <Background
           color={
@@ -66,11 +68,11 @@ function FlowEditor() {
           size={2}
         />
         <MiniMap
+          nodeBorderRadius={6}
           nodeStrokeColor={(node: Node) =>
             NODE_CONFIG[node.type as NODE_TYPES]?.color || bgTempPalette[500]
           }
           nodeStrokeWidth={5}
-          nodeBorderRadius={6}
         />
         <Controls className="bg-bg-800!" />
         <ControlPanel />

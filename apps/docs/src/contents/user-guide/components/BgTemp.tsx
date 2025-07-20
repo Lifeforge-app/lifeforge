@@ -30,9 +30,9 @@ function BgTemp() {
         </div>
         <img
           key={bgTemp}
-          src={`/assets/bgTemp/${COLORS.indexOf(bgTemp) + 1}.png`}
           alt=""
           className="mt-4 w-full rounded-md"
+          src={`/assets/bgTemp/${COLORS.indexOf(bgTemp) + 1}.png`}
         />
       </div>
     </div>

@@ -14,36 +14,40 @@ function GroupNodeConfigModal({
   }
 }) {
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { name, icon } = getNodeData(nodeId)
+
   const [_name, _setName] = useState(name || '')
+
   const [_icon, _setIcon] = useState(icon || '')
 
   return (
     <div className="min-w-[30vw]">
       <ModalHeader
+        icon="tabler:settings"
         namespace="core.apiBuilder"
         title="Group Configuration"
-        icon="tabler:settings"
         onClose={onClose}
       />
       <TextInput
-        namespace="core.apiBuilder"
-        name="Group Name"
-        icon="tabler:article"
-        value={_name}
-        setValue={_setName}
-        className="mb-4"
-        placeholder="Untitled Group"
         darker
+        className="mb-4"
+        icon="tabler:article"
+        name="Group Name"
+        namespace="core.apiBuilder"
+        placeholder="Untitled Group"
+        setValue={_setName}
+        value={_name}
       />
       <IconInput
-        namespace="core.apiBuilder"
-        name="Group Icon"
         icon={_icon}
+        name="Group Icon"
+        namespace="core.apiBuilder"
         setIcon={_setIcon}
       />
       <Button
         className="mt-6 w-full"
+        icon="uil:save"
         onClick={() => {
           updateNodeData(nodeId, {
             name: _name,
@@ -51,7 +55,6 @@ function GroupNodeConfigModal({
           })
           onClose()
         }}
-        icon="uil:save"
       >
         Save
       </Button>

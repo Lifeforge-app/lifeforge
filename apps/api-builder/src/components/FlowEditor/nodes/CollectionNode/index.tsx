@@ -11,6 +11,7 @@ import type { ICollectionNodeData } from './types'
 
 function CollectionNode({ id }: { id: string }) {
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { name, type, fields } = useMemo(() => {
     return getNodeData<ICollectionNodeData>(id)
   }, [getNodeData, id])
@@ -22,6 +23,9 @@ function CollectionNode({ id }: { id: string }) {
       <NodeColumn label="Collection">
         {!name ? (
           <Button
+            className="w-full p-2!"
+            icon="tabler:folder"
+            variant="secondary"
             onClick={() => {
               open(CollectionSelector, {
                 onSelect: (selectedCollection: ICollectionNodeData) => {
@@ -29,17 +33,14 @@ function CollectionNode({ id }: { id: string }) {
                 }
               })
             }}
-            icon="tabler:folder"
-            className="w-full p-2!"
-            variant="secondary"
           >
             Select
           </Button>
         ) : (
           <div className="border-bg-200 dark:border-bg-800 component-bg-lighter flex h-10 w-full items-center gap-2 rounded-md border px-3">
             <Icon
-              icon={type === 'base' ? 'tabler:folder' : 'tabler:columns-3'}
               className="text-bg-500 size-5"
+              icon={type === 'base' ? 'tabler:folder' : 'tabler:columns-3'}
             />
             <span className="truncate">{name}</span>
           </div>
@@ -65,7 +66,7 @@ function CollectionNode({ id }: { id: string }) {
           </div>
         </NodeColumn>
       )}
-      <NodeColumn nodeType="collection" handle="collection-output" />
+      <NodeColumn handle="collection-output" nodeType="collection" />
     </NodeColumnWrapper>
   )
 }

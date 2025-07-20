@@ -13,12 +13,16 @@ import type { ICollectionPickFieldsNodeData } from './types'
 
 function CollectionPickFieldsNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { fieldIds, fields } = useMemo(
     () => getNodeData<ICollectionPickFieldsNodeData>(id),
     [getNodeData, id]
   )
+
   const allNodes = useNodes()
+
   const allEdges = useEdges()
 
   const targetCollection = useMemo(() => {
@@ -34,6 +38,7 @@ function CollectionPickFieldsNode({ id }: { id: string }) {
     const collectionNodeData = getNodeData<ICollectionNodeData>(
       targetCollection.id
     )
+
     return collectionNodeData.fields ?? []
   }, [targetCollection, getNodeData])
 
@@ -44,19 +49,19 @@ function CollectionPickFieldsNode({ id }: { id: string }) {
           selectableColumns.length > 0 ? (
             <NodeListbox
               multiple
-              value={fieldIds}
               setValue={(value: string[]) =>
                 updateNodeData(id, {
                   fieldIds: value,
                   fields: selectableColumns.filter(f => value.includes(f.name))
                 })
               }
+              value={fieldIds}
             >
               {selectableColumns.map(f => (
                 <NodeListboxOption
                   key={f.name}
-                  value={f.name}
                   isSelected={fields.includes(f)}
+                  value={f.name}
                 >
                   <div className="flex-between w-full gap-3">
                     {f.name}
@@ -94,8 +99,8 @@ function CollectionPickFieldsNode({ id }: { id: string }) {
         </NodeColumn>
       )}
       <NodeColumn
-        nodeType="collectionPickFields"
         handle="collection-pick-fields-output"
+        nodeType="collectionPickFields"
       />
     </NodeColumnWrapper>
   )

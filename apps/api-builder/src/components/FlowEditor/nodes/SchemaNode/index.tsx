@@ -13,10 +13,12 @@ import type { ISchemaNodeData } from './types'
 
 function SchemaNode({ id }: { id: string }) {
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const data = useMemo(
     () => getNodeData<ISchemaNodeData>(id),
     [getNodeData, id]
   )
+
   const open = useModalStore(s => s.open)
 
   return (
@@ -31,14 +33,14 @@ function SchemaNode({ id }: { id: string }) {
       />
       <NodeColumn label="Schema Name">
         <NodeTextInput
-          value={data.name}
           setValue={newValue => {
             updateNodeData(id, { name: newValue })
           }}
+          value={data.name}
         />
       </NodeColumn>
       <FieldsColumn fields={data.fields} />
-      <NodeColumn nodeType="schema" handle="schema-output" />
+      <NodeColumn handle="schema-output" nodeType="schema" />
     </NodeColumnWrapper>
   )
 }

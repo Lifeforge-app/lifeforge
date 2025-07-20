@@ -111,4 +111,5 @@ const NODES_CATEGORIES: {
 ]
 
 export default NODE_CONFIG
+
 export { NODES_CATEGORIES }

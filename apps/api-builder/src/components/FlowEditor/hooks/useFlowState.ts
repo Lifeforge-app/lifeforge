@@ -47,8 +47,11 @@ export interface FlowStateActions {
 
 export function useFlowState(): FlowState & FlowStateActions {
   const [nodes, setNodes] = useState<Node[]>([])
+
   const [edges, setEdges] = useState<Edge[]>([])
+
   const [nodeData, setNodeData] = useState<Record<string, any>>({})
+
   const { getIntersectingNodes } = useReactFlow()
 
   const onNodesChange = useCallback(
@@ -59,6 +62,7 @@ export function useFlowState(): FlowState & FlowStateActions {
   const onNodeDrag = useCallback(
     (_event: MouseEvent, node: Node) => {
       const intersectingNodes = getIntersectingNodes(node)
+
       if (node.type === 'group') {
         setNodes(nds =>
           nds.map(n => ({
@@ -66,6 +70,7 @@ export function useFlowState(): FlowState & FlowStateActions {
             className: n.id === node.id ? '' : n.className
           }))
         )
+
         return
       }
 
@@ -95,6 +100,7 @@ export function useFlowState(): FlowState & FlowStateActions {
   const onNodeDragStop = useCallback(
     (_event: MouseEvent, node: Node) => {
       const intersectingNodes = getIntersectingNodes(node)
+
       if (node.type === 'group' || node.parentId) {
         return
       }
@@ -146,6 +152,7 @@ export function useFlowState(): FlowState & FlowStateActions {
             return n
           })
         )
+
         return
       }
     },
@@ -178,6 +185,7 @@ export function useFlowState(): FlowState & FlowStateActions {
         }
 
         setNodes(nds => nds.concat(newNode))
+
         return newNode.id
       }
 
@@ -221,6 +229,7 @@ export function useFlowState(): FlowState & FlowStateActions {
             ...data(prevData[id])
           }
         }))
+
         return
       }
 

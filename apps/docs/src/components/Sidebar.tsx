@@ -28,18 +28,18 @@ function Sidebar({
         } bg-bg-900 fixed left-0 z-50 h-[calc(100%-2rem)] w-full flex-1 overflow-y-auto transition-all sm:w-3/4 md:w-1/2 xl:w-80`}
       >
         <Scrollbars
+          autoHide
+          autoHideDuration={200}
+          autoHideTimeout={1000}
           renderThumbVertical={({ style, ...props }) => (
             <div
               {...props}
+              className="bg-bg-800 rounded-md"
               style={{
                 ...style
               }}
-              className="bg-bg-800 rounded-md"
             />
           )}
-          autoHide
-          autoHideTimeout={1000}
-          autoHideDuration={200}
         >
           <div className="space-y-6 p-12">
             {Object.entries(SECTIONS).map(([title, items]) => (
@@ -48,11 +48,6 @@ function Sidebar({
                 <div className="before:border-bg-800 relative isolate mt-4 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:border-r-[1.5px]">
                   {items.map(item => (
                     <Link
-                      onClick={() => {
-                        document.querySelector('main')?.scrollTo(0, 0)
-                        setSidebarOpen(false)
-                      }}
-                      to={`/${toLinkCase(title)}/${toLinkCase(item)}`}
                       key={`${title}-${item}`}
                       className={`block cursor-pointer px-4 py-2 transition-all ${
                         location.pathname ===
@@ -60,6 +55,11 @@ function Sidebar({
                           ? 'text-custom-500 border-custom-500 hover:border-custom-500 border-l-[2.5px] font-semibold'
                           : 'text-bg-500 hover:text-bg-100 hover:font-medium'
                       }`}
+                      to={`/${toLinkCase(title)}/${toLinkCase(item)}`}
+                      onClick={() => {
+                        document.querySelector('main')?.scrollTo(0, 0)
+                        setSidebarOpen(false)
+                      }}
                     >
                       {item}
                     </Link>

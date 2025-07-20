@@ -29,6 +29,7 @@ export default async function fetchAPI<T>(
   } = {}
 ): Promise<T> {
   const apiHost = import.meta.env.VITE_API_HOST
+
   if (!apiHost) {
     throw new Error('VITE_API_HOST environment variable is not defined')
   }
@@ -42,10 +43,12 @@ export default async function fetchAPI<T>(
     )
 
   const cookies = cookieParse(document.cookie) as CookieData
+
   const token = cookies.token ?? ''
 
   try {
     const url = new URL(endpoint, apiHost)
+
     const response = await fetch(url.toString(), {
       method,
       signal: AbortSignal.timeout(timeout),
@@ -58,6 +61,7 @@ export default async function fetchAPI<T>(
 
     if (!response.ok) {
       const data = (await response.json()) as ApiResponse<T>
+
       throw new Error(data.message || 'Failed to perform API request')
     }
 
@@ -66,9 +70,11 @@ export default async function fetchAPI<T>(
     }
 
     const data = (await response.json()) as ApiResponse<T>
+
     if (data.state === 'error') {
       throw new Error(data.message || 'API returned an error')
     }
+
     if (data.state === 'success') {
       return data.data as T
     }
@@ -79,6 +85,7 @@ export default async function fetchAPI<T>(
         ? err
         : new Error('Failed to perform API request')
     }
+
     return undefined as T
   }
 }

@@ -10,7 +10,9 @@ import type { IRouteNodeData } from '../RouteNode/types'
 
 function ControllerNode({ id }: { id: string }) {
   const connections = useNodeConnections()
+
   const { getNodeData } = useFlowStateContext()
+
   const routeInputConnections = useMemo(
     () =>
       connections.filter(
@@ -18,24 +20,27 @@ function ControllerNode({ id }: { id: string }) {
       ),
     [connections, id]
   )
+
   const routeInputSchemaData = useMemo(() => {
     if (routeInputConnections.length === 0) return null
+
     const inputSchemaNodeId = routeInputConnections[0].source
+
     return getNodeData<IRouteNodeData>(inputSchemaNodeId)
   }, [routeInputConnections, getNodeData])
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="controller" handle="route-input">
+      <NodeColumn handle="route-input" nodeType="controller">
         {routeInputSchemaData && (
           <NodeColumnValueWrapper>
             <div className="flex w-full min-w-0 items-center gap-2">
               <span
+                className="size-2 shrink-0 rounded-full"
                 style={{
                   backgroundColor:
                     METHOD_COLORS[routeInputSchemaData.method][500]
                 }}
-                className="size-2 shrink-0 rounded-full"
               />
               <span className="text-bg-500">
                 {routeInputSchemaData.method.toUpperCase()}{' '}
@@ -50,9 +55,9 @@ function ControllerNode({ id }: { id: string }) {
           </NodeColumnValueWrapper>
         )}
       </NodeColumn>
-      <NodeColumn nodeType="controller" handle="request-schema-input" />
-      <NodeColumn nodeType="controller" handle="response-schema-input" />
-      <NodeColumn nodeType="controller" handle="controller-output" />
+      <NodeColumn handle="request-schema-input" nodeType="controller" />
+      <NodeColumn handle="response-schema-input" nodeType="controller" />
+      <NodeColumn handle="controller-output" nodeType="controller" />
     </NodeColumnWrapper>
   )
 }

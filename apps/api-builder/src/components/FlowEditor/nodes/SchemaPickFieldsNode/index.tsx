@@ -15,12 +15,16 @@ import type { IPickFieldsFromSchemaNodeData } from './types'
 
 function SchemaPickFieldsNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { fieldIds, fields } = useMemo(
     () => getNodeData<IPickFieldsFromSchemaNodeData>(id),
     [getNodeData, id]
   )
+
   const connections = useNodeConnections()
+
   const inputConnections = useMemo(
     () =>
       connections.filter(
@@ -28,11 +32,15 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
       ),
     [connections, id]
   )
+
   const inputSchemaData = useMemo(() => {
     if (inputConnections.length === 0) return null
+
     const inputSchemaNodeId = inputConnections[0].source
+
     return getNodeData<ISchemaNodeData>(inputSchemaNodeId)
   }, [inputConnections, getNodeData])
+
   const inputSchemaDataJSON = useMemo(() => {
     return inputSchemaData ? JSON.stringify(inputSchemaData, null, 2) : null
   }, [inputSchemaData])
@@ -44,6 +52,7 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
 
     if (!inputSchemaData) {
       updateNodeData(id, { fieldIds: [], fields: [] })
+
       return
     }
 
@@ -64,13 +73,12 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="schemaPickFields" handle="schema-input" />
+      <NodeColumn handle="schema-input" nodeType="schemaPickFields" />
       <NodeColumn label="Field IDs">
         {inputSchemaData ? (
           inputSchemaData.fields.length > 0 ? (
             <NodeListbox
               multiple
-              value={fieldIds}
               setValue={(value: string[]) =>
                 updateNodeData(id, {
                   fieldIds: value,
@@ -79,21 +87,22 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
                   )
                 })
               }
+              value={fieldIds}
             >
               {inputSchemaData.fields.map(field => (
                 <NodeListboxOption
                   key={field.name}
-                  value={field.name}
                   isSelected={fieldIds.includes(field.name)}
+                  value={field.name}
                 >
                   <div className="flex items-center gap-2">
                     <Icon
+                      className="text-bg-500 size-4"
                       icon={
                         FIELD_TYPES.find(
                           t => t.label.toLowerCase() === field.type
                         )?.icon || 'tabler:abc'
                       }
-                      className="text-bg-500 size-4"
                     />
                     {field.name}
                   </div>
@@ -112,7 +121,7 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
         )}
       </NodeColumn>
       <FieldsColumn fields={fields} />
-      <NodeColumn nodeType="schemaPickFields" handle="schema-output" />
+      <NodeColumn handle="schema-output" nodeType="schemaPickFields" />
     </NodeColumnWrapper>
   )
 }

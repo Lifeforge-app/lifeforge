@@ -37,6 +37,7 @@ export default function PersonalizationProvider({
         ? 'dark'
         : 'light'
     }
+
     return theme
   }, [theme])
 

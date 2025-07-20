@@ -30,6 +30,7 @@ const DATA_TYPES = [
 
 function ValueNode({ id }: { id: string }) {
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { dataType, value } = useMemo(
     () => getNodeData<IValueNodeData>(id),
     [getNodeData, id]
@@ -39,31 +40,31 @@ function ValueNode({ id }: { id: string }) {
     <NodeColumnWrapper>
       <NodeColumn label="Data Type">
         <NodeListbox
-          value={dataType}
+          buttonContent={
+            <span className="text-bg-500 flex items-center gap-2 font-medium">
+              <Icon
+                className="size-4"
+                icon={
+                  DATA_TYPES.find(t => t.label.toLowerCase() === dataType)
+                    ?.icon || 'tabler:abc'
+                }
+              />
+              {dataType[0].toUpperCase() + dataType.slice(1)}
+            </span>
+          }
           setValue={newValue =>
             updateNodeData(id, {
               dataType: newValue as IValueNodeData['dataType']
             })
           }
-          buttonContent={
-            <span className="text-bg-500 flex items-center gap-2 font-medium">
-              <Icon
-                icon={
-                  DATA_TYPES.find(t => t.label.toLowerCase() === dataType)
-                    ?.icon || 'tabler:abc'
-                }
-                className="size-4"
-              />
-              {dataType[0].toUpperCase() + dataType.slice(1)}
-            </span>
-          }
+          value={dataType}
         >
           {DATA_TYPES.map(type => (
             <NodeListboxOption
               key={type.label}
               value={type.label.toLowerCase()}
             >
-              <Icon icon={type.icon} className="size-4" />
+              <Icon className="size-4" icon={type.icon} />
               {type.label}
             </NodeListboxOption>
           ))}
@@ -74,8 +75,6 @@ function ValueNode({ id }: { id: string }) {
           // TODO
         }
         <NodeTextInput
-          value={value}
-          setValue={newValue => updateNodeData(id, { value: newValue })}
           placeholder={
             dataType === 'string'
               ? 'Enter a string value'
@@ -85,9 +84,11 @@ function ValueNode({ id }: { id: string }) {
                   ? 'true or false'
                   : 'Enter array values (comma separated)'
           }
+          setValue={newValue => updateNodeData(id, { value: newValue })}
+          value={value}
         />
       </NodeColumn>
-      <NodeColumn nodeType="value" handle="value-output" />
+      <NodeColumn handle="value-output" nodeType="value" />
     </NodeColumnWrapper>
   )
 }

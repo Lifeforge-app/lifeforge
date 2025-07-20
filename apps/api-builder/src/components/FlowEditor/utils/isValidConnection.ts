@@ -22,6 +22,7 @@ const hasCycle = (
     if (next.id === sourceId) return true
     if (hasCycle(next, sourceId, nodes, edges, visited)) return true
   }
+
   return false
 }
 
@@ -55,21 +56,27 @@ export const isValidConnection = (
   if (connection.source === connection.target) return false
 
   const sourceNode = nodes.find(n => n.id === connection.source)
+
   const targetNode = nodes.find(n => n.id === connection.target)
+
   if (!sourceNode || !targetNode) return false
 
   if (hasCycle(targetNode, connection.source, nodes, edges)) return false
 
   const tgtCfg = NODE_CONFIG[targetNode.type as NODE_TYPES]
+
   const srcCfg = NODE_CONFIG[sourceNode.type as NODE_TYPES]
+
   if (!tgtCfg || !srcCfg) return false
 
   const tgtHandler = tgtCfg.handlers[
     connection.targetHandle.split('||')[0] as keyof typeof tgtCfg.handlers
   ] as IHandler
+
   const srcHandler = srcCfg.handlers[
     connection.sourceHandle.split('||')[0] as keyof typeof srcCfg.handlers
   ] as IHandler
+
   if (!tgtHandler || !srcHandler) return false
 
   if (tgtHandler.cardinality && tgtHandler.cardinality !== 'many') {
@@ -78,6 +85,7 @@ export const isValidConnection = (
         e.target === connection.target &&
         e.targetHandle === connection.targetHandle
     ).length
+
     if (existing >= tgtHandler.cardinality) return false
   }
 

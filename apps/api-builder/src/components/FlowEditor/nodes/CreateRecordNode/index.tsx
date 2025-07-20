@@ -11,8 +11,11 @@ import FieldValueColumn from './components/FieldValueColumn'
 
 function CreateRecordNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const { getNodeData } = useFlowStateContext()
+
   const nodes = useNodes()
+
   const edges = useEdges()
 
   const targetCollection = useMemo(() => {
@@ -23,20 +26,21 @@ function CreateRecordNode({ id }: { id: string }) {
 
   const targetFields = useMemo(() => {
     if (!targetCollection) return []
+
     return getNodeData<ICollectionNodeData>(targetCollection.id)?.fields ?? []
   }, [targetCollection, getNodeData])
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="createRecord" handle="collection-input" />
+      <NodeColumn handle="collection-input" nodeType="createRecord" />
       {targetCollection ? (
         targetFields.length > 0 ? (
           targetFields.map(field => (
             <NodeColumn
               key={field.name}
-              nodeType="createRecord"
-              handle="field-value-input"
               dynamicId={field.name}
+              handle="field-value-input"
+              nodeType="createRecord"
             >
               <FieldValueColumn fieldId={field.name} />
             </NodeColumn>
@@ -49,7 +53,7 @@ function CreateRecordNode({ id }: { id: string }) {
           {t('empty.noCollectionConnected')}
         </p>
       )}
-      <NodeColumn nodeType="createRecord" handle="db-operation-output" />
+      <NodeColumn handle="db-operation-output" nodeType="createRecord" />
     </NodeColumnWrapper>
   )
 }

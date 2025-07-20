@@ -11,16 +11,21 @@ import type { IRouterNodeData } from './types'
 
 function RouterNode({ id }: { id: string }) {
   const nodes = useNodes()
+
   const edges = useEdges()
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
 
   const parentRouterNode = useMemo(
     () => traverseGraph(nodes, edges, id, [{ dir: 'in', id: 'router-input' }]),
     [nodes, edges, id]
   )
+
   const parentPath = useMemo(() => {
     if (!parentRouterNode) return ''
+
     const parentData = getNodeData<IRouterNodeData>(parentRouterNode.id)
+
     return (
       parentData.parentPath +
       (parentData.path.startsWith('/') ? '' : '/') +
@@ -39,21 +44,21 @@ function RouterNode({ id }: { id: string }) {
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="router" handle="router-input">
+      <NodeColumn handle="router-input" nodeType="router">
         {parentPath && (
           <NodeColumnValueWrapper>{parentPath}</NodeColumnValueWrapper>
         )}
       </NodeColumn>
       <NodeColumn label="Router Path">
         <NodeTextInput
-          value={path}
+          placeholder="/route/path"
           setValue={(newValue: string) => {
             updateNodeData(id, { path: newValue })
           }}
-          placeholder="/route/path"
+          value={path}
         />
       </NodeColumn>
-      <NodeColumn nodeType="router" handle="router-output" />
+      <NodeColumn handle="router-output" nodeType="router" />
     </NodeColumnWrapper>
   )
 }
