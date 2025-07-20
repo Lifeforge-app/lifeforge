@@ -26,7 +26,6 @@ import Sidebar from './components/Sidebar'
 import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
-import TableView from './views/TableView'
 
 export type IWalletTransaction =
   WalletControllersSchemas.ITransactions['getAllTransactions']['response'][number]
@@ -58,8 +57,6 @@ function Transactions() {
     'Receipt'
   ])
 
-  const [view, setView] = useState<'list' | 'table'>('list')
-
   const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
     'wallet/transactions',
     ['wallet', 'transactions']
@@ -74,15 +71,8 @@ function Transactions() {
   const { hash } = useLocation()
 
   const memoizedHeaderMenu = useMemo(
-    () => (
-      <HeaderMenu
-        setView={setView}
-        setVisibleColumn={setVisibleColumn}
-        view={view}
-        visibleColumn={visibleColumn}
-      />
-    ),
-    [setView, view, visibleColumn, setVisibleColumn]
+    () => <HeaderMenu />,
+    [visibleColumn, setVisibleColumn]
   )
 
   const handleCreateTransaction = useCallback(() => {
@@ -192,7 +182,7 @@ function Transactions() {
         <Sidebar />
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <InnerHeader />
-          <SearchBar setView={setView} view={view} />
+          <SearchBar />
           <div className="mt-6 size-full">
             <QueryWrapper query={transactionsQuery}>
               {transactions => {
@@ -221,12 +211,7 @@ function Transactions() {
                   )
                 }
 
-                switch (view) {
-                  case 'table':
-                    return <TableView visibleColumn={visibleColumn} />
-                  case 'list':
-                    return <ListView />
-                }
+                return <ListView />
               }}
             </QueryWrapper>
             {(transactionsQuery.data ?? []).length > 0 && (

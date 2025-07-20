@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
+import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 interface TransactionCount {
   income: number

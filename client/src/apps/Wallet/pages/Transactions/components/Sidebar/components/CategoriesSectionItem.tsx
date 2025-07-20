@@ -1,7 +1,6 @@
 import { SidebarItem } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
-import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import CategoriesSectionItemIcon from './CategoriesSectionItemIcon'
@@ -44,7 +43,7 @@ function CategoriesSectionItem({
       setSidebarOpen(false)
     } else {
       setSelectedCategory(id)
-      setSelectedType(type as IWalletTransaction['type'])
+      setSelectedType(type)
       setSidebarOpen(false)
     }
   }, [])

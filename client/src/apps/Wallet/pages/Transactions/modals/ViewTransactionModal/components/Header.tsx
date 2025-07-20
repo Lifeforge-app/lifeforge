@@ -47,7 +47,11 @@ function Header({ transaction }: { transaction: IWalletTransaction }) {
           type={transaction.type}
         />
       </div>
-      <p className="text-center text-lg">{transaction.particulars}</p>
+      <p className="text-center text-lg">
+        {transaction.type === 'transfer'
+          ? 'Intra-Asset Transfer'
+          : transaction.particulars}
+      </p>
       <p className="text-bg-500 mt-2 text-center">
         {dayjs(transaction.date).format('dddd, D MMM YYYY')}
       </p>
