@@ -1,5 +1,6 @@
-import { Icon } from "@iconify/react";
-import Notes from "../../components/Notes";
+import { Icon } from '@iconify/react'
+
+import Notes from '../../components/Notes'
 
 ###### Configuration
 
@@ -9,7 +10,7 @@ Time to configure the system. This is the most annoying part of setting up Lifef
 
 ---
 
-<section id="database-configuration">
+<section id="database-pre-configuration">
 ## Database Pre-Configuration
 
 First of all, you'll need to configure your Pocketbase database. First, you'll have to somehow get your hands on the local IP of your server. Depending on the OS you're using, the command might differ. Once done, you may proceed to fire up the database that you have just downloaded.
@@ -21,7 +22,8 @@ cd database && ./pocketbase serve --http="192.168.x.x:8090"
 where <code>192.168.x.x</code> is the local IP of your server.
 
 <Notes>
-Small tips: place an ampersand (<code>&</code>) at the end of the command to run it in the background.
+  Small tips: place an ampersand (<code>&</code>) at the end of the command to
+  run it in the background.
 </Notes>
 
 If you're starting the database instance for the very first time (which you probably are), you'll be given a link in the terminal to create an admin account, like so:
@@ -35,7 +37,9 @@ Head to the link and fill in the details to create an admin account. Alternative
 ```
 
 <Notes>
-Make sure to set a decently strong password for your admin account, as the database will eventually be exposed to the public internet.If someone maliciously gains access to your database, they can do **A LOT** of damage.
+  Make sure to set a decently strong password for your admin account, as the
+  database will eventually be exposed to the public internet.If someone
+  maliciously gains access to your database, they can do **A LOT** of damage.
 </Notes>
 
 Once logged in, head to the settings page (the bottommost icon on the left sidebar). In the **Application** tab, there will be two input box at the top for the **Application Name** and **Application URL**. Fill in the details accordingly. The **Application URL** should be the local IP of your server for now, e.g. <code>http://192.168.x.x:8090</code>.
@@ -44,21 +48,22 @@ Once logged in, head to the settings page (the bottommost icon on the left sideb
 
 ### Mail Settings
 
-Next, head to the **settings** page again and click on the **Mail settings** tab. Change the **Sender name** to your liking (eg. Lifeforge. Support) and fill in the **Sender email** with your email address. This is the email address that will be used to send emails to users (which is you) for the purpose of one-time password (OTP), password reset, etc. Next, check the **Use SMTP mail server** checkbox and fill in the required fields. 
+Next, head to the **settings** page again and click on the **Mail settings** tab. Change the **Sender name** to your liking (eg. Lifeforge. Support) and fill in the **Sender email** with your email address. This is the email address that will be used to send emails to users (which is you) for the purpose of one-time password (OTP), password reset, etc. Next, check the **Use SMTP mail server** checkbox and fill in the required fields.
 
 [![Pocketbase Mail Settings](/assets/configurations/pocketbase-mail-settings.png)](/assets/configurations/pocketbase-mail-settings.png)
 
 I'm using Gmail for this, so I'll fill in the following fields:
 
-| Field                      | Value                                                                                                 |
-|----------------------------|-------------------------------------------------------------------------------------------------------|
-| **SMTP Server**            | smtp.gmail.com                                                                                       |
-| **SMTP Port**              | 587                                                                                                 |
-| **SMTP Username**          | \<YOUR_GMAIL_EMAIL\>                                                                                  |
-| **SMTP Password**          | \<YOUR_GMAIL_APP_PASSWORD\> |
+| Field             | Value                       |
+| ----------------- | --------------------------- |
+| **SMTP Server**   | smtp.gmail.com              |
+| **SMTP Port**     | 587                         |
+| **SMTP Username** | \<YOUR_GMAIL_EMAIL\>        |
+| **SMTP Password** | \<YOUR_GMAIL_APP_PASSWORD\> |
 
 <Notes>
-You can generate an app password for your Gmail account by following the instructions [here](https://support.google.com/accounts/answer/185833?hl=en).
+  You can generate an app password for your Gmail account by following the
+  instructions [here](https://support.google.com/accounts/answer/185833?hl=en).
 </Notes>
 
 Once done, there will be a **Send test email** button showing up at the bottom right corner. Click on it to send a test email to your email address. If you receive the email, then the mail settings are configured correctly.
@@ -66,6 +71,7 @@ Once done, there will be a **Send test email** button showing up at the bottom r
 [![Pocketbase Test Email](/assets/configurations/pocketbase-send-test-email.png)](/assets/configurations/pocketbase-send-test-email.png)
 
 And that's it! You have successfully configured your Pocketbase database. Now, let's move on to the frontend configuration.
+
 </section>
 
 <section id="backend-configuration">
@@ -74,13 +80,12 @@ And that's it! You have successfully configured your Pocketbase database. Now, l
 Next, navigate to the <code>lifeforge-api</code> directory that you cloned earlier. You'll see a file named <code>.env.example</code> in the <code>.env</code> directory. Copy this file and rename it to <code>.env.local</code>. Open it in your favourite text editor and fill in the following fields:
 
 | Field           | Value                                                                                                         |
-|-----------------|---------------------------------------------------------------------------------------------------------------|
+| --------------- | ------------------------------------------------------------------------------------------------------------- |
 | **MASTER_KEY**  | A random string that you can generate using a password generator. This key is used to encrypt sensitive data. |
-| **PB_HOST**     | The URL to your Pocketbase (Make sure to put the full URL, including the <code>http://</code> prefix) server                                                                             |
+| **PB_HOST**     | The URL to your Pocketbase (Make sure to put the full URL, including the <code>http://</code> prefix) server  |
 | **PB_EMAIL**    | The admin email of your Pocketbase server                                                                     |
 | **PB_PASSWORD** | The admin password of your Pocketbase server                                                                  |
-| **PORT**        | The port that you prefer to run your server on (A number between 1 to 65535)                                                                |
-
+| **PORT**        | The port that you prefer to run your server on (A number between 1 to 65535)                                  |
 
 ### PDF Thumbnail Generation
 
@@ -102,7 +107,7 @@ to:
 ```xml
 <policy domain="coder" rights="read|write" pattern="PDF" />
 ```
-    
+
 Then, without needing to restart the server, you should be able to generate thumbnails for PDF files.
 
 ### CORS Configuration
@@ -133,10 +138,12 @@ where <code>XXXX</code> should be the port that you have set in the <code>.env.l
 [![Lifeforge API Server](/assets/configurations/api-running.png)](/assets/configurations/api-running.png)
 
 <Notes>
-If you don't plan to develop the API server, you can run the <code>bun start</code> to start the server in production mode.
+  If you don't plan to develop the API server, you can run the{' '}
+  <code>bun start</code> to start the server in production mode.
 </Notes>
 
 And that's it! You have successfully configured your Lifeforge API server. Now, let's continue tackling the database configuration.
+
 </section>
 
 <section id="database-configuration">
@@ -174,7 +181,8 @@ Click on the **users** collection, which should be located at the top of the lis
 For now, you just have to fill in the **email**, **password**, **username** and **name** fields. Make sure to check the **Verified** checkbox as well. Once done, click on the **Create** button at the bottom right corner of the screen.
 
 <Notes>
-You may use a completely different set of credentials from the admin account that you have just created.
+  You may use a completely different set of credentials from the admin account
+  that you have just created.
 </Notes>
 
 ### Setup OAuth Providers (Optional)
@@ -183,13 +191,13 @@ Lifeforge. provides two OAuth providers for users to sign in with: Google and Gi
 
 [![Pocketbase OAuth Providers](/assets/configurations/pocketbase-oauth-providers.png)](/assets/configurations/pocketbase-oauth-providers.png)
 
-
 <Notes>
 For the Google OAuth provider, you'll need to create a project in the Google Cloud console and enable the Google OAuth API. You can find the instructions [here](https://developers.google.com/identity/protocols/oauth2).
 
 For the Github OAuth provider, you'll need to create a Github OAuth app. You can find the instructions [here](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
 
 Make sure to point the **Redirect URL** to <code>\<YOUR_FRONTEND_SERVER_URL\>/auth</code>.
+
 </Notes>
 
 </section>
@@ -197,14 +205,16 @@ Make sure to point the **Redirect URL** to <code>\<YOUR_FRONTEND_SERVER_URL\>/au
 <section id="frontend-configuration">
 ## Frontend Configuration
 
-This is the last step towards setting up your Lifeforge system. Navigate to the <code>lifeforge</code> directory that you cloned earlier. You will find a <code>.env.example</code> file in the root directory. Copy this file and rename it to <code>.env.local</code>. There is only one field that you need to fill in: 
+This is the last step towards setting up your Lifeforge system. Navigate to the <code>lifeforge</code> directory that you cloned earlier. You will find a <code>.env.example</code> file in the root directory. Copy this file and rename it to <code>.env.local</code>. There is only one field that you need to fill in:
 
-| Field           | Value                                                                                                         |
-|-----------------|---------------------------------------------------------------------------------------------------------------|
-| **VITE_API_HOST**  | The URL to your Lifeforge API server. This should be the URL that your API server is running on. (Make sure to put full URL, including the <code>http(s)://</code>prefix) |
+| Field             | Value                                                                                                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **VITE_API_HOST** | The URL to your Lifeforge API server. This should be the URL that your API server is running on. (Make sure to put full URL, including the <code>http(s)://</code>prefix) |
 
 <Notes>
-For the Google API key, you might have to search up how to generate one from the Google Cloud console. It won't be covered in this documentation. Make sure to enable the Google Maps and Google Fonts API for the key.
+  For the Google API key, you might have to search up how to generate one from
+  the Google Cloud console. It won't be covered in this documentation. Make sure
+  to enable the Google Maps and Google Fonts API for the key.
 </Notes>
 
 Finally, you can start the dev server by running the following command:
@@ -214,7 +224,6 @@ bun dev
 ```
 
 </section>
-
 
 ---
 

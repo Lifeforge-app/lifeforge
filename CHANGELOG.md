@@ -3,44 +3,53 @@
 ## 📌 **dev 25w30 (7/21/2025 - 7/28/2025)**
 
 ### 🎨 **UI & Components**
-- **Enhancements**: 
+
+- **Enhancements**:
   - `LocationInput` will now display a loading state when fetching the API key availability
 
 ## 📌 **dev 25w29 (7/14/2025 - 7/20/2025)**
 
 ### 🎸 **Guitar Tabs**
+
 - Migrated file uploading mechanism to use the task pool system for better performance
 - Enhanced web scraping logic with improved edge case handling
 - Added missing internationalization support
 
 ### 💡 **Idea Box**
+
 - Fixed frontend synchronization issue where idea entries weren't properly updated after user actions
 
 ### 📚 **Books Library**
+
 - Resolved book update functionality due to frontend and backend schema mismatches
 
 ### 📅 **Calendar**
+
 - Added automatic location data retrieval from Google Places API when parsing event details from images
 
 ### 💰 **Wallet**
+
 - Introduced new "Spending Heatmap" subpage for visualizing transaction patterns
 
 ### 🌐 **Localization Manager**
+
 - Fixed malformed entry creation in the root layer
 
 ### 🎨 **UI & Components**
+
 - **Migration**: Fully migrated to the new `lifeforge-ui` package under monorepo structure
   - Deprecated legacy codebase on GitHub
   - Removed `@lifeforge/ui` package from npm registry
-- **Enhancement & Fixes**: 
+- **Enhancement & Fixes**:
   - Corrected toast progress bar color application
   - Improved the callback logic for `DeleteConfirmationModal`
 - **Type Safety**: Enhanced `FormModal` component with automatic field type determination based on field value types
-- **New Components**: 
+- **New Components**:
   - Added `NumberInput` component
   - Added `FormNumberInput` component for form number input fields
 
 ### 🏗️ **Code Architecture**
+
 - **Monorepo Migration**: Complete transition to monorepo structure using `bun` as package manager
 - **Type Sharing**: Generated TypeScript interfaces now reside in `shared` package for frontend/backend consistency
 - **Shared Resources**:
@@ -53,6 +62,7 @@
   - Enhanced ESLint rules for better code quality
 
 ### 🔧 **API**
+
 - **Migration**: Moved API codebase to monorepo structure and deprecated legacy repository
 - **Documentation**: Added comprehensive JSDoc documentation for `forgeController`
 - **Type Safety**: Enhanced `existenceCheck` function with schema-based parameter validation
@@ -61,6 +71,7 @@
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
 
 ### 🔧 **API**
+
 - **File Organization**: Migrated all `<module>_interface.ts` files to `schema.ts` for better structure
 - **Schema Generation**: Automated schema generation from database instead of hardcoded definitions
 - **Package Scripts**: Added `schema:generate` command to `package.json`
@@ -69,6 +80,7 @@
 ## 📌 **dev 25w27 (6/30/2025 - 7/7/2025)**
 
 ### 📚 **Books Library**
+
 - **Error Handling**: Fixed API logic where book addition failures weren't properly handled
 - **Terminology**: Renamed `category` to `collection` for better clarity
 - **UI Synchronization**: Resolved sidebar content updates when items are deleted
@@ -77,9 +89,11 @@
 - **Reading Status**: Users can now mark books as read or unread
 
 ### 🎸 **Guitar Tabs**
+
 - **Task Pool Integration**: Migrated download process to task pool mechanism
 
 ### 💰 **Wallet**
+
 - **Transaction Details**: Added detailed transaction view accessible by clicking entries
 - **Location Features**:
   - Transaction coordinates now recorded and displayed in a heatmap
@@ -89,13 +103,16 @@
   - Replaced receipt thumbnails with modal-opening buttons
 
 ### 💾 **Backups**
+
 - **New Module**: Complete backup management system within the application
 - **Independence**: No longer requires PocketBase admin UI for backup operations
 
 ### 🔧 **API**
+
 - **Task Pool**: Implemented SocketIO-based task pool for long-running operations (e.g., Libgen downloads)
 
 ### 🎨 **UI & Components**
+
 - **Preloader**: Added inline styling for Tailwind-independent loading states
 - **Modal System**: Complete `ModalStore` overhaul with direct component passing and enhanced type safety
 - **Input Focus**: Fixed ComboBox input focus behavior
@@ -105,25 +122,31 @@
 ## 📌 **dev 25w26 (6/23/2025 - 6/30/2025)**
 
 ### 🎬 **Movies**
+
 - **Organization**: Added tab selector to separate watched and unwatched movies
 - **Data Sync**: Fixed query data updates when adding movies to library
 - **Sorting**: Enhanced movie sorting algorithms
 
 ### 💰 **Wallet**
+
 - **Visualization**: Added assets balance chart modal for timeline analysis
 
 ### 🔧 **API**
+
 - **Architecture**: Major refactoring to implement chained controller architecture
 
 ## 📌 **dev 25w25 (6/16/2025 - 6/23/2025)**
 
 ### 📅 **Calendar**
+
 - **UI Enhancement**: Added missing calendar sidebar divider
 
 ### 🎬 **Movies**
+
 - **Bug Fix**: Resolved date picker crashes in ticket entry modification
 
 ### 🎨 **UI & Components**
+
 - **File Input**: Added file icons to input components and modals
 - **Color Palette**: Fixed scrolling issues in TailwindCSS color palette
 - **Improvements**: Minor enhancements to file input components
@@ -131,94 +154,117 @@
 ## 📌 **dev 25w24 (6/9/2025 - 6/16/2025)**
 
 ### 🛍️ **Wishlist**
+
 - **Search**: Added search bar functionality
 
 ### 🎨 **Personalization**
+
 - **Dynamic Favicon**: Favicon now generates based on theme color
 - **Performance**: Added `derivedTheme` attribute to prevent recalculation overhead
 
 ### 🔐 **Authentication**
+
 - **2FA Fix**: Resolved resend OTP button issue on page refresh
 
 ### 🏗️ **Code Architecture**
+
 - **Route Control**: Added `forceDisable` attribute to `Route` interface
 - **Stylesheet Organization**: Created centralized `style/index.css`
 - **Performance**: Reduced `useDebounce` timeout from 500ms to 300ms
 
 ### 🎨 **UI & Components**
+
 - **FormModal**: Fixed default API logic firing with custom `onSubmit`
 
 ### 🌐 **Localization**
+
 - **Sync**: Theme and language config synchronized with main system
 - **UI Migration**: Updated modals to use new `lifeforge-ui` package
 - **Loading**: Removed authentication loading screen
 
 ### 🔍 **API Explorer**
+
 - **Complete Rewrite**: New separate app with SSO access
 - **Sync**: Theme and language synchronized with main system
 
 ## 📌 **dev 25w23 (6/2/2025 - 6/9/2025)**
 
 ### 📅 **Calendar**
+
 - **Event Organization**: Added calendar grouping (Work, Personal, etc.) in sidebar
 - **Mobile Support**: Introduced sidebar functionality for mobile view
 - **Visual Polish**: Made calendar borders more subtle
 - **UI Improvements**: Various minor enhancements
 
 ### 💡 **Idea Box**
+
 - **Performance**: Container entry counts now calculated dynamically using PocketBase views
 
 ### ⏱️ **Codetime**
+
 - **VS Code Integration**: Fixed time display issues in VS Code status bar
 
 ### 🎸 **Guitar Tabs**
+
 - **UI Cleanup**: Removed non-functional "Download All" button post-S3 migration
 
 ### 🎵 **Music**
+
 - **Feature Removal**: Temporarily removed NAS import feature (replacement planned)
 
 ### 🎬 **Movies**
+
 - **UI Fix**: Corrected movie ticket modal layout
 
 ### ✅ **Todo List**
+
 - **Feature Removal**: Removed subtask feature (better implementation planned)
 
 ### 📊 **Server Status**
+
 - **Module Deprecation**: Removed due to system-specific nature (replacement planned)
 
 ### 🎨 **Personalization**
+
 - **Font Support**: Fixed font family application for names containing numbers
 
 ### 🔧 **API**
+
 - **Validation**: Major refactoring introducing Zod validation library
 - **Middleware**: Replaced inconsistent middlewares with Zod validation
-- **Endpoints**: 
+- **Endpoints**:
   - Removed `/quotes` endpoint
   - Added `/cors-anywhere` for cross-origin requests
 
 ### 📊 **Dashboard**
+
 - **Quote Widget**: Now uses `/cors-anywhere` endpoint for external quote fetching
 
 ### 🏗️ **Code Quality**
+
 - **Bug Fixes**: Various minor fixes throughout the codebase
 
 ## 📌 **dev 25w22 (5/26/2025 - 6/2/2025)**
 
 ### 💰 **Wallet**
+
 - **Calculations**: Fixed percentage calculation rounding issues in statements
 - **Performance**: Utilized PocketBase views with SQL aggregation for asset balance derivation
 
 ## 📌 **dev 25w21 (5/19/2025 - 5/26/2025)**
 
 ### ⚙️ **Account Settings**
+
 - **Naming**: Renamed folder from `Account` to `Account Settings` for clarity
 - **UI Fix**: Resolved input box overflow in modification modal
 
 ### ✅ **Todo List**
+
 - **Dashboard**: Fixed task tag display issues in dashboard widget
 
 ### 💡 **Idea Box**
-- **UI Polish**: 
+
+- **UI Polish**:
   - Fixed sidebar blur when create idea FAB is clicked
   - Added entry type display with improved hamburger menu positioning
   - Fixed idea type selection menu width in mobile view
@@ -226,25 +272,30 @@
 - **Markdown Support**: Text entries now render markdown properly
 
 ### 💰 **Wallet**
+
 - **UI Refinement**: Reduced border radius for mini calendar date items
 
 ### 📅 **Calendar**
-- **Navigation**: 
+
+- **Navigation**:
   - Moved display mode selector for better responsiveness
   - Added quick "current date" navigation button
 - **Design**: Various visual improvements
 
 ### ⏱️ **Codetime**
+
 - **Dashboard**: Removed chart type selector (bar chart is superior to line chart)
 
 ### 🏗️ **Code Architecture**
-- **Dynamic Routing**: 
+
+- **Dynamic Routing**:
   - Module route configs now stored in separate files per module
   - Implemented dynamic route loading mechanism
   - Renamed `layout` folder to `routes` for clarity
 - **Documentation**: Updated `README.md` with latest screenshots and information
 
 ### 🎨 **UI & Components**
+
 - **Loading States**: Added descriptive loading messages
 - **Preloader**: Restored preloader for module preparation
 - **Date Input**: Migrated to `react-datepicker` from `react-date-picker`
@@ -256,43 +307,52 @@
 ## 📌 **dev 25w20 (5/12/2025 - 5/19/2025)**
 
 ### 💰 **Wallet**
-- **Transaction Management**: 
+
+- **Transaction Management**:
   - Fixed transaction order updates when dates are modified
   - Resolved critical dashboard loading crash
 
 ### ✅ **Todo List**
+
 - **Task Creation**: Fixed failure when priority is not selected
-- **UI Improvements**: 
+- **UI Improvements**:
   - Fixed modification drawer not closing after task deletion
   - Renamed `ModifyTaskWindow` to `ModifyTaskDrawer` for clarity
 
 ### 💡 **Idea Box**
+
 - **Data Sync**: Fixed tag count updates when navigating between folders
 
 ### 📅 **Calendar**
+
 - **Dashboard Integration**: Added event detail viewing in dashboard widget
-- **UI Fixes**: 
+- **UI Fixes**:
   - Resolved z-index issues with event tooltips covering sidebar
   - Fixed event item updates when details are changed
 
 ### 🏗️ **Code Architecture**
+
 - **Navigation**: Replaced `window.location.href` with `useNavigate` to prevent page reloads
 
 ### 🎨 **UI & Components**
+
 - **Input Focus**: Fixed search field focus triggering on side action button clicks
 - **Code Cleanup**: Removed suspicious debug statements
 
 ## 📌 **dev 25w19 (5/5/2025 - 5/12/2025)**
 
 ### 🏗️ **Code Architecture**
+
 - **Portal System**: Created universal portal component for modals and pop-ups outside main app tree
 - **Migration**: Migrated all modals to new universal portal system
 
 ### 🔧 **API**
+
 - **Bug Fixes**: Resolved various critical issues
 
 ### 🎨 **UI & Components**
-- **Performance**: 
+
+- **Performance**:
   - Fixed critical `useCallback` related bugs
   - Massive `FormModal` optimization by eliminating unnecessary re-renders
 - **Button Components**: Enhanced styling for different button states
@@ -300,160 +360,194 @@
 - **Text Selection**: Text now highlights in theme color when selected
 
 ### 👤 **Account**
+
 - **Avatar Management**: Fixed remove button visibility when no avatar exists
 
 ### ✅ **Todo List**
+
 - **Visual Feedback**: Completed tasks now struck through in mini calendar
 
 ## 📌 **dev 25w18 (4/28/2025 - 5/4/2025)**
 
 ### 🎨 **UI & Components**
+
 - **Development Tools**: Reintroduced Storybook for debugging and testing
-- **Bug Fixes**: 
+- **Bug Fixes**:
   - Fixed sidebar hamburger menu icon state restoration
   - Resolved critical TailwindCSS color palette issues
 - **Modal System**: Moved modals to external portal at document body
 
 ### 📅 **Calendar**
+
 - **Code Quality**: Major code refactoring
 - **Recurring Events**: Added ability to exclude specific dates from recurring events
 
 ## 📌 **dev 25w17 (4/20/2025 - 4/27/2025)**
 
 ### ⏱️ **Codetime**
+
 - **VS Code Extension**: Published custom extension for system integration and time tracking
 
 ## 📌 **dev 25w16 (4/13/2025 - 4/19/2025)**
 
 ### 📅 **Calendar**
+
 - **Recurring Events**: Now properly displayed in calendar interface
 
 ### 📚 **Books Library**
+
 - **Libgen Integration**: Added online/offline status indicator for host availability
 
 ### ⏱️ **Codetime**
+
 - **GitHub Integration**: Added API endpoint for generating summary images for GitHub profiles
 
 ### 🔐 **Authentication**
+
 - **Cookie Management**: Renamed `token` to `session` for better clarity
 
 ### 🏗️ **Code Architecture**
+
 - **Performance**: Optimized by removing unnecessary re-renders
 
 ### 🔧 **API**
+
 - **Configuration**: Moved Puppeteer executable path to `.env` for better configurability
 
 ### 💰 **Wallet**
+
 - **Date Range**: Fixed sidebar date range selector functionality
 
 ## 📌 **dev 25w15 (4/6/2025 - 4/12/2025)**
 
 ### 🎨 **UI & Components**
+
 - **FormModal**: Added support for additional custom fields and `CheckboxInput`
 
 ### 📊 **Server Status**
+
 - **Dashboard**: Added empty state screen for storage status widget
 
 ### 📅 **Calendar**
-- **UI Enhancements**: 
+
+- **UI Enhancements**:
   - Improved overall calendar component design
   - Added event detail popup on mini calendar date hover
   - Added quick access button to calendar sidebar
 - **Recurring Events**: Created form component for recurring time selection
 
 ### ✅ **Todo List**
+
 - **Calendar Integration**: Tasks with due dates automatically added to calendar
 
 ### 🎬 **Movies**
-- **Calendar Integration**: 
+
+- **Calendar Integration**:
   - Removed manual "Add to Calendar" button
   - Movies with tickets automatically added to calendar
 
 ## 📌 **dev 25w14 (3/30/2025 - 4/5/2025)**
 
 ### 🎨 **Personalization**
+
 - **API Integration**: Fixed Pixabay API tooltip display when key already exists
 
 ### 🗃️ **Moment Vault**
+
 - **Mobile Fix**: Resolved photo display issue when pressing "Add" button on mobile
 
 ### 📅 **Calendar**
-- **User Experience**: 
+
+- **User Experience**:
   - Added event info tooltips on calendar clicks
   - Enhanced event creation with `Location`, `Reference Link`, and `Description` fields
   - Further improved calendar styling
 - **AI Integration**: Added OpenAI GPT-4o image parsing for event details
 
 ### 🎸 **Guitar Tabs**
+
 - **Performance**: Implemented on-demand audio file loading
 
 ### ✅ **Todo List**
-- **Flexibility**: 
+
+- **Flexibility**:
   - Added time inclusion toggle for task due dates
   - Fixed database recording issues in task creation/modification
 
 ### 🎬 **Movies**
+
 - **Calendar Integration**: Added ticket-to-calendar button
 
 ### 🎨 **UI & Components**
+
 - **Text Input**: Fixed line break application in text area
 - **ListBox**: Changed icon from chevron down to chevron up-down
 - **FormModal**: Added `TextAreaInput` component
 
 ### 🔧 **API**
+
 - **Database**: Utilized PocketBase's `View` collection for entry tracking via SQL
 
 ## 📌 **dev 25w13 (3/23/2025 - 3/29/2025)**
 
 ### 🎨 **UI & Components**
+
 - **Image Generation**: Added AI text-to-image tab in image picker modal
 - **Delete Confirmation**: Added text input confirmation for delete modals
 
 ### 🏗️ **Code Architecture**
+
 - **Bug Fixes**: Resolved duration formatting issues
 
 ### 🗃️ **Moment Vault**
+
 - **Entry Types**: Added support for image entries
 - **Text Wrapping**: Fixed text entry display issues
 
 ### 🎬 **Movies**
+
 - **API**: Fixed various endpoint bugs
 
 ### 📅 **Calendar**
+
 - **Performance**: Improved rendering optimization
-- **Event Management**: 
+- **Event Management**:
   - Start/end time fields now include both date and time
   - Fixed event fetching when date/view mode changes
 
 ### 💰 **Wallet**
+
 - **Mini Calendar**: Fixed date formatting in sidebar
 
 ### ✅ **Todo List**
+
 - **Performance**: Resolved slow data loading issues
 
 ## 📌 **dev 25w12 (3/16/2025 - 3/22/2025)**
 
 ### 🔧 **API**
-- **Architecture**: 
+
+- **Architecture**:
   - Moved type interfaces to respective module directories
   - Continued Controller + Service refactoring
   - Improved error handling logic
   - Restructured `src` folder to `modules` and `core` only
 - **Middleware**: Replaced `validationMiddleware` with `asyncWrapper` for comprehensive error handling
 - **Error Management**: Moved all try-catch blocks to `asyncWrapper`
-- **Organization**: 
+- **Organization**:
   - Moved locale files to respective module directories
   - Relocated `.env` files to `env` directory
 - **Build System**: Migrated bundler from `pkgroll` to `bun`
 - **Schema Management**: Added automatic `schema.json` scanning and database import script
 
 ### 🏗️ **Code Architecture**
+
 - **State Management**: Replaced all `useReducer` with `useState`
 - **Routing**: Reconstructed mechanism, combining configurations into single file
 - **Dependencies**: Pruned unused dependencies and removed empty modules
 - **Entry Point**: Renamed from `main.tsx` to `index.tsx`
 - **Frontend**: Removed PocketBase dependency
-- **Data Fetching**: 
+- **Data Fetching**:
   - Continued `FormModal` migration
   - Completed `@tanstack/query` integration
   - Migrated from `APIFallbackComponent` to `QueryWrapper`
@@ -463,37 +557,46 @@
 - **Plugin Management**: Removed problematic `eslint-plugin-import`
 
 ### 💰 **Wallet**
+
 - **Mini Calendar**: Fixed date range search parameter setting
 
 ### ✅ **Todo List**
+
 - **Bug Fixes**: Resolved issues from recent code refactor
 
 ### 📅 **Calendar**
+
 - **Date Parsing**: Fixed mini calendar date parsing issues
 
 ### 🎬 **New Modules**
+
 - **YouTube Summarizer**: Created and completed full module
 - **Currency Converter**: Created and completed full module
 
 ### 📚 **Books Library**
+
 - **Barcode Scanning**: Added barcode scan button beside search bar
 
 ### 🎸 **Guitar Tabs**
+
 - **Random Loading**: Added random tab loading button beside search bar
 - **Metadata**: Fixed tab metadata update issues after editing
 
 ### 🎨 **Personalization**
+
 - **Localization**: Added missing locales for background image adjustment modal
 
 ### 🗃️ **Moment Vault**
+
 - **Entry Types**: Added support for text entries
 
 ### 🎨 **UI & Components**
+
 - **Deployment**: Created GitHub workflow for automatic deployment and versioning
 - **Mobile**: Fixed sidebar subsection collapse on mobile
 - **ESLint**: Removed problematic `eslint-plugin-import` and fixed all errors
 - **Development**: Added numerous `package.json` commands
-- **Components**: 
+- **Components**:
   - Created reusable `TextAreaInput` with fixes
   - Removed `APIFallbackComponent`
   - Added `formats` prop to `QRCodeScanner`
@@ -502,6 +605,7 @@
 - **Storybook**: Removed due to customization limitations
 
 ### 📖 **Documentation**
+
 - **Installation**: Updated guide to align with latest codebase structure
 - **User Guides**: Added brief system guides
 
@@ -510,18 +614,22 @@
 ## 📌 **dev 25w11 (3/9/2025 - 3/15/2025)**
 
 ### 📖 **Documentation**
+
 - **Navigation**: Fixed section detection and highlighting inconsistencies in right navigation bar
 - **Installation**: Updated guide to align with latest codebase structure
 
 ### 💡 **Idea Box**
+
 - **Text Handling**: Fixed overflow issues with long words
 - **Link Management**: Resolved link content and OG data update bugs
 
 ### 📝 **Change Log**
+
 - **Migration**: Moved all entries from local database to public GitHub repository
 - **AI Assistance**: Used ChatGPT to refine entries from 25w01 onwards
 
 ### 🚇 **Railway Map**
+
 - **New Module**: Complete railway mapping system
 - **Visualization**: Integrated d3.js for dynamic route visualization
 - **Mapping**: Integrated Leaflet.js for interactive Earth map of MRT lines/stations
@@ -529,27 +637,32 @@
 - **UX**: Enhanced interactions with smooth navigation animations
 
 ### 📅 **Calendar**
+
 - **Performance**: Data now fetched based on selected date range instead of everything
 
 ### 🔐 **Authentication**
+
 - **2FA**: Added external authenticator app support as toggleable security
 - **Fallback**: Email OTP option for users without authenticator apps
 - **Error Handling**: Improved logic throughout
 
 ### 🎨 **Personalization**
+
 - **Font Selector**: Availability now depends on `gcloud` key presence in API vault
 
 ### 🌐 **Localization**
+
 - **Conditional UI**: Sign-in button only shows if `VITE_LOCALIZATION_MANAGER_URL` exists
 
 ### 🏗️ **Code Architecture**
+
 - **Utilities**: Replaced custom functions with optimized Node.js modules
-- **Organization**: 
+- **Organization**:
   - Moved non-module files from `modules` to `core`
   - Reorganized providers/interfaces/constants to respective modules
   - Eliminated redundant constant files
 - **Naming**: Standardized `useXXXContext` to `useXXX`
-- **Theme Management**: 
+- **Theme Management**:
   - Centralized theme states in `usePersonalization`
   - Renamed `useThemeColors` to `useComponentsBg`
 - **Configuration**: Migrated `VITE_GOOGLE_API_KEY` to API key vault
@@ -558,8 +671,9 @@
 - **Component Architecture**: Refactored components into independent `lifeforge-ui` package
 
 ### 🎨 **UI & Components**
+
 - **Component Library**: Abstracted reusable components to `lifeforge-ui`
-- **Button Variants**: 
+- **Button Variants**:
   - Renamed `no-bg` to `plain`
   - Added `tertiary` variant
   - Improved overall styling
@@ -570,6 +684,7 @@
 - **Sidebar**: Main items with subsections open menus without navigation
 
 ### 🔧 **API**
+
 - **File Management**: Renamed `uploads` to `medium`
 - **Route Organization**: Split `/users` subroutes into multiple files
 - **Architecture**: Continued Controller + Service refactoring
@@ -579,39 +694,47 @@
 ## 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**
 
 ### 💡 **Idea Box**
+
 - **Drag & Drop**: Prevented folders from being dropped into themselves
-- **UI Fixes**: 
+- **UI Fixes**:
   - Fixed intermittent tag icon display issues
   - Improved filtering to show nested folder contents when filtering by tags
   - Made titles optional for link-type ideas
 
 ### 🗃️ **Moment Vault**
+
 - **Audio Recording**: Fixed occasional capture issues
 
 ### 💰 **Wallet**
+
 - **Bug Fixes**: Resolved asset selection errors when switching transaction types
 - **Heatmap**: Users can toggle displayed transaction types in calendar heatmap
 - **Filtering**: Category selections now dynamically filter based on transaction type
 
 ### 🏗️ **Code Architecture**
+
 - **API Functions**: Refactored `APIRequest` to `fetchAPI` for clarity
 - **Input Focus**: Action buttons in text inputs now auto-focus the field
 - **QR Scanner**: Implemented reusable QR Code Scanner component for Form Modal
 
 ### ⏱️ **Codetime**
+
 - **Analytics**: Introduced time charts for project and language usage tracking
 
 ### 🔑 **API Keys**
+
 - **Organization**: Moved module from "Settings" to "Confidential" section
 - **Usability**: Added copy button for API keys
 
 ### 🎬 **Movies**
+
 - **New Module**: Complete movie management system
 - **TMDB Integration**: Search and import modal for movie data
 - **CRUD Operations**: Full create, read, update, delete functionality
 - **Ticket Management**: Ability to attach ticket data to movie entries
 
 ### 🌐 **Localization**
+
 - **Architecture**: Complete restructure to align with latest locale folder system
 
 ---
@@ -619,20 +742,25 @@
 ## 📌 **dev 25w08 (2/16/2025 - 2/22/2025)**
 
 ### 🎸 **Guitar Tabs**
+
 - **UI Fix**: Corrected "Sort By" selector text to reflect actual selection
 
 ### 🎨 **Personalization**
+
 - **Theme Conflict**: Resolved DaisyUI overwriting neutral gray variant
 
 ### 🗃️ **Moment Vault**
+
 - **New Module**: Life event recording system
 - **Audio Features**: Record life events as audio with optional OpenAI Whisper transcription
 
 ### 🔧 **API**
+
 - **Architecture**: Started migration to `controller + service` pattern
 - **Testing**: Scrapped initial test codebase, began rewriting
 
 ### 🏗️ **Code Architecture**
+
 - **React Router**: Upgraded to version 7 for improved performance
 
 ---
@@ -640,6 +768,7 @@
 ## 📌 **dev 25w07 (2/9/2025 - 2/15/2025)**
 
 ### 🏗️ **Code Architecture**
+
 - **UI Fix**: Refactored OTP screen, fixed dark mode color inconsistency
 
 ---
@@ -647,9 +776,11 @@
 ## 📌 **dev 25w06 (2/2/2025 - 2/8/2025)**
 
 ### 🏗️ **Code Architecture**
+
 - **Color System**: Rewrote TailwindCSS color palette to correctly convert `oklch` to `RGB`
 
 ### 📧 **Mail Inbox**
+
 - **Bulk Operations**: Implemented bulk selection and deletion of mail entries
 
 ---
@@ -657,6 +788,7 @@
 ## 📌 **dev 25w05 (1/26/2025 - 2/1/2025)**
 
 ### 🏗️ **Code Architecture**
+
 - **Framework Upgrade**: Upgraded TailwindCSS to version 4.0
 - **Performance**: Memoized all context provider values
 - **Component Optimization**: Added `react-compiler` for UI performance
@@ -668,25 +800,30 @@
 - **ESLint**: Added plugin for alphabetical component prop sorting
 
 ### 📧 **Mail Inbox**
+
 - **Complete Overhaul**: Redesigned UI for better user experience
-- **Gmail Integration**: 
+- **Gmail Integration**:
   - Synchronized with Gmail, storing emails in custom database
   - Real-time email synchronization with automatic importing
 - **Navigation**: Added sidebar, search bar, and pagination
 - **Viewing**: Users can view mail content directly in UI
 
 ### 🎨 **UI & Components**
+
 - **Theme Consistency**: Improved light mode across components
 - **Navigation**: Fixed icon flashing between routes
 
 ### 👗 **Virtual Wardrobe**
+
 - **Session Cart**: Temporary storage for clothing sets before checkout
 
 ### 🌐 **Localization**
+
 - **Structure**: Revamped folder structure, segmented translations into namespaces
 - **Completion**: Finished translations for previously untranslated sections
 
 ### 📱 **Module Removal**
+
 - **Spotify**: Completely removed from system
 
 ---
@@ -694,9 +831,11 @@
 ## 📌 **dev 25w04 (1/19/2025 - 1/25/2025)**
 
 ### 🎵 **Music**
+
 - **Hotkeys**: Added spacebar support for play/pause functionality
 
 ### 🏗️ **Code Architecture**
+
 - **Dependencies**: Upgraded all project dependencies to latest versions
 - **ESLint**: Migrated to latest release for improved linting
 - **Structure**: Large-scale folder refactoring, organized components into structured directory
@@ -705,12 +844,15 @@
 - **Organization**: Moved routing and entry files into `core` directory
 
 ### 🔐 **Passwords**
+
 - **State Management**: Implemented context providers to reduce redundant code
 
 ### 📊 **Server Status**
+
 - **Code Quality**: Extensive refactor for efficiency and maintainability
 
 ### 👗 **Virtual Wardrobe**
+
 - **New Module**: Complete clothing item management system
 - **CRUD Operations**: Full functionality for wardrobe entries
 - **Filtering**: Added sidebar with filtering options
@@ -739,32 +881,39 @@
 ## 📌 **dev 25w02 (1/5/2025 - 1/11/2025)**
 
 ### 💰 **Wallet**
+
 - Fixed issue where financial reports displayed incorrect calculations across multiple years
 
 ### 🎨 **UI & Components**
+
 - Reduced header icon size for better adaptability on small screens
 - Reorganized module categories for a more intuitive user experience
 - Fixed modal layering issues in the Pixabay search filter within the image picker modal
 - Addressed minor light mode inconsistencies
 
 ### 🛍️ **Wishlist**
+
 - Improved responsiveness for a smoother mobile experience
 
 ### 🔧 **Module Tools**
+
 - Completely revamped the utility tool system
 - Added help screen to guide users through features
 - Implemented multilingual support
 - Introduced ability to list and delete modules dynamically
 
 ### 🏗️ **Code Architecture**
+
 - Updated `README.md` with latest information and screenshots
 - Replaced `tsx` runtime with `bun run` for improved build performance
 - Modified build options to split Node modules into chunks during production builds for better performance
 
 ### 🔧 **API**
+
 - Integrated OpenAI's GPT-4o-mini model and developed `fetchOpenAI` utility function
 
 ### 💲 **OpenAI API Pricing**
+
 - **New Module**: Created module allowing users to view OpenAI API pricing directly within the system
 
 ---
@@ -774,6 +923,7 @@ Of course, here is the `dev 25w01` change log entry rewritten to match the style
 ## 📌 **dev 25w01 (12/29/2024 - 1/4/2025)**
 
 ### 🏗️ **Code Architecture**
+
 - 🎉 Happy New Year! 🎉
 - Optimized stylesheets by removing excessive and unused TailwindCSS classes.
 - Enhanced type declarations for UI components for better TypeScript support.
@@ -790,9 +940,11 @@ Of course, here is the `dev 25w01` change log entry rewritten to match the style
 - Refactored sidebar logic and enhanced type declarations for improved maintainability.
 
 ### 📊 **Dashboard**
+
 - Switched the previous quote API to AI-generated quotes for dynamic content.
 
 ### 💡 **Idea Box**
+
 - Resolved an issue with OG image aspect ratio inconsistencies.
 - Implemented a tagging system, enabling users to categorize ideas with custom tags.
 - Added search functionality within idea containers and folders.
@@ -802,24 +954,30 @@ Of course, here is the `dev 25w01` change log entry rewritten to match the style
 - Fixed an issue where moving ideas out of folders was not properly reflected in the UI.
 
 ### 🎨 **UI & Components**
+
 - Continued improvements to theme consistency across dark and light modes.
 - Fixed multiple responsive UI issues.
 - Password input fields are now hidden by default and will only reveal content when users press and hold the eye button.
 
 ### 💰 **Wallet**
+
 - Corrected text inconsistencies in sidebar buttons.
 - Increased the resolution of receipt images extracted from PDF files for better accuracy.
 
 ### 🔐 **Authentication**
+
 - Switched to using PocketBase’s built-in OTP feature, replacing the previous OTP implementation.
 
 ### 🧩 **Sudoku**
+
 - **New Module**: Introduced a new module allowing users to generate and print Sudoku boards.
 
 ### 📓 **Journal**
+
 - Fixed image display and upload bugs.
 
 ### 👤 **Account**
+
 - Addressed UI responsiveness issues.
 
 ---

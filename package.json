@@ -2,8 +2,8 @@
   "name": "lifeforge-monorepo",
   "private": true,
   "description": "A comprehensive self-hosted all-in-one personal management system",
-  "version": "25w29.0",
-  "license": "MIT",
+  "version": "0.0.0",
+  "license": "CC BY-NC-SA 4.0",
   "author": "LifeForge (https://github.com/Lifeforge-app)",
   "homepage": "https://docs.lifeforge.melvinchia.dev",
   "repository": {
@@ -21,7 +21,7 @@
     "forge": "bun run scripts/forge.ts",
     "lint:client": "cd client && bun run lint",
     "start:server": "cd server && bun run start",
-    "postinstall": "bun run build:shared && bun run build:ui",
+    "postinstall": "bun forge build shared && bun forge build ui",
     "schema:generate:collections": "bun run ./scripts/generateCollectionsSchemas.ts"
   },
   "keywords": [
