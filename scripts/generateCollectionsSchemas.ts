@@ -80,18 +80,7 @@ for (const module of allModules) {
   const moduleName = _.camelCase(module.name)
   const collections = modulesMap[module.name]
 
-  let finalString = `/**
- * This file is auto-generated. DO NOT EDIT IT MANUALLY.
- * You may regenerate it by running \`bun run schema:generate:collection\` in the root directory.
- * If you want to add custom schemas, you will find a dedicated space at the end of this file.
- * Generated for module: ${moduleName}
- * Generated at: ${new Date().toISOString()}
- * Contains: ${collections?.map(e => e.name).join(', ')}
- */
-
-import { z } from "zod/v4";
-
-`
+  let finalString = ``
 
   for (const collection of collections ?? []) {
     console.log(
@@ -230,6 +219,20 @@ import { z } from "zod/v4";
   } else {
     finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n// Add your custom schemas here. They will not be overwritten by this script.\n`
   }
+
+  finalString =
+    `/**
+ * This file is auto-generated. DO NOT EDIT IT MANUALLY.
+ * You may regenerate it by running \`bun run schema:generate:collection\` in the root directory.
+ * If you want to add custom schemas, you will find a dedicated space at the end of this file.
+ * Generated for module: ${moduleName}
+ * Generated at: ${new Date().toISOString()}
+ * Contains: ${collections?.map(e => e.name).join(', ')}
+ */
+
+import { z } from "zod/v4";
+${finalString.includes('SchemaWithPB') ? 'import { SchemaWithPB } from "./schemaWithPB";\n' : ''}
+` + finalString
 
   toBeWritten[`${moduleName}.schema.ts`] = finalString
 }

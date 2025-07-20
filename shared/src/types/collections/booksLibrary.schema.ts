@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: booksLibrary
- * Generated at: 2025-07-19T21:52:02.421Z
- * Contains: books_library__collections, books_library__languages, books_library__entries, books_library__file_types, books_library__file_types_aggregated, books_library__languages_aggregated, books_library__collections_aggregated
+ * Generated at: 2025-07-20T05:23:51.734Z
+ * Contains: collection, language, entry, file_type, file_type_aggregated, language_aggregated, collection_aggregated
  */
 
 import { z } from "zod/v4";
