@@ -14,8 +14,9 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
-    "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "dev": "tsx watch --env-file=./env/.env.local ./src/index.ts",
+    "types": "bun run tsc -b --noEmit",
+    "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "NODE_ENV=production bun --env-file ./env/.env.local ./dist/server.js",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "jest",

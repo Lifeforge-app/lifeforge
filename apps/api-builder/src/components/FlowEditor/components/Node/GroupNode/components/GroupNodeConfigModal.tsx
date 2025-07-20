@@ -1,6 +1,5 @@
+import { Button, IconInput, ModalHeader, TextInput } from 'lifeforge-ui'
 import { useState } from 'react'
-
-import { Button, IconInput, ModalHeader, TextInput } from '@lifeforge/ui'
 
 import { useFlowStateContext } from '../../../../hooks/useFlowStateContext'
 

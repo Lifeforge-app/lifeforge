@@ -1,7 +1,6 @@
 import { useReactFlow } from '@xyflow/react'
+import { Button } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
-
-import { Button } from '@lifeforge/ui'
 
 import { useFlowStateContext } from '../../../hooks/useFlowStateContext'
 

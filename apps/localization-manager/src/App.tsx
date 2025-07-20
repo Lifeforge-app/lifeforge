@@ -1,15 +1,12 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { LoadingScreen, ModalManager } from 'lifeforge-ui'
 import { Suspense, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from 'shared/lib'
 
 import MainContent from './pages/MainContent'
 
 const LocaleAdmin = () => {
-  const { i18n } = useTranslation()
-
   const [isAuthed, setIsAuthed] = useState<'loading' | boolean>('loading')
 
   const { setFontFamily, setTheme, setRawThemeColor, setBgTemp, setLanguage } =
@@ -69,7 +66,6 @@ const LocaleAdmin = () => {
           : 'bg-zinc'
       )
       setLanguage(userData.language || 'en')
-      i18n.changeLanguage(userData.language || 'en')
     } else {
       failAuth()
     }

@@ -1,9 +1,8 @@
 import { type Node, useNodes, useReactFlow } from '@xyflow/react'
+import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { v4 as uuidv4 } from 'uuid'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import GroupNodeConfigModal from '../components/Node/GroupNode/components/GroupNodeConfigModal'
 import NodeSelector from '../components/Node/NodeSelector'

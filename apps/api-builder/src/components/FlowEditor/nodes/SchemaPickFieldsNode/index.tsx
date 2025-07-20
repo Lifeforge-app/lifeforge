@@ -47,7 +47,7 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
 
   useEffect(() => {
     const inputSchemaData = JSON.parse(
-      inputSchemaDataJSON || '{}'
+      inputSchemaDataJSON || '{"fields": [], "name": ""}'
     ) as ISchemaNodeData
 
     if (!inputSchemaData) {
@@ -57,7 +57,7 @@ function SchemaPickFieldsNode({ id }: { id: string }) {
     }
 
     updateNodeData<IPickFieldsFromSchemaNodeData>(id, prevData => {
-      const newFieldIds = prevData.fieldIds.filter(fieldId =>
+      const newFieldIds = prevData.fieldIds?.filter(fieldId =>
         inputSchemaData.fields.some(field => field.name === fieldId)
       )
 

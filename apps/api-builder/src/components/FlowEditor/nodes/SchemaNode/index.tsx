@@ -1,6 +1,5 @@
+import { useModalStore } from 'lifeforge-ui'
 import { useMemo } from 'react'
-
-import { useModalStore } from '@lifeforge/ui'
 
 import NodeColumn from '../../components/Node/NodeColumn'
 import NodeColumnWrapper from '../../components/Node/NodeColumnWrapper'

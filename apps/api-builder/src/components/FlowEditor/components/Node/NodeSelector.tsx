@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { ModalHeader, SearchInput } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { ModalHeader, SearchInput } from '@lifeforge/ui'
 
 import { oklchToHex } from '../../../../utils/colors'
 import NODE_CONFIG, { NODES_CATEGORIES, type NODE_TYPES } from '../../nodes'

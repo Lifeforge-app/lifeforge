@@ -1,8 +1,9 @@
-import { Button } from '@lifeforge/ui'
 import { getViewportForBounds, useNodes } from '@xyflow/react'
 import { toPng } from 'html-to-image'
+import { Button } from 'lifeforge-ui'
 
-import usePersonalization from '../../../../../providers/PersonalizationProvider/usePersonalization'
+import { usePersonalization } from 'shared/lib'
+
 import {
   getAbsolutePosition,
   getNodeBounds
