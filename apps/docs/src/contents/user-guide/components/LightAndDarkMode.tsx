@@ -1,37 +1,37 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { useState } from "react";
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { useState } from 'react'
 
 function LightAndDarkMode() {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<'light' | 'dark'>('light')
 
   return (
-    <div className="w-full min-w-0 flex mt-6">
-      <div className="w-full p-4 rounded-md bg-bg-800/50">
-        <div className="flex flex-col gap-4 md:flex-row items-center justify-between">
-          <h3 className="text-xl font-semibold w-full text-left">
+    <div className="mt-6 flex w-full min-w-0">
+      <div className="bg-bg-800/50 w-full rounded-md p-4">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <h3 className="w-full text-left text-xl font-semibold">
             Light/Dark Theme Preview
           </h3>
-          <div className="flex w-full md:w-auto bg-bg-800 rounded-md gap-2">
+          <div className="bg-bg-800 flex w-full gap-2 rounded-md md:w-auto">
             <button
-              onClick={() => setMode("light")}
-              className={`p-2 px-4 w-1/2 justify-center rounded-md flex items-center font-medium gap-1 ${
-                mode === "light"
-                  ? "bg-primary text-bg-800"
-                  : "bg-bg-800 text-bg-400"
+              onClick={() => setMode('light')}
+              className={`flex w-1/2 items-center justify-center gap-1 rounded-md p-2 px-4 font-medium ${
+                mode === 'light'
+                  ? 'bg-custom-500 text-bg-800'
+                  : 'bg-bg-800 text-bg-400'
               }`}
             >
-              <Icon icon="uil:sun" className="w-5 h-5" />
+              <Icon icon="uil:sun" className="h-5 w-5" />
               Light
             </button>
             <button
-              onClick={() => setMode("dark")}
-              className={`p-2 px-4 w-1/2 justify-center rounded-md flex items-center font-medium gap-1 ${
-                mode === "dark"
-                  ? "bg-primary text-bg-800"
-                  : "bg-bg-800 text-bg-400"
+              onClick={() => setMode('dark')}
+              className={`flex w-1/2 items-center justify-center gap-1 rounded-md p-2 px-4 font-medium ${
+                mode === 'dark'
+                  ? 'bg-custom-500 text-bg-800'
+                  : 'bg-bg-800 text-bg-400'
               }`}
             >
-              <Icon icon="uil:moon" className="w-5 h-5" />
+              <Icon icon="uil:moon" className="h-5 w-5" />
               Dark
             </button>
           </div>
@@ -40,11 +40,11 @@ function LightAndDarkMode() {
           key={mode}
           src={`/assets/colors/${mode}.png`}
           alt=""
-          className="w-full mt-4 rounded-md"
+          className="mt-4 w-full rounded-md"
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default LightAndDarkMode;
+export default LightAndDarkMode

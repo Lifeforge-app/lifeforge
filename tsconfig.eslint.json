@@ -6,5 +6,5 @@
     "client/src",
     "server/src",
     "shared/src"
-  ],
+  ]
 }

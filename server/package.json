@@ -1,10 +1,11 @@
 {
-  "name": "@lifeforge/server",
-  "version": "1.0.0",
+  "name": "lifeforge-server",
   "private": true,
-  "description": "The server-side API for LifeForge.",
-  "license": "MIT",
+  "description": "The backend server for the LifeForge system",
+  "version": "0.0.0",
+  "license": "CC BY-NC-SA 4.0",
   "author": "LifeForge (https://github.com/Lifeforge-app)",
+  "homepage": "https://docs.lifeforge.melvinchia.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lifeforge-app/lifeforge.git",
@@ -16,6 +17,7 @@
     "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "dev": "tsx watch --env-file=./env/.env.local ./src/index.ts",
     "start": "NODE_ENV=production bun --env-file ./env/.env.local ./dist/server.js",
+    "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "jest",
     "schema:generate": "bun ./scripts/generateSchema.ts"
   },

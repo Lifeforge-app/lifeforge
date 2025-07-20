@@ -6,25 +6,20 @@
  * Generated at: 2025-07-20T12:17:56.585Z
  * Contains: entry
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
-  type: z.enum(["text","audio","video","photos",""]),
+  type: z.enum(['text', 'audio', 'video', 'photos', '']),
   file: z.array(z.string()),
   content: z.string(),
-  transcription: z.string(),
-});
+  transcription: z.string()
+})
 
-type IEntry = z.infer<typeof Entry>;
+type IEntry = z.infer<typeof Entry>
 
-export {
-  Entry,
-};
+export { Entry }
 
-export type {
-  IEntry,
-};
+export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

@@ -1,12 +1,12 @@
 import { execSync } from 'child_process'
 
-const PROCESS_ALLOWED = ['build', 'dev', 'types']
+const PROCESS_ALLOWED = ['build', 'dev', 'types', 'lint']
 
 const PROJECTS_ALLOWED = {
   client: 'client',
   server: 'server',
   shared: 'shared',
-  ui: 'ui',
+  ui: 'packages/lifeforge-ui',
   'apps:localization-manager': 'apps/localization-manager',
   'apps:docs': 'apps/docs'
 }

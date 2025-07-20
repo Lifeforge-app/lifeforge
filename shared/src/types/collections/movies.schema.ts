@@ -6,8 +6,7 @@
  * Generated at: 2025-07-20T12:17:56.586Z
  * Contains: entry
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
   tmdb_id: z.number(),
@@ -27,18 +26,14 @@ const Entry = z.object({
   theatre_location: z.string(),
   theatre_location_coords: z.object({ lat: z.number(), lon: z.number() }),
   theatre_number: z.string(),
-  is_watched: z.boolean(),
-});
+  is_watched: z.boolean()
+})
 
-type IEntry = z.infer<typeof Entry>;
+type IEntry = z.infer<typeof Entry>
 
-export {
-  Entry,
-};
+export { Entry }
 
-export type {
-  IEntry,
-};
+export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

@@ -1,69 +1,72 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { Outlet, useLocation } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar";
-import { useEffect } from "react";
-import Scrollbars from "react-custom-scrollbars";
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { useEffect } from 'react'
+import Scrollbars from 'react-custom-scrollbars'
+import { Outlet, useLocation } from 'react-router-dom'
+
+import NavigationBar from './components/NavigationBar'
 
 function Boilerplate() {
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
-    const hash = location.hash;
+    const hash = location.hash
+
     if (hash) {
-      const element = document.getElementById(hash.slice(1));
+      const element = document.getElementById(hash.slice(1))
+
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     } else {
       document
-        .querySelector("section")
-        ?.parentElement?.parentElement?.scrollTo(0, 0);
+        .querySelector('section')
+        ?.parentElement?.parentElement?.scrollTo(0, 0)
     }
-  }, [location]);
+  }, [location])
 
   return (
-    <article className="flex-1 relative xl:ml-[20rem] h-full p-6 sm:p-12 !pb-0 overflow-y-auto min-h-0">
+    <article className="relative h-full min-h-0 flex-1 overflow-y-auto p-6 !pb-0 sm:p-12 xl:ml-[20rem]">
       <Scrollbars
+        autoHide
+        autoHideDuration={200}
+        autoHideTimeout={1000}
         renderThumbVertical={({ style, ...props }) => (
           <div
             {...props}
-            style={{
-              ...style,
-            }}
             className="bg-bg-800 rounded-md"
+            style={{
+              ...style
+            }}
           />
         )}
-        autoHide
-        autoHideTimeout={1000}
-        autoHideDuration={200}
       >
-        <div className="w-full lg:w-[calc(100%-20rem)] min-w-0">
+        <div className="w-full min-w-0 lg:w-[calc(100%-20rem)]">
           <Outlet />
           <NavigationBar />
-          <hr className="my-12 border-t-[1.5px] border-bg-800" />
+          <hr className="border-bg-800 my-12 border-t-[1.5px]" />
           <div className="flex flex-col items-center justify-center gap-2 pb-6 sm:pb-12">
-            <div className="flex items-center gap-2 text-bg-500">
-              <Icon icon="tabler:creative-commons" className="size-6" />
-              <Icon icon="tabler:creative-commons-by" className="size-6" />
-              <Icon icon="tabler:creative-commons-nc" className="size-6" />
-              <Icon icon="tabler:creative-commons-sa" className="size-6" />
+            <div className="text-bg-500 flex items-center gap-2">
+              <Icon className="size-6" icon="tabler:creative-commons" />
+              <Icon className="size-6" icon="tabler:creative-commons-by" />
+              <Icon className="size-6" icon="tabler:creative-commons-nc" />
+              <Icon className="size-6" icon="tabler:creative-commons-sa" />
             </div>
-            <p className="text-center text-sm text-bg-500">
-              A project by{" "}
+            <p className="text-bg-500 text-center text-sm">
+              A project by{' '}
               <a
-                className="text-primary underline"
-                target="_blank"
+                className="text-custom-500 underline"
                 href="https://thecodeblog.net"
                 rel="noreferrer"
+                target="_blank"
               >
                 Melvin Chia
-              </a>{" "}
-              licensed under{" "}
+              </a>{' '}
+              licensed under{' '}
               <a
-                className="text-primary underline"
-                target="_blank"
+                className="text-custom-500 underline"
                 href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
                 rel="noreferrer"
+                target="_blank"
               >
                 CC BY-NC-SA 4.0
               </a>
@@ -73,7 +76,7 @@ function Boilerplate() {
         </div>
       </Scrollbars>
     </article>
-  );
+  )
 }
 
-export default Boilerplate;
+export default Boilerplate

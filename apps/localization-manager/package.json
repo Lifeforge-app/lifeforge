@@ -1,10 +1,11 @@
 {
-  "name": "@lifeforge/localization-manager",
-  "version": "1.0.0",
+  "name": "lifeforge-localization-manager",
   "private": true,
-  "description": "An internal tool for managing application localization and translations.",
-  "license": "MIT",
+  "description": "A tool for streamlining the localization process in LifeForge applications",
+  "version": "0.0.0",
+  "license": "CC BY-NC-SA 4.0",
   "author": "LifeForge (https://github.com/Lifeforge-app)",
+  "homepage": "https://docs.lifeforge.melvinchia.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lifeforge-app/lifeforge.git",

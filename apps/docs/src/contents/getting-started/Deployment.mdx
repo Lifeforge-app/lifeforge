@@ -1,7 +1,9 @@
-import { Icon } from "@iconify/react";
-import CustomLink from "../../components/CustomLink";
+import { Icon } from '@iconify/react'
+
+import CustomLink from '../../components/CustomLink'
 
 ###### Deployment
+
 # Make it Available Anywhere You Go
 
 Now that you have successfully set up your Lifeforge system, it's time to deploy it to a server so that you can access it from anywhere. In this guide, I'll show you how to deploy Lifeforge to a cloud server using Vercel and Render, but you can also deploy it to any other cloud server that supports Node.js applications.
@@ -14,6 +16,7 @@ Now that you have successfully set up your Lifeforge system, it's time to deploy
 Login to your Vercel account and create a new project. Connect your GitHub repository to Vercel and deploy the frontend repository. Make sure to copy and paste the environment variables from your <code>.env</code> file to the Vercel dashboard.
 
 Wait for the deployment to finish, and you should see a link to your Lifeforge frontend. Click on it, and you should be able to access your Lifeforge system. If you want to use a custom domain, you can set it up in the Vercel settings.
+
 </section>
 
 <section id="deploying-backend">
@@ -31,23 +34,25 @@ git clone https://github.com/melvinchia3636/lifeforge-api-proxy.git
 
 Then, navigate to the <code>lifeforge-proxy</code> directory and create a <code>.env</code> file. Fill in the following fields:
 
-| Field                      | Description                                                                                           |
-|----------------------------|-------------------------------------------------------------------------------------------------------|
-| **TARGET_URL**                | The public URL of your backend API server (Make sure to put the full URL, including the <code>http(s)://</code> prefix) |
+| Field          | Description                                                                                                             |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **TARGET_URL** | The public URL of your backend API server (Make sure to put the full URL, including the <code>http(s)://</code> prefix) |
 
 Finally, deploy the proxy server to Render or any other cloud server that supports Node.js applications. Make sure to copy and paste the environment variables from your <code>.env</code> file to the server dashboard.
 
 Once the deployment is complete, you should see a link to your proxy server. Click on the link and make sure that the server is running correctly. If everything is working fine, make sure to update the <code>VITE_API_HOST</code> field in your frontend <code>.env</code> file to the URL of your proxy server.
+
 </section>
 
 <section id="deploying-database">
 ## Deploying Database
 
-Well, you can just let the database run on your local server. But if you really want to deploy it to a cloud server, there might be several ways to do it, which I'm not going to cover in this guide. 
+Well, you can just let the database run on your local server. But if you really want to deploy it to a cloud server, there might be several ways to do it, which I'm not going to cover in this guide.
 
 As for the file storage, Pocketbase provides option for you to store you files in the cloud in the form of an S3 bucket. Head to the Pocketbase settings page and under the File Storage section, you can switch the file storage to S3 and fill in the necessary fields to connect to your S3 bucket.
 
 ![s3](/assets/deployment/s3.png)
+
 </section>
 
 ---
