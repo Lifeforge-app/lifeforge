@@ -3,7 +3,11 @@ import clsx from 'clsx'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
-import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
@@ -29,7 +33,7 @@ function BreakdownDoughnutChart({
       count: number
     }
   >
-  expensesCategories: IWalletCategory[]
+  expensesCategories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
 }) {
   const { t } = useTranslation('apps.wallet')
 

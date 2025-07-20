@@ -85,7 +85,7 @@ function DateInput({
           popperPlacement="bottom-start"
           portalId="app"
           renderCustomHeader={CalendarHeader}
-          selected={date}
+          selected={date || null}
           showPopperArrow={false}
           showTimeSelect={hasTime}
           weekDayClassName={(date: Date) => {

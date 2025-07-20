@@ -4,7 +4,11 @@ import { Scrollbar } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
@@ -20,7 +24,7 @@ function BreakdownDetails({
       percentage: number
     }
   >
-  expensesCategories: IWalletCategory[]
+  expensesCategories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
 }) {
   const { t } = useTranslation('apps.wallet')
 

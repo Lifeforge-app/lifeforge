@@ -2,7 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { IWalletTransaction } from '../interfaces/wallet_interfaces'
+import { IWalletTransaction } from '../pages/Transactions'
 import { useWalletStore } from '../stores/useWalletStore'
 
 export function useFilteredTransactions(transactions: IWalletTransaction[]) {
@@ -23,17 +23,22 @@ export function useFilteredTransactions(transactions: IWalletTransaction[]) {
       .filter(
         tx =>
           (selectedType === null || tx.type === selectedType) &&
-          (selectedCategory === null || tx.category === selectedCategory) &&
-          (selectedAsset === null || tx.asset === selectedAsset) &&
-          (selectedLedger === null || tx.ledger === selectedLedger)
+          (tx.type !== 'transfer'
+            ? (selectedCategory === null || tx.category === selectedCategory) &&
+              (selectedAsset === null || tx.asset === selectedAsset) &&
+              (selectedLedger === null || tx.ledgers.includes(selectedLedger))
+            : true)
       )
-      .filter(
-        tx =>
-          debouncedQuery === '' ||
-          tx.particulars
-            ?.toLowerCase()
-            .includes(debouncedQuery.toLowerCase()) ||
-          tx.location_name?.toLowerCase().includes(debouncedQuery.toLowerCase())
+      .filter(tx =>
+        tx.type !== 'transfer'
+          ? debouncedQuery === '' ||
+            tx.particulars
+              ?.toLowerCase()
+              .includes(debouncedQuery.toLowerCase()) ||
+            tx.location_name
+              ?.toLowerCase()
+              .includes(debouncedQuery.toLowerCase())
+          : true
       )
       .filter(tx => {
         const start = (

@@ -26,7 +26,9 @@
 - **Migration**: Fully migrated to the new `lifeforge-ui` package under monorepo structure
   - Deprecated legacy codebase on GitHub
   - Removed `@lifeforge/ui` package from npm registry
-- **Bug Fixes**: Corrected toast progress bar color application
+- **Enhancement & Fixes**: 
+  - Corrected toast progress bar color application
+  - Improved the callback logic for `DeleteConfirmationModal`
 - **Type Safety**: Enhanced `FormModal` component with automatic field type determination based on field value types
 - **New Components**: 
   - Added `NumberInput` component
@@ -74,7 +76,7 @@
 ### 💰 **Wallet**
 - **Transaction Details**: Added detailed transaction view accessible by clicking entries
 - **Location Features**:
-  - Transaction coordinates now recorded and displayed as maps
+  - Transaction coordinates now recorded and displayed in a heatmap
   - Location display in recent transaction dashboard widget
 - **UI Improvements**:
   - Moved create transaction button to `ModuleHeader` for consistency

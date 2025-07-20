@@ -16,8 +16,11 @@ import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from 'shared/lib'
 import { useAPIQuery } from 'shared/lib'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
 
-import { IWalletAsset } from '@apps/Wallet/interfaces/wallet_interfaces'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 // Register Chart.js components
@@ -37,7 +40,7 @@ function BalanceChartModal({
   onClose
 }: {
   data: {
-    existedData: IWalletAsset
+    existedData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
   }
   onClose: () => void
 }) {
