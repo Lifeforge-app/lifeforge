@@ -1,11 +1,11 @@
+import dayjs from 'dayjs'
 import { Button, ImageAndFileInput, ModalHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
-
-import { ICalendarEvent } from '@apps/Calendar/interfaces/calendar_interfaces'
+import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import CreateEventModal from './ModifyEventModal/CreateEventModal'
 
@@ -31,22 +31,28 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
     formData.append('file', file)
 
     try {
-      const data = await fetchAPI<ICalendarEvent>(
-        import.meta.env.VITE_API_HOST,
-        'calendar/events/scan-image',
-        {
-          method: 'POST',
-          body: formData
-        }
-      )
+      const data = await fetchAPI<
+        CalendarControllersSchemas.IEvents['scanImage']['response']
+      >(import.meta.env.VITE_API_HOST, 'calendar/events/scan-image', {
+        method: 'POST',
+        body: formData
+      })
 
       onClose()
 
       open(CreateEventModal, {
-        type: 'create',
         existedData: {
           ...data,
-          type: 'single'
+          start: dayjs(data.start).toDate(),
+          end: dayjs(data.end).toDate(),
+          location: {
+            name: data.location || '',
+            location: {
+              longitude: data.location_coords?.lon || 0,
+              latitude: data.location_coords?.lat || 0
+            },
+            formattedAddress: data.location || ''
+          }
         }
       })
       setFile(null)

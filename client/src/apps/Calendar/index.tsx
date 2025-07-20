@@ -59,10 +59,7 @@ function CalendarModule() {
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open(CreateEventModal, {
-      existedData: null,
-      type: 'create'
-    })
+    open(CreateEventModal, {})
   }, [])
 
   return (

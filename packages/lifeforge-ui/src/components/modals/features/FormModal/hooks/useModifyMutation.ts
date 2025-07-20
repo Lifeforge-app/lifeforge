@@ -1,4 +1,5 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
+import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
@@ -28,7 +29,7 @@ function useModifyMutation<T>(
 
         Object.entries(data).forEach(([key, value]) => {
           if (value instanceof Date) {
-            formData.append(key, value.toISOString())
+            formData.append(key, dayjs(value).format('YYYY-MM-DDTHH:mm:ssZ'))
           }
 
           if (value instanceof File) {
@@ -56,7 +57,9 @@ function useModifyMutation<T>(
 
         if (value instanceof Date) {
           // @ts-expect-error - ignore this for now lol
-          data[key as keyof typeof data] = value.toISOString()
+          data[key as keyof typeof data] = dayjs(value).format(
+            'YYYY-MM-DDTHH:mm:ssZ'
+          )
         }
 
         if (
