@@ -74,7 +74,7 @@ function AssetsBalanceCard() {
                             ))}
                         </span>
                       ) : (
-                        <span>{numberToCurrency(asset.balance)}</span>
+                        <span>{numberToCurrency(asset.current_balance)}</span>
                       )}
                     </div>
                   </Link>
