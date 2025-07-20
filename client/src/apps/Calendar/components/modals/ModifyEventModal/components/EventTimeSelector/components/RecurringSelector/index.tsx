@@ -2,8 +2,7 @@ import {
   DateInput,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
-  NumberInput,
-  TextInput
+  NumberInput
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -67,9 +66,9 @@ function RecurringSelector({
 
   const [endType, setEndType] = useState<'never' | 'after' | 'on'>('never')
 
-  const [endAfter, setEndAfter] = useState('1')
+  const [endAfter, setEndAfter] = useState(1)
 
-  const [endOn, setEndOn] = useState<Date | null>(null)
+  const [endOn, setEndOn] = useState<Date | undefined>(undefined)
 
   const forms = {
     yearly: (
@@ -245,7 +244,7 @@ function RecurringSelector({
           <div className="flex flex-1 items-center gap-3">
             {endType === 'after' && (
               <>
-                <TextInput
+                <NumberInput
                   darker
                   required
                   className="flex-1"

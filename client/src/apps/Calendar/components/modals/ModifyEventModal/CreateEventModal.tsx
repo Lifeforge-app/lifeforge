@@ -25,8 +25,8 @@ export type ICreateEventFormState = Omit<
       CalendarCollectionsSchemas.IEventsRecurring,
     'base_event' | 'exceptions' | 'start' | 'end'
   > & {
-    start: Date | null
-    end: Date | null
+    start: Date | undefined
+    end: Date | undefined
   }
 
 function CreateEventModal({
@@ -54,7 +54,7 @@ function CreateEventModal({
     category: '',
     calendar: '',
     start: dayjs().startOf('day').toDate(),
-    end: null,
+    end: undefined,
     location: undefined,
     reference_link: '',
     description: '',
@@ -139,7 +139,7 @@ function CreateEventModal({
       category: '',
       calendar: '',
       start: dayjs().startOf('day').toDate(),
-      end: null,
+      end: undefined,
       location: undefined,
       reference_link: '',
       description: '',

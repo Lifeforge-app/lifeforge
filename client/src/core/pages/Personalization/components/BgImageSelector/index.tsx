@@ -43,7 +43,7 @@ function BgImageSelector() {
   const handleDeleteBgImage = useCallback(() => {
     open(DeleteConfirmationModal, {
       apiEndpoint: 'user/personalization/bg-image',
-      customCallback: async () => {
+      afterDelete: async () => {
         setBgImage('')
         setBackdropFilters({
           brightness: 100,

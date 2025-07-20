@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
+import dayjs from 'dayjs'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
-import { fetchAPI } from 'shared/lib'
 import {
   CalendarCollectionsSchemas,
   ISchemaWithPB
@@ -28,6 +28,8 @@ function EventDetailsHeader({
     | undefined
   editable?: boolean
 }) {
+  const { t } = useTranslation('apps.calendar')
+
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
@@ -35,25 +37,22 @@ function EventDetailsHeader({
   const { eventQueryKey } = useCalendarStore()
 
   const handleAddException = useCallback(async () => {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/calendar/events/exception/${event.id.split('-')[0]}`,
-        {
-          method: 'POST',
-          body: {
-            date: event.start
-          }
-        }
-      )
-
-      queryClient.setQueryData(eventQueryKey, (oldData: ICalendarEvent[]) => {
-        return oldData.filter(item => item.id !== event.id)
-      })
-    } catch (error) {
-      toast.error('Failed to add exception')
-      console.error('Error adding exception:', error)
-    }
+    open(DeleteConfirmationModal, {
+      data: { id: event.id.split('-')[0] ?? '' },
+      customConfirmButtonIcon: 'tabler:calendar-off',
+      customTitle: t('modals.confirmAddException.title'),
+      customText: t('modals.confirmAddException.description'),
+      apiEndpoint: 'calendar/events/exception',
+      apiQueries: {
+        date: dayjs(event.start).toISOString()
+      },
+      async afterDelete() {
+        queryClient.setQueryData(eventQueryKey, (oldData: ICalendarEvent[]) => {
+          return oldData.filter(item => item.id !== event.id)
+        })
+      },
+      customConfirmButtonText: 'proceed'
+    })
   }, [event.id])
 
   const handleEdit = useCallback(() => {
@@ -67,7 +66,7 @@ function EventDetailsHeader({
     open(DeleteConfirmationModal, {
       apiEndpoint: 'calendar/events',
       confirmationText: 'Delete this event',
-      data: { ...event, id: event.id.split('-')[0] ?? '' },
+      data: { id: event.id.split('-')[0] ?? '' },
       itemName: 'event',
       nameKey: 'title',
       queryKey: eventQueryKey,
@@ -105,20 +104,23 @@ function EventDetailsHeader({
             button: 'dark:hover:bg-bg-700/50! p-2!'
           }}
         >
-          {event.type === 'recurring' && (
+          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
+          {event.type === 'recurring' ? (
             <MenuItem
+              isRed
               icon="tabler:calendar-off"
-              text="Except Today"
+              namespace="apps.calendar"
+              text="Except This Time"
               onClick={handleAddException}
             />
+          ) : (
+            <MenuItem
+              isRed
+              icon="tabler:trash"
+              text="Delete"
+              onClick={handleDelete}
+            />
           )}
-          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
-          <MenuItem
-            isRed
-            icon="tabler:trash"
-            text="Delete"
-            onClick={handleDelete}
-          />
         </HamburgerMenu>
       )}
     </header>

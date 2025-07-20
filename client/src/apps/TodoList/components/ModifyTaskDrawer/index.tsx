@@ -145,7 +145,7 @@ function ModifyTaskDrawer() {
       itemName: 'task',
       nameKey: 'summary',
       queryKey: entriesQueryKey,
-      customCallback: async () => {
+      afterDelete: async () => {
         queryClient.invalidateQueries({
           queryKey: ['todo-list', 'priorities']
         })

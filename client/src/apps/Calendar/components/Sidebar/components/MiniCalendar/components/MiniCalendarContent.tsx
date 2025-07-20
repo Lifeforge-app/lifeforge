@@ -2,7 +2,8 @@ import dayjs from 'dayjs'
 
 import { usePersonalization } from 'shared/lib'
 
-import { type ICalendarEvent } from '../../../../../interfaces/calendar_interfaces'
+import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
+
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({
