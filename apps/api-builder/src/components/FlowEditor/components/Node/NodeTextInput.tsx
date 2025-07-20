@@ -14,12 +14,12 @@ function NodeTextInput({
   return (
     <NodeColumnValueWrapper>
       <input
+        className="w-full bg-transparent"
+        disabled={disabled}
+        placeholder={placeholder}
         type="text"
         value={value}
         onChange={e => setValue?.(e.target.value)}
-        placeholder={placeholder}
-        className="w-full bg-transparent"
-        disabled={disabled}
       />
     </NodeColumnValueWrapper>
   )

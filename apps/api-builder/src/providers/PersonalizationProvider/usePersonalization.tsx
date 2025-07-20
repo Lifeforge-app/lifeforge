@@ -8,10 +8,12 @@ export const PersonalizationContext = createContext<
 
 export default function usePersonalization(): IPersonalizationData {
   const context = useContext(PersonalizationContext)
+
   if (context === undefined) {
     throw new Error(
       'usePersonalizationContext must be used within a PersonalizationProvider'
     )
   }
+
   return context
 }

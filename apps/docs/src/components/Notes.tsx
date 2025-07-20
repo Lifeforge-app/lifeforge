@@ -13,7 +13,7 @@ function Notes({
       className={`quote bg-bg-800/70 border-custom-500 mt-6 w-full rounded-md border-l-4 p-4 ${className}`}
     >
       <div className="flex items-center gap-2">
-        <Icon icon="tabler:info-circle" className="text-custom-500 h-6 w-6" />
+        <Icon className="text-custom-500 h-6 w-6" icon="tabler:info-circle" />
         <h3 className="text-xl font-semibold">Notes</h3>
       </div>
       <p className="-mt-2 text-base">{children}</p>

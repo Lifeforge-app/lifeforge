@@ -16,10 +16,15 @@ const MARGIN = 40
 export function useFlowKeyboardHandlers() {
   const { onAddNode, setNodes, updateNodeData, setNodeData } =
     useFlowStateContext()
+
   const nodes = useNodes()
+
   const { screenToFlowPosition } = useReactFlow()
+
   const open = useModalStore(s => s.open)
+
   const stack = useModalStore(s => s.stack)
+
   const mousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
 
   const openNodeSelector = useCallback(() => {
@@ -44,11 +49,13 @@ export function useFlowKeyboardHandlers() {
 
     if (selectedNodes.length === 0) {
       toast.error('No nodes selected to group.')
+
       return
     }
 
     if (selectedNodes.some(node => node.type === 'group')) {
       toast.error('You can only group nodes that are not a group themselves.')
+
       return
     }
 
@@ -118,6 +125,7 @@ export function useFlowKeyboardHandlers() {
               parentId: undefined
             }
           }
+
           return node
         })
     )
@@ -125,13 +133,16 @@ export function useFlowKeyboardHandlers() {
 
   const duplicateSelectedNodes = useCallback(() => {
     const selectedNodes = nodes.filter(node => node.selected)
+
     if (selectedNodes.length === 0) {
       toast.error('No nodes selected to duplicate.')
+
       return
     }
 
     if (selectedNodes.length > 1) {
       toast.error('Cannot duplicate multiple nodes at once.')
+
       return
     }
 
@@ -139,6 +150,7 @@ export function useFlowKeyboardHandlers() {
 
     if (selectedNode.type === 'group') {
       toast.error('Cannot duplicate grouped nodes.')
+
       return
     }
 
@@ -149,8 +161,10 @@ export function useFlowKeyboardHandlers() {
     const element = document.querySelector(
       `[data-id="${selectedNode.id}"] > div`
     )
+
     if (!element) {
       toast.error('Selected node not found in the DOM.')
+
       return
     }
 
@@ -179,6 +193,7 @@ export function useFlowKeyboardHandlers() {
     const selectedNodes = nodes.filter(
       node => node.selected && node.type === 'group'
     )
+
     if (!selectedNodes.length) {
       return
     }
@@ -198,6 +213,7 @@ export function useFlowKeyboardHandlers() {
       const { x, y, width, height } = getNodeBounds(children)
 
       const deltaX = x - node.position.x
+
       const deltaY = y - node.position.y
 
       setNodes(nds =>
@@ -223,6 +239,7 @@ export function useFlowKeyboardHandlers() {
               }
             }
           }
+
           return n
         })
       )
@@ -238,6 +255,7 @@ export function useFlowKeyboardHandlers() {
 
     if (selectedNodes.length > 1) {
       toast.error('Cannot remove multiple nodes from a group at once.')
+
       return
     }
 
@@ -257,7 +275,9 @@ export function useFlowKeyboardHandlers() {
       }))
 
     const { x, y, width, height } = getNodeBounds(newChildren)
+
     const deltaX = x - parentNode.position.x
+
     const deltaY = y - parentNode.position.y
 
     setNodes(nds =>
@@ -323,6 +343,7 @@ export function useFlowKeyboardHandlers() {
       if (event.key.toLowerCase() === 'g') {
         if (event.shiftKey) {
           ungroupNodes()
+
           return
         }
         groupSelectedNodes()

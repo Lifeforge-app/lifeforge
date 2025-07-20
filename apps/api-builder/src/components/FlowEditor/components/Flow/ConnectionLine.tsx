@@ -15,6 +15,7 @@ function ConnectionLine({
   toY: number
 }) {
   const { toNode, fromHandle, fromNode } = useConnection()
+
   const color = useMemo(() => {
     return (
       NODE_CONFIG[
@@ -26,11 +27,11 @@ function ConnectionLine({
   return (
     <g>
       <path
+        className="animated"
+        d={`M${fromX},${fromY} C ${fromX} ${toY} ${fromX} ${toY} ${toX},${toY}`}
         fill="none"
         stroke={color}
         strokeWidth={1.5}
-        className="animated"
-        d={`M${fromX},${fromY} C ${fromX} ${toY} ${fromX} ${toY} ${toX},${toY}`}
       />
       <circle
         cx={toX}

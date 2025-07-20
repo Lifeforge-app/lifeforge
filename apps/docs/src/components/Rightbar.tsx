@@ -6,9 +6,13 @@ import { toLinkCase, toTitleCase } from '../utils/string'
 
 function Rightbar() {
   const [allSections, setAllSections] = useState<string[]>([])
+
   const [activeSection, setActiveSection] = useState<string>('')
+
   const location = useLocation()
+
   const userClickedRef = useRef(false)
+
   const userClickTimeoutRef = useRef<number | null>(null)
 
   // Apply aria-current attribute whenever activeSection changes
@@ -19,6 +23,7 @@ function Rightbar() {
       })
 
       const activeLink = document.querySelector(`li a#${activeSection}`)
+
       if (activeLink?.parentElement) {
         activeLink.parentElement.setAttribute('aria-current', 'page')
       }
@@ -27,7 +32,9 @@ function Rightbar() {
 
   useEffect(() => {
     const sections = document.querySelectorAll('article section')
+
     const _allSections: string[] = []
+
     sections.forEach(heading => {
       _allSections.push(heading.querySelector('h2,h6')?.textContent || '')
     })
@@ -44,6 +51,7 @@ function Rightbar() {
 
         entries.forEach(entry => {
           const id = entry.target.id || ''
+
           const sanitizedId = toLinkCase(id)
 
           sectionIntersectionRatios.set(sanitizedId, entry.intersectionRatio)
@@ -74,6 +82,7 @@ function Rightbar() {
         observer.observe(section)
       } else {
         const heading = section.querySelector('h2,h6')
+
         if (heading && heading.textContent) {
           section.id = toLinkCase(heading.textContent.replace(/\./g, ''))
           observer.observe(section)
@@ -84,6 +93,7 @@ function Rightbar() {
     // Set the first section as active after processing all sections
     if (_allSections.length > 0) {
       const firstSectionId = toLinkCase(_allSections[0].replace(/\./g, ''))
+
       setActiveSection(firstSectionId)
     }
 
@@ -106,6 +116,7 @@ function Rightbar() {
     // Manually scroll to the section
     setTimeout(() => {
       const sectionElement = document.getElementById(itemId)
+
       if (sectionElement) {
         sectionElement.scrollIntoView({ behavior: 'smooth' })
       }
@@ -131,17 +142,18 @@ function Rightbar() {
       <ul className="before:border-bg-800 relative isolate mt-4 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:border-r-[1.5px]">
         {allSections.map((item, index) => {
           const itemId = toLinkCase(item.replace(/\./g, ''))
+
           return (
             <a
               key={index}
-              id={itemId}
+              aria-current={activeSection === itemId ? 'page' : undefined}
+              className="aria-[current=page]:text-custom-500 aria-[current=page]:border-custom-500 text-bg-500 hover:text-bg-100 block cursor-pointer px-4 py-2 hover:font-medium aria-[current=page]:border-l-[2.5px] aria-[current=page]:font-semibold"
               href={`#${itemId}`}
+              id={itemId}
               onClick={e => {
                 e.preventDefault() // Prevent default anchor behavior
                 handleSectionClick(itemId)
               }}
-              className="aria-[current=page]:text-custom-500 aria-[current=page]:border-custom-500 text-bg-500 hover:text-bg-100 block cursor-pointer px-4 py-2 hover:font-medium aria-[current=page]:border-l-[2.5px] aria-[current=page]:font-semibold"
-              aria-current={activeSection === itemId ? 'page' : undefined}
             >
               {item}
             </a>
@@ -149,35 +161,35 @@ function Rightbar() {
         })}
       </ul>
       <a
+        className="text-bg-100 mt-6 flex items-center gap-2 font-medium hover:underline"
         href={`https://github.com/melvinchia3636/lifeforge-documentation/edit/main/src/contents/${
           location.pathname.split('/')?.[1]
         }/${toTitleCase(
           location.pathname.split('/')?.[2]?.replace(/-/g, ' ') || ''
         )}.mdx`}
-        target="_blank"
         rel="noreferrer"
-        className="text-bg-100 mt-6 flex items-center gap-2 font-medium hover:underline"
+        target="_blank"
       >
         Edit this page
-        <Icon icon="tabler:arrow-up-right" className="-mb-1 h-5 w-5" />
+        <Icon className="-mb-1 h-5 w-5" icon="tabler:arrow-up-right" />
       </a>
       <a
-        href="https://github.com/melvinchia3636/lifeforge/issues/new"
-        target="_blank"
-        rel="noreferrer"
         className="text-bg-100 mt-4 flex items-center gap-2 font-medium hover:underline"
+        href="https://github.com/melvinchia3636/lifeforge/issues/new"
+        rel="noreferrer"
+        target="_blank"
       >
         Issue Report
-        <Icon icon="tabler:arrow-up-right" className="-mb-1 h-5 w-5" />
+        <Icon className="-mb-1 h-5 w-5" icon="tabler:arrow-up-right" />
       </a>
       <a
-        href="https://github.com/melvinchia3636/lifeforge"
-        target="_blank"
-        rel="noreferrer"
         className="text-bg-100 mt-4 flex items-center gap-2 font-medium hover:underline"
+        href="https://github.com/melvinchia3636/lifeforge"
+        rel="noreferrer"
+        target="_blank"
       >
         Star on GitHub
-        <Icon icon="tabler:arrow-up-right" className="-mb-1 h-5 w-5" />
+        <Icon className="-mb-1 h-5 w-5" icon="tabler:arrow-up-right" />
       </a>
     </aside>
   )

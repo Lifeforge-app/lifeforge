@@ -28,12 +28,16 @@ const OPERATIONS = [
 
 function FilterNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { columnName, comparator } = useMemo(
     () => getNodeData<IFilterNodeData>(id),
     [getNodeData, id]
   )
+
   const allNodes = useNodes()
+
   const allEdges = useEdges()
 
   const targetCollection = useMemo(() => {
@@ -55,6 +59,7 @@ function FilterNode({ id }: { id: string }) {
     const collectionNodeData = getNodeData<ICollectionNodeData>(
       targetCollection.id
     )
+
     return collectionNodeData.fields ?? []
   }, [targetCollection, getNodeData])
 
@@ -63,6 +68,7 @@ function FilterNode({ id }: { id: string }) {
 
     if (targetValueNode.type === 'valueFromRequest') {
       const data = getNodeData<IValueFromRequestNodeData>(targetValueNode.id)
+
       return {
         type: 'valueFromRequest',
         requestType: data.requestType,
@@ -80,6 +86,7 @@ function FilterNode({ id }: { id: string }) {
   useEffect(() => {
     if (!targetCollection) {
       updateNodeData(id, { columnName: '', comparator: '' })
+
       return
     }
   }, [targetCollection, id, updateNodeData])
@@ -90,14 +97,14 @@ function FilterNode({ id }: { id: string }) {
         <>
           <NodeColumn label="Field">
             <NodeListbox
-              value={columnName}
               setValue={value => updateNodeData(id, { columnName: value })}
+              value={columnName}
             >
               {selectableColumns.map(field => (
                 <NodeListboxOption
                   key={field.name}
-                  value={field.name}
                   isSelected={field.name === columnName}
+                  value={field.name}
                 >
                   {field.name}
                 </NodeListboxOption>
@@ -106,20 +113,20 @@ function FilterNode({ id }: { id: string }) {
           </NodeColumn>
           <NodeColumn label="Comparator">
             <NodeListbox
-              value={comparator}
-              setValue={value => updateNodeData(id, { comparator: value })}
               buttonContent={
                 <>
                   {OPERATIONS.find(op => op.value === comparator)?.label} (
                   {comparator})
                 </>
               }
+              setValue={value => updateNodeData(id, { comparator: value })}
+              value={comparator}
             >
               {OPERATIONS.map(op => (
                 <NodeListboxOption
                   key={op.value}
-                  value={op.value}
                   isSelected={op.value === comparator}
+                  value={op.value}
                 >
                   <span className="whitespace-nowrap">
                     {op.label} ({op.value})
@@ -134,7 +141,7 @@ function FilterNode({ id }: { id: string }) {
           {t('empty.noCollectionConnected')}
         </p>
       )}
-      <NodeColumn nodeType="filter" handle="value-input">
+      <NodeColumn handle="value-input" nodeType="filter">
         {targetValueNodeData &&
           targetValueNodeData.type === 'valueFromRequest' &&
           (targetValueNodeData.field ? (
@@ -142,6 +149,7 @@ function FilterNode({ id }: { id: string }) {
               <div className="flex-between w-full gap-3">
                 <span className="flex items-center gap-2">
                   <Icon
+                    className="text-bg-500 size-4"
                     icon={
                       FIELD_TYPES.find(
                         t =>
@@ -149,7 +157,6 @@ function FilterNode({ id }: { id: string }) {
                           targetValueNodeData.field!.type
                       )?.icon || 'tabler:abc'
                     }
-                    className="text-bg-500 size-4"
                   />
                   {targetValueNodeData.field.name}
                 </span>
@@ -165,7 +172,7 @@ function FilterNode({ id }: { id: string }) {
             </p>
           ))}
       </NodeColumn>
-      <NodeColumn nodeType="filter" handle="filter-output" />
+      <NodeColumn handle="filter-output" nodeType="filter" />
     </NodeColumnWrapper>
   )
 }

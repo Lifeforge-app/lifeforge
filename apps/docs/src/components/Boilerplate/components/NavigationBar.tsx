@@ -7,10 +7,12 @@ import { toLinkCase, toTitleCase } from '../../../utils/string'
 
 function NavigationBar() {
   const location = useLocation()
+
   const currentGroup = useMemo(
     () => location.pathname.split('/')[1],
     [location]
   )
+
   const currentSection = useMemo(
     () => location.pathname.split('/')[2],
     [location]
@@ -93,10 +95,10 @@ function NavigationBar() {
     <div className="mt-12 flex items-center justify-between">
       {lastSection ? (
         <Link
-          to={`/${lastSection.group}/${lastSection.section}`}
           className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
+          to={`/${lastSection.group}/${lastSection.section}`}
         >
-          <Icon icon="tabler:arrow-left" className="-mb-1 h-5 w-5 shrink-0" />
+          <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-left" />
           {toTitleCase(lastSection.section)}
         </Link>
       ) : (
@@ -104,11 +106,11 @@ function NavigationBar() {
       )}
       {nextSection && (
         <Link
-          to={`/${nextSection.group}/${nextSection.section}`}
           className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
+          to={`/${nextSection.group}/${nextSection.section}`}
         >
           {toTitleCase(nextSection.section)}
-          <Icon icon="tabler:arrow-right" className="-mb-1 h-5 w-5 shrink-0" />
+          <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-right" />
         </Link>
       )}
     </div>

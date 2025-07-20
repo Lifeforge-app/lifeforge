@@ -22,9 +22,9 @@ function CollectionSelector({
   return (
     <div className="min-w-[40vw]">
       <ModalHeader
+        icon="tabler:folder"
         namespace="core.apiBuilder"
         title="Select Collection"
-        icon="tabler:folder"
         onClose={onClose}
       />
       <QueryWrapper query={collectionsQuery}>
@@ -34,6 +34,7 @@ function CollectionSelector({
               .sort((a, b) => {
                 if (a.type === 'base' && b.type === 'view') return -1
                 if (a.type === 'view' && b.type === 'base') return 1
+
                 return a.name.localeCompare(b.name)
               })
               .map(collection => (
@@ -58,12 +59,12 @@ function CollectionSelector({
                 >
                   <div className="flex items-center gap-2">
                     <Icon
+                      className="text-bg-500 size-5"
                       icon={
                         collection.type === 'base'
                           ? 'tabler:folder'
                           : 'tabler:columns-3'
                       }
-                      className="text-bg-500 size-5"
                     />
                     <span className="text-bg-600 dark:text-bg-400">
                       {collection.name}

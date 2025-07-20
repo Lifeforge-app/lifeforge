@@ -27,6 +27,7 @@ export default function EditSchemaNodeModal({
   data: { schema, onSave }
 }: Props) {
   const { t } = useTranslation('core.apiBuilder')
+
   const [draft, setDraft] = useState<Omit<ISchemaNodeData, 'onUpdate'>>({
     name: schema.name,
     fields: schema.fields
@@ -35,7 +36,9 @@ export default function EditSchemaNodeModal({
   const changeField = (idx: number, key: keyof ISchemaField, val: any) =>
     setDraft(prev => {
       const fields = [...prev.fields]
+
       fields[idx] = { ...fields[idx], [key]: val }
+
       return { ...prev, fields }
     })
 
@@ -57,19 +60,19 @@ export default function EditSchemaNodeModal({
     <div className="min-w-[50vw]">
       <ModalHeader
         icon="tabler:pencil"
+        namespace="core.apiBuilder"
         title="Edit Schema Node"
         onClose={onClose}
-        namespace="core.apiBuilder"
       />
       <div>
         <TextInput
-          value={draft.name}
-          setValue={val => setDraft(prev => ({ ...prev, name: val }))}
-          placeholder="UserSchema"
+          darker
           icon="tabler:braces"
           name="Schema Name"
-          darker
           namespace="core.apiBuilder"
+          placeholder="UserSchema"
+          setValue={val => setDraft(prev => ({ ...prev, name: val }))}
+          value={draft.name}
         />
       </div>
       <div className="mt-4 space-y-3">
@@ -81,31 +84,25 @@ export default function EditSchemaNodeModal({
             <div className="w-full space-y-3">
               <div className="flex items-center gap-3">
                 <TextInput
-                  className="flex-1"
-                  value={f.name}
-                  setValue={val => changeField(i, 'name', val)}
-                  placeholder="fieldName"
                   darker
-                  name="Field Name"
+                  className="flex-1"
                   icon="tabler:id"
+                  name="Field Name"
                   namespace="core.apiBuilder"
+                  placeholder="fieldName"
+                  setValue={val => changeField(i, 'name', val)}
+                  value={f.name}
                 />
                 <ListboxOrComboboxInput
-                  name="Field Type"
-                  icon="tabler:category"
-                  value={f.type}
-                  type="listbox"
-                  namespace="core.apiBuilder"
-                  setValue={val => changeField(i, 'type', val)}
                   buttonContent={
                     <>
                       <Icon
+                        className="size-5"
                         icon={
                           FIELD_TYPES.find(
                             t => t.label.toLowerCase() === f.type
                           )?.icon || 'tabler:abc'
                         }
-                        className="size-5"
                       />
                       <span>
                         {FIELD_TYPES.find(t => t.label.toLowerCase() === f.type)
@@ -113,13 +110,19 @@ export default function EditSchemaNodeModal({
                       </span>
                     </>
                   }
+                  icon="tabler:category"
+                  name="Field Type"
+                  namespace="core.apiBuilder"
+                  setValue={val => changeField(i, 'type', val)}
+                  type="listbox"
+                  value={f.type}
                 >
                   {FIELD_TYPES.map(type => (
                     <ListboxOrComboboxOption
                       key={type.label}
-                      value={type.label.toLowerCase()}
                       icon={type.icon}
                       text={type.label}
+                      value={type.label.toLowerCase()}
                     />
                   ))}
                 </ListboxOrComboboxInput>
@@ -138,10 +141,10 @@ export default function EditSchemaNodeModal({
               </div>
             </div>
             <Button
-              variant="plain"
               isRed
-              onClick={() => removeField(i)}
               icon="tabler:trash"
+              variant="plain"
+              onClick={() => removeField(i)}
             />
           </div>
         ))}
@@ -153,16 +156,16 @@ export default function EditSchemaNodeModal({
         )}
       </div>
       <Button
-        variant="secondary"
-        icon="tabler:plus"
-        onClick={addField}
         className="mt-4 w-full"
+        icon="tabler:plus"
         namespace="core.apiBuilder"
+        variant="secondary"
+        onClick={addField}
       >
         {t('inputs.addField')}
       </Button>
 
-      <Button icon="uil:save" onClick={save} className="mt-6 w-full">
+      <Button className="mt-6 w-full" icon="uil:save" onClick={save}>
         Save
       </Button>
     </div>

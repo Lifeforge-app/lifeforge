@@ -14,17 +14,17 @@ function NodeListboxOption<T>({
 }) {
   return (
     <ListboxOption
-      value={value}
       className={clsx(
         'hover:bg-bg-100 focus:bg-bg-100 dark:hover:bg-bg-700/50 dark:focus:bg-bg-700/50 flex-between gap-3 rounded p-2 text-base transition-colors focus:outline-none',
         isSelected ? 'text-bg-900 dark:text-bg-100' : 'text-bg-500'
       )}
+      value={value}
     >
       {children}
       {isSelected && (
         <Icon
-          icon="tabler:check"
           className="text-bg-900 dark:text-bg-100 size-5"
+          icon="tabler:check"
         />
       )}
     </ListboxOption>

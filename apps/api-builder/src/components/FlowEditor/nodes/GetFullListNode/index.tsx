@@ -4,14 +4,14 @@ import NodeColumnWrapper from '../../components/Node/NodeColumnWrapper'
 function GetFullListNode() {
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="getFullList" handle="collection-input" />
-      <NodeColumn nodeType="getFullList" handle="filter-input" />
-      <NodeColumn nodeType="getFullList" handle="sorter-input" />
+      <NodeColumn handle="collection-input" nodeType="getFullList" />
+      <NodeColumn handle="filter-input" nodeType="getFullList" />
+      <NodeColumn handle="sorter-input" nodeType="getFullList" />
       <NodeColumn
-        nodeType="getFullList"
         handle="collection-pick-fields-input"
+        nodeType="getFullList"
       />
-      <NodeColumn nodeType="getFullList" handle="db-operation-output" />
+      <NodeColumn handle="db-operation-output" nodeType="getFullList" />
     </NodeColumnWrapper>
   )
 }

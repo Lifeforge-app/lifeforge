@@ -21,11 +21,11 @@ function FieldColumn({
       <div className="flex-between w-full gap-3">
         <span className="flex items-center gap-2">
           <Icon
+            className="text-bg-500 size-4"
             icon={
               FIELD_TYPES.find(t => t.label.toLowerCase() === field.type)
                 ?.icon || 'tabler:abc'
             }
-            className="text-bg-500 size-4"
           />
           {field.name}
         </span>

@@ -47,13 +47,13 @@ function NodeListbox<T>({
           )}
         </div>
         <Icon
-          icon="tabler:chevron-down"
           className="text-bg-400 dark:text-bg-600"
+          icon="tabler:chevron-down"
         />
       </ListboxButton>
       <ListboxOptions
-        anchor="bottom"
         transition
+        anchor="bottom"
         className={clsx(
           'border-bg-200 dark:border-bg-700 bg-bg-100 dark:bg-bg-800 shadow-custom min-w-[max(var(--button-width),16rem)] rounded-lg border p-1 [--anchor-gap:--spacing(2)] focus:outline-none',
           'transition duration-100 ease-in data-leave:data-closed:opacity-0'

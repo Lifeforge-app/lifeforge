@@ -12,6 +12,7 @@ import ToastProvider from './providers/ToastProvider'
 
 function App() {
   const [isAuthed, setIsAuthed] = useState(false)
+
   const [themeConfig, setThemeConfig] = useState<{
     fontFamily: string
     theme: 'light' | 'dark' | 'system'
@@ -60,6 +61,7 @@ function App() {
 
     if (data.state === 'success') {
       setIsAuthed(true)
+
       const { userData } = data.data
 
       setThemeConfig({
@@ -99,12 +101,12 @@ function App() {
   }, [])
 
   return (
-    <PersonalizationProvider isAuthed={isAuthed} config={themeConfig}>
+    <PersonalizationProvider config={themeConfig} isAuthed={isAuthed}>
       <LifeforgeUIProviderWrapper>
         <ToastProvider>
           <main
-            id="app"
             className="bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-50 flex min-h-dvh w-full flex-col"
+            id="app"
           >
             <Suspense fallback={<LoadingScreen />}>
               {isAuthed ? (
@@ -113,7 +115,7 @@ function App() {
                 <>
                   <Header />
                   <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
-                    <Icon icon="tabler:lock-access" className="mb-4 text-9xl" />
+                    <Icon className="mb-4 text-9xl" icon="tabler:lock-access" />
                     <h2 className="text-4xl">Unauthorized Personnel</h2>
                     <p className="text-bg-500 mt-4 text-center text-lg">
                       Please authenticate through single sign-on (SSO) in the
@@ -121,9 +123,9 @@ function App() {
                     </p>
                     <Button
                       as="a"
-                      icon="tabler:hammer"
-                      href={import.meta.env.VITE_FRONTEND_URL}
                       className="mt-16"
+                      href={import.meta.env.VITE_FRONTEND_URL}
+                      icon="tabler:hammer"
                     >
                       Go to System
                     </Button>

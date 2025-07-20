@@ -46,9 +46,13 @@ function NodeColumn<T extends NODE_TYPES>({
   ...props
 }: NodeColumnProps<T>) {
   const { t } = useTranslation('core.apiBuilder')
+
   const nodeId = useNodeId()
+
   const connections = useNodeConnections()
+
   const { setEdges } = useFlowStateContext()
+
   const dynamicId =
     'dynamicId' in props ? (props.dynamicId as string) : undefined
 
@@ -56,6 +60,7 @@ function NodeColumn<T extends NODE_TYPES>({
     if (!nodeType || !handle) return undefined
 
     const handlers = NODE_CONFIG[nodeType].handlers
+
     if (handle in handlers) {
       return handlers[handle as keyof typeof handlers] as IHandler
     }
@@ -79,9 +84,11 @@ function NodeColumn<T extends NODE_TYPES>({
 
   const isConnectable = useMemo(() => {
     if (!handler) return true
+
     if (handler.cardinality === 'many' || !handler.cardinality) {
       return true
     }
+
     return filteredConnections.length < handler.cardinality
   }, [handler, filteredConnections.length])
 
@@ -136,15 +143,15 @@ function NodeColumn<T extends NODE_TYPES>({
       {children && <div>{children}</div>}
       {handler && handle && (
         <Handle
-          type={isInput ? 'target' : 'source'}
-          position={isInput ? Position.Left : Position.Right}
-          id={(handle as string) + (dynamicId ? `||${dynamicId}` : '')}
           className={clsx(
             'border-bg-200 dark:border-bg-900 top-2.5! size-3! rounded-full border',
             isInput ? 'right-auto! -left-3!' : '-right-3!'
           )}
+          id={(handle as string) + (dynamicId ? `||${dynamicId}` : '')}
           isConnectable={isConnectable}
+          position={isInput ? Position.Left : Position.Right}
           style={{ backgroundColor: NODE_CONFIG[handler.nodeType]?.color }}
+          type={isInput ? 'target' : 'source'}
         />
       )}
     </div>

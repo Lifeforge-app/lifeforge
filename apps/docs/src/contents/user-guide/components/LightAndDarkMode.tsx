@@ -13,34 +13,34 @@ function LightAndDarkMode() {
           </h3>
           <div className="bg-bg-800 flex w-full gap-2 rounded-md md:w-auto">
             <button
-              onClick={() => setMode('light')}
               className={`flex w-1/2 items-center justify-center gap-1 rounded-md p-2 px-4 font-medium ${
                 mode === 'light'
                   ? 'bg-custom-500 text-bg-800'
                   : 'bg-bg-800 text-bg-400'
               }`}
+              onClick={() => setMode('light')}
             >
-              <Icon icon="uil:sun" className="h-5 w-5" />
+              <Icon className="h-5 w-5" icon="uil:sun" />
               Light
             </button>
             <button
-              onClick={() => setMode('dark')}
               className={`flex w-1/2 items-center justify-center gap-1 rounded-md p-2 px-4 font-medium ${
                 mode === 'dark'
                   ? 'bg-custom-500 text-bg-800'
                   : 'bg-bg-800 text-bg-400'
               }`}
+              onClick={() => setMode('dark')}
             >
-              <Icon icon="uil:moon" className="h-5 w-5" />
+              <Icon className="h-5 w-5" icon="uil:moon" />
               Dark
             </button>
           </div>
         </div>
         <img
           key={mode}
-          src={`/assets/colors/${mode}.png`}
           alt=""
           className="mt-4 w-full rounded-md"
+          src={`/assets/colors/${mode}.png`}
         />
       </div>
     </div>

@@ -19,12 +19,16 @@ const PB_SCHEMA: ISchemaField[] = [
 
 function WithPBNode({ id }: { id: string }) {
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { name, fields } = useMemo(
     () => getNodeData<ISchemaNodeData>(id),
     [getNodeData, id]
   )
+
   const { t } = useTranslation('core.apiBuilder')
+
   const connections = useNodeConnections()
+
   const inputConnections = useMemo(
     () =>
       connections.filter(
@@ -32,11 +36,15 @@ function WithPBNode({ id }: { id: string }) {
       ),
     [connections, id]
   )
+
   const inputSchemaData = useMemo(() => {
     if (inputConnections.length === 0) return null
+
     const inputSchemaNodeId = inputConnections[0].source
+
     return getNodeData<ISchemaNodeData>(inputSchemaNodeId)
   }, [inputConnections, getNodeData])
+
   const inputSchemaDataJSON = useMemo(() => {
     return inputSchemaData ? JSON.stringify(inputSchemaData, null, 2) : null
   }, [inputSchemaData])
@@ -58,8 +66,8 @@ function WithPBNode({ id }: { id: string }) {
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="schemaWithPB" handle="schema-input">
-        {inputSchemaData && <NodeTextInput value={name} disabled />}
+      <NodeColumn handle="schema-input" nodeType="schemaWithPB">
+        {inputSchemaData && <NodeTextInput disabled value={name} />}
       </NodeColumn>
       {inputSchemaData ? (
         <FieldsColumn fields={fields} />
@@ -68,7 +76,7 @@ function WithPBNode({ id }: { id: string }) {
           {t('empty.noSchemaConnected')}
         </p>
       )}
-      <NodeColumn nodeType="schemaWithPB" handle="schema-output" />
+      <NodeColumn handle="schema-output" nodeType="schemaWithPB" />
     </NodeColumnWrapper>
   )
 }

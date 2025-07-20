@@ -18,22 +18,23 @@ function NodeSelector({
   }
 }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <div className="min-w-[300px]">
       <ModalHeader
+        icon="tabler:plus"
         namespace="core.apiBuilder"
         title="New Node"
-        icon="tabler:plus"
         onClose={onClose}
       />
       <SearchInput
+        lighter
         namespace="core.apiBuilder"
-        stuffToSearch="node"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        lighter
+        stuffToSearch="node"
       />
       {NODES_CATEGORIES.map(category => (
         <div key={category.name} className="mt-6">
@@ -44,6 +45,7 @@ function NodeSelector({
             {category.nodes
               .filter(key => {
                 const config = NODE_CONFIG[key]
+
                 return (
                   config.name
                     .toLowerCase()
@@ -55,6 +57,7 @@ function NodeSelector({
               })
               .map(key => {
                 const config = NODE_CONFIG[key]
+
                 return (
                   <div
                     key={key}
@@ -71,8 +74,8 @@ function NodeSelector({
                       }}
                     >
                       <Icon
-                        icon={config.icon || 'tabler:circle'}
                         className="size-5"
+                        icon={config.icon || 'tabler:circle'}
                         style={{
                           color: config.color || '#000'
                         }}

@@ -9,7 +9,7 @@ function Header() {
   return (
     <header className="flex w-full items-center justify-between p-6">
       <h1 className="flex items-center gap-2">
-        <Icon icon="mynaui:api" className="text-custom-400 text-4xl" />
+        <Icon className="text-custom-400 text-4xl" icon="mynaui:api" />
         <div>
           <div className="text-xl font-semibold">
             LifeForge<span className="text-custom-400">.</span>
@@ -19,12 +19,12 @@ function Header() {
       </h1>
       <Button
         as="a"
+        href="https://github.com/Lifeforge-app/lifeforge-api-explorer"
         icon="uil:github"
-        variant="plain"
         iconClassName="size-6"
         rel="noopener noreferrer"
         target="_blank"
-        href="https://github.com/Lifeforge-app/lifeforge-api-explorer"
+        variant="plain"
       />
     </header>
   )

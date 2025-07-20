@@ -19,6 +19,7 @@ function FieldsColumn({
   withEmptyMessage?: boolean
 }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const FinalComponent = withLabel ? NodeColumn : NodeFragment
 
   return (

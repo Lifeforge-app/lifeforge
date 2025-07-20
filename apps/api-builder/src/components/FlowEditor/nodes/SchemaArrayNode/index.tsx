@@ -10,21 +10,27 @@ import { type ISchemaField } from '../SchemaNode/types'
 
 function SchemaArrayNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const connections = useNodeConnections()
+
   const { getNodeData } = useFlowStateContext()
+
   const schemaInputConnections = connections.filter(
     connection =>
       connection.targetHandle === 'schema-input' && connection.target === id
   )
+
   const schemaInputData = useMemo(() => {
     if (schemaInputConnections.length === 0) return null
+
     const inputSchemaNodeId = schemaInputConnections[0].source
+
     return getNodeData<ISchemaField>(inputSchemaNodeId)
   }, [schemaInputConnections, getNodeData])
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="schemaArray" handle="schema-input">
+      <NodeColumn handle="schema-input" nodeType="schemaArray">
         {schemaInputData?.name ? (
           <NodeColumnValueWrapper>
             {schemaInputData.name}
@@ -35,7 +41,7 @@ function SchemaArrayNode({ id }: { id: string }) {
           </p>
         )}
       </NodeColumn>
-      <NodeColumn nodeType="schemaArray" handle="schema-output" />
+      <NodeColumn handle="schema-output" nodeType="schemaArray" />
     </NodeColumnWrapper>
   )
 }

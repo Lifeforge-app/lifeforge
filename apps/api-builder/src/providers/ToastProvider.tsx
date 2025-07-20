@@ -4,6 +4,7 @@ import usePersonalization from './PersonalizationProvider/usePersonalization'
 
 function ToastProvider({ children }: { children: React.ReactNode }) {
   const { theme } = usePersonalization()
+
   return (
     <>
       {children}

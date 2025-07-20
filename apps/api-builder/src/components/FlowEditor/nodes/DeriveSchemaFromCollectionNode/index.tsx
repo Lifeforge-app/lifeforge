@@ -73,9 +73,13 @@ function transformFields(fields: ICollectionField[]): ISchemaField[] {
 
 function DeriveSchemaFromCollectionNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const nodes = useNodes()
+
   const edges = useEdges()
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { collectionName, name, typescriptInterfaceName, fields } = useMemo(
     () => getNodeData<IDeriveSchemaFromCollectionNodeData>(id),
     [getNodeData, id]
@@ -86,6 +90,7 @@ function DeriveSchemaFromCollectionNode({ id }: { id: string }) {
       traverseGraph(nodes, edges, id, [{ dir: 'in', id: 'collection-input' }]),
     [nodes, edges, id]
   )
+
   const collectionInputNodeData = useMemo(
     () =>
       collectionInputNode
@@ -97,7 +102,9 @@ function DeriveSchemaFromCollectionNode({ id }: { id: string }) {
   useEffect(() => {
     if (collectionInputNodeData) {
       const { name, fields } = collectionInputNodeData
+
       let baseName: string
+
       if (name.endsWith('_aggregated')) {
         baseName = _.upperFirst(
           _.camelCase(
@@ -109,7 +116,9 @@ function DeriveSchemaFromCollectionNode({ id }: { id: string }) {
       }
 
       const schemaName = `${baseName}Schema`
+
       const typescriptInterfaceName = `I${baseName}`
+
       const schemaFields = transformFields(fields)
 
       updateNodeData(id, {
@@ -131,8 +140,8 @@ function DeriveSchemaFromCollectionNode({ id }: { id: string }) {
   return (
     <NodeColumnWrapper>
       <NodeColumn
-        nodeType="deriveSchemaFromCollection"
         handle="collection-input"
+        nodeType="deriveSchemaFromCollection"
       >
         {collectionName && (
           <NodeColumnValueWrapper>{collectionName}</NodeColumnValueWrapper>
@@ -153,15 +162,15 @@ function DeriveSchemaFromCollectionNode({ id }: { id: string }) {
       {collectionInputNodeData && (
         <NodeColumn label="Fields">
           {fields.length > 0 ? (
-            <FieldsColumn withLabel={false} fields={fields} />
+            <FieldsColumn fields={fields} withLabel={false} />
           ) : (
             <p className="text-bg-500 text-center">{t('empty.noFields')}</p>
           )}
         </NodeColumn>
       )}
       <NodeColumn
-        nodeType="deriveSchemaFromCollection"
         handle="schema-output"
+        nodeType="deriveSchemaFromCollection"
       />
     </NodeColumnWrapper>
   )

@@ -10,9 +10,11 @@ export function useFlowPersistence() {
 
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY)
+
     if (savedData) {
       try {
         const flowData = JSON.parse(savedData)
+
         if (flowData.nodes && flowData.edges) {
           setNodes(
             flowData.nodes
@@ -22,6 +24,7 @@ export function useFlowPersistence() {
               .sort((a: Node, b: Node) => {
                 if (a.type === 'group' && b.type !== 'group') return -1
                 if (b.type === 'group' && a.type !== 'group') return 1
+
                 return a.id.localeCompare(b.id)
               })
           )

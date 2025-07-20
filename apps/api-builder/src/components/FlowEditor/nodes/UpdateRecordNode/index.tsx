@@ -11,8 +11,11 @@ import FieldValueColumn from '../CreateRecordNode/components/FieldValueColumn'
 
 function UpdateRecordNode({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const { getNodeData } = useFlowStateContext()
+
   const nodes = useNodes()
+
   const edges = useEdges()
 
   const targetCollection = useMemo(() => {
@@ -23,20 +26,21 @@ function UpdateRecordNode({ id }: { id: string }) {
 
   const targetFields = useMemo(() => {
     if (!targetCollection) return []
+
     return getNodeData<ICollectionNodeData>(targetCollection.id)?.fields ?? []
   }, [targetCollection, getNodeData])
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="updateRecord" handle="collection-input" />
+      <NodeColumn handle="collection-input" nodeType="updateRecord" />
       {targetCollection ? (
         targetFields.length > 0 ? (
           targetFields.map(field => (
             <NodeColumn
               key={field.name}
-              nodeType="updateRecord"
-              handle="field-value-input"
               dynamicId={field.name}
+              handle="field-value-input"
+              nodeType="updateRecord"
             >
               <FieldValueColumn fieldId={field.name} />
             </NodeColumn>
@@ -49,7 +53,7 @@ function UpdateRecordNode({ id }: { id: string }) {
           {t('empty.noCollectionConnected')}
         </p>
       )}
-      <NodeColumn nodeType="updateRecord" handle="db-operation-output" />
+      <NodeColumn handle="db-operation-output" nodeType="updateRecord" />
     </NodeColumnWrapper>
   )
 }

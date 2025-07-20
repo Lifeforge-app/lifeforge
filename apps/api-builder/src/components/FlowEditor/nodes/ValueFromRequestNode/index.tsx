@@ -19,21 +19,29 @@ import type { IValueFromRequestNodeData } from './types'
 
 function ValueFromRequest({ id }: { id: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const nodes = useNodes()
+
   const edges = useEdges()
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
 
   const { requestType, field } = useMemo(
     () => getNodeData<IValueFromRequestNodeData>(id),
     [getNodeData, id]
   )
+
   const requestSchemaNode = useMemo(() => {
     const controller = findNodeTypeInGraph(nodes, edges, id, 'controller', true)
+
     if (!controller) return null
+
     const requestSchemaNode = traverseGraph(nodes, edges, controller.id, [
       { dir: 'in', id: 'request-schema-input' }
     ])
+
     if (!requestSchemaNode) return null
+
     return requestSchemaNode
   }, [nodes, edges, id])
 
@@ -49,10 +57,12 @@ function ValueFromRequest({ id }: { id: string }) {
       const schemaNode = traverseGraph(nodes, edges, requestSchemaNode.id, [
         { dir: 'in', id: `${type}-schema-input` }
       ])
+
       if (schemaNode) {
         const schemaData = getNodeData<IPickFieldsFromSchemaNodeData>(
           schemaNode.id
         )
+
         selectableColumns.push(
           ...schemaData.fields.map(field => ({
             from: type,
@@ -68,6 +78,7 @@ function ValueFromRequest({ id }: { id: string }) {
   useEffect(() => {
     if (!requestSchemaNode) {
       updateNodeData(id, { requestType: undefined, field: undefined })
+
       return
     }
   }, [requestSchemaNode, id, updateNodeData])
@@ -86,42 +97,42 @@ function ValueFromRequest({ id }: { id: string }) {
       {requestSchemaNode ? (
         <NodeColumn label="Field">
           <NodeListbox
-            value={{ requestType, field }}
-            setValue={value => {
-              updateNodeData(id, value)
-            }}
             buttonContent={
               field && (
                 <FieldColumn
                   field={field}
-                  withWrapper={false}
                   rightComponent={
                     <span className="text-bg-500 text-sm">
                       ({t(`nodeColumns.${_.camelCase(requestType)}`)})
                     </span>
                   }
+                  withWrapper={false}
                 />
               )
             }
+            setValue={value => {
+              updateNodeData(id, value)
+            }}
+            value={{ requestType, field }}
           >
             {fieldOptions.map(option => (
               <NodeListboxOption
                 key={`${option.from}||${option.field.name}`}
-                value={{ requestType: option.from, field: option.field }}
                 isSelected={
                   field?.name === option.field.name &&
                   requestType === option.from
                 }
+                value={{ requestType: option.from, field: option.field }}
               >
                 <span className="flex-between w-full gap-3">
                   <span className="flex items-center gap-2">
                     <Icon
+                      className="text-bg-500 size-4"
                       icon={
                         FIELD_TYPES.find(
                           t => t.label.toLowerCase() === option.field.type
                         )?.icon || 'tabler:abc'
                       }
-                      className="text-bg-500 size-4"
                     />
                     {option.field.name}
                   </span>
@@ -138,7 +149,7 @@ function ValueFromRequest({ id }: { id: string }) {
           {t('empty.noRequestSchemaConnected')}
         </div>
       )}
-      <NodeColumn nodeType="valueFromRequest" handle="value-output" />
+      <NodeColumn handle="value-output" nodeType="valueFromRequest" />
     </NodeColumnWrapper>
   )
 }
