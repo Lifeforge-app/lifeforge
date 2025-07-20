@@ -5,7 +5,8 @@ import List from 'react-virtualized/dist/commonjs/List'
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import TransactionListItem from './components/TransactionListItem'
+import TransactionIncomeExpensesItem from './components/TransactionIncomeExpensesItem'
+import TransactionTransferItem from './components/TransactionTransferItem'
 
 const AS = AutoSizer as any
 
@@ -39,9 +40,14 @@ function ListView() {
 
                 return (
                   <div key={key} style={style}>
-                    {transaction && (
-                      <TransactionListItem transaction={transaction} />
-                    )}
+                    {transaction &&
+                      (transaction.type === 'transfer' ? (
+                        <TransactionTransferItem transaction={transaction} />
+                      ) : (
+                        <TransactionIncomeExpensesItem
+                          transaction={transaction}
+                        />
+                      ))}
                   </div>
                 )
               }}

@@ -10,14 +10,22 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 import BalanceChartModal from '../modals/BalanceChartModal'
 import ModifyAssetModal from '../modals/ModifyAssetModal'
 
-function AssetItem({ asset }: { asset: IWalletAsset }) {
+function AssetItem({
+  asset
+}: {
+  asset: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
+}) {
   const open = useModalStore(state => state.open)
 
   const { isAmountHidden } = useWalletStore()
@@ -43,7 +51,7 @@ function AssetItem({ asset }: { asset: IWalletAsset }) {
       confirmationText: 'Delete this asset account',
       data: asset,
       itemName: 'asset account',
-      nameKey: 'name',
+      nameKey: 'name' as const,
       queryKey: ['wallet', 'assets']
     })
   }, [asset])

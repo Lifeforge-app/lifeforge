@@ -9,12 +9,12 @@ import { useCallback } from 'react'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
+import { IWalletTransaction } from '../../..'
 import ModifyTransactionsModal from '../../../modals/ModifyTransactionsModal'
 import ViewTransactionModal from '../../../modals/ViewTransactionModal'
 import ViewReceiptModal from './ViewReceiptModal'
 
-function TransactionListItem({
+function TransactionTransferItem({
   transaction
 }: {
   transaction: IWalletTransaction
@@ -23,11 +23,7 @@ function TransactionListItem({
 
   const queryClient = useQueryClient()
 
-  const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
-
-  const categories = categoriesQuery.data ?? []
-
-  const ledgers = ledgersQuery.data ?? []
+  const { assetsQuery } = useWalletData()
 
   const assets = assetsQuery.data ?? []
 
@@ -78,10 +74,14 @@ function TransactionListItem({
     [transaction]
   )
 
+  if (transaction.type !== 'transfer') {
+    return null
+  }
+
   return (
     <div
       className={clsx(
-        'flex-between component-bg-with-hover relative flex gap-12 p-4'
+        'flex-between component-bg-with-hover relative flex gap-12 rounded-md p-4'
       )}
       role="button"
       tabIndex={0}
@@ -94,30 +94,16 @@ function TransactionListItem({
       }}
     >
       <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-3">
-        <div
-          className="h-12 w-1 shrink-0 rounded-full"
-          style={{
-            backgroundColor:
-              categories.find(category => category.id === transaction.category)
-                ?.color ?? 'transparent'
-          }}
-        />
-        <Icon
-          className="text-bg-500 size-8"
-          icon={
-            assets.find(asset => asset.id === transaction.asset)?.icon ?? ''
-          }
-        />
+        <Icon className="text-bg-500 size-8" icon="tabler:transfer" />
         <div className="flex w-full min-w-0 flex-col-reverse sm:flex-col">
           <div className="flex w-full min-w-0 items-center gap-2">
             <div className="min-w-0 truncate text-lg font-medium">
-              {transaction.particulars}{' '}
-              {transaction.location_name !== '' && (
-                <>
-                  <span className="text-bg-500">@</span>{' '}
-                  {transaction.location_name}
-                </>
-              )}
+              Transfer from{' '}
+              {assets.find(asset => asset.id === transaction.from)?.name ??
+                'Unknown'}{' '}
+              to{' '}
+              {assets.find(asset => asset.id === transaction.to)?.name ??
+                'Unknown'}
             </div>
             {transaction.receipt !== '' && (
               <button onClick={handleViewReceipt}>
@@ -155,7 +141,7 @@ function TransactionListItem({
                 {transaction.type[0].toUpperCase() + transaction.type.slice(1)}
               </span>
             </div>
-            {transaction.ledger !== '' && (
+            {/* {transaction.ledgers.length && (
               <>
                 <Icon className="size-1" icon="tabler:circle-filled" />
                 <div className="flex items-center gap-1">
@@ -177,28 +163,20 @@ function TransactionListItem({
                   </span>
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>
       <div className="flex items-center gap-3 text-lg font-medium">
-        <span
-          className={clsx('text-lg font-medium', {
-            'text-green-500': transaction.side === 'debit',
-            'text-red-500': transaction.side === 'credit'
-          })}
-        >
-          {transaction.side === 'debit' ? '+' : '-'}
+        <span className="text-lg font-medium text-blue-500">
           {numberToCurrency(transaction.amount)}
         </span>
         <HamburgerMenu>
-          {transaction.type !== 'transfer' && (
-            <MenuItem
-              icon="tabler:pencil"
-              text="Edit"
-              onClick={handleEditTransaction}
-            />
-          )}
+          <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={handleEditTransaction}
+          />
           <MenuItem
             isRed
             icon="tabler:trash"
@@ -211,4 +189,4 @@ function TransactionListItem({
   )
 }
 
-export default TransactionListItem
+export default TransactionTransferItem
