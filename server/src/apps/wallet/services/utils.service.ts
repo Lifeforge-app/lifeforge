@@ -3,6 +3,7 @@ import Pocketbase from 'pocketbase'
 
 import { ISchemaWithPB } from 'shared/types/collections'
 import { WalletCollectionsSchemas } from 'shared/types/collections'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 export const getTypesCount = async (
   pb: Pocketbase
@@ -127,23 +128,22 @@ export const getExpensesBreakdown = async (
     .endOf('month')
     .format('YYYY-MM-DD')
 
-  const expenses = await pb.collection('wallet__transactions').getFullList<
-    ISchemaWithPB<WalletCollectionsSchemas.ITransaction> & {
-      expand?: { category: ISchemaWithPB<WalletCollectionsSchemas.ICategory> }
-    }
-  >({
-    filter: `date >= '${startDate}' && date <= '${endDate}' && type = 'expenses'`,
-    expand: 'category'
-  })
+  const expenses = await pb
+    .collection('wallet__transactions_income_expenses')
+    .getFullList<
+      ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense> & {
+        expand: {
+          category: ISchemaWithPB<WalletCollectionsSchemas.ICategory>
+          base_transaction: ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
+        }
+      }
+    >({
+      filter: `base_transaction.date >= '${startDate}' && base_transaction.date <= '${endDate}' && type = 'expenses'`,
+      expand: 'category,base_transaction'
+    })
 
-  const spentOnEachCategory: Record<
-    string,
-    {
-      amount: number
-      count: number
-      percentage: number
-    }
-  > = {}
+  const spentOnEachCategory: WalletControllersSchemas.IUtils['getExpensesBreakdown']['response'] =
+    {}
 
   for (const expense of expenses) {
     const categoryId = expense.expand?.category.id
@@ -153,11 +153,12 @@ export const getExpensesBreakdown = async (
     }
 
     if (spentOnEachCategory[categoryId]) {
-      spentOnEachCategory[categoryId].amount += expense.amount
+      spentOnEachCategory[categoryId].amount +=
+        expense.expand.base_transaction.amount
       spentOnEachCategory[categoryId].count += 1
     } else {
       spentOnEachCategory[categoryId] = {
-        amount: expense.amount,
+        amount: expense.expand.base_transaction.amount,
         count: 1,
         percentage: 0
       }

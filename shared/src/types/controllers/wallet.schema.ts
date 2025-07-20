@@ -167,17 +167,6 @@ const Assets = {
   },
 
   /**
-   * @route       GET /balance/:id
-   * @description Get accumulated balance for a wallet asset
-   */
-  getAssetAccumulatedBalance: {
-    params: z.object({
-      id: z.string()
-    }),
-    response: z.record(z.string(), z.number())
-  },
-
-  /**
    * @route       PATCH /:id
    * @description Update an existing wallet asset
    */
