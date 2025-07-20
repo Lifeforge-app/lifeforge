@@ -49,7 +49,8 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
         type: 'create',
         existedData: {
           ...data,
-          receipt: keepReceiptAfterScan ? file : ''
+          type: data.type ?? 'expenses',
+          receipt: (keepReceiptAfterScan ? file : '') as never
         }
       })
     } catch {

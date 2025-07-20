@@ -27,7 +27,6 @@ function ModifyTransactionsModal({
     existedData:
       | ({
           type: IWalletTransaction['type']
-          receipt: string | File | null
         } & Partial<IWalletTransaction>)
       | null
   }
@@ -325,7 +324,7 @@ function ModifyTransactionsModal({
           image: existedData.receipt || null,
           preview: (() => {
             if ((existedData.receipt as File | string | null) instanceof File) {
-              return URL.createObjectURL(existedData.receipt as File)
+              return URL.createObjectURL(existedData.receipt as unknown as File)
             }
 
             if (existedData.receipt) {
