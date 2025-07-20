@@ -407,7 +407,7 @@ export const addException = async (
     .collection('calendar__events_recurring')
     .update<
       ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>
-    >(id, { exceptions })
+    >(event.id, { exceptions })
 
   return true
 }
