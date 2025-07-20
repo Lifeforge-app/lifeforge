@@ -142,15 +142,9 @@ function CalendarComponent({
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
       open(CreateEventModal, {
-        type: 'create',
         existedData: {
-          id: '',
-          title: '',
           start,
-          end: dayjs(end).subtract(1, 'minute').toDate(),
-          category: '',
-          location: '',
-          reference_link: ''
+          end: dayjs(end).subtract(1, 'minute').toDate()
         }
       })
     },
