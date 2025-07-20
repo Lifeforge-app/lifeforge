@@ -9,6 +9,7 @@ export const addDays = (date: Date, days: number): Date => {
   const newDate = new Date(date.valueOf())
 
   newDate.setDate(newDate.getDate() + days)
+
   return newDate
 }
 
@@ -16,10 +17,12 @@ export const getDates = (startDate: Date, stopDate: Date): Date[] => {
   const dateArray = []
 
   let currentDate = startDate
+
   while (currentDate <= stopDate) {
     dateArray.push(new Date(currentDate))
     currentDate = addDays(currentDate, 1)
   }
+
   return dateArray
 }
 
@@ -40,6 +43,7 @@ export const getActivities = async (
       const dateKey = moment(item.date).format('YYYY-MM-DD')
 
       acc[dateKey] = item.total_minutes
+
       return acc
     },
     {} as { [key: string]: number }
@@ -54,12 +58,15 @@ export const getActivities = async (
       if (hours < 1) {
         return 1
       }
+
       if (hours < 3) {
         return 2
       }
+
       if (hours < 5) {
         return 3
       }
+
       return 4
     })()
   }))
@@ -123,9 +130,11 @@ export const getStatistics = async (
     if (a.count > b.count) {
       return -1
     }
+
     if (a.count < b.count) {
       return 1
     }
+
     return 0
   })
 
@@ -198,7 +207,8 @@ export const getStatistics = async (
     'Total time spent': total,
     'Average time spent': average,
     'Longest streak': Math.max(longestStreak, currentStreak),
-    'Current streak': currentStreak
+    'Current streak': currentStreak,
+    'Time spent today': dateMap[moment().format('YYYY-MM-DD')] || 0
   }
 }
 

@@ -6,20 +6,19 @@
  * Generated at: 2025-07-20T12:17:56.591Z
  * Contains: project, language, daily_entry
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Project = z.object({
   name: z.string(),
-  duration: z.number(),
-});
+  duration: z.number()
+})
 
 const Language = z.object({
   name: z.string(),
   icon: z.string(),
   color: z.string(),
-  duration: z.number(),
-});
+  duration: z.number()
+})
 
 const DailyEntry = z.object({
   date: z.string(),
@@ -27,24 +26,16 @@ const DailyEntry = z.object({
   projects: z.any(),
   total_minutes: z.number(),
   last_timestamp: z.number(),
-  languages: z.any(),
-});
+  languages: z.any()
+})
 
-type IProject = z.infer<typeof Project>;
-type ILanguage = z.infer<typeof Language>;
-type IDailyEntry = z.infer<typeof DailyEntry>;
+type IProject = z.infer<typeof Project>
+type ILanguage = z.infer<typeof Language>
+type IDailyEntry = z.infer<typeof DailyEntry>
 
-export {
-  Project,
-  Language,
-  DailyEntry,
-};
+export { Project, Language, DailyEntry }
 
-export type {
-  IProject,
-  ILanguage,
-  IDailyEntry,
-};
+export type { IProject, ILanguage, IDailyEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
@@ -60,6 +51,7 @@ const CodeTimeActivitiesSchema = z.object({
 })
 
 const CodeTimeStatisticsSchema = z.object({
+  'Time spent today': z.number(),
   'Most time spent': z.number(),
   'Total time spent': z.number(),
   'Average time spent': z.number(),
