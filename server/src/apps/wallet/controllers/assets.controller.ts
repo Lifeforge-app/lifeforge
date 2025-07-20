@@ -23,6 +23,18 @@ const createAsset = forgeController
   .statusCode(201)
   .callback(async ({ pb, body }) => await AssetsService.createAsset(pb, body))
 
+const getAssetAccumulatedBalance = forgeController
+  .route('GET /balance/:id')
+  .description('Get accumulated balance for a wallet asset')
+  .schema(WalletControllersSchemas.Assets.getAssetAccumulatedBalance)
+  .existenceCheck('params', {
+    id: 'wallet__assets'
+  })
+  .callback(
+    async ({ pb, params: { id } }) =>
+      await AssetsService.getAssetAccumulatedBalance(pb, id)
+  )
+
 const updateAsset = forgeController
   .route('PATCH /:id')
   .description('Update an existing wallet asset')
@@ -49,6 +61,7 @@ const deleteAsset = forgeController
 
 bulkRegisterControllers(walletAssetsRouter, [
   getAllAssets,
+  getAssetAccumulatedBalance,
   createAsset,
   updateAsset,
   deleteAsset
