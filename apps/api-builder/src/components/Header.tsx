@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { Button } from '@lifeforge/ui'
 
 function Header() {
   const { t } = useTranslation('core.apiExplorer')

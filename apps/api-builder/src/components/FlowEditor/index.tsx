@@ -8,12 +8,11 @@ import {
   ReactFlow,
   ReactFlowProvider
 } from '@xyflow/react'
-
 import '@xyflow/react/dist/style.css'
+import { ModalManager } from 'lifeforge-ui'
 
-import { ModalManager } from '@lifeforge/ui'
+import { usePersonalization } from 'shared/lib'
 
-import usePersonalization from '../../providers/PersonalizationProvider/usePersonalization'
 import ControlPanel from './components/ControlPanel'
 import ConnectionLine from './components/Flow/ConnectionLine'
 import { default as EdgeComponent } from './components/Flow/Edge'

@@ -12,8 +12,8 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "types": "tsc --noEmit",
+    "dev": "vite --port 5173",
+    "types": "tsc -b --noEmit",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

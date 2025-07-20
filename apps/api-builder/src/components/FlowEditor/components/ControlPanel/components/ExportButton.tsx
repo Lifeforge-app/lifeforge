@@ -1,4 +1,4 @@
-import { Button } from '@lifeforge/ui'
+import { Button } from 'lifeforge-ui'
 
 import { useFlowStateContext } from '../../../hooks/useFlowStateContext'
 
