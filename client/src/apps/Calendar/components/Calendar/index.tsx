@@ -34,11 +34,23 @@ interface CalendarComponentProps {
 }
 
 function CalendarComponent({
-  events,
+  events: rawEvents,
   setSidebarOpen,
   selectedCategory,
   selectedCalendar
 }: CalendarComponentProps) {
+  const events = useMemo(() => {
+    if (rawEvents) {
+      return rawEvents.map(event => ({
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end)
+      }))
+    } else {
+      return []
+    }
+  }, [rawEvents])
+
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()

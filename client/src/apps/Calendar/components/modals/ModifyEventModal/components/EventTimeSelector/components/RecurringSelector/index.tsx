@@ -139,7 +139,7 @@ function RecurringSelector({
       dailyEvery,
       hourlyEvery,
       endType,
-      endAfter,
+      endAfter: endType === 'after' ? endAfter.toString() : '1',
       endOn
     })
 
