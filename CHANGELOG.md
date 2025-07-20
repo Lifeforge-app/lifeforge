@@ -2,26 +2,53 @@
 
 ## 📌 **dev 25w29 (7/14/2025 - 7/21/2025)**
 
-- **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
-- **Guitar Tabs**: Improved web scraping logic to handle more edge cases.
-- **Guitar Tabs**: Added some internationalization stuff that have previously been missing.
-- **Idea Box**: Fixed a bug where the idea entry is not properly updated in the frontend when the user performs an action.
-- **Books Library**: Fixed a bug where the book entry cannot be updated due to frontend and backend schema mismatches.
-- **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
-- **Localization Manager**: Fixed a bug where the entry created in the root layer is malformed.
-- **UI**: Fixed a bug where the toast progressbar color is not properly applied.
-- **UI**: Added a new `FormNumberInput` component to the `FormModal` for number input fields.
-- **Code**: Migrated the entire codebase to a monorepo structure using `bun` as the package manager.
-- **Code**: Typescript interfaces are now generated and put into the `shared` package, allowing the frontend and backend to share the same types.
-- **Code**: Shared CSS are now part of the `lifeforge-ui` package, allowing the main app and side apps to share the same styles.
-- **Code**: Shared components like `PersonalizationProvider`, `APIOnlineStatusProvider`, etc. are moved into the `shared` package under `lib` folder, allowing the main app and side apps to share the same providers.
-- **Code**: Huge refactoring of the codebase to improve modularity and maintainability.
-- **Code**: Removed a lot of unused and legacy imports, variables, and functions.
-- **Code**: ESLint and Prettier configurations are now in the root of the monorepo, allowing all packages to share the same configurations.
-- **Code**: Added some more rules to the ESLint configuration to improve code quality.
-- **API**: Written JSDoc for the `forgeController`.
-- **API**: Improved type safety of the `existenceCheck` function in the `forgeController`, now you can only pass in the params/query/body key that is defined in the schema.
-- **API**: Added another middle state class to the `forgeController`, now you are required to follow the order of `route()`, then `schema()`, then the rest of the available methods in the chain.
+### 🎸 **Guitar Tabs**
+- Migrated file uploading mechanism to use the task pool system for better performance
+- Enhanced web scraping logic with improved edge case handling
+- Added missing internationalization support
+
+### 💡 **Idea Box**
+- Fixed frontend synchronization issue where idea entries weren't properly updated after user actions
+
+### 📚 **Books Library**
+- Resolved book update functionality due to frontend and backend schema mismatches
+
+### 📅 **Calendar**
+- Added automatic location data retrieval from Google Places API when parsing event details from images
+
+### 💰 **Wallet**
+- Introduced new "Spending Heatmap" subpage for visualizing transaction patterns
+
+### 🌐 **Localization Manager**
+- Fixed malformed entry creation in the root layer
+
+### 🎨 **UI & Components**
+- **Migration**: Fully migrated to the new `lifeforge-ui` package under monorepo structure
+  - Deprecated legacy codebase on GitHub
+  - Removed `@lifeforge/ui` package from npm registry
+- **Bug Fixes**: Corrected toast progress bar color application
+- **Type Safety**: Enhanced `FormModal` component with automatic field type determination based on field value types
+- **New Components**: 
+  - Added `NumberInput` component
+  - Added `FormNumberInput` component for form number input fields
+
+### 🏗️ **Code Architecture**
+- **Monorepo Migration**: Complete transition to monorepo structure using `bun` as package manager
+- **Type Sharing**: Generated TypeScript interfaces now reside in `shared` package for frontend/backend consistency
+- **Shared Resources**:
+  - CSS styles centralized in `lifeforge-ui` package
+  - Common providers (`PersonalizationProvider`, `APIOnlineStatusProvider`) moved to `shared/lib`
+- **Code Quality**:
+  - Major refactoring to improve modularity and maintainability
+  - Cleaned up unused imports, variables, and legacy functions
+  - Centralized ESLint and Prettier configurations at monorepo root
+  - Enhanced ESLint rules for better code quality
+
+### 🔧 **API**
+- **Migration**: Moved API codebase to monorepo structure and deprecated legacy repository
+- **Documentation**: Added comprehensive JSDoc documentation for `forgeController`
+- **Type Safety**: Enhanced `existenceCheck` function with schema-based parameter validation
+- **Architecture**: Implemented middleware state class requiring `route()` → `schema()` → methods chain order
 
 ## 📌 **dev 25w28 (7/7/2025 - 7/14/2025)**
 
