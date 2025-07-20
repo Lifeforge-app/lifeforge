@@ -1,6 +1,12 @@
 # Change Log
 
-## 📌 **dev 25w29 (7/14/2025 - 7/21/2025)**
+## 📌 **dev 25w30 (7/21/2025 - 7/28/2025)**
+
+### 🎨 **UI & Components**
+- **Enhancements**: 
+  - `LocationInput` will now display a loading state when fetching the API key availability
+
+## 📌 **dev 25w29 (7/14/2025 - 7/20/2025)**
 
 ### 🎸 **Guitar Tabs**
 - Migrated file uploading mechanism to use the task pool system for better performance
