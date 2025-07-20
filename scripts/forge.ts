@@ -8,7 +8,8 @@ const PROJECTS_ALLOWED = {
   shared: 'shared',
   ui: 'packages/lifeforge-ui',
   'apps:localization-manager': 'apps/localization-manager',
-  'apps:docs': 'apps/docs'
+  'apps:docs': 'apps/docs',
+  'apps:api-builder': 'apps/api-builder'
 }
 
 const processType = process.argv[2]
