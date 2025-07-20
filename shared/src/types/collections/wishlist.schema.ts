@@ -3,7 +3,7 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: wishlist
- * Generated at: 2025-07-20T05:29:45.173Z
+ * Generated at: 2025-07-20T12:17:56.591Z
  * Contains: list, entry, list_aggregated
  */
 
