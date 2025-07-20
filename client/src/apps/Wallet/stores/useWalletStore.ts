@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 
-import type { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
+import { WalletCollectionsSchemas } from 'shared/types/collections'
 
 interface WalletState {
-  selectedType: IWalletTransaction['type'] | null
+  selectedType: WalletCollectionsSchemas.ITransaction['type'] | null
   selectedCategory: string | null
   selectedAsset: string | null
   selectedLedger: string | null

@@ -1,34 +1,24 @@
 import { useAPIQuery } from 'shared/lib'
-
-import type {
-  IWalletAsset,
-  IWalletCategory,
-  IWalletLedger,
-  IWalletTransaction
-} from '@apps/Wallet/interfaces/wallet_interfaces'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import { useFilteredTransactions } from './useFilteredTransactions'
 
 export function useWalletData() {
-  const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
-    'wallet/transactions',
-    ['wallet', 'transactions']
-  )
+  const transactionsQuery = useAPIQuery<
+    WalletControllersSchemas.ITransactions['getAllTransactions']['response']
+  >('wallet/transactions', ['wallet', 'transactions'])
 
-  const assetsQuery = useAPIQuery<IWalletAsset[]>('wallet/assets', [
-    'wallet',
-    'assets'
-  ])
+  const assetsQuery = useAPIQuery<
+    WalletControllersSchemas.IAssets['getAllAssets']['response']
+  >('wallet/assets', ['wallet', 'assets'])
 
-  const ledgersQuery = useAPIQuery<IWalletLedger[]>('wallet/ledgers', [
-    'wallet',
-    'ledgers'
-  ])
+  const ledgersQuery = useAPIQuery<
+    WalletControllersSchemas.ILedgers['getAllLedgers']['response']
+  >('wallet/ledgers', ['wallet', 'ledgers'])
 
-  const categoriesQuery = useAPIQuery<IWalletCategory[]>('wallet/categories', [
-    'wallet',
-    'categories'
-  ])
+  const categoriesQuery = useAPIQuery<
+    WalletControllersSchemas.ICategories['getAllCategories']['response']
+  >('wallet/categories', ['wallet', 'categories'])
 
   const typesCountQuery = useAPIQuery<
     Record<

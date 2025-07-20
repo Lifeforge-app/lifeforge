@@ -14,11 +14,11 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
 import { useAPIQuery } from 'shared/lib'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-import { type IWalletTransaction } from '../../interfaces/wallet_interfaces'
 import HeaderMenu from './components/HeaderMenu'
 import InnerHeader from './components/InnerHeader'
 import SearchBar from './components/SearchBar'
@@ -27,6 +27,9 @@ import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
 import TableView from './views/TableView'
+
+export type IWalletTransaction =
+  WalletControllersSchemas.ITransactions['getAllTransactions']['response'][number]
 
 function Transactions() {
   const open = useModalStore(state => state.open)
