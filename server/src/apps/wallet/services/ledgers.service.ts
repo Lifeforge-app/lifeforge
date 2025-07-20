@@ -5,10 +5,10 @@ import { WalletCollectionsSchemas } from 'shared/types/collections'
 
 export const getAllLedgers = (
   pb: PocketBase
-): Promise<ISchemaWithPB<WalletCollectionsSchemas.ILedger>[]> =>
+): Promise<ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated>[]> =>
   pb
     .collection('wallet__ledgers_aggregated')
-    .getFullList<ISchemaWithPB<WalletCollectionsSchemas.ILedger>>({
+    .getFullList<ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated>>({
       sort: 'name'
     })
 

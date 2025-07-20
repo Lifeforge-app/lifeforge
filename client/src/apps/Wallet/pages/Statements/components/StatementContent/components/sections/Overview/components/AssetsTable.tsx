@@ -3,11 +3,13 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { QueryWrapper } from 'lifeforge-ui'
 
-import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import {
-  IWalletAsset,
-  IWalletTransaction
-} from '@apps/Wallet/interfaces/wallet_interfaces'
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function getAmounts({
@@ -16,15 +18,19 @@ function getAmounts({
   month,
   year
 }: {
-  asset: IWalletAsset
+  asset: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
   transactions: IWalletTransaction[]
   month: number
   year: number
 }) {
-  const balance = asset.balance
+  const balance = asset.current_balance
 
-  const transactionsForAsset = transactions.filter(
-    transaction => transaction.asset === asset.id
+  console.log(balance)
+
+  const transactionsForAsset = transactions.filter(transaction =>
+    transaction.type !== 'transfer'
+      ? transaction.asset === asset.id
+      : transaction.to === asset.id || transaction.from === asset.id
   )
 
   const transactionsAfterMonth = transactionsForAsset.filter(
@@ -42,12 +48,22 @@ function getAmounts({
   const thatMonthAmount =
     balance -
     transactionsAfterMonth.reduce((acc, curr) => {
-      if (curr.side === 'debit') {
+      if (curr.type === 'income') {
         return acc + curr.amount
       }
 
-      if (curr.side === 'credit') {
+      if (curr.type === 'expenses') {
         return acc - curr.amount
+      }
+
+      if (curr.type === 'transfer') {
+        if (curr.to === asset.id) {
+          return acc - curr.amount
+        }
+
+        if (curr.from === asset.id) {
+          return acc + curr.amount
+        }
       }
 
       return acc
@@ -56,12 +72,22 @@ function getAmounts({
   const lastMonthAmount =
     thatMonthAmount -
     transactionsThisMonth.reduce((acc, curr) => {
-      if (curr.side === 'debit') {
+      if (curr.type === 'income') {
+        return acc - curr.amount
+      }
+
+      if (curr.type === 'expenses') {
         return acc + curr.amount
       }
 
-      if (curr.side === 'credit') {
-        return acc - curr.amount
+      if (curr.type === 'transfer') {
+        if (curr.to === asset.id) {
+          return acc - curr.amount
+        }
+
+        if (curr.from === asset.id) {
+          return acc + curr.amount
+        }
       }
 
       return acc
@@ -187,7 +213,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                   if (typeof transactions === 'string') return <></>
 
                   const balance = assets.reduce(
-                    (acc, curr) => acc + curr.balance,
+                    (acc, curr) => acc + curr.current_balance,
                     0
                   )
 
@@ -206,11 +232,11 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                   const thatMonthAmount =
                     balance -
                     transactionsAfterMonth.reduce((acc, curr) => {
-                      if (curr.side === 'debit') {
+                      if (curr.type === 'income') {
                         return acc + curr.amount
                       }
 
-                      if (curr.side === 'credit') {
+                      if (curr.type === 'expenses') {
                         return acc - curr.amount
                       }
 
@@ -220,11 +246,11 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                   const lastMonthAmount =
                     thatMonthAmount -
                     transactionsThisMonth.reduce((acc, curr) => {
-                      if (curr.side === 'debit') {
+                      if (curr.type === 'income') {
                         return acc + curr.amount
                       }
 
-                      if (curr.side === 'credit') {
+                      if (curr.type === 'expenses') {
                         return acc - curr.amount
                       }
 

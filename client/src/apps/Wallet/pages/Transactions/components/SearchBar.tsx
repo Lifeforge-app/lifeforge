@@ -1,14 +1,8 @@
-import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
+import { SearchInput } from 'lifeforge-ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
-function SearchBar({
-  setView,
-  view
-}: {
-  setView: React.Dispatch<React.SetStateAction<'table' | 'list'>>
-  view: 'table' | 'list'
-}) {
+function SearchBar() {
   const { searchQuery, setSearchQuery } = useWalletStore()
 
   return (
@@ -19,15 +13,6 @@ function SearchBar({
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         stuffToSearch="transaction"
-      />
-      <ViewModeSelector
-        className="hidden md:flex"
-        options={[
-          { value: 'table', icon: 'tabler:table' },
-          { value: 'list', icon: 'uil:list-ul' }
-        ]}
-        setViewMode={setView}
-        viewMode={view}
       />
     </div>
   )

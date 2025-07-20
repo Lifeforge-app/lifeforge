@@ -5,7 +5,7 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
+import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 const VIEWS = [
   ['tabler:login-2', 'income'],

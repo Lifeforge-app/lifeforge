@@ -40,13 +40,16 @@ function TransactionList({
               <th className="w-full p-3 text-left text-lg font-medium">
                 Particular
               </th>
-              <th className="p-3 text-lg font-medium whitespace-nowrap">
-                Asset
-              </th>
+
               {type !== 'transfer' && (
-                <th className="p-3 text-lg font-medium whitespace-nowrap">
-                  Category
-                </th>
+                <>
+                  <th className="p-3 text-lg font-medium whitespace-nowrap">
+                    Asset
+                  </th>
+                  <th className="p-3 text-lg font-medium whitespace-nowrap">
+                    Category
+                  </th>
+                </>
               )}
               <th className="p-3 text-lg font-medium whitespace-nowrap">
                 Amount
@@ -55,9 +58,11 @@ function TransactionList({
             <tr className="bg-zinc-800 text-white print:bg-black/70">
               <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
               <th className="w-full p-3 text-left text-lg font-medium"></th>
-              <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
               {type !== 'transfer' && (
-                <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
+                <>
+                  <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
+                  <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
+                </>
               )}
               <th className="p-3 text-lg font-medium whitespace-nowrap">RM</th>
             </tr>
@@ -82,11 +87,21 @@ function TransactionList({
                       dayjs(transaction.date).format('MMM DD')}
                   </td>
                   <td className="min-w-96 p-3 text-lg">
-                    {transaction.particulars}
+                    {transaction.type === 'transfer' ? (
+                      <>
+                        Transfer from{' '}
+                        {assets.find(asset => asset.id === transaction.from)
+                          ?.name ?? 'Unknown Asset'}{' '}
+                        to{' '}
+                        {assets.find(asset => asset.id === transaction.to)
+                          ?.name ?? 'Unknown Asset'}
+                      </>
+                    ) : (
+                      transaction.particulars
+                    )}
                   </td>
-
-                  <td className="p-3 text-lg whitespace-nowrap">
-                    {typeof assets !== 'string' && (
+                  {transaction.type !== 'transfer' && (
+                    <td className="p-3 text-lg whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <Icon
                           className="size-6 shrink-0"
@@ -102,18 +117,18 @@ function TransactionList({
                           }
                         </span>
                       </div>
-                    )}
-                  </td>
+                    </td>
+                  )}
                   {type !== 'transfer' && (
                     <td className="p-3 text-lg whitespace-nowrap">
-                      {typeof categories !== 'string' && (
+                      {transaction.type !== 'transfer' && (
                         <div className="flex items-center gap-2">
                           <Icon
                             className="size-6 shrink-0"
                             icon={
                               categories.find(
                                 category => category.id === transaction.category
-                              )?.icon ?? 'tabler:coin'
+                              )?.icon ?? ''
                             }
                             style={{
                               color: categories.find(
@@ -133,7 +148,7 @@ function TransactionList({
                     </td>
                   )}
                   <td className="p-3 text-right text-lg whitespace-nowrap">
-                    {transaction.side === 'credit'
+                    {transaction.type === 'expenses'
                       ? `(${numberToCurrency(transaction.amount)})`
                       : numberToCurrency(transaction.amount)}
                   </td>
@@ -142,7 +157,7 @@ function TransactionList({
             <tr className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]">
               <td
                 className="p-3 text-left text-xl font-semibold whitespace-nowrap"
-                colSpan={type !== 'transfer' ? 4 : 3}
+                colSpan={type !== 'transfer' ? 4 : 2}
               >
                 Total {type.charAt(0).toUpperCase() + type.slice(1)}
               </td>
@@ -163,11 +178,11 @@ function TransactionList({
                     )
                     .reduce((acc, curr) => {
                       if (curr.type !== 'transfer') {
-                        if (curr.side === 'debit') {
+                        if (curr.type === 'income') {
                           return acc + curr.amount
                         }
 
-                        if (curr.side === 'credit') {
+                        if (curr.type === 'expenses') {
                           return acc - curr.amount
                         }
                       } else {

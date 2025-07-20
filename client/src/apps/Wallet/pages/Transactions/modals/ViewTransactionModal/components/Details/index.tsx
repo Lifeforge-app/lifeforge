@@ -113,6 +113,8 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
             transaction.ledgers.includes(ledger.id)
           )
 
+          if (!ledger || ledger.length === 0) return null
+
           return (
             <DetailItem icon="tabler:book" name="ledger">
               {ledger ? (
@@ -134,8 +136,8 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
             </DetailItem>
           )
         })()}
-      <DetailItem vertical icon="tabler:receipt" name="receipt">
-        {transaction.receipt ? (
+      {transaction.receipt && (
+        <DetailItem vertical icon="tabler:receipt" name="receipt">
           <Button
             className="w-full"
             icon="tabler:eye"
@@ -149,34 +151,28 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
           >
             View Receipt
           </Button>
-        ) : (
-          <p className="text-bg-500 mb-2 text-center">No Receipt</p>
-        )}
-      </DetailItem>
-      {transaction.type !== 'transfer' && (
+        </DetailItem>
+      )}
+      {transaction.type !== 'transfer' && transaction.location_name && (
         <DetailItem vertical icon="tabler:map-pin" name="location">
-          {transaction.location_name ? (
-            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-              <Map
-                className="h-96 overflow-hidden rounded-md"
-                defaultCenter={{
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <Map
+              className="h-96 overflow-hidden rounded-md"
+              defaultCenter={{
+                lat: transaction.location_coords?.lat || 0,
+                lng: transaction.location_coords?.lon || 0
+              }}
+              defaultZoom={15}
+              mapId="LocationMap"
+            >
+              <AdvancedMarker
+                position={{
                   lat: transaction.location_coords?.lat || 0,
                   lng: transaction.location_coords?.lon || 0
                 }}
-                defaultZoom={15}
-                mapId="LocationMap"
-              >
-                <AdvancedMarker
-                  position={{
-                    lat: transaction.location_coords?.lat || 0,
-                    lng: transaction.location_coords?.lon || 0
-                  }}
-                />
-              </Map>
-            </APIProvider>
-          ) : (
-            <p className="text-bg-500 mb-2 text-center">No Location</p>
-          )}
+              />
+            </Map>
+          </APIProvider>
         </DetailItem>
       )}
     </div>

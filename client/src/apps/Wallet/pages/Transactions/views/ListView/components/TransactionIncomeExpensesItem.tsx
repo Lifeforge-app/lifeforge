@@ -23,11 +23,11 @@ function TransactionIncomeExpensesItem({
 
   const queryClient = useQueryClient()
 
-  const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
+  const { categoriesQuery, assetsQuery } = useWalletData()
 
   const categories = categoriesQuery.data ?? []
 
-  const ledgers = ledgersQuery.data ?? []
+  // const ledgers = ledgersQuery.data ?? []
 
   const assets = assetsQuery.data ?? []
 

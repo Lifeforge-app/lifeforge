@@ -217,7 +217,7 @@ const Ledgers = {
    * @description Get all wallet ledgers
    */
   getAllLedgers: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Ledger))
+    response: z.array(SchemaWithPB(WalletCollectionsSchemas.LedgerAggregated))
   },
 
   /**
