@@ -7,7 +7,8 @@
         "placeholder": "请键入 \"{{text}}\" 以确认删除",
         "label": "确认删除"
       }
-    }
+    },
+    "error": "删除项目时出错。请再试一次。"
   },
   "searchFilters": "搜索过滤器",
   "iconPicker": {
