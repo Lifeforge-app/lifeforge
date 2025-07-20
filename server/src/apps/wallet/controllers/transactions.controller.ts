@@ -2,7 +2,10 @@ import {
   bulkRegisterControllers,
   forgeController
 } from '@functions/forgeController'
-import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
+import {
+  singleUploadMiddleware,
+  singleUploadMiddlewareOfKey
+} from '@middlewares/uploadMiddleware'
 import express from 'express'
 
 import { WalletControllersSchemas } from 'shared/types/controllers'
@@ -42,13 +45,15 @@ const updateTransaction = forgeController
   .route('PATCH /:id')
   .description('Update an existing wallet transaction')
   .schema(WalletControllersSchemas.Transactions.updateTransaction)
-  .middlewares(singleUploadMiddleware)
+  .middlewares(singleUploadMiddlewareOfKey('receipt'))
   .existenceCheck('params', {
     id: 'wallet__transactions'
   })
   .existenceCheck('body', {
-    category: 'wallet__categories',
-    asset: 'wallet__assets',
+    category: '[wallet__categories]',
+    asset: '[wallet__assets]',
+    from: '[wallet__assets]',
+    to: '[wallet__assets]',
     ledger: '[wallet__ledgers]'
   })
   .callback(({ pb, params: { id }, body, req }) =>
