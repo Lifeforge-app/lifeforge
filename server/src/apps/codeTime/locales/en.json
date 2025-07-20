@@ -6,7 +6,8 @@
     "totalTimeSpent": "Total Time Spent",
     "averageTimeSpent": "Average Time Spent",
     "longestStreak": "Longest Streak",
-    "currentStreak": "Current Streak"
+    "currentStreak": "Current Streak",
+    "timeSpentToday": "Time Spent Today"
   },
   "headers": {
     "statistics": "Statistics",
@@ -18,5 +19,11 @@
   },
   "labels": {
     "inThePast": "In the Past"
+  },
+  "units": {
+    "h": "h",
+    "m": "m",
+    "days": "Days",
+    "hours": "Hours"
   }
 }

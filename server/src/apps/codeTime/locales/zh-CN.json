@@ -6,7 +6,8 @@
     "totalTimeSpent": "总花费时间",
     "averageTimeSpent": "平均花费时间",
     "longestStreak": "最长连续天数",
-    "currentStreak": "当前连续天数"
+    "currentStreak": "当前连续天数",
+    "timeSpentToday": "今天花费的时间"
   },
   "headers": {
     "statistics": "统计",
@@ -18,5 +19,11 @@
   },
   "labels": {
     "inThePast": "过去"
+  },
+  "units": {
+    "h": "时",
+    "m": "分",
+    "days": "天",
+    "hours": "小时"
   }
 }

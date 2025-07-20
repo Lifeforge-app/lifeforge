@@ -6,7 +6,8 @@
     "totalTimeSpent": "Jumlah Masa Dihabiskan",
     "averageTimeSpent": "Purata Masa Dihabiskan",
     "longestStreak": "Rentetan Terpanjang",
-    "currentStreak": "Rentetan Semasa"
+    "currentStreak": "Rentetan Semasa",
+    "timeSpentToday": "Masa Dihabiskan Hari Ini"
   },
   "headers": {
     "statistics": "Statistik",
@@ -18,5 +19,11 @@
   },
   "labels": {
     "inThePast": "Pada Masa Lalu"
+  },
+  "units": {
+    "h": "j",
+    "m": "m",
+    "days": "Hari",
+    "hours": "Jam"
   }
 }
