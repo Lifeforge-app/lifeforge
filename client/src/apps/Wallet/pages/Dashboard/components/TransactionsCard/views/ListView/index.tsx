@@ -4,11 +4,14 @@ import dayjs from 'dayjs'
 import { QueryWrapper } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-function ListView({ categories }: { categories: IWalletCategory[] }) {
-  const { transactionsQuery } = useWalletData()
+import TransactionAmount from '../../components/TransactionAmount'
+import TransactionParticular from '../../components/TransactionParticular'
+
+function ListView() {
+  const { transactionsQuery, categoriesQuery } = useWalletData()
+
+  const categories = categoriesQuery.data ?? []
 
   return (
     <QueryWrapper query={transactionsQuery}>
@@ -23,15 +26,19 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
                     transaction.type === 'transfer' &&
                       'bg-blue-500/20 text-blue-500'
                   )}
-                  style={{
-                    backgroundColor:
-                      categories.find(
-                        category => category.id === transaction.category
-                      )?.color + '20',
-                    color: categories.find(
-                      category => category.id === transaction.category
-                    )?.color
-                  }}
+                  style={
+                    transaction.type !== 'transfer'
+                      ? {
+                          backgroundColor:
+                            categories.find(
+                              category => category.id === transaction.category
+                            )?.color + '20',
+                          color: categories.find(
+                            category => category.id === transaction.category
+                          )?.color
+                        }
+                      : undefined
+                  }
                 >
                   <Icon
                     className="size-6"
@@ -46,13 +53,7 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
                 </div>
                 <div className="flex w-full min-w-0 flex-col">
                   <div className="w-full min-w-0 truncate font-semibold">
-                    {transaction.particulars}{' '}
-                    {transaction.location_name && (
-                      <>
-                        <span className="text-bg-500">@</span>{' '}
-                        {transaction.location_name}
-                      </>
-                    )}
+                    <TransactionParticular transaction={transaction} />
                   </div>
                   <div className="text-bg-500 text-sm">
                     {transaction.type[0].toUpperCase() +
@@ -62,16 +63,10 @@ function ListView({ categories }: { categories: IWalletCategory[] }) {
               </div>
               <div className="flex flex-col">
                 <div className="text-right">
-                  <span
-                    className={clsx(
-                      transaction.side === 'debit'
-                        ? 'text-green-500'
-                        : 'text-red-500'
-                    )}
-                  >
-                    {transaction.side === 'debit' ? '+' : '-'}
-                    {numberToCurrency(transaction.amount)}
-                  </span>
+                  <TransactionAmount
+                    amount={transaction.amount}
+                    type={transaction.type}
+                  />
                 </div>
                 <div className="text-bg-500 text-right text-sm whitespace-nowrap">
                   {dayjs(transaction.date).format('MMM DD, YYYY')}

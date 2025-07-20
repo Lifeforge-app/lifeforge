@@ -6,13 +6,16 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import { IWalletCategory } from '@apps/Wallet/interfaces/wallet_interfaces'
-import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-function TableView({ categories }: { categories: IWalletCategory[] }) {
+import TransactionAmount from '../../components/TransactionAmount'
+import TransactionParticular from '../../components/TransactionParticular'
+
+function TableView() {
   const { t } = useTranslation('apps.wallet')
 
-  const { transactionsQuery } = useWalletData()
+  const { transactionsQuery, categoriesQuery } = useWalletData()
+
+  const categories = categoriesQuery.data ?? []
 
   return (
     <QueryWrapper query={transactionsQuery}>
@@ -62,16 +65,10 @@ function TableView({ categories }: { categories: IWalletCategory[] }) {
                     </Link>
                   </td>
                   <td className="max-w-64 truncate py-2">
-                    {transaction.particulars}{' '}
-                    {transaction.location_name && (
-                      <>
-                        <span className="text-bg-500">@</span>{' '}
-                        {transaction.location_name}
-                      </>
-                    )}
+                    <TransactionParticular transaction={transaction} />
                   </td>
                   <td className="py-2 text-center">
-                    {transaction.category !== '' ? (
+                    {transaction.type !== 'transfer' ? (
                       <Link
                         className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap"
                         style={{
@@ -98,20 +95,14 @@ function TableView({ categories }: { categories: IWalletCategory[] }) {
                         )?.name ?? '-'}
                       </Link>
                     ) : (
-                      '-'
+                      <span className="text-bg-400 dark:text-bg-600">-</span>
                     )}
                   </td>
                   <td className="py-2 text-center">
-                    <span
-                      className={clsx(
-                        transaction.side === 'debit'
-                          ? 'text-green-500'
-                          : 'text-red-500'
-                      )}
-                    >
-                      {transaction.side === 'debit' ? '+' : '-'}
-                      {numberToCurrency(transaction.amount)}
-                    </span>
+                    <TransactionAmount
+                      amount={transaction.amount}
+                      type={transaction.type}
+                    />
                   </td>
                 </tr>
               )
