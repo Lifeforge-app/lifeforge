@@ -7,31 +7,23 @@ import { WalletControllersSchemas } from 'shared/types/controllers'
 
 export const getTypesCount = async (
   pb: Pocketbase
-): Promise<{
-  [key: string]: {
-    amount: number
-    accumulate: number
-  }
-}> => {
+): Promise<WalletControllersSchemas.IUtils['getTypesCount']['response']> => {
   const types = await pb
     .collection('wallet__transaction_types_aggregated')
     .getFullList<
       ISchemaWithPB<WalletCollectionsSchemas.ITransactionTypeAggregated>
     >()
 
-  const typesCount: {
-    [key: string]: {
-      amount: number
-      accumulate: number
-    }
-  } = {}
-
-  types.forEach(type => {
-    typesCount[type.name] = {
-      amount: type.amount,
-      accumulate: type.accumulate
-    }
-  })
+  const typesCount = types.reduce(
+    (acc, cur) => ({
+      ...acc,
+      [cur.name]: {
+        transactionCount: cur.transaction_count,
+        accumulatedAmount: cur.accumulated_amount
+      }
+    }),
+    {}
+  )
 
   return typesCount
 }
@@ -48,23 +40,39 @@ export const getIncomeExpensesSummary = async (
   const end = moment(`${year}-${month}-01`).endOf('month').format('YYYY-MM-DD')
 
   const transactions = await pb
-    .collection('wallet__transactions')
-    .getFullList<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>({
+    .collection('wallet__transactions_income_expenses')
+    .getFullList<
+      Pick<
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense>,
+        'type'
+      > & {
+        expand: {
+          base_transaction: Pick<
+            ISchemaWithPB<WalletCollectionsSchemas.ITransaction>,
+            'amount' | 'date'
+          >
+        }
+      }
+    >({
       filter: "type = 'income' || type = 'expenses'",
-      sort: '-date,-created'
+      fields:
+        'expand.base_transaction.amount,expand.base_transaction.date,type',
+      expand: 'base_transaction'
     })
 
   const inThisMonth = transactions.filter(
     transaction =>
-      moment(moment(transaction.date).format('YYYY-MM-DD')).isSameOrAfter(
-        start
-      ) &&
-      moment(moment(transaction.date).format('YYYY-MM-DD')).isSameOrBefore(end)
+      moment(
+        moment(transaction.expand.base_transaction.date).format('YYYY-MM-DD')
+      ).isSameOrAfter(start) &&
+      moment(
+        moment(transaction.expand.base_transaction.date).format('YYYY-MM-DD')
+      ).isSameOrBefore(end)
   )
 
   const totalIncome = transactions.reduce((acc, cur) => {
     if (cur.type === 'income') {
-      return acc + cur.amount
+      return acc + cur.expand.base_transaction.amount
     }
 
     return acc
@@ -72,7 +80,7 @@ export const getIncomeExpensesSummary = async (
 
   const totalExpenses = transactions.reduce((acc, cur) => {
     if (cur.type === 'expenses') {
-      return acc + cur.amount
+      return acc + cur.expand.base_transaction.amount
     }
 
     return acc
@@ -80,7 +88,7 @@ export const getIncomeExpensesSummary = async (
 
   const monthlyIncome = inThisMonth.reduce((acc, cur) => {
     if (cur.type === 'income') {
-      return acc + cur.amount
+      return acc + cur.expand.base_transaction.amount
     }
 
     return acc
@@ -88,7 +96,7 @@ export const getIncomeExpensesSummary = async (
 
   const monthlyExpenses = inThisMonth.reduce((acc, cur) => {
     if (cur.type === 'expenses') {
-      return acc + cur.amount
+      return acc + cur.expand.base_transaction.amount
     }
 
     return acc
