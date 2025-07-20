@@ -7,6 +7,7 @@ function useFaviconEffect(themeColor: string) {
     const favicon = document.querySelector(
       "link[rel*='icon']"
     ) as HTMLLinkElement
+
     if (favicon) {
       favicon.href = `data:image/svg+xml;base64,${btoa(targetSVGString)}`
     }

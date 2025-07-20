@@ -15,8 +15,11 @@ import type { IRouteNodeData } from './types'
 
 function RouteNode({ id }: { id: string }) {
   const nodes = useNodes()
+
   const edges = useEdges()
+
   const { getNodeData, updateNodeData } = useFlowStateContext()
+
   const { method, path } = useMemo(
     () => getNodeData<IRouteNodeData>(id),
     [getNodeData, id]
@@ -26,9 +29,12 @@ function RouteNode({ id }: { id: string }) {
     () => traverseGraph(nodes, edges, id, [{ dir: 'in', id: 'router-input' }]),
     [nodes, edges, id]
   )
+
   const parentPath = useMemo(() => {
     if (!parentRouterNode) return ''
+
     const parentData = getNodeData<IRouterNodeData>(parentRouterNode.id)
+
     return (
       parentData.parentPath +
       (parentData.path.startsWith('/') ? '' : '/') +
@@ -42,17 +48,13 @@ function RouteNode({ id }: { id: string }) {
 
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="route" handle="router-input">
+      <NodeColumn handle="router-input" nodeType="route">
         {parentPath && (
           <NodeColumnValueWrapper>{parentPath}</NodeColumnValueWrapper>
         )}
       </NodeColumn>
       <NodeColumn label="HTTP Method">
         <NodeListbox
-          value={method}
-          setValue={value =>
-            updateNodeData(id, { method: value as typeof method })
-          }
           buttonContent={
             <span className="text-bg-500 flex items-center gap-2 font-medium">
               <span
@@ -64,9 +66,13 @@ function RouteNode({ id }: { id: string }) {
               {method}
             </span>
           }
+          setValue={value =>
+            updateNodeData(id, { method: value as typeof method })
+          }
+          value={method}
         >
           {Object.entries(METHOD_COLORS).map(([m, color]) => (
-            <NodeListboxOption key={m} value={m} isSelected={m === method}>
+            <NodeListboxOption key={m} isSelected={m === method} value={m}>
               <div className="flex items-center gap-2">
                 <span
                   className="size-2 rounded-full"
@@ -82,14 +88,14 @@ function RouteNode({ id }: { id: string }) {
       </NodeColumn>
       <NodeColumn label="Route Path">
         <NodeTextInput
-          value={path}
+          placeholder="/route/path/:params"
           setValue={newValue => {
             updateNodeData(id, { path: newValue })
           }}
-          placeholder="/route/path/:params"
+          value={path}
         />
       </NodeColumn>
-      <NodeColumn nodeType="route" handle="route-output" />
+      <NodeColumn handle="route-output" nodeType="route" />
     </NodeColumnWrapper>
   )
 }

@@ -40,8 +40,8 @@ function Node({
             }}
           >
             <Icon
-              icon={NODE_CONFIG[nodeType].icon || 'tabler:circle'}
               className="size-5 shrink-0"
+              icon={NODE_CONFIG[nodeType].icon || 'tabler:circle'}
               style={{
                 color: NODE_CONFIG[nodeType].color || '#000'
               }}

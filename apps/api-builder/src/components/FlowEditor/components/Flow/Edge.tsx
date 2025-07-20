@@ -19,10 +19,12 @@ function Edge({
   markerEnd
 }: EdgeProps) {
   const nodes = useNodes()
+
   const sourceNode = useMemo(
     () => nodes.find(node => node.id === source),
     [nodes, source]
   )
+
   const [edgePath] = getBezierPath({
     sourceX,
     sourceY,
@@ -34,8 +36,8 @@ function Edge({
 
   return (
     <BaseEdge
-      path={edgePath}
       markerEnd={markerEnd}
+      path={edgePath}
       style={{
         stroke: NODE_CONFIG[sourceNode?.type as NODE_TYPES]?.color || 'gray'
       }}

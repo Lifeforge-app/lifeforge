@@ -18,6 +18,7 @@ export function traverseGraph(
     if (!current) return null
 
     const connections = getConnectedEdges([current], edges)
+
     const targetConnection = connections.find(conn => {
       if (step.dir === 'out') {
         return conn.sourceHandle === step.id && conn.source === current!.id

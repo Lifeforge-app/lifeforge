@@ -4,9 +4,9 @@ import NodeColumnWrapper from '../../components/Node/NodeColumnWrapper'
 function DeleteRecordNode() {
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="deleteRecord" handle="collection-input" />
-      <NodeColumn nodeType="deleteRecord" handle="id-input" />
-      <NodeColumn nodeType="deleteRecord" handle="db-operation-output" />
+      <NodeColumn handle="collection-input" nodeType="deleteRecord" />
+      <NodeColumn handle="id-input" nodeType="deleteRecord" />
+      <NodeColumn handle="db-operation-output" nodeType="deleteRecord" />
     </NodeColumnWrapper>
   )
 }

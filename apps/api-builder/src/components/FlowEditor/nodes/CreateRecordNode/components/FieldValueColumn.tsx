@@ -9,15 +9,20 @@ import type { IValueFromRequestNodeData } from '../../ValueFromRequestNode/types
 
 function FieldValueColumn({ fieldId }: { fieldId: string }) {
   const { t } = useTranslation('core.apiBuilder')
+
   const nodes = useNodes()
+
   const edges = useEdges()
+
   const nodeId = useNodeId()
+
   const { getNodeData } = useFlowStateContext()
 
   const targetValueNode = useMemo(() => {
     const targetNode = traverseGraph(nodes, edges, nodeId!, [
       { dir: 'in', id: `field-value-input||${fieldId}` }
     ])
+
     return targetNode
   }, [nodes, edges, nodeId, fieldId])
 

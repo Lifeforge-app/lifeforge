@@ -8,7 +8,9 @@ import FieldsColumn from '../SchemaNode/components/FieldsColumn'
 
 function RequestSchemaNode({ id }: { id: string }) {
   const connections = useNodeConnections()
+
   const { getNodeData } = useFlowStateContext()
+
   const schemaInputConnections = useMemo(
     () =>
       connections.filter(
@@ -17,6 +19,7 @@ function RequestSchemaNode({ id }: { id: string }) {
       ),
     [connections, id]
   )
+
   const schemaInputData = useMemo(() => {
     if (schemaInputConnections.length === 0) return null
 
@@ -28,7 +31,9 @@ function RequestSchemaNode({ id }: { id: string }) {
 
     schemaInputConnections.forEach(conn => {
       const inputSchemaNodeId = conn.source
+
       const nodeData = getNodeData(inputSchemaNodeId)
+
       if (nodeData && nodeData.fields) {
         schemaFields[
           conn.targetHandle?.split('-')[0] as keyof typeof schemaFields
@@ -42,15 +47,15 @@ function RequestSchemaNode({ id }: { id: string }) {
   return (
     <NodeColumnWrapper>
       {(['params', 'query', 'body'] as const).map(type => (
-        <NodeColumn nodeType="requestSchema" handle={`${type}-schema-input`}>
+        <NodeColumn handle={`${type}-schema-input`} nodeType="requestSchema">
           <FieldsColumn
             fields={schemaInputData?.[type] || []}
-            withLabel={false}
             withEmptyMessage={false}
+            withLabel={false}
           />
         </NodeColumn>
       ))}
-      <NodeColumn nodeType="requestSchema" handle="request-schema-output" />
+      <NodeColumn handle="request-schema-output" nodeType="requestSchema" />
     </NodeColumnWrapper>
   )
 }

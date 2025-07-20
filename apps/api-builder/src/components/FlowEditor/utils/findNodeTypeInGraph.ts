@@ -13,16 +13,20 @@ export function findNodeTypeInGraph(
   useWayToController = false
 ): Node | null {
   const startNode = nodes.find(node => node.id === startNodeId)
+
   if (!startNode) return null
 
   if (startNode.type === targetType) return startNode
 
   const visited = new Set<string>()
+
   const queue: Node[] = [startNode]
+
   visited.add(startNode.id)
 
   while (queue.length > 0) {
     const current = queue.shift()!
+
     const neighbors = [
       ...getIncomers(current, nodes, edges),
       ...getOutgoers(current, nodes, edges)
@@ -39,11 +43,14 @@ export function findNodeTypeInGraph(
 
       const hasValidConnection = connections.some(edge => {
         const fromNode = nodes.find(n => n.id === edge.source)
+
         const toNode = nodes.find(n => n.id === edge.target)
+
         if (!fromNode || !toNode) return false
 
         const fromHandlers =
           NODE_CONFIG[fromNode.type as NODE_TYPES]?.handlers ?? {}
+
         const toHandlers =
           NODE_CONFIG[toNode.type as NODE_TYPES]?.handlers ?? {}
 
@@ -52,6 +59,7 @@ export function findNodeTypeInGraph(
               edge.sourceHandle.split('||')[0] as keyof typeof fromHandlers
             ] as IHandler)
           : undefined
+
         const toHandler = edge.targetHandle
           ? (toHandlers[
               edge.targetHandle.split('||')[0] as keyof typeof toHandlers

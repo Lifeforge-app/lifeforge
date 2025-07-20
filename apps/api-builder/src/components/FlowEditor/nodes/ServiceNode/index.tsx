@@ -4,8 +4,8 @@ import NodeColumnWrapper from '../../components/Node/NodeColumnWrapper'
 function ServiceNode() {
   return (
     <NodeColumnWrapper>
-      <NodeColumn nodeType="service" handle="controller-input" />
-      <NodeColumn nodeType="service" handle="action-input" />
+      <NodeColumn handle="controller-input" nodeType="service" />
+      <NodeColumn handle="action-input" nodeType="service" />
     </NodeColumnWrapper>
   )
 }
