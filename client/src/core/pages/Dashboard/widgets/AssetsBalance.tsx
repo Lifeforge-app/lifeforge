@@ -48,7 +48,7 @@ export default function AssetsBalance() {
                     <div className="text-bg-500 flex items-center gap-1 text-sm">
                       RM{' '}
                       {showBalance ? (
-                        asset.balance.toFixed(2)
+                        asset.current_balance.toFixed(2)
                       ) : (
                         <span className="flex items-center">
                           {Array(4)

@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
-import { IWalletReceiptScanResult } from '../../../interfaces/wallet_interfaces'
 import ModifyTransactionsModal from './ModifyTransactionsModal'
 
 function ScanReceiptModal({ onClose }: { onClose: () => void }) {
@@ -37,14 +37,12 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
     formData.append('file', file)
 
     try {
-      const data = await fetchAPI<IWalletReceiptScanResult>(
-        import.meta.env.VITE_API_HOST,
-        'wallet/transactions/scan-receipt',
-        {
-          method: 'POST',
-          body: formData
-        }
-      )
+      const data = await fetchAPI<
+        WalletControllersSchemas.ITransactions['scanReceipt']['response']
+      >(import.meta.env.VITE_API_HOST, 'wallet/transactions/scan-receipt', {
+        method: 'POST',
+        body: formData
+      })
 
       onClose()
       open(ModifyTransactionsModal, {

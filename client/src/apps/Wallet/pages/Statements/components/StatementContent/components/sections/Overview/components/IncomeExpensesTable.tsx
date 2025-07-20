@@ -92,6 +92,7 @@ function IncomeExpensesTable({
                           dayjs(transaction.date).month() ===
                             lastMonth.month() &&
                           dayjs(transaction.date).year() === lastMonth.year() &&
+                          transaction.type !== 'transfer' &&
                           transaction.category === category.id
                       )
                       .reduce((acc, curr) => acc + curr.amount, 0)
@@ -101,6 +102,7 @@ function IncomeExpensesTable({
                         transaction =>
                           dayjs(transaction.date).month() === month &&
                           dayjs(transaction.date).year() === year &&
+                          transaction.type !== 'transfer' &&
                           transaction.category === category.id
                       )
                       .reduce((acc, curr) => acc + curr.amount, 0)
