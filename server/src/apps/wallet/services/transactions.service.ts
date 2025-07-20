@@ -154,7 +154,7 @@ export const createTransaction = async (
   const baseTransaction = await pb
     .collection('wallet__transactions')
     .create<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>({
-      type: data.type,
+      type: data.type === 'transfer' ? 'transfer' : 'income_expenses',
       amount: data.amount,
       date: data.date,
       receipt
@@ -180,8 +180,11 @@ export const createTransaction = async (
         asset: data.asset,
         category: data.category,
         ledgers: data.ledgers,
-        location_name: data.location_name ?? '',
-        location_coords: data.location_coords ?? { lon: 0, lat: 0 }
+        location_name: data.location?.name ?? '',
+        location_coords: {
+          lon: data.location?.location.longitude ?? 0,
+          lat: data.location?.location.latitude ?? 0
+        }
       })
   }
 }
@@ -223,36 +226,47 @@ export const updateTransaction = async (
   const baseTransaction = await pb
     .collection('wallet__transactions')
     .update<ISchemaWithPB<WalletCollectionsSchemas.ITransaction>>(id, {
-      type: data.type,
+      type: data.type === 'transfer' ? 'transfer' : 'income_expenses',
       amount: data.amount,
       date: data.date,
       ...(!data.toRemoveReceipt && { receipt })
     })
 
   if (data.type === 'transfer') {
+    const target = await pb
+      .collection('wallet__transactions_transfer')
+      .getFirstListItem(`base_transaction = '${id}'`)
+
     await pb
       .collection('wallet__transactions_transfer')
       .update<
         ISchemaWithPB<WalletCollectionsSchemas.ITransactionsTransfer>
-      >(id, {
+      >(target.id, {
         from: data.from,
         to: data.to,
         base_transaction: baseTransaction.id
       })
   } else {
+    const target = await pb
+      .collection('wallet__transactions_income_expenses')
+      .getFirstListItem(`base_transaction = '${id}'`)
+
     await pb
       .collection('wallet__transactions_income_expenses')
       .update<
         ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense>
-      >(id, {
+      >(target.id, {
         base_transaction: baseTransaction.id,
         type: data.type,
         particulars: data.particulars,
         asset: data.asset,
         category: data.category,
         ledgers: data.ledgers,
-        location_name: data.location_name ?? '',
-        location_coords: data.location_coords ?? { lon: 0, lat: 0 }
+        location_name: data.location?.name ?? '',
+        location_coords: {
+          lon: data.location?.location.longitude ?? 0,
+          lat: data.location?.location.latitude ?? 0
+        }
       })
   }
 }

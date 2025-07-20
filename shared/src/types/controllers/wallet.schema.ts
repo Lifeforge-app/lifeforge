@@ -44,23 +44,40 @@ const Transactions = {
   createTransaction: {
     body: WalletCollectionsSchemas.Transaction.omit({
       type: true,
-      receipt: true
-    }).and(
-      z.union([
-        WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
-          base_transaction: true,
-          location_name: true,
-          location_coords: true
-        }).extend({
-          location: LocationsCustomSchemas.Location.optional()
-        }),
-        WalletCollectionsSchemas.TransactionsTransfer.omit({
-          base_transaction: true
-        }).extend({
-          type: z.literal('transfer')
-        })
-      ])
-    ),
+      receipt: true,
+      amount: true
+    })
+      .extend({
+        amount: z
+          .string()
+          .transform(val => {
+            const amount = parseFloat(val)
+
+            return isNaN(amount) ? 0 : amount
+          })
+          .or(z.number())
+      })
+      .and(
+        z.union([
+          WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
+            base_transaction: true,
+            location_name: true,
+            location_coords: true
+          }).extend({
+            location: LocationsCustomSchemas.Location.optional().nullable(),
+            amount: z.string().transform(val => {
+              const amount = parseFloat(val)
+
+              return isNaN(amount) ? 0 : amount
+            })
+          }),
+          WalletCollectionsSchemas.TransactionsTransfer.omit({
+            base_transaction: true
+          }).extend({
+            type: z.literal('transfer')
+          })
+        ])
+      ),
     response: z.void()
   },
 
@@ -74,18 +91,53 @@ const Transactions = {
     }),
     body: WalletCollectionsSchemas.Transaction.omit({
       type: true,
-      receipt: true
+      receipt: true,
+      amount: true
     })
       .extend({
-        toRemoveReceipt: z.boolean()
+        amount: z
+          .string()
+          .transform(val => {
+            const amount = parseFloat(val)
+
+            return isNaN(amount) ? 0 : amount
+          })
+          .or(z.number()),
+        toRemoveReceipt: z
+          .boolean()
+          .or(z.string().transform(val => val === 'true'))
+          .optional()
       })
       .and(
         z.union([
           WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
             base_transaction: true,
-            location_name: true
+            location_name: true,
+            location_coords: true,
+            ledgers: true
           }).extend({
-            location: LocationsCustomSchemas.Location.optional()
+            location: LocationsCustomSchemas.Location.or(
+              z
+                .string()
+                .transform(
+                  val =>
+                    LocationsCustomSchemas.Location.safeParse(JSON.parse(val))
+                      .data
+                )
+            )
+              .optional()
+              .nullable(),
+            ledgers: z
+              .array(z.string())
+              .or(
+                z
+                  .string()
+                  .transform(
+                    val =>
+                      WalletCollectionsSchemas.Ledger.safeParse(JSON.parse(val))
+                        .data
+                  )
+              )
           }),
           WalletCollectionsSchemas.TransactionsTransfer.omit({
             base_transaction: true
