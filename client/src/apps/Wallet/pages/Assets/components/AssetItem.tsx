@@ -80,7 +80,7 @@ function AssetItem({
               ))}
           </span>
         ) : (
-          numberToCurrency(asset.balance)
+          numberToCurrency(asset.current_balance)
         )}
       </p>
       <Button

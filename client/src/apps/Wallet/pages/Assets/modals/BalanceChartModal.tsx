@@ -20,6 +20,7 @@ import {
   ISchemaWithPB,
   WalletCollectionsSchemas
 } from 'shared/types/collections'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
@@ -46,7 +47,9 @@ function BalanceChartModal({
 }) {
   const { derivedThemeColor } = usePersonalization()
 
-  const assetBalanceQuery = useAPIQuery<Record<string, number>>(
+  const assetBalanceQuery = useAPIQuery<
+    WalletControllersSchemas.IAssets['getAssetAccumulatedBalance']['response']
+  >(
     `wallet/assets/balance/${existedData.id}`,
     ['wallet', 'assets', 'balance', existedData.id],
     !!existedData.id
