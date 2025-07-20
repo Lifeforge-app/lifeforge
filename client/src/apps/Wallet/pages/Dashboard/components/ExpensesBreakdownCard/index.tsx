@@ -17,7 +17,7 @@ import BreakdownChartLegend from './components/BreakdownChartLegend'
 import BreakdownDetails from './components/BreakdownDetails'
 import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'
 
-const ExpensesBreakdownContext = createContext<{
+export const ExpensesBreakdownContext = createContext<{
   spentOnEachCategory: WalletControllersSchemas.IUtils['getExpensesBreakdown']['response']
   expensesCategories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
 }>({
@@ -42,11 +42,22 @@ function ExpensesBreakdownCard() {
     month
   ])
 
+  console.log(expensesBreakdownQuery.data)
+
   const expensesCategories = useMemo(
     () =>
       Object.keys(expensesBreakdownQuery.data ?? {})
-        .map(categoryId =>
-          categoriesQuery.data?.find(category => category.id === categoryId)
+        .map(
+          categoryId =>
+            categoriesQuery.data?.find(
+              category => category.id === categoryId
+            ) ||
+            ({
+              id: categoryId,
+              name: categoryId,
+              icon: 'tabler:category',
+              color: '#000000'
+            } as ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>)
         )
         .filter(e => e),
     [categoriesQuery.data, expensesBreakdownQuery.data]
@@ -78,15 +89,9 @@ function ExpensesBreakdownCard() {
         <QueryWrapper query={expensesBreakdownQuery}>
           {() => (
             <>
-              <BreakdownDoughnutChart
-                expensesCategories={expensesCategories}
-                spentOnEachCategory={data}
-              />
-              <BreakdownChartLegend expensesCategories={expensesCategories} />
-              <BreakdownDetails
-                expensesCategories={expensesCategories}
-                spentOnEachCategory={data}
-              />
+              <BreakdownDoughnutChart />
+              <BreakdownChartLegend />
+              <BreakdownDetails />
             </>
           )}
         </QueryWrapper>

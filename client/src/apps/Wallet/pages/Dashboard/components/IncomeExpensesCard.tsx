@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 
 import { useAPIQuery } from 'shared/lib'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
-import { IWalletIncomeExpenses } from '@apps/Wallet/interfaces/wallet_interfaces'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
@@ -13,7 +13,9 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
 
   const { isAmountHidden } = useWalletStore()
 
-  const incomeExpensesQuery = useAPIQuery<IWalletIncomeExpenses>(
+  const incomeExpensesQuery = useAPIQuery<
+    WalletControllersSchemas.IUtils['getIncomeExpensesSummary']['response']
+  >(
     `wallet/utils/income-expenses?year=${new Date().getFullYear()}&month=${
       new Date().getMonth() + 1
     }`,

@@ -1,15 +1,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { useContext } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
+
+import { ExpensesBreakdownContext } from '..'
 
 const CHART_OPTIONS = {
   responsive: true,
@@ -22,22 +20,14 @@ const CHART_OPTIONS = {
   cutout: '80%'
 }
 
-function BreakdownDoughnutChart({
-  spentOnEachCategory,
-  expensesCategories
-}: {
-  spentOnEachCategory: Record<
-    string,
-    {
-      amount: number
-      count: number
-    }
-  >
-  expensesCategories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
-}) {
+function BreakdownDoughnutChart() {
   const { t } = useTranslation('apps.wallet')
 
   const { isAmountHidden } = useWalletStore()
+
+  const { spentOnEachCategory, expensesCategories } = useContext(
+    ExpensesBreakdownContext
+  )
 
   return (
     <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-3">

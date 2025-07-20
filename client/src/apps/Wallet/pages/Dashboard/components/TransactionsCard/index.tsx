@@ -13,7 +13,7 @@ import ListView from './views/ListView'
 import TableView from './views/TableView'
 
 function TransactionsCard() {
-  const { transactionsQuery, categoriesQuery } = useWalletData()
+  const { transactionsQuery } = useWalletData()
 
   return (
     <DashboardItem
@@ -32,25 +32,18 @@ function TransactionsCard() {
     >
       <QueryWrapper query={transactionsQuery}>
         {transactions => (
-          <QueryWrapper query={categoriesQuery}>
-            {categories => (
-              <div className="size-full min-h-96 xl:min-h-0">
-                <Scrollbar>
-                  {transactions.length > 0 ? (
-                    <>
-                      <TableView categories={categories} />
-                      <ListView categories={categories} />
-                    </>
-                  ) : (
-                    <EmptyStateScreen
-                      name="transactions"
-                      namespace="apps.wallet"
-                    />
-                  )}
-                </Scrollbar>
-              </div>
-            )}
-          </QueryWrapper>
+          <div className="size-full min-h-96 xl:min-h-0">
+            <Scrollbar>
+              {transactions.length > 0 ? (
+                <>
+                  <TableView />
+                  <ListView />
+                </>
+              ) : (
+                <EmptyStateScreen name="transactions" namespace="apps.wallet" />
+              )}
+            </Scrollbar>
+          </div>
         )}
       </QueryWrapper>
     </DashboardItem>
