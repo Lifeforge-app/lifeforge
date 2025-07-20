@@ -27,17 +27,25 @@ function FormListboxInput<T>({
     <ListboxOrComboboxInput
       buttonContent={
         field.multiple === true && Array.isArray(selectedData) ? (
-          <>
+          <div className="flex flex-wrap items-center gap-3">
             {selectedData.length > 0 ? (
               selectedData.map((item: string, i: number) => (
                 <Fragment key={item}>
-                  <Icon
-                    className="size-5"
-                    icon={field.options.find(l => l.value === item)?.icon ?? ''}
-                  />
-                  <span className="-mt-px block truncate">
-                    {field.options.find(l => l.value === item)?.text ?? 'None'}
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <Icon
+                      className="size-5"
+                      icon={
+                        field.options.find(l => l.value === item)?.icon ?? ''
+                      }
+                      style={{
+                        color: field.options.find(l => l.value === item)?.color
+                      }}
+                    />
+                    <span className="-mt-px block truncate">
+                      {field.options.find(l => l.value === item)?.text ??
+                        'None'}
+                    </span>
+                  </div>
                   {i !== selectedData.length - 1 && (
                     <Icon className="size-1" icon="tabler:circle-filled" />
                   )}
@@ -51,7 +59,7 @@ function FormListboxInput<T>({
                 None
               </>
             )}
-          </>
+          </div>
         ) : (
           <>
             {!!(

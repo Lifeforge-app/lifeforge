@@ -23,11 +23,11 @@ function TransactionIncomeExpensesItem({
 
   const queryClient = useQueryClient()
 
-  const { categoriesQuery, assetsQuery } = useWalletData()
+  const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
 
   const categories = categoriesQuery.data ?? []
 
-  // const ledgers = ledgersQuery.data ?? []
+  const ledgers = ledgersQuery.data ?? []
 
   const assets = assetsQuery.data ?? []
 
@@ -107,7 +107,7 @@ function TransactionIncomeExpensesItem({
           }}
         />
         <Icon
-          className="text-bg-500 size-8"
+          className="text-bg-500 size-8 shrink-0"
           icon={
             assets.find(asset => asset.id === transaction.asset)?.icon ?? ''
           }
@@ -130,58 +130,44 @@ function TransactionIncomeExpensesItem({
             )}
           </div>
           <div className="text-bg-500 flex items-center gap-2 text-sm font-medium">
-            <span className="block sm:hidden">
+            <span className="block truncate whitespace-nowrap sm:hidden">
               {dayjs(transaction.date).format('DD MMM')}
             </span>
             <span className="hidden sm:block">
               {dayjs(transaction.date).format('MMM DD, YYYY')}
             </span>
-            <Icon className="size-1" icon="tabler:circle-filled" />
-            <div className="flex items-center gap-1">
-              <Icon
-                className={clsx(
-                  'size-4',
-                  {
-                    income: 'text-green-500',
-                    expenses: 'text-red-500',
-                    transfer: 'text-blue-500'
-                  }[transaction.type as 'income' | 'expenses' | 'transfer']
-                )}
-                icon={
-                  {
-                    income: 'tabler:login-2',
-                    expenses: 'tabler:logout',
-                    transfer: 'tabler:transfer'
-                  }[transaction.type as 'income' | 'expenses' | 'transfer']
-                }
-              />
-              <span className="hidden md:block">
-                {transaction.type[0].toUpperCase() + transaction.type.slice(1)}
-              </span>
-            </div>
-            {/* {transaction.ledgers.length && (
+            {transaction.ledgers.length > 0 && (
               <>
                 <Icon className="size-1" icon="tabler:circle-filled" />
+                In
                 <div className="flex items-center gap-1">
                   <Icon
                     className="size-4"
                     icon={
-                      ledgers.find(ledger => ledger.id === transaction.ledger)
-                        ?.icon ?? ''
+                      ledgers.find(
+                        ledger => ledger.id === transaction.ledgers[0]
+                      )?.icon ?? ''
                     }
                     style={{
                       color:
-                        ledgers.find(ledger => ledger.id === transaction.ledger)
-                          ?.color ?? 'white'
+                        ledgers.find(
+                          ledger => ledger.id === transaction.ledgers[0]
+                        )?.color ?? 'white'
                     }}
                   />
                   <span className="hidden md:block">
-                    {ledgers.find(ledger => ledger.id === transaction.ledger)
-                      ?.name ?? 'Unknown'}
+                    {ledgers.find(
+                      ledger => ledger.id === transaction.ledgers[0]
+                    )?.name ?? 'Unknown'}
                   </span>
                 </div>
+                {transaction.ledgers.length > 1 && (
+                  <span className="truncate">
+                    + {transaction.ledgers.length - 1} more
+                  </span>
+                )}
               </>
-            )} */}
+            )}
           </div>
         </div>
       </div>

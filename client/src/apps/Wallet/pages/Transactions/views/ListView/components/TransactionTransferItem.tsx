@@ -118,52 +118,6 @@ function TransactionTransferItem({
             <span className="hidden sm:block">
               {dayjs(transaction.date).format('MMM DD, YYYY')}
             </span>
-            <Icon className="size-1" icon="tabler:circle-filled" />
-            <div className="flex items-center gap-1">
-              <Icon
-                className={clsx(
-                  'size-4',
-                  {
-                    income: 'text-green-500',
-                    expenses: 'text-red-500',
-                    transfer: 'text-blue-500'
-                  }[transaction.type as 'income' | 'expenses' | 'transfer']
-                )}
-                icon={
-                  {
-                    income: 'tabler:login-2',
-                    expenses: 'tabler:logout',
-                    transfer: 'tabler:transfer'
-                  }[transaction.type as 'income' | 'expenses' | 'transfer']
-                }
-              />
-              <span className="hidden md:block">
-                {transaction.type[0].toUpperCase() + transaction.type.slice(1)}
-              </span>
-            </div>
-            {/* {transaction.ledgers.length && (
-              <>
-                <Icon className="size-1" icon="tabler:circle-filled" />
-                <div className="flex items-center gap-1">
-                  <Icon
-                    className="size-4"
-                    icon={
-                      ledgers.find(ledger => ledger.id === transaction.ledger)
-                        ?.icon ?? ''
-                    }
-                    style={{
-                      color:
-                        ledgers.find(ledger => ledger.id === transaction.ledger)
-                          ?.color ?? 'white'
-                    }}
-                  />
-                  <span className="hidden md:block">
-                    {ledgers.find(ledger => ledger.id === transaction.ledger)
-                      ?.name ?? 'Unknown'}
-                  </span>
-                </div>
-              </>
-            )} */}
           </div>
         </div>
       </div>
