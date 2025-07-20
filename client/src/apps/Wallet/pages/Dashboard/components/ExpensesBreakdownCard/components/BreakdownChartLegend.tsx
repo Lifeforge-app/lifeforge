@@ -1,8 +1,10 @@
-function BreakdownChartLegend({
-  expensesCategories
-}: {
-  expensesCategories: any[]
-}) {
+import { useContext } from 'react'
+
+import { ExpensesBreakdownContext } from '..'
+
+function BreakdownChartLegend() {
+  const { expensesCategories } = useContext(ExpensesBreakdownContext)
+
   return (
     <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
       {expensesCategories.map(category => (

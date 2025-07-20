@@ -1,34 +1,23 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Scrollbar } from 'lifeforge-ui'
+import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-function BreakdownDetails({
-  spentOnEachCategory,
-  expensesCategories
-}: {
-  spentOnEachCategory: Record<
-    string,
-    {
-      amount: number
-      count: number
-      percentage: number
-    }
-  >
-  expensesCategories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
-}) {
+import { ExpensesBreakdownContext } from '..'
+
+function BreakdownDetails() {
   const { t } = useTranslation('apps.wallet')
 
   const { isAmountHidden } = useWalletStore()
+
+  const { spentOnEachCategory, expensesCategories } = useContext(
+    ExpensesBreakdownContext
+  )
 
   return (
     <div className="h-full min-h-96 xl:min-h-0">
