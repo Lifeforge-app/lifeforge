@@ -30,16 +30,24 @@ export const getAssetAccumulatedBalance = async (
     })
 
   const allIncomeExpensesTransactions = await pb
-    .collection('wallet__transactions')
+    .collection('wallet__transactions_income_expenses')
     .getFullList<
       Pick<
-        ISchemaWithPB<WalletCollectionsSchemas.ITransaction>,
-        'amount' | 'date' | 'type'
-      >
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense>,
+        'type'
+      > & {
+        expand: {
+          base_transaction: Pick<
+            ISchemaWithPB<WalletCollectionsSchemas.ITransaction>,
+            'amount' | 'date'
+          >
+        }
+      }
     >({
       filter: `asset = '${assetId}'`,
-      sort: '-date',
-      fields: 'amount,date,type'
+      fields:
+        'expand.base_transaction.amount,expand.base_transaction.date,type',
+      expand: 'base_transaction'
     })
 
   const allTransferTransactions = await pb
@@ -58,23 +66,30 @@ export const getAssetAccumulatedBalance = async (
       }
     >({
       filter: `from = '${assetId}' || to = '${assetId}'`,
-      sort: '-base_transaction.date',
       expand: 'base_transaction',
-      fields: 'base_transaction.amount,base_transaction.date,from,to'
+      fields:
+        'expand.base_transaction.amount,expand.base_transaction.date,from,to'
     })
+
+  const allTransactions = [
+    ...allIncomeExpensesTransactions.map(t => ({
+      type: t.type,
+      amount: t.expand.base_transaction.amount,
+      date: t.expand.base_transaction.date
+    })),
+    ...allTransferTransactions.map(t => ({
+      type: t.from === assetId ? 'expenses' : 'income',
+      amount: t.expand.base_transaction.amount,
+      date: t.expand.base_transaction.date
+    }))
+  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   let currentBalance = starting_balance
 
   const accumulatedBalance: Record<string, number> = {}
 
   const allDateInBetween = moment
-    .range(
-      moment(
-        allIncomeExpensesTransactions[allIncomeExpensesTransactions.length - 1]
-          .date
-      ),
-      moment()
-    )
+    .range(moment(allTransactions[allTransactions.length - 1].date), moment())
     .by('day')
 
   for (const date of allDateInBetween) {
@@ -82,23 +97,15 @@ export const getAssetAccumulatedBalance = async (
 
     accumulatedBalance[dateStr] = parseFloat(currentBalance.toFixed(2))
 
-    const transactionsOnDate = [
-      ...allIncomeExpensesTransactions.filter(t =>
-        moment(t.date).isSame(date, 'day')
-      ),
-      ...allTransferTransactions
-        .filter(t => moment(t.expand.base_transaction.date).isSame(date, 'day'))
-        .map(t => ({
-          type: t.from === assetId ? 'expenses' : 'income',
-          amount: t.expand.base_transaction.amount
-        }))
-    ]
+    const transactionsOnDate = allTransactions.filter(t =>
+      moment(t.date).isSame(date, 'day')
+    )
 
     for (const transaction of transactionsOnDate) {
       if (transaction.type === 'expenses') {
-        currentBalance += transaction.amount
-      } else if (transaction.type === 'income') {
         currentBalance -= transaction.amount
+      } else if (transaction.type === 'income') {
+        currentBalance += transaction.amount
       }
     }
   }
