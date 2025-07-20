@@ -6,26 +6,21 @@
  * Generated at: 2025-07-20T12:17:56.584Z
  * Contains: entry
  */
-
-import { z } from "zod/v4";
+import { z } from 'zod/v4'
 
 const Entry = z.object({
   name: z.string(),
   duration: z.string(),
   author: z.string(),
   file: z.string(),
-  is_favourite: z.boolean(),
-});
+  is_favourite: z.boolean()
+})
 
-type IEntry = z.infer<typeof Entry>;
+type IEntry = z.infer<typeof Entry>
 
-export {
-  Entry,
-};
+export { Entry }
 
-export type {
-  IEntry,
-};
+export type { IEntry }
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

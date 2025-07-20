@@ -1,12 +1,20 @@
 {
-  "name": "lifeforge-documentation",
+  "name": "lifeforge-docs",
   "private": true,
+  "description": "Documentation for the LifeForge system",
   "version": "0.0.0",
+  "license": "CC BY-NC-SA 4.0",
+  "author": "LifeForge (https://github.com/Lifeforge-app)",
+  "homepage": "https://docs.lifeforge.melvinchia.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lifeforge-app/lifeforge.git",
+    "directory": "apps/docs"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -14,6 +22,7 @@
     "@mdx-js/mdx": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@mdx-js/rollup": "^3.1.0",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/react-custom-scrollbars": "^4.0.13",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
