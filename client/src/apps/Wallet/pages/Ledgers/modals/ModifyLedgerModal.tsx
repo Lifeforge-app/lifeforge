@@ -3,9 +3,10 @@ import type { IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
 import {
-  type IWalletLedger,
-  IWalletLedgerFormState
-} from '../../../interfaces/wallet_interfaces'
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 export default function ModifyLedgerModal({
   data: { type, existedData },
@@ -13,17 +14,19 @@ export default function ModifyLedgerModal({
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: IWalletLedger | null
+    existedData: ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated> | null | null
   }
   onClose: () => void
 }) {
-  const [formState, setFormState] = useState<IWalletLedgerFormState>({
+  const [formState, setFormState] = useState<
+    WalletControllersSchemas.ILedgers['createLedger' | 'updateLedger']['body']
+  >({
     name: '',
     icon: '',
     color: ''
   })
 
-  const FIELDS: IFieldProps<IWalletLedgerFormState>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
       required: true,

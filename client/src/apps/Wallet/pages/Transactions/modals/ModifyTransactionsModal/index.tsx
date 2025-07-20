@@ -17,7 +17,6 @@ import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared/lib'
 import { LocationsCustomSchemas } from 'shared/types/collections'
 
-import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'

@@ -1,18 +1,25 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import { useMemo } from 'react'
 
-import {
-  IWalletCategory,
-  IWalletTransaction
-} from '@apps/Wallet/interfaces/wallet_interfaces'
+import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import TransactionAmount from '@apps/Wallet/pages/Dashboard/components/TransactionsCard/components/TransactionAmount'
 
-function Header({
-  transaction,
-  category
-}: {
-  transaction: IWalletTransaction
-  category?: IWalletCategory
-}) {
+import { IWalletTransaction } from '../../..'
+
+function Header({ transaction }: { transaction: IWalletTransaction }) {
+  const { categoriesQuery } = useWalletData()
+
+  const category = useMemo(
+    () =>
+      transaction.type === 'transfer'
+        ? null
+        : categoriesQuery.data?.find(
+            category => category.id === transaction.category
+          ),
+    [transaction, categoriesQuery.data]
+  )
+
   return (
     <div className="flex-center flex flex-col">
       {category && (
@@ -35,14 +42,10 @@ function Header({
         </div>
       )}
       <div className="mb-2 text-center text-4xl font-medium">
-        <span className="text-bg-500 mr-2">
-          {transaction.side === 'debit' ? '+' : '-'}
-        </span>
-        RM{' '}
-        {Intl.NumberFormat('en-MY', {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2
-        }).format(transaction.amount)}
+        <TransactionAmount
+          amount={transaction.amount}
+          type={transaction.type}
+        />
       </div>
       <p className="text-center text-lg">{transaction.particulars}</p>
       <p className="text-bg-500 mt-2 text-center">

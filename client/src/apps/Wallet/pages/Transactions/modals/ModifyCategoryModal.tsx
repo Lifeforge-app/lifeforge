@@ -3,7 +3,11 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { type IWalletCategory } from '../../../interfaces/wallet_interfaces'
+import {
+  ISchemaWithPB,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
+import { WalletControllersSchemas } from 'shared/types/controllers'
 
 function ModifyCategoryModal({
   data: { type, existedData },
@@ -11,18 +15,17 @@ function ModifyCategoryModal({
 }: {
   data: {
     type: 'income' | 'expenses' | 'update' | null
-    existedData: IWalletCategory | null
+    existedData: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated> | null | null
   }
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.wallet')
 
-  const [formState, setFormState] = useState<{
-    type: 'income' | 'expenses'
-    name: string
-    icon: string
-    color: string
-  }>({
+  const [formState, setFormState] = useState<
+    WalletControllersSchemas.ICategories[
+      | 'createCategory'
+      | 'updateCategory']['body']
+  >({
     type: 'income',
     name: '',
     icon: '',

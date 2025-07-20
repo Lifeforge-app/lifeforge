@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { Button, useModalStore } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import { IWalletTransaction } from '@apps/Wallet/interfaces/wallet_interfaces'
+import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 import ViewReceiptModal from '../../../../views/ListView/components/ViewReceiptModal'
 import DetailItem from './components/DetailItem'
@@ -14,16 +14,6 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
   const { assetsQuery, categoriesQuery, ledgersQuery } = useWalletData()
 
   const open = useModalStore(state => state.open)
-
-  const asset = assetsQuery.data?.find(asset => asset.id === transaction.asset)
-
-  const category = categoriesQuery.data?.find(
-    category => category.id === transaction.category
-  )
-
-  const ledger = ledgersQuery.data?.find(
-    ledger => ledger.id === transaction.ledger
-  )
 
   return (
     <div className="mt-6 space-y-3">
@@ -51,42 +41,99 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
           {dayjs(transaction.date).format('dddd, D MMM YYYY')}
         </p>
       </DetailItem>
-      {transaction.type !== 'transfer' && (
-        <DetailItem icon="tabler:category" name="category">
-          <p className="flex items-center gap-1">
-            <Icon
-              className="size-6"
-              icon={category!.icon}
-              style={{
-                color: category!.color
-              }}
-            />
-            {category!.name}
-          </p>
-        </DetailItem>
-      )}
-      <DetailItem icon="tabler:wallet" name="asset">
-        <p className="flex items-center gap-1">
-          <Icon className="size-6" icon={asset!.icon} />
-          {asset!.name}
-        </p>
-      </DetailItem>
-      <DetailItem icon="tabler:book" name="ledger">
-        {ledger ? (
-          <p className="flex items-center gap-1">
-            <Icon
-              className="size-6"
-              icon={ledger.icon}
-              style={{
-                color: ledger.color
-              }}
-            />
-            {ledger.name}
-          </p>
-        ) : (
-          <span className="text-bg-500">No Ledger</span>
-        )}
-      </DetailItem>
+      {transaction.type !== 'transfer' &&
+        (() => {
+          const category = categoriesQuery.data?.find(
+            category => category.id === transaction.category
+          )
+
+          return (
+            <DetailItem icon="tabler:category" name="category">
+              <p className="flex items-center gap-1">
+                <Icon
+                  className="size-6"
+                  icon={category!.icon}
+                  style={{
+                    color: category!.color
+                  }}
+                />
+                {category!.name}
+              </p>
+            </DetailItem>
+          )
+        })()}
+      {transaction.type === 'transfer'
+        ? (() => {
+            const fromAsset = assetsQuery.data?.find(
+              asset => asset.id === transaction.from
+            )
+
+            const toAsset = assetsQuery.data?.find(
+              asset => asset.id === transaction.to
+            )
+
+            return (
+              <DetailItem icon="tabler:exchange" name="asset">
+                <div className="flex min-w-0 items-center gap-1">
+                  <div className="flex items-center gap-1">
+                    <Icon className="size-6 shrink-0" icon={fromAsset!.icon} />
+                    <p className="w-full max-w-96 truncate">
+                      {fromAsset!.name}
+                    </p>
+                  </div>
+                  <Icon
+                    className="text-bg-500 size-6 shrink-0"
+                    icon="tabler:arrow-right"
+                  />
+                  <p className="flex items-center gap-1">
+                    <Icon className="size-6 shrink-0" icon={toAsset!.icon} />
+                    <p className="w-full max-w-96 truncate">{toAsset!.name}</p>
+                  </p>
+                </div>
+              </DetailItem>
+            )
+          })()
+        : (() => {
+            const asset = assetsQuery.data?.find(
+              asset => asset.id === transaction.asset
+            )
+
+            return (
+              <DetailItem icon="tabler:wallet" name="asset">
+                <div className="flex items-center gap-1">
+                  <Icon className="size-6 shrink-0" icon={asset!.icon} />
+                  <p className="w-full max-w-96 truncate">{asset!.name}</p>
+                </div>
+              </DetailItem>
+            )
+          })()}
+      {transaction.type !== 'transfer' &&
+        (() => {
+          const ledger = ledgersQuery.data?.filter(ledger =>
+            transaction.ledgers.includes(ledger.id)
+          )
+
+          return (
+            <DetailItem icon="tabler:book" name="ledger">
+              {ledger ? (
+                <ul className="flex flex-col gap-2">
+                  {ledger.map(ledgerItem => (
+                    <li key={ledgerItem.id} className="flex items-center gap-2">
+                      <Icon
+                        className="size-5"
+                        icon={ledgerItem.icon}
+                        style={{ color: ledgerItem.color }}
+                      />
+                      {ledgerItem.name}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <span className="text-bg-500">No Ledger</span>
+              )}
+            </DetailItem>
+          )
+        })()}
       <DetailItem vertical icon="tabler:receipt" name="receipt">
         {transaction.receipt ? (
           <Button
@@ -106,30 +153,32 @@ function Details({ transaction }: { transaction: IWalletTransaction }) {
           <p className="text-bg-500 mb-2 text-center">No Receipt</p>
         )}
       </DetailItem>
-      <DetailItem vertical icon="tabler:map-pin" name="location">
-        {transaction.location_name ? (
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <Map
-              className="h-96 overflow-hidden rounded-md"
-              defaultCenter={{
-                lat: transaction.location_coords?.lat || 0,
-                lng: transaction.location_coords?.lon || 0
-              }}
-              defaultZoom={15}
-              mapId="LocationMap"
-            >
-              <AdvancedMarker
-                position={{
+      {transaction.type !== 'transfer' && (
+        <DetailItem vertical icon="tabler:map-pin" name="location">
+          {transaction.location_name ? (
+            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+              <Map
+                className="h-96 overflow-hidden rounded-md"
+                defaultCenter={{
                   lat: transaction.location_coords?.lat || 0,
                   lng: transaction.location_coords?.lon || 0
                 }}
-              />
-            </Map>
-          </APIProvider>
-        ) : (
-          <p className="text-bg-500 mb-2 text-center">No Location</p>
-        )}
-      </DetailItem>
+                defaultZoom={15}
+                mapId="LocationMap"
+              >
+                <AdvancedMarker
+                  position={{
+                    lat: transaction.location_coords?.lat || 0,
+                    lng: transaction.location_coords?.lon || 0
+                  }}
+                />
+              </Map>
+            </APIProvider>
+          ) : (
+            <p className="text-bg-500 mb-2 text-center">No Location</p>
+          )}
+        </DetailItem>
+      )}
     </div>
   )
 }
