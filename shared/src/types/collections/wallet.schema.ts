@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: wallet
- * Generated at: 2025-07-19T21:52:02.421Z
- * Contains: wallet__assets, wallet__ledgers, wallet__categories, wallet__transactions, wallet__categories_aggregated, wallet__assets_aggregated, wallet__ledgers_aggregated, wallet__transaction_types_aggregated
+ * Generated at: 2025-07-20T05:23:51.734Z
+ * Contains: asset, ledger, category, transaction, category_aggregated, asset_aggregated, ledger_aggregated, transaction_type_aggregated, transactions_income_expense, transactions_transfer
  */
 
 import { z } from "zod/v4";
@@ -25,25 +25,18 @@ const Category = z.object({
   name: z.string(),
   icon: z.string(),
   color: z.string(),
-  type: z.enum(["income","expenses",""]),
+  type: z.enum(["income","expenses"]),
 });
 
 const Transaction = z.object({
-  type: z.enum(["income","expenses","transfer",""]),
-  side: z.enum(["debit","credit",""]),
-  particulars: z.string(),
+  type: z.enum(["income","expenses","transfer"]),
   amount: z.number(),
   date: z.string(),
-  location_name: z.string(),
-  location_coords: z.object({ lat: z.number(), lon: z.number() }),
-  category: z.string(),
-  asset: z.string(),
-  ledger: z.string(),
   receipt: z.string(),
 });
 
 const CategoryAggregated = z.object({
-  type: z.enum(["income","expenses",""]),
+  type: z.enum(["income","expenses"]),
   name: z.string(),
   icon: z.string(),
   color: z.string(),
@@ -51,11 +44,8 @@ const CategoryAggregated = z.object({
 });
 
 const AssetAggregated = z.object({
-  name: z.string(),
-  icon: z.string(),
-  starting_balance: z.number(),
-  amount: z.number(),
-  balance: z.any(),
+  transaction_count: z.number(),
+  current_balance: z.any(),
 });
 
 const LedgerAggregated = z.object({
@@ -66,9 +56,26 @@ const LedgerAggregated = z.object({
 });
 
 const TransactionTypeAggregated = z.object({
-  name: z.enum(["income","expenses","transfer",""]),
+  name: z.enum(["income","expenses","transfer"]),
   amount: z.number(),
   accumulate: z.any(),
+});
+
+const TransactionsIncomeExpense = z.object({
+  base_transaction: z.string(),
+  type: z.enum(["income","expenses"]),
+  particulars: z.string(),
+  asset: z.string(),
+  category: z.string(),
+  ledgers: z.array(z.string()),
+  location_name: z.string(),
+  location_coords: z.object({ lat: z.number(), lon: z.number() }),
+});
+
+const TransactionsTransfer = z.object({
+  base_transaction: z.string(),
+  from: z.string(),
+  to: z.string(),
 });
 
 type IAsset = z.infer<typeof Asset>;
@@ -79,6 +86,8 @@ type ICategoryAggregated = z.infer<typeof CategoryAggregated>;
 type IAssetAggregated = z.infer<typeof AssetAggregated>;
 type ILedgerAggregated = z.infer<typeof LedgerAggregated>;
 type ITransactionTypeAggregated = z.infer<typeof TransactionTypeAggregated>;
+type ITransactionsIncomeExpense = z.infer<typeof TransactionsIncomeExpense>;
+type ITransactionsTransfer = z.infer<typeof TransactionsTransfer>;
 
 export {
   Asset,
@@ -89,6 +98,8 @@ export {
   AssetAggregated,
   LedgerAggregated,
   TransactionTypeAggregated,
+  TransactionsIncomeExpense,
+  TransactionsTransfer,
 };
 
 export type {
@@ -100,6 +111,8 @@ export type {
   IAssetAggregated,
   ILedgerAggregated,
   ITransactionTypeAggregated,
+  ITransactionsIncomeExpense,
+  ITransactionsTransfer,
 };
 
 // -------------------- CUSTOM SCHEMAS --------------------

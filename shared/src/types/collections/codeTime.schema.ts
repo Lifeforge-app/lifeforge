@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: codeTime
- * Generated at: 2025-07-19T21:52:02.422Z
- * Contains: code_time__projects, code_time__languages, code_time__daily_entries
+ * Generated at: 2025-07-20T05:23:51.735Z
+ * Contains: project, language, daily_entry
  */
 
 import { z } from "zod/v4";

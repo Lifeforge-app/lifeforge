@@ -3,8 +3,8 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: achievements
- * Generated at: 2025-07-19T21:52:02.420Z
- * Contains: achievements__entries
+ * Generated at: 2025-07-20T05:23:51.733Z
+ * Contains: entry
  */
 
 import { z } from "zod/v4";

@@ -14,7 +14,22 @@ const Transactions = {
    * @description Get all wallet transactions
    */
   getAllTransactions: {
-    response: z.array(SchemaWithPB(WalletCollectionsSchemas.Transaction))
+    response: z.array(
+      SchemaWithPB(
+        WalletCollectionsSchemas.Transaction.and(
+          z.union([
+            WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
+              base_transaction: true
+            }),
+            WalletCollectionsSchemas.TransactionsTransfer.omit({
+              base_transaction: true
+            }).extend({
+              type: z.literal('transfer')
+            })
+          ])
+        )
+      )
+    )
   },
 
   /**
