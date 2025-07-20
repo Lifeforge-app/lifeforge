@@ -1,6 +1,6 @@
 {
-  "name": "@lifeforge/client",
-  "version": "1.0.0",
+  "name": "lifeforge-client",
+  "version": "0.0.0",
   "private": true,
   "description": "The client-side user interface for LifeForge.",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/postcss": "^4.1.5",
     "@tailwindcss/vite": "^4.1.5",
-    "@tanstack/react-query": "^5.75.4",
+    "@tanstack/react-query": "^5.80.6",
     "@uidotdev/usehooks": "^2.4.1",
     "@vis.gl/react-google-maps": "^1.5.3",
     "@wavesurfer/react": "^1.0.11",

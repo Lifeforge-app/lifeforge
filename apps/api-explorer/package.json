@@ -1,0 +1,49 @@
+{
+  "name": "lifeforge-api-explorer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "types": "tsc -b --noEmit",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "shared": "workspace:*",
+    "lifeforge-ui": "workspace:*",
+    "@headlessui/react": "^2.2.0",
+    "@iconify/react": "^6.0.0",
+    "@tailwindcss/postcss": "^4.0.12",
+    "@tanstack/react-query": "^5.80.6",
+    "@types/tinycolor2": "^1.4.6",
+    "@uidotdev/usehooks": "^2.4.1",
+    "axios": "^1.7.2",
+    "clsx": "^2.1.1",
+    "formik": "^2.4.6",
+    "i18next": "24.2.3",
+    "i18next-http-backend": "2.7.3",
+    "javascript-color-gradient": "^2.5.0",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7",
+    "pocketbase": "^0.25.2",
+    "postcss": "^8.4.38",
+    "react": "^19.1.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "^19.1.0",
+    "react-i18next": "^15.5.1",
+    "react-nestable": "^3.0.2",
+    "tailwindcss": "^4.1.8",
+    "tinycolor2": "^1.6.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/javascript-color-gradient": "^2.4.2",
+    "@types/lodash": "^4.17.17",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "typescript": "^5.2.2",
+    "vite": "^7.0.5"
+  }
+}
