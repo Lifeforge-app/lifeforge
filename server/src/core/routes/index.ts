@@ -10,6 +10,8 @@ import path from 'path'
 import request from 'request'
 import { z } from 'zod/v4'
 
+import { RoutesControllersSchemas } from 'shared/types/controllers'
+
 const LIB_ROUTES = JSON.parse(
   fs.readFileSync(
     path.resolve(process.cwd(), 'src/core/routes/lib.routes.json'),
@@ -133,13 +135,13 @@ const corsAnywhere = forgeController
     return response.text()
   })
 
-router.get('/_routes', async (req, res) => {
-  const routes = traceRouteStack(router.stack)
+const getAllRoutes = forgeController
+  .route('GET /_routes')
+  .description('Get all registered routes')
+  .schema(RoutesControllersSchemas.Routes.getAllRoutes)
+  .callback(async () => traceRouteStack(router.stack))
 
-  successWithBaseResponse(res, routes)
-})
-
-bulkRegisterControllers(router, [getMedia, corsAnywhere])
+bulkRegisterControllers(router, [getMedia, getAllRoutes, corsAnywhere])
 
 router.use((req, res) => {
   res.status(404)

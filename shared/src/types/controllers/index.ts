@@ -51,3 +51,5 @@ export * as LocationsControllersSchemas from './locations.schema'
 export * as ModulesControllersSchemas from './modules.schema'
 
 export * as BackupsControllersSchemas from './backups.schema'
+
+export * as RoutesControllersSchemas from './routes.schema'
