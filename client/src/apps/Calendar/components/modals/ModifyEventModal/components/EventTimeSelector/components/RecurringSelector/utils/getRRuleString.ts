@@ -157,7 +157,7 @@ export default function getRRULEString(params: {
   hourlyEvery: string
   endType: 'never' | 'after' | 'on'
   endAfter: string
-  endOn: Date | null
+  endOn: Date | undefined
 }) {
   const options: Partial<RRuleOptions> = {
     dtstart: createStartDate(params.start),

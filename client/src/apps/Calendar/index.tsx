@@ -9,7 +9,7 @@ import {
   Scrollbar
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useAPIQuery } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
@@ -42,18 +42,6 @@ function CalendarModule() {
     undefined
   )
 
-  const events = useMemo(() => {
-    if (rawEventsQuery.data) {
-      return rawEventsQuery.data.map(event => ({
-        ...event,
-        start: new Date(event.start),
-        end: new Date(event.end)
-      }))
-    } else {
-      return []
-    }
-  }, [rawEventsQuery.data])
-
   const handleScanImageModalOpen = useCallback(() => {
     open(ScanImageModal, {})
   }, [])
@@ -79,7 +67,7 @@ function CalendarModule() {
             <Scrollbar>
               <div className="size-full pr-4 pb-8">
                 <CalendarComponent
-                  events={events}
+                  events={rawEventsQuery.data ?? []}
                   selectedCalendar={selectedCalendar}
                   selectedCategory={selectedCategory}
                   setSidebarOpen={setSidebarOpen}
