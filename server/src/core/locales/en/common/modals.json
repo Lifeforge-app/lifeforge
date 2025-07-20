@@ -7,7 +7,8 @@
         "placeholder": "Please type \"{{text}}\" to confirm deletion",
         "label": "Confirm Deletion"
       }
-    }
+    },
+    "error": "Error deleting the item. Please try again."
   },
   "searchFilters": "Search Filters",
   "iconPicker": {

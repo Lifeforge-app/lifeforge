@@ -26,6 +26,10 @@
     "calendar": {
       "create": "Cipta Kalendar",
       "update": "Kemaskini Kalendar"
+    },
+    "confirmAddException": {
+      "title": "Sahkan Tambah Pengecualian",
+      "description": "Adakah anda pasti ingin menambah pengecualian untuk acara ini?"
     }
   },
   "inputs": {
@@ -111,7 +115,8 @@
   "buttons": {
     "inputManually": "Masukkan Secara Manual",
     "scanFromImage": "Imbas dari Imej",
-    "today": "Hari Ini"
+    "today": "Hari Ini",
+    "exceptThisTime": "Kecuali Kali Ini"
   },
   "eventTypes": {
     "single": "Acara Tunggal",
