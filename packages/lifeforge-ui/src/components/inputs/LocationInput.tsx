@@ -36,7 +36,7 @@ function LocationInput({
 
   const debouncedQuery = useDebounce(query, 500)
 
-  const [enabled, setEnabled] = useState(false)
+  const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
 
   const dataQuery = useAPIQuery<
     LocationsControllersSchemas.ILocations['getLocations']['response']
@@ -63,7 +63,7 @@ function LocationInput({
       <ListboxOrComboboxInput<LocationsCustomSchemas.ILocation | null>
         className="w-full"
         customActive={(location?.name.length || 0) > 0}
-        disabled={!enabled || disabled}
+        disabled={!enabled || disabled || enabled === 'loading'}
         displayValue={value => value?.name ?? ''}
         icon="tabler:map-pin"
         name={label || 'Location'}
@@ -102,31 +102,38 @@ function LocationInput({
             </div>
           ))}
       </ListboxOrComboboxInput>
-      {!enabled && (
-        <div className="flex-center text-bg-500 absolute top-1/2 right-6 -translate-y-1/2 gap-2">
-          {t('locationDisabled.title')}
-          <Tooltip
-            icon="tabler:info-circle"
-            id="location-disabled"
-            tooltipProps={{
-              positionStrategy: 'fixed',
-              clickable: true,
-              place: 'top-end'
-            }}
-          >
-            <p className="text-bg-500 max-w-64">
-              {t('locationDisabled.description')}{' '}
-              <a
-                className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
-                href="https://docs.lifeforge.melvinchia.dev/user-guide/api-keys#location"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                API Keys Guide
-              </a>
-            </p>
-          </Tooltip>
-        </div>
+      {enabled === 'loading' ? (
+        <Icon
+          className="text-bg-500 absolute top-1/2 right-6 h-6 w-6 -translate-y-1/2"
+          icon="svg-spinners:180-ring"
+        />
+      ) : (
+        !enabled && (
+          <div className="flex-center text-bg-500 absolute top-1/2 right-6 -translate-y-1/2 gap-2">
+            {t('locationDisabled.title')}
+            <Tooltip
+              icon="tabler:info-circle"
+              id="location-disabled"
+              tooltipProps={{
+                positionStrategy: 'fixed',
+                clickable: true,
+                place: 'top-end'
+              }}
+            >
+              <p className="text-bg-500 max-w-64">
+                {t('locationDisabled.description')}{' '}
+                <a
+                  className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
+                  href="https://docs.lifeforge.melvinchia.dev/user-guide/api-keys#location"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  API Keys Guide
+                </a>
+              </p>
+            </Tooltip>
+          </div>
+        )
       )}
     </div>
   )

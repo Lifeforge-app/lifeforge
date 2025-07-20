@@ -1,6 +1,9 @@
 import { z } from 'zod/v4'
 
-import { WalletCollectionsSchemas } from '../collections'
+import {
+  LocationsCustomSchemas,
+  WalletCollectionsSchemas
+} from '../collections'
 import { SchemaWithPB } from '../collections/schemaWithPB'
 import {
   WalletIncomeExpensesSummarySchema,
@@ -45,7 +48,11 @@ const Transactions = {
     }).and(
       z.union([
         WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
-          base_transaction: true
+          base_transaction: true,
+          location_name: true,
+          location_coords: true
+        }).extend({
+          location: LocationsCustomSchemas.Location.optional()
         }),
         WalletCollectionsSchemas.TransactionsTransfer.omit({
           base_transaction: true
@@ -75,7 +82,10 @@ const Transactions = {
       .and(
         z.union([
           WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
-            base_transaction: true
+            base_transaction: true,
+            location_name: true
+          }).extend({
+            location: LocationsCustomSchemas.Location.optional()
           }),
           WalletCollectionsSchemas.TransactionsTransfer.omit({
             base_transaction: true

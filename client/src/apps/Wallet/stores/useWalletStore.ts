@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 
-import { WalletCollectionsSchemas } from 'shared/types/collections'
+import { IWalletTransaction } from '../pages/Transactions'
 
 interface WalletState {
-  selectedType: WalletCollectionsSchemas.ITransaction['type'] | null
+  selectedType: IWalletTransaction['type'] | null
   selectedCategory: string | null
   selectedAsset: string | null
   selectedLedger: string | null
