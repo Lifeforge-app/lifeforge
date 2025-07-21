@@ -101,39 +101,39 @@ const getAllRoutes = forgeController
   .schema(RoutesControllersSchemas.Routes.getAllRoutes)
   .callback(async () => traceRouteStack(router.stack))
 
-const newRoutes = forgeRouter({
-  '/achievements': (await import('../../apps/achievements')).default,
-  '/calendar': (await import('../../apps/calendar')).default,
-  '/todo-list': (await import('../../apps/todoList')).default,
-  '/idea-box': (await import('../../apps/ideaBox')).default,
-  '/code-time': (await import('../../apps/codeTime')).default,
-  '/books-library': (await import('../../apps/booksLibrary')).default,
-  '/wallet': (await import('../../apps/wallet')).default,
-  '/wishlist': (await import('../../apps/wishlist')).default,
-  '/music': (await import('../../apps/music')).default,
-  '/scores-library': (await import('../../apps/scoresLibrary')).default,
-  '/passwords': (await import('../../apps/passwords')).default,
-  '/sudoku': (await import('../../apps/sudoku')).default,
-  '/virtual-wardrobe': (await import('../../apps/virtualWardrobe')).default,
-  '/moment-vault': (await import('../../apps/momentVault')).default,
-  '/movies': (await import('../../apps/movies')).default,
-  '/railway-map': (await import('../../apps/railwayMap')).default,
-  '/youtube-summarizer': (await import('../../apps/youtubeSummarizer')).default,
-  '/blog': (await import('../../apps/blog')).default,
-  '/locales': (await import('../lib/locales')).default,
-  '/user': (await import('../lib/user')).default,
-  '/api-keys': (await import('../lib/apiKeys')).default,
-  '/pixabay': (await import('../lib/pixabay')).default,
-  '/locations': (await import('../lib/locations')).default,
-  '/ai': (await import('../lib/ai')).default,
-  '/modules': (await import('../lib/modules')).default,
-  '/backups': (await import('../lib/backups')).default,
-  '/database': (await import('../lib/database')).default,
+const appRoutes = forgeRouter({
+  '/achievements': (await import('../apps/achievements')).default,
+  '/calendar': (await import('../apps/calendar')).default,
+  '/todo-list': (await import('../apps/todoList')).default,
+  '/idea-box': (await import('../apps/ideaBox')).default,
+  '/code-time': (await import('../apps/codeTime')).default,
+  '/books-library': (await import('../apps/booksLibrary')).default,
+  '/wallet': (await import('../apps/wallet')).default,
+  '/wishlist': (await import('../apps/wishlist')).default,
+  '/music': (await import('../apps/music')).default,
+  '/scores-library': (await import('../apps/scoresLibrary')).default,
+  '/passwords': (await import('../apps/passwords')).default,
+  '/sudoku': (await import('../apps/sudoku')).default,
+  '/virtual-wardrobe': (await import('../apps/virtualWardrobe')).default,
+  '/moment-vault': (await import('../apps/momentVault')).default,
+  '/movies': (await import('../apps/movies')).default,
+  '/railway-map': (await import('../apps/railwayMap')).default,
+  '/youtube-summarizer': (await import('../apps/youtubeSummarizer')).default,
+  '/blog': (await import('../apps/blog')).default,
+  '/locales': (await import('./lib/locales')).default,
+  '/user': (await import('./lib/user')).default,
+  '/api-keys': (await import('./lib/apiKeys')).default,
+  '/pixabay': (await import('./lib/pixabay')).default,
+  '/locations': (await import('./lib/locations')).default,
+  '/ai': (await import('./lib/ai')).default,
+  '/modules': (await import('./lib/modules')).default,
+  '/backups': (await import('./lib/backups')).default,
+  '/database': (await import('./lib/database')).default,
   getMedia,
   corsAnywhere,
   getAllRoutes
 })
 
-router.use('/', registerRoutes(newRoutes))
+router.use('/', registerRoutes(appRoutes))
 
 export default router
