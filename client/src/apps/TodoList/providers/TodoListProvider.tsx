@@ -3,25 +3,32 @@ import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { useAPIQuery } from 'shared/lib'
-
 import {
-  type ITodoListEntry,
-  type ITodoListList,
-  type ITodoListStatusCounter,
-  type ITodoListTag,
-  type ITodoPriority
-} from '@apps/TodoList/interfaces/todo_list_interfaces'
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
+import { TodoListControllersSchemas } from 'shared/types/controllers'
 
 interface ITodoListData {
   entriesQueryKey: unknown[]
   // Data
-  prioritiesQuery: UseQueryResult<ITodoPriority[]>
-  listsQuery: UseQueryResult<ITodoListList[]>
-  tagsListQuery: UseQueryResult<ITodoListTag[]>
-  entriesQuery: UseQueryResult<ITodoListEntry[]>
-  statusCounterQuery: UseQueryResult<ITodoListStatusCounter>
+  prioritiesQuery: UseQueryResult<
+    TodoListControllersSchemas.IPriorities['getAllPriorities']['response']
+  >
+  listsQuery: UseQueryResult<
+    TodoListControllersSchemas.ILists['getAllLists']['response']
+  >
+  tagsListQuery: UseQueryResult<
+    TodoListControllersSchemas.ITags['getAllTags']['response']
+  >
+  entriesQuery: UseQueryResult<
+    TodoListControllersSchemas.IEntries['getAllEntries']['response']
+  >
+  statusCounterQuery: UseQueryResult<
+    TodoListControllersSchemas.IEntries['getStatusCounter']['response']
+  >
 
-  selectedTask: ITodoListEntry | null
+  selectedTask: ISchemaWithPB<TodoListCollectionsSchemas.IEntry> | null
 
   // Modals
   modifyTaskWindowOpenType: 'create' | 'update' | null
@@ -30,7 +37,9 @@ interface ITodoListData {
   setModifyTaskWindowOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  setSelectedTask: React.Dispatch<React.SetStateAction<ITodoListEntry | null>>
+  setSelectedTask: React.Dispatch<
+    React.SetStateAction<ISchemaWithPB<TodoListCollectionsSchemas.IEntry> | null>
+  >
 }
 
 export const TodoListContext = createContext<ITodoListData | undefined>(
@@ -40,25 +49,25 @@ export const TodoListContext = createContext<ITodoListData | undefined>(
 export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams()
 
-  const statusCounterQuery = useAPIQuery<ITodoListStatusCounter>(
-    'todo-list/entries/utils/status-counter',
-    ['todo-list', 'entries', 'status-counter']
-  )
-
-  const prioritiesQuery = useAPIQuery<ITodoPriority[]>('todo-list/priorities', [
+  const statusCounterQuery = useAPIQuery<
+    TodoListControllersSchemas.IEntries['getStatusCounter']['response']
+  >('todo-list/entries/utils/status-counter', [
     'todo-list',
-    'priorities'
+    'entries',
+    'status-counter'
   ])
 
-  const listsQuery = useAPIQuery<ITodoListList[]>('todo-list/lists', [
-    'todo-list',
-    'lists'
-  ])
+  const prioritiesQuery = useAPIQuery<
+    TodoListControllersSchemas.IPriorities['getAllPriorities']['response']
+  >('todo-list/priorities', ['todo-list', 'priorities'])
 
-  const tagsListQuery = useAPIQuery<ITodoListTag[]>('todo-list/tags', [
-    'todo-list',
-    'tags'
-  ])
+  const listsQuery = useAPIQuery<
+    TodoListControllersSchemas.ILists['getAllLists']['response']
+  >('todo-list/lists', ['todo-list', 'lists'])
+
+  const tagsListQuery = useAPIQuery<
+    TodoListControllersSchemas.ITags['getAllTags']['response']
+  >('todo-list/tags', ['todo-list', 'tags'])
 
   const entriesQueryKey = useMemo(
     () => [
@@ -72,7 +81,9 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
     [searchParams]
   )
 
-  const entriesQuery = useAPIQuery<ITodoListEntry[]>(
+  const entriesQuery = useAPIQuery<
+    TodoListControllersSchemas.IEntries['getAllEntries']['response']
+  >(
     `todo-list/entries?${
       searchParams.get('status') !== null &&
       `status=${searchParams.get('status')}`
@@ -89,7 +100,8 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [deleteTaskConfirmationModalOpen, setDeleteTaskConfirmationModalOpen] =
     useState(false)
 
-  const [selectedTask, setSelectedTask] = useState<ITodoListEntry | null>(null)
+  const [selectedTask, setSelectedTask] =
+    useState<ISchemaWithPB<TodoListCollectionsSchemas.IEntry> | null>(null)
 
   const value = useMemo(
     () => ({

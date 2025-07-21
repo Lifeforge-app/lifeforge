@@ -1,8 +1,15 @@
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
+
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
-
-function TaskTags({ entry }: { entry: ITodoListEntry }) {
+function TaskTags({
+  entry
+}: {
+  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
+}) {
   const { tagsListQuery } = useTodoListContext()
 
   const tags = tagsListQuery.data ?? []

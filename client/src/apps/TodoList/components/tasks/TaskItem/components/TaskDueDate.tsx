@@ -1,9 +1,16 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
-import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
 
-function TaskDueDate({ entry }: { entry: ITodoListEntry }) {
+function TaskDueDate({
+  entry
+}: {
+  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
+}) {
   return (
     <>
       {entry.done && entry.completed_at !== '' ? (

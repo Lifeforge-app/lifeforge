@@ -3,15 +3,18 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
-import ModifyListModal from '@apps/TodoList/modals/ModifyListModal'
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
 
-import { type ITodoListList } from '../../../interfaces/todo_list_interfaces'
+import ModifyListModal from '@apps/TodoList/modals/ModifyListModal'
 
 function TaskListListItem({
   item,
   setSidebarOpen
 }: {
-  item: ITodoListList
+  item: ISchemaWithPB<TodoListCollectionsSchemas.IListAggregated>
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)

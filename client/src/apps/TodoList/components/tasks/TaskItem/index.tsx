@@ -3,10 +3,13 @@ import clsx from 'clsx'
 import { Checkbox } from 'lifeforge-ui'
 
 import { fetchAPI } from 'shared/lib'
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
 import TaskTags from './components/TaskTags'
@@ -16,7 +19,7 @@ function TaskItem({
   lighter,
   isInDashboardWidget
 }: {
-  entry: ITodoListEntry
+  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
   lighter?: boolean
   isInDashboardWidget?: boolean
 }) {
@@ -36,7 +39,7 @@ function TaskItem({
   const lists = listsQuery.data ?? []
 
   async function toggleTaskCompletion() {
-    queryClient.setQueryData<ITodoListEntry[]>(
+    queryClient.setQueryData(
       entriesQueryKey,
       entries.map(e =>
         e.id === entry.id

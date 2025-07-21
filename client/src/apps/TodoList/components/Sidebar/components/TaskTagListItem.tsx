@@ -3,15 +3,18 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
-import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
 
-import { type ITodoListTag } from '../../../interfaces/todo_list_interfaces'
+import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
 
 function TaskTagListItem({
   item,
   setSidebarOpen
 }: {
-  item: ITodoListTag
+  item: ISchemaWithPB<TodoListCollectionsSchemas.ITagAggregated>
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)
@@ -58,7 +61,6 @@ function TaskTagListItem({
       icon="tabler:hash"
       name={item.name}
       number={item.amount}
-      sideStripColor={item.color}
       onCancelButtonClick={() => {
         searchParams.delete('tag')
         setSearchParams(searchParams)
