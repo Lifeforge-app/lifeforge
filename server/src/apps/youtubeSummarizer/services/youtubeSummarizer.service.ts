@@ -2,22 +2,25 @@ import { fetchAI } from '@functions/fetchAI'
 import { exec } from 'child_process'
 import Pocketbase from 'pocketbase'
 
-import { IYoutubeInfo } from '../schema'
+import { YoutubeSummarizerCustomSchemas } from 'shared/types/collections'
 
-export const getYoutubeVideoInfo = (videoId: string): Promise<IYoutubeInfo> => {
+export const getYoutubeVideoInfo = (
+  videoId: string
+): Promise<YoutubeSummarizerCustomSchemas.IYoutubeInfo> => {
   return new Promise((resolve, reject) => {
     exec(
       `${process.cwd()}/src/core/bin/yt-dlp --skip-download --dump-json "https://www.youtube.com/watch?v=${videoId}"`,
       (err, stdout) => {
         if (err) {
           reject(err)
+
           return
         }
 
         try {
           const data = JSON.parse(stdout)
 
-          const response: IYoutubeInfo = {
+          const response: YoutubeSummarizerCustomSchemas.IYoutubeInfo = {
             title: data.title,
             uploadDate: data.upload_date,
             uploader: data.uploader,

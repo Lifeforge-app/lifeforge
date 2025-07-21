@@ -95,6 +95,7 @@ export const updateBgImage = async (
     )
 
     fs.unlinkSync(file.path)
+
     return result
   }
 

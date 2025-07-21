@@ -1,17 +1,15 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import walletAssetsRouter from './controllers/assets.controller'
-import walletCategoriesRouter from './controllers/categories.controller'
-import walletLedgersRouter from './controllers/ledgers.controller'
-import walletTransactionsRouter from './controllers/transactions.controller'
-import walletUtilsRouter from './controllers/utils.controller'
+import assetsRouter from './controllers/assets'
+import categoriesRouter from './controllers/categories'
+import ledgersRouter from './controllers/ledgers'
+import transactionsRouter from './controllers/transactions'
+import utilsRouter from './controllers/utils'
 
-const router = express.Router()
-
-router.use('/transactions', walletTransactionsRouter)
-router.use('/categories', walletCategoriesRouter)
-router.use('/assets', walletAssetsRouter)
-router.use('/ledgers', walletLedgersRouter)
-router.use('/utils', walletUtilsRouter)
-
-export default router
+export default forgeRouter({
+  '/transactions': transactionsRouter,
+  '/categories': categoriesRouter,
+  '/assets': assetsRouter,
+  '/ledgers': ledgersRouter,
+  '/utils': utilsRouter
+})

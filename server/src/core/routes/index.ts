@@ -1,63 +1,15 @@
-import {
-  bulkRegisterControllers,
-  forgeController
-} from '@functions/forgeController'
-import forgeRouter, { registerRoutes } from '@functions/forgeRouter'
+import { forgeController } from '@functions/forgeController'
+import { registerRoutes } from '@functions/forgeRouter'
+import forgeRouter from '@functions/forgeRouter'
 import { successWithBaseResponse } from '@functions/response'
 import traceRouteStack from '@functions/traceRouteStack'
 import express from 'express'
-import fs from 'fs'
-import path from 'path'
 import request from 'request'
 import { z } from 'zod/v4'
 
 import { RoutesControllersSchemas } from 'shared/types/controllers'
 
-const newRoutes = forgeRouter({
-  '/achievements': (await import('../../apps/achievements')).default,
-  '/calendar': (await import('../../apps/calendar')).default
-})
-
-const LIB_ROUTES = JSON.parse(
-  fs.readFileSync(
-    path.resolve(process.cwd(), 'src/core/routes/lib.routes.json'),
-    'utf-8'
-  )
-) as Record<string, string>
-
-const MODULE_ROUTES = JSON.parse(
-  fs.readFileSync(
-    path.resolve(process.cwd(), 'src/core/routes/module.routes.json'),
-    'utf-8'
-  )
-) as Record<string, string>
-
 const router = express.Router()
-
-registerRoutes(newRoutes)
-
-for (const [route, module] of Object.entries(LIB_ROUTES)) {
-  try {
-    router.use(
-      route,
-      (await import(path.resolve(process.cwd(), `src/core/lib/${module}`)))
-        .default
-    )
-  } catch (error) {
-    console.error(`Failed to load module for route ${route}: `, error)
-  }
-}
-
-for (const [route, module] of Object.entries(MODULE_ROUTES)) {
-  try {
-    router.use(
-      route,
-      (await import(path.resolve(process.cwd(), `src/apps/${module}`))).default
-    )
-  } catch (error) {
-    console.error(`Failed to load module for route ${route}:`, error)
-  }
-}
 
 router.get('/status', async (req, res) => {
   successWithBaseResponse(res, {
@@ -149,15 +101,39 @@ const getAllRoutes = forgeController
   .schema(RoutesControllersSchemas.Routes.getAllRoutes)
   .callback(async () => traceRouteStack(router.stack))
 
-bulkRegisterControllers(router, [getMedia, getAllRoutes, corsAnywhere])
-
-router.use((req, res) => {
-  res.status(404)
-
-  res.json({
-    state: 'error',
-    message: 'Endpoint not found'
-  })
+const newRoutes = forgeRouter({
+  '/achievements': (await import('../../apps/achievements')).default,
+  '/calendar': (await import('../../apps/calendar')).default,
+  '/todo-list': (await import('../../apps/todoList')).default,
+  '/idea-box': (await import('../../apps/ideaBox')).default,
+  '/code-time': (await import('../../apps/codeTime')).default,
+  '/books-library': (await import('../../apps/booksLibrary')).default,
+  '/wallet': (await import('../../apps/wallet')).default,
+  '/wishlist': (await import('../../apps/wishlist')).default,
+  '/music': (await import('../../apps/music')).default,
+  '/scores-library': (await import('../../apps/scoresLibrary')).default,
+  '/passwords': (await import('../../apps/passwords')).default,
+  '/sudoku': (await import('../../apps/sudoku')).default,
+  '/virtual-wardrobe': (await import('../../apps/virtualWardrobe')).default,
+  '/moment-vault': (await import('../../apps/momentVault')).default,
+  '/movies': (await import('../../apps/movies')).default,
+  '/railway-map': (await import('../../apps/railwayMap')).default,
+  '/youtube-summarizer': (await import('../../apps/youtubeSummarizer')).default,
+  '/blog': (await import('../../apps/blog')).default,
+  '/locales': (await import('../lib/locales')).default,
+  '/user': (await import('../lib/user')).default,
+  '/api-keys': (await import('../lib/apiKeys')).default,
+  '/pixabay': (await import('../lib/pixabay')).default,
+  '/locations': (await import('../lib/locations')).default,
+  '/ai': (await import('../lib/ai')).default,
+  '/modules': (await import('../lib/modules')).default,
+  '/backups': (await import('../lib/backups')).default,
+  '/database': (await import('../lib/database')).default,
+  getMedia,
+  corsAnywhere,
+  getAllRoutes
 })
+
+router.use('/', registerRoutes(newRoutes))
 
 export default router

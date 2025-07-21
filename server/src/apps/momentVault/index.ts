@@ -1,11 +1,9 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import momentVaultEntriesRouter from './controllers/entries.controller'
-import momentVaultTranscriptionRouter from './controllers/transcription.controller'
+import entriesRouter from './controllers/entries'
+import transcriptionRouter from './controllers/transcription'
 
-const router = express.Router()
-
-router.use('/entries', momentVaultEntriesRouter)
-router.use('/transcribe', momentVaultTranscriptionRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': entriesRouter,
+  '/transcribe': transcriptionRouter
+})

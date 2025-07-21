@@ -57,9 +57,11 @@ export default function dijkstraWithTransfers(
   const path = []
 
   let temp: string | null = end
+
   while (temp) {
     path.unshift(temp)
     temp = prev[temp]
   }
+
   return path.length > 1 ? path : null
 }

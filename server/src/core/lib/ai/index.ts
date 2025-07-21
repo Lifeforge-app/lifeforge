@@ -1,9 +1,7 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import imageGenerationRouter from './controllers/imageGeneration.controller'
+import imageGenerationRouter from './controllers/imageGeneration'
 
-const router = express.Router()
-
-router.use('/image-generation', imageGenerationRouter)
-
-export default router
+export default forgeRouter({
+  '/image-generation': imageGenerationRouter
+})

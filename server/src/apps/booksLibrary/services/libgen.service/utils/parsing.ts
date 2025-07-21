@@ -4,6 +4,7 @@ export const cleanupTitle = (title: Element | null) => {
   const el = title.querySelectorAll('font')
 
   let edition = ''
+
   if (el) {
     edition =
       Array.from(el)
@@ -11,6 +12,7 @@ export const cleanupTitle = (title: Element | null) => {
         ?.textContent?.trim() || ''
     el.forEach(e => e.remove())
   }
+
   return {
     title: title.textContent?.trim(),
     edition
@@ -19,5 +21,6 @@ export const cleanupTitle = (title: Element | null) => {
 
 export const zip = (a: Array<string>, b: Array<any> | null) => {
   if (b) return Object.fromEntries(a.map((k, i) => [k, b[i]]).filter(e => e[0]))
+
   return a
 }

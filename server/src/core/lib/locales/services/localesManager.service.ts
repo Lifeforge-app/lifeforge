@@ -129,6 +129,7 @@ export const syncLocales = (
           if (!acc[cur]) {
             acc[cur] = {}
           }
+
           return acc[cur]
         }, fileContent[lang])
 
@@ -180,6 +181,7 @@ export const createLocale = (
       if (!acc[cur]) {
         acc[cur] = {}
       }
+
       return acc[cur]
     }, data)
 
@@ -219,6 +221,7 @@ export const renameLocale = (
       if (!acc[cur]) {
         acc[cur] = {}
       }
+
       return acc[cur]
     }, data)
 
@@ -265,6 +268,7 @@ export const deleteLocale = (
       if (!acc[cur]) {
         acc[cur] = {}
       }
+
       return acc[cur]
     }, data)
 

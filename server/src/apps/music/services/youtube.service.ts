@@ -26,6 +26,7 @@ export const getVideoInfo = (
       (err, stdout) => {
         if (err) {
           reject(err)
+
           return
         }
 
@@ -71,6 +72,7 @@ export const downloadVideo = (
     async err => {
       if (err) {
         downloadStatus = 'failed'
+
         return
       }
 
@@ -81,6 +83,7 @@ export const downloadVideo = (
 
         if (!mp3File) {
           downloadStatus = 'failed'
+
           return
         }
 

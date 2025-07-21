@@ -1,17 +1,15 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import ideaBoxContainersRouter from './controllers/containers.controller'
-import ideaBoxFoldersRouter from './controllers/folders.controller'
-import ideaBoxIdeasRouter from './controllers/ideas.controller'
-import ideaBoxMiscRouter from './controllers/misc.controller'
-import ideaBoxTagsRouter from './controllers/tags.controller'
+import containersRouter from './controllers/containers'
+import foldersRouter from './controllers/folders'
+import ideasRouter from './controllers/ideas'
+import miscRouter from './controllers/misc'
+import tagsRouter from './controllers/tags'
 
-const router = express.Router()
-
-router.use('/containers', ideaBoxContainersRouter)
-router.use('/folders', ideaBoxFoldersRouter)
-router.use('/ideas', ideaBoxIdeasRouter)
-router.use('/tags', ideaBoxTagsRouter)
-router.use('/', ideaBoxMiscRouter)
-
-export default router
+export default forgeRouter({
+  '/containers': containersRouter,
+  '/folders': foldersRouter,
+  '/ideas': ideasRouter,
+  '/tags': tagsRouter,
+  '/': miscRouter
+})

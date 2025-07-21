@@ -136,6 +136,7 @@ const verifyEmailOTP = async (
 
   if (!authData || !pb.authStore.isValid) {
     console.error('Invalid OTP')
+
     return false
   }
 

@@ -25,6 +25,7 @@ const scrapePuzzlePlanet = async (
     }
   } catch (error) {
     console.error('Error scraping data', error)
+
     return null
   }
 }

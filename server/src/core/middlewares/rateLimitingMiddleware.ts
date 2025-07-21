@@ -40,6 +40,7 @@ export default rateLimit({
 
       try {
         await pb.collection('users').authRefresh()
+
         return true
       } catch (error: any) {
         if (error.response.code === 401) {
@@ -49,6 +50,7 @@ export default rateLimit({
     } catch {
       return false
     }
+
     return false
   },
   validate: { xForwardedForHeader: false }
