@@ -1,12 +1,10 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import userAuthRouter from './controllers/auth.controller'
-import userOAuthRouter from './controllers/oauth.controller'
-import userPersonalizationRouter from './controllers/personalization.controller'
-import userSettingsRouter from './controllers/settings.controller'
-import userTwoFARouter from './controllers/twoFA.controller'
-
-const router = express.Router()
+import authRouter from './controllers/auth'
+import oAuthRouter from './controllers/oauth'
+import personalizationRouter from './controllers/personalization'
+import settingsRouter from './controllers/settings'
+import twoFARouter from './controllers/twoFA'
 
 export const currentSession = {
   token: '',
@@ -19,10 +17,10 @@ if (!process.env.MASTER_KEY) {
   throw new Error('MASTER_KEY not found in environment variables')
 }
 
-router.use('/auth', userAuthRouter)
-router.use('/oauth', userOAuthRouter)
-router.use('/2fa', userTwoFARouter)
-router.use('/settings', userSettingsRouter)
-router.use('/personalization', userPersonalizationRouter)
-
-export default router
+export default forgeRouter({
+  '/auth': authRouter,
+  '/oauth': oAuthRouter,
+  '/2fa': twoFARouter,
+  '/settings': settingsRouter,
+  '/personalization': personalizationRouter
+})

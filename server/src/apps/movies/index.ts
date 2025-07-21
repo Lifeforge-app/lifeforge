@@ -1,13 +1,11 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import moviesEntriesRouter from './controllers/entries.controller'
-import moviesTicketRouter from './controllers/ticket.controller'
-import moviesTMDBRouter from './controllers/tmdb.controller'
+import entriesRouter from './controllers/entries'
+import ticketRouter from './controllers/ticket'
+import tmdbRouter from './controllers/tmdb'
 
-const router = express.Router()
-
-router.use('/entries', moviesEntriesRouter)
-router.use('/ticket', moviesTicketRouter)
-router.use('/tmdb', moviesTMDBRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': entriesRouter,
+  '/ticket': ticketRouter,
+  '/tmdb': tmdbRouter
+})

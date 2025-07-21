@@ -1,16 +1,11 @@
 import ClientError from '@functions/ClientError'
-import {
-  bulkRegisterControllers,
-  forgeController
-} from '@functions/forgeController'
+import { forgeController } from '@functions/forgeController'
+import forgeRouter from '@functions/forgeRouter'
 import { getAPIKey } from '@functions/getAPIKey'
-import express from 'express'
 
 import { LocationsControllersSchemas } from 'shared/types/controllers'
 
 import * as LocationsService from './services/locations.service'
-
-const router = express.Router()
 
 const getLocation = forgeController
   .route('GET /')
@@ -36,6 +31,4 @@ const checkIsEnabled = forgeController
     return !!key
   })
 
-bulkRegisterControllers(router, [getLocation, checkIsEnabled])
-
-export default router
+export default forgeRouter({ getLocation, checkIsEnabled })

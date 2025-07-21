@@ -1,13 +1,11 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import scoresLibraryEntriesRouter from './controllers/entries.controller'
-import scoresLibraryGuitarWorldRouter from './controllers/guitarWorld.controller'
-import scoresLibraryTypesRouter from './controllers/types.controller'
+import entriesRouter from './controllers/entries'
+import guitarWorldRouter from './controllers/guitarWorld'
+import typesRouter from './controllers/types'
 
-const router = express.Router()
-
-router.use('/entries', scoresLibraryEntriesRouter)
-router.use('/guitar-world', scoresLibraryGuitarWorldRouter)
-router.use('/types', scoresLibraryTypesRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': entriesRouter,
+  '/guitar-world': guitarWorldRouter,
+  '/types': typesRouter
+})

@@ -1,11 +1,8 @@
 import {
-  bulkRegisterControllers,
   forgeController
 } from '@functions/forgeController'
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 import { z } from 'zod/v4'
-
-const router = express.Router()
 
 const generateBoard = forgeController
   .route('GET /:difficulty')
@@ -55,6 +52,4 @@ const generateBoard = forgeController
     return boards
   })
 
-bulkRegisterControllers(router, [generateBoard])
-
-export default router
+export default forgeRouter({ generateBoard })

@@ -536,7 +536,7 @@ export class ForgeControllerBuilder<
    *
    * @example
    * ```typescript
-   * const router = express.Router()
+   * import forgeRouter from '@functions/forgeRouter'
    * controller.register(router)
    * ```
    */

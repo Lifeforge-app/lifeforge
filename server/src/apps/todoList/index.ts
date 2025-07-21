@@ -1,15 +1,13 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import todoListEntriesRouter from './controllers/entries.controller'
-import todoListListsRouter from './controllers/lists.controller'
-import todoListPrioritiesRouter from './controllers/priorities.controller'
-import todoListTagsRouter from './controllers/tags.controller'
+import entriesRouter from './controllers/entries'
+import listsRouter from './controllers/lists'
+import prioritiesRouter from './controllers/priorities'
+import tagsRouter from './controllers/tags'
 
-const router = express.Router()
-
-router.use('/entries', todoListEntriesRouter)
-router.use('/priorities', todoListPrioritiesRouter)
-router.use('/lists', todoListListsRouter)
-router.use('/tags', todoListTagsRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': entriesRouter,
+  '/priorities': prioritiesRouter,
+  '/lists': listsRouter,
+  '/tags': tagsRouter
+})

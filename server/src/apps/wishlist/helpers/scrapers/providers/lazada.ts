@@ -57,6 +57,7 @@ const scrapeLazada = async (
     return final
   } catch (error) {
     console.error('Error scraping data', error)
+
     return null
   }
 }

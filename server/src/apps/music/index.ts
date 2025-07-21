@@ -1,11 +1,9 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import musicEntriesRouter from './controllers/entries.controller'
-import musicYoutubeRouter from './controllers/youtube.controller'
+import entriesRouter from './controllers/entries'
+import youtubeRouter from './controllers/youtube'
 
-const router = express.Router()
-
-router.use('/entries', musicEntriesRouter)
-router.use('/youtube', musicYoutubeRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': entriesRouter,
+  '/youtube': youtubeRouter
+})

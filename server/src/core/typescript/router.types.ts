@@ -18,10 +18,7 @@ export interface RouterInput {
 }
 
 // Enhanced type-preserving router that maintains the input structure for type inference
-export type ForgeRouter<T extends RouterInput> = {
-  _type: T
-  expressRouter: Router
-}
+export type ForgeRouter<T extends RouterInput> = T
 
 // Type utility to extract the structure from the router
 export type InferRouterStructure<T> = T extends ForgeRouter<infer U> ? U : never

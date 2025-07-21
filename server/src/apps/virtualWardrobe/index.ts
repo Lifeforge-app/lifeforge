@@ -1,11 +1,9 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import virtualWardrobeEntriesRouter from './controllers/entries.controller'
-import virtualWardrobeSessionRouter from './controllers/session.controller'
+import entriesRouter from './controllers/entries'
+import sessionRouter from './controllers/session'
 
-const router = express.Router()
-
-router.use('/entries', virtualWardrobeEntriesRouter)
-router.use('/session', virtualWardrobeSessionRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': entriesRouter,
+  '/session': sessionRouter
+})

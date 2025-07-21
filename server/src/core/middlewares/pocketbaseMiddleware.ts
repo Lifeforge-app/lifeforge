@@ -22,6 +22,7 @@ const pocketbaseMiddleware = async (
     await req.pb
       .collection('users')
       .authWithPassword(process.env.PB_EMAIL!, process.env.PB_PASSWORD!)
+
     return next()
   }
 
@@ -35,6 +36,7 @@ const pocketbaseMiddleware = async (
     ) {
       req.pb = pb
       next()
+
       return
     }
   }
@@ -44,6 +46,7 @@ const pocketbaseMiddleware = async (
       state: 'error',
       message: 'Authorization token is required'
     })
+
     return
   }
 
@@ -58,6 +61,7 @@ const pocketbaseMiddleware = async (
           state: 'error',
           message: 'Invalid authorization credentials'
         })
+
         return
       }
     }

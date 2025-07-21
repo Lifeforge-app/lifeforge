@@ -1,17 +1,7 @@
 import forgeRouter from '@functions/forgeRouter'
 
-import {
-  createEntry,
-  deleteEntry,
-  getAllEntriesByDifficulty,
-  updateEntry
-} from './controllers/entries.controller'
+import entriesRouter from './controllers/entries'
 
 export default forgeRouter({
-  entries: {
-    getAllByDifficulty: getAllEntriesByDifficulty,
-    create: createEntry,
-    update: updateEntry,
-    delete: deleteEntry
-  }
+  '/entries': entriesRouter
 })

@@ -16,6 +16,7 @@ export const getSidebarData = async (
         acc[curr.category] = 0
       }
       acc[curr.category]++
+
       return acc
     },
     {} as Record<string, number>
@@ -27,6 +28,7 @@ export const getSidebarData = async (
         acc[curr.subcategory] = 0
       }
       acc[curr.subcategory]++
+
       return acc
     },
     {} as Record<string, number>
@@ -38,6 +40,7 @@ export const getSidebarData = async (
         acc[curr.brand] = 0
       }
       acc[curr.brand]++
+
       return acc
     },
     {} as Record<string, number>
@@ -49,6 +52,7 @@ export const getSidebarData = async (
         acc[curr.size] = 0
       }
       acc[curr.size]++
+
       return acc
     },
     {} as Record<string, number>
@@ -62,6 +66,7 @@ export const getSidebarData = async (
         }
         acc[color]++
       })
+
       return acc
     },
     {} as Record<string, number>

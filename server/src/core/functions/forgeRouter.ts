@@ -14,11 +14,8 @@ function isRouter(value: unknown): value is Router {
   )
 }
 
-function forgeRouter<T extends RouterInput>(routes: T): ForgeRouter<T> {
-  return {
-    _type: routes,
-    expressRouter: Router()
-  }
+function forgeRouter<T extends RouterInput>(routes: T): T {
+  return routes
 }
 
 function registerRoutes<T extends RouterInput>(
@@ -31,9 +28,16 @@ function registerRoutes<T extends RouterInput>(
       if (controller instanceof ForgeControllerBuilder) {
         controller.register(router)
       } else if (isRouter(controller)) {
+        if (!route.startsWith('/')) {
+          throw new Error(`Route "${route}" must start with a '/'`)
+        }
         router.use(route, controller)
       } else if (typeof controller === 'object' && controller !== null) {
         const nestedRouter = Router()
+
+        if (!route.startsWith('/')) {
+          throw new Error(`Nested route "${route}" must start with a '/'`)
+        }
 
         registerRoutesRecursive(controller as RouterInput, nestedRouter)
         router.use(route, nestedRouter)
@@ -45,7 +49,7 @@ function registerRoutes<T extends RouterInput>(
     }
   }
 
-  registerRoutesRecursive(forgeRouter._type, expressRouter)
+  registerRoutesRecursive(forgeRouter, expressRouter)
 
   return expressRouter
 }

@@ -1,11 +1,9 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import localesRouter from './controllers/locales.controller'
-import localesManagerRouter from './controllers/localesManager.controller'
+import Router from './controllers/locales'
+import ManagerRouter from './controllers/localesManager'
 
-const router = express.Router()
-
-router.use('/manager', localesManagerRouter)
-router.use('/', localesRouter)
-
-export default router
+export default forgeRouter({
+  '/manager': ManagerRouter,
+  '/': Router
+})

@@ -37,5 +37,6 @@ export default async (
   }
 
   pb.authStore.clear()
+
   return true
 }

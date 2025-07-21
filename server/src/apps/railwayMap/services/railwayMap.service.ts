@@ -43,11 +43,13 @@ export const getShortestPath = async (
         distance
       ])
     ) as Record<string, number>
+
     return acc
   }, {})
 
   const lines = allStations.reduce<Record<string, string[]>>((acc, station) => {
     acc[station.name] = station.lines ?? []
+
     return acc
   }, {})
 

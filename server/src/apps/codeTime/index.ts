@@ -1,9 +1,7 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import codeTimeRouter from './controllers/codeTime.controller'
+import codeTimeRouter from './controllers/codeTime'
 
-const router = express.Router()
-
-router.use('/', codeTimeRouter)
-
-export default router
+export default forgeRouter({
+  '/': codeTimeRouter
+})
