@@ -2,6 +2,7 @@ import {
   bulkRegisterControllers,
   forgeController
 } from '@functions/forgeController'
+import forgeRouter, { registerRoutes } from '@functions/forgeRouter'
 import { successWithBaseResponse } from '@functions/response'
 import traceRouteStack from '@functions/traceRouteStack'
 import express from 'express'
@@ -11,6 +12,11 @@ import request from 'request'
 import { z } from 'zod/v4'
 
 import { RoutesControllersSchemas } from 'shared/types/controllers'
+
+const newRoutes = forgeRouter({
+  '/achievements': (await import('../../apps/achievements')).default,
+  '/calendar': (await import('../../apps/calendar')).default
+})
 
 const LIB_ROUTES = JSON.parse(
   fs.readFileSync(
@@ -27,6 +33,8 @@ const MODULE_ROUTES = JSON.parse(
 ) as Record<string, string>
 
 const router = express.Router()
+
+registerRoutes(newRoutes)
 
 for (const [route, module] of Object.entries(LIB_ROUTES)) {
   try {

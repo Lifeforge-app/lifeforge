@@ -1,6 +1,5 @@
 {
   "/todo-list": "todoList",
-  "/calendar": "calendar",
   "/idea-box": "ideaBox",
   "/code-time": "codeTime",
   "/books-library": "booksLibrary",
@@ -15,6 +14,5 @@
   "/movies": "movies",
   "/railway-map": "railwayMap",
   "/youtube-summarizer": "youtubeSummarizer",
-  "/achievements": "achievements",
   "/blog": "blog"
 }

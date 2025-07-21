@@ -17,6 +17,7 @@ io.use(async (socket, next) => {
 
   if (!bearerToken) {
     next(new Error('Authorization token is required'))
+
     return
   }
 
@@ -28,6 +29,7 @@ io.use(async (socket, next) => {
     } catch (error: any) {
       if (error.response.code === 401) {
         next(new Error('Invalid authorization credentials'))
+
         return
       }
     }
