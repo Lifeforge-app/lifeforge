@@ -70,7 +70,7 @@ import { clientError, serverError, successWithBaseResponse } from './response'
  *   })
  * ```
  */
-class ForgeControllerBuilder<
+export class ForgeControllerBuilder<
   BodySchema extends ZodObjectOrIntersection | undefined = undefined,
   QuerySchema extends ZodObjectOrIntersection | undefined = undefined,
   ParamsSchema extends ZodObjectOrIntersection | undefined = undefined,
@@ -711,3 +711,5 @@ export const bulkRegisterControllers = (
     controller.register(router)
   }
 }
+
+export type IForgeController = typeof ForgeControllerBuilder

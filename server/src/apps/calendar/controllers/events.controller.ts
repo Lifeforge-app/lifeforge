@@ -1,17 +1,12 @@
 import ClientError from '@functions/ClientError'
-import {
-  bulkRegisterControllers,
-  forgeController
-} from '@functions/forgeController'
+import { forgeController } from '@functions/forgeController'
+import forgeRouter from '@functions/forgeRouter'
 import { getAPIKey } from '@functions/getAPIKey'
 import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
-import express from 'express'
 
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import * as EventsService from '../services/events.service'
-
-const calendarEventsRouter = express.Router()
 
 const getEventsByDateRange = forgeController
   .route('GET /')
@@ -122,7 +117,7 @@ const deleteEvent = forgeController
     async ({ pb, params: { id } }) => await EventsService.deleteEvent(pb, id)
   )
 
-bulkRegisterControllers(calendarEventsRouter, [
+export default forgeRouter({
   getEventsByDateRange,
   getEventsToday,
   getEventById,
@@ -131,6 +126,4 @@ bulkRegisterControllers(calendarEventsRouter, [
   updateEvent,
   deleteEvent,
   scanImage
-])
-
-export default calendarEventsRouter
+})

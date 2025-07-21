@@ -1,9 +1,17 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import achievementsEntriesRouter from './controllers/entries.controller'
+import {
+  createEntry,
+  deleteEntry,
+  getAllEntriesByDifficulty,
+  updateEntry
+} from './controllers/entries.controller'
 
-const router = express.Router()
-
-router.use('/entries', achievementsEntriesRouter)
-
-export default router
+export default forgeRouter({
+  entries: {
+    getAllByDifficulty: getAllEntriesByDifficulty,
+    create: createEntry,
+    update: updateEntry,
+    delete: deleteEntry
+  }
+})

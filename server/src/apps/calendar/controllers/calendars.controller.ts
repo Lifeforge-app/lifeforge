@@ -1,15 +1,10 @@
 import ClientError from '@functions/ClientError'
-import {
-  bulkRegisterControllers,
-  forgeController
-} from '@functions/forgeController'
-import express from 'express'
+import { forgeController } from '@functions/forgeController'
+import forgeRouter from '@functions/forgeRouter'
 
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import * as CalendarsService from '../services/calendars.service'
-
-const calendarCalendarsRouter = express.Router()
 
 const getAllCalendars = forgeController
   .route('GET /')
@@ -80,12 +75,10 @@ const deleteCalendar = forgeController
       await CalendarsService.deleteCalendar(pb, id)
   )
 
-bulkRegisterControllers(calendarCalendarsRouter, [
+export default forgeRouter({
   getAllCalendars,
   getCalendarById,
   createCalendar,
   updateCalendar,
   deleteCalendar
-])
-
-export default calendarCalendarsRouter
+})

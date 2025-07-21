@@ -1,14 +1,9 @@
-import {
-  bulkRegisterControllers,
-  forgeController
-} from '@functions/forgeController'
-import express from 'express'
+import { forgeController } from '@functions/forgeController'
+import forgeRouter from '@functions/forgeRouter'
 
 import { AchievementsControllersSchemas } from 'shared/types/controllers'
 
-const achievementsEntriesRouter = express.Router()
-
-const getAllEntriesByDifficulty = forgeController
+export const getAllEntriesByDifficulty = forgeController
   .route('GET /:difficulty')
   .description('Get all achievements entries by difficulty')
   .schema(AchievementsControllersSchemas.Entries.getAllEntriesByDifficulty)
@@ -19,7 +14,7 @@ const getAllEntriesByDifficulty = forgeController
     })
   )
 
-const createEntry = forgeController
+export const createEntry = forgeController
   .route('POST /')
   .description('Create a new achievements entry')
   .schema(AchievementsControllersSchemas.Entries.createEntry)
@@ -28,7 +23,7 @@ const createEntry = forgeController
     pb.collection('achievements__entries').create(body)
   )
 
-const updateEntry = forgeController
+export const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update an existing achievements entry')
   .schema(AchievementsControllersSchemas.Entries.updateEntry)
@@ -39,7 +34,7 @@ const updateEntry = forgeController
     pb.collection('achievements__entries').update(id, body)
   )
 
-const deleteEntry = forgeController
+export const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete an existing achievements entry')
   .schema(AchievementsControllersSchemas.Entries.deleteEntry)
@@ -51,11 +46,9 @@ const deleteEntry = forgeController
     await pb.collection('achievements__entries').delete(id)
   })
 
-bulkRegisterControllers(achievementsEntriesRouter, [
+export default forgeRouter({
   getAllEntriesByDifficulty,
   createEntry,
   updateEntry,
   deleteEntry
-])
-
-export default achievementsEntriesRouter
+})
