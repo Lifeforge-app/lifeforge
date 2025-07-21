@@ -1,13 +1,11 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
 import calendarCalendarsRouter from './controllers/calendars.controller'
 import calendarCategoriesRouter from './controllers/categories.controller'
 import calendarEventsRouter from './controllers/events.controller'
 
-const router = express.Router()
-
-router.use('/events', calendarEventsRouter)
-router.use('/calendars', calendarCalendarsRouter)
-router.use('/categories', calendarCategoriesRouter)
-
-export default router
+export default forgeRouter({
+  '/events': calendarEventsRouter,
+  '/calendars': calendarCalendarsRouter,
+  '/categories': calendarCategoriesRouter
+})
