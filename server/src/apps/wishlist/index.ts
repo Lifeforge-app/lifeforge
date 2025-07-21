@@ -1,11 +1,9 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import wishlistEntriesRouter from './controllers/entries.controller'
-import wishlistListsRouter from './controllers/lists.controller'
+import entriesRouter from './controllers/entries'
+import listsRouter from './controllers/lists'
 
-const router = express.Router()
-
-router.use('/lists', wishlistListsRouter)
-router.use('/entries', wishlistEntriesRouter)
-
-export default router
+export default forgeRouter({
+  '/lists': listsRouter,
+  '/entries': entriesRouter
+})

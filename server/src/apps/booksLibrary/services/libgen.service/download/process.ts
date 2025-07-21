@@ -63,6 +63,7 @@ export const addToLibrary = async (
 
       downloadProcess.stdout.on('data', data => {
         data = data.toString()
+
         if (/ETA:/.test(data)) {
           const matches =
             /\[#\w{6} (?<downloaded>.*?)\/(?<total>.*?)\((?<percentage>.*?%)\).*?DL:(?<speed>.*?) ETA:(?<ETA>.*?)s\]/g.exec(
@@ -107,6 +108,7 @@ export const addToLibrary = async (
             status: 'failed',
             error: 'Downloaded file not found'
           })
+
           return
         }
 

@@ -9,6 +9,7 @@ export const checkListExists = async (
 ): Promise<boolean> => {
   try {
     await pb.collection('wishlist__lists').getOne(id)
+
     return true
   } catch (error) {
     return false

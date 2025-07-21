@@ -58,6 +58,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
                   all[ch] || [],
                   one as HTMLTableCellElement
                 )
+
                 return all
               }, [])
               .map(e => {
@@ -85,6 +86,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
                     )
                   ]
                 }
+
                 return [key, e[1]?.textContent?.trim() || '']
               })
           : [
@@ -102,6 +104,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
                               ?.href.replace('../', 'http://libgen.is/')
                           ]
                         }
+
                         return e.textContent?.trim()
                       })
                   ) as [Array<string>, Array<any> | null])

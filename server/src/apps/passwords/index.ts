@@ -1,11 +1,9 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import passwordsEntriesRouter from './controllers/entries.controller'
-import passwordsMasterRouter from './controllers/master.controller'
+import entriesRouter from './controllers/entries'
+import masterRouter from './controllers/master'
 
-const router = express.Router()
-
-router.use('/master', passwordsMasterRouter)
-router.use('/entries', passwordsEntriesRouter)
-
-export default router
+export default forgeRouter({
+  '/master': masterRouter,
+  '/entries': entriesRouter
+})

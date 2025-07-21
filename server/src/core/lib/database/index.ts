@@ -1,9 +1,7 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import databaseCollectionsRouter from './controllers/collections.controller'
+import databaseCollectionsRouter from './controllers/collections'
 
-const router = express.Router()
-
-router.use('/collections', databaseCollectionsRouter)
-
-export default router
+export default forgeRouter({
+  '/collections': databaseCollectionsRouter
+})

@@ -79,6 +79,7 @@ function parseLibgenIS(
 
                       // @ts-ignore
                       all[ch] = [].concat(all[ch] || [], one)
+
                       return all
                     }, [])
                   ) as never as [string, string][]

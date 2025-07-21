@@ -1,9 +1,7 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
 import blogEntriesRouter from './controllers/entries.contorller'
 
-const router = express.Router()
-
-router.use('/entries', blogEntriesRouter)
-
-export default router
+export default forgeRouter({
+  '/entries': blogEntriesRouter
+})

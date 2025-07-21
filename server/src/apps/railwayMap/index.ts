@@ -1,9 +1,7 @@
-import express from 'express'
+import forgeRouter from '@functions/forgeRouter'
 
-import railwayMapRouter from './controllers/railwayMap.controller'
+import railwayMapRouter from './controllers/railwayMap'
 
-const router = express.Router()
-
-router.use('/', railwayMapRouter)
-
-export default router
+export default forgeRouter({
+  '/': railwayMapRouter
+})

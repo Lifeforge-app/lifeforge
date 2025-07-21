@@ -48,6 +48,7 @@ export const updateProfile = async (
 
   if (data.email) {
     await pb.collection('users').requestEmailChange(data.email)
+
     return
   }
 
@@ -59,6 +60,7 @@ export const updateProfile = async (
 
   if (data.username) updateData.username = data.username
   if (data.name) updateData.name = data.name
+
   if (data.dateOfBirth) {
     updateData.dateOfBirth = `${moment(data.dateOfBirth).add(1, 'day').format('YYYY-MM-DD')}T00:00:00.000Z`
   }

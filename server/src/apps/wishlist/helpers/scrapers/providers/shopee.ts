@@ -46,6 +46,7 @@ const getPrice = async (imageURL: string): Promise<number> => {
     return Math.max(...numbers)
   } catch (error) {
     console.error('Error getting price')
+
     return 0
   }
 }
@@ -123,6 +124,7 @@ const scrapeShopee = async (
     return final
   } catch (error) {
     console.error('Error scraping data', error)
+
     return null
   }
 }
