@@ -12,7 +12,7 @@ export default function traceRouteStack(
       const pathName =
         layer.regexp
           .toString()
-          .match(/\/\^\\\/(.*?)\\\/\?\(\?\=\\\/\|\$\)\/i/)?.[1] ?? ''
+          .match(/\/\^\\\/(.*?)\\\/\?\(\?=\\\/\|\$\)\/i/)?.[1] ?? ''
 
       const fullPath = [path, pathName].filter(Boolean).join('/')
 
