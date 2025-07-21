@@ -1,8 +1,15 @@
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
+
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
-
-function TaskHeader({ entry }: { entry: ITodoListEntry }) {
+function TaskHeader({
+  entry
+}: {
+  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
+}) {
   const { prioritiesQuery } = useTodoListContext()
 
   const priorities = prioritiesQuery.data ?? []

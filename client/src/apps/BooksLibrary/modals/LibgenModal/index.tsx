@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
@@ -91,18 +92,16 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
     setLoading(true)
 
     try {
-      const response = await fetchAPI<{
-        provider: (typeof PROVIDERS)[number]
-        query: string
-        resultsCount: string
-        page: number
-        data: Array<Record<string, any>>
-      }>(
+      const response = await fetchAPI<
+        BooksLibraryControllersSchemas.ILibgen['searchBooks']['response']
+      >(
         import.meta.env.VITE_API_HOST,
         `books-library/libgen/search?provider=${provider}&req=${searchQuery}&page=${
           page ?? 1
         }`
       )
+
+      console.log(response)
 
       setData(response.data.length === 0 ? null : response)
       setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))

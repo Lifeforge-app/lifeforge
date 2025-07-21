@@ -3,15 +3,19 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 
-import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
 
-import { type ITodoPriority } from '../../../interfaces/todo_list_interfaces'
+import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
 
 function TaskPriorityListItem({
   item,
   setSidebarOpen
 }: {
-  item: ITodoPriority
+  // TODO Remove the amount in IPriority in the database
+  item: ISchemaWithPB<TodoListCollectionsSchemas.IPriorityAggregated>
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)

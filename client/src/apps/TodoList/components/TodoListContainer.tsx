@@ -6,10 +6,14 @@ import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from 'shared/lib'
+import {
+  ISchemaWithPB,
+  TodoListCollectionsSchemas
+} from 'shared/types/collections'
+import { TodoListControllersSchemas } from 'shared/types/controllers'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import { ITodoListEntry } from '../interfaces/todo_list_interfaces'
 import Header from './Header'
 import ModifyTaskDrawer from './ModifyTaskDrawer'
 import Sidebar from './Sidebar'
@@ -29,16 +33,17 @@ function TodoListContainer() {
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
-  const [filteredEntries, setFilteredEntries] = useState<ITodoListEntry[]>([])
+  const [filteredEntries, setFilteredEntries] = useState<
+    ISchemaWithPB<TodoListCollectionsSchemas.IEntry>[]
+  >([])
 
   const { hash } = useLocation()
 
   async function fetchAndSetTask(id: string) {
     try {
-      const data = await fetchAPI<ITodoListEntry>(
-        import.meta.env.VITE_API_HOST,
-        `todo-list/entries/${id}`
-      )
+      const data = await fetchAPI<
+        TodoListControllersSchemas.IEntries['getEntryById']['response']
+      >(import.meta.env.VITE_API_HOST, `todo-list/entries/${id}`)
 
       setSelectedTask(data)
       setModifyTaskWindowOpenType('update')
