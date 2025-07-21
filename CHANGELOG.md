@@ -23,6 +23,9 @@
 - **Guitar Tabs**: File uploading mechanism is now handled by the task pool mechanism.
 - **Guitar Tabs**: Improved web scraping logic to handle more edge cases.
 - **Guitar Tabs**: Added some internationalization stuff that have previously been missing.
+- **Guitar Tabs**: Renamed this module to `Scores Library` to facilitate the addition of more types of scores in the future.
+- **Scores Library**: User can now define their own types of scores.
+- **Scores Library**: Added support for downloading piano scores from Guitar World
 - **Idea Box**: Fixed a bug where the idea entry is not properly updated in the frontend when the user performs an action.
 - **Books Library**: Fixed a bug where the book entry cannot be updated due to frontend and backend schema mismatches.
 - **Wallet**: Added a new "Spending Heatmap" subpage to the wallet module.
