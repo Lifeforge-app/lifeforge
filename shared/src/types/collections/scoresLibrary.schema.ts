@@ -3,12 +3,12 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: scoresLibrary
- * Generated at: 2025-07-20T12:17:56.590Z
+ * Generated at: 2025-07-22T08:25:19.362Z
  * Contains: entry, author_aggregated, type, type_aggregated
  */
-import { z } from 'zod/v4'
 
-import { SchemaWithPB } from './schemaWithPB'
+import { z } from "zod/v4";
+import { SchemaWithPB } from "./schemaWithPB";
 
 const Entry = z.object({
   name: z.string(),
@@ -19,33 +19,43 @@ const Entry = z.object({
   pdf: z.string(),
   audio: z.string(),
   musescore: z.string(),
-  isFavourite: z.boolean()
-})
+  isFavourite: z.boolean(),
+});
 
 const AuthorAggregated = z.object({
   name: z.string(),
-  amount: z.number()
-})
+  amount: z.number(),
+});
 
 const Type = z.object({
   name: z.string(),
-  icon: z.string()
-})
+  icon: z.string(),
+});
 
 const TypeAggregated = z.object({
   name: z.string(),
   icon: z.string(),
-  amount: z.number()
-})
+  amount: z.number(),
+});
 
-type IEntry = z.infer<typeof Entry>
-type IAuthorAggregated = z.infer<typeof AuthorAggregated>
-type IType = z.infer<typeof Type>
-type ITypeAggregated = z.infer<typeof TypeAggregated>
+type IEntry = z.infer<typeof Entry>;
+type IAuthorAggregated = z.infer<typeof AuthorAggregated>;
+type IType = z.infer<typeof Type>;
+type ITypeAggregated = z.infer<typeof TypeAggregated>;
 
-export { Entry, AuthorAggregated, Type, TypeAggregated }
+export {
+  Entry,
+  AuthorAggregated,
+  Type,
+  TypeAggregated,
+};
 
-export type { IEntry, IAuthorAggregated, IType, ITypeAggregated }
+export type {
+  IEntry,
+  IAuthorAggregated,
+  IType,
+  ITypeAggregated,
+};
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

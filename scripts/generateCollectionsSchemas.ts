@@ -3,14 +3,8 @@ import dotenv from 'dotenv'
 import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
-import { singular } from 'pluralize'
 import Pocketbase, { type CollectionModel } from 'pocketbase'
-
-const toBeWritten: Record<string, string> = {}
-
-const CUSTOM_SCHEMAS_DELIMITER =
-  '// -------------------- CUSTOM SCHEMAS --------------------'
-const TARGET_PATH = path.resolve(__dirname, '../shared/src/types/collections')
+import prettier from 'prettier'
 
 dotenv.config({
   path: path.resolve(__dirname, '../server/env/.env.local')
@@ -24,6 +18,12 @@ if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
 }
 
 const pb = new Pocketbase(process.env.PB_HOST)
+
+let SCHEMA_STRING = `
+import { z } from 'zod/v4'
+
+export const SCHEMAS = {
+`
 
 try {
   await pb
@@ -77,10 +77,19 @@ for (const module of allModules) {
     continue
   }
 
-  const moduleName = _.camelCase(module.name)
   const collections = modulesMap[module.name]
 
-  let finalString = ``
+  if (!collections) {
+    console.warn(
+      chalk.yellow('[WARNING]') +
+        ` No collections found for module ${chalk.bold(moduleName)}.`
+    )
+    continue
+  }
+
+  const moduleName = collections[0].name.split('__')[0]
+
+  SCHEMA_STRING += `  ${moduleName}: {\n`
 
   for (const collection of collections ?? []) {
     console.log(
@@ -156,21 +165,10 @@ for (const module of allModules) {
       }
     }
 
-    if (collection.name.endsWith('_aggregated')) {
-      collection.name =
-        singular(collection.name.replace(/_aggregated$/, '')) + '_aggregated'
-    } else {
-      collection.name = singular(collection.name)
-    }
-
-    collection.name = `${collection.name.split('__').pop() ?? collection.name}`
-
-    const zodSchemaString = `const ${_.upperFirst(
-      _.camelCase(collection.name)
-    )} = z.object({\n${Object.entries(zodSchemaObject)
+    const zodSchemaString = `z.object({\n${Object.entries(zodSchemaObject)
       .map(([key, value]) => `  ${key}: ${value},`)
-      .join('\n')}\n});`
-    finalString += `${zodSchemaString}\n\n`
+      .join('\n')}\n}),`
+    SCHEMA_STRING += `    ${collection.name.split('__').pop()}: ${zodSchemaString}\n`
 
     console.log(
       chalk.green('[INFO]') +
@@ -180,116 +178,16 @@ for (const module of allModules) {
     )
   }
 
-  if (!collections) {
-    console.warn(
-      chalk.yellow('[WARNING]') +
-        ` No collections found for module ${chalk.bold(moduleName)}.`
-    )
-    continue
-  }
-
-  finalString += `${collections
-    .map(
-      e =>
-        `type I${_.upperFirst(_.camelCase(e.name))} = z.infer<typeof ${_.upperFirst(
-          _.camelCase(singular(e.name))
-        )}>;`
-    )
-    .join('\n')}\n\nexport {\n${collections
-    .map(e => `  ${_.upperFirst(_.camelCase(e.name))},`)
-    .join('\n')}\n};\n\nexport type {\n${collections
-    .map(e => `  I${_.upperFirst(_.camelCase(e.name))},`)
-    .join('\n')}\n};\n`
-
-  const outputPath = path.resolve(TARGET_PATH, `${moduleName}.schema.ts`)
-
-  const originalContent = fs.existsSync(outputPath)
-    ? fs.readFileSync(outputPath, 'utf-8')
-    : ''
-
-  if (originalContent.includes(CUSTOM_SCHEMAS_DELIMITER)) {
-    const CustomSchemas = originalContent.split(CUSTOM_SCHEMAS_DELIMITER).pop()!
-
-    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n${CustomSchemas.replace(
-      /\/\/\s*$/,
-      ''
-    )
-      .replace(/^\n+/, '')
-      .replace(/\n+$/, '')}\n`
-  } else {
-    finalString += `\n${CUSTOM_SCHEMAS_DELIMITER}\n\n// Add your custom schemas here. They will not be overwritten by this script.\n`
-  }
-
-  finalString =
-    `/**
- * This file is auto-generated. DO NOT EDIT IT MANUALLY.
- * You may regenerate it by running \`bun run schema:generate:collection\` in the root directory.
- * If you want to add custom schemas, you will find a dedicated space at the end of this file.
- * Generated for module: ${moduleName}
- * Generated at: ${new Date().toISOString()}
- * Contains: ${collections?.map(e => e.name).join(', ')}
- */
-
-import { z } from "zod/v4";
-${finalString.includes('SchemaWithPB') ? 'import { SchemaWithPB } from "./schemaWithPB";\n' : ''}
-` + finalString
-
-  toBeWritten[`${moduleName}.schema.ts`] = finalString
+  SCHEMA_STRING += `  },\n`
 }
 
-if (fs.existsSync(TARGET_PATH) && fs.lstatSync(TARGET_PATH).isDirectory()) {
-  const files = fs.readdirSync(TARGET_PATH)
-  for (const file of files) {
-    if (file.endsWith('.custom.schema.ts')) {
-      toBeWritten[file] = fs.readFileSync(path.join(TARGET_PATH, file), 'utf-8')
-    }
-  }
-  fs.rmdirSync(TARGET_PATH, { recursive: true })
-  await new Promise(resolve => setTimeout(resolve, 1000))
-}
-fs.mkdirSync(TARGET_PATH, { recursive: true })
+SCHEMA_STRING += `},\n`
 
-const indexString = `
-/**
- * This file is auto-generated. DO NOT EDIT IT MANUALLY.
- * You may regenerate it by running \`npm run generate:schema:collection\`.
- * This is the entry point for all schemas in the shared library.
- * Generated at: ${new Date().toISOString()}
- * Contains schemas for all modules.
- */
-
-${Object.keys(toBeWritten)
-  .map(
-    moduleName =>
-      `export * as ${_.upperFirst(_.camelCase(moduleName.replace(/(?:\.custom)?\.schema\.ts$/, moduleName.endsWith('.custom.schema.ts') ? 'Custom' : 'Collections')))}Schemas from './${moduleName.replace(/\.ts$/, '')}';`
-  )
-  .join('\n')}
-
-export { SchemaWithPB } from './schemaWithPB'
-export type { ISchemaWithPB } from './schemaWithPB'
-`
-
-toBeWritten['index.ts'] = indexString
-
-toBeWritten['schemaWithPB.ts'] = `
-import { z } from 'zod/v4'
-
-const BasePBSchema = z.object({
-  id: z.string(),
-  collectionId: z.string(),
-  collectionName: z.string(),
-  created: z.string(),
-  updated: z.string()
+const formattedSchemaString = await prettier.format(SCHEMA_STRING, {
+  parser: 'typescript'
 })
 
-export const SchemaWithPB = <T extends z.ZodTypeAny>(schema: T) => {
-  return z.intersection(schema, BasePBSchema)
-}
-
-export type ISchemaWithPB<T> = T & z.infer<typeof BasePBSchema>
-`
-
-for (const [fileName, content] of Object.entries(toBeWritten)) {
-  const filePath = path.resolve(TARGET_PATH, fileName)
-  fs.writeFileSync(filePath, content, 'utf-8')
-}
+fs.writeFileSync(
+  path.resolve(__dirname, '../server/src/core/typescript/schema.ts'),
+  formattedSchemaString
+)
