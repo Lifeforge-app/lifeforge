@@ -3,20 +3,18 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { VirtualWardrobeControllersSchemas } from 'shared/types/controllers'
-
 import * as sessionService from '../services/session.service'
 
 const getCart = forgeController
   .route('GET /cart')
   .description('Get session cart items')
-  .schema(VirtualWardrobeControllersSchemas.Session.getCart)
+  .input({})
   .callback(async () => sessionService.getSessionCart())
 
 const addToCart = forgeController
   .route('POST /cart/:id')
   .description('Add item to session cart')
-  .schema(VirtualWardrobeControllersSchemas.Session.addToCart)
+  .input({})
   .existenceCheck('params', {
     id: 'virtual_wardrobe__entries'
   })
@@ -27,7 +25,7 @@ const addToCart = forgeController
 const removeFromCart = forgeController
   .route('DELETE /cart/:id')
   .description('Remove item from session cart')
-  .schema(VirtualWardrobeControllersSchemas.Session.removeFromCart)
+  .input({})
   .existenceCheck('params', {
     id: 'virtual_wardrobe__entries'
   })
@@ -38,7 +36,7 @@ const removeFromCart = forgeController
 const checkout = forgeController
   .route('POST /checkout')
   .description('Checkout session cart')
-  .schema(VirtualWardrobeControllersSchemas.Session.checkout)
+  .input({})
   .callback(async ({ pb, body: { notes } }) => {
     await sessionService.checkout(pb, notes)
   })
@@ -46,7 +44,7 @@ const checkout = forgeController
 const clearCart = forgeController
   .route('DELETE /cart')
   .description('Clear session cart')
-  .schema(VirtualWardrobeControllersSchemas.Session.clearCart)
+  .input({})
   .callback(async () => {
     sessionService.clearCart()
   })

@@ -5,31 +5,9 @@ import puppeteer from 'puppeteer-core'
 import { ISchemaWithPB } from 'shared/types/collections'
 import { CodeTimeCollectionsSchemas } from 'shared/types/collections'
 
-export const addDays = (date: Date, days: number): Date => {
-  const newDate = new Date(date.valueOf())
+import { getDates } from '../utils/dates'
 
-  newDate.setDate(newDate.getDate() + days)
-
-  return newDate
-}
-
-export const getDates = (startDate: Date, stopDate: Date): Date[] => {
-  const dateArray = []
-
-  let currentDate = startDate
-
-  while (currentDate <= stopDate) {
-    dateArray.push(new Date(currentDate))
-    currentDate = addDays(currentDate, 1)
-  }
-
-  return dateArray
-}
-
-export const getActivities = async (
-  pb: PocketBase,
-  year?: number
-): Promise<CodeTimeCollectionsSchemas.ICodeTimeActivities> => {
+export const getActivities = async (pb: PocketBase, year?: number) => {
   const yearValue = Number(year) || new Date().getFullYear()
 
   const data = await pb
@@ -102,9 +80,7 @@ export const getActivities = async (
   }
 }
 
-export const getStatistics = async (
-  pb: PocketBase
-): Promise<CodeTimeCollectionsSchemas.ICodeTimeStatistics> => {
+export const getStatistics = async (pb: PocketBase) => {
   const everything = await pb
     .collection('code_time__daily_entries')
     .getFullList({
@@ -230,7 +206,7 @@ export const getLastXDays = async (
 export const getProjectsStats = async (
   pb: PocketBase,
   lastXDays: '24 hours' | '7 days' | '30 days'
-): Promise<{ [key: string]: number }> => {
+) => {
   const params = {
     '24 hours': [24, 'hours'],
     '7 days': [7, 'days'],
@@ -347,10 +323,7 @@ export const getUserMinutes = async (
   }
 }
 
-export const logEvent = async (
-  pb: PocketBase,
-  data: any
-): Promise<{ status: string; message: string }> => {
+export const logEvent = async (pb: PocketBase, data: any) => {
   data.eventTime = Math.floor(Date.now() / 60000) * 60000
 
   const date = moment(data.eventTime).format('YYYY-MM-DD')

@@ -3,27 +3,25 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { TodoListControllersSchemas } from 'shared/types/controllers'
-
 import * as tagsService from '../services/tags.service'
 
 const getAllTags = forgeController
   .route('GET /')
   .description('Get all todo tags')
-  .schema(TodoListControllersSchemas.Tags.getAllTags)
+  .input({})
   .callback(({ pb }) => tagsService.getAllTags(pb))
 
 const createTag = forgeController
   .route('POST /')
   .description('Create a new todo tag')
-  .schema(TodoListControllersSchemas.Tags.createTag)
+  .input({})
   .statusCode(201)
   .callback(({ pb, body }) => tagsService.createTag(pb, body))
 
 const updateTag = forgeController
   .route('PATCH /:id')
   .description('Update an existing todo tag')
-  .schema(TodoListControllersSchemas.Tags.updateTag)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__tags'
   })
@@ -34,7 +32,7 @@ const updateTag = forgeController
 const deleteTag = forgeController
   .route('DELETE /:id')
   .description('Delete a todo tag')
-  .schema(TodoListControllersSchemas.Tags.deleteTag)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__tags'
   })

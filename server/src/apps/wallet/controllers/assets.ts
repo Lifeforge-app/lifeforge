@@ -3,27 +3,25 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import * as AssetsService from '../services/assets.service'
 
 const getAllAssets = forgeController
   .route('GET /')
   .description('Get all wallet assets')
-  .schema(WalletControllersSchemas.Assets.getAllAssets)
+  .input({})
   .callback(async ({ pb }) => await AssetsService.getAllAssets(pb))
 
 const createAsset = forgeController
   .route('POST /')
   .description('Create a new wallet asset')
-  .schema(WalletControllersSchemas.Assets.createAsset)
+  .input({})
   .statusCode(201)
   .callback(async ({ pb, body }) => await AssetsService.createAsset(pb, body))
 
 const getAssetAccumulatedBalance = forgeController
   .route('GET /balance/:id')
   .description('Get accumulated balance for a wallet asset')
-  .schema(WalletControllersSchemas.Assets.getAssetAccumulatedBalance)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__assets'
   })
@@ -35,7 +33,7 @@ const getAssetAccumulatedBalance = forgeController
 const updateAsset = forgeController
   .route('PATCH /:id')
   .description('Update an existing wallet asset')
-  .schema(WalletControllersSchemas.Assets.updateAsset)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__assets'
   })
@@ -47,7 +45,7 @@ const updateAsset = forgeController
 const deleteAsset = forgeController
   .route('DELETE /:id')
   .description('Delete a wallet asset')
-  .schema(WalletControllersSchemas.Assets.deleteAsset)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__assets'
   })

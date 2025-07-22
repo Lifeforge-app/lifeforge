@@ -4,8 +4,6 @@ import {
 import forgeRouter from '@functions/forgeRouter'
 import { v4 } from 'uuid'
 
-import { PasswordsControllersSchemas } from 'shared/types/controllers'
-
 import * as EntriesService from '../services/entries.service'
 
 export let challenge = v4()
@@ -17,19 +15,19 @@ setTimeout(() => {
 const getChallenge = forgeController
   .route('GET /challenge')
   .description('Get current challenge for password operations')
-  .schema(PasswordsControllersSchemas.Entries.getChallenge)
+  .input({})
   .callback(async () => challenge)
 
 const getAllEntries = forgeController
   .route('GET /')
   .description('Get all password entries')
-  .schema(PasswordsControllersSchemas.Entries.getAllEntries)
+  .input({})
   .callback(async ({ pb }) => await EntriesService.getAllEntries(pb))
 
 const createEntry = forgeController
   .route('POST /')
   .description('Create a new password entry')
-  .schema(PasswordsControllersSchemas.Entries.createEntry)
+  .input({})
   .callback(
     async ({ pb, body }) =>
       await EntriesService.createEntry(pb, body, challenge)
@@ -39,7 +37,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update a password entry')
-  .schema(PasswordsControllersSchemas.Entries.updateEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'passwords__entries'
   })
@@ -51,7 +49,7 @@ const updateEntry = forgeController
 const decryptEntry = forgeController
   .route('POST /decrypt/:id')
   .description('Decrypt a password entry')
-  .schema(PasswordsControllersSchemas.Entries.decryptEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'passwords__entries'
   })
@@ -63,7 +61,7 @@ const decryptEntry = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a password entry')
-  .schema(PasswordsControllersSchemas.Entries.deleteEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'passwords__entries'
   })
@@ -75,7 +73,7 @@ const deleteEntry = forgeController
 const togglePin = forgeController
   .route('POST /pin/:id')
   .description('Toggle pin status of a password entry')
-  .schema(PasswordsControllersSchemas.Entries.togglePin)
+  .input({})
   .existenceCheck('params', {
     id: 'passwords__entries'
   })

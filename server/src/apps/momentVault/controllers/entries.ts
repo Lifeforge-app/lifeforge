@@ -5,14 +5,12 @@ import {
 import forgeRouter from '@functions/forgeRouter'
 import { uploadMiddleware } from '@middlewares/uploadMiddleware'
 
-import { MomentVaultControllersSchemas } from 'shared/types/controllers'
-
 import * as EntriesServices from '../services/entries.service'
 
 const getEntries = forgeController
   .route('GET /')
   .description('Get all moment vault entries')
-  .schema(MomentVaultControllersSchemas.Entries.getEntries)
+  .input({})
   .callback(
     async ({ pb, query }) => await EntriesServices.getAllEntries(pb, query.page)
   )
@@ -20,7 +18,7 @@ const getEntries = forgeController
 const createEntry = forgeController
   .route('POST /')
   .description('Create a new moment vault entry')
-  .schema(MomentVaultControllersSchemas.Entries.createEntry)
+  .input({})
   .middlewares(uploadMiddleware)
   .callback(async ({ pb, body: { type, content, transcription }, req }) => {
     if (type === 'audio') {
@@ -72,7 +70,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update a moment vault entry')
-  .schema(MomentVaultControllersSchemas.Entries.updateEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'moment_vault__entries'
   })
@@ -84,7 +82,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a moment vault entry')
-  .schema(MomentVaultControllersSchemas.Entries.deleteEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'moment_vault__entries'
   })

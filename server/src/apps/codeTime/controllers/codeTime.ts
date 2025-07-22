@@ -1,17 +1,21 @@
 import ClientError from '@functions/ClientError'
-import {
-  forgeController
-} from '@functions/forgeController'
+import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
-
-import { CodeTimeControllersSchemas } from 'shared/types/controllers'
+import { z } from 'zod/v4'
 
 import * as CodeTimeService from '../services/codeTime.service'
 
 const getActivities = forgeController
   .route('GET /activities')
   .description('Get activities by year')
-  .schema(CodeTimeControllersSchemas.CodeTime.getActivities)
+  .input({
+    query: z.object({
+      year: z
+        .string()
+        .optional()
+        .transform(val => (val ? parseInt(val, 10) : new Date().getFullYear()))
+    })
+  })
   .callback(
     async ({ pb, query: { year } }) =>
       await CodeTimeService.getActivities(pb, year)
@@ -20,13 +24,17 @@ const getActivities = forgeController
 const getStatistics = forgeController
   .route('GET /statistics')
   .description('Get code time statistics')
-  .schema(CodeTimeControllersSchemas.CodeTime.getStatistics)
+  .input({})
   .callback(async ({ pb }) => await CodeTimeService.getStatistics(pb))
 
 const getLastXDays = forgeController
   .route('GET /last-x-days')
   .description('Get last X days of code time data')
-  .schema(CodeTimeControllersSchemas.CodeTime.getLastXDays)
+  .input({
+    query: z.object({
+      days: z.string().transform(val => parseInt(val, 10))
+    })
+  })
   .callback(async ({ pb, query: { days } }) => {
     if (days > 30) {
       throw new ClientError('days must be less than or equal to 30')
@@ -38,7 +46,11 @@ const getLastXDays = forgeController
 const getProjects = forgeController
   .route('GET /projects')
   .description('Get projects statistics')
-  .schema(CodeTimeControllersSchemas.CodeTime.getProjects)
+  .input({
+    query: z.object({
+      last: z.enum(['24 hours', '7 days', '30 days']).default('7 days')
+    })
+  })
   .callback(
     async ({ pb, query: { last } }) =>
       await CodeTimeService.getProjectsStats(pb, last)
@@ -47,7 +59,11 @@ const getProjects = forgeController
 const getLanguages = forgeController
   .route('GET /languages')
   .description('Get languages statistics')
-  .schema(CodeTimeControllersSchemas.CodeTime.getLanguages)
+  .input({
+    query: z.object({
+      last: z.enum(['24 hours', '7 days', '30 days']).default('7 days')
+    })
+  })
   .callback(
     async ({ pb, query: { last } }) =>
       await CodeTimeService.getLanguagesStats(pb, last)
@@ -56,13 +72,17 @@ const getLanguages = forgeController
 const getEachDay = forgeController
   .route('GET /each-day')
   .description('Get each day code time data')
-  .schema(CodeTimeControllersSchemas.CodeTime.getEachDay)
+  .input({})
   .callback(async ({ pb }) => await CodeTimeService.getEachDay(pb))
 
 const getUserMinutes = forgeController
   .route('GET /user/minutes')
   .description('Get user minutes')
-  .schema(CodeTimeControllersSchemas.CodeTime.getUserMinutes)
+  .input({
+    query: z.object({
+      minutes: z.string().transform(val => parseInt(val, 10))
+    })
+  })
   .callback(
     async ({ pb, query: { minutes } }) =>
       await CodeTimeService.getUserMinutes(pb, minutes)
@@ -71,7 +91,9 @@ const getUserMinutes = forgeController
 const logEvent = forgeController
   .route('POST /eventLog')
   .description('Log a code time event')
-  .schema(CodeTimeControllersSchemas.CodeTime.logEvent as any)
+  .input({
+    body: z.object({}).passthrough()
+  })
   .callback(async ({ pb, body }) => {
     await CodeTimeService.logEvent(pb, body)
 
@@ -85,7 +107,7 @@ const logEvent = forgeController
 const getReadmeImage = forgeController
   .route('GET /readme')
   .description('Get readme image')
-  .schema(CodeTimeControllersSchemas.CodeTime.getReadmeImage)
+  .input({})
   .noDefaultResponse()
   .callback(async ({ pb, res }) => {
     const imageBuffer = await CodeTimeService.getReadmeImage(pb)

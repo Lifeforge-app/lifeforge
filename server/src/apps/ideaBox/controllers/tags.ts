@@ -3,14 +3,12 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import * as tagsService from '../services/tags.service'
 
 const getTags = forgeController
   .route('GET /:container')
   .description('Get tags for a container')
-  .schema(IdeaBoxControllersSchemas.Tags.getTags)
+  .input({})
   .existenceCheck('params', {
     container: 'idea_box__containers'
   })
@@ -22,7 +20,7 @@ const getTags = forgeController
 const createTag = forgeController
   .route('POST /:container')
   .description('Create a new tag')
-  .schema(IdeaBoxControllersSchemas.Tags.createTag)
+  .input({})
   .existenceCheck('params', {
     container: 'idea_box__containers'
   })
@@ -35,7 +33,7 @@ const createTag = forgeController
 const updateTag = forgeController
   .route('PATCH /:id')
   .description('Update a tag')
-  .schema(IdeaBoxControllersSchemas.Tags.updateTag)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__tags'
   })
@@ -47,7 +45,7 @@ const updateTag = forgeController
 const deleteTag = forgeController
   .route('DELETE /:id')
   .description('Delete a tag')
-  .schema(IdeaBoxControllersSchemas.Tags.deleteTag)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__tags'
   })

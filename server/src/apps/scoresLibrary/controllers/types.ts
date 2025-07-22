@@ -7,12 +7,10 @@ import {
   ISchemaWithPB,
   ScoresLibraryCollectionsSchemas
 } from 'shared/types/collections'
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 const getTypes = forgeController
   .route('GET /')
   .description('Get all music score types')
-  .schema(ScoresLibraryControllersSchemas.Types.getTypes)
+  .input({})
   .callback(({ pb }) =>
     pb
       .collection('scores_library__types_aggregated')
@@ -26,7 +24,7 @@ const getTypes = forgeController
 const createType = forgeController
   .route('POST /')
   .description('Create a new music score type')
-  .schema(ScoresLibraryControllersSchemas.Types.createType)
+  .input({})
   .statusCode(201)
   .callback(({ pb, body }) =>
     pb
@@ -37,7 +35,7 @@ const createType = forgeController
 const updateType = forgeController
   .route('PATCH /:id')
   .description('Update an existing music score type')
-  .schema(ScoresLibraryControllersSchemas.Types.updateType)
+  .input({})
   .callback(({ pb, params, body }) =>
     pb
       .collection('scores_library__types')
@@ -49,7 +47,7 @@ const updateType = forgeController
 const deleteType = forgeController
   .route('DELETE /:id')
   .description('Delete a music score type')
-  .schema(ScoresLibraryControllersSchemas.Types.deleteType)
+  .input({})
   .statusCode(204)
   .callback(async ({ pb, params }) => {
     await pb.collection('scores_library__types').delete(params.id)

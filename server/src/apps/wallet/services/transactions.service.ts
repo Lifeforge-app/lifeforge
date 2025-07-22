@@ -7,7 +7,6 @@ import { z } from 'zod'
 
 import { ISchemaWithPB } from 'shared/types/collections'
 import { WalletCollectionsSchemas } from 'shared/types/collections'
-import { WalletControllersSchemas } from 'shared/types/controllers'
 
 function convertPDFToImage(path: string): Promise<File | undefined> {
   return new Promise((resolve, reject) => {
@@ -53,76 +52,11 @@ function convertPDFToImage(path: string): Promise<File | undefined> {
   })
 }
 
-export const getAllTransactions = async (
-  pb: Pocketbase
-): Promise<
-  WalletControllersSchemas.ITransactions['getAllTransactions']['response']
-> => {
-  const incomeExpensesTransactions = await pb
-    .collection('wallet__transactions_income_expenses')
-    .getFullList<
-      ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense> & {
-        expand: {
-          base_transaction: ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
-        }
-      }
-    >({
-      expand: 'base_transaction'
-    })
-
-  const transferTransactions = await pb
-    .collection('wallet__transactions_transfer')
-    .getFullList<
-      ISchemaWithPB<WalletCollectionsSchemas.ITransactionsTransfer> & {
-        expand: {
-          base_transaction: ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
-        }
-      }
-    >({
-      expand: 'base_transaction'
-    })
-
-  const allTransactions: WalletControllersSchemas.ITransactions['getAllTransactions']['response'] =
-    []
-
-  for (const transaction of incomeExpensesTransactions) {
-    const baseTransaction = transaction.expand.base_transaction
-
-    allTransactions.push({
-      ...baseTransaction,
-      type: transaction.type,
-      particulars: transaction.particulars,
-      asset: transaction.asset,
-      category: transaction.category,
-      ledgers: transaction.ledgers,
-      location_name: transaction.location_name,
-      location_coords: transaction.location_coords
-    })
-  }
-
-  for (const transaction of transferTransactions) {
-    const baseTransaction = transaction.expand.base_transaction
-
-    allTransactions.push({
-      ...baseTransaction,
-      type: 'transfer',
-      from: transaction.from,
-      to: transaction.to
-    })
-  }
-
-  return allTransactions.sort((a, b) => {
-    if (new Date(a.date).getTime() === new Date(b.date).getTime()) {
-      return new Date(a.created).getTime() - new Date(b.created).getTime()
-    }
-
-    return new Date(b.date).getTime() - new Date(a.date).getTime()
-  })
-}
+export const getAllTransactions = async (pb: Pocketbase) => {}
 
 export const createTransaction = async (
   pb: Pocketbase,
-  data: WalletControllersSchemas.ITransactions['createTransaction']['body'],
+  data,
   file: Express.Multer.File | undefined
 ): Promise<
   WalletControllersSchemas.ITransactions['createTransaction']['response']
@@ -192,7 +126,7 @@ export const createTransaction = async (
 export const updateTransaction = async (
   pb: Pocketbase,
   id: string,
-  data: WalletControllersSchemas.ITransactions['updateTransaction']['body'],
+  data,
   file: Express.Multer.File | undefined
 ): Promise<
   WalletControllersSchemas.ITransactions['updateTransaction']['response']
