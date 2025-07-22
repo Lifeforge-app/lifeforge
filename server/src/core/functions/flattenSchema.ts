@@ -1,15 +1,3 @@
-import { z } from 'zod/v4'
-
-export const SCHEMAS = {
-  achievements: {
-    entries: z.object({
-      title: z.string(),
-      thoughts: z.string(),
-      difficulty: z.enum(['easy', 'medium', 'hard', 'impossible'])
-    })
-  }
-}
-
 type FlattenSchemas<T> = {
   [K1 in keyof T]: {
     [K2 in keyof T[K1]]: T[K1][K2]
@@ -18,9 +6,9 @@ type FlattenSchemas<T> = {
     : never
 }[keyof T]
 
-function flattenSchemas<T extends Record<string, Record<string, unknown>>>(
-  schemas: T
-): FlattenSchemas<T> {
+export default function flattenSchemas<
+  T extends Record<string, Record<string, unknown>>
+>(schemas: T): FlattenSchemas<T> {
   const flattened = {} as FlattenSchemas<T>
 
   for (const [level1, level2Obj] of Object.entries(schemas)) {
@@ -34,5 +22,3 @@ function flattenSchemas<T extends Record<string, Record<string, unknown>>>(
 
   return flattened
 }
-
-const FLATTENED_SCHEMAS = flattenSchemas(SCHEMAS)

@@ -3,20 +3,21 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: booksLibrary
- * Generated at: 2025-07-20T12:17:56.588Z
+ * Generated at: 2025-07-22T08:25:19.362Z
  * Contains: collection, language, entry, file_type, file_type_aggregated, language_aggregated, collection_aggregated
  */
-import { z } from 'zod/v4'
+
+import { z } from "zod/v4";
 
 const Collection = z.object({
   name: z.string(),
-  icon: z.string()
-})
+  icon: z.string(),
+});
 
 const Language = z.object({
   name: z.string(),
-  icon: z.string()
-})
+  icon: z.string(),
+});
 
 const Entry = z.object({
   title: z.string(),
@@ -34,37 +35,37 @@ const Entry = z.object({
   thumbnail: z.string(),
   is_favourite: z.boolean(),
   is_read: z.boolean(),
-  time_finished: z.string()
-})
+  time_finished: z.string(),
+});
 
 const FileType = z.object({
-  name: z.string()
-})
+  name: z.string(),
+});
 
 const FileTypeAggregated = z.object({
   name: z.string(),
-  amount: z.number()
-})
+  amount: z.number(),
+});
 
 const LanguageAggregated = z.object({
   name: z.string(),
   icon: z.string(),
-  amount: z.number()
-})
+  amount: z.number(),
+});
 
 const CollectionAggregated = z.object({
   name: z.string(),
   icon: z.string(),
-  amount: z.number()
-})
+  amount: z.number(),
+});
 
-type ICollection = z.infer<typeof Collection>
-type ILanguage = z.infer<typeof Language>
-type IEntry = z.infer<typeof Entry>
-type IFileType = z.infer<typeof FileType>
-type IFileTypeAggregated = z.infer<typeof FileTypeAggregated>
-type ILanguageAggregated = z.infer<typeof LanguageAggregated>
-type ICollectionAggregated = z.infer<typeof CollectionAggregated>
+type ICollection = z.infer<typeof Collection>;
+type ILanguage = z.infer<typeof Language>;
+type IEntry = z.infer<typeof Entry>;
+type IFileType = z.infer<typeof FileType>;
+type IFileTypeAggregated = z.infer<typeof FileTypeAggregated>;
+type ILanguageAggregated = z.infer<typeof LanguageAggregated>;
+type ICollectionAggregated = z.infer<typeof CollectionAggregated>;
 
 export {
   Collection,
@@ -73,8 +74,8 @@ export {
   FileType,
   FileTypeAggregated,
   LanguageAggregated,
-  CollectionAggregated
-}
+  CollectionAggregated,
+};
 
 export type {
   ICollection,
@@ -83,8 +84,8 @@ export type {
   IFileType,
   IFileTypeAggregated,
   ILanguageAggregated,
-  ICollectionAggregated
-}
+  ICollectionAggregated,
+};
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
