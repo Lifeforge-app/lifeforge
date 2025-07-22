@@ -15,11 +15,10 @@ const getAllEntries = forgeController
   .description('Get all entries in the books library')
   .input({})
   .callback(({ pb }) =>
-    pb
+    pb.getFullList
       .collection('books_library__entries')
-      .getFullList<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>({
-        sort: '-is_favourite,-created'
-      })
+      .sort(['-is_favourite', '-created'])
+      .execute()
   )
 
 const updateEntry = forgeController

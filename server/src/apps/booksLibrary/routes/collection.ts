@@ -2,23 +2,17 @@ import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 import { z } from 'zod/v4'
 
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
+import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 const getAllCollections = forgeController
   .route('GET /')
   .description('Get all collections for the books library')
   .input({})
   .callback(({ pb }) =>
-    pb
+    pb.getFullList
       .collection('books_library__collections_aggregated')
-      .getFullList<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
-      >({
-        sort: 'name'
-      })
+      .sort(['name'])
+      .execute()
   )
 
 const createCollection = forgeController
@@ -28,17 +22,9 @@ const createCollection = forgeController
     body: BooksLibraryCollectionsSchemas.Collection
   })
   .statusCode(201)
-  .callback(async ({ pb, body }) => {
-    const collection = await pb
-      .collection('books_library__collections')
-      .create<ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollection>>(body)
-
-    return pb
-      .collection('books_library__collections_aggregated')
-      .getOne<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
-      >(collection.id)
-  })
+  .callback(({ pb, body }) =>
+    pb.create.collection('books_library__collections').data(body).execute()
+  )
 
 const updateCollection = forgeController
   .route('PATCH /:id')
@@ -52,19 +38,13 @@ const updateCollection = forgeController
   .existenceCheck('params', {
     id: 'books_library__collections'
   })
-  .callback(async ({ pb, params: { id }, body }) => {
-    const collection = await pb
+  .callback(({ pb, params: { id }, body }) =>
+    pb.update
       .collection('books_library__collections')
-      .update<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollection>
-      >(id, body)
-
-    return pb
-      .collection('books_library__collections_aggregated')
-      .getOne<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
-      >(collection.id)
-  })
+      .id(id)
+      .data(body)
+      .execute()
+  )
 
 const deleteCollection = forgeController
   .route('DELETE /:id')
@@ -79,7 +59,7 @@ const deleteCollection = forgeController
   })
   .statusCode(204)
   .callback(({ pb, params: { id } }) =>
-    pb.collection('books_library__collections').delete(id)
+    pb.delete.collection('books_library__collections').id(id).execute()
   )
 
 export default forgeRouter({

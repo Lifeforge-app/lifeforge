@@ -32,7 +32,6 @@
  */
 import { BaseResponse } from '@typescript/base_response'
 import { Request, Response } from 'express'
-import PocketBase from 'pocketbase'
 import { Server } from 'socket.io'
 
 import {
@@ -42,6 +41,7 @@ import {
 } from '../typescript/forge_controller.types'
 import ClientError from './ClientError'
 import { checkExistence } from './PBRecordValidator'
+import PocketBaseCRUDActions from './PocketBaseCRUDActions'
 import { clientError, serverError, successWithBaseResponse } from './response'
 
 /**
@@ -102,7 +102,7 @@ export class ForgeControllerBuilder<
 
   /** The main request handler function with proper typing for request/response objects */
   private _handler?: (
-    this: { pb: PocketBase; io: Server },
+    this: { pb: PocketBaseCRUDActions; io: Server },
     req: Request<
       InferZodType<TInput['params']>,
       any,
@@ -375,7 +375,7 @@ export class ForgeControllerBuilder<
     }
 
     async function __handler(
-      this: { pb: PocketBase; io: Server },
+      this: { pb: PocketBaseCRUDActions; io: Server },
       req: Request<
         InferZodType<TInput['params']>,
         any,
