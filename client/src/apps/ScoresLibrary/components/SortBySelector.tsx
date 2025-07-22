@@ -31,7 +31,7 @@ function SortBySelector({
       value={sortType}
       onChange={handleChange}
     >
-      <ListboxButton className="flex-between shadow-custom component-bg-with-hover mt-4 flex w-48 gap-2 rounded-md p-4">
+      <ListboxButton className="flex-between shadow-custom component-bg-with-hover flex w-48 gap-2 rounded-md p-4">
         <div className="flex items-center gap-2">
           <Icon
             className="size-6"

@@ -6,14 +6,12 @@ import forgeRouter from '@functions/forgeRouter'
 import multer from 'multer'
 
 import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import * as ideasService from '../services/ideas.service'
 
 const getIdeas = forgeController
   .route('GET /:container/*')
   .description('Get ideas from a folder')
-  .schema(IdeaBoxControllersSchemas.Ideas.getIdeas)
+  .input({})
   .existenceCheck('params', {
     container: 'idea_box__containers'
   })
@@ -41,7 +39,7 @@ const getIdeas = forgeController
 const createIdea = forgeController
   .route('POST /')
   .description('Create a new idea')
-  .schema(IdeaBoxControllersSchemas.Ideas.createIdea)
+  .input({})
   .middlewares(multer().single('image') as any)
   .existenceCheck('body', {
     container: 'idea_box__containers'
@@ -106,7 +104,7 @@ const createIdea = forgeController
 const updateIdea = forgeController
   .route('PATCH /:id')
   .description('Update an idea')
-  .schema(IdeaBoxControllersSchemas.Ideas.updateIdea)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })
@@ -140,7 +138,7 @@ const updateIdea = forgeController
 const deleteIdea = forgeController
   .route('DELETE /:id')
   .description('Delete an idea')
-  .schema(IdeaBoxControllersSchemas.Ideas.deleteIdea)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })
@@ -152,7 +150,7 @@ const deleteIdea = forgeController
 const pinIdea = forgeController
   .route('POST /pin/:id')
   .description('Pin/unpin an idea')
-  .schema(IdeaBoxControllersSchemas.Ideas.pinIdea)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })
@@ -163,7 +161,7 @@ const pinIdea = forgeController
 const archiveIdea = forgeController
   .route('POST /archive/:id')
   .description('Archive/unarchive an idea')
-  .schema(IdeaBoxControllersSchemas.Ideas.archiveIdea)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })
@@ -175,7 +173,7 @@ const archiveIdea = forgeController
 const moveIdea = forgeController
   .route('POST /move/:id')
   .description('Move an idea to a different folder')
-  .schema(IdeaBoxControllersSchemas.Ideas.moveIdea)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })
@@ -190,7 +188,7 @@ const moveIdea = forgeController
 const removeFromFolder = forgeController
   .route('DELETE /move/:id')
   .description('Remove an idea from its current folder')
-  .schema(IdeaBoxControllersSchemas.Ideas.removeFromFolder)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })

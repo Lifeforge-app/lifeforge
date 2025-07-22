@@ -7,7 +7,7 @@ import express from 'express'
 import request from 'request'
 import { z } from 'zod/v4'
 
-import { RoutesControllersSchemas } from 'shared/types/controllers'
+import { RouteCustomSchemas } from 'shared/types/collections'
 
 const router = express.Router()
 
@@ -98,7 +98,9 @@ const corsAnywhere = forgeController
 const getAllRoutes = forgeController
   .route('GET /_routes')
   .description('Get all registered routes')
-  .schema(RoutesControllersSchemas.Routes.getAllRoutes)
+  .schema({
+    response: z.array(RouteCustomSchemas.Route)
+  })
   .callback(async () => traceRouteStack(router.stack))
 
 const appRoutes = forgeRouter({
@@ -135,5 +137,7 @@ const appRoutes = forgeRouter({
 })
 
 router.use('/', registerRoutes(appRoutes))
+
+export type AppRoutes = typeof appRoutes
 
 export default router

@@ -5,27 +5,25 @@ import forgeRouter from '@functions/forgeRouter'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 
-import { VirtualWardrobeControllersSchemas } from 'shared/types/controllers'
-
 import * as entriesService from '../services/entries.service'
 import * as visionService from '../services/vision.service'
 
 const getSidebarData = forgeController
   .route('GET /sidebar-data')
   .description('Get sidebar data for virtual wardrobe')
-  .schema(VirtualWardrobeControllersSchemas.Entries.getSidebarData)
+  .input({})
   .callback(async ({ pb }) => await entriesService.getSidebarData(pb))
 
 const getEntries = forgeController
   .route('GET /')
   .description('Get virtual wardrobe entries with optional filters')
-  .schema(VirtualWardrobeControllersSchemas.Entries.getEntries)
+  .input({})
   .callback(async ({ pb, query }) => await entriesService.getEntries(pb, query))
 
 const createEntry = forgeController
   .route('POST /')
   .description('Create a new virtual wardrobe entry')
-  .schema(VirtualWardrobeControllersSchemas.Entries.createEntry)
+  .input({})
   .middlewares(
     fieldsUploadMiddleware.bind({
       fields: [
@@ -77,7 +75,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update an existing virtual wardrobe entry')
-  .schema(VirtualWardrobeControllersSchemas.Entries.updateEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'virtual_wardrobe__entries'
   })
@@ -89,7 +87,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a virtual wardrobe entry')
-  .schema(VirtualWardrobeControllersSchemas.Entries.deleteEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'virtual_wardrobe__entries'
   })
@@ -101,7 +99,7 @@ const deleteEntry = forgeController
 const toggleFavourite = forgeController
   .route('PATCH /favourite/:id')
   .description('Toggle favourite status of a virtual wardrobe entry')
-  .schema(VirtualWardrobeControllersSchemas.Entries.toggleFavourite)
+  .input({})
   .existenceCheck('params', {
     id: 'virtual_wardrobe__entries'
   })
@@ -113,7 +111,7 @@ const toggleFavourite = forgeController
 const analyzeVision = forgeController
   .route('POST /vision')
   .description('Analyze clothing images using AI vision')
-  .schema(VirtualWardrobeControllersSchemas.Entries.analyzeVision)
+  .input({})
   .middlewares(
     fieldsUploadMiddleware.bind({
       fields: [

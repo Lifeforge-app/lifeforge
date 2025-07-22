@@ -3,8 +3,6 @@ import Pocketbase from 'pocketbase'
 
 import { ISchemaWithPB } from 'shared/types/collections'
 import { WalletCollectionsSchemas } from 'shared/types/collections'
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 export const getTypesCount = async (
   pb: Pocketbase
 ): Promise<WalletControllersSchemas.IUtils['getTypesCount']['response']> => {
@@ -150,7 +148,7 @@ export const getExpensesBreakdown = async (
       expand: 'category,base_transaction'
     })
 
-  const spentOnEachCategory: WalletControllersSchemas.IUtils['getExpensesBreakdown']['response'] =
+  const spentOnEachCategory
     {}
 
   for (const expense of expenses) {

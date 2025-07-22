@@ -1,8 +1,8 @@
 import forgeRouter from '@functions/forgeRouter'
 
-import calendarsRouter from './controllers/calendars'
-import categoriesRouter from './controllers/categories'
-import eventsRouter from './controllers/events'
+import calendarsRouter from './routes/calendars'
+import categoriesRouter from './routes/categories'
+import eventsRouter from './routes/events'
 
 export default forgeRouter({
   '/events': eventsRouter,

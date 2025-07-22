@@ -3,27 +3,25 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { TodoListControllersSchemas } from 'shared/types/controllers'
-
 import * as prioritiesService from '../services/priorities.service'
 
 const getAllPriorities = forgeController
   .route('GET /')
   .description('Get all todo priorities')
-  .schema(TodoListControllersSchemas.Priorities.getAllPriorities)
+  .input({})
   .callback(({ pb }) => prioritiesService.getAllPriorities(pb))
 
 const createPriority = forgeController
   .route('POST /')
   .description('Create a new todo priority')
-  .schema(TodoListControllersSchemas.Priorities.createPriority)
+  .input({})
   .statusCode(201)
   .callback(({ pb, body }) => prioritiesService.createPriority(pb, body))
 
 const updatePriority = forgeController
   .route('PATCH /:id')
   .description('Update an existing todo priority')
-  .schema(TodoListControllersSchemas.Priorities.updatePriority)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__priorities'
   })
@@ -34,7 +32,7 @@ const updatePriority = forgeController
 const deletePriority = forgeController
   .route('DELETE /:id')
   .description('Delete a todo priority')
-  .schema(TodoListControllersSchemas.Priorities.deletePriority)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__priorities'
   })

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 
 import { fetchAPI, useAPIEndpoint, useAPIQuery } from 'shared/lib'
 import { LocationsCustomSchemas } from 'shared/types/collections'
-import { LocationsControllersSchemas } from 'shared/types/controllers'
 
 import { Tooltip } from '../utilities'
 
@@ -38,9 +37,7 @@ function LocationInput({
 
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
 
-  const dataQuery = useAPIQuery<
-    LocationsControllersSchemas.ILocations['getLocations']['response']
-  >(
+  const dataQuery = useAPIQuery<LocationsCustomSchemas.ILocation[]>(
     `/locations?q=${debouncedQuery}`,
     [debouncedQuery],
     debouncedQuery.trim() !== ''
@@ -53,9 +50,9 @@ function LocationInput({
   }, [query])
 
   useEffect(() => {
-    fetchAPI<
-      LocationsControllersSchemas.ILocations['checkIsEnabled']['response']
-    >(apiHost, '/locations/enabled').then(enabled => setEnabled(enabled))
+    fetchAPI<boolean>(apiHost, '/locations/enabled').then(enabled =>
+      setEnabled(enabled)
+    )
   }, [])
 
   return (

@@ -3,27 +3,25 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import * as LedgersService from '../services/ledgers.service'
 
 const getAllLedgers = forgeController
   .route('GET /')
   .description('Get all wallet ledgers')
-  .schema(WalletControllersSchemas.Ledgers.getAllLedgers)
+  .input({})
   .callback(async ({ pb }) => await LedgersService.getAllLedgers(pb))
 
 const createLedger = forgeController
   .route('POST /')
   .description('Create a new wallet ledger')
-  .schema(WalletControllersSchemas.Ledgers.createLedger)
+  .input({})
   .statusCode(201)
   .callback(async ({ pb, body }) => await LedgersService.createLedger(pb, body))
 
 const updateLedger = forgeController
   .route('PATCH /:id')
   .description('Update an existing wallet ledger')
-  .schema(WalletControllersSchemas.Ledgers.updateLedger)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__ledgers'
   })
@@ -35,7 +33,7 @@ const updateLedger = forgeController
 const deleteLedger = forgeController
   .route('DELETE /:id')
   .description('Delete a wallet ledger')
-  .schema(WalletControllersSchemas.Ledgers.deleteLedger)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__ledgers'
   })

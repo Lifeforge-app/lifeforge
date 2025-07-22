@@ -1,16 +1,19 @@
-import {
-  forgeController
-} from '@functions/forgeController'
+import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
+import { z } from 'zod/v4'
 
-import { WishlistControllersSchemas } from 'shared/types/controllers'
+import { WishlistCollectionsSchemas } from 'shared/types/collections'
 
 import * as listsService from '../services/lists.service'
 
 const getList = forgeController
   .route('GET /:id')
   .description('Get wishlist by ID')
-  .schema(WishlistControllersSchemas.Lists.getList)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .existenceCheck('params', {
     id: 'wishlist__lists'
   })
@@ -21,7 +24,11 @@ const getList = forgeController
 const checkListExists = forgeController
   .route('GET /valid/:id')
   .description('Check if wishlist exists')
-  .schema(WishlistControllersSchemas.Lists.checkListExists)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .callback(
     async ({ pb, params: { id } }) => await listsService.checkListExists(pb, id)
   )
@@ -29,20 +36,27 @@ const checkListExists = forgeController
 const getAllLists = forgeController
   .route('GET /')
   .description('Get all wishlists with statistics')
-  .schema(WishlistControllersSchemas.Lists.getAllLists)
+  .input({})
   .callback(async ({ pb }) => await listsService.getAllLists(pb))
 
 const createList = forgeController
   .route('POST /')
   .description('Create a new wishlist')
-  .schema(WishlistControllersSchemas.Lists.createList)
+  .input({
+    body: WishlistCollectionsSchemas.List
+  })
   .statusCode(201)
   .callback(async ({ pb, body }) => await listsService.createList(pb, body))
 
 const updateList = forgeController
   .route('PATCH /:id')
   .description('Update an existing wishlist')
-  .schema(WishlistControllersSchemas.Lists.updateList)
+  .input({
+    params: z.object({
+      id: z.string()
+    }),
+    body: WishlistCollectionsSchemas.List
+  })
   .existenceCheck('params', {
     id: 'wishlist__lists'
   })
@@ -54,7 +68,11 @@ const updateList = forgeController
 const deleteList = forgeController
   .route('DELETE /:id')
   .description('Delete a wishlist')
-  .schema(WishlistControllersSchemas.Lists.deleteList)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .existenceCheck('params', {
     id: 'wishlist__lists'
   })

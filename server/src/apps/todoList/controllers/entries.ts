@@ -3,20 +3,18 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { TodoListControllersSchemas } from 'shared/types/controllers'
-
 import * as entriesService from '../services/entries.service'
 
 const getStatusCounter = forgeController
   .route('GET /utils/status-counter')
   .description('Get status counter for todo entries')
-  .schema(TodoListControllersSchemas.Entries.getStatusCounter)
+  .input({})
   .callback(async ({ pb }) => await entriesService.getStatusCounter(pb))
 
 const getEntryById = forgeController
   .route('GET /:id')
   .description('Get todo entry by ID')
-  .schema(TodoListControllersSchemas.Entries.getEntryById)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__entries'
   })
@@ -27,7 +25,7 @@ const getEntryById = forgeController
 const getAllEntries = forgeController
   .route('GET /')
   .description('Get all todo entries with optional filters')
-  .schema(TodoListControllersSchemas.Entries.getAllEntries)
+  .input({})
   .existenceCheck('query', {
     tag: '[todo_list__tags]',
     list: '[todo_list__lists]',
@@ -41,7 +39,7 @@ const getAllEntries = forgeController
 const createEntry = forgeController
   .route('POST /')
   .description('Create a new todo entry')
-  .schema(TodoListControllersSchemas.Entries.createEntry)
+  .input({})
   .existenceCheck('body', {
     list: '[todo_list__lists]',
     priority: '[todo_list__priorities]',
@@ -53,7 +51,7 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update an existing todo entry')
-  .schema(TodoListControllersSchemas.Entries.updateEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__entries'
   })
@@ -70,7 +68,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a todo entry')
-  .schema(TodoListControllersSchemas.Entries.deleteEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__entries'
   })
@@ -82,7 +80,7 @@ const deleteEntry = forgeController
 const toggleEntry = forgeController
   .route('POST /toggle/:id')
   .description('Toggle completion status of a todo entry')
-  .schema(TodoListControllersSchemas.Entries.toggleEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'todo_list__entries'
   })

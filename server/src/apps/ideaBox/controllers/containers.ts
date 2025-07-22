@@ -5,14 +5,12 @@ import forgeRouter from '@functions/forgeRouter'
 import { singleUploadMiddlewareOfKey } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import * as containersService from '../services/containers.service'
 
 const checkContainerExists = forgeController
   .route('GET /valid/:id')
   .description('Check if a container exists')
-  .schema(IdeaBoxControllersSchemas.Containers.checkContainerExists)
+  .input({})
   .callback(
     async ({ pb, params: { id } }) =>
       await containersService.checkContainerExists(pb, id)
@@ -21,13 +19,13 @@ const checkContainerExists = forgeController
 const getContainers = forgeController
   .route('GET /')
   .description('Get all containers')
-  .schema(IdeaBoxControllersSchemas.Containers.getContainers)
+  .input({})
   .callback(async ({ pb }) => await containersService.getContainers(pb))
 
 const createContainer = forgeController
   .route('POST /')
   .description('Create a new container')
-  .schema(IdeaBoxControllersSchemas.Containers.createContainer)
+  .input({})
   .middlewares(singleUploadMiddlewareOfKey('cover'))
   .callback(async ({ pb, body: { name, color, icon, cover }, req }) => {
     const container = await containersService.createContainer(
@@ -69,7 +67,7 @@ const createContainer = forgeController
 const updateContainer = forgeController
   .route('PATCH /:id')
   .description('Update a container')
-  .schema(IdeaBoxControllersSchemas.Containers.updateContainer)
+  .input({})
   .middlewares(singleUploadMiddlewareOfKey('cover'))
   .existenceCheck('params', {
     id: 'idea_box__containers'
@@ -120,7 +118,7 @@ const updateContainer = forgeController
 const deleteContainer = forgeController
   .route('DELETE /:id')
   .description('Delete a container')
-  .schema(IdeaBoxControllersSchemas.Containers.deleteContainer)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__containers'
   })

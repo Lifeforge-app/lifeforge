@@ -5,15 +5,13 @@ import {
 import forgeRouter from '@functions/forgeRouter'
 import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
 
-import { MomentVaultControllersSchemas } from 'shared/types/controllers'
-
 import * as TranscriptionService from '../services/transcription.service'
 import { convertToMp3 } from '../utils/convertToMP3'
 
 const transcribeExisted = forgeController
   .route('POST /:id')
   .description('Transcribe an existing audio entry')
-  .schema(MomentVaultControllersSchemas.Transcription.transcribeExisted)
+  .input({})
   .existenceCheck('params', {
     id: 'moment_vault__entries'
   })
@@ -25,7 +23,7 @@ const transcribeExisted = forgeController
 const transcribeNew = forgeController
   .route('POST /')
   .description('Transcribe a new audio file')
-  .schema(MomentVaultControllersSchemas.Transcription.transcribeNew)
+  .input({})
   .middlewares(singleUploadMiddleware)
   .callback(async ({ pb, req }) => {
     const { file } = req

@@ -1,48 +1,103 @@
-import { JSDOM } from 'jsdom'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
-import { zip } from '../utils/parsing'
+const zip = (a: Array<string>, b: Array<any> | null) => {
+  if (b) return Object.fromEntries(a.map((k, i) => [k, b[i]]).filter(e => e[0]))
 
-export const getBookDetails = async (md5: string) => {
-  const target = new URL('http://libgen.is/book/index.php')
-
-  target.searchParams.set('md5', md5)
-
-  const data = await fetch(target.href).then(res => res.text())
-
-  const dom = new JSDOM(data)
-
-  const document = dom.window.document
-
-  const final = parseLibgenISBookDetailsPage(document)
-
-  return final
+  return a
 }
 
-export const getLocalLibraryData = async (provider: string, md5: string) => {
-  const target = new URL(
-    provider === 'libgen.is'
-      ? 'http://libgen.is/book/index.php'
-      : `https://${provider}/edition.php`
+export function parseLibgenIS(
+  document: Document
+): [
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['data'],
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['resultsCount']
+] {
+  const table = Array.from(
+    document.querySelectorAll('body > table[rules="cols"]')
   )
 
-  target.searchParams.set('md5', md5)
+  return [
+    table
+      .map(
+        item =>
+          ({
+            ...Object.fromEntries(
+              (
+                Array.from(item.querySelectorAll('tr'))
+                  .map(e => e.textContent?.trim())
+                  .filter(e => e)
+                  .map(e => e?.split('\n'))
+                  .map(e => (e!.length % 2 ? e?.concat(['']) : e))
+                  .map(e =>
+                    e!.reduce((all, one, i) => {
+                      const ch = Math.floor(i / 2)
 
-  const data = await fetch(target.href).then(res => res.text())
+                      // @ts-expect-error - hmmm
+                      all[ch] = [].concat(all[ch] || [], one)
 
-  const dom = new JSDOM(data)
-
-  const document = dom.window.document
-
-  if (provider === 'libgen.is') {
-    return getLibgenISLocalLibraryData(document)
-  } else {
-    throw new Error(
-      'Only libgen.is is supported for local library data retrieval at the moment.'
-    )
-  }
+                      return all
+                    }, [])
+                  ) as never as [string, string][]
+              )
+                .flat()
+                .map(e => [
+                  e[0].split(':')[0],
+                  e[1] || e[0].split(':')[1].trim()
+                ])
+            ),
+            md5: Array.from(item.querySelectorAll('a'))
+              .find(e => e.href.includes('?md5='))
+              ?.href.split('=')?.[1],
+            image: item.querySelector('img')?.src
+          }) as never as Record<string, string | undefined>
+      )
+      .filter(e => Object.keys(e).length > 1),
+    document.querySelector("font[color='grey']")?.textContent || '0'
+  ]
 }
 
-function parseLibgenISBookDetailsPage(document: Document) {
+export function parseLibgenMirror(
+  provider: string,
+  document: Document
+): [
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['data'],
+  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['resultsCount']
+] {
+  return [
+    Array.from(document.querySelectorAll('#tablelibgen tbody tr')).map(e => ({
+      image: `https://${provider}${e.querySelector('img')?.src.replace('_small', '')}`,
+      ...(() => {
+        const titleElement = Array.from(e.querySelectorAll('a[title]')).filter(
+          e => e.textContent?.trim()
+        )[0]
+
+        return {
+          Title: titleElement.textContent?.trim() || '',
+          Edition: titleElement.querySelector('i')?.textContent?.trim() || ''
+        }
+      })(),
+      ISBN: e.querySelector("font[color='green']")?.textContent?.trim() || '',
+      'Author(s)':
+        e.querySelector('td:nth-child(3)')?.textContent?.trim() || '',
+      Publisher: e.querySelector('td:nth-child(4)')?.textContent?.trim() || '',
+      Year: e.querySelector('td:nth-child(5)')?.textContent?.trim() || '',
+      Language: e.querySelector('td:nth-child(6)')?.textContent?.trim() || '',
+      Pages: e.querySelector('td:nth-child(7)')?.textContent?.trim() || '',
+      Size:
+        parseInt(
+          e.querySelector('td:nth-child(8)')?.textContent?.trim() || '0'
+        ) * 1000000,
+      Extension: e.querySelector('td:nth-child(9)')?.textContent?.trim() || '',
+      md5: (
+        e.querySelector("a[href*='md5=']") as HTMLAnchorElement
+      )?.href.split('=')?.[1]
+    })),
+    ''
+  ]
+}
+
+export function parseLibgenISBookDetailsPage(document: Document) {
   const final = Object.fromEntries(
     Array.from(
       document.querySelectorAll('body > table[rules="cols"] > tbody > tr')
@@ -151,7 +206,7 @@ function parseLibgenISBookDetailsPage(document: Document) {
   return final
 }
 
-function getLibgenISLocalLibraryData(document: Document) {
+export function getLibgenISLocalLibraryData(document: Document) {
   const everything = parseLibgenISBookDetailsPage(document)
 
   return {

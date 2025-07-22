@@ -46,10 +46,9 @@ function Searchbar({
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="mt-4 flex gap-2">
       <SortBySelector setSortType={setSortType} sortType={sortType} />
       <SearchInput
-        className="mt-4"
         namespace="apps.scoresLibrary"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

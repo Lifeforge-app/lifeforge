@@ -2,12 +2,10 @@ import PocketBase from 'pocketbase'
 
 import { ISchemaWithPB } from 'shared/types/collections'
 import { MoviesCollectionsSchemas } from 'shared/types/collections'
-import { MoviesControllersSchemas } from 'shared/types/controllers'
-
 export const updateTicket = (
   pb: PocketBase,
   id: string,
-  ticketData: MoviesControllersSchemas.ITicket['updateTicket']['body']
+  ticketData
 ): Promise<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>> => {
   const finalData: Partial<MoviesCollectionsSchemas.IEntry> = {
     ...ticketData,

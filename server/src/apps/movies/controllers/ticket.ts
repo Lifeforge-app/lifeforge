@@ -3,14 +3,12 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { MoviesControllersSchemas } from 'shared/types/controllers'
-
 import * as TicketService from '../services/ticket.service'
 
 const updateTicket = forgeController
   .route('PATCH /:id')
   .description('Update ticket information for a movie entry')
-  .schema(MoviesControllersSchemas.Ticket.updateTicket)
+  .input({})
   .existenceCheck('params', {
     id: 'movies__entries'
   })
@@ -21,7 +19,7 @@ const updateTicket = forgeController
 const clearTicket = forgeController
   .route('DELETE /:id')
   .description('Clear ticket information for a movie entry')
-  .schema(MoviesControllersSchemas.Ticket.clearTicket)
+  .input({})
   .existenceCheck('params', {
     id: 'movies__entries'
   })

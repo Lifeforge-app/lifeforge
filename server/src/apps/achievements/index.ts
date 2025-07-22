@@ -1,6 +1,6 @@
 import forgeRouter from '@functions/forgeRouter'
 
-import entriesRouter from './controllers/entries'
+import entriesRouter from './routes/entries'
 
 export default forgeRouter({
   '/entries': entriesRouter

@@ -1,24 +1,31 @@
-import {
-  forgeController
-} from '@functions/forgeController'
+import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
-
-import { WishlistControllersSchemas } from 'shared/types/controllers'
+import { z } from 'zod/v4'
 
 import * as entriesService from '../services/entries.service'
 
 const getCollectionId = forgeController
   .route('GET /collection-id')
   .description('Get wishlist entries collection ID')
-  .schema(WishlistControllersSchemas.Entries.getCollectionId)
+  .input({})
   .callback(async ({ pb }) => await entriesService.getCollectionId(pb))
 
 const getEntriesByListId = forgeController
   .route('GET /:id')
   .description('Get wishlist entries by list ID')
-  .schema(WishlistControllersSchemas.Entries.getEntriesByListId)
+  .input({
+    params: z.object({
+      id: z.string()
+    }),
+    query: z.object({
+      bought: z
+        .string()
+        .optional()
+        .transform(val => val === 'true')
+    })
+  })
   .existenceCheck('params', {
     id: 'wishlist__lists'
   })
@@ -30,7 +37,12 @@ const getEntriesByListId = forgeController
 const scrapeExternal = forgeController
   .route('POST /external')
   .description('Scrape external website for wishlist entry data')
-  .schema(WishlistControllersSchemas.Entries.scrapeExternal)
+  .input({
+    body: z.object({
+      url: z.string(),
+      provider: z.string()
+    })
+  })
   .callback(
     async ({ pb, body: { url, provider } }) =>
       await entriesService.scrapeExternal(pb, provider, url)
@@ -39,7 +51,15 @@ const scrapeExternal = forgeController
 const createEntry = forgeController
   .route('POST /')
   .description('Create a new wishlist entry')
-  .schema(WishlistControllersSchemas.Entries.createEntry)
+  .input({
+    body: z.object({
+      name: z.string(),
+      url: z.string(),
+      price: z.string().transform(val => parseFloat(val) || 0 || 0),
+      list: z.string(),
+      image: z.any().optional()
+    })
+  })
   .middlewares(singleUploadMiddleware)
   .existenceCheck('body', {
     list: 'wishlist__lists'
@@ -75,7 +95,18 @@ const createEntry = forgeController
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update an existing wishlist entry')
-  .schema(WishlistControllersSchemas.Entries.updateEntry)
+  .input({
+    params: z.object({
+      id: z.string()
+    }),
+    body: z.object({
+      name: z.string(),
+      url: z.string(),
+      price: z.string().transform(val => parseFloat(val) || 0 || 0),
+      list: z.string(),
+      imageRemoved: z.string().optional()
+    })
+  })
   .middlewares(singleUploadMiddleware)
   .existenceCheck('params', {
     id: 'wishlist__entries'
@@ -126,7 +157,11 @@ const updateEntry = forgeController
 const updateEntryBoughtStatus = forgeController
   .route('PATCH /bought/:id')
   .description('Update wishlist entry bought status')
-  .schema(WishlistControllersSchemas.Entries.updateEntryBoughtStatus)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .existenceCheck('params', {
     id: 'wishlist__entries'
   })
@@ -138,7 +173,11 @@ const updateEntryBoughtStatus = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a wishlist entry')
-  .schema(WishlistControllersSchemas.Entries.deleteEntry)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .existenceCheck('params', {
     id: 'wishlist__entries'
   })

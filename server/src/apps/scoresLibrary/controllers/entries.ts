@@ -5,32 +5,30 @@ import {
 import forgeRouter from '@functions/forgeRouter'
 import { uploadMiddleware } from '@middlewares/uploadMiddleware'
 
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 import * as entriesService from '../services/entries.service'
 
 const getSidebarData = forgeController
   .route('GET /sidebar-data')
   .description('Get sidebar data for scores library')
-  .schema(ScoresLibraryControllersSchemas.Entries.getSidebarData)
+  .input({})
   .callback(async ({ pb }) => await entriesService.getSidebarData(pb))
 
 const getEntries = forgeController
   .route('GET /')
   .description('Get scores library entries')
-  .schema(ScoresLibraryControllersSchemas.Entries.getEntries)
+  .input({})
   .callback(async ({ pb, query }) => await entriesService.getEntries(pb, query))
 
 const getRandomEntry = forgeController
   .route('GET /random')
   .description('Get a random score entry')
-  .schema(ScoresLibraryControllersSchemas.Entries.getRandomEntry)
+  .input({})
   .callback(async ({ pb }) => await entriesService.getRandomEntry(pb))
 
 const uploadFiles = forgeController
   .route('POST /upload')
   .description('Upload score files')
-  .schema(ScoresLibraryControllersSchemas.Entries.uploadFiles)
+  .input({})
   .middlewares(uploadMiddleware)
   .statusCode(202)
   .callback(async ({ io, pb, req }) => {
@@ -50,7 +48,7 @@ const uploadFiles = forgeController
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update a score entry')
-  .schema(ScoresLibraryControllersSchemas.Entries.updateEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'scores_library__entries'
   })
@@ -62,7 +60,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a score entry')
-  .schema(ScoresLibraryControllersSchemas.Entries.deleteEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'scores_library__entries'
   })
@@ -74,7 +72,7 @@ const deleteEntry = forgeController
 const toggleFavourite = forgeController
   .route('POST /favourite/:id')
   .description('Toggle favourite status of a score entry')
-  .schema(ScoresLibraryControllersSchemas.Entries.toggleFavourite)
+  .input({})
   .existenceCheck('params', {
     id: 'scores_library__entries'
   })

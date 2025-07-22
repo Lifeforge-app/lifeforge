@@ -1,33 +1,50 @@
 import ClientError from '@functions/ClientError'
 import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
+import { z } from 'zod/v4'
 
-import { CalendarControllersSchemas } from 'shared/types/controllers'
-
-import * as CategoriesService from '../services/categories.service'
+import {
+  CalendarCollectionsSchemas,
+  ISchemaWithPB
+} from 'shared/types/collections'
 
 const getAllCategories = forgeController
   .route('GET /')
   .description('Get all calendar categories')
-  .schema(CalendarControllersSchemas.Categories.getAllCategories)
-  .callback(async ({ pb }) => await CategoriesService.getAllCategories(pb))
+  .input({})
+  .callback(({ pb }) =>
+    pb
+      .collection('calendar__categories_aggregated')
+      .getFullList<
+        ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+      >({
+        sort: '+name'
+      })
+  )
 
 const getCategoryById = forgeController
   .route('GET /:id')
   .description('Get a calendar category by ID')
-  .schema(CalendarControllersSchemas.Categories.getCategoryById)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .existenceCheck('params', {
     id: 'calendar__categories'
   })
-  .callback(
-    async ({ pb, params: { id } }) =>
-      await CategoriesService.getCategoryById(pb, id)
+  .callback(({ pb, params: { id } }) =>
+    pb
+      .collection('calendar__categories_aggregated')
+      .getOne<ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>>(id)
   )
 
 const createCategory = forgeController
   .route('POST /')
   .description('Create a new calendar category')
-  .schema(CalendarControllersSchemas.Categories.createCategory)
+  .input({
+    body: CalendarCollectionsSchemas.Category
+  })
   .statusCode(201)
   .callback(async ({ pb, body }) => {
     if (body.name.startsWith('_')) {
@@ -43,44 +60,49 @@ const createCategory = forgeController
       throw new ClientError('Category with this name already exists')
     }
 
-    return await CategoriesService.createCategory(pb, body)
+    const createdEntry = await pb
+      .collection('calendar__categories')
+      .create<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>>(body)
+
+    await pb
+      .collection('calendar__categories_aggregated')
+      .getOne<
+        ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+      >(createdEntry.id)
   })
 
 const updateCategory = forgeController
   .route('PATCH /:id')
   .description('Update an existing calendar category')
-  .schema(CalendarControllersSchemas.Categories.updateCategory)
+  .input({
+    params: z.object({
+      id: z.string()
+    }),
+    body: CalendarCollectionsSchemas.Category
+  })
   .existenceCheck('params', {
     id: 'calendar__categories'
   })
   .callback(async ({ pb, params: { id }, body }) => {
-    if (body.name.startsWith('_')) {
-      throw new ClientError('Category name cannot start with _')
-    }
-
-    if (
-      await pb
-        .collection('calendar__categories')
-        .getFirstListItem(`name="${body.name}" && id != "${id}"`)
-        .catch(() => null)
-    ) {
-      throw new ClientError('Category with this name already exists')
-    }
-
-    return await CategoriesService.updateCategory(pb, id, body)
+    await pb
+      .collection('calendar__categories')
+      .update<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>>(id, body)
   })
 
 const deleteCategory = forgeController
   .route('DELETE /:id')
   .description('Delete an existing calendar category')
-  .schema(CalendarControllersSchemas.Categories.deleteCategory)
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
   .existenceCheck('params', {
     id: 'calendar__categories'
   })
   .statusCode(204)
-  .callback(
-    async ({ pb, params: { id } }) =>
-      await CategoriesService.deleteCategory(pb, id)
+  .callback(({ pb, params: { id } }) =>
+    pb.collection('calendar__categories').delete(id)
   )
 
 export default forgeRouter({

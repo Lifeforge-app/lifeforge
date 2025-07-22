@@ -3,20 +3,18 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import * as CategoriesService from '../services/categories.service'
 
 const getAllCategories = forgeController
   .route('GET /')
   .description('Get all wallet categories')
-  .schema(WalletControllersSchemas.Categories.getAllCategories)
+  .input({})
   .callback(async ({ pb }) => await CategoriesService.getAllCategories(pb))
 
 const createCategory = forgeController
   .route('POST /')
   .description('Create a new wallet category')
-  .schema(WalletControllersSchemas.Categories.createCategory)
+  .input({})
   .statusCode(201)
   .callback(
     async ({ pb, body }) => await CategoriesService.createCategory(pb, body)
@@ -25,7 +23,7 @@ const createCategory = forgeController
 const updateCategory = forgeController
   .route('PATCH /:id')
   .description('Update an existing wallet category')
-  .schema(WalletControllersSchemas.Categories.updateCategory)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__categories'
   })
@@ -37,7 +35,7 @@ const updateCategory = forgeController
 const deleteCategory = forgeController
   .route('DELETE /:id')
   .description('Delete a wallet category')
-  .schema(WalletControllersSchemas.Categories.deleteCategory)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__categories'
   })
