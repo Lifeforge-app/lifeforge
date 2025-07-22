@@ -82,7 +82,7 @@ for (const module of allModules) {
   if (!collections) {
     console.warn(
       chalk.yellow('[WARNING]') +
-        ` No collections found for module ${chalk.bold(moduleName)}.`
+        ` No collections found for module ${chalk.bold(module.name)}.`
     )
     continue
   }
