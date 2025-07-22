@@ -2,7 +2,7 @@
  * This file is auto-generated. DO NOT EDIT IT MANUALLY.
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
- * Generated for module: passwords
+ * Generated for module: achievements
  * Generated at: 2025-07-22T08:25:19.355Z
  * Contains: entry
  */
@@ -10,13 +10,9 @@
 import { z } from "zod/v4";
 
 const Entry = z.object({
-  name: z.string(),
-  website: z.string(),
-  username: z.string(),
-  password: z.string(),
-  icon: z.string(),
-  color: z.string(),
-  pinned: z.boolean(),
+  title: z.string(),
+  thoughts: z.string(),
+  difficulty: z.enum(["easy","medium","hard","impossible"]),
 });
 
 type IEntry = z.infer<typeof Entry>;

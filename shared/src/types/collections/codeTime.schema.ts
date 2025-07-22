@@ -3,22 +3,23 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: codeTime
- * Generated at: 2025-07-20T12:17:56.591Z
+ * Generated at: 2025-07-22T08:25:19.363Z
  * Contains: project, language, daily_entry
  */
-import { z } from 'zod/v4'
+
+import { z } from "zod/v4";
 
 const Project = z.object({
   name: z.string(),
-  duration: z.number()
-})
+  duration: z.number(),
+});
 
 const Language = z.object({
   name: z.string(),
   icon: z.string(),
   color: z.string(),
-  duration: z.number()
-})
+  duration: z.number(),
+});
 
 const DailyEntry = z.object({
   date: z.string(),
@@ -26,16 +27,24 @@ const DailyEntry = z.object({
   projects: z.any(),
   total_minutes: z.number(),
   last_timestamp: z.number(),
-  languages: z.any()
-})
+  languages: z.any(),
+});
 
-type IProject = z.infer<typeof Project>
-type ILanguage = z.infer<typeof Language>
-type IDailyEntry = z.infer<typeof DailyEntry>
+type IProject = z.infer<typeof Project>;
+type ILanguage = z.infer<typeof Language>;
+type IDailyEntry = z.infer<typeof DailyEntry>;
 
-export { Project, Language, DailyEntry }
+export {
+  Project,
+  Language,
+  DailyEntry,
+};
 
-export type { IProject, ILanguage, IDailyEntry }
+export type {
+  IProject,
+  ILanguage,
+  IDailyEntry,
+};
 
 // -------------------- CUSTOM SCHEMAS --------------------
 

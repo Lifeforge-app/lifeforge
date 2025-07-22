@@ -3,24 +3,29 @@
  * You may regenerate it by running `bun run schema:generate:collection` in the root directory.
  * If you want to add custom schemas, you will find a dedicated space at the end of this file.
  * Generated for module: music
- * Generated at: 2025-07-20T12:17:56.584Z
+ * Generated at: 2025-07-22T08:25:19.354Z
  * Contains: entry
  */
-import { z } from 'zod/v4'
+
+import { z } from "zod/v4";
 
 const Entry = z.object({
   name: z.string(),
   duration: z.string(),
   author: z.string(),
   file: z.string(),
-  is_favourite: z.boolean()
-})
+  is_favourite: z.boolean(),
+});
 
-type IEntry = z.infer<typeof Entry>
+type IEntry = z.infer<typeof Entry>;
 
-export { Entry }
+export {
+  Entry,
+};
 
-export type { IEntry }
+export type {
+  IEntry,
+};
 
 // -------------------- CUSTOM SCHEMAS --------------------
 
