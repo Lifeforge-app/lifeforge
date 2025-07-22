@@ -1,40 +1,38 @@
 import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
+import { SCHEMAS } from '@typescript/schema'
 import { z } from 'zod/v4'
-
-import {
-  AchievementsCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
 
 export const getAllEntriesByDifficulty = forgeController
   .route('GET /:difficulty')
   .description('Get all achievements entries by difficulty')
   .input({
-    params: AchievementsCollectionsSchemas.Entry.pick({
+    params: SCHEMAS.achievements.entries.pick({
       difficulty: true
     })
   })
-  .callback(({ pb, params: { difficulty } }) =>
-    pb
+  .callback(async ({ pb, params: { difficulty } }) =>
+    pb.getFullList
       .collection('achievements__entries')
-      .getFullList<ISchemaWithPB<AchievementsCollectionsSchemas.IEntry>>({
-        filter: `difficulty = "${difficulty}"`,
-        sort: '-created'
-      })
+      .filter([
+        {
+          field: 'difficulty',
+          operator: '=',
+          value: difficulty
+        }
+      ])
+      .execute()
   )
 
 export const createEntry = forgeController
   .route('POST /')
   .description('Create a new achievements entry')
   .input({
-    body: AchievementsCollectionsSchemas.Entry
+    body: SCHEMAS.achievements.entries
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => {
-    pb.collection('achievements__entries').create<
-      ISchemaWithPB<AchievementsCollectionsSchemas.IEntry>
-    >(body)
+    pb.create.collection('achievements__entries').data(body).execute()
   })
 
 export const updateEntry = forgeController
@@ -44,13 +42,17 @@ export const updateEntry = forgeController
     params: z.object({
       id: z.string()
     }),
-    body: AchievementsCollectionsSchemas.Entry
+    body: SCHEMAS.achievements.entries
   })
   .existenceCheck('params', {
     id: 'achievements__entries'
   })
   .callback(async ({ pb, params: { id }, body }) => {
-    await pb.collection('achievements__entries').update(id, body)
+    await pb.update
+      .collection('achievements__entries')
+      .id(id)
+      .data(body)
+      .execute()
   })
 
 export const deleteEntry = forgeController
@@ -66,7 +68,7 @@ export const deleteEntry = forgeController
   })
   .statusCode(204)
   .callback(async ({ pb, params: { id } }) => {
-    await pb.collection('achievements__entries').delete(id)
+    await pb.delete.collection('achievements__entries').id(id).execute()
   })
 
 export default forgeRouter({

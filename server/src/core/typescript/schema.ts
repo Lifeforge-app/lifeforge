@@ -472,4 +472,6 @@ export const SCHEMAS = {
   }
 }
 
-export default flattenSchemas(SCHEMAS)
+const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
+
+export default COLLECTION_SCHEMAS

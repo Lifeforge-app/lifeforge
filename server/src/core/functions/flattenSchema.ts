@@ -1,10 +1,20 @@
-type FlattenSchemas<T> = {
-  [K1 in keyof T]: {
-    [K2 in keyof T[K1]]: T[K1][K2]
-  }[keyof T[K1]] extends infer V
-    ? Record<`${string & K1}__${string & keyof T[K1]}`, V>
-    : never
-}[keyof T]
+// Simple intersection type approach
+type FlattenSchemas<T extends Record<string, Record<string, unknown>>> =
+  UnionToIntersection<
+    {
+      [K1 in keyof T]: {
+        [K2 in keyof T[K1]]: Record<`${string & K1}__${string & K2}`, T[K1][K2]>
+      }[keyof T[K1]]
+    }[keyof T]
+  >
+
+// Helper type to convert union to intersection
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I
+) => void
+  ? I
+  : never
 
 export default function flattenSchemas<
   T extends Record<string, Record<string, unknown>>

@@ -1,3 +1,4 @@
+import PocketBaseCRUDActions from '@functions/PocketBaseCRUDActions'
 import { NextFunction, Request, Response } from 'express'
 import Pocketbase from 'pocketbase'
 
@@ -18,10 +19,13 @@ const pocketbaseMiddleware = async (
   const pb = new Pocketbase(process.env.PB_HOST)
 
   if (process.env.NODE_ENV === 'test') {
-    req.pb = new Pocketbase(process.env.PB_HOST)
-    await req.pb
+    const pb = new Pocketbase(process.env.PB_HOST)
+
+    await pb
       .collection('users')
       .authWithPassword(process.env.PB_EMAIL!, process.env.PB_PASSWORD!)
+
+    req.pb = new PocketBaseCRUDActions(pb)
 
     return next()
   }
@@ -34,7 +38,7 @@ const pocketbaseMiddleware = async (
         `\/locales\/(?:${ALLOWED_LANG.join('|')})\/(?:${ALLOWED_NAMESPACE.join('|')})(\..+)?$`
       ).test(req.url)
     ) {
-      req.pb = pb
+      req.pb = new PocketBaseCRUDActions(pb)
       next()
 
       return
@@ -66,7 +70,7 @@ const pocketbaseMiddleware = async (
       }
     }
 
-    req.pb = pb
+    req.pb = new PocketBaseCRUDActions(pb)
     next()
   } catch {
     res.status(500).send({

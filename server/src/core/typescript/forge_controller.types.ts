@@ -1,6 +1,6 @@
+import PocketBaseCRUDActions from '@functions/PocketBaseCRUDActions'
 import { BaseResponse } from '@typescript/base_response'
 import { Request, Response } from 'express'
-import PocketBase from 'pocketbase'
 import { Server } from 'socket.io'
 import { ZodIntersection, ZodObject, ZodRawShape, ZodTypeAny, z } from 'zod/v4'
 
@@ -25,7 +25,7 @@ type Context<TInput extends InputSchema, TOutput = unknown> = {
   >
   res: Response<BaseResponse<TOutput>>
   io: Server
-  pb: PocketBase
+  pb: PocketBaseCRUDActions
   params: InferZodType<TInput['params']>
   body: InferZodType<TInput['body']>
   query: InferZodType<TInput['query']>
