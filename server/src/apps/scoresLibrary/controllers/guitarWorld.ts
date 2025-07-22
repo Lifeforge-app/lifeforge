@@ -3,14 +3,12 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 import * as guitarWorldService from '../services/guitarWorld.service'
 
 const getTabsList = forgeController
   .route('GET /')
   .description('Get tabs list from Guitar World')
-  .schema(ScoresLibraryControllersSchemas.GuitarWorld.getTabsList)
+  .input({})
   .callback(
     async ({ query: { cookie, page } }) =>
       await guitarWorldService.getTabsList(cookie, page)
@@ -19,7 +17,7 @@ const getTabsList = forgeController
 const downloadTab = forgeController
   .route('POST /download')
   .description('Download a guitar tab from Guitar World')
-  .schema(ScoresLibraryControllersSchemas.GuitarWorld.downloadTab)
+  .input({})
   .statusCode(202)
   .callback(
     async ({ pb, body, io }) =>

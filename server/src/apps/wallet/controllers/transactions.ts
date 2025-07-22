@@ -1,26 +1,126 @@
-import {
-  forgeController
-} from '@functions/forgeController'
+import { forgeController } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 import {
   singleUploadMiddleware,
   singleUploadMiddlewareOfKey
 } from '@middlewares/uploadMiddleware'
+import { z } from 'zod/v4'
 
-import { WalletControllersSchemas } from 'shared/types/controllers'
+import {
+  ISchemaWithPB,
+  LocationsCustomSchemas,
+  WalletCollectionsSchemas
+} from 'shared/types/collections'
 
 import * as TransactionsService from '../services/transactions.service'
 
 const getAllTransactions = forgeController
   .route('GET /')
   .description('Get all wallet transactions')
-  .schema(WalletControllersSchemas.Transactions.getAllTransactions)
-  .callback(async ({ pb }) => await TransactionsService.getAllTransactions(pb))
+  .input({})
+  .callback(async ({ pb }) => {
+    const incomeExpensesTransactions = await pb
+      .collection('wallet__transactions_income_expenses')
+      .getFullList<
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsIncomeExpense> & {
+          expand: {
+            base_transaction: ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
+          }
+        }
+      >({
+        expand: 'base_transaction'
+      })
+
+    const transferTransactions = await pb
+      .collection('wallet__transactions_transfer')
+      .getFullList<
+        ISchemaWithPB<WalletCollectionsSchemas.ITransactionsTransfer> & {
+          expand: {
+            base_transaction: ISchemaWithPB<WalletCollectionsSchemas.ITransaction>
+          }
+        }
+      >({
+        expand: 'base_transaction'
+      })
+
+    const allTransactions = []
+
+    for (const transaction of incomeExpensesTransactions) {
+      const baseTransaction = transaction.expand.base_transaction
+
+      allTransactions.push({
+        ...baseTransaction,
+        type: transaction.type,
+        particulars: transaction.particulars,
+        asset: transaction.asset,
+        category: transaction.category,
+        ledgers: transaction.ledgers,
+        location_name: transaction.location_name,
+        location_coords: transaction.location_coords
+      })
+    }
+
+    for (const transaction of transferTransactions) {
+      const baseTransaction = transaction.expand.base_transaction
+
+      allTransactions.push({
+        ...baseTransaction,
+        type: 'transfer',
+        from: transaction.from,
+        to: transaction.to
+      })
+    }
+
+    return allTransactions.sort((a, b) => {
+      if (new Date(a.date).getTime() === new Date(b.date).getTime()) {
+        return new Date(a.created).getTime() - new Date(b.created).getTime()
+      }
+
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+  })
 
 const createTransaction = forgeController
   .route('POST /')
   .description('Create a new wallet transaction')
-  .schema(WalletControllersSchemas.Transactions.createTransaction)
+  .input({
+    body: WalletCollectionsSchemas.Transaction.omit({
+      type: true,
+      receipt: true,
+      amount: true
+    })
+      .extend({
+        amount: z
+          .string()
+          .transform(val => {
+            const amount = parseFloat(val)
+
+            return isNaN(amount) ? 0 : amount
+          })
+          .or(z.number())
+      })
+      .and(
+        z.union([
+          WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
+            base_transaction: true,
+            location_name: true,
+            location_coords: true
+          }).extend({
+            location: LocationsCustomSchemas.Location.optional().nullable(),
+            amount: z.string().transform(val => {
+              const amount = parseFloat(val)
+
+              return isNaN(amount) ? 0 : amount
+            })
+          }),
+          WalletCollectionsSchemas.TransactionsTransfer.omit({
+            base_transaction: true
+          }).extend({
+            type: z.literal('transfer')
+          })
+        ])
+      )
+  })
   .middlewares(singleUploadMiddleware)
   .existenceCheck('body', {
     category: '[wallet__categories]',
@@ -31,17 +131,53 @@ const createTransaction = forgeController
   })
   .statusCode(201)
   .callback(({ pb, body, req }) =>
-    TransactionsService.createTransaction(
-      pb,
-      body as WalletControllersSchemas.ITransactions['createTransaction']['body'],
-      req.file
-    )
+    TransactionsService.createTransaction(pb, body, req.file)
   )
 
 const updateTransaction = forgeController
   .route('PATCH /:id')
   .description('Update an existing wallet transaction')
-  .schema(WalletControllersSchemas.Transactions.updateTransaction)
+  .input({
+    params: z.object({
+      id: z.string()
+    }),
+    body: WalletCollectionsSchemas.Transaction.omit({
+      type: true,
+      receipt: true,
+      amount: true
+    })
+      .extend({
+        amount: z
+          .string()
+          .transform(val => {
+            const amount = parseFloat(val)
+
+            return isNaN(amount) ? 0 : amount
+          })
+          .or(z.number())
+      })
+      .and(
+        z.union([
+          WalletCollectionsSchemas.TransactionsIncomeExpense.omit({
+            base_transaction: true,
+            location_name: true,
+            location_coords: true
+          }).extend({
+            location: LocationsCustomSchemas.Location.optional().nullable(),
+            amount: z.string().transform(val => {
+              const amount = parseFloat(val)
+
+              return isNaN(amount) ? 0 : amount
+            })
+          }),
+          WalletCollectionsSchemas.TransactionsTransfer.omit({
+            base_transaction: true
+          }).extend({
+            type: z.literal('transfer')
+          })
+        ])
+      )
+  })
   .middlewares(singleUploadMiddlewareOfKey('receipt'))
   .existenceCheck('params', {
     id: 'wallet__transactions'
@@ -54,18 +190,13 @@ const updateTransaction = forgeController
     ledger: '[wallet__ledgers]'
   })
   .callback(({ pb, params: { id }, body, req }) =>
-    TransactionsService.updateTransaction(
-      pb,
-      id,
-      body as WalletControllersSchemas.ITransactions['updateTransaction']['body'],
-      req.file
-    )
+    TransactionsService.updateTransaction(pb, id, body, req.file)
   )
 
 const deleteTransaction = forgeController
   .route('DELETE /:id')
   .description('Delete a wallet transaction')
-  .schema(WalletControllersSchemas.Transactions.deleteTransaction)
+  .input({})
   .existenceCheck('params', {
     id: 'wallet__transactions'
   })
@@ -77,7 +208,7 @@ const deleteTransaction = forgeController
 const scanReceipt = forgeController
   .route('POST /scan-receipt')
   .description('Scan receipt to extract transaction data')
-  .schema(WalletControllersSchemas.Transactions.scanReceipt)
+  .input({})
   .middlewares(singleUploadMiddleware)
   .callback(async ({ pb, req }) => {
     if (!req.file) {

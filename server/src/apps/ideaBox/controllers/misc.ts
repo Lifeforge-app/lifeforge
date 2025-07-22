@@ -3,14 +3,12 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import * as miscService from '../services/misc.service'
 
 const getPath = forgeController
   .route('GET /path/:container/*')
   .description('Get path information for a container')
-  .schema(IdeaBoxControllersSchemas.Misc.getPath)
+  .input({})
   .callback(async ({ pb, params: { container, '0': pathParam }, req, res }) => {
     const result = await miscService.getPath(
       pb,
@@ -30,7 +28,7 @@ const getPath = forgeController
 const checkValid = forgeController
   .route('GET /valid/:container/*')
   .description('Check if a path is valid')
-  .schema(IdeaBoxControllersSchemas.Misc.checkValid)
+  .input({})
   .callback(
     async ({ pb, params: { container, '0': pathParam }, req, res }) =>
       await miscService.checkValid(
@@ -45,7 +43,7 @@ const checkValid = forgeController
 const getOgData = forgeController
   .route('GET /og-data/:id')
   .description('Get Open Graph data for an entry')
-  .schema(IdeaBoxControllersSchemas.Misc.getOgData)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__entries'
   })
@@ -56,7 +54,7 @@ const getOgData = forgeController
 const search = forgeController
   .route('GET /search')
   .description('Search entries')
-  .schema(IdeaBoxControllersSchemas.Misc.search)
+  .input({})
   .existenceCheck('query', {
     container: '[idea_box_containers]'
   })

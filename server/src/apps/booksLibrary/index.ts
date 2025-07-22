@@ -1,10 +1,10 @@
 import forgeRouter from '@functions/forgeRouter'
 
-import collectionsRouter from './controllers/collection'
-import entriesRouter from './controllers/entries'
-import fileTypesRouter from './controllers/fileTypes'
-import languagesRouter from './controllers/languages'
-import libgenRouter from './controllers/libgen'
+import collectionsRouter from './routes/collection'
+import entriesRouter from './routes/entries'
+import fileTypesRouter from './routes/fileTypes'
+import languagesRouter from './routes/languages'
+import libgenRouter from './routes/libgen'
 
 export default forgeRouter({
   '/entries': entriesRouter,

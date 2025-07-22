@@ -1,6 +1,6 @@
 import forgeRouter from '@functions/forgeRouter'
 
-import blogEntriesRouter from './controllers/entries.contorller'
+import blogEntriesRouter from './routes/entries'
 
 export default forgeRouter({
   '/entries': blogEntriesRouter

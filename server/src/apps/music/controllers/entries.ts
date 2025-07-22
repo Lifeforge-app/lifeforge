@@ -3,20 +3,18 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { MusicControllersSchemas } from 'shared/types/controllers'
-
 import * as EntriesService from '../services/entries.service'
 
 const getAllEntries = forgeController
   .route('GET /')
   .description('Get all music entries')
-  .schema(MusicControllersSchemas.Entries.getAllEntries)
+  .input({})
   .callback(async ({ pb }) => await EntriesService.getAllEntries(pb))
 
 const updateEntry = forgeController
   .route('PATCH /:id')
   .description('Update a music entry')
-  .schema(MusicControllersSchemas.Entries.updateEntry)
+  .input({})
   .callback(
     async ({ pb, params: { id }, body }) =>
       await EntriesService.updateEntry(pb, id, body)
@@ -25,7 +23,7 @@ const updateEntry = forgeController
 const deleteEntry = forgeController
   .route('DELETE /:id')
   .description('Delete a music entry')
-  .schema(MusicControllersSchemas.Entries.deleteEntry)
+  .input({})
   .existenceCheck('params', {
     id: 'music__entries'
   })
@@ -37,7 +35,7 @@ const deleteEntry = forgeController
 const toggleFavorite = forgeController
   .route('POST /favourite/:id')
   .description('Toggle favorite status of a music entry')
-  .schema(MusicControllersSchemas.Entries.toggleFavorite)
+  .input({})
   .existenceCheck('params', {
     id: 'music__entries'
   })

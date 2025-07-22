@@ -4,14 +4,12 @@ import {
 } from '@functions/forgeController'
 import forgeRouter from '@functions/forgeRouter'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import * as foldersService from '../services/folders.service'
 
 const getFolders = forgeController
   .route('GET /:container/*')
   .description('Get folders from a container path')
-  .schema(IdeaBoxControllersSchemas.Folders.getFolders)
+  .input({})
   .existenceCheck('params', {
     container: 'idea_box__containers'
   })
@@ -35,7 +33,7 @@ const getFolders = forgeController
 const createFolder = forgeController
   .route('POST /')
   .description('Create a new folder')
-  .schema(IdeaBoxControllersSchemas.Folders.createFolder)
+  .input({})
   .existenceCheck('query', {
     container: 'idea_box__containers'
   })
@@ -48,7 +46,7 @@ const createFolder = forgeController
 const updateFolder = forgeController
   .route('PATCH /:id')
   .description('Update a folder')
-  .schema(IdeaBoxControllersSchemas.Folders.updateFolder)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__folders'
   })
@@ -60,7 +58,7 @@ const updateFolder = forgeController
 const moveFolder = forgeController
   .route('POST /move/:id')
   .description('Move a folder to a different parent')
-  .schema(IdeaBoxControllersSchemas.Folders.moveFolder)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__folders'
   })
@@ -75,7 +73,7 @@ const moveFolder = forgeController
 const removeFromFolder = forgeController
   .route('DELETE /move/:id')
   .description('Remove a folder from its parent')
-  .schema(IdeaBoxControllersSchemas.Folders.removeFromFolder)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__folders'
   })
@@ -87,7 +85,7 @@ const removeFromFolder = forgeController
 const deleteFolder = forgeController
   .route('DELETE /:id')
   .description('Delete a folder')
-  .schema(IdeaBoxControllersSchemas.Folders.deleteFolder)
+  .input({})
   .existenceCheck('params', {
     id: 'idea_box__folders'
   })
