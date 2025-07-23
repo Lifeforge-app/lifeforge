@@ -1,0 +1,200 @@
+import { forgeController, forgeRouter } from '@functions/routes'
+import { SCHEMAS } from '@schema'
+import Moment from 'moment'
+import MomentRange from 'moment-range'
+import { z } from 'zod/v4'
+
+// @ts-expect-error - MomentRange types are not fully compatible with Moment
+const moment = MomentRange.extendMoment(Moment)
+
+const getAllAssets = forgeController
+  .route('GET /')
+  .description('Get all wallet assets')
+  .input({})
+  .callback(({ pb }) =>
+    pb.getFullList
+      .collection('wallet__assets_aggregated')
+      .sort(['name'])
+      .execute()
+  )
+
+const getAssetAccumulatedBalance = forgeController
+  .route('GET /balance/:id')
+  .description('Get accumulated balance for a wallet asset')
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
+  .existenceCheck('params', {
+    id: 'wallet__assets'
+  })
+  .callback(async ({ pb, params: { id } }) => {
+    const { starting_balance } = await pb.getOne
+      .collection('wallet__assets')
+      .id(id)
+      .fields({
+        starting_balance: true
+      })
+      .execute()
+
+    const allIncomeExpensesTransactions = await pb.getFullList
+      .collection('wallet__transactions_income_expenses')
+      .expand({
+        base_transaction: 'wallet__transactions'
+      })
+      .filter([
+        {
+          field: 'asset',
+          operator: '=',
+          value: id
+        }
+      ])
+      .fields({
+        type: true,
+        'expand.base_transaction.amount': true,
+        'expand.base_transaction.date': true
+      })
+      .execute()
+
+    const allTransferTransactions = await pb.getFullList
+      .collection('wallet__transactions_transfer')
+      .expand({
+        base_transaction: 'wallet__transactions'
+      })
+      .filter([
+        {
+          field: 'from',
+          operator: '=',
+          value: id
+        },
+        {
+          field: 'to',
+          operator: '=',
+          value: id
+        }
+      ])
+      .fields({
+        'expand.base_transaction.amount': true,
+        'expand.base_transaction.date': true,
+        from: true,
+        to: true
+      })
+      .execute()
+
+    const allTransactions = [
+      ...allIncomeExpensesTransactions.map(t => ({
+        type: t.type,
+        amount: t.expand!.base_transaction!.amount!,
+        date: t.expand!.base_transaction!.date!
+      })),
+      ...allTransferTransactions.map(t => ({
+        type: t.from === id ? 'expenses' : 'income',
+        amount: t.expand!.base_transaction!.amount!,
+        date: t.expand!.base_transaction!.date!
+      }))
+    ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+    let currentBalance = starting_balance
+
+    const accumulatedBalance: Record<string, number> = {}
+
+    const allDateInBetween = moment
+      .range(moment(allTransactions[allTransactions.length - 1].date), moment())
+      .by('day')
+
+    for (const date of allDateInBetween) {
+      const dateStr = date.format('YYYY-MM-DD')
+
+      accumulatedBalance[dateStr] = parseFloat(currentBalance.toFixed(2))
+
+      const transactionsOnDate = allTransactions.filter(t =>
+        moment(t.date).isSame(date, 'day')
+      )
+
+      for (const transaction of transactionsOnDate) {
+        if (transaction.type === 'expenses') {
+          currentBalance -= transaction.amount
+        } else if (transaction.type === 'income') {
+          currentBalance += transaction.amount
+        }
+      }
+    }
+
+    return accumulatedBalance
+  })
+
+const createAsset = forgeController
+  .route('POST /')
+  .description('Create a new wallet asset')
+  .input({
+    body: SCHEMAS.wallet.assets
+      .pick({
+        name: true,
+        icon: true,
+        starting_balance: true
+      })
+      .extend({
+        starting_balance: z.string().transform(val => {
+          const balance = parseFloat(val)
+
+          return isNaN(balance) ? 0 : balance
+        })
+      })
+  })
+  .statusCode(201)
+  .callback(({ pb, body }) =>
+    pb.create.collection('wallet__assets').data(body).execute()
+  )
+
+const updateAsset = forgeController
+  .route('PATCH /:id')
+  .description('Update an existing wallet asset')
+  .input({
+    params: z.object({
+      id: z.string()
+    }),
+    body: SCHEMAS.wallet.assets
+      .pick({
+        name: true,
+        icon: true,
+        starting_balance: true
+      })
+      .extend({
+        starting_balance: z.string().transform(val => {
+          const balance = parseFloat(val)
+
+          return isNaN(balance) ? 0 : balance
+        })
+      })
+  })
+  .existenceCheck('params', {
+    id: 'wallet__assets'
+  })
+  .callback(({ pb, params: { id }, body }) =>
+    pb.update.collection('wallet__assets').id(id).data(body).execute()
+  )
+
+const deleteAsset = forgeController
+  .route('DELETE /:id')
+  .description('Delete a wallet asset')
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
+  .existenceCheck('params', {
+    id: 'wallet__assets'
+  })
+  .statusCode(204)
+  .callback(({ pb, params: { id } }) =>
+    pb.delete.collection('wallet__assets').id(id).execute()
+  )
+
+export default forgeRouter({
+  getAllAssets,
+  getAssetAccumulatedBalance,
+  createAsset,
+  updateAsset,
+  deleteAsset
+})

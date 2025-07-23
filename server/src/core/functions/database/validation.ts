@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clientError } from '@functions/routes/utils/response'
 import { Request, Response } from 'express'
 
 export default async function checkExistence(
-  req: Request<unknown, unknown, unknown, unknown>,
+  req: Request<any, any, any, any>,
   res: Response,
   collection: string,
   id: string,

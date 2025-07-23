@@ -114,9 +114,9 @@ const sendToKindle = forgeController
     id: 'books_library__entries'
   })
   .callback(async ({ pb, params: { id }, body: { target } }) => {
-    const smtpUser = await getAPIKey('smtp-user', pb.instance)
+    const smtpUser = await getAPIKey('smtp-user', pb)
 
-    const smtpPassword = await getAPIKey('smtp-pass', pb.instance)
+    const smtpPassword = await getAPIKey('smtp-pass', pb)
 
     if (!smtpUser || !smtpPassword) {
       throw new ClientError(

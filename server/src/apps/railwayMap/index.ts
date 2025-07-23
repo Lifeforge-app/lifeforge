@@ -1,6 +1,6 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import railwayMapRouter from './controllers/railwayMap'
+import railwayMapRouter from './routes/railwayMap'
 
 export default forgeRouter({
   '/': railwayMapRouter

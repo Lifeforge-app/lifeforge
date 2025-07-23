@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 const zip = (a: Array<string>, b: Array<any> | null) => {
   if (b) return Object.fromEntries(a.map((k, i) => [k, b[i]]).filter(e => e[0]))
@@ -7,12 +6,17 @@ const zip = (a: Array<string>, b: Array<any> | null) => {
   return a
 }
 
+interface LibgenSearchResult {
+  provider: string
+  query: string
+  resultsCount: string
+  data: Record<string, any>
+  page: number
+}
+
 export function parseLibgenIS(
   document: Document
-): [
-  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['data'],
-  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['resultsCount']
-] {
+): [LibgenSearchResult['data'], LibgenSearchResult['resultsCount']] {
   const table = Array.from(
     document.querySelectorAll('body > table[rules="cols"]')
   )
@@ -60,10 +64,7 @@ export function parseLibgenIS(
 export function parseLibgenMirror(
   provider: string,
   document: Document
-): [
-  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['data'],
-  BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['resultsCount']
-] {
+): [LibgenSearchResult['data'], LibgenSearchResult['resultsCount']] {
   return [
     Array.from(document.querySelectorAll('#tablelibgen tbody tr')).map(e => ({
       image: `https://${provider}${e.querySelector('img')?.src.replace('_small', '')}`,

@@ -12,7 +12,10 @@ import PocketBase from 'pocketbase'
  * @template TCollectionKey - The collection key type
  */
 type UpdateData<TCollectionKey extends CollectionKey> = Partial<
-  Record<FieldKey<TCollectionKey>, unknown>
+  Record<
+    FieldKey<TCollectionKey> | `${FieldKey<TCollectionKey>}${'+' | '-'}`,
+    unknown
+  >
 >
 
 /**
