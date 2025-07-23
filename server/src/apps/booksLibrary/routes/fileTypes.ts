@@ -1,23 +1,14 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
-
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
+import { forgeController } from '@functions/routes'
 
 const getAllFileTypes = forgeController
   .route('GET /')
   .description('Get all file types for the books library')
   .input({})
   .callback(({ pb }) =>
-    pb
+    pb.getFullList
       .collection('books_library__file_types_aggregated')
-      .getFullList<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.IFileTypeAggregated>
-      >({
-        sort: 'name'
-      })
+      .sort(['name'])
+      .execute()
   )
 
 export default forgeRouter({ getAllFileTypes })

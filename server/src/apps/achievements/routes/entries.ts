@@ -1,7 +1,7 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
-import { SCHEMAS } from '@typescript/schema'
+import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
+
+import { SCHEMAS } from '../../../core/schema'
 
 export const getAllEntriesByDifficulty = forgeController
   .route('GET /:difficulty')

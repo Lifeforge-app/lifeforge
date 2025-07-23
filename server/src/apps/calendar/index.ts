@@ -1,4 +1,4 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
 import calendarsRouter from './routes/calendars'
 import categoriesRouter from './routes/categories'

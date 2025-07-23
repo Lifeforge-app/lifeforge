@@ -1,5 +1,4 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController, forgeRouter } from '@functions/routes'
 
 const getAllEntries = forgeController
   .route('GET /')

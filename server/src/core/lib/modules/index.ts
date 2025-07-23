@@ -1,3 +1,3 @@
-import modulesRouter from './controllers/modules'
+import modulesRouter from './routes/modules'
 
 export default modulesRouter

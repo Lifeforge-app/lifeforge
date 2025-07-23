@@ -1,10 +1,10 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import containersRouter from './controllers/containers'
-import foldersRouter from './controllers/folders'
-import ideasRouter from './controllers/ideas'
-import miscRouter from './controllers/misc'
-import tagsRouter from './controllers/tags'
+import containersRouter from './routes/containers'
+import foldersRouter from './routes/folders'
+import ideasRouter from './routes/ideas'
+import miscRouter from './routes/misc'
+import tagsRouter from './routes/tags'
 
 export default forgeRouter({
   '/containers': containersRouter,

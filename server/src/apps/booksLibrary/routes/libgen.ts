@@ -1,5 +1,4 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController, forgeRouter } from '@functions/routes'
 import {
   addToTaskPool,
   updateTaskInPool
@@ -8,8 +7,6 @@ import { spawn } from 'child_process'
 import { JSDOM } from 'jsdom'
 import { z } from 'zod/v4'
 
-import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
-
 import { processDownloadedFiles } from '../utils/download'
 import {
   getLibgenISLocalLibraryData,
@@ -17,6 +14,14 @@ import {
   parseLibgenISBookDetailsPage,
   parseLibgenMirror
 } from '../utils/libgen'
+
+interface IBooksLibraryLibgenSearchResult {
+  provider: string
+  query: string
+  resultsCount: string
+  data: Record<string, any>
+  page: number
+}
 
 const getStatus = forgeController
   .route('GET /status')
@@ -66,8 +71,7 @@ const searchBooks = forgeController
 
       const document = dom.window.document
 
-      let final: BooksLibraryCollectionsSchemas.IBooksLibraryLibgenSearchResult['data'] =
-        []
+      let final: IBooksLibraryLibgenSearchResult['data'] = []
       let resultsCount = ''
 
       if (provider === 'libgen.is') {

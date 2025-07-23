@@ -1,33 +1,27 @@
-import ClientError from '@functions/ClientError'
-import { fetchAI } from '@functions/fetchAI'
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
-import { getAPIKey } from '@functions/getAPIKey'
+import { getAPIKey } from '@functions/database'
+import { fetchAI } from '@functions/external/ai'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
+import { Location } from '@typescript/location.types'
 import fs from 'fs'
 import moment from 'moment'
 import rrule from 'rrule'
 import { z as zOld } from 'zod'
 import { z } from 'zod/v4'
 
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB,
-  LocationsCustomSchemas,
-  MoviesCollectionsSchemas,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-
 import { searchLocations } from '../../../core/lib/locations/services/locations.service'
+import { SCHEMAS } from '../../../core/schema'
 
 // Define the input schemas directly in the controller
-const CreateEventSchema = CalendarCollectionsSchemas.Event.omit({
-  type: true,
-  location: true,
-  location_coords: true
-})
+const CreateEventSchema = SCHEMAS.calendar.events
+  .omit({
+    type: true,
+    location: true,
+    location_coords: true
+  })
   .extend({
-    location: LocationsCustomSchemas.Location.optional()
+    location: Location.optional()
   })
   .and(
     z.union([
@@ -36,7 +30,7 @@ const CreateEventSchema = CalendarCollectionsSchemas.Event.omit({
           type: z.literal('single')
         })
         .and(
-          CalendarCollectionsSchemas.EventsSingle.omit({
+          SCHEMAS.calendar.events_single.omit({
             base_event: true
           })
         ),
@@ -45,20 +39,22 @@ const CreateEventSchema = CalendarCollectionsSchemas.Event.omit({
           type: z.literal('recurring')
         })
         .and(
-          CalendarCollectionsSchemas.EventsRecurring.omit({
+          SCHEMAS.calendar.events_recurring.omit({
             base_event: true
           })
         )
     ])
   )
 
-const UpdateEventSchema = CalendarCollectionsSchemas.Event.omit({
-  type: true,
-  location: true,
-  location_coords: true
-}).extend({
-  location: LocationsCustomSchemas.Location.optional()
-})
+const UpdateEventSchema = SCHEMAS.calendar.events
+  .omit({
+    type: true,
+    location: true,
+    location_coords: true
+  })
+  .extend({
+    location: Location.optional()
+  })
 
 const getEventsByDateRange = forgeController
   .route('GET /')
@@ -90,18 +86,26 @@ const getEventsByDateRange = forgeController
     }> = []
 
     // Get single events
-    const singleCalendarEvents = await pb
+    const singleCalendarEvents = await pb.getFullList
       .collection('calendar__events_single')
-      .getFullList<
-        ISchemaWithPB<CalendarCollectionsSchemas.IEventsSingle> & {
-          expand: {
-            base_event: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
-          }
+      .filter([
+        {
+          combination: '||',
+          filters: [
+            { field: 'start', operator: '>=', value: startMoment },
+            { field: 'end', operator: '>=', value: startMoment }
+          ]
+        },
+        {
+          combination: '||',
+          filters: [
+            { field: 'start', operator: '<=', value: endMoment },
+            { field: 'end', operator: '<=', value: endMoment }
+          ]
         }
-      >({
-        filter: `(start >= '${startMoment}' || end >= '${startMoment}') && (start <= '${endMoment}' || end <= '${endMoment}')`,
-        expand: 'base_event'
-      })
+      ])
+      .expand({ base_event: 'calendar__events' })
+      .execute()
 
     singleCalendarEvents.forEach(event => {
       const baseEvent = event.expand.base_event
@@ -122,17 +126,10 @@ const getEventsByDateRange = forgeController
     })
 
     // Get recurring events
-    const recurringCalendarEvents = await pb
+    const recurringCalendarEvents = await pb.getFullList
       .collection('calendar__events_recurring')
-      .getFullList<
-        ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring> & {
-          expand: {
-            base_event: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
-          }
-        }
-      >({
-        expand: 'base_event'
-      })
+      .expand({ base_event: 'calendar__events' })
+      .execute()
 
     for (const event of recurringCalendarEvents) {
       const baseEvent = event.expand.base_event
@@ -184,11 +181,13 @@ const getEventsByDateRange = forgeController
 
     // Get todo entries
     const todoEntries = (
-      await pb
+      await pb.getFullList
         .collection('todo_list__entries')
-        .getFullList<ISchemaWithPB<TodoListCollectionsSchemas.IEntry>>({
-          filter: `due_date >= '${startMoment}' && due_date <= '${endMoment}'`
-        })
+        .filter([
+          { field: 'due_date', operator: '>=', value: startMoment },
+          { field: 'due_date', operator: '<=', value: endMoment }
+        ])
+        .execute()
         .catch(() => [])
     ).map(entry => ({
       id: entry.id,
@@ -209,11 +208,13 @@ const getEventsByDateRange = forgeController
 
     // Get movie entries
     const movieEntries = (
-      await pb
+      await pb.getFullList
         .collection('movies__entries')
-        .getFullList<ISchemaWithPB<MoviesCollectionsSchemas.IEntry>>({
-          filter: `theatre_showtime >= '${startMoment}' && theatre_showtime <= '${endMoment}'`
-        })
+        .filter([
+          { field: 'theatre_showtime', operator: '>=', value: startMoment },
+          { field: 'theatre_showtime', operator: '<=', value: endMoment }
+        ])
+        .execute()
         .catch(() => [])
     ).map(entry => ({
       id: entry.id,
@@ -273,18 +274,26 @@ const getEventsToday = forgeController
     }> = []
 
     // Get single events
-    const singleCalendarEvents = await pb
+    const singleCalendarEvents = await pb.getFullList
       .collection('calendar__events_single')
-      .getFullList<
-        ISchemaWithPB<CalendarCollectionsSchemas.IEventsSingle> & {
-          expand: {
-            base_event: ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
-          }
+      .filter([
+        {
+          combination: '||',
+          filters: [
+            { field: 'start', operator: '>=', value: startMoment },
+            { field: 'end', operator: '>=', value: startMoment }
+          ]
+        },
+        {
+          combination: '||',
+          filters: [
+            { field: 'start', operator: '<=', value: endMoment },
+            { field: 'end', operator: '<=', value: endMoment }
+          ]
         }
-      >({
-        filter: `(start >= '${startMoment}' || end >= '${startMoment}') && (start <= '${endMoment}' || end <= '${endMoment}')`,
-        expand: 'base_event'
-      })
+      ])
+      .expand({ base_event: 'calendar__events' })
+      .execute()
 
     singleCalendarEvents.forEach(event => {
       const baseEvent = event.expand.base_event
@@ -319,9 +328,7 @@ const getEventById = forgeController
     id: 'calendar__events'
   })
   .callback(({ pb, params: { id } }) =>
-    pb
-      .collection('calendar__events')
-      .getOne<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>(id)
+    pb.getOne.collection('calendar__events').id(id).execute()
   )
 
 const createEvent = forgeController
@@ -338,9 +345,9 @@ const createEvent = forgeController
   .callback(async ({ pb, body }) => {
     const eventData = body as z.infer<typeof CreateEventSchema>
 
-    const baseEvent = await pb
+    const baseEvent = await pb.create
       .collection('calendar__events')
-      .create<ISchemaWithPB<CalendarCollectionsSchemas.IEvent>>({
+      .data({
         title: eventData.title,
         category: eventData.category,
         calendar: eventData.calendar,
@@ -353,33 +360,36 @@ const createEvent = forgeController
         description: eventData.description || '',
         type: eventData.type
       })
+      .execute()
 
     if (eventData.type === 'recurring') {
       if (!('recurring_rule' in eventData)) {
         throw new Error('Recurring events must have a recurring rule')
       }
 
-      await pb
+      await pb.create
         .collection('calendar__events_recurring')
-        .create<ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>>({
+        .data({
           base_event: baseEvent.id,
           recurring_rule: eventData.recurring_rule,
           duration_amount: eventData.duration_amount || 1,
           duration_unit: eventData.duration_unit || 'day',
           exceptions: eventData.exceptions || []
         })
+        .execute()
     } else {
       if (!('start' in eventData) || !('end' in eventData)) {
         throw new Error('Single events must have start and end times')
       }
 
-      await pb
+      await pb.create
         .collection('calendar__events_single')
-        .create<ISchemaWithPB<CalendarCollectionsSchemas.IEventsSingle>>({
+        .data({
           base_event: baseEvent.id,
           start: eventData.start,
           end: eventData.end
         })
+        .execute()
     }
   })
 
@@ -395,11 +405,11 @@ const scanImage = forgeController
       throw new ClientError('No file uploaded')
     }
 
-    const gcloudKey = await getAPIKey('gcloud', pb)
+    const gcloudKey = await getAPIKey('gcloud', pb.instance)
 
-    const categories = await pb
+    const categories = await pb.getFullList
       .collection('calendar__categories')
-      .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.ICategory>>()
+      .execute()
 
     const categoryList = categories.map(category => category.name)
 
@@ -417,7 +427,7 @@ const scanImage = forgeController
     })
 
     const response = await fetchAI({
-      pb,
+      pb: pb.instance,
       provider: 'openai',
       model: 'gpt-4o',
       structure: responseStructure,
@@ -507,11 +517,12 @@ const addException = forgeController
     id: 'calendar__events'
   })
   .callback(async ({ pb, params: { id }, query: { date } }) => {
-    const event = await pb
+    const eventList = await pb.getFullList
       .collection('calendar__events_recurring')
-      .getFirstListItem<
-        ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>
-      >(`base_event="${id}"`)
+      .filter([{ field: 'base_event', operator: '=', value: id }])
+      .execute()
+
+    const event = eventList[0]
 
     const exceptions = event.exceptions || []
 
@@ -521,11 +532,11 @@ const addException = forgeController
 
     exceptions.push(date)
 
-    await pb
+    await pb.update
       .collection('calendar__events_recurring')
-      .update<
-        ISchemaWithPB<CalendarCollectionsSchemas.IEventsRecurring>
-      >(event.id, { exceptions })
+      .id(event.id)
+      .data({ exceptions })
+      .execute()
 
     return true
   })
@@ -551,7 +562,7 @@ const updateEvent = forgeController
 
     const location = eventData.location
 
-    const toBeUpdatedData: Partial<CalendarCollectionsSchemas.IEvent> = {
+    const toBeUpdatedData: Partial<typeof SCHEMAS.calendar.events> = {
       ...eventData,
       ...(typeof location === 'object'
         ? {
@@ -564,11 +575,11 @@ const updateEvent = forgeController
         : { location: undefined })
     }
 
-    await pb
+    await pb.update
       .collection('calendar__events')
-      .update<
-        ISchemaWithPB<CalendarCollectionsSchemas.IEvent>
-      >(id.split('-')[0], toBeUpdatedData)
+      .id(id.split('-')[0])
+      .data(toBeUpdatedData)
+      .execute()
   })
 
 const deleteEvent = forgeController
@@ -584,7 +595,7 @@ const deleteEvent = forgeController
   })
   .statusCode(204)
   .callback(({ pb, params: { id } }) =>
-    pb.collection('calendar__events').delete(id)
+    pb.delete.collection('calendar__events').id(id).execute()
   )
 
 export default forgeRouter({

@@ -1,22 +1,14 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController } from '@functions/routes'
 import { z } from 'zod/v4'
 
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
+import { SCHEMAS } from '../../../core/schema'
 
 const getAllCalendars = forgeController
   .route('GET /')
   .description('Get all calendars')
   .input({})
   .callback(({ pb }) =>
-    pb
-      .collection('calendar__calendars')
-      .getFullList<ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>>({
-        sort: '+name'
-      })
+    pb.getFullList.collection('calendar__calendars').sort(['name']).execute()
   )
 
 const getCalendarById = forgeController
@@ -31,22 +23,18 @@ const getCalendarById = forgeController
     id: 'calendar__calendars'
   })
   .callback(({ pb, params: { id } }) =>
-    pb
-      .collection('calendar__calendars')
-      .getOne<ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>>(id)
+    pb.getOne.collection('calendar__calendars').id(id).execute()
   )
 
 const createCalendar = forgeController
   .route('POST /')
   .description('Create a new calendar')
   .input({
-    body: CalendarCollectionsSchemas.Calendar
+    body: SCHEMAS.calendar.calendars
   })
   .statusCode(201)
   .callback(async ({ pb, body }) =>
-    pb
-      .collection('calendar__calendars')
-      .create<ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>>(body)
+    pb.create.collection('calendar__calendars').data(body).execute()
   )
 
 const updateCalendar = forgeController
@@ -56,15 +44,13 @@ const updateCalendar = forgeController
     params: z.object({
       id: z.string()
     }),
-    body: CalendarCollectionsSchemas.Calendar
+    body: SCHEMAS.calendar.calendars
   })
   .existenceCheck('params', {
     id: 'calendar__calendars'
   })
   .callback(({ pb, params: { id }, body }) =>
-    pb
-      .collection('calendar__calendars')
-      .update<ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>>(id, body)
+    pb.update.collection('calendar__calendars').id(id).data(body).execute()
   )
 
 const deleteCalendar = forgeController
@@ -80,7 +66,7 @@ const deleteCalendar = forgeController
   })
   .statusCode(204)
   .callback(({ pb, params: { id } }) =>
-    pb.collection('calendar__calendars').delete(id)
+    pb.delete.collection('calendar__calendars').id(id).execute()
   )
 
 export default forgeRouter({
