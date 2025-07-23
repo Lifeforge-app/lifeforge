@@ -7,8 +7,7 @@ import {
 } from '@components/screens'
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI, useAPIEndpoint } from 'shared/lib'
+import { fetchAPI, useAPIEndpoint } from 'shared'
 
 import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'

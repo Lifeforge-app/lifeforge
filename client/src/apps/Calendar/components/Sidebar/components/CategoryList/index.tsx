@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { CalendarCollectionsSchemas } from 'shared/types/collections'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 

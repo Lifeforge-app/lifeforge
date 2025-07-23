@@ -1,7 +1,6 @@
 import { parse as parseCookie } from 'cookie'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { decrypt, encrypt } from '../../../core/security/utils/encryption'
 

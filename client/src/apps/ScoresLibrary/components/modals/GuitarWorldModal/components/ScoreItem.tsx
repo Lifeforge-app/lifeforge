@@ -5,8 +5,8 @@ import clsx from 'clsx'
 import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { ScoresLibraryCollectionsSchemas } from 'shared/types/collections'
 
 function ScoreItem({

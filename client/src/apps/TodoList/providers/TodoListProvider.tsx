@@ -1,8 +1,8 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   TodoListCollectionsSchemas

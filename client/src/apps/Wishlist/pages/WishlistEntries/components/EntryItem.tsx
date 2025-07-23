@@ -11,9 +11,9 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
+import { fetchAPI } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 import {
   ISchemaWithPB,
   WishlistCollectionsSchemas

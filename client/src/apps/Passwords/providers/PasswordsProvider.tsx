@@ -2,8 +2,7 @@ import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import { IPasswordEntry } from '@apps/Passwords/interfaces/password_interfaces'
 

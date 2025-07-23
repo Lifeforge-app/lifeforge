@@ -9,8 +9,8 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   IdeaBoxCollectionsSchemas

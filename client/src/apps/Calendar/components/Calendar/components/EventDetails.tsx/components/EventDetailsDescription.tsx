@@ -4,8 +4,8 @@ import { Button } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import { Link } from 'react-router'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { ICalendarEvent } from '../../..'

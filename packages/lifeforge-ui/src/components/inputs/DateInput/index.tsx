@@ -5,9 +5,8 @@ import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { usePersonalization } from 'shared/lib'
 
 import InputIcon from '../shared/InputIcon'
 import InputLabel from '../shared/InputLabel'

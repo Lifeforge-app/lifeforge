@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 function MiniCalendarHeader({
   currentMonth,

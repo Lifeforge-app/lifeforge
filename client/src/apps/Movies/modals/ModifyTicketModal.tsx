@@ -5,8 +5,8 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import {
   ISchemaWithPB,
   MoviesCollectionsSchemas

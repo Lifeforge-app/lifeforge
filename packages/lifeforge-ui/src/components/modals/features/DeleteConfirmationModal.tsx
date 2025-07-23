@@ -2,8 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { fetchAPI, useAPIEndpoint } from 'shared/lib'
+import { fetchAPI, useAPIEndpoint } from 'shared'
 
 import Button from '../../buttons/Button'
 import { TextInput } from '../../inputs'

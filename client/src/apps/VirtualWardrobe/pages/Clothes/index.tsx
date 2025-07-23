@@ -14,8 +14,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import {

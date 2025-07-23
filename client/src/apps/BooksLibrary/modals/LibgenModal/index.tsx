@@ -15,8 +15,8 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
 import Details from './components/Details'

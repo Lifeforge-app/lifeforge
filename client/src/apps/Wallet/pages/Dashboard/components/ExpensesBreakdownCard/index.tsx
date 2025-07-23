@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { createContext, useMemo, useState } from 'react'
 import { Link } from 'react-router'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   WalletCollectionsSchemas

@@ -2,8 +2,7 @@ import { Button, TextAreaInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 function TextType({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('apps.momentVault')

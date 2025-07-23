@@ -8,8 +8,8 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import TMDBLogo from './components/TMDBLogo.svg'

@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import { BG_BLURS } from '../constants/bg_blurs'
 

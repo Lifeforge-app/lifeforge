@@ -4,8 +4,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'

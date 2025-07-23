@@ -1,4 +1,4 @@
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 

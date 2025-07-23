@@ -4,8 +4,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
-
-import { useSidebarState } from 'shared/lib'
+import { useSidebarState } from 'shared'
 
 interface ModuleHeaderProps {
   icon?: string

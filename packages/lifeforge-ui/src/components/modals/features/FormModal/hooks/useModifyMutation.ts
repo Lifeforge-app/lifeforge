@@ -1,7 +1,7 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 function useModifyMutation<T>(
   type: 'create' | 'update',

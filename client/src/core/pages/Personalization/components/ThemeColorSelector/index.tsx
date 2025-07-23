@@ -2,8 +2,7 @@ import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 

@@ -12,9 +12,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
+import { useSidebarState } from 'shared'
+import { useAPIQuery } from 'shared'
 
-import { useSidebarState } from 'shared/lib'
-import { useAPIQuery } from 'shared/lib'
 import {
   CalendarCollectionsSchemas,
   ISchemaWithPB

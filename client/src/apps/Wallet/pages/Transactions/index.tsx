@@ -12,8 +12,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'

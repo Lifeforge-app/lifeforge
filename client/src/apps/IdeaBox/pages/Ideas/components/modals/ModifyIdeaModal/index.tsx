@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
 import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 

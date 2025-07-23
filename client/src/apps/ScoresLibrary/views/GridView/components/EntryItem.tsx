@@ -4,8 +4,8 @@ import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI, useAPIQuery } from 'shared'
 
-import { fetchAPI, useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   ScoresLibraryCollectionsSchemas

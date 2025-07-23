@@ -7,8 +7,8 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { BlogControllersSchemas } from 'shared/types/controllers'
 
 function Blog() {

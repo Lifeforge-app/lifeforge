@@ -1,6 +1,6 @@
 import { memo } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 function EntryContent({

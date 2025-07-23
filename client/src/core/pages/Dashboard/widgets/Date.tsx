@@ -1,9 +1,8 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
+import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { usePersonalization } from 'shared/lib'
 
 import { arabicToChinese } from '../utils/arabicToChineseNumber'
 

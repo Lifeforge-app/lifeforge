@@ -4,8 +4,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import ModifyTransactionsModal from './ModifyTransactionsModal'

@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import {
   CalendarCollectionsSchemas,
   LocationsCustomSchemas

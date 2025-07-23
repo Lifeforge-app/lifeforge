@@ -5,9 +5,9 @@ import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
+import { usePersonalization } from 'shared'
+import { useAPIQuery } from 'shared'
 
-import { usePersonalization } from 'shared/lib'
-import { useAPIQuery } from 'shared/lib'
 import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 function CodeTimeActivityCalendar() {

@@ -1,8 +1,8 @@
 import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
 
 import SortBySelector from './SortBySelector'

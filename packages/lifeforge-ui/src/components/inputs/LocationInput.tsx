@@ -6,8 +6,8 @@ import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { fetchAPI, useAPIEndpoint, useAPIQuery } from 'shared'
 
-import { fetchAPI, useAPIEndpoint, useAPIQuery } from 'shared/lib'
 import { LocationsCustomSchemas } from 'shared/types/collections'
 
 import { Tooltip } from '../utilities'
