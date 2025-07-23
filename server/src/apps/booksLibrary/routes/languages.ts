@@ -1,35 +1,25 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
+import { SCHEMAS } from '../../../core/schema'
 
 const getAllLanguages = forgeController
   .route('GET /')
   .description('Get all languages for the books library')
   .input({})
   .callback(({ pb }) =>
-    pb
-      .collection('books_library__languages_aggregated')
-      .getFullList<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>
-      >()
+    pb.getFullList.collection('books_library__languages_aggregated').execute()
   )
 
 const createLanguage = forgeController
   .route('POST /')
   .description('Create a new language for the books library')
   .input({
-    body: BooksLibraryCollectionsSchemas.Language
+    body: SCHEMAS.books_library.languages
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
-    pb
-      .collection('books_library__languages')
-      .create<ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguage>>(body)
+    pb.create.collection('books_library__languages').data(body).execute()
   )
 
 const updateLanguage = forgeController
@@ -39,15 +29,13 @@ const updateLanguage = forgeController
     params: z.object({
       id: z.string()
     }),
-    body: BooksLibraryCollectionsSchemas.Language
+    body: SCHEMAS.books_library.languages
   })
   .existenceCheck('params', {
     id: 'books_library__languages'
   })
   .callback(({ pb, params: { id }, body }) =>
-    pb
-      .collection('books_library__languages')
-      .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguage>>(id, body)
+    pb.update.collection('books_library__languages').id(id).data(body).execute()
   )
 
 const deleteLanguage = forgeController
@@ -63,7 +51,7 @@ const deleteLanguage = forgeController
   })
   .statusCode(204)
   .callback(({ pb, params: { id } }) =>
-    pb.collection('books_library__languages').delete(id)
+    pb.delete.collection('books_library__languages').id(id).execute()
   )
 
 export default forgeRouter({

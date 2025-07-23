@@ -1,6 +1,6 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import databaseCollectionsRouter from './controllers/collections'
+import databaseCollectionsRouter from './routes/collections'
 
 export default forgeRouter({
   '/collections': databaseCollectionsRouter

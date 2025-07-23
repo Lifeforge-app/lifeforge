@@ -1,12 +1,12 @@
+import { PBService } from '@functions/database'
 import { updateTaskInPool } from '@middlewares/taskPoolMiddleware'
 import fs from 'fs'
-import Pocketbase from 'pocketbase'
 import { Server } from 'socket.io'
 
 import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
 
 export const processDownloadedFiles = async (
-  pb: Pocketbase,
+  pb: PBService,
   io: Server,
   taskId: string,
   md5: string,
@@ -44,7 +44,10 @@ export const processDownloadedFiles = async (
     metadata.file = new File([file], `${md5}.${metadata.extension}`)
     metadata.size = file.byteLength
 
-    await pb.collection('books_library__entries').create(metadata)
+    await pb.create
+      .collection('books_library__entries')
+      .data(metadata)
+      .execute()
 
     updateTaskInPool(io, taskId, {
       status: 'completed'

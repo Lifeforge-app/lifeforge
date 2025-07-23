@@ -1,9 +1,9 @@
-import { fetchAI } from '@functions/fetchAI'
+import { PBService } from '@functions/database'
+import { fetchAI } from '@functions/external/ai'
 import ogs from 'open-graph-scraper'
-import PocketBase from 'pocketbase'
 
 const scrapeLazada = async (
-  pb: PocketBase,
+  pb: PBService,
   url: string
 ): Promise<{
   name: string

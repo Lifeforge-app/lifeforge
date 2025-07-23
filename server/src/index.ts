@@ -1,4 +1,4 @@
-import traceRouteStack from '@functions/traceRouteStack'
+import traceRouteStack from '@functions/utils/traceRouteStack'
 import { globalTaskPool } from '@middlewares/taskPoolMiddleware'
 import { createServer } from 'node:http'
 import Pocketbase from 'pocketbase'

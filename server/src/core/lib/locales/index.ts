@@ -1,7 +1,7 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import Router from './controllers/locales'
-import ManagerRouter from './controllers/localesManager'
+import Router from './routes/locales'
+import ManagerRouter from './routes/localesManager'
 
 export default forgeRouter({
   '/manager': ManagerRouter,

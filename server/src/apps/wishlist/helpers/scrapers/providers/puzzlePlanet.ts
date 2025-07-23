@@ -1,8 +1,8 @@
+import { PBService } from '@functions/database'
 import { JSDOM } from 'jsdom'
-import PocketBase from 'pocketbase'
 
 const scrapePuzzlePlanet = async (
-  _: PocketBase,
+  _: PBService,
   url: string
 ): Promise<{
   name: string

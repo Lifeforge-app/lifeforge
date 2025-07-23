@@ -1,8 +1,8 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import entriesRouter from './controllers/entries'
-import ticketRouter from './controllers/ticket'
-import tmdbRouter from './controllers/tmdb'
+import entriesRouter from './routes/entries'
+import ticketRouter from './routes/ticket'
+import tmdbRouter from './routes/tmdb'
 
 export default forgeRouter({
   '/entries': entriesRouter,

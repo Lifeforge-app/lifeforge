@@ -1,10 +1,10 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import authRouter from './controllers/auth'
-import oAuthRouter from './controllers/oauth'
-import personalizationRouter from './controllers/personalization'
-import settingsRouter from './controllers/settings'
-import twoFARouter from './controllers/twoFA'
+import authRouter from './routes/auth'
+import oAuthRouter from './routes/oauth'
+import personalizationRouter from './routes/personalization'
+import settingsRouter from './routes/settings'
+import twoFARouter from './routes/twoFA'
 
 export const currentSession = {
   token: '',
