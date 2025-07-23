@@ -2,13 +2,12 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
+import { Location } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { fetchAPI, useAPIEndpoint, useAPIQuery } from 'shared'
-
-import { LocationsCustomSchemas } from 'shared/types/collections'
 
 import { Tooltip } from '../utilities'
 
@@ -20,8 +19,8 @@ function LocationInput({
   required,
   disabled
 }: {
-  location: LocationsCustomSchemas.ILocation | null
-  setLocation: (value: LocationsCustomSchemas.ILocation | null) => void
+  location: Location | null
+  setLocation: (value: Location | null) => void
   namespace: string
   label?: string
   required?: boolean
@@ -37,7 +36,7 @@ function LocationInput({
 
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
 
-  const dataQuery = useAPIQuery<LocationsCustomSchemas.ILocation[]>(
+  const dataQuery = useAPIQuery<Location[]>(
     `/locations?q=${debouncedQuery}`,
     [debouncedQuery],
     debouncedQuery.trim() !== ''
@@ -57,7 +56,7 @@ function LocationInput({
 
   return (
     <div className="relative flex w-full items-center gap-3">
-      <ListboxOrComboboxInput<LocationsCustomSchemas.ILocation | null>
+      <ListboxOrComboboxInput<Location | null>
         className="w-full"
         customActive={(location?.name.length || 0) > 0}
         disabled={!enabled || disabled || enabled === 'loading'}

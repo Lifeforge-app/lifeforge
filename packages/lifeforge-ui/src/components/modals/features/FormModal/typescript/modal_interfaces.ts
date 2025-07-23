@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LocationsCustomSchemas } from 'shared/types/collections'
+
+export type Location = {
+  name: string
+  formattedAddress: string
+  location: {
+    latitude: number
+    longitude: number
+  }
+}
 
 export type IFileData = {
   image: string | File | null
@@ -110,7 +118,7 @@ type FieldTypeMap = {
 
 type GetTypeKey<T> = T extends string
   ? 'string'
-  : T extends LocationsCustomSchemas.ILocation
+  : T extends Location
     ? 'location'
     : T extends number
       ? 'number'
