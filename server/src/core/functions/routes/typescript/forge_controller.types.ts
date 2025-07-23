@@ -1,8 +1,19 @@
 import { PBService } from '@functions/database'
-import { BaseResponse } from '@typescript/base_response'
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { Server } from 'socket.io'
-import { ZodIntersection, ZodObject, ZodRawShape, ZodTypeAny, z } from 'zod/v4'
+import type {
+  ZodIntersection,
+  ZodObject,
+  ZodRawShape,
+  ZodTypeAny,
+  z
+} from 'zod/v4'
+
+export interface BaseResponse<T = ''> {
+  data?: T
+  state: 'success' | 'error' | 'accepted'
+  message?: string
+}
 
 type InferZodType<T> = T extends ZodObject<ZodRawShape> ? z.infer<T> : object
 
