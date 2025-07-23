@@ -1,6 +1,6 @@
-import { fetchAI } from '@functions/fetchAI'
+import { PBService } from '@functions/database'
+import { fetchAI } from '@functions/external/ai'
 import ogs from 'open-graph-scraper'
-import PocketBase from 'pocketbase'
 import sharp from 'sharp'
 import { createWorker } from 'tesseract.js'
 
@@ -44,7 +44,7 @@ const getPrice = async (imageURL: string): Promise<number> => {
       .map(e => parseFloat(e?.replace(/,|(?: \.)/g, '') || '')) || [0]
 
     return Math.max(...numbers)
-  } catch (error) {
+  } catch {
     console.error('Error getting price')
 
     return 0
@@ -67,7 +67,7 @@ async function getImageURL(url: string): Promise<string> {
 }
 
 const scrapeShopee = async (
-  pb: PocketBase,
+  pb: PBService,
   url: string
 ): Promise<{
   name: string

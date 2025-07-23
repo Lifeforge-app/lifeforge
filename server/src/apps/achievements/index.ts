@@ -1,4 +1,4 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
 import entriesRouter from './routes/entries'
 

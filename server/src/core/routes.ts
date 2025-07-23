@@ -1,13 +1,10 @@
-import { forgeController } from '@functions/forgeController'
-import { registerRoutes } from '@functions/forgeRouter'
-import forgeRouter from '@functions/forgeRouter'
-import { successWithBaseResponse } from '@functions/response'
-import traceRouteStack from '@functions/traceRouteStack'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { registerRoutes } from '@functions/routes/functions/forgeRouter'
+import { successWithBaseResponse } from '@functions/routes/utils/response'
+import traceRouteStack from '@functions/utils/traceRouteStack'
 import express from 'express'
 import request from 'request'
 import { z } from 'zod/v4'
-
-import { RouteCustomSchemas } from 'shared/types/collections'
 
 const router = express.Router()
 
@@ -24,7 +21,7 @@ router.get('/', (_, res) => {
 const getMedia = forgeController
   .route('GET /media/:collectionId/:entriesId/:photoId')
   .description('Get media file from PocketBase')
-  .schema({
+  .input({
     params: z.object({
       collectionId: z.string(),
       entriesId: z.string(),
@@ -33,8 +30,7 @@ const getMedia = forgeController
     query: z.object({
       thumb: z.string().optional(),
       token: z.string().optional()
-    }),
-    response: z.any()
+    })
   })
   .noDefaultResponse()
   .callback(
@@ -62,11 +58,10 @@ const getMedia = forgeController
 const corsAnywhere = forgeController
   .route('GET /cors-anywhere')
   .description('Proxy request to bypass CORS')
-  .schema({
+  .input({
     query: z.object({
       url: z.url()
-    }),
-    response: z.any()
+    })
   })
   .callback(async ({ query: { url } }) => {
     const response = await fetch(url, {
@@ -98,9 +93,7 @@ const corsAnywhere = forgeController
 const getAllRoutes = forgeController
   .route('GET /_routes')
   .description('Get all registered routes')
-  .schema({
-    response: z.array(RouteCustomSchemas.Route)
-  })
+  .input({})
   .callback(async () => traceRouteStack(router.stack))
 
 const appRoutes = forgeRouter({

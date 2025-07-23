@@ -1,8 +1,7 @@
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
+import { SCHEMAS } from '../../../core/schema'
 
 const getAllCollections = forgeController
   .route('GET /')
@@ -19,7 +18,7 @@ const createCollection = forgeController
   .route('POST /')
   .description('Create a new collection for the books library')
   .input({
-    body: BooksLibraryCollectionsSchemas.Collection
+    body: SCHEMAS.books_library.collections
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -33,7 +32,7 @@ const updateCollection = forgeController
     params: z.object({
       id: z.string()
     }),
-    body: BooksLibraryCollectionsSchemas.Collection
+    body: SCHEMAS.books_library.collections
   })
   .existenceCheck('params', {
     id: 'books_library__collections'

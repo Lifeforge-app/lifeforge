@@ -1,0 +1,204 @@
+import { checkExistence } from '@functions/database'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
+import ogs from 'open-graph-scraper'
+import { z } from 'zod/v4'
+
+import { recursivelySearchFolder } from '../utils/folders'
+
+const OGCache = new Map<string, any>()
+
+const getPath = forgeController
+  .route('GET /path/:container/*')
+  .description('Get path information for a container')
+  .input({
+    params: z.object({
+      container: z.string(),
+      '0': z.string()
+    })
+  })
+  .existenceCheck('params', {
+    container: 'idea_box__containers'
+  })
+  .callback(async ({ pb, params: { container, '0': path }, req, res }) => {
+    const containerEntry = await pb.getOne
+      .collection('idea_box__containers')
+      .id(container)
+      .execute()
+
+    let lastFolder = ''
+
+    const fullPath = []
+
+    for (const folder of path) {
+      if (!(await checkExistence(req, res, 'idea_box__folders', folder))) {
+        throw new ClientError(
+          `Folder with ID "${folder}" does not exist in container "${container}"`
+        )
+      }
+
+      const folderEntry = await pb.getOne
+        .collection('idea_box__folders')
+        .id(folder)
+        .execute()
+
+      if (
+        folderEntry.parent !== lastFolder ||
+        folderEntry.container !== container
+      ) {
+        throw new ClientError('Invalid path')
+      }
+
+      lastFolder = folder
+      fullPath.push(folderEntry)
+    }
+
+    return {
+      container: containerEntry,
+      path: fullPath
+    }
+  })
+
+const checkValid = forgeController
+  .route('GET /valid/:container/*')
+  .description('Check if a path is valid')
+  .input({
+    params: z.object({
+      container: z.string(),
+      '0': z.string()
+    })
+  })
+  .callback(async ({ pb, params: { container, '0': path }, req, res }) => {
+    const containerExists = await checkExistence(
+      req,
+      res,
+      'idea_box__containers',
+      container,
+      false
+    )
+
+    if (!containerExists) {
+      return false
+    }
+
+    let folderExists = true
+    let lastFolder = ''
+
+    for (const folder of path) {
+      if (
+        !(await checkExistence(req, res, 'idea_box__folders', folder, false))
+      ) {
+        folderExists = false
+        break
+      }
+
+      const folderEntry = await pb.getOne
+        .collection('idea_box__folders')
+        .id(folder)
+        .execute()
+
+      if (
+        folderEntry.parent !== lastFolder ||
+        folderEntry.container !== container
+      ) {
+        folderExists = false
+        break
+      }
+
+      lastFolder = folder
+    }
+
+    return containerExists && folderExists
+  })
+
+const getOgData = forgeController
+  .route('GET /og-data/:id')
+  .description('Get Open Graph data for an entry')
+  .input({
+    params: z.object({
+      id: z.string()
+    })
+  })
+  .existenceCheck('params', {
+    id: 'idea_box__entries'
+  })
+  .callback(async ({ pb, params: { id } }) => {
+    const data = await pb.getOne
+      .collection('idea_box__entries')
+      .id(id)
+      .execute()
+
+    if (data.type !== 'link') {
+      throw new ClientError(
+        "Open Graph data can only be fetched for entries of type 'link'"
+      )
+    }
+
+    if (OGCache.has(id) && OGCache.get(id)?.requestUrl === data.content) {
+      return OGCache.get(id)
+    }
+
+    const { result } = await ogs({
+      url: data.content,
+      fetchOptions: {
+        headers: {
+          'User-Agent':
+            'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)'
+        }
+      }
+    }).catch(() => {
+      console.error('Error fetching Open Graph data:', data.content)
+
+      return { result: null }
+    })
+
+    OGCache.set(id, result)
+
+    return result
+  })
+
+const search = forgeController
+  .route('GET /search')
+  .description('Search entries')
+  .input({
+    query: z.object({
+      q: z.string(),
+      container: z.string(),
+      tags: z.string().optional(),
+      folder: z.string().optional()
+    })
+  })
+  .existenceCheck('query', {
+    container: '[idea_box_containers]'
+  })
+  .callback(async ({ pb, query: { q, container, tags, folder }, req, res }) => {
+    if (container) {
+      const containerExists = await checkExistence(
+        req,
+        res,
+        'idea_box__containers',
+        container,
+        false
+      )
+
+      if (!containerExists) return null
+    }
+
+    const results = await recursivelySearchFolder(
+      folder || '',
+      q,
+      container,
+      tags,
+      '',
+      pb
+    )
+
+    return results
+  })
+
+export default forgeRouter({
+  getPath,
+  checkValid,
+  getOgData,
+  search
+})

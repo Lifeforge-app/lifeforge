@@ -1,14 +1,10 @@
-import ClientError from '@functions/ClientError'
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
-import { getAPIKey } from '@functions/getAPIKey'
+import { getAPIKey } from '@functions/database'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
+import { SCHEMAS } from '../../../core/schema'
 
 const getAllEntries = forgeController
   .route('GET /')
@@ -27,7 +23,7 @@ const updateEntry = forgeController
     params: z.object({
       id: z.string()
     }),
-    body: BooksLibraryCollectionsSchemas.Entry.pick({
+    body: SCHEMAS.books_library.entries.pick({
       title: true,
       authors: true,
       collection: true,
@@ -47,9 +43,7 @@ const updateEntry = forgeController
     languages: '[books_library__languages]'
   })
   .callback(({ pb, params: { id }, body }) =>
-    pb
-      .collection('books_library__entries')
-      .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, body)
+    pb.update.collection('books_library__entries').id(id).data(body).execute()
   )
 
 const toggleFavouriteStatus = forgeController
@@ -64,15 +58,18 @@ const toggleFavouriteStatus = forgeController
     id: 'books_library__entries'
   })
   .callback(async ({ pb, params: { id } }) => {
-    const book = await pb
+    const book = await pb.getOne
       .collection('books_library__entries')
-      .getOne<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
+      .id(id)
+      .execute()
 
-    return await pb
+    return await pb.update
       .collection('books_library__entries')
-      .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
+      .id(id)
+      .data({
         is_favourite: !book.is_favourite
       })
+      .execute()
   })
 
 const toggleReadStatus = forgeController
@@ -87,16 +84,19 @@ const toggleReadStatus = forgeController
     id: 'books_library__entries'
   })
   .callback(async ({ pb, params: { id } }) => {
-    const book = await pb
+    const book = await pb.getOne
       .collection('books_library__entries')
-      .getOne<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id)
+      .id(id)
+      .execute()
 
-    return await pb
+    return await pb.update
       .collection('books_library__entries')
-      .update<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(id, {
+      .id(id)
+      .data({
         is_read: !book.is_read,
         time_finished: !book.is_read ? new Date().toISOString() : ''
       })
+      .execute()
   })
 
 const sendToKindle = forgeController
@@ -114,9 +114,9 @@ const sendToKindle = forgeController
     id: 'books_library__entries'
   })
   .callback(async ({ pb, params: { id }, body: { target } }) => {
-    const smtpUser = await getAPIKey('smtp-user', pb)
+    const smtpUser = await getAPIKey('smtp-user', pb.instance)
 
-    const smtpPassword = await getAPIKey('smtp-pass', pb)
+    const smtpPassword = await getAPIKey('smtp-pass', pb.instance)
 
     if (!smtpUser || !smtpPassword) {
       throw new ClientError(
@@ -140,11 +140,12 @@ const sendToKindle = forgeController
       throw new ClientError('SMTP credentials are invalid')
     }
 
-    const entry = await pb
+    const entry = await pb.getOne
       .collection('books_library__entries')
-      .getOne<BooksLibraryCollectionsSchemas.IEntry>(id)
+      .id(id)
+      .execute()
 
-    const fileLink = pb.files.getURL(entry, entry.file)
+    const fileLink = pb.instance.files.getURL(entry, entry.file)
 
     const content = await fetch(fileLink).then(res => res.arrayBuffer())
 
@@ -186,7 +187,7 @@ const deleteEntry = forgeController
   })
   .statusCode(204)
   .callback(({ pb, params: { id } }) =>
-    pb.collection('books_library__entries').delete(id)
+    pb.delete.collection('books_library__entries').id(id).execute()
   )
 
 export default forgeRouter({

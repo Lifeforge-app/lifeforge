@@ -1,22 +1,75 @@
-import ClientError from '@functions/ClientError'
-import {
-  forgeController
-} from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
-import { getAPIKey } from '@functions/getAPIKey'
-
-import { PixabayControllersSchemas } from 'shared/types/controllers'
+import { getAPIKey } from '@functions/database'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
+import { z } from 'zod/v4'
 
 const checkKeyExists = forgeController
   .route('GET /key-exists')
   .description('Check if Pixabay API key exists')
-  .schema(PixabayControllersSchemas.Pixabay.checkKeyExists)
+  .input({})
   .callback(async ({ pb }) => !!(await getAPIKey('pixabay', pb)))
 
 const searchImages = forgeController
   .route('GET /search')
   .description('Search images on Pixabay')
-  .schema(PixabayControllersSchemas.Pixabay.searchImages)
+  .input({
+    query: z.object({
+      q: z.string().min(1),
+      page: z
+        .string()
+        .optional()
+        .default('1')
+        .transform(val => parseInt(val, 10) || 1),
+      type: z.enum(['all', 'photo', 'illustration', 'vector']).default('all'),
+      category: z
+        .enum([
+          'backgrounds',
+          'fashion',
+          'nature',
+          'science',
+          'education',
+          'feelings',
+          'health',
+          'people',
+          'religion',
+          'places',
+          'animals',
+          'industry',
+          'computer',
+          'food',
+          'sports',
+          'transportation',
+          'travel',
+          'buildings',
+          'business',
+          'music'
+        ])
+        .optional(),
+      colors: z
+        .enum([
+          'grayscale',
+          'transparent',
+          'red',
+          'orange',
+          'yellow',
+          'green',
+          'turquoise',
+          'blue',
+          'lilac',
+          'pink',
+          'white',
+          'gray',
+          'black',
+          'brown'
+        ])
+        .optional()
+        .nullable(),
+      editors_choice: z
+        .enum(['true', 'false'])
+        .default('false')
+        .transform(val => val === 'true')
+    })
+  })
   .callback(
     async ({
       query: { q, page, type, category, colors, editors_choice },

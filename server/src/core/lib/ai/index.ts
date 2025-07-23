@@ -1,6 +1,6 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import imageGenerationRouter from './controllers/imageGeneration'
+import imageGenerationRouter from './routes/imageGeneration'
 
 export default forgeRouter({
   '/image-generation': imageGenerationRouter

@@ -1,6 +1,5 @@
-import ClientError from '@functions/ClientError'
-import { forgeController } from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 import { z } from 'zod/v4'
 
 import * as CodeTimeService from '../services/codeTime.service'
