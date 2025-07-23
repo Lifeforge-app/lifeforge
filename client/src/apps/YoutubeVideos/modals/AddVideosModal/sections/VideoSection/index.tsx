@@ -5,7 +5,7 @@
 // import { TextInput } from 'lifeforge-ui'
 // import { useEffect, useState } from 'react'
 // import { toast } from 'react-toastify'
-// import { useAPIQuery } from 'shared/lib'
+// import { useAPIQuery } from 'shared'
 // import { type IYoutubeVideoInfo } from '../../../../interfaces/youtube_video_storage_interfaces'
 // import VideoDetails from './components/VideoDetails'
 // import checkDownloadStatus from './functions/checkDownloadStatus'

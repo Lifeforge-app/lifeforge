@@ -1,4 +1,4 @@
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import FilterChip from './components/HeaderFilterChip'
 

@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 async function getNaturalHeightWidth(file: File) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {

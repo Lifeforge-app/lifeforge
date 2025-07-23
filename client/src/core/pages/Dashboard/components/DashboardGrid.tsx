@@ -5,9 +5,8 @@ import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
-
-import { useSidebarState } from 'shared/lib'
-import { usePersonalization } from 'shared/lib'
+import { useSidebarState } from 'shared'
+import { usePersonalization } from 'shared'
 
 import Achievements from '../widgets/Achievements'
 import AssetsBalance from '../widgets/AssetsBalance'

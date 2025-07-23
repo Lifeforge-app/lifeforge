@@ -11,8 +11,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'

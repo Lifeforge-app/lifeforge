@@ -8,8 +8,7 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import BackupItem from './components/BackupItem'
 import CreateBackupModal from './components/CreateBackupModal'

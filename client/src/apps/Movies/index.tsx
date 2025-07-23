@@ -16,9 +16,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
+import { fetchAPI } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import MovieGrid from './components/MovieGrid'

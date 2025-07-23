@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import {
   CalendarCollectionsSchemas,
   ISchemaWithPB

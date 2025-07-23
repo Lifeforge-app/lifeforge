@@ -17,10 +17,10 @@ import { QueryWrapper } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
+import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from 'shared/lib'
-import { useAPIQuery } from 'shared/lib'
 import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 ChartJS.register(

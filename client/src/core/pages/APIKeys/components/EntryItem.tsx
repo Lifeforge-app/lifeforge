@@ -11,8 +11,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'

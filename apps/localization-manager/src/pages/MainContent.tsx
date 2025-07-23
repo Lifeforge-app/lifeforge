@@ -9,8 +9,7 @@ import {
 } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import CreateEntryModal from './components/CreateEntryModal'
 import LocaleEditor from './components/LocaleEditor'

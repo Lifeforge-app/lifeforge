@@ -3,8 +3,7 @@ import { LoadingScreen, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../providers/AuthProvider'
 import ModuleItem from './components/ModuleItem'

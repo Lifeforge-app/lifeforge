@@ -1,6 +1,5 @@
 import clsx from 'clsx'
-
-import { useSidebarState } from 'shared/lib'
+import { useSidebarState } from 'shared'
 
 import SidebarSubsectionItem from './SidebarSubsectionItem'
 

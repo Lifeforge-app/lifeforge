@@ -7,8 +7,7 @@ import {
   TextInput
 } from 'lifeforge-ui'
 import React, { useState } from 'react'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 const TYPES = [
   ['tabler:folder', 'Folder'],

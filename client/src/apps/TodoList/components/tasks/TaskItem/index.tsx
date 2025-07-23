@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Checkbox } from 'lifeforge-ui'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import {
   ISchemaWithPB,
   TodoListCollectionsSchemas

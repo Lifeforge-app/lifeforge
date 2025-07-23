@@ -2,10 +2,9 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
+import { useSidebarState } from 'shared'
+import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { useSidebarState } from 'shared/lib'
-import { usePersonalization } from 'shared/lib'
 
 import { useAuth } from '../../../providers/AuthProvider'
 

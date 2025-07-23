@@ -10,10 +10,9 @@ import {
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Link } from 'react-router'
+import { usePersonalization } from 'shared'
+import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { usePersonalization } from 'shared/lib'
-import { useAPIQuery } from 'shared/lib'
 
 const getDatesBetween = (start: Dayjs, end: Dayjs): Dayjs[] => {
   if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {

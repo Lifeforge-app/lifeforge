@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
+import { usePersonalization } from 'shared'
+import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { usePersonalization } from 'shared/lib'
-import { useAPIQuery } from 'shared/lib'
 
 export default function Quotes() {
   const quoteQuery = useAPIQuery<

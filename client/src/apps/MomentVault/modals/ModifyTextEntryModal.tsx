@@ -3,8 +3,7 @@ import { t } from 'i18next'
 import { Button, ModalHeader, TextAreaInput } from 'lifeforge-ui'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { IMomentVaultEntry } from '../interfaces/moment_vault_interfaces'
 

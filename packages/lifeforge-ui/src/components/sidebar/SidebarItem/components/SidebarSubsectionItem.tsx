@@ -4,8 +4,7 @@ import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
-
-import { useSidebarState } from 'shared/lib'
+import { useSidebarState } from 'shared'
 
 function SidebarSubsectionItem({
   subsectionName,

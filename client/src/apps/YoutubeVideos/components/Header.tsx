@@ -4,8 +4,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { type IYoutubeVideoInfo } from '../interfaces/youtube_video_storage_interfaces'
 import DownloadProcessModal from '../modals/DownloadProcessModal'

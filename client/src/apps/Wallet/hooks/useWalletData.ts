@@ -1,4 +1,5 @@
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
+
 import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import { useFilteredTransactions } from './useFilteredTransactions'

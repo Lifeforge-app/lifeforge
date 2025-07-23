@@ -2,8 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import {
   type IVirtualWardrobeEntry,

@@ -2,8 +2,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'

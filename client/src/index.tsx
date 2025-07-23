@@ -2,8 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd/dist/core/DndProvider'
 import ReactDOM from 'react-dom/client'
-
-import { APIEndpointProvider } from 'shared/lib'
+import { APIEndpointProvider } from 'shared'
 
 import App from './core/App'
 

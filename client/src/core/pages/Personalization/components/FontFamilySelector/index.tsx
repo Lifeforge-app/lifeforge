@@ -2,9 +2,8 @@ import { Icon } from '@iconify/react'
 import { ConfigColumn } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { usePersonalization } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
+import { usePersonalization } from 'shared'
+import { fetchAPI } from 'shared'
 
 import FontFamilyList from './components/FontFamilyList'
 

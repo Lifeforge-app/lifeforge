@@ -3,8 +3,7 @@ import { NodeResizer } from '@xyflow/react'
 import clsx from 'clsx'
 import { Button, useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import { useFlowStateContext } from '../../../hooks/useFlowStateContext'
 import GroupNodeConfigModal from './components/GroupNodeConfigModal'

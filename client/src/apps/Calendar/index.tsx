@@ -10,8 +10,8 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import CalendarComponent from './components/Calendar'

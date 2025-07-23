@@ -11,8 +11,8 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { WishlistControllersSchemas } from 'shared/types/controllers'
 
 import WishlistListItem from './components/WishlistListItem'

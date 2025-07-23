@@ -5,10 +5,10 @@ import clsx from 'clsx'
 import { Button, HamburgerMenu } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
+import { fetchAPI } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 import {
   BooksLibraryCollectionsSchemas,
   ISchemaWithPB

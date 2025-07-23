@@ -1,8 +1,7 @@
 /* eslint-disable react-compiler/react-compiler */
 import * as d3 from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvider'
 import {

@@ -1,8 +1,7 @@
 import { Button } from '@components/buttons'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI, useAPIEndpoint } from 'shared/lib'
+import { fetchAPI, useAPIEndpoint } from 'shared'
 
 import TextAreaInput from '../../../TextAreaInput'
 

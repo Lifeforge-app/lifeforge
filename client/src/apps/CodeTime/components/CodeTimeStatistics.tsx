@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'

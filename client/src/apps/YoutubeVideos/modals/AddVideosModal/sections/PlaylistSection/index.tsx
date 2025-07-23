@@ -5,7 +5,7 @@
 // import { toast } from 'react-toastify'
 import { IYoutubeVideosStorageEntry } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 
-// import { useAPIQuery } from 'shared/lib'
+// import { useAPIQuery } from 'shared'
 
 // import {
 //   type IYoutubePlaylistEntry,

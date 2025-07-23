@@ -10,8 +10,7 @@ import {
 import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 function BackupItem({
   backup

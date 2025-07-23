@@ -10,8 +10,8 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
 
-import { usePersonalization } from 'shared/lib'
 import {
   ISchemaWithPB,
   MoviesCollectionsSchemas

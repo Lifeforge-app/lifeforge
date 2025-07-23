@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import { SidebarItem } from 'lifeforge-ui'
 import { useState } from 'react'
-
-import { useSidebarState } from 'shared/lib'
+import { useSidebarState } from 'shared'
 
 import SidebarBottomBar from './SidebarBottomBar'
 import SidebarEventBanner from './SidebarEventBanner'

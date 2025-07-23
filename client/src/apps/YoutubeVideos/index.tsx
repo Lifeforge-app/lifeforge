@@ -10,8 +10,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import Header from './components/Header'
 import VideoList from './components/VideoList'

@@ -10,8 +10,7 @@ import {
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { ModalManager } from 'lifeforge-ui'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import ControlPanel from './components/ControlPanel'
 import ConnectionLine from './components/Flow/ConnectionLine'

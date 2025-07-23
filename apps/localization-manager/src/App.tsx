@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { LoadingScreen, ModalManager } from 'lifeforge-ui'
 import { Suspense, useEffect, useState } from 'react'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import MainContent from './pages/MainContent'
 

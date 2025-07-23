@@ -2,8 +2,7 @@ import { Button, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 function PasswordColumn() {
   const { t } = useTranslation('core.accountSettings')

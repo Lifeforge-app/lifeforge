@@ -5,10 +5,9 @@ import { Button } from 'lifeforge-ui'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePersonalization } from 'shared'
+import { fetchAPI } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
-
-import { usePersonalization } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 

@@ -11,7 +11,7 @@ import type { RecordModel } from 'pocketbase'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { useAPIEndpoint } from 'shared/lib'
+import { useAPIEndpoint } from 'shared'
 
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'

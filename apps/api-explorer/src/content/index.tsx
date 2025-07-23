@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { RouteCustomSchemas } from 'shared/types/collections'
 import { RoutesControllersSchemas } from 'shared/types/controllers'
 

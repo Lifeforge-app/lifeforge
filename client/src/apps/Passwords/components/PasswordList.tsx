@@ -2,8 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 

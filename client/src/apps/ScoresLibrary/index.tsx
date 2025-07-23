@@ -15,9 +15,9 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Id, toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
+import { fetchAPI } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
 
 import Header from './components/Header'

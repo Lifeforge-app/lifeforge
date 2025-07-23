@@ -4,8 +4,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'

@@ -9,9 +9,8 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
-import { useAPIQuery } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
+import { useAPIQuery } from 'shared'
+import { fetchAPI } from 'shared'
 
 import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 

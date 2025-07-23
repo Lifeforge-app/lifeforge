@@ -1,8 +1,7 @@
 import dayjs from 'dayjs'
 import { QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 

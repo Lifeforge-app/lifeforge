@@ -4,8 +4,8 @@ import clsx from 'clsx'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import {
   ISchemaWithPB,
   IdeaBoxCollectionsSchemas

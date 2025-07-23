@@ -1,9 +1,9 @@
 import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
+import { fetchAPI } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'

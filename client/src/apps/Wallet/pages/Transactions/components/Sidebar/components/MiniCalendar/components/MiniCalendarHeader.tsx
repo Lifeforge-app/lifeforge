@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 function MiniCalendarHeader({
   currentMonth,

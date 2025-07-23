@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 
