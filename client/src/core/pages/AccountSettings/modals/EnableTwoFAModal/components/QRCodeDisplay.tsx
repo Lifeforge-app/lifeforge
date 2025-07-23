@@ -4,9 +4,8 @@ import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { usePersonalization } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
+import { usePersonalization } from 'shared'
+import { fetchAPI } from 'shared'
 
 function QRCodeDisplay() {
   const { bgTempPalette, derivedTheme } = usePersonalization()

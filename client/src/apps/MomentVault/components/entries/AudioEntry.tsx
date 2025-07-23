@@ -7,10 +7,9 @@ import { useModalStore } from 'lifeforge-ui'
 import type { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { usePersonalization } from 'shared'
+import { fetchAPI } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
-
-import { usePersonalization } from 'shared/lib'
-import { fetchAPI } from 'shared/lib'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 

@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'

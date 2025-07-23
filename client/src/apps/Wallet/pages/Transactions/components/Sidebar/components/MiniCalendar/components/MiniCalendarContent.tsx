@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 

@@ -3,8 +3,8 @@ import forceDown from '@utils/forceDown'
 import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import {
   BooksLibraryCollectionsSchemas,
   ISchemaWithPB

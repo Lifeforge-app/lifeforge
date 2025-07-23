@@ -9,8 +9,8 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { AchievementsCollectionsSchemas } from 'shared/types/collections'
 import { AchievementsControllersSchemas } from 'shared/types/controllers'
 

@@ -6,8 +6,8 @@ import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
 interface IBooksLibraryData {

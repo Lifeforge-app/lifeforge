@@ -7,8 +7,7 @@ import {
 } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import { IVirtualWardrobeFormState } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'

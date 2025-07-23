@@ -3,8 +3,8 @@ import { Button, ImageAndFileInput, ModalHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import CreateEventModal from './ModifyEventModal/CreateEventModal'

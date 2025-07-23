@@ -4,8 +4,7 @@ import clsx from 'clsx'
 import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 

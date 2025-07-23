@@ -12,10 +12,10 @@ import {
 import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
+import { usePersonalization } from 'shared'
+import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from 'shared/lib'
-import { useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   WalletCollectionsSchemas

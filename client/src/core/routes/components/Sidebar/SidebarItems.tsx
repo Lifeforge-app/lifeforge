@@ -7,8 +7,7 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
-
-import { useSidebarState } from 'shared/lib'
+import { useSidebarState } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import ROUTES from '../../Routes'

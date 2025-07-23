@@ -1,12 +1,11 @@
 import { APIOnlineStatusWrapper } from 'lifeforge-ui'
-
 import {
   APIOnlineStatusProvider,
   BackgroundProvider,
   PersonalizationProvider,
   SidebarStateProvider,
   ToastProvider
-} from 'shared/lib'
+} from 'shared'
 
 import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 

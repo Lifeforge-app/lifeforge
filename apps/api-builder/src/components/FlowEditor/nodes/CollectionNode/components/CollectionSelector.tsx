@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import type { ICollectionNodeData } from '../types'
 

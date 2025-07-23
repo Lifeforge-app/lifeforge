@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import { memo } from 'react'
 import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
+import { useSidebarState } from 'shared'
 
-import { useSidebarState } from 'shared/lib'
 import {
   CalendarCollectionsSchemas,
   ISchemaWithPB

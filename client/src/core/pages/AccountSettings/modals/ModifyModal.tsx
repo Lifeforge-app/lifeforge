@@ -3,8 +3,7 @@ import { Button, DateInput, ModalHeader, TextInput } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 

@@ -1,7 +1,7 @@
 import { FormModal, type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import {
   ISchemaWithPB,
   IdeaBoxCollectionsSchemas

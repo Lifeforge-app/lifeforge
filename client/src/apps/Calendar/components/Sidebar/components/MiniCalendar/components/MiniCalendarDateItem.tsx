@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useMemo } from 'react'
+import { useAPIQuery } from 'shared'
 
-import { useAPIQuery } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { ICalendarEvent } from '@apps/Calendar/components/Calendar'

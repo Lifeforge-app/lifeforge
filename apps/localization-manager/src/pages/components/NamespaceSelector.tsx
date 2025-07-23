@@ -4,8 +4,7 @@ import {
   QueryWrapper
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 function NamespaceSelector({
   namespace,

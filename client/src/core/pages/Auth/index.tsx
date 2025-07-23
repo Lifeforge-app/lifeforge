@@ -2,8 +2,7 @@ import { Icon } from '@iconify/react'
 import { ModalManager, QueryWrapper } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import { useAuth } from '../../providers/AuthProvider'
 import AuthForm from './components/AuthForm'

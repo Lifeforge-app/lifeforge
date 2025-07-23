@@ -7,8 +7,7 @@ import {
   useState
 } from 'react'
 import { Outlet } from 'react-router'
-
-import { useAPIQuery } from 'shared/lib'
+import { useAPIQuery } from 'shared'
 
 import {
   IRailwayMapLine,

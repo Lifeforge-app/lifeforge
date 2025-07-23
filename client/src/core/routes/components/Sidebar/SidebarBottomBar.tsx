@@ -5,8 +5,7 @@ import { MenuItem } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-
-import { useSidebarState } from 'shared/lib'
+import { useSidebarState } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 

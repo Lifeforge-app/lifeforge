@@ -6,8 +6,8 @@ import { Calendar, Components, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop, {
   EventInteractionArgs
 } from 'react-big-calendar/lib/addons/dragAndDrop'
+import { fetchAPI } from 'shared'
 
-import { fetchAPI } from 'shared/lib'
 import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'

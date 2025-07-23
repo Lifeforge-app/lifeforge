@@ -4,8 +4,7 @@ import OTPScreen from '@security/components/OTPScreen'
 import { encrypt } from '@security/utils/encryption'
 import { useQuery } from '@tanstack/react-query'
 import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
-
-import { fetchAPI } from 'shared/lib'
+import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import { IAPIKeyEntry } from '../interfaces/api_keys_interfaces'

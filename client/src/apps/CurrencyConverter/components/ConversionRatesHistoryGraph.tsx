@@ -16,8 +16,7 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useMemo, useState } from 'react'
 import { Line } from 'react-chartjs-2'
-
-import { usePersonalization } from 'shared/lib'
+import { usePersonalization } from 'shared'
 
 import { CURRENCIES } from '../constants/currencies'
 
