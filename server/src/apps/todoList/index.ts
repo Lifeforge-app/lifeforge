@@ -1,9 +1,9 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import entriesRouter from './controllers/entries'
-import listsRouter from './controllers/lists'
-import prioritiesRouter from './controllers/priorities'
-import tagsRouter from './controllers/tags'
+import entriesRouter from './routes/entries'
+import listsRouter from './routes/lists'
+import prioritiesRouter from './routes/priorities'
+import tagsRouter from './routes/tags'
 
 export default forgeRouter({
   '/entries': entriesRouter,

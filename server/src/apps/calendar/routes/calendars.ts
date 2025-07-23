@@ -1,4 +1,4 @@
-import { forgeController } from '@functions/routes'
+import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'

@@ -1,5 +1,6 @@
 import { getAPIKey } from '@functions/database'
 import { fetchAI } from '@functions/external/ai'
+import searchLocations from '@functions/external/location'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
@@ -10,7 +11,6 @@ import rrule from 'rrule'
 import { z as zOld } from 'zod'
 import { z } from 'zod/v4'
 
-import { searchLocations } from '../../../core/lib/locations/services/locations.service'
 import { SCHEMAS } from '../../../core/schema'
 
 // Define the input schemas directly in the controller
@@ -108,7 +108,7 @@ const getEventsByDateRange = forgeController
       .execute()
 
     singleCalendarEvents.forEach(event => {
-      const baseEvent = event.expand.base_event
+      const baseEvent = event.expand!.base_event!
 
       allEvents.push({
         id: baseEvent.id,
@@ -132,7 +132,7 @@ const getEventsByDateRange = forgeController
       .execute()
 
     for (const event of recurringCalendarEvents) {
-      const baseEvent = event.expand.base_event
+      const baseEvent = event.expand!.base_event!
 
       const parsed = rrule.RRule.fromString(event.recurring_rule)
 
@@ -296,7 +296,7 @@ const getEventsToday = forgeController
       .execute()
 
     singleCalendarEvents.forEach(event => {
-      const baseEvent = event.expand.base_event
+      const baseEvent = event.expand!.base_event!
 
       allEvents.push({
         id: baseEvent.id,
@@ -405,7 +405,7 @@ const scanImage = forgeController
       throw new ClientError('No file uploaded')
     }
 
-    const gcloudKey = await getAPIKey('gcloud', pb.instance)
+    const gcloudKey = await getAPIKey('gcloud', pb)
 
     const categories = await pb.getFullList
       .collection('calendar__categories')
@@ -427,7 +427,7 @@ const scanImage = forgeController
     })
 
     const response = await fetchAI({
-      pb: pb.instance,
+      pb,
       provider: 'openai',
       model: 'gpt-4o',
       structure: responseStructure,
@@ -486,8 +486,8 @@ const scanImage = forgeController
 
     if (finalResponse.location && gcloudKey) {
       const locationInGoogleMap = await searchLocations(
-        finalResponse.location,
-        gcloudKey
+        gcloudKey,
+        finalResponse.location
       )
 
       if (locationInGoogleMap.length > 0) {

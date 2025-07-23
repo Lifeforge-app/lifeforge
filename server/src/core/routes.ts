@@ -105,7 +105,6 @@ const appRoutes = forgeRouter({
   '/books-library': (await import('../apps/booksLibrary')).default,
   '/wallet': (await import('../apps/wallet')).default,
   '/wishlist': (await import('../apps/wishlist')).default,
-  '/music': (await import('../apps/music')).default,
   '/scores-library': (await import('../apps/scoresLibrary')).default,
   '/passwords': (await import('../apps/passwords')).default,
   '/sudoku': (await import('../apps/sudoku')).default,

@@ -1,9 +1,9 @@
 import { PBService } from '@functions/database'
 import { updateTaskInPool } from '@middlewares/taskPoolMiddleware'
+import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import { Server } from 'socket.io'
-
-import { BooksLibraryCollectionsSchemas } from 'shared/types/collections'
+import { z } from 'zod/v4'
 
 export const processDownloadedFiles = async (
   pb: PBService,
@@ -11,8 +11,14 @@ export const processDownloadedFiles = async (
   taskId: string,
   md5: string,
   metadata: Omit<
-    BooksLibraryCollectionsSchemas.IEntry,
-    'thumbnail' | 'file' | 'is_favourite' | 'is_read' | 'time_finished'
+    z.infer<typeof SCHEMAS.books_library.entries>,
+    | 'thumbnail'
+    | 'file'
+    | 'is_favourite'
+    | 'is_read'
+    | 'time_finished'
+    | 'created'
+    | 'updated'
   > & {
     thumbnail: string | File
     file?: File

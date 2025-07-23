@@ -1,10 +1,10 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import assetsRouter from './controllers/assets'
-import categoriesRouter from './controllers/categories'
-import ledgersRouter from './controllers/ledgers'
-import transactionsRouter from './controllers/transactions'
-import utilsRouter from './controllers/utils'
+import assetsRouter from './routes/assets'
+import categoriesRouter from './routes/categories'
+import ledgersRouter from './routes/ledgers'
+import transactionsRouter from './routes/transactions'
+import utilsRouter from './routes/utils'
 
 export default forgeRouter({
   '/transactions': transactionsRouter,
