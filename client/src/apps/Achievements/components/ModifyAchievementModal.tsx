@@ -55,7 +55,7 @@ function ModifyAchievementModal({
       label: 'Achievement thoughts',
       icon: 'tabler:bubble-text',
       placeholder: 'My thoughts',
-      type: 'text'
+      type: 'textarea'
     },
     {
       id: 'difficulty',

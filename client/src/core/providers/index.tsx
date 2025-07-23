@@ -7,7 +7,7 @@ import {
   ToastProvider
 } from 'shared'
 
-import { MusicProvider } from '@apps/Music/providers/MusicProvider'
+// import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 import AuthProvider from './AuthProvider'
 import SocketProvider from './SocketProvider'
@@ -24,7 +24,8 @@ function Providers({ children }: { children: React.ReactNode }) {
                 <ToastProvider>
                   <BackgroundProvider>
                     <SocketProvider>
-                      <MusicProvider>{children}</MusicProvider>
+                      {/* <MusicProvider>{children}</MusicProvider> */}
+                      {children}
                     </SocketProvider>
                   </BackgroundProvider>
                 </ToastProvider>

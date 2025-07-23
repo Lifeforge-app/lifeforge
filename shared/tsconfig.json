@@ -2,7 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     // Environment setup
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "target": "ESNext",
     "module": "ESNext",
     // Output configuration
@@ -17,6 +19,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["src"],
-  "exclude": ["dist", "node_modules"]
+  "include": [
+    "src",
+    "../server/src/core/functions/routes/typescript/forge_controller.types.ts",
+    "../server/src/core/functions/routes/typescript/forge_router.types.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
