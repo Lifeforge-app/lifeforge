@@ -1,8 +1,8 @@
-import forgeRouter from '@functions/forgeRouter'
+import { forgeRouter } from '@functions/routes'
 
-import entriesRouter from './controllers/entries'
-import guitarWorldRouter from './controllers/guitarWorld'
-import typesRouter from './controllers/types'
+import entriesRouter from './routes/entries'
+import guitarWorldRouter from './routes/guitarWorld'
+import typesRouter from './routes/types'
 
 export default forgeRouter({
   '/entries': entriesRouter,

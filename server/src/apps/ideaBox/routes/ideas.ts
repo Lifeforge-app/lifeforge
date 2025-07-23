@@ -4,8 +4,6 @@ import { SCHEMAS } from '@schema'
 import multer from 'multer'
 import { z } from 'zod/v4'
 
-import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
-
 import { validateFolderPath } from '../utils/folders'
 
 const getIdeas = forgeController
@@ -101,18 +99,14 @@ const createIdea = forgeController
     }) => {
       const { file } = req
 
-      const data: Omit<
-        IdeaBoxCollectionsSchemas.IEntry,
-        'image' | 'archived' | 'pinned'
-      > & {
-        image?: File
-      } = {
+      const data = {
         title: '',
         content: '',
         type,
         container,
         folder,
-        tags: tags || null
+        tags: tags || null,
+        image: null as File | null
       }
 
       switch (type) {

@@ -1,4 +1,4 @@
-import { forgeController } from '@functions/routes'
+import { forgeController, forgeRouter } from '@functions/routes'
 
 const getAllFileTypes = forgeController
   .route('GET /')

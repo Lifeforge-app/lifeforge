@@ -1,13 +1,10 @@
-import {
-  forgeController
-} from '@functions/forgeController'
-import forgeRouter from '@functions/forgeRouter'
+import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
 const generateBoard = forgeController
   .route('GET /:difficulty')
   .description('Generate 6 Sudoku boards by difficulty level')
-  .schema({
+  .input({
     params: z.object({
       difficulty: z.enum(['easy', 'medium', 'hard', 'expert', 'evil'])
     }),
@@ -17,15 +14,7 @@ const generateBoard = forgeController
         .optional()
         .default('6')
         .transform(val => parseInt(val, 10) || 6)
-    }),
-    response: z.array(
-      z.object({
-        id: z.number(),
-        mission: z.string(),
-        solution: z.string(),
-        win_rate: z.number()
-      })
-    )
+    })
   })
   .callback(async ({ params: { difficulty }, query: { count } }) => {
     const boards: any[] = []
