@@ -12,7 +12,9 @@ const listBackups = forgeController
 
     const allBackups = await pb.backups.getFullList()
 
-    return allBackups.sort((a, b) => b.modified.localeCompare(a.modified))
+    return allBackups.sort((a, b) =>
+      b.modified.localeCompare(a.modified)
+    ) as any
   })
 
 const downloadBackup = forgeController
