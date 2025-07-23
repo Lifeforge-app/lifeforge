@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import { ForgeControllerBuilder } from '../functions/forgeController'
-import { InputSchema } from './forge_controller.types'
+import { type InputSchema } from './forge_controller.types'
 
 // Define the controller type
 export type ControllerType = ForgeControllerBuilder<InputSchema, unknown>
