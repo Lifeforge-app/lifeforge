@@ -54,7 +54,7 @@ export const update = forgeController.mutation
     pb.update.collection('achievements__entries').id(id).data(body).execute()
   )
 
-export const delete = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an existing achievements entry')
   .input({
     query: z.object({
@@ -73,5 +73,5 @@ export default forgeRouter({
   getAllByDifficulty,
   create,
   update,
-  delete
+  remove
 })
