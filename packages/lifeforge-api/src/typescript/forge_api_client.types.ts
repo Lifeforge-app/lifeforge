@@ -25,8 +25,9 @@ export type InferInput<T> =
       : never
     : never
 
-export type InferOutput<T> =
-  T extends ForgeControllerBuilderBase<string, any, infer O> ? O : never
+export type InferOutput<T> = T extends ForgeControllerBuilderBase
+  ? T['_output']
+  : never
 
 export type InferClientControllerInput<
   T extends ForgeAPIClientController<any>
