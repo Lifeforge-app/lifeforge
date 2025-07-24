@@ -26,5 +26,5 @@ layer(base);
 @import '@core/pages/Dashboard/index.css';
 @import '@apps/Calendar/index.css';
 @import '@apps/RailwayMap/index.css';
-@import '@apps/Music/index.css';
+/* @import '@apps/Music/index.css'; */
 @import '@apps/Blog/index.css';

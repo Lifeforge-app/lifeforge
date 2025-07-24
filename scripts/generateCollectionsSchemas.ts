@@ -20,6 +20,7 @@ if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
 const pb = new Pocketbase(process.env.PB_HOST)
 
 let SCHEMA_STRING = `
+import flattenSchemas from '@functions/utils/flattenSchema'
 import { z } from 'zod/v4'
 
 export const SCHEMAS = {
@@ -181,13 +182,18 @@ for (const module of allModules) {
   SCHEMA_STRING += `  },\n`
 }
 
-SCHEMA_STRING += `},\n`
+SCHEMA_STRING += `}
+
+const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
+
+export default COLLECTION_SCHEMAS
+`
 
 const formattedSchemaString = await prettier.format(SCHEMA_STRING, {
   parser: 'typescript'
 })
 
 fs.writeFileSync(
-  path.resolve(__dirname, '../server/src/core/typescript/schema.ts'),
+  path.resolve(__dirname, '../server/src/core/schema.ts'),
   formattedSchemaString
 )

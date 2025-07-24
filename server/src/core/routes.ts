@@ -123,13 +123,13 @@ const appRoutes = forgeRouter({
   '/modules': (await import('./lib/modules')).default,
   '/backups': (await import('./lib/backups')).default,
   '/database': (await import('./lib/database')).default,
-  getMedia,
-  corsAnywhere,
-  getAllRoutes
+  getMedia: getMedia,
+  corsAnywhere: corsAnywhere,
+  getAllRoutes: getAllRoutes
 })
 
 router.use('/', registerRoutes(appRoutes))
 
-export type AppRoutes = typeof appRoutes
+export type Router = typeof appRoutes
 
 export default router

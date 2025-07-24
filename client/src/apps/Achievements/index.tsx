@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   EmptyStateScreen,
@@ -9,14 +11,18 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import { AchievementsCollectionsSchemas } from 'shared/types/collections'
-import { AchievementsControllersSchemas } from 'shared/types/controllers'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './components/ModifyAchievementModal'
+import { InferInput, InferOutput } from 'lifeforge-api'
+
+const route = forgeAPI
+  .route('/achievements')
+  .route('/entries')
+  .controller('GET /:difficulty')
+
+export type IAchievement = InferOutput<typeof route>[number]
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
@@ -24,14 +30,17 @@ function Achievements() {
   const open = useModalStore(state => state.open)
 
   const [selectedDifficulty, setSelectedDifficulty] =
-    useState<AchievementsCollectionsSchemas.IEntry['difficulty']>('impossible')
+    useState<InferInput<typeof route>['params']['difficulty']>('impossible')
 
-  const entriesQuery = useAPIQuery<
-    AchievementsControllersSchemas.IEntries['getAllEntriesByDifficulty']['response']
-  >(`achievements/entries/${selectedDifficulty}`, [
-    'achievements/entries',
-    selectedDifficulty
-  ])
+  const entriesQuery = useQuery(
+    route
+      .input({
+        params: {
+          difficulty: selectedDifficulty
+        }
+      })
+      .getQueryOptions()
+  )
 
   return (
     <ModuleWrapper>
