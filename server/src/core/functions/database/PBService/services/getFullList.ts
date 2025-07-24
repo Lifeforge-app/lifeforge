@@ -67,7 +67,7 @@ function recursivelyBuildFilter<
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
-class GetFullList<
+export class GetFullList<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
   TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<

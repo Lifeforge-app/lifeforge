@@ -12,7 +12,7 @@ import PocketBase from 'pocketbase'
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
-class GetOne<
+export class GetOne<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
   TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
