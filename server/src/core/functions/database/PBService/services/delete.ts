@@ -47,7 +47,7 @@ export class Delete<TCollectionKey extends CollectionKey> {
     }
 
     return this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection((this.collectionKey as string).replace(/^users__/, ''))
       .delete(this._recordId)
   }
 }

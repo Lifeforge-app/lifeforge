@@ -20,7 +20,7 @@ const getPath = forgeController
   .existenceCheck('params', {
     container: 'idea_box__containers'
   })
-  .callback(async ({ pb, params: { container, '0': path }, req, res }) => {
+  .callback(async ({ pb, params: { container, '0': path } }) => {
     const containerEntry = await pb.getOne
       .collection('idea_box__containers')
       .id(container)
@@ -31,7 +31,7 @@ const getPath = forgeController
     const fullPath = []
 
     for (const folder of path) {
-      if (!(await checkExistence(req, res, 'idea_box__folders', folder))) {
+      if (!(await checkExistence(pb, 'idea_box__folders', folder))) {
         throw new ClientError(
           `Folder with ID "${folder}" does not exist in container "${container}"`
         )
@@ -68,13 +68,11 @@ const checkValid = forgeController
       '0': z.string()
     })
   })
-  .callback(async ({ pb, params: { container, '0': path }, req, res }) => {
+  .callback(async ({ pb, params: { container, '0': path } }) => {
     const containerExists = await checkExistence(
-      req,
-      res,
+      pb,
       'idea_box__containers',
-      container,
-      false
+      container
     )
 
     if (!containerExists) {
@@ -85,9 +83,7 @@ const checkValid = forgeController
     let lastFolder = ''
 
     for (const folder of path) {
-      if (
-        !(await checkExistence(req, res, 'idea_box__folders', folder, false))
-      ) {
+      if (!(await checkExistence(pb, 'idea_box__folders', folder))) {
         folderExists = false
         break
       }
@@ -171,14 +167,12 @@ const search = forgeController
   .existenceCheck('query', {
     container: '[idea_box_containers]'
   })
-  .callback(async ({ pb, query: { q, container, tags, folder }, req, res }) => {
+  .callback(async ({ pb, query: { q, container, tags, folder } }) => {
     if (container) {
       const containerExists = await checkExistence(
-        req,
-        res,
+        pb,
         'idea_box__containers',
-        container,
-        false
+        container
       )
 
       if (!containerExists) return null

@@ -138,7 +138,7 @@ export class Update<
     }
 
     return this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection((this.collectionKey as string).replace(/^users__/, ''))
       .update(this._recordId, this._data, {
         expand: this._expand,
         fields: this._fields

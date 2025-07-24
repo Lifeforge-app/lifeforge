@@ -108,7 +108,7 @@ type BuildExpandObject<
 }
 
 // Helper type to pick only selected fields from the full result
-type PickSelectedFields<
+export type PickSelectedFields<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey>,
   TFields extends FieldSelection<TCollectionKey, TExpandConfig>
