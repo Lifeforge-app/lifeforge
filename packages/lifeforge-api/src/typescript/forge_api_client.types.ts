@@ -7,7 +7,7 @@ import type {
   ZodTypeAny
 } from 'zod/v4'
 
-import type { ForgeControllerBuilderBase } from '../core/forgeControllerBase'
+import type { ForgeAPIServerControllerBase } from '../core/forgeAPIServer'
 import type { ForgeAPIClientController } from '../core/forgeAPIClient'
 
 type ZodObjectOrIntersection =
@@ -15,7 +15,7 @@ type ZodObjectOrIntersection =
   | ZodIntersection<ZodTypeAny, ZodTypeAny>
 
 export type InferInput<T> =
-  T extends ForgeControllerBuilderBase<string, infer I, any>
+  T extends ForgeAPIServerControllerBase<string, infer I, any>
     ? I extends Record<string, ZodObjectOrIntersection>
       ? {
           [K in keyof I]: I[K] extends ZodObjectOrIntersection
@@ -26,12 +26,12 @@ export type InferInput<T> =
     : never
 
 export type InferOutput<T> =
-  T extends ForgeControllerBuilderBase<string, any, infer O> ? O : never
+  T extends ForgeAPIServerControllerBase<string, any, infer O> ? O : never
 
 export type InferClientControllerInput<
   T extends ForgeAPIClientController<any>
 > =
-  T['__type'] extends ForgeControllerBuilderBase<string, infer I, any>
+  T['__type'] extends ForgeAPIServerControllerBase<string, infer I, any>
     ? I extends Record<string, ZodObjectOrIntersection>
       ? {
           [K in keyof I]: I[K] extends ZodObjectOrIntersection
@@ -44,16 +44,16 @@ export type InferClientControllerInput<
 export type InferClientControllerOutput<
   T extends ForgeAPIClientController<any>
 > =
-  T['__type'] extends ForgeControllerBuilderBase<string, any, infer O>
+  T['__type'] extends ForgeAPIServerControllerBase<string, any, infer O>
     ? O
     : never
 
 export type FilteredRouteKey<T> = {
-  [K in keyof T]: T[K] extends ForgeControllerBuilderBase ? never : K
+  [K in keyof T]: T[K] extends ForgeAPIServerControllerBase ? never : K
 }[keyof T]
 
 type RouteNameMap<T> = {
-  [K in keyof T]: T[K] extends ForgeControllerBuilderBase<infer R, any, any>
+  [K in keyof T]: T[K] extends ForgeAPIServerControllerBase<infer R, any, any>
     ? [R, K]
     : never
 }[keyof T]
@@ -69,7 +69,7 @@ export type ControllerByRoute<
   R extends RouteKeys<T>,
   K extends keyof T = RouteToKeyMap<T>[R] & keyof T
 > =
-  T[K] extends ForgeControllerBuilderBase<infer R, any, any>
+  T[K] extends ForgeAPIServerControllerBase<infer R, any, any>
     ? R extends string
       ? T[K]
       : never
