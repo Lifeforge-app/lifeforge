@@ -24,7 +24,7 @@ function registerRoutes<T extends RouterInput>(
   function registerRoutesRecursive(routes: RouterInput, router: Router): void {
     for (const [route, controller] of Object.entries(routes)) {
       if (controller instanceof ForgeControllerBuilder) {
-        controller.register(router)
+        controller.register(router, route)
       } else if (isRouter(controller)) {
         router.use(`/${route}`, controller)
       } else if (typeof controller === 'object' && controller !== null) {
