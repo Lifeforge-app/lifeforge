@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getTags = forgeController.query
+const list = forgeController.query
   .description('Get tags for a container')
   .input({
     query: z.object({
@@ -27,7 +27,7 @@ const getTags = forgeController.query
         .execute()
   )
 
-const createTag = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new tag')
   .input({
     body: SCHEMAS.idea_box.tags
@@ -41,7 +41,7 @@ const createTag = forgeController.mutation
       await pb.create.collection('idea_box__tags').data(body).execute()
   )
 
-const updateTag = forgeController.mutation
+const update = forgeController.mutation
   .description('Update a tag')
   .input({
     query: z.object({
@@ -59,7 +59,7 @@ const updateTag = forgeController.mutation
       await pb.update.collection('idea_box__tags').id(id).data(body).execute()
   )
 
-const deleteTag = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a tag')
   .input({
     query: z.object({
@@ -75,8 +75,8 @@ const deleteTag = forgeController.mutation
   })
 
 export default forgeRouter({
-  getTags,
-  createTag,
-  updateTag,
-  deleteTag
+  list,
+  create,
+  update,
+  remove
 })

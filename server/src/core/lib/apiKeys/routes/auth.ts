@@ -7,12 +7,11 @@ import { z } from 'zod/v4'
 import { challenge } from '..'
 
 const getChallenge = forgeController.query
-
   .description('Get authentication challenge')
   .input({})
   .callback(async () => challenge)
 
-const createOrUpdateMasterPassword = forgeController.mutation
+const createOrUpdate = forgeController.mutation
   .description('Create or update master password')
   .input({
     body: z.object({
@@ -39,8 +38,7 @@ const createOrUpdateMasterPassword = forgeController.mutation
       .execute()
   })
 
-const verifyMasterPassword = forgeController.mutation
-
+const verify = forgeController.mutation
   .description('Verify master password')
   .input({
     body: z.object({
@@ -64,7 +62,6 @@ const verifyMasterPassword = forgeController.mutation
   })
 
 const verifyOTP = forgeController.mutation
-
   .description('Verify OTP')
   .input({
     body: z.object({
@@ -76,7 +73,7 @@ const verifyOTP = forgeController.mutation
 
 export default forgeRouter({
   getChallenge,
-  createOrUpdateMasterPassword,
-  verifyMasterPassword,
+  createOrUpdate,
+  verify,
   verifyOTP
 })

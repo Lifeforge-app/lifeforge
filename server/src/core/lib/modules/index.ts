@@ -2,8 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { z } from 'zod/v4'
 
-const toggleModule = forgeController.mutation
-
+const toggle = forgeController.mutation
   .description('Toggle a module on/off')
   .input({
     query: z.object({
@@ -39,5 +38,5 @@ const toggleModule = forgeController.mutation
   })
 
 export default forgeRouter({
-  toggleModule
+  toggle
 })

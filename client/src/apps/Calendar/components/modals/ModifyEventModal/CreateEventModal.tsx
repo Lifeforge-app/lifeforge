@@ -25,8 +25,8 @@ export type ICreateEventFormState = Omit<
       CalendarCollectionsSchemas.IEventsRecurring,
     'base_event' | 'exceptions' | 'start' | 'end'
   > & {
-    start: Date | undefined
-    end: Date | undefined
+    start: Date | null
+    end: Date | null
   }
 
 function CreateEventModal({

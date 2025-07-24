@@ -2,8 +2,10 @@ import dayjs from 'dayjs'
 import { create } from 'zustand'
 
 interface CalendarState {
-  eventQueryKey: unknown[]
-  setEventQueryKey: (eventQueryKey: unknown[]) => void
+  start: string
+  end: string
+  setStart: (start: string) => void
+  setEnd: (end: string) => void
 }
 
 export const useCalendarStore = create<CalendarState>()(set => {
@@ -12,7 +14,9 @@ export const useCalendarStore = create<CalendarState>()(set => {
   const end = dayjs().endOf('month').format('YYYY-MM-DD')
 
   return {
-    eventQueryKey: ['calendar', 'events', start, end],
-    setEventQueryKey: (eventQueryKey: unknown[]) => set({ eventQueryKey })
+    start,
+    end,
+    setStart: (start: string) => set({ start }),
+    setEnd: (end: string) => set({ end })
   }
 })

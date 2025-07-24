@@ -3,8 +3,7 @@ import { SCHEMAS } from '@schema'
 import { Location } from '@typescript/location.types'
 import { z } from 'zod/v4'
 
-const updateTicket = forgeController.mutation
-
+const update = forgeController.mutation
   .description('Update ticket information for a movie entry')
   .input({
     query: z.object({
@@ -41,7 +40,7 @@ const updateTicket = forgeController.mutation
       .execute()
   })
 
-const clearTicket = forgeController.mutation
+const clear = forgeController.mutation
   .description('Clear ticket information for a movie entry')
   .input({
     query: z.object({
@@ -66,4 +65,4 @@ const clearTicket = forgeController.mutation
       .execute()
   )
 
-export default forgeRouter({ updateTicket, clearTicket })
+export default forgeRouter({ update, clear })

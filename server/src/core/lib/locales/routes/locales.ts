@@ -5,7 +5,7 @@ import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../../../constants/locales'
 
-const getLocales = forgeController.query
+const get = forgeController.query
   .description(
     'Get locales for a specific language, namespace, and subnamespace'
   )
@@ -112,4 +112,4 @@ const getLocales = forgeController.query
     return data
   })
 
-export default forgeRouter({ getLocales })
+export default forgeRouter({ get })

@@ -11,7 +11,7 @@ function DateRangeSelector() {
   const { startDate, endDate, setStartDate, setEndDate } = useWalletStore()
 
   const handleDateChange = (
-    date: Date | undefined,
+    date: Date | null,
     type: 'start_date' | 'end_date'
   ) => {
     if (!date) {

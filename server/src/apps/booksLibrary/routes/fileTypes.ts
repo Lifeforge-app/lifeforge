@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 
-const getAllFileTypes = forgeController.query
+const list = forgeController.query
   .description('Get all file types for the books library')
   .input({})
   .callback(({ pb }) =>
@@ -10,4 +10,4 @@ const getAllFileTypes = forgeController.query
       .execute()
   )
 
-export default forgeRouter({ getAllFileTypes })
+export default forgeRouter({ list })

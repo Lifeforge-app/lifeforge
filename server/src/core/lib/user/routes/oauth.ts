@@ -8,8 +8,7 @@ import { currentSession } from '..'
 
 let currentCodeVerifier: string | null = null
 
-const listOAuthProviders = forgeController.query
-
+const listProviders = forgeController.query
   .description('List available OAuth providers')
   .input({})
   .callback(async ({ pb }) => {
@@ -18,8 +17,7 @@ const listOAuthProviders = forgeController.query
     ).oauth2.providers.map(e => e.name)
   })
 
-const getOAuthEndpoint = forgeController.query
-
+const getEndpoint = forgeController.query
   .description('Get OAuth endpoint for a provider')
   .input({
     query: z.object({
@@ -44,8 +42,7 @@ const getOAuthEndpoint = forgeController.query
     return endpoint
   })
 
-const oauthVerify = forgeController.mutation
-
+const verify = forgeController.mutation
   .description('Verify OAuth callback')
   .input({
     body: z.object({
@@ -104,7 +101,7 @@ const oauthVerify = forgeController.mutation
   })
 
 export default forgeRouter({
-  listOAuthProviders,
-  getOAuthEndpoint,
-  oauthVerify
+  listProviders,
+  getEndpoint,
+  verify
 })

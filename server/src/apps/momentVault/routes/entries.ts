@@ -7,7 +7,7 @@ import { z } from 'zod/v4'
 
 import { convertToMp3 } from '../utils/convertToMP3'
 
-const getEntries = forgeController.query
+const list = forgeController.query
   .description('Get all moment vault entries')
   .input({
     query: z.object({
@@ -87,7 +87,7 @@ export const createPhotosEntry = async (
   return entry
 }
 
-const createEntry = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new moment vault entry')
   .input({
     body: z.object({
@@ -144,7 +144,7 @@ const createEntry = forgeController.mutation
     throw new ClientError('Invalid entry type')
   })
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .description('Update a moment vault entry')
   .input({
     query: z.object({
@@ -165,7 +165,7 @@ const updateEntry = forgeController.mutation
       .execute()
   )
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a moment vault entry')
   .input({
     query: z.object({
@@ -181,8 +181,8 @@ const deleteEntry = forgeController.mutation
   )
 
 export default forgeRouter({
-  getEntries,
-  createEntry,
-  updateEntry,
-  deleteEntry
+  list,
+  create,
+  update,
+  remove
 })

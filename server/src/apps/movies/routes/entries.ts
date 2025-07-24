@@ -2,7 +2,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const getAllEntries = forgeController.query
+const list = forgeController.query
   .description('Get all movie entries')
   .input({
     query: z.object({
@@ -59,7 +59,7 @@ const getAllEntries = forgeController.query
     }
   })
 
-const createEntryFromTMDB = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a movie entry from TMDB')
   .input({
     query: z.object({
@@ -119,7 +119,7 @@ const createEntryFromTMDB = forgeController.mutation
       .execute()
   })
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a movie entry')
   .input({
     query: z.object({
@@ -135,7 +135,6 @@ const deleteEntry = forgeController.mutation
   )
 
 const toggleWatchStatus = forgeController.mutation
-
   .description('Toggle watch status of a movie entry')
   .input({
     query: z.object({
@@ -161,8 +160,8 @@ const toggleWatchStatus = forgeController.mutation
   })
 
 export default forgeRouter({
-  getAllEntries,
-  createEntryFromTMDB,
-  deleteEntry,
+  list,
+  create,
+  remove,
   toggleWatchStatus
 })

@@ -11,7 +11,7 @@ import z from 'zod/v4'
 
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'
 
-const getAllTransactions = forgeController.query
+const list = forgeController.query
   .description('Get all wallet transactions')
   .input({})
   .callback(async ({ pb }) => {
@@ -114,7 +114,7 @@ const UpdateTransactionInputSchema = CreateTransactionInputSchema.and(
   })
 )
 
-const createTransaction = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new wallet transaction')
   .input({
     body: CreateTransactionInputSchema
@@ -194,7 +194,7 @@ const createTransaction = forgeController.mutation
     }
   })
 
-const updateTransaction = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing wallet transaction')
   .input({
     query: z.object({
@@ -305,7 +305,7 @@ const updateTransaction = forgeController.mutation
     }
   })
 
-const deleteTransaction = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a wallet transaction')
   .input({
     query: z.object({
@@ -321,7 +321,6 @@ const deleteTransaction = forgeController.mutation
   )
 
 const scanReceipt = forgeController.mutation
-
   .description('Scan receipt to extract transaction data')
   .input({})
   .middlewares(singleUploadMiddleware)
@@ -360,9 +359,9 @@ const scanReceipt = forgeController.mutation
   })
 
 export default forgeRouter({
-  getAllTransactions,
-  createTransaction,
-  updateTransaction,
-  deleteTransaction,
+  list,
+  create,
+  update,
+  remove,
   scanReceipt
 })

@@ -32,7 +32,7 @@ function ModifyTicketModal({
       MoviesControllersSchemas.ITicket['updateTicket']['body'],
       'theatre_showtime'
     > & {
-      theatre_showtime: Date | undefined
+      theatre_showtime: Date | null
     }
   >({
     ticket_number: '',

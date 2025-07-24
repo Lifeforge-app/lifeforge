@@ -77,7 +77,6 @@ const FILTERS: Record<string, FilterType<'todo_list__entries'>> = {
 }
 
 const getStatusCounter = forgeController.query
-
   .description('Get status counter for todo entries')
   .input({})
   .callback(async ({ pb }) => {
@@ -103,7 +102,7 @@ const getStatusCounter = forgeController.query
     return counters
   })
 
-const getEntryById = forgeController.query
+const getById = forgeController.query
   .description('Get todo entry by ID')
   .input({
     query: z.object({
@@ -117,7 +116,7 @@ const getEntryById = forgeController.query
     pb.getOne.collection('todo_list__entries').id(id).execute()
   )
 
-const getAllEntries = forgeController.query
+const list = forgeController.query
   .description('Get all todo entries with optional filters')
   .input({
     query: z.object({
@@ -152,7 +151,7 @@ const getAllEntries = forgeController.query
       .execute()
   })
 
-const createEntry = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new todo entry')
   .input({
     body: SCHEMAS.todo_list.entries.omit({
@@ -179,7 +178,7 @@ const createEntry = forgeController.mutation
       .execute()
   )
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing todo entry')
   .input({
     query: z.object({
@@ -212,7 +211,7 @@ const updateEntry = forgeController.mutation
       .execute()
   )
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a todo entry')
   .input({
     query: z.object({
@@ -228,7 +227,6 @@ const deleteEntry = forgeController.mutation
   )
 
 const toggleEntry = forgeController.mutation
-
   .description('Toggle completion status of a todo entry')
   .input({
     query: z.object({
@@ -257,11 +255,11 @@ const toggleEntry = forgeController.mutation
   })
 
 export default forgeRouter({
-  getEntryById,
-  getAllEntries,
+  getById,
+  list,
   getStatusCounter,
-  createEntry,
-  updateEntry,
-  deleteEntry,
+  create,
+  update,
+  remove,
   toggleEntry
 })
