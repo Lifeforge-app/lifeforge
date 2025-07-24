@@ -18,7 +18,8 @@ export const alias = {
   '@utils': path.resolve(__dirname, './src/core/utils'),
   '@apps': path.resolve(__dirname, './src/apps'),
   '@security': path.resolve(__dirname, './src/core/security'),
-  '@core': path.resolve(__dirname, './src/core')
+  '@core': path.resolve(__dirname, './src/core'),
+  '@server': path.resolve(__dirname, '../server/src')
 }
 
 export default defineConfig({

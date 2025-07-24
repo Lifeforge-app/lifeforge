@@ -77,7 +77,7 @@ type GetListReturnType<
   items: MultiItemsReturnType<TCollectionKey, TExpandConfig, TFields>
 }
 
-class GetList<
+export class GetList<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
   TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<

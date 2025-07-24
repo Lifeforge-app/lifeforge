@@ -3,12 +3,9 @@ import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
-
-import {
-  AchievementsCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-import { AchievementsControllersSchemas } from 'shared/types/controllers'
+import { IAchievement } from '..'
+import forgeAPI from '@utils/forgeAPI'
+import { InferInput } from 'lifeforge-api'
 
 const difficulties = [
   ['easy', 'green'],
@@ -17,23 +14,32 @@ const difficulties = [
   ['impossible', 'purple']
 ]
 
+const createRoute = forgeAPI
+  .route('/achievements')
+  .route('/entries')
+  .controller('POST /')
+
+const updateRoute = forgeAPI
+  .route('/achievements')
+  .route('/entries')
+  .controller('PATCH /:id')
+
 function ModifyAchievementModal({
   data: { type, existedData, currentDifficulty },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ISchemaWithPB<AchievementsCollectionsSchemas.IEntry> | null
-    currentDifficulty: AchievementsCollectionsSchemas.IEntry['difficulty']
+    existedData: IAchievement | null
+    currentDifficulty: IAchievement['difficulty']
   }
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.achievements')
 
   const [formState, setFormState] = useState<
-    AchievementsControllersSchemas.IEntries[
-      | 'createEntry'
-      | 'updateEntry']['body']
+    | InferInput<typeof createRoute>['body']
+    | InferInput<typeof updateRoute>['body']
   >({
     title: '',
     thoughts: '',
@@ -55,7 +61,7 @@ function ModifyAchievementModal({
       label: 'Achievement thoughts',
       icon: 'tabler:bubble-text',
       placeholder: 'My thoughts',
-      type: 'text'
+      type: 'textarea'
     },
     {
       id: 'difficulty',

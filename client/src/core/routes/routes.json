@@ -19,6 +19,7 @@
     "items": [
       "@apps/MomentVault",
       "@apps/Blog",
+      "@apps/Movies",
       "@apps/Achievements",
       "@apps/VirtualWardrobe"
     ]
@@ -34,7 +35,6 @@
     "title": "Storage",
     "items": [
       "@apps/BooksLibrary",
-      "@apps/Music",
       "@apps/ScoresLibrary"
     ]
   },

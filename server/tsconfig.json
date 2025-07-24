@@ -15,6 +15,9 @@
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
     "noUnusedLocals": true,
+    "declaration": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
     "paths": {
       "@functions/*": [
         "./src/core/functions/*"

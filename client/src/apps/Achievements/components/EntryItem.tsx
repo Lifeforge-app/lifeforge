@@ -4,15 +4,10 @@ import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import { AchievementsControllersSchemas } from 'shared/types/controllers'
-
 import ModifyAchievementModal from './ModifyAchievementModal'
+import { IAchievement } from '..'
 
-function EntryItem({
-  entry
-}: {
-  entry: AchievementsControllersSchemas.IEntries['getAllEntriesByDifficulty']['response'][number]
-}) {
+function EntryItem({ entry }: { entry: IAchievement }) {
   const open = useModalStore(state => state.open)
 
   const handleDeleteEntry = useCallback(() => {
@@ -27,7 +22,7 @@ function EntryItem({
 
   return (
     <div className="shadow-custom component-bg flex items-start justify-between gap-3 rounded-lg p-4">
-      <div className="flex h-full items-center gap-3">
+      <div className="flex h-full items-start gap-3">
         <div
           className={clsx(
             'flex-center size-12 shrink-0 rounded-md',
@@ -45,7 +40,9 @@ function EntryItem({
         </div>
         <div>
           <h2 className="text-lg font-semibold">{entry.title}</h2>
-          <p className="text-bg-500 mt-1 text-sm">{entry.thoughts}</p>
+          <p className="text-bg-500 mt-1 whitespace-pre-wrap text-sm">
+            {entry.thoughts}
+          </p>
         </div>
       </div>
       <HamburgerMenu>
