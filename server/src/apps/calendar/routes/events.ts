@@ -56,7 +56,7 @@ const UpdateEventSchema = SCHEMAS.calendar.events
     location: Location.optional()
   })
 
-const getEventsByDateRange = forgeController.query
+const getByDateRange = forgeController.query
   .description('Get events by date range')
   .input({
     query: z.object({
@@ -245,8 +245,7 @@ ${entry.theatre_seat}
     return allEvents
   })
 
-const getEventsToday = forgeController.query
-
+const getToday = forgeController.query
   .description("Get today's events")
   .input({})
   .callback(async ({ pb }) => {
@@ -315,7 +314,7 @@ const getEventsToday = forgeController.query
     return allEvents
   })
 
-const getEventById = forgeController.query
+const getById = forgeController.query
   .description('Get an event by ID')
   .input({
     query: z.object({
@@ -329,7 +328,7 @@ const getEventById = forgeController.query
     pb.getOne.collection('calendar__events').id(id).execute()
   )
 
-const createEvent = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new event')
   .input({
     body: CreateEventSchema
@@ -391,7 +390,6 @@ const createEvent = forgeController.mutation
   })
 
 const scanImage = forgeController.mutation
-
   .description('Scan an image to extract event data')
   .input({})
   .middlewares(singleUploadMiddleware)
@@ -500,7 +498,6 @@ const scanImage = forgeController.mutation
   })
 
 const addException = forgeController.mutation
-
   .description('Add an exception to a recurring event')
   .input({
     query: z.object({
@@ -536,7 +533,7 @@ const addException = forgeController.mutation
     return true
   })
 
-const updateEvent = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing event')
   .input({
     query: z.object({
@@ -576,7 +573,7 @@ const updateEvent = forgeController.mutation
       .execute()
   })
 
-const deleteEvent = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an existing event')
   .input({
     query: z.object({
@@ -592,12 +589,12 @@ const deleteEvent = forgeController.mutation
   )
 
 export default forgeRouter({
-  getEventsByDateRange,
-  getEventsToday,
-  getEventById,
-  createEvent,
+  getByDateRange,
+  getToday,
+  getById,
+  create,
   addException,
-  updateEvent,
-  deleteEvent,
+  update,
+  remove,
   scanImage
 })

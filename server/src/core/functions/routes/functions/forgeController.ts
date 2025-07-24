@@ -10,13 +10,12 @@
  * - Support for downloadable content and custom response handling
  *
  * The main exports are:
- * - `forgeController`: Factory for creating new controller builders
+ * - `forgeController`: Factory for creating new controller builders with `query` (GET) and `mutation` (POST) methods
  * - `bulkRegisterControllers`: Utility for registering multiple controllers
  *
  * @example
  * ```typescript
- * const controller = forgeController
- *   .route('POST /users')
+ * const controller = forgeController.mutation
  *   .input({
  *     body: z.object({ name: z.string(), email: z.string().email() })
  *   })
@@ -30,19 +29,16 @@
  * controller.register(router)
  * ```
  */
-import { PBService, checkExistence } from '@functions/database'
+import { checkExistence } from '@functions/database'
 import COLLECTION_SCHEMAS from '@schema'
-import type { BaseResponse } from '@typescript/base_response'
 import type { Request, Response, Router } from 'express'
-import type { Server } from 'socket.io'
-import { z } from 'zod/v4'
-import type {
-  ZodIntersection,
-  ZodObject,
-  ZodRawShape,
-  ZodTypeAny
-} from 'zod/v4'
 
+import {
+  BaseResponse,
+  Context,
+  InferZodType,
+  InputSchema
+} from '../typescript/forge_controller.types'
 import {
   ClientError,
   clientError,
@@ -50,47 +46,22 @@ import {
   successWithBaseResponse
 } from '../utils/response'
 
-export type ZodObjectOrIntersection =
-  | ZodObject<ZodRawShape>
-  | ZodIntersection<ZodTypeAny, ZodTypeAny>
-
-export type InputSchema = {
-  body?: ZodObjectOrIntersection
-  query?: ZodObjectOrIntersection
-}
-
-type InferZodType<T> = T extends ZodObject<ZodRawShape> ? z.infer<T> : object
-
-type Context<TInput extends InputSchema, TOutput = unknown> = {
-  req: Request<
-    never,
-    BaseResponse<TOutput>,
-    InferZodType<TInput['body']>,
-    InferZodType<TInput['query']>
-  >
-  res: Response<BaseResponse<TOutput>>
-  io: Server
-  pb: PBService
-  body: InferZodType<TInput['body']>
-  query: InferZodType<TInput['query']>
-}
-
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
  * Provides comprehensive schema validation, middleware support, and automatic error handling.
  *
- * @template TInput - InputSchema containing body, query, and params validation schemas
+ * @template TMethod - HTTP method type ('get' | 'post')
+ * @template TInput - InputSchema containing body and query validation schemas
  * @template TOutput - The inferred return type from the callback function
  *
  * @example
  * ```typescript
- * const controller = new ForgeControllerBuilder()
- *   .route('POST /users')
+ * const controller = forgeController.mutation
  *   .input({
- *     body: z.object({ name: z.string() }),
- *     query: z.object({ id: z.string() })
+ *     body: z.object({ name: z.string(), age: z.number() }),
+ *     query: z.object({ page: z.string().optional() })
  *   })
- *   .callback(async ({ body, params }) => {
+ *   .callback(async ({ body, query }) => {
  *     // Handler logic here
  *     return { success: true }
  *   })
@@ -104,16 +75,17 @@ export class ForgeControllerBuilder<
   /** Indicates that this class is a ForgeController */
   public __isForgeController!: true
 
+  /** The type of input and output, used for type inference */
   public __input!: TInput
   public __output!: TOutput
 
-  /** The HTTP method for this route (get, post, put, patch, delete) */
+  /** The HTTP method for this route (get, post) */
   protected _method: TMethod = 'get' as TMethod
 
   /** Array of Express middleware functions to apply to this route */
   protected _middlewares: any[] = []
 
-  /** Zod validation schemas for request body, query, and params */
+  /** Zod validation schemas for request body and query */
   protected _schema: TInput = {
     body: undefined,
     query: undefined
@@ -144,10 +116,12 @@ export class ForgeControllerBuilder<
     >,
     res: Response<BaseResponse<any>>
   ) => Promise<void>
+
   /**
    * Creates a new builder instance with updated schema types while preserving current configuration.
-   * This is used internally to maintain immutability when chaining methods.
+   * Used internally to maintain immutability when chaining methods.
    *
+   * @template NewMethod - New HTTP method type
    * @template NewInput - New input schema type
    * @template NewOutput - New output type
    * @param overrides - Partial schema overrides to apply
@@ -172,6 +146,12 @@ export class ForgeControllerBuilder<
     return builder
   }
 
+  /**
+   * Sets the HTTP method for the route.
+   *
+   * @param method - HTTP method ('get' | 'post')
+   * @returns This builder instance for method chaining
+   */
   method(method: TMethod) {
     this._method = method
 
@@ -197,19 +177,18 @@ export class ForgeControllerBuilder<
   }
 
   /**
-   * Sets Zod validation schemas for request input (body, query parameters, and route parameters).
-   * This enables automatic validation and type inference for the route handler.
+   * Sets Zod validation schemas for request input (body and query parameters).
+   * Enables automatic validation and type inference for the route handler.
    *
    * @template T - Object containing optional input schema definitions
-   * @param input - Object with optional body, query, and params Zod schemas
+   * @param input - Object with optional body and query Zod schemas
    * @returns New builder instance with updated input schema types
    *
    * @example
    * ```typescript
    * controller.input({
    *   body: z.object({ name: z.string(), age: z.number() }),
-   *   query: z.object({ page: z.string().optional() }),
-   *   query: z.object({ id: z.string() })
+   *   query: z.object({ page: z.string().optional() })
    * })
    * ```
    */
@@ -262,7 +241,7 @@ export class ForgeControllerBuilder<
    * Configures automatic existence validation for referenced entities in request data.
    * Before the main handler executes, specified fields will be checked against database collections.
    *
-   * @template T - The request section to validate ('params' | 'body' | 'query')
+   * @template T - The request section to validate ('body' | 'query')
    * @param type - Which part of the request to validate
    * @param map - Mapping of field names to collection names for existence checking
    * @returns This builder instance for method chaining
@@ -279,7 +258,7 @@ export class ForgeControllerBuilder<
    * controller.existenceCheck('body', { tagIds: 'tags' })
    * ```
    */
-  existenceCheck<T extends 'params' | 'body' | 'query'>(
+  existenceCheck<T extends 'body' | 'query'>(
     type: T,
     map: T extends 'body'
       ? Partial<Record<keyof InferZodType<TInput['body']>, string>>
@@ -340,16 +319,21 @@ export class ForgeControllerBuilder<
    * The callback receives validated and typed request data along with response utilities.
    * The return type is automatically inferred and made available as a generic parameter.
    *
+   * @template CB - Callback function type
    * @param cb - The route handler function that processes the request
    * @returns New builder instance with inferred output type
    *
    * @example
    * ```typescript
-   * const controller = controller.callback(async ({ req, res, body, params, query, pb, io }) => {
-   *   // body, params, query are fully typed based on input schemas
-   *   const user = await pb.collection('users').getOne(params.id)
-   *   return { success: true, user } // Return type is automatically inferred and captured
-   * })
+   * const controller = forgeController.mutation
+   *   .input({
+   *     body: z.object({ name: z.string() })
+   *   })
+   *   .callback(async ({ req, res, body, query, pb, io }) => {
+   *     // body, query are fully typed based on input schemas
+   *     const user = await pb.collection('users').create(body)
+   *     return { success: true, user } // Return type is automatically inferred
+   *   })
    * // controller now has the return type { success: boolean, user: User } as OutputType
    * ```
    */
@@ -493,7 +477,6 @@ export class ForgeControllerBuilder<
 
     this._handler = __handler
 
-    // Create a new builder instance with the inferred return type
     const newBuilder = new ForgeControllerBuilder<
       TMethod,
       TInput,
@@ -515,10 +498,10 @@ export class ForgeControllerBuilder<
 
   /**
    * Registers this controller with an Express router.
-   * This must be called after setting up the route, schema, and callback.
+   * This must be called after setting up the schema and callback.
    *
    * @param router - Express router instance to register the route with
-   * @throws {Error} When path, method, or handler are missing
+   * @throws {Error} When handler is missing
    *
    * @example
    * ```typescript
@@ -537,7 +520,9 @@ export class ForgeControllerBuilder<
 
 /**
  * Initial builder class that requires input schemas to be set before proceeding.
- * This enforces the pattern where routes must have input validation defined.
+ * Enforces the pattern where routes must have input validation defined.
+ *
+ * @template TMethod - HTTP method type ('get' | 'post')
  */
 class ForgeControllerBuilderWithoutSchema<
   TMethod extends 'get' | 'post' = 'get'
@@ -561,16 +546,15 @@ class ForgeControllerBuilderWithoutSchema<
 
   /**
    * Sets the input validation schemas and transitions to the full builder.
-   * This method transforms the initial builder into a fully-featured controller builder.
+   * Transforms the initial builder into a fully-featured controller builder.
    *
    * @template T - Object containing optional input schema definitions
-   * @param input - Object with optional body, query, and params Zod schemas
+   * @param input - Object with optional body and query Zod schemas
    * @returns New fully-featured builder instance with input schema types applied
    *
    * @example
    * ```typescript
-   * forgeController
-   *   .route('POST /users')
+   * forgeController.mutation
    *   .input({
    *     body: z.object({ name: z.string() }),
    *     query: z.object({ id: z.string() })
@@ -589,6 +573,13 @@ class ForgeControllerBuilderWithoutSchema<
   }
 }
 
+/**
+ * Creates a proxy for initializing controller builders with specific HTTP methods.
+ *
+ * @template TMethod - HTTP method type ('get' | 'post')
+ * @param method - The HTTP method to initialize the builder with
+ * @returns A proxy object that creates a new builder instance
+ */
 function createMethodProxy<TMethod extends 'get' | 'post'>(method: TMethod) {
   return new Proxy(
     {},
@@ -600,6 +591,10 @@ function createMethodProxy<TMethod extends 'get' | 'post'>(method: TMethod) {
   ) as ForgeControllerBuilderWithoutSchema<TMethod>
 }
 
+/**
+ * Factory object for creating controller builders for different HTTP methods.
+ * Provides `query` for GET requests and `mutation` for POST requests.
+ */
 const forgeController = {
   query: createMethodProxy('get'),
   mutation: createMethodProxy('post')

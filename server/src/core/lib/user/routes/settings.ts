@@ -6,7 +6,6 @@ import moment from 'moment'
 import { z } from 'zod/v4'
 
 const updateAvatar = forgeController.mutation
-
   .description('Update user avatar')
   .input({})
   .middlewares(singleUploadMiddleware)
@@ -36,7 +35,6 @@ const updateAvatar = forgeController.mutation
   })
 
 const deleteAvatar = forgeController.mutation
-
   .description('Delete user avatar')
   .input({})
   .statusCode(204)
@@ -100,7 +98,6 @@ const updateProfile = forgeController.mutation
   })
 
 const requestPasswordReset = forgeController.mutation
-
   .description('Request password reset')
   .input({})
   .callback(({ pb }) =>

@@ -10,6 +10,6 @@ export default forgeRouter({
   entries: entriesRouter,
   collections: collectionsRouter,
   languages: languagesRouter,
-  'file-types': fileTypesRouter,
+  fileTypes: fileTypesRouter,
   libgen: libgenRouter
 })

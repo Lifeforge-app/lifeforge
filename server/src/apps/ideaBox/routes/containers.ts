@@ -4,7 +4,7 @@ import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import { z } from 'zod/v4'
 
-const checkContainerExists = forgeController.query
+const validate = forgeController.query
   .description('Check if a container exists')
   .input({
     query: z.object({
@@ -20,7 +20,7 @@ const checkContainerExists = forgeController.query
         .catch(() => {}))
   )
 
-const getAllContainers = forgeController.query
+const list = forgeController.query
   .description('Get all containers')
   .input({})
   .callback(({ pb }) =>
@@ -30,7 +30,7 @@ const getAllContainers = forgeController.query
       .execute()
   )
 
-const createContainer = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new container')
   .input({
     body: SCHEMAS.idea_box.containers
@@ -82,7 +82,7 @@ const createContainer = forgeController.mutation
     return container
   })
 
-const updateContainer = forgeController.mutation
+const update = forgeController.mutation
   .description('Update a container')
   .input({
     query: z.object({
@@ -142,7 +142,7 @@ const updateContainer = forgeController.mutation
     return container
   })
 
-const deleteContainer = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a container')
   .input({
     query: z.object({
@@ -158,9 +158,9 @@ const deleteContainer = forgeController.mutation
   )
 
 export default forgeRouter({
-  checkContainerExists,
-  getAllContainers,
-  createContainer,
-  updateContainer,
-  deleteContainer
+  validate,
+  list,
+  create,
+  update,
+  remove
 })

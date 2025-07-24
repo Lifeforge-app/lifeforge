@@ -8,6 +8,21 @@ import type {
   InferOutput
 } from '../typescript/forge_api_client.types'
 
+function joinObjectsRecursively(
+  target: Record<string, any>,
+  source: Record<string, any>
+): Record<string, any> {
+  for (const key in source) {
+    if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      target[key] = joinObjectsRecursively(target[key] || {}, source[key])
+    } else {
+      target[key] = source[key]
+    }
+  }
+
+  return target
+}
+
 export class ForgeAPIClientController<
   T extends { __isForgeController: true } = any
 > {
@@ -36,7 +51,10 @@ export class ForgeAPIClientController<
   }
 
   input(data: InferInput<T>) {
-    this._input = data
+    this._input = joinObjectsRecursively(
+      this._input || {},
+      data as Record<string, any>
+    )
     this._refreshEndpoint()
 
     this._queryKey = [

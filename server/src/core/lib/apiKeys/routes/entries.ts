@@ -5,7 +5,7 @@ import { z } from 'zod/v4'
 import { challenge } from '..'
 import getDecryptedMaster from '../utils/getDecryptedMaster'
 
-const getAllEntries = forgeController.query
+const list = forgeController.query
   .description('Get all API key entries')
   .input({
     query: z.object({
@@ -30,7 +30,6 @@ const getAllEntries = forgeController.query
   })
 
 const checkKeys = forgeController.query
-
   .description('Check if API keys exist')
   .input({
     query: z.object({
@@ -82,7 +81,7 @@ const getEntryById = forgeController.query
     return encryptedSecondTime
   })
 
-const createEntry = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new API key entry')
   .input({
     body: z.object({
@@ -117,7 +116,7 @@ const createEntry = forgeController.mutation
     return entry
   })
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an API key entry')
   .input({
     query: z.object({
@@ -158,7 +157,7 @@ const updateEntry = forgeController.mutation
     return updatedEntry
   })
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an API key entry')
   .input({
     query: z.object({
@@ -174,10 +173,10 @@ const deleteEntry = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllEntries,
+  list,
   checkKeys,
   getEntryById,
-  createEntry,
-  updateEntry,
-  deleteEntry
+  create,
+  update,
+  remove
 })

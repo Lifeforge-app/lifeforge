@@ -8,7 +8,6 @@ import getReadmeHTML from './utils/readme'
 import { default as _getStatistics } from './utils/statistics'
 
 const getActivities = forgeController.query
-
   .description('Get activities by year')
   .input({
     query: z.object({
@@ -103,13 +102,11 @@ const getActivities = forgeController.query
   })
 
 const getStatistics = forgeController.query
-
   .description('Get code time statistics')
   .input({})
   .callback(({ pb }) => _getStatistics(pb))
 
 const getLastXDays = forgeController.query
-
   .description('Get last X days of code time data')
   .input({
     query: z.object({
@@ -138,7 +135,6 @@ const getLastXDays = forgeController.query
   })
 
 const getProjects = forgeController.query
-
   .description('Get projects statistics')
   .input({
     query: z.object({
@@ -188,7 +184,6 @@ const getProjects = forgeController.query
   })
 
 const getLanguages = forgeController.query
-
   .description('Get languages statistics')
   .input({
     query: z.object({
@@ -238,7 +233,6 @@ const getLanguages = forgeController.query
   })
 
 const getEachDay = forgeController.query
-
   .description('Get each day code time data')
   .input({})
   .callback(async ({ pb }) => {
@@ -277,7 +271,6 @@ const getEachDay = forgeController.query
   })
 
 const getUserMinutes = forgeController.query
-
   .description('Get user minutes')
   .input({
     query: z.object({
@@ -304,7 +297,6 @@ const getUserMinutes = forgeController.query
   })
 
 const eventLog = forgeController.mutation
-
   .description('Log a code time event')
   .input({
     body: z.object({}).passthrough()
@@ -393,7 +385,6 @@ const eventLog = forgeController.mutation
   })
 
 const readme = forgeController.query
-
   .description('Get readme image')
   .input({})
   .noDefaultResponse()

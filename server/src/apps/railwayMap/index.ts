@@ -5,7 +5,6 @@ import { z } from 'zod/v4'
 import dijkstraWithTransfers from './utils/pathFinding'
 
 const getLines = forgeController.query
-
   .description('Get all railway lines')
   .input({})
   .callback(({ pb }) =>
@@ -13,7 +12,6 @@ const getLines = forgeController.query
   )
 
 const getStations = forgeController.query
-
   .description('Get all railway stations')
   .input({})
   .callback(({ pb }) =>
@@ -21,7 +19,6 @@ const getStations = forgeController.query
   )
 
 const getShortestPath = forgeController.query
-
   .description('Get shortest path between two stations')
   .input({
     query: z.object({

@@ -1,4 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   ContentWrapperWithSidebar,
   FAB,
@@ -10,9 +12,6 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
-import { useAPIQuery } from 'shared'
-
-import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
@@ -25,13 +24,17 @@ function CalendarModule() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const { eventQueryKey } = useCalendarStore()
+  const { start, end } = useCalendarStore()
 
-  const rawEventsQuery = useAPIQuery<
-    CalendarControllersSchemas.IEvents['getEventsByDateRange']['response']
-  >(
-    `calendar/events?start=${eventQueryKey[2]}&end=${eventQueryKey[3]}`,
-    eventQueryKey
+  const rawEventsQuery = useQuery(
+    forgeAPI.calendar.events.getByDateRange
+      .input({
+        query: {
+          start,
+          end
+        }
+      })
+      .getQueryOptions()
   )
 
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(

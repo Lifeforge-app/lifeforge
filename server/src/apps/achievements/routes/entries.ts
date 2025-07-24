@@ -3,7 +3,7 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-export const getAllByDifficulty = forgeController.query
+export const list = forgeController.query
   .description('Get all achievements entries by difficulty')
   .input({
     query: SCHEMAS.achievements.entries.pick({
@@ -70,7 +70,7 @@ const remove = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllByDifficulty,
+  list,
   create,
   update,
   remove

@@ -7,7 +7,7 @@ import { z } from 'zod/v4'
 // @ts-expect-error - MomentRange types are not fully compatible with Moment
 const moment = MomentRange.extendMoment(Moment)
 
-const getAllAssets = forgeController.query
+const list = forgeController.query
   .description('Get all wallet assets')
   .input({})
   .callback(({ pb }) =>
@@ -18,7 +18,6 @@ const getAllAssets = forgeController.query
   )
 
 const getAssetAccumulatedBalance = forgeController.query
-
   .description('Get accumulated balance for a wallet asset')
   .input({
     query: z.object({
@@ -123,7 +122,7 @@ const getAssetAccumulatedBalance = forgeController.query
     return accumulatedBalance
   })
 
-const createAsset = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new wallet asset')
   .input({
     body: SCHEMAS.wallet.assets
@@ -145,7 +144,7 @@ const createAsset = forgeController.mutation
     pb.create.collection('wallet__assets').data(body).execute()
   )
 
-const updateAsset = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing wallet asset')
   .input({
     query: z.object({
@@ -172,7 +171,7 @@ const updateAsset = forgeController.mutation
     pb.update.collection('wallet__assets').id(id).data(body).execute()
   )
 
-const deleteAsset = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a wallet asset')
   .input({
     query: z.object({
@@ -188,9 +187,9 @@ const deleteAsset = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllAssets,
+  list,
   getAssetAccumulatedBalance,
-  createAsset,
-  updateAsset,
-  deleteAsset
+  create,
+  update,
+  remove
 })

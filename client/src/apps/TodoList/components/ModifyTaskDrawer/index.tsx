@@ -47,7 +47,7 @@ function ModifyTaskDrawer() {
 
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
 
-  const [dueDate, setDueDate] = useState<Date | undefined>(undefined)
+  const [dueDate, setDueDate] = useState<Date | null>(undefined)
 
   const [priority, setPriority] = useState<string>('')
 

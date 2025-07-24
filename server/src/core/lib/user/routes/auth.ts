@@ -10,7 +10,6 @@ import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 const validateOTP = forgeController.mutation
-
   .description('Validate OTP')
   .input({
     body: z.object({
@@ -21,7 +20,6 @@ const validateOTP = forgeController.mutation
   .callback(({ pb, body }) => _validateOTP(pb, body))
 
 const generateOTP = forgeController.query
-
   .description('Generate OTP')
   .input({})
   .callback(
@@ -34,7 +32,6 @@ const generateOTP = forgeController.query
   )
 
 const login = forgeController.mutation
-
   .description('User login')
   .input({
     body: z.object({
@@ -87,7 +84,6 @@ const login = forgeController.mutation
   })
 
 const verifySessionToken = forgeController.mutation
-
   .description('Verify session token')
   .input({})
   .callback(async ({ req }) => {
