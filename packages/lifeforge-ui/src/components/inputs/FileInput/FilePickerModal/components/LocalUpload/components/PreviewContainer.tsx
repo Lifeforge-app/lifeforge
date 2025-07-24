@@ -1,7 +1,8 @@
 import { Button } from '@components/buttons'
-import FILE_ICONS from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/constants/file_icons'
 import { Icon } from '@iconify/react'
 import { useMemo } from 'react'
+
+import FILE_ICONS from '../../../constants/file_icons'
 
 function PreviewContainer({
   preview,
@@ -20,7 +21,7 @@ function PreviewContainer({
 }) {
   const finalFileName = useMemo(() => {
     if (fileName) return fileName
-    if (typeof file === 'string') return file.split.pop()
+    if (typeof file === 'string') return file.split('/').pop()
     if (file instanceof File) return file.name
 
     return undefined

@@ -1,37 +1,36 @@
 import { Button } from '@components/buttons'
+import _ from 'lodash'
 
 function SubmitButton({
-  submitButtonProps,
+  submitButton,
   submitLoading,
-  openType,
   onSubmitButtonClick
 }: {
-  submitButtonProps?: React.ComponentProps<typeof Button>
+  submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
   submitLoading: boolean
-  openType?: 'create' | 'update' | null
   onSubmitButtonClick: () => Promise<void>
 }) {
-  if (submitButtonProps) {
+  if (typeof submitButton === 'string') {
     return (
       <Button
         className="mt-6 w-full"
-        {...submitButtonProps}
-        loading={submitLoading}
-        onClick={onSubmitButtonClick}
-      />
-    )
-  }
-
-  if (['create', 'update'].includes(openType ?? '')) {
-    return (
-      <Button
-        className="mt-6 w-full"
-        icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+        icon={submitButton === 'create' ? 'tabler:plus' : 'tabler:pencil'}
         loading={submitLoading}
         onClick={onSubmitButtonClick}
       >
-        {openType === 'create' ? 'Create' : 'Update'}
+        {_.upperFirst(submitButton)}
       </Button>
+    )
+  }
+
+  if (submitButton) {
+    return (
+      <Button
+        className="mt-6 w-full"
+        {...submitButton}
+        loading={submitLoading}
+        onClick={onSubmitButtonClick}
+      />
     )
   }
 

@@ -14,8 +14,8 @@ import InputWrapper from '../shared/InputWrapper'
 import CalendarHeader from './components/CalendarHeader'
 
 interface DateInputProps {
-  date: Date | undefined
-  setDate: (date: Date | undefined) => void
+  date: Date | null
+  setDate: (date: Date | null) => void
   name: string
   icon: string
   className?: string
@@ -98,13 +98,7 @@ function DateInput({
           onCalendarOpen={() => {
             setCalendarOpen(true)
           }}
-          onChange={(value: Date | null) => {
-            if (value) {
-              setDate(value)
-            } else {
-              setDate(undefined)
-            }
-          }}
+          onChange={(value: Date | null) => setDate(value)}
         />
         {!!date && (
           <Button
@@ -112,7 +106,7 @@ function DateInput({
             icon="tabler:x"
             variant="plain"
             onClick={() => {
-              setDate(undefined)
+              setDate(null)
             }}
           />
         )}

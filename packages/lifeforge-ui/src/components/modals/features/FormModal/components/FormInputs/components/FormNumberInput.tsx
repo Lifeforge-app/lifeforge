@@ -1,22 +1,15 @@
 import { NumberInput } from '@components/inputs'
 import {
-  IFieldProps,
-  INumberInputFieldProps
+  INumberInputFieldProps,
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-interface FormNumberInputProps<T> {
-  field: IFieldProps<T> & INumberInputFieldProps
-  selectedData: number
-  namespace: string
-  handleChange: (value: number) => void
-}
-
-function FormNumberInput<T>({
+function FormNumberInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormNumberInputProps<T>) {
+}: InferFormInputProps<INumberInputFieldProps>) {
   return (
     <NumberInput
       darker

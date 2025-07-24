@@ -11,3 +11,8 @@ export { default as ModalManager } from './core/ModalManager'
 export { useModalStore } from './core/useModalStore'
 
 export type { ModalComponent } from './core/useModalStore'
+
+export type {
+  Location,
+  FormFieldConfig as RuntimeFieldProps
+} from './features/FormModal/typescript/modal_interfaces'

@@ -1,9 +1,11 @@
 import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import Index from './index'
 import FormModal from './index'
+import { FormFieldConfig } from './typescript/modal_interfaces'
 
 const meta = {
   component: Index
@@ -15,14 +17,14 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    fields: [],
-    title: 'Some Form',
-    icon: 'tabler:list',
-    onClose: () => {},
-    namespace: 'namespace',
-    data: {},
-    setData: () => {}
-  },
+    ui: {
+      title: 'Form Modal',
+      onClose: () => {},
+      icon: 'tabler:form',
+      namespace: 'form-modal',
+      loading: false
+    }
+  } as never,
   render: args => {
     const [data, setData] = useState({
       name: '',
@@ -30,34 +32,40 @@ export const Default: Story = {
       color: ''
     })
 
+    const FIELDS: FormFieldConfig<typeof data> = {
+      name: {
+        label: 'Name',
+        type: 'text',
+        required: true,
+        placeholder: 'Name',
+        icon: 'tabler:text-caption'
+      },
+      icon: {
+        label: 'Icon',
+        type: 'icon',
+        required: true
+      },
+      color: {
+        label: 'Color',
+        type: 'color',
+        required: true
+      }
+    }
+
     return (
       <ModalWrapper isOpen={true}>
         <FormModal
           {...args}
-          data={data}
-          fields={[
-            {
-              id: 'name',
-              label: 'Name',
-              type: 'text',
-              required: true,
-              placeholder: 'Name',
-              icon: 'tabler:text-caption'
-            },
-            {
-              id: 'icon',
-              label: 'Icon',
-              type: 'icon',
-              required: true
-            },
-            {
-              id: 'color',
-              label: 'Color',
-              type: 'color',
-              required: true
+          form={{
+            fields: FIELDS,
+            data,
+            setData,
+            onSubmit: async formData => {
+              console.log('Form submitted with data:', formData)
+              await new Promise(resolve => setTimeout(resolve, 1000))
+              toast.success('Form submitted successfully!')
             }
-          ]}
-          setData={setData}
+          }}
         />
       </ModalWrapper>
     )

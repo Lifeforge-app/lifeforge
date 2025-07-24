@@ -1,22 +1,15 @@
 import { IconInput } from '@components/inputs'
 import {
-  IFieldProps,
-  IIconInputFieldProps
+  IIconInputFieldProps,
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-interface FormIconInputProps<T> {
-  field: IFieldProps<T> & IIconInputFieldProps
-  selectedData: string
-  namespace: string
-  handleChange: (value: string) => void
-}
-
-function FormIconInput<T>({
+function FormIconInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormIconInputProps<T>) {
+}: InferFormInputProps<IIconInputFieldProps>) {
   return (
     <IconInput
       disabled={field.disabled}

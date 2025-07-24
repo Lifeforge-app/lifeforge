@@ -2,12 +2,12 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-import {
-  IPixabaySearchFilter,
-  type PixabaySearchFilterAction
-} from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
 import { Icon } from '@iconify/react'
 
+import {
+  IPixabaySearchFilter,
+  PixabaySearchFilterAction
+} from '../../../typescript/pixabay_interfaces'
 import { CATEGORIES } from '../constants/filterOptions'
 
 interface CategoryFilterProps {

@@ -10,50 +10,54 @@ export type Location = {
 }
 
 export type IFileData = {
-  image: string | File | null
+  file: string | File | null
   preview: string | null
 }
 
 type ITextInputFieldProps = {
-  label: string
-  icon: string
   type: 'text'
+  icon: string
   isPassword?: boolean
   placeholder: string
   qrScanner?: boolean
+  __formDataType: string
+  __finalDataType: string
 }
 
 type INumberInputFieldProps = {
-  label: string
-  icon: string
   type: 'number'
+  icon: string
   placeholder: string
+  __formDataType: number
+  __finalDataType: number
 }
 
 type ICurrencyInputFieldProps = {
-  label: string
-  icon: string
   type: 'currency'
+  icon: string
+  __formDataType: number
+  __finalDataType: number
 }
 
 type ITextAreaInputFieldProps = {
-  label: string
-  icon: string
   type: 'textarea'
+  icon: string
   placeholder: string
+  __formDataType: string
+  __finalDataType: string
 }
 
 type IDateInputFieldProps = {
-  label: string
-  icon: string
   type: 'datetime'
+  icon: string
   hasTime?: boolean
+  __formDataType: Date | null
+  __finalDataType: string | null
 }
 
 type IListboxInputFieldProps = {
-  label: string
-  icon: string
   type: 'listbox'
+  icon: string
   options: Array<{
     value: string
     text: string
@@ -62,101 +66,111 @@ type IListboxInputFieldProps = {
   }>
   nullOption?: string
   multiple?: boolean
+  __formDataType: string | string[] | any[]
+  __finalDataType: string | string[] | any[]
 }
 
 type IColorInputFieldProps = {
-  label: string
   type: 'color'
+  __formDataType: string
+  __finalDataType: string
 }
 
 type IIconInputFieldProps = {
-  label: string
   type: 'icon'
+  __formDataType: string
+  __finalDataType: string
 }
 
 type IImageAndFileInputFieldProps = {
-  label: string
   type: 'file'
   onFileRemoved?: () => void
   enableAIImageGeneration?: boolean
   defaultImageGenerationPrompt?: string
+  __formDataType: IFileData
+  __finalDataType: IFileData['file']
 }
 
 type ILocationInputFieldProps = {
-  label: string
   type: 'location'
+  __formDataType: Location | null
+  __finalDataType: Location | null
 }
 
 type IFormCheckboxFieldProps = {
-  label: string
-  icon: string
   type: 'checkbox'
+  icon: string
+  __formDataType: boolean
+  __finalDataType: boolean
 }
 
-type BaseFieldProps<U extends PropertyKey> = {
-  id: U
+type BaseFieldProps = {
+  label: string
   hidden?: boolean
   required?: boolean
   disabled?: boolean
 }
 
-type FieldTypeMap = {
-  string:
-    | ITextInputFieldProps
-    | ITextAreaInputFieldProps
-    | IColorInputFieldProps
-    | IIconInputFieldProps
-    | IListboxInputFieldProps
-  location: ILocationInputFieldProps
-  number: INumberInputFieldProps | ICurrencyInputFieldProps
-  boolean: IFormCheckboxFieldProps
-  Date: IDateInputFieldProps
-  file: IImageAndFileInputFieldProps
-  'string[]': IListboxInputFieldProps
-  'any[]': IListboxInputFieldProps
-}
-
-type GetTypeKey<T> = T extends string
-  ? 'string'
-  : T extends Location
-    ? 'location'
-    : T extends number
-      ? 'number'
-      : T extends boolean
-        ? 'boolean'
-        : T extends Date
-          ? 'Date'
-          : T extends IFileData
-            ? 'file'
-            : T extends string[]
-              ? 'string[]'
-              : T extends any[]
-                ? 'any[]'
-                : never
-
-type IFieldProps<T = any, U extends keyof T = keyof T> = U extends keyof T
-  ? GetTypeKey<T[U]> extends keyof FieldTypeMap
-    ? BaseFieldProps<U> & FieldTypeMap[GetTypeKey<T[U]>]
-    : BaseFieldProps<U> &
-        (
-          | ITextInputFieldProps
-          | INumberInputFieldProps
-          | ICurrencyInputFieldProps
-          | ITextAreaInputFieldProps
-          | IDateInputFieldProps
-          | IListboxInputFieldProps
-          | IColorInputFieldProps
-          | IIconInputFieldProps
-          | IImageAndFileInputFieldProps
-          | ILocationInputFieldProps
-          | IFormCheckboxFieldProps
-        )
-  : never
+type AllFields =
+  | ITextInputFieldProps
+  | INumberInputFieldProps
+  | ICurrencyInputFieldProps
+  | ITextAreaInputFieldProps
+  | IDateInputFieldProps
+  | IListboxInputFieldProps
+  | IColorInputFieldProps
+  | IIconInputFieldProps
+  | IImageAndFileInputFieldProps
+  | ILocationInputFieldProps
+  | IFormCheckboxFieldProps
 
 type IFormState = Record<string, any>
 
+type MatchFieldByFormDataType<T> = Extract<AllFields, { __formDataType: T }>
+
+type IFieldProps<
+  TFormState extends Record<string, any>,
+  TFormKey extends keyof TFormState = keyof TFormState
+> = TFormKey extends keyof TFormState
+  ? MatchFieldByFormDataType<TFormState[TFormKey]> extends never
+    ? BaseFieldProps & AllFields
+    : BaseFieldProps & MatchFieldByFormDataType<TFormState[TFormKey]>
+  : never
+
+type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never
+
+type FormFieldConfig<TFormState extends IFormState = IFormState> = {
+  [K in keyof TFormState]: BaseFieldProps &
+    DistributiveOmit<
+      MatchFieldByFormDataType<TFormState[K]>,
+      '__formDataType' | '__finalDataType'
+    >
+}
+
+type InferFinalDataType<
+  TFormState extends IFormState,
+  TFieldProps extends IFieldProps<TFormState> = IFieldProps<TFormState>
+> = {
+  [key in keyof TFormState]: key extends keyof TFieldProps
+    ? TFieldProps[key] extends { __finalDataType: infer FinalDataType }
+      ? FinalDataType
+      : never
+    : never
+}
+
+type Field<TField extends AllFields> = IFieldProps<IFormState> & TField
+
+type InferFormInputProps<TField extends AllFields> = {
+  field: Field<TField>
+  selectedData: TField['__formDataType']
+  namespace: string
+  handleChange: (value: TField['__formDataType']) => void
+}
+
 export type {
-  IFieldProps,
+  FormFieldConfig,
   IFormState,
   ITextInputFieldProps,
   INumberInputFieldProps,
@@ -168,5 +182,8 @@ export type {
   IIconInputFieldProps,
   IImageAndFileInputFieldProps,
   ILocationInputFieldProps,
-  IFormCheckboxFieldProps
+  IFormCheckboxFieldProps,
+  InferFinalDataType,
+  InferFormInputProps,
+  Field
 }

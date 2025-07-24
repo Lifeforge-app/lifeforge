@@ -1,5 +1,4 @@
 import { Button } from '@components/buttons'
-import FILE_ICONS from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/constants/file_icons'
 import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
@@ -8,9 +7,10 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
-import FileAndImagePickerModal from './FileAndImagePickerModal'
+import FilePickerModal from './FilePickerModal'
+import FILE_ICONS from './FilePickerModal/constants/file_icons'
 
-function ImageAndFileInput({
+function FileInput({
   darker = true,
   icon,
   name,
@@ -35,7 +35,7 @@ function ImageAndFileInput({
   image: string | File | null
   preview: string | null
   setData: (data: {
-    image: string | File | null
+    file: string | File | null
     preview: string | null
   }) => void
   onImageRemoved?: () => void
@@ -52,15 +52,15 @@ function ImageAndFileInput({
 
   const { t } = useTranslation([namespace, 'common.buttons'])
 
-  const handleImagePickerOpen = useCallback(() => {
-    open(FileAndImagePickerModal, {
+  const handleFilePickerOpen = useCallback(() => {
+    open(FilePickerModal, {
       enablePixabay,
       enableUrl,
       enableAI,
       defaultAIPrompt,
       acceptedMimeTypes,
       onSelect: async (file: string | File, preview: string | null) => {
-        setData({ image: file, preview })
+        setData({ file: file, preview })
       }
     })
   }, [enablePixabay, enableUrl, enableAI, defaultAIPrompt, acceptedMimeTypes])
@@ -95,7 +95,7 @@ function ImageAndFileInput({
           className="mt-6 w-full"
           icon="tabler:x"
           onClick={() => {
-            setData({ image: null, preview: null })
+            setData({ file: null, preview: null })
             onImageRemoved?.()
           }}
         >
@@ -121,7 +121,7 @@ function ImageAndFileInput({
             icon="tabler:x"
             variant="plain"
             onClick={() => {
-              setData({ image: null, preview: null })
+              setData({ file: null, preview: null })
               onImageRemoved?.()
             }}
           />
@@ -131,9 +131,9 @@ function ImageAndFileInput({
         <div className="mt-6 flex flex-col items-center gap-3">
           <Button
             className="w-full"
-            icon="tabler:photo"
+            icon="tabler:file-plus"
             variant="secondary"
-            onClick={handleImagePickerOpen}
+            onClick={handleFilePickerOpen}
           >
             {t('common.buttons:select')}
           </Button>
@@ -144,4 +144,4 @@ function ImageAndFileInput({
   )
 }
 
-export default ImageAndFileInput
+export default FileInput

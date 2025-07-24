@@ -25,8 +25,8 @@ function SidebarSubsectionItem({
 
   const locationDependentStyles = useMemo(
     () =>
-      location.pathname.split.slice(1)[0] === _.kebabCase(name) &&
-      (location.pathname.split.slice(1)[1] === path ||
+      location.pathname.split('/').slice(1)[0] === _.kebabCase(name) &&
+      (location.pathname.split('/').slice(1)[1] === path ||
         (location.pathname.replace(_.kebabCase(name), '').replace(/\//g, '') ===
           '' &&
           subsectionName === 'Dashboard'))

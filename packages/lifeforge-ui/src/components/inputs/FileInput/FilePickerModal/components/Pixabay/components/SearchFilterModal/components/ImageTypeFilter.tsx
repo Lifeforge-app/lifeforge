@@ -2,13 +2,13 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-import {
-  IPixabaySearchFilter,
-  type PixabaySearchFilterAction
-} from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
+import {
+  IPixabaySearchFilter,
+  PixabaySearchFilterAction
+} from '../../../typescript/pixabay_interfaces'
 import { IMAGE_TYPES } from '../constants/filterOptions'
 
 interface ImageTypeFilterProps {

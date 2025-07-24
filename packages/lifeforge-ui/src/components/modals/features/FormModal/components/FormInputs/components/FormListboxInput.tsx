@@ -4,25 +4,18 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import {
-  IFieldProps,
-  IListboxInputFieldProps
+  IListboxInputFieldProps,
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import { Icon } from '@iconify/react'
 import { Fragment } from 'react/jsx-runtime'
 
-interface FormListboxInputProps<T> {
-  field: IFieldProps<T> & IListboxInputFieldProps
-  selectedData: string | string[]
-  namespace: string
-  handleChange: (value: string | string[]) => void
-}
-
-function FormListboxInput<T>({
+function FormListboxInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormListboxInputProps<T>) {
+}: InferFormInputProps<IListboxInputFieldProps>) {
   return (
     <ListboxOrComboboxInput
       buttonContent={
