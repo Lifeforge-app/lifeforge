@@ -2,31 +2,30 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getList = forgeController
-  .route('GET /:id')
+const getList = forgeController.query
   .description('Get wishlist by ID')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__lists'
   })
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.getOne.collection('wishlist__lists').id(id).execute()
   )
 
-const checkListExists = forgeController
-  .route('GET /valid/:id')
+const checkListExists = forgeController.query
+
   .description('Check if wishlist exists')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
   .callback(
-    async ({ pb, params: { id } }) =>
+    async ({ pb, query: { id } }) =>
       !!(await pb.getOne
         .collection('wishlist__lists')
         .id(id)
@@ -34,14 +33,12 @@ const checkListExists = forgeController
         .catch(() => null))
   )
 
-const getAllLists = forgeController
-  .route('GET /')
+const getAllLists = forgeController.query
   .description('Get all wishlists with statistics')
   .input({})
   .callback(({ pb }) => pb.getFullList.collection('wishlist__lists').execute())
 
-const createList = forgeController
-  .route('POST /')
+const createList = forgeController.mutation
   .description('Create a new wishlist')
   .input({
     body: SCHEMAS.wishlist.lists
@@ -51,19 +48,18 @@ const createList = forgeController
     pb.create.collection('wishlist__lists_aggregated').data(body).execute()
   )
 
-const updateList = forgeController
-  .route('PATCH /:id')
+const updateList = forgeController.mutation
   .description('Update an existing wishlist')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.wishlist.lists
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__lists'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update
       .collection('wishlist__lists_aggregated')
       .id(id)
@@ -71,19 +67,18 @@ const updateList = forgeController
       .execute()
   )
 
-const deleteList = forgeController
-  .route('DELETE /:id')
+const deleteList = forgeController.mutation
   .description('Delete a wishlist')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__lists'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('wishlist__lists_aggregated').id(id).execute()
   )
 

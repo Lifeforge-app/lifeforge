@@ -3,11 +3,11 @@ import { SCHEMAS } from '@schema'
 import { Location } from '@typescript/location.types'
 import { z } from 'zod/v4'
 
-const updateTicket = forgeController
-  .route('PATCH /:id')
+const updateTicket = forgeController.mutation
+
   .description('Update ticket information for a movie entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.movies.entries
@@ -21,10 +21,10 @@ const updateTicket = forgeController
         theatre_location: Location.optional()
       })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'movies__entries'
   })
-  .callback(({ pb, params: { id }, body }) => {
+  .callback(({ pb, query: { id }, body }) => {
     const finalData = {
       ...body,
       theatre_location: body.theatre_location?.name,
@@ -41,19 +41,18 @@ const updateTicket = forgeController
       .execute()
   })
 
-const clearTicket = forgeController
-  .route('DELETE /:id')
+const clearTicket = forgeController.mutation
   .description('Clear ticket information for a movie entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'movies__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.update
       .collection('movies__entries')
       .id(id)

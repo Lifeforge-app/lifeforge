@@ -6,70 +6,60 @@ import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
 
-const getIdeas = forgeController
-  .route('GET /:container/*')
+const getIdeas = forgeController.query
   .description('Get ideas from a folder')
   .input({
-    params: z.object({
-      container: z.string(),
-      '0': z.string()
-    }),
     query: z.object({
+      container: z.string(),
+      path: z.string(),
       archived: z
         .string()
         .optional()
         .transform(val => val === 'true')
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     container: 'idea_box__containers'
   })
-  .callback(
-    async ({
+  .callback(async ({ pb, query: { path: pathParam, container, archived } }) => {
+    const path = pathParam.split('/').filter(e => e)
+
+    const { folderExists, lastFolder } = await validateFolderPath(
       pb,
-      params: { '0': pathParam, container },
-      query: { archived }
-    }) => {
-      const path = pathParam.split('/').filter(e => e)
+      container,
+      path
+    )
 
-      const { folderExists, lastFolder } = await validateFolderPath(
-        pb,
-        container,
-        path
+    if (!folderExists) {
+      throw new ClientError(
+        `Folder with path "${pathParam}" does not exist in container "${container}"`
       )
-
-      if (!folderExists) {
-        throw new ClientError(
-          `Folder with path "${pathParam}" does not exist in container "${container}"`
-        )
-      }
-
-      return await pb.getFullList
-        .collection('idea_box__entries')
-        .filter([
-          {
-            field: 'container',
-            operator: '=',
-            value: container
-          },
-          {
-            field: 'archived',
-            operator: '=',
-            value: archived
-          },
-          {
-            field: 'folder',
-            operator: '=',
-            value: lastFolder || ''
-          }
-        ])
-        .sort(['-pinned', '-created'])
-        .execute()
     }
-  )
 
-const createIdea = forgeController
-  .route('POST /')
+    return await pb.getFullList
+      .collection('idea_box__entries')
+      .filter([
+        {
+          field: 'container',
+          operator: '=',
+          value: container
+        },
+        {
+          field: 'archived',
+          operator: '=',
+          value: archived
+        },
+        {
+          field: 'folder',
+          operator: '=',
+          value: lastFolder || ''
+        }
+      ])
+      .sort(['-pinned', '-created'])
+      .execute()
+  })
+
+const createIdea = forgeController.mutation
   .description('Create a new idea')
   .input({
     body: SCHEMAS.idea_box.entries
@@ -143,11 +133,10 @@ const createIdea = forgeController
     }
   )
 
-const updateIdea = forgeController
-  .route('PATCH /:id')
+const updateIdea = forgeController.mutation
   .description('Update an idea')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: z.object({
@@ -157,11 +146,11 @@ const updateIdea = forgeController
       tags: z.array(z.string()).optional()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
   .callback(
-    async ({ pb, params: { id }, body: { title, content, type, tags } }) => {
+    async ({ pb, query: { id }, body: { title, content, type, tags } }) => {
       let data
 
       switch (type) {
@@ -191,34 +180,33 @@ const updateIdea = forgeController
     }
   )
 
-const deleteIdea = forgeController
-  .route('DELETE /:id')
+const deleteIdea = forgeController.mutation
   .description('Delete an idea')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('idea_box__entries').id(id).execute()
   )
   .statusCode(204)
 
-const pinIdea = forgeController
-  .route('POST /pin/:id')
+const pinIdea = forgeController.mutation
+
   .description('Pin/unpin an idea')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const idea = await pb.getOne
       .collection('idea_box__entries')
       .id(id)
@@ -233,18 +221,18 @@ const pinIdea = forgeController
       .execute()
   })
 
-const archiveIdea = forgeController
-  .route('POST /archive/:id')
+const archiveIdea = forgeController.mutation
+
   .description('Archive/unarchive an idea')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const idea = await pb.getOne
       .collection('idea_box__entries')
       .id(id)
@@ -260,24 +248,24 @@ const archiveIdea = forgeController
       .execute()
   })
 
-const moveIdea = forgeController
-  .route('POST /move/:id')
+const moveIdea = forgeController.mutation
+
   .description('Move an idea to a different folder')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: z.object({
       target: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
   .existenceCheck('body', {
     target: 'idea_box__folders'
   })
-  .callback(({ pb, params: { id }, body: { target } }) =>
+  .callback(({ pb, query: { id }, body: { target } }) =>
     pb.update
       .collection('idea_box__entries')
       .id(id)
@@ -287,18 +275,18 @@ const moveIdea = forgeController
       .execute()
   )
 
-const removeFromFolder = forgeController
-  .route('DELETE /move/:id')
+const removeFromFolder = forgeController.mutation
+
   .description('Remove an idea from its current folder')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.update
       .collection('idea_box__entries')
       .id(id)

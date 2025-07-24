@@ -5,8 +5,7 @@ import { z } from 'zod/v4'
 import { challenge } from '..'
 import getDecryptedMaster from '../utils/getDecryptedMaster'
 
-const getAllEntries = forgeController
-  .route('GET /')
+const getAllEntries = forgeController.query
   .description('Get all API key entries')
   .input({
     query: z.object({
@@ -30,8 +29,8 @@ const getAllEntries = forgeController
     return entries
   })
 
-const checkKeys = forgeController
-  .route('GET /check')
+const checkKeys = forgeController.query
+
   .description('Check if API keys exist')
   .input({
     query: z.object({
@@ -48,21 +47,18 @@ const checkKeys = forgeController
       .every(key => allEntries.some(entry => entry.keyId === key))
   })
 
-const getEntryById = forgeController
-  .route('GET /:id')
+const getEntryById = forgeController.query
   .description('Get API key entry by ID')
   .input({
-    params: z.object({
-      id: z.string()
-    }),
     query: z.object({
+      id: z.string(),
       master: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'api_keys__entries'
   })
-  .callback(async ({ pb, params: { id }, query: { master } }) => {
+  .callback(async ({ pb, query: { id, master } }) => {
     const decryptedMaster = await getDecryptedMaster(
       pb,
       decodeURIComponent(master)
@@ -86,8 +82,7 @@ const getEntryById = forgeController
     return encryptedSecondTime
   })
 
-const createEntry = forgeController
-  .route('POST /')
+const createEntry = forgeController.mutation
   .description('Create a new API key entry')
   .input({
     body: z.object({
@@ -122,21 +117,20 @@ const createEntry = forgeController
     return entry
   })
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update an API key entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: z.object({
       data: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'api_keys__entries'
   })
-  .callback(async ({ pb, params: { id }, body: { data } }) => {
+  .callback(async ({ pb, query: { id }, body: { data } }) => {
     const decryptedData = JSON.parse(decrypt2(data, challenge))
 
     const { keyId, name, description, icon, key, master } = decryptedData
@@ -164,19 +158,18 @@ const updateEntry = forgeController
     return updatedEntry
   })
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete an API key entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'api_keys__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('api_keys__entries').id(id).execute()
   )
 

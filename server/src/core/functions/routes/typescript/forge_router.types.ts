@@ -1,27 +1,28 @@
 import { Router } from 'express'
-import { ForgeControllerBuilderBase } from 'lifeforge-api'
-
-import { ForgeControllerBuilder } from '../functions/forgeController'
 
 // Define the controller type
 
 // Define the router input type to support nested structures like tRPC
 export interface RouterInput {
-  [key: string]: Router | ForgeControllerBuilder | RouterInput
+  [key: string]:
+    | Router
+    | {
+        __isForgeController: true
+      }
+    | RouterInput
 }
 
-// Enhanced type-preserving router that maintains the input structure for type inference
 export type ForgeRouter<T extends RouterInput> = T
 
 // Type utility to extract the structure from the router
 export type InferRouterStructure<T> = T extends ForgeRouter<infer U> ? U : never
 
 // Helper type to get all controller paths in a nested structure
-export type GetRouterPaths<T> = T extends ForgeControllerBuilderBase
+export type GetRouterPaths<T> = T extends { __isForgeController: true }
   ? T
   : T extends RouterInput
     ? {
-        [K in keyof T]: T[K] extends ForgeControllerBuilderBase
+        [K in keyof T]: T[K] extends { __isForgeController: true }
           ? T[K]
           : T[K] extends RouterInput
             ? GetRouterPaths<T[K]>
@@ -32,7 +33,7 @@ export type GetRouterPaths<T> = T extends ForgeControllerBuilderBase
 // Type to extract all available routes in dot notation (like tRPC)
 export type RouterPaths<T> = T extends RouterInput
   ? {
-      [K in keyof T]: T[K] extends ForgeControllerBuilderBase
+      [K in keyof T]: T[K] extends { __isForgeController: true }
         ? K
         : T[K] extends RouterInput
           ? `${K & string}.${RouterPaths<T[K]> & string}`

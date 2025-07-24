@@ -25,5 +25,10 @@
   "exclude": [
     "dist",
     "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../../server"
+    }
   ]
 }

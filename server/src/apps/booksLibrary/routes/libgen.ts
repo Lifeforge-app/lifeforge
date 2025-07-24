@@ -23,8 +23,8 @@ interface IBooksLibraryLibgenSearchResult {
   page: number
 }
 
-const getStatus = forgeController
-  .route('GET /status')
+const getStatus = forgeController.query
+
   .description('Get libgen service status')
   .input({})
   .callback(async () => {
@@ -44,8 +44,8 @@ const getStatus = forgeController
     return status.ok
   })
 
-const searchBooks = forgeController
-  .route('GET /search')
+const searchBooks = forgeController.query
+
   .description('Search books in libgen')
   .input({
     query: z.object({
@@ -98,15 +98,15 @@ const searchBooks = forgeController
     }
   })
 
-const getBookDetails = forgeController
-  .route('GET /details/:md5')
+const getBookDetails = forgeController.query
+
   .description('Get book details from libgen')
   .input({
-    params: z.object({
+    query: z.object({
       md5: z.string()
     })
   })
-  .callback(async ({ params: { md5 } }) => {
+  .callback(async ({ query: { md5 } }) => {
     const target = new URL('http://libgen.is/book/index.php')
 
     target.searchParams.set('md5', md5)
@@ -122,16 +122,16 @@ const getBookDetails = forgeController
     return final
   })
 
-const getLocalLibraryData = forgeController
-  .route('GET /local-library-data/:md5')
+const getLocalLibraryData = forgeController.query
+
   .description('Get local library data for a book')
   .input({
-    params: z.object({
+    query: z.object({
       provider: z.string(),
       md5: z.string()
     })
   })
-  .callback(async ({ params: { md5, provider } }) => {
+  .callback(async ({ query: { md5, provider } }) => {
     const target = new URL(
       provider === 'libgen.is'
         ? 'http://libgen.is/book/index.php'
@@ -155,11 +155,11 @@ const getLocalLibraryData = forgeController
     }
   })
 
-const addToLibrary = forgeController
-  .route('POST /add-to-library/:md5')
+const addToLibrary = forgeController.mutation
+
   .description('Add a book to the library from libgen')
   .input({
-    params: z.object({
+    query: z.object({
       md5: z.string()
     }),
     body: z.object({
@@ -178,7 +178,7 @@ const addToLibrary = forgeController
     })
   })
   .statusCode(202)
-  .callback(async ({ io, pb, params: { md5 }, body }) => {
+  .callback(async ({ io, pb, query: { md5 }, body }) => {
     const target = `http://libgen.li/ads.php?md5=${md5}`
 
     const taskId = addToTaskPool(io, {
