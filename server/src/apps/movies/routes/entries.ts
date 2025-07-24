@@ -24,7 +24,6 @@ const getAllEntries = forgeController
           value: watched
         }
       ])
-      .sort(['-is_watched', '-ticket_number', '-theatre_showtime', 'title'])
       .execute()
 
     const total = (
@@ -37,7 +36,27 @@ const getAllEntries = forgeController
 
     return {
       total,
-      entries
+      entries: entries.sort((a, b) => {
+        if (a.is_watched !== b.is_watched) {
+          return a.is_watched ? 1 : -1 // Unwatched entries come first
+        }
+
+        if (
+          (a.ticket_number && !b.ticket_number) ||
+          (!a.ticket_number && b.ticket_number)
+        ) {
+          return a.ticket_number ? -1 : 1 // Entries with tickets come first
+        }
+
+        if (a.theatre_showtime && b.theatre_showtime) {
+          return (
+            new Date(b.theatre_showtime).getTime() -
+            new Date(a.theatre_showtime).getTime()
+          )
+        }
+
+        return a.title.localeCompare(b.title)
+      })
     }
   })
 

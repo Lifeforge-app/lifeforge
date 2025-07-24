@@ -1,28 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { clientError } from '@functions/routes/utils/response'
-import type { Request, Response } from 'express'
+import COLLECTION_SCHEMAS from '@schema'
 
-export default async function checkExistence(
-  req: Request<any, any, any, any>,
-  res: Response,
-  collection: string,
-  id: string,
-  sendError = true
-): Promise<boolean> {
-  const found =
-    (await req.pb
-      .collection(collection)
-      .getOne(id)
-      .then(() => true)
-      .catch(() => {})) ?? false
+import PBService from './PBService'
 
-  if (!found && sendError) {
-    clientError(
-      res,
-      `Document with ID ${id} not found in collection ${collection}`,
-      404
-    )
-  }
+const checkExistence = async (
+  pb: PBService,
+  collection: keyof typeof COLLECTION_SCHEMAS,
+  id: string
+): Promise<boolean> =>
+  (await pb.getOne
+    .collection(collection)
+    .id(id)
+    .execute()
+    .then(() => true)
+    .catch(() => {})) ?? false
 
-  return found
-}
+export default checkExistence
