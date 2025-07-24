@@ -1,58 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { RouterInput } from '@server/core/functions/routes/typescript/forge_router.types'
-import type { Router } from '@server/core/routes'
-import { UseQueryOptions } from '@tanstack/react-query'
-import {
-  type ForgeControllerBuilderBase,
-  type ZodObjectOrIntersection,
-  fetchAPI
-} from 'shared'
-import { z } from 'zod/v4'
+import type { UseQueryOptions } from '@tanstack/react-query'
+import { fetchAPI } from 'shared'
+import type {
+  InferInput,
+  InferOutput,
+  FilteredRouteKey,
+  RouteKeys,
+  ControllerByRoute
+} from '../typescript/forge_api_client.types'
 
-export type InferInput<T> =
-  T extends ForgeControllerBuilderBase<string, infer I, any>
-    ? I extends Record<string, ZodObjectOrIntersection>
-      ? {
-          [K in keyof I]: I[K] extends ZodObjectOrIntersection
-            ? z.infer<I[K]>
-            : never
-        }
-      : never
-    : never
+import type { ForgeControllerBuilderBase } from './forgeControllerBase'
 
-export type InferOutput<T> =
-  T extends ForgeControllerBuilderBase<string, any, infer O> ? O : never
+export class ForgeAPIClientController<
+  T extends ForgeControllerBuilderBase = any
+> {
+  public __type!: T
 
-type FilteredRouteKey<T> = {
-  [K in keyof T]: T[K] extends ForgeControllerBuilderBase ? never : K
-}[keyof T]
-
-type RouteNameMap<T> = {
-  [K in keyof T]: T[K] extends ForgeControllerBuilderBase<infer R, any, any>
-    ? R extends string
-      ? [R, K]
-      : never
-    : never
-}[keyof T]
-
-type RouteToKeyMap<T> = {
-  [P in RouteNameMap<T> as P[0]]: P[1]
-}
-
-type RouteKeys<T> = keyof RouteToKeyMap<T>
-
-type ControllerByRoute<
-  T,
-  R extends RouteKeys<T>,
-  K extends keyof T = RouteToKeyMap<T>[R] & keyof T
-> =
-  T[K] extends ForgeControllerBuilderBase<infer R, any, any>
-    ? R extends string
-      ? T[K]
-      : never
-    : never
-
-class ControllerBuilder<T extends ForgeControllerBuilderBase> {
   private _queryKey: unknown[] = []
   private _endpoint: string = ''
   private _input:
@@ -64,6 +27,7 @@ class ControllerBuilder<T extends ForgeControllerBuilderBase> {
     | undefined
 
   constructor(
+    private _apiHost: string,
     private _route: string,
     private _method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   ) {}
@@ -89,8 +53,7 @@ class ControllerBuilder<T extends ForgeControllerBuilderBase> {
       refetchOnWindowFocus: false,
       staleTime: Infinity,
       queryKey: this._queryKey,
-      queryFn: () =>
-        fetchAPI<InferOutput<T>>(import.meta.env.VITE_API_HOST, this._endpoint)
+      queryFn: () => fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint)
     }
   }
 
@@ -116,11 +79,15 @@ class ControllerBuilder<T extends ForgeControllerBuilderBase> {
   }
 }
 
-class APIBuilder<Current extends RouterInput> {
-  constructor(private _currentRoute: string = '') {}
+export class ForgeAPIClient<Current> {
+  constructor(
+    private _apiHost: string,
+    private _currentRoute: string = ''
+  ) {}
 
   route<K extends FilteredRouteKey<Current>>(key: K) {
-    return new APIBuilder<Current[K] extends RouterInput ? Current[K] : never>(
+    return new ForgeAPIClient<Current[K]>(
+      this._apiHost,
       `${this._currentRoute}${key as string}`
     )
   }
@@ -142,13 +109,10 @@ class APIBuilder<Current extends RouterInput> {
       throw new Error(`Invalid HTTP method: ${method}`)
     }
 
-    return new ControllerBuilder<ControllerByRoute<Current, R>>(
+    return new ForgeAPIClientController<ControllerByRoute<Current, R>>(
+      this._apiHost,
       `${this._currentRoute}${path}`,
       method
     )
   }
 }
-
-const forgeAPI = new APIBuilder<Router>()
-
-export default forgeAPI

@@ -42,12 +42,5 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false
-  },
-  "include": [
-    "./server/src/**/*",
-    "./client/src/**/*",
-    "./shared/src/**/*",
-    "./packages/lifeforge-ui/src/**/*",
-    "./apps/**/src/**/*"
-  ]
+  }
 }
