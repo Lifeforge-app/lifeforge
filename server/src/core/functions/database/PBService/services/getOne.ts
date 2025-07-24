@@ -107,7 +107,7 @@ class GetOne<
     }
 
     return this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getOne(this._itemId, {
         expand: this._expand,
         fields: this._fields

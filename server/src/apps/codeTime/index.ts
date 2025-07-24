@@ -322,7 +322,7 @@ const logEvent = forgeController
         {
           field: 'date',
           operator: '~',
-          value: 'date'
+          value: date
         }
       ])
       .execute()

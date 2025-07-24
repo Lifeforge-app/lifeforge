@@ -28,12 +28,15 @@ export const createEntry = forgeController
   .route('POST /')
   .description('Create a new achievements entry')
   .input({
-    body: SCHEMAS.achievements.entries
+    body: SCHEMAS.achievements.entries.omit({
+      created: true,
+      updated: true
+    })
   })
   .statusCode(201)
-  .callback(async ({ pb, body }) => {
+  .callback(({ pb, body }) =>
     pb.create.collection('achievements__entries').data(body).execute()
-  })
+  )
 
 export const updateEntry = forgeController
   .route('PATCH /:id')
@@ -47,13 +50,9 @@ export const updateEntry = forgeController
   .existenceCheck('params', {
     id: 'achievements__entries'
   })
-  .callback(async ({ pb, params: { id }, body }) => {
-    await pb.update
-      .collection('achievements__entries')
-      .id(id)
-      .data(body)
-      .execute()
-  })
+  .callback(({ pb, params: { id }, body }) =>
+    pb.update.collection('achievements__entries').id(id).data(body).execute()
+  )
 
 export const deleteEntry = forgeController
   .route('DELETE /:id')
@@ -67,9 +66,9 @@ export const deleteEntry = forgeController
     id: 'achievements__entries'
   })
   .statusCode(204)
-  .callback(async ({ pb, params: { id } }) => {
-    await pb.delete.collection('achievements__entries').id(id).execute()
-  })
+  .callback(({ pb, params: { id } }) =>
+    pb.delete.collection('achievements__entries').id(id).execute()
+  )
 
 export default forgeRouter({
   getAllEntriesByDifficulty,

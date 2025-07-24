@@ -177,7 +177,7 @@ class GetList<
       : ''
 
     return this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getList(this._page, this._perPage, {
         filter: filterString,
         sort: this._sort,

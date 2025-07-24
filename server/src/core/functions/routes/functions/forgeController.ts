@@ -31,6 +31,7 @@
  * ```
  */
 import { PBService, checkExistence } from '@functions/database'
+import COLLECTION_SCHEMAS from '@schema'
 import { BaseResponse } from '@typescript/base_response'
 import { Request, Response } from 'express'
 import { Server } from 'socket.io'
@@ -378,7 +379,6 @@ export class ForgeControllerBuilder<
     }
 
     async function __handler(
-      this: { pb: PBService; io: Server },
       req: Request<
         InferZodType<TInput['params']>,
         any,
@@ -427,24 +427,38 @@ export class ForgeControllerBuilder<
                 for (const val of value) {
                   if (
                     !(await checkExistence(
-                      req as any,
-                      res,
-                      collection.replace(/\^?\[(.*)\]$/, '$1'),
+                      req.pb,
+                      collection.replace(
+                        /\^?\[(.*)\]$/,
+                        '$1'
+                      ) as keyof typeof COLLECTION_SCHEMAS,
                       val
                     ))
                   ) {
+                    clientError(
+                      res,
+                      `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`
+                    )
+
                     return
                   }
                 }
               } else {
                 if (
                   !(await checkExistence(
-                    req as any,
-                    res,
-                    collection.replace(/\^?\[(.*)\]$/, '$1'),
+                    req.pb,
+                    collection.replace(
+                      /\^?\[(.*)\]$/,
+                      '$1'
+                    ) as keyof typeof COLLECTION_SCHEMAS,
                     value!
                   ))
                 ) {
+                  clientError(
+                    res,
+                    `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
+                  )
+
                   return
                 }
               }
@@ -483,6 +497,7 @@ export class ForgeControllerBuilder<
           err instanceof Error ? err.message : err
         )
         serverError(res, 'Internal server error')
+        throw err
       }
     }
 
