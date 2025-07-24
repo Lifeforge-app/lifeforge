@@ -1,4 +1,4 @@
-export { ForgeControllerBuilderBase } from './core/forgeControllerBase'
+export { ForgeAPIServerControllerBase } from './core/forgeAPIServer'
 
 export { ForgeAPIClient, ForgeAPIClientController } from './core/forgeAPIClient'
 
