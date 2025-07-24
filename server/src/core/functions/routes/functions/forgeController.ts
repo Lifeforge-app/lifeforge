@@ -509,12 +509,12 @@ export class ForgeControllerBuilder<
    * controller.register(router)
    * ```
    */
-  register(router: Router) {
+  register(router: Router, routeName: string = '') {
     if (!this._handler) {
       throw new Error('Missing handler. Use .callback() before .register()')
     }
 
-    router[this._method]('/', ...this._middlewares, this._handler)
+    router[this._method](`/${routeName}`, ...this._middlewares, this._handler)
   }
 }
 
@@ -581,14 +581,13 @@ class ForgeControllerBuilderWithoutSchema<
  * @returns A proxy object that creates a new builder instance
  */
 function createMethodProxy<TMethod extends 'get' | 'post'>(method: TMethod) {
-  return new Proxy(
-    {},
-    {
-      get() {
-        return new ForgeControllerBuilderWithoutSchema<TMethod>(method)
-      }
+  const builder = new ForgeControllerBuilderWithoutSchema<TMethod>(method)
+
+  return new Proxy(builder, {
+    get(target, prop, receiver) {
+      return Reflect.get(target, prop, receiver)
     }
-  ) as ForgeControllerBuilderWithoutSchema<TMethod>
+  })
 }
 
 /**
