@@ -22,7 +22,7 @@ const route = forgeAPI
   .route('/entries')
   .controller('GET /:difficulty')
 
-export type IAchievement = InferOutput<typeof route>[number]
+export type IAchievement = InferOutput<typeof route>
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
