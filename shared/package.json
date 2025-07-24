@@ -4,12 +4,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "dev": "tsc --watch",
     "types": "tsc -b --noEmit",

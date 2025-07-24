@@ -4,7 +4,11 @@ import { ForgeControllerBuilder } from '../functions/forgeController'
 import { type InputSchema } from './forge_controller.types'
 
 // Define the controller type
-export type ControllerType = ForgeControllerBuilder<InputSchema, unknown>
+export type ControllerType = ForgeControllerBuilder<
+  string,
+  InputSchema,
+  unknown
+>
 
 // Define the router input type to support nested structures like tRPC
 export interface RouterInput {
