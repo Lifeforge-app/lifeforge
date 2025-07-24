@@ -1,7 +1,6 @@
+import { Location } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-
-import { LocationsCustomSchemas } from 'shared/types/collections'
 
 import LocationInput from './LocationInput'
 
@@ -20,8 +19,7 @@ export const Default: Story = {
     namespace: 'namespace'
   },
   render: args => {
-    const [location, setLocation] =
-      useState<LocationsCustomSchemas.ILocation | null>(null)
+    const [location, setLocation] = useState<Location | null>(null)
 
     return (
       <div className="w-[50vw]">

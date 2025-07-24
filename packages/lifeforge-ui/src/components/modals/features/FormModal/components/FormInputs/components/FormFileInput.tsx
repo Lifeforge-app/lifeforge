@@ -1,30 +1,17 @@
-import { ImageAndFileInput } from '@components/inputs'
+import { FileInput } from '@components/inputs'
 import {
-  IFieldProps,
-  IImageAndFileInputFieldProps
+  IImageAndFileInputFieldProps,
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-interface FormFileInputProps<T> {
-  field: IFieldProps<T> & IImageAndFileInputFieldProps
-  selectedData: {
-    image: string | File | null
-    preview: string | null
-  }
-  namespace: string
-  handleChange: (value: {
-    image: string | File | null
-    preview: string | null
-  }) => void
-}
-
-function FormFileInput<T>({
+function FormFileInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormFileInputProps<T>) {
+}: InferFormInputProps<IImageAndFileInputFieldProps>) {
   return (
-    <ImageAndFileInput
+    <FileInput
       enablePixabay
       enableUrl
       acceptedMimeTypes={{
@@ -34,7 +21,7 @@ function FormFileInput<T>({
       disabled={field.disabled}
       enableAI={field.enableAIImageGeneration}
       icon="tabler:file"
-      image={selectedData.image}
+      image={selectedData.file}
       name={field.label}
       namespace={namespace}
       preview={selectedData.preview}
@@ -42,7 +29,7 @@ function FormFileInput<T>({
       setData={handleChange}
       onImageRemoved={() =>
         handleChange({
-          image: null,
+          file: null,
           preview: null
         })
       }

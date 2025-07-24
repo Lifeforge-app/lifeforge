@@ -1,170 +1,57 @@
 import { Button } from '@components/buttons'
-import useModifyMutation from '@components/modals/features/FormModal/hooks/useModifyMutation'
 import type {
-  IFieldProps,
-  IFormState
+  FormFieldConfig,
+  IFormState,
+  InferFinalDataType
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 import { LoadingScreen } from '@components/screens'
-import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import type { RecordModel } from 'pocketbase'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import { useAPIEndpoint } from 'shared'
 
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
 
-function FormModal<T extends IFormState, U extends RecordModel>({
-  // fields stuff
-  fields,
-  additionalFields,
-  data,
-  setData,
-
-  // modal stuff
-  title,
-  icon,
-  openType,
-  onClose,
-  loading = false,
-
-  // submit stuff
-  onSubmit,
-  id,
-  endpoint,
-  queryKey,
-  getFinalData,
-  sortBy,
-  sortMode,
-  submitButtonProps = {
+function FormModal<TFormState extends IFormState>({
+  form: { fields, additionalFields, data, setData, onSubmit },
+  ui,
+  submitButton = {
     children: 'Submit',
     icon: 'tabler:check'
   },
-  customUpdateDataList,
-
-  // action button stuff
-  actionButtonIcon,
-  actionButtonIsRed,
-  onActionButtonClick,
-
-  // misc stuff
-  namespace
+  actionButton
 }: {
-  modalRef?: React.RefObject<HTMLDivElement | null>
-  fields: IFieldProps<T>[]
-  additionalFields?: React.ReactNode
-  data: T
-  setData: React.Dispatch<React.SetStateAction<T>>
-  title: string
-  icon: string
-  openType?: 'create' | 'update' | null
-  onClose: () => void
-  submitButtonProps?: React.ComponentProps<typeof Button>
-  onSubmit?: () => Promise<void>
-  queryKey?: unknown[]
-  endpoint?: string
-  id?: string
-  loading?: boolean
-  actionButtonIcon?: string
-  actionButtonIsRed?: boolean
-  onActionButtonClick?: () => void
-  namespace: string
-  getFinalData?: (originalData: T) => Promise<Record<string, unknown>>
-  sortBy?: keyof U
-  sortMode?: 'asc' | 'desc'
-  customUpdateDataList?: {
-    create?: (newData: U) => void
-    update?: (newData: U) => void
+  form: {
+    fields: FormFieldConfig<TFormState>
+    additionalFields?: React.ReactNode
+    data: TFormState
+    setData: React.Dispatch<React.SetStateAction<TFormState>>
+    onSubmit: (data: InferFinalDataType<TFormState>) => Promise<void>
+  }
+  ui: {
+    title: string
+    icon: string
+    onClose: () => void
+    namespace: string
+    loading?: boolean
+  }
+  submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
+  actionButton?: {
+    icon: string
+    isRed?: boolean
+    onClick?: () => void
   }
 }) {
-  const apiHost = useAPIEndpoint()
-
-  const queryClient = useQueryClient()
-
   const [submitLoading, setSubmitLoading] = useState(false)
 
-  const entryCreateMutation = useModifyMutation<U>(
-    'create',
-    apiHost,
-    endpoint ?? '',
-    {
-      onSettled: () => {
-        setSubmitLoading(false)
-      },
-      onSuccess: (newData: U) => {
-        if (customUpdateDataList?.create) {
-          customUpdateDataList.create(newData)
-        } else {
-          queryClient.setQueryData<U[]>(queryKey ?? [], old => {
-            if (!old) return []
-
-            return [...old, newData].sort((a, b) => {
-              if (sortBy) {
-                if (sortMode === 'asc') {
-                  return a[sortBy] > b[sortBy] ? 1 : -1
-                }
-
-                return a[sortBy] < b[sortBy] ? 1 : -1
-              }
-
-              return 0
-            })
-          })
-        }
-        onClose()
-      }
-    }
-  )
-
-  const entryUpdateMutation = useModifyMutation<U>(
-    'update',
-    apiHost,
-    `${endpoint}/${id}`,
-    {
-      onSettled: () => {
-        setSubmitLoading(false)
-      },
-      onSuccess: (newData: U) => {
-        if (customUpdateDataList?.update) {
-          customUpdateDataList.update(newData)
-        } else {
-          queryClient.setQueryData<U[]>(queryKey ?? [], old => {
-            if (!old) return []
-
-            return old
-              .map(entry => {
-                if (entry.id === newData.id) {
-                  return newData
-                }
-
-                return entry
-              })
-              .sort((a, b) => {
-                if (sortBy) {
-                  if (sortMode === 'asc') {
-                    return a[sortBy] > b[sortBy] ? 1 : -1
-                  }
-
-                  return a[sortBy] < b[sortBy] ? 1 : -1
-                }
-
-                return 0
-              })
-          })
-        }
-        onClose()
-      }
-    }
-  )
-
   async function onSubmitButtonClick(): Promise<void> {
-    const requiredFields = fields.filter(field => field.required)
+    const requiredFields = Object.entries(fields).filter(
+      field => field[1].required
+    )
 
     const missingFields = requiredFields.filter(field => {
-      const value = data[field.id]
+      const value = data[field[0]]
 
       return (
         !value ||
@@ -179,7 +66,7 @@ function FormModal<T extends IFormState, U extends RecordModel>({
     if (missingFields.length) {
       toast.error(
         `The following fields are required: ${missingFields
-          .map(field => field.label)
+          .map(field => field[1].label)
           .join(', ')}`
       )
 
@@ -189,58 +76,69 @@ function FormModal<T extends IFormState, U extends RecordModel>({
     setSubmitLoading(true)
 
     const finalData = Object.fromEntries(
-      Object.entries(getFinalData ? await getFinalData(data) : data).map(
-        ([key, value]) => {
-          if (value instanceof Date) {
-            return [key, dayjs(value).format('YYYY-MM-DDTHH:mm:ssZ')]
-          }
+      Object.entries(data).map(([key, value]) => {
+        const fieldType = fields[key]?.type
 
-          if (typeof value === 'object' && 'image' in (value ?? {})) {
-            return [key, (value as { image: string | File | null }).image]
-          }
-
-          return JSON.parse(JSON.stringify([key, value]))
+        if (!fieldType) {
+          return [key, value]
         }
-      )
+
+        let finalValue: unknown = value
+
+        switch (fieldType) {
+          case 'datetime':
+            finalValue = value
+              ? dayjs(value).format('YYYY-MM-DDTHH:mm:ssZ')
+              : null
+            break
+          case 'currency':
+          case 'number':
+            finalValue = Number(value)
+            break
+          case 'file':
+            finalValue = (value as { file: string | File | null }).file
+            break
+          case 'checkbox':
+            finalValue = Boolean(value)
+            break
+          default:
+            finalValue = value
+        }
+
+        return JSON.parse(JSON.stringify([key, finalValue]))
+      })
     )
 
     if (onSubmit) {
-      await onSubmit()
+      await onSubmit(finalData as InferFinalDataType<TFormState>)
       setSubmitLoading(false)
 
       return
-    }
-
-    if (openType === 'create') {
-      entryCreateMutation.mutate(finalData as Partial<U>)
-    } else if (openType === 'update') {
-      entryUpdateMutation.mutate(finalData as Partial<U>)
     }
   }
 
   return (
     <div className="min-w-[50vw]">
       <ModalHeader
-        actionButtonIcon={actionButtonIcon}
-        actionButtonIsRed={actionButtonIsRed}
-        icon={icon}
-        namespace={namespace}
-        title={title}
-        onActionButtonClick={onActionButtonClick}
-        onClose={onClose}
+        actionButtonIcon={actionButton?.icon}
+        actionButtonIsRed={actionButton?.isRed}
+        icon={ui.icon}
+        namespace={ui.namespace}
+        title={ui.title}
+        onActionButtonClick={actionButton?.onClick}
+        onClose={ui.onClose}
       />
-      {!loading ? (
+      {!ui.loading ? (
         <>
           <FormInputs
             data={data}
             fields={fields}
-            namespace={namespace}
+            namespace={ui.namespace}
             setData={setData}
           />
           {additionalFields}
           <SubmitButton
-            openType={openType}
-            submitButtonProps={submitButtonProps}
+            submitButton={submitButton}
             submitLoading={submitLoading}
             onSubmitButtonClick={onSubmitButtonClick}
           />

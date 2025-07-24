@@ -1,24 +1,15 @@
 import { LocationInput } from '@components/inputs'
 import {
-  IFieldProps,
-  ILocationInputFieldProps
+  ILocationInputFieldProps,
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-import { LocationsCustomSchemas } from 'shared/types/collections'
-
-interface FormLocationInputProps<T> {
-  field: IFieldProps<T> & ILocationInputFieldProps
-  selectedData: LocationsCustomSchemas.ILocation | null
-  namespace: string
-  handleChange: (value: LocationsCustomSchemas.ILocation | null) => void
-}
-
-function FormLocationInput<T>({
+function FormLocationInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormLocationInputProps<T>) {
+}: InferFormInputProps<ILocationInputFieldProps>) {
   return (
     <LocationInput
       disabled={field.disabled}

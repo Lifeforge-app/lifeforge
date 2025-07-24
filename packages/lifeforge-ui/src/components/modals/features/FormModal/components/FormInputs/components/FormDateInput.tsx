@@ -1,22 +1,15 @@
 import { DateInput } from '@components/inputs'
 import {
   IDateInputFieldProps,
-  IFieldProps
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-interface FormDateInputProps<T> {
-  field: IFieldProps<T> & IDateInputFieldProps
-  selectedData: Date | undefined
-  namespace: string
-  handleChange: (value: Date | undefined) => void
-}
-
-function FormDateInput<T>({
+function FormDateInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormDateInputProps<T>) {
+}: InferFormInputProps<IDateInputFieldProps>) {
   return (
     <DateInput
       darker
