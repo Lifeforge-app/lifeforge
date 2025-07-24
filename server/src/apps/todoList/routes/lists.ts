@@ -2,16 +2,14 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllLists = forgeController
-  .route('GET /')
+const getAllLists = forgeController.query
   .description('Get all todo lists')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('todo_list__lists').sort(['name']).execute()
   )
 
-const createList = forgeController
-  .route('POST /')
+const createList = forgeController.mutation
   .description('Create a new todo list')
   .input({
     body: SCHEMAS.todo_list.lists
@@ -21,35 +19,33 @@ const createList = forgeController
     pb.create.collection('todo_list__lists').data(body).execute()
   )
 
-const updateList = forgeController
-  .route('PATCH /:id')
+const updateList = forgeController.mutation
   .description('Update an existing todo list')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.todo_list.lists
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'todo_list__lists'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('todo_list__lists').id(id).data(body).execute()
   )
 
-const deleteList = forgeController
-  .route('DELETE /:id')
+const deleteList = forgeController.mutation
   .description('Delete a todo list')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'todo_list__lists'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('todo_list__lists').id(id).execute()
   )
 

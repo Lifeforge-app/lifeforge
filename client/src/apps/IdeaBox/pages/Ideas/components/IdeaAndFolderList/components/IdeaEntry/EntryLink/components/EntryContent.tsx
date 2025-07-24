@@ -42,7 +42,7 @@ function EntryContent({
 
             if (!url.startsWith('http')) {
               return `${new URL(entry.content).origin}${
-                !url.startsWith('/') ? '/' : ''
+                !url.startsWith ? '/' : ''
               }${url}`
             }
 

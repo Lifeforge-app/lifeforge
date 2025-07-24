@@ -56,8 +56,7 @@ const UpdateEventSchema = SCHEMAS.calendar.events
     location: Location.optional()
   })
 
-const getEventsByDateRange = forgeController
-  .route('GET /')
+const getEventsByDateRange = forgeController.query
   .description('Get events by date range')
   .input({
     query: z.object({
@@ -246,8 +245,8 @@ ${entry.theatre_seat}
     return allEvents
   })
 
-const getEventsToday = forgeController
-  .route('GET /today')
+const getEventsToday = forgeController.query
+
   .description("Get today's events")
   .input({})
   .callback(async ({ pb }) => {
@@ -316,23 +315,21 @@ const getEventsToday = forgeController
     return allEvents
   })
 
-const getEventById = forgeController
-  .route('GET /:id')
+const getEventById = forgeController.query
   .description('Get an event by ID')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'calendar__events'
   })
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.getOne.collection('calendar__events').id(id).execute()
   )
 
-const createEvent = forgeController
-  .route('POST /')
+const createEvent = forgeController.mutation
   .description('Create a new event')
   .input({
     body: CreateEventSchema
@@ -393,8 +390,8 @@ const createEvent = forgeController
     }
   })
 
-const scanImage = forgeController
-  .route('POST /scan-image')
+const scanImage = forgeController.mutation
+
   .description('Scan an image to extract event data')
   .input({})
   .middlewares(singleUploadMiddleware)
@@ -502,21 +499,19 @@ const scanImage = forgeController
     return finalResponse
   })
 
-const addException = forgeController
-  .route('DELETE /exception/:id')
+const addException = forgeController.mutation
+
   .description('Add an exception to a recurring event')
   .input({
-    params: z.object({
-      id: z.string()
-    }),
     query: z.object({
+      id: z.string(),
       date: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'calendar__events'
   })
-  .callback(async ({ pb, params: { id }, query: { date } }) => {
+  .callback(async ({ pb, query: { id, date } }) => {
     const eventList = await pb.getFullList
       .collection('calendar__events_recurring')
       .filter([{ field: 'base_event', operator: '=', value: id }])
@@ -541,23 +536,22 @@ const addException = forgeController
     return true
   })
 
-const updateEvent = forgeController
-  .route('PATCH /:id')
+const updateEvent = forgeController.mutation
   .description('Update an existing event')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: UpdateEventSchema
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'calendar__events'
   })
   .existenceCheck('body', {
     calendar: '[calendar__calendars]',
     category: 'calendar__categories'
   })
-  .callback(async ({ pb, params: { id }, body }) => {
+  .callback(async ({ pb, query: { id }, body }) => {
     const eventData = body as z.infer<typeof UpdateEventSchema>
 
     const location = eventData.location
@@ -582,19 +576,18 @@ const updateEvent = forgeController
       .execute()
   })
 
-const deleteEvent = forgeController
-  .route('DELETE /:id')
+const deleteEvent = forgeController.mutation
   .description('Delete an existing event')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'calendar__events'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('calendar__events').id(id).execute()
   )
 

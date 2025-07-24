@@ -8,19 +8,19 @@ import { recursivelySearchFolder } from '../utils/folders'
 
 const OGCache = new Map<string, any>()
 
-const getPath = forgeController
-  .route('GET /path/:container/*')
+const getPath = forgeController.query
+
   .description('Get path information for a container')
   .input({
-    params: z.object({
+    query: z.object({
       container: z.string(),
       '0': z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     container: 'idea_box__containers'
   })
-  .callback(async ({ pb, params: { container, '0': path } }) => {
+  .callback(async ({ pb, query: { container, '0': path } }) => {
     const containerEntry = await pb.getOne
       .collection('idea_box__containers')
       .id(container)
@@ -59,16 +59,16 @@ const getPath = forgeController
     }
   })
 
-const checkValid = forgeController
-  .route('GET /valid/:container/*')
+const checkValid = forgeController.query
+
   .description('Check if a path is valid')
   .input({
-    params: z.object({
+    query: z.object({
       container: z.string(),
       '0': z.string()
     })
   })
-  .callback(async ({ pb, params: { container, '0': path } }) => {
+  .callback(async ({ pb, query: { container, '0': path } }) => {
     const containerExists = await checkExistence(
       pb,
       'idea_box__containers',
@@ -107,18 +107,18 @@ const checkValid = forgeController
     return containerExists && folderExists
   })
 
-const getOgData = forgeController
-  .route('GET /og-data/:id')
+const getOgData = forgeController.query
+
   .description('Get Open Graph data for an entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const data = await pb.getOne
       .collection('idea_box__entries')
       .id(id)
@@ -153,8 +153,8 @@ const getOgData = forgeController
     return result
   })
 
-const search = forgeController
-  .route('GET /search')
+const search = forgeController.query
+
   .description('Search entries')
   .input({
     query: z.object({

@@ -4,6 +4,6 @@ import entriesRouter from './routes/entries'
 import listsRouter from './routes/lists'
 
 export default forgeRouter({
-  '/lists': listsRouter,
-  '/entries': entriesRouter
+  lists: listsRouter,
+  entries: entriesRouter
 })

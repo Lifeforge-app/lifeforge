@@ -17,14 +17,13 @@ setTimeout(() => {
   challenge = v4()
 }, 1000 * 60)
 
-const getChallenge = forgeController
-  .route('GET /challenge')
+const getChallenge = forgeController.query
+
   .description('Get current challenge for password operations')
   .input({})
   .callback(async () => challenge)
 
-const getAllEntries = forgeController
-  .route('GET /')
+const getAllEntries = forgeController.query
   .description('Get all password entries')
   .input({})
   .callback(({ pb }) =>
@@ -44,8 +43,7 @@ const getAllEntries = forgeController
       .execute()
   )
 
-const createEntry = forgeController
-  .route('POST /')
+const createEntry = forgeController.mutation
   .description('Create a new password entry')
   .input({
     body: SCHEMAS.passwords.entries
@@ -78,11 +76,10 @@ const createEntry = forgeController
       .execute()
   })
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update a password entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.passwords.entries
@@ -93,10 +90,10 @@ const updateEntry = forgeController
         master: z.string()
       })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'passwords__entries'
   })
-  .callback(async ({ pb, params: { id }, body }) => {
+  .callback(async ({ pb, query: { id }, body }) => {
     const { master, password, ...rest } = body
 
     const decryptedMaster = await getDecryptedMaster(pb, master, challenge)
@@ -120,21 +117,19 @@ const updateEntry = forgeController
     return entry
   })
 
-const decryptEntry = forgeController
-  .route('POST /decrypt/:id')
+const decryptEntry = forgeController.mutation
+
   .description('Decrypt a password entry')
   .input({
-    params: z.object({
-      id: z.string()
-    }),
     query: z.object({
+      id: z.string(),
       master: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'passwords__entries'
   })
-  .callback(async ({ pb, params: { id }, query: { master } }) => {
+  .callback(async ({ pb, query: { id, master } }) => {
     const decryptedMaster = await getDecryptedMaster(pb, master, challenge)
 
     const password = await pb.getOne
@@ -150,34 +145,33 @@ const decryptEntry = forgeController
     return encrypt2(decryptedPassword.toString(), challenge)
   })
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a password entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'passwords__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('passwords__entries').id(id).execute()
   )
 
-const togglePin = forgeController
-  .route('POST /pin/:id')
+const togglePin = forgeController.mutation
+
   .description('Toggle pin status of a password entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'passwords__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const entry = await pb.getOne
       .collection('passwords__entries')
       .id(id)

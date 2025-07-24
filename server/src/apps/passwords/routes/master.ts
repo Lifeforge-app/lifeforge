@@ -10,14 +10,13 @@ setTimeout(() => {
   challenge = v4()
 }, 1000 * 60)
 
-const getChallenge = forgeController
-  .route('GET /challenge')
+const getChallenge = forgeController.query
+
   .description('Get current challenge for master password operations')
   .input({})
   .callback(async () => challenge)
 
-const createMaster = forgeController
-  .route('POST /')
+const createMaster = forgeController.mutation
   .description('Create a new master password')
   .input({
     body: z.object({
@@ -38,8 +37,8 @@ const createMaster = forgeController
       .execute()
   })
 
-const verifyMaster = forgeController
-  .route('POST /verify')
+const verifyMaster = forgeController.mutation
+
   .description('Verify master password')
   .input({
     body: z.object({
@@ -59,8 +58,8 @@ const verifyMaster = forgeController
     return await bcrypt.compare(decryptedMaster, masterPasswordHash)
   })
 
-const validateOTP = forgeController
-  .route('POST /otp')
+const validateOTP = forgeController.mutation
+
   .description('Validate OTP for master password operations')
   .input({
     body: z.object({

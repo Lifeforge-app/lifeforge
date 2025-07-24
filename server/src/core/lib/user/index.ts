@@ -18,9 +18,9 @@ if (!process.env.MASTER_KEY) {
 }
 
 export default forgeRouter({
-  '/auth': authRouter,
-  '/oauth': oAuthRouter,
-  '/2fa': twoFARouter,
-  '/settings': settingsRouter,
-  '/personalization': personalizationRouter
+  auth: authRouter,
+  oauth: oAuthRouter,
+  '2fa': twoFARouter,
+  settings: settingsRouter,
+  personalization: personalizationRouter
 })

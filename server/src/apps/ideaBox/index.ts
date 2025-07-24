@@ -7,9 +7,9 @@ import miscRouter from './routes/misc'
 import tagsRouter from './routes/tags'
 
 export default forgeRouter({
-  '/containers': containersRouter,
-  '/folders': foldersRouter,
-  '/ideas': ideasRouter,
-  '/tags': tagsRouter,
-  '/': miscRouter
+  containers: containersRouter,
+  folders: foldersRouter,
+  ideas: ideasRouter,
+  tags: tagsRouter,
+  misc: miscRouter
 })

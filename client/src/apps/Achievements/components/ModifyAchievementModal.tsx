@@ -1,11 +1,12 @@
+import forgeAPI from '@utils/forgeAPI'
+import { InferInput } from 'lifeforge-api'
 import { FormModal } from 'lifeforge-ui'
 import { type IFieldProps } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
+
 import { IAchievement } from '..'
-import forgeAPI from '@utils/forgeAPI'
-import { InferInput } from 'lifeforge-api'
 
 const difficulties = [
   ['easy', 'green'],
@@ -13,16 +14,6 @@ const difficulties = [
   ['hard', 'red'],
   ['impossible', 'purple']
 ]
-
-const createRoute = forgeAPI
-  .route('/achievements')
-  .route('/entries')
-  .controller('POST /')
-
-const updateRoute = forgeAPI
-  .route('/achievements')
-  .route('/entries')
-  .controller('PATCH /:id')
 
 function ModifyAchievementModal({
   data: { type, existedData, currentDifficulty },
@@ -38,8 +29,8 @@ function ModifyAchievementModal({
   const { t } = useTranslation('apps.achievements')
 
   const [formState, setFormState] = useState<
-    | InferInput<typeof createRoute>['body']
-    | InferInput<typeof updateRoute>['body']
+    | InferInput<typeof forgeAPI.achievements.entries.create>['body']
+    | InferInput<typeof forgeAPI.achievements.entries.update>['body']
   >({
     title: '',
     thoughts: '',
@@ -83,7 +74,7 @@ function ModifyAchievementModal({
   //       .input({ body: formState })
   //   } else if (type === 'update' && existedData) {
   //     updateRoute
-  //       .input({ params: { id: existedData.id }, body: formState })
+  //       .input({ query: { id: existedData.id }, body: formState })
   //   }
   // })
 
@@ -102,7 +93,7 @@ function ModifyAchievementModal({
   return (
     <FormModal
       data={formState}
-      endpoint={type === 'create' ? createRoute : updateRoute}
+      endpoint={forgeAPI.achievements.entries[type!]}
       fields={FIELDS}
       icon={
         {
