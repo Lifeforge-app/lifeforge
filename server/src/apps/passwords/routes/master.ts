@@ -11,12 +11,11 @@ setTimeout(() => {
 }, 1000 * 60)
 
 const getChallenge = forgeController.query
-
   .description('Get current challenge for master password operations')
   .input({})
   .callback(async () => challenge)
 
-const createMaster = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new master password')
   .input({
     body: z.object({
@@ -37,8 +36,7 @@ const createMaster = forgeController.mutation
       .execute()
   })
 
-const verifyMaster = forgeController.mutation
-
+const verify = forgeController.mutation
   .description('Verify master password')
   .input({
     body: z.object({
@@ -59,7 +57,6 @@ const verifyMaster = forgeController.mutation
   })
 
 const validateOTP = forgeController.mutation
-
   .description('Validate OTP for master password operations')
   .input({
     body: z.object({
@@ -71,7 +68,7 @@ const validateOTP = forgeController.mutation
 
 export default forgeRouter({
   getChallenge,
-  createMaster,
-  verifyMaster,
+  create,
+  verify,
   validateOTP
 })

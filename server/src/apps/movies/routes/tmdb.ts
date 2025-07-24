@@ -2,8 +2,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const searchMovies = forgeController.query
-
+const search = forgeController.query
   .description('Search movies using TMDB API')
   .input({
     query: z.object({
@@ -53,4 +52,4 @@ const searchMovies = forgeController.query
     return response
   })
 
-export default forgeRouter({ searchMovies })
+export default forgeRouter({ search })

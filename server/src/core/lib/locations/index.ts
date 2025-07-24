@@ -4,7 +4,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { z } from 'zod/v4'
 
-const getLocation = forgeController.query
+const search = forgeController.query
   .description('Search for locations')
   .input({
     query: z.object({
@@ -21,8 +21,7 @@ const getLocation = forgeController.query
     return await searchLocations(key, q)
   })
 
-const checkIsEnabled = forgeController.query
-
+const verifyAPIKey = forgeController.query
   .description('Check if Google Cloud API key exists')
   .input({})
   .callback(async ({ pb }) => {
@@ -31,4 +30,4 @@ const checkIsEnabled = forgeController.query
     return !!key
   })
 
-export default forgeRouter({ getLocation, checkIsEnabled })
+export default forgeRouter({ search, verifyAPIKey })

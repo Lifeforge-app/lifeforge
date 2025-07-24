@@ -91,7 +91,7 @@ const listLocales = forgeController.query
     return final
   })
 
-const syncLocales = forgeController.mutation
+const sync = forgeController.mutation
   .description('Sync locales for a namespace and subnamespace')
   .input({
     body: z.object({
@@ -177,7 +177,7 @@ const syncLocales = forgeController.mutation
     return true
   })
 
-const createLocale = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new locale entry or folder')
   .input({
     query: z.object({
@@ -227,7 +227,7 @@ const createLocale = forgeController.mutation
     }
   )
 
-const renameLocale = forgeController.mutation
+const rename = forgeController.mutation
   .description('Rename a locale')
   .input({
     query: z.object({
@@ -284,7 +284,7 @@ const renameLocale = forgeController.mutation
     }
   )
 
-const deleteLocale = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a locale')
   .input({
     query: z.object({
@@ -328,7 +328,6 @@ const deleteLocale = forgeController.mutation
   })
 
 const getTranslationSuggestions = forgeController.mutation
-
   .description('Get translation suggestions')
   .input({
     query: z.object({
@@ -392,9 +391,9 @@ const getTranslationSuggestions = forgeController.mutation
 export default forgeRouter({
   listSubnamespaces,
   listLocales,
-  syncLocales,
   getTranslationSuggestions,
-  createLocale,
-  renameLocale,
-  deleteLocale
+  sync,
+  create,
+  rename,
+  remove
 })

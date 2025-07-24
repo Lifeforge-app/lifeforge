@@ -6,8 +6,7 @@ import { z } from 'zod/v4'
 
 import { analyzeClothingImages } from '../utils/vision'
 
-const getSidebarData = forgeController.query
-
+const sidebarData = forgeController.query
   .description('Get sidebar data for virtual wardrobe')
   .input({})
   .callback(async ({ pb }) => {
@@ -88,7 +87,7 @@ const getSidebarData = forgeController.query
     }
   })
 
-const getEntries = forgeController.query
+const list = forgeController.query
   .description('Get virtual wardrobe entries with optional filters')
   .input({
     query: z.object({
@@ -188,7 +187,7 @@ const getEntries = forgeController.query
     }
   )
 
-const createEntry = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new virtual wardrobe entry')
   .input({
     body: z.object({
@@ -250,7 +249,7 @@ const createEntry = forgeController.mutation
     }
   })
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing virtual wardrobe entry')
   .input({
     query: z.object({
@@ -278,7 +277,7 @@ const updateEntry = forgeController.mutation
       .execute()
   })
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a virtual wardrobe entry')
   .input({
     query: z.object({
@@ -294,7 +293,6 @@ const deleteEntry = forgeController.mutation
   )
 
 const toggleFavourite = forgeController.mutation
-
   .description('Toggle favourite status of a virtual wardrobe entry')
   .input({
     query: z.object({
@@ -320,7 +318,6 @@ const toggleFavourite = forgeController.mutation
   })
 
 const analyzeVision = forgeController.mutation
-
   .description('Analyze clothing images using AI vision')
   .input({})
   .middlewares(
@@ -367,11 +364,11 @@ const analyzeVision = forgeController.mutation
   })
 
 export default forgeRouter({
-  getSidebarData,
-  getEntries,
-  createEntry,
-  updateEntry,
-  deleteEntry,
+  sidebarData,
+  list,
+  create,
+  update,
+  remove,
   toggleFavourite,
   analyzeVision
 })

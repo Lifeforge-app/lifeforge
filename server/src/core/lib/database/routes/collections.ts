@@ -1,7 +1,7 @@
 import { getPBSuperUserInstance } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 
-const listCollections = forgeController.query
+const list = forgeController.query
   .description('List all collections')
   .input({})
   .callback(async () => {
@@ -25,4 +25,4 @@ const listCollections = forgeController.query
       }))
   })
 
-export default forgeRouter({ listCollections })
+export default forgeRouter({ list })

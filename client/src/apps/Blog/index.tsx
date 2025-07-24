@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   EmptyStateScreen,
@@ -7,16 +9,11 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { useAPIQuery } from 'shared'
-
-import { BlogControllersSchemas } from 'shared/types/controllers'
 
 function Blog() {
   const { t } = useTranslation('apps.blog')
 
-  const entriesQuery = useAPIQuery<
-    BlogControllersSchemas.IEntries['getAllEntries']['response']
-  >('blog/entries', ['blog', 'entries'])
+  const entriesQuery = useQuery(forgeAPI.blog.entries.list.getQueryOptions())
 
   return (
     <ModuleWrapper>

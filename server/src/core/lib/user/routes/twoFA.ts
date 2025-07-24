@@ -26,13 +26,11 @@ setTimeout(
 let tempCode = ''
 
 const getChallenge = forgeController.query
-
   .description('Get 2FA challenge')
   .input({})
   .callback(async () => challenge)
 
 const requestOTP = forgeController.query
-
   .description('Request OTP for 2FA')
   .input({
     query: z.object({
@@ -57,7 +55,6 @@ const requestOTP = forgeController.query
   })
 
 const validateOTP = forgeController.mutation
-
   .description('Validate OTP for 2FA')
   .input({
     body: z.object({
@@ -82,7 +79,6 @@ const validateOTP = forgeController.mutation
   })
 
 const generateAuthenticatorLink = forgeController.query
-
   .description('Generate authenticator link for 2FA')
   .input({})
   .callback(
@@ -110,8 +106,7 @@ const generateAuthenticatorLink = forgeController.query
     }
   )
 
-const verifyAndEnable2FA = forgeController.mutation
-
+const verifyAndEnable = forgeController.mutation
   .description('Verify and enable 2FA')
   .input({
     body: z.object({
@@ -154,8 +149,7 @@ const verifyAndEnable2FA = forgeController.mutation
     }
   )
 
-const disable2FA = forgeController.mutation
-
+const disable = forgeController.mutation
   .description('Disable 2FA')
   .input({})
   .callback(async ({ pb }) => {
@@ -177,7 +171,7 @@ const disable2FA = forgeController.mutation
     canDisable2FA = false
   })
 
-const verify2FA = forgeController.mutation
+const verify = forgeController.mutation
   .description('Verify 2FA code')
   .input({
     body: z.object({
@@ -242,7 +236,7 @@ export default forgeRouter({
   requestOTP,
   validateOTP,
   generateAuthenticatorLink,
-  verifyAndEnable2FA,
-  disable2FA,
-  verify2FA
+  verifyAndEnable,
+  disable,
+  verify
 })

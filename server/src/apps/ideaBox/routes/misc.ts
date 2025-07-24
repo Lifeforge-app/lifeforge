@@ -9,7 +9,6 @@ import { recursivelySearchFolder } from '../utils/folders'
 const OGCache = new Map<string, any>()
 
 const getPath = forgeController.query
-
   .description('Get path information for a container')
   .input({
     query: z.object({
@@ -60,7 +59,6 @@ const getPath = forgeController.query
   })
 
 const checkValid = forgeController.query
-
   .description('Check if a path is valid')
   .input({
     query: z.object({
@@ -108,7 +106,6 @@ const checkValid = forgeController.query
   })
 
 const getOgData = forgeController.query
-
   .description('Get Open Graph data for an entry')
   .input({
     query: z.object({
@@ -154,7 +151,6 @@ const getOgData = forgeController.query
   })
 
 const search = forgeController.query
-
   .description('Search entries')
   .input({
     query: z.object({

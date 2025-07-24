@@ -2,26 +2,25 @@ import {
   ISocketEvent,
   useSocketContext as useSocket
 } from '@providers/SocketProvider'
-import { UseQueryResult, useQueryClient } from '@tanstack/react-query'
+import { UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
-
-import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
 
 interface IBooksLibraryData {
   entriesQuery: UseQueryResult<
-    BooksLibraryControllersSchemas.IEntries['getAllEntries']['response']
+    InferOutput<typeof forgeAPI.booksLibrary.entries.list>
   >
   collectionsQuery: UseQueryResult<
-    BooksLibraryControllersSchemas.ICollection['getAllCollections']['response']
+    InferOutput<typeof forgeAPI.booksLibrary.collections.list>
   >
   languagesQuery: UseQueryResult<
-    BooksLibraryControllersSchemas.ILanguages['getAllLanguages']['response']
+    InferOutput<typeof forgeAPI.booksLibrary.languages.list>
   >
   fileTypesQuery: UseQueryResult<
-    BooksLibraryControllersSchemas.IFileTypes['getAllFileTypes']['response']
+    InferOutput<typeof forgeAPI.booksLibrary.fileTypes.list>
   >
   miscellaneous: {
     processes: Record<
@@ -61,21 +60,21 @@ export default function BooksLibraryProvider() {
 
   const [searchQuery, setSearchQuery] = useState('')
 
-  const entriesQuery = useAPIQuery<
-    BooksLibraryControllersSchemas.IEntries['getAllEntries']['response']
-  >('books-library/entries', ['books-library', 'entries'])
+  const entriesQuery = useQuery(
+    forgeAPI.booksLibrary.entries.list.getQueryOptions()
+  )
 
-  const collectionsQuery = useAPIQuery<
-    BooksLibraryControllersSchemas.ICollection['getAllCollections']['response']
-  >('books-library/collections', ['books-library', 'collections'])
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.getQueryOptions()
+  )
 
-  const languagesQuery = useAPIQuery<
-    BooksLibraryControllersSchemas.ILanguages['getAllLanguages']['response']
-  >('books-library/languages', ['books-library', 'languages'])
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.getQueryOptions()
+  )
 
-  const fileTypesQuery = useAPIQuery<
-    BooksLibraryControllersSchemas.IFileTypes['getAllFileTypes']['response']
-  >('books-library/file-types', ['books-library', 'fileTypes'])
+  const fileTypesQuery = useQuery(
+    forgeAPI.booksLibrary.fileTypes.list.getQueryOptions()
+  )
 
   const [processes, setProcesses] = useState<
     Record<

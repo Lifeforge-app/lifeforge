@@ -2,14 +2,14 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllLists = forgeController.query
+const list = forgeController.query
   .description('Get all todo lists')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('todo_list__lists').sort(['name']).execute()
   )
 
-const createList = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new todo list')
   .input({
     body: SCHEMAS.todo_list.lists
@@ -19,7 +19,7 @@ const createList = forgeController.mutation
     pb.create.collection('todo_list__lists').data(body).execute()
   )
 
-const updateList = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing todo list')
   .input({
     query: z.object({
@@ -34,7 +34,7 @@ const updateList = forgeController.mutation
     pb.update.collection('todo_list__lists').id(id).data(body).execute()
   )
 
-const deleteList = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a todo list')
   .input({
     query: z.object({
@@ -50,8 +50,8 @@ const deleteList = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllLists,
-  createList,
-  updateList,
-  deleteList
+  list,
+  create,
+  update,
+  remove
 })

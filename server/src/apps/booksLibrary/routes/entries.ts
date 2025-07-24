@@ -6,7 +6,7 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const getAllEntries = forgeController.query
+const list = forgeController.query
   .description('Get all entries in the books library')
   .input({})
   .callback(({ pb }) =>
@@ -16,7 +16,7 @@ const getAllEntries = forgeController.query
       .execute()
   )
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .input({
     query: z.object({
       id: z.string()
@@ -45,7 +45,6 @@ const updateEntry = forgeController.mutation
   )
 
 const toggleFavouriteStatus = forgeController.mutation
-
   .description('Toggle the favourite status of an entry in the books library')
   .input({
     query: z.object({
@@ -71,7 +70,6 @@ const toggleFavouriteStatus = forgeController.mutation
   })
 
 const toggleReadStatus = forgeController.mutation
-
   .description('Toggle the read status of an entry in the books library')
   .input({
     query: z.object({
@@ -98,7 +96,6 @@ const toggleReadStatus = forgeController.mutation
   })
 
 const sendToKindle = forgeController.mutation
-
   .description('Send an entry to a Kindle email address')
   .input({
     query: z.object({
@@ -172,7 +169,7 @@ const sendToKindle = forgeController.mutation
     }
   })
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an existing entry in the books library')
   .input({
     query: z.object({
@@ -188,10 +185,10 @@ const deleteEntry = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllEntries,
-  updateEntry,
+  list,
+  update,
   toggleFavouriteStatus,
   toggleReadStatus,
   sendToKindle,
-  deleteEntry
+  remove
 })

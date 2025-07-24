@@ -6,7 +6,7 @@ import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
 
-const getIdeas = forgeController.query
+const list = forgeController.query
   .description('Get ideas from a folder')
   .input({
     query: z.object({
@@ -59,7 +59,7 @@ const getIdeas = forgeController.query
       .execute()
   })
 
-const createIdea = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new idea')
   .input({
     body: SCHEMAS.idea_box.entries
@@ -133,7 +133,7 @@ const createIdea = forgeController.mutation
     }
   )
 
-const updateIdea = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an idea')
   .input({
     query: z.object({
@@ -180,7 +180,7 @@ const updateIdea = forgeController.mutation
     }
   )
 
-const deleteIdea = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an idea')
   .input({
     query: z.object({
@@ -195,8 +195,7 @@ const deleteIdea = forgeController.mutation
   )
   .statusCode(204)
 
-const pinIdea = forgeController.mutation
-
+const pin = forgeController.mutation
   .description('Pin/unpin an idea')
   .input({
     query: z.object({
@@ -221,8 +220,7 @@ const pinIdea = forgeController.mutation
       .execute()
   })
 
-const archiveIdea = forgeController.mutation
-
+const archive = forgeController.mutation
   .description('Archive/unarchive an idea')
   .input({
     query: z.object({
@@ -248,8 +246,7 @@ const archiveIdea = forgeController.mutation
       .execute()
   })
 
-const moveIdea = forgeController.mutation
-
+const moveTo = forgeController.mutation
   .description('Move an idea to a different folder')
   .input({
     query: z.object({
@@ -275,8 +272,7 @@ const moveIdea = forgeController.mutation
       .execute()
   )
 
-const removeFromFolder = forgeController.mutation
-
+const removeFromParent = forgeController.mutation
   .description('Remove an idea from its current folder')
   .input({
     query: z.object({
@@ -297,12 +293,12 @@ const removeFromFolder = forgeController.mutation
   )
 
 export default forgeRouter({
-  getIdeas,
-  createIdea,
-  updateIdea,
-  deleteIdea,
-  pinIdea,
-  archiveIdea,
-  moveIdea,
-  removeFromFolder
+  list,
+  create,
+  update,
+  remove,
+  pin,
+  archive,
+  moveTo,
+  removeFromParent
 })

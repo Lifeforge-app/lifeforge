@@ -7,14 +7,12 @@ const sessionCart = new Set<
   SchemaWithPB<z.infer<typeof SCHEMAS.virtual_wardrobe.entries>>
 >()
 
-const getCart = forgeController.query
-
+const get = forgeController.query
   .description('Get session cart items')
   .input({})
   .callback(async () => sessionCart)
 
-const addToCart = forgeController.mutation
-
+const add = forgeController.mutation
   .description('Add item to session cart')
   .input({
     query: z.object({
@@ -37,8 +35,7 @@ const addToCart = forgeController.mutation
     sessionCart.add(item)
   })
 
-const removeFromCart = forgeController.mutation
-
+const remove = forgeController.mutation
   .description('Remove item from session cart')
   .input({
     query: z.object({
@@ -59,7 +56,6 @@ const removeFromCart = forgeController.mutation
   })
 
 const checkout = forgeController.mutation
-
   .description('Checkout session cart')
   .input({
     body: z.object({
@@ -97,8 +93,7 @@ const checkout = forgeController.mutation
     sessionCart.clear()
   })
 
-const clearCart = forgeController.mutation
-
+const clear = forgeController.mutation
   .description('Clear session cart')
   .input({})
   .callback(async () => {
@@ -106,9 +101,9 @@ const clearCart = forgeController.mutation
   })
 
 export default forgeRouter({
-  getCart,
-  addToCart,
-  removeFromCart,
+  get,
+  add,
+  remove,
   checkout,
-  clearCart
+  clear
 })

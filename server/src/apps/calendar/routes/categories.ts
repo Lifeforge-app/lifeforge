@@ -4,7 +4,7 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const getAllCategories = forgeController.query
+const list = forgeController.query
   .description('Get all calendar categories')
   .input({})
   .callback(({ pb }) =>
@@ -14,7 +14,7 @@ const getAllCategories = forgeController.query
       .execute()
   )
 
-const getCategoryById = forgeController.query
+const getById = forgeController.query
   .description('Get a calendar category by ID')
   .input({
     query: z.object({
@@ -28,7 +28,7 @@ const getCategoryById = forgeController.query
     pb.getOne.collection('calendar__categories_aggregated').id(id).execute()
   )
 
-const createCategory = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new calendar category')
   .input({
     body: SCHEMAS.calendar.categories
@@ -45,7 +45,7 @@ const createCategory = forgeController.mutation
       .execute()
   })
 
-const updateCategory = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing calendar category')
   .input({
     query: z.object({
@@ -68,7 +68,7 @@ const updateCategory = forgeController.mutation
       .execute()
   })
 
-const deleteCategory = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an existing calendar category')
   .input({
     query: z.object({
@@ -84,9 +84,9 @@ const deleteCategory = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllCategories,
-  getCategoryById,
-  createCategory,
-  updateCategory,
-  deleteCategory
+  list,
+  getById,
+  create,
+  update,
+  remove
 })

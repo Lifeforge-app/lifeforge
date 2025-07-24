@@ -1,5 +1,5 @@
 import {
-  decrypt,
+  decrypt as _decrypt,
   decrypt2,
   encrypt,
   encrypt2
@@ -18,12 +18,11 @@ setTimeout(() => {
 }, 1000 * 60)
 
 const getChallenge = forgeController.query
-
   .description('Get current challenge for password operations')
   .input({})
   .callback(async () => challenge)
 
-const getAllEntries = forgeController.query
+const list = forgeController.query
   .description('Get all password entries')
   .input({})
   .callback(({ pb }) =>
@@ -43,7 +42,7 @@ const getAllEntries = forgeController.query
       .execute()
   )
 
-const createEntry = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new password entry')
   .input({
     body: SCHEMAS.passwords.entries
@@ -76,7 +75,7 @@ const createEntry = forgeController.mutation
       .execute()
   })
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .description('Update a password entry')
   .input({
     query: z.object({
@@ -117,8 +116,7 @@ const updateEntry = forgeController.mutation
     return entry
   })
 
-const decryptEntry = forgeController.mutation
-
+const decrypt = forgeController.mutation
   .description('Decrypt a password entry')
   .input({
     query: z.object({
@@ -137,7 +135,7 @@ const decryptEntry = forgeController.mutation
       .id(id)
       .execute()
 
-    const decryptedPassword = decrypt(
+    const decryptedPassword = _decrypt(
       Buffer.from(password.password, 'base64'),
       decryptedMaster
     )
@@ -145,7 +143,7 @@ const decryptEntry = forgeController.mutation
     return encrypt2(decryptedPassword.toString(), challenge)
   })
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a password entry')
   .input({
     query: z.object({
@@ -161,7 +159,6 @@ const deleteEntry = forgeController.mutation
   )
 
 const togglePin = forgeController.mutation
-
   .description('Toggle pin status of a password entry')
   .input({
     query: z.object({
@@ -188,10 +185,10 @@ const togglePin = forgeController.mutation
 
 export default forgeRouter({
   getChallenge,
-  getAllEntries,
-  createEntry,
-  updateEntry,
-  decryptEntry,
-  deleteEntry,
+  list,
+  create,
+  update,
+  decrypt,
+  remove,
   togglePin
 })

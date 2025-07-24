@@ -18,7 +18,6 @@ interface YoutubeInfo {
 }
 
 const getYoutubeVideoInfo = forgeController.query
-
   .description('Get YouTube video information by video ID')
   .input({
     query: z.object({
@@ -69,7 +68,6 @@ const getYoutubeVideoInfo = forgeController.query
   )
 
 const summarizeVideo = forgeController.mutation
-
   .description('Summarize a YouTube video from URL')
   .input({
     body: z.object({

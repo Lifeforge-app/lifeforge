@@ -68,7 +68,7 @@ function RecurringSelector({
 
   const [endAfter, setEndAfter] = useState(1)
 
-  const [endOn, setEndOn] = useState<Date | undefined>(undefined)
+  const [endOn, setEndOn] = useState<Date | null>(undefined)
 
   const forms = {
     yearly: (

@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllLedgers = forgeController.query
+const list = forgeController.query
   .description('Get all wallet ledgers')
   .input({})
   .callback(({ pb }) =>
@@ -12,7 +12,7 @@ const getAllLedgers = forgeController.query
       .execute()
   )
 
-const createLedger = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new wallet ledger')
   .input({
     body: SCHEMAS.wallet.ledgers
@@ -22,7 +22,7 @@ const createLedger = forgeController.mutation
     pb.create.collection('wallet__ledgers').data(body).execute()
   )
 
-const updateLedger = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing wallet ledger')
   .input({
     query: z.object({
@@ -37,7 +37,7 @@ const updateLedger = forgeController.mutation
     pb.update.collection('wallet__ledgers').id(id).data(body).execute()
   )
 
-const deleteLedger = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a wallet ledger')
   .input({
     query: z.object({
@@ -53,8 +53,8 @@ const deleteLedger = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllLedgers,
-  createLedger,
-  updateLedger,
-  deleteLedger
+  list,
+  create,
+  update,
+  remove
 })

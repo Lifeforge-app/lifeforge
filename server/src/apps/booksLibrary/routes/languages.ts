@@ -3,14 +3,14 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const getAllLanguages = forgeController.query
+const list = forgeController.query
   .description('Get all languages for the books library')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('books_library__languages_aggregated').execute()
   )
 
-const createLanguage = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new language for the books library')
   .input({
     body: SCHEMAS.books_library.languages
@@ -20,7 +20,7 @@ const createLanguage = forgeController.mutation
     pb.create.collection('books_library__languages').data(body).execute()
   )
 
-const updateLanguage = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing language for the books library')
   .input({
     query: z.object({
@@ -35,7 +35,7 @@ const updateLanguage = forgeController.mutation
     pb.update.collection('books_library__languages').id(id).data(body).execute()
   )
 
-const deleteLanguage = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete an existing language for the books library')
   .input({
     query: z.object({
@@ -51,8 +51,8 @@ const deleteLanguage = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllLanguages,
-  createLanguage,
-  updateLanguage,
-  deleteLanguage
+  list,
+  create,
+  update,
+  remove
 })

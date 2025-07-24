@@ -2,12 +2,12 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllTags = forgeController.query
+const list = forgeController.query
   .description('Get all todo tags')
   .input({})
   .callback(({ pb }) => pb.getFullList.collection('todo_list__tags').execute())
 
-const createTag = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new todo tag')
   .input({
     body: SCHEMAS.todo_list.tags
@@ -17,7 +17,7 @@ const createTag = forgeController.mutation
     pb.create.collection('todo_list__tags').data(body).execute()
   )
 
-const updateTag = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing todo tag')
   .input({
     query: z.object({
@@ -32,7 +32,7 @@ const updateTag = forgeController.mutation
     pb.update.collection('todo_list__tags').id(id).data(body).execute()
   )
 
-const deleteTag = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a todo tag')
   .input({
     query: z.object({
@@ -48,8 +48,8 @@ const deleteTag = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllTags,
-  createTag,
-  updateTag,
-  deleteTag
+  list,
+  create,
+  update,
+  remove
 })

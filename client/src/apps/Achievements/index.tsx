@@ -18,7 +18,7 @@ import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './components/ModifyAchievementModal'
 
 export type IAchievement = InferOutput<
-  typeof forgeAPI.achievements.entries.getAllByDifficulty
+  typeof forgeAPI.achievements.entries.list
 >[number]
 
 function Achievements() {
@@ -29,12 +29,12 @@ function Achievements() {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<
       InferInput<
-        typeof forgeAPI.achievements.entries.getAllByDifficulty
+        typeof forgeAPI.achievements.entries.list
       >['query']['difficulty']
     >('impossible')
 
   const entriesQuery = useQuery(
-    forgeAPI.achievements.entries.getAllByDifficulty
+    forgeAPI.achievements.entries.list
       .input({
         query: {
           difficulty: selectedDifficulty

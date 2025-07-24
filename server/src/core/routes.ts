@@ -85,7 +85,7 @@ const corsAnywhere = forgeController.query
     return response.text()
   })
 
-const getAllRoutes = forgeController.query
+const listRoutes = forgeController.query
   .description('Get all registered routes')
   .input({})
   .callback(async () => traceRouteStack(router.stack))
@@ -93,34 +93,34 @@ const getAllRoutes = forgeController.query
 const appRoutes = forgeRouter({
   achievements: (await import('../apps/achievements')).default,
   calendar: (await import('../apps/calendar')).default,
-  'todo-list': (await import('../apps/todoList')).default,
-  'idea-box': (await import('../apps/ideaBox')).default,
-  'code-time': (await import('../apps/codeTime')).default,
-  'books-library': (await import('../apps/booksLibrary')).default,
+  todoList: (await import('../apps/todoList')).default,
+  ideaBox: (await import('../apps/ideaBox')).default,
+  codeTime: (await import('../apps/codeTime')).default,
+  booksLibrary: (await import('../apps/booksLibrary')).default,
   wallet: (await import('../apps/wallet')).default,
   wishlist: (await import('../apps/wishlist')).default,
-  'scores-library': (await import('../apps/scoresLibrary')).default,
+  scoresLibrary: (await import('../apps/scoresLibrary')).default,
   passwords: (await import('../apps/passwords')).default,
   sudoku: (await import('../apps/sudoku')).default,
-  'virtual-wardrobe': (await import('../apps/virtualWardrobe')).default,
-  'moment-vault': (await import('../apps/momentVault')).default,
+  virtualWardrobe: (await import('../apps/virtualWardrobe')).default,
+  momentVault: (await import('../apps/momentVault')).default,
   movies: (await import('../apps/movies')).default,
-  'railway-map': (await import('../apps/railwayMap')).default,
-  'youtube-summarizer': (await import('../apps/youtubeSummarizer')).default,
+  railwayMap: (await import('../apps/railwayMap')).default,
+  youtubeSummarizer: (await import('../apps/youtubeSummarizer')).default,
   blog: (await import('../apps/blog')).default,
   locales: (await import('./lib/locales')).default,
   user: (await import('./lib/user')).default,
-  'api-keys': (await import('./lib/apiKeys')).default,
+  apiKeys: (await import('./lib/apiKeys')).default,
   pixabay: (await import('./lib/pixabay')).default,
   locations: (await import('./lib/locations')).default,
   ai: (await import('./lib/ai')).default,
   modules: (await import('./lib/modules')).default,
   backups: (await import('./lib/backups')).default,
   database: (await import('./lib/database')).default,
-  _routes: getAllRoutes,
+  _routes: listRoutes,
   getRoot,
   media: getMedia,
-  'cors-anywhere': corsAnywhere
+  corsAnywhere
 })
 
 router.use('/', registerRoutes(appRoutes))

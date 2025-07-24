@@ -3,7 +3,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import { z } from 'zod/v4'
 
-const listBackups = forgeController.query
+const list = forgeController.query
   .description('List all backups')
   .input({})
   .callback(async () => {
@@ -16,8 +16,7 @@ const listBackups = forgeController.query
     ) as any
   })
 
-const downloadBackup = forgeController.query
-
+const download = forgeController.query
   .description('Download a specific backup')
   .input({
     query: z.object({
@@ -48,7 +47,7 @@ const downloadBackup = forgeController.query
     res.send(buffer)
   })
 
-const createBackup = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new backup')
   .input({
     body: z.object({
@@ -66,7 +65,7 @@ const createBackup = forgeController.mutation
     await pb.backups.create(backupName)
   })
 
-const deleteBackup = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a specific backup')
   .input({
     query: z.object({
@@ -81,8 +80,8 @@ const deleteBackup = forgeController.mutation
   })
 
 export default forgeRouter({
-  listBackups,
-  downloadBackup,
-  createBackup,
-  deleteBackup
+  list,
+  download,
+  create,
+  remove
 })

@@ -17,8 +17,7 @@ export function setLeft(value: number) {
   left = value
 }
 
-const getSidebarData = forgeController.query
-
+const sidebarData = forgeController.query
   .description('Get sidebar data for scores library')
   .input({})
   .callback(async ({ pb }) => {
@@ -60,7 +59,7 @@ const getSidebarData = forgeController.query
     }
   })
 
-const getEntries = forgeController.query
+const list = forgeController.query
   .description('Get scores library entries')
   .input({
     query: z.object({
@@ -131,8 +130,7 @@ const getEntries = forgeController.query
         .execute()
   )
 
-const getRandomEntry = forgeController.query
-
+const random = forgeController.query
   .description('Get a random score entry')
   .input({})
   .callback(async ({ pb }) => {
@@ -143,8 +141,7 @@ const getRandomEntry = forgeController.query
     return allScores[Math.floor(Math.random() * allScores.length)]
   })
 
-const uploadFiles = forgeController.mutation
-
+const upload = forgeController.mutation
   .description('Upload score files')
   .input({})
   .middlewares(uploadMiddleware)
@@ -238,7 +235,7 @@ const uploadFiles = forgeController.mutation
     return taskId
   })
 
-const updateEntry = forgeController.mutation
+const update = forgeController.mutation
   .description('Update a score entry')
   .input({
     query: z.object({
@@ -257,7 +254,7 @@ const updateEntry = forgeController.mutation
     pb.update.collection('scores_library__entries').id(id).data(body).execute()
   )
 
-const deleteEntry = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a score entry')
   .input({
     query: z.object({
@@ -273,7 +270,6 @@ const deleteEntry = forgeController.mutation
   )
 
 const toggleFavourite = forgeController.mutation
-
   .description('Toggle favourite status of a score entry')
   .input({
     query: z.object({
@@ -299,11 +295,11 @@ const toggleFavourite = forgeController.mutation
   })
 
 export default forgeRouter({
-  getSidebarData,
-  getEntries,
-  getRandomEntry,
-  uploadFiles,
-  updateEntry,
-  deleteEntry,
+  sidebarData,
+  list,
+  random,
+  upload,
+  update,
+  remove,
   toggleFavourite
 })

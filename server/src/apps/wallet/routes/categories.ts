@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllCategories = forgeController.query
+const list = forgeController.query
   .description('Get all wallet categories')
   .input({})
   .callback(({ pb }) =>
@@ -12,7 +12,7 @@ const getAllCategories = forgeController.query
       .execute()
   )
 
-const createCategory = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new wallet category')
   .input({
     body: SCHEMAS.wallet.categories
@@ -22,7 +22,7 @@ const createCategory = forgeController.mutation
     pb.create.collection('wallet__categories').data(body).execute()
   )
 
-const updateCategory = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing wallet category')
   .input({
     query: z.object({
@@ -37,7 +37,7 @@ const updateCategory = forgeController.mutation
     pb.update.collection('wallet__categories').id(id).data(body).execute()
   )
 
-const deleteCategory = forgeController.mutation
+const remove = forgeController.mutation
   .description('Delete a wallet category')
   .input({
     query: z.object({
@@ -53,8 +53,8 @@ const deleteCategory = forgeController.mutation
   )
 
 export default forgeRouter({
-  getAllCategories,
-  createCategory,
-  updateCategory,
-  deleteCategory
+  list,
+  create,
+  update,
+  remove
 })
