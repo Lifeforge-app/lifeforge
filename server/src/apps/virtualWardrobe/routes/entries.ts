@@ -6,8 +6,8 @@ import { z } from 'zod/v4'
 
 import { analyzeClothingImages } from '../utils/vision'
 
-const getSidebarData = forgeController
-  .route('GET /sidebar-data')
+const getSidebarData = forgeController.query
+
   .description('Get sidebar data for virtual wardrobe')
   .input({})
   .callback(async ({ pb }) => {
@@ -88,8 +88,7 @@ const getSidebarData = forgeController
     }
   })
 
-const getEntries = forgeController
-  .route('GET /')
+const getEntries = forgeController.query
   .description('Get virtual wardrobe entries with optional filters')
   .input({
     query: z.object({
@@ -189,8 +188,7 @@ const getEntries = forgeController
     }
   )
 
-const createEntry = forgeController
-  .route('POST /')
+const createEntry = forgeController.mutation
   .description('Create a new virtual wardrobe entry')
   .input({
     body: z.object({
@@ -252,11 +250,10 @@ const createEntry = forgeController
     }
   })
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update an existing virtual wardrobe entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: z.object({
@@ -270,10 +267,10 @@ const updateEntry = forgeController
       notes: z.string().optional()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'virtual_wardrobe__entries'
   })
-  .callback(({ pb, params: { id }, body }) => {
+  .callback(({ pb, query: { id }, body }) => {
     return pb.update
       .collection('virtual_wardrobe__entries')
       .id(id)
@@ -281,34 +278,33 @@ const updateEntry = forgeController
       .execute()
   })
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a virtual wardrobe entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'virtual_wardrobe__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('virtual_wardrobe__entries').id(id).execute()
   )
 
-const toggleFavourite = forgeController
-  .route('PATCH /favourite/:id')
+const toggleFavourite = forgeController.mutation
+
   .description('Toggle favourite status of a virtual wardrobe entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'virtual_wardrobe__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const entry = await pb.getOne
       .collection('virtual_wardrobe__entries')
       .id(id)
@@ -323,8 +319,8 @@ const toggleFavourite = forgeController
       .execute()
   })
 
-const analyzeVision = forgeController
-  .route('POST /vision')
+const analyzeVision = forgeController.mutation
+
   .description('Analyze clothing images using AI vision')
   .input({})
   .middlewares(

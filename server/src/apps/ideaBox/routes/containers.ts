@@ -4,16 +4,15 @@ import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import { z } from 'zod/v4'
 
-const checkContainerExists = forgeController
-  .route('GET /valid/:id')
+const checkContainerExists = forgeController.query
   .description('Check if a container exists')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
   .callback(
-    async ({ pb, params: { id } }) =>
+    async ({ pb, query: { id } }) =>
       !!(await pb.getOne
         .collection('idea_box__containers')
         .id(id)
@@ -21,8 +20,7 @@ const checkContainerExists = forgeController
         .catch(() => {}))
   )
 
-const getAllContainers = forgeController
-  .route('GET /')
+const getAllContainers = forgeController.query
   .description('Get all containers')
   .input({})
   .callback(({ pb }) =>
@@ -32,8 +30,7 @@ const getAllContainers = forgeController
       .execute()
   )
 
-const createContainer = forgeController
-  .route('POST /')
+const createContainer = forgeController.mutation
   .description('Create a new container')
   .input({
     body: SCHEMAS.idea_box.containers
@@ -85,11 +82,10 @@ const createContainer = forgeController
     return container
   })
 
-const updateContainer = forgeController
-  .route('PATCH /:id')
+const updateContainer = forgeController.mutation
   .description('Update a container')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.idea_box.containers
@@ -101,10 +97,10 @@ const updateContainer = forgeController
       })
   })
   .middlewares(singleUploadMiddlewareOfKey('cover'))
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__containers'
   })
-  .callback(async ({ pb, params: { id }, body, req }) => {
+  .callback(async ({ pb, query: { id }, body, req }) => {
     const coverFile = await (async () => {
       const cover = body.cover
 
@@ -146,25 +142,24 @@ const updateContainer = forgeController
     return container
   })
 
-const deleteContainer = forgeController
-  .route('DELETE /:id')
+const deleteContainer = forgeController.mutation
   .description('Delete a container')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__containers'
   })
   .statusCode(204)
-  .callback(async ({ pb, params: { id } }) =>
+  .callback(async ({ pb, query: { id } }) =>
     pb.delete.collection('idea_box__containers').id(id).execute()
   )
 
 export default forgeRouter({
   checkContainerExists,
-  getContainers: getAllContainers,
+  getAllContainers,
   createContainer,
   updateContainer,
   deleteContainer
