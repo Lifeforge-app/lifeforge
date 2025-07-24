@@ -144,7 +144,7 @@ export class GetFirstListItem<
       : 'id != ""' // Default filter to ensure we get a valid response
 
     return this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getFirstListItem(filterString, {
         sort: this._sort,
         expand: this._expand,
