@@ -303,7 +303,7 @@ const getUserMinutes = forgeController.query
     }
   })
 
-const logEvent = forgeController.mutation
+const eventLog = forgeController.mutation
 
   .description('Log a code time event')
   .input({
@@ -392,7 +392,7 @@ const logEvent = forgeController.mutation
     return { status: 'ok', message: 'success' }
   })
 
-const getReadmeImage = forgeController.query
+const readme = forgeController.query
 
   .description('Get readme image')
   .input({})
@@ -435,7 +435,9 @@ export default forgeRouter({
   getProjects,
   getLanguages,
   getEachDay,
-  getUserMinutes,
-  logEvent,
-  getReadmeImage
+  user: {
+    minutes: getUserMinutes
+  },
+  eventLog,
+  readme
 })
