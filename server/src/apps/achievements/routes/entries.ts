@@ -45,7 +45,10 @@ export const updateEntry = forgeController
     params: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.achievements.entries
+    body: SCHEMAS.achievements.entries.omit({
+      created: true,
+      updated: true
+    })
   })
   .existenceCheck('params', {
     id: 'achievements__entries'

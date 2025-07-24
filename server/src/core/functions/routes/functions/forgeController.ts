@@ -33,7 +33,7 @@
 import { PBService, checkExistence } from '@functions/database'
 import type { BaseResponse } from '@typescript/base_response'
 import type { Request, Response, Router } from 'express'
-import { ForgeControllerBuilderBase } from 'lifeforge-api'
+import { ForgeAPIServerControllerBase } from 'lifeforge-api'
 import type { Server } from 'socket.io'
 import { z } from 'zod/v4'
 import type {
@@ -49,6 +49,7 @@ import {
   serverError,
   successWithBaseResponse
 } from '../utils/response'
+import COLLECTION_SCHEMAS from '@schema'
 
 export type ZodObjectOrIntersection =
   | ZodObject<ZodRawShape>
@@ -102,7 +103,7 @@ export class ForgeControllerBuilder<
   TRoute extends string = string,
   TInput extends InputSchema = InputSchema,
   TOutput = unknown
-> extends ForgeControllerBuilderBase<TRoute, TInput, TOutput> {
+> extends ForgeAPIServerControllerBase<TRoute, TInput, TOutput> {
   /**
    * Creates a new builder instance with updated schema types while preserving current configuration.
    * This is used internally to maintain immutability when chaining methods.

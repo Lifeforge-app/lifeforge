@@ -77,6 +77,16 @@ function ModifyAchievementModal({
     }
   ]
 
+  // const onSubmit = useCallback(() => {
+  //   if (type === 'create') {
+  //     createRoute
+  //       .input({ body: formState })
+  //   } else if (type === 'update' && existedData) {
+  //     updateRoute
+  //       .input({ params: { id: existedData.id }, body: formState })
+  //   }
+  // })
+
   useEffect(() => {
     if (type === 'update' && existedData !== null) {
       setFormState(existedData)
@@ -92,7 +102,7 @@ function ModifyAchievementModal({
   return (
     <FormModal
       data={formState}
-      endpoint="achievements/entries"
+      endpoint={type === 'create' ? createRoute : updateRoute}
       fields={FIELDS}
       icon={
         {

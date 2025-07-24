@@ -9,10 +9,10 @@ import type {
   ControllerByRoute
 } from '../typescript/forge_api_client.types'
 
-import type { ForgeControllerBuilderBase } from './forgeControllerBase'
+import type { ForgeAPIServerControllerBase } from './forgeAPIServer'
 
 export class ForgeAPIClientController<
-  T extends ForgeControllerBuilderBase = any
+  T extends ForgeAPIServerControllerBase = any
 > {
   public __type!: T
 
@@ -31,6 +31,14 @@ export class ForgeAPIClientController<
     private _route: string,
     private _method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   ) {}
+
+  get queryKey() {
+    return this._queryKey
+  }
+
+  get endpoint() {
+    return this._endpoint
+  }
 
   input(data: InferInput<T>) {
     this._input = data
@@ -53,7 +61,11 @@ export class ForgeAPIClientController<
       refetchOnWindowFocus: false,
       staleTime: Infinity,
       queryKey: this._queryKey,
-      queryFn: () => fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint)
+      queryFn: () =>
+        fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+          method: this._method,
+          body: this._input?.body
+        })
     }
   }
 
