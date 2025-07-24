@@ -1,10 +1,10 @@
 import { Button } from '@components/buttons'
-import {
-  type IPixabaySearchFilter,
-  type PixabaySearchFilterAction
-} from '@components/inputs/ImageAndFileInput/FileAndImagePickerModal/components/Pixabay/typescript/pixabay_interfaces'
 import { ModalHeader, ModalWrapper } from '@components/modals'
 
+import {
+  IPixabaySearchFilter,
+  PixabaySearchFilterAction
+} from '../../typescript/pixabay_interfaces'
 import {
   CategoryFilter,
   ColorFilter,

@@ -13,8 +13,3 @@ export * from './components/screens'
 export * from './components/utilities'
 
 export * from './components/layouts'
-
-export type {
-  IFieldProps,
-  IFormState
-} from './components/modals/features/FormModal/typescript/modal_interfaces'

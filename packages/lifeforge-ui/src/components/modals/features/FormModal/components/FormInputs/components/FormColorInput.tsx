@@ -1,22 +1,15 @@
 import { ColorInput } from '@components/inputs'
 import {
   IColorInputFieldProps,
-  IFieldProps
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-interface FormColorInputProps<T> {
-  field: IFieldProps<T> & IColorInputFieldProps
-  selectedData: string
-  namespace: string
-  handleChange: (value: string) => void
-}
-
-function FormColorInput<T>({
+function FormColorInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormColorInputProps<T>) {
+}: InferFormInputProps<IColorInputFieldProps>) {
   return (
     <ColorInput
       color={selectedData}

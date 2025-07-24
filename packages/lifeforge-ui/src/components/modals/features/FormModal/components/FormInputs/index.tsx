@@ -1,8 +1,9 @@
 import {
+  Field,
+  FormFieldConfig,
   IColorInputFieldProps,
   ICurrencyInputFieldProps,
   IDateInputFieldProps,
-  IFieldProps,
   IFormCheckboxFieldProps,
   IFormState,
   IIconInputFieldProps,
@@ -11,10 +12,9 @@ import {
   ILocationInputFieldProps,
   INumberInputFieldProps,
   ITextAreaInputFieldProps,
-  ITextInputFieldProps
+  ITextInputFieldProps,
+  Location
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
-
-import { LocationsCustomSchemas } from 'shared/types/collections'
 
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'
@@ -28,27 +28,27 @@ import FormNumberInput from './components/FormNumberInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
 
-function FormInputs<T>({
+function FormInputs<T extends IFormState>({
   fields,
   data,
   setData,
   namespace
 }: {
-  fields: IFieldProps<T>[]
+  fields: FormFieldConfig<T>
   data: T
   setData: React.Dispatch<React.SetStateAction<T>>
   namespace: string
 }) {
-  const handleChange = (field: IFieldProps<T>) => {
+  const handleChange = (id: keyof typeof fields) => {
     return (value: IFormState[string]) => {
-      setData(prev => ({ ...prev, [field.id]: value }))
+      setData(prev => ({ ...prev, [id]: value }))
     }
   }
 
   return (
     <div className="space-y-3">
-      {fields.map(field => {
-        const selectedData = data[field.id]
+      {Object.entries(fields).map(([id, field]) => {
+        const selectedData = data[id]
 
         if (field.hidden) {
           return <></>
@@ -59,7 +59,7 @@ function FormInputs<T>({
             return (
               <FormTextInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & ITextInputFieldProps}
+                field={field as Field<ITextInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as string}
@@ -70,7 +70,7 @@ function FormInputs<T>({
             return (
               <FormNumberInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & INumberInputFieldProps}
+                field={field as Field<INumberInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as number}
@@ -81,7 +81,7 @@ function FormInputs<T>({
             return (
               <FormCurrencyInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & ICurrencyInputFieldProps}
+                field={field as Field<ICurrencyInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as number}
@@ -92,7 +92,7 @@ function FormInputs<T>({
             return (
               <FormTextAreaInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & ITextAreaInputFieldProps}
+                field={field as Field<ITextAreaInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as string}
@@ -102,17 +102,17 @@ function FormInputs<T>({
             return (
               <FormDateInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & IDateInputFieldProps}
+                field={field as Field<IDateInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
-                selectedData={selectedData as Date | undefined}
+                selectedData={selectedData as Date | null}
               />
             )
           case 'listbox':
             return (
               <FormListboxInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & IListboxInputFieldProps}
+                field={field as Field<IListboxInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as string | string[]}
@@ -122,7 +122,7 @@ function FormInputs<T>({
             return (
               <FormColorInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & IColorInputFieldProps}
+                field={field as Field<IColorInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as string}
@@ -132,7 +132,7 @@ function FormInputs<T>({
             return (
               <FormIconInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & IIconInputFieldProps}
+                field={field as Field<IIconInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as string}
@@ -142,19 +142,17 @@ function FormInputs<T>({
             return (
               <FormLocationInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & ILocationInputFieldProps}
+                field={field as Field<ILocationInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
-                selectedData={
-                  selectedData as LocationsCustomSchemas.ILocation | null
-                }
+                selectedData={selectedData as Location | null}
               />
             )
           case 'checkbox':
             return (
               <FormCheckboxInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & IFormCheckboxFieldProps}
+                field={field as Field<IFormCheckboxFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={selectedData as boolean}
@@ -164,12 +162,12 @@ function FormInputs<T>({
             return (
               <FormFileInput
                 key={field.id as string}
-                field={field as IFieldProps<T> & IImageAndFileInputFieldProps}
+                field={field as Field<IImageAndFileInputFieldProps>}
                 handleChange={handleChange(field)}
                 namespace={namespace}
                 selectedData={
                   selectedData as {
-                    image: string | File | null
+                    file: string | File | null
                     preview: string | null
                   }
                 }

@@ -1,22 +1,15 @@
 import { TextAreaInput } from '@components/inputs'
 import {
-  IFieldProps,
-  ITextAreaInputFieldProps
+  ITextAreaInputFieldProps,
+  InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/modal_interfaces'
 
-interface FormTextAreaInputProps<T> {
-  field: IFieldProps<T> & ITextAreaInputFieldProps
-  selectedData: string
-  namespace: string
-  handleChange: (value: string) => void
-}
-
-function FormTextAreaInput<T>({
+function FormTextAreaInput({
   field,
   selectedData,
   namespace,
   handleChange
-}: FormTextAreaInputProps<T>) {
+}: InferFormInputProps<ITextAreaInputFieldProps>) {
   return (
     <TextAreaInput
       darker

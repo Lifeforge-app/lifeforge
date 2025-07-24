@@ -9,7 +9,7 @@ import ImageURL from './components/ImageURL'
 import LocalUpload from './components/LocalUpload'
 import Pixabay from './components/Pixabay'
 
-function FileAndImagePickerModal({
+function FilePickerModal({
   data: {
     enablePixabay = false,
     enableUrl = false,
@@ -152,4 +152,4 @@ function FileAndImagePickerModal({
   )
 }
 
-export default FileAndImagePickerModal
+export default FilePickerModal
