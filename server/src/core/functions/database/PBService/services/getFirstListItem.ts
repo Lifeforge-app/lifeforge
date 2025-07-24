@@ -61,7 +61,7 @@ function recursivelyBuildFilter<
   }
 }
 
-class GetFirstListItem<
+export class GetFirstListItem<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
   TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import forgeAPI from '@utils/server'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   EmptyStateScreen,
@@ -15,19 +15,25 @@ import { useTranslation } from 'react-i18next'
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './components/ModifyAchievementModal'
+import { InferInput, InferOutput } from 'lifeforge-api'
+
+const route = forgeAPI
+  .route('/achievements')
+  .route('/entries')
+  .controller('GET /:difficulty')
+
+export type IAchievement = InferOutput<typeof route>[number]
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
 
   const open = useModalStore(state => state.open)
 
-  const [selectedDifficulty, setSelectedDifficulty] = useState<I>('impossible')
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<InferInput<typeof route>['params']['difficulty']>('impossible')
 
   const entriesQuery = useQuery(
-    forgeAPI
-      .route('/achievements')
-      .route('/entries')
-      .controller('GET /:difficulty')
+    route
       .input({
         params: {
           difficulty: selectedDifficulty
@@ -35,8 +41,6 @@ function Achievements() {
       })
       .getQueryOptions()
   )
-
-  console.log()
 
   return (
     <ModuleWrapper>
