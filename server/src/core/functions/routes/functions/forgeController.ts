@@ -416,7 +416,7 @@ export class ForgeControllerBuilder<
                       collection.replace(
                         /\^?\[(.*)\]$/,
                         '$1'
-                      ) as keyof typeof COLLECTION_SCHEMAS,
+                      ) as unknown as keyof typeof COLLECTION_SCHEMAS,
                       val
                     ))
                   ) {
@@ -435,7 +435,7 @@ export class ForgeControllerBuilder<
                     collection.replace(
                       /\^?\[(.*)\]$/,
                       '$1'
-                    ) as keyof typeof COLLECTION_SCHEMAS,
+                    ) as unknown as keyof typeof COLLECTION_SCHEMAS,
                     value!
                   ))
                 ) {
