@@ -69,6 +69,7 @@
     "react-router": "^7.5.3",
     "react-to-print": "^3.1.0",
     "react-toastify": "^11.0.5",
+    "lifeforge-api": "workspace:*",
     "react-tooltip": "^5.28.1",
     "react-virtualized": "^9.22.6",
     "rrule": "^2.8.1",
@@ -77,6 +78,7 @@
     "tailwindcss": "^4.1.5",
     "three": "^0.167.1",
     "tinycolor2": "^1.6.0",
+    "zod": "^3.25.51",
     "zustand": "^5.0.4"
   },
   "devDependencies": {

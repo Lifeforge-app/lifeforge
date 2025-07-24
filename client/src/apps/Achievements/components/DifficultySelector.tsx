@@ -1,15 +1,14 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-
-import { AchievementsCollectionsSchemas } from 'shared/types/collections'
+import { IAchievement } from '..'
 
 function DifficultySelector({
   selectedDifficulty,
   setSelectedDifficulty
 }: {
-  selectedDifficulty: AchievementsCollectionsSchemas.IEntry['difficulty']
+  selectedDifficulty: IAchievement['difficulty']
   setSelectedDifficulty: React.Dispatch<
-    React.SetStateAction<AchievementsCollectionsSchemas.IEntry['difficulty']>
+    React.SetStateAction<IAchievement['difficulty']>
   >
 }) {
   const { t } = useTranslation('apps.achievements')
@@ -27,7 +26,7 @@ function DifficultySelector({
         <button
           key={index}
           className={clsx(
-            'w-full cursor-pointer border-b-2 p-2 tracking-widest uppercase transition-all',
+            'w-full cursor-pointer border-b-2 p-2 uppercase tracking-widest transition-all',
             selectedDifficulty === id
               ? `${classNames} font-medium`
               : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'

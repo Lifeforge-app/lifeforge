@@ -5,7 +5,7 @@ import PocketBase from 'pocketbase'
  * Class for deleting records from PocketBase collections with type safety
  * @template TCollectionKey - The collection key type
  */
-class Delete<TCollectionKey extends CollectionKey> {
+export class Delete<TCollectionKey extends CollectionKey> {
   private _recordId: string = ''
 
   /**

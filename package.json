@@ -20,7 +20,7 @@
   "scripts": {
     "forge": "bun run scripts/forge.ts",
     "start:server": "cd server && bun run start",
-    "postinstall": "bun forge build shared && bun forge build ui",
+    // "postinstall": "bun forge build shared && bun forge build ui",
     "schema:generate:collections": "bun run ./scripts/generateCollectionsSchemas.ts"
   },
   "keywords": [
