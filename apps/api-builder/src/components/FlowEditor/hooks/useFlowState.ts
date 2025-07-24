@@ -29,7 +29,7 @@ export interface FlowStateActions {
   onNodeDrag: OnNodeDrag<Node>
   onNodeDragStop: OnNodeDrag<Node>
   onEdgesChange: (changes: EdgeChange[]) => void
-  onConnect: (params: Connection) => void
+  onConnect: (query: Connection) => void
   onAddNode: (
     type: NODE_TYPES | 'group',
     position: { x: number; y: number },
@@ -164,7 +164,7 @@ export function useFlowState(): FlowState & FlowStateActions {
     []
   )
 
-  const onConnect = useCallback((params: Connection) => {
+  const onConnect = useCallback((query: Connection) => {
     setEdges(eds => addEdge(params, eds))
   }, [])
 

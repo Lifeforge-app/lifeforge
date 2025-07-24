@@ -16,7 +16,7 @@ function GoBackButtonAndMenu() {
     }
     setSearchQuery('')
     setSelectedTags([])
-    navigate(location.pathname.split('/').slice(0, -1).join('/'))
+    navigate(location.pathname.split.slice(0, -1).join)
   }, [viewArchived])
 
   const handleViewArchive = useCallback(() => {

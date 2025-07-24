@@ -7,8 +7,7 @@ import { z } from 'zod/v4'
 // @ts-expect-error - MomentRange types are not fully compatible with Moment
 const moment = MomentRange.extendMoment(Moment)
 
-const getAllAssets = forgeController
-  .route('GET /')
+const getAllAssets = forgeController.query
   .description('Get all wallet assets')
   .input({})
   .callback(({ pb }) =>
@@ -18,18 +17,18 @@ const getAllAssets = forgeController
       .execute()
   )
 
-const getAssetAccumulatedBalance = forgeController
-  .route('GET /balance/:id')
+const getAssetAccumulatedBalance = forgeController.query
+
   .description('Get accumulated balance for a wallet asset')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__assets'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const { starting_balance } = await pb.getOne
       .collection('wallet__assets')
       .id(id)
@@ -124,8 +123,7 @@ const getAssetAccumulatedBalance = forgeController
     return accumulatedBalance
   })
 
-const createAsset = forgeController
-  .route('POST /')
+const createAsset = forgeController.mutation
   .description('Create a new wallet asset')
   .input({
     body: SCHEMAS.wallet.assets
@@ -147,11 +145,10 @@ const createAsset = forgeController
     pb.create.collection('wallet__assets').data(body).execute()
   )
 
-const updateAsset = forgeController
-  .route('PATCH /:id')
+const updateAsset = forgeController.mutation
   .description('Update an existing wallet asset')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.wallet.assets
@@ -168,26 +165,25 @@ const updateAsset = forgeController
         })
       })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__assets'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('wallet__assets').id(id).data(body).execute()
   )
 
-const deleteAsset = forgeController
-  .route('DELETE /:id')
+const deleteAsset = forgeController.mutation
   .description('Delete a wallet asset')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__assets'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('wallet__assets').id(id).execute()
   )
 

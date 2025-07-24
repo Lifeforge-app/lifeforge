@@ -2,8 +2,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const getAllEntries = forgeController
-  .route('GET /')
+const getAllEntries = forgeController.query
   .description('Get all movie entries')
   .input({
     query: z.object({
@@ -60,16 +59,15 @@ const getAllEntries = forgeController
     }
   })
 
-const createEntryFromTMDB = forgeController
-  .route('POST /:id')
+const createEntryFromTMDB = forgeController.mutation
   .description('Create a movie entry from TMDB')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
   .statusCode(201)
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const apiKey = await getAPIKey('tmdb', pb)
 
     if (!apiKey) {
@@ -121,34 +119,33 @@ const createEntryFromTMDB = forgeController
       .execute()
   })
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a movie entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'movies__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('movies__entries').id(id).execute()
   )
 
-const toggleWatchStatus = forgeController
-  .route('PATCH /watch-status/:id')
+const toggleWatchStatus = forgeController.mutation
+
   .description('Toggle watch status of a movie entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'movies__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const entry = await pb.getOne.collection('movies__entries').id(id).execute()
 
     return await pb.update

@@ -20,7 +20,7 @@ function PreviewContainer({
 }) {
   const finalFileName = useMemo(() => {
     if (fileName) return fileName
-    if (typeof file === 'string') return file.split('/').pop()
+    if (typeof file === 'string') return file.split.pop()
     if (file instanceof File) return file.name
 
     return undefined

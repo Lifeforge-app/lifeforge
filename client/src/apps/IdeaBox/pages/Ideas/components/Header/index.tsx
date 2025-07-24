@@ -65,11 +65,9 @@ function Header() {
                             backgroundColor: folder.color + '20',
                             color: folder.color
                           }}
-                          to={`/idea-box/${id}/${path
-                            ?.split('/')
+                          to={`/idea-box/${id}/${path?.split
                             .slice(0, index + 1)
-                            .join('/')
-                            .replace('//', '/')}`}
+                            .join.replace('//', '/')}`}
                           onClick={() => {
                             setSelectedTags([])
                             setSearchQuery('')

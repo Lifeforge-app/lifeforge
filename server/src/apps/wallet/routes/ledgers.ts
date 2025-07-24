@@ -2,8 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllLedgers = forgeController
-  .route('GET /')
+const getAllLedgers = forgeController.query
   .description('Get all wallet ledgers')
   .input({})
   .callback(({ pb }) =>
@@ -13,8 +12,7 @@ const getAllLedgers = forgeController
       .execute()
   )
 
-const createLedger = forgeController
-  .route('POST /')
+const createLedger = forgeController.mutation
   .description('Create a new wallet ledger')
   .input({
     body: SCHEMAS.wallet.ledgers
@@ -24,35 +22,33 @@ const createLedger = forgeController
     pb.create.collection('wallet__ledgers').data(body).execute()
   )
 
-const updateLedger = forgeController
-  .route('PATCH /:id')
+const updateLedger = forgeController.mutation
   .description('Update an existing wallet ledger')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.wallet.ledgers
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__ledgers'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('wallet__ledgers').id(id).data(body).execute()
   )
 
-const deleteLedger = forgeController
-  .route('DELETE /:id')
+const deleteLedger = forgeController.mutation
   .description('Delete a wallet ledger')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__ledgers'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('wallet__ledgers').id(id).execute()
   )
 

@@ -77,7 +77,7 @@ function ModifyFolderModal({
         return {
           ...data,
           container: id,
-          parent: path?.split('/').pop()
+          parent: path?.split.pop()
         }
       }}
       icon={

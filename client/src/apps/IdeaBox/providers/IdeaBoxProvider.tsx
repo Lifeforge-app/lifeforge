@@ -1,21 +1,23 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { useAPIQuery } from 'shared'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
+
+const pathDetailsRoute = forgeAPI
+  .route('/idea-box')
+  .route.controller('GET /path/')
 
 interface IIdeaBoxData {
   pathValid: boolean
   pathValidLoading: boolean
-  pathDetails:
-    | IdeaBoxControllersSchemas.IMisc['getPath']['response']
-    | undefined
+  pathDetails: InferOutput<typeof pathDetailsRoute> | undefined
   pathDetailsLoading: boolean
   entriesQuery: UseQueryResult<
     IdeaBoxControllersSchemas.IIdeas['getIdeas']['response']
@@ -68,15 +70,17 @@ export default function IdeaBoxProvider() {
     }
   )
 
-  const pathDetailsQuery = useAPIQuery<
-    IdeaBoxControllersSchemas.IMisc['getPath']['response']
-  >(
-    `idea-box/path/${id}/${path}`,
-    ['idea-box', 'path', id, path],
-    id !== undefined && path !== undefined && pathValidQuery.data,
-    {
-      staleTime: Infinity
-    }
+  const pathDetailsQuery = useQuery(
+    pathDetailsRoute
+      .input({
+        query: {
+          container: id ?? '',
+          '0': path ?? ''
+        }
+      })
+      .getQueryOptions({
+        enabled: id !== undefined && path !== undefined && pathValidQuery.data
+      })
   )
 
   const entriesQuery = useAPIQuery<
@@ -118,7 +122,7 @@ export default function IdeaBoxProvider() {
     `idea-box/search?q=${encodeURIComponent(
       debouncedSearchQuery.trim()
     )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
-      path !== '' ? `&folder=${path?.split('/').pop()}` : ''
+      path !== '' ? `&folder=${path?.split.pop()}` : ''
     }`,
     ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
     id !== undefined &&

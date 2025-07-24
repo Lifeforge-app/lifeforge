@@ -97,7 +97,7 @@ function IdeaContentInput({
           <>
             <PreviewContainer
               file={formState.image}
-              fileName={debouncedImageLink.split('/').pop() ?? undefined}
+              fileName={debouncedImageLink.split.pop() ?? undefined}
               preview={preview as string}
               setFile={value =>
                 setFormState(prev => ({ ...prev, image: value }))

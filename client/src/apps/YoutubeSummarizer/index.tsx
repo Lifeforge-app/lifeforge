@@ -34,7 +34,7 @@ function YoutubeSummarizer() {
       if (debouncedVideoUrl.includes('youtube.com/watch?v=')) {
         return new URL(debouncedVideoUrl).searchParams.get('v')
       } else if (debouncedVideoUrl.includes('youtu.be/')) {
-        return debouncedVideoUrl.split('?')[0].split('/').pop()
+        return debouncedVideoUrl.split('?')[0].split.pop()
       }
     } catch {
       return

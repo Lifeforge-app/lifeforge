@@ -8,15 +8,14 @@ import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../../../constants/locales'
 
-const listSubnamespaces = forgeController
-  .route('GET /:namespace')
+const listSubnamespaces = forgeController.query
   .description('List subnamespaces for a namespace')
   .input({
-    params: z.object({
+    query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE)
     })
   })
-  .callback(async ({ params: { namespace } }) => {
+  .callback(async ({ query: { namespace } }) => {
     if (namespace === 'apps') {
       const data = fs
         .readdirSync(`${process.cwd()}/src/apps`)
@@ -35,16 +34,15 @@ const listSubnamespaces = forgeController
     return data
   })
 
-const listLocales = forgeController
-  .route('GET /:namespace/:subnamespace')
+const listLocales = forgeController.query
   .description('List locales for a namespace and subnamespace')
   .input({
-    params: z.object({
+    query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     })
   })
-  .callback(async ({ params: { namespace, subnamespace } }) => {
+  .callback(async ({ query: { namespace, subnamespace } }) => {
     const final: Omit<Record<(typeof ALLOWED_LANG)[number], any>, 'zh'> = {
       en: {},
       ms: {},
@@ -93,8 +91,7 @@ const listLocales = forgeController
     return final
   })
 
-const syncLocales = forgeController
-  .route('POST /sync/:namespace/:subnamespace')
+const syncLocales = forgeController.mutation
   .description('Sync locales for a namespace and subnamespace')
   .input({
     body: z.object({
@@ -103,12 +100,12 @@ const syncLocales = forgeController
         z.record(z.enum(ALLOWED_LANG).exclude(['zh']), z.string())
       )
     }),
-    params: z.object({
+    query: z.object({
       namespace: z.enum(['apps', 'common', 'utils', 'core']),
       subnamespace: z.string()
     })
   })
-  .callback(async ({ body: { data }, params: { namespace, subnamespace } }) => {
+  .callback(async ({ body: { data }, query: { namespace, subnamespace } }) => {
     let fileContent
 
     if (namespace === 'apps') {
@@ -180,11 +177,10 @@ const syncLocales = forgeController
     return true
   })
 
-const createLocale = forgeController
-  .route('POST /:type/:namespace/:subnamespace')
+const createLocale = forgeController.mutation
   .description('Create a new locale entry or folder')
   .input({
-    params: z.object({
+    query: z.object({
       type: z.enum(['entry', 'folder']),
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
@@ -195,7 +191,7 @@ const createLocale = forgeController
   })
   .statusCode(201)
   .callback(
-    async ({ params: { type, namespace, subnamespace }, body: { path } }) => {
+    async ({ query: { type, namespace, subnamespace }, body: { path } }) => {
       for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
         const filePath =
           namespace === 'apps'
@@ -231,11 +227,10 @@ const createLocale = forgeController
     }
   )
 
-const renameLocale = forgeController
-  .route('PATCH /:namespace/:subnamespace')
+const renameLocale = forgeController.mutation
   .description('Rename a locale')
   .input({
-    params: z.object({
+    query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     }),
@@ -245,10 +240,7 @@ const renameLocale = forgeController
     })
   })
   .callback(
-    async ({
-      params: { namespace, subnamespace },
-      body: { path, newName }
-    }) => {
+    async ({ query: { namespace, subnamespace }, body: { path, newName } }) => {
       for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
         const filePath =
           namespace === 'apps'
@@ -292,11 +284,10 @@ const renameLocale = forgeController
     }
   )
 
-const deleteLocale = forgeController
-  .route('DELETE /:namespace/:subnamespace')
+const deleteLocale = forgeController.mutation
   .description('Delete a locale')
   .input({
-    params: z.object({
+    query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     }),
@@ -305,7 +296,7 @@ const deleteLocale = forgeController
     })
   })
   .statusCode(204)
-  .callback(async ({ params: { namespace, subnamespace }, body: { path } }) => {
+  .callback(async ({ query: { namespace, subnamespace }, body: { path } }) => {
     ;['en', 'ms', 'zh-CN', 'zh-TW'].forEach(lang => {
       const filePath =
         namespace === 'apps'
@@ -336,11 +327,11 @@ const deleteLocale = forgeController
     return true
   })
 
-const getTranslationSuggestions = forgeController
-  .route('POST /suggestions/:namespace/:subnamespace')
+const getTranslationSuggestions = forgeController.mutation
+
   .description('Get translation suggestions')
   .input({
-    params: z.object({
+    query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     }),
@@ -352,7 +343,7 @@ const getTranslationSuggestions = forgeController
   .callback(
     async ({
       pb,
-      params: { namespace, subnamespace },
+      query: { namespace, subnamespace },
       body: { path, hint }
     }) => {
       const LocaleSuggestions = zOld.object({

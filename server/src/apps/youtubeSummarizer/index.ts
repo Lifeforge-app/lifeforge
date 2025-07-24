@@ -17,16 +17,16 @@ interface YoutubeInfo {
   auto_captions?: Record<string, any>
 }
 
-const getYoutubeVideoInfo = forgeController
-  .route('GET /info/:id')
+const getYoutubeVideoInfo = forgeController.query
+
   .description('Get YouTube video information by video ID')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
   .callback(
-    ({ params: { id } }) =>
+    ({ query: { id } }) =>
       new Promise((resolve, reject) => {
         exec(
           `${process.cwd()}/src/core/bin/yt-dlp --skip-download --dump-json "https://www.youtube.com/watch?v=${id}"`,
@@ -68,8 +68,8 @@ const getYoutubeVideoInfo = forgeController
       })
   )
 
-const summarizeVideo = forgeController
-  .route('POST /summarize')
+const summarizeVideo = forgeController.mutation
+
   .description('Summarize a YouTube video from URL')
   .input({
     body: z.object({
