@@ -2,8 +2,8 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const searchMovies = forgeController
-  .route('GET /search')
+const searchMovies = forgeController.query
+
   .description('Search movies using TMDB API')
   .input({
     query: z.object({

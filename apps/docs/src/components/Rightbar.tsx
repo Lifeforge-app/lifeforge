@@ -163,9 +163,9 @@ function Rightbar() {
       <a
         className="text-bg-100 mt-6 flex items-center gap-2 font-medium hover:underline"
         href={`https://github.com/melvinchia3636/lifeforge-documentation/edit/main/src/contents/${
-          location.pathname.split('/')?.[1]
+          location.pathname.split?.[1]
         }/${toTitleCase(
-          location.pathname.split('/')?.[2]?.replace(/-/g, ' ') || ''
+          location.pathname.split?.[2]?.replace(/-/g, ' ') || ''
         )}.mdx`}
         rel="noreferrer"
         target="_blank"

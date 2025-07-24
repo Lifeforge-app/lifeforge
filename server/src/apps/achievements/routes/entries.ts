@@ -3,15 +3,14 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-export const getAllEntriesByDifficulty = forgeController
-  .route('GET /:difficulty')
+export const getAllByDifficulty = forgeController.query
   .description('Get all achievements entries by difficulty')
   .input({
-    params: SCHEMAS.achievements.entries.pick({
+    query: SCHEMAS.achievements.entries.pick({
       difficulty: true
     })
   })
-  .callback(async ({ pb, params: { difficulty } }) =>
+  .callback(async ({ pb, query: { difficulty } }) =>
     pb.getFullList
       .collection('achievements__entries')
       .filter([
@@ -24,8 +23,7 @@ export const getAllEntriesByDifficulty = forgeController
       .execute()
   )
 
-export const createEntry = forgeController
-  .route('POST /')
+export const create = forgeController.mutation
   .description('Create a new achievements entry')
   .input({
     body: SCHEMAS.achievements.entries.omit({
@@ -38,11 +36,10 @@ export const createEntry = forgeController
     pb.create.collection('achievements__entries').data(body).execute()
   )
 
-export const updateEntry = forgeController
-  .route('PATCH /:id')
+export const update = forgeController.mutation
   .description('Update an existing achievements entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.achievements.entries.omit({
@@ -50,32 +47,31 @@ export const updateEntry = forgeController
       updated: true
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'achievements__entries'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('achievements__entries').id(id).data(body).execute()
   )
 
-export const deleteEntry = forgeController
-  .route('DELETE /:id')
+const remove = forgeController.mutation
   .description('Delete an existing achievements entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'achievements__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('achievements__entries').id(id).execute()
   )
 
 export default forgeRouter({
-  getAllEntriesByDifficulty,
-  createEntry,
-  updateEntry,
-  deleteEntry
+  getAllByDifficulty,
+  create,
+  update,
+  remove
 })

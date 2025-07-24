@@ -5,8 +5,8 @@ import fs from 'fs'
 import moment from 'moment'
 import { z } from 'zod/v4'
 
-const updateAvatar = forgeController
-  .route('PUT /avatar')
+const updateAvatar = forgeController.mutation
+
   .description('Update user avatar')
   .input({})
   .middlewares(singleUploadMiddleware)
@@ -35,8 +35,8 @@ const updateAvatar = forgeController
     return newRecord.avatar
   })
 
-const deleteAvatar = forgeController
-  .route('DELETE /avatar')
+const deleteAvatar = forgeController.mutation
+
   .description('Delete user avatar')
   .input({})
   .statusCode(204)
@@ -52,8 +52,7 @@ const deleteAvatar = forgeController
       .execute()
   })
 
-const updateProfile = forgeController
-  .route('PATCH /')
+const updateProfile = forgeController.mutation
   .description('Update user profile')
   .input({
     body: z.object({
@@ -100,8 +99,8 @@ const updateProfile = forgeController
     }
   })
 
-const requestPasswordReset = forgeController
-  .route('POST /request-password-reset')
+const requestPasswordReset = forgeController.mutation
+
   .description('Request password reset')
   .input({})
   .callback(({ pb }) =>

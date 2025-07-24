@@ -1,7 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 
-const getAllEntries = forgeController
-  .route('GET /')
+const getAllEntries = forgeController.query
   .description('Get all blog entries')
   .input({})
   .callback(({ pb }) => pb.getFullList.collection('blog__entries').execute())

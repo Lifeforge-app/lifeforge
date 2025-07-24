@@ -17,8 +17,8 @@ export function setLeft(value: number) {
   left = value
 }
 
-const getSidebarData = forgeController
-  .route('GET /sidebar-data')
+const getSidebarData = forgeController.query
+
   .description('Get sidebar data for scores library')
   .input({})
   .callback(async ({ pb }) => {
@@ -60,8 +60,7 @@ const getSidebarData = forgeController
     }
   })
 
-const getEntries = forgeController
-  .route('GET /')
+const getEntries = forgeController.query
   .description('Get scores library entries')
   .input({
     query: z.object({
@@ -132,8 +131,8 @@ const getEntries = forgeController
         .execute()
   )
 
-const getRandomEntry = forgeController
-  .route('GET /random')
+const getRandomEntry = forgeController.query
+
   .description('Get a random score entry')
   .input({})
   .callback(async ({ pb }) => {
@@ -144,8 +143,8 @@ const getRandomEntry = forgeController
     return allScores[Math.floor(Math.random() * allScores.length)]
   })
 
-const uploadFiles = forgeController
-  .route('POST /upload')
+const uploadFiles = forgeController.mutation
+
   .description('Upload score files')
   .input({})
   .middlewares(uploadMiddleware)
@@ -239,11 +238,10 @@ const uploadFiles = forgeController
     return taskId
   })
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update a score entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.scores_library.entries.pick({
@@ -252,41 +250,40 @@ const updateEntry = forgeController
       type: true
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'scores_library__entries'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('scores_library__entries').id(id).data(body).execute()
   )
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a score entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'scores_library__entries'
   })
   .statusCode(204)
-  .callback(async ({ pb, params: { id } }) =>
+  .callback(async ({ pb, query: { id } }) =>
     pb.delete.collection('scores_library__entries').id(id).execute()
   )
 
-const toggleFavourite = forgeController
-  .route('POST /favourite/:id')
+const toggleFavourite = forgeController.mutation
+
   .description('Toggle favourite status of a score entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'scores_library__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const entry = await pb.getOne
       .collection('scores_library__entries')
       .id(id)

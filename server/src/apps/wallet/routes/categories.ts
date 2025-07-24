@@ -2,8 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getAllCategories = forgeController
-  .route('GET /')
+const getAllCategories = forgeController.query
   .description('Get all wallet categories')
   .input({})
   .callback(({ pb }) =>
@@ -13,8 +12,7 @@ const getAllCategories = forgeController
       .execute()
   )
 
-const createCategory = forgeController
-  .route('POST /')
+const createCategory = forgeController.mutation
   .description('Create a new wallet category')
   .input({
     body: SCHEMAS.wallet.categories
@@ -24,35 +22,33 @@ const createCategory = forgeController
     pb.create.collection('wallet__categories').data(body).execute()
   )
 
-const updateCategory = forgeController
-  .route('PATCH /:id')
+const updateCategory = forgeController.mutation
   .description('Update an existing wallet category')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.wallet.categories
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__categories'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('wallet__categories').id(id).data(body).execute()
   )
 
-const deleteCategory = forgeController
-  .route('DELETE /:id')
+const deleteCategory = forgeController.mutation
   .description('Delete a wallet category')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__categories'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('wallet__categories').id(id).execute()
   )
 

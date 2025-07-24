@@ -24,7 +24,7 @@ function RequestSchemaNode({ id }: { id: string }) {
     if (schemaInputConnections.length === 0) return null
 
     const schemaFields = {
-      params: [],
+      query: [],
       query: [],
       body: []
     }

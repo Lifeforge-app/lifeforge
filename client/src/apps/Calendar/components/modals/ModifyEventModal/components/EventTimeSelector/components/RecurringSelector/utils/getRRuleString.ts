@@ -137,7 +137,7 @@ const configureEndOptions = (
   }
 }
 
-export default function getRRULEString(params: {
+export default function getRRULEString(query: {
   start: Date | null
   freq: string
   yearlyType: string

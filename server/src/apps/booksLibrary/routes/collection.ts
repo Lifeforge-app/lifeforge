@@ -3,8 +3,7 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const getAllCollections = forgeController
-  .route('GET /')
+const getAllCollections = forgeController.query
   .description('Get all collections for the books library')
   .input({})
   .callback(({ pb }) =>
@@ -14,8 +13,7 @@ const getAllCollections = forgeController
       .execute()
   )
 
-const createCollection = forgeController
-  .route('POST /')
+const createCollection = forgeController.mutation
   .description('Create a new collection for the books library')
   .input({
     body: SCHEMAS.books_library.collections
@@ -25,19 +23,18 @@ const createCollection = forgeController
     pb.create.collection('books_library__collections').data(body).execute()
   )
 
-const updateCollection = forgeController
-  .route('PATCH /:id')
+const updateCollection = forgeController.mutation
   .description('Update an existing collection for the books library')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.books_library.collections
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'books_library__collections'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update
       .collection('books_library__collections')
       .id(id)
@@ -45,19 +42,18 @@ const updateCollection = forgeController
       .execute()
   )
 
-const deleteCollection = forgeController
-  .route('DELETE /:id')
+const deleteCollection = forgeController.mutation
   .description('Delete an existing collection for the books library')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'books_library__collections'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('books_library__collections').id(id).execute()
   )
 

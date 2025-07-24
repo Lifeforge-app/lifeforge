@@ -9,18 +9,17 @@ import { z } from 'zod/v4'
 import { convertToMp3 } from '../utils/convertToMP3'
 import { getTranscription } from '../utils/transcription'
 
-const transcribeExisted = forgeController
-  .route('POST /:id')
+const transcribeExisted = forgeController.mutation
   .description('Transcribe an existing audio entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'moment_vault__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const apiKey = await getAPIKey('groq', pb)
 
     if (!apiKey) {
@@ -78,8 +77,7 @@ const transcribeExisted = forgeController
     }
   })
 
-const transcribeNew = forgeController
-  .route('POST /')
+const transcribeNew = forgeController.mutation
   .description('Transcribe a new audio file')
   .input({})
   .middlewares(singleUploadMiddleware)

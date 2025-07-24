@@ -3,8 +3,6 @@ import { Router } from 'express'
 import { ForgeRouter, RouterInput } from '../typescript/forge_router.types'
 import { ForgeControllerBuilder } from './forgeController'
 
-export type InferRouterStructure<T> = T extends ForgeRouter<infer U> ? U : never
-
 function isRouter(value: unknown): value is Router {
   return !!(
     value &&
@@ -28,19 +26,12 @@ function registerRoutes<T extends RouterInput>(
       if (controller instanceof ForgeControllerBuilder) {
         controller.register(router)
       } else if (isRouter(controller)) {
-        if (!route.startsWith('/')) {
-          throw new Error(`Route "${route}" must start with a '/'`)
-        }
-        router.use(route, controller)
+        router.use(`/${route}`, controller)
       } else if (typeof controller === 'object' && controller !== null) {
         const nestedRouter = Router()
 
-        if (!route.startsWith('/')) {
-          throw new Error(`Nested route "${route}" must start with a '/'`)
-        }
-
         registerRoutesRecursive(controller as RouterInput, nestedRouter)
-        router.use(route, nestedRouter)
+        router.use(`/${route}`, nestedRouter)
       } else {
         console.warn(
           `Skipping route ${route}: not a valid controller, router, or nested object`

@@ -30,11 +30,7 @@ function InFolderChip({
           backgroundColor: entry.folder.color + '30'
         }}
         to={
-          entry.folder.id ===
-          path
-            ?.split('/')
-            .filter(e => e)
-            .pop()
+          entry.folder.id === path?.split.filter(e => e).pop()
             ? ''
             : `.${entry.fullPath}`
         }

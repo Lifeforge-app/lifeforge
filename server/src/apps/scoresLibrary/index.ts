@@ -5,7 +5,7 @@ import guitarWorldRouter from './routes/guitarWorld'
 import typesRouter from './routes/types'
 
 export default forgeRouter({
-  '/entries': entriesRouter,
-  '/guitar-world': guitarWorldRouter,
-  '/types': typesRouter
+  entries: entriesRouter,
+  'guitar-world': guitarWorldRouter,
+  types: typesRouter
 })

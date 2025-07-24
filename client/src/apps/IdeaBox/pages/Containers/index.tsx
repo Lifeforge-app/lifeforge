@@ -9,29 +9,28 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import {
-  ISchemaWithPB,
-  IdeaBoxCollectionsSchemas
-} from 'shared/types/collections'
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
 
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'
+import forgeAPI from '@utils/forgeAPI'
+import { useQuery } from '@tanstack/react-query'
+import { InferOutput } from 'lifeforge-api'
+
+const route = forgeAPI
+  .route('/idea-box')
+  .route('/containers')
+  .controller('GET /')
+
+type IContainer = InferOutput<typeof route>[number]
 
 function IdeaBox() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.ideaBox')
 
-  const query = useAPIQuery<
-    IdeaBoxControllersSchemas.IContainers['getContainers']['response']
-  >('idea-box/containers', ['idea-box', 'containers'])
+  const query = useQuery(route.getQueryOptions())
 
-  const [filteredList, setFilteredList] = useState<
-    ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>[]
-  >([])
+  const [filteredList, setFilteredList] = useState<IContainer[]>([])
 
   const [searchQuery, setSearchQuery] = useState('')
 

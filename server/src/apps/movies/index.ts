@@ -5,7 +5,7 @@ import ticketRouter from './routes/ticket'
 import tmdbRouter from './routes/tmdb'
 
 export default forgeRouter({
-  '/entries': entriesRouter,
-  '/ticket': ticketRouter,
-  '/tmdb': tmdbRouter
+  entries: entriesRouter,
+  ticket: ticketRouter,
+  tmdb: tmdbRouter
 })

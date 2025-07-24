@@ -30,7 +30,7 @@ function MainContent() {
               return acc
             }
 
-            const topLevelPath = endpoint.path.split('/')[0] || 'root'
+            const topLevelPath = endpoint.path.split[0] || 'root'
 
             if (!acc[topLevelPath]) {
               acc[topLevelPath] = []

@@ -47,7 +47,7 @@ function ControllerNode({ id }: { id: string }) {
               </span>
               <span className="w-full min-w-0 truncate">
                 {routeInputSchemaData.parentPath}
-                {routeInputSchemaData.path.startsWith('/')
+                {routeInputSchemaData.path.startsWith
                   ? routeInputSchemaData.path
                   : `/${routeInputSchemaData.path}`}
               </span>

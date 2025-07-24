@@ -37,7 +37,7 @@ function RouteNode({ id }: { id: string }) {
 
     return (
       parentData.parentPath +
-      (parentData.path.startsWith('/') ? '' : '/') +
+      (parentData.path.startsWith ? '' : '/') +
       parentData.path
     )
   }, [getNodeData, parentRouterNode])
@@ -88,7 +88,7 @@ function RouteNode({ id }: { id: string }) {
       </NodeColumn>
       <NodeColumn label="Route Path">
         <NodeTextInput
-          placeholder="/route/path/:params"
+          placeholder="/route/path"
           setValue={newValue => {
             updateNodeData(id, { path: newValue })
           }}
