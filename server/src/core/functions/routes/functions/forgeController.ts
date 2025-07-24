@@ -50,7 +50,6 @@ import {
   serverError,
   successWithBaseResponse
 } from '../utils/response'
-import COLLECTION_SCHEMAS from '@schema'
 
 export type ZodObjectOrIntersection =
   | ZodObject<ZodRawShape>
