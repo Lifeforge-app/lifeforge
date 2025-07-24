@@ -1,6 +1,5 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
-import { successWithBaseResponse } from '@functions/routes/utils/response'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import express from 'express'
 import request from 'request'
@@ -8,26 +7,24 @@ import { z } from 'zod/v4'
 
 const router = express.Router()
 
-router.get('/status', async (req, res) => {
-  successWithBaseResponse(res, {
-    environment: process.env.NODE_ENV
+router.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to LifeForge API!'
   })
 })
 
-router.get('/', (_, res) => {
-  successWithBaseResponse(res, true)
-})
+const getRoot = forgeController.query
+  .description('Get root endpoint')
+  .input({})
+  .callback(async () => 'Welcome to LifeForge API!' as const)
 
-const getMedia = forgeController
-  .route('GET /media/:collectionId/:entriesId/:photoId')
+const getMedia = forgeController.query
   .description('Get media file from PocketBase')
   .input({
-    params: z.object({
+    query: z.object({
       collectionId: z.string(),
       entriesId: z.string(),
-      photoId: z.string()
-    }),
-    query: z.object({
+      photoId: z.string(),
       thumb: z.string().optional(),
       token: z.string().optional()
     })
@@ -35,8 +32,7 @@ const getMedia = forgeController
   .noDefaultResponse()
   .callback(
     async ({
-      params: { collectionId, entriesId, photoId },
-      query: { thumb, token },
+      query: { collectionId, entriesId, photoId, thumb, token },
       res
     }) => {
       const searchParams = new URLSearchParams()
@@ -55,8 +51,7 @@ const getMedia = forgeController
     }
   )
 
-const corsAnywhere = forgeController
-  .route('GET /cors-anywhere')
+const corsAnywhere = forgeController.query
   .description('Proxy request to bypass CORS')
   .input({
     query: z.object({
@@ -90,42 +85,42 @@ const corsAnywhere = forgeController
     return response.text()
   })
 
-const getAllRoutes = forgeController
-  .route('GET /_routes')
+const getAllRoutes = forgeController.query
   .description('Get all registered routes')
   .input({})
   .callback(async () => traceRouteStack(router.stack))
 
 const appRoutes = forgeRouter({
-  '/achievements': (await import('../apps/achievements')).default,
-  '/calendar': (await import('../apps/calendar')).default,
-  '/todo-list': (await import('../apps/todoList')).default,
-  '/idea-box': (await import('../apps/ideaBox')).default,
-  '/code-time': (await import('../apps/codeTime')).default,
-  '/books-library': (await import('../apps/booksLibrary')).default,
-  '/wallet': (await import('../apps/wallet')).default,
-  '/wishlist': (await import('../apps/wishlist')).default,
-  '/scores-library': (await import('../apps/scoresLibrary')).default,
-  '/passwords': (await import('../apps/passwords')).default,
-  '/sudoku': (await import('../apps/sudoku')).default,
-  '/virtual-wardrobe': (await import('../apps/virtualWardrobe')).default,
-  '/moment-vault': (await import('../apps/momentVault')).default,
-  '/movies': (await import('../apps/movies')).default,
-  '/railway-map': (await import('../apps/railwayMap')).default,
-  '/youtube-summarizer': (await import('../apps/youtubeSummarizer')).default,
-  '/blog': (await import('../apps/blog')).default,
-  '/locales': (await import('./lib/locales')).default,
-  '/user': (await import('./lib/user')).default,
-  '/api-keys': (await import('./lib/apiKeys')).default,
-  '/pixabay': (await import('./lib/pixabay')).default,
-  '/locations': (await import('./lib/locations')).default,
-  '/ai': (await import('./lib/ai')).default,
-  '/modules': (await import('./lib/modules')).default,
-  '/backups': (await import('./lib/backups')).default,
-  '/database': (await import('./lib/database')).default,
-  getMedia: getMedia,
-  corsAnywhere: corsAnywhere,
-  getAllRoutes: getAllRoutes
+  achievements: (await import('../apps/achievements')).default,
+  calendar: (await import('../apps/calendar')).default,
+  'todo-list': (await import('../apps/todoList')).default,
+  'idea-box': (await import('../apps/ideaBox')).default,
+  'code-time': (await import('../apps/codeTime')).default,
+  'books-library': (await import('../apps/booksLibrary')).default,
+  wallet: (await import('../apps/wallet')).default,
+  wishlist: (await import('../apps/wishlist')).default,
+  'scores-library': (await import('../apps/scoresLibrary')).default,
+  passwords: (await import('../apps/passwords')).default,
+  sudoku: (await import('../apps/sudoku')).default,
+  'virtual-wardrobe': (await import('../apps/virtualWardrobe')).default,
+  'moment-vault': (await import('../apps/momentVault')).default,
+  movies: (await import('../apps/movies')).default,
+  'railway-map': (await import('../apps/railwayMap')).default,
+  'youtube-summarizer': (await import('../apps/youtubeSummarizer')).default,
+  blog: (await import('../apps/blog')).default,
+  locales: (await import('./lib/locales')).default,
+  user: (await import('./lib/user')).default,
+  'api-keys': (await import('./lib/apiKeys')).default,
+  pixabay: (await import('./lib/pixabay')).default,
+  locations: (await import('./lib/locations')).default,
+  ai: (await import('./lib/ai')).default,
+  modules: (await import('./lib/modules')).default,
+  backups: (await import('./lib/backups')).default,
+  database: (await import('./lib/database')).default,
+  _routes: getAllRoutes,
+  getRoot,
+  media: getMedia,
+  'cors-anywhere': corsAnywhere
 })
 
 router.use('/', registerRoutes(appRoutes))

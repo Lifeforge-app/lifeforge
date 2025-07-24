@@ -5,19 +5,18 @@ import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../../../constants/locales'
 
-const getLocales = forgeController
-  .route('GET /:lang/:namespace/:subnamespace')
+const getLocales = forgeController.query
   .description(
     'Get locales for a specific language, namespace, and subnamespace'
   )
   .input({
-    params: z.object({
+    query: z.object({
       lang: z.enum(ALLOWED_LANG),
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     })
   })
-  .callback(async ({ params: { lang, namespace, subnamespace } }) => {
+  .callback(async ({ query: { lang, namespace, subnamespace } }) => {
     const finalLang = lang === 'zh' ? 'zh-CN' : lang
 
     let data

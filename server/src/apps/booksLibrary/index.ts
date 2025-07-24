@@ -7,9 +7,9 @@ import languagesRouter from './routes/languages'
 import libgenRouter from './routes/libgen'
 
 export default forgeRouter({
-  '/entries': entriesRouter,
-  '/collections': collectionsRouter,
-  '/languages': languagesRouter,
-  '/file-types': fileTypesRouter,
-  '/libgen': libgenRouter
+  entries: entriesRouter,
+  collections: collectionsRouter,
+  languages: languagesRouter,
+  'file-types': fileTypesRouter,
+  libgen: libgenRouter
 })

@@ -194,7 +194,7 @@ function ModifyIdeaModal({
     formData.append('image', formState.image!)
     formData.append('imageLink', debouncedImageLink)
     formData.append('type', innerTypeOfModifyIdea)
-    formData.append('folder', path?.split('/').pop() ?? '')
+    formData.append('folder', path?.split.pop() ?? '')
     formData.append('tags', JSON.stringify(formState.tags))
 
     try {

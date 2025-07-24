@@ -4,6 +4,6 @@ import entriesRouter from './routes/entries'
 import sessionRouter from './routes/session'
 
 export default forgeRouter({
-  '/entries': entriesRouter,
-  '/session': sessionRouter
+  entries: entriesRouter,
+  session: sessionRouter
 })

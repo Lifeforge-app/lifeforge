@@ -120,7 +120,7 @@ function AudioType({
 
     const file = new File(
       audioChunksRef.current,
-      `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
+      `audio.${audioChunksRef.current[0].type.split[1]}`,
       {
         type: audioChunksRef.current[0].type
       }
@@ -153,7 +153,7 @@ function AudioType({
 
     const file = new File(
       audioChunksRef.current,
-      `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
+      `audio.${audioChunksRef.current[0].type.split[1]}`,
       {
         type: audioChunksRef.current[0].type
       }

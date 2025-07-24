@@ -5,32 +5,31 @@ import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
 
-const getFolders = forgeController
-  .route('GET /:container/*')
+const getFolders = forgeController.query
   .description('Get folders from a container path')
   .input({
-    params: z.object({
+    query: z.object({
       container: z.string(),
-      '0': z.string()
+      path: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     container: 'idea_box__containers'
   })
-  .callback(async ({ pb, params }) => {
-    const { container } = params
+  .callback(async ({ pb, query }) => {
+    const { container, path } = query
 
-    const path = params['0'].split('/').filter(p => p !== '')
+    const pathSegments = path.split('/').filter(p => p !== '')
 
     const { folderExists, lastFolder } = await validateFolderPath(
       pb,
       container,
-      path
+      pathSegments
     )
 
     if (!folderExists) {
       throw new ClientError(
-        `Folder with path "${params['0']}" does not exist in container "${container}"`
+        `Folder with path "${path}" does not exist in container "${container}"`
       )
     }
 
@@ -52,8 +51,7 @@ const getFolders = forgeController
       .execute()
   })
 
-const createFolder = forgeController
-  .route('POST /')
+const createFolder = forgeController.mutation
   .description('Create a new folder')
   .input({
     body: SCHEMAS.idea_box.folders
@@ -67,11 +65,10 @@ const createFolder = forgeController
   )
   .statusCode(201)
 
-const updateFolder = forgeController
-  .route('PATCH /:id')
+const updateFolder = forgeController.mutation
   .description('Update a folder')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.idea_box.folders.omit({
@@ -79,11 +76,11 @@ const updateFolder = forgeController
       parent: true
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__folders'
   })
   .callback(
-    async ({ pb, params: { id }, body }) =>
+    async ({ pb, query: { id }, body }) =>
       await pb.update
         .collection('idea_box__folders')
         .id(id)
@@ -91,25 +88,22 @@ const updateFolder = forgeController
         .execute()
   )
 
-const moveFolder = forgeController
-  .route('POST /move/:id')
+const moveFolder = forgeController.mutation
   .description('Move a folder to a different parent')
   .input({
-    params: z.object({
-      id: z.string()
-    }),
     query: z.object({
+      id: z.string(),
       target: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__folders'
   })
   .existenceCheck('query', {
     target: 'idea_box__folders'
   })
   .callback(
-    async ({ pb, params: { id }, query: { target } }) =>
+    async ({ pb, query: { id, target } }) =>
       await pb.update
         .collection('idea_box__folders')
         .id(id)
@@ -119,19 +113,18 @@ const moveFolder = forgeController
         .execute()
   )
 
-const removeFromFolder = forgeController
-  .route('DELETE /move/:id')
+const removeFromFolder = forgeController.mutation
   .description('Remove a folder from its parent')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__folders'
   })
   .callback(
-    async ({ pb, params: { id } }) =>
+    async ({ pb, query: { id } }) =>
       await pb.update
         .collection('idea_box__folders')
         .id(id)
@@ -141,18 +134,17 @@ const removeFromFolder = forgeController
         .execute()
   )
 
-const deleteFolder = forgeController
-  .route('DELETE /:id')
+const deleteFolder = forgeController.mutation
   .description('Delete a folder')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'idea_box__folders'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     await pb.delete.collection('idea_box__folders').id(id).execute()
   })
   .statusCode(204)

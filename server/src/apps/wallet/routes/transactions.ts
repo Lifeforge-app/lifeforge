@@ -11,8 +11,7 @@ import z from 'zod/v4'
 
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'
 
-const getAllTransactions = forgeController
-  .route('GET /')
+const getAllTransactions = forgeController.query
   .description('Get all wallet transactions')
   .input({})
   .callback(async ({ pb }) => {
@@ -115,8 +114,7 @@ const UpdateTransactionInputSchema = CreateTransactionInputSchema.and(
   })
 )
 
-const createTransaction = forgeController
-  .route('POST /')
+const createTransaction = forgeController.mutation
   .description('Create a new wallet transaction')
   .input({
     body: CreateTransactionInputSchema
@@ -196,17 +194,16 @@ const createTransaction = forgeController
     }
   })
 
-const updateTransaction = forgeController
-  .route('PATCH /:id')
+const updateTransaction = forgeController.mutation
   .description('Update an existing wallet transaction')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: UpdateTransactionInputSchema
   })
   .middlewares(singleUploadMiddlewareOfKey('receipt'))
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__transactions'
   })
   .existenceCheck('body', {
@@ -216,7 +213,7 @@ const updateTransaction = forgeController
     to: '[wallet__assets]',
     ledger: '[wallet__ledgers]'
   })
-  .callback(async ({ pb, params: { id }, body, req }) => {
+  .callback(async ({ pb, query: { id }, body, req }) => {
     const data = body as z.infer<typeof UpdateTransactionInputSchema>
 
     let targetFile: Express.Multer.File | File | undefined = req.file
@@ -308,24 +305,23 @@ const updateTransaction = forgeController
     }
   })
 
-const deleteTransaction = forgeController
-  .route('DELETE /:id')
+const deleteTransaction = forgeController.mutation
   .description('Delete a wallet transaction')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wallet__transactions'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('wallet__transactions').id(id).execute()
   )
 
-const scanReceipt = forgeController
-  .route('POST /scan-receipt')
+const scanReceipt = forgeController.mutation
+
   .description('Scan receipt to extract transaction data')
   .input({})
   .middlewares(singleUploadMiddleware)

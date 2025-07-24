@@ -32,7 +32,7 @@ i18n
           return
         }
 
-        return `${import.meta.env.VITE_API_HOST}/locales/${langs[0]}/${namespaces[0].split('.').join('/')}`
+        return `${import.meta.env.VITE_API_HOST}/locales/${langs[0]}/${namespaces[0].split('.').join}`
       },
       parse: (data: string) => {
         return JSON.parse(data).data

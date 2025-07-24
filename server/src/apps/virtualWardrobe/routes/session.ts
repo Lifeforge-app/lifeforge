@@ -7,24 +7,24 @@ const sessionCart = new Set<
   SchemaWithPB<z.infer<typeof SCHEMAS.virtual_wardrobe.entries>>
 >()
 
-const getCart = forgeController
-  .route('GET /cart')
+const getCart = forgeController.query
+
   .description('Get session cart items')
   .input({})
   .callback(async () => sessionCart)
 
-const addToCart = forgeController
-  .route('POST /cart/:id')
+const addToCart = forgeController.mutation
+
   .description('Add item to session cart')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'virtual_wardrobe__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     if (Array.from(sessionCart).some(item => item.id === id)) {
       throw new Error('Entry already in cart')
     }
@@ -37,18 +37,18 @@ const addToCart = forgeController
     sessionCart.add(item)
   })
 
-const removeFromCart = forgeController
-  .route('DELETE /cart/:id')
+const removeFromCart = forgeController.mutation
+
   .description('Remove item from session cart')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'virtual_wardrobe__entries'
   })
-  .callback(async ({ params: { id } }) => {
+  .callback(async ({ query: { id } }) => {
     const item = Array.from(sessionCart).find(item => item.id === id)
 
     if (!item) {
@@ -58,8 +58,8 @@ const removeFromCart = forgeController
     sessionCart.delete(item)
   })
 
-const checkout = forgeController
-  .route('POST /checkout')
+const checkout = forgeController.mutation
+
   .description('Checkout session cart')
   .input({
     body: z.object({
@@ -97,8 +97,8 @@ const checkout = forgeController
     sessionCart.clear()
   })
 
-const clearCart = forgeController
-  .route('DELETE /cart')
+const clearCart = forgeController.mutation
+
   .description('Clear session cart')
   .input({})
   .callback(async () => {

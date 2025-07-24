@@ -76,8 +76,8 @@ const FILTERS: Record<string, FilterType<'todo_list__entries'>> = {
   ]
 }
 
-const getStatusCounter = forgeController
-  .route('GET /utils/status-counter')
+const getStatusCounter = forgeController.query
+
   .description('Get status counter for todo entries')
   .input({})
   .callback(async ({ pb }) => {
@@ -103,23 +103,21 @@ const getStatusCounter = forgeController
     return counters
   })
 
-const getEntryById = forgeController
-  .route('GET /:id')
+const getEntryById = forgeController.query
   .description('Get todo entry by ID')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'todo_list__entries'
   })
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.getOne.collection('todo_list__entries').id(id).execute()
   )
 
-const getAllEntries = forgeController
-  .route('GET /')
+const getAllEntries = forgeController.query
   .description('Get all todo entries with optional filters')
   .input({
     query: z.object({
@@ -154,8 +152,7 @@ const getAllEntries = forgeController
       .execute()
   })
 
-const createEntry = forgeController
-  .route('POST /')
+const createEntry = forgeController.mutation
   .description('Create a new todo entry')
   .input({
     body: SCHEMAS.todo_list.entries.omit({
@@ -182,11 +179,10 @@ const createEntry = forgeController
       .execute()
   )
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update an existing todo entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: SCHEMAS.todo_list.entries.omit({
@@ -194,7 +190,7 @@ const updateEntry = forgeController
       done: true
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'todo_list__entries'
   })
   .existenceCheck('body', {
@@ -202,7 +198,7 @@ const updateEntry = forgeController
     priority: '[todo_list__priorities]',
     tags: '[todo_list__tags]'
   })
-  .callback(({ pb, params: { id }, body }) =>
+  .callback(({ pb, query: { id }, body }) =>
     pb.update
       .collection('todo_list__entries')
       .id(id)
@@ -216,34 +212,33 @@ const updateEntry = forgeController
       .execute()
   )
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a todo entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'todo_list__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('todo_list__entries').id(id).execute()
   )
 
-const toggleEntry = forgeController
-  .route('POST /toggle/:id')
+const toggleEntry = forgeController.mutation
+
   .description('Toggle completion status of a todo entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'todo_list__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const entry = await pb.getOne
       .collection('todo_list__entries')
       .id(id)

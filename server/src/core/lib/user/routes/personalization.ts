@@ -5,8 +5,8 @@ import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 import { z } from 'zod/v4'
 
-const listGoogleFonts = forgeController
-  .route('GET /fonts')
+const listGoogleFonts = forgeController.query
+
   .description('List available Google Fonts')
   .input({})
   .callback(async ({ pb }) => {
@@ -30,8 +30,8 @@ const listGoogleFonts = forgeController
     }
   })
 
-const getGoogleFont = forgeController
-  .route('GET /font')
+const getGoogleFont = forgeController.query
+
   .description('Get specific Google Font details')
   .input({
     query: z.object({
@@ -59,8 +59,8 @@ const getGoogleFont = forgeController
     }
   })
 
-const updateBgImage = forgeController
-  .route('PUT /bg-image')
+const updateBgImage = forgeController.mutation
+
   .description('Update background image')
   .input({
     body: z.object({
@@ -105,8 +105,8 @@ const updateBgImage = forgeController
       .execute()
   })
 
-const deleteBgImage = forgeController
-  .route('DELETE /bg-image')
+const deleteBgImage = forgeController.mutation
+
   .description('Delete background image')
   .input({})
   .statusCode(204)
@@ -120,8 +120,7 @@ const deleteBgImage = forgeController
       .execute()
   )
 
-const updatePersonalization = forgeController
-  .route('PATCH /')
+const updatePersonalization = forgeController.mutation
   .description('Update personalization settings')
   .input({
     body: z.object({

@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseQueryOptions } from '@tanstack/react-query'
 import { fetchAPI } from 'shared'
+
 import type {
+  ClientTree,
   InferInput,
-  InferOutput,
-  FilteredRouteKey,
-  RouteKeys,
-  ControllerByRoute
+  InferOutput
 } from '../typescript/forge_api_client.types'
 
-import type { ForgeAPIServerControllerBase } from './forgeAPIServer'
-
 export class ForgeAPIClientController<
-  T extends ForgeAPIServerControllerBase = any
+  T extends { __isForgeController: true } = any
 > {
   public __type!: T
 
@@ -20,7 +17,6 @@ export class ForgeAPIClientController<
   private _endpoint: string = ''
   private _input:
     | {
-        params?: Record<string, any>
         query?: Record<string, any>
         body?: Record<string, any>
       }
@@ -28,8 +24,7 @@ export class ForgeAPIClientController<
 
   constructor(
     private _apiHost: string,
-    private _route: string,
-    private _method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+    private _route: string
   ) {}
 
   get queryKey() {
@@ -45,7 +40,6 @@ export class ForgeAPIClientController<
     this._refreshEndpoint()
 
     this._queryKey = [
-      this._method,
       this._route,
       this._input ? JSON.stringify(this._input) : null
     ].filter(Boolean)
@@ -63,8 +57,7 @@ export class ForgeAPIClientController<
       queryKey: this._queryKey,
       queryFn: () =>
         fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
-          method: this._method,
-          body: this._input?.body
+          method: 'get'
         })
     }
   }
@@ -72,59 +65,30 @@ export class ForgeAPIClientController<
   private _refreshEndpoint() {
     this._endpoint = `${this._route}`
 
-    if (this._input) {
-      if (this._input.params) {
-        for (const key in this._input.params) {
-          this._endpoint = this._endpoint.replace(
-            `:${key}`,
-            this._input.params[key]
-          )
-        }
-      }
+    if (this._input && this._input.query) {
+      const queryParams = new URLSearchParams(this._input.query).toString()
 
-      if (this._input.query) {
-        const queryParams = new URLSearchParams(this._input.query).toString()
-
-        this._endpoint += `?${queryParams}`
-      }
+      this._endpoint += `?${queryParams}`
     }
   }
 }
 
-export class ForgeAPIClient<Current> {
-  constructor(
-    private _apiHost: string,
-    private _currentRoute: string = ''
-  ) {}
+export function createForgeAPIClient<T>(
+  apiHost: string,
+  path: string[] = []
+): ClientTree<T> {
+  return new Proxy(() => {}, {
+    get: (_, prop) => {
+      if (typeof prop === 'symbol' || prop === 'then') {
+        return undefined
+      }
 
-  route<K extends FilteredRouteKey<Current>>(key: K) {
-    return new ForgeAPIClient<Current[K]>(
-      this._apiHost,
-      `${this._currentRoute}${key as string}`
-    )
-  }
-
-  controller<R extends RouteKeys<Current>>(key: R) {
-    const splittedKey = (key as string).split(' ')
-
-    if (splittedKey.length !== 2) {
-      throw new Error(
-        `Invalid route format: ${key as string}. Expected 'METHOD /path'`
-      )
+      return createForgeAPIClient(apiHost, [...path, prop as string])
+    },
+    apply: (_, __, args) => {
+      return new ForgeAPIClientController<
+        T extends { __isForgeController: true } ? T : never
+      >(apiHost, [...path, args[0]].join('/'))
     }
-
-    const method = splittedKey[0] as 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-
-    const path = splittedKey[1]
-
-    if (!['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
-      throw new Error(`Invalid HTTP method: ${method}`)
-    }
-
-    return new ForgeAPIClientController<ControllerByRoute<Current, R>>(
-      this._apiHost,
-      `${this._currentRoute}${path}`,
-      method
-    )
-  }
+  }) as any
 }

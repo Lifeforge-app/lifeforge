@@ -7,8 +7,7 @@ import { z } from 'zod/v4'
 
 import { convertToMp3 } from '../utils/convertToMP3'
 
-const getEntries = forgeController
-  .route('GET /')
+const getEntries = forgeController.query
   .description('Get all moment vault entries')
   .input({
     query: z.object({
@@ -88,8 +87,7 @@ export const createPhotosEntry = async (
   return entry
 }
 
-const createEntry = forgeController
-  .route('POST /')
+const createEntry = forgeController.mutation
   .description('Create a new moment vault entry')
   .input({
     body: z.object({
@@ -146,21 +144,20 @@ const createEntry = forgeController
     throw new ClientError('Invalid entry type')
   })
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update a moment vault entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: z.object({
       content: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'moment_vault__entries'
   })
-  .callback(({ pb, params: { id }, body: { content } }) =>
+  .callback(({ pb, query: { id }, body: { content } }) =>
     pb.update
       .collection('moment_vault__entries')
       .id(id)
@@ -168,19 +165,18 @@ const updateEntry = forgeController
       .execute()
   )
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a moment vault entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'moment_vault__entries'
   })
   .statusCode(204)
-  .callback(({ pb, params: { id } }) =>
+  .callback(({ pb, query: { id } }) =>
     pb.delete.collection('moment_vault__entries').id(id).execute()
   )
 

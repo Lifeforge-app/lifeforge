@@ -5,24 +5,21 @@ import { z } from 'zod/v4'
 
 import scrapeProviders from '../helpers/scrapers'
 
-const getEntriesByListId = forgeController
-  .route('GET /:id')
+const getEntriesByListId = forgeController.query
   .description('Get wishlist entries by list ID')
   .input({
-    params: z.object({
-      id: z.string()
-    }),
     query: z.object({
+      id: z.string(),
       bought: z
         .string()
         .optional()
         .transform(val => val === 'true')
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__lists'
   })
-  .callback(async ({ pb, params: { id }, query: { bought } }) =>
+  .callback(async ({ pb, query: { id, bought } }) =>
     pb.getFullList
       .collection('wishlist__entries')
       .filter([
@@ -44,8 +41,8 @@ const getEntriesByListId = forgeController
       .execute()
   )
 
-const scrapeExternal = forgeController
-  .route('POST /external')
+const scrapeExternal = forgeController.mutation
+
   .description('Scrape external website for wishlist entry data')
   .input({
     body: z.object({
@@ -65,8 +62,7 @@ const scrapeExternal = forgeController
     return result
   })
 
-const createEntry = forgeController
-  .route('POST /')
+const createEntry = forgeController.mutation
   .description('Create a new wishlist entry')
   .input({
     body: z.object({
@@ -109,11 +105,10 @@ const createEntry = forgeController
     return await pb.create.collection('wishlist__entries').data(data).execute()
   })
 
-const updateEntry = forgeController
-  .route('PATCH /:id')
+const updateEntry = forgeController.mutation
   .description('Update an existing wishlist entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     }),
     body: z.object({
@@ -125,7 +120,7 @@ const updateEntry = forgeController
     })
   })
   .middlewares(singleUploadMiddleware)
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__entries'
   })
   .existenceCheck('body', {
@@ -134,7 +129,7 @@ const updateEntry = forgeController
   .callback(
     async ({
       pb,
-      params: { id },
+      query: { id },
       body: { list, name, url, price, imageRemoved },
       req
     }) => {
@@ -178,18 +173,18 @@ const updateEntry = forgeController
     }
   )
 
-const updateEntryBoughtStatus = forgeController
-  .route('PATCH /bought/:id')
+const updateEntryBoughtStatus = forgeController.mutation
+
   .description('Update wishlist entry bought status')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__entries'
   })
-  .callback(async ({ pb, params: { id } }) => {
+  .callback(async ({ pb, query: { id } }) => {
     const oldEntry = await pb.getOne
       .collection('wishlist__entries')
       .id(id)
@@ -205,20 +200,19 @@ const updateEntryBoughtStatus = forgeController
       .execute()
   })
 
-const deleteEntry = forgeController
-  .route('DELETE /:id')
+const deleteEntry = forgeController.mutation
   .description('Delete a wishlist entry')
   .input({
-    params: z.object({
+    query: z.object({
       id: z.string()
     })
   })
-  .existenceCheck('params', {
+  .existenceCheck('query', {
     id: 'wishlist__entries'
   })
   .statusCode(204)
   .callback(
-    async ({ pb, params: { id } }) =>
+    async ({ pb, query: { id } }) =>
       await pb.delete.collection('wishlist__entries').id(id).execute()
   )
 
