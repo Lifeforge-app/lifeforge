@@ -21,8 +21,6 @@
   },
   "include": [
     "src",
-    "../server/src/core/functions/routes/typescript/forge_controller.types.ts",
-    "../server/src/core/functions/routes/typescript/forge_router.types.ts"
   ],
   "exclude": [
     "dist",

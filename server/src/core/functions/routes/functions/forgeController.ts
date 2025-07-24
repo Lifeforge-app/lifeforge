@@ -31,9 +31,9 @@
  * ```
  */
 import { PBService, checkExistence } from '@functions/database'
-import { BaseResponse } from '@typescript/base_response'
-import { Request, Response } from 'express'
-import { Server } from 'socket.io'
+import type { BaseResponse } from '@typescript/base_response'
+import type { Request, Response, Router } from 'express'
+import type { Server } from 'socket.io'
 
 import {
   Context,
@@ -69,9 +69,11 @@ import {
  * ```
  */
 export class ForgeControllerBuilder<
+  TRoute extends string = string,
   TInput extends InputSchema = InputSchema,
   TOutput = unknown
 > {
+  public routeString: TRoute = '' as TRoute
   /** The HTTP method for this route (get, post, put, patch, delete) */
   protected _method: 'get' | 'post' | 'put' | 'patch' | 'delete' = 'get'
 
@@ -124,10 +126,12 @@ export class ForgeControllerBuilder<
    * @param overrides - Partial schema overrides to apply
    * @returns New builder instance with updated types
    */
-  private cloneWith<NewInput extends InputSchema = TInput, NewOutput = TOutput>(
-    overrides: Partial<InputSchema>
-  ) {
-    const builder = new ForgeControllerBuilder<NewInput, NewOutput>()
+  private cloneWith<
+    NewRoute extends string = TRoute,
+    NewInput extends InputSchema = TInput,
+    NewOutput = TOutput
+  >(overrides: Partial<InputSchema>) {
+    const builder = new ForgeControllerBuilder<NewRoute, NewInput, NewOutput>()
 
     builder._method = this._method
     builder._path = this._path
@@ -156,6 +160,8 @@ export class ForgeControllerBuilder<
    * ```
    */
   route(routeString: string) {
+    this.routeString = routeString as TRoute
+
     const parts = routeString.split(' ')
 
     if (parts.length !== 2) {
@@ -224,7 +230,7 @@ export class ForgeControllerBuilder<
    * ```
    */
   input<T extends InputSchema>(input: T) {
-    return this.cloneWith<T, TOutput>({
+    return this.cloneWith<TRoute, T, TOutput>({
       ...input
     })
   }
@@ -367,7 +373,7 @@ export class ForgeControllerBuilder<
    */
   callback<CB extends (context: Context<TInput, any>) => Promise<any>>(
     cb: CB
-  ): ForgeControllerBuilder<TInput, Awaited<ReturnType<CB>>> {
+  ): ForgeControllerBuilder<TRoute, TInput, Awaited<ReturnType<CB>>> {
     const schema = this._schema
 
     const options = {
@@ -496,6 +502,7 @@ export class ForgeControllerBuilder<
 
     // Create a new builder instance with the inferred return type
     const newBuilder = new ForgeControllerBuilder<
+      TRoute,
       TInput,
       Awaited<ReturnType<CB>>
     >()
@@ -527,7 +534,7 @@ export class ForgeControllerBuilder<
    * controller.register(router)
    * ```
    */
-  register(router: import('express').Router) {
+  register(router: Router) {
     if (!this._path || !this._method) {
       throw new Error('Missing path or method. Use route() before register()')
     }
@@ -544,9 +551,9 @@ export class ForgeControllerBuilder<
  * Initial builder class that requires input schemas to be set before proceeding.
  * This enforces the pattern where routes must have input validation defined.
  */
-class ForgeControllerBuilderWithoutSchema {
+class ForgeControllerBuilderWithoutSchema<TRoute extends string = string> {
   /** The route string in "METHOD /path" format */
-  protected _routeString: string
+  protected _routeString: TRoute
 
   /** Human-readable description of what this endpoint does */
   protected _description = ''
@@ -556,7 +563,7 @@ class ForgeControllerBuilderWithoutSchema {
    *
    * @param routeString - Route definition in "METHOD /path" format
    */
-  constructor(routeString: string) {
+  constructor(routeString: TRoute) {
     this._routeString = routeString
   }
 
@@ -595,7 +602,7 @@ class ForgeControllerBuilderWithoutSchema {
    * ```
    */
   input<T extends InputSchema>(input: T) {
-    return new ForgeControllerBuilder<T, unknown>()
+    return new ForgeControllerBuilder<TRoute, T, unknown>()
       .input(input)
       .route(this._routeString)
       .description(this._description)
@@ -632,7 +639,7 @@ const forgeController = {
    * @param routeString - Route definition in "METHOD /path" format (e.g., "GET /users/:id")
    * @returns New controller builder instance
    */
-  route: (routeString: string) =>
+  route: <TRoute extends string>(routeString: TRoute) =>
     new ForgeControllerBuilderWithoutSchema(routeString)
 }
 

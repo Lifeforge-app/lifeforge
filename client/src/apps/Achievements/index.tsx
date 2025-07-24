@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/server'
 import {
   Button,
   EmptyStateScreen,
@@ -9,10 +11,6 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import { AchievementsCollectionsSchemas } from 'shared/types/collections'
-import { AchievementsControllersSchemas } from 'shared/types/controllers'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
@@ -23,15 +21,22 @@ function Achievements() {
 
   const open = useModalStore(state => state.open)
 
-  const [selectedDifficulty, setSelectedDifficulty] =
-    useState<AchievementsCollectionsSchemas.IEntry['difficulty']>('impossible')
+  const [selectedDifficulty, setSelectedDifficulty] = useState<I>('impossible')
 
-  const entriesQuery = useAPIQuery<
-    AchievementsControllersSchemas.IEntries['getAllEntriesByDifficulty']['response']
-  >(`achievements/entries/${selectedDifficulty}`, [
-    'achievements/entries',
-    selectedDifficulty
-  ])
+  const entriesQuery = useQuery(
+    forgeAPI
+      .route('/achievements')
+      .route('/entries')
+      .controller('GET /:difficulty')
+      .input({
+        params: {
+          difficulty: selectedDifficulty
+        }
+      })
+      .getQueryOptions()
+  )
+
+  console.log()
 
   return (
     <ModuleWrapper>
