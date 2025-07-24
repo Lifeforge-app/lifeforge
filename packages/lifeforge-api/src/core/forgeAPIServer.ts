@@ -1,61 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * @fileoverview Forge Controller - Type-safe Express.js route controller builder
- *
- * This module provides a fluent API for creating Express.js route controllers with:
- * - Automatic request/response validation using Zod schemas
- * - Type-safe request handlers with full TypeScript inference
- * - Built-in error handling and standardized responses
- * - Middleware support and existence checking for referenced entities
- * - Support for downloadable content and custom response handling
- *
- * The main exports are:
- * - `forgeController`: Factory for creating new controller builders
- * - `bulkRegisterControllers`: Utility for registering multiple controllers
- *
- * @example
- * ```typescript
- * const controller = forgeController
- *   .route('POST /users')
- *   .input({
- *     body: z.object({ name: z.string(), email: z.string().email() })
- *   })
- *   .callback(async ({ body, pb }) => {
- *     const user = await pb.collection('users').create(body)
- *     return { id: user.id, success: true }
- *   })
- * // controller now has OutputType = { id: string, success: boolean }
- * type ControllerOutput = InferControllerOutput<typeof controller>
- *
- * controller.register(router)
- * ```
- */
 import type { Request, Response } from 'express'
 import type {
-  ZodIntersection,
-  ZodObject,
-  ZodRawShape,
-  ZodTypeAny,
-  z
-} from 'zod/v4'
-
-export interface BaseResponse<T = ''> {
-  data?: T
-  state: 'success' | 'error' | 'accepted'
-  message?: string
-}
-
-export type ZodObjectOrIntersection =
-  | ZodObject<ZodRawShape>
-  | ZodIntersection<ZodTypeAny, ZodTypeAny>
-
-export type InputSchema = {
-  body?: ZodObjectOrIntersection
-  query?: ZodObjectOrIntersection
-  params?: ZodObjectOrIntersection
-}
-
-type InferZodType<T> = T extends ZodObject<ZodRawShape> ? z.infer<T> : object
+  InputSchema,
+  InferZodType,
+  BaseResponse
+} from '../typescript/forge_api_server.types'
 
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
@@ -78,12 +27,12 @@ type InferZodType<T> = T extends ZodObject<ZodRawShape> ? z.infer<T> : object
  *   })
  * ```
  */
-export class ForgeControllerBuilderBase<
+export class ForgeAPIServerControllerBase<
   TRoute extends string = string,
   TInput extends InputSchema = InputSchema,
   TOutput = unknown
 > {
-  public _output!: TOutput
+  public __output!: TOutput
 
   public routeString: TRoute = '' as TRoute
   /** The HTTP method for this route (get, post, put, patch, delete) */
