@@ -31,6 +31,7 @@
  * ```
  */
 import { PBService, checkExistence } from '@functions/database'
+import COLLECTION_SCHEMAS from '@schema'
 import type { BaseResponse } from '@typescript/base_response'
 import type { Request, Response, Router } from 'express'
 import { ForgeControllerBuilderBase } from 'lifeforge-api'
@@ -186,7 +187,7 @@ export class ForgeControllerBuilder<
                       collection.replace(
                         /\^?\[(.*)\]$/,
                         '$1'
-                      ) as keyof typeof COLLECTION_SCHEMAS,
+                      ) as unknown as keyof typeof COLLECTION_SCHEMAS,
                       val
                     ))
                   ) {
@@ -205,7 +206,7 @@ export class ForgeControllerBuilder<
                     collection.replace(
                       /\^?\[(.*)\]$/,
                       '$1'
-                    ) as keyof typeof COLLECTION_SCHEMAS,
+                    ) as unknown as keyof typeof COLLECTION_SCHEMAS,
                     value!
                   ))
                 ) {
