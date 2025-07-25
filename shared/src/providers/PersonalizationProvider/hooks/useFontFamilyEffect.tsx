@@ -25,7 +25,7 @@ function useFontFamily(fontFamily: string) {
       try {
         const data = await fetchAPI<{ enabled: boolean; items: any[] }>(
           apiEndpoint,
-          `/user/personalization/font?family=${fontFamily.replace(/ /g, '+')}`
+          `/user/personalization/getGoogleFont?family=${fontFamily.replace(/ /g, '+')}`
         )
 
         if (!data.enabled) {
