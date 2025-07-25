@@ -1,20 +1,19 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics() {
   const { t } = useTranslation('apps.codeTime')
 
-  const statsQuery = useAPIQuery<
-    CodeTimeControllersSchemas.ICodeTime['getStatistics']['response']
-  >('code-time/statistics', ['code-time', 'statistics'])
+  const statsQuery = useQuery(
+    forgeAPI['code-time'].getStatistics.getQueryOptions()
+  )
 
   return (
     <div className="flex w-full flex-col gap-3">

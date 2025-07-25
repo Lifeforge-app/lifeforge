@@ -5,61 +5,11 @@ import {
   FieldSelection,
   FilterType,
   MultiItemsReturnType
-} from '@functions/database/PBService/typescript/pb_crud.interfaces'
+} from '@functions/database/PBService/typescript/pb_service'
 import PocketBase from 'pocketbase'
 
-/**
- * Recursively builds filter expressions and parameters for PocketBase queries
- * @template TCollectionKey - The collection key type
- * @template TExpandConfig - The expand configuration type
- * @param filter - The filter configuration object
- * @param paramCounter - Counter for generating unique parameter names
- * @param params - Accumulated parameters object
- * @returns Object containing the filter expression string and parameters
- */
-function recursivelyBuildFilter<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey>
->(
-  filter: FilterType<TCollectionKey, TExpandConfig>,
-  paramCounter: { count: number } = { count: 0 },
-  params: Record<string, unknown> = {}
-): { expression: string; params: Record<string, unknown> } {
-  const expressions = filter.map(f => {
-    if ('combination' in f) {
-      const subFilters = f.filters.map(subFilter => {
-        if ('combination' in subFilter) {
-          const result = recursivelyBuildFilter(
-            [subFilter],
-            paramCounter,
-            params
-          )
-
-          return `(${result.expression})`
-        }
-
-        const paramName = `param${paramCounter.count++}`
-
-        params[paramName] = subFilter.value
-
-        return `${String(subFilter.field)}${subFilter.operator}{:${paramName}}`
-      })
-
-      return `(${subFilters.join(` ${f.combination} `)})`
-    }
-
-    const paramName = `param${paramCounter.count++}`
-
-    params[paramName] = f.value
-
-    return `${String(f.field)}${f.operator}{:${paramName}}`
-  })
-
-  return {
-    expression: expressions.join(' && '),
-    params
-  }
-}
+import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 
 // Paginated return type for getList
 type GetListReturnType<
@@ -84,7 +34,8 @@ export class GetList<
     never,
     never
   >
-> {
+> implements PBServiceBase<TCollectionKey, TExpandConfig>
+{
   private _filterExpression: string = ''
   private _filterParams: Record<string, unknown> = {}
   private _sort: string = ''

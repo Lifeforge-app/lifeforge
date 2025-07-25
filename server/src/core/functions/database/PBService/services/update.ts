@@ -4,8 +4,10 @@ import {
   FieldKey,
   FieldSelection,
   SingleItemReturnType
-} from '@functions/database/PBService/typescript/pb_crud.interfaces'
+} from '@functions/database/PBService/typescript/pb_service'
 import PocketBase from 'pocketbase'
+
+import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 
 /**
  * Type for update data - allows any field from the collection with any value
@@ -31,7 +33,8 @@ export class Update<
     never,
     never
   >
-> {
+> implements PBServiceBase<TCollectionKey, TExpandConfig>
+{
   private _recordId: string = ''
   private _data: UpdateData<TCollectionKey> = {}
   private _expand: string = ''

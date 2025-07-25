@@ -1,14 +1,16 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
+import { InferOutput } from 'lifeforge-api'
 import { QueryWrapper } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
 import { usePersonalization } from 'shared'
-import { useAPIQuery } from 'shared'
 
-import { CodeTimeControllersSchemas } from 'shared/types/controllers'
+const target = forgeAPI['code-time'].getActivities
 
 function CodeTimeActivityCalendar() {
   const { t } = useTranslation('apps.codeTime')
@@ -17,13 +19,18 @@ function CodeTimeActivityCalendar() {
 
   const [year, setYear] = useState(new Date().getFullYear())
 
-  const dataQuery = useAPIQuery<
-    CodeTimeControllersSchemas.ICodeTime['getActivities']['response']
-  >(`code-time/activities?year=${year}`, ['code-time', 'activities', year])
+  const dataQuery = useQuery(
+    target
+      .input({
+        query: {
+          year
+        }
+      })
+      .getQueryOptions()
+  )
 
   const [activities, setActivities] = useState<
-    | CodeTimeControllersSchemas.ICodeTime['getActivities']['response']['data']
-    | null
+    InferOutput<typeof target>['data'] | null
   >(null)
 
   const [firstYear, setFirstYear] = useState<number>()
