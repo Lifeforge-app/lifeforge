@@ -1,16 +1,15 @@
 import { Button } from '@components/buttons'
 import dayjs from 'dayjs'
-import _ from 'lodash'
 import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import InputIcon from '../shared/InputIcon'
-import InputLabel from '../shared/InputLabel'
-import InputWrapper from '../shared/InputWrapper'
+import InputIcon from '../shared/components/InputIcon'
+import InputLabel from '../shared/components/InputLabel'
+import InputWrapper from '../shared/components/InputWrapper'
+import useInputLabel from '../shared/hooks/useInputLabel'
 import CalendarHeader from './components/CalendarHeader'
 
 interface DateInputProps {
@@ -38,7 +37,7 @@ function DateInput({
   namespace,
   disabled
 }: DateInputProps) {
-  const { t } = useTranslation(namespace ? namespace : undefined)
+  const inputLabel = useInputLabel(namespace, name)
 
   const { derivedThemeColor } = usePersonalization()
 
@@ -53,17 +52,7 @@ function DateInput({
         <InputLabel
           active={!!date}
           focused={isCalendarOpen}
-          label={
-            namespace !== false
-              ? t([
-                  ['inputs', _.camelCase(name), 'label']
-                    .filter(e => e)
-                    .join('.'),
-                  ['inputs', _.camelCase(name)].filter(e => e).join('.'),
-                  name
-                ])
-              : name
-          }
+          label={inputLabel}
           required={required === true}
         />
         <DatePicker

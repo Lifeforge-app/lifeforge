@@ -1,35 +1,24 @@
-import { useAPIQuery } from 'shared'
-
-import { WalletControllersSchemas } from 'shared/types/controllers'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 
 import { useFilteredTransactions } from './useFilteredTransactions'
 
 export function useWalletData() {
-  const transactionsQuery = useAPIQuery<
-    WalletControllersSchemas.ITransactions['getAllTransactions']['response']
-  >('wallet/transactions', ['wallet', 'transactions'])
+  const transactionsQuery = useQuery(
+    forgeAPI.wallet.transactions.list.getQueryOptions()
+  )
 
-  const assetsQuery = useAPIQuery<
-    WalletControllersSchemas.IAssets['getAllAssets']['response']
-  >('wallet/assets', ['wallet', 'assets'])
+  const assetsQuery = useQuery(forgeAPI.wallet.assets.list.getQueryOptions())
 
-  const ledgersQuery = useAPIQuery<
-    WalletControllersSchemas.ILedgers['getAllLedgers']['response']
-  >('wallet/ledgers', ['wallet', 'ledgers'])
+  const ledgersQuery = useQuery(forgeAPI.wallet.ledgers.list.getQueryOptions())
 
-  const categoriesQuery = useAPIQuery<
-    WalletControllersSchemas.ICategories['getAllCategories']['response']
-  >('wallet/categories', ['wallet', 'categories'])
+  const categoriesQuery = useQuery(
+    forgeAPI.wallet.categories.list.getQueryOptions()
+  )
 
-  const typesCountQuery = useAPIQuery<
-    Record<
-      string,
-      {
-        amount: number
-        accumulate: number
-      }
-    >
-  >('wallet/utils/types-count', ['wallet', 'transactions', 'types-count'])
+  const typesCountQuery = useQuery(
+    forgeAPI.wallet.utils.getTypesCount.getQueryOptions()
+  )
 
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []

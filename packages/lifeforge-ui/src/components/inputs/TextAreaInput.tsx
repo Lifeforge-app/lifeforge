@@ -1,10 +1,9 @@
-import _ from 'lodash'
 import React, { useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 
-import InputIcon from './shared/InputIcon'
-import InputLabel from './shared/InputLabel'
-import InputWrapper from './shared/InputWrapper'
+import InputIcon from './shared/components/InputIcon'
+import InputLabel from './shared/components/InputLabel'
+import InputWrapper from './shared/components/InputWrapper'
+import useInputLabel from './shared/hooks/useInputLabel'
 
 export interface ITextAreaInputProps {
   icon: string
@@ -36,7 +35,7 @@ function TextAreaInput({
   namespace,
   tKey
 }: ITextAreaInputProps) {
-  const { t } = useTranslation(namespace ? namespace : undefined)
+  const inputLabel = useInputLabel(namespace, name, tKey)
 
   const ref = useRef<HTMLTextAreaElement>(null)
 
@@ -58,16 +57,7 @@ function TextAreaInput({
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!value && String(value).length > 0}
-          label={
-            namespace !== false
-              ? t([
-                  [tKey, 'inputs', _.camelCase(name), 'label']
-                    .filter(e => e)
-                    .join('.'),
-                  [tKey, 'inputs', _.camelCase(name)].filter(e => e).join('.')
-                ])
-              : name
-          }
+          label={inputLabel}
           required={required === true}
         />
         <textarea

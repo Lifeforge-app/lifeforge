@@ -1,3 +1,4 @@
+import forgeAPI from '@utils/forgeAPI'
 import i18n from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
@@ -33,7 +34,19 @@ i18n
           return
         }
 
-        return `${import.meta.env.VITE_API_HOST}/locales/${langs[0]}/${namespaces[0].split('.').join}`
+        const [namespace, subnamespace] = namespaces[0].split('.')
+
+        if (!['utils', 'apps', 'common', 'core'].includes(namespace)) {
+          return
+        }
+
+        return forgeAPI.locales.getLocale.input({
+          query: {
+            lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms',
+            namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
+            subnamespace: subnamespace
+          }
+        }).endpoint
       },
       parse: (data: string) => {
         return JSON.parse(data).data

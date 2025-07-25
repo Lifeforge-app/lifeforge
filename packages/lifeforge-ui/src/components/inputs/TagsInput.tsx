@@ -1,13 +1,12 @@
 import { Icon } from '@iconify/react'
-import _ from 'lodash'
 import { useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import Button from '../buttons/Button'
 import TextInputBox from './TextInput/components/TextInputBox'
-import InputIcon from './shared/InputIcon'
-import InputLabel from './shared/InputLabel'
-import InputWrapper from './shared/InputWrapper'
+import InputIcon from './shared/components/InputIcon'
+import InputLabel from './shared/components/InputLabel'
+import InputWrapper from './shared/components/InputWrapper'
+import useInputLabel from './shared/hooks/useInputLabel'
 
 interface ITagsInputProps {
   name: string
@@ -41,10 +40,9 @@ function TagsInput({
   darker,
   existedTags,
   required,
-  namespace,
-  tKey = ''
+  namespace
 }: ITagsInputProps) {
-  const { t } = useTranslation(namespace)
+  const inputLabel = useInputLabel(namespace, name)
 
   const [currentTag, setCurrentTag] = useState<string>('')
 
@@ -83,12 +81,7 @@ function TagsInput({
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={String(value).length > 0}
-          label={t([
-            [tKey, 'inputs', _.camelCase(name)].filter(e => e).join('.'),
-            [tKey, 'inputs', _.camelCase(name), 'label']
-              .filter(e => e)
-              .join('.')
-          ])}
+          label={inputLabel}
           required={required === true}
         />
         <div className="mt-12 mb-4 ml-[14px] flex flex-wrap items-center gap-2">

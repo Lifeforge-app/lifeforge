@@ -34,11 +34,11 @@ export { default as ColorPickerModal } from './ColorInput/ColorPickerModal'
 
 export { default as IconPickerModal } from './IconInput/IconPickerModal'
 
-export { default as InputWrapper } from './shared/InputWrapper'
+export { default as InputWrapper } from './shared/components/InputWrapper'
 
-export { default as InputIcon } from './shared/InputIcon'
+export { default as InputIcon } from './shared/components/InputIcon'
 
-export { default as InputLabel } from './shared/InputLabel'
+export { default as InputLabel } from './shared/components/InputLabel'
 
 export { default as QRCodeScanner } from './QRCodeScanner'
 

@@ -28,7 +28,8 @@ function Clock() {
         <span className="font-medium">
           {Intl.DateTimeFormat()
             .resolvedOptions()
-            .timeZone.split[1].replace('_', ' ')}
+            .timeZone.split('/')[1]
+            .replace('_', ' ')}
         </span>
         <span className="text-bg-500">
           UTC {dayjs().utcOffset() > 0 ? '+' : ''}
