@@ -58,8 +58,6 @@ app.request.io = io
 server.listen(process.env.PORT, () => {
   const routes = traceRouteStack(app._router.stack)
 
-  console.log(routes)
-
   console.log(`Registered routes: ${routes.length}`)
   console.log(`REST API server running on port ${process.env.PORT}`)
 })
