@@ -16,7 +16,7 @@ function Auth() {
   const [searchParams] = useSearchParams()
 
   const oauthProvidersQuery = useQuery(
-    forgeAPI.user.oauth.listProviders.getQueryOptions()
+    forgeAPI.user.oauth.listProviders.queryOptions()
   )
 
   useEffect(() => {

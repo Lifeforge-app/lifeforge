@@ -4,7 +4,7 @@ import { Socket, io } from 'socket.io-client'
 
 const SocketContext = createContext<Socket | null>(null)
 
-export interface ISocketEvent<
+export interface SocketEvent<
   T,
   P extends string | number | Record<string, string | number> = string
 > {

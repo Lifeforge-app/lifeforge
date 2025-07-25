@@ -7,19 +7,13 @@ import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
 import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
-import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
+  type BooksLibraryEntry,
+  useBooksLibraryContext
+} from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-function EntryItem({
-  item
-}: {
-  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
-}) {
+function EntryItem({ item }: { item: BooksLibraryEntry }) {
   const { derivedThemeColor } = usePersonalization()
 
   const { collectionsQuery } = useBooksLibraryContext()

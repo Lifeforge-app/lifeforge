@@ -1,21 +1,18 @@
 import { Icon } from '@iconify/react'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
+import {
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
-import {
-  ISchemaWithPB,
-  IdeaBoxCollectionsSchemas
-} from 'shared/types/collections'
+import type { IdeaBoxContainer } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyContainerModal from '../../ModifyContainerModal'
 
-function ContainerItem({
-  container
-}: {
-  container: ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>
-}) {
+function ContainerItem({ container }: { container: IdeaBoxContainer }) {
   const open = useModalStore(state => state.open)
 
   const handleUpdateContainer = useCallback(() => {

@@ -4,8 +4,6 @@ import clsx from 'clsx'
 import { MenuItem } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
-
 function TypeSelector({
   inline = false,
   innerTypeOfModifyIdea,

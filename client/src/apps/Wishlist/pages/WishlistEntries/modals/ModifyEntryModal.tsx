@@ -1,18 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
-import { fetchAPI } from 'shared'
-
-import {
-  ISchemaWithPB,
-  WishlistCollectionsSchemas
-} from 'shared/types/collections'
-import { WishlistControllersSchemas } from 'shared/types/controllers'
-
 function ModifyEntryModal({
   data: { type, existedData },
   onClose

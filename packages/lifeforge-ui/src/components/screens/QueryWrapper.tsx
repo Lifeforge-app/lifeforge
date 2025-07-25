@@ -1,4 +1,4 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 import ErrorScreen from './ErrorScreen'
 import LoadingScreen from './LoadingScreen'

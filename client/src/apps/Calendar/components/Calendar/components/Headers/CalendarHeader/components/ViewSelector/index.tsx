@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { View } from 'react-big-calendar'
+import type { View } from 'react-big-calendar'
 
 import ChangeViewButton from './components/ChangeViewButton'
 

@@ -3,7 +3,7 @@ import { SidebarTitle } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'

@@ -1,13 +1,11 @@
 import { Icon } from '@iconify/react'
-import { ISocketEvent, useSocketContext } from '@providers/SocketProvider'
+import { SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
-
-import { ScoresLibraryCollectionsSchemas } from 'shared/types/collections'
 
 function ScoreItem({
   entry,
@@ -76,7 +74,7 @@ function ScoreItem({
 
       socket.on(
         'taskPoolUpdate',
-        (data: ISocketEvent<ScoresLibraryCollectionsSchemas.IEntry>) => {
+        (data: SocketEvent<ScoresLibraryCollectionsSchemas.IEntry>) => {
           if (!data || data.taskId !== taskId) return
 
           if (data.status === 'failed') {

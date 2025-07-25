@@ -1,4 +1,4 @@
-import { Button, ImageAndFileInput } from 'lifeforge-ui'
+import { Button, FileInput } from 'lifeforge-ui'
 
 function UploadPhotoSection({
   step,
@@ -26,7 +26,7 @@ function UploadPhotoSection({
   return (
     <>
       <div className="mt-6 flex gap-3">
-        <ImageAndFileInput
+        <FileInput
           required
           acceptedMimeTypes={{
             'image/*': ['jpg', 'jpeg', 'png', 'gif', 'webp']
@@ -36,8 +36,8 @@ function UploadPhotoSection({
           name="Front Image"
           namespace="apps.virtualWardrobe"
           preview={frontPreview}
-          setData={({ image, preview }) => {
-            setFrontImage(image as File)
+          setData={({ file, preview }) => {
+            setFrontImage(file as File)
             setFrontPreview(preview)
           }}
           onImageRemoved={() => {
@@ -45,7 +45,7 @@ function UploadPhotoSection({
             setFrontPreview(null)
           }}
         />
-        <ImageAndFileInput
+        <FileInput
           required
           acceptedMimeTypes={{
             'image/*': ['jpg', 'jpeg', 'png', 'gif', 'webp']
@@ -55,8 +55,8 @@ function UploadPhotoSection({
           name="Back Image"
           namespace="apps.virtualWardrobe"
           preview={backPreview}
-          setData={({ image, preview }) => {
-            setBackImage(image as File)
+          setData={({ file, preview }) => {
+            setBackImage(file as File)
             setBackPreview(preview)
           }}
           onImageRemoved={() => {

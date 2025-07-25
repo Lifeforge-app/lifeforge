@@ -4,8 +4,6 @@ import { toast } from 'react-toastify'
 import { useAPIQuery } from 'shared'
 import { fetchAPI } from 'shared'
 
-import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
-
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function AddToLibraryModal({

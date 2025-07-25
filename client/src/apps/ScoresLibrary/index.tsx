@@ -1,4 +1,4 @@
-import { ISocketEvent, useSocketContext } from '@providers/SocketProvider'
+import { SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import {
@@ -17,8 +17,6 @@ import { useTranslation } from 'react-i18next'
 import { Id, toast } from 'react-toastify'
 import { useAPIQuery } from 'shared'
 import { fetchAPI } from 'shared'
-
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
 
 import Header from './components/Header'
 import Searchbar from './components/Searchbar'
@@ -136,7 +134,7 @@ function ScoresLibrary() {
         socket.on(
           'taskPoolUpdate',
           (
-            data: ISocketEvent<
+            data: SocketEvent<
               undefined,
               {
                 left: number

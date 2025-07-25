@@ -1,11 +1,12 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { InferInput } from 'lifeforge-api'
-import { FormFieldConfig, FormModal } from 'lifeforge-ui'
+import type { InferInput } from 'lifeforge-api'
+import { type FormFieldConfig, FormModal } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
-import { IAchievement } from '..'
+import type { IAchievement } from '..'
 
 const difficulties = [
   ['easy', 'green'],
@@ -26,6 +27,23 @@ function ModifyAchievementModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.achievements')
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.achievements.entries.create
+      : forgeAPI.achievements.entries.update.input({
+          id: existedData?.id || ''
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['achievements']
+        })
+      }
+    })
+  )
 
   const FIELDS = {
     title: {
@@ -64,7 +82,11 @@ function ModifyAchievementModal({
       data: InferInput<
         (typeof forgeAPI.achievements.entries)['create' | 'update']
       >['body']
-    ) => {},
+    ) => {
+      await mutation.mutateAsync(data)
+
+      onClose()
+    },
     [type]
   )
 

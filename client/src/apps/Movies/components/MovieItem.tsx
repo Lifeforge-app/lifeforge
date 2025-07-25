@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   DeleteConfirmationModal,
@@ -12,11 +14,6 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
-import {
-  ISchemaWithPB,
-  MoviesCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyTicketModal from '../modals/ModifyTicketModal'
 import ShowTicketModal from '../modals/ShowTicketModal'
 
@@ -25,7 +22,7 @@ function MovieItem({
   onToggleWatched,
   type
 }: {
-  data: ISchemaWithPB<MoviesCollectionsSchemas.IEntry>
+  data: InferOutput<typeof forgeAPI.movies.entries.list>['entries'][number]
   onToggleWatched: (id: string) => Promise<void>
   type: 'grid' | 'list'
 }) {

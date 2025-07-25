@@ -3,8 +3,6 @@ import clsx from 'clsx'
 import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { useAPIQuery } from 'shared'
 
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 

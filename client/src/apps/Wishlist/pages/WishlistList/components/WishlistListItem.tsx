@@ -1,14 +1,3 @@
-import { Icon } from '@iconify/react'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { Link } from 'react-router'
-
-import {
-  ISchemaWithPB,
-  WishlistCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
 function WishlistListItem({

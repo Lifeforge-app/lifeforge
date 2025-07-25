@@ -1,8 +1,6 @@
 import { Icon } from '@iconify/react'
 import { Link, useParams } from 'react-router'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function InFolderChip({

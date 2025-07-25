@@ -2,8 +2,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useParams } from 'react-router'
 
-import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
-
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyTagModal from '../modals/ModifyTagModal'
