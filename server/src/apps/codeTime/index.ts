@@ -134,7 +134,7 @@ const getLastXDays = forgeController.query
     return data
   })
 
-const getProjects = forgeController.query
+const getTopProjects = forgeController.query
   .description('Get projects statistics')
   .input({
     query: z.object({
@@ -183,7 +183,7 @@ const getProjects = forgeController.query
     return groupByProject
   })
 
-const getLanguages = forgeController.query
+const getTopLanguages = forgeController.query
   .description('Get languages statistics')
   .input({
     query: z.object({
@@ -423,8 +423,8 @@ export default forgeRouter({
   getActivities,
   getStatistics,
   getLastXDays,
-  getProjects,
-  getLanguages,
+  getTopProjects,
+  getTopLanguages,
   getEachDay,
   user: {
     minutes: getUserMinutes
