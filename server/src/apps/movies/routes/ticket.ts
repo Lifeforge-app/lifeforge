@@ -17,7 +17,7 @@ const update = forgeController.mutation
         theatre_showtime: true
       })
       .extend({
-        theatre_location: Location.optional()
+        theatre_location: Location.nullable()
       })
   })
   .existenceCheck('query', {
