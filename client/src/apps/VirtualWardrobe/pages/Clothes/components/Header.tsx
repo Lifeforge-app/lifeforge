@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 import {
   IVirtualWardrobeEntry,

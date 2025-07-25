@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { IWalletTransaction } from '../pages/Transactions'
+import type { IWalletTransaction } from '../pages/Transactions'
 
 interface WalletState {
   selectedType: IWalletTransaction['type'] | null

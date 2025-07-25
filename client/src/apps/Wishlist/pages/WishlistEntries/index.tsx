@@ -15,8 +15,6 @@ import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { useAPIQuery } from 'shared'
 
-import { WishlistControllersSchemas } from 'shared/types/controllers'
-
 import EntryList from './components/EntryList'
 import Header from './components/Header'
 import FromOtherAppsModal from './modals/FromOtherAppsModal'

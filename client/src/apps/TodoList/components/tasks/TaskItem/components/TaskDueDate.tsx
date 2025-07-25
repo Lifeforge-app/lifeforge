@@ -1,11 +1,6 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
-import {
-  ISchemaWithPB,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-
 function TaskDueDate({
   entry
 }: {

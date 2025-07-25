@@ -1,9 +1,10 @@
-import { DeleteConfirmationModal, SidebarItem } from 'lifeforge-ui'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { ConfirmationModal, SidebarItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
-import { CalendarCollectionsSchemas } from 'shared/types/collections'
-
+import type { CalendarCategory } from '@apps/Calendar/components/Calendar'
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 
 import ActionMenu from './ActionMenu'
@@ -15,17 +16,26 @@ function CategoryListItem({
   onCancelSelect,
   modifiable = true
 }: {
-  item: CalendarCollectionsSchemas.ICategoryAggregated & {
-    id: string
-  }
+  item: CalendarCategory
   isSelected: boolean
-  onSelect: (
-    item: CalendarCollectionsSchemas.ICategoryAggregated & { id: string }
-  ) => void
+  onSelect: (item: CalendarCategory) => void
   onCancelSelect: () => void
   modifiable?: boolean
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
+
+  const deleteMutation = useMutation(
+    forgeAPI.calendar.categories.remove.input({ id: item.id }).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: forgeAPI.calendar.categories.list.key
+        })
+        onCancelSelect()
+      }
+    })
+  )
 
   const handleEdit = useCallback(
     (e: React.MouseEvent) => {
@@ -41,13 +51,13 @@ function CategoryListItem({
   const handleDelete = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      open(DeleteConfirmationModal, {
-        apiEndpoint: 'calendar/categories',
-        confirmationText: 'Delete this category',
-        data: item,
-        itemName: 'category',
-        nameKey: 'name' as const,
-        queryKey: ['calendar', 'categories']
+      open(ConfirmationModal, {
+        title: 'Delete Category',
+        description: `Are you sure you want to delete the category "${item.name}"?`,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync({})
+        },
+        confirmationPrompt: item.name
       })
     },
     [item]

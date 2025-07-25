@@ -2,7 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { IWalletTransaction } from '../pages/Transactions'
+import type { IWalletTransaction } from '../pages/Transactions'
 import { useWalletStore } from '../stores/useWalletStore'
 
 export function useFilteredTransactions(transactions: IWalletTransaction[]) {

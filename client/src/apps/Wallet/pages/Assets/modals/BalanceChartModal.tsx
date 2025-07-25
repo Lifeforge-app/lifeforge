@@ -1,27 +1,3 @@
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Filler,
-  Legend,
-  LineElement,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip
-} from 'chart.js'
-import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
-import { useMemo } from 'react'
-import { Line } from 'react-chartjs-2'
-import { usePersonalization } from 'shared'
-import { useAPIQuery } from 'shared'
-import tinycolor from 'tinycolor2'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 // Register Chart.js components

@@ -1,31 +1,30 @@
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import {
+  ConfirmationModal,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
-import UpdateEventModal from '@apps/Calendar/components/modals/ModifyEventModal/UpdateEventModal'
+import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
-import { ICalendarEvent } from '../../..'
+import type { CalendarCategory, CalendarEvent } from '../../..'
 
 function EventDetailsHeader({
   event,
   category,
   editable = true
 }: {
-  event: ICalendarEvent
-  category:
-    | ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
-    | undefined
+  event: CalendarEvent
+  category: CalendarCategory | undefined
   editable?: boolean
 }) {
   const { t } = useTranslation('apps.calendar')
@@ -34,29 +33,38 @@ function EventDetailsHeader({
 
   const queryClient = useQueryClient()
 
-  const { eventQueryKey } = useCalendarStore()
+  const { start, end } = useCalendarStore()
+
+  const addExceptionMutation = useMutation(
+    forgeAPI.calendar.events.addException
+      .input({
+        id: event.id.split('-')[0] ?? '',
+        date: dayjs(event.start).toISOString()
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.setQueryData(
+            forgeAPI.calendar.events.getByDateRange.input({ start, end }).key,
+            (oldData: CalendarEvent[]) => {
+              return oldData.filter(item => item.id !== event.id)
+            }
+          )
+        }
+      })
+  )
 
   const handleAddException = useCallback(async () => {
-    open(DeleteConfirmationModal, {
-      data: { id: event.id.split('-')[0] ?? '' },
-      customConfirmButtonIcon: 'tabler:calendar-off',
-      customTitle: t('modals.confirmAddException.title'),
-      customText: t('modals.confirmAddException.description'),
-      apiEndpoint: 'calendar/events/exception',
-      apiQueries: {
-        date: dayjs(event.start).toISOString()
-      },
-      async afterDelete() {
-        queryClient.setQueryData(eventQueryKey, (oldData: ICalendarEvent[]) => {
-          return oldData.filter(item => item.id !== event.id)
-        })
-      },
-      customConfirmButtonText: 'proceed'
+    open(ConfirmationModal, {
+      title: t('modals.confirmAddException.title'),
+      description: t('modals.confirmAddException.description'),
+      onConfirm: async () => {
+        await addExceptionMutation.mutateAsync({})
+      }
     })
   }, [event.id])
 
   const handleEdit = useCallback(() => {
-    open(UpdateEventModal, {
+    open(ModifyEventModal, {
       existedData: event,
       type: 'update'
     })
@@ -69,7 +77,6 @@ function EventDetailsHeader({
       data: { id: event.id.split('-')[0] ?? '' },
       itemName: 'event',
       nameKey: 'title',
-      queryKey: eventQueryKey,
       queryUpdateType: 'invalidate'
     })
   }, [event])

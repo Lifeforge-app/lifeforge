@@ -1,13 +1,3 @@
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-
-import {
-  ISchemaWithPB,
-  WishlistCollectionsSchemas
-} from 'shared/types/collections'
-import { WishlistControllersSchemas } from 'shared/types/controllers'
-
 function ModifyWishlistListModal({
   data: { type, existedData },
   onClose

@@ -3,7 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import { useModalStore } from 'lifeforge-ui'
 import { cookieParse } from 'pocketbase'
 import {
-  RefObject,
+  type RefObject,
   createContext,
   useCallback,
   useContext,

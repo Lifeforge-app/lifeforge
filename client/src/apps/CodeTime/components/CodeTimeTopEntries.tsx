@@ -20,11 +20,9 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
       type === 'languages' ? 'getTopLanguages' : 'getTopProjects'
     ]
       .input({
-        query: {
-          lastFor
-        }
+        last: lastFor
       })
-      .getQueryOptions()
+      .queryOptions()
   )
 
   return (

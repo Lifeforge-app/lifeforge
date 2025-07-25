@@ -1,8 +1,6 @@
 // @ts-expect-error no types available
 import Column from 'react-columns'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import EntryImage from './IdeaEntry/EntryImage'

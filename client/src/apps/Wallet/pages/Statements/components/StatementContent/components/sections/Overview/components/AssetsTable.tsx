@@ -1,15 +1,5 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import dayjs from 'dayjs'
-import { QueryWrapper } from 'lifeforge-ui'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function getAmounts({

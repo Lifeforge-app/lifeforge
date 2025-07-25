@@ -13,7 +13,7 @@ import { Link } from 'react-router'
 function Blog() {
   const { t } = useTranslation('apps.blog')
 
-  const entriesQuery = useQuery(forgeAPI.blog.entries.list.getQueryOptions())
+  const entriesQuery = useQuery(forgeAPI.blog.entries.list.queryOptions())
 
   return (
     <ModuleWrapper>

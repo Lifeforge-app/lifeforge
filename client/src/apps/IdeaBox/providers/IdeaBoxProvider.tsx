@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import { InferOutput } from 'lifeforge-api'
+import type { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
@@ -10,15 +10,31 @@ import { useAPIQuery } from 'shared'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
 
+export type IdeaBoxContainer = InferOutput<
+  typeof forgeAPI.ideaBox.containers.list
+>[number]
+
+export type IdeaBoxFolder = InferOutput<
+  typeof forgeAPI.ideaBox.folders.list
+>[number]
+
+export type IdeaBoxTag = InferOutput<typeof forgeAPI.ideaBox.tags.list>[number]
+
+export type IdeaBoxIdea = InferOutput<
+  typeof forgeAPI.ideaBox.ideas.list
+>[number]
+
 interface IIdeaBoxData {
   pathValid: boolean
   pathValidLoading: boolean
   pathDetails: InferOutput<typeof forgeAPI.ideaBox.misc.getPath> | undefined
   pathDetailsLoading: boolean
-  entriesQuery: InferOutput<typeof forgeAPI.ideaBox.ideas.list>
-  foldersQuery: InferOutput<typeof forgeAPI.ideaBox.folders.get>
-  tagsQuery: InferOutput<typeof forgeAPI.ideaBox.tags.list>
-  searchResultsQuery: InferOutput<typeof forgeAPI.ideaBox.misc.search>
+  entriesQuery: UseQueryResult<IdeaBoxIdea[]>
+  foldersQuery: UseQueryResult<IdeaBoxFolder[]>
+  tagsQuery: UseQueryResult<IdeaBoxTag[]>
+  searchResultsQuery: UseQueryResult<
+    InferOutput<typeof forgeAPI.ideaBox.misc.search>
+  >
   searchQuery: string
   debouncedSearchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
@@ -59,67 +75,57 @@ export default function IdeaBoxProvider() {
   )
 
   const pathDetailsQuery = useQuery(
-    pathDetailsRoute
+    forgeAPI.ideaBox.misc.getPath.queryOptions()
+  )
+
+  const entriesQuery = useQuery(
+    forgeAPI.ideaBox.ideas.list
       .input({
-        query: {
-          container: id ?? '',
-          '0': path ?? ''
-        }
+        container: id!,
+        path: path || '',
+        archived: viewArchived
       })
-      .getQueryOptions({
-        enabled: id !== undefined && path !== undefined && pathValidQuery.data
+      .queryOptions({
+        enabled: id !== undefined && pathValidQuery.data
       })
   )
 
-  const entriesQuery = useAPIQuery<
-    IdeaBoxControllersSchemas.IIdeas['getIdeas']['response']
-  >(
-    `idea-box/ideas/${id}/${path}?archived=${viewArchived}`,
-    ['idea-box', 'ideas', id, path, viewArchived],
-    id !== undefined && path !== undefined && pathValidQuery.data,
-    {
-      staleTime: Infinity
-    }
+  const foldersQuery = useQuery(
+    forgeAPI.ideaBox.folders.list
+      .input({
+        container: id!,
+        path: path || ''
+      })
+      .queryOptions({
+        enabled: id !== undefined && pathValidQuery.data
+      })
   )
 
-  const foldersQuery = useAPIQuery<
-    IdeaBoxControllersSchemas.IFolders['getFolders']['response']
-  >(
-    `idea-box/folders/${id}/${path}`,
-    ['idea-box', 'folders', id, path],
-    id !== undefined && path !== undefined && pathValidQuery.data,
-    {
-      staleTime: Infinity
-    }
+  const tagsQuery = useQuery(
+    forgeAPI.ideaBox.tags.list
+      .input({
+        container: id!
+      })
+      .queryOptions({
+        enabled: id !== undefined && pathValidQuery.data && path !== ''
+      })
   )
 
-  const tagsQuery = useAPIQuery<
-    IdeaBoxControllersSchemas.ITags['getTags']['response']
-  >(
-    `idea-box/tags/${id}${path !== '' ? '?folder=' + path : ''}`,
-    ['idea-box', 'tags', id, path],
-    id !== undefined && path !== undefined && pathValidQuery.data,
-    {
-      staleTime: Infinity
-    }
-  )
-
-  const searchResultsQuery = useAPIQuery<
-    IdeaBoxControllersSchemas.IMisc['search']['response']
-  >(
-    `idea-box/search?q=${encodeURIComponent(
-      debouncedSearchQuery.trim()
-    )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
-      path !== '' ? `&folder=${path?.split.pop()}` : ''
-    }`,
-    ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-    id !== undefined &&
-      path !== undefined &&
-      pathValidQuery.data &&
-      (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0),
-    {
-      staleTime: Infinity
-    }
+  const searchResultsQuery = useQuery(
+    forgeAPI.ideaBox.misc.search
+      .input({
+        q: debouncedSearchQuery,
+        container: id!,
+        tags: selectedTags.join(','),
+        folder: path?.split('/').pop() || ''
+      })
+      .queryOptions({
+        enabled:
+          id !== undefined &&
+          path !== undefined &&
+          pathValidQuery.data &&
+          (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0)
+      })
   )
 
   function onPasteImage(event: ClipboardEvent) {

@@ -1,12 +1,9 @@
-import { DeleteConfirmationModal, SidebarItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { ConfirmationModal, SidebarItem, useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
+import type { CalendarCalendar } from '@apps/Calendar/components/Calendar'
 import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 
 import ActionMenu from './ActionMenu'
@@ -18,13 +15,26 @@ function CalendarListItem({
   onCancelSelect,
   modifiable = true
 }: {
-  item: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>
+  item: CalendarCalendar
   isSelected: boolean
-  onSelect: (item: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>) => void
+  onSelect: (item: CalendarCalendar) => void
   onCancelSelect: () => void
   modifiable?: boolean
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
+
+  const deleteMutation = useMutation(
+    forgeAPI.calendar.calendars.remove.input({ id: item.id }).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: forgeAPI.calendar.calendars.list.key
+        })
+        onCancelSelect()
+      }
+    })
+  )
 
   const handleEdit = useCallback(
     (e: React.MouseEvent) => {
@@ -40,13 +50,13 @@ function CalendarListItem({
   const handleDelete = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      open(DeleteConfirmationModal, {
-        apiEndpoint: 'calendar/calendars',
-        confirmationText: 'Delete this calendar',
-        data: item,
-        itemName: 'calendar',
-        nameKey: 'name' as const,
-        queryKey: ['calendar', 'calendars']
+      open(ConfirmationModal, {
+        title: 'Delete Calendar',
+        description: `Are you sure you want to delete the calendar "${item.name}"?`,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync({})
+        },
+        confirmationPrompt: item.name
       })
     },
     [item]

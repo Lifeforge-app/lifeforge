@@ -3,14 +3,14 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
-import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
+import {
+  type BooksLibraryCollection,
+  type BooksLibraryFileType,
+  type BooksLibraryLanguage,
+  useBooksLibraryContext
+} from '../../../providers/BooksLibraryProvider'
 
 function _SidebarItem({
   item,
@@ -18,10 +18,7 @@ function _SidebarItem({
   fallbackIcon,
   hasHamburgerMenu = true
 }: {
-  item:
-    | ISchemaWithPB<BooksLibraryCollectionsSchemas.ICollectionAggregated>
-    | ISchemaWithPB<BooksLibraryCollectionsSchemas.ILanguageAggregated>
-    | ISchemaWithPB<BooksLibraryCollectionsSchemas.IFileTypeAggregated>
+  item: BooksLibraryCollection | BooksLibraryLanguage | BooksLibraryFileType
   stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasHamburgerMenu?: boolean

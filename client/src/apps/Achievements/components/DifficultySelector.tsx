@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-import { IAchievement } from '..'
+
+import type { IAchievement } from '..'
 
 function DifficultySelector({
   selectedDifficulty,
@@ -26,7 +27,7 @@ function DifficultySelector({
         <button
           key={index}
           className={clsx(
-            'w-full cursor-pointer border-b-2 p-2 uppercase tracking-widest transition-all',
+            'w-full cursor-pointer border-b-2 p-2 tracking-widest uppercase transition-all',
             selectedDifficulty === id
               ? `${classNames} font-medium`
               : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'

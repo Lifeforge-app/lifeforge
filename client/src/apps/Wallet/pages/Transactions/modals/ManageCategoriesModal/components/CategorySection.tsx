@@ -1,13 +1,3 @@
-import { Icon } from '@iconify/react'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyCategoryModal from '../../ModifyCategoryModal'
 import CategorySectionItem from './CategorySectionItem'
 

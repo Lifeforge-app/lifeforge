@@ -1,12 +1,10 @@
 import { Icon } from '@iconify/react'
-import { Button, ImageAndFileInput, ModalHeader, Switch } from 'lifeforge-ui'
+import { Button, FileInput, ModalHeader, Switch } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
-
-import { WalletControllersSchemas } from 'shared/types/controllers'
 
 import ModifyTransactionsModal from './ModifyTransactionsModal'
 
@@ -76,7 +74,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
         title="receipts.scan"
         onClose={onClose}
       />
-      <ImageAndFileInput
+      <FileInput
         acceptedMimeTypes={{
           images: ['image/jpeg', 'image/png', 'image/jpg'],
           files: ['application/pdf']
@@ -86,8 +84,8 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
         name="receipt"
         namespace="apps.wallet"
         preview={preview}
-        setData={({ image, preview }) => {
-          setFile(image)
+        setData={({ file, preview }) => {
+          setFile(file)
           setPreview(preview)
         }}
       />

@@ -1,19 +1,18 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import Markdown from 'react-markdown'
 import { Link } from 'react-router'
-import { useAPIQuery } from 'shared'
 
-import { CalendarControllersSchemas } from 'shared/types/controllers'
+import type { CalendarEvent } from '../../..'
 
-import { ICalendarEvent } from '../../..'
-
-function EventDetailsDescription({ event }: { event: ICalendarEvent }) {
-  const calendarsQuery = useAPIQuery<
-    CalendarControllersSchemas.ICalendars['getAllCalendars']['response']
-  >('calendar/calendars', ['calendar', 'calendars'])
+function EventDetailsDescription({ event }: { event: CalendarEvent }) {
+  const calendarsQuery = useQuery(
+    forgeAPI.calendar.calendars.list.queryOptions()
+  )
 
   const eventIsWholeDay = useMemo(() => {
     return (

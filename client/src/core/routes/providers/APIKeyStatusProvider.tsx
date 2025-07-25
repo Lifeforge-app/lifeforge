@@ -1,6 +1,7 @@
 import MissingAPIKeyScreen from '@core/routes/components/MissingAPIKeyScreen'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { ModuleWrapper, QueryWrapper } from 'lifeforge-ui'
-import { useAPIQuery } from 'shared'
 
 function APIKeyStatusProvider({
   APIKeys,
@@ -9,10 +10,14 @@ function APIKeyStatusProvider({
   APIKeys: string[]
   children: React.ReactNode
 }) {
-  const hasRequiredAPIKeysQuery = useAPIQuery<boolean>(
-    `api-keys/entries/check?keys=${encodeURIComponent(APIKeys.join(','))}`,
-    ['api-keys', 'entries', 'check', APIKeys.join(',')],
-    APIKeys.length > 0
+  const hasRequiredAPIKeysQuery = useQuery(
+    forgeAPI.apiKeys.entries.checkKeys
+      .input({
+        keys: APIKeys.join(',')
+      })
+      .queryOptions({
+        enabled: APIKeys.length > 0
+      })
   )
 
   return (

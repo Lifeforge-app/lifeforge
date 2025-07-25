@@ -9,7 +9,7 @@ import {
 } from '@tabler/icons-react'
 import { lazy } from 'react'
 
-import { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Wallet',

@@ -12,8 +12,6 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { WishlistControllersSchemas } from 'shared/types/controllers'
-
 import ModifyEntryModal from './ModifyEntryModal'
 
 const PROVIDERS = [
