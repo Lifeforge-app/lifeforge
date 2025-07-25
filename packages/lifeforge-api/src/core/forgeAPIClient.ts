@@ -40,14 +40,16 @@ export class ForgeAPIClientController<
   constructor(
     private _apiHost: string,
     private _route: string
-  ) {}
+  ) {
+    this._refreshEndpoint()
+  }
 
   get queryKey() {
     return this._queryKey
   }
 
   get endpoint() {
-    return this._endpoint
+    return new URL(this._endpoint, this._apiHost).toString()
   }
 
   input(data: InferInput<T>) {
@@ -56,11 +58,6 @@ export class ForgeAPIClientController<
       data as Record<string, any>
     )
     this._refreshEndpoint()
-
-    this._queryKey = [
-      this._route,
-      this._input ? JSON.stringify(this._input) : null
-    ].filter(Boolean)
 
     return this
   }
@@ -84,10 +81,15 @@ export class ForgeAPIClientController<
     this._endpoint = `${this._route}`
 
     if (this._input && this._input.query) {
-      const queryParams = new URLSearchParams(this._input.query).toString()
+      const queryParams = new URLSearchParams(this._input.query)
 
-      this._endpoint += `?${queryParams}`
+      this._endpoint += `?${queryParams.toString()}`
     }
+
+    this._queryKey = [
+      this._route,
+      this._input ? JSON.stringify(this._input) : null
+    ].filter(Boolean)
   }
 }
 
@@ -95,18 +97,32 @@ export function createForgeAPIClient<T>(
   apiHost: string,
   path: string[] = []
 ): ClientTree<T> {
+  const controller = new ForgeAPIClientController<
+    T extends { __isForgeController: true } ? T : never
+  >(apiHost, path.join('/'))
+
   return new Proxy(() => {}, {
-    get: (_, prop) => {
-      if (typeof prop === 'symbol' || prop === 'then') {
-        return undefined
+    get: (_, prop: string) => {
+      if (typeof prop === 'symbol' || prop === 'then') return undefined
+
+      if (
+        prop in controller &&
+        typeof (controller as any)[prop] !== 'undefined'
+      ) {
+        const value = (controller as any)[prop]
+
+        return typeof value === 'function' ? value.bind(controller) : value
       }
 
-      return createForgeAPIClient(apiHost, [...path, prop as string])
+      return createForgeAPIClient(apiHost, [...path, prop])
     },
+
     apply: (_, __, args) => {
-      return new ForgeAPIClientController<
-        T extends { __isForgeController: true } ? T : never
-      >(apiHost, [...path, args[0]].join('/'))
+      throw new Error(
+        `Invalid function call on path: ${path.join(
+          '.'
+        )} — maybe you meant to use .input()?`
+      )
     }
   }) as any
 }
