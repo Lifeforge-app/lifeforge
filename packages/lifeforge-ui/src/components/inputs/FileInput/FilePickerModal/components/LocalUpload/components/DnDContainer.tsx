@@ -1,6 +1,6 @@
 import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
-import { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
+import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
 
 function DnDContainer({

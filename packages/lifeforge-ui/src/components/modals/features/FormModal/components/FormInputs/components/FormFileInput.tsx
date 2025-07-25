@@ -1,6 +1,6 @@
 import { FileInput } from '@components/inputs'
 import {
-  IImageAndFileInputFieldProps,
+  IFileInputFieldProps,
   InferFormInputProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 
@@ -9,7 +9,7 @@ function FormFileInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<IImageAndFileInputFieldProps>) {
+}: InferFormInputProps<IFileInputFieldProps>) {
   return (
     <FileInput
       enablePixabay

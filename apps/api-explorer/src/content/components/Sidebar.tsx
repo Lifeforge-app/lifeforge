@@ -7,8 +7,6 @@ import {
 } from 'lifeforge-ui'
 import { useState } from 'react'
 
-import { RouteCustomSchemas } from 'shared/types/collections'
-
 import Header from '../../components/Header'
 import METHOD_COLORS from '../../constants/methodColors'
 
