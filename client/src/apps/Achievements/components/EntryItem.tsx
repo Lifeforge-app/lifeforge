@@ -1,22 +1,41 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
+import type { IAchievement } from '..'
 import ModifyAchievementModal from './ModifyAchievementModal'
-import { IAchievement } from '..'
 
 function EntryItem({ entry }: { entry: IAchievement }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
+  const deleteMutation = useMutation(
+    forgeAPI.achievements.entries.remove
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['achievements']
+          })
+        }
+      })
+  )
+
   const handleDeleteEntry = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'achievements/entries',
-      data: entry,
-      itemName: 'achievement',
-      nameKey: 'title' as const,
-      queryKey: ['achievements/entries', entry.difficulty]
+    open(ConfirmationModal, {
+      title: 'Delete Achievement',
+      description: 'Are you sure you want to delete this achievement?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [entry])
 
@@ -40,7 +59,7 @@ function EntryItem({ entry }: { entry: IAchievement }) {
         </div>
         <div>
           <h2 className="text-lg font-semibold">{entry.title}</h2>
-          <p className="text-bg-500 mt-1 whitespace-pre-wrap text-sm">
+          <p className="text-bg-500 mt-1 text-sm whitespace-pre-wrap">
             {entry.thoughts}
           </p>
         </div>

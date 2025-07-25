@@ -1,10 +1,4 @@
 import forceDown from '@utils/forceDown'
-import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
-
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
 
 function DownloadMenu({
   entry

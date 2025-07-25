@@ -1,9 +1,4 @@
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
-import { ICalendarEvent } from '../..'
+import type { CalendarCategory, CalendarEvent } from '../..'
 import EventDetailsDescription from './components/EventDetailsDescription'
 import EventDetailsHeader from './components/EventDetailsHeader'
 
@@ -12,10 +7,8 @@ function EventDetails({
   category,
   editable = true
 }: {
-  event: ICalendarEvent
-  category:
-    | ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
-    | undefined
+  event: CalendarEvent
+  category: CalendarCategory | undefined
   editable?: boolean
 }) {
   return (

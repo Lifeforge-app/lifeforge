@@ -1,16 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
-
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
-
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal({

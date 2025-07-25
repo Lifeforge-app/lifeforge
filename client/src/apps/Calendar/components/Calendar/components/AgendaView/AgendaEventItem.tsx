@@ -1,28 +1,23 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { useMemo } from 'react'
-import { useAPIQuery } from 'shared'
-
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
-import { ICalendarEvent } from '../..'
+import type { CalendarCategory, CalendarEvent } from '../..'
 
-function AgendaEventItem({ event }: { event: ICalendarEvent }) {
-  const categoriesQuery = useAPIQuery<
-    CalendarControllersSchemas.ICategories['getAllCategories']['response']
-  >('calendar/categories', ['calendar', 'categories'])
+function AgendaEventItem({ event }: { event: CalendarEvent }) {
+  const categoriesQuery = useQuery(
+    forgeAPI.calendar.categories.list.queryOptions()
+  )
 
   const category = useMemo(() => {
     if (event.category.startsWith('_')) {
       return (INTERNAL_CATEGORIES[
         event.category as keyof typeof INTERNAL_CATEGORIES
-      ] ?? {}) as ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+      ] ?? {}) as CalendarCategory | undefined
     }
 
     return categoriesQuery.data?.find(

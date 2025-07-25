@@ -1,13 +1,3 @@
-import { FormModal, type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useAPIQuery } from 'shared'
-
-import {
-  ISchemaWithPB,
-  IdeaBoxCollectionsSchemas
-} from 'shared/types/collections'
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 function ModifyContainerModal({
   data: { type, existedData },
   onClose

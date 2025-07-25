@@ -1,31 +1,43 @@
 import {
-  ISocketEvent,
+  type SocketEvent,
   useSocketContext as useSocket
 } from '@providers/SocketProvider'
-import { UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  type UseQueryResult,
+  useQuery,
+  useQueryClient
+} from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { InferOutput } from 'lifeforge-api'
+import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
+export type BooksLibraryEntry = InferOutput<
+  typeof forgeAPI.booksLibrary.entries.list
+>[number]
+
+export type BooksLibraryCollection = InferOutput<
+  typeof forgeAPI.booksLibrary.collections.list
+>[number]
+
+export type BooksLibraryLanguage = InferOutput<
+  typeof forgeAPI.booksLibrary.languages.list
+>[number]
+
+export type BooksLibraryFileType = InferOutput<
+  typeof forgeAPI.booksLibrary.fileTypes.list
+>[number]
+
 interface IBooksLibraryData {
-  entriesQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.booksLibrary.entries.list>
-  >
-  collectionsQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.booksLibrary.collections.list>
-  >
-  languagesQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.booksLibrary.languages.list>
-  >
-  fileTypesQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.booksLibrary.fileTypes.list>
-  >
+  entriesQuery: UseQueryResult<BooksLibraryEntry[]>
+  collectionsQuery: UseQueryResult<BooksLibraryCollection[]>
+  languagesQuery: UseQueryResult<BooksLibraryLanguage[]>
+  fileTypesQuery: UseQueryResult<BooksLibraryFileType[]>
   miscellaneous: {
     processes: Record<
       string,
-      | ISocketEvent<
+      | SocketEvent<
           Record<string, any>,
           {
             downloaded: string
@@ -61,25 +73,25 @@ export default function BooksLibraryProvider() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const entriesQuery = useQuery(
-    forgeAPI.booksLibrary.entries.list.getQueryOptions()
+    forgeAPI.booksLibrary.entries.list.queryOptions()
   )
 
   const collectionsQuery = useQuery(
-    forgeAPI.booksLibrary.collections.list.getQueryOptions()
+    forgeAPI.booksLibrary.collections.list.queryOptions()
   )
 
   const languagesQuery = useQuery(
-    forgeAPI.booksLibrary.languages.list.getQueryOptions()
+    forgeAPI.booksLibrary.languages.list.queryOptions()
   )
 
   const fileTypesQuery = useQuery(
-    forgeAPI.booksLibrary.fileTypes.list.getQueryOptions()
+    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
   )
 
   const [processes, setProcesses] = useState<
     Record<
       string,
-      | ISocketEvent<
+      | SocketEvent<
           Record<string, any>,
           {
             downloaded: string
@@ -99,7 +111,7 @@ export default function BooksLibraryProvider() {
     socket.on(
       'taskPoolUpdate',
       (
-        data: ISocketEvent<
+        data: SocketEvent<
           Record<string, any>,
           {
             downloaded: string

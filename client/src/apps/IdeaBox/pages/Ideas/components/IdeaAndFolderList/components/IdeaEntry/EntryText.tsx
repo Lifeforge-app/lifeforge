@@ -6,8 +6,6 @@ import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'

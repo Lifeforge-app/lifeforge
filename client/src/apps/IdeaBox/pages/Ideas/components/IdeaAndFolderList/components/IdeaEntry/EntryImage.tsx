@@ -5,8 +5,6 @@ import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'

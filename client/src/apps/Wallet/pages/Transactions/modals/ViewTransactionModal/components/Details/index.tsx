@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { Button, useModalStore } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 import ViewReceiptModal from '../../../../views/ListView/components/ViewReceiptModal'
 import DetailItem from './components/DetailItem'

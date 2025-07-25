@@ -1,11 +1,3 @@
-import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
-
-import {
-  ISchemaWithPB,
-  WishlistCollectionsSchemas
-} from 'shared/types/collections'
-
 import EntryItem from './EntryItem'
 
 function EntryList({

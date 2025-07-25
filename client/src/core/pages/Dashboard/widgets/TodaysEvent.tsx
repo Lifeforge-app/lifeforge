@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { InferOutput } from 'lifeforge-api'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   DashboardItem,
@@ -17,7 +17,10 @@ import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 import { useSidebarState } from 'shared'
 
-import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
+import type {
+  CalendarCategory,
+  CalendarEvent
+} from '@apps/Calendar/components/Calendar'
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
@@ -26,7 +29,7 @@ function EventItem({
   event
 }: {
   categories: InferOutput<typeof forgeAPI.calendar.categories.list>
-  event: ICalendarEvent
+  event: CalendarEvent
 }) {
   const { sidebarExpanded } = useSidebarState()
 
@@ -51,11 +54,13 @@ function EventItem({
 
   const targetCategory = useMemo(
     () =>
-      event.category.startsWith('_')
+      (event.category.startsWith('_')
         ? INTERNAL_CATEGORIES[
             event.category as keyof typeof INTERNAL_CATEGORIES
           ]
-        : categories.find(category => category.id === event.category),
+        : categories.find(category => category.id === event.category)) as
+        | CalendarCategory
+        | undefined,
     [event.category, categories]
   )
 
@@ -125,11 +130,11 @@ function EventItem({
 
 export default function TodaysEvent() {
   const rawEventsQuery = useQuery(
-    forgeAPI.calendar.events.getToday.getQueryOptions()
+    forgeAPI.calendar.events.getToday.queryOptions()
   )
 
   const categoriesQuery = useQuery(
-    forgeAPI.calendar.categories.list.getQueryOptions()
+    forgeAPI.calendar.categories.list.queryOptions()
   )
 
   const filteredEvents = useMemo(

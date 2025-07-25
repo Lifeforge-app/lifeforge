@@ -1,9 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useAPIQuery } from 'shared'
-
-import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
@@ -25,9 +24,13 @@ function MiniCalendar() {
     .endOf('month')
     .format('YYYY-MM-DD')
 
-  const eventsQuery = useAPIQuery<ICalendarEvent[]>(
-    `calendar/events?start=${startDate}&end=${endDate}`,
-    ['calendar', 'events', currentYear, currentMonth]
+  const eventsQuery = useQuery(
+    forgeAPI.calendar.events.getByDateRange
+      .input({
+        start: startDate,
+        end: endDate
+      })
+      .queryOptions()
   )
 
   return (

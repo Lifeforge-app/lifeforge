@@ -1,4 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   EmptyStateScreen,
   ModuleHeader,
@@ -12,9 +15,6 @@ import { useTranslation } from 'react-i18next'
 
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'
-import forgeAPI from '@utils/forgeAPI'
-import { useQuery } from '@tanstack/react-query'
-import { InferOutput } from 'lifeforge-api'
 
 const route = forgeAPI
   .route('/idea-box')
@@ -28,7 +28,7 @@ function IdeaBox() {
 
   const { t } = useTranslation('apps.ideaBox')
 
-  const query = useQuery(route.getQueryOptions())
+  const query = useQuery(route.queryOptions())
 
   const [filteredList, setFilteredList] = useState<IContainer[]>([])
 

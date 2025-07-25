@@ -1,13 +1,3 @@
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useParams } from 'react-router'
-
-import {
-  ISchemaWithPB,
-  IdeaBoxCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 
 function FolderContextMenu({

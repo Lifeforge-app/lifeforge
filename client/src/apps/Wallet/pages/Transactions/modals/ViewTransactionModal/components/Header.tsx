@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import TransactionAmount from '@apps/Wallet/pages/Dashboard/components/TransactionsCard/components/TransactionAmount'
 
-import { IWalletTransaction } from '../../..'
+import type { IWalletTransaction } from '../../..'
 
 function Header({ transaction }: { transaction: IWalletTransaction }) {
   const { categoriesQuery } = useWalletData()

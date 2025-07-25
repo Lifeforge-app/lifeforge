@@ -4,8 +4,6 @@ import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import EntryContextMenu from '../components/EntryContextMenu'
 import InFolderChip from '../components/InFolderChip'
 import TagChip from '../components/TagChip'

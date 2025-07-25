@@ -2,8 +2,6 @@ import { Icon } from '@iconify/react'
 import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
-
 import TypeSelector from './components/TypeSelector'
 
 function ModalHeader({

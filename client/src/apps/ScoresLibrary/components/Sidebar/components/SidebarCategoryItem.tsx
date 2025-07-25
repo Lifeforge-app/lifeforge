@@ -1,16 +1,3 @@
-import {
-  DeleteConfirmationModal,
-  MenuItem,
-  SidebarItem,
-  useModalStore
-} from 'lifeforge-ui'
-import { useCallback } from 'react'
-
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyTypeModal from '../../modals/ModifyTypeModal'
 
 function SidebarTypeItem({

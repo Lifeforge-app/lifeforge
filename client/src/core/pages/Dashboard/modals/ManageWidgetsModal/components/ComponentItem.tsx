@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { Switch } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IDashboardLayout, usePersonalization } from 'shared'
+import { type IDashboardLayout, usePersonalization } from 'shared'
 
 function ComponentListItem({
   id,

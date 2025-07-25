@@ -1,17 +1,14 @@
-import { CalendarCollectionsSchemas } from 'shared/types/collections'
-
-import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
+import type {
+  CalendarCategory,
+  CalendarEvent
+} from '@apps/Calendar/components/Calendar'
 
 function MiniCalendarEventIndicator({
   eventsOnTheDay,
   getCategory
 }: {
-  eventsOnTheDay: ICalendarEvent[]
-  getCategory: (
-    event: ICalendarEvent
-  ) =>
-    | (CalendarCollectionsSchemas.ICategoryAggregated & { id: string })
-    | undefined
+  eventsOnTheDay: CalendarEvent[]
+  getCategory: (event: CalendarEvent) => CalendarCategory | undefined
 }) {
   const groupedByThree = []
 

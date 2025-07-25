@@ -1,17 +1,17 @@
-import { useQueryClient } from '@tanstack/react-query'
-import dayjs from 'dayjs'
-import { DeleteConfirmationModal, FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import {
+  DeleteConfirmationModal,
+  type FormFieldConfig,
+  FormModal
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import {
-  ISchemaWithPB,
-  MoviesCollectionsSchemas
-} from 'shared/types/collections'
-import { MoviesControllersSchemas } from 'shared/types/controllers'
+import type { MovieEntry } from '..'
 
 function ModifyTicketModal({
   data: { type, existedData },
@@ -19,34 +19,30 @@ function ModifyTicketModal({
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: ISchemaWithPB<MoviesCollectionsSchemas.IEntry> | null
+    existedData: MovieEntry
   }
   onClose: () => void
 }) {
-  const open = useModalStore(state => state.open)
-
   const queryClient = useQueryClient()
 
-  const [formState, setFormState] = useState<
-    Omit<
-      MoviesControllersSchemas.ITicket['updateTicket']['body'],
-      'theatre_showtime'
-    > & {
-      theatre_showtime: Date | null
-    }
-  >({
-    ticket_number: '',
-    theatre_location: undefined,
-    theatre_number: '',
-    theatre_seat: '',
-    theatre_showtime: undefined
-  })
+  const open = useModalStore(state => state.open)
 
-  const modalRef = useRef<HTMLDivElement | null>(null)
+  const modifyTicketMutation = useMutation(
+    forgeAPI.movies.ticket.update
+      .input({
+        id: existedData.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['movies', 'entries']
+          })
+        }
+      })
+  )
 
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'ticket_number',
+  const FIELDS = {
+    ticket_number: {
       required: true,
       label: 'Ticket number',
       icon: 'tabler:ticket',
@@ -54,39 +50,37 @@ function ModifyTicketModal({
       type: 'text',
       qrScanner: true
     },
-    {
-      id: 'theatre_seat',
+    theatre_seat: {
       label: 'Theatre seat',
       icon: 'mdi:love-seat-outline',
       placeholder: 'A1',
       type: 'text'
     },
-    {
-      id: 'theatre_location',
+    theatre_location: {
       label: 'Theatre location',
       type: 'location'
     },
-    {
-      id: 'theatre_showtime',
+    theatre_showtime: {
       label: 'Theatre showtime',
       icon: 'tabler:clock',
       type: 'datetime',
       hasTime: true
     },
-    {
-      id: 'theatre_number',
+    theatre_number: {
       label: 'Theatre number',
       icon: 'tabler:hash',
       placeholder: '1',
       type: 'text'
     }
-  ]
+  } as const satisfies FormFieldConfig<
+    InferInput<typeof forgeAPI.movies.ticket.update>['body']
+  >
 
   async function deleteTicket() {
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `/movies/ticket/${existedData?.id}`,
+        `/movies/ticket/${existedData.id}`,
         {
           method: 'DELETE'
         }
@@ -107,42 +101,6 @@ function ModifyTicketModal({
     }
   }
 
-  useEffect(() => {
-    if (!existedData) return
-
-    if (type === 'create') {
-      setFormState(prev => ({
-        ...prev,
-        ticket_number: '',
-        theatre_location: undefined,
-        theatre_number: '',
-        theatre_seat: '',
-        theatre_showtime: undefined
-      }))
-
-      return
-    }
-
-    if (type === 'update') {
-      setFormState({
-        ticket_number: existedData.ticket_number,
-        theatre_location: {
-          name: existedData.theatre_location,
-          formattedAddress: '',
-          location: {
-            latitude: existedData.theatre_location_coords.lat,
-            longitude: existedData.theatre_location_coords.lon
-          }
-        },
-        theatre_number: existedData.theatre_number,
-        theatre_seat: existedData.theatre_seat,
-        theatre_showtime: existedData.theatre_showtime
-          ? dayjs(existedData.theatre_showtime).toDate()
-          : undefined
-      })
-    }
-  }, [type, existedData])
-
   const handleDeleteTicket = useCallback(() => {
     open(DeleteConfirmationModal, {
       customOnClick: deleteTicket,
@@ -150,35 +108,49 @@ function ModifyTicketModal({
     })
   }, [deleteTicket])
 
+  const onSubmit = useCallback(
+    async (data: InferInput<typeof forgeAPI.movies.ticket.update>['body']) => {
+      await modifyTicketMutation.mutateAsync(data)
+
+      onClose()
+    },
+    [type]
+  )
+
   return (
     <FormModal
-      actionButtonIsRed
-      actionButtonIcon={type === 'update' ? 'tabler:trash' : ''}
-      customUpdateDataList={{
-        create: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['movies', 'entries']
-          })
-        },
-        update: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['movies', 'entries']
-          })
-        }
+      actionButton={{
+        isRed: true,
+        icon: 'tabler:trash',
+        onClick: handleDeleteTicket
       }}
-      data={formState}
-      endpoint="/movies/ticket"
-      fields={FIELDS}
-      icon="tabler:ticket"
-      id={existedData?.id}
-      modalRef={modalRef}
-      namespace="apps.movies"
-      openType="update"
-      queryKey={['movies', 'entries']}
-      setData={setFormState}
-      title={`ticket.${type}`}
-      onActionButtonClick={handleDeleteTicket}
-      onClose={onClose}
+      form={{
+        fields: FIELDS,
+        existedData: {
+          ticket_number: existedData.ticket_number || '',
+          theatre_location: {
+            name: existedData.theatre_location || '',
+            location: {
+              latitude: existedData.theatre_location_coords?.lat || 0,
+              longitude: existedData.theatre_location_coords?.lon || 0
+            },
+            formattedAddress: existedData.theatre_location || ''
+          },
+          theatre_number: existedData.theatre_number || '',
+          theatre_seat: existedData.theatre_seat || '',
+          theatre_showtime: existedData.theatre_showtime
+            ? new Date(existedData.theatre_showtime)
+            : undefined
+        },
+        onSubmit
+      }}
+      submitButton={type}
+      ui={{
+        title: `ticket.${type}`,
+        icon: 'tabler:ticket',
+        onClose,
+        namespace: 'apps.movies'
+      }}
     />
   )
 }

@@ -1,22 +1,18 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forceDown from '@utils/forceDown'
+import forgeAPI from '@utils/forgeAPI'
 import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
-import { fetchAPI } from 'shared'
-
-import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
 
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
+import type { BooksLibraryEntry } from '@apps/BooksLibrary/providers/BooksLibraryProvider'
 
 export default function EntryContextMenu({
   item
 }: {
-  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
+  item: BooksLibraryEntry
 }) {
   const open = useModalStore(state => state.open)
 
@@ -40,27 +36,22 @@ export default function EntryContextMenu({
       .catch(console.error)
   }, [item])
 
-  const handleReadStatusChange = useCallback(async () => {
-    setReadStatusChangeLoading(true)
-
-    try {
-      await fetchAPI<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(
-        import.meta.env.VITE_API_HOST,
-        `books-library/entries/read/${item.id}`,
-        {
-          method: 'POST'
-        }
-      )
-
-      queryClient.invalidateQueries({
-        queryKey: ['books-library', 'entries']
+  const readStatusChangeMutation = useMutation(
+    forgeAPI.booksLibrary.entries.toggleReadStatus
+      .input({
+        id: item.id
       })
-    } catch (error) {
-      console.error('Failed to update read status:', error)
-    } finally {
-      setReadStatusChangeLoading(false)
-    }
-  }, [item, queryClient])
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['books-library', 'entries']
+          })
+        },
+        onSettled: () => {
+          setReadStatusChangeLoading(false)
+        }
+      })
+  )
 
   const handleSendToKindle = useCallback(() => {
     open(SendToKindleModal, {
@@ -99,7 +90,10 @@ export default function EntryContextMenu({
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
         text={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
-        onClick={handleReadStatusChange}
+        onClick={() => {
+          setReadStatusChangeLoading(true)
+          readStatusChangeMutation.mutate({})
+        }}
       />
       <MenuItem
         icon="tabler:brand-amazon"

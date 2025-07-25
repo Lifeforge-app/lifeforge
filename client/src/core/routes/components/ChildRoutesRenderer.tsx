@@ -2,7 +2,7 @@ import { LoadingScreen, ModalManager } from 'lifeforge-ui'
 import { Suspense } from 'react'
 import { Route } from 'react-router'
 
-import { ModuleConfig } from '../interfaces/routes_interfaces'
+import type { ModuleConfig } from '../interfaces/routes_interfaces'
 import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
 
 function ChildRoutesRenderer({

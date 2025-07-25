@@ -1,24 +1,3 @@
-import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
-import dayjs from 'dayjs'
-import {
-  Button,
-  Checkbox,
-  DeleteConfirmationModal,
-  HamburgerMenu,
-  MenuItem
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
-import { fetchAPI } from 'shared'
-
-import {
-  ISchemaWithPB,
-  WishlistCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyEntryModal from '../modals/ModifyEntryModal'
 
 function EntryItem({
