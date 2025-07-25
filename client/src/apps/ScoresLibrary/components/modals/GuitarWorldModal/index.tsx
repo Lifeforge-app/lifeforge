@@ -2,8 +2,6 @@ import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useAPIQuery } from 'shared'
 
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({ onClose }: { onClose: () => void }) {

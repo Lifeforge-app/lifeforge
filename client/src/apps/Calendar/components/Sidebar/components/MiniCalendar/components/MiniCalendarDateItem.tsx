@@ -4,7 +4,10 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useMemo } from 'react'
 
-import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
+import type {
+  CalendarCategory,
+  CalendarEvent
+} from '@apps/Calendar/components/Calendar'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
 import MiniCalendarEventDetails from './MiniCalendarEventDetails'
@@ -16,7 +19,7 @@ interface MiniCalendarDateItemProps {
   firstDay: number
   lastDate: number
   date: Date
-  events: ICalendarEvent[]
+  events: CalendarEvent[]
 }
 
 function MiniCalendarDateItem({
@@ -28,7 +31,7 @@ function MiniCalendarDateItem({
   events
 }: MiniCalendarDateItemProps) {
   const categoriesQuery = useQuery(
-    forgeAPI.calendar.categories.list.getQueryOptions()
+    forgeAPI.calendar.categories.list.queryOptions()
   )
 
   const isInThisMonth = useMemo(
@@ -65,11 +68,11 @@ function MiniCalendarDateItem({
   )
 
   const getCategory = useCallback(
-    (event: ICalendarEvent) => {
+    (event: CalendarEvent) => {
       return event.category.startsWith('_')
-        ? INTERNAL_CATEGORIES[
+        ? (INTERNAL_CATEGORIES[
             event.category as keyof typeof INTERNAL_CATEGORIES
-          ]
+          ] as CalendarCategory)
         : categoriesQuery.data?.find(category => category.id === event.category)
     },
     [categoriesQuery.data]

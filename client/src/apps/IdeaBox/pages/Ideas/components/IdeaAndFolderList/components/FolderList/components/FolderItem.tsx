@@ -1,16 +1,3 @@
-import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
-import { useDrag, useDrop } from 'react-dnd'
-import { Link, useParams } from 'react-router'
-import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
-
-import {
-  ISchemaWithPB,
-  IdeaBoxCollectionsSchemas
-} from 'shared/types/collections'
-
 import FolderContextMenu from './FolderContextMenu'
 
 function getStyle({

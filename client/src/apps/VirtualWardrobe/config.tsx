@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router'
 
-import { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Virtual Wardrobe',

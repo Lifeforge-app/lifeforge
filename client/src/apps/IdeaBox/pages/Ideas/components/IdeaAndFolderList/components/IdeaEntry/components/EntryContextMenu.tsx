@@ -6,8 +6,6 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'

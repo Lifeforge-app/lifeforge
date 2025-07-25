@@ -1,8 +1,3 @@
-import {
-  ISchemaWithPB,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 function TaskTags({

@@ -1,4 +1,4 @@
-import { ModuleCategory } from './interfaces/routes_interfaces'
+import type { ModuleCategory } from './interfaces/routes_interfaces'
 import RouteItems from './routes.json'
 
 export const ROUTES: ModuleCategory[] = []

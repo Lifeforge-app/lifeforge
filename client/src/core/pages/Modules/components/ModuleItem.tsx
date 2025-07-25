@@ -1,4 +1,4 @@
-import { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { Icon } from '@iconify/react'
 import { Switch } from 'lifeforge-ui'
 import _ from 'lodash'

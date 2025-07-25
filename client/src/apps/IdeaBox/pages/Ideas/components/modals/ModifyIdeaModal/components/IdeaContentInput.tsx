@@ -6,7 +6,7 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { IdeaBoxCollectionsSchemas } from 'shared/types/collections'
+import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function IdeaContentInput({
   formState,
@@ -29,7 +29,7 @@ function IdeaContentInput({
     tags: string[]
   }
   innerOpenType: 'create' | 'update' | 'paste' | null
-  innerTypeOfModifyIdea: IdeaBoxCollectionsSchemas.IEntry['type']
+  innerTypeOfModifyIdea: IdeaBoxIdea['type']
   getInputProps: () => Record<string, unknown>
   getRootProps: () => Record<string, unknown>
   isDragActive: boolean

@@ -1,5 +1,10 @@
 import dayjs from 'dayjs'
-import { ByWeekday, RRule, Options as RRuleOptions, datetime } from 'rrule'
+import {
+  type ByWeekday,
+  RRule,
+  type Options as RRuleOptions,
+  datetime
+} from 'rrule'
 
 const createStartDate = (start: Date | null) => {
   const startDate = dayjs(start)
@@ -137,7 +142,7 @@ const configureEndOptions = (
   }
 }
 
-export default function getRRULEString(query: {
+export default function getRRULEString(params: {
   start: Date | null
   freq: string
   yearlyType: string

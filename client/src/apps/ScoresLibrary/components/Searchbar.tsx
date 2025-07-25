@@ -3,8 +3,6 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 import SortBySelector from './SortBySelector'
 
 function Searchbar({

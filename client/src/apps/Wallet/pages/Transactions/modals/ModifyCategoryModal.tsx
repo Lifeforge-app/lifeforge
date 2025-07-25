@@ -1,14 +1,3 @@
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 function ModifyCategoryModal({
   data: { type, existedData },
   onClose

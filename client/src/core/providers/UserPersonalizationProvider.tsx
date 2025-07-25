@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { IBackdropFilters, IDashboardLayout, fetchAPI } from 'shared'
+import { type IBackdropFilters, type IDashboardLayout, fetchAPI } from 'shared'
 import { usePersonalization } from 'shared'
 
 import { useAuth } from './AuthProvider'

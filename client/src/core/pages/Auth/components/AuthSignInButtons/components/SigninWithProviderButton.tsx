@@ -21,9 +21,7 @@ function SigninWithProviderButton({
   const signInWithProvider = useCallback(async () => {
     const providerInstance = await fetch(
       forgeAPI.user.oauth.getEndpoint.input({
-        query: {
-          provider
-        }
+        provider
       }).endpoint
     )
       .then(async res => {

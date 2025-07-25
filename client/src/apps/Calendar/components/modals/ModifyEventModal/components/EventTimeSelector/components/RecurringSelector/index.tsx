@@ -7,7 +7,6 @@ import {
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ICreateEventFormState } from '../../../../CreateEventModal'
 import DailyForm from './components/DailyForm'
 import HourlyForm from './components/HourlyForm'
 import MonthlyForm from './components/MonthlyForm'

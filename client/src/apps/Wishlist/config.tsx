@@ -1,13 +1,13 @@
 import { lazy } from 'react'
 
-import { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Wishlist',
   icon: 'tabler:heart',
   routes: {
     wishlist: lazy(() => import('./pages/WishlistList')),
-    wishlist: lazy(() => import('./pages/WishlistEntries'))
+    'wishlist/entries': lazy(() => import('./pages/WishlistEntries'))
   },
   togglable: true,
   hasAI: true

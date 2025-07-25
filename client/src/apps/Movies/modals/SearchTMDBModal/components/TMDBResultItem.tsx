@@ -3,8 +3,6 @@ import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 
-import { MoviesCollectionsSchemas } from 'shared/types/collections'
-
 function TMDBResultItem({
   data,
   onAddToLibrary,

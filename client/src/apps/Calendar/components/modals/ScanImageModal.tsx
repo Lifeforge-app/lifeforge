@@ -1,13 +1,11 @@
 import dayjs from 'dayjs'
-import { Button, ImageAndFileInput, ModalHeader } from 'lifeforge-ui'
+import { Button, FileInput, ModalHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { CalendarControllersSchemas } from 'shared/types/controllers'
-
-import CreateEventModal from './ModifyEventModal/CreateEventModal'
+import ModifyEventModal from './ModifyEventModal'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
@@ -40,7 +38,8 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
 
       onClose()
 
-      open(CreateEventModal, {
+      open(ModifyEventModal, {
+        type: 'create',
         existedData: {
           ...data,
           start: dayjs(data.start).toDate(),
@@ -76,7 +75,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           title="scanImage"
           onClose={onClose}
         />
-        <ImageAndFileInput
+        <FileInput
           acceptedMimeTypes={{
             images: ['image/jpeg', 'image/png', 'image/jpg'],
             files: ['application/pdf']
@@ -86,8 +85,8 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           name="image"
           namespace="apps.calendar"
           preview={preview}
-          setData={({ image, preview }) => {
-            setFile(image)
+          setData={({ file, preview }) => {
+            setFile(file)
             setPreview(preview)
           }}
           onImageRemoved={() => {

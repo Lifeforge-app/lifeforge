@@ -1,14 +1,3 @@
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-
-import {
-  ISchemaWithPB,
-  IdeaBoxCollectionsSchemas
-} from 'shared/types/collections'
-import { IdeaBoxControllersSchemas } from 'shared/types/controllers'
-
 function ModifyTagModal({
   data: { type, existedData },
   onClose

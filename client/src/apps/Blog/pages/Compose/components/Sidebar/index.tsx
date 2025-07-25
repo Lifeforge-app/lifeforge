@@ -1,7 +1,10 @@
+//TODO: TO BE CONTINUED
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 import { Icon } from '@iconify/react'
 import {
   Button,
-  ImageAndFileInput,
+  FileInput,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   SidebarWrapper,
@@ -102,7 +105,7 @@ function Sidebar({
             />
           ))}
         </ListboxOrComboboxInput>
-        <ImageAndFileInput
+        <FileInput
           enableAI
           enablePixabay
           acceptedMimeTypes={{

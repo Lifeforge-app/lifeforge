@@ -9,7 +9,7 @@ import { useCallback } from 'react'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import { IWalletTransaction } from '../../..'
+import type { IWalletTransaction } from '../../..'
 import ModifyTransactionsModal from '../../../modals/ModifyTransactionsModal'
 import ViewTransactionModal from '../../../modals/ViewTransactionModal'
 import ViewReceiptModal from './ViewReceiptModal'

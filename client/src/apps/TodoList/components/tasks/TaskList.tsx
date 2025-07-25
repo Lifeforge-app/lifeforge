@@ -1,10 +1,3 @@
-import { Scrollbar } from 'lifeforge-ui'
-
-import {
-  ISchemaWithPB,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-
 import TaskItem from './TaskItem'
 
 function TaskList({

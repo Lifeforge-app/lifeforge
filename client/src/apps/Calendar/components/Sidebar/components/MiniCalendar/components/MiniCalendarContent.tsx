@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { usePersonalization } from 'shared'
 
-import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
+import type { CalendarEvent } from '@apps/Calendar/components/Calendar'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
@@ -12,7 +12,7 @@ function MiniCalendarContent({
 }: {
   currentMonth: number
   currentYear: number
-  events: ICalendarEvent[]
+  events: CalendarEvent[]
 }) {
   const { language } = usePersonalization()
 

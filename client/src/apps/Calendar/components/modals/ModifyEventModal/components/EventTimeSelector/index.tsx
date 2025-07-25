@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react'
 import { Button, DateInput } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { ICreateEventFormState } from '../../CreateEventModal'
 import RecurringSelector from './components/RecurringSelector'
 
 function EventTimeSelector({

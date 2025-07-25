@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { InferOutput } from 'lifeforge-api'
+import type { InferOutput } from 'lifeforge-api'
 import { QueryWrapper } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
@@ -22,11 +22,9 @@ function CodeTimeActivityCalendar() {
   const dataQuery = useQuery(
     target
       .input({
-        query: {
-          year
-        }
+        year
       })
-      .getQueryOptions()
+      .queryOptions()
   )
 
   const [activities, setActivities] = useState<

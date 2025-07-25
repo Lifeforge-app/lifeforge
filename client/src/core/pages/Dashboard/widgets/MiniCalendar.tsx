@@ -28,12 +28,10 @@ export default function MiniCalendar() {
   const eventsQuery = useQuery(
     forgeAPI.calendar.events.getByDateRange
       .input({
-        query: {
-          start: startDate,
-          end: endDate
-        }
+        start: startDate,
+        end: endDate
       })
-      .getQueryOptions()
+      .queryOptions()
   )
 
   return (
