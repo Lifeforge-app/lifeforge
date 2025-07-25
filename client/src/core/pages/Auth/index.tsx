@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { ModalManager, QueryWrapper } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
-import { useAPIQuery } from 'shared'
 
 import { useAuth } from '../../providers/AuthProvider'
 import AuthForm from './components/AuthForm'
@@ -14,11 +15,9 @@ function Auth() {
 
   const [searchParams] = useSearchParams()
 
-  const oauthProvidersQuery = useAPIQuery<string[]>('/user/oauth/providers', [
-    'auth',
-    'oauth',
-    'providers'
-  ])
+  const oauthProvidersQuery = useQuery(
+    forgeAPI.user.oauth.listProviders.getQueryOptions()
+  )
 
   useEffect(() => {
     const code = searchParams.get('code')

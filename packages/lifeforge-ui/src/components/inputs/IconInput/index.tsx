@@ -1,13 +1,12 @@
 import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import _ from 'lodash'
 import { useCallback, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 
-import InputIcon from '../shared/InputIcon'
-import InputLabel from '../shared/InputLabel'
-import InputWrapper from '../shared/InputWrapper'
+import InputIcon from '../shared/components/InputIcon'
+import InputLabel from '../shared/components/InputLabel'
+import InputWrapper from '../shared/components/InputWrapper'
+import useInputLabel from '../shared/hooks/useInputLabel'
 import IconPickerModal from './IconPickerModal'
 
 function IconInput({
@@ -27,7 +26,7 @@ function IconInput({
 }) {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation(namespace)
+  const inputLabel = useInputLabel(namespace, name)
 
   const ref = useRef<HTMLInputElement | null>(null)
 
@@ -45,11 +44,7 @@ function IconInput({
     <InputWrapper darker disabled={disabled} inputRef={ref}>
       <InputIcon active={!!icon} icon="tabler:icons" />
       <div className="flex w-full items-center gap-2">
-        <InputLabel
-          active={!!icon}
-          label={t([`inputs.${_.camelCase(name)}`, name])}
-          required={required}
-        />
+        <InputLabel active={!!icon} label={inputLabel} required={required} />
         <div className="mt-6 mr-12 flex w-full items-center gap-2 pl-4">
           <div className="icon-input-icon size-4 shrink-0">
             <Icon

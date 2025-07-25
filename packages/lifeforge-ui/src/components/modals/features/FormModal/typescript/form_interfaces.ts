@@ -55,19 +55,19 @@ type IDateInputFieldProps = {
   __finalDataType: string | null
 }
 
-type IListboxInputFieldProps = {
+type IListboxInputFieldProps<TMultiple extends boolean = false> = {
   type: 'listbox'
   icon: string
+  multiple?: TMultiple | unknown
   options: Array<{
-    value: string
+    value: any
     text: string
     icon?: string
     color?: string
   }>
   nullOption?: string
-  multiple?: boolean
-  __formDataType: any | any[]
-  __finalDataType: any | any[]
+  __formDataType: TMultiple extends true ? any[] : any | null
+  __finalDataType: TMultiple extends true ? any[] : any | null
 }
 
 type IColorInputFieldProps = {
@@ -126,18 +126,15 @@ type AllFields =
 
 type IFormState = Record<string, any>
 
-type NormalizePrimitive<T> = T extends string
-  ? string
-  : T extends number
-    ? number
-    : T extends boolean
-      ? boolean
-      : T
+type MatchFieldByFormDataType<T> = Extract<AllFields, { __formDataType: T }>
 
-type MatchFieldByFormDataType<T> = Extract<
-  AllFields,
-  { __formDataType: NormalizePrimitive<T> }
->
+type MatchFieldByFieldType<TField> = TField extends {
+  type: infer FieldType
+}
+  ? FieldType extends AllFields['type']
+    ? Extract<AllFields, { type: FieldType }>
+    : never
+  : never
 
 type IFieldProps<
   TFormState extends Record<string, any>,
@@ -160,13 +157,42 @@ type FormFieldConfig<TFormState extends IFormState = IFormState> = {
     >
 }
 
-type InferFinalDataType<
-  TFormState extends IFormState,
-  TFieldProps extends IFieldProps<TFormState> = IFieldProps<TFormState>
-> = {
-  [key in keyof TFormState]: key extends keyof TFieldProps
-    ? TFieldProps[key] extends { __finalDataType: infer FinalDataType }
-      ? FinalDataType
+type InferFormStateFromFields<TFields> = {
+  [K in keyof TFields]: TFields[K] extends {
+    type: infer TFieldType
+  }
+    ? TFieldType extends AllFields['type']
+      ? TFieldType extends 'listbox'
+        ? TFields[K] extends { options: Array<infer TOption> }
+          ? TOption extends { value: infer TValue; text: string }
+            ? TValue
+            : never
+          : never
+        : MatchFieldByFieldType<TFields[K]>['__formDataType']
+      : never
+    : never
+}
+
+type InferListBoxDataType<TField> = TField extends {
+  options: Array<infer TOption>
+}
+  ? TOption extends { value: infer TValue }
+    ? TField extends { multiple: true }
+      ? TValue[]
+      : TField extends { required: true }
+        ? TValue
+        : TValue | null
+    : never
+  : never
+
+type InferFinalDataType<TFieldProps extends FormFieldConfig<any>> = {
+  [key in keyof TFieldProps]: TFieldProps[key] extends {
+    type: infer TFieldType
+  }
+    ? TFieldType extends AllFields['type']
+      ? TFieldType extends 'listbox'
+        ? InferListBoxDataType<TFieldProps[key]>
+        : MatchFieldByFieldType<TFieldProps[key]>['__finalDataType']
       : never
     : never
 }
@@ -181,6 +207,7 @@ type InferFormInputProps<TField extends AllFields> = {
 }
 
 export type {
+  AllFields,
   FormFieldConfig,
   IFormState,
   ITextInputFieldProps,
@@ -194,6 +221,7 @@ export type {
   IImageAndFileInputFieldProps,
   ILocationInputFieldProps,
   IFormCheckboxFieldProps,
+  InferFormStateFromFields,
   InferFinalDataType,
   InferFormInputProps,
   Field
