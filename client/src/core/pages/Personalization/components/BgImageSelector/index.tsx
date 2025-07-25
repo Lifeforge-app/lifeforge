@@ -2,7 +2,7 @@ import {
   Button,
   ConfigColumn,
   DeleteConfirmationModal,
-  FileAndImagePickerModal,
+  FilePickerModal,
   QueryWrapper,
   Tooltip
 } from 'lifeforge-ui'
@@ -86,7 +86,7 @@ function BgImageSelector() {
   }
 
   const handleOpenImageSelector = useCallback(() => {
-    open(FileAndImagePickerModal, {
+    open(FilePickerModal, {
       enableUrl: true,
       acceptedMimeTypes: {
         'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
