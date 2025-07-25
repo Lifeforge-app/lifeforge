@@ -1,19 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Field,
+  AllFields,
   FormFieldConfig,
-  IColorInputFieldProps,
-  ICurrencyInputFieldProps,
-  IDateInputFieldProps,
-  IFormCheckboxFieldProps,
-  IFormState,
-  IIconInputFieldProps,
-  IImageAndFileInputFieldProps,
-  IListboxInputFieldProps,
-  ILocationInputFieldProps,
-  INumberInputFieldProps,
-  ITextAreaInputFieldProps,
-  ITextInputFieldProps,
-  Location
+  IFormState
 } from '../../typescript/form_interfaces'
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'
@@ -26,6 +15,20 @@ import FormLocationInput from './components/FormLocationInput'
 import FormNumberInput from './components/FormNumberInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
+
+const COMPONENT_MAP: Record<AllFields['type'], React.FC<any>> = {
+  text: FormTextInput,
+  number: FormNumberInput,
+  currency: FormCurrencyInput,
+  textarea: FormTextAreaInput,
+  datetime: FormDateInput,
+  listbox: FormListboxInput,
+  color: FormColorInput,
+  icon: FormIconInput,
+  location: FormLocationInput,
+  checkbox: FormCheckboxInput,
+  file: FormFileInput
+}
 
 function FormInputs<T extends IFormState>({
   fields,
@@ -49,132 +52,23 @@ function FormInputs<T extends IFormState>({
       {Object.entries(fields).map(([id, field]) => {
         const selectedData = data[id]
 
+        const fieldType = field.type as AllFields['type']
+
+        const FormComponent = COMPONENT_MAP[fieldType]
+
         if (field.hidden) {
           return <></>
         }
 
-        switch (field.type) {
-          case 'text':
-            return (
-              <FormTextInput
-                key={field.id as string}
-                field={field as Field<ITextInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as string}
-              />
-            )
-
-          case 'number':
-            return (
-              <FormNumberInput
-                key={field.id as string}
-                field={field as Field<INumberInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as number}
-              />
-            )
-
-          case 'currency':
-            return (
-              <FormCurrencyInput
-                key={field.id as string}
-                field={field as Field<ICurrencyInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as number}
-              />
-            )
-
-          case 'textarea':
-            return (
-              <FormTextAreaInput
-                key={field.id as string}
-                field={field as Field<ITextAreaInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as string}
-              />
-            )
-          case 'datetime':
-            return (
-              <FormDateInput
-                key={field.id as string}
-                field={field as Field<IDateInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as Date | null}
-              />
-            )
-          case 'listbox':
-            return (
-              <FormListboxInput
-                key={field.id as string}
-                field={field as Field<IListboxInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as string | string[]}
-              />
-            )
-          case 'color':
-            return (
-              <FormColorInput
-                key={field.id as string}
-                field={field as Field<IColorInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as string}
-              />
-            )
-          case 'icon':
-            return (
-              <FormIconInput
-                key={field.id as string}
-                field={field as Field<IIconInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as string}
-              />
-            )
-          case 'location':
-            return (
-              <FormLocationInput
-                key={field.id as string}
-                field={field as Field<ILocationInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as Location | null}
-              />
-            )
-          case 'checkbox':
-            return (
-              <FormCheckboxInput
-                key={field.id as string}
-                field={field as Field<IFormCheckboxFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={selectedData as boolean}
-              />
-            )
-          case 'file':
-            return (
-              <FormFileInput
-                key={field.id as string}
-                field={field as Field<IImageAndFileInputFieldProps>}
-                handleChange={handleChange(field)}
-                namespace={namespace}
-                selectedData={
-                  selectedData as {
-                    file: string | File | null
-                    preview: string | null
-                  }
-                }
-              />
-            )
-          default:
-            return <></>
-        }
+        return (
+          <FormComponent
+            key={id}
+            field={field}
+            handleChange={handleChange(id)}
+            namespace={namespace}
+            selectedData={selectedData}
+          />
+        )
       })}
     </div>
   )

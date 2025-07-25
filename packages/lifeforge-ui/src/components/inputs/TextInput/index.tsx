@@ -1,12 +1,11 @@
-import _ from 'lodash'
-import { memo, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { memo, useRef, useState } from 'react'
 
 import { Button } from '../../buttons'
-import InputActionButton from '../shared/InputActionButton'
-import InputIcon from '../shared/InputIcon'
-import InputLabel from '../shared/InputLabel'
-import InputWrapper from '../shared/InputWrapper'
+import InputActionButton from '../shared/components/InputActionButton'
+import InputIcon from '../shared/components/InputIcon'
+import InputLabel from '../shared/components/InputLabel'
+import InputWrapper from '../shared/components/InputWrapper'
+import useInputLabel from '../shared/hooks/useInputLabel'
 import TextInputBox from './components/TextInputBox'
 
 export interface ITextInputProps {
@@ -64,25 +63,11 @@ function TextInput({
   namespace,
   tKey
 }: ITextInputProps) {
-  const { t } = useTranslation(namespace ? namespace : undefined)
-
   const [showPassword, setShowPassword] = useState(false)
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const inputLabel = useMemo(() => {
-    if (!namespace) return name
-
-    const nameKey = _.camelCase(name)
-
-    const labelKey = [tKey, 'inputs', nameKey, 'label']
-      .filter(Boolean)
-      .join('.')
-
-    const fallbackKey = [tKey, 'inputs', nameKey].filter(Boolean).join('.')
-
-    return t([labelKey, fallbackKey, name])
-  }, [namespace, name, tKey, t])
+  const inputLabel = useInputLabel(namespace, name, tKey)
 
   return (
     <InputWrapper

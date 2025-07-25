@@ -21,7 +21,7 @@ function LocationInput({
 }: {
   location: Location | null
   setLocation: (value: Location | null) => void
-  namespace: string
+  namespace: string | false
   label?: string
   required?: boolean
   disabled?: boolean
