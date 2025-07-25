@@ -66,8 +66,8 @@ type IListboxInputFieldProps = {
   }>
   nullOption?: string
   multiple?: boolean
-  __formDataType: string | string[] | any[]
-  __finalDataType: string | string[] | any[]
+  __formDataType: any | any[]
+  __finalDataType: any | any[]
 }
 
 type IColorInputFieldProps = {
@@ -126,7 +126,18 @@ type AllFields =
 
 type IFormState = Record<string, any>
 
-type MatchFieldByFormDataType<T> = Extract<AllFields, { __formDataType: T }>
+type NormalizePrimitive<T> = T extends string
+  ? string
+  : T extends number
+    ? number
+    : T extends boolean
+      ? boolean
+      : T
+
+type MatchFieldByFormDataType<T> = Extract<
+  AllFields,
+  { __formDataType: NormalizePrimitive<T> }
+>
 
 type IFieldProps<
   TFormState extends Record<string, any>,

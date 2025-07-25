@@ -3,7 +3,7 @@ import type {
   FormFieldConfig,
   IFormState,
   InferFinalDataType
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import dayjs from 'dayjs'
 import { useState } from 'react'

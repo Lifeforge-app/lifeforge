@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import Index from './index'
 import FormModal from './index'
-import { FormFieldConfig } from './typescript/modal_interfaces'
+import { FormFieldConfig } from './typescript/form_interfaces'
 
 const meta = {
   component: Index

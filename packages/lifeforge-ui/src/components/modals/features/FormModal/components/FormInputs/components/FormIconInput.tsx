@@ -2,7 +2,7 @@ import { IconInput } from '@components/inputs'
 import {
   IIconInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormIconInput({
   field,

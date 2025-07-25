@@ -2,7 +2,7 @@ import { LocationInput } from '@components/inputs'
 import {
   ILocationInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormLocationInput({
   field,
