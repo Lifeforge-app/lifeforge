@@ -1,11 +1,15 @@
-import { CollectionKey } from '@functions/database/PBService/typescript/pb_crud.interfaces'
+import { CollectionKey } from '@functions/database/PBService/typescript/pb_service'
 import PocketBase from 'pocketbase'
+
+import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 
 /**
  * Class for deleting records from PocketBase collections with type safety
  * @template TCollectionKey - The collection key type
  */
-export class Delete<TCollectionKey extends CollectionKey> {
+export class Delete<TCollectionKey extends CollectionKey>
+  implements PBServiceBase<TCollectionKey>
+{
   private _recordId: string = ''
 
   /**

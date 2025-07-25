@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import dayjs, { Dayjs } from 'dayjs'
 import {
@@ -11,7 +13,6 @@ import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Link } from 'react-router'
 import { usePersonalization } from 'shared'
-import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
 
 const getDatesBetween = (start: Dayjs, end: Dayjs): Dayjs[] => {
@@ -84,16 +85,8 @@ const chartOptions: ChartOptions = {
   hover: { intersect: false }
 }
 
-interface ICodeTimeEachDay {
-  date: string
-  duration: number
-}
-
 const CodeTime = () => {
-  const dataQuery = useAPIQuery<ICodeTimeEachDay[]>('code-time/each-day', [
-    'code-time',
-    'each-day'
-  ])
+  const dataQuery = useQuery(forgeAPI['code-time'].getEachDay.getQueryOptions())
 
   const { derivedThemeColor: themeColor } = usePersonalization()
 

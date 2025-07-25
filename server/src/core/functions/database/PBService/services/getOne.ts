@@ -3,8 +3,10 @@ import {
   ExpandConfig,
   FieldSelection,
   SingleItemReturnType
-} from '@functions/database/PBService/typescript/pb_crud.interfaces'
+} from '@functions/database/PBService/typescript/pb_service'
 import PocketBase from 'pocketbase'
+
+import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 
 /**
  * Class for retrieving a single record from PocketBase collections with field selection and expansion capabilities
@@ -19,7 +21,8 @@ export class GetOne<
     never,
     never
   >
-> {
+> implements PBServiceBase<TCollectionKey, TExpandConfig>
+{
   private _itemId: string = ''
   private _expand: string = ''
   private _fields: string = ''

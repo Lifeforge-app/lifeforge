@@ -1,4 +1,4 @@
-import { FilterType } from '@functions/database/PBService/typescript/pb_crud.interfaces'
+import { FilterType } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'

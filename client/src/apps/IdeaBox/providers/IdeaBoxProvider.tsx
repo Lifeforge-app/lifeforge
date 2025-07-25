@@ -1,4 +1,4 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import { InferOutput } from 'lifeforge-api'
@@ -10,27 +10,15 @@ import { useAPIQuery } from 'shared'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
 
-const pathDetailsRoute = forgeAPI
-  .route('/idea-box')
-  .route.controller('GET /path/')
-
 interface IIdeaBoxData {
   pathValid: boolean
   pathValidLoading: boolean
-  pathDetails: InferOutput<typeof pathDetailsRoute> | undefined
+  pathDetails: InferOutput<typeof forgeAPI.ideaBox.misc.getPath> | undefined
   pathDetailsLoading: boolean
-  entriesQuery: UseQueryResult<
-    IdeaBoxControllersSchemas.IIdeas['getIdeas']['response']
-  >
-  foldersQuery: UseQueryResult<
-    IdeaBoxControllersSchemas.IFolders['getFolders']['response']
-  >
-  tagsQuery: UseQueryResult<
-    IdeaBoxControllersSchemas.ITags['getTags']['response']
-  >
-  searchResultsQuery: UseQueryResult<
-    IdeaBoxControllersSchemas.IMisc['search']['response']
-  >
+  entriesQuery: InferOutput<typeof forgeAPI.ideaBox.ideas.list>
+  foldersQuery: InferOutput<typeof forgeAPI.ideaBox.folders.get>
+  tagsQuery: InferOutput<typeof forgeAPI.ideaBox.tags.list>
+  searchResultsQuery: InferOutput<typeof forgeAPI.ideaBox.misc.search>
   searchQuery: string
   debouncedSearchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>

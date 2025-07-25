@@ -110,8 +110,11 @@ type BuildExpandObject<
 // Helper type to pick only selected fields from the full result
 export type PickSelectedFields<
   TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig>
+  TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
+  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
+    never,
+    never
+  >
 > = {
   [K in keyof TFields as K extends keyof SchemaWithPB<
     ExtractZodShape<CollectionSchema<TCollectionKey>>

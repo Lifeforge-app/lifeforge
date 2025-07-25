@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { InferOutput } from 'lifeforge-api'
 import {
   Button,
   DashboardItem,
@@ -13,13 +16,6 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 import { useSidebarState } from 'shared'
-import { useAPIQuery } from 'shared'
-
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 import EventDetails from '@apps/Calendar/components/Calendar/components/EventDetails.tsx'
@@ -29,7 +25,7 @@ function EventItem({
   categories,
   event
 }: {
-  categories: ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>[]
+  categories: InferOutput<typeof forgeAPI.calendar.categories.list>
   event: ICalendarEvent
 }) {
   const { sidebarExpanded } = useSidebarState()
@@ -56,9 +52,9 @@ function EventItem({
   const targetCategory = useMemo(
     () =>
       event.category.startsWith('_')
-        ? (INTERNAL_CATEGORIES[
+        ? INTERNAL_CATEGORIES[
             event.category as keyof typeof INTERNAL_CATEGORIES
-          ] as ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>)
+          ]
         : categories.find(category => category.id === event.category),
     [event.category, categories]
   )
@@ -128,13 +124,13 @@ function EventItem({
 }
 
 export default function TodaysEvent() {
-  const rawEventsQuery = useAPIQuery<
-    CalendarControllersSchemas.IEvents['getEventsToday']['response']
-  >('calendar/events/today', ['calendar', 'events', 'today'])
+  const rawEventsQuery = useQuery(
+    forgeAPI.calendar.events.getToday.getQueryOptions()
+  )
 
-  const categoriesQuery = useAPIQuery<
-    CalendarControllersSchemas.ICategories['getAllCategories']['response']
-  >('calendar/categories', ['calendar', 'categories'])
+  const categoriesQuery = useQuery(
+    forgeAPI.calendar.categories.list.getQueryOptions()
+  )
 
   const filteredEvents = useMemo(
     () =>

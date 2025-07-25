@@ -1,4 +1,4 @@
-import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_crud.interfaces'
+import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'

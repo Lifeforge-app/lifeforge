@@ -1,4 +1,6 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   BarElement,
   CategoryScale,
@@ -18,10 +20,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
-import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 ChartJS.register(
   CategoryScale,
@@ -41,13 +40,15 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
 
   const [lastFor, setLastFor] = useState<7 | 30>(7)
 
-  const dataQuery = useAPIQuery<
-    CodeTimeControllersSchemas.ICodeTime['getLastXDays']['response']
-  >(`code-time/last-x-days?days=${lastFor}`, [
-    'code-time',
-    'last-x-days',
-    lastFor
-  ])
+  const dataQuery = useQuery(
+    forgeAPI['code-time'].getLastXDays
+      .input({
+        query: {
+          days: lastFor
+        }
+      })
+      .getQueryOptions()
+  )
 
   const getDailyData = useCallback(
     (days: string[], item: string) =>
