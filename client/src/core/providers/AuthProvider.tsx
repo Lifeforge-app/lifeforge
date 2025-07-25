@@ -1,4 +1,5 @@
 import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
+import forgeAPI from '@utils/forgeAPI'
 import { useModalStore } from 'lifeforge-ui'
 import { cookieParse } from 'pocketbase'
 import {
@@ -148,7 +149,7 @@ export default function AuthProvider({
       success: boolean
       userData: any
     }> => {
-      return await fetch(`${import.meta.env.VITE_API_HOST}/user/auth/verify`, {
+      return await fetch(forgeAPI.user.auth.verifySessionToken.endpoint, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${session}`
@@ -178,7 +179,7 @@ export default function AuthProvider({
       email: string
       password: string
     }): Promise<string | void> => {
-      const res = fetch(`${import.meta.env.VITE_API_HOST}/user/auth/login`, {
+      const res = fetch(forgeAPI.user.auth.login.endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -241,16 +242,13 @@ export default function AuthProvider({
       type: 'email' | 'app'
     }): Promise<void> => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_HOST}/user/2fa/verify`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ otp, tid: tid.current, type })
-          }
-        )
+        const res = await fetch(forgeAPI.user['2fa'].verify.endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ otp, tid: tid.current, type })
+        })
 
         const data = await res.json()
 
@@ -300,7 +298,7 @@ export default function AuthProvider({
               state: string
               tid: string
             }
-        >(import.meta.env.VITE_API_HOST, 'user/oauth/verify', {
+        >(forgeAPI.user.oauth.verify.endpoint, {
           method: 'POST',
           body: { code, provider: storedProvider }
         })
