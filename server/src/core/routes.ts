@@ -13,6 +13,13 @@ router.get('/', (req, res) => {
   })
 })
 
+const status = forgeController.query
+  .description('Get server status')
+  .input({})
+  .callback(async () => ({
+    environment: process.env.NODE_ENV || 'development'
+  }))
+
 const getRoot = forgeController.query
   .description('Get root endpoint')
   .input({})
@@ -95,7 +102,7 @@ const appRoutes = forgeRouter({
   calendar: (await import('../apps/calendar')).default,
   todoList: (await import('../apps/todoList')).default,
   ideaBox: (await import('../apps/ideaBox')).default,
-  codeTime: (await import('../apps/codeTime')).default,
+  'code-time': (await import('../apps/codeTime')).default,
   booksLibrary: (await import('../apps/booksLibrary')).default,
   wallet: (await import('../apps/wallet')).default,
   wishlist: (await import('../apps/wishlist')).default,
@@ -118,6 +125,7 @@ const appRoutes = forgeRouter({
   backups: (await import('./lib/backups')).default,
   database: (await import('./lib/database')).default,
   _routes: listRoutes,
+  status,
   getRoot,
   media: getMedia,
   corsAnywhere
