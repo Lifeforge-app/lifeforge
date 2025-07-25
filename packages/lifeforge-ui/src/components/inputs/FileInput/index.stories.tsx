@@ -32,8 +32,8 @@ export const Default: Story = {
           {...args}
           image={image}
           preview={preview}
-          setData={({ file: image, preview }) => {
-            setImage(image)
+          setData={({ file, preview }) => {
+            setImage(file)
             setPreview(preview)
           }}
         />

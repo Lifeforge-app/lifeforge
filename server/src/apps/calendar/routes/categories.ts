@@ -61,7 +61,7 @@ const update = forgeController.mutation
       throw new ClientError('Category name cannot start with _')
     }
 
-    await pb.update
+    return await pb.update
       .collection('calendar__categories')
       .id(id)
       .data(body)

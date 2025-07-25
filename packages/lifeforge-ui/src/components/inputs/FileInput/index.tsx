@@ -62,7 +62,7 @@ function FileInput({
       defaultAIPrompt,
       acceptedMimeTypes,
       onSelect: async (file: string | File, preview: string | null) => {
-        setData({ file: file, preview })
+        setData({ file, preview })
       }
     })
   }, [enablePixabay, enableUrl, enableAI, defaultAIPrompt, acceptedMimeTypes])

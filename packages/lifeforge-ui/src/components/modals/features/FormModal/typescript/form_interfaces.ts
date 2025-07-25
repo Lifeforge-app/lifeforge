@@ -52,7 +52,7 @@ type IDateInputFieldProps = {
   icon: string
   hasTime?: boolean
   __formDataType: Date | null
-  __finalDataType: string | null
+  __finalDataType: string | undefined
 }
 
 type IListboxInputFieldProps<TMultiple extends boolean = false> = {
@@ -67,7 +67,7 @@ type IListboxInputFieldProps<TMultiple extends boolean = false> = {
   }>
   nullOption?: string
   __formDataType: TMultiple extends true ? any[] : any | null
-  __finalDataType: TMultiple extends true ? any[] : any | null
+  __finalDataType: TMultiple extends true ? any[] : any | undefined
 }
 
 type IColorInputFieldProps = {
@@ -82,7 +82,7 @@ type IIconInputFieldProps = {
   __finalDataType: string
 }
 
-type IImageAndFileInputFieldProps = {
+type IFileInputFieldProps = {
   type: 'file'
   onFileRemoved?: () => void
   enableAIImageGeneration?: boolean
@@ -94,7 +94,7 @@ type IImageAndFileInputFieldProps = {
 type ILocationInputFieldProps = {
   type: 'location'
   __formDataType: Location | null
-  __finalDataType: Location | null
+  __finalDataType: Location | undefined
 }
 
 type IFormCheckboxFieldProps = {
@@ -120,13 +120,13 @@ type AllFields =
   | IListboxInputFieldProps
   | IColorInputFieldProps
   | IIconInputFieldProps
-  | IImageAndFileInputFieldProps
+  | IFileInputFieldProps
   | ILocationInputFieldProps
   | IFormCheckboxFieldProps
 
 type IFormState = Record<string, any>
 
-type MatchFieldByFormDataType<T> = Extract<AllFields, { __formDataType: T }>
+type MatchFieldByFormDataType<T> = Extract<AllFields, { __finalDataType: T }>
 
 type MatchFieldByFieldType<TField> = TField extends {
   type: infer FieldType
@@ -149,13 +149,13 @@ type DistributiveOmit<T, K extends keyof any> = T extends any
   ? Omit<T, K>
   : never
 
-type FormFieldConfig<TFormState extends IFormState = IFormState> = {
+type FormFieldConfig<TFormState extends IFormState = IFormState> = Partial<{
   [K in keyof TFormState]: BaseFieldProps &
     DistributiveOmit<
       MatchFieldByFormDataType<TFormState[K]>,
       '__formDataType' | '__finalDataType'
     >
-}
+}>
 
 type InferFormStateFromFields<TFields> = {
   [K in keyof TFields]: TFields[K] extends {
@@ -181,7 +181,7 @@ type InferListBoxDataType<TField> = TField extends {
       ? TValue[]
       : TField extends { required: true }
         ? TValue
-        : TValue | null
+        : TValue | undefined
     : never
   : never
 
@@ -218,7 +218,7 @@ export type {
   IListboxInputFieldProps,
   IColorInputFieldProps,
   IIconInputFieldProps,
-  IImageAndFileInputFieldProps,
+  IFileInputFieldProps,
   ILocationInputFieldProps,
   IFormCheckboxFieldProps,
   InferFormStateFromFields,
