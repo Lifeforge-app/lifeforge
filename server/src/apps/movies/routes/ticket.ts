@@ -13,11 +13,11 @@ const update = forgeController.mutation
       .pick({
         ticket_number: true,
         theatre_number: true,
-        theatre_seat: true,
-        theatre_showtime: true
+        theatre_seat: true
       })
       .extend({
-        theatre_location: Location.nullable()
+        theatre_showtime: z.string().optional(),
+        theatre_location: Location.optional()
       })
   })
   .existenceCheck('query', {
