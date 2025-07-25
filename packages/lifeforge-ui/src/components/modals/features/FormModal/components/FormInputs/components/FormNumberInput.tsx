@@ -2,7 +2,7 @@ import { NumberInput } from '@components/inputs'
 import {
   INumberInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormNumberInput({
   field,

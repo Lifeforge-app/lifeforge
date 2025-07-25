@@ -2,7 +2,7 @@ import { TextAreaInput } from '@components/inputs'
 import {
   ITextAreaInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormTextAreaInput({
   field,

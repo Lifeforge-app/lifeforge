@@ -2,7 +2,7 @@ import { CurrencyInput } from '@components/inputs'
 import {
   ICurrencyInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormCurrencyInput({
   field,

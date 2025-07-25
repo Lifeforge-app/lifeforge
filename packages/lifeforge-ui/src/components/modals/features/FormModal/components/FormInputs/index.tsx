@@ -14,7 +14,7 @@ import {
   ITextAreaInputFieldProps,
   ITextInputFieldProps,
   Location
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'

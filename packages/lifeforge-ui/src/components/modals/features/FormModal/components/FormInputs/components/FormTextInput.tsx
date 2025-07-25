@@ -2,7 +2,7 @@ import { QRCodeScanner, TextInput } from '@components/inputs'
 import {
   ITextInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { useState } from 'react'
 
 function FormTextInput({

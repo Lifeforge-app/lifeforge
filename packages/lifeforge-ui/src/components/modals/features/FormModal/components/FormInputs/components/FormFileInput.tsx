@@ -2,7 +2,7 @@ import { FileInput } from '@components/inputs'
 import {
   IImageAndFileInputFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormFileInput({
   field,

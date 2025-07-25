@@ -14,5 +14,6 @@ export type { ModalComponent } from './core/useModalStore'
 
 export type {
   Location,
-  FormFieldConfig as RuntimeFieldProps
-} from './features/FormModal/typescript/modal_interfaces'
+  FormFieldConfig,
+  InferFinalDataType
+} from './features/FormModal/typescript/form_interfaces'
