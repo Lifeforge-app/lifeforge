@@ -31,7 +31,7 @@ const getMedia = forgeController.query
     query: z.object({
       collectionId: z.string(),
       recordId: z.string(),
-      photoId: z.string(),
+      fieldId: z.string(),
       thumb: z.string().optional(),
       token: z.string().optional()
     })
@@ -39,7 +39,7 @@ const getMedia = forgeController.query
   .noDefaultResponse()
   .callback(
     async ({
-      query: { collectionId, recordId, photoId, thumb, token },
+      query: { collectionId, recordId, fieldId, thumb, token },
       res
     }) => {
       const searchParams = new URLSearchParams()
@@ -53,7 +53,7 @@ const getMedia = forgeController.query
       }
 
       request(
-        `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${photoId}?${searchParams.toString()}`
+        `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${searchParams.toString()}`
       ).pipe(res)
     }
   )
