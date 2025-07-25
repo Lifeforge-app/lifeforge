@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ChartOptions, ScriptableContext } from 'chart.js'
+import type { ChartOptions, ScriptableContext } from 'chart.js'
 import dayjs, { Dayjs } from 'dayjs'
 import {
   Button,
@@ -86,7 +86,7 @@ const chartOptions: ChartOptions = {
 }
 
 const CodeTime = () => {
-  const dataQuery = useQuery(forgeAPI['code-time'].getEachDay.getQueryOptions())
+  const dataQuery = useQuery(forgeAPI['code-time'].getEachDay.queryOptions())
 
   const { derivedThemeColor: themeColor } = usePersonalization()
 

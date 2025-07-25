@@ -3,19 +3,15 @@ import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
 
 import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
-import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
+  type BooksLibraryEntry,
+  useBooksLibraryContext
+} from '../../providers/BooksLibraryProvider'
 
 function BookMeta({
   item,
   isGridView = false
 }: {
-  item:
-    | ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
-    | Record<string, any>
+  item: BooksLibraryEntry | Record<string, any>
   isGridView?: boolean
 }) {
   const { languagesQuery } = useBooksLibraryContext()

@@ -13,8 +13,6 @@ import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAPIQuery } from 'shared'
 
-import { WishlistControllersSchemas } from 'shared/types/controllers'
-
 import WishlistListItem from './components/WishlistListItem'
 import ModifyWishlistListModal from './modals/ModifyWishlistModal'
 

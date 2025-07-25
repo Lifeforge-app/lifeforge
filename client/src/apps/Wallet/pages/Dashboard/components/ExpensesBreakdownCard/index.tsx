@@ -1,16 +1,3 @@
-import { Icon } from '@iconify/react'
-import dayjs from 'dayjs'
-import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
-import { createContext, useMemo, useState } from 'react'
-import { Link } from 'react-router'
-import { useAPIQuery } from 'shared'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
 import BreakdownChartLegend from './components/BreakdownChartLegend'

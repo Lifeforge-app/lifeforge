@@ -1,13 +1,3 @@
-import { FormModal } from 'lifeforge-ui'
-import type { IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 function ModifyAssetModal({
   data: { type, existedData },
   onClose

@@ -1,7 +1,5 @@
 import { EmptyStateScreen, Pagination } from 'lifeforge-ui'
 
-import { MoviesControllersSchemas } from 'shared/types/controllers'
-
 import TMDBResultItem from './TMDBResultItem'
 
 function TMDBResultsList({

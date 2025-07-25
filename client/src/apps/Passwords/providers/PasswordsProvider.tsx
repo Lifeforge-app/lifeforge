@@ -1,4 +1,4 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'

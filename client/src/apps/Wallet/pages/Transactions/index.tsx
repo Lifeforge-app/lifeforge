@@ -1,4 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import type forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -14,8 +16,6 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 import { useAPIQuery } from 'shared'
 
-import { WalletControllersSchemas } from 'shared/types/controllers'
-
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
@@ -27,8 +27,9 @@ import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
 
-export type IWalletTransaction =
-  WalletControllersSchemas.ITransactions['getAllTransactions']['response'][number]
+export type IWalletTransaction = InferOutput<
+  typeof forgeAPI.wallet.transactions.list
+>[number]
 
 function Transactions() {
   const open = useModalStore(state => state.open)

@@ -1,16 +1,3 @@
-import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useMemo } from 'react'
-import { toast } from 'react-toastify'
-import { fetchAPI, useAPIQuery } from 'shared'
-
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyEntryModal from '@apps/ScoresLibrary/components/modals/ModifyEntryModal'
 
 import AudioPlayer from '../../../components/AudioPlayer'

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { InferInput, InferOutput } from 'lifeforge-api'
+import type { InferInput, InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -36,11 +36,9 @@ function Achievements() {
   const entriesQuery = useQuery(
     forgeAPI.achievements.entries.list
       .input({
-        query: {
-          difficulty: selectedDifficulty
-        }
+        difficulty: selectedDifficulty
       })
-      .getQueryOptions()
+      .queryOptions()
   )
 
   return (
@@ -56,7 +54,6 @@ function Achievements() {
             onClick={() => {
               open(ModifyAchievementModal, {
                 type: 'create',
-                existedData: null,
                 currentDifficulty: selectedDifficulty
               })
             }}
@@ -89,7 +86,6 @@ function Achievements() {
               onCTAClick={() => {
                 open(ModifyAchievementModal, {
                   type: 'create',
-                  existedData: null,
                   currentDifficulty: selectedDifficulty
                 })
               }}
@@ -103,7 +99,6 @@ function Achievements() {
           onClick={() => {
             open(ModifyAchievementModal, {
               type: 'create',
-              existedData: null,
               currentDifficulty: selectedDifficulty
             })
           }}

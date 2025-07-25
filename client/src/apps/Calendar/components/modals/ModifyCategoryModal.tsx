@@ -1,95 +1,83 @@
-import { useDebounce } from '@uidotdev/usehooks'
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useRef, useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { type FormFieldConfig, FormModal } from 'lifeforge-ui'
 
-import { CalendarCollectionsSchemas } from 'shared/types/collections'
-import { CalendarControllersSchemas } from 'shared/types/controllers'
+import type { CalendarCalendar } from '../Calendar'
 
 function ModifyCategoryModal({
   data: { type, existedData },
   onClose
 }: {
   data: {
-    type: 'create' | 'update' | null
-    existedData:
-      | (CalendarCollectionsSchemas.ICategoryAggregated & {
-          id: string
-        })
-      | null
+    type: 'create' | 'update'
+    existedData?: CalendarCalendar
   }
   onClose: () => void
 }) {
-  const modalRef = useRef<HTMLDivElement>(null)
+  const queryClient = useQueryClient()
 
-  const innerOpenType = useDebounce(type, type === null ? 300 : 0)
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.calendar.categories.create
+      : forgeAPI.calendar.categories.update.input({
+          id: existedData?.id ?? ''
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: forgeAPI.calendar.categories.list.key
+        })
+        onClose()
+      }
+    })
+  )
 
-  const [formState, setFormState] = useState<
-    CalendarControllersSchemas.ICategories[
-      | 'createCategory'
-      | 'updateCategory']['body']
-  >({
-    name: '',
-    icon: '',
-    color: '#FFFFFF'
-  })
-
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'name',
+  const FIELDS = {
+    name: {
       required: true,
       label: 'Category name',
       icon: 'tabler:category',
       placeholder: 'Category name',
       type: 'text'
     },
-    {
-      id: 'icon',
+    icon: {
       required: true,
       label: 'Category icon',
       type: 'icon'
     },
-    {
-      id: 'color',
+    color: {
       required: true,
       label: 'Category color',
       type: 'color'
     }
-  ]
+  } as const satisfies FormFieldConfig<
+    InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
+  >
 
-  useEffect(() => {
-    if (type === 'update' && existedData !== null) {
-      setFormState(existedData)
-    } else {
-      setFormState({
-        name: '',
-        icon: '',
-        color: '#FFFFFF'
-      })
-    }
-  }, [innerOpenType, existedData])
+  async function onSubmit(
+    data: InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
+  ) {
+    await mutation.mutateAsync(data)
+  }
 
   return (
     <FormModal
-      data={formState}
-      endpoint="calendar/categories"
-      fields={FIELDS}
-      icon={
-        {
+      form={{
+        fields: FIELDS,
+        existedData,
+        onSubmit
+      }}
+      submitButton={type}
+      ui={{
+        icon: {
           create: 'tabler:plus',
           update: 'tabler:pencil'
-        }[innerOpenType!]
-      }
-      id={existedData?.id}
-      modalRef={modalRef}
-      namespace="apps.calendar"
-      openType={type}
-      queryKey={['calendar', 'categories']}
-      setData={setFormState}
-      sortBy="name"
-      sortMode="asc"
-      title={`category.${innerOpenType}`}
-      onClose={onClose}
+        }[type],
+        title: `category.${type}`,
+        namespace: 'apps.calendar',
+        onClose
+      }}
     />
   )
 }

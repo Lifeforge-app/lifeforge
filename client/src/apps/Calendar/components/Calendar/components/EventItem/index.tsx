@@ -1,22 +1,17 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI.js'
 import { memo, useMemo } from 'react'
-import { useAPIQuery } from 'shared'
-
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
-import { ICalendarEvent } from '../../index.js'
+import type { CalendarCategory, CalendarEvent } from '../../index.js'
 import EventItemButton from './components/EventItemButton.js'
 import EventItemTooltip from './components/EventItemTooltip.js'
 
-function EventItem({ event }: { event: ICalendarEvent }) {
-  const categoriesQuery = useAPIQuery<
-    CalendarControllersSchemas.ICategories['getAllCategories']['response']
-  >('calendar/categories', ['calendar', 'categories'])
+function EventItem({ event }: { event: CalendarEvent }) {
+  const categoriesQuery = useQuery(
+    forgeAPI.calendar.categories.list.queryOptions()
+  )
 
   const category = useMemo(() => {
     if (event.category.startsWith('_')) {
@@ -24,7 +19,7 @@ function EventItem({ event }: { event: ICalendarEvent }) {
         ...INTERNAL_CATEGORIES[
           event.category as keyof typeof INTERNAL_CATEGORIES
         ]
-      } as ISchemaWithPB<CalendarCollectionsSchemas.ICategoryAggregated>
+      } as CalendarCategory | undefined
     }
 
     return categoriesQuery.data?.find(

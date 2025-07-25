@@ -1,12 +1,14 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useAPIQuery } from 'shared'
 
-import { CalendarCollectionsSchemas } from 'shared/types/collections'
-import { CalendarControllersSchemas } from 'shared/types/controllers'
-
+import type {
+  CalendarCalendar,
+  CalendarCategory
+} from '@apps/Calendar/components/Calendar'
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
@@ -21,19 +23,16 @@ function CategoryList({
   setSidebarOpen: (value: boolean) => void
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
 }) {
-  const categoriesQuery = useAPIQuery<
-    CalendarControllersSchemas.ICategories['getAllCategories']['response']
-  >('calendar/categories', ['calendar', 'categories'])
+  const categoriesQuery = useQuery(
+    forgeAPI.calendar.categories.list.queryOptions()
+  )
 
   const open = useModalStore(state => state.open)
 
-  const handleSelect = useCallback(
-    (item: CalendarCollectionsSchemas.ICalendar & { id: string }) => {
-      setSelectedCategory(item.id)
-      setSidebarOpen(false)
-    },
-    []
-  )
+  const handleSelect = useCallback((item: CalendarCalendar) => {
+    setSelectedCategory(item.id)
+    setSidebarOpen(false)
+  }, [])
 
   const handleCancelSelect = useCallback(() => {
     setSelectedCategory(undefined)
@@ -59,7 +58,9 @@ function CategoryList({
           />
           {[...categories, ...Object.keys(INTERNAL_CATEGORIES)].length > 0 ? (
             <ul className="-mt-2 flex h-full min-w-0 flex-col">
-              {Object.entries(INTERNAL_CATEGORIES).map(([key, value]) => (
+              {Object.entries(
+                INTERNAL_CATEGORIES as unknown as CalendarCategory[]
+              ).map(([key, value]) => (
                 <CategoryListItem
                   key={key}
                   isSelected={selectedCategory === key}

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function OverviewSummary({

@@ -1,13 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
-import { Checkbox } from 'lifeforge-ui'
-import { fetchAPI } from 'shared'
-
-import {
-  ISchemaWithPB,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskDueDate from './components/TaskDueDate'

@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 
-import { ModuleConfig } from '../../routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '../../routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Localization Manager',

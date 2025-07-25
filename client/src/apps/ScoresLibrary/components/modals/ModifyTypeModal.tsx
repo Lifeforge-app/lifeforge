@@ -1,13 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { FormModal, IFieldProps } from 'lifeforge-ui'
-import { useState } from 'react'
-
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 function ModifyTypeModal({
   onClose,
   data: { openType, existedData }

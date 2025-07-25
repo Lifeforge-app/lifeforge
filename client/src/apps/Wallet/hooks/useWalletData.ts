@@ -5,19 +5,19 @@ import { useFilteredTransactions } from './useFilteredTransactions'
 
 export function useWalletData() {
   const transactionsQuery = useQuery(
-    forgeAPI.wallet.transactions.list.getQueryOptions()
+    forgeAPI.wallet.transactions.list.queryOptions()
   )
 
-  const assetsQuery = useQuery(forgeAPI.wallet.assets.list.getQueryOptions())
+  const assetsQuery = useQuery(forgeAPI.wallet.assets.list.queryOptions())
 
-  const ledgersQuery = useQuery(forgeAPI.wallet.ledgers.list.getQueryOptions())
+  const ledgersQuery = useQuery(forgeAPI.wallet.ledgers.list.queryOptions())
 
   const categoriesQuery = useQuery(
-    forgeAPI.wallet.categories.list.getQueryOptions()
+    forgeAPI.wallet.categories.list.queryOptions()
   )
 
   const typesCountQuery = useQuery(
-    forgeAPI.wallet.utils.getTypesCount.getQueryOptions()
+    forgeAPI.wallet.utils.getTypesCount.queryOptions()
   )
 
   const filteredTransactions = useFilteredTransactions(

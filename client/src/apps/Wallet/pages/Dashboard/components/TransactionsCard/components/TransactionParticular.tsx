@@ -1,5 +1,5 @@
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 function TransactionParticular({
   transaction

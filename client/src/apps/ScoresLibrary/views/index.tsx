@@ -1,10 +1,3 @@
-import { EmptyStateScreen } from 'lifeforge-ui'
-
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
-
 import GridView from './GridView'
 import ListView from './ListView'
 
