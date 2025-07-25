@@ -1,11 +1,10 @@
-import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
-import { useTranslation } from 'react-i18next'
 
-import InputIcon from './shared/InputIcon'
-import InputLabel from './shared/InputLabel'
-import InputWrapper from './shared/InputWrapper'
+import InputIcon from './shared/components/InputIcon'
+import InputLabel from './shared/components/InputLabel'
+import InputWrapper from './shared/components/InputWrapper'
+import useInputLabel from './shared/hooks/useInputLabel'
 
 function CurrencyInputComponent({
   name,
@@ -29,8 +28,10 @@ function CurrencyInputComponent({
   darker?: boolean
   className?: string
   required?: boolean
-  namespace: string
+  namespace: string | false
 }) {
+  const inputLabel = useInputLabel(namespace, name)
+
   const [innerValue, setInnerValue] = useState(
     value.toString() === '0' ? '' : value.toString()
   )
@@ -39,15 +40,13 @@ function CurrencyInputComponent({
     setInnerValue(value.toString() === '0' ? '' : value.toString())
   }, [value])
 
-  const { t } = useTranslation(namespace)
-
   return (
     <InputWrapper className={className} darker={darker} disabled={disabled}>
       <InputIcon active={!!innerValue} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!innerValue}
-          label={t(`inputs.${_.camelCase(name)}`)}
+          label={inputLabel}
           required={required === true}
         />
         <CurrencyInput

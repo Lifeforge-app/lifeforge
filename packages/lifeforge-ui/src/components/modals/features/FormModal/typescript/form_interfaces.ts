@@ -207,6 +207,7 @@ type InferFormInputProps<TField extends AllFields> = {
 }
 
 export type {
+  AllFields,
   FormFieldConfig,
   IFormState,
   ITextInputFieldProps,

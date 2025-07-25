@@ -4,8 +4,9 @@ import _ from 'lodash'
 import { useCallback, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import InputIcon from '../shared/InputIcon'
-import InputLabel from '../shared/InputLabel'
+import InputIcon from '../shared/components/InputIcon'
+import InputLabel from '../shared/components/InputLabel'
+import useInputLabel from '../shared/hooks/useInputLabel'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOrComboboxOptions from './components/ListboxOrComboboxOptions'
@@ -57,6 +58,8 @@ function ListboxOrComboboxInput<T>(props: IListboxOrComboboxInputProps<T>) {
 
   const { t } = useTranslation(namespace ? namespace : undefined)
 
+  const inputLabel = useInputLabel(namespace, name, tKey)
+
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
       return customActive
@@ -105,18 +108,7 @@ function ListboxOrComboboxInput<T>(props: IListboxOrComboboxInputProps<T>) {
             <InputLabel
               isListboxOrCombobox
               active={isActive}
-              label={t(
-                namespace !== false
-                  ? t([
-                      [tKey, 'inputs', _.camelCase(name), 'label']
-                        .filter(e => e)
-                        .join('.'),
-                      [tKey, 'inputs', _.camelCase(name)]
-                        .filter(e => e)
-                        .join('.')
-                    ])
-                  : name
-              )}
+              label={inputLabel}
               required={required === true}
             />
             <div className="relative mt-10 mb-3 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pr-10 pl-5 text-left focus:outline-hidden">

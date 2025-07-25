@@ -42,7 +42,7 @@ export const Default: Story = {
       title: {
         type: 'text',
         label: 'Title',
-        icon: 'tabler:title',
+        icon: 'tabler:article',
         placeholder: 'Enter title here'
       }
     } as const satisfies FormFieldConfig<{
