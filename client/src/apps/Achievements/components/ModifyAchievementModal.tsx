@@ -1,8 +1,8 @@
 import forgeAPI from '@utils/forgeAPI'
 import { InferInput } from 'lifeforge-api'
 import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
+import type { FormFieldConfig, InferFinalDataType } from 'lifeforge-ui'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
@@ -28,34 +28,25 @@ function ModifyAchievementModal({
 }) {
   const { t } = useTranslation('apps.achievements')
 
-  const [formState, setFormState] = useState<
+  const FIELDS: FormFieldConfig<
     | InferInput<typeof forgeAPI.achievements.entries.create>['body']
     | InferInput<typeof forgeAPI.achievements.entries.update>['body']
-  >({
-    title: '',
-    thoughts: '',
-    difficulty: 'easy'
-  })
-
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'title',
+  > = {
+    title: {
       required: true,
       label: 'Achievement title',
       icon: 'tabler:award',
       placeholder: 'My achievement',
       type: 'text'
     },
-    {
-      id: 'thoughts',
+    thoughts: {
       required: true,
       label: 'Achievement thoughts',
       icon: 'tabler:bubble-text',
       placeholder: 'My thoughts',
       type: 'textarea'
     },
-    {
-      id: 'difficulty',
+    difficulty: {
       required: true,
       label: 'Achievement difficulty',
       icon: 'tabler:list',
@@ -66,17 +57,12 @@ function ModifyAchievementModal({
         color: COLOR[color as keyof typeof COLOR][500]
       }))
     }
-  ]
+  }
 
-  // const onSubmit = useCallback(() => {
-  //   if (type === 'create') {
-  //     createRoute
-  //       .input({ body: formState })
-  //   } else if (type === 'update' && existedData) {
-  //     updateRoute
-  //       .input({ query: { id: existedData.id }, body: formState })
-  //   }
-  // })
+  const onSubmit = useCallback(
+    async (data: InferFinalDataType<FormFieldConfig>) => {},
+    [formState, type]
+  )
 
   useEffect(() => {
     if (type === 'update' && existedData !== null) {
@@ -92,16 +78,16 @@ function ModifyAchievementModal({
 
   return (
     <FormModal
-      data={formState}
-      endpoint={forgeAPI.achievements.entries[type!]}
-      fields={FIELDS}
+      form={{
+        fields: FIELDS,
+        onSubmit
+      }}
       icon={
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
         }[type!]
       }
-      id={existedData?.id}
       namespace="apps.achievements"
       openType={type}
       queryKey={['achievements/entries', currentDifficulty]}

@@ -2,7 +2,7 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-import { Location } from '@components/modals/features/FormModal/typescript/modal_interfaces'
+import { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'

@@ -2,7 +2,7 @@ import { Switch } from '@components/buttons'
 import {
   IFormCheckboxFieldProps,
   InferFormInputProps
-} from '@components/modals/features/FormModal/typescript/modal_interfaces'
+} from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
