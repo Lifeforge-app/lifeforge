@@ -5,8 +5,8 @@ import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
 
-const get = forgeController.query
-  .description('Get folders from a container path')
+const list = forgeController.query
+  .description('List folders from a container path')
   .input({
     query: z.object({
       container: z.string(),
@@ -150,7 +150,7 @@ const remove = forgeController.mutation
   .statusCode(204)
 
 export default forgeRouter({
-  get,
+  list,
   create,
   update,
   moveTo,
