@@ -5,5 +5,5 @@ import ManagerRouter from './routes/localesManager'
 
 export default forgeRouter({
   manager: ManagerRouter,
-  '': Router
+  getLocale: Router
 })
