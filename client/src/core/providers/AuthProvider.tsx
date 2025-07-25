@@ -298,10 +298,22 @@ export default function AuthProvider({
               state: string
               tid: string
             }
-        >(forgeAPI.user.oauth.verify.endpoint, {
-          method: 'POST',
-          body: { code, provider: storedProvider }
-        })
+        >(
+          import.meta.env.VITE_API_HOST,
+          forgeAPI.user.oauth.verify.input({
+            body: {
+              code,
+              provider: storedProvider
+            }
+          }).endpoint,
+          {
+            method: 'POST',
+            body: {
+              code,
+              provider: storedProvider
+            }
+          }
+        )
 
         if (typeof session !== 'string') {
           if (session.state !== '2fa_required') {
