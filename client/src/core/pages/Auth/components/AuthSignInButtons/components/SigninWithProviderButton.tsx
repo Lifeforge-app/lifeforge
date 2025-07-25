@@ -1,3 +1,4 @@
+import forgeAPI from '@utils/forgeAPI'
 import { Button } from 'lifeforge-ui'
 import _ from 'lodash'
 import { memo, useCallback } from 'react'
@@ -19,9 +20,11 @@ function SigninWithProviderButton({
 
   const signInWithProvider = useCallback(async () => {
     const providerInstance = await fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/user/oauth/endpoint?provider=${provider}`
+      forgeAPI.user.oauth.getEndpoint.input({
+        query: {
+          provider
+        }
+      }).endpoint
     )
       .then(async res => {
         const data = await res.json()

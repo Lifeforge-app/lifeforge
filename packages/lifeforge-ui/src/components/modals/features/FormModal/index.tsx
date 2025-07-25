@@ -2,10 +2,12 @@ import { Button } from '@components/buttons'
 import type {
   FormFieldConfig,
   IFormState,
-  InferFinalDataType
+  InferFinalDataType,
+  InferFormStateFromFields
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import dayjs from 'dayjs'
+import _ from 'lodash'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -13,8 +15,47 @@ import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
 
-function FormModal<TFormState extends IFormState>({
-  form: { fields, additionalFields, data, setData, onSubmit },
+const getInitialData = <TFormState extends IFormState>(
+  fields: FormFieldConfig<TFormState>,
+  formExistedData?: Partial<InferFormStateFromFields<TFormState>>
+) => {
+  return Object.fromEntries(
+    Object.entries(fields).map(([key, field]) => {
+      if (formExistedData && key in formExistedData) {
+        return [key, formExistedData[key]]
+      }
+
+      let finalValue: unknown = ''
+
+      switch (field.type) {
+        case 'number':
+        case 'currency':
+          finalValue = 0
+          break
+        case 'datetime':
+        case 'location':
+          finalValue = null
+          break
+        case 'listbox':
+          finalValue = field.multiple ? [] : null
+          break
+        case 'checkbox':
+          finalValue = false
+          break
+        case 'file':
+          finalValue = { file: null, preview: null }
+          break
+        default:
+          finalValue = ''
+      }
+
+      return [key, finalValue]
+    })
+  )
+}
+
+function FormModal<TFields extends FormFieldConfig<any>>({
+  form: { fields, existedData, additionalFields, onSubmit },
   ui,
   submitButton = {
     children: 'Submit',
@@ -23,11 +64,10 @@ function FormModal<TFormState extends IFormState>({
   actionButton
 }: {
   form: {
-    fields: FormFieldConfig<TFormState>
+    fields: TFields
+    existedData?: Partial<InferFormStateFromFields<TFields>>
     additionalFields?: React.ReactNode
-    data: TFormState
-    setData: React.Dispatch<React.SetStateAction<TFormState>>
-    onSubmit: (data: InferFinalDataType<TFormState>) => Promise<void>
+    onSubmit: (data: InferFinalDataType<TFields>) => Promise<void>
   }
   ui: {
     title: string
@@ -43,6 +83,10 @@ function FormModal<TFormState extends IFormState>({
     onClick?: () => void
   }
 }) {
+  const [data, setData] = useState<InferFormStateFromFields<TFields>>(
+    getInitialData(fields, existedData) as InferFormStateFromFields<TFields>
+  )
+
   const [submitLoading, setSubmitLoading] = useState(false)
 
   async function onSubmitButtonClick(): Promise<void> {
@@ -50,18 +94,9 @@ function FormModal<TFormState extends IFormState>({
       field => field[1].required
     )
 
-    const missingFields = requiredFields.filter(field => {
-      const value = data[field[0]]
-
-      return (
-        !value ||
-        (typeof value === 'string' && !value.trim()) ||
-        (typeof value === 'object' &&
-          !Array.isArray(value) &&
-          !value.image &&
-          JSON.stringify(value) === '{}')
-      )
-    })
+    const missingFields = requiredFields.filter(field =>
+      _.isEmpty(data[field[0]])
+    )
 
     if (missingFields.length) {
       toast.error(
@@ -88,7 +123,7 @@ function FormModal<TFormState extends IFormState>({
         switch (fieldType) {
           case 'datetime':
             finalValue = value
-              ? dayjs(value).format('YYYY-MM-DDTHH:mm:ssZ')
+              ? dayjs(value as never).format('YYYY-MM-DDTHH:mm:ssZ')
               : null
             break
           case 'currency':
@@ -110,7 +145,7 @@ function FormModal<TFormState extends IFormState>({
     )
 
     if (onSubmit) {
-      await onSubmit(finalData as InferFinalDataType<TFormState>)
+      await onSubmit(finalData as InferFinalDataType<TFields>)
       setSubmitLoading(false)
 
       return
@@ -131,10 +166,12 @@ function FormModal<TFormState extends IFormState>({
       {!ui.loading ? (
         <>
           <FormInputs
-            data={data}
+            data={data as IFormState}
             fields={fields}
             namespace={ui.namespace}
-            setData={setData}
+            setData={
+              setData as React.Dispatch<React.SetStateAction<IFormState>>
+            }
           />
           {additionalFields}
           <SubmitButton

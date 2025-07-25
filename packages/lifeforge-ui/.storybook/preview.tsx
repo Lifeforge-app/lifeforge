@@ -1,9 +1,9 @@
 import type { Preview } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import { APIEndpointProvider, PersonalizationProvider } from 'shared'
 
 import ModalManager from '../src/components/modals/core/ModalManager'
-import { LifeforgeUIProvider } from '../src/providers/LifeforgeUIProvider'
 import './index.css'
 
 const queryClient = new QueryClient()
@@ -37,26 +37,22 @@ const withBodyClass = (Story, context) => {
   }, [context.globals.theme])
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <LifeforgeUIProvider
-        personalization={{
-          apiHost: 'https://lifeforge-api-proxy.onrender.com',
-          theme: context.globals.theme,
-          themeColor: 'blue'
-        }}
-      >
-        <main className="bg-white" id="app">
-          <div
-            className={`bg-zinc theme-blue flex min-h-dvh w-full items-center justify-center transition-all ${
-              context.globals.theme === 'dark' ? 'dark' : ''
-            } ${context.globals.theme === 'dark' ? 'bg-bg-900' : 'bg-bg-200/50'}`}
-          >
-            <Story />
-          </div>
-        </main>
-        <ModalManager />
-      </LifeforgeUIProvider>
-    </QueryClientProvider>
+    <APIEndpointProvider endpoint={'https://lifeforge-api-proxy.onrender.com'}>
+      <QueryClientProvider client={queryClient}>
+        <PersonalizationProvider>
+          <main className="bg-white" id="app">
+            <div
+              className={`bg-zinc theme-blue flex min-h-dvh w-full items-center justify-center transition-all ${
+                context.globals.theme === 'dark' ? 'dark' : ''
+              } ${context.globals.theme === 'dark' ? 'bg-bg-900' : 'bg-bg-200/50'}`}
+            >
+              <Story />
+            </div>
+          </main>
+          <ModalManager />
+        </PersonalizationProvider>
+      </QueryClientProvider>
+    </APIEndpointProvider>
   )
 }
 
