@@ -81,8 +81,8 @@ const list = forgeController.query
     })
   })
   .callback(
-    ({ pb, query: { page, query = '', category, author, starred, sort } }) =>
-      pb.getList
+    ({ pb, query: { page, query = '', category, author, starred, sort } }) => {
+      return pb.getList
         .collection('scores_library__entries')
         .page(page)
         .perPage(20)
@@ -113,7 +113,9 @@ const list = forgeController.query
               ] as const)
             : []),
           ...(starred
-            ? ([{ field: 'isFavourite', operator: '=', value: true }] as const)
+            ? ([
+                { field: 'isFavourite', operator: '=', value: starred }
+              ] as const)
             : [])
         ])
         .sort([
@@ -128,6 +130,7 @@ const list = forgeController.query
           )[sort]
         ])
         .execute()
+    }
   )
 
 const random = forgeController.query

@@ -64,6 +64,8 @@ export class GetList<
   filter(filter: FilterType<TCollectionKey, TExpandConfig>) {
     const result = recursivelyBuildFilter(filter)
 
+    console.log(result)
+
     this._filterExpression = result.expression
     this._filterParams = result.params
 
