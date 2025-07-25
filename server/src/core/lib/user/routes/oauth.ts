@@ -50,7 +50,7 @@ const verify = forgeController.mutation
       code: z.string()
     })
   })
-  .callback(async ({ pb, body: { provider: providerName, code } }) => {
+  .callback(async ({ req, pb, body: { provider: providerName, code } }) => {
     const providers = await pb.instance.collection('users').listAuthMethods()
 
     const provider = providers.oauth2.providers.find(
@@ -68,7 +68,7 @@ const verify = forgeController.mutation
           provider.name,
           code,
           currentCodeVerifier,
-          `${origin}/auth`,
+          `${req.headers.origin}/auth`,
           {
             emailVisibility: false
           }

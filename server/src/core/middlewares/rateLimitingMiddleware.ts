@@ -1,17 +1,12 @@
 import rateLimit from 'express-rate-limit'
 import Pocketbase from 'pocketbase'
 
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
-
 export default rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 250,
   skip: async req => {
     if (
       req.path.startsWith('/media/') ||
-      new RegExp(
-        `\/locales\/(?:${ALLOWED_LANG.join('|')})\/(?:${ALLOWED_NAMESPACE.join('|')})(\..+)?$`
-      ).test(req.url) ||
       [
         '/code-time/user/minutes',
         '/code-time/eventLog',

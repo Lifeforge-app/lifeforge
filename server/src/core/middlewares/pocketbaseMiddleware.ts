@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from 'express'
 import Pocketbase from 'pocketbase'
 
 import { ENDPOINT_WHITELIST } from '../constants/endpointWhitelist'
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
   throw new Error('Pocketbase environment variables not set')
@@ -33,10 +32,7 @@ const pocketbaseMiddleware = async (
   if (!bearerToken || req.url.startsWith('/user/auth')) {
     if (
       req.url === '/' ||
-      ENDPOINT_WHITELIST.some(route => req.url.startsWith(route)) ||
-      new RegExp(
-        `\/locales\/(?:${ALLOWED_LANG.join('|')})\/(?:${ALLOWED_NAMESPACE.join('|')})(\..+)?$`
-      ).test(req.url)
+      ENDPOINT_WHITELIST.some(route => req.url.startsWith(route))
     ) {
       req.pb = new PBService(pb)
       next()
