@@ -465,7 +465,6 @@ export class ForgeControllerBuilder<
           err instanceof Error ? err.message : err
         )
         serverError(res, 'Internal server error')
-        throw err
       }
     }
 
