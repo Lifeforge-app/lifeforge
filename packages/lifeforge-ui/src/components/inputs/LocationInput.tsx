@@ -2,7 +2,7 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-import { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
+import type { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
@@ -49,7 +49,7 @@ function LocationInput({
   }, [query])
 
   useEffect(() => {
-    fetchAPI<boolean>(apiHost, '/locations/enabled').then(enabled =>
+    fetchAPI<boolean>(apiHost, '/locations/verifyAPIKey').then(enabled =>
       setEnabled(enabled)
     )
   }, [])

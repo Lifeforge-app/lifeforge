@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { UseQueryOptions } from '@tanstack/react-query'
+import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 import { fetchAPI } from 'shared'
 
 import type {
@@ -28,48 +28,43 @@ export class ForgeAPIClientController<
 > {
   public __type!: T
 
-  private _queryKey: unknown[] = []
+  private _key: unknown[] = []
   private _endpoint: string = ''
-  private _input:
-    | {
-        query?: Record<string, any>
-        body?: Record<string, any>
-      }
-    | undefined
+  private _input: Record<string, any> | undefined
 
   constructor(
     private _apiHost: string,
     private _route: string
   ) {
-    this._refreshEndpoint()
+    this.refreshEndpoint()
   }
 
-  get queryKey() {
-    return this._queryKey
+  get key() {
+    return this._key
   }
 
   get endpoint() {
     return new URL(this._endpoint, this._apiHost).toString()
   }
 
-  input(data: InferInput<T>) {
+  input(data: InferInput<T>['query']) {
     this._input = joinObjectsRecursively(
       this._input || {},
       data as Record<string, any>
     )
-    this._refreshEndpoint()
+    this.refreshEndpoint()
 
     return this
   }
 
-  getQueryOptions(
+  queryOptions(
     options: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'> = {}
   ): UseQueryOptions<InferOutput<T>> {
     return {
       ...options,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
-      queryKey: this._queryKey,
+      queryKey: this._key,
       queryFn: () =>
         fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
           method: 'get'
@@ -77,17 +72,60 @@ export class ForgeAPIClientController<
     }
   }
 
-  private _refreshEndpoint() {
+  mutationOptions(
+    options: Omit<
+      UseMutationOptions<any, any, any>,
+      'mutationKey' | 'mutationFn'
+    > = {}
+  ): UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']> {
+    return {
+      ...options,
+      mutationKey: this._key,
+      mutationFn: async (data: Partial<T>) => {
+        if (Object.values(data).some(value => value instanceof File)) {
+          const formData = new FormData()
+
+          const fileEntries: Record<string, File> = {}
+
+          Object.entries(data).forEach(([key, value]) => {
+            if (value instanceof File) {
+              fileEntries[key] = value
+            } else if (typeof value !== 'string') {
+              formData.append(key, JSON.stringify(value))
+            } else {
+              formData.append(key, value)
+            }
+          })
+
+          Object.entries(fileEntries).forEach(([key, file]) => {
+            formData.append(key, file)
+          })
+
+          return fetchAPI(this._apiHost, this._endpoint, {
+            method: 'POST',
+            body: formData
+          })
+        }
+
+        return fetchAPI(this._apiHost, this._endpoint, {
+          method: 'POST',
+          body: data
+        })
+      }
+    }
+  }
+
+  private refreshEndpoint() {
     this._endpoint = `${this._route}`
 
-    if (this._input && this._input.query) {
-      const queryParams = new URLSearchParams(this._input.query)
+    if (this._input) {
+      const queryParams = new URLSearchParams(this._input)
 
       this._endpoint += `?${queryParams.toString()}`
     }
 
-    this._queryKey = [
-      this._route,
+    this._key = [
+      ...this._route.split('/').filter(Boolean),
       this._input ? JSON.stringify(this._input) : null
     ].filter(Boolean)
   }
@@ -117,11 +155,11 @@ export function createForgeAPIClient<T>(
       return createForgeAPIClient(apiHost, [...path, prop])
     },
 
-    apply: (_, __, args) => {
+    apply: () => {
       throw new Error(
         `Invalid function call on path: ${path.join(
           '.'
-        )} — maybe you meant to use .input()?`
+        )} — maybe you meant to use .input(), .queryOptions(), or .getMutationOptions()?`
       )
     }
   }) as any
