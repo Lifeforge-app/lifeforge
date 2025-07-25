@@ -8,8 +8,6 @@ import { useState } from 'react'
 import { useQuill } from 'react-quilljs'
 import { useNavigate } from 'react-router'
 
-import { IBlogEntryFormState } from '@apps/Blog/interfaces/blog_interfaces'
-
 import Sidebar from './components/Sidebar'
 
 function Compose() {
@@ -29,7 +27,7 @@ function Compose() {
     }
   })
 
-  const [blogPost, setBlogPost] = useState<IBlogEntryFormState>({
+  const [blogPost, setBlogPost] = useState({
     title: '',
     excerpt: '',
     visibility: 'private',

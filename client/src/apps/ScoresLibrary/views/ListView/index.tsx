@@ -1,8 +1,3 @@
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
-
 import EntryItem from './components/EntryItem'
 
 function ListView({

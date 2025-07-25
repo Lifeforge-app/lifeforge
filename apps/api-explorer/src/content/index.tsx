@@ -4,9 +4,6 @@ import { QueryWrapper } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 import { useAPIQuery } from 'shared'
 
-import { RouteCustomSchemas } from 'shared/types/collections'
-import { RoutesControllersSchemas } from 'shared/types/controllers'
-
 import METHOD_COLORS from '../constants/methodColors'
 import Sidebar from './components/Sidebar'
 

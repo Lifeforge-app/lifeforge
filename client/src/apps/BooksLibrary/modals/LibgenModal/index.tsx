@@ -17,8 +17,6 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { BooksLibraryControllersSchemas } from 'shared/types/controllers'
-
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
 

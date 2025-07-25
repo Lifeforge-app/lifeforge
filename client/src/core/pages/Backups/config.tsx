@@ -1,4 +1,4 @@
-import { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { IconHistory } from '@tabler/icons-react'
 import { lazy } from 'react'
 

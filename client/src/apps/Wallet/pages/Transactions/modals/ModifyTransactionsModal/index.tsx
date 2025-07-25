@@ -1,22 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { FormModal, IFieldProps } from 'lifeforge-ui'
+import { FormModal } from 'lifeforge-ui'
 import {
-  SetStateAction,
+  type SetStateAction,
   useCallback,
   useEffect,
   useMemo,
   useState
 } from 'react'
 
-import {
-  LocationsCustomSchemas,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import { IWalletTransaction } from '../..'
+import type { IWalletTransaction } from '../..'
 
 function ModifyTransactionsModal({
   data: { type, existedData },

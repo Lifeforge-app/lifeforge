@@ -1,5 +1,7 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -16,15 +18,16 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
 import { fetchAPI } from 'shared'
-
-import { MoviesControllersSchemas } from 'shared/types/controllers'
 
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
 import SearchTMDBModal from './modals/SearchTMDBModal'
 import ShowTicketModal from './modals/ShowTicketModal'
+
+export type MovieEntry = InferOutput<
+  typeof forgeAPI.movies.entries.list
+>['entries'][number]
 
 function Movies() {
   const open = useModalStore(state => state.open)
@@ -45,13 +48,13 @@ function Movies() {
     'unwatched'
   )
 
-  const entriesQuery = useAPIQuery<
-    MoviesControllersSchemas.IEntries['getAllEntries']['response']
-  >(`movies/entries?watched=${currentTab === 'watched'}`, [
-    'movies',
-    'entries',
-    currentTab
-  ])
+  const entriesQuery = useQuery(
+    forgeAPI.movies.entries.list
+      .input({
+        watched: currentTab === 'watched'
+      })
+      .queryOptions()
+  )
 
   useEffect(() => {
     if (!entriesQuery.data) return

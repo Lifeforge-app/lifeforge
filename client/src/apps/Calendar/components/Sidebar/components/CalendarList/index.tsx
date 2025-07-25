@@ -1,15 +1,10 @@
 import { Icon } from '@iconify/react'
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { QueryWrapper, SidebarTitle, useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useAPIQuery } from 'shared'
 
-import {
-  CalendarCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-import { CalendarControllersSchemas } from 'shared/types/controllers'
-
+import type { CalendarCalendar } from '@apps/Calendar/components/Calendar'
 import ModifyCalendarModal from '@apps/Calendar/components/modals/ModifyCalendarModal'
 
 import CalendarListItem from './components/CalendarListItem'
@@ -23,14 +18,14 @@ function CalendarList({
   setSidebarOpen: (value: boolean) => void
   setSelectedCalendar: React.Dispatch<React.SetStateAction<string | undefined>>
 }) {
-  const calendarsQuery = useAPIQuery<
-    CalendarControllersSchemas.ICalendars['getAllCalendars']['response']
-  >('calendar/calendars', ['calendar', 'calendars'])
+  const calendarsQuery = useQuery(
+    forgeAPI.calendar.calendars.list.queryOptions()
+  )
 
   const open = useModalStore(state => state.open)
 
   const handleSelect = useCallback(
-    (item: ISchemaWithPB<CalendarCollectionsSchemas.ICalendar>) => {
+    (item: CalendarCalendar) => {
       setSelectedCalendar(item.id)
       setSidebarOpen(false)
     },
@@ -44,7 +39,6 @@ function CalendarList({
 
   const handleCreate = useCallback(() => {
     open(ModifyCalendarModal, {
-      existedData: null,
       type: 'create'
     })
   }, [])

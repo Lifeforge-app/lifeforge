@@ -2,19 +2,13 @@ import { Icon } from '@iconify/react'
 import { Scrollbar } from 'lifeforge-ui'
 
 import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
-import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
+  type BooksLibraryEntry,
+  useBooksLibraryContext
+} from '../../providers/BooksLibraryProvider'
 import BookMeta from '../components/BookMeta'
 import EntryItem from './components/EntryItem'
 
-function ListView({
-  books
-}: {
-  books: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
-}) {
+function ListView({ books }: { books: BooksLibraryEntry[] }) {
   const {
     miscellaneous: { processes },
     collectionsQuery

@@ -1,4 +1,4 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
 import {
   QueryWrapper,
   SidebarDivider,
@@ -8,8 +8,6 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
-
-import { ScoresLibraryCollectionsSchemas } from 'shared/types/collections'
 
 import ModifyTypeModal from '../modals/ModifyTypeModal'
 import SidebarAuthorItem from './components/SidebarAuthorItem'

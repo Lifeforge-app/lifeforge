@@ -1,33 +1,42 @@
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
+import type { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
-import { Calendar, Components, dayjsLocalizer } from 'react-big-calendar'
+import { Calendar, type Components, dayjsLocalizer } from 'react-big-calendar'
 import withDragAndDrop, {
-  EventInteractionArgs
+  type EventInteractionArgs
 } from 'react-big-calendar/lib/addons/dragAndDrop'
 import { fetchAPI } from 'shared'
 
-import { CalendarControllersSchemas } from 'shared/types/controllers'
-
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
-import CreateEventModal from '../modals/ModifyEventModal/CreateEventModal'
+import ModifyEventModal from '../modals/ModifyEventModal'
 import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import EventItem from './components/EventItem'
 import CalendarHeader from './components/Headers/CalendarHeader'
 import WeekHeader from './components/Headers/WeekHeader'
 
-export type ICalendarEvent =
-  CalendarControllersSchemas.IEvents['getEventsByDateRange']['response'][number]
+export type CalendarEvent = InferOutput<
+  typeof forgeAPI.calendar.events.getByDateRange
+>[number]
+
+export type CalendarCategory = InferOutput<
+  typeof forgeAPI.calendar.categories.list
+>[number]
+
+export type CalendarCalendar = InferOutput<
+  typeof forgeAPI.calendar.calendars.list
+>[number]
 
 const localizer = dayjsLocalizer(dayjs)
 
 const DnDCalendar = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
-  events: ICalendarEvent[]
+  events: CalendarEvent[]
   setSidebarOpen: (value: boolean) => void
   selectedCategory: string | undefined
   selectedCalendar: string | undefined
@@ -55,7 +64,7 @@ function CalendarComponent({
 
   const queryClient = useQueryClient()
 
-  const { eventQueryKey: queryKey, setEventQueryKey } = useCalendarStore()
+  const { start, end, setStart, setEnd } = useCalendarStore()
 
   const filteredEvents = useMemo(
     () =>
@@ -81,7 +90,8 @@ function CalendarComponent({
 
         const end = dayjs(range[range.length - 1]).format('YYYY-MM-DD')
 
-        setEventQueryKey(['calendar', 'events', start, end])
+        setStart(start)
+        setEnd(end)
 
         return
       }
@@ -91,7 +101,8 @@ function CalendarComponent({
 
         const end = dayjs(range.end).format('YYYY-MM-DD')
 
-        setEventQueryKey(['calendar', 'events', start, end])
+        setStart(start)
+        setEnd(end)
       }
     },
     []
@@ -103,7 +114,7 @@ function CalendarComponent({
         return <CalendarHeader setSidebarOpen={setSidebarOpen} {...props} />
       },
       event: ({ event }: { event: object }) => {
-        return <EventItem event={event as ICalendarEvent} />
+        return <EventItem event={event as CalendarEvent} />
       },
       week: {
         header: WeekHeader
@@ -111,7 +122,7 @@ function CalendarComponent({
       agenda: {
         date: AgendaDate as (props: unknown) => React.ReactElement,
         event: ({ event }: { event: object }) => (
-          <AgendaEventItem event={event as ICalendarEvent} />
+          <AgendaEventItem event={event as CalendarEvent} />
         )
       }
     }),
@@ -119,22 +130,28 @@ function CalendarComponent({
   )
 
   const updateEvent = useCallback(
-    async ({ event, start, end }: EventInteractionArgs<ICalendarEvent>) => {
-      queryClient.setQueryData(queryKey, (prevEvents: ICalendarEvent[]) => {
-        return prevEvents.map(prevEvent => {
-          if (prevEvent.id === event.id) {
-            return {
-              ...prevEvent,
-              start,
-              end
+    async ({ event, start, end }: EventInteractionArgs<CalendarEvent>) => {
+      queryClient.setQueryData(
+        forgeAPI.calendar.events.getByDateRange.input({
+          start: start as string,
+          end: end as string
+        }).key,
+        (prevEvents: CalendarEvent[]) => {
+          return prevEvents.map(prevEvent => {
+            if (prevEvent.id === event.id) {
+              return {
+                ...prevEvent,
+                start,
+                end
+              }
             }
-          }
 
-          return prevEvent
-        })
-      })
+            return prevEvent
+          })
+        }
+      )
 
-      await fetchAPI<ICalendarEvent>(
+      await fetchAPI<CalendarEvent>(
         import.meta.env.VITE_API_HOST,
         `calendar/events/${event.id}`,
         {
@@ -148,15 +165,16 @@ function CalendarComponent({
         }
       )
     },
-    [queryClient, queryKey]
+    [queryClient, start, end]
   )
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
-      open(CreateEventModal, {
+      open(ModifyEventModal, {
+        type: 'create',
         existedData: {
-          start,
-          end: dayjs(end).subtract(1, 'minute').toDate()
+          start: dayjs(start).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          end: dayjs(end).subtract(1, 'minute').format('YYYY-MM-DD HH:mm:ss')
         }
       })
     },
@@ -164,10 +182,10 @@ function CalendarComponent({
   )
 
   const handleEventChange = useCallback((e: EventInteractionArgs<object>) => {
-    updateEvent(e as EventInteractionArgs<ICalendarEvent>).catch(console.error)
+    updateEvent(e as EventInteractionArgs<CalendarEvent>).catch(console.error)
   }, [])
 
-  const draggableAccessor = useCallback((event: ICalendarEvent) => {
+  const draggableAccessor = useCallback((event: CalendarEvent) => {
     return !(event.category.startsWith('_') || event.type === 'recurring')
   }, [])
 

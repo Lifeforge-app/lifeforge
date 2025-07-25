@@ -1,6 +1,6 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { InferOutput } from 'lifeforge-api'
+import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -43,16 +43,16 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams()
 
   const statusCounterQuery = useQuery(
-    forgeAPI.todoList.entries.getStatusCounter.getQueryOptions()
+    forgeAPI.todoList.entries.getStatusCounter.queryOptions()
   )
 
   const prioritiesQuery = useQuery(
-    forgeAPI.todoList.priorities.list.getQueryOptions()
+    forgeAPI.todoList.priorities.list.queryOptions()
   )
 
-  const listsQuery = useQuery(forgeAPI.todoList.lists.list.getQueryOptions())
+  const listsQuery = useQuery(forgeAPI.todoList.lists.list.queryOptions())
 
-  const tagsListQuery = useQuery(forgeAPI.todoList.tags.list.getQueryOptions())
+  const tagsListQuery = useQuery(forgeAPI.todoList.tags.list.queryOptions())
 
   const entriesQueryKey = useMemo(
     () => [
@@ -69,14 +69,12 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const entriesQuery = useQuery(
     forgeAPI.todoList.entries.list
       .input({
-        query: {
-          status: searchParams.get('status') ?? 'all',
-          tag: searchParams.get('tag') ?? undefined,
-          list: searchParams.get('list') ?? undefined,
-          priority: searchParams.get('priority') ?? undefined
-        }
+        status: searchParams.get('status') ?? 'all',
+        tag: searchParams.get('tag') ?? undefined,
+        list: searchParams.get('list') ?? undefined,
+        priority: searchParams.get('priority') ?? undefined
       })
-      .getQueryOptions()
+      .queryOptions()
   )
 
   const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<

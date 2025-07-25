@@ -15,19 +15,34 @@ import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
 
-const getInitialData = <TFormState extends IFormState>(
-  fields: FormFieldConfig<TFormState>,
+const transformExistedData = (
+  field: FormFieldConfig[keyof FormFieldConfig],
+  value: unknown
+): unknown => {
+  if (field?.type === 'datetime' && value) {
+    return dayjs(value as string).toDate()
+  }
+
+  if (field?.type === 'file' && value) {
+    return { file: value, preview: value }
+  }
+
+  return value
+}
+
+const getInitialData = <TFormState extends FormFieldConfig<any>>(
+  fields: TFormState,
   formExistedData?: Partial<InferFormStateFromFields<TFormState>>
 ) => {
   return Object.fromEntries(
     Object.entries(fields).map(([key, field]) => {
       if (formExistedData && key in formExistedData) {
-        return [key, formExistedData[key]]
+        return [key, transformExistedData(field, formExistedData[key])]
       }
 
       let finalValue: unknown = ''
 
-      switch (field.type) {
+      switch (field?.type) {
         case 'number':
         case 'currency':
           finalValue = 0
@@ -91,7 +106,7 @@ function FormModal<TFields extends FormFieldConfig<any>>({
 
   async function onSubmitButtonClick(): Promise<void> {
     const requiredFields = Object.entries(fields).filter(
-      field => field[1].required
+      field => field[1]?.required
     )
 
     const missingFields = requiredFields.filter(field =>
@@ -101,7 +116,7 @@ function FormModal<TFields extends FormFieldConfig<any>>({
     if (missingFields.length) {
       toast.error(
         `The following fields are required: ${missingFields
-          .map(field => field[1].label)
+          .map(field => field[1]?.label)
           .join(', ')}`
       )
 
@@ -124,7 +139,10 @@ function FormModal<TFields extends FormFieldConfig<any>>({
           case 'datetime':
             finalValue = value
               ? dayjs(value as never).format('YYYY-MM-DDTHH:mm:ssZ')
-              : null
+              : undefined
+            break
+          case 'location':
+            finalValue = value ?? undefined
             break
           case 'currency':
           case 'number':

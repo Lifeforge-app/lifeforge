@@ -1,7 +1,5 @@
 import { ErrorScreen, LoadingScreen, Pagination } from 'lifeforge-ui'
 
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 import ScoreItem from './ScoreItem'
 
 function ScoreList({

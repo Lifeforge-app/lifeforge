@@ -1,16 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import {
-  ISchemaWithPB,
-  ScoresLibraryCollectionsSchemas
-} from 'shared/types/collections'
-import { ScoresLibraryControllersSchemas } from 'shared/types/controllers'
-
 function ModifyEntryModal({
   onClose,
   data: { existedData, queryKey }

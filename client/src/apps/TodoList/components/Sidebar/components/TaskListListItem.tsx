@@ -1,13 +1,3 @@
-import { DeleteConfirmationModal, MenuItem, SidebarItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useSearchParams } from 'react-router'
-
-import {
-  ISchemaWithPB,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyListModal from '@apps/TodoList/modals/ModifyListModal'
 
 function TaskListListItem({

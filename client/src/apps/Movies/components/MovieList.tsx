@@ -1,8 +1,3 @@
-import {
-  ISchemaWithPB,
-  MoviesCollectionsSchemas
-} from 'shared/types/collections'
-
 import MovieItem from './MovieItem'
 
 function MovieList({

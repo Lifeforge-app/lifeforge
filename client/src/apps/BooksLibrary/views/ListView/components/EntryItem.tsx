@@ -1,28 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { Button, HamburgerMenu } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
-import { fetchAPI } from 'shared'
 import tinycolor from 'tinycolor2'
 
 import {
-  BooksLibraryCollectionsSchemas,
-  ISchemaWithPB
-} from 'shared/types/collections'
-
-import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
+  type BooksLibraryEntry,
+  useBooksLibraryContext
+} from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-export default function EntryItem({
-  item
-}: {
-  item: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>
-}) {
+export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
   const { t } = useTranslation('apps.booksLibrary')
 
   const { derivedThemeColor } = usePersonalization()
@@ -33,40 +27,22 @@ export default function EntryItem({
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 
-  async function addToFavourites() {
-    setAddToFavouritesLoading(true)
-
-    try {
-      await fetchAPI<ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>>(
-        import.meta.env.VITE_API_HOST,
-        `books-library/entries/favourite/${item.id}`,
-        {
-          method: 'POST'
-        }
-      )
-
-      queryClient.setQueryData<
-        ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry>[]
-      >(['books-library', 'entries'], prevEntries => {
-        if (!prevEntries) return []
-
-        return prevEntries.map(entry => {
-          if (entry.id === item.id) {
-            return {
-              ...entry,
-              is_favourite: !entry.is_favourite
-            }
-          }
-
-          return entry
-        })
+  const toggleFavouriteStatusMutation = useMutation(
+    forgeAPI.booksLibrary.entries.toggleFavouriteStatus
+      .input({
+        id: item.id
       })
-    } catch {
-      console.error('Failed to add to favourites')
-    } finally {
-      setAddToFavouritesLoading(false)
-    }
-  }
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['books-library', 'entries']
+          })
+        },
+        onSettled: () => {
+          setAddToFavouritesLoading(false)
+        }
+      })
+  )
 
   return (
     <li
@@ -88,7 +64,7 @@ export default function EntryItem({
           })()}
           variant="plain"
           onClick={() => {
-            addToFavourites().catch(console.error)
+            toggleFavouriteStatusMutation.mutate({})
           }}
         />
         <HamburgerMenu>

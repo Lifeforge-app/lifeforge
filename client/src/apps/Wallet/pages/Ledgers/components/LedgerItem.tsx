@@ -1,14 +1,3 @@
-import { Icon } from '@iconify/react'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
-
-import {
-  ISchemaWithPB,
-  WalletCollectionsSchemas
-} from 'shared/types/collections'
-
 import ModifyLedgerModal from '../modals/ModifyLedgerModal'
 
 function LedgerItem({

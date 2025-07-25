@@ -15,7 +15,7 @@ import { useCallback, useState } from 'react'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
-import CreateEventModal from './components/modals/ModifyEventModal/CreateEventModal'
+import ModifyEventModal from './components/modals/ModifyEventModal'
 import ScanImageModal from './components/modals/ScanImageModal'
 import { useCalendarStore } from './stores/useCalendarStore'
 
@@ -29,12 +29,10 @@ function CalendarModule() {
   const rawEventsQuery = useQuery(
     forgeAPI.calendar.events.getByDateRange
       .input({
-        query: {
-          start,
-          end
-        }
+        start,
+        end
       })
-      .getQueryOptions()
+      .queryOptions()
   )
 
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
@@ -50,7 +48,9 @@ function CalendarModule() {
   }, [])
 
   const handleCreateEvent = useCallback(() => {
-    open(CreateEventModal, {})
+    open(ModifyEventModal, {
+      type: 'create'
+    })
   }, [])
 
   return (

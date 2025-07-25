@@ -12,7 +12,7 @@ function CodeTimeStatistics() {
   const { t } = useTranslation('apps.codeTime')
 
   const statsQuery = useQuery(
-    forgeAPI['code-time'].getStatistics.getQueryOptions()
+    forgeAPI['code-time'].getStatistics.queryOptions()
   )
 
   return (
