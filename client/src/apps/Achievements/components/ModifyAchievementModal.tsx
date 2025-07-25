@@ -1,8 +1,7 @@
 import forgeAPI from '@utils/forgeAPI'
 import { InferInput } from 'lifeforge-api'
-import { FormModal } from 'lifeforge-ui'
-import type { FormFieldConfig, InferFinalDataType } from 'lifeforge-ui'
-import { useCallback, useEffect } from 'react'
+import { FormFieldConfig, FormModal } from 'lifeforge-ui'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
@@ -20,18 +19,15 @@ function ModifyAchievementModal({
   onClose
 }: {
   data: {
-    type: 'create' | 'update' | null
-    existedData: IAchievement | null
+    type: 'create' | 'update'
+    existedData?: IAchievement
     currentDifficulty: IAchievement['difficulty']
   }
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.achievements')
 
-  const FIELDS: FormFieldConfig<
-    | InferInput<typeof forgeAPI.achievements.entries.create>['body']
-    | InferInput<typeof forgeAPI.achievements.entries.update>['body']
-  > = {
+  const FIELDS = {
     title: {
       required: true,
       label: 'Achievement title',
@@ -53,47 +49,43 @@ function ModifyAchievementModal({
       type: 'listbox',
       options: difficulties.map(([name, color]) => ({
         text: t(`difficulties.${name}`),
-        value: name,
+        value: name as IAchievement['difficulty'],
         color: COLOR[color as keyof typeof COLOR][500]
       }))
     }
-  }
+  } as const satisfies FormFieldConfig<
+    InferInput<
+      (typeof forgeAPI.achievements.entries)['create' | 'update']
+    >['body']
+  >
 
   const onSubmit = useCallback(
-    async (data: InferFinalDataType<FormFieldConfig>) => {},
-    [formState, type]
+    async (
+      data: InferInput<
+        (typeof forgeAPI.achievements.entries)['create' | 'update']
+      >['body']
+    ) => {},
+    [type]
   )
-
-  useEffect(() => {
-    if (type === 'update' && existedData !== null) {
-      setFormState(existedData)
-    } else {
-      setFormState({
-        title: '',
-        thoughts: '',
-        difficulty: currentDifficulty
-      })
-    }
-  }, [type, existedData])
 
   return (
     <FormModal
       form={{
         fields: FIELDS,
+        existedData: {
+          title: existedData?.title || '',
+          thoughts: existedData?.thoughts || '',
+          difficulty: existedData?.difficulty || currentDifficulty || 'easy'
+        },
         onSubmit
       }}
-      icon={
-        {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type!]
-      }
-      namespace="apps.achievements"
-      openType={type}
-      queryKey={['achievements/entries', currentDifficulty]}
-      setData={setFormState}
-      title={`achievement.${type}`}
-      onClose={onClose}
+      submitButton={type}
+      ui={{
+        icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+        title: `achievement.${type}`,
+        onClose,
+        namespace: 'apps.achievements'
+      }}
     />
   )
 }
