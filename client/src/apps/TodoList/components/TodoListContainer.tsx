@@ -6,12 +6,6 @@ import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import {
-  ISchemaWithPB,
-  TodoListCollectionsSchemas
-} from 'shared/types/collections'
-import { TodoListControllersSchemas } from 'shared/types/controllers'
-
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import Header from './Header'

@@ -1,7 +1,7 @@
 import { Response } from 'express'
 import fs from 'fs'
 
-import { BaseResponse } from '../../../typescript/base_response'
+import { BaseResponse } from '../typescript/forge_controller.types'
 
 export class ClientError extends Error {
   code: number

@@ -1,9 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useMemo } from 'react'
-import { useAPIQuery } from 'shared'
-
-import { CalendarControllersSchemas } from 'shared/types/controllers'
 
 import { ICalendarEvent } from '@apps/Calendar/components/Calendar'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
@@ -28,9 +27,9 @@ function MiniCalendarDateItem({
   date,
   events
 }: MiniCalendarDateItemProps) {
-  const categoriesQuery = useAPIQuery<
-    CalendarControllersSchemas.ICategories['getAllCategories']['response']
-  >('calendar/categories', ['calendar', 'categories'])
+  const categoriesQuery = useQuery(
+    forgeAPI.calendar.categories.list.getQueryOptions()
+  )
 
   const isInThisMonth = useMemo(
     () => !(firstDay > index || index - firstDay + 1 > lastDate),

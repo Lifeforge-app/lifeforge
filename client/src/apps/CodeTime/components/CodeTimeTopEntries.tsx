@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import { CodeTimeControllersSchemas } from 'shared/types/controllers'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
@@ -16,11 +15,17 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
     '24 hours'
   )
 
-  const topEntriesQuery = useAPIQuery<
-    CodeTimeControllersSchemas.ICodeTime[
-      | 'getProjects'
-      | 'getLanguages']['response']
-  >(`code-time/${type}?last=${lastFor}`, ['code-time', 'top', type, lastFor])
+  const topEntriesQuery = useQuery(
+    forgeAPI['code-time'][
+      type === 'languages' ? 'getTopLanguages' : 'getTopProjects'
+    ]
+      .input({
+        query: {
+          lastFor
+        }
+      })
+      .getQueryOptions()
+  )
 
   return (
     <div className="space-y-6 pb-8">
