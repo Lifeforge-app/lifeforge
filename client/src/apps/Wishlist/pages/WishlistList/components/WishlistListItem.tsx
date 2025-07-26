@@ -1,18 +1,38 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
+import { toast } from 'react-toastify'
 
 import type { WishlistList } from '..'
 import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
 function WishlistListItem({ list }: { list: WishlistList }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
+
+  const deleteMutation = useMutation(
+    forgeAPI.wishlist.lists.remove
+      .input({
+        id: list.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['wishlist'] })
+        },
+        onError: () => {
+          toast.error('Failed to delete wishlist')
+        }
+      })
+  )
 
   const handleUpdateList = useCallback(() => {
     open(ModifyWishlistListModal, {
@@ -22,13 +42,14 @@ function WishlistListItem({ list }: { list: WishlistList }) {
   }, [list])
 
   const handleDeleteList = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'wishlist/lists',
-      confirmationText: 'Delete this wishlist',
-      data: list,
-      itemName: 'wishlist',
-      nameKey: 'name' as const,
-      queryKey: ['wishlist', 'lists']
+    open(ConfirmationModal, {
+      title: 'Delete Wishlist',
+      description: 'Are you sure you want to delete this wishlist?',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      },
+      buttonType: 'delete',
+      confirmationPrompt: list.name
     })
   }, [list])
 
