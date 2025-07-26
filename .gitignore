@@ -9,6 +9,8 @@ coverage
 # production
 dist
 build
+*.js
+*.tsbuildinfo
 
 # misc
 .DS_Store
