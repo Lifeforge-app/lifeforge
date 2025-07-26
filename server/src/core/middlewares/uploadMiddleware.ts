@@ -41,16 +41,15 @@ const singleUploadMiddlewareOfKey =
     })
   }
 
-function fieldsUploadMiddleware(
-  this: { fields: { name: string; maxCount: number }[] },
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  upload.fields(this.fields ?? [])(req, res, () => {
-    next()
-  })
-}
+const fieldsUploadMiddleware =
+  (fields: Record<string, number>) =>
+  (req: Request, res: Response, next: NextFunction) => {
+    upload.fields(
+      Object.entries(fields).map(([name, maxCount]) => ({ name, maxCount }))
+    )(req, res, () => {
+      next()
+    })
+  }
 
 export {
   fieldsUploadMiddleware,
