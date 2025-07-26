@@ -1,90 +1,85 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { defineForm } from 'lifeforge-ui'
+
+import type { WishlistList } from '..'
+
 function ModifyWishlistListModal({
   data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    initialData: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated> | null
+    initialData?: WishlistList
   }
   onClose: () => void
 }) {
-  const [data, setData] = useState<
-    WishlistControllersSchemas.ILists['createList' | 'updateList']['body']
-  >({
-    name: '',
-    description: '',
-    icon: '',
-    color: ''
-  })
+  const queryClient = useQueryClient()
 
-  const FIELDS: IFieldProps<typeof data>[] = [
-    {
-      id: 'name',
-      required: true,
-      label: 'Wishlist name',
-      icon: 'tabler:list',
-      placeholder: 'My wishlist',
-      type: 'text'
-    },
-    {
-      id: 'description',
-      label: 'Wishlist description',
-      icon: 'tabler:file-text',
-      placeholder: 'My wishlist description',
-      type: 'text'
-    },
-    {
-      id: 'icon',
-      required: true,
-      label: 'Wishlist icon',
-      type: 'icon'
-    },
-    {
-      id: 'color',
-      required: true,
-      label: 'Wishlist color',
-      type: 'color'
-    }
-  ]
-
-  useEffect(() => {
-    if (type === 'update' && initialData !== null) {
-      setData({
-        name: initialData.name,
-        description: initialData.description,
-        icon: initialData.icon,
-        color: initialData.color
-      })
-    } else {
-      setData({
-        name: '',
-        description: '',
-        icon: '',
-        color: ''
-      })
-    }
-  }, [type, initialData])
-
-  return (
-    <FormModal
-      data={data}
-      endpoint="wishlist/lists"
-      fields={FIELDS}
-      icon={
-        {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type!]
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.wishlist.lists.create
+      : forgeAPI.wishlist.lists.update.input({
+          id: initialData!.id
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['wishlist', 'lists'] })
       }
-      id={initialData?.id}
-      namespace="apps.wishlist"
-      openType={type}
-      queryKey={['wishlist', 'lists']}
-      setData={setData}
-      title={`wishlist.${type}`}
-      onClose={onClose}
-    />
+    })
   )
+
+  const Form = defineForm<
+    InferInput<(typeof forgeAPI.wishlist.lists)[typeof type]>['body']
+  >()
+    .ui({
+      namespace: 'apps.wishlist',
+      title: `wishlist.${type}`,
+      icon: {
+        create: 'tabler:plus',
+        update: 'tabler:pencil'
+      }[type],
+      onClose,
+      submitButton: type
+    })
+    .typesMap({
+      name: 'text',
+      icon: 'icon',
+      color: 'color',
+      description: 'textarea'
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Wishlist name',
+        icon: 'tabler:list',
+        placeholder: 'My wishlist',
+        type: 'text'
+      },
+      description: {
+        label: 'Wishlist description',
+        icon: 'tabler:file-text',
+        placeholder: 'My wishlist description',
+        type: 'text'
+      },
+      icon: {
+        required: true,
+        label: 'Wishlist icon',
+        type: 'icon'
+      },
+      color: {
+        required: true,
+        label: 'Wishlist color',
+        type: 'color'
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
+
+  return <Form />
 }
 
 export default ModifyWishlistListModal
