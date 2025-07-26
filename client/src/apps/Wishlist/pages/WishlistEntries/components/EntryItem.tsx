@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import {
   Button,
   Checkbox,
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
@@ -43,6 +43,21 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
       })
   )
 
+  const deleteMutation = useMutation(
+    forgeAPI.wishlist.entries.remove
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['wishlist'] })
+        },
+        onError: () => {
+          toast.error('Failed to delete entry')
+        }
+      })
+  )
+
   const handleEdit = useCallback(() => {
     open(ModifyEntryModal, {
       type: 'update',
@@ -51,11 +66,13 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
   }, [entry])
 
   const handleDelete = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'wishlist/entries',
-      data: entry,
-      itemName: 'entry',
-      nameKey: 'name' as const
+    open(ConfirmationModal, {
+      title: 'Delete Entry',
+      description: 'Are you sure you want to delete this entry?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [entry])
 
