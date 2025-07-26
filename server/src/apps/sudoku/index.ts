@@ -5,7 +5,14 @@ const generateBoard = forgeController.query
   .description('Generate 6 Sudoku boards by difficulty level')
   .input({
     query: z.object({
-      difficulty: z.enum(['easy', 'medium', 'hard', 'expert', 'evil']),
+      difficulty: z.enum([
+        'easy',
+        'medium',
+        'hard',
+        'expert',
+        'evil',
+        'extreme'
+      ]),
       count: z
         .string()
         .optional()

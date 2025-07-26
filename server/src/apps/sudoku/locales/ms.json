@@ -1,4 +1,15 @@
 {
   "title": "Sudoku",
-  "description": "Jana papan Sudoku yang boleh dicetak tanpa had."
+  "description": "Jana papan Sudoku yang boleh dicetak tanpa had.",
+  "difficulties": {
+    "easy": "Mudah",
+    "medium": "Sederhana",
+    "hard": "Sukar",
+    "expert": "Pakar",
+    "evil": "Jahat",
+    "extreme": "Melampau"
+  },
+  "inputs": {
+    "difficulty": "Kesukaran"
+  }
 }

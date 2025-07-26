@@ -62,14 +62,19 @@ const getAssetAccumulatedBalance = forgeController.query
       })
       .filter([
         {
-          field: 'from',
-          operator: '=',
-          value: id
-        },
-        {
-          field: 'to',
-          operator: '=',
-          value: id
+          combination: '||',
+          filters: [
+            {
+              field: 'from',
+              operator: '=',
+              value: id
+            },
+            {
+              field: 'to',
+              operator: '=',
+              value: id
+            }
+          ]
         }
       ])
       .fields({
@@ -126,18 +131,6 @@ const create = forgeController.mutation
   .description('Create a new wallet asset')
   .input({
     body: SCHEMAS.wallet.assets
-      .pick({
-        name: true,
-        icon: true,
-        starting_balance: true
-      })
-      .extend({
-        starting_balance: z.string().transform(val => {
-          const balance = parseFloat(val)
-
-          return isNaN(balance) ? 0 : balance
-        })
-      })
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -151,18 +144,6 @@ const update = forgeController.mutation
       id: z.string()
     }),
     body: SCHEMAS.wallet.assets
-      .pick({
-        name: true,
-        icon: true,
-        starting_balance: true
-      })
-      .extend({
-        starting_balance: z.string().transform(val => {
-          const balance = parseFloat(val)
-
-          return isNaN(balance) ? 0 : balance
-        })
-      })
   })
   .existenceCheck('query', {
     id: 'wallet__assets'

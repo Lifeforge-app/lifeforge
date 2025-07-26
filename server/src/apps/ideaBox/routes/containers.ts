@@ -1,3 +1,4 @@
+import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { singleUploadMiddlewareOfKey } from '@middlewares/uploadMiddleware'
 import { SCHEMAS } from '@schema'
@@ -33,54 +34,26 @@ const list = forgeController.query
 const create = forgeController.mutation
   .description('Create a new container')
   .input({
-    body: SCHEMAS.idea_box.containers
-      .omit({
-        cover: true
-      })
-      .extend({
-        cover: z.union([z.string(), z.file()])
-      })
+    body: SCHEMAS.idea_box.containers.omit({
+      cover: true
+    })
   })
-  .middlewares(singleUploadMiddlewareOfKey('cover'))
+  .media({
+    cover: {
+      maxCount: 1,
+      optional: true
+    }
+  })
   .statusCode(201)
-  .callback(async ({ pb, body, req }) => {
-    const coverFile = await (async () => {
-      const cover = body.cover
-
-      if (req.file) {
-        return new File([fs.readFileSync(req.file.path)], req.file.filename)
-      }
-
-      if (cover) {
-        const response = await fetch(cover as string) //TODO
-
-        const fileBuffer = await response.arrayBuffer()
-
-        return new File([fileBuffer], 'cover.jpg')
-      }
-
-      return undefined
-    })()
-
-    const containerData: Record<string, string | File> = body
-
-    if (coverFile) {
-      containerData.cover = coverFile
-    } else {
-      containerData.cover = ''
-    }
-
-    const container = await pb.create
+  .callback(async ({ pb, body, media: { cover } }) =>
+    pb.create
       .collection('idea_box__containers')
-      .data(containerData)
+      .data({
+        ...body,
+        ...(await getMedia('cover', cover))
+      })
       .execute()
-
-    if (req.file) {
-      fs.unlinkSync(req.file.path)
-    }
-
-    return container
-  })
+  )
 
 const update = forgeController.mutation
   .description('Update a container')
@@ -88,59 +61,29 @@ const update = forgeController.mutation
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.idea_box.containers
-      .omit({
-        cover: true
-      })
-      .extend({
-        cover: z.union([z.string(), z.file()])
-      })
+    body: SCHEMAS.idea_box.containers.omit({
+      cover: true
+    })
   })
-  .middlewares(singleUploadMiddlewareOfKey('cover'))
+  .media({
+    cover: {
+      maxCount: 1,
+      optional: true
+    }
+  })
   .existenceCheck('query', {
     id: 'idea_box__containers'
   })
-  .callback(async ({ pb, query: { id }, body, req }) => {
-    const coverFile = await (async () => {
-      const cover = body.cover
-
-      if (req.file) {
-        return new File([fs.readFileSync(req.file.path)], req.file.filename)
-      }
-
-      if (cover === 'keep') {
-        return 'keep'
-      }
-
-      if (typeof cover === 'string') {
-        const response = await fetch(cover)
-
-        const fileBuffer = await response.arrayBuffer()
-
-        return new File([fileBuffer], 'cover.jpg')
-      }
-
-      return undefined
-    })()
-
-    const containerData: Record<string, string | File> = body
-
-    if (coverFile !== 'keep') {
-      containerData.cover = coverFile ?? ''
-    }
-
-    const container = await pb.update
+  .callback(async ({ pb, query: { id }, body, media: { cover } }) =>
+    pb.update
       .collection('idea_box__containers')
       .id(id)
-      .data(containerData)
+      .data({
+        ...body,
+        ...(await getMedia('cover', cover))
+      })
       .execute()
-
-    if (req.file) {
-      fs.unlinkSync(req.file.path)
-    }
-
-    return container
-  })
+  )
 
 const remove = forgeController.mutation
   .description('Delete a container')
