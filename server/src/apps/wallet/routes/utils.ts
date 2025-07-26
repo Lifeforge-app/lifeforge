@@ -31,8 +31,8 @@ const getIncomeExpensesSummary = forgeController.query
   .description('Get income and expenses summary for a specific month/year')
   .input({
     query: z.object({
-      year: z.string(),
-      month: z.string()
+      year: z.string().transform(val => parseInt(val)),
+      month: z.string().transform(val => parseInt(val))
     })
   })
   .callback(async ({ pb, query: { year, month } }) => {
@@ -114,8 +114,8 @@ const getExpensesBreakdown = forgeController.query
   .description('Get expenses breakdown by category for a specific month/year')
   .input({
     query: z.object({
-      year: z.number(),
-      month: z.number()
+      year: z.string().transform(val => parseInt(val)),
+      month: z.string().transform(val => parseInt(val))
     })
   })
   .callback(async ({ pb, query: { year, month } }) => {
