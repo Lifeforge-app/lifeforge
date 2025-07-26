@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { FormModal, defineForm } from 'lifeforge-ui'
+import { defineForm } from 'lifeforge-ui'
 
 import type { WishlistEntry } from '..'
 
@@ -32,9 +32,19 @@ function ModifyEntryModal({
 
   const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
 
-  const FORM = defineForm<
+  const Form = defineForm<
     InferInput<(typeof forgeAPI.wishlist.entries)[typeof type]>['body']
   >()
+    .ui({
+      title: `entry.${type}`,
+      namespace: 'apps.wishlist',
+      onClose,
+      icon: {
+        create: 'tabler:plus',
+        update: 'tabler:pencil'
+      }[type!],
+      submitButton: type
+    })
     .typesMap({
       list: 'listbox',
       url: 'text',
@@ -100,21 +110,7 @@ function ModifyEntryModal({
       await mutation.mutateAsync(data)
     })
 
-  return (
-    <FormModal
-      form={FORM}
-      submitButton={type}
-      ui={{
-        title: `entry.${type}`,
-        namespace: 'apps.wishlist',
-        onClose,
-        icon: {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type!]
-      }}
-    />
-  )
+  return <Form />
 }
 
 export default ModifyEntryModal
