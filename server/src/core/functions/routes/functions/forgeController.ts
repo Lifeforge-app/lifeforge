@@ -40,8 +40,7 @@ import {
   ConvertMedia,
   InferZodType,
   InputSchema,
-  MediaConfig,
-  type ReplaceFileWithMulter
+  MediaConfig
 } from '../typescript/forge_controller.types'
 import {
   ClientError,

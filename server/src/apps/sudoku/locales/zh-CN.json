@@ -1,4 +1,15 @@
 {
   "title": "数独",
-  "description": "无限生成可打印的数独棋盘。"
+  "description": "无限生成可打印的数独棋盘。",
+  "difficulties": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "expert": "专家",
+    "evil": "邪恶",
+    "extreme": "极限"
+  },
+  "inputs": {
+    "difficulty": "难度"
+  }
 }
