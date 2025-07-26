@@ -18,7 +18,7 @@ function Passwords() {
   const handleCreatePassword = useCallback(() => {
     open(ModifyPasswordModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 

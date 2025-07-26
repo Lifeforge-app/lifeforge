@@ -5,12 +5,14 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
+import type { ScoreLibrarySortType } from '@apps/ScoresLibrary'
+
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
   ['tabler:clock', 'oldest'],
   ['tabler:at', 'author'],
   ['tabler:abc', 'name']
-]
+] as const
 
 function ActionMenu({
   setView,
@@ -20,8 +22,8 @@ function ActionMenu({
 }: {
   setView: (view: 'grid' | 'list') => void
   view: 'grid' | 'list'
-  sortType: string
-  setSortType: React.Dispatch<React.SetStateAction<string>>
+  sortType: ScoreLibrarySortType
+  setSortType: React.Dispatch<React.SetStateAction<ScoreLibrarySortType>>
 }) {
   const { t } = useTranslation('apps.scoresLibrary')
 

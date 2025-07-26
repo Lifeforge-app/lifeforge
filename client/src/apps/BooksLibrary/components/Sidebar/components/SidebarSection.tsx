@@ -29,7 +29,7 @@ function SidebarSection({
   const handleCreateItem = useCallback(() => {
     open(ModifyModal, {
       type: 'create',
-      existedData: null,
+      initialData: null,
       stuff: stuff as 'collections' | 'languages'
     })
   }, [stuff])

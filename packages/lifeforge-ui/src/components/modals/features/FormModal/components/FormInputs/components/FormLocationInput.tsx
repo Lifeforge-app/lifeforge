@@ -1,7 +1,7 @@
 import { LocationInput } from '@components/inputs'
 import {
-  ILocationInputFieldProps,
-  InferFormInputProps
+  type FormInputProps,
+  type LocationFieldProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormLocationInput({
@@ -9,7 +9,7 @@ function FormLocationInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<ILocationInputFieldProps>) {
+}: FormInputProps<LocationFieldProps>) {
   return (
     <LocationInput
       disabled={field.disabled}

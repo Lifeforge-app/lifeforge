@@ -71,7 +71,7 @@ function EntryItem({ entry }: { entry: IAchievement }) {
           onClick={() => {
             open(ModifyAchievementModal, {
               type: 'update',
-              existedData: entry,
+              initialData: entry,
               currentDifficulty: entry.difficulty
             })
           }}

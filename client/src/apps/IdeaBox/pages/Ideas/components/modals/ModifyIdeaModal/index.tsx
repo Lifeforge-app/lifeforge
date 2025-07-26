@@ -13,13 +13,13 @@ import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal({
-  data: { type, ideaType, existedData, pastedData },
+  data: { type, ideaType, initialData, pastedData },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | 'paste'
     ideaType: IdeaBoxCollectionsSchemas.IEntry['type']
-    existedData?:
+    initialData?:
       | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
       | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
       | null
@@ -93,14 +93,14 @@ function ModifyIdeaModal({
         tags: []
       })
     } else if (innerOpenType === 'update') {
-      if (existedData) {
+      if (initialData) {
         setFormState({
-          title: existedData.title,
-          content: existedData.content,
-          link: existedData.content,
+          title: initialData.title,
+          content: initialData.content,
+          link: initialData.content,
           image: null,
           imageLink: '',
-          tags: existedData.tags ?? []
+          tags: initialData.tags ?? []
         })
         setPreview(null)
       }
@@ -115,7 +115,7 @@ function ModifyIdeaModal({
       })
       setPreview(pastedData.preview)
     }
-  }, [existedData, innerOpenType])
+  }, [initialData, innerOpenType])
 
   useEffect(() => {
     if (innerTypeOfModifyIdea === 'image') {
@@ -197,7 +197,7 @@ function ModifyIdeaModal({
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `idea-box/ideas/${innerOpenType === 'update' ? existedData?.id : ''}`,
+        `idea-box/ideas/${innerOpenType === 'update' ? initialData?.id : ''}`,
         {
           method: innerOpenType === 'update' ? 'PATCH' : 'POST',
           body:

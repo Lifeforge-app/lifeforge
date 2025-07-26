@@ -74,7 +74,7 @@ const create = forgeController.mutation
       throw new Error('API key not found')
     }
 
-    const existedData = await pb.getFirstListItem
+    const initialData = await pb.getFirstListItem
       .collection('movies__entries')
       .filter([
         {
@@ -86,7 +86,7 @@ const create = forgeController.mutation
       .execute()
       .catch(() => null)
 
-    if (existedData) {
+    if (initialData) {
       throw new Error('Entry already exists')
     }
 

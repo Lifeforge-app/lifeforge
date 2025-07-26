@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function TransactionAmount({
   type,
   amount
 }: {
-  type: IWalletTransaction['type']
+  type: WalletTransaction['type']
   amount: number
 }) {
   return (

@@ -98,7 +98,7 @@ function EntryContextMenu({
     open(ModifyIdeaModal, {
       type: 'update',
       ideaType: entry.type,
-      existedData: entry
+      initialData: entry
     })
   }, [entry])
 

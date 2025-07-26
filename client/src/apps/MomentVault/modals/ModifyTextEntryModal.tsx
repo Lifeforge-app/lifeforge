@@ -8,11 +8,11 @@ import { fetchAPI } from 'shared'
 import { IMomentVaultEntry } from '../interfaces/moment_vault_interfaces'
 
 function ModifyTextEntryModal({
-  data: { existedData, queryKey },
+  data: { initialData, queryKey },
   onClose
 }: {
   data: {
-    existedData: IMomentVaultEntry | null
+    initialData: IMomentVaultEntry | null
     queryKey: unknown[]
   }
   onClose: () => void
@@ -26,14 +26,14 @@ function ModifyTextEntryModal({
   const [submitLoading, setSubmitLoading] = useState(false)
 
   async function onSubmit() {
-    if (!existedData) return
+    if (!initialData) return
 
     setSubmitLoading(true)
 
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `moment-vault/entries/${existedData.id}`,
+        `moment-vault/entries/${initialData.id}`,
         {
           method: 'PATCH',
           body: {
@@ -53,10 +53,10 @@ function ModifyTextEntryModal({
   }
 
   useEffect(() => {
-    if (existedData) {
-      setText(existedData.content)
+    if (initialData) {
+      setText(initialData.content)
     }
-  }, [existedData])
+  }, [initialData])
 
   useEffect(() => {
     if (!inputRef.current) return

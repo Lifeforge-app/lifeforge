@@ -20,7 +20,7 @@ function TextEntry({
 
   const handleUpdateEntry = useCallback(() => {
     open(ModifyTextEntryModal, {
-      existedData: entry,
+      initialData: entry,
       queryKey: ['moment-vault', 'entries', page]
     })
   }, [entry])

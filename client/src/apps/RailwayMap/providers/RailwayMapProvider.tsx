@@ -1,3 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   createContext,
   useContext,
@@ -7,22 +10,25 @@ import {
   useState
 } from 'react'
 import { Outlet } from 'react-router'
-import { useAPIQuery } from 'shared'
 
-import {
-  IRailwayMapLine,
-  IRailwayMapStation,
-  IRailwayMapViewType
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+export type RailwayMapStation = InferOutput<
+  typeof forgeAPI.railwayMap.getStations
+>[number]
+
+export type RailwayMapLine = InferOutput<
+  typeof forgeAPI.railwayMap.getLines
+>[number]
+
+export type RailwayMapViewType = 'route' | 'earth' | 'list'
 
 interface IRailwayMapData {
-  viewType: IRailwayMapViewType
-  setViewType: React.Dispatch<React.SetStateAction<IRailwayMapViewType>>
+  viewType: RailwayMapViewType
+  setViewType: React.Dispatch<React.SetStateAction<RailwayMapViewType>>
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-  lines: IRailwayMapLine[]
+  lines: RailwayMapLine[]
   linesLoading: boolean
-  stations: IRailwayMapStation[]
+  stations: RailwayMapStation[]
   stationsLoading: boolean
   filteredLines: string[]
   setFilteredLines: React.Dispatch<React.SetStateAction<string[]>>
@@ -30,17 +36,17 @@ interface IRailwayMapData {
   setRoutePlannerStart: React.Dispatch<React.SetStateAction<string>>
   routePlannerEnd: string
   setRoutePlannerEnd: React.Dispatch<React.SetStateAction<string>>
-  shortestRoute: IRailwayMapStation[] | 'loading' | 'error'
+  shortestRoute: RailwayMapStation[] | 'loading' | 'error'
   setShortestRoute: React.Dispatch<
-    React.SetStateAction<IRailwayMapStation[] | 'loading' | 'error'>
+    React.SetStateAction<RailwayMapStation[] | 'loading' | 'error'>
   >
   routeMapSVGRef: React.RefObject<SVGSVGElement | null>
   routeMapGRef: React.RefObject<SVGGElement | null>
-  selectedStation: IRailwayMapStation | null
+  selectedStation: RailwayMapStation | null
   setSelectedStation: React.Dispatch<
-    React.SetStateAction<IRailwayMapStation | null>
+    React.SetStateAction<RailwayMapStation | null>
   >
-  centerStation: IRailwayMapStation | undefined
+  centerStation: RailwayMapStation | undefined
 }
 
 export const RailwayMapContext = createContext<IRailwayMapData | undefined>(
@@ -48,19 +54,13 @@ export const RailwayMapContext = createContext<IRailwayMapData | undefined>(
 )
 
 export default function RailwayMapProvider() {
-  const [viewType, setViewType] = useState<IRailwayMapViewType>('route')
+  const [viewType, setViewType] = useState<RailwayMapViewType>('route')
 
   const [searchQuery, setSearchQuery] = useState('')
 
-  const linesQuery = useAPIQuery<IRailwayMapLine[]>('railway-map/lines', [
-    'railway-map',
-    'lines'
-  ])
+  const linesQuery = useQuery(forgeAPI.railwayMap.getLines.queryOptions())
 
-  const stationsQuery = useAPIQuery<IRailwayMapStation[]>(
-    'railway-map/stations',
-    ['railway-map', 'stations']
-  )
+  const stationsQuery = useQuery(forgeAPI.railwayMap.getStations.queryOptions())
 
   const [filteredLines, setFilteredLines] = useState<string[]>([])
 
@@ -69,11 +69,11 @@ export default function RailwayMapProvider() {
   const [routePlannerEnd, setRoutePlannerEnd] = useState('')
 
   const [shortestRoute, setShortestRoute] = useState<
-    IRailwayMapStation[] | 'loading' | 'error'
+    RailwayMapStation[] | 'loading' | 'error'
   >([])
 
   const [selectedStation, setSelectedStation] =
-    useState<IRailwayMapStation | null>(null)
+    useState<RailwayMapStation | null>(null)
 
   const centerStation = useMemo(() => {
     return stationsQuery.data?.find(station => station.name === 'Novena')

@@ -4,8 +4,8 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import {
-  IListboxInputFieldProps,
-  InferFormInputProps
+  type FormInputProps,
+  type ListboxFieldProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import { Fragment } from 'react/jsx-runtime'
@@ -15,7 +15,7 @@ function FormListboxInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<IListboxInputFieldProps>) {
+}: FormInputProps<ListboxFieldProps>) {
   return (
     <ListboxOrComboboxInput
       buttonContent={
@@ -93,7 +93,7 @@ function FormListboxInput({
       }
       disabled={field.disabled}
       icon={field.icon}
-      multiple={field.multiple}
+      multiple={!!field.multiple}
       name={field.label}
       namespace={namespace}
       required={field.required}

@@ -14,7 +14,7 @@ function TaskTagListItem({
   const handleUpdateTag = useCallback(() => {
     open(ModifyTagModal, {
       type: 'update',
-      existedData: item
+      initialData: item
     })
   }, [item])
 

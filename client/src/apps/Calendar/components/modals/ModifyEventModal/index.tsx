@@ -1,19 +1,19 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { type FormFieldConfig, FormModal } from 'lifeforge-ui'
+import { type FieldsConfig, FormModal } from 'lifeforge-ui'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
 import type { CalendarEvent } from '../../Calendar'
 
 function ModifyEventModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData?: Partial<CalendarEvent>
+    initialData?: Partial<CalendarEvent>
   }
   onClose: () => void
 }) {
@@ -83,7 +83,7 @@ function ModifyEventModal({
       type: 'textarea',
       placeholder: 'Event description'
     }
-  } as const satisfies FormFieldConfig<
+  } as const satisfies FieldsConfig<
     InferInput<typeof forgeAPI.calendar.events.create>['body']
   >
 

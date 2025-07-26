@@ -15,7 +15,7 @@ function TaskPriorityListItem({
   const handleUpdatePriority = useCallback(() => {
     open(ModifyPriorityModal, {
       type: 'update',
-      existedData: item
+      initialData: item
     })
   }, [item])
 

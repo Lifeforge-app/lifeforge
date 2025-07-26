@@ -1,5 +1,5 @@
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function getAmounts({
@@ -9,7 +9,7 @@ function getAmounts({
   year
 }: {
   asset: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
-  transactions: IWalletTransaction[]
+  transactions: WalletTransaction[]
   month: number
   year: number
 }) {

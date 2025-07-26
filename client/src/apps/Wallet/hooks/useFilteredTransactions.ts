@@ -2,10 +2,10 @@ import { useDebounce } from '@uidotdev/usehooks'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import type { IWalletTransaction } from '../pages/Transactions'
+import type { WalletTransaction } from '../pages/Transactions'
 import { useWalletStore } from '../stores/useWalletStore'
 
-export function useFilteredTransactions(transactions: IWalletTransaction[]) {
+export function useFilteredTransactions(transactions: WalletTransaction[]) {
   const {
     selectedType,
     selectedCategory,

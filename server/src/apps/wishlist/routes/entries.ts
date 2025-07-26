@@ -69,7 +69,7 @@ const create = forgeController.mutation
       url: z.string(),
       price: z.string().transform(val => parseFloat(val) || 0 || 0),
       list: z.string(),
-      image: z.any().optional()
+      image: z.union([z.string(), z.file()]).optional()
     })
   })
   .middlewares(singleUploadMiddleware)
@@ -115,7 +115,7 @@ const update = forgeController.mutation
       url: z.string(),
       price: z.string().transform(val => parseFloat(val) || 0 || 0),
       list: z.string(),
-      imageRemoved: z.string().optional()
+      image: z.union([z.string(), z.file()]).optional()
     })
   })
   .middlewares(singleUploadMiddleware)
@@ -129,14 +129,14 @@ const update = forgeController.mutation
     async ({
       pb,
       query: { id },
-      body: { list, name, url, price, imageRemoved },
+      body: { list, name, url, price, image },
       req
     }) => {
       const { file } = req
 
       let finalFile: null | File = null
 
-      if (imageRemoved === 'true') {
+      if (image === 'removed') {
         finalFile = null
       }
 
@@ -147,12 +147,7 @@ const update = forgeController.mutation
         fs.unlinkSync(file.path)
       }
 
-      const oldEntry = await pb.getOne
-        .collection('wishlist__entries')
-        .id(id)
-        .execute()
-
-      const entry = await pb.update
+      return await pb.update
         .collection('wishlist__entries')
         .id(id)
         .data({
@@ -160,15 +155,13 @@ const update = forgeController.mutation
           name,
           url,
           price,
-          ...(imageRemoved === 'true' || finalFile
+          ...(image === 'removed' || finalFile
             ? {
                 image: finalFile
               }
             : {})
         })
         .execute()
-
-      return oldEntry.list === list ? entry : 'removed'
     }
   )
 

@@ -1,5 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   MenuItem,
@@ -13,43 +16,54 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
 
 import EntryList from './components/EntryList'
 import Header from './components/Header'
 import FromOtherAppsModal from './modals/FromOtherAppsModal'
 import ModifyEntryModal from './modals/ModifyEntryModal'
 
+export type WishlistEntry = InferOutput<
+  typeof forgeAPI.wishlist.entries.listByListId
+>[number]
+
+export type WishlistList = InferOutput<typeof forgeAPI.wishlist.lists.getById>
+
 function WishlistEntries() {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('apps.wishlist')
-
   const navigate = useNavigate()
+
+  const { t } = useTranslation('apps.wishlist')
 
   const { id } = useParams<{ id: string }>()
 
-  const validQuery = useAPIQuery<
-    WishlistControllersSchemas.ILists['checkListExists']['response']
-  >(`wishlist/lists/valid/${id}`, [`wishlist`, `lists`, `valid`, id])
-
   const [activeTab, setActiveTab] = useState('wishlist')
 
-  const wishlistListDetailsQuery = useAPIQuery<
-    WishlistControllersSchemas.ILists['getList']['response']
-  >(`wishlist/lists/${id}`, [`wishlist`, `lists`, id], validQuery.data === true)
-
-  const queryKey = useMemo(
-    () => [`wishlist`, `entries`, id, activeTab === 'bought'],
-    [id, activeTab]
+  const validQuery = useQuery(
+    forgeAPI.wishlist.lists.validate
+      .input({
+        id: id ?? ''
+      })
+      .queryOptions()
   )
 
-  const entriesQuery = useAPIQuery<
-    WishlistControllersSchemas.IEntries['getEntriesByListId']['response']
-  >(
-    `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
-    queryKey,
-    validQuery.data === true
+  const wishlistListDetailsQuery = useQuery(
+    forgeAPI.wishlist.lists.getById
+      .input({
+        id: id ?? ''
+      })
+      .queryOptions({
+        enabled: validQuery.data === true
+      })
+  )
+
+  const entriesQuery = useQuery(
+    forgeAPI.wishlist.entries.listByListId
+      .input({
+        id: id ?? '',
+        bought: activeTab === 'bought'
+      })
+      .queryOptions()
   )
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -65,7 +79,7 @@ function WishlistEntries() {
   const handleAddManually = useCallback(() => {
     open(ModifyEntryModal, {
       type: 'create',
-      existedData: {
+      initialData: {
         list: id as string
       }
     })
@@ -126,7 +140,6 @@ function WishlistEntries() {
                   <EntryList
                     filteredEntries={filteredEntries || []}
                     isTotallyEmpty={!!entriesQuery.data?.length}
-                    queryKey={queryKey}
                   />
                 </>
               )}

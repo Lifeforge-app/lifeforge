@@ -5,12 +5,12 @@ import dayjs from 'dayjs'
 import { Button, useModalStore } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 import ViewReceiptModal from '../../../../views/ListView/components/ViewReceiptModal'
 import DetailItem from './components/DetailItem'
 
-function Details({ transaction }: { transaction: IWalletTransaction }) {
+function Details({ transaction }: { transaction: WalletTransaction }) {
   const { assetsQuery, categoriesQuery, ledgersQuery } = useWalletData()
 
   const open = useModalStore(state => state.open)

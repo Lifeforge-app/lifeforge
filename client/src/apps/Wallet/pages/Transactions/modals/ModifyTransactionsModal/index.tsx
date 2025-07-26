@@ -11,18 +11,18 @@ import {
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import type { IWalletTransaction } from '../..'
+import type { WalletTransaction } from '../..'
 
 function ModifyTransactionsModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData:
+    initialData:
       | ({
-          type: IWalletTransaction['type']
-        } & Partial<IWalletTransaction>)
+          type: WalletTransaction['type']
+        } & Partial<WalletTransaction>)
       | null
   }
   onClose: () => void
@@ -40,7 +40,7 @@ function ModifyTransactionsModal({
   const [toRemoveReceipt, setToRemoveReceipt] = useState<boolean>(false)
 
   const [baseFormState, setBaseFormState] = useState<{
-    type: IWalletTransaction['type']
+    type: WalletTransaction['type']
     date: Date
     amount: number
     receipt: {
@@ -310,20 +310,20 @@ function ModifyTransactionsModal({
   )
 
   useEffect(() => {
-    if (existedData && type === 'update') {
+    if (initialData && type === 'update') {
       setBaseFormState({
-        type: existedData.type ?? 'income',
-        date: dayjs(existedData.date).toDate(),
-        amount: existedData.amount || 0,
+        type: initialData.type ?? 'income',
+        date: dayjs(initialData.date).toDate(),
+        amount: initialData.amount || 0,
         receipt: {
-          image: existedData.receipt || null,
+          image: initialData.receipt || null,
           preview: (() => {
-            if ((existedData.receipt as File | string | null) instanceof File) {
-              return URL.createObjectURL(existedData.receipt as unknown as File)
+            if ((initialData.receipt as File | string | null) instanceof File) {
+              return URL.createObjectURL(initialData.receipt as unknown as File)
             }
 
-            if (existedData.receipt) {
-              return `${import.meta.env.VITE_API_HOST}/media/${existedData.collectionId}/${existedData.id}/${existedData.receipt}`
+            if (initialData.receipt) {
+              return `${import.meta.env.VITE_API_HOST}/media/${initialData.collectionId}/${initialData.id}/${initialData.receipt}`
             }
 
             return null
@@ -331,10 +331,10 @@ function ModifyTransactionsModal({
         }
       })
 
-      if (existedData.type === 'transfer') {
+      if (initialData.type === 'transfer') {
         setTransferFormState({
-          from: existedData.from || '',
-          to: existedData.to || ''
+          from: initialData.from || '',
+          to: initialData.to || ''
         })
 
         setIncomeExpensesFormState({
@@ -346,17 +346,17 @@ function ModifyTransactionsModal({
         })
       } else {
         setIncomeExpensesFormState({
-          category: existedData.category || '',
-          asset: existedData.asset || '',
-          ledgers: existedData.ledgers || [],
-          particulars: existedData.particulars || '',
+          category: initialData.category || '',
+          asset: initialData.asset || '',
+          ledgers: initialData.ledgers || [],
+          particulars: initialData.particulars || '',
           location: {
-            name: existedData.location_name || '',
+            name: initialData.location_name || '',
             location: {
-              latitude: existedData.location_coords?.lat || 0,
-              longitude: existedData.location_coords?.lon || 0
+              latitude: initialData.location_coords?.lat || 0,
+              longitude: initialData.location_coords?.lon || 0
             },
-            formattedAddress: existedData.location_name || ''
+            formattedAddress: initialData.location_name || ''
           }
         })
       }
@@ -386,7 +386,7 @@ function ModifyTransactionsModal({
     }
 
     setToRemoveReceipt(false)
-  }, [existedData, type])
+  }, [initialData, type])
 
   return (
     <FormModal
@@ -410,7 +410,7 @@ function ModifyTransactionsModal({
         toRemoveReceipt
       })}
       icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-      id={existedData ? existedData.id : ''}
+      id={initialData ? initialData.id : ''}
       namespace="apps.wallet"
       openType={type}
       setData={handleChange}

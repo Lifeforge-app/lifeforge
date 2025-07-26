@@ -14,7 +14,7 @@ import SearchResults from './components/SearchResults'
 import {
   type IPixabaySearchFilter,
   type IPixabaySearchResult,
-  PixabaySearchFilterAction
+  type PixabaySearchFilterAction
 } from './typescript/pixabay_interfaces'
 
 const initialFilter: IPixabaySearchFilter = {

@@ -14,7 +14,7 @@ function TaskListListItem({
   const handleUpdateList = useCallback(() => {
     open(ModifyListModal, {
       type: 'update',
-      existedData: item
+      initialData: item
     })
   }, [item])
 

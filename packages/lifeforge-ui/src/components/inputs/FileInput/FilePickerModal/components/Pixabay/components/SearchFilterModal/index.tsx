@@ -2,8 +2,8 @@ import { Button } from '@components/buttons'
 import { ModalHeader, ModalWrapper } from '@components/modals'
 
 import {
-  IPixabaySearchFilter,
-  PixabaySearchFilterAction
+  type IPixabaySearchFilter,
+  type PixabaySearchFilterAction
 } from '../../typescript/pixabay_interfaces'
 import {
   CategoryFilter,

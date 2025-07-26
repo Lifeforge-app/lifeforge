@@ -1,6 +1,8 @@
 import { FAB, ModuleHeader } from 'lifeforge-ui'
 import { useMemo } from 'react'
 
+import type { ScoreLibrarySortType } from '@apps/ScoresLibrary'
+
 import ActionMenu from './components/ActionMenu'
 import UploadTabButton from './components/UploadTabButton'
 
@@ -17,8 +19,8 @@ function Header({
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
-  sortType: string
-  setSortType: React.Dispatch<React.SetStateAction<string>>
+  sortType: ScoreLibrarySortType
+  setSortType: React.Dispatch<React.SetStateAction<ScoreLibrarySortType>>
   uploadFiles: () => void
 }) {
   const memoizedActionButton = useMemo(

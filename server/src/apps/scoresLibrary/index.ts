@@ -6,6 +6,6 @@ import typesRouter from './routes/types'
 
 export default forgeRouter({
   entries: entriesRouter,
-  'guitar-world': guitarWorldRouter,
+  guitarWorld: guitarWorldRouter,
   types: typesRouter
 })

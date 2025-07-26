@@ -13,7 +13,7 @@ const getById = forgeController.query
     id: 'wishlist__lists'
   })
   .callback(({ pb, query: { id } }) =>
-    pb.getOne.collection('wishlist__lists').id(id).execute()
+    pb.getOne.collection('wishlist__lists_aggregated').id(id).execute()
   )
 
 const validate = forgeController.query
@@ -35,7 +35,9 @@ const validate = forgeController.query
 const list = forgeController.query
   .description('Get all wishlists with statistics')
   .input({})
-  .callback(({ pb }) => pb.getFullList.collection('wishlist__lists').execute())
+  .callback(({ pb }) =>
+    pb.getFullList.collection('wishlist__lists_aggregated').execute()
+  )
 
 const create = forgeController.mutation
   .description('Create a new wishlist')
@@ -44,7 +46,7 @@ const create = forgeController.mutation
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
-    pb.create.collection('wishlist__lists_aggregated').data(body).execute()
+    pb.create.collection('wishlist__lists').data(body).execute()
   )
 
 const update = forgeController.mutation
@@ -59,11 +61,7 @@ const update = forgeController.mutation
     id: 'wishlist__lists'
   })
   .callback(({ pb, query: { id }, body }) =>
-    pb.update
-      .collection('wishlist__lists_aggregated')
-      .id(id)
-      .data(body)
-      .execute()
+    pb.update.collection('wishlist__lists').id(id).data(body).execute()
   )
 
 const remove = forgeController.mutation
@@ -78,7 +76,7 @@ const remove = forgeController.mutation
   })
   .statusCode(204)
   .callback(({ pb, query: { id } }) =>
-    pb.delete.collection('wishlist__lists_aggregated').id(id).execute()
+    pb.delete.collection('wishlist__lists').id(id).execute()
   )
 
 export default forgeRouter({

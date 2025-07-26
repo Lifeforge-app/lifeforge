@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import type forgeAPI from '@utils/forgeAPI'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
@@ -14,7 +15,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
-import { useAPIQuery } from 'shared'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
@@ -27,8 +27,12 @@ import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
 
-export type IWalletTransaction = InferOutput<
+export type WalletTransaction = InferOutput<
   typeof forgeAPI.wallet.transactions.list
+>[number]
+
+export type WalletCategory = InferOutput<
+  typeof forgeAPI.wallet.categories.list
 >[number]
 
 function Transactions() {
@@ -58,13 +62,34 @@ function Transactions() {
     'Receipt'
   ])
 
-  const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
-    'wallet/transactions',
-    ['wallet', 'transactions']
+  const transactionsQuery = useQuery(
+    forgeAPI.wallet.transactions.list.queryOptions()
   )
 
   const filteredTransactions = useFilteredTransactions(
     transactionsQuery.data ?? []
+  )
+
+  console.log(
+    [
+      ...new Set(
+        filteredTransactions
+          .map(e => (e.type === 'income' ? e.particulars : ''))
+          .filter(Boolean)
+          .slice(0, 50)
+      )
+    ].join(', ')
+  )
+
+  console.log(
+    [
+      ...new Set(
+        filteredTransactions
+          .map(e => (e.type === 'expenses' ? e.particulars : ''))
+          .filter(Boolean)
+          .slice(0, 50)
+      )
+    ].join(', ')
   )
 
   const [searchParams] = useSearchParams()
@@ -79,7 +104,7 @@ function Transactions() {
   const handleCreateTransaction = useCallback(() => {
     open(ModifyTransactionsModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 
@@ -91,7 +116,7 @@ function Transactions() {
     if (hash === '#new') {
       open(ModifyTransactionsModal, {
         type: 'create',
-        existedData: null
+        initialData: null
       })
     }
 
@@ -116,7 +141,7 @@ function Transactions() {
     }
 
     if (type && ['income', 'expenses', 'transfer'].includes(type)) {
-      setSelectedType(type as IWalletTransaction['type'])
+      setSelectedType(type as WalletTransaction['type'])
     }
 
     if (ledger) {

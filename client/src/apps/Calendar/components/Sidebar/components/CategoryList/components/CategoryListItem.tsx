@@ -41,7 +41,7 @@ function CategoryListItem({
     (e: React.MouseEvent) => {
       e.stopPropagation()
       open(ModifyCategoryModal, {
-        existedData: item,
+        initialData: item,
         type: 'update'
       })
     },

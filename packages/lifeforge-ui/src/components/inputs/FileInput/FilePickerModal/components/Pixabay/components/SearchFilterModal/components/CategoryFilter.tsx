@@ -5,8 +5,8 @@ import {
 import { Icon } from '@iconify/react'
 
 import {
-  IPixabaySearchFilter,
-  PixabaySearchFilterAction
+  type IPixabaySearchFilter,
+  type PixabaySearchFilterAction
 } from '../../../typescript/pixabay_interfaces'
 import { CATEGORIES } from '../constants/filterOptions'
 

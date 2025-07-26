@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@components/buttons'
 import type {
-  FormFieldConfig,
-  IFormState,
-  InferFinalDataType,
-  InferFormStateFromFields
+  FieldsConfig,
+  FormState,
+  InferFormFinalState,
+  InferFormState
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import dayjs from 'dayjs'
@@ -15,10 +16,7 @@ import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
 
-const transformExistedData = (
-  field: FormFieldConfig[keyof FormFieldConfig],
-  value: unknown
-): unknown => {
+const transformExistedData = (field: any, value: unknown): unknown => {
   if (field?.type === 'datetime' && value) {
     return dayjs(value as string).toDate()
   }
@@ -30,9 +28,9 @@ const transformExistedData = (
   return value
 }
 
-const getInitialData = <TFormState extends FormFieldConfig<any>>(
+const getInitialData = <TFormState extends FieldsConfig<any, any>>(
   fields: TFormState,
-  formExistedData?: Partial<InferFormStateFromFields<TFormState>>
+  formExistedData?: Partial<InferFormState<TFormState>>
 ) => {
   return Object.fromEntries(
     Object.entries(fields).map(([key, field]) => {
@@ -69,20 +67,16 @@ const getInitialData = <TFormState extends FormFieldConfig<any>>(
   )
 }
 
-function FormModal<TFields extends FormFieldConfig<any>>({
-  form: { fields, existedData, additionalFields, onSubmit },
-  ui,
-  submitButton = {
-    children: 'Submit',
-    icon: 'tabler:check'
-  },
+function FormModal<TFields extends FieldsConfig<any, any>>({
+  form: { fields, initialData, additionalFields, onSubmit },
+  ui: { title, icon, namespace, loading = false, onClose, submitButton },
   actionButton
 }: {
   form: {
     fields: TFields
-    existedData?: Partial<InferFormStateFromFields<TFields>>
+    initialData?: Partial<InferFormState<TFields>>
     additionalFields?: React.ReactNode
-    onSubmit: (data: InferFinalDataType<TFields>) => Promise<void>
+    onSubmit: (data: InferFormFinalState<TFields>) => Promise<void>
   }
   ui: {
     title: string
@@ -90,16 +84,16 @@ function FormModal<TFields extends FormFieldConfig<any>>({
     onClose: () => void
     namespace: string
     loading?: boolean
+    submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
   }
-  submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
   actionButton?: {
     icon: string
     isRed?: boolean
     onClick?: () => void
   }
 }) {
-  const [data, setData] = useState<InferFormStateFromFields<TFields>>(
-    getInitialData(fields, existedData) as InferFormStateFromFields<TFields>
+  const [data, setData] = useState<InferFormState<TFields>>(
+    getInitialData(fields, initialData) as InferFormState<TFields>
   )
 
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -163,7 +157,7 @@ function FormModal<TFields extends FormFieldConfig<any>>({
     )
 
     if (onSubmit) {
-      await onSubmit(finalData as InferFinalDataType<TFields>)
+      await onSubmit(finalData as InferFormFinalState<TFields>)
       setSubmitLoading(false)
 
       return
@@ -175,21 +169,19 @@ function FormModal<TFields extends FormFieldConfig<any>>({
       <ModalHeader
         actionButtonIcon={actionButton?.icon}
         actionButtonIsRed={actionButton?.isRed}
-        icon={ui.icon}
-        namespace={ui.namespace}
-        title={ui.title}
+        icon={icon}
+        namespace={namespace}
+        title={title}
         onActionButtonClick={actionButton?.onClick}
-        onClose={ui.onClose}
+        onClose={onClose}
       />
-      {!ui.loading ? (
+      {!loading ? (
         <>
           <FormInputs
-            data={data as IFormState}
+            data={data as FormState}
             fields={fields}
-            namespace={ui.namespace}
-            setData={
-              setData as React.Dispatch<React.SetStateAction<IFormState>>
-            }
+            namespace={namespace}
+            setData={setData as React.Dispatch<React.SetStateAction<FormState>>}
           />
           {additionalFields}
           <SubmitButton

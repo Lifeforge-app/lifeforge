@@ -40,7 +40,7 @@ function CalendarListItem({
     (e: React.MouseEvent) => {
       e.stopPropagation()
       open(ModifyCalendarModal, {
-        existedData: item,
+        initialData: item,
         type: 'update'
       })
     },

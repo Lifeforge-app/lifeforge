@@ -51,7 +51,7 @@ const list = forgeController.query
 
       allTransactions.push({
         ...baseTransaction,
-        type: 'transfer',
+        type: 'transfer' as const,
         from: transaction.from,
         to: transaction.to
       })

@@ -13,11 +13,11 @@ ChartJS.register(
 )
 
 function BalanceChartModal({
-  data: { existedData },
+  data: { initialData },
   onClose
 }: {
   data: {
-    existedData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
+    initialData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
   }
   onClose: () => void
 }) {
@@ -26,9 +26,9 @@ function BalanceChartModal({
   const assetBalanceQuery = useAPIQuery<
     WalletControllersSchemas.IAssets['getAssetAccumulatedBalance']['response']
   >(
-    `wallet/assets/balance/${existedData.id}`,
-    ['wallet', 'assets', 'balance', existedData.id],
-    !!existedData.id
+    `wallet/assets/balance/${initialData.id}`,
+    ['wallet', 'assets', 'balance', initialData.id],
+    !!initialData.id
   )
 
   const chartData = useMemo(() => {
@@ -121,7 +121,7 @@ function BalanceChartModal({
     <div className="min-w-[50vw]">
       <ModalHeader
         appendTitle={
-          <p className="hidden truncate sm:block"> - {existedData.name}</p>
+          <p className="hidden truncate sm:block"> - {initialData.name}</p>
         }
         icon="tabler:chart-line"
         namespace="apps.wallet"

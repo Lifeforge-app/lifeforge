@@ -21,7 +21,6 @@ import { fetchAPI } from 'shared'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import { ITodoListEntry } from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'
 import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'

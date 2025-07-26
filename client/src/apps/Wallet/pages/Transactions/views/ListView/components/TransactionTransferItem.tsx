@@ -9,7 +9,7 @@ import { useCallback } from 'react'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
-import type { IWalletTransaction } from '../../..'
+import type { WalletTransaction } from '../../..'
 import ModifyTransactionsModal from '../../../modals/ModifyTransactionsModal'
 import ViewTransactionModal from '../../../modals/ViewTransactionModal'
 import ViewReceiptModal from './ViewReceiptModal'
@@ -17,7 +17,7 @@ import ViewReceiptModal from './ViewReceiptModal'
 function TransactionTransferItem({
   transaction
 }: {
-  transaction: IWalletTransaction
+  transaction: WalletTransaction
 }) {
   const open = useModalStore(state => state.open)
 
@@ -36,7 +36,7 @@ function TransactionTransferItem({
   const handleEditTransaction = useCallback(() => {
     open(ModifyTransactionsModal, {
       type: 'update',
-      existedData: transaction
+      initialData: transaction
     })
   }, [transaction])
 
@@ -81,7 +81,7 @@ function TransactionTransferItem({
   return (
     <div
       className={clsx(
-        'flex-between component-bg-with-hover relative flex gap-12 rounded-md p-4'
+        'flex-between component-bg-with-hover shadow-custom relative flex gap-12 rounded-md p-4'
       )}
       role="button"
       tabIndex={0}

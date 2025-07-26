@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { SocketEvent, useSocketContext } from '@providers/SocketProvider'
+import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Button } from 'lifeforge-ui'
@@ -7,11 +7,13 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
+import type { ScoreLibraryGuitarWorldResponse } from '..'
+
 function ScoreItem({
   entry,
   cookie
 }: {
-  entry: ScoresLibraryCollectionsSchemas.IGuitarWorldEntry
+  entry: ScoreLibraryGuitarWorldResponse['data'][number]
   cookie: string
 }) {
   const queryClient = useQueryClient()
@@ -74,7 +76,9 @@ function ScoreItem({
 
       socket.on(
         'taskPoolUpdate',
-        (data: SocketEvent<ScoresLibraryCollectionsSchemas.IEntry>) => {
+        (
+          data: SocketEvent<ScoreLibraryGuitarWorldResponse['data'][number]>
+        ) => {
           if (!data || data.taskId !== taskId) return
 
           if (data.status === 'failed') {
@@ -115,7 +119,7 @@ function ScoreItem({
                 弹唱吉他谱: 'bg-green-500/20 text-green-500',
                 指弹吉他谱: 'bg-blue-500/20 text-blue-500',
                 独奏钢琴谱: 'bg-purple-500/20 text-purple-500'
-              }[entry.category] || 'bg-gray-500/20 text-gray-500'
+              }[entry.category as never] || 'bg-gray-500/20 text-gray-500'
             )}
           >
             {entry.category}

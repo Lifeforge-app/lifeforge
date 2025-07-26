@@ -4,6 +4,8 @@ import { ListboxOrComboboxOption, ListboxOrComboboxOptions } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import type { ScoreLibrarySortType } from '..'
+
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
   ['tabler:clock', 'oldest'],
@@ -15,12 +17,12 @@ function SortBySelector({
   sortType,
   setSortType
 }: {
-  sortType: string
-  setSortType: (sortType: string) => void
+  sortType: ScoreLibrarySortType
+  setSortType: (sortType: ScoreLibrarySortType) => void
 }) {
   const { t } = useTranslation('apps.scoresLibrary')
 
-  const handleChange = useCallback((value: string) => {
+  const handleChange = useCallback((value: ScoreLibrarySortType) => {
     setSortType(value)
   }, [])
 

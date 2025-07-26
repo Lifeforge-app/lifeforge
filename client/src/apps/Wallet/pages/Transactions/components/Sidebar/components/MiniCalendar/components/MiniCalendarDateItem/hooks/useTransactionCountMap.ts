@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 interface TransactionCount {
   income: number
@@ -17,7 +17,7 @@ function useTransactionCountMap({
   currentYear,
   viewsFilter
 }: {
-  transactions: IWalletTransaction[]
+  transactions: WalletTransaction[]
   currentMonth: number
   currentYear: number
   viewsFilter: ('income' | 'expenses' | 'transfer')[]

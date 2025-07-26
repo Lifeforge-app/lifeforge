@@ -1,10 +1,10 @@
 function ModifyFolderModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder> | null
+    initialData: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder> | null
   }
   onClose: () => void
 }) {
@@ -42,11 +42,11 @@ function ModifyFolderModal({
   ]
 
   useEffect(() => {
-    if (type === 'update' && existedData !== null) {
+    if (type === 'update' && initialData !== null) {
       setFormState({
-        name: existedData.name,
-        icon: existedData.icon,
-        color: existedData.color
+        name: initialData.name,
+        icon: initialData.icon,
+        color: initialData.color
       })
     } else {
       setFormState({
@@ -55,7 +55,7 @@ function ModifyFolderModal({
         color: ''
       })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -75,7 +75,7 @@ function ModifyFolderModal({
           update: 'tabler:pencil'
         }[type]
       }
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.ideaBox"
       openType={type}
       queryKey={['idea-box', 'folders', id!, path!]}

@@ -172,7 +172,7 @@ function CalendarComponent({
     ({ start, end }: { start: Date; end: Date }) => {
       open(ModifyEventModal, {
         type: 'create',
-        existedData: {
+        initialData: {
           start: dayjs(start).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
           end: dayjs(end).subtract(1, 'minute').format('YYYY-MM-DD HH:mm:ss')
         }

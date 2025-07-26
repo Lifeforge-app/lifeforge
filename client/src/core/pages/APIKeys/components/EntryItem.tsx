@@ -63,7 +63,7 @@ function EntryItem({
   const handleUpdateEntry = useCallback(async () => {
     open(ModifyAPIKeyModal, {
       type: 'update',
-      existedData: entry,
+      initialData: entry,
       masterPassword
     })
   }, [entry, masterPassword])

@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 function OverviewSummary({
   filteredTransactions
 }: {
-  filteredTransactions: IWalletTransaction[]
+  filteredTransactions: WalletTransaction[]
 }) {
   return (
     <div className="mt-6 flex w-full flex-col">

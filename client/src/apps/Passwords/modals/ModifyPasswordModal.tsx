@@ -20,12 +20,12 @@ import {
 } from '../interfaces/password_interfaces'
 
 function ModifyPasswordModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: IPasswordEntry | null
+    initialData: IPasswordEntry | null
   }
   onClose: () => void
 }) {
@@ -75,7 +75,7 @@ function ModifyPasswordModal({
     try {
       const data = await fetchAPI<IPasswordEntry>(
         import.meta.env.VITE_API_HOST,
-        `passwords/entries${type === 'update' ? '/' + existedData?.id : ''}`,
+        `passwords/entries${type === 'update' ? '/' + initialData?.id : ''}`,
         {
           method: type === 'create' ? 'POST' : 'PATCH',
           body: {
@@ -96,7 +96,7 @@ function ModifyPasswordModal({
           }
 
           return prev.map(password => {
-            if (password.id === existedData?.id) {
+            if (password.id === initialData?.id) {
               return data
             }
 
@@ -122,14 +122,14 @@ function ModifyPasswordModal({
         username: '',
         password: ''
       })
-    } else if (type === 'update' && existedData !== null) {
+    } else if (type === 'update' && initialData !== null) {
       setFormState({
-        name: existedData.name,
-        icon: existedData.icon,
-        color: existedData.color,
-        website: existedData.website,
-        username: existedData.username,
-        password: existedData.decrypted ?? ''
+        name: initialData.name,
+        icon: initialData.icon,
+        color: initialData.color,
+        website: initialData.website,
+        username: initialData.username,
+        password: initialData.decrypted ?? ''
       })
     }
   }, [type])

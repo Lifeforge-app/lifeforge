@@ -28,7 +28,7 @@ function Ledgers() {
   const handleCreateLedger = () => {
     open(ModifyLedgerModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }
 
@@ -36,7 +36,7 @@ function Ledgers() {
     if (hash === '#new') {
       open(ModifyLedgerModal, {
         type: 'create',
-        existedData: null
+        initialData: null
       })
     }
   }, [hash])

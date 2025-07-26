@@ -45,7 +45,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
       onClose()
       open(ModifyTransactionsModal, {
         type: 'create',
-        existedData: {
+        initialData: {
           ...data,
           type: data.type ?? 'expenses',
           receipt: (keepReceiptAfterScan ? file : '') as never

@@ -13,7 +13,7 @@ function ContainerList({
   const handleCreateContainer = useCallback(() => {
     open(ModifyContainerModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 

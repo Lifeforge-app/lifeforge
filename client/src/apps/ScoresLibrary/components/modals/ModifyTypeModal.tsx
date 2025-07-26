@@ -1,71 +1,73 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { type FieldsConfig, FormModal } from 'lifeforge-ui'
+
+import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
+
 function ModifyTypeModal({
   onClose,
-  data: { openType, existedData }
+  data: { openType, initialData }
 }: {
   onClose: () => void
   data: {
     openType: 'create' | 'update'
-    existedData: ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated> | null
+    initialData?: ScoreLibraryEntry
   }
 }) {
   const queryClient = useQueryClient()
 
-  const [formState, setFormState] = useState<
-    | ScoresLibraryControllersSchemas.ITypes['createType']['body']
-    | ScoresLibraryControllersSchemas.ITypes['updateType']['body']
-  >({
-    name: '',
-    icon: ''
-  })
+  const mutation = useMutation(
+    (openType === 'create'
+      ? forgeAPI.scoresLibrary.types.create
+      : forgeAPI.scoresLibrary.types.update.input({ id: initialData!.id })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+        onClose()
+      }
+    })
+  )
 
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'name',
+  const FIELDS = {
+    name: {
       required: true,
       label: 'Type Name',
       icon: 'tabler:category',
       placeholder: 'New Type',
       type: 'text'
     },
-    {
-      id: 'icon',
+    icon: {
       required: true,
       label: 'Type Icon',
       type: 'icon'
     }
-  ]
+  } as const satisfies FieldsConfig<
+    InferInput<(typeof forgeAPI.scoresLibrary.types)[typeof openType]>['body']
+  >
+
+  async function onSubmit(
+    data: InferInput<
+      (typeof forgeAPI.scoresLibrary.types)[typeof openType]
+    >['body']
+  ) {
+    await mutation.mutateAsync(data)
+  }
 
   return (
     <FormModal
-      customUpdateDataList={{
-        create: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['scores-library', 'types']
-          })
-          queryClient.invalidateQueries({
-            queryKey: ['scores-library', 'sidebar-data']
-          })
-        },
-        update: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['scores-library', 'types']
-          })
-          queryClient.invalidateQueries({
-            queryKey: ['scores-library', 'sidebar-data']
-          })
-        }
+      form={{
+        fields: FIELDS,
+        initialData,
+        onSubmit
       }}
-      data={formState}
-      endpoint="scores-library/types"
-      fields={FIELDS}
-      icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-      id={existedData?.id}
-      namespace="apps.scoresLibrary"
-      openType={openType}
-      queryKey={['scores-library', 'types']}
-      setData={setFormState}
-      title={`types.${openType}`}
-      onClose={onClose}
+      submitButton={openType}
+      ui={{
+        icon: openType === 'create' ? 'tabler:plus' : 'tabler:pencil',
+        title: `types.${openType}`,
+        namespace: 'apps.scoresLibrary',
+        onClose
+      }}
     />
   )
 }

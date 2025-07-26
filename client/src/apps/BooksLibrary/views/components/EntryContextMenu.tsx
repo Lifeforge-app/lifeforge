@@ -62,7 +62,7 @@ export default function EntryContextMenu({
   const handleUpdateEntry = useCallback(() => {
     open(ModifyBookModal, {
       type: 'update',
-      existedData: item
+      initialData: item
     })
   }, [item])
 

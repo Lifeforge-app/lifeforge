@@ -22,7 +22,7 @@ function TaskPriorityList({
   const handleCreatePriority = useCallback(() => {
     open(ModifyPriorityModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 

@@ -12,7 +12,7 @@ function CategorySectionItem({
   const handleEditCategory = useCallback(() => {
     open(ModifyCategoryModal, {
       type: 'update',
-      existedData: category
+      initialData: category
     })
   }, [category])
 

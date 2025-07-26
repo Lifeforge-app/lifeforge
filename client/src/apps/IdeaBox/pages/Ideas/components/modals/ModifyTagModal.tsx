@@ -1,10 +1,10 @@
 function ModifyTagModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: ISchemaWithPB<IdeaBoxCollectionsSchemas.ITag> | null
+    initialData: ISchemaWithPB<IdeaBoxCollectionsSchemas.ITag> | null
   }
   onClose: () => void
 }) {
@@ -40,8 +40,8 @@ function ModifyTagModal({
   ]
 
   useEffect(() => {
-    if (existedData !== null) {
-      setFormState(existedData)
+    if (initialData !== null) {
+      setFormState(initialData)
     } else {
       setFormState({
         name: '',
@@ -49,7 +49,7 @@ function ModifyTagModal({
         color: ''
       })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -62,7 +62,7 @@ function ModifyTagModal({
           update: 'tabler:pencil'
         }[type!]
       }
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.ideaBox"
       openType={type}
       queryKey={['idea-box', 'tags', id!]}

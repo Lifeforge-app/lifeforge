@@ -115,11 +115,21 @@ export class ForgeAPIClientController<
     }
   }
 
+  async query() {
+    return await fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+      method: 'get'
+    })
+  }
+
   private refreshEndpoint() {
     this._endpoint = `${this._route}`
 
     if (this._input) {
-      const queryParams = new URLSearchParams(this._input)
+      const queryParams = new URLSearchParams(
+        Object.fromEntries(
+          Object.entries(this._input).filter(([, value]) => value !== undefined)
+        )
+      )
 
       this._endpoint += `?${queryParams.toString()}`
     }

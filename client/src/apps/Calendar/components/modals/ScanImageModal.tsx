@@ -40,7 +40,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
 
       open(ModifyEventModal, {
         type: 'create',
-        existedData: {
+        initialData: {
           ...data,
           start: dayjs(data.start).toDate(),
           end: dayjs(data.end).toDate(),

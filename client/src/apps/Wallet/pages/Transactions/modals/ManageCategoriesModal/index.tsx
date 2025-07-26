@@ -18,7 +18,7 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
   const handleCreateIncomeCategory = useCallback(() => {
     open(ModifyCategoryModal, {
       type: 'income',
-      existedData: null
+      initialData: null
     })
   }, [])
 

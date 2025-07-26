@@ -2,16 +2,17 @@ import { HamburgerMenuSelectorWrapper, MenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { IRailwayMapLine } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
-import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
+import {
+  type RailwayMapLine,
+  useRailwayMapContext
+} from '../../../providers/RailwayMapProvider'
 
 function LineFilter() {
   const { lines, filteredLines, setFilteredLines } = useRailwayMapContext()
 
   const { t } = useTranslation('apps.railwayMap')
 
-  const onClick = useCallback((line: IRailwayMapLine) => {
+  const onClick = useCallback((line: RailwayMapLine) => {
     setFilteredLines(prev =>
       prev.includes(line.id)
         ? prev.filter(l => l !== line.id)

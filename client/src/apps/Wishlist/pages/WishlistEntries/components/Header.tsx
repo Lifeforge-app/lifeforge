@@ -1,10 +1,19 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+import { Button, GoBackButton, MenuItem, useModalStore } from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router'
+
+import type { WishlistList } from '..'
 import FromOtherAppsModal from '../modals/FromOtherAppsModal'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
 
 function Header({
   wishlistListDetails
 }: {
-  wishlistListDetails: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated>
+  wishlistListDetails: WishlistList
 }) {
   const open = useModalStore(state => state.open)
 
@@ -17,7 +26,7 @@ function Header({
   const handleAddManually = useCallback(() => {
     open(ModifyEntryModal, {
       type: 'create',
-      existedData: {
+      initialData: {
         list: id as string
       }
     })

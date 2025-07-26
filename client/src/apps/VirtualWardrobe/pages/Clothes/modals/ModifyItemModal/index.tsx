@@ -15,12 +15,12 @@ import UploadPhotoSection from './components/UploadPhotoSection'
 
 function ModifyItemModal({
   onClose,
-  data: { type, existedData }
+  data: { type, initialData }
 }: {
   onClose: () => void
   data: {
     type: 'create' | 'update'
-    existedData: IVirtualWardrobeEntry | null
+    initialData: IVirtualWardrobeEntry | null
   }
 }) {
   const queryClient = useQueryClient()
@@ -88,7 +88,7 @@ function ModifyItemModal({
       const data = await fetchAPI<IVirtualWardrobeEntry>(
         import.meta.env.VITE_API_HOST,
         'virtual-wardrobe/entries' +
-          (type === 'update' ? `/${existedData?.id}` : ''),
+          (type === 'update' ? `/${initialData?.id}` : ''),
         {
           method: type === 'create' ? 'POST' : 'PATCH',
           body:
@@ -139,17 +139,17 @@ function ModifyItemModal({
       setBackPreview(null)
       setSubmitButtonLoading(false)
     } else {
-      if (existedData !== null) {
+      if (initialData !== null) {
         setStep(2)
         setFormState({
-          name: existedData.name,
-          category: existedData.category,
-          subcategory: existedData.subcategory,
-          brand: existedData.brand,
-          size: existedData.size,
-          colors: existedData.colors,
-          price: existedData.price,
-          notes: existedData.notes
+          name: initialData.name,
+          category: initialData.category,
+          subcategory: initialData.subcategory,
+          brand: initialData.brand,
+          size: initialData.size,
+          colors: initialData.colors,
+          price: initialData.price,
+          notes: initialData.notes
         })
         setFrontImage(null)
         setBackImage(null)

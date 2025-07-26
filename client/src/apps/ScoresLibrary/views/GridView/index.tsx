@@ -1,10 +1,8 @@
+import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
+
 import EntryItem from './components/EntryItem'
 
-function GridView({
-  entries
-}: {
-  entries: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>[]
-}) {
+function GridView({ entries }: { entries: ScoreLibraryEntry[] }) {
   return (
     <div className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(16rem,1fr))]">
       {entries.map(entry => (

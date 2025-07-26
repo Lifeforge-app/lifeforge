@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react'
 import { ITodoListTag } from '../interfaces/todo_list_interfaces'
 
 function ModifyTagModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ITodoListTag | null
+    initialData: ITodoListTag | null
   }
   onClose: () => void
 }) {
@@ -30,12 +30,12 @@ function ModifyTagModal({
   ]
 
   useEffect(() => {
-    if (type === 'update' && existedData !== null) {
-      setData(existedData)
+    if (type === 'update' && initialData !== null) {
+      setData(initialData)
     } else {
       setData({ name: '' })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -43,7 +43,7 @@ function ModifyTagModal({
       endpoint="todo-list/tags"
       fields={FIELDS}
       icon="tabler:tag"
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.todoList"
       openType={type}
       queryKey={['todo-list', 'tags']}

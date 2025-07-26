@@ -4,7 +4,7 @@ import { ListboxOrComboboxOption, ListboxOrComboboxOptions } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import { IRailwayMapViewType } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type { RailwayMapViewType } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 export const VIEW_TYPES = [
   ['tabler:route-alt-left', 'Route Map', 'route'],
@@ -13,8 +13,8 @@ export const VIEW_TYPES = [
 ] as const
 
 interface ViewTypeSwitcherProps {
-  viewType: IRailwayMapViewType
-  setViewType: (viewType: IRailwayMapViewType) => void
+  viewType: RailwayMapViewType
+  setViewType: (viewType: RailwayMapViewType) => void
 }
 
 function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {

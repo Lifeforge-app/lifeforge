@@ -1,4 +1,4 @@
-import type { IFormState } from 'lifeforge-ui'
+import type { FormState } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
 
 interface IPasswordEntry extends RecordModel {
@@ -12,7 +12,7 @@ interface IPasswordEntry extends RecordModel {
   pinned: boolean
 }
 
-interface IPasswordFormState extends IFormState {
+interface IPasswordFormState extends FormState {
   name: string
   icon: string
   color: string

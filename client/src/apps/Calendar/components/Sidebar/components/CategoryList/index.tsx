@@ -41,7 +41,7 @@ function CategoryList({
 
   const handleCreate = useCallback(() => {
     open(ModifyCategoryModal, {
-      existedData: null,
+      initialData: null,
       type: 'create'
     })
   }, [])

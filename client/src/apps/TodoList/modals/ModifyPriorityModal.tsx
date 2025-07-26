@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react'
 import { ITodoPriority } from '../interfaces/todo_list_interfaces'
 
 function ModifyPriorityModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: ITodoPriority | null
+    initialData: ITodoPriority | null
   }
   onClose: () => void
 }) {
@@ -37,15 +37,15 @@ function ModifyPriorityModal({
   ]
 
   useEffect(() => {
-    if (type === 'update' && existedData !== null) {
-      setData(existedData)
+    if (type === 'update' && initialData !== null) {
+      setData(initialData)
     } else {
       setData({
         name: '',
         color: '#FFFFFF'
       })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -58,7 +58,7 @@ function ModifyPriorityModal({
           update: 'tabler:pencil'
         }[type!]
       }
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.todoList"
       openType={type}
       queryKey={['todo-list', 'priorities']}

@@ -88,7 +88,7 @@ function EntryItem<T extends boolean = false>({
   const handleUpdateItem = useCallback(() => {
     open(ModifyItemModal, {
       type: 'update',
-      existedData: entry
+      initialData: entry
     })
   }, [entry])
 
