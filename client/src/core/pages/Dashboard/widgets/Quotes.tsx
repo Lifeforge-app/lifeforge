@@ -1,17 +1,19 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { QueryWrapper } from 'lifeforge-ui'
 import { usePersonalization } from 'shared'
-import { useAPIQuery } from 'shared'
 import tinycolor from 'tinycolor2'
 
 export default function Quotes() {
-  const quoteQuery = useAPIQuery<
-    {
-      q: string
-      a: string
-    }[]
-  >('cors-anywhere?url=https://zenquotes.io/api/random', ['quote'])
+  const quoteQuery = useQuery(
+    forgeAPI.corsAnywhere
+      .input({
+        url: 'https://zenquotes.io/api/random'
+      })
+      .queryOptions()
+  )
 
   const { derivedThemeColor: themeColor } = usePersonalization()
 

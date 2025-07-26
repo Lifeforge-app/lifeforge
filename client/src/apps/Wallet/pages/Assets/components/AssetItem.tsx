@@ -1,43 +1,68 @@
+import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import clsx from 'clsx'
+import {
+  Button,
+  ConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
+
+import type { WalletAsset } from '@apps/Wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import BalanceChartModal from '../modals/BalanceChartModal'
 import ModifyAssetModal from '../modals/ModifyAssetModal'
 
-function AssetItem({
-  asset
-}: {
-  asset: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
-}) {
+function AssetItem({ asset }: { asset: WalletAsset }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const { isAmountHidden } = useWalletStore()
 
   const navigate = useNavigate()
 
-  const handleEditAsset = useCallback(() => {
+  const deleteMutation = useMutation(
+    forgeAPI.wallet.assets.remove
+      .input({
+        id: asset.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
+        },
+        onError: (error: Error) => {
+          toast.error('Failed to delete asset: ' + error.message)
+        }
+      })
+  )
+
+  const handleEditAsset = () =>
     open(ModifyAssetModal, {
       type: 'update',
       initialData: asset
     })
-  }, [asset])
 
-  const handleOpenBalanceChart = useCallback(() => {
+  const handleOpenBalanceChart = () =>
     open(BalanceChartModal, {
       initialData: asset
     })
-  }, [asset])
 
-  const handleDeleteAsset = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'wallet/assets',
-      confirmationText: 'Delete this asset account',
-      data: asset,
-      itemName: 'asset account',
-      nameKey: 'name' as const,
-      queryKey: ['wallet', 'assets']
+  const handleDeleteAsset = () =>
+    open(ConfirmationModal, {
+      title: 'Delete Asset',
+      description: `Are you sure you want to delete the asset "${asset.name}"? This action cannot be undone.`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
-  }, [asset])
 
   return (
     <div className="bg-bg-100 shadow-custom dark:bg-bg-900 relative space-y-4 rounded-lg p-4">

@@ -1,6 +1,7 @@
+import forgeAPI from '@utils/forgeAPI'
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { type IBackdropFilters, type IDashboardLayout, fetchAPI } from 'shared'
+import { type IBackdropFilters, type IDashboardLayout } from 'shared'
 import { usePersonalization } from 'shared'
 
 import { useAuth } from './AuthProvider'
@@ -17,11 +18,8 @@ const UserPersonalizationContext = createContext<{
 
 async function syncUserData(data: Record<string, unknown>) {
   try {
-    await fetchAPI(import.meta.env.VITE_API_HOST, '/user/personalization', {
-      method: 'PATCH',
-      body: {
-        data
-      }
+    await forgeAPI.user.personalization.updatePersonalization.mutate({
+      data
     })
   } catch {
     toast.error('Failed to update personalization settings')

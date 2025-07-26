@@ -4,20 +4,34 @@ import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
+export type TodoListEntry = InferOutput<
+  typeof forgeAPI.todoList.entries.getById
+>
+
+export type TodoListPriority = InferOutput<
+  typeof forgeAPI.todoList.priorities.list
+>[number]
+
+export type TodoListList = InferOutput<
+  typeof forgeAPI.todoList.lists.list
+>[number]
+
+export type TodoListTag = InferOutput<
+  typeof forgeAPI.todoList.tags.list
+>[number]
+
+export type TodoListStatusCounter = InferOutput<
+  typeof forgeAPI.todoList.entries.getStatusCounter
+>
+
 interface ITodoListData {
   entriesQueryKey: unknown[]
   // Data
-  prioritiesQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.todoList.priorities.list>
-  >
-  listsQuery: UseQueryResult<InferOutput<typeof forgeAPI.todoList.lists.list>>
-  tagsListQuery: UseQueryResult<InferOutput<typeof forgeAPI.todoList.tags.list>>
-  entriesQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.todoList.entries.list>
-  >
-  statusCounterQuery: UseQueryResult<
-    InferOutput<typeof forgeAPI.todoList.entries.getStatusCounter>
-  >
+  prioritiesQuery: UseQueryResult<TodoListEntry[]>
+  listsQuery: UseQueryResult<TodoListList[]>
+  tagsListQuery: UseQueryResult<TodoListTag[]>
+  entriesQuery: UseQueryResult<TodoListEntry[]>
+  statusCounterQuery: UseQueryResult<TodoListStatusCounter>
 
   selectedTask: InferOutput<typeof forgeAPI.todoList.entries.getById> | null
 

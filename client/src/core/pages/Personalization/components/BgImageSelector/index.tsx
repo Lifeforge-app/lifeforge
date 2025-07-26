@@ -1,9 +1,11 @@
+import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ConfigColumn,
   DeleteConfirmationModal,
   FilePickerModal,
-  QueryWrapper,
   Tooltip
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -11,7 +13,6 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
-import { useAPIQuery } from 'shared'
 import { fetchAPI } from 'shared'
 
 import AdjustBgImageModal from './modals/AdjustBgImageModal'
@@ -21,19 +22,17 @@ function BgImageSelector() {
 
   const { t } = useTranslation('core.personalization')
 
-  const pixabayEnabledQuery = useAPIQuery<boolean>('/pixabay/key-exists', [
-    'pixabay',
-    'key-exists'
-  ])
+  const pixabayEnabledQuery = useQuery(
+    forgeAPI.pixabay.verifyAPIKey.queryOptions()
+  )
+
+  const imageGenAPIKeyExistsQuery = useQuery(
+    forgeAPI.ai.imageGeneration.verifyAPIKey.queryOptions()
+  )
 
   const { bgImage } = usePersonalization()
 
   const { setBgImage, setBackdropFilters } = usePersonalization()
-
-  const imageGenAPIKeyExistsQuery = useAPIQuery<boolean>(
-    'ai/image-generation/key-exists',
-    ['ai', 'image-generation', 'key-exists']
-  )
 
   const handleAdjustBgImage = useCallback(() => {
     open(AdjustBgImageModal, {})
@@ -124,41 +123,39 @@ function BgImageSelector() {
               remove
             </Button>
           </>
+        ) : pixabayEnabledQuery.isLoading ? (
+          <Icon className="text-bg-500 size-6" icon="svg-spinners:180-ring" />
         ) : (
-          <QueryWrapper query={pixabayEnabledQuery}>
-            {pixabayEnabled => (
-              <>
-                <Button
-                  className="w-full md:w-auto"
-                  icon="tabler:photo-hexagon"
-                  onClick={handleOpenImageSelector}
-                >
-                  select
-                </Button>
-                {!pixabayEnabled && (
-                  <Tooltip
-                    icon="tabler:info-circle"
-                    id="pixabayDisabled"
-                    tooltipProps={{
-                      clickable: true
-                    }}
+          <>
+            <Button
+              className="w-full md:w-auto"
+              icon="tabler:photo-hexagon"
+              onClick={handleOpenImageSelector}
+            >
+              select
+            </Button>
+            {!pixabayEnabledQuery.data && (
+              <Tooltip
+                icon="tabler:info-circle"
+                id="pixabayDisabled"
+                tooltipProps={{
+                  clickable: true
+                }}
+              >
+                <p className="text-bg-500 max-w-84">
+                  {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
+                  <a
+                    className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
+                    href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#pixabay"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    <p className="text-bg-500 max-w-84">
-                      {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
-                      <a
-                        className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
-                        href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#pixabay"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Customization Guide
-                      </a>
-                    </p>
-                  </Tooltip>
-                )}
-              </>
+                    Customization Guide
+                  </a>
+                </p>
+              </Tooltip>
             )}
-          </QueryWrapper>
+          </>
         )}
       </ConfigColumn>
     </>

@@ -8,7 +8,6 @@ import type {
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import dayjs from 'dayjs'
-import _ from 'lodash'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -22,6 +21,41 @@ const transformExistedData = (field: any, value: unknown): unknown => {
   }
 
   return value
+}
+
+const checkEmpty = (value: unknown): boolean => {
+  if (value === null || value === undefined) {
+    return true
+  }
+
+  if (typeof value === 'string' && value.trim() === '') {
+    return true
+  }
+
+  if (Array.isArray(value) && value.length === 0) {
+    return true
+  }
+
+  if (typeof value === 'object') {
+    if (Object.keys(value).length === 0) {
+      return true
+    }
+
+    if ('file' in value && (!value.file || value.file === 'removed')) {
+      return true
+    }
+
+    if (
+      'name' in value &&
+      'formattedAddress' in value &&
+      !value.name &&
+      !value.formattedAddress
+    ) {
+      return true
+    }
+  }
+
+  return false
 }
 
 const getInitialData = <TFormState extends FieldsConfig<any, any>>(
@@ -100,7 +134,7 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
     )
 
     const missingFields = requiredFields.filter(field =>
-      _.isEmpty(data[field[0]])
+      checkEmpty(data[field[0]])
     )
 
     if (missingFields.length) {

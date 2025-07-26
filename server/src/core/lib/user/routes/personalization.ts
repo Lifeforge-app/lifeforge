@@ -13,7 +13,8 @@ const listGoogleFonts = forgeController.query
 
     if (!key) {
       return {
-        enabled: false
+        enabled: false,
+        items: []
       }
     }
 
@@ -25,7 +26,7 @@ const listGoogleFonts = forgeController.query
 
     return {
       enabled: true,
-      items: data.items
+      items: data.items as any[]
     }
   })
 

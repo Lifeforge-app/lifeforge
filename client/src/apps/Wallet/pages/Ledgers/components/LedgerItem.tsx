@@ -1,15 +1,55 @@
+import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import {
+  ConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
+
+import type { WalletLedger } from '@apps/Wallet/hooks/useWalletData'
+
 import ModifyLedgerModal from '../modals/ModifyLedgerModal'
 
-function LedgerItem({
-  ledger
-}: {
-  ledger: ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated>
-}) {
+function LedgerItem({ ledger }: { ledger: WalletLedger }) {
   const { t } = useTranslation('apps.wallet')
 
   const navigate = useNavigate()
 
   const open = useModalStore(state => state.open)
+
+  const queryClient = useQueryClient()
+
+  const deleteMutation = useMutation(
+    forgeAPI.wallet.ledgers.remove.input({ id: ledger.id }).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
+      },
+      onError: (error: Error) => {
+        toast.error('Failed to delete ledger: ' + error.message)
+      }
+    })
+  )
+
+  const handleEditLedger = () =>
+    open(ModifyLedgerModal, {
+      type: 'update',
+      initialData: ledger
+    })
+
+  const handleDeleteLedger = () =>
+    open(ConfirmationModal, {
+      title: 'Delete Ledger',
+      description: `Are you sure you want to delete the ledger "${ledger.name}"? This action cannot be undone.`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
+    })
 
   return (
     <div
@@ -17,9 +57,7 @@ function LedgerItem({
       className="flex-between shadow-custom component-bg-with-hover relative flex w-full cursor-pointer gap-3 rounded-lg p-4 transition-all"
       role="button"
       tabIndex={0}
-      onClick={() => {
-        navigate(`/wallet/transactions?ledger=${ledger.id}`)
-      }}
+      onClick={() => navigate(`/wallet/transactions?ledger=${ledger.id}`)}
       onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           navigate(`/wallet/transactions?ledger=${ledger.id}`)
@@ -29,16 +67,12 @@ function LedgerItem({
       <div className="flex items-center gap-3">
         <span
           className="w-min rounded-md p-2"
-          style={{
-            backgroundColor: ledger.color + '20'
-          }}
+          style={{ backgroundColor: ledger.color + '20' }}
         >
           <Icon
             className="size-8"
             icon={ledger.icon}
-            style={{
-              color: ledger.color
-            }}
+            style={{ color: ledger.color }}
           />
         </span>
         <div>
@@ -49,30 +83,12 @@ function LedgerItem({
         </div>
       </div>
       <HamburgerMenu>
-        <MenuItem
-          icon="tabler:pencil"
-          text="Edit"
-          onClick={() => {
-            open(ModifyLedgerModal, {
-              type: 'update',
-              initialData: ledger
-            })
-          }}
-        />
+        <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEditLedger} />
         <MenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
-          onClick={() => {
-            open(DeleteConfirmationModal, {
-              apiEndpoint: 'wallet/ledgers',
-              confirmationText: 'Delete this ledger',
-              data: ledger,
-              itemName: 'ledger',
-              nameKey: 'name' as const,
-              queryKey: ['wallet', 'ledgers']
-            })
-          }}
+          onClick={handleDeleteLedger}
         />
       </HamburgerMenu>
     </div>
