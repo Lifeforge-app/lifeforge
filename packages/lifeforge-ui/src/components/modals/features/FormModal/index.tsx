@@ -139,7 +139,8 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
             finalValue = Number(value)
             break
           case 'file':
-            finalValue = (value as { file: string | File | null }).file
+            finalValue =
+              (value as { file: string | File | null }).file ?? undefined
             break
           case 'checkbox':
             finalValue = Boolean(value)
