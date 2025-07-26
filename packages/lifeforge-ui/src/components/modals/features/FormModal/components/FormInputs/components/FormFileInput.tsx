@@ -28,9 +28,8 @@ function FormFileInput({
       required={field.required}
       setData={handleChange}
       onImageRemoved={() => {
-        field.onFileRemoved?.()
         handleChange({
-          file: null,
+          file: 'removed',
           preview: null
         })
       }}

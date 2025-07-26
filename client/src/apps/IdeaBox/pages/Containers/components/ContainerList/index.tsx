@@ -1,19 +1,21 @@
+import { Icon } from '@iconify/react'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import type { IdeaBoxContainer } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 import ModifyContainerModal from '../ModifyContainerModal'
 import ContainerItem from './components/ContainerItem'
 
-function ContainerList({
-  filteredList
-}: {
-  filteredList: ISchemaWithPB<IdeaBoxCollectionsSchemas.IContainerAggregated>[]
-}) {
+function ContainerList({ filteredList }: { filteredList: IdeaBoxContainer[] }) {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation(['apps.ideaBox', 'common.buttons'])
 
   const handleCreateContainer = useCallback(() => {
     open(ModifyContainerModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 
