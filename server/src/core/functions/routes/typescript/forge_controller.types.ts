@@ -16,7 +16,7 @@ export interface BaseResponse<T = ''> {
 }
 
 export type ZodObjectOrIntersection =
-  | ZodObject<ZodRawShape>
+  | ZodObject<any>
   | ZodIntersection<ZodTypeAny, ZodTypeAny>
 
 export type InputSchema = {
@@ -24,10 +24,31 @@ export type InputSchema = {
   query?: ZodObjectOrIntersection
 }
 
-export type InferZodType<T> =
-  T extends ZodObject<ZodRawShape> ? z.infer<T> : object
+export type InferZodType<T> = T extends ZodObject<any> ? z.infer<T> : object
 
-export type Context<TInput extends InputSchema, TOutput = unknown> = {
+export type ReplaceFileWithMulter<T> = T extends File
+  ? Express.Multer.File
+  : T extends (infer U)[]
+    ? ReplaceFileWithMulter<U>[]
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<ReplaceFileWithMulter<U>>
+      : T extends object
+        ? T extends (...args: any[]) => any
+          ? T
+          : { [K in keyof T]: ReplaceFileWithMulter<T[K]> }
+        : T
+
+export type ConvertMedia<TMedia extends MediaConfig> = {
+  [K in keyof TMedia]: TMedia[K] extends { optional: true }
+    ? Express.Multer.File[] | string | undefined
+    : Express.Multer.File[] | string
+}
+
+export type Context<
+  TInput extends InputSchema,
+  TOutput = unknown,
+  TMedia extends MediaConfig = MediaConfig
+> = {
   req: Request<
     never,
     BaseResponse<TOutput>,
@@ -39,4 +60,13 @@ export type Context<TInput extends InputSchema, TOutput = unknown> = {
   pb: PBService
   body: InferZodType<TInput['body']>
   query: InferZodType<TInput['query']>
+  media: ConvertMedia<TMedia>
 }
+
+export type MediaConfig = Record<
+  string,
+  {
+    maxCount: number
+    optional: boolean
+  }
+>

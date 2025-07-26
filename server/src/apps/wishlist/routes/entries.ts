@@ -1,5 +1,5 @@
 import { forgeController, forgeRouter } from '@functions/routes'
-import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
+import { singleUploadMiddlewareOfKey } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 import { z } from 'zod/v4'
 
@@ -28,15 +28,11 @@ const listByListId = forgeController.query
           operator: '=',
           value: id
         },
-        ...(bought
-          ? ([
-              {
-                field: 'bought',
-                operator: '=',
-                value: bought
-              }
-            ] as const)
-          : [])
+        {
+          field: 'bought',
+          operator: '=',
+          value: bought
+        }
       ])
       .execute()
   )
@@ -68,31 +64,35 @@ const create = forgeController.mutation
       name: z.string(),
       url: z.string(),
       price: z.number().min(0),
-      list: z.string(),
-      image: z.union([z.string(), z.file()]).optional()
+      list: z.string()
     })
   })
-  .middlewares(singleUploadMiddleware)
+  .media({
+    image: {
+      maxCount: 1,
+      optional: true
+    }
+  })
   .existenceCheck('body', {
     list: 'wishlist__lists'
   })
   .statusCode(201)
-  .callback(async ({ pb, body, req }) => {
-    const { file } = req
+  .callback(async ({ pb, body, media: { image } }) => {
+    let imageFile: File | null = null
 
-    let imageFile: File | undefined
+    if (image) {
+      if (typeof image === 'string') {
+        const response = await fetch(image)
 
-    if (file) {
-      const fileBuffer = fs.readFileSync(file.path)
+        const buffer = await response.arrayBuffer()
 
-      imageFile = new File([fileBuffer], file.originalname)
-      fs.unlinkSync(file.path)
-    } else if (typeof body.image === 'string' && body.image) {
-      const response = await fetch(body.image)
+        imageFile = new File([buffer], 'image.jpg')
+      } else {
+        const fileBuffer = fs.readFileSync(image[0].path)
 
-      const buffer = await response.arrayBuffer()
-
-      imageFile = new File([buffer], 'image.jpg')
+        imageFile = new File([fileBuffer], image[0].originalname)
+        fs.unlinkSync(image[0].path)
+      }
     }
 
     const data = {
@@ -114,11 +114,15 @@ const update = forgeController.mutation
       name: z.string(),
       url: z.string(),
       price: z.number().min(0),
-      list: z.string(),
-      image: z.union([z.string(), z.file()]).optional()
+      list: z.string()
     })
   })
-  .middlewares(singleUploadMiddleware)
+  .media({
+    image: {
+      maxCount: 1,
+      optional: true
+    }
+  })
   .existenceCheck('query', {
     id: 'wishlist__entries'
   })
@@ -129,22 +133,26 @@ const update = forgeController.mutation
     async ({
       pb,
       query: { id },
-      body: { list, name, url, price, image },
-      req
+      body: { list, name, url, price },
+      media: { image }
     }) => {
-      const { file } = req
-
       let finalFile: null | File = null
 
       if (image === 'removed') {
         finalFile = null
-      }
+      } else if (image) {
+        if (typeof image === 'string') {
+          const response = await fetch(image)
 
-      if (file) {
-        const fileBuffer = fs.readFileSync(file.path)
+          const buffer = await response.arrayBuffer()
 
-        finalFile = new File([fileBuffer], file.originalname)
-        fs.unlinkSync(file.path)
+          finalFile = new File([buffer], 'image.jpg')
+        } else {
+          const fileBuffer = fs.readFileSync(image[0].path)
+
+          finalFile = new File([fileBuffer], image[0].originalname)
+          fs.unlinkSync(image[0].path)
+        }
       }
 
       return await pb.update
