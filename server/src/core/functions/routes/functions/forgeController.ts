@@ -30,14 +30,18 @@
  * ```
  */
 import { checkExistence } from '@functions/database'
+import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import type { Request, Response, Router } from 'express'
 
 import {
   BaseResponse,
   Context,
+  ConvertMedia,
   InferZodType,
-  InputSchema
+  InputSchema,
+  MediaConfig,
+  type ReplaceFileWithMulter
 } from '../typescript/forge_controller.types'
 import {
   ClientError,
@@ -45,6 +49,8 @@ import {
   serverError,
   successWithBaseResponse
 } from '../utils/response'
+import restoreFormDataType from '../utils/restoreDataType'
+import { splitMediaAndData } from '../utils/splitMediaAndData'
 
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
@@ -70,7 +76,8 @@ import {
 export class ForgeControllerBuilder<
   TMethod extends 'get' | 'post' = 'get',
   TInput extends InputSchema = InputSchema,
-  TOutput = unknown
+  TOutput = unknown,
+  TMedia extends MediaConfig = MediaConfig
 > {
   /** Indicates that this class is a ForgeController */
   public __isForgeController!: true
@@ -106,6 +113,8 @@ export class ForgeControllerBuilder<
   /** Whether this endpoint returns downloadable content */
   protected _isDownloadable = false
 
+  protected _media: TMedia = {} as TMedia
+
   /** The main request handler function with proper typing for request/response objects */
   protected _handler?: (
     req: Request<
@@ -130,13 +139,20 @@ export class ForgeControllerBuilder<
   private cloneWith<
     NewMethod extends TMethod = TMethod,
     NewInput extends InputSchema = TInput,
-    NewOutput = TOutput
-  >(overrides: Partial<InputSchema>) {
-    const builder = new ForgeControllerBuilder<NewMethod, NewInput, NewOutput>()
+    NewOutput = TOutput,
+    NewMedia extends MediaConfig = TMedia
+  >(overrides: Partial<InputSchema>, media: NewMedia) {
+    const builder = new ForgeControllerBuilder<
+      NewMethod,
+      NewInput,
+      NewOutput,
+      NewMedia
+    >()
 
     builder._method = this._method as NewMethod
     builder._middlewares = [...this._middlewares]
     builder._schema = { ...this._schema, ...overrides } as unknown as NewInput
+    builder._media = media as NewMedia
     builder._statusCode = this._statusCode
     builder._existenceCheck = this._existenceCheck
     builder._noDefaultResponse = this._noDefaultResponse
@@ -176,6 +192,10 @@ export class ForgeControllerBuilder<
     return this
   }
 
+  media<NewMedia extends MediaConfig>(config: NewMedia) {
+    return this.cloneWith<TMethod, TInput, TOutput, NewMedia>({}, config)
+  }
+
   /**
    * Sets Zod validation schemas for request input (body and query parameters).
    * Enables automatic validation and type inference for the route handler.
@@ -193,9 +213,12 @@ export class ForgeControllerBuilder<
    * ```
    */
   input<T extends InputSchema>(input: T) {
-    return this.cloneWith<TMethod, T, TOutput>({
-      ...input
-    })
+    return this.cloneWith<TMethod, T, TOutput>(
+      {
+        ...input
+      },
+      this._media
+    )
   }
 
   /**
@@ -337,7 +360,7 @@ export class ForgeControllerBuilder<
    * // controller now has the return type { success: boolean, user: User } as OutputType
    * ```
    */
-  callback<CB extends (context: Context<TInput, any>) => Promise<any>>(
+  callback<CB extends (context: Context<TInput, any, TMedia>) => Promise<any>>(
     cb: CB
   ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>> {
     const schema = this._schema
@@ -349,51 +372,96 @@ export class ForgeControllerBuilder<
       isDownloadable: this._isDownloadable
     }
 
-    async function __handler(
-      req: Request<
-        never,
-        any,
-        InferZodType<TInput['body']>,
-        InferZodType<TInput['query']>
-      >,
-      res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
-    ): Promise<void> {
-      try {
-        for (const type of ['body', 'query'] as const) {
-          const validator = schema[type]
+    const _handler = (__media: TMedia) => {
+      async function __handler(
+        req: Request<
+          never,
+          any,
+          InferZodType<TInput['body']>,
+          InferZodType<TInput['query']>
+        >,
+        res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
+      ): Promise<void> {
+        try {
+          let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
 
-          if (validator) {
-            const result = validator.safeParse(req[type])
+          for (const type of ['body', 'query'] as const) {
+            const validator = schema[type]
 
-            if (!result.success) {
-              return clientError(res, {
-                location: type,
-                message: JSON.parse(result.error.message)
-              })
+            if (validator) {
+              let result
+
+              if (type === 'body') {
+                const { data, media } = splitMediaAndData(
+                  __media,
+                  req[type],
+                  (req.files || {}) as Record<string, Express.Multer.File[]>
+                )
+
+                finalMedia = media as ConvertMedia<TMedia>
+
+                const finalData = req.is('multipart/form-data')
+                  ? Object.fromEntries(
+                      Object.entries(data).map(([key, value]) => [
+                        key,
+                        restoreFormDataType(value)
+                      ])
+                    )
+                  : data
+
+                result = validator.safeParse(finalData)
+              } else {
+                result = validator.safeParse(req[type])
+              }
+
+              if (!result.success) {
+                return clientError(res, {
+                  location: type,
+                  message: JSON.parse(result.error.message)
+                })
+              }
+
+              if (type === 'body') {
+                req.body = result.data as InferZodType<TInput['body']>
+              } else if (type === 'query') {
+                req.query = result.data as InferZodType<TInput['query']>
+              }
             }
 
-            if (type === 'body') {
-              req.body = result.data as InferZodType<TInput['body']>
-            } else if (type === 'query') {
-              req.query = result.data as InferZodType<TInput['query']>
-            }
-          }
+            if (options.existenceCheck?.[type]) {
+              for (const [key, collection] of Object.entries(
+                options.existenceCheck[type]
+              ) as Array<[string, string]>) {
+                const optional = collection.match(/\^?\[(.*)\]$/)
 
-          if (options.existenceCheck?.[type]) {
-            for (const [key, collection] of Object.entries(
-              options.existenceCheck[type]
-            ) as Array<[string, string]>) {
-              const optional = collection.match(/\^?\[(.*)\]$/)
+                const value = (req[type] as any)[key] as
+                  | string
+                  | string[]
+                  | undefined
 
-              const value = (req[type] as any)[key] as
-                | string
-                | string[]
-                | undefined
+                if (optional && !value) continue
 
-              if (optional && !value) continue
+                if (Array.isArray(value)) {
+                  for (const val of value) {
+                    if (
+                      !(await checkExistence(
+                        req.pb,
+                        collection.replace(
+                          /\^?\[(.*)\]$/,
+                          '$1'
+                        ) as unknown as keyof typeof COLLECTION_SCHEMAS,
+                        val
+                      ))
+                    ) {
+                      clientError(
+                        res,
+                        `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`
+                      )
 
-              if (Array.isArray(value)) {
-                for (const val of value) {
+                      return
+                    }
+                  }
+                } else {
                   if (
                     !(await checkExistence(
                       req.pb,
@@ -401,80 +469,63 @@ export class ForgeControllerBuilder<
                         /\^?\[(.*)\]$/,
                         '$1'
                       ) as unknown as keyof typeof COLLECTION_SCHEMAS,
-                      val
+                      value!
                     ))
                   ) {
                     clientError(
                       res,
-                      `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`
+                      `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
                     )
 
                     return
                   }
                 }
-              } else {
-                if (
-                  !(await checkExistence(
-                    req.pb,
-                    collection.replace(
-                      /\^?\[(.*)\]$/,
-                      '$1'
-                    ) as unknown as keyof typeof COLLECTION_SCHEMAS,
-                    value!
-                  ))
-                ) {
-                  clientError(
-                    res,
-                    `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
-                  )
-
-                  return
-                }
               }
             }
           }
-        }
 
-        if (options.isDownloadable) {
-          res.setHeader('X-Lifeforge-Downloadable', 'true')
-          res.setHeader(
-            'Access-Control-Expose-Headers',
-            'X-Lifeforge-Downloadable'
+          if (options.isDownloadable) {
+            res.setHeader('X-Lifeforge-Downloadable', 'true')
+            res.setHeader(
+              'Access-Control-Expose-Headers',
+              'X-Lifeforge-Downloadable'
+            )
+          }
+
+          const result = await cb({
+            req,
+            res,
+            io: req.io,
+            pb: req.pb,
+            body: req.body,
+            query: req.query,
+            media: finalMedia
+          })
+
+          if (!options.noDefaultResponse) {
+            res.status(options.statusCode || 200)
+            successWithBaseResponse(res, result)
+          }
+        } catch (err) {
+          if (ClientError.isClientError(err)) {
+            return clientError(res, err.message, err.code)
+          }
+          console.error(
+            'Internal error:',
+            err instanceof Error ? err.message : err
           )
+          serverError(res, 'Internal server error')
         }
-
-        const result = await cb({
-          req,
-          res,
-          io: req.io,
-          pb: req.pb,
-          body: req.body,
-          query: req.query
-        })
-
-        if (!options.noDefaultResponse) {
-          res.status(options.statusCode || 200)
-          successWithBaseResponse(res, result)
-        }
-      } catch (err) {
-        if (ClientError.isClientError(err)) {
-          return clientError(res, err.message, err.code)
-        }
-        console.error(
-          'Internal error:',
-          err instanceof Error ? err.message : err
-        )
-        serverError(res, 'Internal server error')
       }
-    }
 
-    __handler.meta = {
-      description: this._description,
-      schema,
-      options
-    }
+      __handler.meta = {
+        description: this._description,
+        schema,
+        options
+      }
 
-    this._handler = __handler
+      return __handler
+    }
 
     const newBuilder = new ForgeControllerBuilder<
       TMethod,
@@ -485,12 +536,13 @@ export class ForgeControllerBuilder<
     newBuilder._method = this._method
     newBuilder._middlewares = [...this._middlewares]
     newBuilder._schema = this._schema
+    newBuilder._media = this._media
     newBuilder._statusCode = this._statusCode
     newBuilder._existenceCheck = this._existenceCheck
     newBuilder._noDefaultResponse = this._noDefaultResponse
     newBuilder._description = this._description
     newBuilder._isDownloadable = this._isDownloadable
-    newBuilder._handler = __handler
+    newBuilder._handler = _handler(this._media)
 
     return newBuilder
   }
@@ -513,7 +565,25 @@ export class ForgeControllerBuilder<
       throw new Error('Missing handler. Use .callback() before .register()')
     }
 
-    router[this._method](`/${routeName}`, ...this._middlewares, this._handler)
+    router[this._method](
+      `/${routeName}`,
+      [
+        ...(Object.keys(this._media).length > 0
+          ? [
+              fieldsUploadMiddleware(
+                Object.fromEntries(
+                  Object.entries(this._media).map(([key, value]) => [
+                    key,
+                    value.maxCount
+                  ])
+                )
+              )
+            ]
+          : []),
+        ...this._middlewares
+      ],
+      this._handler
+    )
   }
 }
 
