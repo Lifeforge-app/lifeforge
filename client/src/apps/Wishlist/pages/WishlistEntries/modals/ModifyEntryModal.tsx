@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import type { WishlistEntry } from '..'
@@ -17,6 +18,8 @@ function ModifyEntryModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
+  const [fileRemoved, setFileRemoved] = useState(false)
 
   const mutation = useMutation(
     (type === 'create'
@@ -88,7 +91,10 @@ function ModifyEntryModal({
       },
       image: {
         label: 'Product Image',
-        icon: 'tabler:photo'
+        icon: 'tabler:photo',
+        onFileRemoved: () => {
+          setFileRemoved(true)
+        }
       }
     })
     .initialData({
@@ -98,21 +104,27 @@ function ModifyEntryModal({
           ? forgeAPI.media.input({
               collectionId: initialData.collectionId!,
               recordId: initialData.id!,
-              fieldId: 'image'
+              fieldId: initialData.image!
             }).endpoint
           : null,
         preview: initialData?.image
           ? forgeAPI.media.input({
               collectionId: initialData.collectionId!,
               recordId: initialData.id!,
-              fieldId: 'image'
+              fieldId: initialData.image!
             }).endpoint
           : null
       }
     })
     .onSubmit(async data => {
+      if (fileRemoved) {
+        data.image = 'removed'
+      }
+
       await mutation.mutateAsync(data)
     })
+
+  console.log(fileRemoved)
 
   return <FormModal {...formProps} />
 }
