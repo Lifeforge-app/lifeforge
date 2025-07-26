@@ -1,7 +1,24 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 
 import { useFilteredTransactions } from './useFilteredTransactions'
+
+export type WalletTransaction = InferOutput<
+  typeof forgeAPI.wallet.transactions.list
+>[number]
+
+export type WalletAsset = InferOutput<
+  typeof forgeAPI.wallet.assets.list
+>[number]
+
+export type WalletLedger = InferOutput<
+  typeof forgeAPI.wallet.ledgers.list
+>[number]
+
+export type WalletCategory = InferOutput<
+  typeof forgeAPI.wallet.categories.list
+>[number]
 
 export function useWalletData() {
   const transactionsQuery = useQuery(

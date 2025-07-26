@@ -1,3 +1,23 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  Legend,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip
+} from 'chart.js'
+import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
+import { useMemo } from 'react'
+import { Line } from 'react-chartjs-2'
+import { usePersonalization } from 'shared'
+import tinycolor from 'tinycolor2'
+
+import type { WalletAsset } from '@apps/Wallet/hooks/useWalletData'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 // Register Chart.js components
@@ -17,18 +37,18 @@ function BalanceChartModal({
   onClose
 }: {
   data: {
-    initialData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
+    initialData: WalletAsset
   }
   onClose: () => void
 }) {
   const { derivedThemeColor } = usePersonalization()
 
-  const assetBalanceQuery = useAPIQuery<
-    WalletControllersSchemas.IAssets['getAssetAccumulatedBalance']['response']
-  >(
-    `wallet/assets/balance/${initialData.id}`,
-    ['wallet', 'assets', 'balance', initialData.id],
-    !!initialData.id
+  const assetBalanceQuery = useQuery(
+    forgeAPI.wallet.assets.getAssetAccumulatedBalance
+      .input({
+        id: initialData.id
+      })
+      .queryOptions()
   )
 
   const chartData = useMemo(() => {

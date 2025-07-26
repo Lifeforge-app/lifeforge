@@ -34,8 +34,7 @@ function Assets() {
 
   const handleCreateCategory = useCallback(() => {
     open(ModifyAssetModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 

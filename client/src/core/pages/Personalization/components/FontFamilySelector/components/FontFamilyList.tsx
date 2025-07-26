@@ -1,32 +1,34 @@
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
+import type { UseQueryResult } from '@tanstack/react-query'
+import type forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
+import type { InferOutput } from 'lifeforge-api'
 import { Tooltip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
 
 import FontFamilyItem from './FontFamilyItem'
 
-interface FontFamilyListProps {
-  enabled: string | boolean
-  fontFamily: string
-  allFonts: any[]
-}
-
 function FontFamilyList({
-  enabled,
-  fontFamily,
-  allFonts
-}: FontFamilyListProps) {
+  fontsQuery
+}: {
+  fontsQuery: UseQueryResult<
+    InferOutput<typeof forgeAPI.user.personalization.listGoogleFonts>
+  >
+}) {
   const { t } = useTranslation('core.personalization')
 
   const { changeFontFamily } = useUserPersonalization()
 
-  if (enabled === 'loading') {
+  const { fontFamily } = usePersonalization()
+
+  if (fontsQuery.isLoading) {
     return <Icon className="text-bg-500 size-6" icon="svg-spinners:180-ring" />
   }
 
-  if (enabled) {
+  if (fontsQuery.isSuccess && fontsQuery.data.enabled) {
     return (
       <Listbox
         value={fontFamily}
@@ -61,7 +63,7 @@ function FontFamilyList({
             anchor="bottom end"
             className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
-            {allFonts.map(({ family }) => (
+            {fontsQuery.data.items.map(({ family }) => (
               <FontFamilyItem key={family} family={family} />
             ))}
           </ListboxOptions>

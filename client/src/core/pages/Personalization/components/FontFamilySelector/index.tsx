@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { ConfigColumn } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
-import { fetchAPI } from 'shared'
 
 import FontFamilyList from './components/FontFamilyList'
 
@@ -42,31 +42,15 @@ const addFontsToStylesheet = (fonts: any[]) => {
 function FontFamilySelector() {
   const { t } = useTranslation('core.personalization')
 
-  const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
-
-  const { fontFamily } = usePersonalization()
-
-  const [allFonts, setAllFonts] = useState<any[]>([])
+  const fontsQuery = useQuery(
+    forgeAPI.user.personalization.listGoogleFonts.queryOptions()
+  )
 
   useEffect(() => {
-    const loadFonts = async () => {
-      const fonts = await fetchAPI<{
-        enabled: boolean
-        items: any[]
-      }>(import.meta.env.VITE_API_HOST, '/user/personalization/fonts')
-
-      setEnabled(fonts.enabled)
-
-      if (!fonts.enabled) {
-        return
-      }
-
-      setAllFonts(fonts.items)
-      addFontsToStylesheet(fonts.items)
+    if (fontsQuery.data) {
+      addFontsToStylesheet(fontsQuery.data.items)
     }
-
-    loadFonts()
-  }, [setAllFonts])
+  }, [fontsQuery.isSuccess])
 
   return (
     <ConfigColumn
@@ -86,11 +70,7 @@ function FontFamilySelector() {
         </>
       }
     >
-      <FontFamilyList
-        allFonts={allFonts}
-        enabled={enabled}
-        fontFamily={fontFamily}
-      />
+      <FontFamilyList fontsQuery={fontsQuery} />
     </ConfigColumn>
   )
 }

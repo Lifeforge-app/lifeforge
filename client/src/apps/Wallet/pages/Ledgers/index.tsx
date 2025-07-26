@@ -27,16 +27,14 @@ function Ledgers() {
 
   const handleCreateLedger = () => {
     open(ModifyLedgerModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }
 
   useEffect(() => {
     if (hash === '#new') {
       open(ModifyLedgerModal, {
-        type: 'create',
-        initialData: null
+        type: 'create'
       })
     }
   }, [hash])
@@ -67,7 +65,7 @@ function Ledgers() {
         {ledgers => (
           <>
             {ledgers.length > 0 ? (
-              <div className="mb-24 space-y-4 md:mb-6">
+              <div className="mb-24 space-y-3 md:mb-6">
                 {ledgers.map(ledger => (
                   <LedgerItem key={ledger.id} ledger={ledger} />
                 ))}
