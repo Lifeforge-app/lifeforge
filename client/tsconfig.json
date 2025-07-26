@@ -13,6 +13,7 @@
       "node"
     ],
     /* Bundler mode */
+    "outDir": "./dist",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -23,6 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "verbatimModuleSyntax": true,
+    "composite": true,
     "paths": {
       "@providers/*": [
         "./src/core/providers/*"
@@ -49,6 +51,7 @@
   ],
   "include": [
     "./src/**/*",
+    "./src/**/*.json",
   ],
   "references": [
     {

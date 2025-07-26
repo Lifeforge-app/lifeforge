@@ -1,3 +1,13 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import {
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import ModifyCategoryModal from '../../ModifyCategoryModal'
 
 function CategorySectionItem({
