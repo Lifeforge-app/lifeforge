@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Recursively merges the `source` object into the `target` object.
  * - If a key in source is an object (but **not** an array), it merges recursively.
@@ -60,17 +61,38 @@ export function getFormData(data: Record<string, any>): FormData {
 
   const fileEntries: Record<string, File> = {}
 
+  const encodeValue = (value: any): string | File => {
+    const type = typeof value
+
+    if (value instanceof File) return value
+
+    if (value instanceof Date) {
+      return `__type:date;${JSON.stringify(value.toISOString())}`
+    }
+
+    if (Array.isArray(value)) {
+      return `__type:array;${JSON.stringify(value)}`
+    }
+
+    switch (type) {
+      case 'boolean':
+      case 'number':
+        return `__type:${type};${JSON.stringify(value)}`
+      case 'object':
+        return `__type:object;${JSON.stringify(value)}`
+      default:
+        return String(value)
+    }
+  }
+
   Object.entries(data).forEach(([key, value]) => {
     if (value instanceof File) {
       fileEntries[key] = value
-    } else if (typeof value !== 'string') {
-      formData.append(key, JSON.stringify(value))
     } else {
-      formData.append(key, value)
+      formData.append(key, encodeValue(value))
     }
   })
 
-  // Always add files last, for server sanity
   Object.entries(fileEntries).forEach(([key, file]) => {
     formData.append(key, file)
   })

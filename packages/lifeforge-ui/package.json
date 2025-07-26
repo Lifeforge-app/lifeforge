@@ -25,8 +25,8 @@
   "scripts": {
     "dev": "tsup src/index.ts --watch",
     "storybook": "storybook dev -p 6006",
-    "types": "tsgo --noEmit",
-    "build": "rm -rf dist && tsup src/index.ts",
+    "types": "tsc --noEmit",
+    "build": "tsc --noEmit && rm -rf dist && tsup src/index.ts",
     "build-storybook": "storybook build"
   },
   "dependencies": {

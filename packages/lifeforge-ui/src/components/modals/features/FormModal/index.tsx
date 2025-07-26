@@ -149,7 +149,7 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
             finalValue = value
         }
 
-        return JSON.parse(JSON.stringify([key, finalValue]))
+        return [key, finalValue]
       })
     )
 
@@ -158,6 +158,7 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
         await onSubmit(finalData as InferFormFinalState<TFields>)
       } finally {
         setSubmitLoading(false)
+        onClose()
       }
     }
   }

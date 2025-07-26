@@ -11,7 +11,7 @@ import {
   PointElement,
   Title,
   Tooltip,
-  TooltipItem
+  type TooltipItem
 } from 'chart.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
