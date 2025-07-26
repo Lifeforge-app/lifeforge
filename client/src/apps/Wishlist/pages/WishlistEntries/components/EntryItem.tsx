@@ -11,8 +11,8 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
 import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
 
 import type { WishlistEntry } from '..'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
@@ -21,11 +21,6 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
-
-  const collectionIdQuery = useAPIQuery<string>(
-    'wishlist/entries/collection-id',
-    ['wishlist', 'entries', 'collection-id']
-  )
 
   const [bought, setBought] = useState(entry.bought)
 
@@ -65,7 +60,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
   }, [entry])
 
   return (
-    <li className="component-bg relative flex flex-col justify-between gap-3 rounded-md p-4 sm:pr-8 md:flex-row md:items-center">
+    <li className="component-bg shadow-custom relative flex flex-col justify-between gap-3 rounded-md p-4 sm:pr-8 md:flex-row md:items-center">
       <div className="flex-between gap-8">
         <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
           <div className="component-bg-lighter relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20">
@@ -74,17 +69,19 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
               icon="tabler:shopping-bag"
             />
             {entry.image !== '' && (
-              <img
-                alt=""
-                className="size-full rounded-md object-cover"
-                src={
-                  forgeAPI.media.input({
-                    collectionId: entry.collectionId,
-                    recordId: entry.id,
-                    fieldId: entry.image
-                  }).endpoint
-                }
-              />
+              <Zoom>
+                <img
+                  alt=""
+                  className="size-full rounded-md object-cover"
+                  src={
+                    forgeAPI.media.input({
+                      collectionId: entry.collectionId,
+                      recordId: entry.id,
+                      fieldId: entry.image
+                    }).endpoint
+                  }
+                />
+              </Zoom>
             )}
           </div>
           <div className="w-full min-w-0">
