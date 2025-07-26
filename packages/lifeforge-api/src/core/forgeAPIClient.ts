@@ -7,31 +7,39 @@ import type {
   InferInput,
   InferOutput
 } from '../typescript/forge_api_client.types'
+import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
-function joinObjectsRecursively(
-  target: Record<string, any>,
-  source: Record<string, any>
-): Record<string, any> {
-  for (const key in source) {
-    if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
-      target[key] = joinObjectsRecursively(target[key] || {}, source[key])
-    } else {
-      target[key] = source[key]
-    }
-  }
-
-  return target
-}
-
+/**
+ * ForgeAPIClientController is a chainable API client controller for making type-safe
+ * HTTP requests, designed to pair with LifeForge Server API schema and support React Query.
+ *
+ * Usage is chainable and ergonomic:
+ *   - Set query parameters using `.input()`
+ *   - Get fetch options for React Query via `.queryOptions()` and `.mutationOptions()`
+ *   - Trigger requests directly with `.query()` and `.mutate()`
+ *
+ * Path is configured in the constructor, and query params are managed internally.
+ *
+ * @template T The controller type, inferred from API schema, must include `__isForgeController: true`.
+ */
 export class ForgeAPIClientController<
   T extends { __isForgeController: true } = any
 > {
+  /** Internal type, for type inference only */
   public __type!: T
 
+  /** Internal cache key for React Query and other usages */
   private _key: unknown[] = []
+  /** The full API endpoint path, including query string */
   private _endpoint: string = ''
+  /** Internal storage for query parameters */
   private _input: Record<string, any> | undefined
 
+  /**
+   * Creates a new API client controller for a specific route.
+   * @param _apiHost The base URL of the API server
+   * @param _route The endpoint path (without base URL)
+   */
   constructor(
     private _apiHost: string,
     private _route: string
@@ -39,14 +47,26 @@ export class ForgeAPIClientController<
     this.refreshEndpoint()
   }
 
+  /**
+   * Returns the current cache key, which includes the route and query params.
+   * Useful for React Query's `queryKey`.
+   */
   get key() {
     return this._key
   }
 
+  /**
+   * Returns the full endpoint URL (absolute), including query string if present.
+   */
   get endpoint() {
     return new URL(this._endpoint, this._apiHost).toString()
   }
 
+  /**
+   * Set query parameters for the endpoint.
+   * @param data Object of query parameters matching the input type
+   * @returns The controller instance for chaining
+   */
   input(data: InferInput<T>['query']) {
     this._input = joinObjectsRecursively(
       this._input || {},
@@ -57,6 +77,11 @@ export class ForgeAPIClientController<
     return this
   }
 
+  /**
+   * Generates a React Query `UseQueryOptions` object for the current endpoint.
+   * @param options Optional overrides (excluding `queryKey` and `queryFn`)
+   * @returns Options for use in React Query's `useQuery`
+   */
   queryOptions(
     options: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'> = {}
   ): UseQueryOptions<InferOutput<T>> {
@@ -72,6 +97,11 @@ export class ForgeAPIClientController<
     }
   }
 
+  /**
+   * Generates a React Query `UseMutationOptions` object for the current endpoint.
+   * @param options Optional overrides (excluding `mutationKey` and `mutationFn`)
+   * @returns Options for use in React Query's `useMutation`
+   */
   mutationOptions(
     options: Omit<
       UseMutationOptions<any, any, any>,
@@ -81,46 +111,42 @@ export class ForgeAPIClientController<
     return {
       ...options,
       mutationKey: this._key,
-      mutationFn: async (data: Partial<T>) => {
-        if (Object.values(data).some(value => value instanceof File)) {
-          const formData = new FormData()
-
-          const fileEntries: Record<string, File> = {}
-
-          Object.entries(data).forEach(([key, value]) => {
-            if (value instanceof File) {
-              fileEntries[key] = value
-            } else if (typeof value !== 'string') {
-              formData.append(key, JSON.stringify(value))
-            } else {
-              formData.append(key, value)
-            }
-          })
-
-          Object.entries(fileEntries).forEach(([key, file]) => {
-            formData.append(key, file)
-          })
-
-          return fetchAPI(this._apiHost, this._endpoint, {
-            method: 'POST',
-            body: formData
-          })
-        }
-
+      mutationFn: (data: Partial<T>) => {
         return fetchAPI(this._apiHost, this._endpoint, {
           method: 'POST',
-          body: data
+          body: hasFile(data) ? getFormData(data) : data
         })
       }
     }
   }
 
-  async query() {
-    return await fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
-      method: 'get'
+  /**
+   * Triggers a GET request to the current endpoint.
+   * @returns Promise resolving to the API response
+   */
+  query() {
+    return fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+      method: 'GET'
     })
   }
 
+  /**
+   * Triggers a POST request to the current endpoint.
+   * @param data The body data for the request
+   * @returns Promise resolving to the API response
+   */
+  mutate(data: InferInput<T>['body']) {
+    return fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+      method: 'POST',
+      body: hasFile(data) ? getFormData(data) : data
+    })
+  }
+
+  /**
+   * Refreshes the endpoint string and cache key based on current route and input.
+   * Called internally during class construction and when input changes.
+   * @private
+   */
   private refreshEndpoint() {
     this._endpoint = `${this._route}`
 
@@ -141,6 +167,18 @@ export class ForgeAPIClientController<
   }
 }
 
+/**
+ * Recursively creates a chainable API client tree based on the provided type.
+ * Allows ergonomic deep routing:
+ *   `api.client.foo.bar.input(...).query()`
+ *
+ * Properties and methods from the controller are exposed at each leaf node.
+ *
+ * @template T API tree schema type (usually inferred from backend schema types)
+ * @param apiHost The base URL of the API server
+ * @param path The path segments accumulated so far (internal use)
+ * @returns A proxied API client tree
+ */
 export function createForgeAPIClient<T>(
   apiHost: string,
   path: string[] = []

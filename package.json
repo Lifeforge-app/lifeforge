@@ -61,7 +61,6 @@
     "typescript-eslint": "^8.31.1"
   },
   "dependencies": {
-    "@typescript/native-preview": "^7.0.0-dev.20250725.1",
     "babel-plugin-react-compiler": "^19.1.0-rc.2"
   }
 }

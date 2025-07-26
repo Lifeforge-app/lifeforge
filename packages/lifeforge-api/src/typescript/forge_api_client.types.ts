@@ -13,6 +13,15 @@ type ZodObjectOrIntersection =
   | ZodObject<ZodRawShape>
   | ZodIntersection<ZodTypeAny, ZodTypeAny>
 
+/**
+ * Infers the *input* TypeScript type from a Forge controller config object,
+ * using its embedded Zod schema definitions.
+ * - Produces a plain object type with values inferred from Zod.
+ *
+ * @template T The controller config object, must have `__isForgeController` and `__input` fields.
+ * @example
+ * type MyInput = InferInput<typeof myController>
+ */
 export type InferInput<T> = T extends {
   __isForgeController: true
   __input: infer I
@@ -26,6 +35,13 @@ export type InferInput<T> = T extends {
     : never
   : never
 
+/**
+ * Infers the *output* (response) TypeScript type from a Forge controller config object.
+ *
+ * @template T The controller config object, must have `__isForgeController` and `__output` fields.
+ * @example
+ * type MyOutput = InferOutput<typeof myController>
+ */
 export type InferOutput<T> = T extends {
   __isForgeController: true
   __output: infer O
@@ -33,6 +49,13 @@ export type InferOutput<T> = T extends {
   ? O
   : never
 
+/**
+ * Extracts the input schema (as plain TypeScript type) from a `ForgeAPIClientController` instance.
+ *
+ * @template T The ForgeAPIClientController instance
+ * @example
+ * type Input = InferClientControllerInput<typeof apiClient>
+ */
 export type InferClientControllerInput<
   T extends ForgeAPIClientController<any>
 > = T['__type'] extends { __isForgeController: true; __input: infer I }
@@ -45,6 +68,13 @@ export type InferClientControllerInput<
     : never
   : never
 
+/**
+ * Extracts the output schema (response type) from a `ForgeAPIClientController` instance.
+ *
+ * @template T The ForgeAPIClientController instance
+ * @example
+ * type Output = InferClientControllerOutput<typeof apiClient>
+ */
 export type InferClientControllerOutput<
   T extends ForgeAPIClientController<any>
 > = T['__type'] extends {
@@ -54,24 +84,54 @@ export type InferClientControllerOutput<
   ? O
   : never
 
+/**
+ * Filters the keys of a route tree to only include non-controller nodes.
+ * - Used for extracting "sub-tree" keys (e.g., sub-modules).
+ *
+ * @template T The route tree object
+ * @example
+ * type Keys = FilteredRouteKey<typeof routeTree>
+ */
 export type FilteredRouteKey<T> = {
   [K in keyof T]: T[K] extends { __isForgeController: true } ? never : K
 }[keyof T]
 
+/**
+ * Given a controller tree, returns a union of `[route, key]` tuples for each controller.
+ * - Internal utility for mapping between route paths and object keys.
+ */
 type RouteNameMap<T> = {
   [K in keyof T]: T[K] extends { __route: infer R }
     ? [R extends string | number | symbol ? R : never, K]
     : never
 }[keyof T]
 
+/**
+ * Maps each controller's route to its object key, e.g. { "/entries": "entries" }
+ */
 type RouteToKeyMap<T> = {
   [P in RouteNameMap<T> as P[0] extends string | number | symbol
     ? P[0]
     : never]: P[1]
 }
 
+/**
+ * Gets all route keys for a controller tree, e.g. "/foo", "/bar".
+ */
 export type RouteKeys<T> = keyof RouteToKeyMap<T>
 
+/**
+ * Constructs a deeply-nested client tree from a controller schema.
+ * - Each controller becomes a `ForgeAPIClientController`
+ * - Nested groups become more `ClientTree`
+ *
+ * This is what powers your chainable, type-safe API client.
+ *
+ * @template T The API schema tree (usually from your backend type export)
+ * @example
+ * const api = createForgeAPIClient<typeof schema>(...)
+ * // api.foo.bar.mutate() etc.
+ */
 export type ClientTree<T> = {
   [K in keyof T]: T[K] extends { __isForgeController: true }
     ? ForgeAPIClientController<T[K]>
