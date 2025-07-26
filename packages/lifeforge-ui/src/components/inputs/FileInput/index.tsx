@@ -83,28 +83,28 @@ function FileInput({
         </span>
       </div>
       {preview !== null && (
-        <Zoom zoomMargin={100}>
-          <img
-            alt=""
-            className="mx-auto mt-6 max-h-64 rounded-md"
-            src={preview}
-          />
-        </Zoom>
+        <>
+          <Zoom zoomMargin={100}>
+            <img
+              alt=""
+              className="mx-auto mt-6 max-h-64 rounded-md"
+              src={preview}
+            />
+          </Zoom>
+          <Button
+            isRed
+            className="mt-6 w-full"
+            icon="tabler:x"
+            onClick={() => {
+              setData({ file: null, preview: null })
+              onImageRemoved?.()
+            }}
+          >
+            Remove
+          </Button>
+        </>
       )}
-      {preview !== null && (
-        <Button
-          isRed
-          className="mt-6 w-full"
-          icon="tabler:x"
-          onClick={() => {
-            setData({ file: null, preview: null })
-            onImageRemoved?.()
-          }}
-        >
-          Remove
-        </Button>
-      )}
-      {image !== null && preview === null && (
+      {image !== null && image !== 'removed' && preview === null && (
         <div className="mt-4 flex items-center justify-between gap-8">
           <div className="flex w-full items-center gap-3">
             <Icon
@@ -129,7 +129,7 @@ function FileInput({
           />
         </div>
       )}
-      {image === null && preview === null && (
+      {(image === null || image === "removed") && (
         <div className="mt-6 flex flex-col items-center gap-3">
           <Button
             className="w-full"
