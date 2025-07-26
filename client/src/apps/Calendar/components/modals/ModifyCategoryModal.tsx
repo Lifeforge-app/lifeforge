@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
 
 import type { CalendarCalendar } from '../Calendar'
 
@@ -33,7 +33,7 @@ function ModifyCategoryModal({
     })
   )
 
-  const Form = defineForm<
+  const formProps = defineForm<
     InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
   >()
     .ui({
@@ -69,7 +69,7 @@ function ModifyCategoryModal({
       await mutation.mutateAsync(data)
     })
 
-  return <Form />
+  return <FormModal {...formProps} />
 }
 
 export default ModifyCategoryModal

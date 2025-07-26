@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
 
 import type { IdeaBoxContainer } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
@@ -36,7 +36,7 @@ function ModifyContainerModal({
     forgeAPI.ai.imageGeneration.verifyAPIKey.queryOptions()
   )
 
-  const Form = defineForm<
+  const formProps = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.containers)[typeof type]>['body']
   >()
     .ui({
@@ -96,7 +96,7 @@ function ModifyContainerModal({
       await mutation.mutateAsync(data)
     })
 
-  return <Form />
+  return <FormModal {...formProps} />
 }
 
 export default ModifyContainerModal

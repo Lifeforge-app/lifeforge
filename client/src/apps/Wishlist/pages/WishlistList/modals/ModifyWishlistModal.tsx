@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
 
 import type { WishlistList } from '..'
 
@@ -30,7 +30,7 @@ function ModifyWishlistListModal({
     })
   )
 
-  const Form = defineForm<
+  const formProps = defineForm<
     InferInput<(typeof forgeAPI.wishlist.lists)[typeof type]>['body']
   >()
     .ui({
@@ -79,7 +79,7 @@ function ModifyWishlistListModal({
       await mutation.mutateAsync(data)
     })
 
-  return <Form />
+  return <FormModal {...formProps} />
 }
 
 export default ModifyWishlistListModal

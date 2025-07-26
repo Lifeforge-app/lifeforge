@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
@@ -44,7 +44,7 @@ function ModifyAchievementModal({
     })
   )
 
-  const Form = defineForm<
+  const formProps = defineForm<
     InferInput<(typeof forgeAPI.achievements.entries)[typeof type]>['body']
   >()
     .ui({
@@ -92,7 +92,7 @@ function ModifyAchievementModal({
       await mutation.mutateAsync(formData)
     })
 
-  return <Form />
+  return <FormModal {...formProps} />
 }
 
 export default ModifyAchievementModal

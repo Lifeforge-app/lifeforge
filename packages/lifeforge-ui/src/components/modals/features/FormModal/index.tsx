@@ -21,10 +21,6 @@ const transformExistedData = (field: any, value: unknown): unknown => {
     return dayjs(value as string).toDate()
   }
 
-  if (field?.type === 'file' && value) {
-    return { file: value, preview: value }
-  }
-
   return value
 }
 
@@ -76,7 +72,7 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
     fields: TFields
     initialData?: Partial<InferFormState<TFields>>
     additionalFields?: React.ReactNode
-    onSubmit: (data: InferFormFinalState<TFields>) => Promise<void>
+    onSubmit: (data: InferFormFinalState<any>) => Promise<void>
   }
   ui: {
     title: string
@@ -157,10 +153,11 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
     )
 
     if (onSubmit) {
-      await onSubmit(finalData as InferFormFinalState<TFields>)
-      setSubmitLoading(false)
-
-      return
+      try {
+        await onSubmit(finalData as InferFormFinalState<TFields>)
+      } finally {
+        setSubmitLoading(false)
+      }
     }
   }
 
