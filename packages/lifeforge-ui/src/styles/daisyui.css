@@ -40,3 +40,7 @@
 .dark .range-primary {
   --range-thumb: var(--color-bg-800);
 }
+
+progress {
+  @apply text-custom-500!;
+}

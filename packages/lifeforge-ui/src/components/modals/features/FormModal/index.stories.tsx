@@ -2,6 +2,7 @@ import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import Index from './index'
+import FormModal from './index'
 import defineForm from './utils/defineForm'
 
 const meta = {
@@ -23,7 +24,7 @@ export const Default: Story = {
     }
   } as never,
   render: () => {
-    const FormComponent = defineForm<{
+    const formProps = defineForm<{
       title: string
       price: number
       choice:
@@ -118,7 +119,7 @@ export const Default: Story = {
 
     return (
       <ModalWrapper isOpen={true}>
-        <FormComponent />
+        <FormModal {...formProps} />
       </ModalWrapper>
     )
   }

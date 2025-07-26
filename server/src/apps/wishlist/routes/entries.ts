@@ -67,7 +67,7 @@ const create = forgeController.mutation
     body: z.object({
       name: z.string(),
       url: z.string(),
-      price: z.string().transform(val => parseFloat(val) || 0 || 0),
+      price: z.number().min(0),
       list: z.string(),
       image: z.union([z.string(), z.file()]).optional()
     })
@@ -113,7 +113,7 @@ const update = forgeController.mutation
     body: z.object({
       name: z.string(),
       url: z.string(),
-      price: z.string().transform(val => parseFloat(val) || 0 || 0),
+      price: z.number().min(0),
       list: z.string(),
       image: z.union([z.string(), z.file()]).optional()
     })
