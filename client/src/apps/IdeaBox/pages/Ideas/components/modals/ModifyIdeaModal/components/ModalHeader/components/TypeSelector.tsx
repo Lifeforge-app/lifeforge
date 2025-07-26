@@ -4,15 +4,17 @@ import clsx from 'clsx'
 import { MenuItem } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
+import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 function TypeSelector({
   inline = false,
   innerTypeOfModifyIdea,
   setInnerTypeOfModifyIdea
 }: {
   inline?: boolean
-  innerTypeOfModifyIdea: IdeaBoxCollectionsSchemas.IEntry['type']
+  innerTypeOfModifyIdea: IdeaBoxIdea['type']
   setInnerTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<IdeaBoxCollectionsSchemas.IEntry['type']>
+    React.SetStateAction<IdeaBoxIdea['type']>
   >
 }) {
   const { t } = useTranslation('apps.ideaBox')

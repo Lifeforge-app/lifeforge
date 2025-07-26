@@ -89,7 +89,7 @@ function TagsSelector() {
       if (tag) {
         open(ModifyTagModal, {
           type: 'update',
-          existedData: tag
+          initialData: tag
         })
       }
     },

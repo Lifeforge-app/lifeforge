@@ -6,8 +6,8 @@ import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  IPixabaySearchFilter,
-  PixabaySearchFilterAction
+  type IPixabaySearchFilter,
+  type PixabaySearchFilterAction
 } from '../../../typescript/pixabay_interfaces'
 import { IMAGE_TYPES } from '../constants/filterOptions'
 

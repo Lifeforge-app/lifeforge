@@ -38,7 +38,7 @@ function Wishlist() {
   const handleCreateWishlistList = useCallback(() => {
     open(ModifyWishlistListModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 

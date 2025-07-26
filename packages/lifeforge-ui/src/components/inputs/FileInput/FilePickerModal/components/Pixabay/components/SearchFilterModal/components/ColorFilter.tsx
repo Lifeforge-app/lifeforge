@@ -4,8 +4,8 @@ import {
 } from '@components/inputs'
 
 import {
-  IPixabaySearchFilter,
-  PixabaySearchFilterAction
+  type IPixabaySearchFilter,
+  type PixabaySearchFilterAction
 } from '../../../typescript/pixabay_interfaces'
 import { COLORS } from '../constants/filterOptions'
 

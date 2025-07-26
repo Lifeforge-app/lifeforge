@@ -18,7 +18,7 @@ function DetailItem({
   return (
     <div
       className={clsx(
-        'component-bg-lighter rounded-lg p-4',
+        'bg-bg-50/50 dark:bg-bg-800/50 shadow-custom rounded-lg p-4',
         vertical ? 'space-y-4' : 'flex-between gap-6'
       )}
     >

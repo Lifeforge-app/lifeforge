@@ -64,7 +64,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
 
       open(ModifyEntryModal, {
         type: 'create',
-        existedData: {
+        initialData: {
           name,
           price,
           image,

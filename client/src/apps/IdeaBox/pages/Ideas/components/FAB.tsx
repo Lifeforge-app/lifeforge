@@ -24,13 +24,13 @@ function FAB() {
       if (name === 'Folder') {
         open(ModifyFolderModal, {
           type: 'create',
-          existedData: null
+          initialData: null
         })
       } else {
         open(ModifyIdeaModal, {
           type: 'create',
           ideaType: name.toLowerCase() as 'text' | 'link' | 'image',
-          existedData: null
+          initialData: null
         })
       }
     },

@@ -1,12 +1,13 @@
 import { Icon } from '@iconify/react'
 
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
-import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvider'
+import {
+  type RailwayMapStation,
+  useRailwayMapContext
+} from '../../../../../providers/RailwayMapProvider'
 import { centerMapOnStation } from '../../../../Maps/maps/RouteMap/utils/renderUtils'
 import StationCodes from '../../../../StationCode'
 
-function SearchResultItem({ station }: { station: IRailwayMapStation }) {
+function SearchResultItem({ station }: { station: RailwayMapStation }) {
   const {
     viewType,
     routeMapSVGRef,

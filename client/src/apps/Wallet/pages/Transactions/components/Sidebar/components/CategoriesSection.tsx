@@ -46,7 +46,7 @@ function CategoriesSection() {
   const handleActionButtonClick = useCallback(() => {
     open(ModifyCategoryModal, {
       type: 'income',
-      existedData: null
+      initialData: null
     })
   }, [])
 

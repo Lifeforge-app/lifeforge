@@ -3,7 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
 import {
   DeleteConfirmationModal,
-  type FormFieldConfig,
+  type FieldsConfig,
   FormModal
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -14,12 +14,12 @@ import { fetchAPI } from 'shared'
 import type { MovieEntry } from '..'
 
 function ModifyTicketModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: MovieEntry
+    initialData: MovieEntry
   }
   onClose: () => void
 }) {
@@ -30,7 +30,7 @@ function ModifyTicketModal({
   const modifyTicketMutation = useMutation(
     forgeAPI.movies.ticket.update
       .input({
-        id: existedData.id
+        id: initialData.id
       })
       .mutationOptions({
         onSuccess: () => {
@@ -72,7 +72,7 @@ function ModifyTicketModal({
       placeholder: '1',
       type: 'text'
     }
-  } as const satisfies FormFieldConfig<
+  } as const satisfies FieldsConfig<
     InferInput<typeof forgeAPI.movies.ticket.update>['body']
   >
 
@@ -80,7 +80,7 @@ function ModifyTicketModal({
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `/movies/ticket/${existedData.id}`,
+        `/movies/ticket/${initialData.id}`,
         {
           method: 'DELETE'
         }
@@ -126,20 +126,20 @@ function ModifyTicketModal({
       }}
       form={{
         fields: FIELDS,
-        existedData: {
-          ticket_number: existedData.ticket_number || '',
+        initialData: {
+          ticket_number: initialData.ticket_number || '',
           theatre_location: {
-            name: existedData.theatre_location || '',
+            name: initialData.theatre_location || '',
             location: {
-              latitude: existedData.theatre_location_coords?.lat || 0,
-              longitude: existedData.theatre_location_coords?.lon || 0
+              latitude: initialData.theatre_location_coords?.lat || 0,
+              longitude: initialData.theatre_location_coords?.lon || 0
             },
-            formattedAddress: existedData.theatre_location || ''
+            formattedAddress: initialData.theatre_location || ''
           },
-          theatre_number: existedData.theatre_number || '',
-          theatre_seat: existedData.theatre_seat || '',
-          theatre_showtime: existedData.theatre_showtime
-            ? new Date(existedData.theatre_showtime)
+          theatre_number: initialData.theatre_number || '',
+          theatre_seat: initialData.theatre_seat || '',
+          theatre_showtime: initialData.theatre_showtime
+            ? new Date(initialData.theatre_showtime)
             : undefined
         },
         onSubmit

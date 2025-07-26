@@ -1,3 +1,13 @@
+import {
+  DeleteConfirmationModal,
+  MenuItem,
+  SidebarItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback } from 'react'
+
+import type { ScoreLibraryType } from '@apps/ScoresLibrary'
+
 import ModifyTypeModal from '../../modals/ModifyTypeModal'
 
 function SidebarTypeItem({
@@ -6,7 +16,7 @@ function SidebarTypeItem({
   onCancel,
   onSelect
 }: {
-  data: ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>
+  data: ScoreLibraryType
   isActive: boolean
   onCancel: () => void
   onSelect: (category: string) => void
@@ -20,7 +30,7 @@ function SidebarTypeItem({
   const handleUpdate = useCallback(() => {
     open(ModifyTypeModal, {
       openType: 'update',
-      existedData: data
+      initialData: data
     })
   }, [data])
 

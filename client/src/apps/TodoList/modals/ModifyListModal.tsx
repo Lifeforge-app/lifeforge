@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react'
 import { ITodoListList } from '../interfaces/todo_list_interfaces'
 
 function ModifyListModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: ITodoListList | null
+    initialData: ITodoListList | null
   }
   onClose: () => void
 }) {
@@ -44,8 +44,8 @@ function ModifyListModal({
   ]
 
   useEffect(() => {
-    if (type === 'update' && existedData !== null) {
-      setData(existedData)
+    if (type === 'update' && initialData !== null) {
+      setData(initialData)
     } else {
       setData({
         name: '',
@@ -53,7 +53,7 @@ function ModifyListModal({
         color: '#FFFFFF'
       })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -66,7 +66,7 @@ function ModifyListModal({
           update: 'tabler:pencil'
         }[type!]
       }`}
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.todoList"
       openType={type}
       queryKey={['todo-list', 'lists']}

@@ -18,7 +18,7 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
   const handleUpdateContainer = useCallback(() => {
     open(ModifyContainerModal, {
       type: 'update',
-      existedData: container
+      initialData: container
     })
   }, [container])
 

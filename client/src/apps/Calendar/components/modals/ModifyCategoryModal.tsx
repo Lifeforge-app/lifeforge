@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { type FormFieldConfig, FormModal } from 'lifeforge-ui'
+import { defineForm } from 'lifeforge-ui'
 
 import type { CalendarCalendar } from '../Calendar'
 
 function ModifyCategoryModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData?: CalendarCalendar
+    initialData?: CalendarCalendar
   }
   onClose: () => void
 }) {
@@ -21,7 +21,7 @@ function ModifyCategoryModal({
     (type === 'create'
       ? forgeAPI.calendar.categories.create
       : forgeAPI.calendar.categories.update.input({
-          id: existedData?.id ?? ''
+          id: initialData?.id ?? ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -33,53 +33,43 @@ function ModifyCategoryModal({
     })
   )
 
-  const FIELDS = {
-    name: {
-      required: true,
-      label: 'Category name',
-      icon: 'tabler:category',
-      placeholder: 'Category name',
-      type: 'text'
-    },
-    icon: {
-      required: true,
-      label: 'Category icon',
-      type: 'icon'
-    },
-    color: {
-      required: true,
-      label: 'Category color',
-      type: 'color'
-    }
-  } as const satisfies FormFieldConfig<
+  const Form = defineForm<
     InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
-  >
+  >()
+    .ui({
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+      title: `category.${type}`,
+      onClose,
+      namespace: 'apps.calendar',
+      submitButton: type
+    })
+    .typesMap({
+      name: 'text',
+      icon: 'icon',
+      color: 'color'
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Category name',
+        icon: 'tabler:category',
+        placeholder: 'Category name'
+      },
+      icon: {
+        required: true,
+        label: 'Category icon'
+      },
+      color: {
+        required: true,
+        label: 'Category color'
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
 
-  async function onSubmit(
-    data: InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
-  ) {
-    await mutation.mutateAsync(data)
-  }
-
-  return (
-    <FormModal
-      form={{
-        fields: FIELDS,
-        existedData,
-        onSubmit
-      }}
-      submitButton={type}
-      ui={{
-        icon: {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type],
-        title: `category.${type}`,
-        namespace: 'apps.calendar',
-        onClose
-      }}
-    />
-  )
+  return <Form />
 }
 
 export default ModifyCategoryModal

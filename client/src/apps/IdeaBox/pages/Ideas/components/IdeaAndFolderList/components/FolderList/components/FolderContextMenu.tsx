@@ -17,7 +17,7 @@ function FolderContextMenu({
   const handleUpdateFolder = useCallback(() => {
     open(ModifyFolderModal, {
       type: 'update',
-      existedData: folder
+      initialData: folder
     })
   }, [folder])
 

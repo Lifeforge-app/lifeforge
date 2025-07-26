@@ -1,12 +1,23 @@
+import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import dayjs from 'dayjs'
+import {
+  Button,
+  Checkbox,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
+import { useAPIQuery } from 'shared'
+
+import type { WishlistEntry } from '..'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
 
-function EntryItem({
-  entry,
-  queryKey
-}: {
-  entry: ISchemaWithPB<WishlistCollectionsSchemas.IEntry>
-  queryKey: unknown[]
-}) {
+function EntryItem({ entry }: { entry: WishlistEntry }) {
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
@@ -18,38 +29,29 @@ function EntryItem({
 
   const [bought, setBought] = useState(entry.bought)
 
-  const toggleBought = () =>
-    queryClient.setQueryData<
-      ISchemaWithPB<WishlistCollectionsSchemas.IEntry>[]
-    >(queryKey, prev => {
-      if (!prev) return prev
-
-      return prev.filter(e => e.id !== entry.id)
-    })
-
-  async function markAsCompleted() {
-    setBought(!bought)
-
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `wishlist/entries/bought/${entry.id}`,
-        {
-          method: 'PATCH'
+  const toggleBoughtMutation = useMutation(
+    forgeAPI.wishlist.entries.updateBoughtStatus
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          setTimeout(
+            () => queryClient.invalidateQueries({ queryKey: ['wishlist'] }),
+            500
+          )
+        },
+        onError: () => {
+          setBought(prev => !prev)
+          toast.error('Failed to update bought status')
         }
-      )
-
-      setTimeout(toggleBought, 500)
-    } catch {
-      toast.error('Failed to update entry completion status')
-      setBought(bought)
-    }
-  }
+      })
+  )
 
   const handleEdit = useCallback(() => {
     open(ModifyEntryModal, {
       type: 'update',
-      existedData: entry
+      initialData: entry
     })
   }, [entry])
 
@@ -58,8 +60,7 @@ function EntryItem({
       apiEndpoint: 'wishlist/entries',
       data: entry,
       itemName: 'entry',
-      nameKey: 'name' as const,
-      queryKey
+      nameKey: 'name' as const
     })
   }, [entry])
 
@@ -98,7 +99,8 @@ function EntryItem({
           checked={bought}
           className="hidden! sm:flex! md:hidden!"
           onChange={() => {
-            markAsCompleted().catch(console.error)
+            setBought(prev => !prev)
+            toggleBoughtMutation.mutate({})
           }}
         />
       </div>
@@ -119,7 +121,8 @@ function EntryItem({
           checked={bought}
           className="flex! sm:hidden! md:flex!"
           onChange={() => {
-            markAsCompleted().catch(console.error)
+            setBought(prev => !prev)
+            toggleBoughtMutation.mutate({})
           }}
         />
         <HamburgerMenu

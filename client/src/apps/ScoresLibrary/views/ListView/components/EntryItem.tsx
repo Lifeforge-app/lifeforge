@@ -1,56 +1,77 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import {
+  ConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback, useMemo } from 'react'
+import { toast } from 'react-toastify'
+
+import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
 import ModifyEntryModal from '@apps/ScoresLibrary/components/modals/ModifyEntryModal'
 
 import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
 
-function EntryItem({
-  entry
-}: {
-  entry: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>
-}) {
+function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
   const open = useModalStore(state => state.open)
 
   const queryClient = useQueryClient()
 
-  const typesQuery = useAPIQuery<
-    ISchemaWithPB<ScoresLibraryCollectionsSchemas.ITypeAggregated>[]
-  >(`scores-library/types`, ['scores-library', 'types'])
+  const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
   const type = useMemo(() => {
     return typesQuery.data?.find(type => type.id === entry.type)
   }, [typesQuery.data, entry.type])
 
-  async function favouriteTab() {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `scores-library/entries/favourite/${entry.id}`,
-        {
-          method: 'POST'
+  const toggleFavouriteStatusMutation = useMutation(
+    forgeAPI.scoresLibrary.entries.toggleFavourite
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+        },
+        onError: () => {
+          toast.error('Failed to toggle favourite status')
         }
-      )
+      })
+  )
 
-      queryClient.invalidateQueries({ queryKey: ['scores-library'] })
-    } catch {
-      toast.error('Failed to add to favourites')
-    }
-  }
+  const deleteMutation = useMutation(
+    forgeAPI.scoresLibrary.entries.remove
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+        },
+        onError: () => {
+          toast.error('Failed to delete entry')
+        }
+      })
+  )
 
   const handleUpdateEntry = useCallback(() => {
     open(ModifyEntryModal, {
-      existedData: entry,
+      initialData: entry,
       queryKey: ['scores-library']
     })
   }, [entry])
 
   const handleDeleteEntry = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'scores-library/entries',
-      confirmationText: 'Delete this guitar tab',
-      data: entry,
-      itemName: 'guitar tab',
-      nameKey: 'name' as const,
-      queryKey: ['scores-library']
+    open(ConfirmationModal, {
+      title: 'Delete Entry',
+      description: `Are you sure you want to delete this score for song "${entry.name}"?`,
+      confirmationPrompt: entry.name,
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [entry])
 
@@ -73,9 +94,14 @@ function EntryItem({
             <img
               alt=""
               className="h-full"
-              src={`${import.meta.env.VITE_API_HOST}/media/${
-                entry.collectionId
-              }/${entry.id}/${entry.thumbnail}`}
+              src={
+                forgeAPI.media.input({
+                  collectionId: entry.collectionId,
+                  recordId: entry.id,
+                  photoId: entry.thumbnail,
+                  thumb: '0x512'
+                }).endpoint
+              }
             />
           </div>
           <div className="flex w-full min-w-0 flex-1 flex-col">
@@ -122,7 +148,7 @@ function EntryItem({
             text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
             onClick={e => {
               e.preventDefault()
-              favouriteTab()
+              toggleFavouriteStatusMutation.mutateAsync({})
             }}
           />
           <MenuItem

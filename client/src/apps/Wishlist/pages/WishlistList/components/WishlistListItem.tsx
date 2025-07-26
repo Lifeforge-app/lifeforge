@@ -10,7 +10,7 @@ function WishlistListItem({
   const handleUpdateList = useCallback(() => {
     open(ModifyWishlistListModal, {
       type: 'update',
-      existedData: list
+      initialData: list
     })
   }, [list])
 

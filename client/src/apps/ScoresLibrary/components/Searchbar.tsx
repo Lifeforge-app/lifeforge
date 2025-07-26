@@ -1,8 +1,9 @@
+import forgeAPI from '@utils/forgeAPI'
 import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
+import type { ScoreLibrarySortType } from '..'
 import SortBySelector from './SortBySelector'
 
 function Searchbar({
@@ -17,8 +18,8 @@ function Searchbar({
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-  sortType: string
-  setSortType: React.Dispatch<React.SetStateAction<string>>
+  sortType: ScoreLibrarySortType
+  setSortType: React.Dispatch<React.SetStateAction<ScoreLibrarySortType>>
 }) {
   const [requestRandomLoading, setRequestRandomLoading] = useState(false)
 
@@ -26,13 +27,13 @@ function Searchbar({
     setRequestRandomLoading(true)
 
     try {
-      const entry = await fetchAPI<
-        ScoresLibraryControllersSchemas.IEntries['getRandomEntry']['response']
-      >(import.meta.env.VITE_API_HOST, '/scores-library/entries/random')
+      const entry = await forgeAPI.scoresLibrary.entries.random.query()
 
-      const url = `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
-        entry.id
-      }/${entry.pdf}`
+      const url = forgeAPI.media.input({
+        collectionId: entry.collectionId,
+        recordId: entry.id,
+        fieldId: entry.pdf
+      }).endpoint
 
       window.open(url, '_blank')
       setRequestRandomLoading(false)

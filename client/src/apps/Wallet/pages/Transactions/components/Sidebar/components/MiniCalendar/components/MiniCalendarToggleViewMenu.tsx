@@ -5,7 +5,7 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 const VIEWS = [
   ['tabler:login-2', 'income'],
@@ -17,8 +17,8 @@ function MiniCalendarToggleViewMenu({
   viewsFilter,
   toggleView
 }: {
-  viewsFilter: IWalletTransaction['type'][]
-  toggleView: (view: IWalletTransaction['type']) => void
+  viewsFilter: WalletTransaction['type'][]
+  toggleView: (view: WalletTransaction['type']) => void
 }) {
   const { t } = useTranslation('apps.wallet')
 

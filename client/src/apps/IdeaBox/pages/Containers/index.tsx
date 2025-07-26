@@ -16,21 +16,16 @@ import { useTranslation } from 'react-i18next'
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'
 
-const route = forgeAPI
-  .route('/idea-box')
-  .route('/containers')
-  .controller('GET /')
-
-type IContainer = InferOutput<typeof route>[number]
+type IdeaBoxContainer = InferOutput<typeof forgeAPI.ideaBox.containers.list>[number]
 
 function IdeaBox() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.ideaBox')
 
-  const query = useQuery(route.queryOptions())
+  const query = useQuery(forgeAPI.ideaBox.containers.list.queryOptions())
 
-  const [filteredList, setFilteredList] = useState<IContainer[]>([])
+  const [filteredList, setFilteredList] = useState<IdeaBoxContainer[]>([])
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -55,7 +50,7 @@ function IdeaBox() {
   const handleCreateContainer = useCallback(() => {
     open(ModifyContainerModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 

@@ -22,7 +22,7 @@ function TaskTagList({
   const handleCreateTag = useCallback(() => {
     open(ModifyTagModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [])
 

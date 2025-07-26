@@ -9,6 +9,8 @@ import {
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
+import type { ScoreLibrarySidebarData } from '@apps/ScoresLibrary'
+
 import ModifyTypeModal from '../modals/ModifyTypeModal'
 import SidebarAuthorItem from './components/SidebarAuthorItem'
 import SidebarTypeItem from './components/SidebarCategoryItem'
@@ -25,7 +27,7 @@ function Sidebar({
   category: type,
   setCategory
 }: {
-  sidebarDataQuery: UseQueryResult<ScoresLibraryCollectionsSchemas.ISidebarData>
+  sidebarDataQuery: UseQueryResult<ScoreLibrarySidebarData>
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   author: string | null
@@ -76,8 +78,7 @@ function Sidebar({
 
   const handleCreate = useCallback(() => {
     open(ModifyTypeModal, {
-      openType: 'create',
-      existedData: null
+      openType: 'create'
     })
   }, [])
 

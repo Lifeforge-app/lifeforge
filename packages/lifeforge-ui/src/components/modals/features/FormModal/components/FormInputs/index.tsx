@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  AllFields,
-  FormFieldConfig,
-  IFormState
+  type FieldsConfig,
+  type FormFieldPropsUnion,
+  type FormState
 } from '../../typescript/form_interfaces'
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'
@@ -16,7 +16,7 @@ import FormNumberInput from './components/FormNumberInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
 
-const COMPONENT_MAP: Record<AllFields['type'], React.FC<any>> = {
+const COMPONENT_MAP: Record<FormFieldPropsUnion['type'], React.FC<any>> = {
   text: FormTextInput,
   number: FormNumberInput,
   currency: FormCurrencyInput,
@@ -30,19 +30,19 @@ const COMPONENT_MAP: Record<AllFields['type'], React.FC<any>> = {
   file: FormFileInput
 }
 
-function FormInputs<T extends IFormState>({
+function FormInputs<T extends FormState>({
   fields,
   data,
   setData,
   namespace
 }: {
-  fields: FormFieldConfig<T>
+  fields: FieldsConfig<T>
   data: T
   setData: React.Dispatch<React.SetStateAction<T>>
   namespace: string
 }) {
   const handleChange = (id: keyof typeof fields) => {
-    return (value: IFormState[string]) => {
+    return (value: FormState[string]) => {
       setData(prev => ({ ...prev, [id]: value }))
     }
   }
@@ -52,7 +52,7 @@ function FormInputs<T extends IFormState>({
       {Object.entries(fields).map(([id, field]) => {
         const selectedData = data[id]
 
-        const fieldType = field.type as AllFields['type']
+        const fieldType = field.type as FormFieldPropsUnion['type']
 
         const FormComponent = COMPONENT_MAP[fieldType]
 

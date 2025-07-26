@@ -55,7 +55,7 @@ function LedgerItem({
           onClick={() => {
             open(ModifyLedgerModal, {
               type: 'update',
-              existedData: ledger
+              initialData: ledger
             })
           }}
         />

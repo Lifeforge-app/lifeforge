@@ -27,7 +27,7 @@ function IdeaAndFolderList() {
     open(ModifyIdeaModal, {
       type: 'create',
       ideaType: 'text',
-      existedData: null
+      initialData: null
     })
   }, [])
 

@@ -1,10 +1,10 @@
 function ModifyWishlistListModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated> | null
+    initialData: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated> | null
   }
   onClose: () => void
 }) {
@@ -48,12 +48,12 @@ function ModifyWishlistListModal({
   ]
 
   useEffect(() => {
-    if (type === 'update' && existedData !== null) {
+    if (type === 'update' && initialData !== null) {
       setData({
-        name: existedData.name,
-        description: existedData.description,
-        icon: existedData.icon,
-        color: existedData.color
+        name: initialData.name,
+        description: initialData.description,
+        icon: initialData.icon,
+        color: initialData.color
       })
     } else {
       setData({
@@ -63,7 +63,7 @@ function ModifyWishlistListModal({
         color: ''
       })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -76,7 +76,7 @@ function ModifyWishlistListModal({
           update: 'tabler:pencil'
         }[type!]
       }
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.wishlist"
       openType={type}
       queryKey={['wishlist', 'lists']}

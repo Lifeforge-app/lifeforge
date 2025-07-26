@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { type FormFieldConfig, FormModal } from 'lifeforge-ui'
-import { useCallback } from 'react'
+import { defineForm } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
@@ -16,12 +15,12 @@ const difficulties = [
 ]
 
 function ModifyAchievementModal({
-  data: { type, existedData, currentDifficulty },
+  data: { type, initialData, currentDifficulty },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData?: IAchievement
+    initialData?: IAchievement
     currentDifficulty: IAchievement['difficulty']
   }
   onClose: () => void
@@ -34,7 +33,7 @@ function ModifyAchievementModal({
     (type === 'create'
       ? forgeAPI.achievements.entries.create
       : forgeAPI.achievements.entries.update.input({
-          id: existedData?.id || ''
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -45,71 +44,55 @@ function ModifyAchievementModal({
     })
   )
 
-  const FIELDS = {
-    title: {
-      required: true,
-      label: 'Achievement title',
-      icon: 'tabler:award',
-      placeholder: 'My achievement',
-      type: 'text'
-    },
-    thoughts: {
-      required: true,
-      label: 'Achievement thoughts',
-      icon: 'tabler:bubble-text',
-      placeholder: 'My thoughts',
-      type: 'textarea'
-    },
-    difficulty: {
-      required: true,
-      label: 'Achievement difficulty',
-      icon: 'tabler:list',
-      type: 'listbox',
-      options: difficulties.map(([name, color]) => ({
-        text: t(`difficulties.${name}`),
-        value: name as IAchievement['difficulty'],
-        color: COLOR[color as keyof typeof COLOR][500]
-      }))
-    }
-  } as const satisfies FormFieldConfig<
-    InferInput<
-      (typeof forgeAPI.achievements.entries)['create' | 'update']
-    >['body']
-  >
+  const Form = defineForm<
+    InferInput<(typeof forgeAPI.achievements.entries)[typeof type]>['body']
+  >()
+    .ui({
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+      title: `achievement.${type}`,
+      onClose,
+      namespace: 'apps.achievements',
+      submitButton: type
+    })
+    .typesMap({
+      difficulty: 'listbox',
+      title: 'text',
+      thoughts: 'textarea'
+    })
+    .setupFields({
+      title: {
+        required: true,
+        label: 'Achievement title',
+        icon: 'tabler:award',
+        placeholder: 'My achievement'
+      },
+      thoughts: {
+        required: true,
+        label: 'Achievement thoughts',
+        icon: 'tabler:bubble-text',
+        placeholder: 'My thoughts'
+      },
+      difficulty: {
+        required: true,
+        label: 'Achievement difficulty',
+        icon: 'tabler:list',
+        options: difficulties.map(([name, color]) => ({
+          text: t(`difficulties.${name}`),
+          value: name as IAchievement['difficulty'],
+          color: COLOR[color as keyof typeof COLOR][500]
+        }))
+      }
+    })
+    .initialData({
+      title: initialData?.title || '',
+      thoughts: initialData?.thoughts || '',
+      difficulty: initialData?.difficulty || currentDifficulty || 'easy'
+    })
+    .onSubmit(async formData => {
+      await mutation.mutateAsync(formData)
+    })
 
-  const onSubmit = useCallback(
-    async (
-      data: InferInput<
-        (typeof forgeAPI.achievements.entries)['create' | 'update']
-      >['body']
-    ) => {
-      await mutation.mutateAsync(data)
-
-      onClose()
-    },
-    [type]
-  )
-
-  return (
-    <FormModal
-      form={{
-        fields: FIELDS,
-        existedData: {
-          title: existedData?.title || '',
-          thoughts: existedData?.thoughts || '',
-          difficulty: existedData?.difficulty || currentDifficulty || 'easy'
-        },
-        onSubmit
-      }}
-      submitButton={type}
-      ui={{
-        icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-        title: `achievement.${type}`,
-        onClose,
-        namespace: 'apps.achievements'
-      }}
-    />
-  )
+  return <Form />
 }
 
 export default ModifyAchievementModal

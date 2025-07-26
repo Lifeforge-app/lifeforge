@@ -39,7 +39,7 @@ function _SidebarItem({
   const handleUpdateStuff = useCallback(() => {
     open(ModifyModal, {
       type: 'update',
-      existedData: item,
+      initialData: item,
       stuff: stuff as 'collections' | 'languages'
     })
   }, [item, stuff])
