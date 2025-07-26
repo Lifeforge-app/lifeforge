@@ -7,7 +7,7 @@ export default {
   icon: 'tabler:heart',
   routes: {
     wishlist: lazy(() => import('./pages/WishlistList')),
-    'wishlist/entries': lazy(() => import('./pages/WishlistEntries'))
+    'wishlist/:id': lazy(() => import('./pages/WishlistEntries'))
   },
   togglable: true,
   hasAI: true

@@ -77,9 +77,13 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
               <img
                 alt=""
                 className="size-full rounded-md object-cover"
-                src={`${import.meta.env.VITE_API_HOST}/media/${collectionIdQuery.data}/${
-                  entry.id
-                }/${entry.image}`}
+                src={
+                  forgeAPI.media.input({
+                    collectionId: entry.collectionId,
+                    recordId: entry.id,
+                    fieldId: entry.image
+                  }).endpoint
+                }
               />
             )}
           </div>

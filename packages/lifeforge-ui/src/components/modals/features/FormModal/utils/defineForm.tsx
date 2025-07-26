@@ -51,18 +51,15 @@ export default function defineForm<
                       callback: (
                         data: InferFormFinalState<typeof finalFields>
                       ) => Promise<void>
-                    ) => {
-                      return () => (
-                        <FormModal
-                          form={{
-                            fields: finalFields,
-                            initialData,
-                            onSubmit: callback
-                          }}
-                          ui={uiConfig}
-                        />
-                      )
-                    }
+                    ) =>
+                      ({
+                        form: {
+                          fields: finalFields,
+                          initialData: initialData,
+                          onSubmit: callback
+                        },
+                        ui: uiConfig
+                      }) satisfies React.ComponentProps<typeof FormModal>
                   }
                 }
               }

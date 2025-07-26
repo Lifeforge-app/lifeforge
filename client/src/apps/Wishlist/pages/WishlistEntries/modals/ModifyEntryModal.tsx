@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
+import { toast } from 'react-toastify'
 
 import type { WishlistEntry } from '..'
 
@@ -26,13 +27,16 @@ function ModifyEntryModal({
     ).mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['wishlist'] })
+      },
+      onError: () => {
+        toast.error(`Failed to ${type} entry`)
       }
     })
   )
 
   const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
 
-  const Form = defineForm<
+  const formProps = defineForm<
     InferInput<(typeof forgeAPI.wishlist.entries)[typeof type]>['body']
   >()
     .ui({
@@ -110,7 +114,7 @@ function ModifyEntryModal({
       await mutation.mutateAsync(data)
     })
 
-  return <Form />
+  return <FormModal {...formProps} />
 }
 
 export default ModifyEntryModal
