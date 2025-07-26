@@ -19,7 +19,7 @@ export default function Tooltip({
         <Icon className="text-bg-500 size-5" icon={icon} />
       </span>
       <ReactTooltip
-        className="bg-bg-50 text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-50 z-9999 rounded-md! p-4! text-base!"
+        className="bg-bg-50! text-bg-800! shadow-custom dark:bg-bg-900! dark:text-bg-50! z-9999 rounded-md! p-4! text-base!"
         classNameArrow="size-6!"
         id={`tooltip-${_.kebabCase(id)}`}
         opacity={1}

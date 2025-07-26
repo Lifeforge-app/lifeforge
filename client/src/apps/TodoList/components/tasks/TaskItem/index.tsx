@@ -1,4 +1,12 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import { useQueryClient } from '@tanstack/react-query'
+import clsx from 'clsx'
+import { Checkbox } from 'lifeforge-ui'
+import { fetchAPI } from 'shared'
+
+import {
+  type TodoListEntry,
+  useTodoListContext
+} from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
@@ -9,7 +17,7 @@ function TaskItem({
   lighter,
   isInDashboardWidget
 }: {
-  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
+  entry: TodoListEntry
   lighter?: boolean
   isInDashboardWidget?: boolean
 }) {
