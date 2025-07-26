@@ -13,8 +13,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
-    "types": "tsgo --noEmit",
-    "build": "tsgo && vite build",
+    "types": "tsc --noEmit",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
