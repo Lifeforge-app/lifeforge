@@ -34,7 +34,7 @@ function WishlistListItem({ list }: { list: WishlistList }) {
 
   return (
     <Link
-      className="group component-bg-with-hover relative flex w-full flex-col gap-6 rounded-md p-4"
+      className="group component-bg-with-hover shadow-custom relative flex w-full flex-col gap-6 rounded-md p-4"
       to={`/wishlist/${list.id}`}
     >
       <div
