@@ -1,10 +1,17 @@
+import { Icon } from '@iconify/react'
+import {
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { Link } from 'react-router'
+
+import type { WishlistList } from '..'
 import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
-function WishlistListItem({
-  list
-}: {
-  list: ISchemaWithPB<WishlistCollectionsSchemas.IListAggregated>
-}) {
+function WishlistListItem({ list }: { list: WishlistList }) {
   const open = useModalStore(state => state.open)
 
   const handleUpdateList = useCallback(() => {

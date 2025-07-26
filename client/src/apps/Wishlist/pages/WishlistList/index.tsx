@@ -1,4 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -11,19 +14,20 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
 
 import WishlistListItem from './components/WishlistListItem'
 import ModifyWishlistListModal from './modals/ModifyWishlistModal'
+
+export type WishlistList = InferOutput<
+  typeof forgeAPI.wishlist.lists.list
+>[number]
 
 function Wishlist() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.wishlist')
 
-  const listsQuery = useAPIQuery<
-    WishlistControllersSchemas.ILists['getAllLists']['response']
-  >('wishlist/lists', ['wishlist', 'lists'])
+  const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -37,8 +41,7 @@ function Wishlist() {
 
   const handleCreateWishlistList = useCallback(() => {
     open(ModifyWishlistListModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 

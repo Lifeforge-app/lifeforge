@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ListboxOrComboboxInput,
@@ -10,7 +11,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import ModifyEntryModal from './ModifyEntryModal'
 
@@ -50,17 +50,11 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
     setLoading('loading')
 
     try {
-      const data = await fetchAPI<
-        WishlistControllersSchemas.IEntries['scrapeExternal']['response']
-      >(import.meta.env.VITE_API_HOST, 'wishlist/entries/external', {
-        method: 'POST',
-        body: {
+      const { name, price, image } =
+        await forgeAPI.wishlist.entries.scrapeExternal.mutate({
           provider,
           url
-        }
-      })
-
-      const { name, price, image } = data
+        })
 
       open(ModifyEntryModal, {
         type: 'create',
