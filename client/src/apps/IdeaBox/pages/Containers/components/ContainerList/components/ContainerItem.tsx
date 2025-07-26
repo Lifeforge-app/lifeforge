@@ -1,19 +1,41 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
+import { toast } from 'react-toastify'
 
 import type { IdeaBoxContainer } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyContainerModal from '../../ModifyContainerModal'
 
 function ContainerItem({ container }: { container: IdeaBoxContainer }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
+
+  const deleteMutation = useMutation(
+    forgeAPI.ideaBox.containers.remove
+      .input({
+        id: container.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'containers']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to delete container')
+        }
+      })
+  )
 
   const handleUpdateContainer = useCallback(() => {
     open(ModifyContainerModal, {
@@ -23,12 +45,14 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
   }, [container])
 
   const handleDeleteContainer = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'idea-box/containers',
-      confirmationText: 'Delete this container',
-      data: container,
-      itemName: 'container',
-      queryKey: ['idea-box', 'containers']
+    open(ConfirmationModal, {
+      title: 'Delete Container',
+      description: 'Are you sure you want to delete this container?',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      },
+      buttonType: 'delete',
+      confirmationPrompt: container.name
     })
   }, [container])
 
@@ -39,9 +63,14 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
           <img
             alt=""
             className="aspect-video size-full object-cover"
-            src={`${import.meta.env.VITE_API_HOST}/media${
-              container.cover
-            }?thumb=0x200`}
+            src={
+              forgeAPI.media.input({
+                collectionId: container.collectionId,
+                recordId: container.id,
+                fieldId: container.cover,
+                thumb: '0x500'
+              }).endpoint
+            }
           />
         ) : (
           <Icon

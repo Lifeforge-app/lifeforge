@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import { toast } from 'react-toastify'
 
 import type { IdeaBoxContainer } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
@@ -28,6 +29,11 @@ function ModifyContainerModal({
         queryClient.invalidateQueries({
           queryKey: ['ideaBox', 'containers']
         })
+      },
+      onError: () => {
+        toast.error(
+          `Failed to ${type === 'create' ? 'create' : 'update'} container`
+        )
       }
     })
   )
@@ -85,7 +91,12 @@ function ModifyContainerModal({
       cover: initialData?.cover
         ? {
             file: 'keep',
-            preview: `${import.meta.env.VITE_API_HOST}/media/${initialData.cover}`
+            preview: forgeAPI.media.input({
+              collectionId: initialData.collectionId,
+              recordId: initialData.id,
+              fieldId: initialData.cover,
+              thumb: '0x500'
+            }).endpoint
           }
         : {
             file: null,
