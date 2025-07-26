@@ -1,4 +1,4 @@
-import type { IFormState } from 'lifeforge-ui'
+import type { FormState } from 'lifeforge-ui'
 import type { RecordModel } from 'pocketbase'
 
 interface IVirtualWardrobeSidebarData {
@@ -26,7 +26,7 @@ interface IVirtualWardrobeEntry extends RecordModel {
   back_image: string
 }
 
-interface IVirtualWardrobeFormState extends IFormState {
+interface IVirtualWardrobeFormState extends FormState {
   name: string
   category: string
   subcategory: string

@@ -2,7 +2,7 @@ import { Pagination, Scrollbar } from '@components/utilities'
 import clsx from 'clsx'
 import PhotoAlbum from 'react-photo-album'
 
-import { IPixabaySearchResult } from '../typescript/pixabay_interfaces'
+import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
 
 function SearchResults({
   results,

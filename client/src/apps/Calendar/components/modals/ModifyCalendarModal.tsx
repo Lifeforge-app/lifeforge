@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { type FormFieldConfig, FormModal } from 'lifeforge-ui'
+import { defineForm } from 'lifeforge-ui'
 
 import type { CalendarCalendar } from '../Calendar'
 
 function ModifyCalendarModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData?: CalendarCalendar
+    initialData?: CalendarCalendar
   }
   onClose: () => void
 }) {
@@ -20,7 +20,7 @@ function ModifyCalendarModal({
   const mutation = useMutation(
     (type === 'create'
       ? forgeAPI.calendar.calendars.create
-      : forgeAPI.calendar.calendars.update.input({ id: existedData!.id })
+      : forgeAPI.calendar.calendars.update.input({ id: initialData!.id })
     ).mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
@@ -31,48 +31,38 @@ function ModifyCalendarModal({
     })
   )
 
-  const FIELDS = {
-    name: {
-      required: true,
-      label: 'Calendar name',
-      icon: 'tabler:calendar',
-      placeholder: 'Calendar name',
-      type: 'text'
-    },
-    color: {
-      required: true,
-      label: 'Calendar color',
-      type: 'color'
-    }
-  } as const satisfies FormFieldConfig<
+  const Form = defineForm<
     InferInput<(typeof forgeAPI.calendar.calendars)[typeof type]>['body']
-  >
+  >()
+    .ui({
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+      title: `calendar.${type}`,
+      onClose,
+      namespace: 'apps.calendar',
+      submitButton: type
+    })
+    .typesMap({
+      name: 'text',
+      color: 'color'
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Calendar name',
+        icon: 'tabler:calendar',
+        placeholder: 'Calendar name'
+      },
+      color: {
+        required: true,
+        label: 'Calendar color'
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
 
-  async function onSubmit(
-    data: InferInput<(typeof forgeAPI.calendar.calendars)[typeof type]>['body']
-  ) {
-    await mutation.mutateAsync(data)
-  }
-
-  return (
-    <FormModal
-      form={{
-        fields: FIELDS,
-        existedData,
-        onSubmit
-      }}
-      submitButton={type}
-      ui={{
-        title: `calendar.${type}`,
-        icon: {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type],
-        namespace: 'apps.calendar',
-        onClose
-      }}
-    />
-  )
+  return <Form />
 }
 
 export default ModifyCalendarModal

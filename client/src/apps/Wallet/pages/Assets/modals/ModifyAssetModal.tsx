@@ -1,10 +1,10 @@
 function ModifyAssetModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated> | null | null
+    initialData: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated> | null | null
   }
   onClose: () => void
 }) {
@@ -44,11 +44,11 @@ function ModifyAssetModal({
   useEffect(() => {
     if (type) {
       if (type === 'update') {
-        if (existedData) {
+        if (initialData) {
           setFormState({
-            name: existedData.name,
-            icon: existedData.icon,
-            starting_balance: existedData.starting_balance
+            name: initialData.name,
+            icon: initialData.icon,
+            starting_balance: initialData.starting_balance
           })
         }
       } else {
@@ -59,7 +59,7 @@ function ModifyAssetModal({
         })
       }
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -67,7 +67,7 @@ function ModifyAssetModal({
       endpoint="wallet/assets"
       fields={FIELDS}
       icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.wallet"
       openType={type}
       queryKey={['wallet', 'assets']}

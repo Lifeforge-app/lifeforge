@@ -1,10 +1,10 @@
 export default function ModifyLedgerModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update' | null
-    existedData: ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated> | null | null
+    initialData: ISchemaWithPB<WalletCollectionsSchemas.ILedgerAggregated> | null | null
   }
   onClose: () => void
 }) {
@@ -40,11 +40,11 @@ export default function ModifyLedgerModal({
   ]
 
   useEffect(() => {
-    if (type === 'update' && existedData) {
+    if (type === 'update' && initialData) {
       setFormState({
-        name: existedData.name,
-        icon: existedData.icon,
-        color: existedData.color
+        name: initialData.name,
+        icon: initialData.icon,
+        color: initialData.color
       })
     } else {
       setFormState({
@@ -53,7 +53,7 @@ export default function ModifyLedgerModal({
         color: ''
       })
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -61,7 +61,7 @@ export default function ModifyLedgerModal({
       endpoint="wallet/ledgers"
       fields={FIELDS}
       icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.wallet"
       openType={type}
       queryKey={['wallet', 'ledgers']}

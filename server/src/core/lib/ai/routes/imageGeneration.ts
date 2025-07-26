@@ -4,7 +4,7 @@ import { ClientError } from '@functions/routes/utils/response'
 import OpenAI from 'openai'
 import { z } from 'zod/v4'
 
-const checkKey = forgeController.query
+const verifyAPIKey = forgeController.query
   .description('Check if OpenAI API key exists')
   .input({})
   .callback(async ({ pb }) => !!(await getAPIKey('openai', pb)))
@@ -41,4 +41,4 @@ const generateImage = forgeController.mutation
     return response.data[0].url
   })
 
-export default forgeRouter({ checkKey, generateImage })
+export default forgeRouter({ verifyAPIKey, generateImage })

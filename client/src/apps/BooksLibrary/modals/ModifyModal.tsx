@@ -9,12 +9,12 @@ import { fetchAPI } from 'shared'
 
 function ModifyModal({
   onClose,
-  data: { type, existedData, stuff }
+  data: { type, initialData, stuff }
 }: {
   onClose: () => void
   data: {
     type: 'create' | 'update'
-    existedData: any
+    initialData: any
     stuff: 'collections' | 'languages'
   }
 }) {
@@ -52,8 +52,8 @@ function ModifyModal({
   useEffect(() => {
     if (type) {
       if (type === 'update') {
-        if (existedData) {
-          setData(existedData)
+        if (initialData) {
+          setData(initialData)
         }
       } else {
         setData({
@@ -62,7 +62,7 @@ function ModifyModal({
         })
       }
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   async function onSubmitButtonClick() {
     const { name, icon } = data
@@ -77,7 +77,7 @@ function ModifyModal({
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
         `books-library/${stuff}${
-          type === 'update' ? `/${existedData?.id}` : ''
+          type === 'update' ? `/${initialData?.id}` : ''
         }`,
         {
           method: type === 'create' ? 'POST' : 'PATCH',

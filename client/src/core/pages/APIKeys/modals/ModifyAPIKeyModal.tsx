@@ -11,12 +11,12 @@ import {
 } from '../interfaces/api_keys_interfaces'
 
 function ModifyAPIKeyModal({
-  data: { type, existedData, masterPassword },
+  data: { type, initialData, masterPassword },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    existedData: IAPIKeyEntry | null
+    initialData: IAPIKeyEntry | null
     masterPassword: string
   }
   onClose: () => void
@@ -82,7 +82,7 @@ function ModifyAPIKeyModal({
     try {
       const data = await fetchAPI<string>(
         import.meta.env.VITE_API_HOST,
-        `api-keys/entries/${existedData?.id}?master=${encodeURIComponent(
+        `api-keys/entries/${initialData?.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`
       )
@@ -91,17 +91,17 @@ function ModifyAPIKeyModal({
 
       const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
 
-      if (existedData === null) {
+      if (initialData === null) {
         toast.error('Failed to fetch key')
 
         return
       }
 
       setFormState({
-        keyId: existedData.keyId,
-        name: existedData.name,
-        description: existedData.description,
-        icon: existedData.icon,
+        keyId: initialData.keyId,
+        name: initialData.name,
+        description: initialData.description,
+        icon: initialData.icon,
         key: decryptedSecondTime
       })
     } catch {
@@ -112,7 +112,7 @@ function ModifyAPIKeyModal({
   }
 
   useEffect(() => {
-    if (type === 'update' && existedData !== null) {
+    if (type === 'update' && initialData !== null) {
       setIsFetchingKey(true)
       fetchKey().catch(console.error)
     } else {
@@ -154,7 +154,7 @@ function ModifyAPIKeyModal({
         return { data: encryptedEverything }
       }}
       icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-      id={existedData?.id}
+      id={initialData?.id}
       loading={isFetchingKey}
       namespace="core.apiKeys"
       openType={type}

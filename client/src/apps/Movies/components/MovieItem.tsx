@@ -42,7 +42,7 @@ function MovieItem({
 
   const handleUpdateTicket = useCallback(() => {
     open(ModifyTicketModal, {
-      existedData: data,
+      initialData: data,
       type: data.ticket_number ? 'update' : 'create'
     })
   }, [data])

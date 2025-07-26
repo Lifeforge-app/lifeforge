@@ -1,4 +1,4 @@
-import { ModalComponent } from '@components/modals'
+import type { ModalComponent } from '@components/modals'
 
 import MorandiColorPaletteModal from './ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './TailwindCSSColorsModal'

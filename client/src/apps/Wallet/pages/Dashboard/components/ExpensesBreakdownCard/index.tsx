@@ -1,12 +1,24 @@
+import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import dayjs from 'dayjs'
+import type { InferOutput } from 'lifeforge-api'
+import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { createContext, useMemo, useState } from 'react'
+import { Link } from 'react-router'
+
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import type { WalletCategory } from '@apps/Wallet/pages/Transactions'
 
 import BreakdownChartLegend from './components/BreakdownChartLegend'
 import BreakdownDetails from './components/BreakdownDetails'
 import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'
 
 export const ExpensesBreakdownContext = createContext<{
-  spentOnEachCategory: WalletControllersSchemas.IUtils['getExpensesBreakdown']['response']
-  expensesCategories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
+  spentOnEachCategory: InferOutput<
+    typeof forgeAPI.wallet.utils.getExpensesBreakdown
+  >
+  expensesCategories: WalletCategory[]
 }>({
   spentOnEachCategory: {},
   expensesCategories: []
@@ -20,16 +32,11 @@ function ExpensesBreakdownCard() {
 
   const [month] = useState(dayjs().month() + 1)
 
-  const expensesBreakdownQuery = useAPIQuery<
-    WalletControllersSchemas.IUtils['getExpensesBreakdown']['response']
-  >(`/wallet/utils/expenses-breakdown?year=${year}&month=${month}`, [
-    'wallet',
-    'expenses-breakdown',
-    year,
-    month
-  ])
-
-  console.log(expensesBreakdownQuery.data)
+  const expensesBreakdownQuery = useQuery(
+    forgeAPI.wallet.utils.getExpensesBreakdown
+      .input({ year, month })
+      .queryOptions()
+  )
 
   const expensesCategories = useMemo(
     () =>
@@ -44,7 +51,7 @@ function ExpensesBreakdownCard() {
               name: categoryId,
               icon: 'tabler:category',
               color: '#000000'
-            } as ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>)
+            } as WalletCategory)
         )
         .filter(e => e),
     [categoriesQuery.data, expensesBreakdownQuery.data]

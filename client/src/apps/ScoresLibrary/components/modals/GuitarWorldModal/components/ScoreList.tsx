@@ -1,5 +1,6 @@
 import { ErrorScreen, LoadingScreen, Pagination } from 'lifeforge-ui'
 
+import type { ScoreLibraryGuitarWorldResponse } from '..'
 import ScoreItem from './ScoreItem'
 
 function ScoreList({
@@ -8,10 +9,7 @@ function ScoreList({
   setPage,
   cookie
 }: {
-  data:
-    | ScoresLibraryControllersSchemas.IGuitarWorld['getTabsList']['response']
-    | 'loading'
-    | 'error'
+  data: ScoreLibraryGuitarWorldResponse | 'loading' | 'error'
   page: number
   setPage: (page: number) => void
   cookie: string

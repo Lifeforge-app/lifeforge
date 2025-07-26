@@ -1,10 +1,10 @@
 function ModifyCategoryModal({
-  data: { type, existedData },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'income' | 'expenses' | 'update' | null
-    existedData: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated> | null | null
+    initialData: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated> | null | null
   }
   onClose: () => void
 }) {
@@ -69,12 +69,12 @@ function ModifyCategoryModal({
   useEffect(() => {
     if (type) {
       if (type === 'update') {
-        if (existedData) {
+        if (initialData) {
           setFormState({
-            type: existedData.type,
-            name: existedData.name,
-            icon: existedData.icon,
-            color: existedData.color
+            type: initialData.type,
+            name: initialData.name,
+            icon: initialData.icon,
+            color: initialData.color
           })
         }
       } else {
@@ -86,7 +86,7 @@ function ModifyCategoryModal({
         })
       }
     }
-  }, [type, existedData])
+  }, [type, initialData])
 
   return (
     <FormModal
@@ -94,7 +94,7 @@ function ModifyCategoryModal({
       endpoint="wallet/categories"
       fields={FIELDS}
       icon={type === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-      id={existedData?.id}
+      id={initialData?.id}
       namespace="apps.wallet"
       openType={type === 'update' ? 'update' : 'create'}
       queryKey={['wallet', 'categories']}

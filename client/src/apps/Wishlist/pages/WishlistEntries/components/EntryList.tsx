@@ -1,13 +1,15 @@
+import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+
+import type { WishlistEntry } from '..'
 import EntryItem from './EntryItem'
 
 function EntryList({
   filteredEntries,
-  isTotallyEmpty,
-  queryKey
+  isTotallyEmpty
 }: {
-  filteredEntries: ISchemaWithPB<WishlistCollectionsSchemas.IEntry>[]
+  filteredEntries: WishlistEntry[]
   isTotallyEmpty: boolean
-  queryKey: unknown[]
 }) {
   const { t } = useTranslation('apps.wishlist')
 
@@ -39,7 +41,7 @@ function EntryList({
     <Scrollbar>
       <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
         {filteredEntries.map(entry => (
-          <EntryItem key={entry.id} entry={entry} queryKey={queryKey} />
+          <EntryItem key={entry.id} entry={entry} />
         ))}
       </ul>
     </Scrollbar>

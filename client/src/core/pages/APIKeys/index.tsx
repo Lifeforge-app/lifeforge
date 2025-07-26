@@ -18,7 +18,7 @@ function APIKeys() {
   const handleCreateAPIKey = useCallback(async () => {
     open(ModifyAPIKeyModal, {
       type: 'create',
-      existedData: null,
+      initialData: null,
       masterPassword
     })
   }, [masterPassword])

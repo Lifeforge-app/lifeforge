@@ -62,7 +62,7 @@ function PasswordEntryITem({
 
       open(ModifyPasswordModal, {
         type: 'update',
-        existedData: {
+        initialData: {
           ...password,
           decrypted
         }

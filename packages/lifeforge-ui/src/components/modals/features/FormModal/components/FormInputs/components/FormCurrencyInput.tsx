@@ -1,7 +1,7 @@
 import { CurrencyInput } from '@components/inputs'
 import {
-  ICurrencyInputFieldProps,
-  InferFormInputProps
+  type CurrencyFieldProps,
+  type FormInputProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormCurrencyInput({
@@ -9,7 +9,7 @@ function FormCurrencyInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<ICurrencyInputFieldProps>) {
+}: FormInputProps<CurrencyFieldProps>) {
   return (
     <CurrencyInput
       darker

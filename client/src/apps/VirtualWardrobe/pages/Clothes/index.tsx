@@ -73,7 +73,7 @@ function VirtualWardrobeClothes() {
   const handleCreateItem = useCallback(() => {
     open(ModifyItemModal, {
       type: 'create',
-      existedData: null
+      initialData: null
     })
   }, [queryKey])
 

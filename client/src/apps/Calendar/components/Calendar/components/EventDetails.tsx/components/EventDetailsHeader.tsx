@@ -65,7 +65,7 @@ function EventDetailsHeader({
 
   const handleEdit = useCallback(() => {
     open(ModifyEventModal, {
-      existedData: event,
+      initialData: event,
       type: 'update'
     })
   }, [event])

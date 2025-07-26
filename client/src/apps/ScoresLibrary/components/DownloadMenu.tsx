@@ -1,10 +1,9 @@
 import forceDown from '@utils/forceDown'
+import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 
-function DownloadMenu({
-  entry
-}: {
-  entry: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>
-}) {
+import type { ScoreLibraryEntry } from '..'
+
+function DownloadMenu({ entry }: { entry: ScoreLibraryEntry }) {
   return (
     <HamburgerMenu customIcon="tabler:download">
       <MenuItem

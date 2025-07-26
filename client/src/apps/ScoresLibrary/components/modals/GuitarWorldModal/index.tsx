@@ -1,8 +1,14 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
-import { useAPIQuery } from 'shared'
 
 import ScoreList from './components/ScoreList'
+
+export type ScoreLibraryGuitarWorldResponse = InferOutput<
+  typeof forgeAPI.scoresLibrary.guitarWorld.list
+>
 
 function GuitarWorldModal({ onClose }: { onClose: () => void }) {
   const [cookie, setCookie] = useState('')
@@ -11,13 +17,12 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
 
   const [page, setPage] = useState(1)
 
-  const dataQuery = useAPIQuery<
-    ScoresLibraryControllersSchemas.IGuitarWorld['getTabsList']['response']
-  >(
-    `scores-library/guitar-world?cookie=${finalCookie}&page=${page}`,
-    ['scores-library', finalCookie, page],
-    !!finalCookie,
-    {}
+  const dataQuery = useQuery(
+    forgeAPI.scoresLibrary.guitarWorld.list
+      .input({ cookie: finalCookie, page })
+      .queryOptions({
+        enabled: !!finalCookie
+      })
   )
 
   useEffect(() => {

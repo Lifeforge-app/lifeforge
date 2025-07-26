@@ -1,6 +1,8 @@
-import { SocketEvent, useSocketContext } from '@providers/SocketProvider'
-import { useQueryClient } from '@tanstack/react-query'
+import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput, InferOutput } from 'lifeforge-api'
 import {
   Button,
   ContentWrapperWithSidebar,
@@ -14,8 +16,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Id, toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
+import { type Id, toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
 import Header from './components/Header'
@@ -23,6 +24,22 @@ import Searchbar from './components/Searchbar'
 import Sidebar from './components/Sidebar'
 import GuitarWorldModal from './components/modals/GuitarWorldModal'
 import Views from './views'
+
+export type ScoreLibraryEntry = InferOutput<
+  typeof forgeAPI.scoresLibrary.entries.list
+>['items'][number]
+
+export type ScoreLibraryType = InferOutput<
+  typeof forgeAPI.scoresLibrary.types.list
+>[number]
+
+export type ScoreLibrarySidebarData = InferOutput<
+  typeof forgeAPI.scoresLibrary.entries.sidebarData
+>
+
+export type ScoreLibrarySortType = InferInput<
+  typeof forgeAPI.scoresLibrary.entries.list
+>['query']['sort']
 
 function ScoresLibrary() {
   const { t } = useTranslation('apps.scoresLibrary')
@@ -41,7 +58,8 @@ function ScoresLibrary() {
 
   const [isStarred, setStarred] = useState<boolean>(false)
 
-  const [selectedSortType, setSelectedSortType] = useState<string>('newest')
+  const [selectedSortType, setSelectedSortType] =
+    useState<ScoreLibrarySortType>('newest')
 
   const queryKey = [
     'scores-library',
@@ -54,36 +72,24 @@ function ScoresLibrary() {
     selectedSortType
   ]
 
-  const entriesQuery = useAPIQuery<
-    ScoresLibraryControllersSchemas.IEntries['getEntries']['response']
-  >(
-    (() => {
-      const searchParams = new URLSearchParams()
-
-      searchParams.set('sort', selectedSortType)
-      searchParams.set('page', String(page))
-
-      if (debouncedSearchQuery.trim())
-        searchParams.set('query', debouncedSearchQuery.trim())
-
-      if (selectedCategory) searchParams.set('category', selectedCategory)
-
-      if (isStarred) searchParams.set('starred', 'true')
-
-      if (selectedAuthor) searchParams.set('author', selectedAuthor)
-
-      return `scores-library/entries?${searchParams.toString()}`
-    })(),
-    queryKey
+  const entriesQuery = useQuery(
+    forgeAPI.scoresLibrary.entries.list
+      .input({
+        page,
+        query: debouncedSearchQuery,
+        category: selectedCategory ? selectedCategory : undefined,
+        starred: isStarred,
+        author: selectedAuthor ? selectedAuthor : undefined,
+        sort: selectedSortType
+      })
+      .queryOptions()
   )
 
-  const sidebarDataQuery = useAPIQuery<
-    ScoresLibraryControllersSchemas.IEntries['getSidebarData']['response']
-  >('scores-library/entries/sidebar-data', ['scores-library', 'sidebar-data'])
+  const sidebarDataQuery = useQuery(
+    forgeAPI.scoresLibrary.entries.sidebarData.queryOptions()
+  )
 
-  const typesQuery = useAPIQuery<
-    ScoresLibraryControllersSchemas.ITypes['getTypes']['response']
-  >('scores-library/types', ['scores-library', 'types'])
+  const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 

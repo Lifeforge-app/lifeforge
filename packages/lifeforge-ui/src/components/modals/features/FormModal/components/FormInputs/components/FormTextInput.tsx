@@ -1,7 +1,7 @@
 import { QRCodeScanner, TextInput } from '@components/inputs'
 import {
-  ITextInputFieldProps,
-  InferFormInputProps
+  type FormInputProps,
+  type TextFieldProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { useState } from 'react'
 
@@ -10,7 +10,7 @@ function FormTextInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<ITextInputFieldProps>) {
+}: FormInputProps<TextFieldProps>) {
   const [qrScannerModalOpen, setQrScannerModalOpen] = useState<boolean>(false)
 
   return (

@@ -1,7 +1,7 @@
 import { ColorInput } from '@components/inputs'
 import {
-  IColorInputFieldProps,
-  InferFormInputProps
+  type ColorFieldProps,
+  type FormInputProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 
 function FormColorInput({
@@ -9,7 +9,7 @@ function FormColorInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<IColorInputFieldProps>) {
+}: FormInputProps<ColorFieldProps>) {
   return (
     <ColorInput
       color={selectedData}

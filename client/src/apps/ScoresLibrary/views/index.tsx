@@ -1,3 +1,6 @@
+import { EmptyStateScreen } from 'lifeforge-ui'
+
+import type { ScoreLibraryEntry } from '..'
 import GridView from './GridView'
 import ListView from './ListView'
 
@@ -7,7 +10,7 @@ function Views({
   debouncedSearchQuery,
   totalItems
 }: {
-  entries: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry>[]
+  entries: ScoreLibraryEntry[]
   view: 'grid' | 'list'
   debouncedSearchQuery: string
   totalItems: number

@@ -3,7 +3,7 @@ import { SidebarTitle } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { IWalletTransaction } from '@apps/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
@@ -16,12 +16,12 @@ function MiniCalendar() {
 
   const [currentYear, setCurrentYear] = useState(dayjs().year())
 
-  const [viewsFilter, setViewsFilter] = useState<IWalletTransaction['type'][]>([
+  const [viewsFilter, setViewsFilter] = useState<WalletTransaction['type'][]>([
     'income',
     'expenses'
   ])
 
-  const toggleView = useCallback((view: IWalletTransaction['type']) => {
+  const toggleView = useCallback((view: WalletTransaction['type']) => {
     setViewsFilter(prevViews =>
       prevViews.includes(view)
         ? prevViews.filter(v => v !== view)

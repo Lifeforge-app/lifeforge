@@ -1,7 +1,7 @@
 import { Switch } from '@components/buttons'
 import {
-  IFormCheckboxFieldProps,
-  InferFormInputProps
+  type CheckboxFieldProps,
+  type FormInputProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
@@ -12,7 +12,7 @@ function FormCheckboxInput({
   selectedData,
   namespace,
   handleChange
-}: InferFormInputProps<IFormCheckboxFieldProps>) {
+}: FormInputProps<CheckboxFieldProps>) {
   const { t } = useTranslation(namespace)
 
   return (

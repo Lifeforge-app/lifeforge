@@ -18,13 +18,13 @@ function AssetItem({
   const handleEditAsset = useCallback(() => {
     open(ModifyAssetModal, {
       type: 'update',
-      existedData: asset
+      initialData: asset
     })
   }, [asset])
 
   const handleOpenBalanceChart = useCallback(() => {
     open(BalanceChartModal, {
-      existedData: asset
+      initialData: asset
     })
   }, [asset])
 

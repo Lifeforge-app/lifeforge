@@ -1,6 +1,6 @@
 import { ModalHeader } from 'lifeforge-ui'
 
-import type { IWalletTransaction } from '../..'
+import type { WalletTransaction } from '../..'
 import Details from './components/Details'
 import Header from './components/Header'
 
@@ -9,7 +9,7 @@ function ViewTransactionModal({
   onClose
 }: {
   data: {
-    transaction: IWalletTransaction
+    transaction: WalletTransaction
   }
   onClose: () => void
 }) {

@@ -1,47 +1,54 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { type FieldsConfig, FormModal } from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+
+import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
+
 function ModifyEntryModal({
   onClose,
-  data: { existedData, queryKey }
+  data: { initialData, queryKey }
 }: {
   onClose: () => void
   data: {
-    existedData: ISchemaWithPB<ScoresLibraryCollectionsSchemas.IEntry> | null
+    initialData: ScoreLibraryEntry
     queryKey: unknown[]
   }
 }) {
   const { t } = useTranslation('apps.scoresLibrary')
 
-  const typesQuery = useAPIQuery<
-    ScoresLibraryControllersSchemas.ITypes['getTypes']['response']
-  >('scores-library/types', ['scores-library', 'types'])
+  const mutation = useMutation(
+    forgeAPI.scoresLibrary.entries.update
+      .input({ id: initialData.id })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey })
+          onClose()
+        }
+      })
+  )
+
+  const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
   const queryClient = useQueryClient()
 
-  const [formState, setFormState] = useState<
-    ScoresLibraryControllersSchemas.IEntries['updateEntry']['body']
-  >({
-    name: '',
-    author: '',
-    type: ''
-  })
-
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'name',
+  const FIELDS = {
+    name: {
       required: true,
       label: 'Music Name',
       icon: 'tabler:music',
       placeholder: 'A cool tab',
       type: 'text'
     },
-    {
-      id: 'author',
+    author: {
+      required: true,
       label: 'Author',
       icon: 'tabler:user',
       placeholder: 'John Doe',
       type: 'text'
     },
-    {
-      id: 'type',
+    type: {
       required: true,
       label: 'Score Type',
       icon: 'tabler:category',
@@ -59,43 +66,31 @@ function ModifyEntryModal({
         })) || [])
       ]
     }
-  ]
+  } as const satisfies FieldsConfig<
+    InferInput<typeof forgeAPI.scoresLibrary.entries.update>['body']
+  >
 
-  useEffect(() => {
-    if (existedData !== null) {
-      setFormState({
-        name: existedData.name,
-        author: existedData.author,
-        type: existedData.type
-      })
-    } else {
-      setFormState({
-        name: '',
-        author: '',
-        type: ''
-      })
-    }
-  }, [existedData])
+  async function onSubmit(
+    data: InferInput<typeof forgeAPI.scoresLibrary.entries.update>['body']
+  ) {
+    await mutation.mutateAsync(data)
+  }
 
   return (
     <FormModal
-      customUpdateDataList={{
-        update: () => {
-          queryClient.invalidateQueries({ queryKey })
-        }
+      form={{
+        fields: FIELDS,
+        initialData,
+        onSubmit
       }}
-      data={formState}
-      endpoint="scores-library/entries"
-      fields={FIELDS}
-      icon="tabler:pencil"
-      id={existedData?.id}
-      loading={typesQuery.isLoading}
-      namespace="apps.scoresLibrary"
-      openType="update"
-      queryKey={queryKey}
-      setData={setFormState}
-      title="scoresLibrary.update"
-      onClose={onClose}
+      submitButton="update"
+      ui={{
+        icon: 'tabler:pencil',
+        title: 'scoresLibrary.update',
+        namespace: 'apps.scoresLibrary',
+        onClose,
+        loading: typesQuery.isLoading
+      }}
     />
   )
 }

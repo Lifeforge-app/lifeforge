@@ -1,11 +1,11 @@
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal({
-  data: { existedData },
+  data: { initialData },
   onClose
 }: {
   data: {
-    existedData: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry> | null
+    initialData: ISchemaWithPB<BooksLibraryCollectionsSchemas.IEntry> | null
   }
   onClose: () => void
 }) {
@@ -114,7 +114,7 @@ function ModifyBookModal({
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `books-library/entries/${existedData?.id}`,
+        `books-library/entries/${initialData?.id}`,
         {
           method: 'PATCH',
           body: data
@@ -129,20 +129,20 @@ function ModifyBookModal({
   }
 
   useEffect(() => {
-    if (existedData !== null) {
+    if (initialData !== null) {
       setData({
         ...data,
-        authors: existedData.authors,
-        collection: existedData.collection,
-        edition: existedData.edition,
-        isbn: existedData.isbn,
-        languages: existedData.languages,
-        publisher: existedData.publisher,
-        title: existedData.title,
-        year_published: existedData.year_published
+        authors: initialData.authors,
+        collection: initialData.collection,
+        edition: initialData.edition,
+        isbn: initialData.isbn,
+        languages: initialData.languages,
+        publisher: initialData.publisher,
+        title: initialData.title,
+        year_published: initialData.year_published
       })
     }
-  }, [existedData])
+  }, [initialData])
 
   return (
     <FormModal
