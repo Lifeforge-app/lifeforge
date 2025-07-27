@@ -25,9 +25,9 @@ function CategoriesSection() {
           icon: 'tabler:tag',
           name: t('sidebar.allCategories'),
           color: 'white',
-          id: null,
-          type: null,
-          amount: undefined
+          type: null as 'income' | 'expenses' | null,
+          amount: undefined as number | undefined,
+          id: null as string | null
         }
       ]
         .concat(
@@ -35,7 +35,7 @@ function CategoriesSection() {
             (a, b) =>
               ['income', 'expenses'].indexOf(a.type) -
               ['income', 'expenses'].indexOf(b.type)
-          ) ?? ([] as any)
+          ) ?? []
         )
         .filter(
           ({ type }) => selectedType === type || (selectedType ?? null) === null
@@ -45,8 +45,10 @@ function CategoriesSection() {
 
   const handleActionButtonClick = useCallback(() => {
     open(ModifyCategoryModal, {
-      type: 'income',
-      initialData: null
+      type: 'create',
+      initialData: {
+        type: 'expenses'
+      }
     })
   }, [])
 

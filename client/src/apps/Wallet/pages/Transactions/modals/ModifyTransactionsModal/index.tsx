@@ -1,13 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
-import { FormModal } from 'lifeforge-ui'
-import {
-  type SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import { InferInput } from 'lifeforge-api'
+import { FormModal, defineForm } from 'lifeforge-ui'
+import { type SetStateAction, useCallback, useEffect, useMemo } from 'react'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
@@ -18,7 +14,7 @@ function ModifyTransactionsModal({
   onClose
 }: {
   data: {
-    type: 'create' | 'update' | null
+    type: 'create' | 'update'
     initialData:
       | ({
           type: WalletTransaction['type']
@@ -37,47 +33,28 @@ function ModifyTransactionsModal({
 
   const ledgers = ledgersQuery.data ?? []
 
-  const [toRemoveReceipt, setToRemoveReceipt] = useState<boolean>(false)
-
-  const [baseFormState, setBaseFormState] = useState<{
-    type: WalletTransaction['type']
-    date: Date
-    amount: number
-    receipt: {
-      image: string | File | null
-      preview: string | null
-    }
-  }>({
-    type: 'expenses',
-    date: dayjs().toDate(),
-    amount: 0,
-    receipt: {
-      image: null,
-      preview: null
-    }
-  })
-
-  const [incomeExpensesFormState, setIncomeExpensesFormState] = useState<
-    Omit<
-      WalletCollectionsSchemas.ITransactionsIncomeExpense,
-      'location_name' | 'location_coords' | 'base_transaction' | 'type'
-    > & {
-      location: LocationsCustomSchemas.ILocation | undefined
-    }
-  >({
-    category: '',
-    asset: '',
-    ledgers: [],
-    particulars: '',
-    location: undefined
-  })
-
-  const [transferFormState, setTransferFormState] = useState<
-    Omit<WalletCollectionsSchemas.ITransactionsTransfer, 'base_transaction'>
-  >({
-    from: '',
-    to: ''
-  })
+  const formProps = defineForm<
+    InferInput<(typeof forgeAPI.wallet.transactions)[typeof type]>['body']
+  >()
+    .ui({
+      namespace: 'apps.wallet',
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+      title: `transactions.${type}`,
+      submitButton: type,
+      onClose
+    })
+    .typesMap({
+      type: 'listbox',
+      date: 'datetime',
+      amount: 'currency',
+      particulars: 'text',
+      category: 'listbox',
+      asset: 'listbox',
+      ledgers: 'listbox',
+      location: 'location',
+      receipt: 'file',
+      
+    })
 
   const fields = useMemo<IFieldProps[]>(() => {
     const BASE_FIELD_PROPS: IFieldProps<typeof baseFormState>[] = [

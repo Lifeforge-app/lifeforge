@@ -119,7 +119,11 @@ const create = forgeController.mutation
   .input({
     body: CreateTransactionInputSchema
   })
-  .middlewares(singleUploadMiddleware)
+  .media({
+    receipt: {
+      optional: true
+    }
+  })
   .existenceCheck('body', {
     category: '[wallet__categories]',
     asset: '[wallet__assets]',
@@ -128,16 +132,15 @@ const create = forgeController.mutation
     toAsset: '[wallet__assets]'
   })
   .statusCode(201)
-  .callback(async ({ pb, body, req }) => {
+  .callback(async ({ pb, body, media: { receipt: rawReceipt } }) => {
     const data = body as z.infer<typeof CreateTransactionInputSchema>
 
-    let targetFile: Express.Multer.File | File | undefined = req.file
     let receipt: File | undefined = undefined
 
-    if (targetFile)
-      targetFile.originalname = decodeURIComponent(targetFile.originalname)
+    if (rawReceipt)
+      rawReceipt.originalname = decodeURIComponent(rawReceipt.originalname)
 
-    const path = req.file?.originalname.split('/') ?? []
+    const path = rawReceipt?.originalname.split('/') ?? []
 
     const fileName = path.pop()
 
