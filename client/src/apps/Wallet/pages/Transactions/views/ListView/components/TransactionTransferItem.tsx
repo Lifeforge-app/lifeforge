@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
@@ -11,8 +12,8 @@ import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
 import type { WalletTransaction } from '../../..'
 import ModifyTransactionsModal from '../../../modals/ModifyTransactionsModal'
+import ViewReceiptModal from '../../../modals/ViewReceiptModal'
 import ViewTransactionModal from '../../../modals/ViewTransactionModal'
-import ViewReceiptModal from './ViewReceiptModal'
 
 function TransactionTransferItem({
   transaction
@@ -66,9 +67,11 @@ function TransactionTransferItem({
       e.preventDefault()
 
       open(ViewReceiptModal, {
-        src: `${import.meta.env.VITE_API_HOST}/media/${
-          transaction.collectionId
-        }/${transaction.id}/${transaction.receipt}`
+        src: forgeAPI.media.input({
+          collectionId: transaction.collectionId,
+          recordId: transaction.id,
+          fieldId: transaction.receipt
+        }).endpoint
       })
     },
     [transaction]

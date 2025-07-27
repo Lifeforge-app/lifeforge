@@ -126,6 +126,7 @@ function ModifyTicketModal({
     .onSubmit(async data => {
       await modifyTicketMutation.mutateAsync(data)
     })
+    .build()
 
   return (
     <FormModal

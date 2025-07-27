@@ -82,6 +82,7 @@ export class ForgeControllerBuilder<
   public __isForgeController!: true
 
   /** The type of input and output, used for type inference */
+  public __method!: TMethod
   public __input!: TInput
   public __output!: TOutput
   public __media!: TMedia

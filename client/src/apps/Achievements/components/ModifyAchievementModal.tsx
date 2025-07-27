@@ -91,7 +91,7 @@ function ModifyAchievementModal({
     })
     .onSubmit(async formData => {
       await mutation.mutateAsync(formData)
-    })
+    }).build()
 
   return <FormModal {...formProps} />
 }

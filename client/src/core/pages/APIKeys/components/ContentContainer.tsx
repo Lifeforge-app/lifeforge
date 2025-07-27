@@ -3,12 +3,16 @@ import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 import { encrypt } from '@security/utils/encryption'
 import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
-import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
-import { IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 import EntryItem from './EntryItem'
+
+export type APIKeysEntry = InferOutput<
+  typeof forgeAPI.apiKeys.entries.list
+>[number]
 
 function ContentContainer({
   masterPassword,
@@ -23,22 +27,19 @@ function ContentContainer({
 }) {
   const { userData } = useAuth()
 
-  const entriesQuery = useQuery<IAPIKeyEntry[]>({
-    queryKey: ['api-keys', 'entries', masterPassword],
-    queryFn: async () => {
-      const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        'api-keys/auth/challenge'
-      )
+  const challengeQuery = useQuery(
+    forgeAPI.apiKeys.auth.getChallenge.queryOptions()
+  )
 
-      return fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        'api-keys/entries?master=' +
-          encodeURIComponent(encrypt(masterPassword, challenge))
-      )
-    },
-    enabled: !!masterPassword
-  })
+  const entriesQuery = useQuery(
+    forgeAPI.apiKeys.entries.list
+      .input({
+        master: encrypt(masterPassword, challengeQuery.data || '')
+      })
+      .queryOptions({
+        enabled: !!masterPassword && otpSuccess && challengeQuery.isSuccess
+      })
+  )
 
   if (!otpSuccess) {
     return (

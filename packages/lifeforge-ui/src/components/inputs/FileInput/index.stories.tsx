@@ -15,7 +15,7 @@ export const Default: Story = {
   args: {
     icon: 'tabler:file',
     name: 'name',
-    image: null,
+    file: null,
     preview: null,
     setData: () => {},
     namespace: 'namespace',
@@ -30,7 +30,7 @@ export const Default: Story = {
       <div className="flex h-screen w-screen items-center justify-center px-32">
         <Index
           {...args}
-          image={image}
+          file={image}
           preview={preview}
           setData={({ file, preview }) => {
             setImage(file)

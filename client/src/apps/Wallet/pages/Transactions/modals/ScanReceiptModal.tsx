@@ -72,8 +72,8 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
           images: ['image/jpeg', 'image/png', 'image/jpg'],
           files: ['application/pdf']
         }}
+        file={file}
         icon="tabler:receipt"
-        image={file}
         name="receipt"
         namespace="apps.wallet"
         preview={preview}
