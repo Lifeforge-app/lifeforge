@@ -22,7 +22,7 @@ function ModifyContainerModal({
     (type === 'create'
       ? forgeAPI.ideaBox.containers.create
       : forgeAPI.ideaBox.containers.update.input({
-          id: initialData!.id!
+          id: initialData?.id || ''!
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -46,10 +46,7 @@ function ModifyContainerModal({
     InferInput<(typeof forgeAPI.ideaBox.containers)[typeof type]>['body']
   >()
     .ui({
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type],
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
       title: `container.${type}`,
       onClose,
       namespace: 'apps.ideaBox',
@@ -77,6 +74,7 @@ function ModifyContainerModal({
         label: 'Container color'
       },
       cover: {
+        optional: true,
         required: true,
         icon: 'tabler:photo',
         label: 'Cover Image',
@@ -105,7 +103,8 @@ function ModifyContainerModal({
     })
     .onSubmit(async data => {
       await mutation.mutateAsync(data)
-    }).build()
+    })
+    .build()
 
   return <FormModal {...formProps} />
 }

@@ -6,17 +6,14 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import {
+  type IdeaBoxIdea,
+  useIdeaBoxContext
+} from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'
 
-function EntryContextMenu({
-  entry
-}: {
-  entry:
-    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
-    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
-}) {
+function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
   const open = useModalStore(state => state.open)
 
   const { viewArchived, debouncedSearchQuery, selectedTags } =

@@ -1,76 +1,82 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { defineForm, FormModal } from 'lifeforge-ui'
+import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
+
+import type { IdeaBoxTag } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 function ModifyTagModal({
   data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    initialData: ISchemaWithPB<IdeaBoxCollectionsSchemas.ITag> | null
+    initialData?: IdeaBoxTag
   }
   onClose: () => void
 }) {
+  const queryClient = useQueryClient()
+
   const { id } = useParams<{ id: string }>()
 
-  const [formState, setFormState] = useState<
-    IdeaBoxControllersSchemas.ITags['createTag' | 'updateTag']['body']
-  >({
-    name: '',
-    icon: '',
-    color: ''
-  })
-
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'name',
-      label: 'Tag name',
-      icon: 'tabler:tag',
-      placeholder: 'My tag',
-      type: 'text',
-      disabled: true
-    },
-    {
-      id: 'icon',
-      label: 'Tag icon',
-      type: 'icon'
-    },
-    {
-      id: 'color',
-      label: 'Tag color',
-      type: 'color'
-    }
-  ]
-
-  useEffect(() => {
-    if (initialData !== null) {
-      setFormState(initialData)
-    } else {
-      setFormState({
-        name: '',
-        icon: '',
-        color: ''
-      })
-    }
-  }, [type, initialData])
-
-  return (
-    <FormModal
-      data={formState}
-      endpoint="idea-box/tags"
-      fields={FIELDS}
-      icon={
-        {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type!]
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.ideaBox.tags.create
+      : forgeAPI.ideaBox.tags.update.input({ id: initialData?.id || '' })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['ideaBox', 'tags'] })
+      },
+      onError: error => {
+        toast.error(`Failed to ${type} tag: ${error.message}`)
       }
-      id={initialData?.id}
-      namespace="apps.ideaBox"
-      openType={type}
-      queryKey={['idea-box', 'tags', id!]}
-      setData={setFormState}
-      title={`tag.${type}`}
-      onClose={onClose}
-    />
+    })
   )
+
+  const formProps = defineForm<
+    InferInput<(typeof forgeAPI.ideaBox.tags)[typeof type]>['body']
+  >()
+    .ui({
+      title: `tag.${type}`,
+      icon: {
+        create: 'tabler:plus',
+        update: 'tabler:pencil'
+      }[type],
+      namespace: 'apps.ideaBox',
+      onClose,
+      submitButton: type
+    })
+    .typesMap({
+      name: 'text',
+      icon: 'icon',
+      color: 'color',
+      container: 'text'
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Tag name',
+        icon: 'tabler:tag',
+        placeholder: 'My tag'
+      },
+      icon: {
+        label: 'Tag icon',
+        type: 'icon'
+      },
+      color: {
+        label: 'Tag color',
+        type: 'color'
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync({ ...data, container: id || '' })
+    })
+    .build()
+
+  return <FormModal {...formProps} />
 }
 
 export default ModifyTagModal

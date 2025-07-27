@@ -25,7 +25,7 @@ function ModifyCategoryModal({
     (type === 'create'
       ? forgeAPI.wallet.categories.create
       : forgeAPI.wallet.categories.update.input({
-          id: initialData!.id!
+          id: initialData?.id || ''!
         })
     ).mutationOptions({
       onSuccess: () => {

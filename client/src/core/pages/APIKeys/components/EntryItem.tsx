@@ -13,10 +13,9 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
-import { decrypt, encrypt } from '../../../security/utils/encryption'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
+import decryptKey from '../utils/decryptKey'
 import type { APIKeysEntry } from './ContentContainer'
 
 function EntryItem({
@@ -53,26 +52,10 @@ function EntryItem({
   )
 
   async function copyKey() {
-    const challenge = await fetchAPI<string>(
-      import.meta.env.VITE_API_HOST,
-      'api-keys/auth/challenge'
-    )
-
     setIsCopying(true)
 
     try {
-      const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        `api-keys/entries/${entry.id}?master=${encodeURIComponent(
-          encrypt(masterPassword, challenge)
-        )}`
-      )
-
-      const decryptedKey = decrypt(data, challenge)
-
-      const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
-
-      copy(decryptedSecondTime)
+      copy(await decryptKey({ entry, masterPassword }))
       toast.success('Key copied to clipboard')
     } catch (err) {
       console.error(err)
@@ -83,11 +66,18 @@ function EntryItem({
   }
 
   const handleUpdateEntry = useCallback(async () => {
-    open(ModifyAPIKeyModal, {
-      type: 'update',
-      initialData: entry,
-      masterPassword
-    })
+    try {
+      open(ModifyAPIKeyModal, {
+        type: 'update',
+        initialData: {
+          ...entry,
+          key: await decryptKey({ entry, masterPassword })
+        },
+        masterPassword
+      })
+    } catch {
+      toast.error('Failed to fetch API Key')
+    }
   }, [entry, masterPassword])
 
   const handleDeleteEntry = () =>
@@ -128,7 +118,7 @@ function EntryItem({
       </div>
       <div className="ml-2 flex gap-2">
         <Button
-          className="p-2!"
+          className="shrink-0"
           icon="tabler:copy"
           loading={isCopying}
           variant="plain"

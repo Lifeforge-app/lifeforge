@@ -47,7 +47,9 @@ const create = forgeController.mutation
   .input({
     body: SCHEMAS.passwords.entries
       .omit({
-        pinned: true
+        pinned: true,
+        created: true,
+        updated: true
       })
       .extend({
         master: z.string()
@@ -83,7 +85,9 @@ const update = forgeController.mutation
     }),
     body: SCHEMAS.passwords.entries
       .omit({
-        pinned: true
+        pinned: true,
+        created: true,
+        updated: true
       })
       .extend({
         master: z.string()
@@ -104,7 +108,7 @@ const update = forgeController.mutation
       decryptedMaster
     )
 
-    const entry = await pb.update
+    await pb.update
       .collection('passwords__entries')
       .id(id)
       .data({
@@ -112,8 +116,6 @@ const update = forgeController.mutation
         password: encryptedPassword.toString('base64')
       })
       .execute()
-
-    return entry
   })
 
 const decrypt = forgeController.mutation

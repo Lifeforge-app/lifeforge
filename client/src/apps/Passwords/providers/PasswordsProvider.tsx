@@ -1,14 +1,17 @@
-import type { UseQueryResult } from '@tanstack/react-query'
+import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
-import { useAPIQuery } from 'shared'
 
-import { IPasswordEntry } from '@apps/Passwords/interfaces/password_interfaces'
+export type PasswordEntry = InferOutput<
+  typeof forgeAPI.passwords.entries.list
+>[number]
 
 interface IPasswordsData {
-  passwordListQuery: UseQueryResult<IPasswordEntry[]>
-  filteredPasswordList: IPasswordEntry[]
+  passwordListQuery: UseQueryResult<PasswordEntry[]>
+  filteredPasswordList: PasswordEntry[]
 
   otpSuccess: boolean
   masterPassword: string
@@ -32,10 +35,10 @@ export default function PasswordsProvider() {
 
   const debouncedQuery = useDebounce(query, 300)
 
-  const passwordListQuery = useAPIQuery<IPasswordEntry[]>(
-    'passwords/entries',
-    ['passwords', 'entries'],
-    masterPassword !== ''
+  const passwordListQuery = useQuery(
+    forgeAPI.passwords.entries.list.queryOptions({
+      enabled: masterPassword !== ''
+    })
   )
 
   const filteredPasswordList = useMemo(() => {

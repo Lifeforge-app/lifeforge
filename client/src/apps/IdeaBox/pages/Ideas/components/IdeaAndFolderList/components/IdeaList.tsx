@@ -1,19 +1,16 @@
 // @ts-expect-error no types available
 import Column from 'react-columns'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import {
+  type IdeaBoxIdea,
+  useIdeaBoxContext
+} from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import EntryImage from './IdeaEntry/EntryImage'
 import EntryLink from './IdeaEntry/EntryLink'
 import EntryText from './IdeaEntry/EntryText'
 
-function IdeaList({
-  data
-}: {
-  data:
-    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response']
-    | IdeaBoxControllersSchemas.IMisc['search']['response']
-}) {
+function IdeaList({ data }: { data: IdeaBoxIdea[] }) {
   const { selectedTags } = useIdeaBoxContext()
 
   return (

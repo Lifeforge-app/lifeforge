@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
+import {
+  type PasswordEntry,
+  usePasswordContext
+} from '@apps/Passwords/providers/PasswordsProvider'
 
-import { IPasswordEntry } from '../interfaces/password_interfaces'
 import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList() {
@@ -17,10 +19,10 @@ function PasswordList() {
   const { passwordListQuery, filteredPasswordList } = usePasswordContext()
 
   async function pinPassword(id: string) {
-    const mapPasswords = (p: IPasswordEntry) =>
+    const mapPasswords = (p: PasswordEntry) =>
       p.id === id ? { ...p, pinned: !p.pinned } : p
 
-    const sortPasswords = (a: IPasswordEntry, b: IPasswordEntry) => {
+    const sortPasswords = (a: PasswordEntry, b: PasswordEntry) => {
       if (a.pinned && !b.pinned) return -1
       if (!a.pinned && b.pinned) return 1
 
@@ -36,7 +38,7 @@ function PasswordList() {
         }
       )
 
-      queryClient.setQueryData<IPasswordEntry[]>(
+      queryClient.setQueryData<PasswordEntry[]>(
         ['passwords', 'entries'],
         prev => {
           if (!prev) return prev

@@ -1,4 +1,5 @@
 import OTPScreen from '@security/components/OTPScreen'
+import forgeAPI from '@utils/forgeAPI'
 import { ModalHeader } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -38,7 +39,8 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
             callback={() => {
               setOtpSuccess(true)
             }}
-            endpoint="/user/2fa"
+            challengeController={forgeAPI.user['2fa'].getChallenge}
+            verifyController={forgeAPI.user['2fa'].validateOTP}
           />
         </div>
       ) : (

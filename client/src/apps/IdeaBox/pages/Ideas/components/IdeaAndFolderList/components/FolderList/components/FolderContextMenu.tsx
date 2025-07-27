@@ -1,3 +1,14 @@
+import {
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useParams } from 'react-router'
+
+import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 
 function FolderContextMenu({
@@ -5,7 +16,7 @@ function FolderContextMenu({
   // isOver,
   removeFromFolder
 }: {
-  folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
+  folder: IdeaBoxFolder
   isOver: boolean
   removeFromFolder: () => Promise<void>
 }) {

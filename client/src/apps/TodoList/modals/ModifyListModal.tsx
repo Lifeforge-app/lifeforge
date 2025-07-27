@@ -22,7 +22,7 @@ function ModifyListModal({
     (type === 'create'
       ? forgeAPI.todoList.lists.create
       : forgeAPI.todoList.lists.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -38,10 +38,7 @@ function ModifyListModal({
     InferInput<(typeof forgeAPI.todoList.lists)[typeof type]>['body']
   >()
     .ui({
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type],
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
       namespace: 'apps.todoList',
       title: `list.${type}`,
       onClose,

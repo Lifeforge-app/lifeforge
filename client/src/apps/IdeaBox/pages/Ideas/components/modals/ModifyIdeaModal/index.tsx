@@ -7,7 +7,10 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import {
+  type IdeaBoxIdea,
+  useIdeaBoxContext
+} from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
@@ -18,12 +21,9 @@ function ModifyIdeaModal({
 }: {
   data: {
     type: 'create' | 'update' | 'paste'
-    ideaType: IdeaBoxCollectionsSchemas.IEntry['type']
-    initialData?:
-      | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
-      | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
-      | null
-    pastedData?: { file: File; preview: string } | null
+    ideaType: IdeaBoxIdea['type']
+    initialData?: IdeaBoxIdea
+    pastedData?: { file: File; preview: string }
   }
   onClose: () => void
 }) {
@@ -34,7 +34,7 @@ function ModifyIdeaModal({
   const innerOpenType = useDebounce(type, type === null ? 300 : 0)
 
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] =
-    useState<IdeaBoxCollectionsSchemas.IEntry['type']>('text')
+    useState<IdeaBoxIdea['type']>('text')
 
   const [formState, setFormState] = useState<{
     title: string
@@ -197,7 +197,7 @@ function ModifyIdeaModal({
     try {
       await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        `idea-box/ideas/${innerOpenType === 'update' ? initialData?.id : ''}`,
+        `idea-box/ideas/${innerOpenType === 'update' ? initialData?.id || '' : ''}`,
         {
           method: innerOpenType === 'update' ? 'PATCH' : 'POST',
           body:
