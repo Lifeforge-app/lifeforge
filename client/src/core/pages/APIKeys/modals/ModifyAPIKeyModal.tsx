@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
@@ -19,30 +19,11 @@ function ModifyAPIKeyModal({
 }) {
   const queryClient = useQueryClient()
 
-  const challengeQuery = useQuery(
-    forgeAPI.apiKeys.auth.getChallenge.queryOptions()
-  )
-
-  const keyQuery = useQuery(
-    forgeAPI.apiKeys.entries.decrypt
-      .input({
-        id: initialData!.id,
-        master: encrypt(masterPassword, challengeQuery.data!)
-      })
-      .queryOptions({
-        enabled: !!(
-          type === 'update' &&
-          initialData?.id &&
-          !challengeQuery.isLoading
-        )
-      })
-  )
-
   const mutation = useMutation(
     (type === 'create'
       ? forgeAPI.apiKeys.entries.create
       : forgeAPI.apiKeys.entries.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -65,10 +46,6 @@ function ModifyAPIKeyModal({
       icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
       namespace: 'core.apiKeys',
       title: `apiKey.${type}`,
-      loading:
-        type === 'update'
-          ? keyQuery.isLoading || challengeQuery.isLoading
-          : false,
       onClose,
       submitButton: type
     })
@@ -115,8 +92,8 @@ function ModifyAPIKeyModal({
       keyId: initialData?.keyId || '',
       name: initialData?.name || '',
       description: initialData?.description || '',
-      icon: initialData?.icon || 'tabler:key',
-      key: keyQuery.data || ''
+      icon: initialData?.icon || '',
+      key: initialData?.key || ''
     })
     .onSubmit(async data => {
       const challenge = await forgeAPI.apiKeys.auth.getChallenge.query()

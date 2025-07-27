@@ -22,7 +22,7 @@ function ModifyAssetModal({
     (type === 'create'
       ? forgeAPI.wallet.assets.create
       : forgeAPI.wallet.assets.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {

@@ -1,17 +1,19 @@
 import { Icon } from '@iconify/react'
+import type { ForgeAPIClientController } from 'lifeforge-api'
 import { Button, TextInput } from 'lifeforge-ui'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import { encrypt } from '../utils/encryption'
 
 function LockedScreen({
-  endpoint,
+  challengeController,
+  verifyController,
   setMasterPassword
 }: {
-  endpoint: string
+  challengeController: ForgeAPIClientController
+  verifyController: ForgeAPIClientController
   setMasterPassword: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
@@ -31,21 +33,11 @@ function LockedScreen({
     setLoading(true)
 
     try {
-      const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        `${endpoint}/challenge`
-      )
+      const challenge = (await challengeController.query()) as string
 
-      const data = await fetchAPI<boolean>(
-        import.meta.env.VITE_API_HOST,
-        `${endpoint}/verify`,
-        {
-          method: 'POST',
-          body: {
-            password: encrypt(masterPassWordInputContent, challenge)
-          }
-        }
-      )
+      const data = await verifyController.mutate({
+        password: encrypt(masterPassWordInputContent, challenge)
+      } as never)
 
       if (data === true) {
         toast.info(

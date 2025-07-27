@@ -40,7 +40,7 @@ function ModifyTransactionsModal({
     (type === 'create'
       ? forgeAPI.wallet.transactions.create
       : forgeAPI.wallet.transactions.update.input({
-          id: initialData!.id!
+          id: initialData?.id || ''!
         })
     ).mutationOptions({
       onSuccess: () => {

@@ -13,17 +13,19 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
+import {
+  type PasswordEntry,
+  usePasswordContext
+} from '@apps/Passwords/providers/PasswordsProvider'
 
-import { type IPasswordEntry } from '../interfaces/password_interfaces'
 import ModifyPasswordModal from '../modals/ModifyPasswordModal'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 
-function PasswordEntryITem({
+function PasswordEntryItem({
   password,
   pinPassword
 }: {
-  password: IPasswordEntry
+  password: PasswordEntry
   pinPassword: (id: string) => Promise<void>
 }) {
   const { t } = useTranslation('apps.passwords')
@@ -224,4 +226,4 @@ function PasswordEntryITem({
   )
 }
 
-export default PasswordEntryITem
+export default PasswordEntryItem

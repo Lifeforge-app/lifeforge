@@ -21,7 +21,7 @@ function ModifyWishlistListModal({
     (type === 'create'
       ? forgeAPI.wishlist.lists.create
       : forgeAPI.wishlist.lists.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -36,10 +36,7 @@ function ModifyWishlistListModal({
     .ui({
       namespace: 'apps.wishlist',
       title: `wishlist.${type}`,
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type],
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
       onClose,
       submitButton: type
     })

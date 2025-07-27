@@ -1,6 +1,7 @@
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
+import forgeAPI from '@utils/forgeAPI'
 import { FAB, SearchInput } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -35,7 +36,8 @@ function ContentContainer() {
     return (
       <OTPScreen
         callback={() => setOtpSuccess(true)}
-        endpoint="passwords/master"
+        challengeController={forgeAPI.passwords.master.getChallenge}
+        verifyController={forgeAPI.passwords.master.validateOTP}
       />
     )
   }
@@ -43,8 +45,9 @@ function ContentContainer() {
   if (masterPassword === '') {
     return (
       <LockedScreen
-        endpoint="passwords/master"
+        challengeController={forgeAPI.passwords.master.getChallenge}
         setMasterPassword={setMasterPassword}
+        verifyController={forgeAPI.passwords.master.verify}
       />
     )
   }

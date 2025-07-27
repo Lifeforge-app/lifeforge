@@ -22,7 +22,7 @@ function ModifyModal({
     (type === 'create'
       ? forgeAPI.booksLibrary[stuff].create
       : forgeAPI.booksLibrary[stuff].update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {

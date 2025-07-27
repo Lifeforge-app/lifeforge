@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
+import forgeAPI from '@utils/forgeAPI'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
@@ -51,7 +52,8 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
             callback={() => {
               setOtpSuccess(true)
             }}
-            endpoint="/user/2fa"
+            challengeController={forgeAPI.user['2fa'].getChallenge}
+            verifyController={forgeAPI.user['2fa'].validateOTP}
           />
         </div>
       ) : (

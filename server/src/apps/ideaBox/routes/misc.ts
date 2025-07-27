@@ -164,16 +164,6 @@ const search = forgeController.query
     container: '[idea_box__containers]'
   })
   .callback(async ({ pb, query: { q, container, tags, folder } }) => {
-    if (container) {
-      const containerExists = await checkExistence(
-        pb,
-        'idea_box__containers',
-        container
-      )
-
-      if (!containerExists) return null
-    }
-
     const results = await recursivelySearchFolder(
       folder || '',
       q,
