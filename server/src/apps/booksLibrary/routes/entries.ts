@@ -21,24 +21,26 @@ const update = forgeController.mutation
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.books_library.entries.pick({
-      title: true,
-      authors: true,
-      edition: true,
-      languages: true,
-      isbn: true,
-      publisher: true,
-      year_published: true
-    }).extend({
-      collection: z.string().optional()
-    })
+    body: SCHEMAS.books_library.entries
+      .pick({
+        title: true,
+        authors: true,
+        edition: true,
+        languages: true,
+        isbn: true,
+        publisher: true,
+        year_published: true
+      })
+      .extend({
+        collection: z.string().optional()
+      })
   })
   .description('Update an existing entry in the books library')
   .existenceCheck('query', {
     id: 'books_library__entries'
   })
   .existenceCheck('body', {
-    collection: '[books_library__categories]',
+    collection: '[books_library__collections]',
     languages: '[books_library__languages]'
   })
   .callback(({ pb, query: { id }, body }) =>

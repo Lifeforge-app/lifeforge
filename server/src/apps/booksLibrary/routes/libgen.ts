@@ -249,24 +249,16 @@ const addToLibrary = forgeController.mutation
         })
 
         downloadProcess.stderr.on('data', data => {
-          updateTaskInPool(io, taskId, {
-            status: 'failed',
-            error: data.toString()
-          })
+          throw new Error(data.toString())
         })
 
         downloadProcess.on('error', err => {
-          updateTaskInPool(io, taskId, {
-            status: 'failed',
-            error: err instanceof Error ? err.message : 'Unknown error'
-          })
+          throw new Error(`Download process failed: ${err.message}`)
         })
 
         downloadProcess.on('close', () => {
           processDownloadedFiles(pb, io, taskId, md5, body)
         })
-
-        return { initiated: true }
       } catch (error) {
         updateTaskInPool(io, taskId, {
           status: 'failed',

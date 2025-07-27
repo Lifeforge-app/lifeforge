@@ -161,7 +161,7 @@ const search = forgeController.query
     })
   })
   .existenceCheck('query', {
-    container: '[idea_box_containers]'
+    container: '[idea_box__containers]'
   })
   .callback(async ({ pb, query: { q, container, tags, folder } }) => {
     if (container) {
