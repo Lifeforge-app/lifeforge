@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import { Button, FileInput, ModalHeader, Switch } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import ModifyTransactionsModal from './ModifyTransactionsModal'
 
@@ -30,16 +30,9 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
 
     setLoading(true)
 
-    const formData = new FormData()
-
-    formData.append('file', file)
-
     try {
-      const data = await fetchAPI<
-        WalletControllersSchemas.ITransactions['scanReceipt']['response']
-      >(import.meta.env.VITE_API_HOST, 'wallet/transactions/scan-receipt', {
-        method: 'POST',
-        body: formData
+      const data = await forgeAPI.wallet.transactions.scanReceipt.mutate({
+        file
       })
 
       onClose()
