@@ -76,7 +76,7 @@ export class ForgeControllerBuilder<
   TMethod extends 'get' | 'post' = 'get',
   TInput extends InputSchema = InputSchema,
   TOutput = unknown,
-  TMedia extends MediaConfig = MediaConfig
+  TMedia extends MediaConfig | null = null
 > {
   /** Indicates that this class is a ForgeController */
   public __isForgeController!: true
@@ -84,6 +84,7 @@ export class ForgeControllerBuilder<
   /** The type of input and output, used for type inference */
   public __input!: TInput
   public __output!: TOutput
+  public __media!: TMedia
 
   /** The HTTP method for this route (get, post) */
   protected _method: TMethod = 'get' as TMethod
@@ -139,7 +140,7 @@ export class ForgeControllerBuilder<
     NewMethod extends TMethod = TMethod,
     NewInput extends InputSchema = TInput,
     NewOutput = TOutput,
-    NewMedia extends MediaConfig = TMedia
+    NewMedia extends MediaConfig | null = TMedia
   >(overrides: Partial<InputSchema>, media: NewMedia) {
     const builder = new ForgeControllerBuilder<
       NewMethod,
@@ -373,7 +374,7 @@ export class ForgeControllerBuilder<
    */
   callback<CB extends (context: Context<TInput, any, TMedia>) => Promise<any>>(
     cb: CB
-  ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>> {
+  ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia> {
     const schema = this._schema
 
     const options = {
@@ -541,7 +542,8 @@ export class ForgeControllerBuilder<
     const newBuilder = new ForgeControllerBuilder<
       TMethod,
       TInput,
-      Awaited<ReturnType<CB>>
+      Awaited<ReturnType<CB>>,
+      TMedia
     >()
 
     newBuilder._method = this._method
@@ -579,14 +581,11 @@ export class ForgeControllerBuilder<
     router[this._method](
       `/${routeName}`,
       [
-        ...(Object.keys(this._media).length > 0
+        ...(Object.keys(this._media ?? {}).length > 0
           ? [
               fieldsUploadMiddleware(
                 Object.fromEntries(
-                  Object.entries(this._media).map(([key, value]) => [
-                    key,
-                    value.maxCount
-                  ])
+                  Object.entries(this._media ?? {}).map(([key]) => [key, 1])
                 )
               )
             ]

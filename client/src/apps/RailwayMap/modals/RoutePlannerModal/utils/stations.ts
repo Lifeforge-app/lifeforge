@@ -1,16 +1,16 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type { RailwayMapStation } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
-export const filterStations = (stations: IRailwayMapStation[], query: string) =>
+export const filterStations = (stations: RailwayMapStation[], query: string) =>
   stations.filter(
     station =>
       station.name.toLowerCase().includes(query.toLowerCase()) ||
-      station.codes.some(code =>
+      station.codes.some((code: string) =>
         code.toLowerCase().includes(query.toLowerCase())
       )
   )
 
 export const formatStationDisplay = (
-  stations: IRailwayMapStation[],
+  stations: RailwayMapStation[],
   stationId: string
 ) => {
   const station = stations.find(s => s.id === stationId)

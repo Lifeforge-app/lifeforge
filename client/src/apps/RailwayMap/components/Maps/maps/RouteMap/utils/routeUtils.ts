@@ -1,8 +1,8 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type { RailwayMapStation } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 export const getConsecutiveLine = (
-  station: IRailwayMapStation,
-  lastStation: IRailwayMapStation
+  station: RailwayMapStation,
+  lastStation: RailwayMapStation
 ): string => {
   const stationLines = station.lines
 
@@ -16,7 +16,7 @@ export const getConsecutiveLine = (
 }
 
 export const getLinesRequired = (
-  shortestRoute: IRailwayMapStation[]
+  shortestRoute: RailwayMapStation[]
 ): string[] => {
   const linesRequired: string[] = []
 

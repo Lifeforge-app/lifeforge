@@ -23,7 +23,7 @@ function TypeSection() {
       {TYPES.map(([icon, name]) => (
         <TypeSectionItem
           key={name}
-          amount={typesCountQuery.data?.[name.toLowerCase()]?.amount}
+          amount={typesCountQuery.data?.[name.toLowerCase()]?.transactionCount}
           icon={icon}
           name={name}
         />
