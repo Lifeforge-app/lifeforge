@@ -283,9 +283,21 @@ export class ForgeControllerBuilder<
   existenceCheck<T extends 'body' | 'query'>(
     type: T,
     map: T extends 'body'
-      ? Partial<Record<keyof InferZodType<TInput['body']>, string>>
+      ? Partial<
+          Record<
+            keyof InferZodType<TInput['body']>,
+            | keyof typeof COLLECTION_SCHEMAS
+            | `[${keyof typeof COLLECTION_SCHEMAS}]`
+          >
+        >
       : T extends 'query'
-        ? Partial<Record<keyof InferZodType<TInput['query']>, string>>
+        ? Partial<
+            Record<
+              keyof InferZodType<TInput['query']>,
+              | keyof typeof COLLECTION_SCHEMAS
+              | `[${keyof typeof COLLECTION_SCHEMAS}]`
+            >
+          >
         : never
   ) {
     this._existenceCheck[type] = map
