@@ -1,11 +1,20 @@
+import {
+  DeleteConfirmationModal,
+  MenuItem,
+  SidebarItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useSearchParams } from 'react-router'
+
 import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
+import type { TodoListPriority } from '@apps/TodoList/providers/TodoListProvider'
 
 function TaskPriorityListItem({
   item,
   setSidebarOpen
 }: {
-  // TODO Remove the amount in IPriority in the database
-  item: ISchemaWithPB<TodoListCollectionsSchemas.IPriorityAggregated>
+  item: TodoListPriority
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)

@@ -6,7 +6,10 @@ const list = forgeController.query
   .description('Get all todo lists')
   .input({})
   .callback(({ pb }) =>
-    pb.getFullList.collection('todo_list__lists').sort(['name']).execute()
+    pb.getFullList
+      .collection('todo_list__lists_aggregated')
+      .sort(['name'])
+      .execute()
   )
 
 const create = forgeController.mutation

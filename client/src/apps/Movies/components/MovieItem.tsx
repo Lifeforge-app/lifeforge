@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
@@ -12,6 +13,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
 
 import ModifyTicketModal from '../modals/ModifyTicketModal'
@@ -19,13 +21,13 @@ import ShowTicketModal from '../modals/ShowTicketModal'
 
 function MovieItem({
   data,
-  onToggleWatched,
   type
 }: {
   data: InferOutput<typeof forgeAPI.movies.entries.list>['entries'][number]
-  onToggleWatched: (id: string) => Promise<void>
   type: 'grid' | 'list'
 }) {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.movies')
 
   const { language } = usePersonalization()
@@ -33,6 +35,25 @@ function MovieItem({
   const open = useModalStore(state => state.open)
 
   const [toggleWatchedLoading, setToggleWatchedLoading] = useState(false)
+
+  const toggleWatchedMutation = useMutation(
+    forgeAPI.movies.entries.toggleWatchStatus
+      .input({
+        id: data.id
+      })
+      .mutationOptions({
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({
+            queryKey: ['movies', 'entries']
+          })
+
+          setToggleWatchedLoading(false)
+        },
+        onError: () => {
+          toast.error('Failed to mark movie as watched.')
+        }
+      })
+  )
 
   const handleShowTicket = useCallback(() => {
     open(ShowTicketModal, {
@@ -162,9 +183,7 @@ function MovieItem({
               variant="secondary"
               onClick={() => {
                 setToggleWatchedLoading(true)
-                onToggleWatched(data.id).finally(() => {
-                  setToggleWatchedLoading(false)
-                })
+                toggleWatchedMutation.mutateAsync({})
               }}
             >
               Mark as Watched
@@ -203,9 +222,7 @@ function MovieItem({
             text="Mark as Unwatched"
             onClick={() => {
               setToggleWatchedLoading(true)
-              onToggleWatched(data.id).finally(() => {
-                setToggleWatchedLoading(false)
-              })
+              toggleWatchedMutation.mutateAsync({})
             }}
           />
         )}
