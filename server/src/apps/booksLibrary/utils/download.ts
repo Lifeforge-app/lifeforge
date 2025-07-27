@@ -19,9 +19,11 @@ export const processDownloadedFiles = async (
     | 'time_finished'
     | 'created'
     | 'updated'
+    | 'collection'
   > & {
     thumbnail: string | File
     file?: File
+    collection?: string
   }
 ): Promise<void> => {
   if (!fs.existsSync(`./medium/${md5}.${metadata.extension}`)) {

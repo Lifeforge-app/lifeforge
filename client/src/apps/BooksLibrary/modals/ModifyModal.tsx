@@ -1,11 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { FormModal, defineForm } from 'lifeforge-ui'
 import _ from 'lodash'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 function ModifyModal({
   onClose,
@@ -20,94 +18,63 @@ function ModifyModal({
 }) {
   const queryClient = useQueryClient()
 
-  const { t } = useTranslation('apps.booksLibrary')
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.booksLibrary[stuff].create
+      : forgeAPI.booksLibrary[stuff].update.input({
+          id: initialData!.id
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['books-library', stuff] })
+      },
+      onError: () => {
+        toast.error(`Failed to ${type} ${_.camelCase(stuff)}`)
+      }
+    })
+  )
 
   const singleStuff = {
     collections: 'collection',
     languages: 'language'
   }[stuff]
 
-  const [data, setData] = useState({
-    name: '',
-    icon: ''
-  })
-
-  const FIELDS: IFieldProps<typeof data>[] = [
-    {
-      id: 'name',
-      label: `${singleStuff} name`,
-      icon: 'tabler:book',
-      required: true,
-      placeholder: `Project ${singleStuff}`,
-      type: 'text'
-    },
-    {
-      id: 'icon',
-      required: true,
-      label: `${singleStuff} icon`,
-      type: 'icon'
-    }
-  ]
-
-  useEffect(() => {
-    if (type) {
-      if (type === 'update') {
-        if (initialData) {
-          setData(initialData)
-        }
-      } else {
-        setData({
-          name: '',
-          icon: ''
-        })
+  const formProps = defineForm<
+    InferInput<
+      (typeof forgeAPI.booksLibrary)[typeof stuff][typeof type]
+    >['body']
+  >()
+    .ui({
+      icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
+      namespace: 'apps.booksLibrary',
+      title: `${_.camelCase(singleStuff)}.${type}`,
+      onClose,
+      submitButton: type
+    })
+    .typesMap({
+      name: 'text',
+      icon: 'icon'
+    })
+    .setupFields({
+      name: {
+        label: `${singleStuff} name`,
+        icon: 'tabler:book',
+        required: true,
+        placeholder: `Project ${singleStuff}`,
+        type: 'text'
+      },
+      icon: {
+        label: `${singleStuff} icon`,
+        type: 'icon',
+        required: true
       }
-    }
-  }, [type, initialData])
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
 
-  async function onSubmitButtonClick() {
-    const { name, icon } = data
-
-    if (name.trim().length === 0 || icon.trim().length === 0) {
-      toast.error(t('input.error.fieldEmpty'))
-
-      return
-    }
-
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `books-library/${stuff}${
-          type === 'update' ? `/${initialData?.id}` : ''
-        }`,
-        {
-          method: type === 'create' ? 'POST' : 'PATCH',
-          body: {
-            name,
-            icon
-          }
-        }
-      )
-
-      queryClient.invalidateQueries({ queryKey: ['books-library', stuff] })
-      onClose()
-    } catch {
-      toast.error(`Failed to ${type} ${singleStuff}`)
-    }
-  }
-
-  return (
-    <FormModal
-      data={data}
-      fields={FIELDS}
-      icon={type === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-      namespace="apps.booksLibrary"
-      openType={type}
-      setData={setData}
-      title={`${_.camelCase(singleStuff)}.${type}`}
-      onClose={onClose}
-      onSubmit={onSubmitButtonClick}
-    />
-  )
+  return <FormModal {...formProps} />
 }
 
 export default ModifyModal

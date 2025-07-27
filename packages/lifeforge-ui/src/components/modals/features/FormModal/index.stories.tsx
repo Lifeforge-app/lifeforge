@@ -27,13 +27,14 @@ export const Default: Story = {
     const formProps = defineForm<{
       title: string
       price: number
-      choice:
+      choice: (
         | 'option1'
         | 'option2'
         | 'option3'
         | 'option4'
         | 'option5'
         | 'option6'
+      )[]
     }>()
       .ui({
         icon: 'tabler:forms',
@@ -53,6 +54,7 @@ export const Default: Story = {
       })
       .setupFields({
         choice: {
+          multiple: true,
           required: true,
           label: 'Choice',
           icon: 'tabler:check',
@@ -98,8 +100,7 @@ export const Default: Story = {
         price: {
           icon: 'tabler:world-dollar',
           label: 'Price',
-          required: true,
-          placeholder: 'Enter price here'
+          required: true
         },
         title: {
           label: 'Title',
@@ -108,10 +109,11 @@ export const Default: Story = {
         }
       })
       .initialData({
-        choice: 'option1',
+        choice: ['option1'],
         title: 'Initial Title'
       })
       .onSubmit(async formData => {
+        formData.choice
         alert(`Form submitted with data: ${JSON.stringify(formData)}`)
         await new Promise(resolve => setTimeout(resolve, 1000))
         alert('Form submitted successfully!')

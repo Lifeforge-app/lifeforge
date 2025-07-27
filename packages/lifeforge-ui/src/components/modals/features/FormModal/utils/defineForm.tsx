@@ -42,18 +42,23 @@ export default function defineForm<
               }
 
               return {
-                ui: uiConfig,
                 initialData: (
-                  initialData?: Partial<InferFormState<typeof finalFields>>
+                  initialData?: Partial<
+                    InferFormState<typeof fieldType, typeof finalFields>
+                  >
                 ) => {
                   return {
                     onSubmit: (
                       callback: (
-                        data: InferFormFinalState<typeof finalFields>
+                        data: InferFormFinalState<
+                          typeof fieldType,
+                          typeof finalFields
+                        >
                       ) => Promise<void>
                     ) =>
                       ({
                         form: {
+                          fieldTypes: fieldType,
                           fields: finalFields,
                           initialData: initialData,
                           onSubmit: callback

@@ -1,6 +1,8 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -15,7 +17,6 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
@@ -29,6 +30,10 @@ const PROVIDERS = [
   'libgen.gl'
 ] as const
 
+export type LibgenSearchResult = InferOutput<
+  typeof forgeAPI.booksLibrary.libgen.searchBooks
+>
+
 function LibgenModal({ onClose }: { onClose: () => void }) {
   const [provider, setProvider] =
     useState<(typeof PROVIDERS)[number]>('libgen.is')
@@ -37,13 +42,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
 
   const [hasSearched, setHasSearched] = useState(false)
 
-  const [data, setData] = useState<{
-    provider: (typeof PROVIDERS)[number]
-    query: string
-    resultsCount: string
-    page: number
-    data: Array<Record<string, any>>
-  } | null>(null)
+  const [data, setData] = useState<LibgenSearchResult | null>(null)
 
   const [loading, setLoading] = useState(false)
 
@@ -65,13 +64,13 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   async function checkLibgenOnlineStatus() {
     for (const endpoint of PROVIDERS) {
       try {
-        await fetchAPI(
-          import.meta.env.VITE_API_HOST,
-          `cors-anywhere?url=https://${endpoint}`,
-          {
+        await forgeAPI.corsAnywhere
+          .input({
+            url: `https://${endpoint}`
+          })
+          .query({
             timeout: 5000
-          }
-        )
+          })
 
         setProviderOnlineStatuses(prev => ({
           ...prev,
@@ -90,16 +89,13 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
     setLoading(true)
 
     try {
-      const response = await fetchAPI<
-        BooksLibraryControllersSchemas.ILibgen['searchBooks']['response']
-      >(
-        import.meta.env.VITE_API_HOST,
-        `books-library/libgen/search?provider=${provider}&req=${searchQuery}&page=${
-          page ?? 1
-        }`
-      )
-
-      console.log(response)
+      const response = await forgeAPI.booksLibrary.libgen.searchBooks
+        .input({
+          provider,
+          req: searchQuery.trim(),
+          page: page.toString()
+        })
+        .query()
 
       setData(response.data.length === 0 ? null : response)
       setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))
@@ -155,7 +151,8 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
       />
       {viewDetailsFor !== null ? (
         <Details
-          id={viewDetailsFor}
+          md5={viewDetailsFor}
+          provider={provider}
           onClose={() => {
             setViewDetailsFor(null)
           }}
@@ -311,7 +308,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                         <SearchResultItem
                           key={book.id}
                           book={book}
-                          isLibgenIS={data.provider === 'libgen.is'}
+                          provider={data.provider}
                           setViewDetailsFor={setViewDetailsFor}
                         />
                       ))}

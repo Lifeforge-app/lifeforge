@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { type SudokuBoard } from '../interfaces/sudoku_interfaces'
+import type { SudokuBoard } from '..'
 
 function Board({ data }: { data: SudokuBoard }) {
   return (

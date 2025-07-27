@@ -19,7 +19,7 @@ interface IBooksLibraryLibgenSearchResult {
   provider: string
   query: string
   resultsCount: string
-  data: Record<string, any>
+  data: Record<string, any>[]
   page: number
 }
 
@@ -116,7 +116,15 @@ const getBookDetails = forgeController.query
 
     const final = parseLibgenISBookDetailsPage(document)
 
-    return final
+    return final as {
+      image: string
+      hashes: Record<string, string>
+      title: string
+      'Author(s)'?: string
+      toc?: string
+      descriptions?: string
+      [key: string]: any
+    }
   })
 
 const getLocalLibraryData = forgeController.query
@@ -159,7 +167,8 @@ const addToLibrary = forgeController.mutation
     }),
     body: z.object({
       authors: z.string(),
-      collection: z.string(),
+      thumbnail: z.string(),
+      collection: z.string().optional(),
       extension: z.string(),
       edition: z.string(),
       isbn: z.string(),
@@ -167,7 +176,6 @@ const addToLibrary = forgeController.mutation
       md5: z.string(),
       publisher: z.string(),
       size: z.number().int().min(0),
-      thumbnail: z.string(),
       title: z.string(),
       year_published: z.number().int().min(0)
     })

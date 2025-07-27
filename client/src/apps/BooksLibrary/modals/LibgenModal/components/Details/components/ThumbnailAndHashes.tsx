@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 
-import { BookDetailProps } from '..'
+import type { BookDetailProps } from '..'
 
 function ThumbnailAndHashes({ data }: { data: BookDetailProps }) {
   return (
