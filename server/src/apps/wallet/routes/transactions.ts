@@ -323,14 +323,18 @@ const remove = forgeController.mutation
 const scanReceipt = forgeController.mutation
   .description('Scan receipt to extract transaction data')
   .input({})
-  .middlewares(singleUploadMiddleware)
-  .callback(async ({ pb, req }) => {
-    if (!req.file) {
+  .media({
+    file: {
+      optional: false
+    }
+  })
+  .callback(async ({ pb, media: { file } }) => {
+    if (!file || typeof file === 'string') {
       throw new Error('No file uploaded')
     }
 
-    if (req.file.originalname.endsWith('.pdf')) {
-      const image = await convertPDFToImage(req.file.path)
+    if (file.originalname.endsWith('.pdf')) {
+      const image = await convertPDFToImage(file.path)
 
       if (!image) {
         throw new Error('Failed to convert PDF to image')
@@ -340,7 +344,7 @@ const scanReceipt = forgeController.mutation
 
       fs.writeFileSync('medium/receipt.png', Buffer.from(buffer))
     } else {
-      fs.renameSync(req.file.path, 'medium/receipt.png')
+      fs.renameSync(file.path, 'medium/receipt.png')
     }
 
     if (!fs.existsSync('medium/receipt.png')) {
