@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferOutput } from 'lifeforge-api'
@@ -17,8 +17,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
@@ -33,8 +31,6 @@ function Movies() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.movies')
-
-  const queryClient = useQueryClient()
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -72,25 +68,6 @@ function Movies() {
       setSearchParams({}, { replace: true })
     }
   }, [searchParams, setSearchParams, entriesQuery.data])
-
-  async function toggleWatched(id: string, isWatched: boolean = false) {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/movies/entries/watch-status/${id}?watched=${isWatched}`,
-        {
-          method: 'PATCH'
-        }
-      )
-
-      queryClient.invalidateQueries({
-        queryKey: ['movies', 'entries']
-      })
-    } catch (error) {
-      console.error('Error marking movie as watched:', error)
-      toast.error('Failed to mark movie as watched.')
-    }
-  }
 
   const handleOpenTMDBModal = useCallback(() => {
     open(SearchTMDBModal, {})
@@ -186,7 +163,6 @@ function Movies() {
 
                     return matchesSearch && matchesTab
                   })}
-                  onToggleWatched={async id => toggleWatched(id)}
                 />
               )}
             </>

@@ -1,12 +1,15 @@
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
 import { EmptyStateScreen, FAB, QueryWrapper, SearchInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import {
+  type TodoListEntry,
+  useTodoListContext
+} from '@apps/TodoList/providers/TodoListProvider'
 
 import Header from './Header'
 import ModifyTaskDrawer from './ModifyTaskDrawer'
@@ -27,17 +30,17 @@ function TodoListContainer() {
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
-  const [filteredEntries, setFilteredEntries] = useState<
-    ISchemaWithPB<TodoListCollectionsSchemas.IEntry>[]
-  >([])
+  const [filteredEntries, setFilteredEntries] = useState<TodoListEntry[]>([])
 
   const { hash } = useLocation()
 
   async function fetchAndSetTask(id: string) {
     try {
-      const data = await fetchAPI<
-        TodoListControllersSchemas.IEntries['getEntryById']['response']
-      >(import.meta.env.VITE_API_HOST, `todo-list/entries/${id}`)
+      const data = await forgeAPI.todoList.entries.getById
+        .input({
+          id
+        })
+        .query()
 
       setSelectedTask(data)
       setModifyTaskWindowOpenType('update')

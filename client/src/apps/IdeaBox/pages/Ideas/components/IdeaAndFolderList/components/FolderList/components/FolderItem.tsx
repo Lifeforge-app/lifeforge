@@ -1,4 +1,13 @@
+import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
+import clsx from 'clsx'
+import { useDrag, useDrop } from 'react-dnd'
+import { Link, useParams } from 'react-router'
+import { toast } from 'react-toastify'
+import { fetchAPI } from 'shared'
+
 import FolderContextMenu from './FolderContextMenu'
+import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function getStyle({
   isOver,
@@ -30,11 +39,7 @@ function getStyle({
   }
 }
 
-function FolderItem({
-  folder
-}: {
-  folder: ISchemaWithPB<IdeaBoxCollectionsSchemas.IFolder>
-}) {
+function FolderItem({ folder }: { folder: IdeaBoxFolder }) {
   const queryClient = useQueryClient()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()

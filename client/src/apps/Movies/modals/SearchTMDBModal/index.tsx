@@ -1,12 +1,20 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { Button, EmptyStateScreen, ModalHeader, QueryWrapper, SearchInput } from 'lifeforge-ui'
+import type { InferOutput } from 'lifeforge-api'
+import {
+  Button,
+  EmptyStateScreen,
+  ModalHeader,
+  QueryWrapper,
+  SearchInput
+} from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'
+
+export type TMDBSearchResults = InferOutput<typeof forgeAPI.movies.tmdb.search>
 
 function SearchTMDBModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
@@ -28,44 +36,15 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       })
   )
 
-  async function addToLibrary(id: number) {
-    try {
-      await fetchAPI(import.meta.env.VITE_API_HOST, `movies/entries/${id}`, {
-        method: 'POST'
-      })
+  const onAddToLibrary = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: forgeAPI.movies.entries.list.input({ watched: false }).key
+    })
+    await queryClient.invalidateQueries({
+      queryKey: forgeAPI.movies.entries.list.input({ watched: false }).key
+    })
 
-      queryClient.invalidateQueries({
-        queryKey: ['movies', 'entries', 'unwatched']
-      })
-
-      queryClient.setQueryData(
-        forgeAPI.movies.tmdb.search.input({
-          q: queryToSearch,
-          page
-        }).key,
-        (prevResults: any) => {
-          if (!prevResults) return null
-
-          return {
-            ...prevResults,
-            results: prevResults.results.map((entry: any) => {
-              if (entry.id === id) {
-                return {
-                  ...entry,
-                  existed: true
-                }
-              }
-
-              return entry
-            })
-          }
-        }
-      )
-
-      toast.success('Movie added to library!')
-    } catch {
-      toast.error('An error occurred while adding the movie to your library!')
-    }
+    toast.success('Movie added to your library!')
   }
 
   return (
@@ -126,10 +105,8 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
               <TMDBResultsList
                 page={page}
                 results={searchResults}
-                setPage={(page: number) => {
-                  setPage(page)
-                }}
-                onAddToLibrary={addToLibrary}
+                setPage={setPage}
+                onAddToLibrary={onAddToLibrary}
               />
             )}
           </QueryWrapper>

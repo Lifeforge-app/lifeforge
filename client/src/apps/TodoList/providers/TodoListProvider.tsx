@@ -27,7 +27,7 @@ export type TodoListStatusCounter = InferOutput<
 interface ITodoListData {
   entriesQueryKey: unknown[]
   // Data
-  prioritiesQuery: UseQueryResult<TodoListEntry[]>
+  prioritiesQuery: UseQueryResult<TodoListPriority[]>
   listsQuery: UseQueryResult<TodoListList[]>
   tagsListQuery: UseQueryResult<TodoListTag[]>
   entriesQuery: UseQueryResult<TodoListEntry[]>

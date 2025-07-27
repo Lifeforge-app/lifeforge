@@ -6,7 +6,7 @@ const list = forgeController.query
   .description('Get all todo priorities')
   .input({})
   .callback(({ pb }) =>
-    pb.getFullList.collection('todo_list__priorities').execute()
+    pb.getFullList.collection('todo_list__priorities_aggregated').execute()
   )
 
 const create = forgeController.mutation

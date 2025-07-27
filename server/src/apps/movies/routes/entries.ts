@@ -63,7 +63,7 @@ const create = forgeController.mutation
   .description('Create a movie entry from TMDB')
   .input({
     query: z.object({
-      id: z.string()
+      id: z.string().transform(val => parseInt(val, 10))
     })
   })
   .statusCode(201)

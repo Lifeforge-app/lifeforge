@@ -151,8 +151,7 @@ export const SCHEMAS = {
     }),
     priorities: z.object({
       name: z.string(),
-      color: z.string(),
-      amount: z.number()
+      color: z.string()
     }),
     lists_aggregated: z.object({
       name: z.string(),

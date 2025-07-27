@@ -1,10 +1,10 @@
+import { Scrollbar } from 'lifeforge-ui'
+
+import type { TodoListEntry } from '@apps/TodoList/providers/TodoListProvider'
+
 import TaskItem from './TaskItem'
 
-function TaskList({
-  entries
-}: {
-  entries: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>[]
-}) {
+function TaskList({ entries }: { entries: TodoListEntry[] }) {
   return (
     <div className="mt-4 flex flex-1 flex-col">
       <Scrollbar>

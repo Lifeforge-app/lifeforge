@@ -21,8 +21,7 @@ function TaskListList({
 
   const handleCreateList = useCallback(() => {
     open(ModifyListModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 

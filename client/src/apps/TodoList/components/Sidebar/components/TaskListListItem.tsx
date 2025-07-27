@@ -1,10 +1,20 @@
+import {
+  DeleteConfirmationModal,
+  MenuItem,
+  SidebarItem,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useSearchParams } from 'react-router'
+
 import ModifyListModal from '@apps/TodoList/modals/ModifyListModal'
+import type { TodoListList } from '@apps/TodoList/providers/TodoListProvider'
 
 function TaskListListItem({
   item,
   setSidebarOpen
 }: {
-  item: ISchemaWithPB<TodoListCollectionsSchemas.IListAggregated>
+  item: TodoListList
   setSidebarOpen: (value: boolean) => void
 }) {
   const open = useModalStore(state => state.open)
