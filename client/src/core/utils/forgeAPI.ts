@@ -1,7 +1,7 @@
-import { type Router } from '@server/core/routes'
+import { type AppRoutes } from '@server/core/appRoutes.type'
 import { createForgeAPIClient } from 'lifeforge-api'
 
-const forgeAPI = createForgeAPIClient<Router>(
+const forgeAPI = createForgeAPIClient<AppRoutes>(
   import.meta.env.VITE_API_HOST || 'https://localhost:3000'
 )
 

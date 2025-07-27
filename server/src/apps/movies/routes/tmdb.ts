@@ -2,7 +2,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-interface TMDBSearchResult {
+export interface TMDBSearchResult {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]

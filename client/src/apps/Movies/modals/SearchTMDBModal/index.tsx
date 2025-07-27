@@ -1,12 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import {
-  Button,
-  EmptyStateScreen,
-  ModalHeader,
-  QueryWrapper,
-  SearchInput
-} from 'lifeforge-ui'
+import { Button, EmptyStateScreen, ModalHeader, QueryWrapper, SearchInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
@@ -126,21 +120,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
         </Button>
       </div>
       <div className="mt-6">
-        <QueryWrapper query={searchResultsQuery}>
-          {searchResults => {
-            if (searchResults.total_results === 0) {
-              return (
-                <div className="h-96">
-                  <EmptyStateScreen
-                    icon={<img alt="TMDB" className="h-24" src={TMDBLogo} />}
-                    name="tmdb"
-                    namespace="apps.movies"
-                  />
-                </div>
-              )
-            }
-
-            return (
+        {queryToSearch ? (
+          <QueryWrapper query={searchResultsQuery}>
+            {searchResults => (
               <TMDBResultsList
                 page={page}
                 results={searchResults}
@@ -149,9 +131,17 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
                 }}
                 onAddToLibrary={addToLibrary}
               />
-            )
-          }}
-        </QueryWrapper>
+            )}
+          </QueryWrapper>
+        ) : (
+          <div className="h-96">
+            <EmptyStateScreen
+              icon={<img alt="TMDB" className="h-24" src={TMDBLogo} />}
+              name="tmdb"
+              namespace="apps.movies"
+            />
+          </div>
+        )}
       </div>
     </div>
   )
