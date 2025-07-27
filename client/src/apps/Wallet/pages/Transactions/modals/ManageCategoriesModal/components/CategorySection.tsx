@@ -24,8 +24,10 @@ function CategorySection({ categories, type, iconName }: CategorySectionProps) {
 
   const handleCreateCategoryOfType = useCallback(() => {
     open(ModifyCategoryModal, {
-      type,
-      initialData: null
+      type: 'create',
+      initialData: {
+        type
+      }
     })
   }, [type])
 
