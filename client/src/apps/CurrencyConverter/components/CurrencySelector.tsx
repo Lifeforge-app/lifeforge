@@ -5,7 +5,7 @@ import {
 } from 'lifeforge-ui'
 
 import { useCurrencies } from '../hooks/useCurrencies'
-import { Currency } from '../interfaces/currency_converter_interfaces'
+import type { Currency } from '../interfaces/currency_converter_interfaces'
 
 interface CurrencySelectorProps {
   currencies: Currency[]

@@ -10,7 +10,7 @@ import ConversionRatesHistoryGraph from './components/ConversionRatesHistoryGrap
 import ConversionResult from './components/ConversionResult'
 import CurrencySelector from './components/CurrencySelector'
 import { useCurrencies } from './hooks/useCurrencies'
-import { ExchangeRates } from './interfaces/currency_converter_interfaces'
+import type { ExchangeRates } from './interfaces/currency_converter_interfaces'
 
 function CurrencyConverter() {
   const [amount, setAmount] = useState<number>(1)

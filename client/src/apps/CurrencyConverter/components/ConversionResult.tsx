@@ -3,7 +3,7 @@ import { ErrorScreen, LoadingScreen } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import { useCurrencies } from '../hooks/useCurrencies'
-import { ExchangeRates } from '../interfaces/currency_converter_interfaces'
+import type { ExchangeRates } from '../interfaces/currency_converter_interfaces'
 
 interface ConversionResultProps {
   amount: number
