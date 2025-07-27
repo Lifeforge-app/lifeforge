@@ -1,18 +1,18 @@
 import L from 'leaflet'
-import { RefObject, useEffect, useRef } from 'react'
+import { type RefObject, useEffect, useRef } from 'react'
 
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type {
+  RailwayMapLine,
+  RailwayMapStation
+} from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 import { initializeMap, renderLines, renderStations } from '../utils/mapUtils'
 
 interface EarthMapRendererProps {
   mapRef: RefObject<HTMLDivElement | null>
-  filteredLines: IRailwayMapLine[]
-  filteredStations: IRailwayMapStation[]
-  lines: IRailwayMapLine[]
+  filteredLines: RailwayMapLine[]
+  filteredStations: RailwayMapStation[]
+  lines: RailwayMapLine[]
 }
 
 export const useEarthMapRenderer = ({

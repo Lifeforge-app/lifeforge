@@ -205,12 +205,10 @@ const create = forgeController.mutation
     fieldsUploadMiddleware.bind({
       fields: [
         {
-          name: 'backImage',
-          maxCount: 1
+          name: 'backImage'
         },
         {
-          name: 'frontImage',
-          maxCount: 1
+          name: 'frontImage'
         }
       ]
     })
@@ -324,12 +322,10 @@ const analyzeVision = forgeController.mutation
     fieldsUploadMiddleware.bind({
       fields: [
         {
-          name: 'frontImage',
-          maxCount: 1
+          name: 'frontImage'
         },
         {
-          name: 'backImage',
-          maxCount: 1
+          name: 'backImage'
         }
       ]
     })

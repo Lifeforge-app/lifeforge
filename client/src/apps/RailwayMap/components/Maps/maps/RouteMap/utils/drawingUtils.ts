@@ -1,17 +1,17 @@
 import * as d3 from 'd3'
 
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type {
+  RailwayMapLine,
+  RailwayMapStation
+} from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 import { roundedPolygon } from './geometryUtils'
 import { getLinesRequired } from './routeUtils'
-import { RouteData, getLine, ignoreStation } from './stationUtils'
+import { type RouteData, getLine, ignoreStation } from './stationUtils'
 import { centerMapOnStation } from './zoomUtils'
 
 export type StationSelectionCallback = (
-  station: IRailwayMapStation | null
+  station: RailwayMapStation | null
 ) => void
 
 export type Theme = 'light' | 'dark'
@@ -20,11 +20,11 @@ export type ColorMap = { [key: number]: string }
 
 export const addStationInteraction = (
   element: d3.Selection<any, unknown, null, undefined>,
-  station: IRailwayMapStation,
+  station: RailwayMapStation,
   setSelectedStation: StationSelectionCallback,
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
-  centerStation: IRailwayMapStation
+  centerStation: RailwayMapStation
 ) => {
   element.on('click', () => {
     setSelectedStation(station)
@@ -34,7 +34,7 @@ export const addStationInteraction = (
 
 export const drawText = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  station: IRailwayMapStation,
+  station: RailwayMapStation,
   fill: string
 ) => {
   g.append('text')
@@ -50,7 +50,7 @@ export const drawText = (
 
       const lines = station.map_data.text.split('\n')
 
-      lines.forEach((line, i) => {
+      lines.forEach((line: string, i: number) => {
         textElement
           .append('tspan')
           .attr('x', station.map_data.x + (station.map_data.textOffsetX || 0))
@@ -62,14 +62,14 @@ export const drawText = (
 
 export const drawInterchange = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  station: IRailwayMapStation,
+  station: RailwayMapStation,
   stroke: string,
   fill: string,
   isSelected: boolean,
   setSelectedStation: StationSelectionCallback,
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
-  centerStation: IRailwayMapStation
+  centerStation: RailwayMapStation
 ) => {
   const attributes = {
     id: `station-${station.id}`,
@@ -131,14 +131,14 @@ export const drawInterchange = (
 
 export const drawStation = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  station: IRailwayMapStation,
+  station: RailwayMapStation,
   stroke: string,
   fill: string,
   isSelected: boolean,
   setSelectedStation: StationSelectionCallback,
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
-  centerStation: IRailwayMapStation
+  centerStation: RailwayMapStation
 ) => {
   const attributes = {
     id: `station-${station.id}`,
@@ -182,16 +182,16 @@ export const drawStation = (
 
 export const drawStations = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  filteredStations: IRailwayMapStation[],
+  filteredStations: RailwayMapStation[],
   shortestRoute: RouteData,
-  lines: IRailwayMapLine[],
+  lines: RailwayMapLine[],
   bgTemp: ColorMap,
   finalTheme: Theme,
-  selectedStation: IRailwayMapStation | null,
+  selectedStation: RailwayMapStation | null,
   setSelectedStation: StationSelectionCallback,
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
-  centerStation: IRailwayMapStation
+  centerStation: RailwayMapStation
 ) => {
   filteredStations.forEach(station => {
     if (ignoreStation(station, shortestRoute)) return
@@ -249,7 +249,7 @@ export const drawStations = (
 
 export const drawLines = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  filteredLines: IRailwayMapLine[],
+  filteredLines: RailwayMapLine[],
   shortestRoute: RouteData
 ) => {
   filteredLines.forEach(line => {
@@ -259,7 +259,7 @@ export const drawLines = (
       if (!linesRequired.includes(line.id)) return
     }
 
-    line.map_paths.forEach(pathGroups => {
+    line.map_paths.forEach((pathGroups: string[]) => {
       const path = roundedPolygon(
         pathGroups.map(p => ({ x: p[0], y: p[1] })),
         5

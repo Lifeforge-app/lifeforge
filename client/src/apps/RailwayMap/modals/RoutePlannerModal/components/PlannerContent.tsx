@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import { Button } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
-import fetchShortestRoute from '../utils/fetchShortestRoute'
 import { filterStations } from '../utils/stations'
 import StationSelector from './StationSelector'
 
@@ -54,7 +54,18 @@ function PlannerContent({
     setShortestRoute('loading')
 
     try {
-      const data = await fetchShortestRoute(start, end)
+      if (!start || !end) {
+        toast.error('Please select a start and end station.')
+
+        return
+      }
+
+      const data = await forgeAPI.railwayMap.getShortestPath
+        .input({
+          start,
+          end
+        })
+        .query()
 
       if (!data) {
         toast.error('No route found.')

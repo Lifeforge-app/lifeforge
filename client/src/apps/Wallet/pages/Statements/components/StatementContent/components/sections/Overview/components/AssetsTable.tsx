@@ -1,4 +1,12 @@
-import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+import dayjs from 'dayjs'
+import { QueryWrapper } from 'lifeforge-ui'
+
+import {
+  type WalletAsset,
+  useWalletData
+} from '@apps/Wallet/hooks/useWalletData'
 import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
 
@@ -8,7 +16,7 @@ function getAmounts({
   month,
   year
 }: {
-  asset: ISchemaWithPB<WalletCollectionsSchemas.IAssetAggregated>
+  asset: WalletAsset
   transactions: WalletTransaction[]
   month: number
   year: number

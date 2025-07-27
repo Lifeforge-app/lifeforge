@@ -1,8 +1,14 @@
+import { Icon } from '@iconify/react'
+import { useModalStore } from 'lifeforge-ui'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import type { WalletCategory } from '../../..'
 import ModifyCategoryModal from '../../ModifyCategoryModal'
 import CategorySectionItem from './CategorySectionItem'
 
 interface CategorySectionProps {
-  categories: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>[]
+  categories: WalletCategory[]
   type: 'income' | 'expenses'
   iconName: string
 }

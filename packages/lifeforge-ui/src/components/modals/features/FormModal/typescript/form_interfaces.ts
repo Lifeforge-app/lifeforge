@@ -111,9 +111,10 @@ type IconFieldProps = BaseFieldProps & {
   __finalDataType: string
 }
 
-type FileFieldProps = BaseFieldProps & {
+type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps & {
   type: 'file'
   icon: string
+  optional: TOptional
   onFileRemoved?: () => void
   enableAIImageGeneration?: boolean
   defaultImageGenerationPrompt?: string
@@ -155,7 +156,7 @@ type FormState = Record<string, any>
 // Find field type by data type (usually for automatic inference)
 type MatchFieldByFormDataType<T> = Extract<
   FormFieldPropsUnion,
-  { __finalDataType: T }
+  { __finalDataType: T extends { __type: 'media' } ? string | File : T }
 >
 
 type MatchFieldByType<TType> = Extract<FormFieldPropsUnion, { type: TType }>
@@ -193,7 +194,15 @@ type FieldsConfig<
       ? ListboxFieldProps<
           TFormState[K] extends Array<infer TOption> ? TOption : TFormState[K]
         >
-      : FormFieldTypeMap[TFieldType[K]],
+      : TFieldType[K] extends 'file'
+        ? FileFieldProps<
+            TFormState[K] extends { config: { optional: infer TOptional } }
+              ? TOptional extends boolean
+                ? TOptional
+                : false
+              : false
+          >
+        : FormFieldTypeMap[TFieldType[K]],
     '__formDataType' | '__finalDataType' | 'type'
   > &
     BaseFieldProps

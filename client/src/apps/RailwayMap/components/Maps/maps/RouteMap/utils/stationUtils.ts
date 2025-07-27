@@ -1,14 +1,14 @@
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type {
+  RailwayMapLine,
+  RailwayMapStation
+} from '@apps/RailwayMap/providers/RailwayMapProvider'
 
-export type RouteData = IRailwayMapStation[] | 'loading' | 'error'
+export type RouteData = RailwayMapStation[] | 'loading' | 'error'
 
 export const getLine = (
-  station: IRailwayMapStation,
-  lines: IRailwayMapLine[]
-): IRailwayMapLine | undefined => {
+  station: RailwayMapStation,
+  lines: RailwayMapLine[]
+): RailwayMapLine | undefined => {
   const stationCode = station.codes[0]
 
   return lines.find(
@@ -22,7 +22,7 @@ export const getLine = (
 }
 
 export const ignoreStation = (
-  station: IRailwayMapStation,
+  station: RailwayMapStation,
   shortestRoute: RouteData
 ): boolean => {
   return (

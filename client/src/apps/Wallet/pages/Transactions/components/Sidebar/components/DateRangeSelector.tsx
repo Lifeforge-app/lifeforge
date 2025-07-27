@@ -66,10 +66,10 @@ function DateRangeSelector() {
             darker
             className={clsx('w-full', idx === 1 ? 'mt-4!' : 'mt-0')}
             date={
-              (type === 'start_date' ? startDate : endDate) !== undefined &&
+              (type === 'start_date' ? startDate : endDate) !== null &&
               dayjs(type === 'start_date' ? startDate : endDate).isValid()
                 ? dayjs(type === 'start_date' ? startDate : endDate).toDate()
-                : undefined
+                : null
             }
             icon={icon}
             name={name}

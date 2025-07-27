@@ -1,8 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import dayjs from 'dayjs'
 import {
   Button,
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
@@ -10,7 +12,6 @@ import {
 import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 function BackupItem({
   backup
@@ -27,13 +28,29 @@ function BackupItem({
 
   const [downloadLoading, setDownloadLoading] = useState(false)
 
+  const deleteMutation = useMutation(
+    forgeAPI.backups.remove
+      .input({
+        key: backup.key
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['backups'] })
+        },
+        onError: (error: Error) => {
+          toast.error('Failed to delete backup: ' + error.message)
+        }
+      })
+  )
+
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
 
-    const buffer = await fetchAPI<Buffer>(
-      import.meta.env.VITE_API_HOST,
-      `/backups/download/${backup.key}`
-    )
+    const buffer = (await forgeAPI.backups.download
+      .input({
+        key: backup.key
+      })
+      .query()) as unknown as Buffer
 
     if (!buffer) {
       toast.error('Failed to download backup')
@@ -58,14 +75,12 @@ function BackupItem({
   }, [backup.key])
 
   const handleDeleteBackup = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: `/backups/${backup.key}`,
-      itemName: 'backup',
-      confirmationText: 'Delete this backup',
-      afterDelete: async () => {
-        queryClient.invalidateQueries({
-          queryKey: ['backups']
-        })
+    open(ConfirmationModal, {
+      title: 'Delete Backup',
+      description: `Are you sure you want to delete the backup "${backup.key}"? This action cannot be undone.`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
       }
     })
   }, [backup.key])
@@ -77,12 +92,17 @@ function BackupItem({
           className="text-bg-500 ml-2 size-7 shrink-0"
           icon="tabler:file-zip"
         />
-        <h3 className="flex w-full min-w-0 items-end gap-2 text-lg font-medium">
-          <p className="truncate">{backup.key}</p>{' '}
-          <p className="text-bg-500 mb-0.5 block text-sm whitespace-nowrap">
-            ({prettyBytes(backup.size)})
+        <div>
+          <h3 className="flex w-full min-w-0 items-end gap-2 text-lg font-medium">
+            <p className="truncate">{backup.key}</p>{' '}
+            <p className="text-bg-500 mb-0.5 block text-sm whitespace-nowrap">
+              ({prettyBytes(backup.size)})
+            </p>
+          </h3>
+          <p className="text-bg-500 mt-1 text-sm">
+            {dayjs(backup.modified).format('MMM D, YYYY h:mm A')}
           </p>
-        </h3>
+        </div>
       </div>
       <div className="hidden shrink-0 items-center gap-2 sm:flex">
         <Button

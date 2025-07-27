@@ -1,9 +1,9 @@
 import * as d3 from 'd3'
 
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type {
+  RailwayMapLine,
+  RailwayMapStation
+} from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 import { getLine } from './stationUtils'
 
@@ -26,8 +26,8 @@ export const clearSelection = (
 
 export const updateSelection = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  selectedStation: IRailwayMapStation,
-  lines: IRailwayMapLine[],
+  selectedStation: RailwayMapStation,
+  lines: RailwayMapLine[],
   initialFill: string
 ) => {
   clearSelection(g, initialFill)

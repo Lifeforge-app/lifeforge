@@ -98,7 +98,7 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
                 forgeAPI.media.input({
                   collectionId: entry.collectionId,
                   recordId: entry.id,
-                  photoId: entry.thumbnail,
+                  fieldId: entry.thumbnail,
                   thumb: '0x512'
                 }).endpoint
               }

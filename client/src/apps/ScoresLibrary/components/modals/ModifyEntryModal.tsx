@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { type FieldsConfig, FormModal } from 'lifeforge-ui'
+import { defineForm, FormModal } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
@@ -33,66 +33,63 @@ function ModifyEntryModal({
 
   const queryClient = useQueryClient()
 
-  const FIELDS = {
-    name: {
-      required: true,
-      label: 'Music Name',
-      icon: 'tabler:music',
-      placeholder: 'A cool tab',
-      type: 'text'
-    },
-    author: {
-      required: true,
-      label: 'Author',
-      icon: 'tabler:user',
-      placeholder: 'John Doe',
-      type: 'text'
-    },
-    type: {
-      required: true,
-      label: 'Score Type',
-      icon: 'tabler:category',
-      type: 'listbox',
-      options: [
-        {
-          value: '',
-          text: t('scoreTypes.uncategorized'),
-          icon: 'tabler:music-off'
-        },
-        ...(typesQuery.data?.map(({ id, icon, name }) => ({
-          value: id,
-          text: name,
-          icon
-        })) || [])
-      ]
-    }
-  } as const satisfies FieldsConfig<
+  const formProps = defineForm<
     InferInput<typeof forgeAPI.scoresLibrary.entries.update>['body']
-  >
+  >()
+    .ui({
+      icon: 'tabler:pencil',
+      title: 'scoresLibrary.update',
+      namespace: 'apps.scoresLibrary',
+      onClose,
+      loading: typesQuery.isLoading,
+      submitButton: 'update'
+    })
+    .typesMap({
+      name: 'text',
+      author: 'text',
+      type: 'listbox'
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Music Name',
+        icon: 'tabler:music',
+        placeholder: 'A cool tab',
+        type: 'text'
+      },
+      author: {
+        required: true,
+        label: 'Author',
+        icon: 'tabler:user',
+        placeholder: 'John Doe',
+        type: 'text'
+      },
+      type: {
+        required: true,
+        multiple: false,
+        label: 'Score Type',
+        icon: 'tabler:category',
+        type: 'listbox',
+        options: [
+          {
+            value: '',
+            text: t('scoreTypes.uncategorized'),
+            icon: 'tabler:music-off'
+          },
+          ...(typesQuery.data?.map(({ id, icon, name }) => ({
+            value: id,
+            text: name,
+            icon
+          })) || [])
+        ]
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
 
-  async function onSubmit(
-    data: InferInput<typeof forgeAPI.scoresLibrary.entries.update>['body']
-  ) {
-    await mutation.mutateAsync(data)
-  }
-
-  return (
-    <FormModal
-      form={{
-        fields: FIELDS,
-        initialData,
-        onSubmit
-      }}
-      submitButton="update"
-      ui={{
-        icon: 'tabler:pencil',
-        title: 'scoresLibrary.update',
-        namespace: 'apps.scoresLibrary',
-        onClose,
-        loading: typesQuery.isLoading
-      }}
-    />
-  )
+  return <FormModal {...formProps} />
 }
 
 export default ModifyEntryModal
