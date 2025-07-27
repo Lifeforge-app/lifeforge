@@ -1,5 +1,4 @@
 import { forgeController, forgeRouter } from '@functions/routes'
-import { singleUploadMiddlewareOfKey } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 import { z } from 'zod/v4'
 

@@ -1,8 +1,6 @@
 import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { singleUploadMiddlewareOfKey } from '@middlewares/uploadMiddleware'
 import { SCHEMAS } from '@schema'
-import fs from 'fs'
 import { z } from 'zod/v4'
 
 const validate = forgeController.query
