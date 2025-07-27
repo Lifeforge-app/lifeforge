@@ -33,7 +33,7 @@ function ModifyAchievementModal({
     (type === 'create'
       ? forgeAPI.achievements.entries.create
       : forgeAPI.achievements.entries.update.input({
-          id: initialData?.id || ''
+          id: initialData?.id || '' || ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -91,7 +91,8 @@ function ModifyAchievementModal({
     })
     .onSubmit(async formData => {
       await mutation.mutateAsync(formData)
-    }).build()
+    })
+    .build()
 
   return <FormModal {...formProps} />
 }

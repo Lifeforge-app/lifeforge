@@ -22,7 +22,7 @@ function ModifyLedgerModal({
     (type === 'create'
       ? forgeAPI.wallet.ledgers.create
       : forgeAPI.wallet.ledgers.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {

@@ -16,7 +16,9 @@ import { useTranslation } from 'react-i18next'
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'
 
-type IdeaBoxContainer = InferOutput<typeof forgeAPI.ideaBox.containers.list>[number]
+type IdeaBoxContainer = InferOutput<
+  typeof forgeAPI.ideaBox.containers.list
+>[number]
 
 function IdeaBox() {
   const open = useModalStore(state => state.open)
@@ -49,8 +51,7 @@ function IdeaBox() {
 
   const handleCreateContainer = useCallback(() => {
     open(ModifyContainerModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 

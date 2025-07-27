@@ -47,7 +47,8 @@ function ContentContainer({
         callback={() => {
           setOtpSuccess(true)
         }}
-        endpoint="api-keys/auth"
+        challengeController={forgeAPI.apiKeys.auth.getChallenge}
+        verifyController={forgeAPI.apiKeys.auth.verifyOTP}
       />
     )
   }
@@ -59,8 +60,9 @@ function ContentContainer({
   if (masterPassword === '') {
     return (
       <LockedScreen
-        endpoint="api-keys/auth"
+        challengeController={forgeAPI.apiKeys.auth.getChallenge}
         setMasterPassword={setMasterPassword}
+        verifyController={forgeAPI.apiKeys.auth.verify}
       />
     )
   }
@@ -69,7 +71,7 @@ function ContentContainer({
     <>
       <QueryWrapper query={entriesQuery}>
         {entries => (
-          <div className="mb-24 flex-1 lg:mb-12">
+          <div className="mt-6 mb-24 flex-1 lg:mb-12">
             {entries.length > 0 ? (
               entries.map((entry, idx) => (
                 <EntryItem

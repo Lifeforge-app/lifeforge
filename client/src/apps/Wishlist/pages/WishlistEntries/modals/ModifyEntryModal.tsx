@@ -25,7 +25,7 @@ function ModifyEntryModal({
     (type === 'create'
       ? forgeAPI.wishlist.entries.create
       : forgeAPI.wishlist.entries.update.input({
-          id: initialData!.id!
+          id: initialData?.id || ''!
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -46,10 +46,7 @@ function ModifyEntryModal({
       title: `entry.${type}`,
       namespace: 'apps.wishlist',
       onClose,
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type!],
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
       submitButton: type
     })
     .typesMap({
@@ -124,7 +121,8 @@ function ModifyEntryModal({
       }
 
       await mutation.mutateAsync(data)
-    }).build()
+    })
+    .build()
 
   return <FormModal {...formProps} />
 }

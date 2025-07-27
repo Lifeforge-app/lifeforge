@@ -1,15 +1,12 @@
 import { Icon } from '@iconify/react'
 import { Link, useParams } from 'react-router'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import {
+  type IdeaBoxIdea,
+  useIdeaBoxContext
+} from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
-function InFolderChip({
-  entry
-}: {
-  entry:
-    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
-    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
-}) {
+function InFolderChip({ entry }: { entry: IdeaBoxIdea }) {
   const { setSearchQuery, setSelectedTags } = useIdeaBoxContext()
 
   const { '*': path } = useParams<{ '*': string }>()
@@ -28,7 +25,11 @@ function InFolderChip({
           backgroundColor: entry.folder.color + '30'
         }}
         to={
-          entry.folder.id === path?.split.filter(e => e).pop()
+          entry.folder.id ===
+          path
+            ?.split('/')
+            .filter(e => e)
+            .pop()
             ? ''
             : `.${entry.fullPath}`
         }

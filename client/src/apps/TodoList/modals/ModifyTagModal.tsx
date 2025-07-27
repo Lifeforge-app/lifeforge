@@ -3,6 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
+
 import type { TodoListTag } from '../providers/TodoListProvider'
 
 function ModifyTagModal({
@@ -21,7 +22,7 @@ function ModifyTagModal({
     (type === 'create'
       ? forgeAPI.todoList.tags.create
       : forgeAPI.todoList.tags.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {

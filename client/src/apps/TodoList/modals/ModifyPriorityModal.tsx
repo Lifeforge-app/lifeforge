@@ -22,7 +22,7 @@ function ModifyPriorityModal({
     (type === 'create'
       ? forgeAPI.todoList.priorities.create
       : forgeAPI.todoList.priorities.update.input({
-          id: initialData!.id
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {
@@ -38,10 +38,7 @@ function ModifyPriorityModal({
     InferInput<(typeof forgeAPI.todoList.priorities)[typeof type]>['body']
   >()
     .ui({
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type],
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
       namespace: 'apps.todoList',
       title: `priority.${type}`,
       onClose,
