@@ -2,9 +2,11 @@
 import { Button } from '@components/buttons'
 import type {
   FieldsConfig,
+  FormFieldPropsUnion,
   FormState,
   InferFormFinalState,
-  InferFormState
+  InferFormState,
+  MatchFieldByFormDataType
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import dayjs from 'dayjs'
@@ -15,8 +17,8 @@ import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
 
-const transformExistedData = (field: any, value: unknown): unknown => {
-  if (field?.type === 'datetime' && value) {
+const transformExistedData = (fieldType: string, value: unknown): unknown => {
+  if (fieldType === 'datetime' && value) {
     return dayjs(value as string).toDate()
   }
 
@@ -58,19 +60,20 @@ const checkEmpty = (value: unknown): boolean => {
   return false
 }
 
-const getInitialData = <TFormState extends FieldsConfig<any, any>>(
-  fields: TFormState,
-  formExistedData?: Partial<InferFormState<TFormState>>
+const getInitialData = <TFormConfig extends FieldsConfig<any, any>>(
+  fieldTypes: Record<string, FormFieldPropsUnion['type']>,
+  fields: TFormConfig,
+  formExistedData?: Partial<InferFormState<any, TFormConfig>>
 ) => {
   return Object.fromEntries(
-    Object.entries(fields).map(([key, field]) => {
+    Object.entries(fieldTypes).map(([key, fieldType]) => {
       if (formExistedData && key in formExistedData) {
-        return [key, transformExistedData(field, formExistedData[key])]
+        return [key, transformExistedData(fieldType, formExistedData[key])]
       }
 
       let finalValue: unknown = ''
 
-      switch (field?.type) {
+      switch (fieldType) {
         case 'number':
         case 'currency':
           finalValue = 0
@@ -80,7 +83,7 @@ const getInitialData = <TFormState extends FieldsConfig<any, any>>(
           finalValue = null
           break
         case 'listbox':
-          finalValue = field.multiple ? [] : null
+          finalValue = fields[key]?.multiple ? [] : null
           break
         case 'checkbox':
           finalValue = false
@@ -97,16 +100,23 @@ const getInitialData = <TFormState extends FieldsConfig<any, any>>(
   )
 }
 
-function FormModal<TFields extends FieldsConfig<any, any>>({
-  form: { fields, initialData, additionalFields, onSubmit },
+function FormModal<
+  TFormState extends FormState,
+  TFieldTypes extends {
+    [K in keyof TFormState]: MatchFieldByFormDataType<TFormState[K]>['type']
+  },
+  TFields extends FieldsConfig<any, any>
+>({
+  form: { fields, fieldTypes, initialData, additionalFields, onSubmit },
   ui: { title, icon, namespace, loading = false, onClose, submitButton },
   actionButton
 }: {
   form: {
     fields: TFields
-    initialData?: Partial<InferFormState<TFields>>
+    fieldTypes: TFieldTypes
+    initialData?: Partial<InferFormState<TFieldTypes, TFields>>
     additionalFields?: React.ReactNode
-    onSubmit: (data: InferFormFinalState<any>) => Promise<void>
+    onSubmit: (data: InferFormFinalState<any, any>) => Promise<void>
   }
   ui: {
     title: string
@@ -122,8 +132,11 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
     onClick?: () => void
   }
 }) {
-  const [data, setData] = useState<InferFormState<TFields>>(
-    getInitialData(fields, initialData) as InferFormState<TFields>
+  const [data, setData] = useState<InferFormState<TFieldTypes, TFields>>(
+    getInitialData(fieldTypes, fields, initialData) as InferFormState<
+      TFieldTypes,
+      TFields
+    >
   )
 
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -189,7 +202,7 @@ function FormModal<TFields extends FieldsConfig<any, any>>({
 
     if (onSubmit) {
       try {
-        await onSubmit(finalData as InferFormFinalState<TFields>)
+        await onSubmit(finalData as InferFormFinalState<TFieldTypes, TFields>)
       } finally {
         setSubmitLoading(false)
         onClose()

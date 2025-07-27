@@ -8,12 +8,12 @@ import AddToLibraryModal from '../../AddToLibraryModal'
 
 function AddToLibraryButton({
   book,
-  fullWidth = false,
-  isLibgenIS = false
+  provider,
+  fullWidth = false
 }: {
   book: Record<string, any>
+  provider: string
   fullWidth?: boolean
-  isLibgenIS?: boolean
 }) {
   const md5 = book.md5
 
@@ -58,12 +58,14 @@ function AddToLibraryButton({
   }, [entriesQuery.data, md5, processes])
 
   const handleAddToLibrary = useCallback(() => {
-    open(AddToLibraryModal, { isLibgenIS, book })
+    open(AddToLibraryModal, { provider, book })
   }, [md5])
 
   return (
     <Button
-      className={fullWidth ? `w-full ${isLibgenIS && 'lg:w-1/2'}` : ''}
+      className={
+        fullWidth ? `w-full ${provider === 'libgen.is' && 'lg:w-1/2'}` : ''
+      }
       disabled={
         !!targetProcess || entriesQuery.data?.some(entry => entry.md5 === md5)
       }

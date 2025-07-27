@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   ListboxOrComboboxInput,
@@ -14,6 +15,10 @@ import { useReactToPrint } from 'react-to-print'
 import colors from 'tailwindcss/colors'
 
 import Board from './components/Board'
+
+export type SudokuBoard = InferOutput<
+  typeof forgeAPI.sudoku.generateBoard
+>[number]
 
 const DIFFICULTIES = [
   { value: 'easy', color: colors.green[500] },

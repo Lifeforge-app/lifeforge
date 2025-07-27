@@ -1,4 +1,4 @@
-import { BookDetailProps } from '..'
+import type { BookDetailProps } from '..'
 
 function DataTable({ data }: { data: BookDetailProps }) {
   const renderContent = (key: string, value: any) => {
