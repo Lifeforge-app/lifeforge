@@ -1,18 +1,35 @@
 import { Icon } from '@iconify/react'
+import { useMutation } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
+
+import type { TMDBSearchResults } from '..'
 
 function TMDBResultItem({
   data,
-  onAddToLibrary,
-  isAdded
+  isAdded,
+  onAddToLibrary
 }: {
-  data: MoviesCollectionsSchemas.ITMDBSearchResult
-  onAddToLibrary: (id: number) => Promise<void>
+  data: TMDBSearchResults['results'][number]
   isAdded: boolean
+  onAddToLibrary: () => Promise<void>
 }) {
   const [loading, setLoading] = useState(false)
+
+  const addToLibraryMutation = useMutation(
+    forgeAPI.movies.entries.create.input({ id: data.id }).mutationOptions({
+      onSuccess: async () => {
+        await onAddToLibrary()
+        setLoading(false)
+      },
+      onError: (error: any) => {
+        toast.error(`Failed to add movie: ${error.message || 'Unknown error'}`)
+      }
+    })
+  )
 
   return (
     <div className="component-bg-lighter shadow-custom flex flex-col items-center gap-6 rounded-md p-4 md:flex-row">
@@ -48,7 +65,7 @@ function TMDBResultItem({
           variant={isAdded ? 'plain' : 'primary'}
           onClick={() => {
             setLoading(true)
-            onAddToLibrary(data.id).finally(() => setLoading(false))
+            addToLibraryMutation.mutateAsync({})
           }}
         >
           {isAdded ? 'Already in Library' : 'Add to Library'}

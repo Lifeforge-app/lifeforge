@@ -1,5 +1,6 @@
 import { EmptyStateScreen, Pagination } from 'lifeforge-ui'
 
+import type { TMDBSearchResults } from '..'
 import TMDBResultItem from './TMDBResultItem'
 
 function TMDBResultsList({
@@ -8,10 +9,10 @@ function TMDBResultsList({
   setPage,
   onAddToLibrary
 }: {
-  results: MoviesControllersSchemas.ITmdb['searchMovies']['response'] | null
+  results: TMDBSearchResults
   page: number
   setPage: (page: number) => void
-  onAddToLibrary: (id: number) => Promise<void>
+  onAddToLibrary: () => Promise<void>
 }) {
   if (results === null) {
     return <></>
@@ -19,7 +20,7 @@ function TMDBResultsList({
 
   if (results.total_results === 0) {
     return (
-      <div className="mt-6">
+      <div className="mt-6 h-96">
         <EmptyStateScreen
           icon="tabler:search-off"
           name="search"

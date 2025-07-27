@@ -1,21 +1,11 @@
+import type { MovieEntry } from '..'
 import MovieItem from './MovieItem'
 
-function MovieList({
-  data,
-  onToggleWatched
-}: {
-  data: ISchemaWithPB<MoviesCollectionsSchemas.IEntry>[]
-  onToggleWatched: (id: string) => Promise<void>
-}) {
+function MovieList({ data }: { data: MovieEntry[] }) {
   return (
     <div className="mb-24 space-y-4 md:mb-12">
       {data.map(item => (
-        <MovieItem
-          key={item.id}
-          data={item}
-          type="list"
-          onToggleWatched={onToggleWatched}
-        />
+        <MovieItem key={item.id} data={item} type="list" />
       ))}
     </div>
   )

@@ -156,7 +156,9 @@ const create = forgeController.mutation
   .input({
     body: SCHEMAS.todo_list.entries.omit({
       completed_at: true,
-      done: true
+      done: true,
+      created: true,
+      updated: true
     })
   })
   .existenceCheck('body', {
@@ -186,7 +188,9 @@ const update = forgeController.mutation
     }),
     body: SCHEMAS.todo_list.entries.omit({
       completed_at: true,
-      done: true
+      done: true,
+      created: true,
+      updated: true
     })
   })
   .existenceCheck('query', {

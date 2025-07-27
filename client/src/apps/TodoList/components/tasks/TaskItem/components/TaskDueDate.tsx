@@ -1,11 +1,9 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
-function TaskDueDate({
-  entry
-}: {
-  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
-}) {
+import type { TodoListEntry } from '@apps/TodoList/providers/TodoListProvider'
+
+function TaskDueDate({ entry }: { entry: TodoListEntry }) {
   return (
     <>
       {entry.done && entry.completed_at !== '' ? (

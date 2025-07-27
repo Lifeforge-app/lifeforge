@@ -1,10 +1,9 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
+import {
+  type TodoListEntry,
+  useTodoListContext
+} from '@apps/TodoList/providers/TodoListProvider'
 
-function TaskHeader({
-  entry
-}: {
-  entry: ISchemaWithPB<TodoListCollectionsSchemas.IEntry>
-}) {
+function TaskHeader({ entry }: { entry: TodoListEntry }) {
   const { prioritiesQuery } = useTodoListContext()
 
   const priorities = prioritiesQuery.data ?? []

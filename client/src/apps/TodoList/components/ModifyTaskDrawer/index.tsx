@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import {
   Button,
+  ConfirmationModal,
   DateInput,
-  DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem,
   Scrollbar,
@@ -17,7 +18,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -33,7 +33,6 @@ function ModifyTaskDrawer() {
   const { t } = useTranslation('apps.todoList')
 
   const {
-    entriesQueryKey,
     modifyTaskWindowOpenType: openType,
     setModifyTaskWindowOpenType: setOpenType,
     selectedTask,
@@ -46,7 +45,7 @@ function ModifyTaskDrawer() {
 
   const [dueDateHasTime, setDueDateHasTime] = useState(false)
 
-  const [dueDate, setDueDate] = useState<Date | null>(undefined)
+  const [dueDate, setDueDate] = useState<Date | null>(null)
 
   const [priority, setPriority] = useState<string>('')
 
@@ -78,7 +77,7 @@ function ModifyTaskDrawer() {
     const task = {
       summary: summary.trim(),
       notes: notes.trim(),
-      due_date: dueDate ?? '',
+      due_date: dueDate ? dayjs(dueDate).toISOString() : '',
       due_date_has_time: dueDateHasTime,
       priority: priority ?? null,
       list: list ?? '',
@@ -86,41 +85,20 @@ function ModifyTaskDrawer() {
     }
 
     try {
-      const data = await fetchAPI<ITodoListEntry>(
-        import.meta.env.VITE_API_HOST,
-        'todo-list/entries' +
-          (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
-        {
-          method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-          body: task
-        }
-      )
+      await (
+        openType === 'create'
+          ? forgeAPI.todoList.entries.create
+          : forgeAPI.todoList.entries.update.input({
+              id: selectedTask!.id
+            })
+      ).mutate(task)
 
       setOpenType(null)
       setSelectedTask(null)
 
-      queryClient.setQueryData<ITodoListEntry[]>(entriesQueryKey, entries => {
-        if (!entries) return []
-
-        if (innerOpenType === 'create') {
-          return [data, ...entries]
-        }
-
-        return entries.map(entry => {
-          if (entry.id === data.id) {
-            return data
-          }
-
-          return entry
-        })
+      await queryClient.invalidateQueries({
+        queryKey: ['todo-list']
       })
-
-      queryClient.invalidateQueries({
-        queryKey: ['todo-list', 'status-counter']
-      })
-      queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
-      queryClient.invalidateQueries({ queryKey: ['todo-list', 'priorities'] })
-      queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
     } catch {
       toast.error('Error')
     } finally {
@@ -136,24 +114,32 @@ function ModifyTaskDrawer() {
     }, 300)
   }
 
+  const deleteMutation = useMutation(
+    forgeAPI.todoList.entries.remove
+      .input({
+        id: selectedTask?.id ?? ''
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['todo-list']
+          })
+          setOpenType(null)
+          setSelectedTask(null)
+        },
+        onError: () => {
+          toast.error('Error deleting task')
+        }
+      })
+  )
+
   const handleDeleteTask = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'todo-list/entries',
-      data: selectedTask ?? undefined,
-      itemName: 'task',
-      nameKey: 'summary',
-      queryKey: entriesQueryKey,
-      afterDelete: async () => {
-        queryClient.invalidateQueries({
-          queryKey: ['todo-list', 'priorities']
-        })
-        queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
-        queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
-        queryClient.invalidateQueries({
-          queryKey: ['todo-list', 'status-counter']
-        })
-        setOpenType(null)
-        setSelectedTask(null)
+    open(ConfirmationModal, {
+      title: 'Delete Task',
+      description: 'Are you sure you want to delete this task?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
       }
     })
   }, [selectedTask])
@@ -173,9 +159,7 @@ function ModifyTaskDrawer() {
       setSummary(selectedTask.summary)
       setNotes(selectedTask.notes)
       setDueDate(
-        selectedTask.due_date
-          ? dayjs(selectedTask.due_date).toDate()
-          : undefined
+        selectedTask.due_date ? dayjs(selectedTask.due_date).toDate() : null
       )
       setDueDateHasTime(selectedTask.due_date_has_time)
       setPriority(selectedTask.priority)
@@ -184,7 +168,7 @@ function ModifyTaskDrawer() {
     } else {
       setSummary('')
       setNotes('')
-      setDueDate(undefined)
+      setDueDate(null)
       setDueDateHasTime(false)
       setPriority('')
       setList('')

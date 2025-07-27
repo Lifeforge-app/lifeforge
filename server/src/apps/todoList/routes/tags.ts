@@ -5,7 +5,9 @@ import { z } from 'zod/v4'
 const list = forgeController.query
   .description('Get all todo tags')
   .input({})
-  .callback(({ pb }) => pb.getFullList.collection('todo_list__tags').execute())
+  .callback(({ pb }) =>
+    pb.getFullList.collection('todo_list__tags_aggregated').execute()
+  )
 
 const create = forgeController.mutation
   .description('Create a new todo tag')

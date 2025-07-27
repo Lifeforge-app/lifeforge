@@ -1,8 +1,10 @@
-import { FormModal } from 'lifeforge-ui'
-import { type IFieldProps } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { FormModal, defineForm } from 'lifeforge-ui'
+import { toast } from 'react-toastify'
 
-import { ITodoPriority } from '../interfaces/todo_list_interfaces'
+import type { TodoListPriority } from '../providers/TodoListProvider'
 
 function ModifyPriorityModal({
   data: { type, initialData },
@@ -10,63 +12,67 @@ function ModifyPriorityModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData: ITodoPriority | null
+    initialData?: TodoListPriority
   }
   onClose: () => void
 }) {
-  const [data, setData] = useState({
-    name: '',
-    color: ''
-  })
+  const queryClient = useQueryClient()
 
-  const FIELDS: IFieldProps<typeof data>[] = [
-    {
-      id: 'name',
-      required: true,
-      label: 'Priority name',
-      icon: 'tabler:sort-ascending-numbers',
-      placeholder: 'Priority name',
-      type: 'text'
-    },
-    {
-      id: 'color',
-      required: true,
-      label: 'Priority color',
-      type: 'color'
-    }
-  ]
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.todoList.priorities.create
+      : forgeAPI.todoList.priorities.update.input({
+          id: initialData!.id
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['todo-list', 'priorities'] })
+      },
+      onError: error => {
+        toast.error(`Failed to ${type} priority: ${error.message}`)
+      }
+    })
+  )
 
-  useEffect(() => {
-    if (type === 'update' && initialData !== null) {
-      setData(initialData)
-    } else {
-      setData({
+  const formProps = defineForm<
+    InferInput<(typeof forgeAPI.todoList.priorities)[typeof type]>['body']
+  >()
+    .ui({
+      icon: {
+        create: 'tabler:plus',
+        update: 'tabler:pencil'
+      }[type],
+      namespace: 'apps.todoList',
+      title: `priority.${type}`,
+      onClose,
+      submitButton: type
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Priority name',
+        icon: 'tabler:sort-ascending-numbers',
+        placeholder: 'Priority name',
+        type: 'text'
+      },
+      color: {
+        required: true,
+        label: 'Priority color',
+        type: 'color'
+      }
+    })
+    .initialData(
+      initialData ?? {
         name: '',
         color: '#FFFFFF'
-      })
-    }
-  }, [type, initialData])
-
-  return (
-    <FormModal
-      data={data}
-      endpoint="todo-list/priorities"
-      fields={FIELDS}
-      icon={
-        {
-          create: 'tabler:plus',
-          update: 'tabler:pencil'
-        }[type!]
       }
-      id={initialData?.id}
-      namespace="apps.todoList"
-      openType={type}
-      queryKey={['todo-list', 'priorities']}
-      setData={setData}
-      title={`priority.${type}`}
-      onClose={onClose}
-    />
-  )
+    )
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
+    .build()
+
+  return <FormModal {...formProps} />
 }
 
 export default ModifyPriorityModal

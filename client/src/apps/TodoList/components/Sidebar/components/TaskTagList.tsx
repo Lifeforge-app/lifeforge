@@ -21,8 +21,7 @@ function TaskTagList({
 
   const handleCreateTag = useCallback(() => {
     open(ModifyTagModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 
