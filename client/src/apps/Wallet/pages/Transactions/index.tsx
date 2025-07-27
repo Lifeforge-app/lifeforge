@@ -103,8 +103,7 @@ function Transactions() {
 
   const handleCreateTransaction = useCallback(() => {
     open(ModifyTransactionsModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 
@@ -115,8 +114,7 @@ function Transactions() {
   useEffect(() => {
     if (hash === '#new') {
       open(ModifyTransactionsModal, {
-        type: 'create',
-        initialData: null
+        type: 'create'
       })
     }
 

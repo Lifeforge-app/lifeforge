@@ -1,9 +1,10 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
-import { InferInput } from 'lifeforge-api'
+import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { type SetStateAction, useCallback, useEffect, useMemo } from 'react'
+import { useState } from 'react'
+import colors from 'tailwindcss/colors'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
@@ -15,11 +16,11 @@ function ModifyTransactionsModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData:
-      | ({
-          type: WalletTransaction['type']
-        } & Partial<WalletTransaction>)
-      | null
+    initialData?: {
+      type: WalletTransaction['type']
+    } & Partial<Omit<WalletTransaction, 'receipt'>> & {
+        receipt?: File | string
+      }
   }
   onClose: () => void
 }) {
@@ -32,6 +33,26 @@ function ModifyTransactionsModal({
   const categories = categoriesQuery.data ?? []
 
   const ledgers = ledgersQuery.data ?? []
+
+  const [transactionType, setTransactionType] = useState<
+    'income' | 'expenses' | 'transfer'
+  >(initialData?.type ?? 'income')
+
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.wallet.transactions.create
+      : forgeAPI.wallet.transactions.update.input({
+          id: initialData!.id!
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      },
+      onError: error => {
+        console.error('Failed to modify transaction:', error)
+      }
+    })
+  )
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wallet.transactions)[typeof type]>['body']
@@ -53,348 +74,179 @@ function ModifyTransactionsModal({
       ledgers: 'listbox',
       location: 'location',
       receipt: 'file',
-      
+      from: 'listbox',
+      to: 'listbox'
     })
-
-  const fields = useMemo<IFieldProps[]>(() => {
-    const BASE_FIELD_PROPS: IFieldProps<typeof baseFormState>[] = [
-      {
-        id: 'type',
+    .setupFields({
+      type: {
+        multiple: false,
         label: 'Transaction Type',
-        type: 'listbox',
         options: [
-          { text: 'Income', value: 'income', icon: 'tabler:login-2' },
-          { text: 'Expenses', value: 'expenses', icon: 'tabler:logout-2' },
-          { text: 'Transfer', value: 'transfer', icon: 'tabler:transfer' }
+          {
+            text: 'Income',
+            value: 'income',
+            icon: 'tabler:login-2',
+            color: colors.green[500]
+          },
+          {
+            text: 'Expenses',
+            value: 'expenses',
+            icon: 'tabler:logout-2',
+            color: colors.red[500]
+          },
+          {
+            text: 'Transfer',
+            value: 'transfer',
+            icon: 'tabler:transfer',
+            color: colors.blue[500]
+          }
         ],
         icon: 'tabler:exchange',
         required: true
       },
-      {
-        id: 'date',
-        label: 'Date',
-        type: 'datetime',
+      date: {
         required: true,
+        label: 'Date',
         icon: 'tabler:calendar'
       },
-      {
-        id: 'amount',
-        label: 'Amount',
-        type: 'currency',
+      amount: {
         required: true,
+        label: 'Amount',
         icon: 'tabler:currency-dollar'
-      }
-    ]
-
-    if (baseFormState.type === 'transfer') {
-      const _state = {
-        ...baseFormState,
-        ...transferFormState
-      }
-
-      const fieldProps: IFieldProps<typeof _state>[] = [
-        ...BASE_FIELD_PROPS,
-        {
-          id: 'from',
-          label: 'From Asset',
-          type: 'listbox',
-          options: assets.map(asset => ({
-            text: asset.name,
-            value: asset.id,
-            icon: asset.icon
+      },
+      from: {
+        required: true,
+        multiple: false,
+        label: 'From Asset',
+        options: assets.map(asset => ({
+          text: asset.name,
+          value: asset.id,
+          icon: asset.icon
+        })),
+        icon: 'tabler:arrow-left-circle',
+        hidden: transactionType !== 'transfer'
+      },
+      to: {
+        required: true,
+        multiple: false,
+        label: 'To Asset',
+        options: assets.map(asset => ({
+          text: asset.name,
+          value: asset.id,
+          icon: asset.icon
+        })),
+        icon: 'tabler:arrow-right-circle',
+        hidden: transactionType !== 'transfer'
+      },
+      particulars: {
+        label: 'Particulars',
+        required: true,
+        icon: 'tabler:file-description',
+        placeholder: 'Enter details about the transaction',
+        hidden: transactionType === 'transfer'
+      },
+      category: {
+        multiple: false,
+        label: 'Category',
+        options: categories
+          .filter(cat => cat.type === transactionType)
+          .map(category => ({
+            text: category.name,
+            value: category.id,
+            icon: category.icon,
+            color: category.color
           })),
-          icon: 'tabler:arrow-left-circle'
-        },
-        {
-          id: 'to',
-          label: 'To Asset',
-          type: 'listbox',
-          options: assets.map(asset => ({
-            text: asset.name,
-            value: asset.id,
-            icon: asset.icon
-          })),
-          icon: 'tabler:arrow-right-circle'
-        },
-        {
-          id: 'receipt',
-          label: 'Receipt',
-          type: 'file',
-          required: false,
-          onFileRemoved: () => setToRemoveReceipt(true)
-        }
-      ]
-
-      return fieldProps
-    } else {
-      const _state = {
-        ...baseFormState,
-        ...incomeExpensesFormState
+        icon: 'tabler:category',
+        required: true,
+        hidden: transactionType === 'transfer'
+      },
+      asset: {
+        multiple: false,
+        label: 'Asset',
+        options: assets.map(asset => ({
+          text: asset.name,
+          value: asset.id,
+          icon: asset.icon
+        })),
+        icon: 'tabler:coin',
+        required: true,
+        hidden: transactionType === 'transfer'
+      },
+      ledgers: {
+        multiple: true,
+        label: 'Ledger',
+        options: ledgers.map(ledger => ({
+          text: ledger.name,
+          value: ledger.id,
+          icon: ledger.icon,
+          color: ledger.color
+        })),
+        icon: 'tabler:book',
+        hidden: transactionType === 'transfer'
+      },
+      location: {
+        label: 'Location',
+        hidden: transactionType === 'transfer'
+      },
+      receipt: {
+        label: 'Receipt',
+        icon: 'tabler:receipt',
+        optional: true
       }
-
-      const fieldProps: IFieldProps<typeof _state>[] = [
-        ...BASE_FIELD_PROPS,
-        {
-          id: 'particulars',
-          label: 'Particulars',
-          type: 'text',
-          required: true,
-          icon: 'tabler:file-description',
-          placeholder: 'Enter details about the transaction'
-        },
-        {
-          id: 'category',
-          label: 'Category',
-          type: 'listbox',
-          options: categories
-            .filter(cat => cat.type === baseFormState.type)
-            .map(category => ({
-              text: category.name,
-              value: category.id,
-              icon: category.icon,
-              color: category.color
-            })),
-          icon: 'tabler:category',
-          required: true
-        },
-        {
-          id: 'asset',
-          label: 'Asset',
-          type: 'listbox',
-          options: assets.map(asset => ({
-            text: asset.name,
-            value: asset.id,
-            icon: asset.icon
-          })),
-          icon: 'tabler:coin',
-          required: true
-        },
-        {
-          id: 'ledgers',
-          label: 'Ledger',
-          type: 'listbox',
-          options: ledgers.map(ledger => ({
-            text: ledger.name,
-            value: ledger.id,
-            icon: ledger.icon,
-            color: ledger.color
-          })),
-          icon: 'tabler:book',
-          required: false,
-          multiple: true
-        },
-        {
-          id: 'location',
-          label: 'Location',
-          type: 'location'
-        },
-        {
-          id: 'receipt',
-          label: 'Receipt',
-          type: 'file',
-          required: false,
-          onFileRemoved: () => setToRemoveReceipt(true)
-        }
-      ]
-
-      return fieldProps
-    }
-  }, [
-    baseFormState,
-    incomeExpensesFormState,
-    transferFormState,
-    assets,
-    categories,
-    ledgers
-  ])
-
-  const formState = useMemo(() => {
-    if (baseFormState.type === 'transfer') {
-      return {
-        ...baseFormState,
-        ...transferFormState,
-        type: 'transfer' as const
+    })
+    .initialData({
+      type: initialData?.type || 'income',
+      date: initialData ? dayjs(initialData.date).toDate() : dayjs().toDate(),
+      amount: initialData?.amount || 0,
+      receipt: {
+        file:
+          typeof initialData?.receipt === 'string'
+            ? 'keep'
+            : initialData?.receipt instanceof File
+              ? initialData.receipt
+              : null,
+        preview:
+          typeof initialData?.receipt === 'string'
+            ? forgeAPI.media.input({
+                collectionId: initialData.collectionId!,
+                recordId: initialData.id!,
+                fieldId: initialData.receipt
+              }).endpoint
+            : initialData?.receipt instanceof File
+              ? URL.createObjectURL(initialData.receipt)
+              : null
       }
-    }
-
-    return {
-      ...baseFormState,
-      ...incomeExpensesFormState,
-      type: baseFormState.type as 'income' | 'expenses'
-    }
-  }, [baseFormState, transferFormState, incomeExpensesFormState])
-
-  const handleChange = useCallback(
-    (newState: SetStateAction<typeof formState>) => {
-      const currentState =
-        baseFormState.type === 'transfer'
-          ? { ...baseFormState, ...transferFormState, type: 'transfer' }
-          : {
-              ...baseFormState,
-              ...incomeExpensesFormState,
-              type: baseFormState.type as 'income' | 'expenses'
-            }
-
-      const updatedState =
-        typeof newState === 'function'
-          ? newState(currentState as typeof formState)
-          : newState
-
-      setBaseFormState(prev => ({
-        ...prev,
-        type: updatedState.type,
-        date: updatedState.date,
-        amount: updatedState.amount,
-        receipt: updatedState.receipt
-      }))
-
-      if (updatedState.type === 'transfer') {
-        setTransferFormState(prev => ({
-          ...prev,
-          from: updatedState.from,
-          to: updatedState.to
-        }))
-
-        if (baseFormState.type !== 'transfer') {
-          setIncomeExpensesFormState({
-            category: '',
-            asset: '',
-            ledgers: [],
-            particulars: '',
-            location: undefined
-          })
-        }
-      } else {
-        setIncomeExpensesFormState(prev => ({
-          ...prev,
-          type: updatedState.type,
-          category: updatedState.category || '',
-          asset: updatedState.asset || '',
-          ledgers: updatedState.ledgers || [],
-          particulars: updatedState.particulars || '',
-          location: updatedState.location
-        }))
-
-        if (baseFormState.type === 'transfer') {
-          setTransferFormState({
-            from: '',
-            to: ''
-          })
-        }
-      }
-    },
-    [baseFormState, transferFormState, incomeExpensesFormState]
-  )
-
-  useEffect(() => {
-    if (initialData && type === 'update') {
-      setBaseFormState({
-        type: initialData.type ?? 'income',
-        date: dayjs(initialData.date).toDate(),
-        amount: initialData.amount || 0,
-        receipt: {
-          image: initialData.receipt || null,
-          preview: (() => {
-            if ((initialData.receipt as File | string | null) instanceof File) {
-              return URL.createObjectURL(initialData.receipt as unknown as File)
-            }
-
-            if (initialData.receipt) {
-              return `${import.meta.env.VITE_API_HOST}/media/${initialData.collectionId}/${initialData.id}/${initialData.receipt}`
-            }
-
-            return null
-          })()
-        }
-      })
-
-      if (initialData.type === 'transfer') {
-        setTransferFormState({
-          from: initialData.from || '',
-          to: initialData.to || ''
-        })
-
-        setIncomeExpensesFormState({
-          category: '',
-          asset: '',
-          ledgers: [],
-          particulars: '',
-          location: undefined
+    })
+    .onChange(data => {
+      setTransactionType(data.type)
+    })
+    .onSubmit(async data => {
+      if (data.type === 'transfer') {
+        await mutation.mutateAsync({
+          type: 'transfer',
+          date: data.date,
+          from: data.from,
+          to: data.to,
+          receipt: data.receipt,
+          amount: data.amount
         })
       } else {
-        setIncomeExpensesFormState({
-          category: initialData.category || '',
-          asset: initialData.asset || '',
-          ledgers: initialData.ledgers || [],
-          particulars: initialData.particulars || '',
-          location: {
-            name: initialData.location_name || '',
-            location: {
-              latitude: initialData.location_coords?.lat || 0,
-              longitude: initialData.location_coords?.lon || 0
-            },
-            formattedAddress: initialData.location_name || ''
-          }
+        await mutation.mutateAsync({
+          type: data.type,
+          date: data.date,
+          asset: data.asset,
+          category: data.category,
+          ledgers: data.ledgers,
+          location: data.location,
+          particulars: data.particulars,
+          receipt: data.receipt,
+          amount: data.amount
         })
       }
-    } else {
-      setBaseFormState({
-        type: 'income',
-        date: dayjs().toDate(),
-        amount: 0,
-        receipt: {
-          image: null,
-          preview: null
-        }
-      })
+    })
+    .build()
 
-      setIncomeExpensesFormState({
-        category: '',
-        asset: '',
-        ledgers: [],
-        particulars: '',
-        location: undefined
-      })
-
-      setTransferFormState({
-        from: '',
-        to: ''
-      })
-    }
-
-    setToRemoveReceipt(false)
-  }, [initialData, type])
-
-  return (
-    <FormModal
-      customUpdateDataList={{
-        create: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['wallet']
-          })
-        },
-        update: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['wallet']
-          })
-        }
-      }}
-      data={formState}
-      endpoint="wallet/transactions"
-      fields={fields as never}
-      getFinalData={async () => ({
-        ...formState,
-        toRemoveReceipt
-      })}
-      icon={type === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-      id={initialData ? initialData.id : ''}
-      namespace="apps.wallet"
-      openType={type}
-      setData={handleChange}
-      title={`transactions.${type}`}
-      onClose={onClose}
-    />
-  )
+  return <FormModal {...formProps} />
 }
 
 export default ModifyTransactionsModal

@@ -5,12 +5,11 @@ import type {
   FormFieldPropsUnion,
   FormState,
   InferFormFinalState,
-  InferFormState,
-  MatchFieldByFormDataType
+  InferFormState
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import ModalHeader from '../../core/components/ModalHeader'
@@ -36,6 +35,10 @@ const checkEmpty = (value: unknown): boolean => {
 
   if (Array.isArray(value) && value.length === 0) {
     return true
+  }
+
+  if (value instanceof Date) {
+    return isNaN(value.getTime())
   }
 
   if (typeof value === 'object') {
@@ -100,23 +103,27 @@ const getInitialData = <TFormConfig extends FieldsConfig<any, any>>(
   )
 }
 
-function FormModal<
-  TFormState extends FormState,
-  TFieldTypes extends {
-    [K in keyof TFormState]: MatchFieldByFormDataType<TFormState[K]>['type']
+function FormModal({
+  form: {
+    fields,
+    fieldTypes,
+    initialData,
+    additionalFields,
+    onSubmit,
+    onChange
   },
-  TFields extends FieldsConfig<any, any>
->({
-  form: { fields, fieldTypes, initialData, additionalFields, onSubmit },
   ui: { title, icon, namespace, loading = false, onClose, submitButton },
   actionButton
 }: {
   form: {
-    fields: TFields
-    fieldTypes: TFieldTypes
-    initialData?: Partial<InferFormState<TFieldTypes, TFields>>
+    fields: Record<string, FormFieldPropsUnion>
+    fieldTypes: Record<string, FormFieldPropsUnion['type']>
+    initialData?: Partial<InferFormState<typeof fieldTypes, typeof fields>>
     additionalFields?: React.ReactNode
-    onSubmit: (data: InferFormFinalState<any, any>) => Promise<void>
+    onSubmit: (
+      data: InferFormFinalState<typeof fieldTypes, typeof fields>
+    ) => Promise<void>
+    onChange?: (data: InferFormState<typeof fieldTypes, typeof fields>) => void
   }
   ui: {
     title: string
@@ -132,10 +139,12 @@ function FormModal<
     onClick?: () => void
   }
 }) {
-  const [data, setData] = useState<InferFormState<TFieldTypes, TFields>>(
+  const [data, setData] = useState<
+    InferFormState<typeof fieldTypes, typeof fields>
+  >(
     getInitialData(fieldTypes, fields, initialData) as InferFormState<
-      TFieldTypes,
-      TFields
+      typeof fieldTypes,
+      typeof fields
     >
   )
 
@@ -143,7 +152,7 @@ function FormModal<
 
   async function onSubmitButtonClick(): Promise<void> {
     const requiredFields = Object.entries(fields).filter(
-      field => field[1]?.required
+      field => field[1]?.required && !field[1].hidden
     )
 
     const missingFields = requiredFields.filter(field =>
@@ -202,13 +211,19 @@ function FormModal<
 
     if (onSubmit) {
       try {
-        await onSubmit(finalData as InferFormFinalState<TFieldTypes, TFields>)
+        await onSubmit(
+          finalData as InferFormFinalState<typeof fieldTypes, typeof fields>
+        )
+        onClose()
       } finally {
         setSubmitLoading(false)
-        onClose()
       }
     }
   }
+
+  useEffect(() => {
+    onChange?.(data)
+  }, [data, onChange])
 
   return (
     <div className="min-w-[50vw]">

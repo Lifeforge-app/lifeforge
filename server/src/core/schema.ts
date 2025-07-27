@@ -323,16 +323,12 @@ export const SCHEMAS = {
       category: z.string(),
       ledgers: z.array(z.string()),
       location_name: z.string(),
-      location_coords: z.object({ lat: z.number(), lon: z.number() }),
-      created: z.string(),
-      updated: z.string()
+      location_coords: z.object({ lat: z.number(), lon: z.number() })
     }),
     transactions_transfer: z.object({
       base_transaction: z.string(),
       from: z.string(),
-      to: z.string(),
-      created: z.string(),
-      updated: z.string()
+      to: z.string()
     })
   },
   books_library: {
