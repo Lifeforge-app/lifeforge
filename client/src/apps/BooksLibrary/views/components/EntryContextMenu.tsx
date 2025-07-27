@@ -25,9 +25,11 @@ export default function EntryContextMenu({
   const handleDownload = useCallback(() => {
     setDownloadLoading(true)
     forceDown(
-      `${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
-        item.id
-      }/${item.file}`,
+      forgeAPI.media.input({
+        collectionId: item.collectionId,
+        recordId: item.id,
+        fieldId: item.file
+      }).endpoint,
       `${item.title}.${item.extension}`
     )
       .then(() => {

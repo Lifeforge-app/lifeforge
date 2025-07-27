@@ -73,9 +73,13 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
       </div>
       <a
         className="absolute inset-0 z-10 size-full rounded-lg"
-        href={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
-          item.id
-        }/${item.file}`}
+        href={
+          forgeAPI.media.input({
+            collectionId: item.collectionId,
+            recordId: item.id,
+            fieldId: item.file
+          }).endpoint
+        }
         rel="noreferrer"
         target="_blank"
       />
