@@ -173,7 +173,6 @@ const addToLibrary = forgeController.mutation
       edition: z.string(),
       isbn: z.string(),
       languages: z.array(z.string()),
-      md5: z.string(),
       publisher: z.string(),
       size: z.number().int().min(0),
       title: z.string(),

@@ -74,6 +74,7 @@ function ModifyAchievementModal({
       },
       difficulty: {
         required: true,
+        multiple: false,
         label: 'Achievement difficulty',
         icon: 'tabler:list',
         options: difficulties.map(([name, color]) => ({

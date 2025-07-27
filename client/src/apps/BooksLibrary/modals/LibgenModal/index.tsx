@@ -62,27 +62,33 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   )
 
   async function checkLibgenOnlineStatus() {
-    for (const endpoint of PROVIDERS) {
+    const promises = PROVIDERS.map(async endpoint => {
       try {
         await forgeAPI.corsAnywhere
-          .input({
-            url: `https://${endpoint}`
-          })
-          .query({
-            timeout: 5000
-          })
+          .input({ url: `https://${endpoint}` })
+          .query({ timeout: 5000 })
 
-        setProviderOnlineStatuses(prev => ({
-          ...prev,
-          [endpoint]: true
-        }))
+        return { endpoint, ok: true }
       } catch {
-        setProviderOnlineStatuses(prev => ({
-          ...prev,
-          [endpoint]: false
-        }))
+        return { endpoint, ok: false }
       }
-    }
+    })
+
+    const results = await Promise.all(promises)
+
+    const statusMap = results.reduce(
+      (acc, { endpoint, ok }) => {
+        acc[endpoint] = ok
+
+        return acc
+      },
+      {} as Record<(typeof PROVIDERS)[number], boolean>
+    )
+
+    setProviderOnlineStatuses(prev => ({
+      ...prev,
+      ...statusMap
+    }))
   }
 
   async function fetchBookResults(page: number) {

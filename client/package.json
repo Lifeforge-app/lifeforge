@@ -13,7 +13,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
-    "types": "tsc --noEmit",
+    "types": "tsc -b",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

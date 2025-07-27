@@ -12,12 +12,7 @@ function QueryWrapper<T>({
   children: (data: T) => React.ReactElement | false
   showLoading?: boolean
 }) {
-  if (
-    query.isLoading ||
-    query.isPending ||
-    query.isFetching ||
-    query.isRefetching
-  ) {
+  if (query.isLoading) {
     return showLoading ? <LoadingScreen /> : <></>
   }
 
