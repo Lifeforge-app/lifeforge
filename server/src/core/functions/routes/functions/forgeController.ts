@@ -496,6 +496,14 @@ export class ForgeControllerBuilder<
             }
           }
 
+          for (const [key, value] of Object.entries(
+            __media || ({} as MediaConfig)
+          )) {
+            if (!value.optional && !finalMedia[key]) {
+              return clientError(res, `Missing required media field "${key}"`)
+            }
+          }
+
           if (options.isDownloadable) {
             res.setHeader('X-Lifeforge-Downloadable', 'true')
             res.setHeader(
