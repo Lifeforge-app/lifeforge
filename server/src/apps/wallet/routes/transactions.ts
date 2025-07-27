@@ -104,7 +104,7 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
           type: z.literal('transfer')
         })
     ])
-  )
+)
 
 const create = forgeController.mutation
   .description('Create a new wallet transaction')
