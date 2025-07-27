@@ -51,7 +51,7 @@ function AddToLibraryModal({
   >()
     .ui({
       icon: 'majesticons:book-plus-line',
-      loading: fetchedDataQuery.isLoading,
+      loading: fetchedDataQuery.isLoading && languagesQuery.isLoading,
       namespace: 'apps.booksLibrary',
       submitButton: {
         children: 'Download',
@@ -150,10 +150,10 @@ function AddToLibraryModal({
       }
     })
     .initialData(
-      fetchedDataQuery.data && !languagesQuery.isLoading && languagesQuery.data
+      fetchedDataQuery.data
         ? {
             ...fetchedDataQuery.data,
-            languages: languagesQuery.data
+            languages: (languagesQuery.data || [])
               .filter(lang =>
                 fetchedDataQuery.data.languages.some(
                   (name: string) => name === lang.name
@@ -169,8 +169,10 @@ function AddToLibraryModal({
             edition: book.Edition || '',
             authors: book['Author(s)'] || '',
             publisher: book.Publisher || '',
-            year_published: parseInt(book['Year Published'], 10) || 0,
-            languages: [],
+            year_published: parseInt(book['Year'], 10) || 0,
+            languages: (languagesQuery.data || [])
+              .filter(lang => lang.name === book.Language)
+              .map(lang => lang.id),
             thumbnail: book['image'],
             extension: book.Extension || '',
             size: parseInt(book.Size, 10) || 0
