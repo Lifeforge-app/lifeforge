@@ -38,8 +38,8 @@ export type ConvertMedia<TMedia extends MediaConfig | null> =
     ? Record<string, never>
     : {
         [K in keyof TMedia]: TMedia[K] extends { optional: true }
-          ? Express.Multer.File[] | string | undefined
-          : Express.Multer.File[] | string
+          ? Express.Multer.File | string | undefined
+          : Express.Multer.File | string
       }
 
 export type Context<
