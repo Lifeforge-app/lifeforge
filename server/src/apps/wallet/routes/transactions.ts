@@ -66,7 +66,9 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
   .omit({
     type: true,
     receipt: true,
-    amount: true
+    amount: true,
+    created: true,
+    updated: true
   })
   .extend({
     amount: z
