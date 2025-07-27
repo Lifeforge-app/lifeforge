@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   EmptyStateScreen,
@@ -8,7 +10,6 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
 
 import BackupItem from './components/BackupItem'
 import CreateBackupModal from './components/CreateBackupModal'
@@ -18,13 +19,7 @@ function Backups() {
 
   const open = useModalStore(state => state.open)
 
-  const backupsQuery = useAPIQuery<
-    {
-      key: string
-      size: number
-      modified: string
-    }[]
-  >('backups', ['backups'])
+  const backupsQuery = useQuery(forgeAPI.backups.list.queryOptions())
 
   return (
     <ModuleWrapper>

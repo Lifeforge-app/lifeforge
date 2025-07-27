@@ -1,13 +1,13 @@
 import * as d3 from 'd3'
 
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type { RailwayMapStation } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 let zoomBehavior: d3.ZoomBehavior<Element, unknown>
 
 export const setupZooming = (
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>,
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  centerStation: IRailwayMapStation
+  centerStation: RailwayMapStation
 ) => {
   const svgNode = svg.node()
 
@@ -52,8 +52,8 @@ export const setupZooming = (
 export const centerMapOnStation = (
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
-  station: IRailwayMapStation,
-  centerStation: IRailwayMapStation,
+  station: RailwayMapStation,
+  centerStation: RailwayMapStation,
   scale = 2,
   duration = 1000,
   needZoom = true

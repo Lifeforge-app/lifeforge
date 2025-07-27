@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
-import { type FieldsConfig, FormModal } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
 
-import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
+import type { ScoreLibraryType } from '@apps/ScoresLibrary'
 
 function ModifyTypeModal({
   onClose,
@@ -12,7 +12,7 @@ function ModifyTypeModal({
   onClose: () => void
   data: {
     openType: 'create' | 'update'
-    initialData?: ScoreLibraryEntry
+    initialData?: ScoreLibraryType
   }
 }) {
   const queryClient = useQueryClient()
@@ -29,47 +29,38 @@ function ModifyTypeModal({
     })
   )
 
-  const FIELDS = {
-    name: {
-      required: true,
-      label: 'Type Name',
-      icon: 'tabler:category',
-      placeholder: 'New Type',
-      type: 'text'
-    },
-    icon: {
-      required: true,
-      label: 'Type Icon',
-      type: 'icon'
-    }
-  } as const satisfies FieldsConfig<
+  const formProps = defineForm<
     InferInput<(typeof forgeAPI.scoresLibrary.types)[typeof openType]>['body']
-  >
+  >()
+    .ui({
+      icon: openType === 'create' ? 'tabler:plus' : 'tabler:pencil',
+      title: `types.${openType}`,
+      namespace: 'apps.scoresLibrary',
+      onClose,
+      submitButton: openType
+    })
+    .typesMap({
+      name: 'text',
+      icon: 'icon'
+    })
+    .setupFields({
+      name: {
+        required: true,
+        label: 'Type Name',
+        icon: 'tabler:category',
+        placeholder: 'New Type'
+      },
+      icon: {
+        required: true,
+        label: 'Type Icon'
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
 
-  async function onSubmit(
-    data: InferInput<
-      (typeof forgeAPI.scoresLibrary.types)[typeof openType]
-    >['body']
-  ) {
-    await mutation.mutateAsync(data)
-  }
-
-  return (
-    <FormModal
-      form={{
-        fields: FIELDS,
-        initialData,
-        onSubmit
-      }}
-      submitButton={openType}
-      ui={{
-        icon: openType === 'create' ? 'tabler:plus' : 'tabler:pencil',
-        title: `types.${openType}`,
-        namespace: 'apps.scoresLibrary',
-        onClose
-      }}
-    />
-  )
+  return <FormModal {...formProps} />
 }
 
 export default ModifyTypeModal

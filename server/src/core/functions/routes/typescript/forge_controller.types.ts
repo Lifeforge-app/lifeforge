@@ -33,16 +33,19 @@ export type ReplaceFileWithMulter<T> = T extends File
           : { [K in keyof T]: ReplaceFileWithMulter<T[K]> }
         : T
 
-export type ConvertMedia<TMedia extends MediaConfig> = {
-  [K in keyof TMedia]: TMedia[K] extends { optional: true }
-    ? Express.Multer.File[] | string | undefined
-    : Express.Multer.File[] | string
-}
+export type ConvertMedia<TMedia extends MediaConfig | null> =
+  TMedia extends null
+    ? Record<string, never>
+    : {
+        [K in keyof TMedia]: TMedia[K] extends { optional: true }
+          ? Express.Multer.File[] | string | undefined
+          : Express.Multer.File[] | string
+      }
 
 export type Context<
   TInput extends InputSchema,
   TOutput = unknown,
-  TMedia extends MediaConfig = MediaConfig
+  TMedia extends MediaConfig | null = null
 > = {
   req: Request<
     never,
@@ -61,7 +64,6 @@ export type Context<
 export type MediaConfig = Record<
   string,
   {
-    maxCount: number
     optional: boolean
   }
 >

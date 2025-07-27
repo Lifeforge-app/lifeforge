@@ -1,6 +1,6 @@
 import type { RecordModel } from 'pocketbase'
 
-interface IRailwayMapLine extends RecordModel {
+interface RailwayMapLine extends RecordModel {
   country: string
   type: string
   name: string
@@ -10,7 +10,7 @@ interface IRailwayMapLine extends RecordModel {
   map_paths: [number, number][][]
 }
 
-interface IRailwayMapStation extends RecordModel {
+interface RailwayMapStation extends RecordModel {
   name: string
   codes: string[]
   lines: string[]
@@ -29,4 +29,4 @@ interface IRailwayMapStation extends RecordModel {
 
 type IRailwayMapViewType = 'earth' | 'list' | 'route'
 
-export type { IRailwayMapLine, IRailwayMapStation, IRailwayMapViewType }
+export type { RailwayMapLine, RailwayMapStation, IRailwayMapViewType }

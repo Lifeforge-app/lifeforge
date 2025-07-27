@@ -68,7 +68,6 @@ const create = forgeController.mutation
   })
   .media({
     image: {
-      maxCount: 1,
       optional: true
     }
   })
@@ -118,7 +117,6 @@ const update = forgeController.mutation
   })
   .media({
     image: {
-      maxCount: 1,
       optional: true
     }
   })

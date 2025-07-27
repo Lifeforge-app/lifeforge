@@ -1,13 +1,12 @@
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
 
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
 import StationCodes from '../../../components/StationCode'
 import { formatStationDisplay } from '../utils/stations'
+import type { RailwayMapStation } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 interface StationSelectorProps {
-  stations: IRailwayMapStation[]
-  filteredStations: IRailwayMapStation[]
+  stations: RailwayMapStation[]
+  filteredStations: RailwayMapStation[]
   value: string
   setValue: (value: string) => void
   setQuery: (query: string) => void

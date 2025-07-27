@@ -1,9 +1,9 @@
 import L from 'leaflet'
 
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+import type {
+  RailwayMapLine,
+  RailwayMapStation
+} from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 export const initializeMap = (element: HTMLDivElement): L.Map => {
   const map = L.map(element).setView([1.3521, 103.8198], 12)
@@ -19,7 +19,7 @@ export const initializeMap = (element: HTMLDivElement): L.Map => {
 
 export const renderLines = (
   map: L.Map,
-  filteredLines: IRailwayMapLine[],
+  filteredLines: RailwayMapLine[],
   polylineLayers: Record<string, L.Polyline>
 ) => {
   Object.keys(polylineLayers).forEach(id => {
@@ -46,9 +46,9 @@ export const renderLines = (
 
 export const getLineForStationCode = (
   code: string,
-  station: IRailwayMapStation,
-  lines: IRailwayMapLine[]
-): IRailwayMapLine | undefined => {
+  station: RailwayMapStation,
+  lines: RailwayMapLine[]
+): RailwayMapLine | undefined => {
   const targetLine = station.lines.find(line => {
     const lineData = lines.find(l => l.id === line)!
 
@@ -81,15 +81,15 @@ export const getLineForStationCode = (
 }
 
 export const createStationMarkerContent = (
-  station: IRailwayMapStation,
-  lines: IRailwayMapLine[]
+  station: RailwayMapStation,
+  lines: RailwayMapLine[]
 ): HTMLDivElement => {
   const stationHtml = document.createElement('div')
 
   stationHtml.className = 'rounded-md'
 
   if (station.codes.length > 0) {
-    station.codes.forEach((code, index) => {
+    station.codes.forEach((code: string, index: number) => {
       const stationCode = document.createElement('span')
 
       stationCode.className = `text-xs font-['LTAIdentityMedium'] font-semibold text-bg-100 bg-gray-800 px-2 py-0.5 ${
@@ -109,8 +109,8 @@ export const createStationMarkerContent = (
 
 export const renderStations = (
   map: L.Map,
-  filteredStations: IRailwayMapStation[],
-  lines: IRailwayMapLine[],
+  filteredStations: RailwayMapStation[],
+  lines: RailwayMapLine[],
   stationMarkers: Record<string, L.Marker>
 ) => {
   Object.keys(stationMarkers).forEach(id => {

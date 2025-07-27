@@ -61,6 +61,7 @@ function ModifyEntryModal({
     })
     .setupFields({
       list: {
+        multiple: false,
         required: true,
         label: 'Wishlist Name',
         icon: 'tabler:list',
@@ -91,6 +92,7 @@ function ModifyEntryModal({
       },
       image: {
         label: 'Product Image',
+        optional: true,
         icon: 'tabler:photo',
         onFileRemoved: () => {
           setFileRemoved(true)
@@ -123,8 +125,6 @@ function ModifyEntryModal({
 
       await mutation.mutateAsync(data)
     })
-
-  console.log(fileRemoved)
 
   return <FormModal {...formProps} />
 }

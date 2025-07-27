@@ -25,12 +25,25 @@ type ZodObjectOrIntersection =
 export type InferInput<T> = T extends {
   __isForgeController: true
   __input: infer I
+  __media: infer M
 }
-  ? I extends Record<string, ZodObjectOrIntersection>
+  ? I extends {
+      body?: infer B
+      query?: infer Q
+    }
     ? {
-        [K in keyof I]: I[K] extends ZodObjectOrIntersection
-          ? z.infer<I[K]>
-          : never
+        body: M extends null
+          ? B extends ZodObjectOrIntersection
+            ? z.infer<B>
+            : Record<string, any>
+          : (B extends ZodObjectOrIntersection
+              ? z.infer<B>
+              : Record<string, any>) & {
+              [K in keyof M]: M[K] extends { optional: true }
+                ? File | string | undefined
+                : File | string
+            }
+        query: Q extends ZodObjectOrIntersection ? z.infer<Q> : never
       }
     : never
   : never
@@ -58,12 +71,29 @@ export type InferOutput<T> = T extends {
  */
 export type InferClientControllerInput<
   T extends ForgeAPIClientController<any>
-> = T['__type'] extends { __isForgeController: true; __input: infer I }
-  ? I extends Record<string, ZodObjectOrIntersection>
+> = T['__type'] extends {
+  __isForgeController: true
+  __input: infer I
+  __media: infer M
+}
+  ? I extends {
+      body?: infer B
+      query?: infer Q
+    }
     ? {
-        [K in keyof I]: I[K] extends ZodObjectOrIntersection
-          ? z.infer<I[K]>
-          : never
+        body: M extends null
+          ? B extends ZodObjectOrIntersection
+            ? z.infer<B>
+            : Record<string, any>
+          : (B extends ZodObjectOrIntersection
+              ? z.infer<B>
+              : Record<string, any>) & {
+              [K in keyof M]: {
+                __type: 'media'
+                config: M[K]
+              }
+            }
+        query: Q extends ZodObjectOrIntersection ? z.infer<Q> : never
       }
     : never
   : never

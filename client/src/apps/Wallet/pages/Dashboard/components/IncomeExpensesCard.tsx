@@ -15,8 +15,8 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const incomeExpensesQuery = useQuery(
     forgeAPI.wallet.utils.getIncomeExpensesSummary
       .input({
-        year: new Date().getFullYear().toString(),
-        month: (new Date().getMonth() + 1).toString()
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1
       })
       .queryOptions()
   )

@@ -11,9 +11,11 @@ const list = forgeController.query
 
     const allBackups = await pb.backups.getFullList()
 
-    return allBackups.sort((a, b) =>
-      b.modified.localeCompare(a.modified)
-    ) as any
+    return allBackups.sort((a, b) => b.modified.localeCompare(a.modified)) as {
+      key: string
+      size: number
+      modified: string
+    }[]
   })
 
 const download = forgeController.query

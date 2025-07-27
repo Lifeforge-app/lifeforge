@@ -15,7 +15,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 interface IAuthData {
   auth: boolean
@@ -292,28 +291,10 @@ export default function AuthProvider({
           throw new Error('Invalid state')
         }
 
-        const session = await fetchAPI<
-          | string
-          | {
-              state: string
-              tid: string
-            }
-        >(
-          import.meta.env.VITE_API_HOST,
-          forgeAPI.user.oauth.verify.input({
-            body: {
-              code,
-              provider: storedProvider
-            }
-          }).endpoint,
-          {
-            method: 'POST',
-            body: {
-              code,
-              provider: storedProvider
-            }
-          }
-        )
+        const session = await forgeAPI.user.oauth.verify.mutate({
+          code,
+          provider: storedProvider
+        })
 
         if (typeof session !== 'string') {
           if (session.state !== '2fa_required') {

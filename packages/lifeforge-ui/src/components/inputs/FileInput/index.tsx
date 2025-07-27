@@ -129,7 +129,7 @@ function FileInput({
           />
         </div>
       )}
-      {(image === null || image === "removed") && (
+      {(image === null || image === 'removed') && (
         <div className="mt-6 flex flex-col items-center gap-3">
           <Button
             className="w-full"

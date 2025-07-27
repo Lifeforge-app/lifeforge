@@ -19,7 +19,7 @@ const UserPersonalizationContext = createContext<{
 async function syncUserData(data: Record<string, unknown>) {
   try {
     await forgeAPI.user.personalization.updatePersonalization.mutate({
-      data
+      data: data as any
     })
   } catch {
     toast.error('Failed to update personalization settings')
