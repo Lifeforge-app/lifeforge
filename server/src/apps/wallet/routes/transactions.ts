@@ -66,19 +66,8 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
   .omit({
     type: true,
     receipt: true,
-    amount: true,
     created: true,
     updated: true
-  })
-  .extend({
-    amount: z
-      .string()
-      .transform(val => {
-        const amount = parseFloat(val)
-
-        return isNaN(amount) ? 0 : amount
-      })
-      .or(z.number())
   })
   .and(
     z.union([
@@ -89,12 +78,7 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
           location_coords: true
         })
         .extend({
-          location: Location.optional().nullable(),
-          amount: z.string().transform(val => {
-            const amount = parseFloat(val)
-
-            return isNaN(amount) ? 0 : amount
-          })
+          location: Location.optional().nullable()
         }),
       SCHEMAS.wallet.transactions_transfer
         .omit({
