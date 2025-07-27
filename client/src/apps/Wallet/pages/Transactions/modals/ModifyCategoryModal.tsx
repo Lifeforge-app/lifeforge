@@ -1,108 +1,107 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { FormModal, defineForm } from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import type { WalletCategory } from '..'
+
 function ModifyCategoryModal({
   data: { type, initialData },
   onClose
 }: {
   data: {
-    type: 'income' | 'expenses' | 'update' | null
-    initialData: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated> | null | null
+    type: 'create' | 'update'
+    initialData?: Partial<WalletCategory>
   }
   onClose: () => void
 }) {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.wallet')
 
-  const [formState, setFormState] = useState<
-    WalletControllersSchemas.ICategories[
-      | 'createCategory'
-      | 'updateCategory']['body']
-  >({
-    type: 'income',
-    name: '',
-    icon: '',
-    color: ''
-  })
-
-  const FIELDS: IFieldProps<typeof formState>[] = [
-    {
-      id: 'type',
-      label: 'Category type',
-      icon: 'tabler:apps',
-      type: 'listbox',
-      disabled: type === 'update',
-      required: true,
-      options: [
-        {
-          value: 'income',
-          text: t('transactionTypes.income'),
-          icon: 'tabler:login-2',
-          color: 'green'
-        },
-        {
-          value: 'expenses',
-          text: t('transactionTypes.expenses'),
-          icon: 'tabler:logout',
-          color: 'red'
-        }
-      ]
-    },
-    {
-      id: 'name',
-      label: 'Category name',
-      required: true,
-      icon: 'tabler:pencil',
-      placeholder: 'My Categories',
-      type: 'text'
-    },
-    {
-      id: 'icon',
-      label: 'Category icon',
-      required: true,
-      type: 'icon'
-    },
-    {
-      id: 'color',
-      label: 'Category color',
-      required: true,
-      type: 'color'
-    }
-  ]
-
-  useEffect(() => {
-    if (type) {
-      if (type === 'update') {
-        if (initialData) {
-          setFormState({
-            type: initialData.type,
-            name: initialData.name,
-            icon: initialData.icon,
-            color: initialData.color
-          })
-        }
-      } else {
-        setFormState({
-          type: 'income',
-          name: '',
-          icon: '',
-          color: ''
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.wallet.categories.create
+      : forgeAPI.wallet.categories.update.input({
+          id: initialData!.id!
         })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
+      },
+      onError: error => {
+        toast.error(
+          `Failed to ${type === 'create' ? 'create' : 'update'} category: ${error.message}`
+        )
       }
-    }
-  }, [type, initialData])
-
-  return (
-    <FormModal
-      data={formState}
-      endpoint="wallet/categories"
-      fields={FIELDS}
-      icon={type === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-      id={initialData?.id}
-      namespace="apps.wallet"
-      openType={type === 'update' ? 'update' : 'create'}
-      queryKey={['wallet', 'categories']}
-      setData={setFormState}
-      title={`categories.${type === 'update' ? 'update' : 'create'}`}
-      onClose={onClose}
-    />
+    })
   )
+
+  const formProps = defineForm<
+    InferInput<
+      (typeof forgeAPI.wallet.categories)[typeof type extends 'update'
+        ? 'update'
+        : 'create']
+    >['body']
+  >()
+    .ui({
+      namespace: 'apps.wallet',
+      icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
+      title: `categories.${type === 'update' ? 'update' : 'create'}`,
+      submitButton: type === 'update' ? 'update' : 'create',
+      onClose
+    })
+    .typesMap({
+      type: 'listbox',
+      icon: 'icon',
+      name: 'text',
+      color: 'color'
+    })
+    .setupFields({
+      type: {
+        multiple: false,
+        required: true,
+        disabled: type === 'update',
+        label: t('categoryType'),
+        icon: 'tabler:apps',
+        options: [
+          {
+            value: 'income',
+            text: t('transactionTypes.income'),
+            icon: 'tabler:login-2',
+            color: 'green'
+          },
+          {
+            value: 'expenses',
+            text: t('transactionTypes.expenses'),
+            icon: 'tabler:logout',
+            color: 'red'
+          }
+        ]
+      },
+      name: {
+        required: true,
+        label: t('categoryName'),
+        icon: 'tabler:pencil',
+        placeholder: t('categoryNamePlaceholder')
+      },
+      icon: {
+        required: true,
+        label: t('categoryIcon')
+      },
+      color: {
+        required: true,
+        label: t('categoryColor')
+      }
+    })
+    .initialData(initialData)
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
+
+  return <FormModal {...formProps} />
 }
 
 export default ModifyCategoryModal
