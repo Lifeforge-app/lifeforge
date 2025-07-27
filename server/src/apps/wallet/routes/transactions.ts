@@ -1,9 +1,5 @@
 import parseOCR from '@functions/external/ocr'
 import { forgeController, forgeRouter } from '@functions/routes'
-import {
-  singleUploadMiddleware,
-  singleUploadMiddlewareOfKey
-} from '@middlewares/uploadMiddleware'
 import { SCHEMAS } from '@schema'
 import { Location } from '@typescript/location.types'
 import fs from 'fs'
@@ -108,12 +104,6 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
     ])
   )
 
-const UpdateTransactionInputSchema = CreateTransactionInputSchema.and(
-  z.object({
-    toRemoveReceipt: z.boolean().optional()
-  })
-)
-
 const create = forgeController.mutation
   .description('Create a new wallet transaction')
   .input({
@@ -135,28 +125,14 @@ const create = forgeController.mutation
   .callback(async ({ pb, body, media: { receipt: rawReceipt } }) => {
     const data = body as z.infer<typeof CreateTransactionInputSchema>
 
-    let receipt: File | undefined = undefined
-
-    if (rawReceipt)
-      rawReceipt.originalname = decodeURIComponent(rawReceipt.originalname)
-
-    const path = rawReceipt?.originalname.split('/') ?? []
-
-    const fileName = path.pop()
-
-    if (req.file?.originalname.endsWith('.pdf')) {
-      targetFile = await convertPDFToImage(req.file.path)
-    }
-
-    if (targetFile instanceof File) {
-      receipt = targetFile
-    } else if (targetFile && fs.existsSync(targetFile.path)) {
-      const fileBuffer = fs.readFileSync(targetFile.path)
-
-      receipt = new File([fileBuffer], fileName ?? 'receipt.jpg', {
-        type: targetFile.mimetype
-      })
-    }
+    const receipt =
+      rawReceipt && typeof rawReceipt !== 'string'
+        ? rawReceipt.originalname.endsWith('.pdf')
+          ? await convertPDFToImage(rawReceipt.path)
+          : new File([fs.readFileSync(rawReceipt.path)], 'receipt.jpg', {
+              type: rawReceipt.mimetype
+            })
+        : undefined
 
     const baseTransaction = await pb.create
       .collection('wallet__transactions')
@@ -203,9 +179,13 @@ const update = forgeController.mutation
     query: z.object({
       id: z.string()
     }),
-    body: UpdateTransactionInputSchema
+    body: CreateTransactionInputSchema
   })
-  .middlewares(singleUploadMiddlewareOfKey('receipt'))
+  .media({
+    receipt: {
+      optional: true
+    }
+  })
   .existenceCheck('query', {
     id: 'wallet__transactions'
   })
@@ -216,97 +196,84 @@ const update = forgeController.mutation
     to: '[wallet__assets]',
     ledger: '[wallet__ledgers]'
   })
-  .callback(async ({ pb, query: { id }, body, req }) => {
-    const data = body as z.infer<typeof UpdateTransactionInputSchema>
+  .callback(
+    async ({ pb, query: { id }, body, media: { receipt: rawReceipt } }) => {
+      const data = body as z.infer<typeof CreateTransactionInputSchema>
 
-    let targetFile: Express.Multer.File | File | undefined = req.file
-    let receipt: File | undefined = undefined
+      const receipt =
+        rawReceipt && typeof rawReceipt !== 'string'
+          ? rawReceipt.originalname.endsWith('.pdf')
+            ? await convertPDFToImage(rawReceipt.path)
+            : new File([fs.readFileSync(rawReceipt.path)], 'receipt.jpg', {
+                type: rawReceipt.mimetype
+              })
+          : undefined
 
-    if (!data.toRemoveReceipt) {
-      if (targetFile)
-        targetFile.originalname = decodeURIComponent(targetFile.originalname)
-
-      const path = req.file?.originalname.split('/') ?? []
-
-      const fileName = path.pop()
-
-      if (req.file?.originalname.endsWith('.pdf')) {
-        targetFile = await convertPDFToImage(req.file.path)
-      }
-
-      if (targetFile instanceof File) {
-        receipt = targetFile
-      } else if (targetFile && fs.existsSync(targetFile.path)) {
-        const fileBuffer = fs.readFileSync(targetFile.path)
-
-        receipt = new File([fileBuffer], fileName ?? 'receipt.jpg', {
-          type: targetFile.mimetype
+      const baseTransaction = await pb.update
+        .collection('wallet__transactions')
+        .id(id)
+        .data({
+          type: data.type === 'transfer' ? 'transfer' : 'income_expenses',
+          amount: data.amount,
+          date: data.date,
+          ...(rawReceipt !== 'keep' && {
+            receipt: rawReceipt === 'removed' ? null : receipt
+          })
         })
+        .execute()
+
+      if (data.type === 'transfer') {
+        const target = await pb.getFirstListItem
+          .collection('wallet__transactions_transfer')
+          .filter([
+            {
+              field: 'base_transaction',
+              operator: '=',
+              value: id
+            }
+          ])
+          .execute()
+
+        await pb.update
+          .collection('wallet__transactions_transfer')
+          .id(target.id)
+          .data({
+            from: data.from,
+            to: data.to,
+            base_transaction: baseTransaction.id
+          })
+          .execute()
+      } else {
+        const target = await pb.getFirstListItem
+          .collection('wallet__transactions_income_expenses')
+          .filter([
+            {
+              field: 'base_transaction',
+              operator: '=',
+              value: id
+            }
+          ])
+          .execute()
+
+        await pb.update
+          .collection('wallet__transactions_income_expenses')
+          .id(target.id)
+          .data({
+            type: data.type,
+            particulars: data.particulars,
+            asset: data.asset,
+            category: data.category,
+            ledgers: data.ledgers,
+            location_name: data.location?.name ?? '',
+            location_coords: {
+              lon: data.location?.location.longitude ?? 0,
+              lat: data.location?.location.latitude ?? 0
+            }
+          })
+          .execute()
       }
     }
-
-    const baseTransaction = await pb.update
-      .collection('wallet__transactions')
-      .id(id)
-      .data({
-        type: data.type === 'transfer' ? 'transfer' : 'income_expenses',
-        amount: data.amount,
-        date: data.date,
-        ...(!data.toRemoveReceipt && { receipt })
-      })
-      .execute()
-
-    if (data.type === 'transfer') {
-      const target = await pb.getFirstListItem
-        .collection('wallet__transactions_transfer')
-        .filter([
-          {
-            field: 'base_transaction',
-            operator: '=',
-            value: id
-          }
-        ])
-        .execute()
-
-      await pb.update
-        .collection('wallet__transactions_transfer')
-        .id(target.id)
-        .data({
-          from: data.from,
-          to: data.to,
-          base_transaction: baseTransaction.id
-        })
-        .execute()
-    } else {
-      const target = await pb.getFirstListItem
-        .collection('wallet__transactions_income_expenses')
-        .filter([
-          {
-            field: 'base_transaction',
-            operator: '=',
-            value: id
-          }
-        ])
-        .execute()
-
-      await pb.update
-        .collection('wallet__transactions_income_expenses')
-        .id(target.id)
-        .data({
-          type: data.type,
-          particulars: data.particulars,
-          asset: data.asset,
-          category: data.category,
-          ledgers: data.ledgers,
-          location_name: data.location?.name ?? '',
-          location_coords: {
-            lon: data.location?.location.longitude ?? 0,
-            lat: data.location?.location.latitude ?? 0
-          }
-        })
-        .execute()
-    }
-  })
+  )
 
 const remove = forgeController.mutation
   .description('Delete a wallet transaction')
