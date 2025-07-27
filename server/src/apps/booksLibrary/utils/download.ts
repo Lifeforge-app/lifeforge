@@ -20,6 +20,7 @@ export const processDownloadedFiles = async (
     | 'created'
     | 'updated'
     | 'collection'
+    | 'md5'
   > & {
     thumbnail: string | File
     file?: File

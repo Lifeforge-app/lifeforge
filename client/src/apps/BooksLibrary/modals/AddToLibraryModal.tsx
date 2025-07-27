@@ -16,8 +16,6 @@ function AddToLibraryModal({
     book: Record<string, any>
   }
 }) {
-  const md5 = book.md5 || null
-
   const {
     collectionsQuery,
     languagesQuery,
@@ -26,22 +24,26 @@ function AddToLibraryModal({
 
   const fetchedDataQuery = useQuery(
     forgeAPI.booksLibrary.libgen.getLocalLibraryData
-      .input({ md5, provider })
+      .input({ md5: book.md5, provider })
       .queryOptions({
-        enabled: Boolean(md5)
+        enabled: Boolean(book.md5) && provider === 'libgen.is'
       })
   )
 
   const mutation = useMutation(
-    forgeAPI.booksLibrary.libgen.addToLibrary.mutationOptions({
-      onSuccess: taskId => {
-        addToProcesses(taskId)
-        toast.success('Book added to download queue')
-      },
-      onError: () => {
-        toast.error('Failed to add book to download queue')
-      }
-    })
+    forgeAPI.booksLibrary.libgen.addToLibrary
+      .input({
+        md5: book.md5
+      })
+      .mutationOptions({
+        onSuccess: taskId => {
+          addToProcesses(taskId)
+          toast.success('Book added to download queue')
+        },
+        onError: () => {
+          toast.error('Failed to add book to download queue')
+        }
+      })
   )
 
   const formProps = defineForm<
@@ -59,7 +61,6 @@ function AddToLibraryModal({
       onClose
     })
     .typesMap({
-      md5: 'text',
       isbn: 'text',
       thumbnail: 'text',
       collection: 'listbox',
@@ -73,12 +74,6 @@ function AddToLibraryModal({
       size: 'number'
     })
     .setupFields({
-      md5: {
-        label: 'MD5',
-        icon: 'tabler:id',
-        placeholder: 'MD5 Hash of the file',
-        disabled: true
-      },
       isbn: {
         label: 'ISBN',
         icon: 'tabler:barcode',
@@ -168,7 +163,6 @@ function AddToLibraryModal({
             collection: ''
           }
         : {
-            md5: book.md5 || '',
             isbn: book.ISBN || '',
             collection: '',
             title: book.Title || '',
