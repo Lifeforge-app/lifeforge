@@ -7,11 +7,11 @@ import AddToLibraryButton from './AddToLibraryButton'
 
 function SearchResultItem({
   book,
-  isLibgenIS,
+  provider,
   setViewDetailsFor
 }: {
   book: Record<string, any>
-  isLibgenIS: boolean
+  provider: string
   setViewDetailsFor: (id: string) => void
 }) {
   return (
@@ -74,7 +74,7 @@ function SearchResultItem({
         </div>
         <div className="flex flex-1 items-end justify-end">
           <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-3">
-            {isLibgenIS && (
+            {provider === 'libgen.is' && (
               <Button
                 className="w-full lg:w-1/2!"
                 icon="tabler:eye"
@@ -87,7 +87,7 @@ function SearchResultItem({
                 View Details
               </Button>
             )}
-            <AddToLibraryButton fullWidth book={book} isLibgenIS={isLibgenIS} />
+            <AddToLibraryButton fullWidth book={book} provider={provider} />
           </div>
         </div>
       </div>

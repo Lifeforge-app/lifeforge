@@ -83,11 +83,11 @@ type DateFieldProps = BaseFieldProps & {
 
 type ListboxFieldProps<
   TOption = any,
-  TMultiple extends boolean = false
+  TMultiple extends boolean = boolean
 > = BaseFieldProps & {
   type: 'listbox'
   icon: string
-  multiple?: TMultiple | unknown
+  multiple: TMultiple
   options: Array<{
     value: TOption
     text: string
@@ -158,13 +158,13 @@ type MatchFieldByFormDataType<T> = Extract<
   { __finalDataType: T }
 >
 
+type MatchFieldByType<TType> = Extract<FormFieldPropsUnion, { type: TType }>
+
 // Find props by field type (for customization/override)
 type MatchFieldByFieldType<TField> = TField extends {
   type: infer FieldType
 }
-  ? FieldType extends FormFieldPropsUnion['type']
-    ? Extract<FormFieldPropsUnion, { type: FieldType }>
-    : never
+  ? MatchFieldByType<FieldType>
   : never
 
 // Single field inference
@@ -190,25 +190,36 @@ type FieldsConfig<
 > = Partial<{
   [K in keyof TFormState]: DistributiveOmit<
     TFieldType[K] extends 'listbox'
-      ? ListboxFieldProps<TFormState[K]>
+      ? ListboxFieldProps<
+          TFormState[K] extends Array<infer TOption> ? TOption : TFormState[K]
+        >
       : FormFieldTypeMap[TFieldType[K]],
     '__formDataType' | '__finalDataType' | 'type'
   > &
     BaseFieldProps
 }>
 
+type InferListboxOptions<TOption> = TOption extends {
+  value: infer TValue
+  text: string
+}
+  ? TValue
+  : never
+
 // Infer form state type from fields
-type InferFormState<TFields> = {
-  [K in keyof TFields]: TFields[K] extends { type: infer TFieldType }
-    ? TFieldType extends FormFieldPropsUnion['type']
-      ? TFieldType extends 'listbox'
-        ? TFields[K] extends { options: Array<infer TOption> }
-          ? TOption extends { value: infer TValue; text: string }
-            ? TValue
-            : never
-          : never
-        : MatchFieldByFieldType<TFields[K]>['__formDataType']
-      : never
+type InferFormState<TFieldTypes, TFields> = {
+  [K in keyof TFieldTypes]: TFieldTypes[K] extends infer TFieldType
+    ? TFieldType extends 'listbox'
+      ? TFields[K extends keyof TFields ? K : never] extends {
+          options: Array<infer TOption>
+        }
+        ? TFields[K extends keyof TFields ? K : never] extends {
+            multiple: true
+          }
+          ? InferListboxOptions<TOption>[]
+          : InferListboxOptions<TOption>
+        : never
+      : MatchFieldByType<TFieldType>['__formDataType']
     : never
 }
 
@@ -216,23 +227,22 @@ type InferFormState<TFields> = {
 type InferListBoxDataType<TField> = TField extends {
   options: Array<infer TOption>
 }
-  ? TOption extends { value: infer TValue }
-    ? TField extends { multiple: true }
-      ? TValue[]
-      : TField extends { required: true }
-        ? TValue
-        : TValue | undefined
-    : never
+  ? TField extends { multiple: true }
+    ? InferListboxOptions<TOption>[]
+    : TField extends { required: true }
+      ? InferListboxOptions<TOption>
+      : InferListboxOptions<TOption> | undefined
   : never
 
-type InferFormFinalState<TFieldProps extends FieldsConfig<any, any>> = {
-  [key in keyof TFieldProps]: TFieldProps[key] extends {
-    type: infer TFieldType
-  }
+type InferFormFinalState<
+  TFieldTypes,
+  TFieldProps extends FieldsConfig<any, any>
+> = {
+  [key in keyof TFieldTypes]: TFieldTypes[key] extends infer TFieldType
     ? TFieldType extends FormFieldPropsUnion['type']
       ? TFieldType extends 'listbox'
         ? InferListBoxDataType<TFieldProps[key]>
-        : MatchFieldByFieldType<TFieldProps[key]>['__finalDataType']
+        : MatchFieldByType<TFieldType>['__finalDataType']
       : never
     : never
 }

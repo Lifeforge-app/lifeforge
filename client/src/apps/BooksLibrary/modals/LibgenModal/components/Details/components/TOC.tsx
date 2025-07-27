@@ -1,4 +1,4 @@
-import { BookDetailProps } from '..'
+import type { BookDetailProps } from '..'
 
 function TOC({ data }: { data: BookDetailProps }) {
   return (

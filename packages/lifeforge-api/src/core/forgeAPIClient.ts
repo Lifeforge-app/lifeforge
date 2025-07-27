@@ -104,7 +104,7 @@ export class ForgeAPIClientController<
    */
   mutationOptions(
     options: Omit<
-      UseMutationOptions<any, any, any>,
+      UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']>,
       'mutationKey' | 'mutationFn'
     > = {}
   ): UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']> {
@@ -124,9 +124,15 @@ export class ForgeAPIClientController<
    * Triggers a GET request to the current endpoint.
    * @returns Promise resolving to the API response
    */
-  query() {
+  query(options?: {
+    method?: string
+    timeout?: number
+    raiseError?: boolean
+    isExternal?: boolean
+  }) {
     return fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
-      method: 'GET'
+      method: 'GET',
+      ...options
     })
   }
 

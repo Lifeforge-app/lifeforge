@@ -24,12 +24,13 @@ const update = forgeController.mutation
     body: SCHEMAS.books_library.entries.pick({
       title: true,
       authors: true,
-      collection: true,
       edition: true,
       languages: true,
       isbn: true,
       publisher: true,
       year_published: true
+    }).extend({
+      collection: z.string().optional()
     })
   })
   .description('Update an existing entry in the books library')

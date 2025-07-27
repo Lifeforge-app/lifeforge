@@ -21,7 +21,12 @@ const generateBoard = forgeController.query
     })
   })
   .callback(async ({ query: { difficulty, count } }) => {
-    const boards: any[] = []
+    const boards: {
+      id: number
+      mission: string
+      solution: string
+      win_rate: number
+    }[] = []
 
     for (let i = 0; i < count; i++) {
       await fetch(`https://sudoku.com/api/v2/level/${difficulty}`, {

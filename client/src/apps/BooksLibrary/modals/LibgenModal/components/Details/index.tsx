@@ -1,3 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import { GoBackButton, QueryWrapper } from 'lifeforge-ui'
 import { useAPIQuery } from 'shared'
 
@@ -6,21 +9,29 @@ import DataTable from './components/DataTable'
 import TOC from './components/TOC'
 import ThumbnailAndHashes from './components/ThumbnailAndHashes'
 
-export interface BookDetailProps {
-  image: string
-  hashes: Record<string, string>
-  title: string
-  'Author(s)'?: string
-  toc?: string
-  descriptions?: string
-  [key: string]: any
-}
+export type BookDetailProps = InferOutput<
+  typeof forgeAPI.booksLibrary.libgen.getBookDetails
+>
 
-function Details({ id, onClose }: { id: string; onClose: () => void }) {
-  const booksQuery = useAPIQuery<BookDetailProps>(
-    `books-library/libgen/details/${id}`,
-    ['books-library', 'libgen', 'details', id],
-    Boolean(id)
+function Details({
+  md5,
+  onClose,
+  provider
+}: {
+  md5: string
+  onClose: () => void
+  provider: string
+}) {
+  const booksQuery = useQuery(
+    forgeAPI.booksLibrary.libgen.getBookDetails.input({ md5 }).queryOptions({
+      enabled: Boolean(md5)
+    })
+  )
+
+  useAPIQuery<BookDetailProps>(
+    `books-library/libgen/details/${md5}`,
+    ['books-library', 'libgen', 'details', md5],
+    Boolean(md5)
   )
 
   return (
@@ -53,7 +64,7 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
                         ))}
                     </div>
                   </div>
-                  <AddToLibraryButton book={data} />
+                  <AddToLibraryButton book={data} provider={provider} />
                 </div>
                 <DataTable data={data} />
                 <TOC data={data} />

@@ -10,7 +10,7 @@ interface LibgenSearchResult {
   provider: string
   query: string
   resultsCount: string
-  data: Record<string, any>
+  data: Record<string, any>[]
   page: number
 }
 

@@ -1,13 +1,9 @@
-import {
-  Button,
-  EmptyStateScreen,
-  LoadingScreen,
-  TextInput
-} from 'lifeforge-ui'
-import { useCallback, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { Button, EmptyStateScreen, QueryWrapper, TextInput } from 'lifeforge-ui'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 function ContentContainer({
   bookId,
@@ -18,7 +14,11 @@ function ContentContainer({
 }) {
   const { t } = useTranslation('apps.booksLibrary')
 
-  const [enabled, setEnabled] = useState<boolean | 'loading'>('loading')
+  const enabledQuery = useQuery(
+    forgeAPI.apiKeys.entries.checkKeys
+      .input({ keys: 'smtp-user,smtp-pass' })
+      .queryOptions()
+  )
 
   const [kindleEmail, setKindleEmail] = useState('')
 
@@ -28,14 +28,13 @@ function ContentContainer({
     setLoading(true)
 
     try {
-      fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `books-library/entries/send-to-kindle/${bookId}`,
-        {
-          method: 'POST',
-          body: { target: kindleEmail }
-        }
-      )
+      await forgeAPI.booksLibrary.entries.sendToKindle
+        .input({
+          id: bookId
+        })
+        .mutate({
+          target: kindleEmail
+        })
 
       toast.info(t('kindleSent', { email: kindleEmail }))
       onClose()
@@ -47,71 +46,52 @@ function ContentContainer({
     }
   }, [kindleEmail])
 
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && kindleEmail) {
-        handleSubmit()
-      }
-    },
-    [kindleEmail, handleSubmit]
-  )
-
-  useEffect(() => {
-    fetchAPI<boolean>(
-      import.meta.env.VITE_API_HOST,
-      'api-keys/entries/check?keys=smtp-user,smtp-pass'
-    )
-      .then(isEnabled => {
-        setEnabled(isEnabled)
-      })
-      .catch(() => {
-        setEnabled(false)
-        toast.error('Failed to check SMTP API keys.')
-      })
-  }, [])
-
-  if (enabled === 'loading') {
-    return <LoadingScreen customMessage={t('checkingKeys')} />
-  }
-
-  if (!enabled) {
-    return (
-      <div className="py-8">
-        <EmptyStateScreen
-          icon="tabler:send-off"
-          name="noSMTPKeys"
-          namespace="apps.booksLibrary"
-        />
-      </div>
-    )
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && kindleEmail) {
+      handleSubmit()
+    }
   }
 
   return (
-    <div className="space-y-4">
-      <TextInput
-        darker
-        required
-        icon="tabler:mail"
-        inputMode="email"
-        name="Kindle Email"
-        namespace="apps.booksLibrary"
-        placeholder="johndoe@kindle.com"
-        setValue={setKindleEmail}
-        value={kindleEmail}
-        onKeyDown={handleKeyDown}
-      />
-      <Button
-        iconAtEnd
-        className="w-full"
-        disabled={!kindleEmail.match(/^[\w-.]+@kindle\.com$/)}
-        icon="tabler:send"
-        loading={loading}
-        namespace="apps.booksLibrary"
-        onClick={handleSubmit}
-      >
-        Send to Kindle
-      </Button>
-    </div>
+    <QueryWrapper query={enabledQuery}>
+      {enabled =>
+        enabled ? (
+          <div className="space-y-4">
+            <TextInput
+              darker
+              required
+              icon="tabler:mail"
+              inputMode="email"
+              name="Kindle Email"
+              namespace="apps.booksLibrary"
+              placeholder="johndoe@kindle.com"
+              setValue={setKindleEmail}
+              value={kindleEmail}
+              onKeyDown={handleKeyDown}
+            />
+            <Button
+              iconAtEnd
+              className="w-full"
+              disabled={!kindleEmail.match(/^[\w-.]+@kindle\.com$/)}
+              icon="tabler:send"
+              loading={loading}
+              namespace="apps.booksLibrary"
+              onClick={handleSubmit}
+            >
+              Send to Kindle
+            </Button>
+          </div>
+        ) : (
+          <div className="py-8">
+            <EmptyStateScreen
+              icon="tabler:send-off"
+              name="noSMTPKeys"
+              namespace="apps.booksLibrary"
+            />
+          </div>
+        )
+      }
+    </QueryWrapper>
   )
 }
 
