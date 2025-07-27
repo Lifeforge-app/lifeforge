@@ -1,12 +1,13 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   EmptyStateScreen,
-  LoadingScreen,
   ModalHeader,
+  QueryWrapper,
   SearchInput
 } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
@@ -18,39 +19,20 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
   const [searchQuery, setSearchQuery] = useState('')
 
-  const [searchLoading, setSearchLoading] = useState(false)
+  const [queryToSearch, setQueryToSearch] = useState('')
 
   const [page, setPage] = useState(1)
 
-  const [searchResults, setSearchResults] = useState<
-    MoviesControllersSchemas.ITmdb['searchMovies']['response'] | null
-  >(null)
-
-  async function searchTMDB(page: number = 1) {
-    if (searchQuery.trim() === '') {
-      toast.error('Please enter a search query!')
-
-      return
-    }
-
-    setSearchResults(null)
-    setSearchLoading(true)
-
-    try {
-      const data = await fetchAPI<
-        MoviesControllersSchemas.ITmdb['searchMovies']['response']
-      >(
-        import.meta.env.VITE_API_HOST,
-        `movies/tmdb/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
-      )
-
-      setSearchResults(data)
-    } catch {
-      toast.error('An error occurred while searching for movies!')
-    } finally {
-      setSearchLoading(false)
-    }
-  }
+  const searchResultsQuery = useQuery(
+    forgeAPI.movies.tmdb.search
+      .input({
+        q: queryToSearch,
+        page
+      })
+      .queryOptions({
+        enabled: !!queryToSearch
+      })
+  )
 
   async function addToLibrary(id: number) {
     try {
@@ -62,35 +44,35 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
         queryKey: ['movies', 'entries', 'unwatched']
       })
 
-      setSearchResults(prevResults => {
-        if (!prevResults) return null
+      queryClient.setQueryData(
+        forgeAPI.movies.tmdb.search.input({
+          q: queryToSearch,
+          page
+        }).key,
+        (prevResults: any) => {
+          if (!prevResults) return null
 
-        return {
-          ...prevResults,
-          results: prevResults.results.map(entry => {
-            if (entry.id === id) {
-              return {
-                ...entry,
-                existed: true
+          return {
+            ...prevResults,
+            results: prevResults.results.map((entry: any) => {
+              if (entry.id === id) {
+                return {
+                  ...entry,
+                  existed: true
+                }
               }
-            }
 
-            return entry
-          })
+              return entry
+            })
+          }
         }
-      })
+      )
 
       toast.success('Movie added to library!')
     } catch {
       toast.error('An error occurred while adding the movie to your library!')
     }
   }
-
-  useEffect(() => {
-    setSearchQuery('')
-    setSearchResults(null)
-    setPage(1)
-  }, [])
 
   return (
     <div className="min-w-[70vw]">
@@ -124,7 +106,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
             if (e.key === 'Enter') {
               if (searchQuery.trim() !== '') {
                 setPage(1)
-                searchTMDB(1)
+                setQueryToSearch(searchQuery.trim())
               }
             }
           }}
@@ -134,49 +116,42 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
           className="w-full sm:w-auto"
           disabled={searchQuery.trim() === ''}
           icon="tabler:arrow-right"
-          loading={searchLoading}
+          loading={searchResultsQuery.isLoading}
           onClick={() => {
             setPage(1)
-            searchTMDB(1)
+            setQueryToSearch(searchQuery.trim())
           }}
         >
           search
         </Button>
       </div>
-      <div className="mt-6 w-full">
-        {(() => {
-          if (searchLoading) {
-            return (
-              <div className="h-96">
-                <LoadingScreen />
-              </div>
-            )
-          }
+      <div className="mt-6">
+        <QueryWrapper query={searchResultsQuery}>
+          {searchResults => {
+            if (searchResults.total_results === 0) {
+              return (
+                <div className="h-96">
+                  <EmptyStateScreen
+                    icon={<img alt="TMDB" className="h-24" src={TMDBLogo} />}
+                    name="tmdb"
+                    namespace="apps.movies"
+                  />
+                </div>
+              )
+            }
 
-          if (searchResults === null) {
             return (
-              <div className="h-96">
-                <EmptyStateScreen
-                  icon={<img alt="TMDB" className="h-24" src={TMDBLogo} />}
-                  name="tmdb"
-                  namespace="apps.movies"
-                />
-              </div>
+              <TMDBResultsList
+                page={page}
+                results={searchResults}
+                setPage={(page: number) => {
+                  setPage(page)
+                }}
+                onAddToLibrary={addToLibrary}
+              />
             )
-          }
-
-          return (
-            <TMDBResultsList
-              page={page}
-              results={searchResults}
-              setPage={(page: number) => {
-                setPage(page)
-                searchTMDB(page)
-              }}
-              onAddToLibrary={addToLibrary}
-            />
-          )
-        })()}
+          }}
+        </QueryWrapper>
       </div>
     </div>
   )

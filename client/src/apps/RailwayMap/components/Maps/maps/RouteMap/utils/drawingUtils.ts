@@ -261,7 +261,7 @@ export const drawLines = (
 
     line.map_paths.forEach((pathGroups: string[]) => {
       const path = roundedPolygon(
-        pathGroups.map(p => ({ x: p[0], y: p[1] })),
+        pathGroups.map(p => ({ x: parseInt(p[0]), y: parseInt(p[1]) })),
         5
       )
 

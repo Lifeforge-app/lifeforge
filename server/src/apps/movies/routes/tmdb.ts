@@ -2,6 +2,24 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
+interface TMDBSearchResult {
+  adult: boolean
+  backdrop_path: string
+  genre_ids: number[]
+  existed: boolean
+  id: number
+  original_language: string
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string
+  release_date: string
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
+}
+
 const search = forgeController.query
   .description('Search movies using TMDB API')
   .input({
@@ -49,7 +67,12 @@ const search = forgeController.query
       entry.existed = allIds.some(e => e.tmdb_id === entry.id)
     })
 
-    return response
+    return response as {
+      page: number
+      results: TMDBSearchResult[]
+      total_pages: number
+      total_results: number
+    }
   })
 
 export default forgeRouter({ search })
