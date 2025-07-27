@@ -1,6 +1,7 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { SCHEMAS } from '@schema'
+import fs from 'fs'
 import multer from 'multer'
 import { z } from 'zod/v4'
 
@@ -121,9 +122,13 @@ const create = forgeController.mutation
                 'Image file is required for image type ideas'
               )
             }
-            data['image'] = new File([file.buffer], file.originalname, {
-              type: file.mimetype
-            })
+            data['image'] = new File(
+              [fs.readFileSync(file.path)],
+              file.originalname,
+              {
+                type: file.mimetype
+              }
+            )
             data['title'] = title
           }
           break

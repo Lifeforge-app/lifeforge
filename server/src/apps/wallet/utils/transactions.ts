@@ -62,13 +62,14 @@ export function convertPDFToImage(path: string): Promise<File | undefined> {
             return
           }
 
-          const thumbnailFile = new File(
-            [responseBuffer.buffer],
-            `receipt.png`,
-            {
-              type: 'image/png'
-            }
+          const arrayBuffer = responseBuffer.buffer.slice(
+            responseBuffer.buffer.byteOffset,
+            responseBuffer.buffer.byteOffset + responseBuffer.buffer.byteLength
           )
+
+          const thumbnailFile = new File([arrayBuffer], `receipt.png`, {
+            type: 'image/png'
+          })
 
           resolve(thumbnailFile)
 

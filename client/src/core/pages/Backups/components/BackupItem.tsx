@@ -59,7 +59,14 @@ function BackupItem({
       return
     }
 
-    const blob = new Blob([buffer], { type: 'application/zip' })
+    const arrayBuffer = buffer.buffer.slice(
+      buffer.byteOffset,
+      buffer.byteOffset + buffer.byteLength
+    )
+
+    const blob = new Blob([arrayBuffer as BlobPart], {
+      type: 'application/zip'
+    })
 
     const url = URL.createObjectURL(blob)
 

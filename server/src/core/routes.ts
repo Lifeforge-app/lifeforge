@@ -132,26 +132,6 @@ const appRoutes = forgeRouter({
 
 router.use('/', registerRoutes(appRoutes))
 
-type JoinPath<P extends string, K extends string> = P extends ''
-  ? K
-  : `${P}.${K}`
-
-type FlatRouteMap<T, P extends string = ''> = T extends {
-  __isForgeController: true
-}
-  ? [[P, T]]
-  : T extends object
-    ? {
-        [K in keyof T]: FlatRouteMap<T[K], JoinPath<P, Extract<K, string>>>
-      }[keyof T]
-    : never
-
-type TupleUnionToObj<U extends [string, any][]> = {
-  [K in U[number][0]]: Extract<U[number], [K, any]>[1]
-}
-
-export type FlatControllers = TupleUnionToObj<FlatRouteMap<typeof appRoutes>>
-
 export type Router = typeof appRoutes
 
 export default router
