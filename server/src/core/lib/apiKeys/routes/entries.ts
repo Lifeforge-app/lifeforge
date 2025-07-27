@@ -46,7 +46,7 @@ const checkKeys = forgeController.query
       .every(key => allEntries.some(entry => entry.keyId === key))
   })
 
-const getEntryById = forgeController.query
+const decrypt = forgeController.query
   .description('Get API key entry by ID')
   .input({
     query: z.object({
@@ -175,7 +175,7 @@ const remove = forgeController.mutation
 export default forgeRouter({
   list,
   checkKeys,
-  getEntryById,
+  decrypt,
   create,
   update,
   remove

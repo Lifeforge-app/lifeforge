@@ -1,6 +1,5 @@
 export {
   createForgeAPIClient,
-  createFlatForgeAPIClient,
   ForgeAPIClientController
 } from './core/forgeAPIClient'
 
