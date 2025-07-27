@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { CURRENCIES } from '../constants/currencies'
-import { Currency } from '../interfaces/currency_converter_interfaces'
+import type { Currency } from '../interfaces/currency_converter_interfaces'
 
 export function useCurrencies() {
   const [fromQuery, setFromQuery] = useState<string>('')

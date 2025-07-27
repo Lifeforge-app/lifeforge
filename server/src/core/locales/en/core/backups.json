@@ -15,7 +15,7 @@
   },
   "inputs": {
     "backupName": {
-      "label": "Backup Name",
+      "label": "Backup Name (must end with .zip)",
       "placeholder": "Enter Backup Name (leave empty to autogenerate)"
     }
   },

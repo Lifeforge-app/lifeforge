@@ -15,7 +15,7 @@
   },
   "inputs": {
     "backupName": {
-      "label": "備份名稱",
+      "label": "備份名稱（必須以 .zip 結尾）",
       "placeholder": "輸入備份名稱（留空以自動生成）"
     }
   },
