@@ -73,6 +73,7 @@ function ModifyModal({
     .onSubmit(async data => {
       await mutation.mutateAsync(data)
     })
+    .build()
 
   return <FormModal {...formProps} />
 }

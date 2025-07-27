@@ -39,8 +39,8 @@ export function joinObjectsRecursively(
  * hasFile({ avatar: fileObj, name: "Alice" }) // true
  * hasFile({ name: "Bob" }) // false
  */
-export const hasFile = (data: Record<string, any>): boolean =>
-  Object.values(data).some(value => value instanceof File)
+export const hasFile = (data: Record<string, any> | undefined): boolean =>
+  data ? Object.values(data).some(value => value instanceof File) : false
 
 /**
  * Converts a flat object to FormData, auto-handling:
@@ -56,7 +56,9 @@ export const hasFile = (data: Record<string, any>): boolean =>
  * @example
  * getFormData({ file, meta: { type: 'image' }, name: 'myfile' })
  */
-export function getFormData(data: Record<string, any>): FormData {
+export function getFormData(data: Record<string, any> | undefined): FormData {
+  if (!data) return new FormData()
+
   const formData = new FormData()
 
   const fileEntries: Record<string, File> = {}

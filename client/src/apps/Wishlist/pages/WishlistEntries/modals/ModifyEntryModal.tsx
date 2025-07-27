@@ -124,7 +124,7 @@ function ModifyEntryModal({
       }
 
       await mutation.mutateAsync(data)
-    })
+    }).build()
 
   return <FormModal {...formProps} />
 }

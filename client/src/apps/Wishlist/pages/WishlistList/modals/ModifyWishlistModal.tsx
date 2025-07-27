@@ -78,6 +78,7 @@ function ModifyWishlistListModal({
     .onSubmit(async data => {
       await mutation.mutateAsync(data)
     })
+    .build()
 
   return <FormModal {...formProps} />
 }

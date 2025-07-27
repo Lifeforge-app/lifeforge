@@ -116,6 +116,8 @@ type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps & {
   icon: string
   optional: TOptional
   onFileRemoved?: () => void
+  enablePixabay?: boolean
+  enableUrl?: boolean
   enableAIImageGeneration?: boolean
   defaultImageGenerationPrompt?: string
   __formDataType: FileData

@@ -86,10 +86,9 @@ const create = forgeController.mutation
 
         imageFile = new File([buffer], 'image.jpg')
       } else {
-        const fileBuffer = fs.readFileSync(image[0].path)
+        const fileBuffer = fs.readFileSync(image.path)
 
-        imageFile = new File([fileBuffer], image[0].originalname)
-        fs.unlinkSync(image[0].path)
+        imageFile = new File([fileBuffer], image.originalname)
       }
     }
 
@@ -145,10 +144,9 @@ const update = forgeController.mutation
 
           finalFile = new File([buffer], 'image.jpg')
         } else {
-          const fileBuffer = fs.readFileSync(image[0].path)
+          const fileBuffer = fs.readFileSync(image.path)
 
-          finalFile = new File([fileBuffer], image[0].originalname)
-          fs.unlinkSync(image[0].path)
+          finalFile = new File([fileBuffer], image.originalname)
         }
       }
 

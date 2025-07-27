@@ -109,7 +109,6 @@ const appRoutes = forgeRouter({
   scoresLibrary: (await import('../apps/scoresLibrary')).default,
   passwords: (await import('../apps/passwords')).default,
   sudoku: (await import('../apps/sudoku')).default,
-  virtualWardrobe: (await import('../apps/virtualWardrobe')).default,
   momentVault: (await import('../apps/momentVault')).default,
   movies: (await import('../apps/movies')).default,
   railwayMap: (await import('../apps/railwayMap')).default,
@@ -132,6 +131,26 @@ const appRoutes = forgeRouter({
 })
 
 router.use('/', registerRoutes(appRoutes))
+
+type JoinPath<P extends string, K extends string> = P extends ''
+  ? K
+  : `${P}.${K}`
+
+type FlatRouteMap<T, P extends string = ''> = T extends {
+  __isForgeController: true
+}
+  ? [[P, T]]
+  : T extends object
+    ? {
+        [K in keyof T]: FlatRouteMap<T[K], JoinPath<P, Extract<K, string>>>
+      }[keyof T]
+    : never
+
+type TupleUnionToObj<U extends [string, any][]> = {
+  [K in U[number][0]]: Extract<U[number], [K, any]>[1]
+}
+
+export type FlatControllers = TupleUnionToObj<FlatRouteMap<typeof appRoutes>>
 
 export type Router = typeof appRoutes
 
