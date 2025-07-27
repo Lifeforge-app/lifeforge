@@ -33,7 +33,7 @@ export type FileData = {
 
 /** --------- Field Props Definitions ----------- */
 
-type BaseFieldProps = {
+export type BaseFieldProps = {
   label: string
   hidden?: boolean
   required?: boolean

@@ -1,9 +1,23 @@
 import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 import type { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
 
 import Index from './index'
 import FormModal from './index'
-import defineForm from './utils/defineForm'
+import defineForm from './utils/FormBuilder'
+
+type CuteForm = {
+  title: string
+  price: number
+  choice: (
+    | 'option1'
+    | 'option2'
+    | 'option3'
+    | 'option4'
+    | 'option5'
+    | 'option6'
+  )[]
+}
 
 const meta = {
   component: Index
@@ -24,18 +38,13 @@ export const Default: Story = {
     }
   } as never,
   render: () => {
-    const formProps = defineForm<{
-      title: string
-      price: number
-      choice: (
-        | 'option1'
-        | 'option2'
-        | 'option3'
-        | 'option4'
-        | 'option5'
-        | 'option6'
-      )[]
-    }>()
+    const [formData, setFormData] = useState<CuteForm>({
+      title: '',
+      price: 0,
+      choice: []
+    })
+
+    const formProps = defineForm<CuteForm>()
       .ui({
         icon: 'tabler:forms',
         title: 'Form Modal',
@@ -58,6 +67,7 @@ export const Default: Story = {
           required: true,
           label: 'Choice',
           icon: 'tabler:check',
+          hidden: !formData.title.trim(),
           options: [
             {
               value: 'option1',
@@ -113,14 +123,18 @@ export const Default: Story = {
         title: 'Initial Title'
       })
       .onSubmit(async formData => {
-        formData.choice
         alert(`Form submitted with data: ${JSON.stringify(formData)}`)
         await new Promise(resolve => setTimeout(resolve, 1000))
         alert('Form submitted successfully!')
       })
+      .onChange(data => {
+        setFormData(data)
+      })
+      .build()
 
     return (
       <ModalWrapper isOpen={true}>
+        {JSON.stringify(formData)}
         <FormModal {...formProps} />
       </ModalWrapper>
     )
