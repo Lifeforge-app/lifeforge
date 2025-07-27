@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { type InferInput } from 'lifeforge-api'
-import { defineForm, FormModal } from 'lifeforge-ui'
+import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
 import {
@@ -23,16 +23,20 @@ function ModifyBookModal({
   const { languagesQuery, collectionsQuery } = useBooksLibraryContext()
 
   const mutation = useMutation(
-    forgeAPI.booksLibrary.entries.update.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['books-library', 'entries']
-        })
-      },
-      onError: () => {
-        toast.error('Failed to update book data')
-      }
-    })
+    forgeAPI.booksLibrary.entries.update
+      .input({
+        id: initialData.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'entries']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to update book data')
+        }
+      })
   )
 
   const formProps = defineForm<

@@ -79,13 +79,21 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
         rel="noreferrer"
         target="_blank"
       />
-      <div className="flex-center component-bg-lighter aspect-10/12 h-min w-28 rounded-lg p-2">
+      <div className="flex-center component-bg-lighter relative isolate aspect-10/12 h-min w-28 rounded-lg p-2">
         <img
           alt=""
           className="h-full object-cover"
-          src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
-            item.id
-          }/${item.thumbnail}`}
+          src={
+            forgeAPI.media.input({
+              collectionId: item.collectionId,
+              recordId: item.id,
+              fieldId: item.thumbnail
+            }).endpoint
+          }
+        />
+        <Icon
+          className="text-bg-200 dark:text-bg-800 absolute top-1/2 left-1/2 z-[-1] size-12 -translate-x-1/2 -translate-y-1/2"
+          icon="tabler:book"
         />
       </div>
       <div className="flex min-w-0 flex-1 flex-col">

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { HamburgerMenu } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -40,13 +41,21 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
       >
         <EntryContextMenu item={item} />
       </HamburgerMenu>
-      <div className="flex-center bg-bg-200/70 shadow-custom dark:bg-bg-800/50 aspect-9/12 w-full overflow-hidden rounded-lg">
+      <div className="flex-center bg-bg-200/70 shadow-custom dark:bg-bg-800/50 relative isolate aspect-9/12 w-full overflow-hidden rounded-lg">
         <img
           alt=""
           className="h-full"
-          src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
-            item.id
-          }/${item.thumbnail}`}
+          src={
+            forgeAPI.media.input({
+              collectionId: item.collectionId,
+              recordId: item.id,
+              fieldId: item.thumbnail
+            }).endpoint
+          }
+        />
+        <Icon
+          className="text-bg-200 dark:text-bg-800 absolute top-1/2 left-1/2 z-[-1] size-20 -translate-x-1/2 -translate-y-1/2"
+          icon="tabler:book"
         />
       </div>
       <div className="mt-4">
