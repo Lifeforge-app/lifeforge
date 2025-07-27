@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
@@ -7,7 +8,7 @@ import { Button, useModalStore } from 'lifeforge-ui'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
 
-import ViewReceiptModal from '../../../../views/ListView/components/ViewReceiptModal'
+import ViewReceiptModal from '../../../ViewReceiptModal'
 import DetailItem from './components/DetailItem'
 
 function Details({ transaction }: { transaction: WalletTransaction }) {
@@ -148,7 +149,11 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
             variant="secondary"
             onClick={() => {
               open(ViewReceiptModal, {
-                src: `${import.meta.env.VITE_API_HOST}/media/${transaction.collectionId}/${transaction.id}/${transaction.receipt}`
+                src: forgeAPI.media.input({
+                  collectionId: transaction.collectionId,
+                  recordId: transaction.id,
+                  fieldId: transaction.receipt
+                }).endpoint
               })
             }}
           >

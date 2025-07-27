@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
 import {
   Button,
   ConfigColumn,
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem
 } from 'lifeforge-ui'
@@ -14,21 +16,41 @@ import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
-import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
+import type { APIKeysEntry } from './ContentContainer'
 
 function EntryItem({
   entry,
   hasDivider,
   masterPassword
 }: {
-  entry: IAPIKeyEntry
+  entry: APIKeysEntry
   hasDivider: boolean
   masterPassword: string
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const [isCopying, setIsCopying] = useState(false)
+
+  const deleteMutation = useMutation(
+    forgeAPI.apiKeys.entries.remove
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['apiKeys']
+          })
+          toast.success('API Key deleted successfully')
+        },
+        onError: () => {
+          toast.error('Failed to delete API Key')
+        }
+      })
+  )
 
   async function copyKey() {
     const challenge = await fetchAPI<string>(
@@ -68,16 +90,15 @@ function EntryItem({
     })
   }, [entry, masterPassword])
 
-  const handleDeleteEntry = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'api-keys/entries',
-      confirmationText: 'Delete this API key',
-      data: entry,
-      itemName: 'API Key',
-      nameKey: 'name',
-      queryKey: ['api-keys', 'entries', masterPassword]
+  const handleDeleteEntry = () =>
+    open(ConfirmationModal, {
+      title: 'Delete API Key',
+      description: `Are you sure you want to delete the API Key "${entry.name}"? This action cannot be undone.`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
-  }, [entry, masterPassword])
 
   return (
     <ConfigColumn

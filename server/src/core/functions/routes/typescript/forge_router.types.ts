@@ -33,8 +33,14 @@ export type GetRouterPaths<T> = T extends { __isForgeController: true }
 // Type to extract all available routes in dot notation (like tRPC)
 export type RouterPaths<T> = T extends RouterInput
   ? {
-      [K in keyof T]: T[K] extends { __isForgeController: true }
-        ? K
+      [K in keyof T]: T[K] extends { __isForgeController: true, __type: infer Type, __input: infer Input, __media: infer Media, __output: infer Output }
+        ? {
+          __isForgeController: true
+          __type: Type
+          __input: Input
+          __media: Media
+          __output: Output
+        }
         : T[K] extends RouterInput
           ? `${K & string}.${RouterPaths<T[K]> & string}`
           : never

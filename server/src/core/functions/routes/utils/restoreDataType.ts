@@ -2,6 +2,7 @@ export default function restoreFormDataType(value: string): any {
   if (!value.startsWith('__type:')) return value
 
   const [meta, raw] = value.split(';', 2)
+
   const type = meta.replace('__type:', '')
 
   const parsed = JSON.parse(raw)

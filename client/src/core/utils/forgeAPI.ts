@@ -1,4 +1,4 @@
-import type { Router } from '@server/core/routes'
+import { type Router } from '@server/core/routes'
 import { createForgeAPIClient } from 'lifeforge-api'
 
 const forgeAPI = createForgeAPIClient<Router>(

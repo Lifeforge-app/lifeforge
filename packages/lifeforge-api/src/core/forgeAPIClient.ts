@@ -218,3 +218,30 @@ export function createForgeAPIClient<T>(
     }
   }) as any
 }
+
+export function createFlatForgeAPIClient<T extends Record<string, any>>(
+  apiHost: string
+) {
+  // 生成 controller 实例的缓存池
+  const _instances: Record<string, ForgeAPIClientController<any>> = {}
+
+  function getController<Path extends keyof T & string>(
+    path: Path
+  ): ForgeAPIClientController<T[Path]> {
+    // 路径格式 a.b.c -> a/b/c
+    const endpoint = path.replace(/\./g, '/')
+
+    if (!_instances[path]) {
+      _instances[path] = new ForgeAPIClientController<T[Path]>(
+        apiHost,
+        endpoint
+      )
+    }
+
+    return _instances[path]
+  }
+
+  return {
+    getController
+  }
+}

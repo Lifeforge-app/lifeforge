@@ -58,7 +58,7 @@ function LocationInput({
     <div className="relative flex w-full items-center gap-3">
       <ListboxOrComboboxInput<Location | null>
         className="w-full"
-        customActive={(location?.name.length || 0) > 0}
+        customActive={(location?.name?.length || 0) > 0}
         disabled={!enabled || disabled || enabled === 'loading'}
         displayValue={value => value?.name ?? ''}
         icon="tabler:map-pin"

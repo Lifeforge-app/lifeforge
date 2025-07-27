@@ -115,42 +115,6 @@ export type InferClientControllerOutput<
   : never
 
 /**
- * Filters the keys of a route tree to only include non-controller nodes.
- * - Used for extracting "sub-tree" keys (e.g., sub-modules).
- *
- * @template T The route tree object
- * @example
- * type Keys = FilteredRouteKey<typeof routeTree>
- */
-export type FilteredRouteKey<T> = {
-  [K in keyof T]: T[K] extends { __isForgeController: true } ? never : K
-}[keyof T]
-
-/**
- * Given a controller tree, returns a union of `[route, key]` tuples for each controller.
- * - Internal utility for mapping between route paths and object keys.
- */
-type RouteNameMap<T> = {
-  [K in keyof T]: T[K] extends { __route: infer R }
-    ? [R extends string | number | symbol ? R : never, K]
-    : never
-}[keyof T]
-
-/**
- * Maps each controller's route to its object key, e.g. { "/entries": "entries" }
- */
-type RouteToKeyMap<T> = {
-  [P in RouteNameMap<T> as P[0] extends string | number | symbol
-    ? P[0]
-    : never]: P[1]
-}
-
-/**
- * Gets all route keys for a controller tree, e.g. "/foo", "/bar".
- */
-export type RouteKeys<T> = keyof RouteToKeyMap<T>
-
-/**
  * Constructs a deeply-nested client tree from a controller schema.
  * - Each controller becomes a `ForgeAPIClientController`
  * - Nested groups become more `ClientTree`

@@ -1,9 +1,8 @@
-import dayjs from 'dayjs'
+import forgeAPI from '@utils/forgeAPI'
 import { Button, FileInput, ModalHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import ModifyEventModal from './ModifyEventModal'
 
@@ -24,35 +23,16 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
     }
     setLoading(true)
 
-    const formData = new FormData()
-
-    formData.append('file', file)
-
     try {
-      const data = await fetchAPI<
-        CalendarControllersSchemas.IEvents['scanImage']['response']
-      >(import.meta.env.VITE_API_HOST, 'calendar/events/scan-image', {
-        method: 'POST',
-        body: formData
+      const data = await forgeAPI.calendar.events.scanImage.mutate({
+        file
       })
 
       onClose()
 
       open(ModifyEventModal, {
         type: 'create',
-        initialData: {
-          ...data,
-          start: dayjs(data.start).toDate(),
-          end: dayjs(data.end).toDate(),
-          location: {
-            name: data.location || '',
-            location: {
-              longitude: data.location_coords?.lon || 0,
-              latitude: data.location_coords?.lat || 0
-            },
-            formattedAddress: data.location || ''
-          }
-        }
+        initialData: data
       })
       setFile(null)
       setPreview(null)
@@ -80,8 +60,8 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
             images: ['image/jpeg', 'image/png', 'image/jpg'],
             files: ['application/pdf']
           }}
+          file={file}
           icon="tabler:photo"
-          image={file}
           name="image"
           namespace="apps.calendar"
           preview={preview}

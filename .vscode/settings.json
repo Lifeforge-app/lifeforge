@@ -2,5 +2,6 @@
   "cSpell.words": [
     "ITMDB",
     "subnamespace"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

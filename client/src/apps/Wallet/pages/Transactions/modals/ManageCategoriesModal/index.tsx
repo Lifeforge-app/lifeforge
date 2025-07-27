@@ -1,6 +1,5 @@
 import { EmptyStateScreen, ModalHeader, QueryWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
@@ -15,12 +14,10 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
 
   const { categoriesQuery } = useWalletData()
 
-  const handleCreateIncomeCategory = useCallback(() => {
+  const handleCreateIncomeCategory = () =>
     open(ModifyCategoryModal, {
-      type: 'income',
-      initialData: null
+      type: 'create'
     })
-  }, [])
 
   return (
     <div className="min-w-[40rem]!">

@@ -8,7 +8,7 @@ import colors from 'tailwindcss/colors'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import type { WalletTransaction } from '../..'
+import type { WalletTransaction } from '..'
 
 function ModifyTransactionsModal({
   data: { type, initialData },
@@ -18,9 +18,7 @@ function ModifyTransactionsModal({
     type: 'create' | 'update'
     initialData?: {
       type: WalletTransaction['type']
-    } & Partial<Omit<WalletTransaction, 'receipt'>> & {
-        receipt?: File | string
-      }
+    } & Partial<WalletTransaction>
   }
   onClose: () => void
 }) {
@@ -63,19 +61,6 @@ function ModifyTransactionsModal({
       title: `transactions.${type}`,
       submitButton: type,
       onClose
-    })
-    .typesMap({
-      type: 'listbox',
-      date: 'datetime',
-      amount: 'currency',
-      particulars: 'text',
-      category: 'listbox',
-      asset: 'listbox',
-      ledgers: 'listbox',
-      location: 'location',
-      receipt: 'file',
-      from: 'listbox',
-      to: 'listbox'
     })
     .setupFields({
       type: {
@@ -200,22 +185,43 @@ function ModifyTransactionsModal({
       amount: initialData?.amount || 0,
       receipt: {
         file:
-          typeof initialData?.receipt === 'string'
+          typeof initialData?.receipt === 'string' &&
+          initialData?.receipt.length > 0
             ? 'keep'
-            : initialData?.receipt instanceof File
-              ? initialData.receipt
+            : (initialData?.receipt as File | undefined) instanceof File
+              ? (initialData!.receipt as unknown as File)
               : null,
-        preview:
-          typeof initialData?.receipt === 'string'
+        preview: initialData?.receipt
+          ? typeof initialData?.receipt === 'string'
             ? forgeAPI.media.input({
                 collectionId: initialData.collectionId!,
                 recordId: initialData.id!,
-                fieldId: initialData.receipt
+                fieldId: initialData!.receipt
               }).endpoint
-            : initialData?.receipt instanceof File
-              ? URL.createObjectURL(initialData.receipt)
+            : (initialData?.receipt as File | undefined) instanceof File
+              ? URL.createObjectURL(initialData!.receipt as unknown as File)
               : null
-      }
+          : null
+      },
+      ...(initialData?.type === 'transfer'
+        ? {
+            from: initialData?.from,
+            to: initialData?.to
+          }
+        : {
+            asset: initialData?.asset,
+            category: initialData?.category,
+            ledgers: initialData?.ledgers,
+            particulars: initialData?.particulars,
+            location: {
+              name: initialData?.location_name || '',
+              location: {
+                latitude: initialData?.location_coords?.lat || 0,
+                longitude: initialData?.location_coords?.lon || 0
+              },
+              formattedAddress: initialData?.location_name || ''
+            }
+          })
     })
     .onChange(data => {
       setTransactionType(data.type)

@@ -8,13 +8,10 @@ import {
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import type { WalletCategory } from '../../..'
 import ModifyCategoryModal from '../../ModifyCategoryModal'
 
-function CategorySectionItem({
-  category
-}: {
-  category: ISchemaWithPB<WalletCollectionsSchemas.ICategoryAggregated>
-}) {
+function CategorySectionItem({ category }: { category: WalletCategory }) {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.wallet')

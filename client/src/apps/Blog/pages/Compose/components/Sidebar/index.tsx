@@ -111,8 +111,8 @@ function Sidebar({
           acceptedMimeTypes={{
             image: ['image/*']
           }}
+          file={data.featuredImage}
           icon="tabler:photo"
-          image={data.featuredImage}
           name="Featured Image"
           namespace="apps.blog"
           preview={data.featuredImagePreview}
