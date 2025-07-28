@@ -13,7 +13,7 @@
       "node"
     ],
     /* Bundler mode */
-    "outDir": "./dist",
+    "outDir": "./tsbuild",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,

@@ -13,8 +13,6 @@ import {
   TextInput
 } from 'lifeforge-ui'
 
-import { IBlogEntryFormState } from '@apps/Blog/interfaces/blog_interfaces'
-
 const VISIBILITY_OPTIONS = [
   {
     label: 'Public',
@@ -36,8 +34,8 @@ function Sidebar({
   isOpen,
   setOpen
 }: {
-  data: IBlogEntryFormState
-  setData: React.Dispatch<React.SetStateAction<IBlogEntryFormState>>
+  data: any
+  setData: React.Dispatch<React.SetStateAction<any>>
   isOpen: boolean
   setOpen: (isOpen: boolean) => void
 }) {

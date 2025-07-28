@@ -1,11 +1,14 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   MenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
 import type { TodoListTag } from '@apps/TodoList/providers/TodoListProvider'
@@ -17,6 +20,8 @@ function TaskTagListItem({
   item: TodoListTag
   setSidebarOpen: (value: boolean) => void
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -28,15 +33,36 @@ function TaskTagListItem({
     })
   }, [item])
 
+  const deleteMutation = useMutation(
+    forgeAPI.todoList.tags.remove
+      .input({
+        id: item.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['todo-list'] })
+          setSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            tag: ''
+          })
+        },
+        onError: () => {
+          toast.error(
+            'An error occurred while deleting the tag. Please try again later.'
+          )
+        }
+      })
+  )
+
   const handleDeleteTag = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'todo-list/tags',
-      confirmationText: 'Delete this tag',
-      customText:
+    open(ConfirmationModal, {
+      title: 'Delete Tag',
+      description:
         'Are you sure you want to delete this tag? The tasks with this tag will not be deleted.',
-      data: item,
-      itemName: 'tag',
-      queryKey: ['todo-list', 'tags']
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [item])
 
