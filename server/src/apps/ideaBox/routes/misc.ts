@@ -29,7 +29,7 @@ const getPath = forgeController.query
 
     const fullPath = []
 
-    for (const folder of path) {
+    for (const folder of path.split('/').filter(e => e)) {
       if (!(await checkExistence(pb, 'idea_box__folders', folder))) {
         throw new ClientError(
           `Folder with ID "${folder}" does not exist in container "${container}"`
@@ -80,7 +80,7 @@ const checkValid = forgeController.query
     let folderExists = true
     let lastFolder = ''
 
-    for (const folder of path) {
+    for (const folder of path.split('/').filter(e => e)) {
       if (!(await checkExistence(pb, 'idea_box__folders', folder))) {
         folderExists = false
         break
