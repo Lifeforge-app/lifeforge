@@ -54,7 +54,7 @@ function FormInputs<T extends FormState>({
 
         const fieldType = field.type as FormFieldPropsUnion['type']
 
-        const FormComponent = COMPONENT_MAP[fieldType]
+        const FormComponent = COMPONENT_MAP[fieldType] || (() => <></>)
 
         if (field.hidden) {
           return <></>

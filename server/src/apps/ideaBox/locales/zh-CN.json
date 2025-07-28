@@ -43,8 +43,8 @@
       "update": "更新标签"
     },
     "idea": {
-      "create": "新增",
-      "update": "编辑"
+      "create": "新增创意",
+      "update": "编辑创意"
     }
   },
   "buttons": {
@@ -58,6 +58,7 @@
     "containerName": "创意盒名称",
     "folderName": "资料夹名称",
     "ideaTitle": "创意标题",
+    "ideaType": "創意類型",
     "imageLink": "图片连结",
     "coverImage": "封面图片",
     "ideaTags": "创意标签",
