@@ -115,15 +115,18 @@ const list = forgeController.query
     return [
       ...textIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        content: idea.content
+        content: idea.content,
+        type: 'text',
       })),
       ...imageIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        image: idea.image
+        image: idea.image,
+        type: 'image',
       })),
       ...linkIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        link: idea.link
+        link: idea.link,
+        type: 'link',
       }))
     ]
   })
