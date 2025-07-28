@@ -111,7 +111,7 @@ function ModifyIdeaModal({
       },
       tags: {
         multiple: true,
-        label: 'Tags',
+        label: 'Idea Tags',
         icon: 'tabler:tags',
         options:
           tagsQuery.data?.map(tag => ({
