@@ -1,5 +1,6 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
@@ -23,73 +24,87 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
-  const handlePinIdea = useCallback(async () => {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `idea-box/ideas/pin/${entry.id}`,
-        {
-          method: 'POST'
+  const deleteMutation = useMutation(
+    forgeAPI.ideaBox.ideas.remove
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'ideas']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'misc', 'search']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to delete idea')
         }
-      )
-
-      queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas']
       })
+  )
 
-      queryClient.invalidateQueries({
-        queryKey: [
-          'idea-box',
-          'search',
-          id,
-          path,
-          selectedTags,
-          debouncedSearchQuery
-        ]
+  const pinIdeaMutation = useMutation(
+    forgeAPI.ideaBox.ideas.pin
+      .input({
+        id: entry.id
       })
-    } catch {
-      toast.error(`Failed to ${entry.pinned ? 'unpin' : 'pin'} idea`)
-    }
-  }, [entry, id, path, viewArchived])
-
-  const handleArchiveIdea = useCallback(async () => {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `idea-box/ideas/archive/${entry.id}`,
-        {
-          method: 'POST'
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'ideas']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'misc', 'search']
+          })
+        },
+        onError: () => {
+          toast.error(`Failed to ${entry.pinned ? 'unpin' : 'pin'} idea`)
         }
-      )
-
-      queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas']
       })
-      queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'search']
-      })
-    } catch {
-      toast.error(`Failed to ${entry.archived ? 'unarchive' : 'archive'} idea`)
-    }
-  }, [entry, id, path])
+  )
 
-  const handleRemoveFromFolder = useCallback(async () => {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `idea-box/ideas/move/${entry.id}`,
-        {
-          method: 'DELETE'
+  const archiveIdeaMutation = useMutation(
+    forgeAPI.ideaBox.ideas.archive
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'ideas']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'misc', 'search']
+          })
+        },
+        onError: () => {
+          toast.error(
+            `Failed to ${entry.archived ? 'unarchive' : 'archive'} idea`
+          )
         }
-      )
-
-      queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas', id!, path!]
       })
-    } catch {
-      toast.error('Failed to remove idea from folder')
-    }
-  }, [entry, id, path])
+  )
+
+  const removeFromFolderMutation = useMutation(
+    forgeAPI.ideaBox.ideas.removeFromParent
+      .input({
+        id: entry.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'ideas', id, path]
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'misc', 'search']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to remove idea from folder')
+        }
+      })
+  )
 
   const handleUpdateIdea = useCallback(() => {
     open(ModifyIdeaModal, {
@@ -99,15 +114,13 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
   }, [entry])
 
   const handleDeleteIdea = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      multiQueryKey: true,
-      apiEndpoint: 'idea-box/ideas',
-      data: entry,
-      itemName: 'idea',
-      queryKey: [
-        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-        ['idea-box', 'ideas', id!, path!, viewArchived]
-      ]
+    open(ConfirmationModal, {
+      title: 'Delete Idea',
+      description: `Are you sure you want to delete this idea? This action cannot be undone.`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [entry, id, path, viewArchived, debouncedSearchQuery, selectedTags])
 
@@ -117,13 +130,17 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
         <MenuItem
           icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
           text={entry.pinned ? 'Unpin' : 'Pin'}
-          onClick={handlePinIdea}
+          onClick={() => {
+            pinIdeaMutation.mutate({})
+          }}
         />
       )}
       <MenuItem
         icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
         text={entry.archived ? 'Unarchive' : 'Archive'}
-        onClick={handleArchiveIdea}
+        onClick={() => {
+          archiveIdeaMutation.mutate({})
+        }}
       />
       <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateIdea} />
       {!debouncedSearchQuery && selectedTags.length === 0 && path !== '' && (
@@ -131,7 +148,9 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
           icon="tabler:folder-minus"
           namespace="apps.ideaBox"
           text="Remove from folder"
-          onClick={handleRemoveFromFolder}
+          onClick={() => {
+            removeFromFolderMutation.mutate({})
+          }}
         />
       )}
       <MenuItem

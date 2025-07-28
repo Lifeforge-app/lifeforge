@@ -146,6 +146,10 @@ export async function recursivelySearchFolder(
     collectionId: result.collectionId,
     collectionName: result.collectionName,
     image: result.image,
+    child: {
+      id: result.id,
+      collectionId: result.collectionId
+    },
     expand: {
       folder: thisFolder
     },
