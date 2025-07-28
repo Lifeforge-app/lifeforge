@@ -44,13 +44,14 @@ function ModifyIdeaModal({
       submitButton: type === 'create' ? 'create' : 'update'
     })
     .typesMap({
-      title: 'text',
       content: 'textarea',
-      imageLink: 'text',
+      link: 'text',
+      image: 'file',
       type: 'listbox',
       folder: 'text',
       container: 'text',
-      tags: 'listbox'
+      tags: 'listbox',
+      
     })
     .setupFields({
       title: {

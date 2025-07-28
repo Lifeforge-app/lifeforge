@@ -161,7 +161,9 @@ const createSchema = SCHEMAS.idea_box.entries
   .omit({
     created: true,
     updated: true,
-    type: true
+    type: true,
+    archived: true,
+    pinned: true
   })
   .and(
     z.union([
@@ -258,7 +260,9 @@ const updateSchema = SCHEMAS.idea_box.entries
     updated: true,
     type: true,
     folder: true,
-    container: true
+    container: true,
+    archived: true,
+    pinned: true
   })
   .and(
     z.union([
