@@ -12,7 +12,8 @@
     "transcribeToText": "Transcribe to Text"
   },
   "modals": {
-    "addEntry": "Add Entry"
+    "addEntry": "Add Entry",
+    "updateEntry": "Update Entry"
   },
   "inputs": {
     "entryType": "Entry Type",

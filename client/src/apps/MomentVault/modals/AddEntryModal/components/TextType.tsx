@@ -15,13 +15,17 @@ function TextType({ onSuccess }: { onSuccess: () => void }) {
     setSubmitLoading(true)
 
     try {
-      await fetchAPI(import.meta.env.VITE_API_HOST, 'moment-vault/entries', {
-        method: 'POST',
-        body: {
-          type: 'text',
-          content: text
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        'momentVault/entries/create',
+        {
+          method: 'POST',
+          body: {
+            type: 'text',
+            content: text
+          }
         }
-      })
+      )
 
       onSuccess()
     } catch (err) {

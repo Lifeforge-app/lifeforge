@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { t } from 'i18next'
 import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
@@ -40,7 +39,7 @@ function ModifyTextEntryModal({
     InferInput<typeof forgeAPI.momentVault.entries.update>['body']
   >()
     .ui({
-      title: 'Update Text Entry',
+      title: 'Update Entry',
       namespace: 'apps.momentVault',
       icon: 'tabler:pencil',
       onClose,
@@ -51,10 +50,10 @@ function ModifyTextEntryModal({
     })
     .setupFields({
       content: {
-        placeholder: t('apps.momentVault:placeholders.textEntry'),
+        placeholder: 'Something amazing happened today...',
         required: true,
         icon: 'tabler:file-text',
-        label: t('apps.momentVault:fields.textContent')
+        label: 'Text Content'
       }
     })
     .initialData({
