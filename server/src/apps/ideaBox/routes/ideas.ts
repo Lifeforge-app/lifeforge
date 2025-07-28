@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { SCHEMAS } from '@schema'
+import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
 import fs from 'fs'
 import multer from 'multer'
 import { z } from 'zod/v4'
@@ -112,23 +112,28 @@ const list = forgeController.query
       .sort(['-base_entry.pinned', '-base_entry.created'])
       .execute()
 
+      const returnSchema = COLLECTION_SCHEMAS.idea_box__entries.and(
+        z.union([
+          COLLECTION_SCHEMAS.idea_box__entries_text,
+          COLLECTION_SCHEMAS.idea_box__entries_image,
+          COLLECTION_SCHEMAS.idea_box__entries_link
+        ])
+      )
+
     return [
       ...textIdeas.map(idea => ({
         ...idea.expand!.base_entry,
         content: idea.content,
-        type: 'text',
-      })),
+        type: 'text',      })),
       ...imageIdeas.map(idea => ({
         ...idea.expand!.base_entry,
         image: idea.image,
-        type: 'image',
       })),
       ...linkIdeas.map(idea => ({
         ...idea.expand!.base_entry,
         link: idea.link,
-        type: 'link',
       }))
-    ]
+    ] as Array<z.infer<typeof returnSchema>>
   })
 
 const create = forgeController.mutation
