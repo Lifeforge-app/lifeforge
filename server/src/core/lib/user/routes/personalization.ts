@@ -2,7 +2,7 @@ import { getAPIKey } from '@functions/database'
 import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { z } from 'zod/v4'
+import { record, z } from 'zod/v4'
 
 const listGoogleFonts = forgeController.query
   .description('List available Google Fonts')
@@ -72,7 +72,11 @@ const updateBgImage = forgeController.mutation
       .data(await getMedia('bgImage', file))
       .execute()
 
-    return `${newRecord.collectionId}/${newRecord.id}/${newRecord.bgImage}`
+    return {
+      collectionId: newRecord.collectionId,
+      recordId: newRecord.id,
+      fieldId: newRecord.bgImage
+    }
   })
 
 const deleteBgImage = forgeController.mutation
