@@ -101,12 +101,12 @@ function AvatarColumn() {
       </div>
       <div className="flex items-center">
         <Button
-          icon="tabler:upload"
+          icon="tabler:photo-hexagon"
           loading={loading}
           variant={userData.avatar !== '' ? 'plain' : 'primary'}
           onClick={handleChangeAvatar}
         >
-          upload
+          select
         </Button>
         {userData.avatar !== '' && (
           <Button

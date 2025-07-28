@@ -113,7 +113,7 @@ const getOgData = forgeController.query
     })
   })
   .existenceCheck('query', {
-    id: 'idea_box__entries_link'
+    id: 'idea_box__entries'
   })
   .callback(async ({ pb, query: { id } }) => {
     const data = await pb.getFirstListItem
