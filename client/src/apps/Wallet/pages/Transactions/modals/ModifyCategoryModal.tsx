@@ -4,6 +4,7 @@ import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import colors from 'tailwindcss/colors'
 
 import type { WalletCategory } from '..'
 
@@ -71,13 +72,13 @@ function ModifyCategoryModal({
             value: 'income',
             text: t('transactionTypes.income'),
             icon: 'tabler:login-2',
-            color: 'green'
+            color: colors.green[500]
           },
           {
             value: 'expenses',
             text: t('transactionTypes.expenses'),
             icon: 'tabler:logout',
-            color: 'red'
+            color: colors.red[500]
           }
         ]
       },
