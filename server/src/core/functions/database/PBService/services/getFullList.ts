@@ -1,7 +1,7 @@
 import {
+  AllPossibleFieldsForFilter,
   CollectionKey,
   ExpandConfig,
-  FieldKey,
   FieldSelection,
   FilterType,
   MultiItemsReturnType
@@ -61,7 +61,12 @@ export class GetFullList<
    * @param sort - Array of field names for sorting. Prefix with '-' for descending order
    * @returns The current GetFullList instance for method chaining
    */
-  sort(sort: (FieldKey<TCollectionKey> | `-${FieldKey<TCollectionKey>}`)[]) {
+  sort(
+    sort: (
+      | AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig>
+      | `-${AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> : never}`
+    )[]
+  ) {
     this._sort = sort.join(', ')
 
     return this
@@ -130,7 +135,7 @@ export class GetFullList<
 
     const filterString = this._filterExpression
       ? this._pb.filter(this._filterExpression, this._filterParams)
-      : ''
+      : undefined
 
     return this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))

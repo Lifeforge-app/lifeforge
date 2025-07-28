@@ -21,35 +21,41 @@ export function recursivelyBuildFilter<
   paramCounter: { count: number } = { count: 0 },
   params: Record<string, unknown> = {}
 ): { expression: string; params: Record<string, unknown> } {
-  const expressions = filter.map(f => {
-    if ('combination' in f) {
-      const subFilters = f.filters.map(subFilter => {
-        if ('combination' in subFilter) {
-          const result = recursivelyBuildFilter(
-            [subFilter],
-            paramCounter,
-            params
-          )
+  const expressions = filter
+    .map(f => {
+      if ('combination' in f) {
+        const subFilters = f.filters
+          .map(subFilter => {
+            if ('combination' in subFilter) {
+              const result = recursivelyBuildFilter(
+                [subFilter],
+                paramCounter,
+                params
+              )
 
-          return `(${result.expression})`
-        }
+              return `(${result.expression})`
+            }
 
-        const paramName = `param${paramCounter.count++}`
+            const paramName = `param${paramCounter.count++}`
 
-        params[paramName] = subFilter.value
+            params[paramName] = subFilter.value
 
-        return `${String(subFilter.field)}${subFilter.operator}{:${paramName}}`
-      })
+            return `${String(subFilter.field)}${subFilter.operator}{:${paramName}}`
+          })
+          .filter(Boolean)
 
-      return `(${subFilters.join(` ${f.combination} `)})`
-    }
+        return subFilters.length
+          ? `(${subFilters.join(` ${f.combination} `)})`
+          : ''
+      }
 
-    const paramName = `param${paramCounter.count++}`
+      const paramName = `param${paramCounter.count++}`
 
-    params[paramName] = f.value
+      params[paramName] = f.value
 
-    return `${String(f.field)}${f.operator}{:${paramName}}`
-  })
+      return `${String(f.field)}${f.operator}{:${paramName}}`
+    })
+    .filter(Boolean)
 
   return {
     expression: expressions.join(' && '),

@@ -37,27 +37,86 @@ const list = forgeController.query
       )
     }
 
-    return await pb.getFullList
-      .collection('idea_box__entries')
+    const textIdeas = await pb.getFullList
+      .collection('idea_box__entries_text')
+      .expand({
+        base_entry: 'idea_box__entries'
+      })
       .filter([
         {
-          field: 'container',
+          field: 'base_entry.container',
           operator: '=',
           value: container
         },
         {
-          field: 'archived',
+          field: 'base_entry.archived',
           operator: '=',
           value: archived
         },
         {
-          field: 'folder',
+          field: 'base_entry.folder',
           operator: '=',
           value: lastFolder || ''
         }
       ])
-      .sort(['-pinned', '-created'])
+      .sort(['-base_entry.pinned', '-base_entry.created'])
       .execute()
+
+    const imageIdeas = await pb.getFullList
+      .collection('idea_box__entries_image')
+      .expand({
+        base_entry: 'idea_box__entries'
+      })
+      .filter([
+        {
+          field: 'base_entry.container',
+          operator: '=',
+          value: container
+        },
+        {
+          field: 'base_entry.archived',
+          operator: '=',
+          value: archived
+        },
+        {
+          field: 'base_entry.folder',
+          operator: '=',
+          value: lastFolder || ''
+        }
+      ])
+      .sort(['-base_entry.pinned', '-base_entry.created'])
+      .execute()
+
+    const linkIdeas = await pb.getFullList
+      .collection('idea_box__entries_link')
+      .expand({
+        base_entry: 'idea_box__entries'
+      })
+      .filter([
+        {
+          field: 'base_entry.container',
+          operator: '=',
+          value: container
+        },
+        {
+          field: 'base_entry.archived',
+          operator: '=',
+          value: archived
+        },
+        {
+          field: 'base_entry.folder',
+          operator: '=',
+          value: lastFolder || ''
+        }
+      ])
+      .sort(['-base_entry.pinned', '-base_entry.created'])
+      .execute()
+
+    return {
+      text: textIdeas,
+      image: imageIdeas,
+      link: linkIdeas
+    }
   })
 
 const create = forgeController.mutation
@@ -67,9 +126,6 @@ const create = forgeController.mutation
       .pick({
         type: true,
         container: true,
-        folder: true,
-        title: true,
-        content: true,
         tags: true
       })
       .extend({
@@ -82,61 +138,53 @@ const create = forgeController.mutation
     container: 'idea_box__containers'
   })
   .statusCode(201)
-  .callback(
-    async ({
-      pb,
-      body: { type, container, folder, title, content, imageLink, tags },
-      req
-    }) => {
-      const { file } = req
+  .callback(async ({ pb, body: { type, container, imageLink, tags }, req }) => {
+    const { file } = req
 
-      const data = {
-        title: '',
-        content: '',
-        type,
-        container,
-        folder,
-        tags: tags || null,
-        image: null as File | null
-      }
-
-      switch (type) {
-        case 'text':
-        case 'link':
-          data['title'] = title
-          data['content'] = content
-          break
-        case 'image':
-          if (imageLink) {
-            const response = await fetch(imageLink)
-
-            const buffer = await response.arrayBuffer()
-
-            data['image'] = new File([buffer], 'image.jpg', {
-              type: 'image/jpeg'
-            })
-            data['title'] = title
-          } else {
-            if (!file) {
-              throw new ClientError(
-                'Image file is required for image type ideas'
-              )
-            }
-            data['image'] = new File(
-              [fs.readFileSync(file.path)],
-              file.originalname,
-              {
-                type: file.mimetype
-              }
-            )
-            data['title'] = title
-          }
-          break
-      }
-
-      return pb.create.collection('idea_box__entries').data(data).execute()
+    const data = {
+      title: '',
+      content: '',
+      type,
+      container,
+      folder,
+      tags: tags || null,
+      image: null as File | null
     }
-  )
+
+    switch (type) {
+      case 'text':
+      case 'link':
+        data['title'] = title
+        data['content'] = content
+        break
+      case 'image':
+        if (imageLink) {
+          const response = await fetch(imageLink)
+
+          const buffer = await response.arrayBuffer()
+
+          data['image'] = new File([buffer], 'image.jpg', {
+            type: 'image/jpeg'
+          })
+          data['title'] = title
+        } else {
+          if (!file) {
+            throw new ClientError('Image file is required for image type ideas')
+          }
+          data['image'] = new File(
+            [fs.readFileSync(file.path)],
+            file.originalname,
+            {
+              type: file.mimetype
+            }
+          )
+          data['title'] = title
+        }
+        break
+    }
+
+    return pb.create.collection('idea_box__entries').data(data).execute()
+  })
 
 const update = forgeController.mutation
   .description('Update an idea')

@@ -1,7 +1,7 @@
 import {
+  AllPossibleFieldsForFilter,
   CollectionKey,
   ExpandConfig,
-  FieldKey,
   FieldSelection,
   FilterType,
   SingleItemReturnType
@@ -40,7 +40,12 @@ export class GetFirstListItem<
     return this
   }
 
-  sort(sort: (FieldKey<TCollectionKey> | `-${FieldKey<TCollectionKey>}`)[]) {
+  sort(
+    sort: (
+      | AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig>
+      | `-${AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> : never}`
+    )[]
+  ) {
     this._sort = sort.join(', ')
 
     return this
