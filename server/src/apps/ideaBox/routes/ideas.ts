@@ -122,7 +122,11 @@ const list = forgeController.query
             type: z.literal('text')
           }),
           COLLECTION_SCHEMAS.idea_box__entries_image.extend({
-            type: z.literal('image')
+            type: z.literal('image'),
+            child: z.object({
+              id: z.string(),
+              collectionId: z.string()
+            })
           }),
           COLLECTION_SCHEMAS.idea_box__entries_link.extend({
             type: z.literal('link')

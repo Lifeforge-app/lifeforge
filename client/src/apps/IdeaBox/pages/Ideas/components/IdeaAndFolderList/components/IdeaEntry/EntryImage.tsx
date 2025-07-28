@@ -65,8 +65,8 @@ function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
         ZoomContent={CustomZoomContent}
         zoomImg={{
           src: forgeAPI.media.input({
-            collectionId: entry.collectionId,
-            recordId: entry.id,
+            collectionId: entry.child.collectionId,
+            recordId: entry.child.id,
             fieldId: entry.image
           }).endpoint
         }}
@@ -77,8 +77,8 @@ function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
           className="shadow-custom rounded-lg"
           src={
             forgeAPI.media.input({
-              collectionId: entry.collectionId,
-              recordId: entry.id,
+              collectionId: entry.child.collectionId,
+              recordId: entry.child.id,
               fieldId: entry.image
             }).endpoint
           }

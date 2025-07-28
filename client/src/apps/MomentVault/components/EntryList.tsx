@@ -1,8 +1,10 @@
-import { type UseQueryResult } from '@tanstack/react-query'
-import { DeleteConfirmationModal, Pagination, QueryWrapper } from 'lifeforge-ui'
+import { type UseQueryResult, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
+import { ConfirmationModal, Pagination, QueryWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { ListResult } from 'pocketbase'
 import { useCallback, useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 import AudioEntry from './entries/AudioEntry'
 import PhotosEntry from './entries/PhotosEntry'
@@ -13,21 +15,38 @@ function EntryList({
   page,
   setPage
 }: {
-  dataQuery: UseQueryResult<ListResult<IMomentVaultEntry>>
+  dataQuery: UseQueryResult<
+    InferOutput<typeof forgeAPI.momentVault.entries.list>
+  >
   page: number
   setPage: (page: number) => void
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const handleDeleteEntry = useCallback(
-    (entry: IMomentVaultEntry) => () => {
-      open(DeleteConfirmationModal, {
-        apiEndpoint: '/moment-vault/entries',
-        data: entry,
-        itemName: 'entry',
-        queryKey: ['moment-vault', 'entries', page],
-        queryUpdateType: 'invalidate',
-        confirmationText: 'Delete this entry'
+    (entryId: string) => () => {
+      open(ConfirmationModal, {
+        title: 'Delete Entry',
+        description: 'Are you sure you want to delete this entry?',
+        buttonType: 'delete',
+        onConfirm: async () => {
+          await forgeAPI.momentVault.entries.remove
+            .input({
+              id: entryId
+            })
+            .mutate({
+              onSuccess: () => {
+                queryClient.invalidateQueries({
+                  queryKey: ['momentVault', 'entries']
+                })
+              },
+              onError: () => {
+                toast.error('Failed to delete entry')
+              }
+            })
+        }
       })
     },
     [page]
@@ -58,7 +77,7 @@ function EntryList({
                 return (
                   <AudioEntry
                     key={entry.id}
-                    entriesQueryKey={['moment-vault', 'entries', page]}
+                    currentPage={page}
                     entry={entry}
                     onDelete={handleDeleteEntry(entry)}
                   />
@@ -70,7 +89,6 @@ function EntryList({
                   <TextEntry
                     key={entry.id}
                     entry={entry}
-                    page={page}
                     onDelete={handleDeleteEntry(entry)}
                   />
                 )

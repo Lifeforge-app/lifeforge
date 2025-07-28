@@ -35,7 +35,7 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['books-library', 'entries']
+            queryKey: ['booksLibrary', 'entries']
           })
         },
         onSettled: () => {

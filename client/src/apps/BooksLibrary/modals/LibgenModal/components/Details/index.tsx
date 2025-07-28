@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferOutput } from 'lifeforge-api'
 import { GoBackButton, QueryWrapper } from 'lifeforge-ui'
-import { useAPIQuery } from 'shared'
 
 import AddToLibraryButton from '../AddToLibraryButton'
 import DataTable from './components/DataTable'
@@ -26,12 +25,6 @@ function Details({
     forgeAPI.booksLibrary.libgen.getBookDetails.input({ md5 }).queryOptions({
       enabled: Boolean(md5)
     })
-  )
-
-  useAPIQuery<BookDetailProps>(
-    `books-library/libgen/details/${md5}`,
-    ['books-library', 'libgen', 'details', md5],
-    Boolean(md5)
   )
 
   return (

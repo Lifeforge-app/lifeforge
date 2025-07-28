@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
@@ -18,6 +19,8 @@ function ModifyFolderModal({
 }) {
   const queryClient = useQueryClient()
 
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
   const mutation = useMutation(
     (type === 'create'
       ? forgeAPI.ideaBox.folders.create
@@ -26,7 +29,7 @@ function ModifyFolderModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['idea-box', 'folders'] })
+        queryClient.invalidateQueries({ queryKey: ['ideaBox', 'folders'] })
       },
       onError: error => {
         toast.error(`Failed to ${type} folder: ${error.message}`)
@@ -46,6 +49,13 @@ function ModifyFolderModal({
       title: `folder.${type}`,
       onClose,
       submitButton: type
+    })
+    .typesMap({
+      container: 'text',
+      parent: 'text',
+      name: 'text',
+      icon: 'icon',
+      color: 'color'
     })
     .setupFields({
       name: {
@@ -80,6 +90,8 @@ function ModifyFolderModal({
           }
     )
     .onSubmit(async data => {
+      data.container = id!
+      data.parent = path?.split('/').pop() || ''
       await mutation.mutateAsync(data)
     })
     .build()

@@ -1,7 +1,10 @@
-import { DeleteConfirmationModal, MenuItem, SidebarItem } from 'lifeforge-ui'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { ConfirmationModal, MenuItem, SidebarItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
@@ -23,6 +26,8 @@ function _SidebarItem({
   fallbackIcon?: string
   hasHamburgerMenu?: boolean
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -44,13 +49,35 @@ function _SidebarItem({
     })
   }, [item, stuff])
 
+  const deleteMutation = useMutation(
+    forgeAPI.booksLibrary[stuff as 'collections' | 'languages'].remove
+      .input({
+        id: item.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', stuff]
+          })
+
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'entries']
+          })
+        },
+        onError: () => {
+          toast.error(`Failed to delete ${singleStuff}`)
+        }
+      })
+  )
+
   const handleDeleteStuff = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: `books-library/${stuff}`,
-      data: item,
-      itemName: singleStuff,
-      nameKey: 'name' as const,
-      queryKey: ['books-library', stuff]
+    open(ConfirmationModal, {
+      title: `Delete ${singleStuff}`,
+      description: `Are you sure you want to delete this ${singleStuff}?`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [item, stuff])
 

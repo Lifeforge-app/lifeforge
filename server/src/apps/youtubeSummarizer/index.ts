@@ -4,7 +4,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { exec } from 'child_process'
 import { z } from 'zod/v4'
 
-interface YoutubeInfo {
+export interface YoutubeInfo {
   title: string
   uploadDate: string
   uploader: string
@@ -26,7 +26,7 @@ const getYoutubeVideoInfo = forgeController.query
   })
   .callback(
     ({ query: { id } }) =>
-      new Promise((resolve, reject) => {
+      new Promise<YoutubeInfo>((resolve, reject) => {
         exec(
           `${process.cwd()}/src/core/bin/yt-dlp --skip-download --dump-json "https://www.youtube.com/watch?v=${id}"`,
           (err, stdout) => {

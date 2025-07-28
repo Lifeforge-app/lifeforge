@@ -155,7 +155,7 @@ export default function BooksLibraryProvider() {
             return newProcesses
           })
           queryClient.invalidateQueries({
-            queryKey: ['books-library']
+            queryKey: ['booksLibrary']
           })
 
           return
