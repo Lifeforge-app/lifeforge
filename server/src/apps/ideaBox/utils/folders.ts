@@ -96,7 +96,15 @@ export async function recursivelySearchFolder(
           : [])
       ])
       .execute()
-  ).map(result => ({ ...result, fullPath: parents }))
+  ).map(result => ({
+    ...result.expand!.base_entry,
+    id: result.id,
+    collectionId: result.collectionId,
+    collectionName: result.collectionName,
+    content: result.content,
+    type: 'text',
+    fullPath: parents
+  }))
 
   if (folderInsideFolder.length === 0) {
     return allResults
