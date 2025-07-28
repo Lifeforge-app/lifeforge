@@ -128,16 +128,16 @@ export class Update<
   > {
     if (!this.collectionKey) {
       throw new Error(
-        'Collection key is required. Use .collection() method to set the collection key.'
+        `FaiCollection key is required. Use .collection() method to set the collection key.`
       )
     }
 
     if (!this._recordId) {
-      throw new Error('Record ID is required. Use .id() method to set the ID.')
+      throw new Error(`Failed to update record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`)
     }
 
     if (Object.keys(this._data).length === 0) {
-      throw new Error('Data is required. Use .data() method to set the data.')
+      throw new Error(`Failed to update record in collection "${this.collectionKey}". Data is required. Use .data() method to set the data.`)
     }
 
     return this._pb
