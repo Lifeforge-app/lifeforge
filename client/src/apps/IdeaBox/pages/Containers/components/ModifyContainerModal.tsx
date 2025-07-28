@@ -75,7 +75,7 @@ function ModifyContainerModal({
       },
       cover: {
         optional: true,
-        required: true,
+        required: false,
         icon: 'tabler:photo',
         label: 'Cover Image',
         enableAIImageGeneration: imageGenAPIKeyExistsQuery.data ?? false,
