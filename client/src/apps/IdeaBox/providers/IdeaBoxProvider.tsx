@@ -169,11 +169,10 @@ export default function IdeaBoxProvider() {
     reader.onload = function () {
       if (file !== null) {
         open(ModifyIdeaModal, {
-          type: 'paste',
-          ideaType: 'image',
-          pastedData: {
-            preview: reader.result as string,
-            file
+          type: 'create',
+          initialData: {
+            type: 'image',
+            image: file as never
           }
         })
       }
