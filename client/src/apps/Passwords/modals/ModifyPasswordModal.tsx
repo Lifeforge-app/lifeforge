@@ -17,7 +17,7 @@ function ModifyPasswordModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData: PasswordEntry & {
+    initialData?: PasswordEntry & {
       decrypted?: string
     }
   }
@@ -64,17 +64,17 @@ function ModifyPasswordModal({
     })
     .setupFields({
       name: {
-        label: 'name',
+        label: 'serviceName',
         icon: 'tabler:lock',
         placeholder: 'My Service',
         required: true
       },
       icon: {
-        label: 'icon',
+        label: 'serviceIcon',
         required: true
       },
       color: {
-        label: 'color',
+        label: 'serviceColor',
         required: true
       },
       website: {
@@ -84,7 +84,7 @@ function ModifyPasswordModal({
         required: true
       },
       username: {
-        label: 'username',
+        label: 'usernameOrEmail',
         icon: 'tabler:user',
         placeholder: 'johndoe1234'
       },
@@ -102,7 +102,7 @@ function ModifyPasswordModal({
       color: initialData?.color ?? '',
       website: initialData?.website ?? '',
       username: initialData?.username ?? '',
-      password: initialData.decrypted ?? ''
+      password: initialData?.decrypted ?? ''
     })
     .onSubmit(async data => {
       const challenge = await forgeAPI.passwords.entries.getChallenge.query()

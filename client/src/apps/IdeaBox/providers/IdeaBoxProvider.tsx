@@ -20,9 +20,9 @@ export type IdeaBoxFolder = InferOutput<
 
 export type IdeaBoxTag = InferOutput<typeof forgeAPI.ideaBox.tags.list>[number]
 
-export type IdeaBoxIdea = InferOutput<
-  typeof forgeAPI.ideaBox.ideas.list
->[number]
+export type IdeaBoxIdea =
+  | InferOutput<typeof forgeAPI.ideaBox.ideas.list>[number]
+  | InferOutput<typeof forgeAPI.ideaBox.misc.search>[number]
 
 interface IIdeaBoxData {
   pathValid: boolean
