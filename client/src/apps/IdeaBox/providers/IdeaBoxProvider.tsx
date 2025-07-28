@@ -6,7 +6,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
 
@@ -20,9 +19,9 @@ export type IdeaBoxFolder = InferOutput<
 
 export type IdeaBoxTag = InferOutput<typeof forgeAPI.ideaBox.tags.list>[number]
 
-export type IdeaBoxIdea =
-  | InferOutput<typeof forgeAPI.ideaBox.ideas.list>[number]
-  | InferOutput<typeof forgeAPI.ideaBox.misc.search>[number]
+export type IdeaBoxIdea = InferOutput<
+  typeof forgeAPI.ideaBox.ideas.list
+>[number]
 
 interface IIdeaBoxData {
   pathValid: boolean
@@ -65,17 +64,26 @@ export default function IdeaBoxProvider() {
     searchParams.get('archived') === 'true'
   )
 
-  const pathValidQuery = useAPIQuery<boolean>(
-    `idea-box/valid/${id}/${path}`,
-    ['idea-box', 'valid', id, path],
-    id !== undefined && path !== undefined,
-    {
-      staleTime: Infinity
-    }
+  const pathValidQuery = useQuery(
+    forgeAPI.ideaBox.misc.checkValid
+      .input({
+        container: id || '',
+        path: path || ''
+      })
+      .queryOptions({
+        enabled: id !== undefined && path !== undefined
+      })
   )
 
   const pathDetailsQuery = useQuery(
-    forgeAPI.ideaBox.misc.getPath.queryOptions()
+    forgeAPI.ideaBox.misc.getPath
+      .input({
+        container: id || '',
+        path: path || ''
+      })
+      .queryOptions({
+        enabled: id !== undefined && pathValidQuery.data
+      })
   )
 
   const entriesQuery = useQuery(

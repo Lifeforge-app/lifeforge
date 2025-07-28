@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
@@ -30,6 +31,10 @@ function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
     []
   )
 
+  if (entry.type !== 'image') {
+    return null
+  }
+
   return (
     <div
       ref={node => {
@@ -57,22 +62,27 @@ function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
         <EntryContextMenu entry={entry} />
       </div>
 
-      <h3 className="text-xl font-semibold">{entry.title}</h3>
       <Zoom
         ZoomContent={CustomZoomContent}
         zoomImg={{
-          src: `${import.meta.env.VITE_API_HOST}/media/${
-            entry.collectionId
-          }/${entry.id}/${entry.image}`
+          src: forgeAPI.media.input({
+            collectionId: entry.collectionId,
+            recordId: entry.id,
+            fieldId: entry.image
+          }).endpoint
         }}
         zoomMargin={40}
       >
         <img
           alt={''}
           className="shadow-custom rounded-lg"
-          src={`${import.meta.env.VITE_API_HOST}/media/${
-            entry.collectionId
-          }/${entry.id}/${entry.image}?thumb=500x0`}
+          src={
+            forgeAPI.media.input({
+              collectionId: entry.collectionId,
+              recordId: entry.id,
+              fieldId: entry.image
+            }).endpoint
+          }
         />
       </Zoom>
       {entry.tags !== null && entry.tags?.length !== 0 && (

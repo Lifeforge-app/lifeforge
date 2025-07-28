@@ -32,6 +32,10 @@ function EntryText({ entry }: { entry: IdeaBoxIdea }) {
     []
   )
 
+  if (entry.type !== 'text') {
+    return null
+  }
+
   return (
     <button
       ref={node => {
