@@ -1,4 +1,5 @@
 import {
+  AllPossibleFieldsForFilter,
   CollectionKey,
   ExpandConfig,
   FieldKey,
@@ -17,7 +18,10 @@ export interface PBServiceBase<
   filter?(filter: FilterType<TCollectionKey, TExpandConfig>): this
 
   sort?(
-    sort: (FieldKey<TCollectionKey> | `-${FieldKey<TCollectionKey>}`)[]
+    sort: (
+      | AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig>
+      | `-${AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> : never}`
+    )[]
   ): this
 
   fields?<NewFields extends FieldSelection<TCollectionKey, TExpandConfig>>(
