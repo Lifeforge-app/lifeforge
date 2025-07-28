@@ -113,11 +113,19 @@ const list = forgeController.query
       .sort(['-base_entry.pinned', '-base_entry.created'])
       .execute()
 
-      const returnSchema = COLLECTION_SCHEMAS.idea_box__entries.and(
+      const _returnSchema = COLLECTION_SCHEMAS.idea_box__entries.omit({
+        type: true
+      }).and(
         z.union([
-          COLLECTION_SCHEMAS.idea_box__entries_text,
-          COLLECTION_SCHEMAS.idea_box__entries_image,
-          COLLECTION_SCHEMAS.idea_box__entries_link
+          COLLECTION_SCHEMAS.idea_box__entries_text.extend({
+            type: z.literal('text')
+          }),
+          COLLECTION_SCHEMAS.idea_box__entries_image.extend({
+            type: z.literal('image')
+          }),
+          COLLECTION_SCHEMAS.idea_box__entries_link.extend({
+            type: z.literal('link')
+          })
         ])
       )
 
