@@ -75,14 +75,13 @@ export const createPhotosEntry = async (
     return new File([fileBuffer], file.path.split('/').pop() || 'photo.jpg')
   })
 
-  const entry = await pb.create.collection('moment_vault__entries').data({
-    type: 'photos',
-    file: allImages
-  }).execute
-
-  files.forEach(file => {
-    fs.unlinkSync(file.path)
-  })
+  const entry = await pb.create
+    .collection('moment_vault__entries')
+    .data({
+      type: 'photos',
+      file: allImages
+    })
+    .execute()
 
   return entry
 }

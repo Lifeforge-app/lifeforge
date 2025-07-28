@@ -33,6 +33,7 @@ import { checkExistence } from '@functions/database'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import type { Request, Response, Router } from 'express'
+import { z } from 'zod/v4'
 
 import {
   BaseResponse,
@@ -399,46 +400,44 @@ export class ForgeControllerBuilder<
           let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
 
           for (const type of ['body', 'query'] as const) {
-            const validator = schema[type]
+            const validator = schema[type] || z.object({})
 
-            if (validator) {
-              let result
+            let result
 
-              if (type === 'body') {
-                const { data, media } = splitMediaAndData(
-                  __media,
-                  req[type],
-                  (req.files || {}) as Record<string, Express.Multer.File[]>
-                )
+            if (type === 'body') {
+              const { data, media } = splitMediaAndData(
+                __media,
+                req[type],
+                (req.files || {}) as Record<string, Express.Multer.File[]>
+              )
 
-                finalMedia = media as ConvertMedia<TMedia>
+              finalMedia = media as ConvertMedia<TMedia>
 
-                const finalData = req.is('multipart/form-data')
-                  ? Object.fromEntries(
-                      Object.entries(data).map(([key, value]) => [
-                        key,
-                        restoreFormDataType(value)
-                      ])
-                    )
-                  : data
+              const finalData = req.is('multipart/form-data')
+                ? Object.fromEntries(
+                    Object.entries(data).map(([key, value]) => [
+                      key,
+                      restoreFormDataType(value)
+                    ])
+                  )
+                : data
 
-                result = validator.safeParse(finalData)
-              } else {
-                result = validator.safeParse(req[type])
-              }
+              result = validator.safeParse(finalData)
+            } else {
+              result = validator.safeParse(req[type])
+            }
 
-              if (!result.success) {
-                return clientError(res, {
-                  location: type,
-                  message: JSON.parse(result.error.message)
-                })
-              }
+            if (!result.success) {
+              return clientError(res, {
+                location: type,
+                message: JSON.parse(result.error.message)
+              })
+            }
 
-              if (type === 'body') {
-                req.body = result.data as InferZodType<TInput['body']>
-              } else if (type === 'query') {
-                req.query = result.data as InferZodType<TInput['query']>
-              }
+            if (type === 'body') {
+              req.body = result.data as InferZodType<TInput['body']>
+            } else if (type === 'query') {
+              req.query = result.data as InferZodType<TInput['query']>
             }
 
             if (options.existenceCheck?.[type]) {

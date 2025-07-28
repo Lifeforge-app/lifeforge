@@ -1,8 +1,7 @@
 import { getAPIKey } from '@functions/database'
+import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
-import fs from 'fs'
 import { z } from 'zod/v4'
 
 const listGoogleFonts = forgeController.query
@@ -60,47 +59,20 @@ const getGoogleFont = forgeController.query
 
 const updateBgImage = forgeController.mutation
   .description('Update background image')
-  .input({
-    body: z.object({
-      url: z.string().optional()
-    })
+  .input({})
+  .media({
+    file: {
+      optional: false
+    }
   })
-  .middlewares(singleUploadMiddleware)
-  .callback(async ({ pb, body: { url }, req }) => {
-    let targetFile: File
-
-    if (req.file) {
-      const fileBuffer = fs.readFileSync(req.file.path)
-
-      targetFile = new File(
-        [fileBuffer],
-        `bgImage.${req.file.originalname.split('.').pop()}`
-      )
-
-      fs.unlinkSync(req.file.path)
-    }
-
-    if (!url) {
-      throw new ClientError('No file uploaded')
-    }
-
-    try {
-      const response = await fetch(url)
-
-      const fileBuffer = await response.arrayBuffer()
-
-      targetFile = new File([new Uint8Array(fileBuffer)], `bgImage.png`)
-    } catch {
-      throw new Error('Invalid file')
-    }
-
-    await pb.update
+  .callback(async ({ pb, media: { file } }) => {
+    const newRecord = await pb.update
       .collection('users__users')
       .id(pb.instance.authStore.record!.id)
-      .data({
-        bgImage: targetFile
-      })
+      .data(await getMedia('bgImage', file))
       .execute()
+
+    return `${newRecord.collectionId}/${newRecord.id}/${newRecord.bgImage}`
   })
 
 const deleteBgImage = forgeController.mutation
