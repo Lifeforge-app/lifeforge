@@ -26,7 +26,9 @@ function IdeaAndFolderList() {
   const handleIdeaCreation = useCallback(() => {
     open(ModifyIdeaModal, {
       type: 'create',
-      ideaType: 'text'
+      initialData: {
+        type: 'text'
+      }
     })
   }, [])
 
