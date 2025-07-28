@@ -1,13 +1,14 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
+
+import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import FolderContextMenu from './FolderContextMenu'
-import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function getStyle({
   isOver,
@@ -80,36 +81,27 @@ function FolderItem({ folder }: { folder: IdeaBoxFolder }) {
     if (type === 'folder' && targetId === folder.id) return
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
-        {
-          method: 'POST'
-        }
-      )
+      await forgeAPI.ideaBox[type === 'idea' ? 'ideas' : 'folders'].moveTo
+        .input({
+          id: targetId
+        })
+        .mutate({
+          target: folder.id
+        })
 
       queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'ideas']
+        queryKey: ['ideaBox', 'ideas']
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['ideaBox', 'folders']
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['idea-box', 'misc', 'search']
       })
     } catch {
       toast.error('Failed to move item')
-    }
-  }
-
-  const removeFromFolder = async () => {
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `idea-box/folders/move/${folder.id}`,
-        {
-          method: 'DELETE'
-        }
-      )
-      queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'folders', id, path]
-      })
-    } catch {
-      toast.error('Failed to remove item from folder')
     }
   }
 
@@ -137,11 +129,7 @@ function FolderItem({ folder }: { folder: IdeaBoxFolder }) {
         <Icon className="mr-2 size-5 shrink-0" icon={folder.icon} />
         <span className="w-full min-w-0 truncate">{folder.name}</span>
       </div>
-      <FolderContextMenu
-        folder={folder}
-        isOver={isOver}
-        removeFromFolder={removeFromFolder}
-      />
+      <FolderContextMenu folder={folder} isOver={isOver} />
     </Link>
   )
 }

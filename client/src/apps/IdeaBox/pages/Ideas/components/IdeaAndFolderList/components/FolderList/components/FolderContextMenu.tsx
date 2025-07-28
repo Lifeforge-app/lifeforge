@@ -1,3 +1,5 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   DeleteConfirmationModal,
   HamburgerMenu,
@@ -12,15 +14,15 @@ import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 
 function FolderContextMenu({
-  folder,
+  folder
   // isOver,
-  removeFromFolder
 }: {
   folder: IdeaBoxFolder
   isOver: boolean
-  removeFromFolder: () => Promise<void>
 }) {
   // console.log(isOver) //TODO
+  const queryClient = useQueryClient()
+
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const open = useModalStore(state => state.open)
@@ -42,6 +44,27 @@ function FolderContextMenu({
     })
   }, [folder])
 
+  const removeFromFolderMutation = useMutation(
+    forgeAPI.ideaBox.folders.removeFromParent
+      .input({
+        id: folder.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['idea-box', 'ideas']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['idea-box', 'misc', 'search']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['idea-box', 'folders']
+          })
+        },
+        onError: () => {}
+      })
+  )
+
   return (
     <HamburgerMenu
       classNames={{
@@ -54,7 +77,7 @@ function FolderContextMenu({
           icon="tabler:folder-minus"
           namespace="apps.ideaBox"
           text="Remove from folder"
-          onClick={() => removeFromFolder().catch(console.error)}
+          onClick={() => removeFromFolderMutation.mutate({})}
         />
       )}
       <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateFolder} />
