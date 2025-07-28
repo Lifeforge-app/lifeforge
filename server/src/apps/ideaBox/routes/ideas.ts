@@ -142,10 +142,16 @@ const list = forgeController.query
       })),
       ...imageIdeas.map(idea => ({
         ...idea.expand!.base_entry,
+        id: idea.id,
+        collectionId: idea.collectionId,
+        collectionName: idea.collectionName,
         image: idea.image
       })),
       ...linkIdeas.map(idea => ({
         ...idea.expand!.base_entry,
+        id: idea.id,
+        collectionId: idea.collectionId,
+        collectionName: idea.collectionName,
         link: idea.link
       }))
     ] as Array<SchemaWithPB<z.infer<typeof _returnSchema>>>

@@ -56,8 +56,8 @@ export async function recursivelySearchFolder(
 
   const allResults = (
     await pb.getFullList
-      .collection('idea_box__entries')
-      .expand({ folder: 'idea_box__folders' })
+      .collection('idea_box__entries_text')
+      .expand({ base_entry: 'idea_box__entries' })
       .filter([
         {
           combination: '||',
@@ -66,26 +66,21 @@ export async function recursivelySearchFolder(
               field: 'content',
               operator: '~',
               value: q
-            },
-            {
-              field: 'title',
-              operator: '~',
-              value: q
             }
           ]
         },
         {
-          field: 'container',
+          field: 'base_entry.container',
           operator: '=',
           value: container
         },
         {
-          field: 'archived',
+          field: 'base_entry.archived',
           operator: '=',
           value: false
         },
         {
-          field: 'folder',
+          field: 'base_entry.folder',
           operator: '=',
           value: folderId
         },
@@ -93,7 +88,7 @@ export async function recursivelySearchFolder(
           ? tags.split(',').map(
               tag =>
                 ({
-                  field: 'tags',
+                  field: 'base_entry.tags',
                   operator: '~',
                   value: tag
                 }) as const
