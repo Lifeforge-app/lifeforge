@@ -484,15 +484,33 @@ const removeFromParent = forgeController.mutation
   .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(({ pb, query: { id } }) =>
-    pb.update
+  .callback(async ({ pb, query: { id } }) => {
+    const currentIdea = await pb.getOne
+      .collection('idea_box__entries')
+      .id(id)
+      .execute()
+
+    if (!currentIdea.folder) {
+      throw new ClientError('Idea is not in any folder')
+    }
+
+    const currentFolder = await pb.getOne
+      .collection('idea_box__folders')
+      .id(currentIdea.folder)
+      .execute()
+
+    if (!currentFolder) {
+      throw new ClientError('Current folder does not exist')
+    }
+
+    await pb.update
       .collection('idea_box__entries')
       .id(id)
       .data({
-        folder: ''
+        folder: currentFolder.parent || ''
       })
       .execute()
-  )
+  })
 
 export default forgeRouter({
   list,
