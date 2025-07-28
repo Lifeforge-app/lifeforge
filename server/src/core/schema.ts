@@ -1,40 +1,7 @@
-import flattenSchemas from '@functions/utils/flattenSchema'
-import { z } from 'zod/v4'
+import flattenSchemas from "@functions/utils/flattenSchema";
+import { z } from "zod/v4";
 
 export const SCHEMAS = {
-  virtual_wardrobe: {
-    entries: z.object({
-      name: z.string(),
-      category: z.string(),
-      subcategory: z.string(),
-      colors: z.any(),
-      size: z.string(),
-      brand: z.string(),
-      front_image: z.string(),
-      back_image: z.string(),
-      last_worn: z.string(),
-      times_worn: z.number(),
-      purchase_date: z.string(),
-      price: z.number(),
-      notes: z.string(),
-      is_favourite: z.boolean()
-    }),
-    histories: z.object({
-      entries: z.array(z.string()),
-      notes: z.string(),
-      created: z.string(),
-      updated: z.string()
-    })
-  },
-  music: {
-    entries: z.object({
-      name: z.string(),
-      duration: z.string(),
-      author: z.string(),
-      file: z.string(),
-      is_favourite: z.boolean()
-    })
-  },
   calendar: {
     events: z.object({
       title: z.string(),
@@ -44,46 +11,46 @@ export const SCHEMAS = {
       location_coords: z.object({ lat: z.number(), lon: z.number() }),
       reference_link: z.string(),
       description: z.string(),
-      type: z.enum(['single', 'recurring']),
+      type: z.enum(["single", "recurring"]),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     categories: z.object({
       name: z.string(),
       color: z.string(),
-      icon: z.string()
+      icon: z.string(),
     }),
     categories_aggregated: z.object({
       name: z.string(),
       icon: z.string(),
       color: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     calendars: z.object({
       name: z.string(),
-      color: z.string()
+      color: z.string(),
     }),
     events_single: z.object({
       base_event: z.string(),
       start: z.string(),
-      end: z.string()
+      end: z.string(),
     }),
     events_recurring: z.object({
       recurring_rule: z.string(),
       duration_amount: z.number(),
-      duration_unit: z.enum(['hour', 'year', 'month', 'day', 'week']),
+      duration_unit: z.enum(["hour", "year", "month", "day", "week"]),
       exceptions: z.any(),
-      base_event: z.string()
-    })
+      base_event: z.string(),
+    }),
   },
   achievements: {
     entries: z.object({
       title: z.string(),
       thoughts: z.string(),
-      difficulty: z.enum(['easy', 'medium', 'hard', 'impossible']),
+      difficulty: z.enum(["easy", "medium", "hard", "impossible"]),
       created: z.string(),
-      updated: z.string()
-    })
+      updated: z.string(),
+    }),
   },
   passwords: {
     entries: z.object({
@@ -95,18 +62,18 @@ export const SCHEMAS = {
       color: z.string(),
       pinned: z.boolean(),
       created: z.string(),
-      updated: z.string()
-    })
+      updated: z.string(),
+    }),
   },
   moment_vault: {
     entries: z.object({
-      type: z.enum(['text', 'audio', 'video', 'photos', '']),
+      type: z.enum(["text", "audio", "video", "photos", ""]),
       file: z.array(z.string()),
       content: z.string(),
       transcription: z.string(),
       created: z.string(),
-      updated: z.string()
-    })
+      updated: z.string(),
+    }),
   },
   blog: {
     entries: z.object({
@@ -114,27 +81,27 @@ export const SCHEMAS = {
       title: z.string(),
       media: z.array(z.string()),
       excerpt: z.string(),
-      visibility: z.enum(['private', 'public', 'unlisted', '']),
+      visibility: z.enum(["private", "public", "unlisted", ""]),
       featured_image: z.string(),
       labels: z.any(),
       category: z.string(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     categories: z.object({
       name: z.string(),
       color: z.string(),
-      icon: z.string()
-    })
+      icon: z.string(),
+    }),
   },
   todo_list: {
     lists: z.object({
       name: z.string(),
       icon: z.string(),
-      color: z.string()
+      color: z.string(),
     }),
     tags: z.object({
-      name: z.string()
+      name: z.string(),
     }),
     entries: z.object({
       summary: z.string(),
@@ -147,67 +114,64 @@ export const SCHEMAS = {
       done: z.boolean(),
       completed_at: z.string(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     priorities: z.object({
       name: z.string(),
-      color: z.string()
+      color: z.string(),
     }),
     lists_aggregated: z.object({
       name: z.string(),
       color: z.string(),
       icon: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     tags_aggregated: z.object({
       name: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     priorities_aggregated: z.object({
       name: z.string(),
       color: z.string(),
-      amount: z.number()
-    })
+      amount: z.number(),
+    }),
   },
   idea_box: {
     containers: z.object({
       icon: z.string(),
       color: z.string(),
       name: z.string(),
-      cover: z.string()
+      cover: z.string(),
     }),
     entries: z.object({
-      type: z.enum(['text', 'image', 'link']),
-      image: z.string(),
-      title: z.string(),
-      content: z.string(),
+      type: z.enum(["text", "image", "link"]),
       container: z.string(),
       folder: z.string(),
       pinned: z.boolean(),
       archived: z.boolean(),
       tags: z.any(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     folders: z.object({
       container: z.string(),
       name: z.string(),
       color: z.string(),
       icon: z.string(),
-      parent: z.string()
+      parent: z.string(),
     }),
     tags: z.object({
       name: z.string(),
       icon: z.string(),
       color: z.string(),
-      container: z.string()
+      container: z.string(),
     }),
     tags_aggregated: z.object({
       name: z.string(),
       color: z.string(),
       icon: z.string(),
       container: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     containers_aggregated: z.object({
       name: z.string(),
@@ -216,8 +180,20 @@ export const SCHEMAS = {
       cover: z.string(),
       text_count: z.number(),
       link_count: z.number(),
-      image_count: z.number()
-    })
+      image_count: z.number(),
+    }),
+    entries_text: z.object({
+      base_entry: z.string(),
+      content: z.string(),
+    }),
+    entries_link: z.object({
+      link: z.url(),
+      base_entry: z.string(),
+    }),
+    entries_image: z.object({
+      image: z.string(),
+      base_entry: z.string(),
+    }),
   },
   railway_map: {
     lines: z.object({
@@ -227,7 +203,7 @@ export const SCHEMAS = {
       name: z.string(),
       color: z.string(),
       ways: z.any(),
-      map_paths: z.any()
+      map_paths: z.any(),
     }),
     stations: z.object({
       name: z.string(),
@@ -238,8 +214,8 @@ export const SCHEMAS = {
       map_data: z.any(),
       type: z.string(),
       distances: z.any(),
-      map_image: z.string()
-    })
+      map_image: z.string(),
+    }),
   },
   movies: {
     entries: z.object({
@@ -260,84 +236,85 @@ export const SCHEMAS = {
       theatre_location: z.string(),
       theatre_location_coords: z.object({ lat: z.number(), lon: z.number() }),
       theatre_number: z.string(),
-      is_watched: z.boolean()
-    })
+      is_watched: z.boolean(),
+    }),
   },
   wallet: {
     assets: z.object({
       name: z.string(),
       icon: z.string(),
-      starting_balance: z.number()
+      starting_balance: z.number(),
     }),
     ledgers: z.object({
       name: z.string(),
       icon: z.string(),
-      color: z.string()
+      color: z.string(),
     }),
     categories: z.object({
       name: z.string(),
       icon: z.string(),
       color: z.string(),
-      type: z.enum(['income', 'expenses'])
+      type: z.enum(["income", "expenses"]),
     }),
     transactions: z.object({
-      type: z.enum(['transfer', 'income_expenses']),
+      type: z.enum(["transfer", "income_expenses"]),
       amount: z.number(),
       date: z.string(),
       receipt: z.string(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     categories_aggregated: z.object({
-      type: z.enum(['income', 'expenses']),
+      type: z.enum(["income", "expenses"]),
       name: z.string(),
       icon: z.string(),
       color: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     assets_aggregated: z.object({
       name: z.string(),
       icon: z.string(),
       starting_balance: z.number(),
       transaction_count: z.number(),
-      current_balance: z.any()
+      current_balance: z.any(),
     }),
     ledgers_aggregated: z.object({
       name: z.string(),
       color: z.string(),
       icon: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     transaction_types_aggregated: z.object({
-      name: z.enum(['transfer', 'income_expenses']),
-      transaction_type: z.any(),
+      name: z.any(),
       transaction_count: z.number(),
-      accumulated_amount: z.any()
+      accumulated_amount: z.any(),
     }),
     transactions_income_expenses: z.object({
       base_transaction: z.string(),
-      type: z.enum(['income', 'expenses']),
+      type: z.enum(["income", "expenses"]),
       particulars: z.string(),
       asset: z.string(),
       category: z.string(),
       ledgers: z.array(z.string()),
       location_name: z.string(),
-      location_coords: z.object({ lat: z.number(), lon: z.number() })
+      location_coords: z.object({ lat: z.number(), lon: z.number() }),
+      created: z.string(),
+      updated: z.string(),
     }),
     transactions_transfer: z.object({
       base_transaction: z.string(),
       from: z.string(),
-      to: z.string()
-    })
+      to: z.string(),
+    }),
   },
   books_library: {
     collections: z.object({
       name: z.string(),
-      icon: z.string()
+      icon: z.string(),
     }),
     languages: z.object({
       name: z.string(),
-      icon: z.string()
+      icon: z.string(),
     }),
     entries: z.object({
       title: z.string(),
@@ -357,25 +334,25 @@ export const SCHEMAS = {
       is_read: z.boolean(),
       time_finished: z.string(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     file_types: z.object({
-      name: z.string()
+      name: z.string(),
     }),
     file_types_aggregated: z.object({
       name: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     languages_aggregated: z.object({
       name: z.string(),
       icon: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     collections_aggregated: z.object({
       name: z.string(),
       icon: z.string(),
-      amount: z.number()
-    })
+      amount: z.number(),
+    }),
   },
   scores_library: {
     entries: z.object({
@@ -389,32 +366,32 @@ export const SCHEMAS = {
       musescore: z.string(),
       isFavourite: z.boolean(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     authors_aggregated: z.object({
       name: z.string(),
-      amount: z.number()
+      amount: z.number(),
     }),
     types: z.object({
       name: z.string(),
-      icon: z.string()
+      icon: z.string(),
     }),
     types_aggregated: z.object({
       name: z.string(),
       icon: z.string(),
-      amount: z.number()
-    })
+      amount: z.number(),
+    }),
   },
   code_time: {
     projects: z.object({
       name: z.string(),
-      duration: z.number()
+      duration: z.number(),
     }),
     languages: z.object({
       name: z.string(),
       icon: z.string(),
       color: z.string(),
-      duration: z.number()
+      duration: z.number(),
     }),
     daily_entries: z.object({
       date: z.string(),
@@ -424,15 +401,15 @@ export const SCHEMAS = {
       last_timestamp: z.number(),
       languages: z.any(),
       created: z.string(),
-      updated: z.string()
-    })
+      updated: z.string(),
+    }),
   },
   wishlist: {
     lists: z.object({
       name: z.string(),
       description: z.string(),
       color: z.string(),
-      icon: z.string()
+      icon: z.string(),
     }),
     entries: z.object({
       name: z.string(),
@@ -443,7 +420,7 @@ export const SCHEMAS = {
       bought: z.boolean(),
       bought_at: z.string(),
       created: z.string(),
-      updated: z.string()
+      updated: z.string(),
     }),
     lists_aggregated: z.object({
       name: z.string(),
@@ -453,8 +430,8 @@ export const SCHEMAS = {
       total_count: z.number(),
       total_amount: z.any(),
       bought_count: z.number(),
-      bought_amount: z.any()
-    })
+      bought_amount: z.any(),
+    }),
   },
   api_keys: {
     entries: z.object({
@@ -464,8 +441,8 @@ export const SCHEMAS = {
       icon: z.string(),
       key: z.string(),
       created: z.string(),
-      updated: z.string()
-    })
+      updated: z.string(),
+    }),
   },
   users: {
     users: z.object({
@@ -478,13 +455,13 @@ export const SCHEMAS = {
       name: z.string(),
       avatar: z.string(),
       dateOfBirth: z.string(),
-      theme: z.enum(['system', 'light', 'dark']),
+      theme: z.enum(["system", "light", "dark"]),
       color: z.string(),
       bgTemp: z.string(),
       bgImage: z.string(),
       backdropFilters: z.any(),
       fontFamily: z.string(),
-      language: z.enum(['zh-CN', 'en', 'ms', 'zh-TW', '']),
+      language: z.enum(["zh-CN", "en", "ms", "zh-TW", ""]),
       moduleConfigs: z.any(),
       enabledModules: z.any(),
       dashboardLayout: z.any(),
@@ -496,11 +473,11 @@ export const SCHEMAS = {
       APIKeysMasterPasswordHash: z.string(),
       twoFASecret: z.string(),
       created: z.string(),
-      updated: z.string()
-    })
-  }
-}
+      updated: z.string(),
+    }),
+  },
+};
 
-const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
+const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS);
 
-export default COLLECTION_SCHEMAS
+export default COLLECTION_SCHEMAS;
