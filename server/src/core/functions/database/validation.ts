@@ -6,12 +6,14 @@ const checkExistence = async (
   pb: PBService,
   collection: keyof typeof COLLECTION_SCHEMAS,
   id: string
-): Promise<boolean> =>
-  (await pb.getOne
-    .collection(collection)
-    .id(id)
-    .execute()
-    .then(() => true)
-    .catch(() => {})) ?? false
+): Promise<boolean> => {
+  try {
+    await pb.getOne.collection(collection).id(id).execute()
+
+    return true
+  } catch {
+    return false
+  }
+}
 
 export default checkExistence

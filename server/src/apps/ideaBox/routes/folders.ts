@@ -56,8 +56,9 @@ const create = forgeController.mutation
   .input({
     body: SCHEMAS.idea_box.folders
   })
-  .existenceCheck('query', {
-    container: 'idea_box__containers'
+  .existenceCheck('body', {
+    container: 'idea_box__containers',
+    parent: 'idea_box__folders'
   })
   .callback(
     async ({ pb, body }) =>
