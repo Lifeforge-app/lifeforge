@@ -112,11 +112,20 @@ const list = forgeController.query
       .sort(['-base_entry.pinned', '-base_entry.created'])
       .execute()
 
-    return {
-      text: textIdeas,
-      image: imageIdeas,
-      link: linkIdeas
-    }
+    return [
+      ...textIdeas.map(idea => ({
+        ...idea.expand!.base_entry,
+        content: idea.content
+      })),
+      ...imageIdeas.map(idea => ({
+        ...idea.expand!.base_entry,
+        image: idea.image
+      })),
+      ...linkIdeas.map(idea => ({
+        ...idea.expand!.base_entry,
+        link: idea.link
+      }))
+    ]
   })
 
 const create = forgeController.mutation
