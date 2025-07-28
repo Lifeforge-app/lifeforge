@@ -1,3 +1,4 @@
+import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
@@ -6,7 +7,6 @@ import multer from 'multer'
 import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
-import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 
 const list = forgeController.query
   .description('Get ideas from a folder')
@@ -113,9 +113,11 @@ const list = forgeController.query
       .sort(['-base_entry.pinned', '-base_entry.created'])
       .execute()
 
-      const _returnSchema = COLLECTION_SCHEMAS.idea_box__entries.omit({
+    const _returnSchema = COLLECTION_SCHEMAS.idea_box__entries
+      .omit({
         type: true
-      }).and(
+      })
+      .and(
         z.union([
           COLLECTION_SCHEMAS.idea_box__entries_text.extend({
             type: z.literal('text')
@@ -132,17 +134,21 @@ const list = forgeController.query
     return [
       ...textIdeas.map(idea => ({
         ...idea.expand!.base_entry,
+        id: idea.id,
+        collectionId: idea.collectionId,
+        collectionName: idea.collectionName,
         content: idea.content,
-        type: 'text',      })),
+        type: 'text'
+      })),
       ...imageIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        image: idea.image,
+        image: idea.image
       })),
       ...linkIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        link: idea.link,
+        link: idea.link
       }))
-    ] as Array<SchemaWithPB<z.infer<typeof returnSchema>>>
+    ] as Array<SchemaWithPB<z.infer<typeof _returnSchema>>>
   })
 
 const create = forgeController.mutation
