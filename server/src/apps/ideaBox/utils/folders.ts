@@ -54,10 +54,9 @@ export async function recursivelySearchFolder(
     ])
     .execute()
 
-  const thisFolder = await pb.getOne
-    .collection('idea_box__folders')
-    .id(folderId)
-    .execute()
+  const thisFolder = folderId
+    ? await pb.getOne.collection('idea_box__folders').id(folderId).execute()
+    : undefined
 
   const textResults = (
     await pb.getFullList
