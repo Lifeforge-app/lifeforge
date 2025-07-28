@@ -69,7 +69,16 @@ const updateBgImage = forgeController.mutation
     const newRecord = await pb.update
       .collection('users__users')
       .id(pb.instance.authStore.record!.id)
-      .data(await getMedia('bgImage', file))
+      .data({
+        ...(await getMedia('bgImage', file)),
+        backdropFilters: {
+          brightness: 100,
+          blur: 'none',
+          contrast: 100,
+          saturation: 100,
+          overlayOpacity: 50
+        }
+      })
       .execute()
 
     return {
