@@ -126,7 +126,7 @@ export type PickSelectedFields<
     ? SchemaWithPB<ExtractZodShape<CollectionSchema<TCollectionKey>>>[K]
     : never
 } & (keyof TExpandConfig extends never
-  ? Record<string, never>
+  ? Record<string, any>
   : {
       expand?: {
         [ExpandKey in keyof TExpandConfig]?: {
