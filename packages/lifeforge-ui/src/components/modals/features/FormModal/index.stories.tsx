@@ -1,6 +1,5 @@
 import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
 
 import Index from './index'
 import FormModal from './index'
@@ -8,7 +7,13 @@ import defineForm from './utils/FormBuilder'
 
 type CuteForm = {
   title: string
+  title2: string
+  title3: string
+  title4: string
+  title5: string
+  title6: string
   price: number
+  hmmm: File | string
   choice: (
     | 'option1'
     | 'option2'
@@ -38,12 +43,6 @@ export const Default: Story = {
     }
   } as never,
   render: () => {
-    const [formData, setFormData] = useState<CuteForm>({
-      title: '',
-      price: 0,
-      choice: []
-    })
-
     const formProps = defineForm<CuteForm>()
       .ui({
         icon: 'tabler:forms',
@@ -59,7 +58,13 @@ export const Default: Story = {
       .typesMap({
         choice: 'listbox',
         price: 'currency',
-        title: 'text'
+        title: 'text',
+        title2: 'text',
+        title3: 'text',
+        title4: 'text',
+        title5: 'text',
+        title6: 'text',
+        hmmm: 'file'
       })
       .setupFields({
         choice: {
@@ -67,7 +72,6 @@ export const Default: Story = {
           required: true,
           label: 'Choice',
           icon: 'tabler:check',
-          hidden: !formData.title.trim(),
           options: [
             {
               value: 'option1',
@@ -116,6 +120,37 @@ export const Default: Story = {
           label: 'Title',
           icon: 'tabler:article',
           placeholder: 'Enter title here'
+        },
+        title2: {
+          label: 'Title 2',
+          icon: 'tabler:article',
+          placeholder: 'Enter title 2 here'
+        },
+        title3: {
+          label: 'Title 3',
+          icon: 'tabler:article',
+          placeholder: 'Enter title 3 here'
+        },
+        title4: {
+          label: 'Title 4',
+          icon: 'tabler:article',
+          placeholder: 'Enter title 4 here'
+        },
+        title5: {
+          label: 'Title 5',
+          icon: 'tabler:article',
+          placeholder: 'Enter title 5 here'
+        },
+        title6: {
+          label: 'Title 6',
+          icon: 'tabler:article',
+          placeholder: 'Enter title 6 here'
+        },
+        hmmm: {
+          label: 'Hmmm',
+          icon: 'tabler:file',
+          required: true,
+          optional: false
         }
       })
       .initialData({
@@ -127,14 +162,10 @@ export const Default: Story = {
         await new Promise(resolve => setTimeout(resolve, 1000))
         alert('Form submitted successfully!')
       })
-      .onChange(data => {
-        setFormData(data)
-      })
       .build()
 
     return (
       <ModalWrapper isOpen={true}>
-        {JSON.stringify(formData)}
         <FormModal {...formProps} />
       </ModalWrapper>
     )
