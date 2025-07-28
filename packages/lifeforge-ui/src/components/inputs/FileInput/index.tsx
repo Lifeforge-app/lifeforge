@@ -70,12 +70,12 @@ function FileInput({
   return (
     <div
       className={clsx(
-        'bg-bg-200/50 file-input shadow-custom flex w-full flex-col rounded-md p-6',
+        'bg-bg-200/50 __file-input shadow-custom flex w-full flex-col rounded-md p-6',
         darker ? 'component-bg-lighter' : 'component-bg',
         disabled ? 'pointer-events-none! opacity-50' : 'cursor-pointer'
       )}
     >
-      <div className="text-bg-500 flex items-center gap-3">
+      <div className="text-bg-500 flex w-full items-center gap-3">
         <Icon className="size-6" icon={icon} />
         <span className="font-medium">
           {inputLabel}{' '}
@@ -83,7 +83,7 @@ function FileInput({
         </span>
       </div>
       {!file || file === 'removed' ? (
-        <div className="mt-6 flex flex-col items-center gap-3">
+        <div className="mt-6 flex w-full flex-col items-center gap-3">
           <Button
             className="w-full"
             icon="tabler:file-plus"

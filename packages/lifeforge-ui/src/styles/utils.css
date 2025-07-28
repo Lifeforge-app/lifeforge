@@ -28,7 +28,7 @@
   @apply h-full w-full;
 }
 
-.file-input {
+.__file-input {
   & [data-rmiz],
   & [data-rmiz-content] {
     @apply max-h-96 w-full;
