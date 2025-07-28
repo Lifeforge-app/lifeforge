@@ -3,6 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import type { InferInput, InferOutput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -20,6 +21,8 @@ function ModifyIdeaModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
+  const { t } = useTranslation('apps.ideaBox')
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
@@ -82,9 +85,9 @@ function ModifyIdeaModal({
         label: 'Idea type',
         icon: 'tabler:category',
         options: [
-          { value: 'text', text: 'Text' },
-          { value: 'link', text: 'Link' },
-          { value: 'image', text: 'Image' }
+          { value: 'text', text: t('entryType.text') },
+          { value: 'link', text: t('entryType.link') },
+          { value: 'image', text: t('entryType.image') }
         ]
       },
       text: {
@@ -97,7 +100,7 @@ function ModifyIdeaModal({
       link: {
         required: true,
         label: 'Idea link',
-        icon: 'tabler:url',
+        icon: 'tabler:link',
         placeholder: 'https://example.com/your-idea',
         hidden: ideaType !== 'link'
       },
