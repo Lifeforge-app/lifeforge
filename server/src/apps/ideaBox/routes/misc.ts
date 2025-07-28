@@ -63,10 +63,10 @@ const checkValid = forgeController.query
   .input({
     query: z.object({
       container: z.string(),
-      '0': z.string()
+      path: z.string()
     })
   })
-  .callback(async ({ pb, query: { container, '0': path } }) => {
+  .callback(async ({ pb, query: { container, path } }) => {
     const containerExists = await checkExistence(
       pb,
       'idea_box__containers',
