@@ -1,25 +1,26 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
+import type { InferOutput } from 'lifeforge-api'
 import { Button, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import type { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
 import { fetchAPI } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import type { MomentVaultEntry } from '@apps/MomentVault'
 
 function AudioEntry({
-  entriesQueryKey,
+  currentPage,
   entry,
   onDelete
 }: {
-  entriesQueryKey: unknown[]
-  entry: IMomentVaultEntry
+  currentPage: number
+  entry: MomentVaultEntry
   onDelete: () => void
 }) {
   const stack = useModalStore(state => state.stack)
@@ -70,9 +71,13 @@ function AudioEntry({
         }
       )
 
-      queryClient.setQueryData<ListResult<IMomentVaultEntry>>(
-        entriesQueryKey,
-        prev => {
+      queryClient.setQueryData(
+        forgeAPI.momentVault.entries.list.input({ page: currentPage }).key,
+        (
+          prev:
+            | InferOutput<typeof forgeAPI.momentVault.entries.list>
+            | undefined
+        ) => {
           if (!prev) return prev
 
           const newData = prev.items.map(item => {
@@ -131,7 +136,11 @@ function AudioEntry({
             cursorColor={themeColor}
             height={50}
             progressColor={themeColor}
-            url={`${import.meta.env.VITE_API_HOST}/media/${entry.file?.[0]}`}
+            url={forgeAPI.media.input({
+              collectionId: entry.collectionId,
+              recordId: entry.id,
+              fieldId: entry.file?.[0]
+            }).endpoint}
             waveColor={
               derivedTheme === 'dark' ? bgTempPalette[700] : bgTempPalette[400]
             }

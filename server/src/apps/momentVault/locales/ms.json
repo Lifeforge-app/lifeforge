@@ -7,7 +7,7 @@
   "buttons": {
     "text": "Teks",
     "audio": "Audio",
-    "photo": "Foto",
+    "photos": "Foto",
     "video": "Video",
     "transcribeToText": "Transkrip ke Teks"
   },
