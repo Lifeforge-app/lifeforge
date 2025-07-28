@@ -49,10 +49,14 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
         formData.append('files', photo.file)
       })
 
-      await fetchAPI(import.meta.env.VITE_API_HOST, 'moment-vault/entries', {
-        method: 'POST',
-        body: formData
-      })
+      await fetchAPI(
+        import.meta.env.VITE_API_HOST,
+        'momentVault/entries/create',
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
 
       onSuccess()
     } catch (err) {

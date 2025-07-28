@@ -12,7 +12,8 @@
     "transcribeToText": "Transkrip ke Teks"
   },
   "modals": {
-    "addEntry": "Tambah Entri"
+    "addEntry": "Tambah Entri",
+    "updateEntry": "Kemas Kini Entri"
   },
   "inputs": {
     "entryType": "Jenis Entri",
