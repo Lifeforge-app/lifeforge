@@ -43,8 +43,8 @@
       "update": "更新標籤"
     },
     "idea": {
-      "create": "新增",
-      "update": "編輯"
+      "create": "新增創意",
+      "update": "編輯創意"
     }
   },
   "buttons": {
@@ -58,6 +58,7 @@
     "containerName": "創意盒名稱",
     "folderName": "資料夾名稱",
     "ideaTitle": "創意標題",
+    "ideaType": "創意類型",
     "imageLink": "圖片連結",
     "coverImage": "封面圖片",
     "ideaTags": "創意標籤",
