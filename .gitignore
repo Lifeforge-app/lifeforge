@@ -9,6 +9,7 @@ coverage
 # production
 dist
 build
+tsbuild
 *.js
 *.tsbuildinfo
 
