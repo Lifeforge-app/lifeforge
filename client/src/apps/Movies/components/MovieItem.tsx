@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem
 } from 'lifeforge-ui'
@@ -68,14 +68,25 @@ function MovieItem({
     })
   }, [data])
 
+  const deleteMutation = useMutation(
+    forgeAPI.movies.entries.remove.input({ id: data.id }).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['movies'] })
+      },
+      onError: () => {
+        toast.error('Failed to delete movie entry')
+      }
+    })
+  )
+
   const handleDeleteTicket = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: '/movies/entries',
-      data: data,
-      itemName: 'movie',
-      nameKey: 'title',
-      queryKey: ['movies', 'entries'],
-      queryUpdateType: 'invalidate'
+    open(ConfirmationModal, {
+      title: 'Delete Movie',
+      description: 'Are you sure you want to delete this movie?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [data])
 

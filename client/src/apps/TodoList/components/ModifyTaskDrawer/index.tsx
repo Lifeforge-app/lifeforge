@@ -192,7 +192,7 @@ function ModifyTaskDrawer() {
       />
       <div
         className={clsx(
-          'bg-bg-100 dark:bg-bg-900 absolute top-0 right-0 flex size-full flex-col p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
+          'bg-bg-100 dark:bg-bg-900 absolute top-0 right-0 flex size-full flex-col rounded-l-xl p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
           innerOpenType !== null && 'translate-x-0',
           innerOpenType === null && 'translate-x-full'
         )}
@@ -220,7 +220,7 @@ function ModifyTaskDrawer() {
               />
             </HamburgerMenu>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             <TextInput
               ref={summaryInputRef}
               darker

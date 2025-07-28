@@ -7,7 +7,6 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import tinycolor from 'tinycolor2'
 
@@ -23,8 +22,6 @@ function FolderContextMenu({
   isOver: boolean
 }) {
   const queryClient = useQueryClient()
-
-  const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const open = useModalStore(state => state.open)
 

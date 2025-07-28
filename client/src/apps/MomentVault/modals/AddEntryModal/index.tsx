@@ -38,7 +38,6 @@ function AddEntryModal({
   onClose
 }: {
   data: {
-    entriesQueryKey: unknown[]
     type: 'text' | 'audio' | 'photos' | 'video'
   }
   onClose: () => void

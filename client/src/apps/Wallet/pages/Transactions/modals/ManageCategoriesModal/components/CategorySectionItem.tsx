@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
@@ -10,8 +12,11 @@ import { useTranslation } from 'react-i18next'
 
 import type { WalletCategory } from '../../..'
 import ModifyCategoryModal from '../../ModifyCategoryModal'
+import { toast } from 'react-toastify'
 
 function CategorySectionItem({ category }: { category: WalletCategory }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.wallet')
@@ -23,14 +28,27 @@ function CategorySectionItem({ category }: { category: WalletCategory }) {
     })
   }, [category])
 
+  const deleteMutation = useMutation(
+    forgeAPI.wallet.categories.remove
+      .input({ id: category.id })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
+        },
+        onError: () => {
+          toast.error('Failed to delete category')
+        }
+      })
+  )
+
   const handleDeleteCategory = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'wallet/categories',
-      confirmationText: 'Delete this category',
-      data: category,
-      itemName: 'category',
-      nameKey: 'name' as const,
-      queryKey: ['wallet', 'categories']
+    open(ConfirmationModal, {
+      title: 'Delete Category',
+      description: 'Are you sure you want to delete this category?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [])
 

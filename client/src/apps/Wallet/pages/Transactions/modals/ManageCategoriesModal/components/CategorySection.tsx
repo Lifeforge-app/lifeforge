@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +36,13 @@ function CategorySection({ categories, type, iconName }: CategorySectionProps) {
     <>
       <div className="flex-between flex gap-3">
         <h2 className="text-bg-500 flex items-center gap-2 text-lg font-medium">
-          <Icon className="size-6" icon={iconName} />
+          <Icon
+            className={clsx(
+              'size-6',
+              type === 'income' ? 'text-green-500' : 'text-red-500'
+            )}
+            icon={iconName}
+          />
           {t('transactionTypes.' + type)}
         </h2>
         <button

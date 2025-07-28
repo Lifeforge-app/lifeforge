@@ -4,6 +4,7 @@ import forgeAPI from '@utils/forgeAPI'
 import { ConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
 import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
