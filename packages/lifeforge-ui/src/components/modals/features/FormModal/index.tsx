@@ -70,7 +70,7 @@ const getInitialData = <TFormConfig extends FieldsConfig<any, any>>(
 ) => {
   return Object.fromEntries(
     Object.entries(fieldTypes).map(([key, fieldType]) => {
-      if (formExistedData && key in formExistedData) {
+      if (formExistedData && key in formExistedData && formExistedData[key]) {
         return [key, transformExistedData(fieldType, formExistedData[key])]
       }
 

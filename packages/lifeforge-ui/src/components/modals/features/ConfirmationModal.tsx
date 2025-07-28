@@ -23,7 +23,7 @@ function ConfirmationModal({
     onConfirm: () => Promise<void>
   }
 }) {
-  const { t } = useTranslation('common.modals')
+  const { t } = useTranslation(['common.modals', 'common.buttons'])
 
   const [loading, setLoading] = useState(false)
 
@@ -53,9 +53,12 @@ function ConfirmationModal({
           icon="tabler:alert-triangle"
           name="Confirmation"
           namespace="common.modals"
-          placeholder={t('deleteConfirmation.inputs.confirmation.placeholder', {
-            text: confirmationPrompt
-          })}
+          placeholder={t(
+            'common.modals:deleteConfirmation.inputs.confirmation.placeholder',
+            {
+              text: confirmationPrompt
+            }
+          )}
           setValue={setConfirmationTextState}
           tKey="deleteConfirmation"
           value={confirmationTextState}
@@ -80,7 +83,9 @@ function ConfirmationModal({
           loading={loading}
           onClick={onClick}
         >
-          {buttonType}
+          {t(
+            `common.buttons:${buttonType === 'delete' ? 'delete' : 'confirm'}`
+          )}
         </Button>
       </div>
     </div>
