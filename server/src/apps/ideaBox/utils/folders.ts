@@ -59,20 +59,15 @@ export async function recursivelySearchFolder(
     .id(folderId)
     .execute()
 
-  const allResults = (
+  const textResults = (
     await pb.getFullList
       .collection('idea_box__entries_text')
       .expand({ base_entry: 'idea_box__entries' })
       .filter([
         {
-          combination: '||',
-          filters: [
-            {
-              field: 'content',
-              operator: '~',
-              value: q
-            }
-          ]
+          field: 'content',
+          operator: '~',
+          value: q
         },
         {
           field: 'base_entry.container',
@@ -113,6 +108,98 @@ export async function recursivelySearchFolder(
     type: 'text',
     fullPath: parents
   }))
+
+  const imageResults = (
+    await pb.getFullList
+      .collection('idea_box__entries_image')
+      .expand({ base_entry: 'idea_box__entries' })
+      .filter([
+        {
+          field: 'base_entry.container',
+          operator: '=',
+          value: container
+        },
+        {
+          field: 'base_entry.archived',
+          operator: '=',
+          value: false
+        },
+        {
+          field: 'base_entry.folder',
+          operator: '=',
+          value: folderId
+        },
+        ...(tags
+          ? tags.split(',').map(
+              tag =>
+                ({
+                  field: 'base_entry.tags',
+                  operator: '~',
+                  value: tag
+                }) as const
+            )
+          : [])
+      ])
+      .execute()
+  ).map(result => ({
+    ...result.expand!.base_entry,
+    id: result.id,
+    collectionId: result.collectionId,
+    collectionName: result.collectionName,
+    image: result.image,
+    expand: {
+      folder: thisFolder
+    },
+    type: 'image',
+    fullPath: parents
+  }))
+
+  const linkResults = (
+    await pb.getFullList
+      .collection('idea_box__entries_link')
+      .expand({ base_entry: 'idea_box__entries' })
+      .filter([
+        {
+          field: 'base_entry.container',
+          operator: '=',
+          value: container
+        },
+        {
+          field: 'base_entry.archived',
+          operator: '=',
+          value: false
+        },
+        {
+          field: 'base_entry.folder',
+          operator: '=',
+          value: folderId
+        },
+        ...(tags
+          ? tags.split(',').map(
+              tag =>
+                ({
+                  field: 'base_entry.tags',
+                  operator: '~',
+                  value: tag
+                }) as const
+            )
+          : [])
+      ])
+      .execute()
+  ).map(result => ({
+    ...result.expand!.base_entry,
+    id: result.id,
+    collectionId: result.collectionId,
+    collectionName: result.collectionName,
+    link: result.link,
+    expand: {
+      folder: thisFolder
+    },
+    type: 'link',
+    fullPath: parents
+  }))
+
+  const allResults = [...textResults, ...imageResults, ...linkResults]
 
   if (folderInsideFolder.length === 0) {
     return allResults
