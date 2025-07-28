@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
 import {
   Button,
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem
 } from 'lifeforge-ui'
@@ -28,6 +30,8 @@ function PasswordEntryItem({
   password: PasswordEntry
   pinPassword: (id: string) => Promise<void>
 }) {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.passwords')
 
   const open = useModalStore(state => state.open)
@@ -41,6 +45,21 @@ function PasswordEntryItem({
   const [loading, setLoading] = useState(false)
 
   const [copyLoading, setCopyLoading] = useState(false)
+
+  const deleteMutation = useMutation(
+    forgeAPI.passwords.entries.remove
+      .input({
+        id: password.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['passwords', 'entries'] })
+        },
+        onError: () => {
+          toast.error('Failed to delete password. Please try again.')
+        }
+      })
+  )
 
   async function copyPassword() {
     setCopyLoading(true)
@@ -96,13 +115,13 @@ function PasswordEntryItem({
   }, [masterPassword, password.id, decryptedPassword])
 
   const handleDeletePassword = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'passwords/entries',
-      confirmationText: 'Delete this password',
-      customText: `Are you sure you want to delete the password for ${password.name}? This action is irreversible.`,
-      data: password,
-      itemName: 'password',
-      queryKey: ['passwords', 'entries']
+    open(ConfirmationModal, {
+      title: 'Delete Password',
+      description: `Are you sure you want to delete the password for ${password.name}? This action cannot be undone.`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [password])
 

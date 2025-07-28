@@ -4,18 +4,14 @@ import dayjs from 'dayjs'
 import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 
+import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 import EntryContextMenu from '../components/EntryContextMenu'
 import InFolderChip from '../components/InFolderChip'
 import TagChip from '../components/TagChip'
 import EntryContent from './components/EntryContent'
 
-function EntryLink({
-  entry
-}: {
-  entry:
-    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
-    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
-}) {
+function EntryLink({ entry }: { entry: IdeaBoxIdea }) {
   const { t } = useTranslation('apps.ideaBox')
 
   const [{ opacity, isDragging }, dragRef] = useDrag(

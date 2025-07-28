@@ -1,22 +1,14 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { memo } from 'react'
-import { useAPIQuery } from 'shared'
 
-function EntryContent({
-  entry
-}: {
-  entry:
-    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
-    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
-}) {
-  const OGQuery = useAPIQuery<
-    IdeaBoxControllersSchemas.IMisc['getOgData']['response']
-  >(
-    `idea-box/og-data/${entry.id}`,
-    ['idea-box', 'og', entry.id, entry.content],
-    true,
-    {
+import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
+function EntryContent({ entry }: { entry: IdeaBoxIdea }) {
+  const OGQuery = useQuery(
+    forgeAPI.ideaBox.misc.getOgData.input({ id: entry.id }).queryOptions({
       retry: 5
-    }
+    })
   )
 
   return OGQuery.isSuccess && OGQuery.data ? (
