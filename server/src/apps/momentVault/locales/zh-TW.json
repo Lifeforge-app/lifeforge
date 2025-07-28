@@ -7,7 +7,7 @@
   "buttons": {
     "text": "文字",
     "audio": "音訊",
-    "photo": "相片",
+    "photos": "相片",
     "video": "影片",
     "transcribeToText": "轉錄為文字"
   },

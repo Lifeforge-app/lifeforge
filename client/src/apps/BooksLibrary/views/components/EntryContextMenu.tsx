@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forceDown from '@utils/forceDown'
 import forgeAPI from '@utils/forgeAPI'
-import { DeleteConfirmationModal, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
@@ -46,7 +46,7 @@ export default function EntryContextMenu({
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['books-library', 'entries']
+            queryKey: ['booksLibrary', 'entries']
           })
         },
         onSettled: () => {
@@ -68,19 +68,33 @@ export default function EntryContextMenu({
     })
   }, [item])
 
+  const deleteMutation = useMutation(
+    forgeAPI.booksLibrary.entries.remove
+      .input({
+        id: item.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'entries']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'fileTypes']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to delete book')
+        }
+      })
+  )
+
   const handleDeleteEntry = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'books-library/entries',
-      data: item,
-      itemName: 'book',
-      nameKey: 'title' as const,
-      afterDelete: async () => {
-        await queryClient.invalidateQueries({
-          queryKey: ['books-library', 'entries']
-        })
-        queryClient.invalidateQueries({
-          queryKey: ['books-library', 'file-types']
-        })
+    open(ConfirmationModal, {
+      title: 'Delete Book',
+      description: `Are you sure you want to delete ${item.title}?`,
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
       }
     })
   }, [item])

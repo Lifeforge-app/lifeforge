@@ -1,4 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   FAB,
@@ -7,15 +10,15 @@ import {
   ModuleWrapper
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { ListResult } from 'pocketbase'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
-
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import EntryList from './components/EntryList'
 import AddEntryModal from './modals/AddEntryModal'
+
+export type MomentVaultEntry = InferOutput<
+  typeof forgeAPI.momentVault.entries.list
+>['items'][number]
 
 function MomentVault() {
   const open = useModalStore(state => state.open)
@@ -24,9 +27,12 @@ function MomentVault() {
 
   const [page, setPage] = useState(1)
 
-  const dataQuery = useAPIQuery<ListResult<IMomentVaultEntry>>(
-    `/moment-vault/entries?page=${page}`,
-    ['moment-vault', 'entries', page]
+  const dataQuery = useQuery(
+    forgeAPI.momentVault.entries.list
+      .input({
+        page
+      })
+      .queryOptions()
   )
 
   const handleAddEntry = useCallback(
