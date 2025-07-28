@@ -2,11 +2,11 @@ import fs from 'fs'
 
 type FileResult<TFieldName extends string> =
   | {}
-  | { [K in TFieldName]: File | File[] | null | undefined }
+  | { [K in TFieldName]: File | null | undefined }
 
 export default async function getMedia<TFieldName extends string = string>(
   fieldName: TFieldName,
-  media: string | Express.Multer.File | Express.Multer.File[] | undefined
+  media: string | Express.Multer.File | undefined
 ): Promise<FileResult<TFieldName>> {
   if (media === 'keep') {
     return {}
@@ -32,15 +32,6 @@ export default async function getMedia<TFieldName extends string = string>(
   }
 
   if (media) {
-    // If the media is multiple files, return an array of Filee
-    if (Array.isArray(media)) {
-      return {
-        [fieldName]: media.map(file => {
-          return new File([fs.readFileSync(file.path)], file.originalname)
-        })
-      }
-    }
-
     // If the media is a single file, return it as a File
     return {
       [fieldName]: new File([fs.readFileSync(media.path)], media.originalname)

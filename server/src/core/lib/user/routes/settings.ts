@@ -1,35 +1,26 @@
+import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
-import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
-import fs from 'fs'
 import moment from 'moment'
 import { z } from 'zod/v4'
 
 const updateAvatar = forgeController.mutation
   .description('Update user avatar')
   .input({})
-  .middlewares(singleUploadMiddleware)
-  .callback(async ({ req: { file }, pb }) => {
-    if (!file) {
-      throw new ClientError('No file uploaded')
+  .media({
+    file: {
+      optional: false
     }
+  })
+  .callback(async ({ media: { file: rawFile }, pb }) => {
+    const fileResult = await getMedia('avatar', rawFile)
 
     const { id } = pb.instance.authStore.record!
-
-    const fileBuffer = fs.readFileSync(file.path)
 
     const newRecord = await pb.update
       .collection('users__users')
       .id(id)
-      .data({
-        avatar: new File(
-          [fileBuffer],
-          `${id}.${file.originalname.split('.').pop()}`
-        )
-      })
+      .data(fileResult)
       .execute()
-
-    fs.unlinkSync(file.path)
 
     return newRecord.avatar
   })
