@@ -9,8 +9,6 @@ import { usePersonalization } from 'shared'
 import { fetchAPI } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
-
 function AudioType({
   onSuccess,
   audioURL,
@@ -120,7 +118,7 @@ function AudioType({
 
     const file = new File(
       audioChunksRef.current,
-      `audio.${audioChunksRef.current[0].type.split[1]}`,
+      `audio.${audioChunksRef.current[0].type.split('.')[1]}`,
       {
         type: audioChunksRef.current[0].type
       }
@@ -153,7 +151,7 @@ function AudioType({
 
     const file = new File(
       audioChunksRef.current,
-      `audio.${audioChunksRef.current[0].type.split[1]}`,
+      `audio.${audioChunksRef.current[0].type.split('.')[1]}`,
       {
         type: audioChunksRef.current[0].type
       }
@@ -164,9 +162,9 @@ function AudioType({
     body.append('transcription', transcription ?? '')
 
     try {
-      await fetchAPI<IMomentVaultEntry>(
+      await fetchAPI(
         import.meta.env.VITE_API_HOST,
-        'moment-vault/entries',
+        'momentVault/entries/create',
         {
           method: 'POST',
           body

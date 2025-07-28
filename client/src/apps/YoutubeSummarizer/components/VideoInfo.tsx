@@ -3,13 +3,9 @@ import dayjs from 'dayjs'
 import humanNumber from 'human-number'
 import { DashboardItem } from 'lifeforge-ui'
 
-import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
+import type { YoutubeInfo } from '..'
 
-interface VideoInfoProps {
-  videoInfo: IYoutubeVideoInfo
-}
-
-function VideoInfo({ videoInfo }: VideoInfoProps) {
+function VideoInfo({ videoInfo }: { videoInfo: YoutubeInfo }) {
   return (
     <DashboardItem
       className="h-min"
