@@ -294,6 +294,9 @@ const updateSchema = SCHEMAS.idea_box.entries
 const update = forgeController.mutation
   .description('Update an idea')
   .input({
+    query: z.object({
+      id: z.string()
+    }),
     body: updateSchema
   })
   .media({
@@ -304,22 +307,16 @@ const update = forgeController.mutation
   .existenceCheck('query', {
     id: 'idea_box__entries'
   })
-  .callback(async ({ pb, body: rawBody, media: { image } }) => {
+  .callback(async ({ pb, query: { id }, body: rawBody, media: { image } }) => {
     const body = rawBody as z.infer<typeof createSchema>
 
-    const baseEntry = await pb.update
-      .collection('idea_box__entries')
-      .data({
-        type: body.type,
-        tags: body.tags
-      })
-      .execute()
+    let updatedEntry
 
     if (body.type === 'text') {
-      await pb.update
+      updatedEntry = await pb.update
         .collection('idea_box__entries_text')
+        .id(id)
         .data({
-          base_entry: baseEntry.id,
           content: body.content
         })
         .execute()
@@ -330,22 +327,31 @@ const update = forgeController.mutation
 
       const imageData = await getMedia('idea', image)
 
-      await pb.update
+      updatedEntry = await pb.update
         .collection('idea_box__entries_image')
         .data({
-          base_entry: baseEntry.id,
           image: imageData
         })
         .execute()
     } else if (body.type === 'link') {
-      await pb.update
+      updatedEntry = await pb.update
         .collection('idea_box__entries_link')
         .data({
-          base_entry: baseEntry.id,
           link: body.link
         })
         .execute()
+    } else {
+      throw new ClientError('Invalid idea type')
     }
+
+    await pb.update
+      .collection('idea_box__entries')
+      .id(updatedEntry.base_entry)
+      .data({
+        type: body.type,
+        tags: body.tags
+      })
+      .execute()
   })
 
 const remove = forgeController.mutation
