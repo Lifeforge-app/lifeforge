@@ -10,6 +10,7 @@ export default defineConfig({
   ],
   outDir: 'dist',
   format: ['esm', 'cjs'],
+  external: ['../../server/src/core/appRoutes.type'],
   minify: true,
   dts: true,
   clean: true

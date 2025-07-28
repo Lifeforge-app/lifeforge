@@ -45,10 +45,10 @@ function SearchResults({
           renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
             <button
               className={clsx(
-                'bg-bg-200 dark:bg-bg-800/50 relative isolate block overflow-hidden rounded-md outline outline-2 transition-all',
+                'bg-bg-200 dark:bg-bg-800/50 ring-offset-bg-100 dark:ring-offset-bg-900 relative isolate block overflow-hidden rounded-md ring-2 ring-offset-2 transition-all',
                 photo.fullResURL === file
-                  ? 'outline-custom-500'
-                  : 'hover:outline-bg-500 outline-transparent'
+                  ? 'ring-custom-500'
+                  : 'hover:ring-bg-400 dark:hover:ring-bg-600 ring-transparent'
               )}
               style={style}
               onClick={() => {
@@ -59,7 +59,7 @@ function SearchResults({
               <img alt={alt} className="size-full object-cover" src={src} />
             </button>
           )}
-          spacing={8}
+          spacing={12}
         />
       </div>
       <Pagination

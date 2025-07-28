@@ -70,7 +70,7 @@ function FileInput({
   return (
     <div
       className={clsx(
-        'bg-bg-200/50 shadow-custom flex w-full flex-col rounded-md p-6',
+        'bg-bg-200/50 file-input shadow-custom flex w-full flex-col rounded-md p-6',
         darker ? 'component-bg-lighter' : 'component-bg',
         disabled ? 'pointer-events-none! opacity-50' : 'cursor-pointer'
       )}
@@ -97,13 +97,9 @@ function FileInput({
       ) : (
         <>
           {preview ? (
-            <>
+            <div className="mt-6">
               <Zoom zoomMargin={100}>
-                <img
-                  alt=""
-                  className="mx-auto mt-6 max-h-64 rounded-md"
-                  src={preview}
-                />
+                <img alt="" className="max-h-96 rounded-md" src={preview} />
               </Zoom>
               <Button
                 isRed
@@ -116,7 +112,7 @@ function FileInput({
               >
                 Remove
               </Button>
-            </>
+            </div>
           ) : (
             <div className="mt-4 flex items-center justify-between gap-8">
               <div className="flex w-full items-center gap-3">

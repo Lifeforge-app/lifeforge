@@ -8,7 +8,7 @@ import './index.css'
 
 const queryClient = new QueryClient()
 
-const withBodyClass = (Story, context) => {
+const withBodyClass = (Story: any, context: any) => {
   useEffect(() => {
     document.body.classList.remove(
       'bg-bg-50!',

@@ -122,7 +122,6 @@ export default function BooksLibraryProvider() {
           }
         >
       ) => {
-        console.log('taskPoolUpdate', data)
         if (data.module !== 'booksLibrary') return
 
         if (!processes[data.taskId]) {

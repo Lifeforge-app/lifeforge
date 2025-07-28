@@ -23,7 +23,6 @@ function getAmounts({
 }) {
   const balance = asset.current_balance
 
-  console.log(balance)
 
   const transactionsForAsset = transactions.filter(transaction =>
     transaction.type !== 'transfer'

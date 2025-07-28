@@ -30,6 +30,7 @@ export const Default: Story = {
       <div className="flex h-screen w-screen items-center justify-center px-32">
         <Index
           {...args}
+          enablePixabay
           file={image}
           preview={preview}
           setData={({ file, preview }) => {

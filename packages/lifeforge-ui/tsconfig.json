@@ -26,6 +26,10 @@
   },
   "include": [
     "./src/**/*",
-    "../../shared/src/lib/providers/APIOnlineStatusProvider.tsx"
+  ],
+  "references": [
+    {
+      "path": "../../server/tsconfig.json"
+    },
   ]
 }
