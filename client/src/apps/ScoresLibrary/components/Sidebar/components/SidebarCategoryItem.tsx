@@ -1,10 +1,13 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   MenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 import type { ScoreLibraryType } from '@apps/ScoresLibrary'
 
@@ -21,6 +24,8 @@ function SidebarTypeItem({
   onCancel: () => void
   onSelect: (category: string) => void
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const handleSelect = useCallback(() => {
@@ -34,17 +39,25 @@ function SidebarTypeItem({
     })
   }, [data])
 
+  const deleteMutation = useMutation(
+    forgeAPI.scoresLibrary.types.remove.input({ id: data.id }).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+      },
+      onError: () => {
+        toast.error('Failed to delete type')
+      }
+    })
+  )
+
   const handleDelete = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'scores-library/types',
-      queryKey: [
-        ['scores-library', 'types'],
-        ['scores-library', 'sidebar-data']
-      ],
-      queryUpdateType: 'invalidate',
-      multiQueryKey: true,
-      data,
-      nameKey: 'name' as const
+    open(ConfirmationModal, {
+      title: 'Delete Type',
+      description: 'Are you sure you want to delete this type?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [])
 
@@ -54,17 +67,11 @@ function SidebarTypeItem({
       active={isActive}
       hamburgerMenuItems={
         <>
-          <MenuItem
-            icon="tabler:pencil"
-            namespace="apps.scoresLibrary"
-            text="update type"
-            onClick={handleUpdate}
-          />
+          <MenuItem icon="tabler:pencil" text="update" onClick={handleUpdate} />
           <MenuItem
             isRed
             icon="tabler:trash"
-            namespace="apps.scoresLibrary"
-            text="delete type"
+            text="delete"
             onClick={handleDelete}
           />
         </>

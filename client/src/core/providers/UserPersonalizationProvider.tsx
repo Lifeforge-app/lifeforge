@@ -108,9 +108,11 @@ function UserPersonalizationProvider({
 
     if (userData?.bgImage !== '') {
       setBgImage(
-        `${import.meta.env.VITE_API_HOST}/media/${userData?.collectionId}/${
-          userData?.id
-        }/${userData?.bgImage}`
+        forgeAPI.media.input({
+          collectionId: userData.collectionId,
+          recordId: userData.id,
+          fieldId: userData.bgImage
+        }).endpoint
       )
     }
 

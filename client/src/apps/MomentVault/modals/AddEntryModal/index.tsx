@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   ListboxOrComboboxInput,
   ListboxOrComboboxOption,
   ModalHeader
@@ -58,16 +58,14 @@ function AddEntryModal({
   >(type)
 
   const handleOverrideAudioConfirm = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      customConfirmButtonIcon: 'tabler:reload',
-      customConfirmButtonText: 'Overwrite',
-      customOnClick: async (close: () => void) => {
+    open(ConfirmationModal, {
+      title: 'Overwrite Audio',
+      description: 'Are you sure you want to overwrite the current audio?',
+      buttonType: 'confirm',
+      onConfirm: async () => {
         setAudioURL(null)
         setTranscription(null)
-        close()
-      },
-      customText: 'Are you sure you want to overwrite the current audio?',
-      customTitle: 'Overwrite Audio'
+      }
     })
   }, [])
 
