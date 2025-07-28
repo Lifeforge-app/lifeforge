@@ -11,8 +11,6 @@ function InFolderChip({ entry }: { entry: IdeaBoxIdea }) {
 
   const { '*': path } = useParams<{ '*': string }>()
 
-  console.log(entry)
-
   if (!('fullPath' in entry) || !entry.expand || !entry.expand.folder) {
     return <></>
   }

@@ -1,7 +1,9 @@
 import { ModuleWrapper, SearchInput } from 'lifeforge-ui'
 import { useParams } from 'react-router'
 
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import IdeaBoxProvider, {
+  useIdeaBoxContext
+} from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import FAB from './components/FAB'
 import Header from './components/Header'
@@ -32,4 +34,12 @@ function Ideas() {
   )
 }
 
-export default Ideas
+const IdeasWithProvider = () => {
+  return (
+    <IdeaBoxProvider>
+      <Ideas />
+    </IdeaBoxProvider>
+  )
+}
+
+export default IdeasWithProvider
