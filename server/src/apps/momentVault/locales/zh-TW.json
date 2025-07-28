@@ -12,7 +12,8 @@
     "transcribeToText": "轉錄為文字"
   },
   "modals": {
-    "addEntry": "添加條目"
+    "addEntry": "添加條目",
+    "updateEntry": "更新條目"
   },
   "inputs": {
     "entryType": "條目類型",
