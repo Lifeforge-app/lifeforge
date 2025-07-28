@@ -113,26 +113,20 @@ const getOgData = forgeController.query
     })
   })
   .existenceCheck('query', {
-    id: 'idea_box__entries'
+    id: 'idea_box__entries_link'
   })
   .callback(async ({ pb, query: { id } }) => {
     const data = await pb.getOne
-      .collection('idea_box__entries')
+      .collection('idea_box__entries_link')
       .id(id)
       .execute()
 
-    if (data.type !== 'link') {
-      throw new ClientError(
-        "Open Graph data can only be fetched for entries of type 'link'"
-      )
-    }
-
-    if (OGCache.has(id) && OGCache.get(id)?.requestUrl === data.content) {
+    if (OGCache.has(id) && OGCache.get(id)?.requestUrl === data.link) {
       return OGCache.get(id)
     }
 
     const { result } = await ogs({
-      url: data.content,
+      url: data.link,
       fetchOptions: {
         headers: {
           'User-Agent':
@@ -140,7 +134,7 @@ const getOgData = forgeController.query
         }
       }
     }).catch(() => {
-      console.error('Error fetching Open Graph data:', data.content)
+      console.error('Error fetching Open Graph data:', data.link)
 
       return { result: null }
     })
