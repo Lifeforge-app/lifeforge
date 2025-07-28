@@ -106,7 +106,9 @@ export class GetOne<
     }
 
     if (!this._itemId) {
-      throw new Error('Item ID is required. Use .id() method to set the ID.')
+      throw new Error(
+        `Failed to retrieve record in collection "${this.collectionKey}". Item ID is required. Use .id() method to set the ID.`
+      )
     }
 
     return this._pb

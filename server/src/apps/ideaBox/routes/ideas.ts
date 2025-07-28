@@ -3,7 +3,6 @@ import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
-import multer from 'multer'
 import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
@@ -201,10 +200,9 @@ const create = forgeController.mutation
       optional: true
     }
   })
-  .middlewares(multer().single('image'))
   .existenceCheck('body', {
     container: 'idea_box__containers',
-    folder: 'idea_box__folders'
+    folder: '[idea_box__folders]'
   })
   .statusCode(201)
   .callback(async ({ pb, body: rawBody, media: { image } }) => {
@@ -233,13 +231,13 @@ const create = forgeController.mutation
         throw new ClientError('Image is required for image entries')
       }
 
-      const imageData = await getMedia('idea', image)
+      const imageData = await getMedia('image', image)
 
       await pb.create
         .collection('idea_box__entries_image')
         .data({
           base_entry: baseEntry.id,
-          image: imageData
+          ...imageData
         })
         .execute()
     } else if (body.type === 'link') {
@@ -353,13 +351,13 @@ const update = forgeController.mutation
         ])
         .execute()
 
-      const imageData = await getMedia('idea', image)
+      const imageData = await getMedia('image', image)
 
       await pb.update
         .collection('idea_box__entries_image')
         .id(existingImage.id)
         .data({
-          image: imageData
+          ...imageData
         })
         .execute()
     } else if (body.type === 'link') {
