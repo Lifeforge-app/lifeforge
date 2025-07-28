@@ -13,13 +13,13 @@ const getPath = forgeController.query
   .input({
     query: z.object({
       container: z.string(),
-      '0': z.string()
+      path: z.string()
     })
   })
   .existenceCheck('query', {
     container: 'idea_box__containers'
   })
-  .callback(async ({ pb, query: { container, '0': path } }) => {
+  .callback(async ({ pb, query: { container, path } }) => {
     const containerEntry = await pb.getOne
       .collection('idea_box__containers')
       .id(container)
