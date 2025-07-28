@@ -41,7 +41,10 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       queryKey: forgeAPI.movies.entries.list.input({ watched: false }).key
     })
     await queryClient.invalidateQueries({
-      queryKey: forgeAPI.movies.entries.list.input({ watched: false }).key
+      queryKey: forgeAPI.movies.tmdb.search.input({
+        q: queryToSearch,
+        page
+      }).key
     })
 
     toast.success('Movie added to your library!')

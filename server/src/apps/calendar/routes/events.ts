@@ -13,12 +13,13 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-// Define the input schemas directly in the controller
-const CreateEventSchema = SCHEMAS.calendar.events
+const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
   .omit({
     type: true,
     location: true,
-    location_coords: true
+    location_coords: true,
+    created: true,
+    updated: true
   })
   .extend({
     location: Location.optional()
@@ -40,21 +41,12 @@ const CreateEventSchema = SCHEMAS.calendar.events
         })
         .and(
           SCHEMAS.calendar.events_recurring.omit({
-            base_event: true
+            base_event: true,
+            exceptions: true
           })
         )
     ])
   )
-
-const UpdateEventSchema = SCHEMAS.calendar.events
-  .omit({
-    type: true,
-    location: true,
-    location_coords: true
-  })
-  .extend({
-    location: Location.optional()
-  })
 
 const getByDateRange = forgeController.query
   .description('Get events by date range')
@@ -331,7 +323,7 @@ const getById = forgeController.query
 const create = forgeController.mutation
   .description('Create a new event')
   .input({
-    body: CreateEventSchema
+    body: CreateAndUpdateEventSchema
   })
   .statusCode(201)
   .existenceCheck('body', {
@@ -339,7 +331,7 @@ const create = forgeController.mutation
     category: 'calendar__categories'
   })
   .callback(async ({ pb, body }) => {
-    const eventData = body as z.infer<typeof CreateEventSchema>
+    const eventData = body as z.infer<typeof CreateAndUpdateEventSchema>
 
     const baseEvent = await pb.create
       .collection('calendar__events')
@@ -370,7 +362,7 @@ const create = forgeController.mutation
           recurring_rule: eventData.recurring_rule,
           duration_amount: eventData.duration_amount || 1,
           duration_unit: eventData.duration_unit || 'day',
-          exceptions: eventData.exceptions || []
+          exceptions: []
         })
         .execute()
     } else {
@@ -539,7 +531,7 @@ const update = forgeController.mutation
     query: z.object({
       id: z.string()
     }),
-    body: UpdateEventSchema
+    body: CreateAndUpdateEventSchema
   })
   .existenceCheck('query', {
     id: 'calendar__events'
@@ -549,11 +541,11 @@ const update = forgeController.mutation
     category: 'calendar__categories'
   })
   .callback(async ({ pb, query: { id }, body }) => {
-    const eventData = body as z.infer<typeof UpdateEventSchema>
+    const eventData = body as z.infer<typeof CreateAndUpdateEventSchema>
 
     const location = eventData.location
 
-    const toBeUpdatedData: Partial<typeof SCHEMAS.calendar.events> = {
+    const toBeUpdatedData = {
       ...eventData,
       ...(typeof location === 'object'
         ? {
