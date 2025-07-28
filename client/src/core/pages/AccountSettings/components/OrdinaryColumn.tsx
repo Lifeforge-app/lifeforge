@@ -17,7 +17,7 @@ function OrdinaryColumn({
   title: string
   id: string
   icon: string
-  type?: string
+  type: 'text' | 'datetime'
 }) {
   const open = useModalStore(state => state.open)
 
@@ -48,7 +48,7 @@ function OrdinaryColumn({
                 return t('settings.empty')
               }
 
-              if (type === 'date') {
+              if (type === 'datetime') {
                 return dayjs(userData[id]).format('DD MMM YYYY')
               }
 

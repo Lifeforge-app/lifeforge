@@ -17,7 +17,9 @@ function TextEntry({
   const open = useModalStore(state => state.open)
 
   const handleUpdateEntry = useCallback(() => {
-    open(ModifyTextEntryModal, {})
+    open(ModifyTextEntryModal, {
+      initialData: entry
+    })
   }, [entry])
 
   return (

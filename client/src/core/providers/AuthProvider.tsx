@@ -344,9 +344,12 @@ export default function AuthProvider({
 
   const getAvatarURL = useCallback((): string => {
     if (userData) {
-      return `${import.meta.env.VITE_API_HOST}/media/${userData.collectionId}/${
-        userData.id
-      }/${userData.avatar}?thumb=256x0`
+      return forgeAPI.media.input({
+        collectionId: userData.collectionId,
+        recordId: userData.id,
+        fieldId: userData.avatar,
+        thumb: '256x0'
+      }).endpoint
     }
 
     return ''
