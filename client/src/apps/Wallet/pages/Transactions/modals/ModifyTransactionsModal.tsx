@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import colors from 'tailwindcss/colors'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
@@ -47,7 +48,7 @@ function ModifyTransactionsModal({
         queryClient.invalidateQueries({ queryKey: ['wallet'] })
       },
       onError: error => {
-        console.error('Failed to modify transaction:', error)
+        toast.error('Failed to modify transaction:', error)
       }
     })
   )
@@ -61,6 +62,19 @@ function ModifyTransactionsModal({
       title: `transactions.${type}`,
       submitButton: type,
       onClose
+    })
+    .typesMap({
+      type: 'listbox',
+      date: 'datetime',
+      amount: 'currency',
+      from: 'listbox',
+      to: 'listbox',
+      particulars: 'text',
+      category: 'listbox',
+      asset: 'listbox',
+      ledgers: 'listbox',
+      location: 'location',
+      receipt: 'file'
     })
     .setupFields({
       type: {
@@ -94,10 +108,18 @@ function ModifyTransactionsModal({
         label: 'Date',
         icon: 'tabler:calendar'
       },
+      particulars: {
+        label: 'Particulars',
+        required: true,
+        icon: 'tabler:file-description',
+        placeholder: 'Enter details about the transaction',
+        hidden: transactionType === 'transfer'
+      },
       amount: {
         required: true,
         label: 'Amount',
-        icon: 'tabler:currency-dollar'
+        icon: 'tabler:currency-dollar',
+        placeholder: 'Enter amount'
       },
       from: {
         required: true,
@@ -122,13 +144,6 @@ function ModifyTransactionsModal({
         })),
         icon: 'tabler:arrow-right-circle',
         hidden: transactionType !== 'transfer'
-      },
-      particulars: {
-        label: 'Particulars',
-        required: true,
-        icon: 'tabler:file-description',
-        placeholder: 'Enter details about the transaction',
-        hidden: transactionType === 'transfer'
       },
       category: {
         multiple: false,
@@ -227,6 +242,8 @@ function ModifyTransactionsModal({
       setTransactionType(data.type)
     })
     .onSubmit(async data => {
+      console.log(data)
+
       if (data.type === 'transfer') {
         await mutation.mutateAsync({
           type: 'transfer',
