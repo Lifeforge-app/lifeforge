@@ -116,9 +116,15 @@ const getOgData = forgeController.query
     id: 'idea_box__entries_link'
   })
   .callback(async ({ pb, query: { id } }) => {
-    const data = await pb.getOne
+    const data = await pb.getFirstListItem
       .collection('idea_box__entries_link')
-      .id(id)
+      .filter([
+        {
+          field: 'base_entry',
+          operator: '=',
+          value: id
+        }
+      ])
       .execute()
 
     if (OGCache.has(id) && OGCache.get(id)?.requestUrl === data.link) {
