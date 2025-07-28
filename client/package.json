@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "vite --port 5173",
     "types": "tsc -b",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
