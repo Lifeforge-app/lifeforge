@@ -4,7 +4,7 @@ import forgeAPI from '@utils/forgeAPI'
 import type { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router'
+import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
@@ -25,9 +25,7 @@ export type IdeaBoxIdea =
 
 interface IIdeaBoxData {
   pathValid: boolean
-  pathValidLoading: boolean
   pathDetails: InferOutput<typeof forgeAPI.ideaBox.misc.getPath> | undefined
-  pathDetailsLoading: boolean
   entriesQuery: UseQueryResult<IdeaBoxIdea[]>
   foldersQuery: UseQueryResult<IdeaBoxFolder[]>
   tagsQuery: UseQueryResult<IdeaBoxTag[]>
@@ -45,7 +43,11 @@ interface IIdeaBoxData {
 
 export const IdeaBoxContext = createContext<IIdeaBoxData | undefined>(undefined)
 
-export default function IdeaBoxProvider() {
+export default function IdeaBoxProvider({
+  children
+}: {
+  children: React.ReactNode
+}) {
   const open = useModalStore(state => state.open)
 
   const navigate = useNavigate()
@@ -211,9 +213,7 @@ export default function IdeaBoxProvider() {
   const value = useMemo(
     () => ({
       pathValid: pathValidQuery.data ?? false,
-      pathValidLoading: pathValidQuery.isLoading,
       pathDetails: pathDetailsQuery.data,
-      pathDetailsLoading: pathDetailsQuery.isLoading,
       entriesQuery,
       foldersQuery,
       tagsQuery,
@@ -228,17 +228,11 @@ export default function IdeaBoxProvider() {
     }),
     [
       pathValidQuery.data,
-      pathValidQuery.isLoading,
       pathDetailsQuery.data,
-      pathDetailsQuery.isLoading,
       foldersQuery.data,
-      foldersQuery.isLoading,
       tagsQuery.data,
-      tagsQuery.isLoading,
       entriesQuery.data,
-      entriesQuery.isLoading,
       searchResultsQuery.data,
-      searchResultsQuery.isLoading,
       searchQuery,
       debouncedSearchQuery,
       selectedTags,
@@ -246,11 +240,7 @@ export default function IdeaBoxProvider() {
     ]
   )
 
-  return (
-    <IdeaBoxContext value={value}>
-      <Outlet />
-    </IdeaBoxContext>
-  )
+  return <IdeaBoxContext value={value}>{children}</IdeaBoxContext>
 }
 
 export function useIdeaBoxContext(): IIdeaBoxData {

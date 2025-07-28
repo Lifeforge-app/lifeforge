@@ -53,7 +53,7 @@ function IdeaList({ data }: { data: IdeaBoxIdea[] }) {
             image: EntryImage,
             text: EntryText,
             link: EntryLink
-          }[entry.type as 'image' | 'text' | 'link']
+          }[entry.type]
 
           return <Component key={entry.id} entry={entry} />
         })}

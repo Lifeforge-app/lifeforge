@@ -1,12 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { InferInput, InferOutput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function ModifyIdeaModal({
   data: { type, initialData },
@@ -23,9 +21,15 @@ function ModifyIdeaModal({
 }) {
   const queryClient = useQueryClient()
 
-  const { tagsQuery } = useIdeaBoxContext()
-
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
+  const tagsQuery = useQuery(
+    forgeAPI.ideaBox.tags.list
+      .input({
+        container: id || ''
+      })
+      .queryOptions()
+  )
 
   const [ideaType, setIdeaType] = useState<'text' | 'link' | 'image'>('text')
 
@@ -56,7 +60,7 @@ function ModifyIdeaModal({
   >()
     .ui({
       icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `ideaBox.${type}`,
+      title: `idea.${type}`,
       onClose,
       namespace: 'apps.ideaBox',
       loading: tagsQuery.isLoading,
@@ -76,7 +80,7 @@ function ModifyIdeaModal({
         multiple: false,
         required: true,
         label: 'Idea type',
-        icon: 'tabler:type',
+        icon: 'tabler:category',
         options: [
           { value: 'text', text: 'Text' },
           { value: 'link', text: 'Link' },

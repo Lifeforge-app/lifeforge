@@ -5,11 +5,10 @@ import type { ModuleConfig } from '../../core/routes/interfaces/routes_interface
 
 export default {
   name: 'Idea Box',
-  provider: lazy(() => import('./providers/IdeaBoxProvider')),
   icon: <IconBulb />,
   routes: {
-    '': lazy(() => import('./pages/Containers')),
-    ':id/*': lazy(() => import('./pages/Ideas'))
+    'idea-box': lazy(() => import('./pages/Containers')),
+    'idea-box/:id/*': lazy(() => import('./pages/Ideas'))
   },
   togglable: true
 } satisfies ModuleConfig
