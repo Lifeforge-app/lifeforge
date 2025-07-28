@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ConfigColumn,
-  DeleteConfirmationModal,
+  ConfirmationModal,
   FilePickerModal,
   Tooltip
 } from 'lifeforge-ui'
@@ -13,7 +13,6 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
-import { fetchAPI } from 'shared'
 
 import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
@@ -38,10 +37,9 @@ function BgImageSelector() {
     open(AdjustBgImageModal, {})
   }, [])
 
-  const handleDeleteBgImage = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'user/personalization/bg-image',
-      afterDelete: async () => {
+  const deleteMutation = useMutation(
+    forgeAPI.user.personalization.deleteBgImage.mutationOptions({
+      onSuccess: () => {
         setBgImage('')
         setBackdropFilters({
           brightness: 100,
@@ -51,33 +49,30 @@ function BgImageSelector() {
           overlayOpacity: 50
         })
       },
-      customText:
-        'Deleting the background image will revert the system appearance to plain colors. Are you sure you want to proceed?',
-      itemName: 'background image'
+      onError: () => {
+        toast.error('Failed to delete background image')
+      }
+    })
+  )
+
+  const handleDeleteBgImage = useCallback(() => {
+    open(ConfirmationModal, {
+      title: 'Delete Background Image',
+      description: 'Are you sure you want to delete your background image?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [])
 
-  async function onSubmit(url: string | File) {
+  async function onSubmit(file: string | File) {
     try {
-      const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        'user/personalization/bg-image',
-        {
-          method: 'PUT',
-          body:
-            typeof url === 'string'
-              ? { url }
-              : (() => {
-                  const formData = new FormData()
+      const data = await forgeAPI.user.personalization.updateBgImage.mutate({
+        file
+      })
 
-                  formData.append('file', url)
-
-                  return formData
-                })()
-        }
-      )
-
-      setBgImage(`${import.meta.env.VITE_API_HOST}/${data}`)
+      setBgImage(forgeAPI.media.input(data).endpoint)
       toast.success('Background image updated')
     } catch {
       toast.error('Failed to update background image')

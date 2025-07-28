@@ -1,28 +1,33 @@
-import { Scrollbar } from 'lifeforge-ui'
+import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
-import TransactionIncomeExpensesItem from './components/TransactionIncomeExpensesItem'
-import TransactionTransferItem from './components/TransactionTransferItem'
+import TransactionItem from './components/TransactionItem'
 
-const AS = AutoSizer as any
-
-const L = List as any
-
-function ListView() {
+function TransactionList() {
   const { transactionsQuery } = useWalletData()
 
   const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
 
+  if (transactions.length === 0) {
+    return (
+      <EmptyStateScreen
+        icon="tabler:filter-off"
+        name="results"
+        namespace="apps.wallet"
+      />
+    )
+  }
+
   return (
     <>
       <Scrollbar>
-        <AS>
+        <AutoSizer>
           {({ height, width }: { height: number; width: number }) => (
-            <L
+            <List
               height={height}
               rowCount={transactions.length + 1}
               rowHeight={80}
@@ -40,24 +45,19 @@ function ListView() {
 
                 return (
                   <div key={key} style={style}>
-                    {transaction &&
-                      (transaction.type === 'transfer' ? (
-                        <TransactionTransferItem transaction={transaction} />
-                      ) : (
-                        <TransactionIncomeExpensesItem
-                          transaction={transaction}
-                        />
-                      ))}
+                    {transaction && (
+                      <TransactionItem transaction={transaction} />
+                    )}
                   </div>
                 )
               }}
               width={width - 2}
             />
           )}
-        </AS>
+        </AutoSizer>
       </Scrollbar>
     </>
   )
 }
 
-export default ListView
+export default TransactionList
