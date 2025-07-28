@@ -1,5 +1,4 @@
 import {
-  AllPossibleFieldsForFieldSelection,
   AllPossibleFieldsForFilter,
   CollectionKey,
   ExpandConfig,
