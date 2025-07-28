@@ -2,7 +2,7 @@ import { getAPIKey } from '@functions/database'
 import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { record, z } from 'zod/v4'
+import { z } from 'zod/v4'
 
 const listGoogleFonts = forgeController.query
   .description('List available Google Fonts')
@@ -69,7 +69,16 @@ const updateBgImage = forgeController.mutation
     const newRecord = await pb.update
       .collection('users__users')
       .id(pb.instance.authStore.record!.id)
-      .data(await getMedia('bgImage', file))
+      .data({
+        ...(await getMedia('bgImage', file)),
+        backdropFilters: {
+          brightness: 100,
+          blur: 'none',
+          contrast: 100,
+          saturation: 100,
+          overlayOpacity: 50
+        }
+      })
       .execute()
 
     return {
