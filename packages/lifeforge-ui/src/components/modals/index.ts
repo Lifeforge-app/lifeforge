@@ -2,8 +2,6 @@ export { default as FormModal } from './features/FormModal'
 
 export { default as ConfirmationModal } from './features/ConfirmationModal'
 
-export { default as DeleteConfirmationModal } from './features/DeleteConfirmationModal'
-
 export { default as ModalHeader } from './core/components/ModalHeader'
 
 export { default as ModalWrapper } from './core/components/ModalWrapper'
