@@ -104,7 +104,7 @@ export async function recursivelySearchFolder(
     expand: {
       folder: thisFolder
     },
-    type: 'text',
+    type: 'text' as const,
     fullPath: parents
   }))
 
@@ -149,7 +149,7 @@ export async function recursivelySearchFolder(
     expand: {
       folder: thisFolder
     },
-    type: 'image',
+    type: 'image' as const,
     fullPath: parents
   }))
 
@@ -194,7 +194,7 @@ export async function recursivelySearchFolder(
     expand: {
       folder: thisFolder
     },
-    type: 'link',
+    type: 'link' as const,
     fullPath: parents
   }))
 
