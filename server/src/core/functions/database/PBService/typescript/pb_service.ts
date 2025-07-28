@@ -32,7 +32,7 @@ type ExpandConfig<TCollectionKey extends CollectionKey> = Partial<
   Record<FieldKey<TCollectionKey>, CollectionKey>
 >
 
-type AllPossibleFieldsForFilter<
+export type AllPossibleFieldsForFilter<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey>
 > =
@@ -45,7 +45,7 @@ type AllPossibleFieldsForFilter<
             : never
         }[keyof TExpandConfig])
 
-type AllPossibleFieldsForFieldSelection<
+export type AllPossibleFieldsForFieldSelection<
   TCollectionKey extends CollectionKey,
   TExpandConfig extends ExpandConfig<TCollectionKey>
 > =
