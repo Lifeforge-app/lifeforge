@@ -28,7 +28,9 @@ function FAB() {
       } else {
         open(ModifyIdeaModal, {
           type: 'create',
-          ideaType: name.toLowerCase() as 'text' | 'link' | 'image'
+          initialData: {
+            type: name.toLowerCase() as 'text' | 'link' | 'image'
+          }
         })
       }
     },

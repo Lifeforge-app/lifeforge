@@ -94,7 +94,6 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
   const handleUpdateIdea = useCallback(() => {
     open(ModifyIdeaModal, {
       type: 'update',
-      ideaType: entry.type,
       initialData: entry
     })
   }, [entry])
