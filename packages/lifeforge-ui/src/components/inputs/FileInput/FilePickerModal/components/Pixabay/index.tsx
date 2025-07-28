@@ -7,8 +7,9 @@ import {
 } from '@components/screens'
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI, useAPIEndpoint } from 'shared'
+import { useAPIEndpoint } from 'shared'
 
+import forgeAPI from '../../../../../../utils/forgeAPI'
 import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'
 import {
@@ -79,22 +80,18 @@ function Pixabay({
     setResults(null)
     setLoading(true)
 
-    const params = Object.fromEntries(
-      Object.entries({
-        q: query,
-        page: page.toString(),
-        type: filters.imageType,
-        category: filters.category,
-        colors: filters.colors,
-        editors_choice: filters.isEditorsChoice ? 'true' : 'false'
-      }).filter(([, v]) => Boolean(v))
-    ) as Record<string, string>
-
     try {
-      const data = await fetchAPI<IPixabaySearchResult>(
-        apiHost,
-        `pixabay/search?${new URLSearchParams(params).toString()}`
-      )
+      const data = await forgeAPI.pixabay.searchImages
+        .setHost(apiHost)
+        .input({
+          q: query,
+          page,
+          type: filters.imageType,
+          category: filters.category,
+          colors: filters.colors,
+          editors_choice: filters.isEditorsChoice
+        })
+        .query()
 
       setResults(data)
     } catch {
@@ -160,7 +157,7 @@ function Pixabay({
                   <LoadingScreen />
                 </div>
               ) : (
-                <div className="flex-center mb-6 size-full flex-1">
+                <div className="flex-center my-6 size-full flex-1">
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
                     name="pixabay"

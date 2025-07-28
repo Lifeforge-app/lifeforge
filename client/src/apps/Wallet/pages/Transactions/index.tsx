@@ -66,32 +66,6 @@ function Transactions() {
     forgeAPI.wallet.transactions.list.queryOptions()
   )
 
-  const filteredTransactions = useFilteredTransactions(
-    transactionsQuery.data ?? []
-  )
-
-  console.log(
-    [
-      ...new Set(
-        filteredTransactions
-          .map(e => (e.type === 'income' ? e.particulars : ''))
-          .filter(Boolean)
-          .slice(0, 50)
-      )
-    ].join(', ')
-  )
-
-  console.log(
-    [
-      ...new Set(
-        filteredTransactions
-          .map(e => (e.type === 'expenses' ? e.particulars : ''))
-          .filter(Boolean)
-          .slice(0, 50)
-      )
-    ].join(', ')
-  )
-
   const [searchParams] = useSearchParams()
 
   const { hash } = useLocation()

@@ -203,7 +203,6 @@ const download = forgeController.mutation
             })
           })
         } catch (error) {
-          console.log(error)
           updateTaskInPool(io, taskId, {
             status: 'failed',
             error: error instanceof Error ? error.message : 'Unknown error'

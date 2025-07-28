@@ -41,7 +41,7 @@ export class ForgeAPIClientController<
    * @param _route The endpoint path (without base URL)
    */
   constructor(
-    private _apiHost: string,
+    private _apiHost: string = '',
     private _route: string
   ) {
     this.refreshEndpoint()
@@ -60,6 +60,13 @@ export class ForgeAPIClientController<
    */
   get endpoint() {
     return new URL(this._endpoint, this._apiHost).toString()
+  }
+
+  setHost(apiHost: string) {
+    this._apiHost = apiHost
+    this.refreshEndpoint()
+
+    return this
   }
 
   /**
@@ -186,7 +193,7 @@ export class ForgeAPIClientController<
  * @returns A proxied API client tree
  */
 export function createForgeAPIClient<T>(
-  apiHost: string,
+  apiHost?: string,
   path: string[] = []
 ): ClientTree<T> {
   const controller = new ForgeAPIClientController<
