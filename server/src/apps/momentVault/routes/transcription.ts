@@ -1,7 +1,6 @@
 import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 import request from 'request'
 import { z } from 'zod/v4'
@@ -80,11 +79,13 @@ const transcribeExisted = forgeController.mutation
 const transcribeNew = forgeController.mutation
   .description('Transcribe a new audio file')
   .input({})
-  .middlewares(singleUploadMiddleware)
-  .callback(async ({ pb, req }) => {
-    const { file } = req
-
-    if (!file) {
+  .media({
+    file: {
+      optional: false
+    }
+  })
+  .callback(async ({ pb, media: { file } }) => {
+    if (!file || typeof file === 'string') {
       throw new ClientError('No file uploaded')
     }
 

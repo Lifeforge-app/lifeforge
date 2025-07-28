@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
@@ -127,14 +128,9 @@ function AudioType({
     body.append('file', file)
 
     try {
-      const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        'moment-vault/transcribe',
-        {
-          method: 'POST',
-          body
-        }
-      )
+      const data = await forgeAPI.momentVault.transcribe.transcribeNew.mutate({
+        file
+      })
 
       setTranscription(data)
     } catch {
