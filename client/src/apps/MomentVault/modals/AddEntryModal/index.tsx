@@ -34,7 +34,7 @@ const TYPES = [
 ]
 
 function AddEntryModal({
-  data: { entriesQueryKey, type },
+  data: { type },
   onClose
 }: {
   data: {
@@ -128,7 +128,7 @@ function AddEntryModal({
                 onSuccess={() => {
                   onClose()
                   queryClient.invalidateQueries({
-                    queryKey: entriesQueryKey
+                    queryKey: ['momentVault', 'entries']
                   })
                 }}
               />
@@ -138,7 +138,7 @@ function AddEntryModal({
                 onSuccess={() => {
                   onClose()
                   queryClient.invalidateQueries({
-                    queryKey: entriesQueryKey
+                    queryKey: ['momentVault', 'entries']
                   })
                 }}
               />
@@ -148,7 +148,7 @@ function AddEntryModal({
                 onSuccess={() => {
                   onClose()
                   queryClient.invalidateQueries({
-                    queryKey: entriesQueryKey
+                    queryKey: ['momentVault', 'entries']
                   })
                 }}
               />

@@ -32,20 +32,19 @@ function EntryList({
         description: 'Are you sure you want to delete this entry?',
         buttonType: 'delete',
         onConfirm: async () => {
-          await forgeAPI.momentVault.entries.remove
-            .input({
-              id: entryId
+          try {
+            await forgeAPI.momentVault.entries.remove
+              .input({
+                id: entryId
+              })
+              .mutate({})
+
+            await queryClient.invalidateQueries({
+              queryKey: ['momentVault', 'entries']
             })
-            .mutate({
-              onSuccess: () => {
-                queryClient.invalidateQueries({
-                  queryKey: ['momentVault', 'entries']
-                })
-              },
-              onError: () => {
-                toast.error('Failed to delete entry')
-              }
-            })
+          } catch (error: any) {
+            toast.error(`Failed to delete entry: ${error.message}`)
+          }
         }
       })
     },
@@ -79,7 +78,7 @@ function EntryList({
                     key={entry.id}
                     currentPage={page}
                     entry={entry}
-                    onDelete={handleDeleteEntry(entry)}
+                    onDelete={handleDeleteEntry(entry.id)}
                   />
                 )
               }
@@ -89,7 +88,7 @@ function EntryList({
                   <TextEntry
                     key={entry.id}
                     entry={entry}
-                    onDelete={handleDeleteEntry(entry)}
+                    onDelete={handleDeleteEntry(entry.id)}
                   />
                 )
               }
@@ -99,7 +98,7 @@ function EntryList({
                   <PhotosEntry
                     key={entry.id}
                     entry={entry}
-                    onDelete={handleDeleteEntry(entry)}
+                    onDelete={handleDeleteEntry(entry.id)}
                   />
                 )
               }
