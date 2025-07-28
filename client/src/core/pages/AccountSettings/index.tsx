@@ -11,18 +11,29 @@ function AccountSettings() {
       <ModuleHeader title="Account Settings" />
       <div className="mb-8">
         <AvatarColumn />
-        <OrdinaryColumn icon="tabler:user" id="username" title="username" />
+        <OrdinaryColumn
+          icon="tabler:user"
+          id="username"
+          title="username"
+          type="text"
+        />
         <OrdinaryColumn
           icon="tabler:user-screen"
           id="name"
           title="display Name"
+          type="text"
         />
-        <OrdinaryColumn icon="tabler:mail" id="email" title="email" />
+        <OrdinaryColumn
+          icon="tabler:mail"
+          id="email"
+          title="email"
+          type="text"
+        />
         <OrdinaryColumn
           icon="tabler:cake"
           id="dateOfBirth"
           title="date Of Birth"
-          type="date"
+          type="datetime"
         />
         <PasswordColumn />
         <TwoFAColumn />

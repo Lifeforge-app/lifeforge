@@ -41,7 +41,7 @@ function SidebarBottomBar() {
           )}
         >
           <div className="flex-center w-full min-w-0 gap-3">
-            <div className="bg-bg-100 dark:bg-bg-800 flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full">
+            <div className="bg-bg-100 shadow-custom dark:bg-bg-800 flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full">
               {userData.avatar !== '' ? (
                 <img
                   alt=""

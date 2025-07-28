@@ -1,10 +1,16 @@
 import { Icon } from '@iconify/react'
-import { Button, ConfigColumn, DeleteConfirmationModal } from 'lifeforge-ui'
+import { useMutation } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import {
+  Button,
+  ConfigColumn,
+  ConfirmationModal,
+  FilePickerModal
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -17,54 +23,66 @@ function AvatarColumn() {
 
   const { getAvatarURL, userData, setUserData } = useAuth()
 
-  function changeAvatar() {
-    const input = document.createElement('input')
+  async function changeAvatar(file: File | string | null) {
+    if (file === null) {
+      toast.error('No file selected')
 
-    input.type = 'file'
-    input.accept = 'image/*'
-    input.click()
+      return
+    }
 
-    input.onchange = async () => {
-      const file = input.files?.[0]
+    setLoading(true)
 
-      if (file !== undefined) {
-        const formData = new FormData()
+    try {
+      const data = await forgeAPI.user.settings.updateAvatar.mutate({
+        file
+      })
 
-        formData.append('file', file)
+      setUserData({ ...userData, avatar: data })
 
-        setLoading(true)
-
-        try {
-          const data = await fetchAPI<string>(
-            import.meta.env.VITE_API_HOST,
-            '/user/settings/avatar',
-            {
-              method: 'PUT',
-              body: formData
-            }
-          )
-
-          setUserData({ ...userData, avatar: data })
-        } catch {
-          toast.error('An error occurred')
-        } finally {
-          setLoading(false)
-        }
-      }
+      toast.success('Avatar updated successfully')
+    } catch {
+      toast.error('An error occurred')
+    } finally {
+      setLoading(false)
     }
   }
 
-  const handleDeleteAvatar = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: '/user/settings/avatar',
-      customText: 'Are you sure you want to remove your profile picture?',
-      itemName: 'avatar',
-      afterDelete: async () => {
+  const deleteAvatarMutation = useMutation(
+    forgeAPI.user.settings.deleteAvatar.mutationOptions({
+      onSuccess: () => {
         setUserData((userData: any) => ({
           ...userData,
           avatar: ''
         }))
+        toast.success('Avatar removed successfully')
+      },
+      onError: () => {
+        toast.error('Failed to remove avatar')
       }
+    })
+  )
+
+  const handleDeleteAvatar = useCallback(() => {
+    open(ConfirmationModal, {
+      title: 'Delete Avatar',
+      description:
+        'Are you sure you want to delete your avatar? This action cannot be undone.',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteAvatarMutation.mutateAsync({})
+      }
+    })
+  }, [])
+
+  const handleChangeAvatar = useCallback(() => {
+    open(FilePickerModal, {
+      acceptedMimeTypes: {
+        'image/*': ['.jpg', '.jpeg', '.png', '.gif']
+      },
+      enablePixabay: true,
+      enableUrl: true,
+      enableAI: true,
+      onSelect: file => changeAvatar(file)
     })
   }, [])
 
@@ -74,7 +92,7 @@ function AvatarColumn() {
       icon="tabler:camera"
       title={t('settings.title.profilePicture')}
     >
-      <div className="bg-bg-100 dark:bg-bg-800 mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full">
+      <div className="bg-bg-100 shadow-custom dark:bg-bg-800 mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full">
         {userData.avatar !== '' ? (
           <img alt="" className="size-full object-cover" src={getAvatarURL()} />
         ) : (
@@ -85,10 +103,8 @@ function AvatarColumn() {
         <Button
           icon="tabler:upload"
           loading={loading}
-          variant="plain"
-          onClick={() => {
-            changeAvatar()
-          }}
+          variant={userData.avatar !== '' ? 'plain' : 'primary'}
+          onClick={handleChangeAvatar}
         >
           upload
         </Button>
