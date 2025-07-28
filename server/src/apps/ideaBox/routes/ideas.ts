@@ -134,24 +134,19 @@ const list = forgeController.query
     return [
       ...textIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        id: idea.id,
-        collectionId: idea.collectionId,
-        collectionName: idea.collectionName,
         content: idea.content,
         type: 'text'
       })),
       ...imageIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        id: idea.id,
-        collectionId: idea.collectionId,
-        collectionName: idea.collectionName,
+        child: {
+          id: idea.id,
+          collectionId: idea.collectionId
+        },
         image: idea.image
       })),
       ...linkIdeas.map(idea => ({
         ...idea.expand!.base_entry,
-        id: idea.id,
-        collectionId: idea.collectionId,
-        collectionName: idea.collectionName,
         link: idea.link
       }))
     ] as Array<SchemaWithPB<z.infer<typeof _returnSchema>>>
@@ -310,12 +305,30 @@ const update = forgeController.mutation
   .callback(async ({ pb, query: { id }, body: rawBody, media: { image } }) => {
     const body = rawBody as z.infer<typeof createSchema>
 
-    let updatedEntry
+    const baseIdea = await pb.update
+      .collection('idea_box__entries')
+      .id(id)
+      .data({
+        type: body.type,
+        tags: body.tags
+      })
+      .execute()
 
     if (body.type === 'text') {
-      updatedEntry = await pb.update
+      const existingText = await pb.getFirstListItem
         .collection('idea_box__entries_text')
-        .id(id)
+        .filter([
+          {
+            field: 'base_entry',
+            operator: '=',
+            value: baseIdea.id
+          }
+        ])
+        .execute()
+
+      await pb.update
+        .collection('idea_box__entries_text')
+        .id(existingText.id)
         .data({
           content: body.content
         })
@@ -325,17 +338,41 @@ const update = forgeController.mutation
         throw new ClientError('Image is required for image entries')
       }
 
+      const existingImage = await pb.getFirstListItem
+        .collection('idea_box__entries_image')
+        .filter([
+          {
+            field: 'base_entry',
+            operator: '=',
+            value: baseIdea.id
+          }
+        ])
+        .execute()
+
       const imageData = await getMedia('idea', image)
 
-      updatedEntry = await pb.update
+      await pb.update
         .collection('idea_box__entries_image')
+        .id(existingImage.id)
         .data({
           image: imageData
         })
         .execute()
     } else if (body.type === 'link') {
-      updatedEntry = await pb.update
+      const existingLink = await pb.getFirstListItem
         .collection('idea_box__entries_link')
+        .filter([
+          {
+            field: 'base_entry',
+            operator: '=',
+            value: baseIdea.id
+          }
+        ])
+        .execute()
+
+      await pb.update
+        .collection('idea_box__entries_link')
+        .id(existingLink.id)
         .data({
           link: body.link
         })
@@ -343,15 +380,6 @@ const update = forgeController.mutation
     } else {
       throw new ClientError('Invalid idea type')
     }
-
-    await pb.update
-      .collection('idea_box__entries')
-      .id(updatedEntry.base_entry)
-      .data({
-        type: body.type,
-        tags: body.tags
-      })
-      .execute()
   })
 
 const remove = forgeController.mutation

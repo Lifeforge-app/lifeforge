@@ -45,12 +45,11 @@ function ModifyIdeaModal({
     ).mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ['idea-box', 'ideas', id, path]
+          queryKey: ['ideaBox', 'ideas']
         })
         queryClient.invalidateQueries({
-          queryKey: ['idea-box', 'search', id, path]
+          queryKey: ['ideaBox', 'search']
         })
-        queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags'] })
       },
       onError: error => {
         toast.error('Failed to modify idea:', error)
@@ -85,12 +84,16 @@ function ModifyIdeaModal({
         label: 'Idea type',
         icon: 'tabler:category',
         options: [
-          { value: 'text', text: t('entryType.text') },
-          { value: 'link', text: t('entryType.link') },
-          { value: 'image', text: t('entryType.image') }
+          {
+            value: 'text',
+            text: t('entryType.text'),
+            icon: 'tabler:text-size'
+          },
+          { value: 'link', text: t('entryType.link'), icon: 'tabler:link' },
+          { value: 'image', text: t('entryType.image'), icon: 'tabler:photo' }
         ]
       },
-      text: {
+      content: {
         required: true,
         label: 'Idea content',
         icon: 'tabler:text-wrap',
@@ -170,7 +173,7 @@ function ModifyIdeaModal({
     .onSubmit(async data => {
       switch (data.type) {
         case 'text':
-          mutation.mutate({
+          await mutation.mutateAsync({
             content: data.content.trim(),
             type: 'text',
             folder: path?.split('/').pop() ?? '',
@@ -180,7 +183,7 @@ function ModifyIdeaModal({
           })
           break
         case 'link':
-          mutation.mutate({
+          await mutation.mutateAsync({
             link: data.link.trim(),
             type: 'link',
             folder: path?.split('/').pop() ?? '',
@@ -190,7 +193,7 @@ function ModifyIdeaModal({
           })
           break
         case 'image':
-          mutation.mutate({
+          await mutation.mutateAsync({
             type: 'image',
             folder: path?.split('/').pop() ?? '',
             container: id ?? '',

@@ -28,7 +28,7 @@ const COMPONENT_MAP: Record<FormFieldPropsUnion['type'], React.FC<any>> = {
   location: FormLocationInput,
   checkbox: FormCheckboxInput,
   file: FormFileInput
-}
+} satisfies Record<FormFieldPropsUnion['type'], React.FC<any>>
 
 function FormInputs<T extends FormState>({
   fields,
