@@ -3,15 +3,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import {
-  ConfirmationModal,
-  DeleteConfirmationModal,
-  HamburgerMenu,
-  MenuItem
-} from 'lifeforge-ui'
+import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import ModifyEventModal from '@apps/Calendar/components/modals/ModifyEventModal'
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
@@ -70,14 +66,31 @@ function EventDetailsHeader({
     })
   }, [event])
 
+  const deleteMutation = useMutation(
+    forgeAPI.calendar.events.remove
+      .input({
+        id: event.id.split('-')[0] ?? ''
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['calendar'] })
+        },
+        onError: () => {
+          toast.error(
+            'An error occurred while deleting the event. Please try again later.'
+          )
+        }
+      })
+  )
+
   const handleDelete = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'calendar/events',
-      confirmationText: 'Delete this event',
-      data: { id: event.id.split('-')[0] ?? '' },
-      itemName: 'event',
-      nameKey: 'title',
-      queryUpdateType: 'invalidate'
+    open(ConfirmationModal, {
+      title: 'Delete Event',
+      description: 'Are you sure you want to delete this event?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [event])
 
