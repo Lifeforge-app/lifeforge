@@ -1,7 +1,8 @@
 import {
+  AllPossibleFieldsForFieldSelection,
+  AllPossibleFieldsForFilter,
   CollectionKey,
   ExpandConfig,
-  FieldKey,
   FieldSelection,
   FilterType,
   MultiItemsReturnType
@@ -70,7 +71,12 @@ export class GetList<
     return this
   }
 
-  sort(sort: (FieldKey<TCollectionKey> | `-${FieldKey<TCollectionKey>}`)[]) {
+  sort(
+    sort: (
+      | AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig>
+      | `-${AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> : never}`
+    )[]
+  ) {
     this._sort = sort.join(', ')
 
     return this
@@ -125,7 +131,7 @@ export class GetList<
 
     const filterString = this._filterExpression
       ? this._pb.filter(this._filterExpression, this._filterParams)
-      : ''
+      : undefined
 
     return this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
