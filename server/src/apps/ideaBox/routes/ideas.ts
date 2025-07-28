@@ -134,6 +134,9 @@ const list = forgeController.query
     return [
       ...textIdeas.map(idea => ({
         ...idea.expand!.base_entry,
+        id: idea.id,
+        collectionId: idea.collectionId,
+        collectionName: idea.collectionName,
         content: idea.content,
         type: 'text'
       })),
