@@ -10,7 +10,6 @@ import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
-import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
 function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
@@ -95,7 +94,7 @@ function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
       <span className="text-bg-500 block text-sm">
         {dayjs(entry.created).fromNow()}
       </span>
-      <InFolderChip entry={entry} />
+      {/* <InFolderChip entry={entry} /> */}
     </div>
   )
 }
