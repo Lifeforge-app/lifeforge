@@ -9,7 +9,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
-import { fetchAPI } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
 
 import type { MomentVaultEntry } from '@apps/MomentVault'
@@ -63,13 +62,11 @@ function AudioEntry({
     setTranscriptionLoading(true)
 
     try {
-      const data = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        `moment-vault/transcribe/${entry.id}`,
-        {
-          method: 'POST'
-        }
-      )
+      const data = await forgeAPI.momentVault.transcribe.transcribeExisted
+        .input({
+          id: entry.id
+        })
+        .mutate({})
 
       queryClient.setQueryData(
         forgeAPI.momentVault.entries.list.input({ page: currentPage }).key,
@@ -136,11 +133,13 @@ function AudioEntry({
             cursorColor={themeColor}
             height={50}
             progressColor={themeColor}
-            url={forgeAPI.media.input({
-              collectionId: entry.collectionId,
-              recordId: entry.id,
-              fieldId: entry.file?.[0]
-            }).endpoint}
+            url={
+              forgeAPI.media.input({
+                collectionId: entry.collectionId,
+                recordId: entry.id,
+                fieldId: entry.file?.[0]
+              }).endpoint
+            }
             waveColor={
               derivedTheme === 'dark' ? bgTempPalette[700] : bgTempPalette[400]
             }

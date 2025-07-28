@@ -38,8 +38,7 @@ function MomentVault() {
   const handleAddEntry = useCallback(
     (type: string) => () => {
       open(AddEntryModal, {
-        type: type as 'text' | 'audio' | 'photos' | 'video',
-        entriesQueryKey: ['moment-vault', 'entries', page]
+        type: type as 'text' | 'audio' | 'photos' | 'video'
       })
     },
     [page]
