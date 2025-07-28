@@ -58,6 +58,7 @@
     "containerName": "Idea Box Name",
     "folderName": "Folder Name",
     "ideaTitle": "Idea Title",
+    "ideaType": "Idea Type",
     "imageLink": "Image Link",
     "coverImage": "Cover Image",
     "ideaTags": "Idea Tags",
