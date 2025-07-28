@@ -29,6 +29,10 @@ function EntryLink({ entry }: { entry: IdeaBoxIdea }) {
     []
   )
 
+  if (entry.type !== 'link') {
+    return null
+  }
+
   return (
     <div
       ref={node => {
