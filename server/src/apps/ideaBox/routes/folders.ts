@@ -92,18 +92,20 @@ const moveTo = forgeController.mutation
   .description('Move a folder to a different parent')
   .input({
     query: z.object({
-      id: z.string(),
+      id: z.string()
+    }),
+    body: z.object({
       target: z.string()
     })
   })
   .existenceCheck('query', {
     id: 'idea_box__folders'
   })
-  .existenceCheck('query', {
+  .existenceCheck('body', {
     target: 'idea_box__folders'
   })
   .callback(
-    async ({ pb, query: { id, target } }) =>
+    async ({ pb, query: { id }, body: { target } }) =>
       await pb.update
         .collection('idea_box__folders')
         .id(id)

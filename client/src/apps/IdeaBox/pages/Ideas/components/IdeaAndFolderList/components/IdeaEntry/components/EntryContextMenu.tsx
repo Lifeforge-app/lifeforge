@@ -5,7 +5,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import {
   type IdeaBoxIdea,
@@ -94,7 +93,7 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['ideaBox', 'ideas', id, path]
+            queryKey: ['ideaBox', 'ideas']
           })
           queryClient.invalidateQueries({
             queryKey: ['ideaBox', 'misc', 'search']
