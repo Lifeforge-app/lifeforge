@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import EntryContextMenu from '../components/EntryContextMenu'
-import InFolderChip from '../components/InFolderChip'
 import TagChip from '../components/TagChip'
 import EntryContent from './components/EntryContent'
 
@@ -59,8 +58,7 @@ function EntryLink({ entry }: { entry: IdeaBoxIdea }) {
         </div>
         <EntryContextMenu entry={entry} />
       </div>
-      {entry.title && <h3 className="text-xl font-semibold">{entry.title}</h3>}
-      <EntryContent key={entry.content} entry={entry} />
+      <EntryContent key={entry.link} entry={entry} />
       {entry.tags !== null && entry.tags?.length !== 0 && (
         <div className="flex gap-2">
           {entry.tags?.map((tag: string, index: number) => (
@@ -68,10 +66,10 @@ function EntryLink({ entry }: { entry: IdeaBoxIdea }) {
           ))}
         </div>
       )}
-      <div className="text-bg-500 text-sm">
+      <div className="text-bg-500 mt-2 text-sm">
         {dayjs(entry.created).fromNow()}
       </div>
-      <InFolderChip entry={entry} />
+      {/* <InFolderChip entry={entry} /> */}
     </div>
   )
 }

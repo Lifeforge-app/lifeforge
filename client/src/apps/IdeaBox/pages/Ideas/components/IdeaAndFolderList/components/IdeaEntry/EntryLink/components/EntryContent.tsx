@@ -11,13 +11,17 @@ function EntryContent({ entry }: { entry: IdeaBoxIdea }) {
     })
   )
 
+  if (entry.type !== 'link') {
+    return null
+  }
+
   return OGQuery.isSuccess && OGQuery.data ? (
     <button
       className="shadow-custom component-bg-lighter-with-hover w-full cursor-pointer space-y-2 rounded-md p-2 text-left"
       onClick={() => {
         const a = document.createElement('a')
 
-        a.href = entry.content
+        a.href = entry.link
         a.target = '_blank'
         a.rel = 'noreferrer noopener'
         a.click()
@@ -31,7 +35,7 @@ function EntryContent({ entry }: { entry: IdeaBoxIdea }) {
             const url: string = OGQuery.data.ogImage?.[0].url
 
             if (!url.startsWith('http')) {
-              return `${new URL(entry.content).origin}${
+              return `${new URL(entry.link).origin}${
                 !url.startsWith ? '/' : ''
               }${url}`
             }
@@ -41,7 +45,7 @@ function EntryContent({ entry }: { entry: IdeaBoxIdea }) {
         />
       )}
       <p className="text-custom-500 text-xs font-medium">
-        {OGQuery.data.ogSiteName ?? new URL(entry.content).hostname}
+        {OGQuery.data.ogSiteName ?? new URL(entry.link).hostname}
       </p>
       {OGQuery.data.ogTitle !== undefined && (
         <p className="text-sm font-medium">{OGQuery.data.ogTitle}</p>
@@ -55,11 +59,11 @@ function EntryContent({ entry }: { entry: IdeaBoxIdea }) {
   ) : (
     <a
       className="text-custom-500 break-all underline underline-offset-2"
-      href={entry.content}
+      href={entry.link}
       rel="noreferrer"
       target="_blank"
     >
-      {entry.content}
+      {entry.link}
     </a>
   )
 }
