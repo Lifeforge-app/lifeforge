@@ -5,18 +5,14 @@ import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
+import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
-function EntryImage({
-  entry
-}: {
-  entry:
-    | IdeaBoxControllersSchemas.IIdeas['getIdeas']['response'][number]
-    | IdeaBoxControllersSchemas.IMisc['search']['response'][number]
-}) {
+function EntryImage({ entry }: { entry: IdeaBoxIdea }) {
   const { t } = useTranslation('apps.ideaBox')
 
   const [{ opacity, isDragging }, dragRef] = useDrag(

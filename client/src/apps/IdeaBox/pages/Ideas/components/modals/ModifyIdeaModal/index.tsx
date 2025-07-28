@@ -1,6 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { Button, QueryWrapper, TagsInput } from 'lifeforge-ui'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferInput } from 'lifeforge-api'
+import { Button, QueryWrapper, TagsInput, defineForm } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
@@ -30,6 +32,52 @@ function ModifyIdeaModal({
   const { tagsQuery } = useIdeaBoxContext()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
+  const formProps = defineForm<
+    InferInput<typeof forgeAPI.ideaBox.ideas.create>['body']
+  >()
+    .ui({
+      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+      title: `ideaBox.${type}`,
+      onClose,
+      namespace: 'apps.ideaBox',
+      submitButton: type === 'create' ? 'create' : 'update'
+    })
+    .typesMap({
+      title: 'text',
+      content: 'textarea',
+      imageLink: 'text',
+      type: 'listbox',
+      folder: 'text',
+      container: 'text',
+      tags: 'listbox'
+    })
+    .setupFields({
+      title: {
+        required: true,
+        label: 'Idea title',
+        icon: 'tabler:title',
+        placeholder: 'Idea title'
+      },
+      content: {
+        required: true,
+        label: 'Idea content',
+        icon: 'tabler:text-wrap',
+        placeholder: 'Idea content'
+      },
+      link: {
+        required: true,
+        label: 'Idea link',
+        icon: 'tabler:url',
+        placeholder: 'https://example.com/your-idea'
+      },
+      imageLink: {
+        label: 'Image link (optional)',
+        icon: 'tabler:image-plus',
+        placeholder:
+          'https://example.com/your-idea-image.png (only for image ideas)'
+      }
+    })
 
   const innerOpenType = useDebounce(type, type === null ? 300 : 0)
 

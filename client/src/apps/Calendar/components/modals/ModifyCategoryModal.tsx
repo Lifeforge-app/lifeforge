@@ -21,7 +21,7 @@ function ModifyCategoryModal({
     (type === 'create'
       ? forgeAPI.calendar.categories.create
       : forgeAPI.calendar.categories.update.input({
-          id: initialData?.id || '' ?? ''
+          id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {

@@ -27,8 +27,7 @@ function ContentContainer() {
 
   const handleCreatePassword = useCallback(() => {
     open(ModifyPasswordModal, {
-      type: 'create',
-      initialData: null
+      type: 'create'
     })
   }, [])
 

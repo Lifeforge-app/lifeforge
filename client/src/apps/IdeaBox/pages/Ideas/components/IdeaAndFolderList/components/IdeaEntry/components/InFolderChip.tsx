@@ -11,7 +11,12 @@ function InFolderChip({ entry }: { entry: IdeaBoxIdea }) {
 
   const { '*': path } = useParams<{ '*': string }>()
 
-  if (typeof entry.folder === 'string' || !('fullPath' in entry)) {
+  if (
+    typeof entry.folder === 'string' ||
+    !('fullPath' in entry) ||
+    !entry.expand ||
+    !entry.expand.folder
+  ) {
     return <></>
   }
 
@@ -21,11 +26,11 @@ function InFolderChip({ entry }: { entry: IdeaBoxIdea }) {
       <Link
         className="inline-flex items-center gap-2 rounded-full px-3 py-1 pl-2 hover:opacity-70"
         style={{
-          color: entry.folder.color,
-          backgroundColor: entry.folder.color + '30'
+          color: entry.expand.folder.color,
+          backgroundColor: entry.expand.folder.color + '30'
         }}
         to={
-          entry.folder.id ===
+          entry.expand.folder.id ===
           path
             ?.split('/')
             .filter(e => e)
@@ -38,8 +43,8 @@ function InFolderChip({ entry }: { entry: IdeaBoxIdea }) {
           setSearchQuery('')
         }}
       >
-        <Icon className="size-4" icon={entry.folder.icon} />
-        {entry.folder.name}
+        <Icon className="size-4" icon={entry.expand.folder.icon} />
+        {entry.expand.folder.name}
       </Link>
     </span>
   )
