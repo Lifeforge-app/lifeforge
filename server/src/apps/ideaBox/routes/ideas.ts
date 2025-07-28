@@ -6,6 +6,7 @@ import multer from 'multer'
 import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
+import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 
 const list = forgeController.query
   .description('Get ideas from a folder')
@@ -133,7 +134,7 @@ const list = forgeController.query
         ...idea.expand!.base_entry,
         link: idea.link,
       }))
-    ] as Array<z.infer<typeof returnSchema>>
+    ] as Array<SchemaWithPB<z.infer<typeof returnSchema>>>
   })
 
 const create = forgeController.mutation
