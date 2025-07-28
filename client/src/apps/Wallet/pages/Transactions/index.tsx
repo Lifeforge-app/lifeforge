@@ -16,16 +16,15 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
-import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 import HeaderMenu from './components/HeaderMenu'
 import InnerHeader from './components/InnerHeader'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
+import TransactionList from './components/TransactionList'
 import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ScanReceiptModal from './modals/ScanReceiptModal'
-import ListView from './views/ListView'
 
 export type WalletTransaction = InferOutput<
   typeof forgeAPI.wallet.transactions.list
@@ -199,17 +198,7 @@ function Transactions() {
                   )
                 }
 
-                if (filteredTransactions.length === 0) {
-                  return (
-                    <EmptyStateScreen
-                      icon="tabler:filter-off"
-                      name="results"
-                      namespace="apps.wallet"
-                    />
-                  )
-                }
-
-                return <ListView />
+                return <TransactionList />
               }}
             </QueryWrapper>
             {(transactionsQuery.data ?? []).length > 0 && (

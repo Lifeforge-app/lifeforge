@@ -35,5 +35,6 @@
   "adjust": "Adjust",
   "downloading": "Downloading ...",
   "generate": "Generate",
-  "regenerate": "Regenerate"
+  "regenerate": "Regenerate",
+  "confirm": "Confirm"
 }
