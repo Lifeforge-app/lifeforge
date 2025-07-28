@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import type { MomentVaultEntry } from '@apps/MomentVault'
 
 async function getNaturalHeightWidth(file: string) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {
@@ -23,7 +24,7 @@ function PhotosEntry({
   entry,
   onDelete
 }: {
-  entry: IMomentVaultEntry
+  entry: MomentVaultEntry
   onDelete: () => void
 }) {
   const [loading, setLoading] = useState(true)
@@ -40,12 +41,16 @@ function PhotosEntry({
     const fetchPhotos = async () => {
       const photos = await Promise.all(
         entry.file!.map(async file => {
-          const { height, width } = await getNaturalHeightWidth(
-            `${import.meta.env.VITE_API_HOST}/media/${file}`
-          )
+          const fileUrl = forgeAPI.media.input({
+            collectionId: entry.collectionId,
+            recordId: entry.id,
+            fieldId: file
+          }).endpoint
+
+          const { height, width } = await getNaturalHeightWidth(fileUrl)
 
           return {
-            src: `${import.meta.env.VITE_API_HOST}/media/${file}`,
+            src: fileUrl,
             height,
             width
           }

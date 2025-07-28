@@ -1,26 +1,27 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   HamburgerMenu,
   MenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
+import tinycolor from 'tinycolor2'
 
 import type { IdeaBoxFolder } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 
 function FolderContextMenu({
-  folder
-  // isOver,
+  folder,
+  isOver
 }: {
   folder: IdeaBoxFolder
   isOver: boolean
 }) {
-  // console.log(isOver) //TODO
   const queryClient = useQueryClient()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
@@ -34,13 +35,30 @@ function FolderContextMenu({
     })
   }, [folder])
 
+  const deleteMutation = useMutation(
+    forgeAPI.ideaBox.folders.remove
+      .input({
+        id: folder.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['ideaBox', 'folders'] })
+        },
+        onError: error => {
+          toast.error(`Failed to delete folder: ${error.message}`)
+        }
+      })
+  )
+
   const handleDeleteFolder = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'idea-box/folders',
-      confirmationText: 'Delete this folder',
-      data: folder,
-      itemName: 'folder',
-      queryKey: ['idea-box', 'folders', id!, path!]
+    open(ConfirmationModal, {
+      title: 'Delete Folder',
+      description: `Are you sure you want to delete the folder "${folder.name}"? This action cannot be undone.`,
+      buttonType: 'delete',
+      confirmationPrompt: folder.name,
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [folder])
 
@@ -69,7 +87,12 @@ function FolderContextMenu({
     <HamburgerMenu
       classNames={{
         button: 'p-2!',
-        wrapper: 'relative z-10'
+        wrapper: 'relative z-10',
+        icon: isOver
+          ? tinycolor(folder.color).isDark()
+            ? 'text-bg-100'
+            : 'text-bg-900'
+          : 'text-bg-500'
       }}
     >
       {folder.parent !== '' && (

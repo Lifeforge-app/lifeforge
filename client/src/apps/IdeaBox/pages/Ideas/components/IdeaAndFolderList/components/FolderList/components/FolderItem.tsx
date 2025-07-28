@@ -98,7 +98,7 @@ function FolderItem({ folder }: { folder: IdeaBoxFolder }) {
       })
 
       queryClient.invalidateQueries({
-        queryKey: ['idea-box', 'misc', 'search']
+        queryKey: ['ideaBox', 'misc', 'search']
       })
     } catch {
       toast.error('Failed to move item')

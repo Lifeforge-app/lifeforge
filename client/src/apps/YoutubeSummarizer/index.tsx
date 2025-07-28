@@ -1,4 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import {
   EmptyStateScreen,
   ModuleHeader,
@@ -9,14 +12,15 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useAPIQuery } from 'shared'
 import { fetchAPI } from 'shared'
-
-import { IYoutubeVideoInfo } from '@apps/YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 
 import CaptionSelector from './components/CaptionSelector'
 import SummaryDisplay from './components/SummaryDisplay'
 import VideoInfo from './components/VideoInfo'
+
+export type YoutubeInfo = InferOutput<
+  typeof forgeAPI.youtubeSummarizer.getYoutubeVideoInfo
+>
 
 function YoutubeSummarizer() {
   const { t } = useTranslation('apps.youtubeSummarizer')
@@ -41,29 +45,12 @@ function YoutubeSummarizer() {
     }
   }, [debouncedVideoUrl])
 
-  const videoInfoQuery = useAPIQuery<
-    IYoutubeVideoInfo & {
-      captions: Record<
-        string,
-        {
-          ext: string
-          url: string
-          name: string
-        }[]
-      >
-      auto_captions: Record<
-        string,
-        {
-          ext: string
-          url: string
-          name: string
-        }[]
-      >
-    }
-  >(
-    `/youtube-summarizer/info/${videoID}`,
-    ['youtube-summarizer', 'info', videoID],
-    !!videoID && videoID.length === 11
+  const videoInfoQuery = useQuery(
+    forgeAPI.youtubeSummarizer.getYoutubeVideoInfo
+      .input({
+        id: videoID || ''
+      })
+      .queryOptions({ enabled: !!videoID && videoID.length === 11 })
   )
 
   async function summarizeVideo(url: string) {

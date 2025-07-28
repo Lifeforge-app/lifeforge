@@ -1,100 +1,71 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { t } from 'i18next'
-import { Button, ModalHeader, TextAreaInput } from 'lifeforge-ui'
-import { useEffect, useRef, useState } from 'react'
+import type { InferInput } from 'lifeforge-api'
+import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
-import { IMomentVaultEntry } from '../interfaces/moment_vault_interfaces'
+import type { MomentVaultEntry } from '..'
 
 function ModifyTextEntryModal({
-  data: { initialData, queryKey },
+  data: { initialData },
   onClose
 }: {
   data: {
-    initialData: IMomentVaultEntry | null
-    queryKey: unknown[]
+    initialData?: MomentVaultEntry
   }
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
 
-  const [text, setText] = useState('')
-
-  const inputRef = useRef<HTMLTextAreaElement | null>(null)
-
-  const [submitLoading, setSubmitLoading] = useState(false)
-
-  async function onSubmit() {
-    if (!initialData) return
-
-    setSubmitLoading(true)
-
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `moment-vault/entries/${initialData.id}`,
-        {
-          method: 'PATCH',
-          body: {
-            content: text
-          }
+  const mutation = useMutation(
+    forgeAPI.momentVault.entries.update
+      .input({
+        id: initialData?.id || ''
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['momentVault', 'entries']
+          })
+          onClose()
+        },
+        onError: () => {
+          toast.error('Failed to modify text entry')
         }
-      )
-
-      queryClient.invalidateQueries({ queryKey })
-      onClose()
-    } catch (err) {
-      console.error(err)
-      toast.error('Failed to modify text entry')
-    } finally {
-      setSubmitLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (initialData) {
-      setText(initialData.content)
-    }
-  }, [initialData])
-
-  useEffect(() => {
-    if (!inputRef.current) return
-
-    inputRef.current.style.height = 'auto'
-    inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
-  }, [text])
-
-  return (
-    <div className="min-w-[50vw]">
-      <ModalHeader
-        icon="tabler:pencil"
-        namespace="apps.momentVault"
-        title="Update Text Entry"
-        onClose={onClose}
-      />
-      <TextAreaInput
-        darker
-        required
-        className="mt-4"
-        icon="tabler:file-text"
-        name="Text Content"
-        namespace="apps.momentVault"
-        placeholder={t('apps.momentVault:placeholders.textEntry')}
-        setValue={setText}
-        value={text}
-      />
-      <Button
-        className="mt-6 w-full"
-        disabled={text.trim().length === 0}
-        icon="tabler:pencil"
-        loading={submitLoading}
-        onClick={onSubmit}
-      >
-        Update
-      </Button>
-    </div>
+      })
   )
+
+  const formProps = defineForm<
+    InferInput<typeof forgeAPI.momentVault.entries.update>['body']
+  >()
+    .ui({
+      title: 'Update Text Entry',
+      namespace: 'apps.momentVault',
+      icon: 'tabler:pencil',
+      onClose,
+      submitButton: 'update'
+    })
+    .typesMap({
+      content: 'textarea'
+    })
+    .setupFields({
+      content: {
+        placeholder: t('apps.momentVault:placeholders.textEntry'),
+        required: true,
+        icon: 'tabler:file-text',
+        label: t('apps.momentVault:fields.textContent')
+      }
+    })
+    .initialData({
+      content: initialData?.content || ''
+    })
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
+    .build()
+
+  return <FormModal {...formProps} />
 }
 
 export default ModifyTextEntryModal

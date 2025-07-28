@@ -4,25 +4,20 @@ import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
+import type { MomentVaultEntry } from '@apps/MomentVault'
 import ModifyTextEntryModal from '@apps/MomentVault/modals/ModifyTextEntryModal'
 
 function TextEntry({
   entry,
-  page,
   onDelete
 }: {
-  entry: IMomentVaultEntry
-  page: number
+  entry: MomentVaultEntry
   onDelete: () => void
 }) {
   const open = useModalStore(state => state.open)
 
   const handleUpdateEntry = useCallback(() => {
-    open(ModifyTextEntryModal, {
-      initialData: entry,
-      queryKey: ['moment-vault', 'entries', page]
-    })
+    open(ModifyTextEntryModal, {})
   }, [entry])
 
   return (

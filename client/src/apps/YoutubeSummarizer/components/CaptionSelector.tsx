@@ -10,11 +10,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-interface CaptionData {
-  captions: Record<string, CaptionMeta[]>
-  auto_captions: Record<string, CaptionMeta[]>
-  title: string
-}
+import type { YoutubeInfo } from '..'
 
 interface CaptionMeta {
   ext: string
@@ -23,7 +19,7 @@ interface CaptionMeta {
 }
 
 interface CaptionSelectorProps {
-  videoInfo: CaptionData
+  videoInfo: YoutubeInfo
   summarizeLoading: boolean
   onSummarize: (url: string) => void
 }
@@ -146,8 +142,8 @@ function CaptionSelector({
       {captionType &&
         (Object.keys(
           {
-            auto: videoInfo.auto_captions,
-            manual: videoInfo.captions
+            auto: videoInfo.auto_captions || {},
+            manual: videoInfo.captions || {}
           }[captionType]
         ).length > 0 ? (
           <>
@@ -172,8 +168,8 @@ function CaptionSelector({
             >
               {Object.entries(
                 captionType === 'auto'
-                  ? videoInfo.auto_captions
-                  : videoInfo.captions
+                  ? videoInfo.auto_captions || {}
+                  : videoInfo.captions || {}
               )
                 .filter(([, meta]) => meta[0].name)
                 .map(([language, meta]) => (
