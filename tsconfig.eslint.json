@@ -3,6 +3,7 @@
   "include": [
     "apps/*/src",
     "packages/*/src",
+    "packages/*/.storybook",
     "client/src",
     "server/src",
     "shared/src"
