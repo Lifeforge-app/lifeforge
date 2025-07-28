@@ -1,11 +1,14 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
-  DeleteConfirmationModal,
+  ConfirmationModal,
   MenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 
 import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
 import type { TodoListPriority } from '@apps/TodoList/providers/TodoListProvider'
@@ -17,6 +20,8 @@ function TaskPriorityListItem({
   item: TodoListPriority
   setSidebarOpen: (value: boolean) => void
 }) {
+  const queryClient = useQueryClient()
+
   const open = useModalStore(state => state.open)
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -28,15 +33,35 @@ function TaskPriorityListItem({
     })
   }, [item])
 
+  const deleteMutation = useMutation(
+    forgeAPI.todoList.priorities.remove
+      .input({
+        id: item.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['todo-list'] })
+          setSearchParams({
+            ...Object.fromEntries(searchParams.entries()),
+            priority: ''
+          })
+        },
+        onError: () => {
+          toast.error(
+            'An error occurred while deleting the priority. Please try again later.'
+          )
+        }
+      })
+  )
+
   const handleDeletePriority = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'todo-list/priorities',
-      confirmationText: 'Delete this priority',
-      customText:
-        'Are you sure you want to delete this priority? The tasks with this priority will not be deleted.',
-      data: item,
-      itemName: 'priority',
-      queryKey: ['todo-list', 'priorities']
+    open(ConfirmationModal, {
+      title: 'Delete Priority',
+      description: 'Are you sure you want to delete this priority?',
+      buttonType: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      }
     })
   }, [item])
 
