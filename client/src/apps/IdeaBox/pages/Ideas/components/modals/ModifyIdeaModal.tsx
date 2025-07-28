@@ -151,8 +151,8 @@ function ModifyIdeaModal({
                         preview: initialData.image
                           ? typeof initialData.image === 'string'
                             ? forgeAPI.media.input({
-                                collectionId: initialData.collectionId!,
-                                recordId: initialData.id!,
+                                collectionId: initialData.child!.collectionId!,
+                                recordId: initialData.child!.id!,
                                 fieldId: initialData.image
                               }).endpoint
                             : (initialData.image as File | undefined) instanceof
@@ -164,13 +164,19 @@ function ModifyIdeaModal({
                           : null
                       }
                     : undefined
-              })
+              }),
+            tags: initialData.tags?.map((tag: string) => tagsQuery.data?.find(t => t.name === tag)?.id || tag) || []
       }
     )
     .onChange(({ type }) => {
       setIdeaType(type)
     })
     .onSubmit(async data => {
+      data.tags =
+        data.tags?.map(
+          tag => tagsQuery.data?.find(t => t.id === tag)?.name || tag
+        ) || []
+
       switch (data.type) {
         case 'text':
           await mutation.mutateAsync({
