@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import { Link, useParams } from 'react-router'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
@@ -7,8 +8,7 @@ import ContainerName from './components/ContainerName'
 import GoBackButtonAndMenu from './components/GoBackButtonAndMenu'
 
 function Header() {
-  const { pathDetails, pathDetailsLoading, setSearchQuery, setSelectedTags } =
-    useIdeaBoxContext()
+  const { pathDetails, setSearchQuery, setSelectedTags } = useIdeaBoxContext()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
@@ -19,19 +19,21 @@ function Header() {
         className="bg-bg-900 relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-cover bg-center bg-no-repeat p-6 sm:h-72"
         style={{
           backgroundImage:
-            typeof pathDetails !== 'string'
-              ? `url(${import.meta.env.VITE_API_HOST}/media/${pathDetails?.container.cover.replace(
-                  /^\//,
-                  ''
-                )})`
-              : ''
+            pathDetails?.container &&
+            `url(${
+              forgeAPI.media.input({
+                collectionId: pathDetails.container.collectionId,
+                recordId: pathDetails.container.id,
+                fieldId: pathDetails.container.cover
+              }).endpoint
+            })`
         }}
       >
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
         <div className="flex-between relative z-9999 flex w-full">
           <h1 className="text-bg-100 flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
             {(() => {
-              if (pathDetailsLoading) {
+              if (!pathDetails) {
                 return (
                   <>
                     <Icon
@@ -45,18 +47,18 @@ function Header() {
                 return (
                   <div className="flex flex-wrap items-center gap-3">
                     <ContainerName
-                      color={pathDetails!.container.color}
-                      icon={pathDetails!.container.icon}
-                      id={pathDetails!.container.id}
-                      name={pathDetails!.container.name}
+                      color={pathDetails.container.color}
+                      icon={pathDetails.container.icon}
+                      id={pathDetails.container.id}
+                      name={pathDetails.container.name}
                     />
-                    {pathDetails!.path.length > 0 && (
+                    {pathDetails.path.length > 0 && (
                       <Icon
                         className="size-5 text-gray-500"
                         icon="tabler:chevron-right"
                       />
                     )}
-                    {pathDetails!.path.map((folder, index) => (
+                    {pathDetails.path.map((folder, index) => (
                       <>
                         <Link
                           key={folder.id}
@@ -81,7 +83,7 @@ function Header() {
                           />
                           <span className="hidden md:block">{folder.name}</span>
                         </Link>
-                        {index !== pathDetails!.path.length - 1 && (
+                        {index !== pathDetails.path.length - 1 && (
                           <Icon
                             className="size-5 text-gray-500"
                             icon="tabler:chevron-right"
