@@ -16,7 +16,6 @@ function ModifyIdeaModal({
     initialData?: Partial<
       InferOutput<typeof forgeAPI.ideaBox.ideas.list>[number]
     >
-    pastedData?: { file: File; preview: string }
   }
   onClose: () => void
 }) {
@@ -165,7 +164,11 @@ function ModifyIdeaModal({
                       }
                     : undefined
               }),
-            tags: initialData.tags?.map((tag: string) => tagsQuery.data?.find(t => t.name === tag)?.id || tag) || []
+        tags:
+          initialData.tags?.map(
+            (tag: string) =>
+              tagsQuery.data?.find(t => t.name === tag)?.id || tag
+          ) || []
       }
     )
     .onChange(({ type }) => {
