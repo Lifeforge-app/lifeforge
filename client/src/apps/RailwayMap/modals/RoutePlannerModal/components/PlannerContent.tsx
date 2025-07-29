@@ -103,7 +103,7 @@ function PlannerContent({
           value={start}
         />
         <Icon
-          className="size-6 rotate-90 text-zinc-500"
+          className="text-bg-500 size-6 rotate-90"
           icon="tabler:arrows-exchange"
         />
         <StationSelector

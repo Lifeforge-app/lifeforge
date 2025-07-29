@@ -1,7 +1,5 @@
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+import ListboxInput from '@components/inputs/ListboxInput'
+import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 
 import {
   type IPixabaySearchFilter,
@@ -16,7 +14,7 @@ interface ColorFilterProps {
 
 function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       buttonContent={
         <>
           <div
@@ -37,13 +35,12 @@ function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
         updateFilters({ type: 'SET_COLORS', payload: value })
       }}
       tKey="imagePicker"
-      type="listbox"
       value={colors}
     >
       {COLORS.map(({ name, color, id }, i) => (
-        <ListboxOrComboboxOption key={i} color={color} text={name} value={id} />
+        <ListboxOption key={i} color={color} text={name} value={id} />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

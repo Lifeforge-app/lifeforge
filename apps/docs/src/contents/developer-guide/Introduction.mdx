@@ -1,4 +1,22 @@
-import { Router } from 'express'
+import { Icon } from '@iconify/react'
+import Code from '../../components/Code'
+
+<section id="introduction">
+###### Introduction
+
+# Everything Behind LifeForge
+
+Welcome to the developer guide for LifeForge, where you can explore the architecture, design principles, and technical details that power this all-in-one personal management system. This guide is intended for developers who want to understand how LifeForge works under the hood, contribute to its development, or build upon its foundation. 
+
+</section>
+
+---
+
+<section id="the-back-story">
+## Test
+
+<Code language='javascript'>
+{`import { Router } from 'express'
 
 // Define the controller type
 
@@ -48,7 +66,7 @@ export type RouterPaths<T> = T extends RouterInput
                     __output: Output
                 }
               : T[K] extends RouterInput
-                ? `${K & string}.${RouterPaths<T[K]> & string}`
+                ? \`\${K & string}.\${RouterPaths<T[K]> & string}\`
                 : never
       }[keyof T]
     : never
@@ -57,7 +75,7 @@ export type RouterPaths<T> = T extends RouterInput
 export type GetController<
     T,
     P extends string
-> = P extends `${infer Head}.${infer Tail}`
+> = P extends \`\${infer Head}.\${infer Tail}\`
     ? T extends RouterInput
         ? Head extends keyof T
             ? GetController<T[Head], Tail>
@@ -66,3 +84,8 @@ export type GetController<
     : P extends keyof T
       ? T[P]
       : never
+`}
+</Code>
+
+</section>
+   

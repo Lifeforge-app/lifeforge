@@ -1,8 +1,5 @@
-import {
-  ListboxNullOption,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+import { ListboxInput, ListboxNullOption } from '@components/inputs'
+import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 import {
   type FormInputProps,
   type ListboxFieldProps
@@ -17,7 +14,7 @@ function FormListboxInput({
   handleChange
 }: FormInputProps<ListboxFieldProps>) {
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       buttonContent={
         field.multiple === true && Array.isArray(selectedData) ? (
           <div className="flex flex-wrap items-center gap-3">
@@ -98,7 +95,6 @@ function FormListboxInput({
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
-      type="listbox"
       value={selectedData}
     >
       {field.nullOption !== undefined && (
@@ -108,7 +104,7 @@ function FormListboxInput({
         />
       )}
       {field.options.map(({ text, color, icon, value }) => (
-        <ListboxOrComboboxOption
+        <ListboxOption
           key={value}
           color={color}
           icon={icon}
@@ -116,7 +112,7 @@ function FormListboxInput({
           value={value}
         />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

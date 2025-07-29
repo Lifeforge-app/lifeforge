@@ -109,7 +109,7 @@ const LocaleAdmin = () => {
                   to access the locale editor.
                 </p>
                 <a
-                  className="bg-custom-500 text-bg-900 hover:bg-custom-400 mt-16 flex items-center justify-center gap-2 rounded-md p-4 px-6 font-semibold tracking-widest uppercase transition-all"
+                  className="bg-custom-500 text-bg-800 hover:bg-custom-400 mt-16 flex items-center justify-center gap-2 rounded-md p-4 px-6 font-semibold tracking-widest uppercase transition-all"
                   href={import.meta.env.VITE_FRONTEND_URL}
                 >
                   <Icon className="text-2xl" icon="tabler:hammer" />

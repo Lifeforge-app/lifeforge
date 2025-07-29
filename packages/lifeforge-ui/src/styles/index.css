@@ -5,5 +5,12 @@
 @import './daisyui.css';
 @import './utils.css';
 
+@import 'react-grid-layout/css/styles.css';
+@import 'react-medium-image-zoom/dist/styles.css';
+@import 'react-toastify/dist/ReactToastify.css';
+@import 'react-tooltip/dist/react-tooltip.css';
+@import 'react-virtualized/styles.css';
+@import 'react-datepicker/dist/react-datepicker.css';
+
 @import '../components/inputs/DateInput/index.css';
 @import '../components/inputs/ColorInput/ColorPickerModal/index.css';

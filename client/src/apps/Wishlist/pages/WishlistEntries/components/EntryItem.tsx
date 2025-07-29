@@ -102,12 +102,12 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
             )}
           </div>
           <div className="w-full min-w-0">
-            <h2 className="line-clamp-2 w-full min-w-0 text-lg font-medium text-zinc-500">
+            <h2 className="text-bg-500 line-clamp-2 w-full min-w-0 text-lg font-medium">
               {entry.name}
             </h2>
             <p className="mt-2 text-2xl">RM {entry.price.toFixed(2)}</p>
             {entry.bought && (
-              <p className="mt-2 text-sm text-zinc-500">
+              <p className="text-bg-500 mt-2 text-sm">
                 Bought {dayjs(entry.bought_at).fromNow()}
               </p>
             )}

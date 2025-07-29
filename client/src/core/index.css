@@ -14,11 +14,6 @@ layer(base);
 
 /* NPM package styles */
 @import 'leaflet/dist/leaflet.css';
-@import 'react-grid-layout/css/styles.css';
-@import 'react-medium-image-zoom/dist/styles.css';
-@import 'react-toastify/dist/ReactToastify.css';
-@import 'react-tooltip/dist/react-tooltip.css';
-@import 'react-virtualized/styles.css';
 @import 'lifeforge-ui/dist/index.css';
 @import 'quill/dist/quill.snow.css';
 

@@ -50,7 +50,7 @@ function ColorInput({
         <InputLabel active={!!color} label={inputLabel} required={required} />
         <div className="mt-6 mr-4 flex w-full items-center gap-2 pl-4">
           <div
-            className={`mt-0.5 size-3 shrink-0 rounded-full border border-transparent group-focus-within:border-zinc-300 dark:group-focus-within:border-zinc-700`}
+            className={`group-focus-within:border-bg-300 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
             style={{
               backgroundColor: color
             }}

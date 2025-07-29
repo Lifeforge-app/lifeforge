@@ -10,8 +10,6 @@ export { default as ColorInput } from './ColorInput'
 
 export { default as FileInput } from './FileInput'
 
-export { default as ListboxOrComboboxInput } from './ListboxOrComboboxInput'
-
 export { default as DateInput } from './DateInput'
 
 export { default as CurrencyInput } from './CurrencyInput'
@@ -22,11 +20,15 @@ export { default as TagsInput } from './TagsInput'
 
 export { default as LocationInput } from './LocationInput'
 
-export { default as ListboxOrComboboxOption } from './ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+export { default as ListboxInput } from './ListboxInput'
 
-export { default as ListboxOrComboboxOptions } from './ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
+export { default as ComboboxInput } from './ComboboxInput'
 
-export { default as ListboxNullOption } from './ListboxOrComboboxInput/components/ListboxNullOption'
+export { default as ListboxOptions } from './ListboxInput/components/ListboxOptions'
+
+export { default as ListboxNullOption } from './ListboxInput/components/ListboxNullOption'
+
+export { default as ComboboxOption } from './ComboboxInput/components/ComboboxOption'
 
 export { default as FilePickerModal } from './FileInput/FilePickerModal'
 
