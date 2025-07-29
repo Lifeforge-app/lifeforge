@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
 import PhotoAlbum from 'react-photo-album'
 
 import type { MomentVaultEntry } from '@apps/MomentVault'
@@ -78,18 +79,32 @@ function PhotosEntry({
         ) : (
           <>
             <div className="w-full">
-              <PhotoAlbum
-                layout="rows"
-                photos={photos}
-                renderPhoto={({ imageProps }) => (
+              {photos.length > 1 ? (
+                <PhotoAlbum
+                  layout="rows"
+                  photos={photos}
+                  renderPhoto={({ imageProps }) => (
+                    <div style={imageProps.style}>
+                      <Zoom zoomMargin={64}>
+                        <img
+                          alt=""
+                          className="h-full w-full rounded-md object-cover"
+                          src={imageProps.src}
+                        />
+                      </Zoom>
+                    </div>
+                  )}
+                  spacing={8}
+                />
+              ) : (
+                <Zoom zoomMargin={64}>
                   <img
-                    {...imageProps}
                     alt=""
-                    className="h-full w-full rounded-md object-cover"
+                    className="h-96 rounded-md object-cover"
+                    src={photos[0].src}
                   />
-                )}
-                spacing={8}
-              />
+                </Zoom>
+              )}
             </div>
             <HamburgerMenu>
               <MenuItem
