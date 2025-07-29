@@ -88,7 +88,7 @@ function FolderContextMenu({
         icon: isOver
           ? tinycolor(folder.color).isDark()
             ? 'text-bg-100'
-            : 'text-bg-900'
+            : 'text-bg-800'
           : 'text-bg-500'
       }}
     >

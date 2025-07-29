@@ -7,6 +7,7 @@ import Boilerplate from './components/Boilerplate'
 import Header from './components/Header'
 import Rightbar from './components/Rightbar'
 import Sidebar from './components/Sidebar'
+import DeveloperIntroduction from './contents/developer-guide/Introduction.mdx'
 import Configuration from './contents/getting-started/Configuration.mdx'
 import Deployment from './contents/getting-started/Deployment.mdx'
 import Installation from './contents/getting-started/Installation.mdx'
@@ -77,10 +78,10 @@ const components: MDXComponents = {
   strong(properties) {
     return <strong {...properties} className="text-bg-100 font-semibold" />
   },
-  code(properties) {
+  code() {
     return (
-      <div className="bg-bg-800 mt-6 rounded-md">
-        <code {...properties} />
+      <div className="text-5xl text-red-500">
+        USE CUSTOM COMPONENT FOR CODE SNIPPET
       </div>
     )
   },
@@ -165,6 +166,12 @@ function App() {
               <Route
                 element={<APIKeys components={components} />}
                 path="api-keys"
+              />
+            </Route>
+            <Route path="/developer-guide">
+              <Route
+                element={<DeveloperIntroduction components={components} />}
+                path="introduction"
               />
             </Route>
           </Route>

@@ -75,8 +75,8 @@ function SearchInput({
           className={clsx(
             'flex items-center gap-1 rounded-lg p-2',
             filterAmount !== undefined && filterAmount > 0
-              ? 'text-bg-900 dark:text-bg-100'
-              : 'text-bg-500 hover:text-bg-900 dark:hover:text-bg-100',
+              ? 'text-bg-800 dark:text-bg-100'
+              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100',
             'hover:bg-bg-200 dark:hover:bg-bg-700/50 transition-all'
           )}
           onClick={onFilterIconClick}

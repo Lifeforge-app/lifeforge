@@ -5,7 +5,7 @@ import type { SudokuBoard } from '..'
 function Board({ data }: { data: SudokuBoard }) {
   return (
     <div className="aspect-square size-full p-4">
-      <div className="relative grid size-full grid-cols-9 border-[3px] border-zinc-800 dark:border-zinc-100 print:border-black">
+      <div className="border-bg-800 dark:border-bg-100 relative grid size-full grid-cols-9 border-[3px] print:border-black">
         {Array(9)
           .fill(0)
           .map((_, j) => (
@@ -14,7 +14,7 @@ function Board({ data }: { data: SudokuBoard }) {
               className={clsx(
                 'grid size-full grid-rows-9',
                 ![2, 5, 8].includes(j) &&
-                  'border-r border-zinc-500 print:border-zinc-400!'
+                  'border-bg-500 print:border-bg-400! border-r'
               )}
             >
               {Array(9)
@@ -25,7 +25,7 @@ function Board({ data }: { data: SudokuBoard }) {
                     className={clsx(
                       'size-full',
                       ![2, 5, 8].includes(k) &&
-                        'border-b border-zinc-500 print:border-zinc-400!'
+                        'border-bg-500 print:border-bg-400! border-b'
                     )}
                   >
                     {data.mission[k * 9 + j] !== '0' && (
@@ -43,7 +43,7 @@ function Board({ data }: { data: SudokuBoard }) {
             .map((_, j) => (
               <div
                 key={j}
-                className="h-full w-[2px] bg-zinc-800 dark:bg-zinc-100 print:bg-black!"
+                className="bg-bg-800 dark:bg-bg-100 h-full w-[2px] print:bg-black!"
               />
             ))}
         </div>
@@ -53,7 +53,7 @@ function Board({ data }: { data: SudokuBoard }) {
             .map((_, j) => (
               <div
                 key={j}
-                className="h-[2px] w-full bg-zinc-800 dark:bg-zinc-100 print:bg-black!"
+                className="bg-bg-800 dark:bg-bg-100 h-[2px] w-full print:bg-black!"
               />
             ))}
         </div>

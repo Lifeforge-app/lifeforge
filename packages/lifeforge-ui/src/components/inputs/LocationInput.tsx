@@ -1,14 +1,13 @@
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+import { ComboboxInput, ComboboxOption } from '@components/inputs'
 import type { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { fetchAPI, useAPIEndpoint, useAPIQuery } from 'shared'
+import { useAPIEndpoint } from 'shared'
 
+import forgeAPI from '../../utils/forgeAPI'
 import { Tooltip } from '../utilities'
 
 function LocationInput({
@@ -36,10 +35,15 @@ function LocationInput({
 
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
 
-  const dataQuery = useAPIQuery<Location[]>(
-    `/locations?q=${debouncedQuery}`,
-    [debouncedQuery],
-    debouncedQuery.trim() !== ''
+  const dataQuery = useQuery(
+    forgeAPI.locations.search
+      .setHost(apiHost)
+      .input({
+        q: debouncedQuery
+      })
+      .queryOptions({
+        enabled: debouncedQuery.trim() !== ''
+      })
   )
 
   useEffect(() => {
@@ -49,14 +53,15 @@ function LocationInput({
   }, [query])
 
   useEffect(() => {
-    fetchAPI<boolean>(apiHost, '/locations/verifyAPIKey').then(enabled =>
-      setEnabled(enabled)
-    )
+    forgeAPI.locations.verifyAPIKey
+      .setHost(apiHost)
+      .query()
+      .then(enabled => setEnabled(enabled))
   }, [])
 
   return (
     <div className="relative flex w-full items-center gap-3">
-      <ListboxOrComboboxInput<Location | null>
+      <ComboboxInput<Location | null>
         className="w-full"
         customActive={(location?.name?.length || 0) > 0}
         disabled={!enabled || disabled || enabled === 'loading'}
@@ -67,14 +72,13 @@ function LocationInput({
         required={required}
         setQuery={setQuery}
         setValue={setLocation}
-        type="combobox"
         value={location}
       >
         {query.trim() !== '' &&
           (dataQuery.data ? (
             <>
               {dataQuery.data.map(loc => (
-                <ListboxOrComboboxOption
+                <ComboboxOption
                   key={JSON.stringify(loc.location)}
                   text={
                     <div className="w-full min-w-0">
@@ -84,7 +88,6 @@ function LocationInput({
                       </p>
                     </div>
                   }
-                  type="combobox"
                   value={loc}
                 />
               ))}
@@ -97,7 +100,7 @@ function LocationInput({
               />
             </div>
           ))}
-      </ListboxOrComboboxInput>
+      </ComboboxInput>
       {enabled === 'loading' ? (
         <Icon
           className="text-bg-500 absolute top-1/2 right-6 h-6 w-6 -translate-y-1/2"

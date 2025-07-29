@@ -5,23 +5,28 @@
 @import 'lifeforge-ui/dist/index.css';
 @source "../../../node_modules/lifeforge-ui/dist";
 
-* {
-  font-family: 'Albert Sans', sans-serif;
+*:not(code *) {
+    font-family: 'Albert Sans', sans-serif;
 }
 
 .hljs * {
-  font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .hljs {
-  @apply bg-transparent;
+    @apply bg-transparent;
 }
 
 code {
-  font-family: 'JetBrains Mono', monospace;
-  @apply text-bg-100 text-sm break-all sm:text-base;
+    font-family: 'JetBrains Mono', monospace !important;
+    @apply text-bg-100! text-sm! break-all! sm:text-base!;
+}
+
+pre,
+pre * {
+    @apply bg-transparent!;
 }
 
 article section {
-  @apply scroll-mt-24;
+    @apply scroll-mt-24;
 }

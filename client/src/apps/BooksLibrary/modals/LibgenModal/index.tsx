@@ -293,7 +293,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                     <div className="mb-4 space-y-1">
                       <p className="text-bg-500 text-lg font-medium">
                         Search results for{' '}
-                        <span className="text-bg-900 dark:text-bg-100">
+                        <span className="text-bg-800 dark:text-bg-100">
                           &quot;{data.query}&quot;
                         </span>
                       </p>

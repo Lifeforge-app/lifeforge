@@ -55,7 +55,7 @@ function TransactionList({
                 Amount
               </th>
             </tr>
-            <tr className="bg-zinc-800 text-white print:bg-black/70">
+            <tr className="bg-bg-800 text-white print:bg-black/70">
               <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
               <th className="w-full p-3 text-left text-lg font-medium"></th>
               {type !== 'transfer' && (
@@ -79,7 +79,7 @@ function TransactionList({
               .map((transaction, index) => (
                 <tr
                   key={transaction.id}
-                  className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]"
+                  className="even:bg-bg-200 dark:even:bg-bg-800/30 print:even:bg-black/[3%]"
                 >
                   <td className="p-3 text-lg whitespace-nowrap">
                     {((type === 'transfer' && index % 2 === 0) ||
@@ -154,7 +154,7 @@ function TransactionList({
                   </td>
                 </tr>
               ))}
-            <tr className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]">
+            <tr className="even:bg-bg-200 dark:even:bg-bg-800/30 print:even:bg-black/[3%]">
               <td
                 className="p-3 text-left text-xl font-semibold whitespace-nowrap"
                 colSpan={type !== 'transfer' ? 4 : 2}

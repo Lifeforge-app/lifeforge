@@ -1,7 +1,5 @@
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+import ListboxInput from '@components/inputs/ListboxInput'
+import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 import { Icon } from '@iconify/react'
 
 import {
@@ -17,7 +15,7 @@ interface CategoryFilterProps {
 
 function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       buttonContent={
         <>
           <Icon
@@ -36,13 +34,12 @@ function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
         updateFilters({ type: 'SET_CATEGORY', payload: value })
       }}
       tKey="imagePicker"
-      type="listbox"
       value={category}
     >
       {CATEGORIES.map(({ name, icon, id }, i) => (
-        <ListboxOrComboboxOption key={i} icon={icon} text={name} value={id} />
+        <ListboxOption key={i} icon={icon} text={name} value={id} />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

@@ -13,7 +13,7 @@ function Header() {
           <div className="text-xl font-semibold">
             LifeForge<span className="text-custom-400">.</span>
           </div>
-          <div className="text-sm font-medium text-zinc-500">{t('title')}</div>
+          <div className="text-bg-500 text-sm font-medium">{t('title')}</div>
         </div>
       </h1>
       <Button
