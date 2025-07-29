@@ -1,17 +1,13 @@
-import {
-  ComboboxOption as HeadlessComboboxOption,
-  ListboxOption as HeadlessListboxOption
-} from '@headlessui/react'
+import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
-function ListboxOrComboboxOption({
+function ListboxOption({
   value,
   text,
   icon,
   iconAtEnd = false,
   color,
-  type = 'listbox',
   noCheckmark = false
 }: {
   value: unknown
@@ -19,14 +15,10 @@ function ListboxOrComboboxOption({
   icon?: string | React.ReactElement
   iconAtEnd?: boolean
   color?: string
-  type?: 'listbox' | 'combobox'
   noCheckmark?: boolean
 }) {
-  const Element =
-    type === 'listbox' ? HeadlessListboxOption : HeadlessComboboxOption
-
   return (
-    <Element
+    <HeadlessListboxOption
       className="flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer gap-8 p-4 transition-all select-none"
       value={value}
     >
@@ -76,8 +68,8 @@ function ListboxOrComboboxOption({
           )}
         </>
       )}
-    </Element>
+    </HeadlessListboxOption>
   )
 }
 
-export default ListboxOrComboboxOption
+export default ListboxOption

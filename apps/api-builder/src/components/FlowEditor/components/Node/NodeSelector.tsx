@@ -60,7 +60,7 @@ function NodeSelector({
                 return (
                   <div
                     key={key}
-                    className="text-bg-500 component-bg-with-hover hover:text-bg-900 dark:hover:text-bg-100 flex cursor-pointer items-center gap-2 rounded p-3"
+                    className="text-bg-500 component-bg-with-hover hover:text-bg-800 dark:hover:text-bg-100 flex cursor-pointer items-center gap-2 rounded p-3"
                     onClick={() => {
                       onSelect(key)
                       onClose()

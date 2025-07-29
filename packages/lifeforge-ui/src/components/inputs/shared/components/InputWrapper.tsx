@@ -52,7 +52,7 @@ function InputWrapper({
   return (
     <div
       className={clsx(
-        'border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 hover:bg-bg-200 group relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 pl-6 transition-all',
+        'border-bg-400 dark:border-bg-600 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 hover:bg-bg-200 group relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 pl-6 transition-all',
         darker ? 'component-bg-lighter-with-hover' : 'component-bg-with-hover',
         className,
         disabled ? 'pointer-events-none! opacity-50' : 'cursor-text'

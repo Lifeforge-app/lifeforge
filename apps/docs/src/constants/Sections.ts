@@ -13,6 +13,7 @@ const SECTIONS = {
     'API Keys'
   ],
   'Developer Guide': [
+    'Introduction',
     'Architecture',
     'UI Library',
     'API Reference',

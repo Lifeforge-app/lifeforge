@@ -62,7 +62,7 @@ function TextAreaInput({
         />
         <textarea
           ref={ref}
-          className="focus:placeholder:text-bg-500 mt-3 -mb-3 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
+          className="focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 mt-3 -mb-3 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
           placeholder={placeholder}
           value={value}
           onInput={e => {

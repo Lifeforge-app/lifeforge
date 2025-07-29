@@ -104,7 +104,7 @@ const LocaleAdmin = (): React.ReactElement => {
             <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
               <Icon className="mb-4 text-9xl" icon="tabler:lock-access" />
               <h2 className="text-4xl">Unauthorized Personnel</h2>
-              <p className="mt-4 text-center text-lg text-zinc-500">
+              <p className="text-bg-500 mt-4 text-center text-lg">
                 Please authenticate through single sign-on (SSO) in the system
                 to access the locale editor.
               </p>

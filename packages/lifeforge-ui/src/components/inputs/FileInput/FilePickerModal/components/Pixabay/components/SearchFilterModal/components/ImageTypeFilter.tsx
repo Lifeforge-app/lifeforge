@@ -1,7 +1,5 @@
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+import ListboxInput from '@components/inputs/ListboxInput'
+import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +18,7 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
   const { t } = useTranslation('common.modals')
 
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       buttonContent={
         <>
           <Icon
@@ -41,18 +39,17 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
         updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })
       }}
       tKey="imagePicker"
-      type="listbox"
       value={imageType}
     >
       {IMAGE_TYPES.map(({ icon, id }, i) => (
-        <ListboxOrComboboxOption
+        <ListboxOption
           key={i}
           icon={icon}
           text={t(`imagePicker.imageType.${id}`)}
           value={id}
         />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

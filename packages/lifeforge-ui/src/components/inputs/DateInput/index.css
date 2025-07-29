@@ -21,7 +21,7 @@
 }
 
 .react-datepicker__day--today {
-  @apply bg-custom-500/20 text-bg-900 shadow-custom dark:text-bg-200 hover:bg-custom-500/50! rounded-md;
+  @apply bg-custom-500/20 text-bg-800 shadow-custom dark:text-bg-200 hover:bg-custom-500/50! rounded-md;
 }
 
 .react-datepicker__day-name {
@@ -33,7 +33,7 @@
 }
 
 .theme-light .react-datepicker__day--selected {
-  @apply bg-custom-500! text-bg-900! font-medium;
+  @apply bg-custom-500! text-bg-800! font-medium;
 }
 
 .react-datepicker__current-month {
@@ -71,7 +71,7 @@
 }
 
 .theme-light .react-datepicker__time-list-item--selected {
-  @apply bg-custom-500! text-bg-900!;
+  @apply bg-custom-500! text-bg-800!;
 }
 
 .react-datepicker__time-list-item--selected:hover {

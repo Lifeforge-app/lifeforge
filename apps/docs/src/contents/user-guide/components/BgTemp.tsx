@@ -7,7 +7,7 @@ function BgTemp() {
 
   return (
     <div className="mt-6 flex w-full min-w-0">
-      <div className="w-full rounded-md bg-zinc-800/50 p-4">
+      <div className="bg-bg-800/50 w-full rounded-md p-4">
         <div className="flex w-full flex-col items-center justify-between gap-4 md:flex-row">
           <h3 className="w-full text-left text-xl font-semibold">
             Background Temperature Preview
@@ -18,7 +18,7 @@ function BgTemp() {
                 key={index}
                 className={`size-6 rounded-full ${color} bg-bg-500 ${
                   bgTemp === color
-                    ? 'ring-offset-bg-950 ring-2 ring-zinc-100 ring-offset-2'
+                    ? 'ring-offset-bg-950 ring-bg-100 ring-2 ring-offset-2'
                     : ''
                 }`}
                 onClick={() => {
