@@ -39,8 +39,12 @@ export const Default: Story = {
 
 export const BarcodeScanner: Story = {
   args: {
+    onClose: () => {},
     data: {
-      formats: ['linear_codes']
+      formats: ['linear_codes'],
+      onScanned: (data: string) => {
+        alert(`Scanned barcode data: ${data}`)
+      }
     }
   },
 

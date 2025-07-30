@@ -21,7 +21,7 @@ function ColorInput({
   color: string
   setColor: (value: string) => void
   className?: string
-  namespace: string
+  namespace: string | false
   required?: boolean
   disabled?: boolean
 }) {

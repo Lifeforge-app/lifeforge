@@ -15,7 +15,7 @@
       ]
     },
     "declaration": true,
-    "emitDeclarationOnly": false,
+    "emitDeclarationOnly": true,
     "outDir": "dist",
     "esModuleInterop": true,
     "allowUnusedLabels": false,

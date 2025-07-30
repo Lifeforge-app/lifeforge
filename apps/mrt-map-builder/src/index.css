@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Onest:wght@100..900&display=swap')
+layer(base);
+
+@import 'tailwindcss';
+
+@plugin 'daisyui';
+
+@import 'lifeforge-ui/dist/index.css';
+@source "../../../node_modules/lifeforge-ui/dist";
+
+@font-face {
+  font-family: 'LTAIdentityMedium';
+  src:
+    url('/fonts/LTAIdentity-Medium.woff2') format('woff2'),
+    url('/fonts/LTAIdentity-Medium.woff') format('woff');
+}
