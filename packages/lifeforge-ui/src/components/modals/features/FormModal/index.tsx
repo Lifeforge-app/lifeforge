@@ -129,7 +129,7 @@ function FormModal({
     title: string
     icon: string
     onClose: () => void
-    namespace: string
+    namespace: string | false
     loading?: boolean
     submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
   }
@@ -231,7 +231,7 @@ function FormModal({
         actionButtonIcon={actionButton?.icon}
         actionButtonIsRed={actionButton?.isRed}
         icon={icon}
-        namespace={namespace}
+        namespace={namespace ? namespace : undefined}
         title={title}
         onActionButtonClick={actionButton?.onClick}
         onClose={onClose}

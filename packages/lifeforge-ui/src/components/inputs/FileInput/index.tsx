@@ -40,7 +40,7 @@ function FileInput({
   }) => void
   onImageRemoved?: () => void
   required?: boolean
-  namespace: string
+  namespace: string | false
   disabled?: boolean
   enablePixabay?: boolean
   enableUrl?: boolean
@@ -50,7 +50,10 @@ function FileInput({
 }) {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation([namespace, 'common.buttons'])
+  const { t } = useTranslation([
+    ...(namespace ? [namespace] : []),
+    'common.buttons'
+  ])
 
   const inputLabel = useInputLabel(namespace, name)
 
@@ -90,7 +93,7 @@ function FileInput({
             variant="secondary"
             onClick={handleFilePickerOpen}
           >
-            {t('common.buttons:select')}
+            {t(['common.buttons:select', 'Select'])}
           </Button>
           <p className="text-bg-500 text-xs">{reminderText}</p>
         </div>

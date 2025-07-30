@@ -24,7 +24,9 @@ export { default as ListboxInput } from './ListboxInput'
 
 export { default as ComboboxInput } from './ComboboxInput'
 
-export { default as ListboxOptions } from './ListboxInput/components/ListboxOptions'
+export { default as SliderInput } from './SliderInput'
+
+export { default as ListboxOption } from './ListboxInput/components/ListboxOption'
 
 export { default as ListboxNullOption } from './ListboxInput/components/ListboxNullOption'
 

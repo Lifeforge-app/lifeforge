@@ -39,7 +39,7 @@ function FormInputs<T extends FormState>({
   fields: FieldsConfig<T>
   data: T
   setData: React.Dispatch<React.SetStateAction<T>>
-  namespace: string
+  namespace: string | false
 }) {
   const handleChange = (id: keyof typeof fields) => {
     return (value: FormState[string]) => {

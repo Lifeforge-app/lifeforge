@@ -18,7 +18,6 @@ function CurrencyInputComponent({
   required,
   namespace
 }: {
-  reference?: React.RefObject<HTMLInputElement | null>
   name: string
   disabled?: boolean
   placeholder: string

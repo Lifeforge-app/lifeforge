@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -83,9 +84,10 @@ function ConfirmationModal({
           loading={loading}
           onClick={onClick}
         >
-          {t(
-            `common.buttons:${buttonType === 'delete' ? 'delete' : 'confirm'}`
-          )}
+          {t([
+            `common.buttons:${buttonType === 'delete' ? 'delete' : 'confirm'}`,
+            _.upperFirst(buttonType)
+          ])}
         </Button>
       </div>
     </div>
