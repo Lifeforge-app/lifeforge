@@ -1,9 +1,9 @@
 import { QRCodeScanner, TextInput } from '@components/inputs'
+import { useModalStore } from '@components/modals/core/useModalStore'
 import {
   type FormInputProps,
   type TextFieldProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
-import { useState } from 'react'
 
 function FormTextInput({
   field,
@@ -11,7 +11,15 @@ function FormTextInput({
   namespace,
   handleChange
 }: FormInputProps<TextFieldProps>) {
-  const [qrScannerModalOpen, setQrScannerModalOpen] = useState<boolean>(false)
+  const open = useModalStore(state => state.open)
+
+  const openQRScanner = () => {
+    open(QRCodeScanner, {
+      onScanned: data => {
+        handleChange(data)
+      }
+    })
+  }
 
   return (
     <>
@@ -27,19 +35,7 @@ function FormTextInput({
         required={field.required}
         setValue={handleChange}
         value={selectedData}
-        onActionButtonClick={() => {
-          setQrScannerModalOpen(true)
-        }}
-      />
-      <QRCodeScanner
-        isOpen={qrScannerModalOpen}
-        onClose={() => {
-          setQrScannerModalOpen(false)
-        }}
-        onScanned={data => {
-          handleChange(data)
-          setQrScannerModalOpen(false)
-        }}
+        onActionButtonClick={openQRScanner}
       />
     </>
   )

@@ -44,7 +44,7 @@ function EmptyStateScreen({
         (typeof icon === 'string' ? (
           <Icon
             className={clsx(
-              'text-bg-300 dark:text-bg-500 shrink-0',
+              'text-bg-400 dark:text-bg-600 shrink-0',
               smaller ? 'size-24' : 'size-32'
             )}
             icon={icon}
@@ -54,7 +54,7 @@ function EmptyStateScreen({
         ))}
       <h2
         className={clsx(
-          'text-bg-500 px-6 text-center font-semibold',
+          'text-bg-400 dark:text-bg-600 px-6 text-center font-semibold',
           smaller ? 'text-3xl' : 'text-4xl'
         )}
       >
@@ -64,7 +64,7 @@ function EmptyStateScreen({
       </h2>
       <p
         className={clsx(
-          'text-bg-500 -mt-2 px-6 text-center whitespace-pre-wrap',
+          'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
           smaller ? 'text-base' : 'text-lg'
         )}
       >
