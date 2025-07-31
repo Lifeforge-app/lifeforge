@@ -7,6 +7,90 @@ const cacheTime = 1000 * 60
 
 let lastFetch = +new Date()
 
+export interface IFlightStatus {
+  getFlights: GetFlights
+}
+
+export interface GetFlights {
+  next_token: string
+  flights: Flight[]
+}
+
+export interface Flight {
+  actual_timestamp: null
+  aircraft_type: string
+  airline: string
+  airline_details: AirlineDetails
+  airport: string
+  airport_details: AirportDetails
+  check_in_row: null | string
+  current_gate: null | string
+  direction: string
+  display_belt: null
+  display_checkinrowctr: null | string
+  display_gate: null | string
+  display_timestamp: string
+  drop_off_door: null | string
+  estimated_timestamp: null | string
+  flight_number: string
+  firstbag_timestamp: null
+  flight_status: string
+  flight_type: string
+  last_updated_timestamp: Date
+  lastbag_timestamp: null
+  master_flight_number: null | string
+  nature: string
+  nearest_carpark: string | null
+  offblock_timestamp: null | string
+  origin_dep_country: null
+  origin_dep_date: null
+  origin_dep_terminal: null
+  origin_dep_time: null
+  origin_via_country: null
+  pick_up_door: null
+  previous_gate: null | string
+  scheduled_date: Date
+  scheduled_time: string
+  slave_flights: string[]
+  technical_flight_status1: string
+  technical_flight_status2: string
+  terminal: string
+  via: null | string
+  via_airport_details: AirportDetails | null
+  status_mapping: StatusMapping
+}
+
+export interface AirlineDetails {
+  logo_url: string
+  code: string
+  name: string
+  name_zh: string
+  name_zh_hant: null | string
+  transfer_counters: string | null
+  transit: string
+}
+
+export interface AirportDetails {
+  code: string
+  country_code: string
+  lat: string
+  lng: string
+  name: string
+  name_zh: string
+  name_zh_hant: string
+}
+
+export interface StatusMapping {
+  belt_status_en: null
+  belt_status_zh: null
+  details_status_en: string
+  details_status_zh: string
+  listing_status_en: string
+  listing_status_zh: string
+  show_gate: boolean
+  status_text_color: string
+}
+
 const getFlight = forgeController.query
   .description('Get flight status from Changi Airport')
   .input({
@@ -133,7 +217,7 @@ const getFlight = forgeController.query
     cache.set('searchType', type)
     lastFetch = +new Date()
 
-    return data
+    return data as GetFlights
   })
 
 export default forgeRouter({
