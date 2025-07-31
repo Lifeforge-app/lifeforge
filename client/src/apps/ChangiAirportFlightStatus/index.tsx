@@ -1,10 +1,18 @@
-import { Listbox, ListboxButton } from "@headlessui/react"
-import { Icon } from "@iconify/react/dist/iconify.js"
-import { useQuery } from "@tanstack/react-query"
-import forgeAPI from "@utils/forgeAPI"
-import clsx from "clsx"
-import { ModuleWrapper, ModuleHeader, SearchInput, Scrollbar, ListboxOptions, ListboxOption } from "lifeforge-ui"
-import { useState } from "react"
+import { Listbox, ListboxButton } from '@headlessui/react'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import clsx from 'clsx'
+import {
+  ListboxOption,
+  ListboxOptions,
+  ModuleHeader,
+  ModuleWrapper,
+  QueryWrapper,
+  Scrollbar,
+  SearchInput
+} from 'lifeforge-ui'
+import { useState } from 'react'
 
 const STATUSES = {
   Departed: ['text-green-500', 'tabler:plane-departure', 'bg-green-500/20'],
@@ -28,10 +36,13 @@ const SEARCH_TYPE = [
 ]
 
 function ChangiAirportFlightStatus() {
-  const [type, setType] = useState('dep')
+  const [type, setType] = useState<'dep' | 'arr'>('dep')
+
   const [searchQuery, setSearchQuery] = useState('')
-  
-  const flightsQuery = useQuery(forgeAPI.changiAirportFlightStatus.)
+
+  const flightsQuery = useQuery(
+    forgeAPI.changiAirportFlightStatus.getFlight.input({ type }).queryOptions()
+  )
 
   return (
     <ModuleWrapper>
@@ -45,23 +56,17 @@ function ChangiAirportFlightStatus() {
             setType(value)
           }}
         >
-          <ListboxButton
-            className=
-              'flex-between shadow-custom flex w-48 gap-2 rounded-md p-4 component-bg-with-hover'
-          >
+          <ListboxButton className="flex-between shadow-custom component-bg-with-hover flex w-56 gap-2 rounded-md p-4">
             <div className="flex items-center gap-2">
               <Icon
                 className="size-6"
                 icon={
-                  SEARCH_TYPE.find(
-                    ([, , t]) => t === type
-                  )?.[1] || 'tabler:plane-departure'
+                  SEARCH_TYPE.find(([, , t]) => t === type)?.[1] ||
+                  'tabler:plane-departure'
                 }
               />
               <span className="font-medium whitespace-nowrap">
-                {SEARCH_TYPE.find(
-                  ([, , t]) => t === type
-                )?.[0] || 'Departure'}
+                {SEARCH_TYPE.find(([, , t]) => t === type)?.[0] || 'Departure'}
               </span>
             </div>
             <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
@@ -85,7 +90,7 @@ function ChangiAirportFlightStatus() {
         />
       </div>
       <Scrollbar className="mt-6 w-full flex-1">
-        <APIFallbackComponent data={flights}>
+        <QueryWrapper query={flightsQuery}>
           {flights => (
             <table className="mr-8 mb-8 w-max">
               <thead>
@@ -96,16 +101,10 @@ function ChangiAirportFlightStatus() {
                     'Flight Number',
                     'Aircraft Type',
                     'Airline',
-                    `${
-                      (searchParams.get('type') ?? 'dep') === 'dep'
-                        ? 'Destination'
-                        : 'Origin'
-                    } Airport`,
+                    `${type === 'dep' ? 'Destination' : 'Origin'} Airport`,
                     'Terminal',
                     'Gate',
-                    (searchParams.get('type') ?? 'dep') === 'dep'
-                      ? 'Check-In Row'
-                      : 'Baggage Belt',
+                    type === 'dep' ? 'Check-In Row' : 'Baggage Belt',
                     'Estimated Time',
                     'Code Share'
                   ].map(column => (
@@ -125,13 +124,21 @@ function ChangiAirportFlightStatus() {
                       <div
                         className={clsx(
                           'inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap',
-                          STATUSES[flight.flight_status]?.[0],
-                          STATUSES[flight.flight_status]?.[2]
+                          STATUSES[
+                            flight.flight_status as keyof typeof STATUSES
+                          ]?.[0],
+                          STATUSES[
+                            flight.flight_status as keyof typeof STATUSES
+                          ]?.[2]
                         )}
                       >
                         <Icon
                           className="size-4"
-                          icon={STATUSES[flight.flight_status]?.[1]}
+                          icon={
+                            STATUSES[
+                              flight.flight_status as keyof typeof STATUSES
+                            ]?.[1]
+                          }
                         />
                         {flight.flight_status}
                       </div>
@@ -175,12 +182,12 @@ function ChangiAirportFlightStatus() {
                       T{flight.terminal}
                     </td>
                     <td className="p-2 text-center whitespace-nowrap">
-                      {(searchParams.get('type') ?? 'dep') === 'dep'
+                      {type === 'dep'
                         ? flight.current_gate
                         : flight.display_gate}
                     </td>
                     <td className="p-2 text-center whitespace-nowrap">
-                      {(searchParams.get('type') ?? 'dep') === 'dep'
+                      {type === 'dep'
                         ? flight.check_in_row
                         : flight.display_belt}
                     </td>
@@ -195,9 +202,9 @@ function ChangiAirportFlightStatus() {
               </tbody>
             </table>
           )}
-        </APIFallbackComponent>
+        </QueryWrapper>
       </Scrollbar>
-    </ModuleWrAPPER>
+    </ModuleWrapper>
   )
 }
 
