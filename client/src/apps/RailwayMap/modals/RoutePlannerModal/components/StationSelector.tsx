@@ -1,8 +1,9 @@
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
+import { ComboboxInput, ComboboxOption } from 'lifeforge-ui'
+
+import type { RailwayMapStation } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 import StationCodes from '../../../components/StationCode'
 import { formatStationDisplay } from '../utils/stations'
-import type { RailwayMapStation } from '@apps/RailwayMap/providers/RailwayMapProvider'
 
 interface StationSelectorProps {
   stations: RailwayMapStation[]
@@ -28,7 +29,7 @@ function StationSelector({
   namespace
 }: StationSelectorProps) {
   return (
-    <ListboxOrComboboxInput
+    <ComboboxInput
       className={className}
       displayValue={value => formatStationDisplay(stations, value)}
       icon={icon}
@@ -36,21 +37,19 @@ function StationSelector({
       namespace={namespace}
       setQuery={setQuery}
       setValue={setValue}
-      type="combobox"
       value={value}
     >
       {filteredStations.map(station => (
-        <ListboxOrComboboxOption
+        <ComboboxOption
           key={station.id}
           iconAtEnd
           noCheckmark
           icon={<StationCodes codes={station.codes} />}
           text={station.name}
-          type="combobox"
           value={station.id}
         />
       ))}
-    </ListboxOrComboboxInput>
+    </ComboboxInput>
   )
 }
 

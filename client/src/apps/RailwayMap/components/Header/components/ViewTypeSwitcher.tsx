@@ -1,6 +1,6 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { ListboxOrComboboxOption, ListboxOrComboboxOptions } from 'lifeforge-ui'
+import { ListboxOption, ListboxOptions } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
@@ -50,16 +50,16 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
           icon="tabler:chevron-down"
         />
       </ListboxButton>
-      <ListboxOrComboboxOptions>
+      <ListboxOptions>
         {VIEW_TYPES.map(([icon, name, value]) => (
-          <ListboxOrComboboxOption
+          <ListboxOption
             key={value}
             icon={icon}
             text={t(`viewTypes.${_.camelCase(name)}`)}
             value={value}
           />
         ))}
-      </ListboxOrComboboxOptions>
+      </ListboxOptions>
     </Listbox>
   )
 }
