@@ -107,7 +107,8 @@ const appRoutes = forgeRouter({
   modules: (await import('./lib/modules')).default,
   backups: (await import('./lib/backups')).default,
   database: (await import('./lib/database')).default,
-  changiAirportFlightStatus: await import('../apps/changiAirportFlightStatus'),
+  changiAirportFlightStatus: (await import('../apps/changiAirportFlightStatus'))
+    .default,
   status,
   getRoot,
   media: getMedia,
