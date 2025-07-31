@@ -1,6 +1,6 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { ListboxOrComboboxOption, ListboxOrComboboxOptions } from 'lifeforge-ui'
+import { ListboxOption, ListboxOptions } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -53,16 +53,16 @@ function SortBySelector({
         </div>
         <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
       </ListboxButton>
-      <ListboxOrComboboxOptions customWidth="min-w-48">
+      <ListboxOptions customWidth="min-w-48">
         {SORT_TYPE.map(([icon, value]) => (
-          <ListboxOrComboboxOption
+          <ListboxOption
             key={value}
             icon={icon}
             text={t(`sortTypes.${value}`)}
             value={value}
           />
         ))}
-      </ListboxOrComboboxOptions>
+      </ListboxOptions>
     </Listbox>
   )
 }

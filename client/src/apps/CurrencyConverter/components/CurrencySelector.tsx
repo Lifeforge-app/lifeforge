@@ -1,8 +1,4 @@
-import {
-  Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from 'lifeforge-ui'
+import { Button, ComboboxInput, ComboboxOption } from 'lifeforge-ui'
 
 import { useCurrencies } from '../hooks/useCurrencies'
 import type { Currency } from '../interfaces/currency_converter_interfaces'
@@ -29,7 +25,7 @@ function CurrencySelector({
   return (
     <div className="mb-6 flex flex-col items-center gap-3 sm:flex-row">
       <div className="w-full">
-        <ListboxOrComboboxInput
+        <ComboboxInput
           displayValue={value => {
             const currency = currencies.find(c => c.code === value)
 
@@ -40,18 +36,16 @@ function CurrencySelector({
           namespace="apps.currencyConverter"
           setQuery={setQueries.from}
           setValue={setFromCurrency}
-          type="combobox"
           value={fromCurrency}
         >
           {filteredCurrencies.from.map(currency => (
-            <ListboxOrComboboxOption
+            <ComboboxOption
               key={currency.code}
               text={`${currency.code} - ${currency.name}`}
-              type="combobox"
               value={currency.code}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ComboboxInput>
       </div>
 
       <Button
@@ -61,7 +55,7 @@ function CurrencySelector({
       />
 
       <div className="w-full">
-        <ListboxOrComboboxInput
+        <ComboboxInput
           displayValue={value => {
             const currency = currencies.find(c => c.code === value)
 
@@ -72,18 +66,16 @@ function CurrencySelector({
           namespace="apps.currencyConverter"
           setQuery={setQueries.to}
           setValue={setToCurrency}
-          type="combobox"
           value={toCurrency}
         >
           {filteredCurrencies.to.map(currency => (
-            <ListboxOrComboboxOption
+            <ComboboxOption
               key={currency.code}
               text={`${currency.code} - ${currency.name}`}
-              type="combobox"
               value={currency.code}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ComboboxInput>
       </div>
     </div>
   )

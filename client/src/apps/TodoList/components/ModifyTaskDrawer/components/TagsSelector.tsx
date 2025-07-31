@@ -1,4 +1,4 @@
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
+import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -14,7 +14,7 @@ function TagsSelector({
   const tagsList = tagsListQuery.data ?? []
 
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       multiple
       buttonContent={
         <span className="-mt-px block truncate">
@@ -29,18 +29,12 @@ function TagsSelector({
       name="tags"
       namespace="apps.todoList"
       setValue={setTags}
-      type="listbox"
       value={tags}
     >
       {tagsList.map(({ name, id }, i) => (
-        <ListboxOrComboboxOption
-          key={i}
-          icon="tabler:hash"
-          text={name}
-          value={id}
-        />
+        <ListboxOption key={i} icon="tabler:hash" text={name} value={id} />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

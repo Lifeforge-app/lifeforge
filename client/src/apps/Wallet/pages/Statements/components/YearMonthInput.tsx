@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
+import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 import { useEffect, useMemo } from 'react'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
@@ -53,7 +53,7 @@ function YearMonthInput({
 
   return (
     <div className="flex flex-col items-center gap-3 sm:flex-row">
-      <ListboxOrComboboxInput
+      <ListboxInput
         buttonContent={
           <>
             <span className="-mt-px block truncate">
@@ -66,18 +66,17 @@ function YearMonthInput({
         name="Month"
         namespace="apps.wallet"
         setValue={setMonth}
-        type="listbox"
         value={month}
       >
         {monthsOptions.map(mon => (
-          <ListboxOrComboboxOption
+          <ListboxOption
             key={mon}
             text={dayjs().month(mon).format('MMMM')}
             value={mon}
           />
         ))}
-      </ListboxOrComboboxInput>
-      <ListboxOrComboboxInput
+      </ListboxInput>
+      <ListboxInput
         buttonContent={
           <>
             <span className="-mt-px block truncate">{year ?? 'None'}</span>
@@ -88,13 +87,12 @@ function YearMonthInput({
         name="Year"
         namespace="apps.wallet"
         setValue={setYear}
-        type="listbox"
         value={year}
       >
         {yearsOptions.map(yr => (
-          <ListboxOrComboboxOption key={yr} text={yr.toString()} value={yr} />
+          <ListboxOption key={yr} text={yr.toString()} value={yr} />
         ))}
-      </ListboxOrComboboxInput>
+      </ListboxInput>
     </div>
   )
 }

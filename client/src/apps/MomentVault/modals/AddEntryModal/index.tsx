@@ -1,11 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import {
-  ConfirmationModal,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
-  ModalHeader
-} from 'lifeforge-ui'
+import { ConfirmationModal, ListboxInput, ListboxOption, ModalHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -84,7 +79,7 @@ function AddEntryModal({
         onClose={onClose}
       />
       <div className="space-y-4">
-        <ListboxOrComboboxInput
+        <ListboxInput
           required
           buttonContent={
             <>
@@ -101,18 +96,17 @@ function AddEntryModal({
           name="Entry Type"
           namespace="apps.momentVault"
           setValue={setInnerOpenType}
-          type="listbox"
           value={innerOpenType}
         >
           {TYPES.map(({ id, icon }, i) => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={i}
               icon={icon}
               text={t(`entryTypes.${id}`)}
               value={id}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
         {(() => {
           const components = {
             audio: (

@@ -4,8 +4,8 @@ import {
   Button,
   DashboardItem,
   EmptyStateScreen,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
+  ListboxInput,
+  ListboxOption
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -97,7 +97,7 @@ function CaptionSelector({
       namespace="apps.youtubeSummarizer"
       title="Select Language"
     >
-      <ListboxOrComboboxInput
+      <ListboxInput
         buttonContent={
           <>
             {captionType ? (
@@ -125,20 +125,19 @@ function CaptionSelector({
         name="Caption Type"
         namespace="apps.youtubeSummarizer"
         setValue={setCaptionType}
-        type="listbox"
         value={captionType}
       >
-        <ListboxOrComboboxOption
+        <ListboxOption
           icon="tabler:robot"
           text={t('captionTypes.auto')}
           value="auto"
         />
-        <ListboxOrComboboxOption
+        <ListboxOption
           icon="tabler:message-language"
           text={t('captionTypes.manual')}
           value="manual"
         />
-      </ListboxOrComboboxInput>
+      </ListboxInput>
       {captionType &&
         (Object.keys(
           {
@@ -147,7 +146,7 @@ function CaptionSelector({
           }[captionType]
         ).length > 0 ? (
           <>
-            <ListboxOrComboboxInput
+            <ListboxInput
               buttonContent={
                 <>
                   <Icon icon="tabler:language" />
@@ -163,7 +162,6 @@ function CaptionSelector({
               name="Language"
               namespace="apps.youtubeSummarizer"
               setValue={setSelectedLanguage}
-              type="listbox"
               value={selectedLanguage}
             >
               {Object.entries(
@@ -173,14 +171,14 @@ function CaptionSelector({
               )
                 .filter(([, meta]) => meta[0].name)
                 .map(([language, meta]) => (
-                  <ListboxOrComboboxOption
+                  <ListboxOption
                     key={language}
                     icon="tabler:language"
                     text={meta[0].name ?? ''}
                     value={JSON.stringify({ language, meta })}
                   />
                 ))}
-            </ListboxOrComboboxInput>
+            </ListboxInput>
             {selectedLanguage && (
               <>
                 <Button

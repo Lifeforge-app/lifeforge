@@ -6,14 +6,15 @@ import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
-  ListboxOrComboboxOption,
-  ListboxOrComboboxOptions,
+  ListboxOption,
+  ListboxOptions,
   LoadingScreen,
   ModalHeader,
   Pagination,
   QRCodeScanner,
   Scrollbar,
-  SearchInput
+  SearchInput,
+  useModalStore
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -35,6 +36,8 @@ export type LibgenSearchResult = InferOutput<
 >
 
 function LibgenModal({ onClose }: { onClose: () => void }) {
+  const open = useModalStore(state => state.open)
+
   const [provider, setProvider] =
     useState<(typeof PROVIDERS)[number]>('libgen.is')
 
@@ -49,8 +52,6 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   const [totalPages, setTotalPages] = useState(0)
 
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
-
-  const [qrcodeScannerOpen, setQrcodeScannerOpen] = useState(false)
 
   const [providerOnlineStatuses, setProviderOnlineStatuses] = useState<
     Record<(typeof PROVIDERS)[number], boolean | 'loading'>
@@ -206,9 +207,9 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                   icon="tabler:chevron-down"
                 />
               </ListboxButton>
-              <ListboxOrComboboxOptions customWidth="min-w-48 w-[var(--button-width)]">
+              <ListboxOptions customWidth="min-w-48 w-[var(--button-width)]">
                 {PROVIDERS.map(value => (
-                  <ListboxOrComboboxOption
+                  <ListboxOption
                     key={value}
                     color={(() => {
                       if (providerOnlineStatuses[value] === 'loading') {
@@ -228,7 +229,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                     value={value}
                   />
                 ))}
-              </ListboxOrComboboxOptions>
+              </ListboxOptions>
             </Listbox>
             <SearchInput
               lighter
@@ -243,7 +244,12 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                 }
               }}
               onSideButtonClick={() => {
-                setQrcodeScannerOpen(true)
+                open(QRCodeScanner, {
+                  formats: ['linear_codes'],
+                  onScanned: data => {
+                    setSearchQuery(data)
+                  }
+                })
               }}
             />
             <Button
@@ -342,17 +348,6 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
           </Scrollbar>
         </>
       )}
-      <QRCodeScanner
-        formats={['linear_codes']}
-        isOpen={qrcodeScannerOpen}
-        onClose={() => {
-          setQrcodeScannerOpen(false)
-        }}
-        onScanned={data => {
-          setSearchQuery(data)
-          setQrcodeScannerOpen(false)
-        }}
-      />
     </div>
   )
 }
