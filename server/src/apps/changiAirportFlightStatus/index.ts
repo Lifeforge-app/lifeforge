@@ -106,7 +106,9 @@ const getFlight = forgeController.query
     ) {
       const data = cache.get('flights')
 
-      return data
+      return data as {
+        getFlights: GetFlights
+      }
     }
 
     const API_key = await fetch(
@@ -217,7 +219,9 @@ const getFlight = forgeController.query
     cache.set('searchType', type)
     lastFetch = +new Date()
 
-    return data as GetFlights
+    return data as {
+      getFlights: GetFlights
+    }
   })
 
 export default forgeRouter({
