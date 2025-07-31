@@ -7,7 +7,7 @@ export default {
   name: 'Changi Airport Flight Status',
   icon: <IconPlane />,
   routes: {
-    calendar: lazy(() => import('.'))
+    'changi-airport-flight-status': lazy(() => import('.'))
   },
   togglable: true
 } satisfies ModuleConfig
