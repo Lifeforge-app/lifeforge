@@ -1,5 +1,5 @@
 // PriorityListbox.tsx
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
+import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -15,7 +15,7 @@ function PrioritySelector({
   const priorities = prioritiesQuery.data ?? []
 
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       buttonContent={
         <>
           <span
@@ -34,19 +34,13 @@ function PrioritySelector({
       name="priority"
       namespace="apps.todoList"
       setValue={setPriority}
-      type="listbox"
       value={priority}
     >
-      <ListboxOrComboboxOption
-        key={'none'}
-        color="lightgray"
-        text="None"
-        value=""
-      />
+      <ListboxOption key={'none'} color="lightgray" text="None" value="" />
       {priorities.map(({ name, color, id }, i) => (
-        <ListboxOrComboboxOption key={i} color={color} text={name} value={id} />
+        <ListboxOption key={i} color={color} text={name} value={id} />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

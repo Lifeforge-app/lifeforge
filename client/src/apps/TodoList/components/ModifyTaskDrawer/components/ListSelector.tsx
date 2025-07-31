@@ -1,4 +1,4 @@
-import { ListboxOrComboboxInput, ListboxOrComboboxOption } from 'lifeforge-ui'
+import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -14,7 +14,7 @@ function ListSelector({
   const lists = listsQuery.data ?? []
 
   return (
-    <ListboxOrComboboxInput
+    <ListboxInput
       buttonContent={
         <>
           <span
@@ -33,19 +33,13 @@ function ListSelector({
       name="list"
       namespace="apps.todoList"
       setValue={setList}
-      type="listbox"
       value={list ?? ''}
     >
-      <ListboxOrComboboxOption color="lightgray" text="None" value="" />
+      <ListboxOption color="lightgray" text="None" value="" />
       {lists.map(({ name, color, id }) => (
-        <ListboxOrComboboxOption
-          key={id}
-          color={color}
-          text={name}
-          value={id}
-        />
+        <ListboxOption key={id} color={color} text={name} value={id} />
       ))}
-    </ListboxOrComboboxInput>
+    </ListboxInput>
   )
 }
 

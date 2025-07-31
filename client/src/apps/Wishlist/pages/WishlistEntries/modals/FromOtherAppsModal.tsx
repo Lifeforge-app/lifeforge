@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
+  ListboxInput,
+  ListboxOption,
   ModalHeader,
   TextInput
 } from 'lifeforge-ui'
@@ -100,7 +100,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
         onClose={onClose}
       />
       <div className="space-y-4">
-        <ListboxOrComboboxInput
+        <ListboxInput
           buttonContent={
             <>
               <Icon
@@ -122,11 +122,10 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
           name="Provider"
           namespace="apps.wishlist"
           setValue={setProvider}
-          type="listbox"
           value={provider}
         >
           {PROVIDERS.map(({ name, color, id, icon }, i) => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={i}
               color={color}
               icon={icon}
@@ -134,7 +133,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
               value={id}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
         <TextInput
           darker
           icon="tabler:link"

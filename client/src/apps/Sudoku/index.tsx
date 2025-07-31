@@ -3,8 +3,8 @@ import forgeAPI from '@utils/forgeAPI'
 import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
+  ListboxInput,
+  ListboxOption,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
@@ -52,7 +52,7 @@ function Sudoku() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="uil:table" title="Sudoku" />
-      <ListboxOrComboboxInput
+      <ListboxInput
         buttonContent={
           <span className="flex items-center gap-2">
             <span
@@ -70,18 +70,17 @@ function Sudoku() {
         name="difficulty"
         namespace="apps.sudoku"
         setValue={setDifficulty}
-        type="listbox"
         value={difficulty}
       >
         {DIFFICULTIES.map((diff, index) => (
-          <ListboxOrComboboxOption
+          <ListboxOption
             key={index}
             color={diff.color}
             text={t(`difficulties.${diff.value}`)}
             value={diff.value}
           />
         ))}
-      </ListboxOrComboboxInput>
+      </ListboxInput>
       <QueryWrapper query={dataQuery}>
         {data => (
           <div className="mt-4 space-y-2">

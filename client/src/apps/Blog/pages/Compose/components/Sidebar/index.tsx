@@ -5,8 +5,8 @@ import { Icon } from '@iconify/react'
 import {
   Button,
   FileInput,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
+  ListboxInput,
+  ListboxOption,
   SidebarWrapper,
   TagsInput,
   TextAreaInput,
@@ -68,7 +68,7 @@ function Sidebar({
           }}
           value={data.excerpt}
         />
-        <ListboxOrComboboxInput
+        <ListboxInput
           buttonContent={
             <>
               <Icon
@@ -91,18 +91,17 @@ function Sidebar({
           setValue={(visibility: typeof data.visibility) => {
             setData(prevData => ({ ...prevData, visibility }))
           }}
-          type="listbox"
           value={data.visibility}
         >
           {VISIBILITY_OPTIONS.map(option => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={option.label}
               icon={option.icon}
               text={option.label}
               value={option.label.toLowerCase()}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
         <FileInput
           enableAI
           enablePixabay
@@ -132,14 +131,13 @@ function Sidebar({
             }))
           }}
         />
-        {/* <ListboxOrComboboxInput
+        {/* <ListboxInput
           icon="tabler:category"
           name="Category"
           namespace="apps.blog"
           setValue={(category: string | null) => {
             setData(prevData => ({ ...prevData, category }))
           }}
-          type="listbox"
           value={data.category}
         /> */}
         <TagsInput

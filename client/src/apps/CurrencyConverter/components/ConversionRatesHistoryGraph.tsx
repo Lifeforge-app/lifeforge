@@ -9,11 +9,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import {
-  Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from 'lifeforge-ui'
+import { Button, ListboxInput, ListboxOption } from 'lifeforge-ui'
 import { useEffect, useMemo, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { usePersonalization } from 'shared'
@@ -144,7 +140,7 @@ export default function ConversionRatesHistoryGraph() {
   return (
     <>
       <div className="flex-center flex flex-col gap-3 sm:flex-row">
-        <ListboxOrComboboxInput
+        <ListboxInput
           buttonContent={
             <div className="flex items-center gap-2">
               {CURRENCIES[fromCurrency] && (
@@ -162,11 +158,10 @@ export default function ConversionRatesHistoryGraph() {
           name="From"
           namespace="apps.currencyConverter"
           setValue={setFromCurrency}
-          type="listbox"
           value={fromCurrency}
         >
           {supportedCurrencies.map(code => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={code}
               icon={
                 <Icon
@@ -177,7 +172,7 @@ export default function ConversionRatesHistoryGraph() {
               value={code}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
         <Button
           className="w-full sm:w-auto"
           icon="tabler:arrows-exchange"
@@ -186,7 +181,7 @@ export default function ConversionRatesHistoryGraph() {
             setToCurrency(fromCurrency)
           }}
         />
-        <ListboxOrComboboxInput
+        <ListboxInput
           buttonContent={
             <div className="flex items-center gap-2">
               {CURRENCIES[toCurrency] && (
@@ -204,11 +199,10 @@ export default function ConversionRatesHistoryGraph() {
           name="To"
           namespace="apps.currencyConverter"
           setValue={setToCurrency}
-          type="listbox"
           value={toCurrency}
         >
           {supportedCurrencies.map(code => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={code}
               icon={
                 <Icon
@@ -219,7 +213,7 @@ export default function ConversionRatesHistoryGraph() {
               value={code}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
       </div>
 
       <div className="relative mt-4 min-h-64 flex-1">
