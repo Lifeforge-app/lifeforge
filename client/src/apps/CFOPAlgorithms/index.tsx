@@ -19,7 +19,7 @@ function CFOPAlgorithms() {
             <img
               alt={key}
               className="mb-8 size-48"
-              src={`/assets/cfop/landing-${key.toLowerCase()}.webp`}
+              src={`/assets/apps/CFOPAlgorithms/landing-${key.toLowerCase()}.webp`}
             />
             <h2 className="text-center text-5xl font-semibold tracking-wider">
               {key}

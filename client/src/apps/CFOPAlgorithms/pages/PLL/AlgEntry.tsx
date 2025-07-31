@@ -57,8 +57,8 @@ function AlgEntry({
       arrowLine.style.height = '2px'
       arrowLine.style.backgroundColor = 'black'
       arrowLine.style.zIndex = '1'
-      arrowLine.style.left = `${start.offsetLeft + 10}px`
-      arrowLine.style.top = `${start.offsetTop + 10}px`
+      arrowLine.style.left = `${start.offsetLeft + 8}px`
+      arrowLine.style.top = `${start.offsetTop + 8}px`
       arrowLine.style.transform = `rotate(${angle}rad)`
       arrowLine.style.transformOrigin = 'left'
       containerRef.current.appendChild(arrowLine)
@@ -72,8 +72,8 @@ function AlgEntry({
         arrowHeadLeft.style.backgroundColor = 'black'
         arrowHeadLeft.style.borderRadius = '2px'
         arrowHeadLeft.style.zIndex = '1'
-        arrowHeadLeft.style.left = `${end.offsetLeft + 10}px`
-        arrowHeadLeft.style.top = `${end.offsetTop + 10}px`
+        arrowHeadLeft.style.left = `${end.offsetLeft + 8}px`
+        arrowHeadLeft.style.top = `${end.offsetTop + 8}px`
         arrowHeadLeft.style.transform = `rotate(${
           angle + (i === 0 ? -1 : 1) * (3 / 4) * Math.PI
         }rad)`
@@ -88,8 +88,8 @@ function AlgEntry({
       smallRect.style.height = '2px'
       smallRect.style.backgroundColor = 'black'
       smallRect.style.zIndex = '1'
-      smallRect.style.left = `${end.offsetLeft + 9}px`
-      smallRect.style.top = `${end.offsetTop + 10}px`
+      smallRect.style.left = `${end.offsetLeft + 7}px`
+      smallRect.style.top = `${end.offsetTop + 8}px`
       smallRect.style.transform = `rotate(${angle + (3 / 4) * Math.PI}rad)`
       containerRef.current.appendChild(smallRect)
     }
@@ -163,7 +163,7 @@ function AlgEntry({
           </div>
         </div>
         <div>
-          <p className="text-bg-500 text-lg font-semibold">
+          <p className="text-custom-500 text-lg font-semibold">
             {algsetAlgs[index].name}
           </p>
           <p className="text-xl">{algsetAlgs[index].alg[0]}</p>

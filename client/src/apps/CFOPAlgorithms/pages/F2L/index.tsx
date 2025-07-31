@@ -174,7 +174,7 @@ function CFOPF2L(): React.ReactElement {
             <img
               alt="F2L"
               className="size-16"
-              src="/assets/cfop/landing-f2l.webp"
+              src="/assets/apps/CFOPAlgorithms/landing-f2l.webp"
             />
             First Two Layers
           </h1>
