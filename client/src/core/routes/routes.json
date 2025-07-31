@@ -48,7 +48,8 @@
     "title": "Information",
     "items": [
       "@apps/RailwayMap",
-      "@apps/ChangiAirportFlightStatus"
+      "@apps/ChangiAirportFlightStatus",
+      "@apps/CFOPAlgorithms"
     ]
   },
   {
