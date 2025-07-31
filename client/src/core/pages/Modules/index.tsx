@@ -1,9 +1,9 @@
 import ROUTES from '@core/routes/Routes'
+import forgeAPI from '@utils/forgeAPI'
 import { LoadingScreen, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../providers/AuthProvider'
 import ModuleItem from './components/ModuleItem'
@@ -28,13 +28,11 @@ function Modules() {
     })
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `modules/toggle/${_.kebabCase(moduleName)}`,
-        {
-          method: 'POST'
-        }
-      )
+      await forgeAPI.modules.toggle
+        .input({
+          id: _.kebabCase(moduleName)
+        })
+        .mutate({})
     } catch {
       toast.error('Failed to update modules')
       setUserData({
