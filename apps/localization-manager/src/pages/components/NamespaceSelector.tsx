@@ -1,8 +1,4 @@
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
-  QueryWrapper
-} from 'lifeforge-ui'
+import { ListboxInput, ListboxOption, QueryWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useAPIQuery } from 'shared'
 
@@ -30,7 +26,7 @@ function NamespaceSelector({
   return (
     <div className="mt-6 flex flex-col">
       <div className="flex w-full items-center gap-4">
-        <ListboxOrComboboxInput
+        <ListboxInput
           buttonContent={
             <div>
               {namespace
@@ -51,22 +47,21 @@ function NamespaceSelector({
             setNamespace(value)
             setSubNamespace(null)
           }}
-          type="listbox"
           value={namespace}
         >
           {['common', 'core', 'apps', 'utils'].map(ns => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={ns}
               icon="tabler:category-2"
               text={t(`namespaces.${ns}`)}
               value={ns}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
         {namespace && (
           <QueryWrapper query={subNamespacesQuery}>
             {subNamespaces => (
-              <ListboxOrComboboxInput
+              <ListboxInput
                 buttonContent={
                   <div>
                     {namespace
@@ -86,18 +81,17 @@ function NamespaceSelector({
                   }
                   setSubNamespace(value)
                 }}
-                type="listbox"
                 value={subNamespace}
               >
                 {subNamespaces.map(sns => (
-                  <ListboxOrComboboxOption
+                  <ListboxOption
                     key={sns}
                     icon="tabler:cube"
                     text={sns}
                     value={sns}
                   />
                 ))}
-              </ListboxOrComboboxInput>
+              </ListboxInput>
             )}
           </QueryWrapper>
         )}
