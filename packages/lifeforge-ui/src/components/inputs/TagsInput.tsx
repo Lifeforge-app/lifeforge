@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import { useRef, useState } from 'react'
 
 import Button from '../buttons/Button'
@@ -24,8 +23,13 @@ interface ITagsInputProps {
     color: string
   }>
   required?: boolean
-  namespace: string
+  namespace: string | false
   tKey?: string
+  renderTags?: (
+    tag: string,
+    index: number,
+    onRemoveTag: () => void
+  ) => React.ReactNode
 }
 
 function TagsInput({
@@ -38,9 +42,9 @@ function TagsInput({
   disabled = false,
   className = '',
   darker,
-  existedTags,
   required,
-  namespace
+  namespace,
+  renderTags
 }: ITagsInputProps) {
   const inputLabel = useInputLabel(namespace, name)
 
@@ -85,21 +89,14 @@ function TagsInput({
           required={required === true}
         />
         <div className="mt-12 mb-4 ml-[14px] flex flex-wrap items-center gap-2">
-          {value.map((tag, index) => {
-            const existedTag = existedTags?.find(t => t.name === tag)
-
-            return (
+          {value.map((tag, index) =>
+            renderTags ? (
+              renderTags(tag, index, () => removeTag(index))
+            ) : (
               <div
                 key={index}
                 className="bg-bg-200 dark:bg-bg-700/50 flex items-center rounded-full py-1 pr-2 pl-3"
               >
-                {existedTag !== undefined && (
-                  <Icon
-                    className="mr-2 size-3"
-                    icon={existedTag.icon}
-                    style={{ color: existedTag.color }}
-                  />
-                )}
                 <span className="mr-2 text-sm">{tag}</span>
                 {!disabled && (
                   <Button
@@ -114,7 +111,7 @@ function TagsInput({
                 )}
               </div>
             )
-          })}
+          )}
           {!disabled && (
             <TextInputBox
               noAutoComplete

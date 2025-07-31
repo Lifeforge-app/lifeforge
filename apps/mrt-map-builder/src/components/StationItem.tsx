@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
@@ -8,58 +9,34 @@ import {
   MenuItem,
   NumberInput,
   SliderInput,
+  TagsInput,
   TextInput,
   useModalStore
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import React, { useState } from 'react'
+import { usePersonalization } from 'shared'
+import tinycolor from 'tinycolor2'
+
+import type { Line, Station } from '../typescript/mrt.interfaces'
 
 function StationItem({
   station,
-  index,
   mrtLines,
   setMrtStations
 }: {
-  station: {
-    type: 'station' | 'interchange'
-    name: string
-    lines: string[]
-    x: number
-    y: number
-    width: number
-    height?: number
-    rotate?: number
-    textOffsetX?: number
-    textOffsetY?: number
-  }
-  index: number
-  mrtLines: { name: string; color: string }[]
-  setMrtStations: React.Dispatch<
-    React.SetStateAction<
-      {
-        type: 'station' | 'interchange'
-        name: string
-        lines: string[]
-        x: number
-        y: number
-        width: number
-        height?: number
-        rotate?: number
-        textOffsetX?: number
-        textOffsetY?: number
-      }[]
-    >
-  >
+  station: Station
+  mrtLines: Line[]
+  setMrtStations: React.Dispatch<React.SetStateAction<Station[]>>
 }) {
   const open = useModalStore(state => state.open)
+
+  const { bgTempPalette } = usePersonalization()
 
   const [collapsed, setCollapsed] = useState(true)
 
   return (
-    <div
-      key={`station-${index}`}
-      className="border-bg-200 dark:border-bg-800 rounded-lg border-2 p-4"
-    >
+    <div className="border-bg-200 dark:border-bg-800 rounded-lg border-2 p-4">
       <div className="flex-between gap-6">
         <div className="flex w-full min-w-0 items-center gap-2">
           <Icon
@@ -110,13 +87,9 @@ function StationItem({
                   description: `Are you sure you want to delete the station "${station.name}"? This action cannot be undone.`,
                   buttonType: 'delete',
                   onConfirm: async () => {
-                    setMrtStations(prevStations => {
-                      const newStations = [...prevStations]
-
-                      newStations.splice(index, 1)
-
-                      return newStations
-                    })
+                    setMrtStations(prevStations =>
+                      prevStations.filter(s => s.id !== station.id)
+                    )
                   }
                 })
               }}
@@ -126,6 +99,61 @@ function StationItem({
       </div>
       {!collapsed && (
         <div className="mt-4 space-y-3">
+          <TagsInput
+            darker
+            icon="tabler:code"
+            name="Station Codes"
+            namespace={false}
+            placeholder="Enter station codes..."
+            renderTags={(tag, tagIndex, onRemove) => (
+              <div
+                key={tagIndex}
+                className="flex items-center rounded-full pt-0.5 pr-2 pb-1 pl-3"
+                style={{
+                  backgroundColor:
+                    mrtLines.find(l => l.code.slice(0, 2) === tag.slice(0, 2))
+                      ?.color ?? '#ccc',
+                  color: tinycolor(
+                    mrtLines.find(l => l.code.slice(0, 2) === tag.slice(0, 2))
+                      ?.color ?? '#ccc'
+                  ).isDark()
+                    ? bgTempPalette[100]
+                    : bgTempPalette[800]
+                }}
+              >
+                <span className="mr-2 font-[LTAIdentityMedium] text-sm">
+                  {tag}
+                </span>
+                <Button
+                  className={clsx(
+                    'mt-0.5 p-1! hover:bg-transparent',
+                    tinycolor(
+                      mrtLines.find(l => l.code.slice(0, 2) === tag.slice(0, 2))
+                        ?.color ?? '#ccc'
+                    ).isDark()
+                      ? 'text-bg-100!'
+                      : 'text-bg-800!'
+                  )}
+                  icon="tabler:x"
+                  iconClassName="size-4!"
+                  variant="plain"
+                  onClick={onRemove}
+                />
+              </div>
+            )}
+            setValue={codes => {
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, codes }
+                  }
+
+                  return s
+                })
+              )
+            }}
+            value={station.codes || []}
+          />
           <ListboxInput
             buttonContent={
               <div className="flex items-center gap-2">
@@ -147,16 +175,15 @@ function StationItem({
             name="Station Type"
             namespace={false}
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, type: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  type: value as 'station' | 'interchange'
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.type}
           >
@@ -209,16 +236,15 @@ function StationItem({
             name="Lines"
             namespace={false}
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, lines: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  lines: value
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.lines ?? []}
           >
@@ -240,16 +266,15 @@ function StationItem({
             namespace={false}
             placeholder="Station Name"
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, name: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  name: value
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.name}
           />
@@ -261,16 +286,15 @@ function StationItem({
             namespace={false}
             placeholder="X Coordinate"
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, x: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  x: value
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.x}
           />
@@ -282,16 +306,15 @@ function StationItem({
             namespace={false}
             placeholder="Y Coordinate"
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, y: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  y: value
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.y}
           />
@@ -305,16 +328,15 @@ function StationItem({
                 namespace={false}
                 placeholder="Width"
                 setValue={value => {
-                  setMrtStations(prevStations => {
-                    const newStations = [...prevStations]
+                  setMrtStations(prevStations =>
+                    prevStations.map(s => {
+                      if (s.id === station.id) {
+                        return { ...s, width: value }
+                      }
 
-                    newStations[index] = {
-                      ...newStations[index],
-                      width: value
-                    }
-
-                    return newStations
-                  })
+                      return s
+                    })
+                  )
                 }}
                 value={station.width}
               />
@@ -326,16 +348,15 @@ function StationItem({
                 namespace={false}
                 placeholder="Height"
                 setValue={value => {
-                  setMrtStations(prevStations => {
-                    const newStations = [...prevStations]
+                  setMrtStations(prevStations =>
+                    prevStations.map(s => {
+                      if (s.id === station.id) {
+                        return { ...s, height: value }
+                      }
 
-                    newStations[index] = {
-                      ...newStations[index],
-                      height: value
-                    }
-
-                    return newStations
-                  })
+                      return s
+                    })
+                  )
                 }}
                 value={station.height ?? 1}
               />
@@ -347,16 +368,15 @@ function StationItem({
                 namespace={false}
                 placeholder="Rotation"
                 setValue={value => {
-                  setMrtStations(prevStations => {
-                    const newStations = [...prevStations]
+                  setMrtStations(prevStations =>
+                    prevStations.map(s => {
+                      if (s.id === station.id) {
+                        return { ...s, rotate: value }
+                      }
 
-                    newStations[index] = {
-                      ...newStations[index],
-                      rotate: value
-                    }
-
-                    return newStations
-                  })
+                      return s
+                    })
+                  )
                 }}
                 value={station.rotate ?? 0}
               />
@@ -370,16 +390,15 @@ function StationItem({
             name="Text Offset X"
             namespace={false}
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, textOffsetX: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  textOffsetX: value
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.textOffsetX ?? 0}
           />
@@ -391,16 +410,15 @@ function StationItem({
             name="Text Offset Y"
             namespace={false}
             setValue={value => {
-              setMrtStations(prevStations => {
-                const newStations = [...prevStations]
+              setMrtStations(prevStations =>
+                prevStations.map(s => {
+                  if (s.id === station.id) {
+                    return { ...s, textOffsetY: value }
+                  }
 
-                newStations[index] = {
-                  ...newStations[index],
-                  textOffsetY: value
-                }
-
-                return newStations
-              })
+                  return s
+                })
+              )
             }}
             value={station.textOffsetY ?? 0}
           />

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
@@ -7,35 +8,29 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useState } from 'react'
+import tinycolor from 'tinycolor2'
 
+import type { Line } from '../typescript/mrt.interfaces'
 import ModifyLineModal from './ModifyLineModal'
 
 function LineItem({
   line,
   index,
-  currentPlotting,
   setMrtLines,
   selectedLineIndex,
   setSelectedLineIndex
 }: {
-  line: {
-    name: string
-    color: string
-    path: [number, number][]
-  }
+  line: Line
   index: number
-  currentPlotting: 'station' | 'line'
-  setMrtLines: React.Dispatch<
-    React.SetStateAction<
-      {
-        name: string
-        color: string
-        path: [number, number][]
-      }[]
-    >
-  >
-  selectedLineIndex: number | null
-  setSelectedLineIndex: (index: number | null) => void
+  setMrtLines: React.Dispatch<React.SetStateAction<Line[]>>
+  selectedLineIndex: {
+    index: number | null
+    type: 'path_drawing' | 'station_plotting'
+  }
+  setSelectedLineIndex: (
+    type: 'path_drawing' | 'station_plotting',
+    index: number | null
+  ) => void
 }) {
   const open = useModalStore(state => state.open)
 
@@ -45,10 +40,22 @@ function LineItem({
     <div className="border-bg-200 dark:border-bg-800 mx-4 rounded-lg border-2 p-4">
       <div className="flex-between gap-6">
         <div className="flex w-full min-w-0 items-center gap-2">
-          <div
-            className="h-6 w-1 rounded-full"
-            style={{ backgroundColor: line.color }}
-          />
+          {line.code ? (
+            <div
+              className={clsx(
+                'min-h-6 rounded-sm px-2 pb-0.5 font-[LTAIdentityMedium]',
+                tinycolor(line.color).isDark() ? 'text-bg-100' : 'text-bg-800'
+              )}
+              style={{ backgroundColor: line.color }}
+            >
+              {line.code}
+            </div>
+          ) : (
+            <div
+              className="h-6 w-1 rounded-sm font-[LTAIdentityMedium]"
+              style={{ backgroundColor: line.color }}
+            />
+          )}
           <div className="w-full min-w-0 truncate text-lg font-medium">
             {line.name}
           </div>
@@ -75,7 +82,11 @@ function LineItem({
                   type: 'update',
                   setLineData: setMrtLines,
                   index,
-                  initialData: { name: line.name, color: line.color }
+                  initialData: {
+                    name: line.name,
+                    color: line.color,
+                    code: line.code
+                  }
                 })
               }}
             />
@@ -92,8 +103,8 @@ function LineItem({
                       prevLines.filter((_, i) => i !== index)
                     )
 
-                    if (selectedLineIndex === index) {
-                      setSelectedLineIndex(null)
+                    if (selectedLineIndex.index === index) {
+                      setSelectedLineIndex('path_drawing', null)
                     }
                   }
                 })
@@ -163,19 +174,40 @@ function LineItem({
           )}
         </ul>
       )}
-      {currentPlotting === 'line' && (
-        <Button
-          className="mt-4 w-full"
-          disabled={selectedLineIndex === index}
-          icon="tabler:pointer"
-          variant="secondary"
-          onClick={() => {
-            setSelectedLineIndex(index)
-          }}
-        >
-          {selectedLineIndex === index ? 'Currently Selected' : 'Select Line'}
-        </Button>
-      )}
+      <Button
+        className="mt-4 w-full"
+        disabled={
+          selectedLineIndex.index === index &&
+          selectedLineIndex.type === 'path_drawing'
+        }
+        icon="tabler:brush"
+        variant="secondary"
+        onClick={() => {
+          setSelectedLineIndex('path_drawing', index)
+        }}
+      >
+        {selectedLineIndex.index === index &&
+        selectedLineIndex.type === 'path_drawing'
+          ? 'Currently Drawing'
+          : 'Draw Path'}
+      </Button>
+      <Button
+        className="mt-2 w-full"
+        disabled={
+          selectedLineIndex.index === index &&
+          selectedLineIndex.type === 'station_plotting'
+        }
+        icon="tabler:target-arrow"
+        variant="secondary"
+        onClick={() => {
+          setSelectedLineIndex('station_plotting', index)
+        }}
+      >
+        {selectedLineIndex.index === index &&
+        selectedLineIndex.type === 'station_plotting'
+          ? 'Currently Plotting Stations'
+          : 'Plot Stations'}
+      </Button>
     </div>
   )
 }
