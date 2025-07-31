@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import {
   Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
+  ListboxInput,
+  ListboxOption,
   ModalHeader,
   Switch,
   TextInput
@@ -92,7 +92,7 @@ export default function EditSchemaNodeModal({
                   setValue={val => changeField(i, 'name', val)}
                   value={f.name}
                 />
-                <ListboxOrComboboxInput
+                <ListboxInput
                   buttonContent={
                     <>
                       <Icon
@@ -113,18 +113,17 @@ export default function EditSchemaNodeModal({
                   name="Field Type"
                   namespace="core.apiBuilder"
                   setValue={val => changeField(i, 'type', val)}
-                  type="listbox"
                   value={f.type}
                 >
                   {FIELD_TYPES.map(type => (
-                    <ListboxOrComboboxOption
+                    <ListboxOption
                       key={type.label}
                       icon={type.icon}
                       text={type.label}
                       value={type.label.toLowerCase()}
                     />
                   ))}
-                </ListboxOrComboboxInput>
+                </ListboxInput>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
