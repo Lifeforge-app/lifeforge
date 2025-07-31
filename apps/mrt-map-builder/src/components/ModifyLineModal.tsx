@@ -1,6 +1,8 @@
 import { FormModal, defineForm } from 'lifeforge-ui'
 import React from 'react'
 
+import type { Line } from '../typescript/mrt.interfaces'
+
 function ModifyLineModal({
   onClose,
   data: { type, setLineData, index, initialData }
@@ -8,20 +10,9 @@ function ModifyLineModal({
   onClose: () => void
   data: {
     type: 'create' | 'update'
-    setLineData: React.Dispatch<
-      React.SetStateAction<
-        {
-          name: string
-          color: string
-          path: [number, number][]
-        }[]
-      >
-    >
+    setLineData: React.Dispatch<React.SetStateAction<Line[]>>
     index?: number
-    initialData?: {
-      name: string
-      color: string
-    }
+    initialData?: Partial<Line>
   }
 }) {
   const formProps = defineForm<{
@@ -37,7 +28,8 @@ function ModifyLineModal({
     })
     .typesMap({
       name: 'text',
-      color: 'color'
+      color: 'color',
+      code: 'text'
     })
     .setupFields({
       name: {
@@ -49,6 +41,12 @@ function ModifyLineModal({
       color: {
         label: 'Line Color',
         required: true
+      },
+      code: {
+        label: 'Line Code',
+        placeholder: 'Enter line code',
+        required: true,
+        icon: 'tabler:hash'
       }
     })
     .initialData(initialData)
@@ -60,13 +58,17 @@ function ModifyLineModal({
           newData[index] = {
             ...newData[index],
             name: data.name,
+            code: data.code,
             color: data.color
           }
 
           return newData
         }
 
-        return [...prev, { name: data.name, color: data.color, path: [] }]
+        return [
+          ...prev,
+          { name: data.name, color: data.color, code: data.code, path: [] }
+        ]
       })
     })
     .build()
