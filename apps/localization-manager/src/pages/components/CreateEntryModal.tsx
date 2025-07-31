@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import {
   Button,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption,
+  ListboxInput,
+  ListboxOption,
   ModalHeader,
   TextInput
 } from 'lifeforge-ui'
@@ -133,7 +133,7 @@ function CreateEntryModal({
           setValue={() => {}}
           value={target[2] || 'root'}
         />
-        <ListboxOrComboboxInput
+        <ListboxInput
           buttonContent={
             <div className="flex items-center gap-2">
               <Icon
@@ -152,18 +152,17 @@ function CreateEntryModal({
           setValue={value => {
             setSelectedType(value.toLowerCase() as 'folder' | 'entry')
           }}
-          type="listbox"
           value={target[0]}
         >
           {TYPES.map(type => (
-            <ListboxOrComboboxOption
+            <ListboxOption
               key={type[1]}
               icon={type[0]}
               text={type[1]}
               value={type[1]}
             />
           ))}
-        </ListboxOrComboboxInput>
+        </ListboxInput>
         <TextInput
           darker
           className="w-full"
