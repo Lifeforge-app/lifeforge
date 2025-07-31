@@ -1,55 +1,40 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im0xMS40MTQgMTBsLTcuMzgzIDcuNDE4YTIuMDkgMi4wOSAwIDAgMCAwIDIuOTY3YTIuMTEgMi4xMSAwIDAgMCAyLjk3NiAwTDE0LjQxNCAxM20zLjcwNyAyLjI5M2wyLjU4Ni0yLjU4NmExIDEgMCAwIDAgMC0xLjQxNGwtNy41ODYtNy41ODZhMSAxIDAgMCAwLTEuNDE0IDBMOS4xMjEgNi4yOTNhMSAxIDAgMCAwIDAgMS40MTRsNy41ODYgNy41ODZhMSAxIDAgMCAwIDEuNDE0IDAiLz48L3N2Zz4="
-    />
-    <link rel="manifest" href="/manifest.json" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
-    />
-    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
-    <meta name="title" content="Lifeforge." />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link
-      rel="apple-touch-startup-image"
-      href="/assets/icons/icon-512x512.png"
-      sizes="512x512"
-    />
-    <style>
-      .preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        color: black;
-        font-family: 'Inter', sans-serif;
-      }
-    </style>
-  </head>
 
-  <body class="h-dvh w-full">
-    <div
-      class="preloader flex-center absolute top-0 left-0 h-dvh w-full flex-col gap-6 bg-white! text-black!"
-    >
-      <span class="loader text-black!"></span>
-      <p class="text-bg-500 text-lg font-medium">Getting things ready..</p>
-    </div>
-    <div
-      class="dark:bg-bg-950 h-dvh w-full bg-white text-black"
-      id="root"
-    ></div>
-    <script type="module" src="/src/index.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
+  <meta name="title" content="Lifeforge." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-startup-image" href="/assets/icons/icon-512x512.png" sizes="512x512" />
+  <style>
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      color: black;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="h-dvh w-full">
+  <div class="preloader flex-center absolute top-0 left-0 h-dvh w-full flex-col gap-6 bg-white! text-black!">
+    <span class="loader text-black!"></span>
+    <p class="text-bg-500 text-lg font-medium">Getting things ready..</p>
+  </div>
+  <div class="dark:bg-bg-950 h-dvh w-full bg-white text-black" id="root"></div>
+  <script type="module" src="/src/index.tsx"></script>
+</body>
+
 </html>

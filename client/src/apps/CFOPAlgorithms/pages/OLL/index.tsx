@@ -21,7 +21,7 @@ function CFOPF2L() {
             <img
               alt="OLL"
               className="size-16"
-              src="/assets/cfop/landing-oll.webp"
+              src="/assets/apps/CFOPAlgorithms/landing-oll.webp"
             />
             Orientation of the Last Layer
           </h1>

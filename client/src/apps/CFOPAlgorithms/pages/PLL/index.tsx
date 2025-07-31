@@ -21,7 +21,7 @@ function CFOPPLL() {
             <img
               alt="PLL"
               className="size-16"
-              src="/assets/cfop/landing-pll.webp"
+              src="/assets/apps/CFOPAlgorithms/landing-pll.webp"
             />
             Permutation of the Last Layer
           </h1>
