@@ -33,10 +33,13 @@ function SearchInput({
   sideButtonLoading?: boolean
   onSideButtonClick?: () => void
   className?: string
-  namespace: string
+  namespace: string | false
   tKey?: string
 }) {
-  const { t } = useTranslation(['common.misc', namespace])
+  const { t } = useTranslation([
+    'common.misc',
+    ...(namespace ? [namespace] : [])
+  ])
 
   return (
     <search

@@ -187,6 +187,7 @@
       "dependencies": {
         "@iconify/react": "^6.0.0",
         "@tailwindcss/vite": "^4.1.11",
+        "clsx": "^2.1.1",
         "daisyui": "^5.0.50",
         "i18next": "24.2.3",
         "i18next-http-backend": "2.7.3",
@@ -196,6 +197,7 @@
         "react-i18next": "^15.5.1",
         "shared": "workspace:*",
         "tailwindcss": "^4.1.11",
+        "tinycolor2": "^1.6.0",
       },
       "devDependencies": {
         "@types/react": "^19.1.8",
@@ -344,6 +346,7 @@
         "shared": "workspace:*",
         "tailwindcss": "^4.1.5",
         "tinycolor2": "^1.6.0",
+        "uuid": "^11.1.0",
         "zustand": "^5.0.4",
       },
       "devDependencies": {
