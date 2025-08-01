@@ -81,7 +81,6 @@
     "ts-node": "^10.9.2",
     "uuid": "^9.0.1",
     "words-count": "^2.0.2",
-    "lifeforge-api": "workspace:*",
     "zod": "^3.25.51",
     "zod-to-json-schema": "^3.24.5",
     "zod-to-ts": "^1.2.0"
