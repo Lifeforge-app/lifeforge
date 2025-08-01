@@ -24,6 +24,10 @@
   },
   "include": [
     "src",
-    "../mrt-map-builder/src/i18n.ts"
+  ],
+  "references": [
+    {
+      "path": "../../server/tsconfig.json"
+    }
   ]
 }

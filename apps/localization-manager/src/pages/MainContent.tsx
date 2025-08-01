@@ -9,8 +9,8 @@ import {
 } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { fetchAPI } from 'shared'
 
+import forgeAPI from '../utils/forgeAPI'
 import CreateEntryModal from './components/CreateEntryModal'
 import LocaleEditor from './components/LocaleEditor'
 import NamespaceSelector from './components/NamespaceSelector'
@@ -50,6 +50,12 @@ function MainContent() {
     setSyncLoading(true)
 
     try {
+      if (!namespace || !subNamespace) {
+        alert('Please select a namespace and sub-namespace first')
+
+        return
+      }
+
       const data = Object.fromEntries(
         changedKeys.map(key => {
           const final: Record<string, string> = {}
@@ -62,16 +68,13 @@ function MainContent() {
         })
       )
 
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/locales/manager/sync/${namespace}/${subNamespace}`,
-        {
-          method: 'POST',
-          body: {
-            data
-          }
-        }
-      )
+      await forgeAPI.locales.manager.sync
+        .input({
+          namespace,
+          subnamespace: subNamespace
+        })
+        .mutate({ data })
+
       setChangedKeys([])
     } catch {
       alert('Failed to sync with server')
@@ -97,6 +100,10 @@ function MainContent() {
   }
 
   async function renameEntry(path: string) {
+    if (!namespace || !subNamespace) {
+      return
+    }
+
     if (changedKeys.includes(path)) {
       alert('Please sync changes with the server before renaming')
 
@@ -110,17 +117,15 @@ function MainContent() {
     }
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/locales/manager/${namespace}/${subNamespace}`,
-        {
-          method: 'PATCH',
-          body: {
-            path,
-            newName
-          }
-        }
-      )
+      await forgeAPI.locales.manager.rename
+        .input({
+          namespace,
+          subnamespace: subNamespace
+        })
+        .mutate({
+          path,
+          newName
+        })
       ;[setLocales, setOldLocales].forEach(e => {
         e(prev => {
           if (typeof prev === 'string') {
@@ -153,7 +158,7 @@ function MainContent() {
   }
 
   async function deleteEntry(path: string) {
-    if (typeof locales === 'string') {
+    if (typeof locales === 'string' || !namespace || !subNamespace) {
       return
     }
 
@@ -162,16 +167,14 @@ function MainContent() {
     }
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/locales/manager/${namespace}/${subNamespace}`,
-        {
-          method: 'DELETE',
-          body: {
-            path
-          }
-        }
-      )
+      await forgeAPI.locales.manager.remove
+        .input({
+          namespace,
+          subnamespace: subNamespace
+        })
+        .mutate({
+          path
+        })
       ;[setLocales, setOldLocales].forEach(e => {
         e(prev => {
           if (typeof prev === 'string') {
@@ -203,24 +206,22 @@ function MainContent() {
   }
 
   async function fetchSuggestions(path: string) {
-    if (typeof locales === 'string') {
+    if (typeof locales === 'string' || !namespace || !subNamespace) {
       return
     }
 
     const hint = prompt('Enter the suggestion')
 
     try {
-      const data = await fetchAPI<Record<string, string>>(
-        import.meta.env.VITE_API_HOST,
-        `/locales/manager/suggestions/${namespace}/${subNamespace}`,
-        {
-          method: 'POST',
-          body: {
-            path,
-            hint: hint ?? ''
-          }
-        }
-      )
+      const data = await forgeAPI.locales.manager.getTranslationSuggestions
+        .input({
+          namespace,
+          subnamespace: subNamespace
+        })
+        .mutate({
+          path,
+          hint: hint ?? ''
+        })
 
       setLocales(prev => {
         if (typeof prev === 'string') {
@@ -236,7 +237,7 @@ function MainContent() {
 
           for (let i = 0; i < pathArray.length; i++) {
             if (i === pathArray.length - 1) {
-              targetObject[pathArray[i]] = data[lng]
+              targetObject[pathArray[i]] = data[lng as keyof typeof data]
             } else {
               targetObject = targetObject[pathArray[i]]
             }
@@ -259,13 +260,19 @@ function MainContent() {
   }
 
   const fetchLocales = useCallback(async () => {
+    if (typeof locales === 'string' || !namespace || !subNamespace) {
+      return
+    }
+
     setLocales('loading')
 
     try {
-      const data = await fetchAPI<Record<string, any>>(
-        import.meta.env.VITE_API_HOST,
-        `/locales/manager/${namespace}/${subNamespace}`
-      )
+      const data = await forgeAPI.locales.manager.listLocales
+        .input({
+          namespace,
+          subnamespace: subNamespace
+        })
+        .query()
 
       setLocales(data)
       setOldLocales(JSON.parse(JSON.stringify(data)))

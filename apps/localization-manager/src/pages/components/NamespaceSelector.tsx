@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import { ListboxInput, ListboxOption, QueryWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useAPIQuery } from 'shared'
+
+import forgeAPI from '../../utils/forgeAPI'
 
 function NamespaceSelector({
   namespace,
@@ -17,10 +19,14 @@ function NamespaceSelector({
 }) {
   const { t } = useTranslation('utils.localeAdmin')
 
-  const subNamespacesQuery = useAPIQuery<string[]>(
-    `/locales/manager/${namespace}`,
-    ['namespace', namespace],
-    !!namespace
+  const subNamespacesQuery = useQuery(
+    forgeAPI.locales.manager.listSubnamespaces
+      .input({
+        namespace: namespace!
+      })
+      .queryOptions({
+        enabled: !!namespace
+      })
   )
 
   return (
