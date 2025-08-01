@@ -134,6 +134,6 @@ const appRoutes = forgeRouter({
 
 router.use('/', registerRoutes(appRoutes))
 
-export type AppRoutes = typeof appRoutes
+export { appRoutes }
 
 export default router
