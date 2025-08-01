@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "vite --port 5173",
     "types": "tsc -b",
-    "build": "cd ../shared && bun run build && cd ../packages/lifeforge-api && bun run build && cd ../lifeforge-ui && bun run build && cd ../../client && tsc && vite build",
+    "build": "cd ../shared && bun run build && cd ../packages/lifeforge-ui && bun run build && cd ../../client && tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
