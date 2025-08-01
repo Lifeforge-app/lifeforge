@@ -1,4 +1,4 @@
-import { type AppRoutes } from '@server/core/appRoutes.type'
+import { type AppRoutes } from '@server/core/routes/routes.type'
 import { createForgeAPIClient } from 'shared'
 
 const forgeAPI = createForgeAPIClient<AppRoutes>(
