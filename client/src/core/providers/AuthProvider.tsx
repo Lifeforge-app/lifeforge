@@ -1,6 +1,5 @@
 import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { cookieParse } from 'pocketbase'
 import {
@@ -16,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
 type UserData = InferOutput<
   typeof forgeAPI.user.auth.verifySessionToken

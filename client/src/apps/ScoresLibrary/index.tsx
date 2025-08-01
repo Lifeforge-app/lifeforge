@@ -2,7 +2,6 @@ import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferInput, InferOutput } from 'lifeforge-api'
 import {
   Button,
   ContentWrapperWithSidebar,
@@ -17,6 +16,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type Id, toast } from 'react-toastify'
+import type { InferInput, InferOutput } from 'shared'
 import { fetchAPI } from 'shared'
 
 import Header from './components/Header'

@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   ListboxInput,
@@ -12,6 +11,7 @@ import {
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useReactToPrint } from 'react-to-print'
+import type { InferOutput } from 'shared'
 import colors from 'tailwindcss/colors'
 
 import Board from './components/Board'

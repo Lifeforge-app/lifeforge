@@ -1,10 +1,10 @@
 import { type UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { ConfirmationModal, Pagination, QueryWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect } from 'react'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
 import AudioEntry from './entries/AudioEntry'
 import PhotosEntry from './entries/PhotosEntry'
