@@ -44,15 +44,19 @@ function OrdinaryColumn({
         <div className="flex-between w-full gap-3">
           <span className="text-bg-500 whitespace-nowrap">
             {(() => {
-              if (userData[id] === '') {
+              if (!userData) return null
+
+              if (userData[id as keyof typeof userData] === '') {
                 return t('settings.empty')
               }
 
               if (type === 'datetime') {
-                return dayjs(userData[id]).format('DD MMM YYYY')
+                return dayjs(userData[id as keyof typeof userData]).format(
+                  'DD MMM YYYY'
+                )
               }
 
-              return userData[id]
+              return userData[id as keyof typeof userData]
             })()}
           </span>
           <Button

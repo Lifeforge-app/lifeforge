@@ -221,13 +221,13 @@ const verify = forgeController.mutation
 
     const userData = pb.authStore.record
 
-    removeSensitiveData(userData)
+    const sanitizedUserData = removeSensitiveData(userData)
 
-    await updateNullData(userData, pb)
+    await updateNullData(sanitizedUserData, pb)
 
     return {
       session: pb.authStore.token,
-      userData
+      userData: sanitizedUserData
     }
   })
 

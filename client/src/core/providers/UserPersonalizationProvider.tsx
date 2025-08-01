@@ -19,7 +19,7 @@ const UserPersonalizationContext = createContext<{
 async function syncUserData(data: Record<string, unknown>) {
   try {
     await forgeAPI.user.personalization.updatePersonalization.mutate({
-      data: data as any
+      data
     })
   } catch {
     toast.error('Failed to update personalization settings')
@@ -82,9 +82,7 @@ function UserPersonalizationProvider({
   useEffect(() => {
     if (!userData) return
 
-    if (userData?.theme !== '') {
-      setTheme(userData.theme)
-    }
+    setTheme(userData.theme)
 
     if (userData?.color !== '') {
       setRawThemeColor(
