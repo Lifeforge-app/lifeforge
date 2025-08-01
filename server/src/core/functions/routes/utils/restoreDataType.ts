@@ -1,5 +1,6 @@
 export default function restoreFormDataType(value: string): any {
-  if (!value.startsWith('__type:')) return value
+  if (!value.startsWith('__type:'))
+    return value === 'undefined' ? undefined : value
 
   const [meta, raw] = value.split(';', 2)
 
