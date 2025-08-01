@@ -1,6 +1,17 @@
 import { forgeController, forgeRouter } from '@functions/routes'
+import { registerRoutes } from '@functions/routes/functions/forgeRouter'
+import traceRouteStack from '@functions/utils/traceRouteStack'
+import express from 'express'
 import request from 'request'
 import { z } from 'zod/v4'
+
+const router = express.Router()
+
+router.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to LifeForge API!'
+  })
+})
 
 const status = forgeController.query
   .description('Get server status')
@@ -81,40 +92,48 @@ const corsAnywhere = forgeController.query
     return response.text()
   })
 
+const listRoutes = forgeController.query
+  .description('Get all registered routes')
+  .input({})
+  .callback(async () => traceRouteStack(router.stack))
+
 const appRoutes = forgeRouter({
-  achievements: (await import('../apps/achievements')).default,
-  calendar: (await import('../apps/calendar')).default,
-  todoList: (await import('../apps/todoList')).default,
-  ideaBox: (await import('../apps/ideaBox')).default,
-  'code-time': (await import('../apps/codeTime')).default,
-  booksLibrary: (await import('../apps/booksLibrary')).default,
-  wallet: (await import('../apps/wallet')).default,
-  wishlist: (await import('../apps/wishlist')).default,
-  scoresLibrary: (await import('../apps/scoresLibrary')).default,
-  passwords: (await import('../apps/passwords')).default,
-  sudoku: (await import('../apps/sudoku')).default,
-  momentVault: (await import('../apps/momentVault')).default,
-  movies: (await import('../apps/movies')).default,
-  railwayMap: (await import('../apps/railwayMap')).default,
-  youtubeSummarizer: (await import('../apps/youtubeSummarizer')).default,
-  blog: (await import('../apps/blog')).default,
-  locales: (await import('./lib/locales')).default,
-  user: (await import('./lib/user')).default,
-  apiKeys: (await import('./lib/apiKeys')).default,
-  pixabay: (await import('./lib/pixabay')).default,
-  locations: (await import('./lib/locations')).default,
-  ai: (await import('./lib/ai')).default,
-  modules: (await import('./lib/modules')).default,
-  backups: (await import('./lib/backups')).default,
-  database: (await import('./lib/database')).default,
-  changiAirportFlightStatus: (await import('../apps/changiAirportFlightStatus'))
+  achievements: (await import('@apps/achievements')).default,
+  calendar: (await import('@apps/calendar')).default,
+  todoList: (await import('@apps/todoList')).default,
+  ideaBox: (await import('@apps/ideaBox')).default,
+  'code-time': (await import('@apps/codeTime')).default,
+  booksLibrary: (await import('@apps/booksLibrary')).default,
+  wallet: (await import('@apps/wallet')).default,
+  wishlist: (await import('@apps/wishlist')).default,
+  scoresLibrary: (await import('@apps/scoresLibrary')).default,
+  passwords: (await import('@apps/passwords')).default,
+  sudoku: (await import('@apps/sudoku')).default,
+  momentVault: (await import('@apps/momentVault')).default,
+  movies: (await import('@apps/movies')).default,
+  railwayMap: (await import('@apps/railwayMap')).default,
+  youtubeSummarizer: (await import('@apps/youtubeSummarizer')).default,
+  blog: (await import('@apps/blog')).default,
+  changiAirportFlightStatus: (await import('@apps/changiAirportFlightStatus'))
     .default,
+  locales: (await import('@lib/locales')).default,
+  user: (await import('@lib/user')).default,
+  apiKeys: (await import('@lib/apiKeys')).default,
+  pixabay: (await import('@lib/pixabay')).default,
+  locations: (await import('@lib/locations')).default,
+  ai: (await import('@lib/ai')).default,
+  modules: (await import('@lib/modules')).default,
+  backups: (await import('@lib/backups')).default,
+  database: (await import('@lib/database')).default,
+  _listRoutes: listRoutes,
   status,
   getRoot,
   media: getMedia,
   corsAnywhere
 })
 
+router.use('/', registerRoutes(appRoutes))
+
 export type AppRoutes = typeof appRoutes
 
-export default appRoutes
+export default router
