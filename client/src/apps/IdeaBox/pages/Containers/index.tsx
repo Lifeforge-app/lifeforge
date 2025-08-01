@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   EmptyStateScreen,
   ModuleHeader,
@@ -12,6 +11,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { InferOutput } from 'shared'
 
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'

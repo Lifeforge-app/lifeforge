@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferInput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { InferInput } from 'shared'
 
 function CreateBackupModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.backups')

@@ -1,11 +1,11 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
 import ModifyIdeaModal from '../pages/Ideas/components/modals/ModifyIdeaModal'
 

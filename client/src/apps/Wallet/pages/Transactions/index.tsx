@@ -1,7 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -15,6 +14,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
+import type { InferOutput } from 'shared'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 

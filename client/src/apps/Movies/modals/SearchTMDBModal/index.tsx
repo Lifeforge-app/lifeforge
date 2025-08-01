@@ -1,6 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -10,6 +9,7 @@ import {
 } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'

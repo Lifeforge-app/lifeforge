@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   createContext,
   useContext,
@@ -10,6 +9,7 @@ import {
   useState
 } from 'react'
 import { Outlet } from 'react-router'
+import type { InferOutput } from 'shared'
 
 export type RailwayMapStation = InferOutput<
   typeof forgeAPI.railwayMap.getStations
