@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   EmptyStateScreen,
   ModuleHeader,
@@ -12,6 +11,7 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 import { fetchAPI } from 'shared'
 
 import CaptionSelector from './components/CaptionSelector'

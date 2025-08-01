@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferInput, InferOutput } from 'lifeforge-api'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import type { InferInput, InferOutput } from 'shared'
 
 function ModifyIdeaModal({
   data: { type, initialData },

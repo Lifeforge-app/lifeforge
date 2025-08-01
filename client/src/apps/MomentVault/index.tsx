@@ -1,7 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   FAB,
@@ -12,6 +11,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { InferOutput } from 'shared'
 
 import EntryList from './components/EntryList'
 import AddEntryModal from './modals/AddEntryModal'

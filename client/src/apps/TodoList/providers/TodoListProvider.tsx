@@ -1,8 +1,8 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
+import type { InferOutput } from 'shared'
 
 export type TodoListEntry = InferOutput<
   typeof forgeAPI.todoList.entries.getById

@@ -2,7 +2,6 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -18,6 +17,7 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'

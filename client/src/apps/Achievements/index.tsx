@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferInput, InferOutput } from 'lifeforge-api'
 import {
   Button,
   EmptyStateScreen,
@@ -12,6 +11,7 @@ import {
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { InferInput, InferOutput } from 'shared'
 
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'

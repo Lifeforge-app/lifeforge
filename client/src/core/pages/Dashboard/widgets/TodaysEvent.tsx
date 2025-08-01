@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   DashboardItem,
@@ -15,6 +14,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
+import type { InferOutput } from 'shared'
 import { useSidebarState } from 'shared'
 
 import type {

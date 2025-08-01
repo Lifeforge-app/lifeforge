@@ -2,12 +2,12 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import type { InferOutput } from 'lifeforge-api'
 import { QueryWrapper } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
+import type { InferOutput } from 'shared'
 import { usePersonalization } from 'shared'
 
 const target = forgeAPI['code-time'].getActivities

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { GoBackButton, QueryWrapper } from 'lifeforge-ui'
+import type { InferOutput } from 'shared'
 
 import AddToLibraryButton from '../AddToLibraryButton'
 import DataTable from './components/DataTable'

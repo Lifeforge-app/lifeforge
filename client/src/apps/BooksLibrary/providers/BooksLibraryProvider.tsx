@@ -8,10 +8,10 @@ import {
   useQueryClient
 } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
 export type BooksLibraryEntry = InferOutput<
   typeof forgeAPI.booksLibrary.entries.list

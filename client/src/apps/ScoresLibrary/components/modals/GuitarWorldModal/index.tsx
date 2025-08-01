@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import type { InferOutput } from 'shared'
 
 import ScoreList from './components/ScoreList'
 

@@ -1,9 +1,9 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
+import type { InferOutput } from 'shared'
 
 export type PasswordEntry = InferOutput<
   typeof forgeAPI.passwords.entries.list

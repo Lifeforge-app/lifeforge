@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
-import type { ForgeAPIClientController } from 'lifeforge-api'
 import { Button, TextInput } from 'lifeforge-ui'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { ForgeAPIClientController } from 'shared'
 
 import { encrypt } from '../utils/encryption'
 

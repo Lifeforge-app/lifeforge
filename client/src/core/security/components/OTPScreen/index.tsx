@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import type { ForgeAPIClientController } from 'lifeforge-api'
 import { Button } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { ForgeAPIClientController } from 'shared'
 
 import { encrypt } from '../../utils/encryption'
 import OTPInputBox from './components/OTPInputBox'

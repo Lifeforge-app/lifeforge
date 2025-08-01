@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import type { InferOutput } from 'lifeforge-api'
 import {
   Button,
   ConfirmationModal,
@@ -14,6 +13,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 import { usePersonalization } from 'shared'
 
 import ModifyTicketModal from '../modals/ModifyTicketModal'

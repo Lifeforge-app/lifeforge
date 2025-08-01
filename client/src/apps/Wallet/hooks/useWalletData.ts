@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import type { InferOutput } from 'lifeforge-api'
+import type { InferOutput } from 'shared'
 
 import { useFilteredTransactions } from './useFilteredTransactions'
 
