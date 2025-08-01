@@ -180,52 +180,48 @@ const sync = forgeController.mutation
 const create = forgeController.mutation
   .description('Create a new locale entry or folder')
   .input({
-    query: z.object({
+    body: z.object({
       type: z.enum(['entry', 'folder']),
       namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    }),
-    body: z.object({
+      subnamespace: z.string(),
       path: z.string().optional().default('')
     })
   })
   .statusCode(201)
-  .callback(
-    async ({ query: { type, namespace, subnamespace }, body: { path } }) => {
-      for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
-        const filePath =
-          namespace === 'apps'
-            ? `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
-            : `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`
+  .callback(async ({ body: { path, type, namespace, subnamespace } }) => {
+    for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
+      const filePath =
+        namespace === 'apps'
+          ? `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
+          : `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`
 
-        const data: Record<string, any> = JSON.parse(
-          fs.readFileSync(filePath, 'utf-8')
-        )
+      const data: Record<string, any> = JSON.parse(
+        fs.readFileSync(filePath, 'utf-8')
+      )
 
-        const splitted: string[] = path.split('.')
+      const splitted: string[] = path.split('.')
 
-        const key = splitted.pop()
+      const key = splitted.pop()
 
-        const target = splitted.reduce((acc, cur) => {
-          if (!acc[cur]) {
-            acc[cur] = {}
-          }
-
-          return acc[cur]
-        }, data)
-
-        if (target[key as string] !== undefined) {
-          throw new ClientError(`Key ${key} already exists in path ${path}`)
+      const target = splitted.reduce((acc, cur) => {
+        if (!acc[cur]) {
+          acc[cur] = {}
         }
 
-        target[key as string] = type === 'entry' ? '' : {}
+        return acc[cur]
+      }, data)
 
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
+      if (target[key as string] !== undefined) {
+        throw new ClientError(`Key ${key} already exists in path ${path}`)
       }
 
-      return true
+      target[key as string] = type === 'entry' ? '' : {}
+
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
     }
-  )
+
+    return true
+  })
 
 const rename = forgeController.mutation
   .description('Rename a locale')

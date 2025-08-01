@@ -1,18 +1,8 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
-import {
-  Button,
-  ListboxInput,
-  ListboxOption,
-  ModalHeader,
-  TextInput
-} from 'lifeforge-ui'
-import React, { useState } from 'react'
-import { fetchAPI } from 'shared'
+import { useMutation } from '@tanstack/react-query'
+import { FormModal, defineForm } from 'lifeforge-ui'
+import React from 'react'
 
-const TYPES = [
-  ['tabler:folder', 'Folder'],
-  ['tabler:file-text', 'Entry']
-]
+import forgeAPI from '../../utils/forgeAPI'
 
 function CreateEntryModal({
   onClose,
@@ -29,167 +19,122 @@ function CreateEntryModal({
     >
   }
 }) {
-  const [selectedType, setSelectedType] = useState<'folder' | 'entry'>('entry')
+  const mutation = useMutation(
+    forgeAPI.locales.manager.create.mutationOptions({
+      onSuccess: (_, variables) => {
+        ;[setLocales, setOldLocales].forEach(e =>
+          e(prev => {
+            if (typeof prev === 'string') {
+              return prev
+            }
 
-  const [name, setName] = useState('')
+            const newData = JSON.parse(JSON.stringify(prev))
 
-  const [loading, setLoading] = useState(false)
+            for (const lng in newData) {
+              let targetObject = newData[lng]
 
-  async function onSubmit() {
-    if (!name.trim()) {
-      alert('Name is required')
+              const path = target[2].split('.').filter(Boolean)
 
-      return
-    }
+              for (let i = 0; i < path.length; i++) {
+                if (!targetObject[path[i]]) {
+                  targetObject[path[i]] = {}
+                }
 
-    setLoading(true)
-
-    try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/locales/manager/${selectedType}/${target[0]}/${target[1]}`,
-        {
-          method: 'POST',
-          body: {
-            path: [target[2], name].filter(Boolean).join('.')
-          }
-        }
-      )
-
-      onClose()
-      ;[setLocales, setOldLocales].forEach(e =>
-        e(prev => {
-          if (typeof prev === 'string') {
-            return prev
-          }
-
-          const newData = JSON.parse(JSON.stringify(prev))
-
-          for (const lng in newData) {
-            let targetObject = newData[lng]
-
-            const path = target[2].split('.').filter(Boolean)
-
-            for (let i = 0; i < path.length; i++) {
-              if (!targetObject[path[i]]) {
-                targetObject[path[i]] = {}
+                targetObject = targetObject[path[i]]
               }
 
-              targetObject = targetObject[path[i]]
+              targetObject[variables.path.split('.').pop()!] =
+                variables.type === 'folder' ? {} : ''
             }
 
-            targetObject[name] = selectedType === 'folder' ? {} : ''
-          }
-
-          return newData
-        })
-      )
-    } catch {
-      alert('Failed to create entry')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <div className="min-w-[40vw]">
-      <ModalHeader
-        icon="tabler:plus"
-        namespace="utils.localeAdmin"
-        title="entry.create"
-        onClose={onClose}
-      />
-      <div className="space-y-4">
-        <TextInput
-          darker
-          disabled
-          className="w-full"
-          icon="tabler:category-2"
-          name="namespace"
-          namespace="utils.localeAdmin"
-          placeholder=""
-          setValue={() => {}}
-          value={target[0]}
-        />
-        <TextInput
-          darker
-          disabled
-          className="w-full"
-          icon="tabler:cube"
-          name="sub namespace"
-          namespace="utils.localeAdmin"
-          placeholder=""
-          setValue={() => {}}
-          value={target[1]}
-        />
-        <TextInput
-          darker
-          disabled
-          className="w-full"
-          icon="tabler:folder"
-          name="parent"
-          namespace="utils.localeAdmin"
-          placeholder=""
-          setValue={() => {}}
-          value={target[2] || 'root'}
-        />
-        <ListboxInput
-          buttonContent={
-            <div className="flex items-center gap-2">
-              <Icon
-                className="size-4"
-                icon={
-                  TYPES.find(type => type[1].toLowerCase() === selectedType)![0]
-                }
-              />
-              {selectedType[0].toUpperCase() + selectedType.slice(1)}
-            </div>
-          }
-          className="w-full"
-          icon="tabler:category-2"
-          name="type"
-          namespace="utils.localeAdmin"
-          setValue={value => {
-            setSelectedType(value.toLowerCase() as 'folder' | 'entry')
-          }}
-          value={target[0]}
-        >
-          {TYPES.map(type => (
-            <ListboxOption
-              key={type[1]}
-              icon={type[0]}
-              text={type[1]}
-              value={type[1]}
-            />
-          ))}
-        </ListboxInput>
-        <TextInput
-          darker
-          className="w-full"
-          icon="tabler:file-text"
-          name="name"
-          namespace="utils.localeAdmin"
-          placeholder="nameOfTheEntry"
-          setValue={setName}
-          value={name}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              e.preventDefault()
-              onSubmit()
-            }
-          }}
-        />
-      </div>
-      <Button
-        className="mt-6 w-full"
-        icon="tabler:plus"
-        loading={loading}
-        onClick={onSubmit}
-      >
-        Create
-      </Button>
-    </div>
+            return newData
+          })
+        )
+      },
+      onError: () => {
+        alert('Failed to create entry')
+      }
+    })
   )
+
+  const formProps = defineForm<{
+    namespace: string
+    subNamespace: string
+    parent: string
+    type: 'folder' | 'entry'
+    name: string
+  }>()
+    .ui({
+      icon: 'tabler:plus',
+      namespace: 'utils.localeAdmin',
+      title: 'entry.create',
+      onClose,
+      submitButton: 'create'
+    })
+    .typesMap({
+      namespace: 'text',
+      subNamespace: 'text',
+      parent: 'text',
+      type: 'listbox',
+      name: 'text'
+    })
+    .setupFields({
+      namespace: {
+        label: 'Namespace',
+        placeholder: 'Enter namespace',
+        required: true,
+        icon: 'tabler:category-2',
+        disabled: true
+      },
+      subNamespace: {
+        label: 'Sub Namespace',
+        placeholder: 'Enter sub namespace',
+        required: true,
+        icon: 'tabler:cube',
+        disabled: true
+      },
+      parent: {
+        label: 'Parent',
+        placeholder: 'Enter parent',
+        required: true,
+        icon: 'tabler:folder',
+        disabled: true
+      },
+      type: {
+        label: 'Type',
+        options: [
+          { value: 'folder', text: 'Folder', icon: 'tabler:folder' },
+          { value: 'entry', text: 'Entry', icon: 'tabler:file-text' }
+        ],
+        required: true,
+        icon: 'tabler:category-2',
+        multiple: false
+      },
+      name: {
+        label: 'Name',
+        placeholder: 'Enter name',
+        required: true,
+        icon: 'tabler:file-text'
+      }
+    })
+    .initialData({
+      namespace: target[0],
+      subNamespace: target[1],
+      parent: target[2] || 'root'
+    })
+    .onSubmit(async data => {
+      const { namespace, subNamespace, parent, type, name } = data
+
+      await mutation.mutate({
+        namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
+        subnamespace: subNamespace,
+        path: [parent, name].filter(Boolean).join('.'),
+        type
+      })
+    })
+    .build()
+
+  return <FormModal {...formProps} />
 }
 
 export default CreateEntryModal

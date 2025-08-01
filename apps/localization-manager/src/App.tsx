@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { usePersonalization } from 'shared'
 
 import MainContent from './pages/MainContent'
+import forgeAPI from './utils/forgeAPI'
 
 const LocaleAdmin = () => {
   const [isAuthed, setIsAuthed] = useState<'loading' | boolean>('loading')
@@ -17,36 +18,12 @@ const LocaleAdmin = () => {
   }
 
   const verifyToken = async () => {
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
-      '$1'
-    )
+    try {
+      const { userData } = await forgeAPI.user.auth.verifySessionToken.mutate(
+        {}
+      )
 
-    if (!token) {
-      failAuth()
-    }
-
-    const res = await fetch(
-      `${import.meta.env.VITE_API_HOST}/user/auth/verify`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
-
-    if (!res.ok) {
-      failAuth()
-    }
-
-    const data = await res.json()
-
-    if (data.state === 'success') {
       setIsAuthed(true)
-
-      const { userData } = data.data
 
       setFontFamily(userData.fontFamily || 'Inter')
       setTheme(userData.theme || 'system')
@@ -65,7 +42,7 @@ const LocaleAdmin = () => {
           : 'bg-zinc'
       )
       setLanguage(userData.language || 'en')
-    } else {
+    } catch {
       failAuth()
     }
   }
