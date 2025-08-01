@@ -14,6 +14,8 @@ function Modules() {
   const { userData, setUserData } = useAuth()
 
   async function toggleModule(moduleName: string) {
+    if (!userData) return
+
     const newEnabledModules = userData.enabledModules.includes(
       _.kebabCase(moduleName)
     )

@@ -16,12 +16,12 @@ function addNumberSuffix(number: number): string {
   return number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
 }
 
-const getEventType = (userDOB: string): string => {
+const getEventType = (userDOB: string | undefined): string => {
   const today = dayjs().format('MM-DD')
 
   if (today === '08-31') return 'merdeka'
   if (today === '12-25') return 'christmas'
-  if (dayjs(userDOB).format('MM-DD') === today) return 'birthday'
+  if (userDOB && dayjs(userDOB).format('MM-DD') === today) return 'birthday'
 
   return ''
 }

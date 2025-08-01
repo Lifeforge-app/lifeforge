@@ -1,24 +1,43 @@
+import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
+import COLLECTION_SCHEMAS from '@schema'
+import _ from 'lodash'
 import Pocketbase from 'pocketbase'
+import { z } from 'zod/v4'
 
-export function removeSensitiveData(userData: Record<string, any>): void {
-  for (const key in userData) {
-    if (key.includes('webauthn')) {
-      delete userData[key]
-    }
-  }
+export function removeSensitiveData(userData: Record<string, any>) {
+  const newUserData = _.cloneDeep(userData)
 
-  userData.hasMasterPassword = Boolean(userData.masterPasswordHash)
-  userData.hasJournalMasterPassword = Boolean(
+  newUserData.hasMasterPassword = Boolean(userData.masterPasswordHash)
+  newUserData.hasJournalMasterPassword = Boolean(
     userData.journalMasterPasswordHash
   )
-  userData.hasAPIKeysMasterPassword = Boolean(
+  newUserData.hasAPIKeysMasterPassword = Boolean(
     userData.APIKeysMasterPasswordHash
   )
-  userData.twoFAEnabled = Boolean(userData.twoFASecret)
-  delete userData['masterPasswordHash']
-  delete userData['journalMasterPasswordHash']
-  delete userData['APIKeysMasterPasswordHash']
-  delete userData['twoFASecret']
+  newUserData.twoFAEnabled = Boolean(userData.twoFASecret)
+  delete newUserData['masterPasswordHash']
+  delete newUserData['journalMasterPasswordHash']
+  delete newUserData['APIKeysMasterPasswordHash']
+  delete newUserData['twoFASecret']
+
+  return newUserData as SchemaWithPB<
+    Omit<
+      z.infer<(typeof COLLECTION_SCHEMAS)['users__users']>,
+      | 'masterPasswordHash'
+      | 'journalMasterPasswordHash'
+      | 'APIKeysMasterPasswordHash'
+      | 'twoFASecret'
+    > & {
+      hasMasterPassword: boolean
+      hasJournalMasterPassword: boolean
+      hasAPIKeysMasterPassword: boolean
+      twoFAEnabled: boolean
+      masterPasswordHash?: string
+      journalMasterPasswordHash?: string
+      APIKeysMasterPasswordHash?: string
+      twoFASecret?: string
+    }
+  >
 }
 
 export async function updateNullData(

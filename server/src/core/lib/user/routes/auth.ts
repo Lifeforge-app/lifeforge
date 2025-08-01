@@ -58,7 +58,7 @@ const login = forgeController.mutation
         throw new ClientError('Invalid credentials', 401)
       }
 
-      removeSensitiveData(userData)
+      const sanitizedUserData = removeSensitiveData(userData)
 
       if (userData.twoFAEnabled) {
         currentSession.token = pb.authStore.token
@@ -71,12 +71,12 @@ const login = forgeController.mutation
         }
       }
 
-      await updateNullData(userData, pb)
+      await updateNullData(sanitizedUserData, pb)
 
       return {
         state: 'success',
         session: pb.authStore.token,
-        userData
+        userData: sanitizedUserData
       }
     } else {
       throw new ClientError('Invalid credentials', 401)
@@ -111,12 +111,13 @@ const verifySessionToken = forgeController.mutation
       throw new ClientError('Invalid session', 401)
     }
 
-    removeSensitiveData(userData)
-    await updateNullData(userData, pb)
+    const sanitizedUserData = removeSensitiveData(userData)
+
+    await updateNullData(sanitizedUserData, pb)
 
     return {
       session: pb.authStore.token,
-      userData
+      userData: sanitizedUserData
     }
   })
 
