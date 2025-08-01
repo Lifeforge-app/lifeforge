@@ -71,7 +71,9 @@ function LocationInput({
         namespace={namespace}
         required={required}
         setQuery={setQuery}
-        setValue={setLocation}
+        setValue={location => {
+          setLocation(location ?? null)
+        }}
         value={location}
       >
         {query.trim() !== '' &&
