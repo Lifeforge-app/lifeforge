@@ -120,6 +120,7 @@ type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps & {
   enableUrl?: boolean
   enableAIImageGeneration?: boolean
   defaultImageGenerationPrompt?: string
+  acceptedMimeTypes?: Record<string, string[]>
   __formDataType: FileData
   __finalDataType: string | File
 }
