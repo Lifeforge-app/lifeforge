@@ -1,3 +1,3 @@
-import appRoutes from './app.routes'
+import appRoutes from './routes'
 
 export type AppRoutes = typeof appRoutes

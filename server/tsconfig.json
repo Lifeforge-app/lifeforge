@@ -31,6 +31,12 @@
       "@schema": [
         "./src/core/schema"
       ],
+      "@apps/*": [
+        "./src/apps/*"
+      ],
+      "@lib/*": [
+        "./src/core/lib/*"
+      ]
     }
   }
 }
