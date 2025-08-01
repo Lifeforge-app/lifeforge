@@ -1,4 +1,4 @@
-import { createForgeAPIClient } from 'lifeforge-api'
+import { createForgeAPIClient } from 'shared'
 
 import type { AppRoutes } from '../../../../server/src/core/routes/routes.type'
 

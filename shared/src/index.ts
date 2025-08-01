@@ -22,6 +22,16 @@ export { default as SidebarStateProvider } from './providers/SidebarStateProvide
 
 export { default as ToastProvider } from './providers/ToastProvider'
 
+export {
+  createForgeAPIClient,
+  ForgeAPIClientController
+} from './api/core/forgeAPIClient'
+
+export type {
+  InferClientControllerOutput as InferOutput,
+  InferClientControllerInput as InferInput
+} from './api/typescript/forge_api_client.types'
+
 export type {
   IDashboardLayout,
   IBackdropFilters
