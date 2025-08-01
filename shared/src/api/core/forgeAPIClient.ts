@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
-import { fetchAPI } from 'shared'
 
+import fetchAPI from '../../utils/fetchAPI'
 import type {
   ClientTree,
   InferInput,
