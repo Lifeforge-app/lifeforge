@@ -191,7 +191,11 @@ function ModifyTransactionsModal({
       receipt: {
         label: 'Receipt',
         icon: 'tabler:receipt',
-        optional: true
+        optional: true,
+        acceptedMimeTypes: {
+          images: ['image/png', 'image/jpeg', 'image/webp'],
+          documents: ['application/pdf']
+        }
       }
     })
     .initialData({
