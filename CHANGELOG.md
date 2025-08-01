@@ -1,6 +1,16 @@
 # Change Log
 
+## 📌 **dev 25w31 (7/28/2025 - 8/4/2025)**
+
+- **UI**: Introduced a `Slider` component for better user interaction with range inputs.
+- **UI**: More progress on storybook integration.
+- **UI**: Integrated the new `forgeAPI` client into the `lifeforge-ui` package to adapt to the new API structure.
+- **UI**: QrCodeScanner component now utilizes the global modal manager.
+- **UI**: Separated the `ListboxOrCombobox` component into two distinct components: `Listbox` and `Combobox`, to better reflect their individual functionalities.
+- **Code**: User data is now properly typed in the `useAuth` hook.
+
 ## 📌 **dev 25w30 (7/21/2025 - 7/28/2025)**
+
 - **Wallet**: Extremely massive code refactor for CRUD action handling.
 - **Wallet**: Transfer transactions are now shown as a single entry, and user can now edit them.
 - **Wallet**: Improved the database schema by introducing subtypes for income-expenses and transfer transactions respectively.
@@ -8,12 +18,25 @@
 - **Calendar**: Improved the database schema by introducing subtypes for single and recurring events respectively.
 - **Codetime**: Added "Code Time Today" display at the top of the statistic section.
 - **Codetime**: Time units are now translated.
+- **Sudoku**: User can now choose the difficulty level of the Sudoku puzzle.
+- **Account Settings**: Avatar column now utilizes the `FileInput` component that allows images from multiple sources.
 - **UI**: `LocationInput` will now display a loading state when fetching the API key availability.
 - **UI**: Fixed the order of `form-data` submitted by the `FormModal` so that all text fields are submitted first, followed by file inputs.
+- **UI**: Replaced `DeleteConfirmationModal` with a more generic `ConfirmationModal` that can be used for any confirmation action.
+- **UI**: Completely reinvented the `FormModal` component to allow form creation in a completely type-safe manner.
 - **UI**: Minor code refactoring to improve code quality.
+- **UI**: File input component now has a proper name instead of being called `FileAndImageInput` somewhere and `ImageInput` somewhere else.
 - **Code**: Migrated the remaining side apps to the monorepo structure.
 - **Code**: Deprecated the rest of the legacy codebase in the GitHub repository after the migration to the monorepo structure.
 - **Code**: Created a script called `forge.ts` to allow developers to run commands across all packages in the monorepo.
+- **Code**: Created a package called `lifeforge-api` that contains a client class to interact with the backend server in a completely type-safe manner.
+- **Code**: Completely reinvented how the server API is called in the frontend.
+- **Code**: A lot of bug fixing.
+- **Code**: Renamed all the typescript interfaces from `I<Something>` to just `<Something>` for better consistency.
+- **API**: Yet another massive refactor of the API codebase, hugely inspired by tRPC.
+- **API**: Introduced a type-safe wrapper for PocketBase API calls, allowing for better type safety and autocompletion in the IDE.
+- **API**: All database schemas are moved from `shared` package back into the server repo as a single file.
+- **API**: Introduced a new `.media()` method in the `forgeController` to handle media files in a type-safe manner.
 - **API Explorer**: Refactored the entire codebase to use the new `lifeforge-ui` and `shared` libraries.
 - **API Builder**: Refactored the entire codebase to use the new `lifeforge-ui` and `shared` libraries.
 - **Documentation**: Refactored the entire documentation codebase to use the new `lifeforge-ui` and `shared` libraries.

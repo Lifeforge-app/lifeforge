@@ -23,6 +23,8 @@ function AvatarColumn() {
 
   const { getAvatarURL, userData, setUserData } = useAuth()
 
+  if (!userData) return null
+
   async function changeAvatar(file: File | string | null) {
     if (file === null) {
       toast.error('No file selected')
@@ -37,7 +39,7 @@ function AvatarColumn() {
         file
       })
 
-      setUserData({ ...userData, avatar: data })
+      setUserData(userData => (userData ? { ...userData, avatar: data } : null))
 
       toast.success('Avatar updated successfully')
     } catch {
@@ -50,10 +52,7 @@ function AvatarColumn() {
   const deleteAvatarMutation = useMutation(
     forgeAPI.user.settings.deleteAvatar.mutationOptions({
       onSuccess: () => {
-        setUserData((userData: any) => ({
-          ...userData,
-          avatar: ''
-        }))
+        setUserData(userData => (userData ? { ...userData, avatar: '' } : null))
         toast.success('Avatar removed successfully')
       },
       onError: () => {

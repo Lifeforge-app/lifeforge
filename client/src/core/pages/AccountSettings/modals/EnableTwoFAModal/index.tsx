@@ -16,10 +16,9 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
   const [otpSuccess, setOtpSuccess] = useState(false)
 
   const handleSuccess = useCallback(() => {
-    setUserData((userData: any) => ({
-      ...userData,
-      twoFAEnabled: true
-    }))
+    setUserData(userData =>
+      userData ? { ...userData, twoFAEnabled: true } : null
+    )
     toast.success(t('messages.twoFA.enableSuccess'))
     onClose()
   }, [])

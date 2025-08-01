@@ -1,5 +1,6 @@
 import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
 import forgeAPI from '@utils/forgeAPI'
+import type { InferOutput } from 'lifeforge-api'
 import { useModalStore } from 'lifeforge-ui'
 import { cookieParse } from 'pocketbase'
 import {
@@ -16,7 +17,11 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
-interface IAuthData {
+type UserData = InferOutput<
+  typeof forgeAPI.user.auth.verifySessionToken
+>['userData']
+
+interface AuthData {
   auth: boolean
   setAuth: (value: boolean) => void
   authenticate: ({
@@ -34,7 +39,7 @@ interface IAuthData {
   }) => Promise<string | void>
   verifySession: (
     session: string
-  ) => Promise<{ success: boolean; userData: any }>
+  ) => Promise<{ success: boolean; userData: UserData | null }>
   verifyOAuth: (code: string, state: string) => void
   logout: () => void
   loginQuota: {
@@ -42,13 +47,13 @@ interface IAuthData {
     dismissQuota: () => void
   }
   authLoading: boolean
-  userData: any
-  setUserData: React.Dispatch<React.SetStateAction<any>>
+  userData: UserData | null
+  setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
   getAvatarURL: () => string
   tid: RefObject<string>
 }
 
-export const AuthContext = createContext<IAuthData | undefined>(undefined)
+export const AuthContext = createContext<AuthData | undefined>(undefined)
 
 export default function AuthProvider({
   children
@@ -61,7 +66,7 @@ export default function AuthProvider({
 
   const [auth, _setAuth] = useState(false)
 
-  const [userData, _setUserData] = useState<any>(null)
+  const [userData, setUserData] = useState<UserData | null>(null)
 
   const [quota, setQuota] = useState(5)
 
@@ -80,13 +85,6 @@ export default function AuthProvider({
       _setAuth(value)
     },
     [_setAuth]
-  )
-
-  const setUserData = useCallback(
-    (data: any) => {
-      _setUserData(data)
-    },
-    [_setUserData]
   )
 
   const updateQuota = useCallback((): number => {
@@ -146,7 +144,7 @@ export default function AuthProvider({
       session: string
     ): Promise<{
       success: boolean
-      userData: any
+      userData: UserData | null
     }> => {
       return await fetch(forgeAPI.user.auth.verifySessionToken.endpoint, {
         method: 'POST',
@@ -316,7 +314,7 @@ export default function AuthProvider({
               setUserData(userData)
               setAuth(true)
 
-              toast.success(t('auth.welcome') + userData.username)
+              toast.success(t('auth.welcome') + userData?.username)
             }
           })
           .catch(() => {
@@ -407,7 +405,7 @@ export default function AuthProvider({
   return <AuthContext value={value}>{children}</AuthContext>
 }
 
-export function useAuth(): IAuthData {
+export function useAuth(): AuthData {
   const context = useContext(AuthContext)
 
   if (!context) {

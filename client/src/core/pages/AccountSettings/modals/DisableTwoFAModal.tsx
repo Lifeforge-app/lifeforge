@@ -1,4 +1,5 @@
 import OTPScreen from '@security/components/OTPScreen'
+import forgeAPI from '@utils/forgeAPI'
 import { Button, ModalHeader } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +7,6 @@ import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
-import forgeAPI from '@utils/forgeAPI'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
@@ -24,10 +24,9 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
         method: 'POST'
       })
 
-      setUserData((userData: any) => ({
-        ...userData,
-        twoFAEnabled: false
-      }))
+      setUserData(userData =>
+        userData ? { ...userData, twoFAEnabled: false } : null
+      )
       toast.success(t('messages.twoFA.disableSuccess'))
       onClose()
     } catch {

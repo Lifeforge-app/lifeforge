@@ -14,6 +14,8 @@ function TwoFAColumn() {
 
   const { userData } = useAuth()
 
+  if (!userData) return null
+
   const handleToggle2FAModal = useCallback(() => {
     if (userData.twoFAEnabled) {
       open(DisableTwoFAModal, {})
