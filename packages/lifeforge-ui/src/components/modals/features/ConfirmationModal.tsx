@@ -49,10 +49,9 @@ function ConfirmationModal({
       <p className="text-bg-500 mt-2">{description}</p>
       {confirmationPrompt && (
         <TextInput
-          darker
           className="mt-4"
           icon="tabler:alert-triangle"
-          name="Confirmation"
+          label="Confirmation"
           namespace="common.modals"
           placeholder={t(
             'common.modals:deleteConfirmation.inputs.confirmation.placeholder',

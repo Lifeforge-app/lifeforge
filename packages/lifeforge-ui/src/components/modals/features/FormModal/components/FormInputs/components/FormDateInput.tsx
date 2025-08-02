@@ -12,15 +12,14 @@ function FormDateInput({
 }: FormInputProps<DateFieldProps>) {
   return (
     <DateInput
-      darker
-      date={selectedData}
       disabled={field.disabled}
       hasTime={field.hasTime}
       icon={field.icon}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
       required={field.required}
-      setDate={handleChange}
+      setValue={handleChange}
+      value={selectedData}
     />
   )
 }

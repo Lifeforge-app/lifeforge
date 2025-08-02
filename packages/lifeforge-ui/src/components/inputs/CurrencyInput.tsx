@@ -6,30 +6,32 @@ import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 
-function CurrencyInputComponent({
-  name,
-  placeholder,
-  disabled = false,
-  icon,
-  value,
-  setValue,
-  darker = false,
-  className = '',
-  required,
-  namespace
-}: {
-  name: string
-  disabled?: boolean
-  placeholder: string
+interface CurrencyInputProps {
+  label: string
   icon: string
+  placeholder: string
   value: number
   setValue: (number: number) => void
-  darker?: boolean
-  className?: string
   required?: boolean
+  disabled?: boolean
+  className?: string
   namespace: string | false
-}) {
-  const inputLabel = useInputLabel(namespace, name)
+  tKey?: string
+}
+
+function CurrencyInputComponent({
+  label,
+  icon,
+  placeholder,
+  value,
+  setValue,
+  required,
+  disabled,
+  className,
+  namespace,
+  tKey
+}: CurrencyInputProps) {
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   const [innerValue, setInnerValue] = useState(
     value.toString() === '0' ? '' : value.toString()
@@ -40,7 +42,7 @@ function CurrencyInputComponent({
   }, [value])
 
   return (
-    <InputWrapper className={className} darker={darker} disabled={disabled}>
+    <InputWrapper className={className} disabled={disabled}>
       <InputIcon active={!!innerValue} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
@@ -51,7 +53,7 @@ function CurrencyInputComponent({
         <CurrencyInput
           className="focus:placeholder:text-bg-500 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden"
           decimalsLimit={2}
-          name={name}
+          name={label}
           placeholder={placeholder}
           value={innerValue}
           onBlur={() => {

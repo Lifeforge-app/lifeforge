@@ -12,10 +12,9 @@ function FormCurrencyInput({
 }: FormInputProps<CurrencyFieldProps>) {
   return (
     <CurrencyInput
-      darker
       disabled={field.disabled}
       icon={field.icon}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
       placeholder="0.00"
       required={field.required}

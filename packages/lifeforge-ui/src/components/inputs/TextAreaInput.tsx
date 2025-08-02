@@ -5,37 +5,32 @@ import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 
-export interface ITextAreaInputProps {
+export interface TextAreaInputProps {
+  label: string
   icon: string
-  name: string
   placeholder: string
   value: string
   setValue: (value: string) => void
-
-  className?: string
-  darker?: boolean
-  disabled?: boolean
-  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   required?: boolean
+  disabled?: boolean
+  className?: string
   namespace: string | false
   tKey?: string
 }
 
 function TextAreaInput({
-  className = '',
-  darker = false,
-  disabled = false,
+  label,
   icon,
-  name,
   placeholder,
-  required,
-  setValue,
   value,
+  setValue,
+  required,
+  disabled,
+  className,
   namespace,
   tKey
-}: ITextAreaInputProps) {
-  const inputLabel = useInputLabel(namespace, name, tKey)
+}: TextAreaInputProps) {
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   const ref = useRef<HTMLTextAreaElement>(null)
 
@@ -47,12 +42,7 @@ function TextAreaInput({
   }, [value])
 
   return (
-    <InputWrapper
-      className={className}
-      darker={darker}
-      disabled={disabled}
-      inputRef={ref}
-    >
+    <InputWrapper className={className} disabled={disabled} inputRef={ref}>
       <InputIcon active={!!value && String(value).length > 0} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel

@@ -24,18 +24,23 @@ function FormTextInput({
   return (
     <>
       <TextInput
-        darker
-        actionButtonIcon={field.qrScanner ? 'tabler:qrcode' : ''}
+        actionButtonProps={
+          field.qrScanner
+            ? {
+                icon: 'tabler:qrcode',
+                onClick: openQRScanner
+              }
+            : undefined
+        }
         disabled={field.disabled}
         icon={field.icon}
         isPassword={field.isPassword}
-        name={field.label}
+        label={field.label}
         namespace={namespace}
         placeholder={field.placeholder}
         required={field.required}
         setValue={handleChange}
         value={selectedData}
-        onActionButtonClick={openQRScanner}
       />
     </>
   )

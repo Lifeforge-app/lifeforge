@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import TextInput from './TextInput'
 
-function NumberInput({
-  darker,
-  className,
-  value,
-  setValue,
-  namespace,
-  name,
-  placeholder,
-  required = false,
-  disabled = false,
-  icon
-}: {
-  darker?: boolean
-  className?: string
+interface NumberInputProps {
+  label: string
+  icon: string
   value: number
   setValue: (value: number) => void
-  namespace: string | false
-  name: string
-  placeholder?: string
   required?: boolean
   disabled?: boolean
-  icon: string
-}) {
+  className?: string
+  namespace: string | false
+  tKey?: string
+}
+
+function NumberInput({
+  label,
+  icon,
+  value,
+  setValue,
+  required = false,
+  disabled = false,
+  className,
+  namespace,
+  tKey
+}: NumberInputProps) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
   )
@@ -36,17 +36,17 @@ function NumberInput({
   return (
     <TextInput
       className={className}
-      darker={darker}
       disabled={disabled}
       icon={icon}
       inputMode="numeric"
-      name={name}
+      label={label}
       namespace={namespace}
-      placeholder={placeholder || ''}
+      placeholder="123"
       required={required}
       setValue={(value: string) => {
         setCurrentStringValue(value)
       }}
+      tKey={tKey}
       value={currentStringValue}
       onBlur={() => {
         const numericValue = parseInt(currentStringValue)
