@@ -55,10 +55,9 @@ function AIImageGenerator({
   return !file ? (
     <>
       <TextAreaInput
-        darker
         required
         icon="tabler:edit"
-        name="Prompt"
+        label="Prompt"
         namespace="common.modals"
         placeholder="A description of the image you want to generate"
         setValue={setPrompt}

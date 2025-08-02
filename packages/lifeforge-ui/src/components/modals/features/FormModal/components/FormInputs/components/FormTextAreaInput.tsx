@@ -12,10 +12,9 @@ function FormTextAreaInput({
 }: FormInputProps<TextAreaFieldProps>) {
   return (
     <TextAreaInput
-      darker
       disabled={field.disabled}
       icon={field.icon}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
       placeholder={field.placeholder}
       required={field.required}

@@ -14,10 +14,9 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:user',
-    name: 'Username',
+    label: 'Username',
     placeholder: 'John Doe',
     setValue: () => {},
-    darker: true,
     namespace: false,
     value: ''
   },
@@ -31,9 +30,8 @@ export const Default: Story = {
 export const PasswordInput: Story = {
   args: {
     icon: 'tabler:key',
-    name: 'Password',
+    label: 'Password',
     placeholder: 'Type your password here',
-    darker: true,
     namespace: false,
     value: '',
     isPassword: true,
@@ -50,12 +48,14 @@ export const PasswordInput: Story = {
 export const WithActionButton: Story = {
   args: {
     icon: 'tabler:barcode',
-    name: 'Barcode',
+    label: 'Barcode',
     placeholder: '0123456789',
-    darker: true,
     namespace: false,
     value: '',
-    actionButtonIcon: 'tabler:scan',
+    actionButtonProps: {
+      icon: 'tabler:scan',
+      onClick: () => {}
+    },
     setValue: () => {}
   },
 

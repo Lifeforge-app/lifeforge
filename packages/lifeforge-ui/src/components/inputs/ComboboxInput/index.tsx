@@ -7,36 +7,38 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ComboboxOptions from './components/ComboboxOptions'
 
-function ComboboxInput<T>({
-  name,
-  icon,
-  value,
-  setValue,
-  disabled = false,
-  className = '',
-  children,
-  customActive = false,
-  required = false,
-  namespace = false,
-  tKey = '',
-  setQuery,
-  displayValue
-}: {
-  name: string
+interface ComboboxInputProps<T> {
+  label: string
   icon: string
   value: T
   setValue: (value: T) => void
-  disabled?: boolean
-  className?: string
-  children: React.ReactNode
-  customActive?: boolean
-  required?: boolean
-  namespace: string | false
-  tKey?: string
   setQuery: (query: string) => void
   displayValue: (value: T) => string
-}) {
-  const inputLabel = useInputLabel(namespace, name, tKey)
+  required?: boolean
+  disabled?: boolean
+  children: React.ReactNode
+  customActive?: boolean
+  className?: string
+  namespace: string | false
+  tKey?: string
+}
+
+function ComboboxInput<T>({
+  label,
+  icon,
+  value,
+  setValue,
+  setQuery,
+  displayValue,
+  required,
+  disabled,
+  children,
+  customActive,
+  className,
+  namespace,
+  tKey
+}: ComboboxInputProps<T>) {
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {

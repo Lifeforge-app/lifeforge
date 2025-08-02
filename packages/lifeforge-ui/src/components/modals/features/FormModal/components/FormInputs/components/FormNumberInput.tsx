@@ -12,12 +12,10 @@ function FormNumberInput({
 }: FormInputProps<NumberFieldProps>) {
   return (
     <NumberInput
-      darker
       disabled={field.disabled}
       icon={field.icon}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
-      placeholder={field.placeholder}
       required={field.required}
       setValue={handleChange}
       value={selectedData}

@@ -7,46 +7,40 @@ import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 
-interface ITagsInputProps {
-  name: string
+interface TagsInputProps {
+  label: string
   icon: string
   placeholder: string
   value: string[]
   setValue: (tags: string[]) => void
-  maxTags?: number
-  disabled?: boolean
-  className?: string
-  darker?: boolean
-  existedTags?: Array<{
-    name: string
-    icon: string
-    color: string
-  }>
   required?: boolean
-  namespace: string | false
-  tKey?: string
+  disabled?: boolean
+  maxTags?: number
   renderTags?: (
     tag: string,
     index: number,
     onRemoveTag: () => void
   ) => React.ReactNode
+  className?: string
+  namespace: string | false
+  tKey?: string
 }
 
 function TagsInput({
-  name,
+  label,
   icon,
   placeholder,
   value,
   setValue,
-  maxTags = 100,
-  disabled = false,
-  className = '',
-  darker,
   required,
+  disabled = false,
+  maxTags = 100,
+  renderTags,
+  className = '',
   namespace,
-  renderTags
-}: ITagsInputProps) {
-  const inputLabel = useInputLabel(namespace, name)
+  tKey
+}: TagsInputProps) {
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   const [currentTag, setCurrentTag] = useState<string>('')
 
@@ -75,12 +69,7 @@ function TagsInput({
   }
 
   return (
-    <InputWrapper
-      className={className}
-      darker={darker}
-      disabled={disabled}
-      inputRef={inputRef}
-    >
+    <InputWrapper className={className} disabled={disabled} inputRef={inputRef}>
       <InputIcon active={String(value).length > 0} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
@@ -114,7 +103,6 @@ function TagsInput({
           )}
           {!disabled && (
             <TextInputBox
-              noAutoComplete
               className="my-0! w-auto! flex-1 py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}

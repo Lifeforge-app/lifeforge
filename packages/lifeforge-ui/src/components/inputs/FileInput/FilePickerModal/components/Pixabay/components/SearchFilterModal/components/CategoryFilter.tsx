@@ -28,7 +28,7 @@ function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
         </>
       }
       icon="tabler:category"
-      name="image Category"
+      label="image Category"
       namespace="common.modals"
       setValue={value => {
         updateFilters({ type: 'SET_CATEGORY', payload: value })

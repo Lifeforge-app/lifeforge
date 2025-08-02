@@ -13,9 +13,8 @@ function ImageURL({
   return (
     <>
       <TextInput
-        darker
         icon="tabler:link"
-        name="Image link"
+        label="Image link"
         namespace="common.modals"
         placeholder="https://example.com/image.jpg"
         setValue={(value: string) => {

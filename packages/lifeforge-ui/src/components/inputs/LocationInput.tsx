@@ -9,23 +9,30 @@ import { useAPIEndpoint } from 'shared'
 
 import forgeAPI from '../../utils/forgeAPI'
 import { Tooltip } from '../utilities'
+import useInputLabel from './shared/hooks/useInputLabel'
 
-function LocationInput({
-  location,
-  setLocation,
-  namespace,
-  label,
-  required,
-  disabled
-}: {
-  location: Location | null
-  setLocation: (value: Location | null) => void
-  namespace: string | false
+interface LocationInputProps {
   label?: string
+  value: Location | null
+  setValue: (value: Location | null) => void
   required?: boolean
   disabled?: boolean
-}) {
+  namespace: string | false
+  tKey?: string
+}
+
+function LocationInput({
+  label,
+  value,
+  setValue,
+  required,
+  disabled,
+  namespace,
+  tKey
+}: LocationInputProps) {
   const { t } = useTranslation('common.misc')
+
+  const inputLabel = useInputLabel(namespace, label || 'Location', tKey)
 
   const apiHost = useAPIEndpoint()
 
@@ -63,18 +70,18 @@ function LocationInput({
     <div className="relative flex w-full items-center gap-3">
       <ComboboxInput<Location | null>
         className="w-full"
-        customActive={(location?.name?.length || 0) > 0}
+        customActive={(value?.name?.length || 0) > 0}
         disabled={!enabled || disabled || enabled === 'loading'}
         displayValue={value => value?.name ?? ''}
         icon="tabler:map-pin"
-        name={label || 'Location'}
+        label={inputLabel}
         namespace={namespace}
         required={required}
         setQuery={setQuery}
         setValue={location => {
-          setLocation(location ?? null)
+          setValue(location ?? null)
         }}
-        value={location}
+        value={value}
       >
         {query.trim() !== '' &&
           (dataQuery.data ? (

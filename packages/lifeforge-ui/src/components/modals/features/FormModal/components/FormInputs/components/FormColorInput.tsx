@@ -12,12 +12,12 @@ function FormColorInput({
 }: FormInputProps<ColorFieldProps>) {
   return (
     <ColorInput
-      color={selectedData}
+      value={selectedData}
       disabled={field.disabled}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
       required={field.required}
-      setColor={handleChange}
+      setValue={handleChange}
     />
   )
 }

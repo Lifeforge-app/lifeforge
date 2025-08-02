@@ -8,60 +8,59 @@ import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
 import ColorPickerModal from './ColorPickerModal'
 
-function ColorInput({
-  name,
-  color,
-  setColor,
-  className,
-  namespace,
-  required,
-  disabled
-}: {
-  name: string
-  color: string
-  setColor: (value: string) => void
-  className?: string
-  namespace: string | false
+interface ColorInputProps {
+  label: string
+  value: string
+  setValue: (value: string) => void
   required?: boolean
   disabled?: boolean
-}) {
+  className?: string
+  namespace: string | false
+  tKey?: string
+}
+
+function ColorInput({
+  label,
+  value,
+  setValue,
+  required,
+  disabled,
+  className,
+  namespace,
+  tKey
+}: ColorInputProps) {
   const open = useModalStore(state => state.open)
 
-  const inputLabel = useInputLabel(namespace, name)
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   const ref = useRef<HTMLInputElement | null>(null)
 
   const handleColorPickerOpen = useCallback(() => {
     open(ColorPickerModal, {
-      color,
-      setColor
+      value,
+      setValue
     })
-  }, [color])
+  }, [value])
 
   return (
-    <InputWrapper
-      darker
-      className={className}
-      disabled={disabled}
-      inputRef={ref}
-    >
-      <InputIcon active={color !== ''} icon="tabler:palette" />
+    <InputWrapper className={className} disabled={disabled} inputRef={ref}>
+      <InputIcon active={value !== ''} icon="tabler:palette" />
       <div className="flex w-full items-center gap-2">
-        <InputLabel active={!!color} label={inputLabel} required={required} />
+        <InputLabel active={!!value} label={inputLabel} required={required} />
         <div className="mt-6 mr-4 flex w-full items-center gap-2 pl-4">
           <div
             className={`group-focus-within:border-bg-300 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
             style={{
-              backgroundColor: color
+              backgroundColor: value
             }}
           ></div>
           <input
             ref={ref}
             className="focus:placeholder:text-bg-500 h-8 w-full min-w-28 rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden"
             placeholder="#FFFFFF"
-            value={color}
+            value={value}
             onChange={e => {
-              setColor(e.target.value)
+              setValue(e.target.value)
             }}
           />
         </div>

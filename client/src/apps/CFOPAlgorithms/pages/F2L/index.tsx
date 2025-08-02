@@ -207,7 +207,7 @@ function CFOPF2L(): React.ReactElement {
                         key={i}
                         className="shadow-custom component-bg flex w-full items-center gap-6 rounded-md p-4"
                       >
-                        <div className="bg-bg-800/50 rounded-md p-1 pb-2">
+                        <div className="bg-bg-100 shadow-custom dark:bg-bg-800/50 rounded-md p-1 pb-2">
                           <Cube pattern={pattern} />
                         </div>
                         <div className="space-y-2 text-lg font-medium">

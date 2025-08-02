@@ -11,9 +11,8 @@ import FilePickerModal from './FilePickerModal'
 import FILE_ICONS from './FilePickerModal/constants/file_icons'
 
 function FileInput({
-  darker = true,
   icon,
-  name,
+  label,
   reminderText,
   file,
   preview,
@@ -28,9 +27,8 @@ function FileInput({
   defaultAIPrompt = '',
   acceptedMimeTypes
 }: {
-  darker?: boolean
   icon: string
-  name: string
+  label: string
   reminderText?: string
   file: string | File | null
   preview: string | null
@@ -55,7 +53,7 @@ function FileInput({
     'common.buttons'
   ])
 
-  const inputLabel = useInputLabel(namespace, name)
+  const inputLabel = useInputLabel(namespace, label)
 
   const handleFilePickerOpen = useCallback(() => {
     open(FilePickerModal, {
@@ -73,8 +71,7 @@ function FileInput({
   return (
     <div
       className={clsx(
-        'bg-bg-200/50 __file-input shadow-custom flex w-full flex-col rounded-md p-6',
-        darker ? 'component-bg-lighter' : 'component-bg',
+        'bg-bg-200/50 __file-input shadow-custom component-bg-lighter flex w-full flex-col rounded-md p-6',
         disabled ? 'pointer-events-none! opacity-50' : 'cursor-pointer'
       )}
     >

@@ -1,20 +1,21 @@
 import { memo, useRef, useState } from 'react'
 
 import { Button } from '../../buttons'
-import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
 import TextInputBox from './components/TextInputBox'
 
-export interface ITextInputProps {
+export type TextInputProps = {
+  label: string
   icon: string
-  name: string
   placeholder: string
   value: string
   setValue: (value: string) => void
-
+  required?: boolean
+  disabled?: boolean
+  isPassword?: boolean
   inputMode?:
     | 'text'
     | 'none'
@@ -24,58 +25,36 @@ export interface ITextInputProps {
     | 'numeric'
     | 'decimal'
     | 'search'
-  actionButtonIcon?: string
-  actionButtonLoading?: boolean
-  autoFocus?: boolean
+  actionButtonProps?: React.ComponentProps<typeof Button>
   className?: string
-  darker?: boolean
-  disabled?: boolean
-  isPassword?: boolean
-  noAutoComplete?: boolean
-  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  ref?: React.RefObject<HTMLInputElement | null>
-  required?: boolean
   namespace: string | false
   tKey?: string
-}
+} & React.HTMLAttributes<HTMLInputElement>
 
 function TextInput({
-  actionButtonIcon = '',
-  actionButtonLoading = false,
-  className = '',
-  darker = false,
-  disabled = false,
+  label,
   icon,
-  inputMode = 'text',
-  isPassword = false,
-  name,
-  noAutoComplete = true,
-  onActionButtonClick = () => {},
-  onBlur,
-  onKeyDown = () => {},
   placeholder,
-  ref,
-  required,
-  setValue,
   value,
+  setValue,
+  required,
+  disabled,
+  isPassword = false,
+  inputMode = 'text',
+  actionButtonProps,
+  className,
   namespace,
-  tKey
-}: ITextInputProps) {
+  tKey,
+  ...inputProps
+}: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const inputLabel = useInputLabel(namespace, name, tKey)
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   return (
-    <InputWrapper
-      className={className}
-      darker={darker}
-      disabled={disabled}
-      inputRef={inputRef}
-    >
+    <InputWrapper className={className} disabled={disabled} inputRef={inputRef}>
       <InputIcon active={!!value && String(value).length > 0} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
@@ -88,14 +67,11 @@ function TextInput({
           inputMode={inputMode}
           inputRef={inputRef}
           isPassword={isPassword}
-          noAutoComplete={noAutoComplete}
           placeholder={placeholder}
-          reference={ref}
           setValue={setValue}
           showPassword={showPassword}
           value={value}
-          onBlur={onBlur}
-          onKeyDown={onKeyDown}
+          {...inputProps}
         />
         {isPassword && (
           <Button
@@ -116,11 +92,17 @@ function TextInput({
             }}
           />
         )}
-        {actionButtonIcon && (
-          <InputActionButton
-            actionButtonIcon={actionButtonIcon}
-            actionButtonLoading={actionButtonLoading}
-            onActionButtonClick={onActionButtonClick}
+        {actionButtonProps && (
+          <Button
+            className="mr-4 p-2!"
+            variant="plain"
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+
+              actionButtonProps.onClick?.(e)
+            }}
+            {...actionButtonProps}
           />
         )}
       </div>

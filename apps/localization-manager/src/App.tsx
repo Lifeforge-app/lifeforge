@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { usePersonalization } from 'shared'
 
 import MainContent from './pages/MainContent'
+import LocaleManagerProvider from './providers/LocaleManagerProvider'
 import forgeAPI from './utils/forgeAPI'
 
 const LocaleAdmin = () => {
@@ -96,7 +97,11 @@ const LocaleAdmin = () => {
             )
           }
 
-          return <MainContent />
+          return (
+            <LocaleManagerProvider>
+              <MainContent />
+            </LocaleManagerProvider>
+          )
         })()}
       </Suspense>
       <ModalManager />

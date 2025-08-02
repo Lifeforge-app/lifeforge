@@ -33,7 +33,7 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
         </>
       }
       icon="tabler:list"
-      name="image type"
+      label="image type"
       namespace="common.modals"
       setValue={value => {
         updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })

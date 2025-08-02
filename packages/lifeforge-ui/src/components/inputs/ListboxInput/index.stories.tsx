@@ -37,7 +37,7 @@ const OPTIONS = [
 
 export const Default: Story = {
   args: {
-    name: 'Category',
+    label: 'Category',
     icon: 'tabler:category',
     value: '',
     setValue: () => {},
@@ -84,7 +84,7 @@ export const Default: Story = {
 
 export const MultipleSelection: Story = {
   args: {
-    name: 'Category',
+    label: 'Category',
     icon: 'tabler:category',
     value: '',
     namespace: 'namespace',

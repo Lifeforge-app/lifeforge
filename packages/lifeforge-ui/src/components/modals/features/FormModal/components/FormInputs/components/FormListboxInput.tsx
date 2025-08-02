@@ -91,7 +91,7 @@ function FormListboxInput({
       disabled={field.disabled}
       icon={field.icon}
       multiple={!!field.multiple}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
       required={field.required}
       setValue={handleChange}

@@ -3,35 +3,36 @@ import clsx from 'clsx'
 
 import useInputLabel from './shared/hooks/useInputLabel'
 
-function SliderInput({
-  icon,
-  name,
-  min = 0,
-  max = 100,
-  step = 1,
-  value,
-  setValue,
-  className,
-  namespace = false,
-  tKey,
-  disabled = false,
-  required = false
-}: {
+interface SliderInputProps {
+  label: string
   icon: string
-  name: string
-  min?: number
-  max?: number
-  labels?: string[]
-  step?: number
   value: number
   setValue: (value: number) => void
+  required?: boolean
+  disabled?: boolean
+  min?: number
+  max?: number
+  step?: number
   className?: string
   namespace: string | false
   tKey?: string
-  disabled?: boolean
-  required?: boolean
-}) {
-  const inputLabel = useInputLabel(namespace, name, tKey)
+}
+
+function SliderInput({
+  label,
+  icon,
+  value,
+  setValue,
+  required,
+  disabled,
+  min = 0,
+  max = 100,
+  step = 1,
+  className,
+  namespace,
+  tKey
+}: SliderInputProps) {
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   return (
     <div>

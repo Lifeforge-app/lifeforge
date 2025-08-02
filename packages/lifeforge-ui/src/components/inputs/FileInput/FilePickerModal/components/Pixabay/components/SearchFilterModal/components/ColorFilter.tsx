@@ -29,7 +29,7 @@ function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
         </>
       }
       icon="tabler:color-swatch"
-      name="Image Color"
+      label="Image Color"
       namespace="common.modals"
       setValue={value => {
         updateFilters({ type: 'SET_COLORS', payload: value })

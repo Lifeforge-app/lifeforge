@@ -1,55 +1,23 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import React from 'react'
 
 import forgeAPI from '../../utils/forgeAPI'
 
 function CreateEntryModal({
   onClose,
-  data: { target, setLocales, setOldLocales }
+  data: { target }
 }: {
   onClose: () => void
   data: {
     target: [string, string, string]
-    setLocales: React.Dispatch<
-      React.SetStateAction<Record<string, any> | 'loading' | 'error'>
-    >
-    setOldLocales: React.Dispatch<
-      React.SetStateAction<Record<string, any> | 'loading' | 'error'>
-    >
   }
 }) {
+  const queryClient = useQueryClient()
+
   const mutation = useMutation(
     forgeAPI.locales.manager.create.mutationOptions({
-      onSuccess: (_, variables) => {
-        ;[setLocales, setOldLocales].forEach(e =>
-          e(prev => {
-            if (typeof prev === 'string') {
-              return prev
-            }
-
-            const newData = JSON.parse(JSON.stringify(prev))
-
-            for (const lng in newData) {
-              let targetObject = newData[lng]
-
-              const path = target[2].split('.').filter(Boolean)
-
-              for (let i = 0; i < path.length; i++) {
-                if (!targetObject[path[i]]) {
-                  targetObject[path[i]] = {}
-                }
-
-                targetObject = targetObject[path[i]]
-              }
-
-              targetObject[variables.path.split('.').pop()!] =
-                variables.type === 'folder' ? {} : ''
-            }
-
-            return newData
-          })
-        )
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['locales', 'manager'] })
       },
       onError: () => {
         alert('Failed to create entry')
@@ -125,7 +93,7 @@ function CreateEntryModal({
     .onSubmit(async data => {
       const { namespace, subNamespace, parent, type, name } = data
 
-      await mutation.mutate({
+      await mutation.mutateAsync({
         namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
         subnamespace: subNamespace,
         path: [parent, name].filter(Boolean).join('.'),

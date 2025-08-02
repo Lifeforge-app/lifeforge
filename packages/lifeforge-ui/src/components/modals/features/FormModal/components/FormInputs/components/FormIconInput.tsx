@@ -13,11 +13,11 @@ function FormIconInput({
   return (
     <IconInput
       disabled={field.disabled}
-      icon={selectedData}
-      name={field.label}
+      value={selectedData}
+      label={field.label}
       namespace={namespace}
       required={field.required}
-      setIcon={handleChange}
+      setValue={handleChange}
     />
   )
 }

@@ -33,7 +33,7 @@ function InputLabel({
   return (
     <span
       className={clsx(
-        'text-bg-400 dark:text-bg-600 group-focus-within:text-custom-500! group-data-open:text-custom-500! pointer-events-none absolute left-[4.2rem] font-medium tracking-wide transition-all',
+        'text-bg-500 group-focus-within:text-custom-500! group-data-open:text-custom-500! pointer-events-none absolute left-[4.2rem] font-medium tracking-wide transition-all',
         focused && 'text-custom-500',
         labelPositionClasses
       )}

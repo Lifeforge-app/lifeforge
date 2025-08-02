@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:rotate',
-    name: 'Slider Input',
+    label: 'Slider Input',
     namespace: false,
     value: 0,
     required: true,
