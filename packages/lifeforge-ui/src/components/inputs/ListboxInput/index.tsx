@@ -8,36 +8,38 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOptions from './components/ListboxOptions'
 
-function ListboxInput<T>({
-  name,
-  icon,
-  value,
-  setValue,
-  disabled = false,
-  className = '',
-  children,
-  customActive,
-  required = false,
-  namespace = false,
-  tKey = '',
-  buttonContent,
-  multiple = false
-}: {
-  name: string
+interface ListboxInputProps<T> {
+  label: string
   icon: string
   value: T
   setValue: (value: T) => void
+  required?: boolean
   disabled?: boolean
+  multiple?: boolean
   className?: string
   children: React.ReactNode
   customActive?: boolean
-  required?: boolean
+  buttonContent: React.ReactElement
   namespace: string | false
   tKey?: string
-  buttonContent: React.ReactElement
-  multiple?: boolean
-}) {
-  const inputLabel = useInputLabel(namespace, name, tKey)
+}
+
+function ListboxInput<T>({
+  label,
+  icon,
+  value,
+  setValue,
+  required,
+  disabled,
+  multiple,
+  className,
+  children,
+  customActive,
+  buttonContent,
+  namespace,
+  tKey
+}: ListboxInputProps<T>) {
+  const inputLabel = useInputLabel(namespace, label, tKey)
 
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {

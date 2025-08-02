@@ -19,21 +19,21 @@ function checkContrast(hexColor: string): string {
 }
 
 function ColorPickerModal({
-  data: { color, setColor },
+  data: { value, setValue },
   onClose
 }: {
   data: {
-    color: string
-    setColor: (color: string) => void
+    value: string
+    setValue: (color: string) => void
   }
   onClose: () => void
 }) {
   const open = useModalStore(state => state.open)
 
-  const [innerColor, setInnerColor] = useState(color.toLowerCase() || '#000000')
+  const [innerColor, setInnerColor] = useState(value.toLowerCase() || '#000000')
 
   const confirmColor = () => {
-    setColor(innerColor)
+    setValue(innerColor)
     onClose()
   }
 
@@ -58,8 +58,8 @@ function ColorPickerModal({
   )
 
   useEffect(() => {
-    setInnerColor(color.toLowerCase() || '#000000')
-  }, [color])
+    setInnerColor(value.toLowerCase() || '#000000')
+  }, [value])
 
   return (
     <div className="sm:min-w-[28rem]!">

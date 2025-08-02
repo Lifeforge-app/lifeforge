@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    location: null,
-    setLocation: () => {},
+    value: null,
+    setValue: () => {},
     namespace: 'namespace'
   },
   render: args => {
@@ -23,11 +23,7 @@ export const Default: Story = {
 
     return (
       <div className="w-[50vw]">
-        <LocationInput
-          {...args}
-          location={location}
-          setLocation={setLocation}
-        />
+        <LocationInput {...args} setValue={setLocation} value={location} />
       </div>
     )
   }

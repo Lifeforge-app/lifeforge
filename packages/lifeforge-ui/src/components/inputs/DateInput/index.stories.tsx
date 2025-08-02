@@ -13,15 +13,15 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    date: new Date(),
-    setDate: () => {},
-    name: 'Date',
+    value: new Date(),
+    setValue: () => {},
+    label: 'Date',
     icon: 'tabler:calendar',
     namespace: false
   },
   render: args => {
-    const [date, setDate] = useState(args.date)
+    const [date, setDate] = useState(args.value)
 
-    return <DateInput darker {...args} date={date} setDate={setDate} />
+    return <DateInput {...args} setValue={setDate} value={date} />
   }
 }

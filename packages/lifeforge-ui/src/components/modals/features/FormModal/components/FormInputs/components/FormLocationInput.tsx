@@ -14,10 +14,10 @@ function FormLocationInput({
     <LocationInput
       disabled={field.disabled}
       label={field.label}
-      location={selectedData}
+      value={selectedData}
       namespace={namespace}
       required={field.required}
-      setLocation={value => handleChange(value)}
+      setValue={value => handleChange(value)}
     />
   )
 }

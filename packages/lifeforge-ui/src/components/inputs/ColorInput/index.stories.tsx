@@ -13,9 +13,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    name: 'name',
-    color: '',
-    setColor: () => {},
+    label: 'name',
+    value: '',
+    setValue: () => {},
     namespace: 'namespace'
   },
   render: args => {
@@ -23,7 +23,7 @@ export const Default: Story = {
 
     return (
       <div className="flex h-screen w-screen items-center justify-center">
-        <Index {...args} color={color} setColor={setColor} />
+        <Index {...args} value={color} setValue={setColor} />
       </div>
     )
   }

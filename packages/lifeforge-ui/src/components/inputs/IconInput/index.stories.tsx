@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Index from './index'
 
 const meta = {
-    component: Index
+  component: Index
 } satisfies Meta<typeof Index>
 
 export default meta
@@ -12,17 +12,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-    args: {
-        name: 'name',
-        icon: 'tabler:cube',
-        setIcon: () => {},
-        namespace: 'namespace'
-    },
-    render: args => {
-        const [icon, setIcon] = useState(args.icon)
+  args: {
+    label: 'name',
+    value: 'tabler:cube',
+    setValue: () => {},
+    namespace: 'namespace'
+  },
+  render: args => {
+    const [icon, setIcon] = useState(args.value)
 
-        return (
-            <Index {...args} disabled={false} icon={icon} setIcon={setIcon} />
-        )
-    }
+    return <Index {...args} disabled={false} value={icon} setValue={setIcon} />
+  }
 }

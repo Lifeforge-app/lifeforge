@@ -14,12 +14,11 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:text-size',
-    name: 'Description',
+    label: 'Description',
     placeholder: 'Something amazing about yourself...',
     value: '',
     setValue: () => {},
-    namespace: false,
-    darker: true
+    namespace: false
   },
   render: args => {
     const [value, setValue] = useState(args.value)

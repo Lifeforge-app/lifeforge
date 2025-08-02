@@ -53,7 +53,6 @@ type TextFieldProps = BaseFieldProps & {
 type NumberFieldProps = BaseFieldProps & {
   type: 'number'
   icon: string
-  placeholder: string
   __formDataType: number
   __finalDataType: number
 }

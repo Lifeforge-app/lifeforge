@@ -24,7 +24,7 @@ function FormFileInput({
       enableUrl={field.enableUrl}
       file={selectedData.file}
       icon={field.icon}
-      name={field.label}
+      label={field.label}
       namespace={namespace}
       preview={selectedData.preview}
       required={field.required}
