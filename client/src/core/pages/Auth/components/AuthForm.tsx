@@ -29,7 +29,7 @@ function AuthForm({ providers }: { providers: string[] }) {
 
   const INPUT_FIELDS = [
     {
-      name: t('inputs.emailOrUsername.label'),
+      label: t('inputs.emailOrUsername.label'),
       placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
       icon: 'tabler:user',
       value: emailOrUsername,
@@ -37,7 +37,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       inputMode: 'email'
     },
     {
-      name: t('inputs.password.label'),
+      label: t('inputs.password.label'),
       placeholder: '••••••••••••••••',
       icon: 'tabler:key',
       value: password,
@@ -119,9 +119,8 @@ function AuthForm({ providers }: { providers: string[] }) {
         <TextInput
           key={index}
           {...input}
-          darker
           disabled={formDisabled}
-          isPassword={input.name === 'Password'}
+          isPassword={input.label === 'Password'}
           namespace={false}
           onKeyDown={onInputKeyDown}
         />

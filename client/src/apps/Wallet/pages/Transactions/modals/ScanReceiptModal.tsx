@@ -74,7 +74,7 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
         }}
         file={file}
         icon="tabler:receipt"
-        name="receipt"
+        label="receipt"
         namespace="apps.wallet"
         preview={preview}
         setData={({ file, preview }) => {

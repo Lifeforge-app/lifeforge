@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { Button, TextInput } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -15,10 +15,6 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
   const [newPassword, setNewPassword] = useState<string>('')
 
   const [confirmPassword, setConfirmPassword] = useState<string>('')
-
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const inputRef2 = useRef<HTMLInputElement>(null)
 
   function confirmAction(): void {
     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
@@ -40,6 +36,28 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
     })
   }
 
+  function generateRandomPassword(): void {
+    const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
+
+    const special = '!@#$%^&*()_+'
+
+    const numbers = '0123456789'
+
+    const all = upperCase + lowerCase + numbers + special
+
+    let password = ''
+
+    for (let i = 0; i < 12; i++) {
+      password += all[Math.floor(Math.random() * all.length)]
+    }
+    setNewPassword(password)
+    setConfirmPassword(password)
+
+    toast.success('Random password generated successfully')
+  }
+
   return (
     <>
       <div className="flex-center size-full flex-1 flex-col gap-3">
@@ -52,50 +70,26 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
         </p>
         <TextInput
           key="newPassword"
-          ref={inputRef}
-          darker
           isPassword
-          noAutoComplete
-          actionButtonIcon="tabler:dice"
+          actionButtonProps={{
+            icon: 'tabler:dice',
+            onClick: generateRandomPassword
+          }}
           className="w-1/2"
           icon="tabler:lock"
-          name="New Password"
+          label="New Password"
           namespace="common.vault"
           placeholder="••••••••••••••••"
           setValue={setNewPassword}
           tKey="vault"
           value={newPassword}
-          onActionButtonClick={() => {
-            const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-            const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
-
-            const special = '!@#$%^&*()_+'
-
-            const numbers = '0123456789'
-
-            const all = upperCase + lowerCase + numbers + special
-
-            let password = ''
-
-            for (let i = 0; i < 12; i++) {
-              password += all[Math.floor(Math.random() * all.length)]
-            }
-            setNewPassword(password)
-            setConfirmPassword(password)
-
-            toast.success('Random password generated successfully')
-          }}
         />
         <TextInput
           key="confirmPassword"
-          ref={inputRef2}
-          darker
           isPassword
-          noAutoComplete
           className="w-1/2"
           icon="tabler:lock-check"
-          name="Confirm Password"
+          label="Confirm Password"
           namespace="common.vault"
           placeholder="••••••••••••••••"
           setValue={setConfirmPassword}

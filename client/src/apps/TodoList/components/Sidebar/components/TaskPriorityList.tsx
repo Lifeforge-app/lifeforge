@@ -30,7 +30,7 @@ function TaskPriorityList({
       <SidebarTitle
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={handleCreatePriority}
-        name="priorities"
+        label="priorities"
         namespace="apps.todoList"
       />
       <QueryWrapper query={prioritiesQuery}>

@@ -222,12 +222,10 @@ function ModifyTaskDrawer() {
           </div>
           <div className="space-y-3">
             <TextInput
-              ref={summaryInputRef}
-              darker
               required
               className="w-full"
               icon="tabler:abc"
-              name="Summary"
+              label="Summary"
               namespace="apps.todoList"
               placeholder="An urgent task"
               setValue={setSummary}
@@ -250,21 +248,19 @@ function ModifyTaskDrawer() {
               />
             </div>
             <DateInput
-              darker
-              date={dueDate}
               hasTime={dueDateHasTime}
               icon="tabler:calendar"
-              name="Due date"
+              label="Due date"
               namespace="apps.todoList"
-              setDate={setDueDate}
+              setValue={setDueDate}
+              value={dueDate}
             />
             <PrioritySelector priority={priority} setPriority={setPriority} />
             <ListSelector list={list} setList={setList} />
             <TagsSelector setTags={setTags} tags={tags} />
             <TextAreaInput
-              darker
               icon="tabler:pencil"
-              name="Notes"
+              label="Notes"
               namespace="apps.todoList"
               placeholder="Add notes here..."
               setValue={setNotes}

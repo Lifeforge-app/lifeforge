@@ -84,7 +84,7 @@ function TaskListListItem({
         </>
       }
       icon={item.icon}
-      name={item.name}
+      label={item.name}
       number={item.amount}
       sideStripColor={item.color}
       onCancelButtonClick={() => {

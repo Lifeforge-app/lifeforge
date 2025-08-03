@@ -30,7 +30,7 @@ function TaskListList({
       <SidebarTitle
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={handleCreateList}
-        name="lists"
+        label="lists"
         namespace="apps.todoList"
       />
       <QueryWrapper query={listsQuery}>

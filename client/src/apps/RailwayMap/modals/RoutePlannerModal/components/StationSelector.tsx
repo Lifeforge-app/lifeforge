@@ -33,7 +33,7 @@ function StationSelector({
       className={className}
       displayValue={value => formatStationDisplay(stations, value)}
       icon={icon}
-      name={name}
+      label={name}
       namespace={namespace}
       setQuery={setQuery}
       setValue={setValue}

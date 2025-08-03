@@ -7,14 +7,14 @@ import { Link, useLocation } from 'react-router'
 import { useSidebarState } from 'shared'
 
 function SidebarSubsectionItem({
-  subsectionName,
+  subsectionLabel,
   icon,
-  name,
+  label,
   path
 }: {
-  subsectionName: string
+  subsectionLabel: string
   icon: string | React.ReactElement
-  name: string
+  label: string
   path: string
 }) {
   const location = useLocation()
@@ -25,14 +25,15 @@ function SidebarSubsectionItem({
 
   const locationDependentStyles = useMemo(
     () =>
-      location.pathname.split('/').slice(1)[0] === _.kebabCase(name) &&
+      location.pathname.split('/').slice(1)[0] === _.kebabCase(label) &&
       (location.pathname.split('/').slice(1)[1] === path ||
-        (location.pathname.replace(_.kebabCase(name), '').replace(/\//g, '') ===
-          '' &&
-          subsectionName === 'Dashboard'))
+        (location.pathname
+          .replace(_.kebabCase(label), '')
+          .replace(/\//g, '') === '' &&
+          subsectionLabel === 'Dashboard'))
         ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800'
         : 'text-bg-500',
-    [name, path, subsectionName, location.pathname]
+    [name, path, subsectionLabel, location.pathname]
   )
 
   const handleClick = useCallback(() => {
@@ -43,14 +44,14 @@ function SidebarSubsectionItem({
 
   return (
     <Link
-      key={subsectionName}
+      key={subsectionLabel}
       className={clsx(
         'hover:bg-bg-100/50 dark:hover:bg-bg-800/50 mx-4 flex w-full items-center gap-3 rounded-lg py-4 font-medium transition-all',
         !sidebarExpanded ? 'justify-center' : '',
         sidebarExpanded ? 'pl-[3.8rem]' : 'px-2',
         locationDependentStyles
       )}
-      to={`./${_.kebabCase(name)}/${path}`}
+      to={`./${_.kebabCase(label)}/${path}`}
       onClick={handleClick}
     >
       <div className="flex size-7 items-center justify-center">
@@ -64,8 +65,8 @@ function SidebarSubsectionItem({
       {sidebarExpanded && (
         <span className="w-full truncate pr-4">
           {t(
-            `apps.${_.camelCase(name)}.subsections.${_.camelCase(
-              subsectionName
+            `apps.${_.camelCase(label)}.subsections.${_.camelCase(
+              subsectionLabel
             )}`
           )}{' '}
         </span>

@@ -93,11 +93,10 @@ function CurrencyConverter() {
         title="Currency Converter"
       />
       <CurrencyInput
-        darker
         required
         className="mb-6"
         icon="tabler:cash"
-        name="Amount"
+        label="Amount"
         namespace="apps.currencyConverter"
         placeholder="0.00"
         setValue={setAmount}

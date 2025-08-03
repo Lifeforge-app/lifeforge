@@ -73,12 +73,10 @@ function LockedScreen({
         {t(`vault.passwordRequired`)}
       </p>
       <TextInput
-        darker
         isPassword
-        noAutoComplete
         className="w-full md:w-3/4 xl:w-1/2"
         icon="tabler:lock"
-        name="Master Password"
+        label="Master Password"
         namespace="common.vault"
         placeholder={'••••••••••••••••'}
         setValue={setMasterPassWordInputContent}

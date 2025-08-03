@@ -78,7 +78,7 @@ function CalendarListItem({
     <SidebarItem
       active={isSelected}
       hamburgerMenuItems={hamburgerMenuItems}
-      name={item.name}
+      label={item.name}
       sideStripColor={item.color}
       onCancelButtonClick={onCancelSelect}
       onClick={handleClick}

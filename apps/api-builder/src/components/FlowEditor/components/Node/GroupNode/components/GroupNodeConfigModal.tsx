@@ -29,7 +29,6 @@ function GroupNodeConfigModal({
         onClose={onClose}
       />
       <TextInput
-        darker
         className="mb-4"
         icon="tabler:article"
         name="Group Name"

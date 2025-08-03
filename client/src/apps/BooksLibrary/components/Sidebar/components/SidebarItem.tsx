@@ -103,7 +103,7 @@ function _SidebarItem({
           ) : undefined
         }
         icon={'icon' in item ? item.icon : fallbackIcon}
-        name={item.name}
+        label={item.name}
         number={item.amount}
         onCancelButtonClick={() => {
           searchParams.delete(singleStuff)

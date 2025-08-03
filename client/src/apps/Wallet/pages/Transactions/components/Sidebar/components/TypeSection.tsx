@@ -19,13 +19,13 @@ function TypeSection() {
 
   return (
     <>
-      <SidebarTitle name={t('sidebar.transactionTypes')} />
+      <SidebarTitle label={t('sidebar.transactionTypes')} />
       {TYPES.map(([icon, name]) => (
         <TypeSectionItem
           key={name}
           amount={typesCountQuery.data?.[name.toLowerCase()]?.transactionCount}
           icon={icon}
-          name={name}
+          label={name}
         />
       ))}
     </>

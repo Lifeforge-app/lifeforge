@@ -5,12 +5,12 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 function AssetsSectionItem({
   icon,
-  name,
+  label,
   id,
   amount
 }: {
   icon: string
-  name: string
+  label: string
   id: string | null
   amount: number | undefined
 }) {
@@ -35,7 +35,7 @@ function AssetsSectionItem({
     <SidebarItem
       active={selectedAsset === id || (selectedAsset === null && id === null)}
       icon={icon}
-      name={name}
+      label={label}
       number={amount}
       onCancelButtonClick={id !== null ? handleCancelButtonClick : undefined}
       onClick={handleClick}

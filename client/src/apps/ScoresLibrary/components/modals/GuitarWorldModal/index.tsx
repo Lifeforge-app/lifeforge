@@ -42,9 +42,8 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
       {!finalCookie ? (
         <>
           <TextInput
-            darker
             icon="tabler:cookie"
-            name="cookie"
+            label="cookie"
             namespace="apps.scoresLibrary"
             placeholder="Cookie from Guitar World"
             setValue={setCookie}
