@@ -50,7 +50,7 @@ function CalendarList({
           <SidebarTitle
             actionButtonIcon="tabler:plus"
             actionButtonOnClick={handleCreate}
-            name="Calendars"
+            label="Calendars"
             namespace="apps.calendar"
           />
           {calendars.length > 0 ? (

@@ -30,7 +30,7 @@ function Switch({
       checked={checked}
       className={clsx(
         'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full',
-        checked ? 'bg-custom-500' : 'darker-component-bg-with-hover'
+        checked ? 'bg-custom-500' : '-component-bg-with-hover'
       )}
       onChange={onChange}
     >

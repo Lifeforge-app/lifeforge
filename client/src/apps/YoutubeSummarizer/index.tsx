@@ -90,7 +90,7 @@ function YoutubeSummarizer() {
       <TextInput
         disabled={summarizeLoading}
         icon="tabler:link"
-        name="video URL"
+        label="video URL"
         namespace="apps.youtubeSummarizer"
         placeholder="https://www.youtube.com/watch?v=..."
         setValue={setVideoUrl}

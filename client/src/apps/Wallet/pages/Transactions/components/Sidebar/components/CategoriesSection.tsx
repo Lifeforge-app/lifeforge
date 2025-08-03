@@ -57,7 +57,7 @@ function CategoriesSection() {
       <SidebarTitle
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={handleActionButtonClick}
-        name={t('sidebar.categories')}
+        label={t('sidebar.categories')}
       />
       <QueryWrapper query={categoriesQuery}>
         {() => (
@@ -69,7 +69,7 @@ function CategoriesSection() {
                 color={color}
                 icon={icon}
                 id={id}
-                name={name}
+                label={name}
                 type={type}
               />
             ))}

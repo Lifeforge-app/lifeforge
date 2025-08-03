@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 
 function DetailItem({
   icon,
-  name,
+  label,
   vertical = false,
   children
 }: {
   icon: string
-  name: string
+  label: string
   vertical?: boolean
   children: React.ReactElement
 }) {
@@ -25,7 +25,7 @@ function DetailItem({
       <div className="text-bg-500 flex items-center gap-3">
         <Icon className="size-6 shrink-0" icon={icon} />
         <h3 className="text-lg font-medium whitespace-nowrap">
-          {t(`inputs.${name}`)}
+          {t(`inputs.${label}`)}
         </h3>
       </div>
       {children}

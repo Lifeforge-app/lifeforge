@@ -122,7 +122,6 @@ function LineItem({
                 className="border-bg-200 dark:border-bg-800 space-y-2 rounded-md border-2 p-4"
               >
                 <NumberInput
-                  darker
                   className="w-full"
                   icon="tabler:square-letter-x"
                   name="X Coordinate"
@@ -144,7 +143,6 @@ function LineItem({
                   value={point[0]}
                 />
                 <NumberInput
-                  darker
                   className="w-full"
                   icon="tabler:square-letter-y"
                   name="Y Coordinate"

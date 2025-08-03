@@ -16,21 +16,21 @@ export default {
   icon: <IconCurrencyDollar />,
   hasAI: true,
   subsection: [
-    { name: 'Dashboard', icon: <IconDashboard />, path: '' },
+    { label: 'Dashboard', icon: <IconDashboard />, path: '' },
     {
-      name: 'Transactions',
+      label: 'Transactions',
       icon: <IconArrowsExchange />,
       path: 'transactions'
     },
-    { name: 'Assets', icon: <IconWallet />, path: 'assets' },
-    { name: 'Ledgers', icon: <IconBook />, path: 'ledgers' },
+    { label: 'Assets', icon: <IconWallet />, path: 'assets' },
+    { label: 'Ledgers', icon: <IconBook />, path: 'ledgers' },
     {
-      name: 'Spending Heatmap',
+      label: 'Spending Heatmap',
       icon: <IconMapPin />,
       path: 'spending-heatmap'
     },
     {
-      name: 'Financial Statements',
+      label: 'Financial Statements',
       icon: <IconFileText />,
       path: 'statements'
     }

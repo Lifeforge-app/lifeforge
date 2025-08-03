@@ -85,7 +85,7 @@ function TaskTagListItem({
         </>
       }
       icon="tabler:hash"
-      name={item.name}
+      label={item.name}
       number={item.amount}
       onCancelButtonClick={() => {
         searchParams.delete('tag')

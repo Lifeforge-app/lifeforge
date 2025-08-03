@@ -100,7 +100,6 @@ function StationItem({
       {!collapsed && (
         <div className="mt-4 space-y-3">
           <TagsInput
-            darker
             icon="tabler:code"
             name="Station Codes"
             namespace={false}
@@ -259,7 +258,6 @@ function StationItem({
             ))}
           </ListboxInput>
           <TextInput
-            darker
             className="flex-1"
             icon="tabler:map-pin"
             name="Station Name"
@@ -279,7 +277,6 @@ function StationItem({
             value={station.name}
           />
           <NumberInput
-            darker
             className="flex-1"
             icon="tabler:square-letter-x"
             name="X Coordinate"
@@ -299,7 +296,6 @@ function StationItem({
             value={station.x}
           />
           <NumberInput
-            darker
             className="flex-1"
             icon="tabler:square-letter-y"
             name="Y Coordinate"
@@ -321,7 +317,6 @@ function StationItem({
           {station.type === 'interchange' && (
             <>
               <NumberInput
-                darker
                 className="flex-1"
                 icon="tabler:arrows-horizontal"
                 name="Width"
@@ -341,7 +336,6 @@ function StationItem({
                 value={station.width}
               />
               <NumberInput
-                darker
                 className="flex-1"
                 icon="tabler:arrows-vertical"
                 name="Height"
@@ -361,7 +355,6 @@ function StationItem({
                 value={station.height ?? 1}
               />
               <NumberInput
-                darker
                 className="flex-1"
                 icon="tabler:rotate-2"
                 name="Rotation"

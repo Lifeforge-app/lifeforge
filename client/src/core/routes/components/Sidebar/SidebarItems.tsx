@@ -55,14 +55,14 @@ function SidebarItems({ query }: { query: string }) {
               <Fragment key={`section-${item.title || item.items[0].name}`}>
                 {item.title !== '' &&
                   filteredModules.length > 0 &&
-                  sidebarExpanded && <SidebarTitle name={item.title} />}
+                  sidebarExpanded && <SidebarTitle label={item.title} />}
                 {filteredModules.map(subItem => (
                   <SidebarItem
                     key={_.kebabCase(subItem.name)}
                     autoActive
                     isMainSidebarItem
                     icon={subItem.icon ?? ''}
-                    name={subItem.name.replace('-', ' ')}
+                    label={subItem.name.replace('-', ' ')}
                     showAIIcon={subItem.hasAI === true}
                     sidebarExpanded={sidebarExpanded}
                     subsection={subItem.subsection}

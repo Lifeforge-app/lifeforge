@@ -65,7 +65,6 @@ export default function EditSchemaNodeModal({
       />
       <div>
         <TextInput
-          darker
           icon="tabler:braces"
           name="Schema Name"
           namespace="core.apiBuilder"
@@ -83,7 +82,6 @@ export default function EditSchemaNodeModal({
             <div className="w-full space-y-3">
               <div className="flex items-center gap-3">
                 <TextInput
-                  darker
                   className="flex-1"
                   icon="tabler:id"
                   name="Field Name"

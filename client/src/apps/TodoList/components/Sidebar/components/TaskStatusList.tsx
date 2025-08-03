@@ -31,7 +31,7 @@ function TaskStatusList({
               }
               autoActive={false}
               icon={icon}
-              name={name}
+              label={name}
               namespace="apps.todoList"
               number={
                 statusCounter[name.toLowerCase() as keyof typeof statusCounter]

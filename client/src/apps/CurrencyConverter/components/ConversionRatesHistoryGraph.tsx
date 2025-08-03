@@ -155,7 +155,7 @@ export default function ConversionRatesHistoryGraph() {
           }
           className="w-full sm:w-1/2"
           icon="tabler:arrow-up"
-          name="From"
+          label="From"
           namespace="apps.currencyConverter"
           setValue={setFromCurrency}
           value={fromCurrency}
@@ -196,7 +196,7 @@ export default function ConversionRatesHistoryGraph() {
           }
           className="w-full sm:w-1/2"
           icon="tabler:arrow-down"
-          name="To"
+          label="To"
           namespace="apps.currencyConverter"
           setValue={setToCurrency}
           value={toCurrency}

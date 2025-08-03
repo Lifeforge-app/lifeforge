@@ -58,11 +58,10 @@ function ContentContainer({
         enabled ? (
           <div className="space-y-4">
             <TextInput
-              darker
               required
               icon="tabler:mail"
               inputMode="email"
-              name="Kindle Email"
+              label="Kindle Email"
               namespace="apps.booksLibrary"
               placeholder="johndoe@kindle.com"
               setValue={setKindleEmail}

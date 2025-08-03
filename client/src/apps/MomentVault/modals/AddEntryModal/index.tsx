@@ -93,7 +93,7 @@ function AddEntryModal({
             </>
           }
           icon="tabler:apps"
-          name="Entry Type"
+          label="Entry Type"
           namespace="apps.momentVault"
           setValue={setInnerOpenType}
           value={innerOpenType}

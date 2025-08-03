@@ -52,7 +52,7 @@ function CategoryList({
           <SidebarTitle
             actionButtonIcon="tabler:plus"
             actionButtonOnClick={handleCreate}
-            name="Categories"
+            label="Categories"
             namespace="apps.calendar"
           />
           {[...categories, ...Object.keys(INTERNAL_CATEGORIES)].length > 0 ? (

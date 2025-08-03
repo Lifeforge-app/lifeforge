@@ -119,7 +119,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
             </>
           }
           icon="tabler:apps"
-          name="Provider"
+          label="Provider"
           namespace="apps.wishlist"
           setValue={setProvider}
           value={provider}
@@ -135,9 +135,8 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
           ))}
         </ListboxInput>
         <TextInput
-          darker
           icon="tabler:link"
-          name="Product URL"
+          label="Product URL"
           namespace="apps.wishlist"
           placeholder={
             provider === 'shopee'

@@ -30,7 +30,7 @@
   }
 }
 
-@utility darker-component-bg-with-hover {
+@utility -component-bg-with-hover {
   @apply bg-bg-200 dark:bg-bg-800/50 hover:bg-bg-200 dark:hover:bg-bg-800/80 transition-all;
 
   .has-bg-image & {

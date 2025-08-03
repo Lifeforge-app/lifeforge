@@ -26,7 +26,7 @@ function TagsSelector({
         </span>
       }
       icon="tabler:tags"
-      name="tags"
+      label="tags"
       namespace="apps.todoList"
       setValue={setTags}
       value={tags}

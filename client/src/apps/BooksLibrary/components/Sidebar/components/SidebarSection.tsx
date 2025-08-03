@@ -47,7 +47,7 @@ function SidebarSection({
   return (
     <>
       <SidebarTitle
-        name={stuff}
+        label={stuff}
         namespace="apps.booksLibrary"
         {...(hasActionButton
           ? {

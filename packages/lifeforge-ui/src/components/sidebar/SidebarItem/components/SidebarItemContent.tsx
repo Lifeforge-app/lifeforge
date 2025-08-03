@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 function SidebarItemContent({
-  name,
+  label,
   sidebarExpanded,
   isMainSidebarItem,
   hasAI,
@@ -17,7 +17,7 @@ function SidebarItemContent({
   namespace,
   needTranslate
 }: {
-  name: string
+  label: string
   sidebarExpanded: boolean
   isMainSidebarItem: boolean
   hasAI: boolean
@@ -40,8 +40,8 @@ function SidebarItemContent({
             return (
               <div className="block w-full min-w-0 truncate">
                 {needTranslate
-                  ? t([`${namespace}:sidebar.${_.camelCase(name)}`, name])
-                  : name}
+                  ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
+                  : label}
               </div>
             )
           }
@@ -50,7 +50,7 @@ function SidebarItemContent({
             sidebarExpanded && (
               <span className="flex-between flex w-full gap-2 truncate">
                 <span className="max-w-48 min-w-0 truncate">
-                  {t(`common.sidebar:apps.${_.camelCase(name)}.title`)}
+                  {t(`common.sidebar:apps.${_.camelCase(label)}.title`)}
                 </span>
                 {hasAI && (
                   <Icon

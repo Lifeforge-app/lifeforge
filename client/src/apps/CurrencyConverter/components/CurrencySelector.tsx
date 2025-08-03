@@ -32,7 +32,7 @@ function CurrencySelector({
             return currency ? `${currency.code} - ${currency.name}` : ''
           }}
           icon="tabler:arrow-up"
-          name="From"
+          label="From"
           namespace="apps.currencyConverter"
           setQuery={setQueries.from}
           setValue={setFromCurrency}
@@ -62,7 +62,7 @@ function CurrencySelector({
             return currency ? `${currency.code} - ${currency.name}` : ''
           }}
           icon="tabler:arrow-down"
-          name="To"
+          label="To"
           namespace="apps.currencyConverter"
           setQuery={setQueries.to}
           setValue={setToCurrency}

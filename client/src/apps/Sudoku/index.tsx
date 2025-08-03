@@ -67,7 +67,7 @@ function Sudoku() {
           </span>
         }
         icon="tabler:category"
-        name="difficulty"
+        label="difficulty"
         namespace="apps.sudoku"
         setValue={setDifficulty}
         value={difficulty}

@@ -62,7 +62,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           }}
           file={file}
           icon="tabler:photo"
-          name="image"
+          label="image"
           namespace="apps.calendar"
           preview={preview}
           setData={({ file, preview }) => {

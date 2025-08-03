@@ -8,7 +8,7 @@ import ItemCount from './components/ItemCount'
 
 function TagItem({
   id,
-  name,
+  label,
   icon,
   color,
   amount,
@@ -17,7 +17,7 @@ function TagItem({
   onUpdate
 }: {
   id: string
-  name: string
+  label: string
   icon: string
   color: string
   amount: number
@@ -41,15 +41,15 @@ function TagItem({
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
-        onSelect(name)
+        onSelect(label)
       }
     },
-    [name]
+    [label]
   )
 
   const handleClick = useCallback(() => {
-    onSelect(name)
-  }, [name])
+    onSelect(label)
+  }, [label])
 
   const handleUpdate = useCallback(() => {
     onUpdate(id)
@@ -78,7 +78,7 @@ function TagItem({
           }}
         />
       )}
-      <span className="shrink-0 text-sm">{name}</span>
+      <span className="shrink-0 text-sm">{label}</span>
       <ItemCount isSelected={isSelected} tagColor={color} tagCount={amount} />
       <HamburgerButton
         isSelected={isSelected}

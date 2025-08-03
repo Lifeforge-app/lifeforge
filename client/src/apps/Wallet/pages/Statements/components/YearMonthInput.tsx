@@ -63,7 +63,7 @@ function YearMonthInput({
         }
         className="w-full sm:w-1/2"
         icon="tabler:calendar-month"
-        name="Month"
+        label="Month"
         namespace="apps.wallet"
         setValue={setMonth}
         value={month}
@@ -84,7 +84,7 @@ function YearMonthInput({
         }
         className="w-full sm:w-1/2"
         icon="tabler:calendar"
-        name="Year"
+        label="Year"
         namespace="apps.wallet"
         setValue={setYear}
         value={year}

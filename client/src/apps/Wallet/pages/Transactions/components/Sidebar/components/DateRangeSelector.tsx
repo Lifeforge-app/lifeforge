@@ -58,25 +58,24 @@ function DateRangeSelector() {
 
   return (
     <>
-      <SidebarTitle name={t('sidebar.dateRange')} />
+      <SidebarTitle label={t('sidebar.dateRange')} />
       <div className="px-4">
         {dateInputsConfig.map(({ type, icon, name }, idx) => (
           <DateInput
             key={type}
-            darker
             className={clsx('w-full', idx === 1 ? 'mt-4!' : 'mt-0')}
-            date={
+            icon={icon}
+            label={name}
+            namespace="apps.wallet"
+            setValue={date => {
+              handleDateChange(date, type)
+            }}
+            value={
               (type === 'start_date' ? startDate : endDate) !== null &&
               dayjs(type === 'start_date' ? startDate : endDate).isValid()
                 ? dayjs(type === 'start_date' ? startDate : endDate).toDate()
                 : null
             }
-            icon={icon}
-            name={name}
-            namespace="apps.wallet"
-            setDate={date => {
-              handleDateChange(date, type)
-            }}
           />
         ))}
       </div>

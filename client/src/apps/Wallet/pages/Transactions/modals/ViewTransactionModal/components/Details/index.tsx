@@ -18,7 +18,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
 
   return (
     <div className="mt-6 space-y-3">
-      <DetailItem icon="tabler:exchange" name="transactionType">
+      <DetailItem icon="tabler:exchange" label="transactionType">
         <p className="flex items-center gap-1">
           <Icon
             className={clsx('size-5', {
@@ -37,7 +37,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
           {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
         </p>
       </DetailItem>
-      <DetailItem icon="tabler:calendar" name="date">
+      <DetailItem icon="tabler:calendar" label="date">
         <p className="text-center">
           {dayjs(transaction.date).format('dddd, D MMM YYYY')}
         </p>
@@ -49,7 +49,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
           )
 
           return (
-            <DetailItem icon="tabler:category" name="category">
+            <DetailItem icon="tabler:category" label="category">
               <p className="flex items-center gap-1">
                 <Icon
                   className="size-6"
@@ -74,7 +74,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
             )
 
             return (
-              <DetailItem icon="tabler:exchange" name="asset">
+              <DetailItem icon="tabler:exchange" label="asset">
                 <div className="flex min-w-0 items-center gap-1">
                   <div className="flex items-center gap-1">
                     <Icon className="size-6 shrink-0" icon={fromAsset!.icon} />
@@ -100,7 +100,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
             )
 
             return (
-              <DetailItem icon="tabler:wallet" name="asset">
+              <DetailItem icon="tabler:wallet" label="asset">
                 <div className="flex items-center gap-1">
                   <Icon className="size-6 shrink-0" icon={asset!.icon} />
                   <p className="w-full max-w-96 truncate">{asset!.name}</p>
@@ -117,7 +117,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
           if (!ledger || ledger.length === 0) return null
 
           return (
-            <DetailItem icon="tabler:book" name="ledger">
+            <DetailItem icon="tabler:book" label="ledger">
               {ledger ? (
                 <ul className="flex flex-col gap-2">
                   {ledger.map(ledgerItem => (
@@ -141,7 +141,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
           )
         })()}
       {transaction.receipt && (
-        <DetailItem vertical icon="tabler:receipt" name="receipt">
+        <DetailItem vertical icon="tabler:receipt" label="receipt">
           <Button
             className="w-full"
             icon="tabler:eye"
@@ -162,7 +162,7 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
         </DetailItem>
       )}
       {transaction.type !== 'transfer' && transaction.location_name && (
-        <DetailItem vertical icon="tabler:map-pin" name="location">
+        <DetailItem vertical icon="tabler:map-pin" label="location">
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
             <Map
               className="h-96 overflow-hidden rounded-md"

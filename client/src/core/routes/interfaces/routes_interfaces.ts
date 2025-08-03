@@ -13,7 +13,7 @@ export interface ModuleConfig {
   hasAI?: boolean
   requiredAPIKeys?: string[]
   subsection?: {
-    name: string
+    label: string
     icon: React.ReactElement | string
     path: string
   }[]

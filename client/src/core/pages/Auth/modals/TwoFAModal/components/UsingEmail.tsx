@@ -132,11 +132,10 @@ function UsingEmail({
         ) : (
           <>
             <TextInput
-              darker
               className="mb-4 w-full"
               icon="tabler:mail"
               inputMode="email"
-              name="email"
+              label="email"
               namespace="common.auth"
               placeholder="johndoe@gmail.com"
               setValue={setEmail}

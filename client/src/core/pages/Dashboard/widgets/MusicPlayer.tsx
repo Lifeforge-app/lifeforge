@@ -65,7 +65,7 @@
 //               </Button>
 //             }
 //             icon="tabler:disc-off"
-//             name="music"
+//             label="music"
 //             namespace="core.dashboard"
 //             tKey="widgets.musicPlayer"
 //           />

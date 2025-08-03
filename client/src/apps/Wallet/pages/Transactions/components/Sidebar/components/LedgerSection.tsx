@@ -38,7 +38,7 @@ function LedgerSection() {
         actionButtonOnClick={() => {
           navigate('/wallet/ledgers#new')
         }}
-        name={t('sidebar.ledgers')}
+        label={t('sidebar.ledgers')}
       />
       <QueryWrapper query={ledgersQuery}>
         {() => (
@@ -50,7 +50,7 @@ function LedgerSection() {
                 color={color}
                 icon={icon}
                 id={id}
-                name={name}
+                label={name}
               />
             ))}
           </>

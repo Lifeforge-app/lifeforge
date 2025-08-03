@@ -16,7 +16,7 @@ function Sidebar() {
       <SidebarItem
         active={Array.from(searchParams.keys()).length === 0}
         icon="tabler:list"
-        name="All books"
+        label="All books"
         namespace="apps.booksLibrary"
         onClick={() => {
           setSearchParams({})
@@ -26,7 +26,7 @@ function Sidebar() {
       <SidebarItem
         active={searchParams.get('favourite') === 'true'}
         icon="tabler:heart"
-        name="Favourite"
+        label="Favourite"
         namespace="apps.booksLibrary"
         onClick={() => {
           searchParams.set('favourite', 'true')

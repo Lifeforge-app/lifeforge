@@ -21,7 +21,7 @@ function SidebarStarredItem({
     <SidebarItem
       active={isActive}
       icon="tabler:star-filled"
-      name="Starred"
+      label="Starred"
       namespace="apps.scoresLibrary"
       number={count}
       onClick={handleClick}

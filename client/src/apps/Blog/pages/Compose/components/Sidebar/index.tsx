@@ -47,9 +47,8 @@ function Sidebar({
           <h2 className="text-xl font-semibold">Post Settings</h2>
         </div>
         <TextInput
-          darker
           icon="tabler:article"
-          name="Title"
+          label="Title"
           namespace="apps.blog"
           placeholder="Enter the title of your post..."
           setValue={(title: string) => {
@@ -58,9 +57,8 @@ function Sidebar({
           value={data.title}
         />
         <TextAreaInput
-          darker
           icon="tabler:quote"
-          name="Excerpt"
+          label="Excerpt"
           namespace="apps.blog"
           placeholder="Write a short excerpt for your post..."
           setValue={(excerpt: string) => {
@@ -86,7 +84,7 @@ function Sidebar({
             </>
           }
           icon="tabler:eye"
-          name="Visibility"
+          label="Visibility"
           namespace="apps.blog"
           setValue={(visibility: typeof data.visibility) => {
             setData(prevData => ({ ...prevData, visibility }))
@@ -110,7 +108,7 @@ function Sidebar({
           }}
           file={data.featuredImage}
           icon="tabler:photo"
-          name="Featured Image"
+          label="Featured Image"
           namespace="apps.blog"
           preview={data.featuredImagePreview}
           setData={(data: {
@@ -133,7 +131,7 @@ function Sidebar({
         />
         {/* <ListboxInput
           icon="tabler:category"
-          name="Category"
+          label="Category"
           namespace="apps.blog"
           setValue={(category: string | null) => {
             setData(prevData => ({ ...prevData, category }))
@@ -141,9 +139,8 @@ function Sidebar({
           value={data.category}
         /> */}
         <TagsInput
-          darker
           icon="tabler:tags"
-          name="labels"
+          label="labels"
           namespace="apps.blog"
           placeholder="Add tags to your post..."
           setValue={(labels: string[]) => {

@@ -31,7 +31,7 @@ function PrioritySelector({
         </>
       }
       icon="tabler:alert-triangle"
-      name="priority"
+      label="priority"
       namespace="apps.todoList"
       setValue={setPriority}
       value={priority}
