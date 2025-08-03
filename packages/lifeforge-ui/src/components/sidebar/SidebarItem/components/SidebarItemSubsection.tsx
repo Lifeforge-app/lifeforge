@@ -5,15 +5,15 @@ import SidebarSubsectionItem from './SidebarSubsectionItem'
 
 function SidebarItemSubsection({
   subsection,
-  name,
+  label,
   subsectionExpanded
 }: {
   subsection: {
-    name: string
+    label: string
     icon: string | React.ReactElement
     path: string
   }[]
-  name: string
+  label: string
   subsectionExpanded: boolean
 }) {
   const { sidebarExpanded } = useSidebarState()
@@ -31,13 +31,13 @@ function SidebarItemSubsection({
           !sidebarExpanded && 'bg-bg-800'
         )}
       >
-        {subsection.map(({ name: subsectionName, icon, path }) => (
+        {subsection.map(({ label: subsectionLabel, icon, path }) => (
           <SidebarSubsectionItem
-            key={subsectionName}
+            key={subsectionLabel}
             icon={icon}
-            name={name}
+            label={label}
             path={path}
-            subsectionName={subsectionName}
+            subsectionLabel={subsectionLabel}
           />
         ))}
       </ul>

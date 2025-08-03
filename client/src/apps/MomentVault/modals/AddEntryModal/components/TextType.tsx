@@ -39,10 +39,9 @@ function TextType({ onSuccess }: { onSuccess: () => void }) {
   return (
     <>
       <TextAreaInput
-        darker
         required
         icon="tabler:file-text"
-        name="Text Content"
+        label="Text Content"
         namespace="apps.momentVault"
         placeholder={t('apps.momentVault:placeholders.textEntry')}
         setValue={setText}

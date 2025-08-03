@@ -14,7 +14,7 @@ function Sidebar({
 }) {
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
-      <SidebarTitle name="tasks" namespace="apps.todoList" />
+      <SidebarTitle label="tasks" namespace="apps.todoList" />
       <TaskStatusList setSidebarOpen={setOpen} />
       <SidebarDivider />
       <TaskPriorityList setSidebarOpen={setOpen} />

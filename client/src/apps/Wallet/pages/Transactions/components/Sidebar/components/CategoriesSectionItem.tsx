@@ -7,14 +7,14 @@ import CategoriesSectionItemIcon from './CategoriesSectionItemIcon'
 
 function CategoriesSectionItem({
   icon,
-  name,
+  label,
   color,
   id,
   type,
   amount
 }: {
   icon: string
-  name: string
+  label: string
   color: string
   id: string | null
   type: 'income' | 'expenses' | null
@@ -53,7 +53,7 @@ function CategoriesSectionItem({
       key={id}
       active={selectedCategory === id}
       icon={memoizedIcon}
-      name={name}
+      label={label}
       number={amount}
       sideStripColor={color}
       onCancelButtonClick={id !== null ? handleCancelButtonClick : undefined}

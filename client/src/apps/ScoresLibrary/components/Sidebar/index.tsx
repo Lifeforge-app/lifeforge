@@ -90,7 +90,7 @@ function Sidebar({
             <SidebarItem
               active={type === null && author === null && !starred}
               icon="tabler:list"
-              name="All scores"
+              label="All scores"
               namespace="apps.scoresLibrary"
               number={sidebarData.total}
               onClick={handleResetAll}
@@ -105,7 +105,7 @@ function Sidebar({
             <SidebarTitle
               actionButtonIcon="tabler:plus"
               actionButtonOnClick={handleCreate}
-              name="categories"
+              label="categories"
               namespace="apps.scoresLibrary"
             />
             {sidebarData.types.map(t => (
@@ -118,7 +118,7 @@ function Sidebar({
               />
             ))}
             <SidebarDivider />
-            <SidebarTitle name="authors" namespace="apps.scoresLibrary" />
+            <SidebarTitle label="authors" namespace="apps.scoresLibrary" />
             {sortedAuthors.map(([auth, count]) => (
               <SidebarAuthorItem
                 key={auth}

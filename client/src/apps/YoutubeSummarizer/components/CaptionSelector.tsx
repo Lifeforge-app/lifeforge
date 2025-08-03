@@ -122,7 +122,7 @@ function CaptionSelector({
         }
         disabled={summarizeLoading}
         icon="tabler:text-grammar"
-        name="Caption Type"
+        label="Caption Type"
         namespace="apps.youtubeSummarizer"
         setValue={setCaptionType}
         value={captionType}
@@ -159,7 +159,7 @@ function CaptionSelector({
               }
               disabled={summarizeLoading}
               icon="tabler:language"
-              name="Language"
+              label="Language"
               namespace="apps.youtubeSummarizer"
               setValue={setSelectedLanguage}
               value={selectedLanguage}

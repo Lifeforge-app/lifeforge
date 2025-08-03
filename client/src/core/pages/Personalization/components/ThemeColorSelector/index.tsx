@@ -33,10 +33,10 @@ function ThemeColorSelector() {
           <>
             <ColorInput
               className="w-full md:w-min"
-              color={customThemeColor}
-              name="Color Hex"
+              label="Color Hex"
               namespace="core.personalization"
-              setColor={setCustomThemeColor}
+              setValue={setCustomThemeColor}
+              value={customThemeColor}
             />
             {themeColor !== customThemeColor &&
               customThemeColor.match(/^#[0-9A-F]{6}$/i) !== null && (

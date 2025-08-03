@@ -26,7 +26,7 @@ function SidebarAuthorItem({
       active={isActive}
       autoActive={false}
       icon="tabler:user"
-      name={author || t('unknownAuthor')}
+      label={author || t('unknownAuthor')}
       number={count}
       onCancelButtonClick={onCancel}
       onClick={handleClick}

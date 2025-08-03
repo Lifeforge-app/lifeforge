@@ -25,7 +25,7 @@ interface MainSidebarItemProps {
 
   showAIIcon: boolean
   subsection?: {
-    name: string
+    label: string
     icon: string | React.ReactElement
     path: string
   }[]
@@ -71,7 +71,7 @@ interface SubSidebarItemProps {
 }
 
 interface SidebarItemBaseProps {
-  name: string
+  label: string
   icon?: string | React.ReactElement
 }
 
@@ -80,7 +80,7 @@ type SidebarItemProps = SidebarItemAutoActiveProps &
   SidebarItemBaseProps
 
 function SidebarItem({
-  name,
+  label,
   icon,
   sideStripColor,
   showAIIcon = false,
@@ -108,15 +108,15 @@ function SidebarItem({
     isMainSidebarItem
       ? false
       : subsection !== undefined &&
-          location.pathname.slice(1).startsWith(_.kebabCase(name))
+          location.pathname.slice(1).startsWith(_.kebabCase(label))
   )
 
   const isLocationMatched = useMemo(
     () =>
       location.pathname
         .slice(1)
-        .startsWith((prefix !== '' ? `${prefix}/` : '') + _.kebabCase(name)),
-    [location.pathname, prefix, name]
+        .startsWith((prefix !== '' ? `${prefix}/` : '') + _.kebabCase(label)),
+    [location.pathname, prefix, label]
   )
 
   const handleNavigation = useCallback(() => {
@@ -133,13 +133,13 @@ function SidebarItem({
         return
       }
 
-      navigate(`./${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(name)}`)
+      navigate(`./${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label)}`)
     }
 
     if (window.innerWidth < 1024) {
       toggleSidebar?.()
     }
-  }, [isMainSidebarItem, subsectionExpanded, subsection, prefix, name])
+  }, [isMainSidebarItem, subsectionExpanded, subsection, prefix, label])
 
   const handleToggleSubsection = useCallback(() => {
     if (subsection !== undefined) {
@@ -182,7 +182,7 @@ function SidebarItem({
           hamburgerMenuItems={hamburgerMenuItems}
           hasAI={showAIIcon}
           isMainSidebarItem={isMainSidebarItem}
-          name={name}
+          label={label}
           namespace={namespace}
           needTranslate={needTranslate}
           number={number}
@@ -201,7 +201,7 @@ function SidebarItem({
       </SidebarItemWrapper>
       {subsection !== undefined && (
         <SidebarItemSubsection
-          name={name}
+          label={label}
           subsection={subsection}
           subsectionExpanded={subsectionExpanded}
         />

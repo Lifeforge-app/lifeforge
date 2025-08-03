@@ -32,7 +32,7 @@ function Sidebar() {
         <SidebarItem
           active={false}
           icon="tabler:layout-sidebar-left-expand"
-          name=""
+          label=""
           onClick={toggleSidebar}
         />
       )}

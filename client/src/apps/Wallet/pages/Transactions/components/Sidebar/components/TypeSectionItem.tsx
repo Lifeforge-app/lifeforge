@@ -9,11 +9,11 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 function TypeSectionItem({
   icon,
-  name,
+  label,
   amount
 }: {
   icon: string
-  name: string
+  label: string
   amount: number | undefined
 }) {
   const { t } = useTranslation('apps.wallet')
@@ -30,8 +30,8 @@ function TypeSectionItem({
         Income: colors.green[500],
         Expenses: colors.red[500],
         Transfer: colors.blue[500]
-      })[name],
-    [bgTempPalette, name]
+      })[label],
+    [bgTempPalette, label]
   )
 
   const handleCancelButtonClick = useCallback(() => {
@@ -40,12 +40,12 @@ function TypeSectionItem({
   }, [])
 
   const handleClick = useCallback(() => {
-    if (name === 'All Types') {
+    if (label === 'All Types') {
       setSelectedType(null)
       setSidebarOpen(false)
     } else {
       setSelectedCategory(null)
-      setSelectedType(name.toLowerCase() as 'income' | 'expenses' | 'transfer')
+      setSelectedType(label.toLowerCase() as 'income' | 'expenses' | 'transfer')
       setSidebarOpen(false)
     }
   }, [])
@@ -53,19 +53,19 @@ function TypeSectionItem({
   return (
     <SidebarItem
       active={
-        selectedType === name.toLowerCase() ||
-        (selectedType === null && name === 'All Types')
+        selectedType === label.toLowerCase() ||
+        (selectedType === null && label === 'All Types')
       }
       icon={icon}
-      name={t(
-        name.includes('All')
-          ? `sidebar.${_.camelCase(name)}`
-          : `transactionTypes.${_.camelCase(name)}`
+      label={t(
+        label.includes('All')
+          ? `sidebar.${_.camelCase(label)}`
+          : `transactionTypes.${_.camelCase(label)}`
       )}
       number={amount}
       sideStripColor={sidebarStripColor}
       onCancelButtonClick={
-        name !== 'All Types' ? handleCancelButtonClick : undefined
+        label !== 'All Types' ? handleCancelButtonClick : undefined
       }
       onClick={handleClick}
     />

@@ -30,7 +30,7 @@ function TaskTagList({
       <SidebarTitle
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={handleCreateTag}
-        name="Tags"
+        label="Tags"
         namespace="apps.todoList"
       />
       <QueryWrapper query={tagsListQuery}>

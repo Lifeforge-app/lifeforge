@@ -5,13 +5,13 @@ import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 
 export default function LedgerSectionItem({
   icon,
-  name,
+  label,
   color,
   id,
   amount
 }: {
   icon: string
-  name: string
+  label: string
   color: string
   id: string | null
   amount: number | undefined
@@ -27,7 +27,7 @@ export default function LedgerSectionItem({
   }, [])
 
   const handleClick = useCallback(() => {
-    if (name === 'All') {
+    if (label === 'All') {
       setSelectedLedger(null)
 
       return
@@ -40,7 +40,7 @@ export default function LedgerSectionItem({
     <SidebarItem
       active={active}
       icon={icon}
-      name={name}
+      label={label}
       number={amount}
       sideStripColor={color}
       onCancelButtonClick={id !== null ? handleCancelButtonClick : undefined}

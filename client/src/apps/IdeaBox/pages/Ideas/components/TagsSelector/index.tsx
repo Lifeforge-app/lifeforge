@@ -2,15 +2,15 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useParams } from 'react-router'
 
-import { useIdeaBoxContext, type IdeaBoxTag } from '@apps/IdeaBox/providers/IdeaBoxProvider'
+import {
+  type IdeaBoxTag,
+  useIdeaBoxContext
+} from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import ModifyTagModal from '../modals/ModifyTagModal'
 import TagItem from './components/TagItem'
 
-const sortFunc = (
-  a: IdeaBoxTag,
-  b: IdeaBoxTag
-) => {
+const sortFunc = (a: IdeaBoxTag, b: IdeaBoxTag) => {
   if (a.amount === b.amount) {
     return a.name.localeCompare(b.name)
   }
@@ -113,7 +113,7 @@ function TagsSelector() {
               icon={tag.icon}
               id={tag.id}
               isSelected={selectedTags.includes(tag.name)}
-              name={tag.name}
+              label={tag.name}
               onSelect={handleSelectTag}
               onUpdate={handleUpdateTag}
             />

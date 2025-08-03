@@ -77,7 +77,7 @@ function SidebarTypeItem({
         </>
       }
       icon={data.icon}
-      name={data.name}
+      label={data.name}
       namespace="apps.scoresLibrary"
       number={data.amount}
       onCancelButtonClick={onCancel}

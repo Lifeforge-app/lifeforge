@@ -30,7 +30,7 @@ function ListSelector({
         </>
       }
       icon="tabler:list"
-      name="list"
+      label="list"
       namespace="apps.todoList"
       setValue={setList}
       value={list ?? ''}
