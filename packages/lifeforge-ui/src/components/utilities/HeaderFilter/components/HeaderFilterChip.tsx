@@ -15,7 +15,7 @@ function FilterChip({
   return (
     <span
       className={clsx(
-        'flex-center gap-1 rounded-full px-2 py-1 text-sm',
+        'flex-center shadow-custom gap-1 rounded-full px-2 py-1 text-sm',
         color === undefined &&
           `text-bg-500 dark:text-bg-400 component-bg-lighter`
       )}
