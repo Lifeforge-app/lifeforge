@@ -1,39 +1,72 @@
 import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forceDown from '@utils/forceDown'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { DeleteConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 import UpdateMusicModal from '@apps/Music/modals/UpdateMusicModal'
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
+import { type MusicEntry } from '@apps/Music/providers/MusicProvider'
 
-import { IMusicEntry } from '../../../../interfaces/music_interfaces'
-
-function SideButtons({ music }: { music: IMusicEntry }) {
+function SideButtons({ music }: { music: MusicEntry }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
 
-  const { toggleFavourite } = useMusicContext()
+  const toggleFavouriteMutation = useMutation(
+    forgeAPI.music.entries.toggleFavourite
+      .input({
+        id: music.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
+          toast.success(
+            music.is_favourite
+              ? `Removed "${music.name}" from favourites`
+              : `Added "${music.name}" to favourites`
+          )
+        },
+        onError: error => {
+          toast.error(`Failed to toggle favourite: ${error.message}`)
+        }
+      })
+  )
 
   const handleUpdateEntry = useCallback(() => {
     open(UpdateMusicModal, {
-      existedData: music
+      initialData: music
     })
   }, [music])
 
+  const deleteEntryMutation = useMutation(
+    forgeAPI.music.entries.remove
+      .input({
+        id: music.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
+        },
+        onError: error => {
+          toast.error(`Failed to delete music: ${error.message}`)
+        }
+      })
+  )
+
   const handleDeleteEntry = useCallback(() => {
-    open(DeleteConfirmationModal, {
-      apiEndpoint: 'music/entries',
-      data: music,
-      itemName: 'music',
-      nameKey: 'name',
-      afterDelete: async () => {
-        queryClient.invalidateQueries({
-          queryKey: ['music', 'entries']
-        })
+    open(ConfirmationModal, {
+      title: 'Delete Music',
+      description: `Are you sure you want to delete "${music.name}"?`,
+      onConfirm: async () => {
+        await deleteEntryMutation.mutateAsync({})
       }
     })
   }, [music])
@@ -48,7 +81,7 @@ function SideButtons({ music }: { music: IMusicEntry }) {
             : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
         )}
         onClick={() => {
-          toggleFavourite(music).catch(() => {})
+          toggleFavouriteMutation.mutateAsync({})
         }}
       >
         <Icon
@@ -62,9 +95,11 @@ function SideButtons({ music }: { music: IMusicEntry }) {
           text="Download"
           onClick={() => {
             forceDown(
-              `${import.meta.env.VITE_API_HOST}/media/${music.collectionId}/${
-                music.id
-              }/${music.file}`,
+              forgeAPI.media.input({
+                collectionId: music.collectionId,
+                recordId: music.id,
+                fieldId: 'file'
+              }).endpoint,
               music.name
             )
           }}

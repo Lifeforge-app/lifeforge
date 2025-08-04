@@ -3,11 +3,12 @@ import clsx from 'clsx'
 import { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
+import {
+  type MusicEntry,
+  useMusicContext
+} from '@apps/Music/providers/MusicProvider'
 
-import { IMusicEntry } from '../../../../interfaces/music_interfaces'
-
-function PlayStateIndicator({ music }: { music: IMusicEntry }) {
+function PlayStateIndicator({ music }: { music: MusicEntry }) {
   const { currentMusic, isPlaying, togglePlay } = useMusicContext()
 
   const stateIcon = useMemo(() => {

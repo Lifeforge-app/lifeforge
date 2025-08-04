@@ -54,7 +54,7 @@ function Music() {
           setSearchQuery={setSearchQuery}
           stuffToSearch="music"
         />
-        <div className="divide-bg-200/50 dark:divide-bg-900 relative flex size-full min-w-0 flex-col divide-y-2">
+        <div className="relative mt-4 flex size-full min-w-0">
           <Scrollbar>
             <QueryWrapper query={musicsQuery}>
               {musics =>

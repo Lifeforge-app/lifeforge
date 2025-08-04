@@ -1,21 +1,52 @@
 /* eslint-disable react-compiler/react-compiler */
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+import { Button } from 'lifeforge-ui'
+import { toast } from 'react-toastify'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
-import IconButton from './IconButton'
-
 export default function VolumeControl() {
-  const { audio, currentMusic, setVolume, volume, toggleFavourite } =
+  const queryClient = useQueryClient()
+
+  const { audio, currentMusic, setCurrentMusic, setVolume, volume } =
     useMusicContext()
 
   if (currentMusic === null) {
     return <></>
   }
 
+  const toggleFavouriteMutation = useMutation(
+    forgeAPI.music.entries.toggleFavourite
+      .input({
+        id: currentMusic.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
+          setCurrentMusic(prev => {
+            if (!prev) return null
+
+            return { ...prev, is_favourite: !prev.is_favourite }
+          })
+          toast.success(
+            currentMusic.is_favourite
+              ? `Removed "${currentMusic.name}" from favourites`
+              : `Added "${currentMusic.name}" to favourites`
+          )
+        },
+        onError: error => {
+          toast.error(`Failed to toggle favourite: ${error.message}`)
+        }
+      })
+  )
+
   return (
     <div className="hidden w-1/3 items-center justify-end gap-2 xl:flex">
-      <IconButton
+      <Button
         className={
           currentMusic.is_favourite
             ? 'text-red-500 hover:text-red-600'
@@ -24,8 +55,9 @@ export default function VolumeControl() {
         icon={
           currentMusic.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
         }
+        variant="plain"
         onClick={() => {
-          toggleFavourite(currentMusic).catch(() => {})
+          toggleFavouriteMutation.mutateAsync({})
         }}
       />
       <div className="flex items-center">
@@ -36,7 +68,7 @@ export default function VolumeControl() {
           type="range"
           value={volume}
           onChange={e => {
-            audio.volume = +e.target.value / 100
+            audio.current.volume = +e.target.value / 100
             setVolume(+e.target.value)
           }}
         ></input>

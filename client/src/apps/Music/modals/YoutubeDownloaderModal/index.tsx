@@ -3,13 +3,6 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-// import { toast } from 'react-toastify'
-
-import { useAPIQuery } from 'shared/lib'
-
-// import { fetchAPI } from 'shared/lib'
-
-import { type IYoutubeVideoInfo } from '../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 import VideoInfo from './components/VideoInfo'
 
 const URL_REGEX =
@@ -26,11 +19,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
 
   const videoURL = useDebounce(videoURLinput, 300)
 
-  const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
-    `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
-    ['music', 'youtube', 'get-info', videoURL.match(URL_REGEX)?.groups?.id],
-    URL_REGEX.test(videoURL)
-  )
+  const videoInfoQuery = undefined
 
   async function downloadVideo() {
     //TODO
@@ -97,10 +86,9 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
         }}
       />
       <TextInput
-        darker
         className="mb-8"
         icon="tabler:link"
-        name="Video URL"
+        label="Video URL"
         namespace="apps.music"
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         setValue={setVideoURLInput}
