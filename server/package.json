@@ -59,7 +59,7 @@
     "music-metadata": "^7.14.0",
     "nodemailer": "^7.0.3",
     "open-graph-scraper": "^6.8.2",
-    "openai": "^5.6.0",
+    "openai": "^5.11.0",
     "os-utils": "^0.0.14",
     "pdf-page-counter": "^1.0.3",
     "pdf-thumbnail": "^1.0.6",
