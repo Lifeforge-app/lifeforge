@@ -1,6 +1,12 @@
 # Change Log
 
-## 📌 **dev 25w31 (7/28/2025 - 8/4/2025)**
+## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
+
+- **Music**: Added this module back.
+- **CFOP Algorithms**: Added this module back.
+- **Changi Airport Flight Status**: Added this module back.
+
+## 📌 **dev 25w31 (7/28/2025 - 8/3/2025)**
 
 - **UI**: Introduced a `Slider` component for better user interaction with range inputs.
 - **UI**: More progress on storybook integration.
@@ -11,6 +17,7 @@
 
 ## 📌 **dev 25w30 (7/21/2025 - 7/28/2025)**
 
+- **Music**: Temporarily removed this module due to the need for almost a complete rewrite.
 - **Wallet**: Extremely massive code refactor for CRUD action handling.
 - **Wallet**: Transfer transactions are now shown as a single entry, and user can now edit them.
 - **Wallet**: Improved the database schema by introducing subtypes for income-expenses and transfer transactions respectively.
