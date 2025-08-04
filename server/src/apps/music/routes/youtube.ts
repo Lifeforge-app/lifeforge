@@ -5,7 +5,6 @@ import {
 } from '@middlewares/taskPoolMiddleware'
 import { exec } from 'child_process'
 import fs from 'fs'
-import { v4 } from 'uuid'
 import z from 'zod/v4'
 
 const getVideoInfo = forgeController.query
@@ -72,9 +71,7 @@ const downloadVideo = forgeController.mutation
   })
   .callback(
     async ({ pb, query: { id }, body: { title, uploader, duration }, io }) => {
-      const downloadID = v4()
-
-      addToTaskPool(io, {
+      const downloadID = addToTaskPool(io, {
         module: 'music',
         description: 'Downloading YouTube video with name: ' + title,
         status: 'pending'
