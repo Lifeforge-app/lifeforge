@@ -1,0 +1,30 @@
+{
+  "title": "音樂",
+  "description": "您人生中最美好時刻的個人配樂。",
+  "buttons": {
+    "importFromNas": "從 NAS 匯入",
+    "downloadFromYoutube": "從 YouTube 下載",
+    "selectMusic": "選擇音樂"
+  },
+  "inputs": {
+    "musicName": "音樂名稱",
+    "author": "作者",
+    "videoUrl": "影片網址"
+  },
+  "items": {
+    "music": "音樂"
+  },
+  "empty": {
+    "music": {
+      "title": "沒有音樂",
+      "description": "您還沒有添加任何音樂。點擊下面的按鈕添加一個。"
+    },
+    "result": {
+      "title": "沒有結果",
+      "description": "找不到項目, 請嘗試其他關鍵字。"
+    }
+  },
+  "modals": {
+    "downloadFromYoutube": "從 YouTube 下載"
+  }
+}
