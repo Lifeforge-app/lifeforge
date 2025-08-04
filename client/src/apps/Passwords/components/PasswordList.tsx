@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
+import { EmptyStateScreen, QueryWrapper, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { fetchAPI } from 'shared'
@@ -10,9 +10,12 @@ import {
 } from '@apps/Passwords/providers/PasswordsProvider'
 
 import PasswordEntryItem from './PasswordEntryItem'
+import ModifyPasswordModal from '../modals/ModifyPasswordModal'
 
 function PasswordList() {
   const queryClient = useQueryClient()
+
+  const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.passwords')
 
@@ -57,8 +60,16 @@ function PasswordList() {
       {() =>
         filteredPasswordList.length === 0 ? (
           <EmptyStateScreen
-            ctaContent="new"
-            ctaTProps={{ item: t('items.password') }}
+            CTAButtonProps={{
+              onClick: () => {
+                open(ModifyPasswordModal, {
+                  type: 'create'
+                })
+              },
+              tProps: { item: t('items.password') },
+              icon: 'tabler:plus',
+              children: 'new'
+            }}
             icon="tabler:key-off"
             name={passwordListQuery.data?.length ? 'search' : 'passwords'}
             namespace="apps.passwords"

@@ -34,7 +34,7 @@ export default function MusicPlayer() {
           <>
             <div className="shadow-custom bg-bg-100/50 dark:bg-bg-800/50 flex min-h-0 w-full flex-1 items-center justify-center rounded-md py-8">
               <Icon
-            className={clsx(
+                className={clsx(
                   'aspect-square h-full w-1/2',
                   isPlaying
                     ? 'text-custom-500 animate-spin'
@@ -59,18 +59,15 @@ export default function MusicPlayer() {
         ) : (
           <EmptyStateScreen
             smaller
-            customCTAButton={
-              <Button
-                className="mt-4"
-                icon="tabler:music"
-                namespace="apps.music"
-                onClick={() => {
-                  navigate('/music')
-                }}
-              >
-                select music
-              </Button>
-            }
+            CTAButtonProps={{
+              className: 'mt-4',
+              icon: 'tabler:music',
+              namespace: 'apps.music',
+              onClick: () => {
+                navigate('/music')
+              },
+              children: 'Select Music'
+            }}
             icon="tabler:disc-off"
             name="music"
             namespace="core.dashboard"

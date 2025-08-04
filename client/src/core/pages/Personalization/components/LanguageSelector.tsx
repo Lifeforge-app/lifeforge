@@ -60,7 +60,7 @@ function LanguageSelector() {
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'shadow-custom component-bg-with-hover flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden'
+              'shadow-custom component-bg-lighter-with-hover flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden'
             )}
           >
             <Icon

@@ -19,7 +19,7 @@ function ThemeSelector() {
       icon="tabler:palette"
       title={t('themeSelector.title')}
     >
-      <div className="mt-4 flex w-full flex-col gap-8 px-2 md:flex-row">
+      <div className="flex w-full flex-col gap-8 px-2 md:flex-row">
         {[
           {
             id: 'system',
