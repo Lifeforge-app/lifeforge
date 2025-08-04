@@ -4,7 +4,12 @@ import { z } from 'zod/v4'
 const list = forgeController.query
   .description('Get all music entries')
   .input({})
-  .callback(({ pb }) => pb.getFullList.collection('music__entries').execute())
+  .callback(({ pb }) =>
+    pb.getFullList
+      .collection('music__entries')
+      .sort(['-is_favourite', 'name'])
+      .execute()
+  )
 
 const update = forgeController.mutation
   .description('Update a music entry')
