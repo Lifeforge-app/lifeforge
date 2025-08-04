@@ -3,7 +3,7 @@ import {
   addToTaskPool,
   updateTaskInPool
 } from '@middlewares/taskPoolMiddleware'
-import { exec } from 'child_process'
+import { exec, spawn } from 'child_process'
 import fs from 'fs'
 import z from 'zod/v4'
 
@@ -74,64 +74,95 @@ const downloadVideo = forgeController.mutation
       const downloadID = addToTaskPool(io, {
         module: 'music',
         description: 'Downloading YouTube video with name: ' + title,
-        status: 'pending'
+        status: 'pending',
+        progress: 'Initializing download'
       })
 
-      exec(
-        `${process.cwd()}/src/core/bin/yt-dlp -f bestaudio -o "${process.cwd()}/medium/${downloadID}-%(title)s.%(ext)s" --extract-audio --audio-format mp3 --audio-quality 0 "https://www.youtube.com/watch?v=${id}"`,
-        async err => {
-          if (err) {
+      const downloadProcess = spawn(`${process.cwd()}/src/core/bin/yt-dlp`, [
+        '-f',
+        'bestaudio',
+        '-o',
+        `${process.cwd()}/medium/${downloadID}-%(title)s.%(ext)s`,
+        '--extract-audio',
+        '--audio-format',
+        'mp3',
+        '--audio-quality',
+        '0',
+        `https://www.youtube.com/watch?v=${id}`
+      ])
+
+      downloadProcess.on('error', err => {
+        updateTaskInPool(io, downloadID, {
+          status: 'failed',
+          error: err instanceof Error ? err.message : String(err)
+        })
+      })
+
+      downloadProcess.stdout.on('error', err => {
+        updateTaskInPool(io, downloadID, {
+          status: 'failed',
+          error: err instanceof Error ? err.message : String(err)
+        })
+      })
+
+      downloadProcess.stderr.on('data', data => {
+        const message = data.toString().trim()
+
+        if (
+          ['[youtube]', '[download]', '[ExtractAudio]'].some(prefix =>
+            message.startsWith(prefix)
+          )
+        ) {
+          updateTaskInPool(io, downloadID, {
+            status: 'running',
+            progress: message
+          })
+        }
+      })
+
+      downloadProcess.on('close', async () => {
+        try {
+          const allFiles = fs.readdirSync(`${process.cwd()}/medium`)
+
+          const mp3File = allFiles.find(file => file.startsWith(downloadID))
+
+          if (!mp3File) {
             updateTaskInPool(io, downloadID, {
-              status: 'failed',
-              error: err instanceof Error ? err.message : String(err)
+              status: 'failed'
             })
 
             return
           }
 
-          try {
-            const allFiles = fs.readdirSync(`${process.cwd()}/medium`)
+          const fileBuffer = fs.readFileSync(
+            `${process.cwd()}/medium/${mp3File}`
+          )
 
-            const mp3File = allFiles.find(file => file.startsWith(downloadID))
-
-            if (!mp3File) {
-              updateTaskInPool(io, downloadID, {
-                status: 'failed'
-              })
-
-              return
-            }
-
-            const fileBuffer = fs.readFileSync(
-              `${process.cwd()}/medium/${mp3File}`
-            )
-
-            await pb.create
-              .collection('music__entries')
-              .data({
-                name: title,
-                author: uploader,
-                duration,
-                file: new File(
-                  [fileBuffer],
-                  mp3File.split('-').slice(1).join('-')
-                )
-              })
-              .execute()
-
-            fs.unlinkSync(`${process.cwd()}/medium/${mp3File}`)
-
-            updateTaskInPool(io, downloadID, {
-              status: 'completed'
+          await pb.create
+            .collection('music__entries')
+            .data({
+              name: title,
+              author: uploader,
+              duration,
+              file: new File(
+                [fileBuffer],
+                mp3File.split('-').slice(1).join('-')
+              )
             })
-          } catch (error) {
-            updateTaskInPool(io, downloadID, {
-              status: 'failed',
-              error: error instanceof Error ? error.message : String(error)
-            })
-          }
+            .execute()
+
+          fs.unlinkSync(`${process.cwd()}/medium/${mp3File}`)
+
+          updateTaskInPool(io, downloadID, {
+            status: 'completed'
+          })
+        } catch (error) {
+          updateTaskInPool(io, downloadID, {
+            status: 'failed',
+            error: error instanceof Error ? error.message : String(error)
+          })
         }
-      )
+      })
 
       return downloadID
     }
