@@ -6,7 +6,7 @@ export default rateLimit({
   max: 250,
   skip: async req => {
     if (
-      req.path.startsWith('/media/') ||
+      req.path.startsWith('/media') ||
       [
         '/code-time/user/minutes',
         '/code-time/eventLog',
@@ -16,7 +16,8 @@ export default rateLimit({
         '/user/auth/login',
         '/books-library/cover',
         '/status',
-        '/youtube-videos/video/thumbnail'
+        '/youtube-videos/video/thumbnail',
+        '/locales'
       ].some(route => req.path.trim().startsWith(route))
     ) {
       return true
