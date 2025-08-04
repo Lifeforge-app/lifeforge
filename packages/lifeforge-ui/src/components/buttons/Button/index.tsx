@@ -77,17 +77,19 @@ function Button<C extends React.ElementType = 'button'>({
           loading={finalProps.loading}
         />
       )}
-      {children && typeof children === 'string'
-        ? t(
-            [
-              `common.buttons:${_.camelCase(children as string)}`,
-              `buttons.${_.camelCase(children as string)}`,
-              `${finalProps.tKey}.buttons.${_.camelCase(children as string)}`,
-              children
-            ],
-            finalProps.tProps
-          )
-        : children}
+      <div className="min-w-0 truncate">
+        {children && typeof children === 'string'
+          ? t(
+              [
+                `common.buttons:${_.camelCase(children as string)}`,
+                `buttons.${_.camelCase(children as string)}`,
+                `${finalProps.tKey}.buttons.${_.camelCase(children as string)}`,
+                children
+              ],
+              finalProps.tProps
+            )
+          : children}
+      </div>
       {finalProps.iconAtEnd && (
         <ButtonIcon
           disabled={finalProps.disabled}

@@ -16,7 +16,9 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
 
   const socket = useSocketContext()
 
-  const [loading, setLoading] = useState(false)
+  const [downloadProgress, setDownloadProgress] = useState<string | boolean>(
+    false
+  )
 
   const [videoURLinput, setVideoURLInput] = useState('')
 
@@ -32,10 +34,14 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
       })
   )
 
-  async function downloadVideo() {
-    setLoading(true)
+  const [targetMusicName, setTargetMusicName] = useState('')
 
+  const [targetMusicAuthor, setTargetMusicAuthor] = useState('')
+
+  async function downloadVideo() {
     try {
+      setDownloadProgress('Downloading...')
+
       const taskId = await forgeAPI.music.youtube.downloadVideo
         .input({
           id: videoURL.match(URL_REGEX)?.groups?.id ?? ''
@@ -46,36 +52,43 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
           duration: parseInt(videoInfoQuery.data?.duration ?? '0', 10)
         })
 
-      setLoading(true)
-
-      socket.on('taskPoolUpdate', (data: SocketEvent<undefined, ''>) => {
-        console.log(data)
+      socket.on('taskPoolUpdate', (data: SocketEvent<undefined, string>) => {
         if (!data || data.taskId !== taskId) return
 
         if (data.status === 'completed') {
           toast.success('Music downloaded successfully!')
-          setLoading(false)
+          setDownloadProgress(false)
           queryClient.invalidateQueries({
             queryKey: ['music', 'entries']
           })
           onClose()
         } else if (data.status === 'failed') {
           toast.error('Failed to download music!')
-          setLoading(false)
+          setDownloadProgress(false)
+        } else {
+          setDownloadProgress(data.progress || 'Downloading...')
         }
       })
     } catch (error) {
       console.error('Error downloading video:', error)
       toast.error('Failed to download video')
-      setLoading(false)
+      setDownloadProgress(false)
     }
   }
+
   useEffect(() => {
-    setVideoURLInput('')
-  }, [])
+    if (videoInfoQuery.data) {
+      setTargetMusicName(videoInfoQuery.data.title || '')
+      setTargetMusicAuthor(videoInfoQuery.data.uploader || '')
+    } else {
+      setVideoURLInput('')
+      setTargetMusicName('')
+      setTargetMusicAuthor('')
+    }
+  }, [videoInfoQuery.data])
 
   return (
-    <div className="min-w-[40vw]">
+    <div className="max-w-[40vw] min-w-[40vw]">
       <ModalHeader
         icon="tabler:brand-youtube"
         namespace="apps.music"
@@ -101,14 +114,43 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
             {videoInfo => (
               <>
                 <VideoInfo videoInfo={videoInfo} />
+                <TextInput
+                  actionButtonProps={{
+                    icon: 'mage:stars-c',
+                    onClick: () => {}
+                  }}
+                  icon="tabler:music"
+                  label="Music Name"
+                  namespace="apps.music"
+                  placeholder="Beautiful Music"
+                  setValue={setTargetMusicName}
+                  value={targetMusicName}
+                />
+                <TextInput
+                  icon="tabler:user"
+                  label="Music Author"
+                  namespace="apps.music"
+                  placeholder="John Doe"
+                  setValue={setTargetMusicAuthor}
+                  value={targetMusicAuthor}
+                />
                 <Button
-                  className="mt-6 w-full"
-                  icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-                  loading={loading}
+                  className="mt-6 w-full max-w-full"
+                  icon={
+                    downloadProgress
+                      ? 'svg-spinners:180-ring'
+                      : 'tabler:download'
+                  }
+                  loading={!!downloadProgress}
                   onClick={downloadVideo}
                 >
-                  {loading ? 'Downloading' : 'Download'}
+                  {downloadProgress ? 'Downloading' : 'Download'}
                 </Button>
+                {downloadProgress && (
+                  <div className="text-bg-500 mt-2 text-left text-sm">
+                    {downloadProgress}
+                  </div>
+                )}
               </>
             )}
           </QueryWrapper>

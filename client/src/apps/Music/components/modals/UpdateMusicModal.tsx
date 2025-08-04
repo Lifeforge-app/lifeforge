@@ -3,7 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
-import type { MusicEntry } from '../providers/MusicProvider'
+import type { MusicEntry } from '../../providers/MusicProvider'
 
 function UpdateMusicModal({
   data: { initialData },
