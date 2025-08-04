@@ -8,8 +8,9 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import UpdateMusicModal from '@apps/Music/modals/UpdateMusicModal'
 import { type MusicEntry } from '@apps/Music/providers/MusicProvider'
+
+import UpdateMusicModal from '../../../../modals/UpdateMusicModal'
 
 function SideButtons({ music }: { music: MusicEntry }) {
   const queryClient = useQueryClient()
