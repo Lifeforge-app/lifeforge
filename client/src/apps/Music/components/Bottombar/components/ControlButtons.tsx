@@ -35,7 +35,7 @@ export default function ControlButtons({
           variant={isShuffle ? 'tertiary' : 'plain'}
           onClick={() => {
             setIsShuffle(!isShuffle)
-            if (isShuffle) setIsRepeat(false)
+            if (!isShuffle) setIsRepeat(false)
           }}
         />
       )}
@@ -58,7 +58,7 @@ export default function ControlButtons({
           variant={isRepeat ? 'tertiary' : 'plain'}
           onClick={() => {
             setIsRepeat(!isRepeat)
-            if (isRepeat) setIsShuffle(false)
+            if (!isRepeat) setIsShuffle(false)
           }}
         />
       )}

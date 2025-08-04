@@ -3,8 +3,15 @@
 ## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
 
 - **Music**: Added this module back.
+- **Music**: Added FAB in mobile view.
+- **Music**: User can now ask AI to parse the music name and author from the title and uploader.
+- **Music**: Fixed the behaviours of the shuffle and repeat buttons.
+- **Music**: Replaced custom `IconButton` with `Button` component from `lifeforge-ui`.
+- **Music**: Music will now be stopped igf the current music is deleted.
+- **Music**: Minor bug fixes and UI improvements.
 - **CFOP Algorithms**: Added this module back.
 - **Changi Airport Flight Status**: Added this module back.
+- **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
 
 ## 📌 **dev 25w31 (7/28/2025 - 8/3/2025)**
 
