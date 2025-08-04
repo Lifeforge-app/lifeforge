@@ -9,7 +9,7 @@ function AccountSettings() {
   return (
     <ModuleWrapper>
       <ModuleHeader title="Account Settings" />
-      <div className="mb-8">
+      <div className="mb-8 space-y-3">
         <AvatarColumn />
         <OrdinaryColumn
           icon="tabler:user"

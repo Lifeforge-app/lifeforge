@@ -66,9 +66,6 @@ function Music() {
                   <MusicList debouncedSearchQuery={debouncedSearchQuery} />
                 ) : (
                   <EmptyStateScreen
-                    customCTAButton={
-                      musics.length > 0 ? <AddMusicButton /> : undefined
-                    }
                     icon={
                       musics.length > 0
                         ? 'tabler:search-off'

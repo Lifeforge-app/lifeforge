@@ -71,7 +71,7 @@ function ContentContainer({
     <>
       <QueryWrapper query={entriesQuery}>
         {entries => (
-          <div className="mt-6 mb-24 flex-1 lg:mb-12">
+          <div className="mt-6 mb-24 flex-1 space-y-3 lg:mb-12">
             {entries.length > 0 ? (
               entries.map((entry, idx) => (
                 <EntryItem

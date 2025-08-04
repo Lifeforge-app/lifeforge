@@ -78,17 +78,20 @@ function Achievements() {
             </div>
           ) : (
             <EmptyStateScreen
-              ctaContent="new"
-              ctaTProps={{ item: t('items.achievement') }}
+              CTAButtonProps={{
+                children: 'new',
+                icon: 'tabler:plus',
+                tProps: { item: t('items.achievement') },
+                onClick: () => {
+                  open(ModifyAchievementModal, {
+                    type: 'create',
+                    currentDifficulty: selectedDifficulty
+                  })
+                }
+              }}
               icon="tabler:award-off"
               name="achievement"
               namespace="apps.achievements"
-              onCTAClick={() => {
-                open(ModifyAchievementModal, {
-                  type: 'create',
-                  currentDifficulty: selectedDifficulty
-                })
-              }}
             />
           )
         }
