@@ -5,28 +5,20 @@ import { useTranslation } from 'react-i18next'
 import Button from '../buttons/Button'
 
 function EmptyStateScreen({
-  onCTAClick,
+  CTAButtonProps,
   name,
   title,
   description,
   icon,
-  ctaContent,
-  ctaTProps,
-  ctaIcon,
-  customCTAButton,
   smaller = false,
   namespace,
   tKey = ''
 }: {
-  onCTAClick?: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
+  CTAButtonProps?: React.ComponentProps<typeof Button>
   name: string | false
   title?: string
   description?: string
   icon?: string | React.ReactElement
-  ctaContent?: string
-  ctaTProps?: Record<string, unknown>
-  ctaIcon?: string
-  customCTAButton?: React.ReactElement
   smaller?: boolean
   namespace: string | false
   tKey?: string
@@ -72,19 +64,7 @@ function EmptyStateScreen({
           ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
           : description}
       </p>
-      {customCTAButton ??
-        (ctaContent && onCTAClick && (
-          <Button
-            className="mt-6"
-            icon={ctaIcon ?? 'tabler:plus'}
-            tProps={ctaTProps}
-            onClick={() => {
-              onCTAClick('create')
-            }}
-          >
-            {ctaContent}
-          </Button>
-        ))}
+      {CTAButtonProps && <Button {...CTAButtonProps} />}
     </div>
   )
 }

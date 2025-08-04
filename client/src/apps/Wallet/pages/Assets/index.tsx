@@ -102,14 +102,14 @@ function Assets() {
               </div>
             ) : (
               <EmptyStateScreen
-                ctaContent="new"
-                ctaTProps={{
-                  item: t('items.asset')
+                CTAButtonProps={{
+                  children: 'new',
+                  icon: 'tabler:plus',
+                  onClick: handleCreateCategory
                 }}
                 icon="tabler:wallet-off"
                 name="assets"
                 namespace="apps.wallet"
-                onCTAClick={handleCreateCategory}
               />
             )}
             {assets.length > 0 && (
