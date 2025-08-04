@@ -7,11 +7,11 @@ import {
   ToastProvider
 } from 'shared'
 
-// import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 import AuthProvider from './AuthProvider'
 import SocketProvider from './SocketProvider'
 import UserPersonalizationProvider from './UserPersonalizationProvider'
+import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -24,8 +24,7 @@ function Providers({ children }: { children: React.ReactNode }) {
                 <ToastProvider>
                   <BackgroundProvider>
                     <SocketProvider>
-                      {/* <MusicProvider>{children}</MusicProvider> */}
-                      {children}
+                      <MusicProvider>{children}</MusicProvider>
                     </SocketProvider>
                   </BackgroundProvider>
                 </ToastProvider>
