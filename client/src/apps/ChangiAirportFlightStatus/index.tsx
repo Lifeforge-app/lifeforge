@@ -46,7 +46,7 @@ function ChangiAirportFlightStatus() {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader icon="tabler:plane" title="Changi Flight Status" />
+      <ModuleHeader icon="tabler:plane" title="Changi Airport Flight Status" />
       <div className="mt-6 flex items-center gap-2">
         <Listbox
           as="div"
