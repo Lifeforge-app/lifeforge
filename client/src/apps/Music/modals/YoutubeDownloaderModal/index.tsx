@@ -49,34 +49,21 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
       setLoading(true)
 
       socket.on('taskPoolUpdate', (data: SocketEvent<undefined, ''>) => {
+        console.log(data)
         if (!data || data.taskId !== taskId) return
+
+        if (data.status === 'completed') {
+          toast.success('Music downloaded successfully!')
+          setLoading(false)
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
+          onClose()
+        } else if (data.status === 'failed') {
+          toast.error('Failed to download music!')
+          setLoading(false)
+        }
       })
-
-      // intervalManager.setInterval(async () => {
-      //   const success = (
-      //     await fetchAPI<{ status: string }>(
-      //       import.meta.env.VITE_API_HOST,
-      //       'music/youtube/download-status'
-      //     )
-      //   ).status
-
-      //   switch (success) {
-      //     case 'completed':
-      //       toast.success('Music downloaded successfully!')
-      //       intervalManager.clearAllIntervals()
-      //       setLoading(false)
-      //       queryClient.invalidateQueries({
-      //         queryKey: ['music', 'entries']
-      //       })
-      //       onClose()
-      //       break
-      //     case 'failed':
-      //       toast.error('Failed to download music!')
-      //       intervalManager.clearAllIntervals()
-      //       setLoading(false)
-      //       break
-      //   }
-      // }, 3000)
     } catch (error) {
       console.error('Error downloading video:', error)
       toast.error('Failed to download video')
