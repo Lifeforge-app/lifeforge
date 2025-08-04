@@ -113,7 +113,8 @@ function FormModal({
     onChange
   },
   ui: { title, icon, namespace, loading = false, onClose, submitButton },
-  actionButton
+  actionButton,
+  externalData
 }: {
   form: {
     fields: Record<string, FormFieldPropsUnion>
@@ -138,8 +139,14 @@ function FormModal({
     isRed?: boolean
     onClick?: () => void
   }
+  externalData?: {
+    data: InferFormState<typeof fieldTypes, typeof fields>
+    setData: React.Dispatch<
+      React.SetStateAction<InferFormState<typeof fieldTypes, typeof fields>>
+    >
+  }
 }) {
-  const [data, setData] = useState<
+  const [internalData, setInternalData] = useState<
     InferFormState<typeof fieldTypes, typeof fields>
   >(
     getInitialData(fieldTypes, fields, initialData) as InferFormState<
@@ -147,6 +154,10 @@ function FormModal({
       typeof fields
     >
   )
+
+  const data = externalData ? externalData.data : internalData
+
+  const setData = externalData ? externalData.setData : setInternalData
 
   const [submitLoading, setSubmitLoading] = useState(false)
 

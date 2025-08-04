@@ -8,12 +8,17 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import { type MusicEntry } from '@apps/Music/providers/MusicProvider'
+import {
+  type MusicEntry,
+  useMusicContext
+} from '@apps/Music/providers/MusicProvider'
 
 import UpdateMusicModal from '../../../../modals/UpdateMusicModal'
 
 function SideButtons({ music }: { music: MusicEntry }) {
   const queryClient = useQueryClient()
+
+  const { stopMusic, currentMusic } = useMusicContext()
 
   const open = useModalStore(state => state.open)
 
@@ -55,6 +60,10 @@ function SideButtons({ music }: { music: MusicEntry }) {
           queryClient.invalidateQueries({
             queryKey: ['music', 'entries']
           })
+
+          if (currentMusic?.id === music.id) {
+            stopMusic()
+          }
         },
         onError: error => {
           toast.error(`Failed to delete music: ${error.message}`)

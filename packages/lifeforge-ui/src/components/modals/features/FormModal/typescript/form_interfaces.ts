@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { TextInput } from '@components/inputs'
 
 /** --------- Utility Types ----------- */
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
@@ -46,6 +47,10 @@ type TextFieldProps = BaseFieldProps & {
   isPassword?: boolean
   placeholder: string
   qrScanner?: boolean
+  actionButtonProps?: React.ComponentProps<
+    typeof TextInput
+  >['actionButtonProps']
+
   __formDataType: string
   __finalDataType: string
 }

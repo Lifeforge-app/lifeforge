@@ -25,12 +25,14 @@ function FormTextInput({
     <>
       <TextInput
         actionButtonProps={
-          field.qrScanner
-            ? {
-                icon: 'tabler:qrcode',
-                onClick: openQRScanner
-              }
-            : undefined
+          field.actionButtonProps
+            ? field.actionButtonProps
+            : field.qrScanner
+              ? {
+                  icon: 'tabler:qrcode',
+                  onClick: openQRScanner
+                }
+              : undefined
         }
         disabled={field.disabled}
         icon={field.icon}

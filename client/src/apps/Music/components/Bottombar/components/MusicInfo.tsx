@@ -1,11 +1,44 @@
 import { Icon } from '@iconify/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { HamburgerMenu } from 'lifeforge-ui'
+import { Button } from 'lifeforge-ui'
+import { toast } from 'react-toastify'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 export default function MusicInfo() {
-  const { currentMusic, isPlaying } = useMusicContext()
+  const queryClient = useQueryClient()
+
+  const { currentMusic, setCurrentMusic, isPlaying } = useMusicContext()
+
+  const toggleFavouriteMutation = useMutation(
+    forgeAPI.music.entries.toggleFavourite
+      .input({
+        id: currentMusic?.id || ''
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          if (!currentMusic) return
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
+          setCurrentMusic(prev => {
+            if (!prev) return null
+
+            return { ...prev, is_favourite: !prev.is_favourite }
+          })
+          toast.success(
+            currentMusic.is_favourite
+              ? `Removed "${currentMusic.name}" from favourites`
+              : `Added "${currentMusic.name}" to favourites`
+          )
+        },
+        onError: error => {
+          toast.error(`Failed to toggle favourite: ${error.message}`)
+        }
+      })
+  )
 
   if (currentMusic === null) {
     return <></>
@@ -28,13 +61,21 @@ export default function MusicInfo() {
           <p className="text-bg-500 text-sm">{currentMusic.author}</p>
         </div>
       </div>
-      <HamburgerMenu
-        classNames={{
-          wrapper: 'md:hidden'
+      <Button
+        className={clsx(
+          'md:hidden',
+          currentMusic.is_favourite
+            ? 'text-red-500 hover:text-red-600'
+            : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
+        )}
+        icon={
+          currentMusic.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
+        }
+        variant="plain"
+        onClick={() => {
+          toggleFavouriteMutation.mutateAsync({})
         }}
-      >
-        sus
-      </HamburgerMenu>
+      />
     </div>
   )
 }

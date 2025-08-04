@@ -12,11 +12,11 @@ function QueryWrapper<T>({
   children: (data: T) => React.ReactElement | false
   showLoading?: boolean
 }) {
-  if (query.isLoading) {
+  if (query.isLoading || query.data === undefined) {
     return showLoading ? <LoadingScreen /> : <></>
   }
 
-  if (query.isError || query.data === undefined) {
+  if (query.isError) {
     return <ErrorScreen message="Failed to fetch data from server." />
   }
 

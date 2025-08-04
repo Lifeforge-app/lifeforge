@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import type { MusicEntry } from '../../providers/MusicProvider'
@@ -15,6 +16,13 @@ function UpdateMusicModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
+  const [data, setData] = useState({
+    name: initialData?.name || '',
+    author: initialData?.author || ''
+  })
+
+  const [aiParsingLoading, setAiParsingLoading] = useState(false)
 
   const mutation = useMutation(
     forgeAPI.music.entries.update
@@ -53,7 +61,39 @@ function UpdateMusicModal({
         label: 'Music Name',
         placeholder: "John Doe's Music",
         icon: 'tabler:music',
-        required: true
+        required: true,
+        actionButtonProps: {
+          icon: 'mage:stars-c',
+          loading: aiParsingLoading,
+          onClick: async () => {
+            setAiParsingLoading(true)
+
+            try {
+              const response =
+                await forgeAPI.music.youtube.parseMusicNameAndAuthor.mutate({
+                  title: initialData?.name || '',
+                  uploader: initialData?.author || ''
+                })
+
+              if (!response) {
+                toast.error('Failed to parse music name and author')
+
+                return
+              }
+
+              setData({
+                name: response.name || '',
+                author: response.author || ''
+              })
+            } catch (error) {
+              toast.error(
+                `Failed to parse music name and author: ${error instanceof Error ? error.message : String(error)}`
+              )
+            } finally {
+              setAiParsingLoading(false)
+            }
+          }
+        }
       },
       author: {
         label: 'Music Author',
@@ -68,7 +108,15 @@ function UpdateMusicModal({
     })
     .build()
 
-  return <FormModal {...formProps} />
+  return (
+    <FormModal
+      {...formProps}
+      externalData={{
+        data,
+        setData
+      }}
+    />
+  )
 }
 
 export default UpdateMusicModal
