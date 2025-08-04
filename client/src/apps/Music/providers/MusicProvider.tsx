@@ -123,6 +123,22 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const lastMusic = () => {
     if (!musicsQuery.data) return
 
+    if (isShuffle) {
+      shuffleMusic()
+
+      return
+    }
+
+    if (isRepeat) {
+      if (currentMusic !== null) {
+        playMusic(currentMusic).catch(err => {
+          toast.error(`Failed to play music. Error: ${err}`)
+        })
+      }
+
+      return
+    }
+
     const currentIndex = musicsQuery.data.findIndex(
       music => music.id === currentMusic?.id
     )
@@ -136,6 +152,22 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   const nextMusic = () => {
     if (!musicsQuery.data) return
+
+    if (isShuffle) {
+      shuffleMusic()
+
+      return
+    }
+
+    if (isRepeat) {
+      if (currentMusic !== null) {
+        playMusic(currentMusic).catch(err => {
+          toast.error(`Failed to play music. Error: ${err}`)
+        })
+      }
+
+      return
+    }
 
     const currentIndex = musicsQuery.data.findIndex(
       music => music.id === currentMusic?.id
