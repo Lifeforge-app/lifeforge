@@ -1,3 +1,4 @@
+import { fetchAI } from '@functions/external/ai'
 import { forgeController, forgeRouter } from '@functions/routes'
 import {
   addToTaskPool,
@@ -98,14 +99,7 @@ const downloadVideo = forgeController.mutation
         })
       })
 
-      downloadProcess.stdout.on('error', err => {
-        updateTaskInPool(io, downloadID, {
-          status: 'failed',
-          error: err instanceof Error ? err.message : String(err)
-        })
-      })
-
-      downloadProcess.stderr.on('data', data => {
+      downloadProcess.stdout.on('data', data => {
         const message = data.toString().trim()
 
         if (
@@ -169,7 +163,43 @@ const downloadVideo = forgeController.mutation
   )
   .statusCode(202)
 
+const PROMPT =
+  'Given a video title and uploader, extract the music title (from the video title if possible, otherwise use the whole title) and author (use composer/lyricist or original artist if mentioned, otherwise use your knowledge to identify the most likely original author; if the title is generic, choose the most widely recognized author). Do not list the uploader as author unless it is clearly original. If author is unknown, write “Unknown”. '
+
+const parseMusicNameAndAuthor = forgeController.mutation
+  .description('Parse music name and author from YouTube video using AI')
+  .input({
+    body: z.object({
+      title: z.string(),
+      uploader: z.string()
+    })
+  })
+  .callback(async ({ body: { title, uploader }, pb }) => {
+    const response = await fetchAI({
+      pb,
+      provider: 'openai',
+      model: 'gpt-4.1-mini',
+      messages: [
+        {
+          role: 'system',
+          content: PROMPT
+        },
+        {
+          role: 'user',
+          content: `Title: ${title}\nUploader: ${uploader}`
+        }
+      ],
+      structure: z.object({
+        name: z.string(),
+        author: z.string()
+      })
+    })
+
+    return response
+  })
+
 export default forgeRouter({
   getVideoInfo,
-  downloadVideo
+  downloadVideo,
+  parseMusicNameAndAuthor
 })

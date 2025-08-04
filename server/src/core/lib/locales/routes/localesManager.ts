@@ -3,7 +3,6 @@ import { fetchAI } from '@functions/external/ai'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import fs from 'fs'
-import { z as zOld } from 'zod/v3'
 import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../../../constants/locales'
@@ -341,11 +340,11 @@ const getTranslationSuggestions = forgeController.mutation
       query: { namespace, subnamespace },
       body: { path, hint }
     }) => {
-      const LocaleSuggestions = zOld.object({
-        en: zOld.string(),
-        ms: zOld.string(),
-        'zh-CN': zOld.string(),
-        'zh-TW': zOld.string()
+      const LocaleSuggestions = z.object({
+        en: z.string(),
+        ms: z.string(),
+        'zh-CN': z.string(),
+        'zh-TW': z.string()
       })
 
       const prompt = `Translate i18n locale keys into natural language suitable for user interface elements such as buttons, labels, and descriptions. The input will be an array of two elements: the first is a locale key in the format {namespace}.{subnamespace}:{key}, and the second is an optional user-provided hint for reference.
