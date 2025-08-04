@@ -2,21 +2,7 @@ import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import humanNumber from 'human-number'
 
-import {
-  type IYoutubePlaylistVideoEntry,
-  type IYoutubeVideoInfo
-} from '../../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
-
-function VideoInfo({
-  videoInfo
-}: {
-  videoInfo:
-    | IYoutubeVideoInfo
-    | (IYoutubePlaylistVideoEntry & {
-        likeCount?: number
-        uploadDate?: string
-      })
-}) {
+function VideoInfo({ videoInfo }: { videoInfo: any }) {
   return (
     <>
       <div className="border-bg-800 relative w-64 shrink-0 overflow-hidden rounded-md border">

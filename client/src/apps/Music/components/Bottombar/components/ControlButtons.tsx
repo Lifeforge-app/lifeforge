@@ -1,9 +1,8 @@
 import clsx from 'clsx'
+import { Button } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
-
-import IconButton from './IconButton'
 
 export default function ControlButtons({
   isWidget = false,
@@ -31,46 +30,32 @@ export default function ControlButtons({
   return (
     <div className={clsx('flex-center gap-2', !isWidget && 'xl:w-1/3')}>
       {(isFull || !isWidget) && (
-        <IconButton
-          className={clsx(
-            'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50',
-            isShuffle && 'text-custom-500 hover:text-custom-600'
-          )}
+        <Button
           icon="uil:shuffle"
+          variant={isShuffle ? 'tertiary' : 'plain'}
           onClick={() => {
             setIsShuffle(!isShuffle)
             if (isShuffle) setIsRepeat(false)
           }}
         />
       )}
-      <IconButton
-        className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50"
-        icon="tabler:skip-back"
-        onClick={lastMusic}
-      />
-      <IconButton
-        className="bg-bg-500 shadow-custom hover:bg-custom-500! dark:bg-bg-100 dark:text-bg-800 mx-2 rounded-full p-4 text-white"
+      <Button icon="tabler:skip-back" variant="plain" onClick={lastMusic} />
+      <Button
         icon={
           isPlaying ? 'tabler:player-pause-filled' : 'tabler:player-play-filled'
         }
+        variant={!isPlaying ? 'primary' : 'plain'}
         onClick={() => {
           togglePlay(currentMusic).catch(err => {
             toast.error(`Failed to play music. Error: ${err}`)
           })
         }}
       />
-      <IconButton
-        className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50"
-        icon="tabler:skip-forward"
-        onClick={nextMusic}
-      />
+      <Button icon="tabler:skip-forward" variant="plain" onClick={nextMusic} />
       {(isFull || !isWidget) && (
-        <IconButton
-          className={clsx(
-            'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50',
-            isRepeat && 'text-custom-500 hover:text-custom-600'
-          )}
+        <Button
           icon="uil:repeat"
+          variant={isRepeat ? 'tertiary' : 'plain'}
           onClick={() => {
             setIsRepeat(!isRepeat)
             if (isRepeat) setIsShuffle(false)

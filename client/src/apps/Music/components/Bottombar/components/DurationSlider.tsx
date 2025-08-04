@@ -29,7 +29,7 @@ function DurationSlider() {
         type="range"
         value={currentDuration}
         onChange={e => {
-          audio.currentTime = +e.target.value
+          audio.current.currentTime = +e.target.value
           setCurrentDuration(+e.target.value)
         }}
       ></input>
