@@ -6,7 +6,7 @@ export default rateLimit({
   max: 250,
   skip: async req => {
     if (
-      req.path.startsWith('/media/') ||
+      req.path.startsWith('/media') ||
       [
         '/code-time/user/minutes',
         '/code-time/eventLog',
