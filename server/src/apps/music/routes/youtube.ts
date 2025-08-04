@@ -135,6 +135,8 @@ const downloadVideo = forgeController.mutation
           }
         }
       )
+
+      return downloadID
     }
   )
   .statusCode(202)
