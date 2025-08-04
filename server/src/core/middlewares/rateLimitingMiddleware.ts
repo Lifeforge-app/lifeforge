@@ -16,7 +16,8 @@ export default rateLimit({
         '/user/auth/login',
         '/books-library/cover',
         '/status',
-        '/youtube-videos/video/thumbnail'
+        '/youtube-videos/video/thumbnail',
+        '/locales'
       ].some(route => req.path.trim().startsWith(route))
     ) {
       return true
