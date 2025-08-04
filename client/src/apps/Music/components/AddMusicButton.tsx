@@ -4,7 +4,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import YoutubeDownloaderModal from '../modals/YoutubeDownloaderModal'
+import YoutubeDownloaderModal from './modals/YoutubeDownloaderModal'
 
 function AddMusicButton() {
   const open = useModalStore(state => state.open)
