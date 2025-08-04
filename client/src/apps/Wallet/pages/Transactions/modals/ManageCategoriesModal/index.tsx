@@ -44,14 +44,15 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
             </>
           ) : (
             <EmptyStateScreen
-              ctaContent="new"
-              ctaTProps={{
-                item: t('items.category')
+              CTAButtonProps={{
+                children: 'new',
+                icon: 'tabler:plus',
+                onClick: handleCreateIncomeCategory,
+                tProps: { item: t('items.category') }
               }}
               icon="tabler:apps-off"
               name="categories"
               namespace="apps.wallet"
-              onCTAClick={handleCreateIncomeCategory}
             />
           )
         }

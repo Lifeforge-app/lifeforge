@@ -1,5 +1,3 @@
-import { Button } from '@components/buttons'
-
 import { useAPIOnlineStatus } from 'shared'
 
 import EmptyStateScreen from './EmptyStateScreen'
@@ -19,15 +17,11 @@ export default function APIOnlineStatusWrapper({
   if (isOnline === false) {
     return (
       <EmptyStateScreen
-        customCTAButton={
-          <Button
-            className="bg-black! text-white!"
-            icon="tabler:refresh"
-            onClick={retry}
-          >
-            Retry
-          </Button>
-        }
+        CTAButtonProps={{
+          children: 'Retry',
+          onClick: retry,
+          icon: 'tabler:refresh'
+        }}
         description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
         icon="tabler:wifi-off"
         name={false}

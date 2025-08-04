@@ -59,14 +59,7 @@ function BackupItem({
       return
     }
 
-    const arrayBuffer = buffer.buffer.slice(
-      buffer.byteOffset,
-      buffer.byteOffset + buffer.byteLength
-    )
-
-    const blob = new Blob([arrayBuffer as BlobPart], {
-      type: 'application/zip'
-    })
+    const blob = new Blob([buffer as any], { type: 'application/zip' })
 
     const url = URL.createObjectURL(blob)
 
@@ -99,7 +92,7 @@ function BackupItem({
           className="text-bg-500 ml-2 size-7 shrink-0"
           icon="tabler:file-zip"
         />
-        <div>
+        <div className="w-full min-w-0">
           <h3 className="flex w-full min-w-0 items-end gap-2 text-lg font-medium">
             <p className="truncate">{backup.key}</p>{' '}
             <p className="text-bg-500 mb-0.5 block text-sm whitespace-nowrap">

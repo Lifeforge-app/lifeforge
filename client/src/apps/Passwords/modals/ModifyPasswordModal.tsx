@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
+import copy from 'copy-to-clipboard'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
@@ -26,6 +28,15 @@ function ModifyPasswordModal({
   const queryClient = useQueryClient()
 
   const { masterPassword } = usePasswordContext()
+
+  const [data, setData] = useState({
+    name: initialData?.name ?? '',
+    icon: initialData?.icon ?? '',
+    color: initialData?.color ?? '',
+    website: initialData?.website ?? '',
+    username: initialData?.username ?? '',
+    password: initialData?.decrypted ?? ''
+  })
 
   const mutation = useMutation(
     (type === 'create'
@@ -93,16 +104,42 @@ function ModifyPasswordModal({
         icon: 'tabler:key',
         placeholder: 'Your password',
         required: true,
-        isPassword: true
+        isPassword: true,
+        actionButtonProps: {
+          icon: 'tabler:dice',
+          onClick: () => {
+            const alphabets = 'abcdefghijklmnopqrstuvwxyz'
+
+            const ALPHABETS = alphabets.toUpperCase()
+
+            const numbers = '0123456789'
+
+            const symbols = '!@#$%^&*()_+[]{}|;:,.<>?'
+
+            const allCharacters = `${alphabets}${ALPHABETS}${numbers}${symbols}`
+
+            const passwordLength = 16
+
+            let generatedPassword = ''
+
+            for (let i = 0; i < passwordLength; i++) {
+              const randomIndex = Math.floor(
+                Math.random() * allCharacters.length
+              )
+
+              generatedPassword += allCharacters[randomIndex]
+            }
+
+            setData(prev => ({
+              ...prev,
+              password: generatedPassword
+            }))
+
+            copy(generatedPassword)
+            toast.success('Password copied to clipboard')
+          }
+        }
       }
-    })
-    .initialData({
-      name: initialData?.name ?? '',
-      icon: initialData?.icon ?? '',
-      color: initialData?.color ?? '',
-      website: initialData?.website ?? '',
-      username: initialData?.username ?? '',
-      password: initialData?.decrypted ?? ''
     })
     .onSubmit(async data => {
       const challenge = await forgeAPI.passwords.entries.getChallenge.query()
@@ -119,7 +156,15 @@ function ModifyPasswordModal({
     })
     .build()
 
-  return <FormModal {...formProps} />
+  return (
+    <FormModal
+      {...formProps}
+      externalData={{
+        data,
+        setData
+      }}
+    />
+  )
 }
 
 export default ModifyPasswordModal

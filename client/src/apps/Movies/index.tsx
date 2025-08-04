@@ -140,14 +140,15 @@ function Movies() {
 
               {data.entries.length === 0 ? (
                 <EmptyStateScreen
-                  ctaContent={t('common.buttons:new', {
-                    item: t('apps.movies:items.movie')
-                  })}
-                  ctaIcon="tabler:plus"
+                  CTAButtonProps={{
+                    onClick: handleOpenTMDBModal,
+                    tProps: { item: t('items.movie') },
+                    icon: 'tabler:plus',
+                    children: 'new'
+                  }}
                   icon="tabler:movie-off"
                   name="library"
                   namespace="apps.movies"
-                  onCTAClick={handleOpenTMDBModal}
                 />
               ) : (
                 <FinalComponent

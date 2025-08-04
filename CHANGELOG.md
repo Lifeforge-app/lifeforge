@@ -9,6 +9,8 @@
 - **Music**: Replaced custom `IconButton` with `Button` component from `lifeforge-ui`.
 - **Music**: Music will now be stopped igf the current music is deleted.
 - **Music**: Minor bug fixes and UI improvements.
+- **Passwords**: User can now generate passwords in the `ModifyPasswordModal`.
+- **Passwords**: User can now rotate the password in the password list by clicking the rotate button in the context menu.
 - **CFOP Algorithms**: Added this module back.
 - **Changi Airport Flight Status**: Added this module back.
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.

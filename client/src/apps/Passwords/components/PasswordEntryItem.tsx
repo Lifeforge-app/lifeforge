@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { encrypt } from '@security/utils/encryption'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
@@ -45,6 +46,8 @@ function PasswordEntryItem({
   const [loading, setLoading] = useState(false)
 
   const [copyLoading, setCopyLoading] = useState(false)
+
+  const [rotateLoading, setRotateLoading] = useState(false)
 
   const deleteMutation = useMutation(
     forgeAPI.passwords.entries.remove
@@ -201,6 +204,64 @@ function PasswordEntryItem({
             onClick={copyPassword}
           />
           <HamburgerMenu>
+            <MenuItem
+              icon="tabler:rotate"
+              loading={rotateLoading}
+              text="Rotate Password"
+              onClick={async () => {
+                setRotateLoading(true)
+
+                const alphabets = 'abcdefghijklmnopqrstuvwxyz'
+
+                const ALPHABETS = alphabets.toUpperCase()
+
+                const numbers = '0123456789'
+
+                const symbols = '!@#$%^&*()_+[]{}|;:,.<>?'
+
+                const allCharacters = `${alphabets}${ALPHABETS}${numbers}${symbols}`
+
+                const passwordLength = 16
+
+                let generatedPassword = ''
+
+                for (let i = 0; i < passwordLength; i++) {
+                  const randomIndex = Math.floor(
+                    Math.random() * allCharacters.length
+                  )
+
+                  generatedPassword += allCharacters[randomIndex]
+                }
+
+                const challenge =
+                  await forgeAPI.passwords.entries.getChallenge.query()
+
+                const encryptedMaster = encrypt(masterPassword, challenge)
+
+                const encryptedPassword = encrypt(generatedPassword, challenge)
+
+                await forgeAPI.passwords.entries.update
+                  .input({
+                    id: password.id
+                  })
+                  .mutate({
+                    ...password,
+                    password: encryptedPassword,
+                    master: encryptedMaster
+                  })
+
+                copy(generatedPassword)
+                toast.success('Password copied to clipboard')
+
+                setRotateLoading(false)
+
+                queryClient.invalidateQueries({
+                  queryKey: ['passwords', 'entries']
+                })
+
+                setDecryptedPassword(generatedPassword)
+              }}
+            />
             <MenuItem
               className="flex sm:hidden"
               icon={

@@ -2,7 +2,6 @@ import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import { EmptyStateScreen, FAB, QueryWrapper, SearchInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -17,8 +16,6 @@ import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 
 function TodoListContainer() {
-  const { t } = useTranslation('apps.todoList')
-
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { entriesQuery, setModifyTaskWindowOpenType, setSelectedTask } =

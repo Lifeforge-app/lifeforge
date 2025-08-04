@@ -41,7 +41,7 @@ function ConfigColumn({
       <div
         ref={ref}
         className={clsx(
-          'flex w-full min-w-0 flex-col justify-between gap-8 px-4',
+          'shadow-custom component-bg flex w-full min-w-0 flex-col justify-between gap-8 rounded-lg p-4',
           !vertical &&
             !noDefaultBreakpoints &&
             {
@@ -55,7 +55,7 @@ function ConfigColumn({
         )}
       >
         <div className="flex shrink items-center gap-3">
-          <Icon className="text-bg-500 size-6 shrink-0" icon={icon} />
+          <Icon className="text-bg-500 mx-3 size-6 shrink-0" icon={icon} />
           <div>
             <h3 className="flex w-full items-center gap-2 text-xl leading-normal font-medium md:w-auto">
               {title}
@@ -72,9 +72,6 @@ function ConfigColumn({
           {children}
         </div>
       </div>
-      {hasDivider && (
-        <div className="border-bg-200 dark:border-bg-800/50 my-6 w-full border-b-[1.5px]" />
-      )}
     </>
   )
 }
