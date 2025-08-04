@@ -178,21 +178,13 @@ const download = forgeController.mutation
                   [fs.readFileSync(`./medium/${id}.pdf`)],
                   `${id}.pdf`
                 ),
-                type: (() => {
-                  switch (category) {
-                    case '弹唱吉他谱':
-                      return 'singalong'
-                    case '指弹吉他谱':
-                      return 'fingerstyle'
-                    default:
-                      return ''
-                  }
-                })(),
+                type: '',
                 thumbnail: new File(
                   [fs.readFileSync(`./medium/${id}/0.jpg`)],
                   `${id}.jpeg`
                 )
               })
+              .execute()
 
             fs.rmdirSync(folder, { recursive: true })
             fs.unlinkSync(`./medium/${id}.pdf`)
