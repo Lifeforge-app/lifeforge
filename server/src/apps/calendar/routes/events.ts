@@ -8,7 +8,6 @@ import { Location } from '@typescript/location.types'
 import fs from 'fs'
 import moment from 'moment'
 import rrule from 'rrule'
-import { z as zOld } from 'zod'
 import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
@@ -400,13 +399,13 @@ const scanImage = forgeController.mutation
 
     const categoryList = categories.map(category => category.name)
 
-    const responseStructure = zOld.object({
-      title: zOld.string(),
-      start: zOld.string(),
-      end: zOld.string(),
-      location: zOld.string().nullable(),
-      description: zOld.string().nullable(),
-      category: zOld.string().nullable()
+    const responseStructure = z.object({
+      title: z.string(),
+      start: z.string(),
+      end: z.string(),
+      location: z.string().nullable(),
+      description: z.string().nullable(),
+      category: z.string().nullable()
     })
 
     const base64Image = fs.readFileSync(file.path, {
