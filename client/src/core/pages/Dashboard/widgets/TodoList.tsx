@@ -37,17 +37,18 @@ function TodoListContent() {
           ) : (
             <EmptyStateScreen
               smaller
-              ctaContent="new"
-              ctaTProps={{
-                item: t('items.task')
+              CTAButtonProps={{
+                icon: 'tabler:plus',
+                tProps: { item: t('items.task') },
+                children: 'new',
+                onClick: () => {
+                  navigate('/todo-list#new')
+                }
               }}
               icon="tabler:calendar-smile"
               name="today"
               namespace="core.dashboard"
               tKey="widgets.todoList"
-              onCTAClick={() => {
-                navigate('/todo-list#new')
-              }}
             />
           )}
         </ul>

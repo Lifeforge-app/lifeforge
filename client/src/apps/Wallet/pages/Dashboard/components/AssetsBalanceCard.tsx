@@ -84,16 +84,17 @@ function AssetsBalanceCard() {
           ) : (
             <EmptyStateScreen
               smaller
-              ctaContent="new"
-              ctaTProps={{
-                item: t('items.asset')
+              CTAButtonProps={{
+                children: 'new',
+                icon: 'tabler:plus',
+                onClick: () => {
+                  navigate('/wallet/assets#new')
+                },
+                tProps: { item: t('items.asset') }
               }}
               icon="tabler:wallet-off"
               name="assets"
               namespace="apps.wallet"
-              onCTAClick={() => {
-                navigate('/wallet/assets')
-              }}
             />
           )
         }

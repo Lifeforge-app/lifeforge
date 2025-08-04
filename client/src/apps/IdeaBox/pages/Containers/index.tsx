@@ -70,14 +70,15 @@ function IdeaBox() {
             <ContainerList filteredList={filteredList} />
           ) : (
             <EmptyStateScreen
-              ctaContent="new"
-              ctaTProps={{
-                item: t('items.container')
+              CTAButtonProps={{
+                children: 'new',
+                onClick: handleCreateContainer,
+                icon: 'tabler:plus',
+                tProps: { item: t('items.container') }
               }}
               icon="tabler:cube-off"
               name="container"
               namespace="apps.ideaBox"
-              onCTAClick={handleCreateContainer}
             />
           )
         }

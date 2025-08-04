@@ -1,7 +1,8 @@
-import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
+import { EmptyStateScreen, Scrollbar, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import type { WishlistEntry } from '..'
+import ModifyEntryModal from '../modals/ModifyEntryModal'
 import EntryItem from './EntryItem'
 
 function EntryList({
@@ -11,14 +12,22 @@ function EntryList({
   filteredEntries: WishlistEntry[]
   isTotallyEmpty: boolean
 }) {
+  const open = useModalStore(state => state.open)
+
   const { t } = useTranslation('apps.wishlist')
 
-  if (!isTotallyEmpty) {
+  if (isTotallyEmpty) {
     return (
       <EmptyStateScreen
-        ctaContent="new"
-        ctaTProps={{
-          item: t('items.entry')
+        CTAButtonProps={{
+          children: 'new',
+          onClick: () => {
+            open(ModifyEntryModal, {
+              type: 'create'
+            })
+          },
+          tProps: { item: t('items.entry') },
+          icon: 'tabler:plus'
         }}
         icon="tabler:shopping-cart-off"
         name="entries"

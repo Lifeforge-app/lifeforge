@@ -72,14 +72,15 @@ function Ledgers() {
               </div>
             ) : (
               <EmptyStateScreen
-                ctaContent="new"
-                ctaTProps={{
-                  item: t('items.ledger')
+                CTAButtonProps={{
+                  children: 'new',
+                  icon: 'tabler:plus',
+                  onClick: handleCreateLedger,
+                  tProps: { item: t('items.ledger') }
                 }}
                 icon="tabler:wallet-off"
                 name="ledger"
                 namespace="apps.wallet"
-                onCTAClick={() => handleCreateLedger()}
               />
             )}
             {ledgers.length > 0 && (
