@@ -411,7 +411,7 @@
         "music-metadata": "^7.14.0",
         "nodemailer": "^7.0.3",
         "open-graph-scraper": "^6.8.2",
-        "openai": "^5.6.0",
+        "openai": "^5.11.0",
         "os-utils": "^0.0.14",
         "pdf-page-counter": "^1.0.3",
         "pdf-thumbnail": "^1.0.6",
@@ -3429,7 +3429,7 @@
 
     "open-graph-scraper": ["open-graph-scraper@6.10.0", "", { "dependencies": { "chardet": "^2.1.0", "cheerio": "^1.0.0-rc.12", "iconv-lite": "^0.6.3", "undici": "^6.21.2" } }, "sha512-JTuaO/mWUPduYCIQvunmsQnfGpSRFUTEh4k5cW2KOafJxTm3Z99z25/c1oO9QnIh2DK7ol5plJAq3EUVy+5xyw=="],
 
-    "openai": ["openai@5.10.1", "", { "peerDependencies": { "ws": "^8.18.0", "zod": "^3.23.8" }, "optionalPeers": ["ws", "zod"], "bin": { "openai": "bin/cli" } }, "sha512-fq6xVfv1/gpLbsj8fArEt3b6B9jBxdhAK+VJ+bDvbUvNd+KTLlA3bnDeYZaBsGH9LUhJ1M1yXfp9sEyBLMx6eA=="],
+    "openai": ["openai@5.11.0", "", { "peerDependencies": { "ws": "^8.18.0", "zod": "^3.23.8" }, "optionalPeers": ["ws", "zod"], "bin": { "openai": "bin/cli" } }, "sha512-+AuTc5pVjlnTuA9zvn8rA/k+1RluPIx9AD4eDcnutv6JNwHHZxIhkFy+tmMKCvmMFDQzfA/r1ujvPWB19DQkYg=="],
 
     "opencollective-postinstall": ["opencollective-postinstall@2.0.3", "", { "bin": { "opencollective-postinstall": "index.js" } }, "sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q=="],
 
