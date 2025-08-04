@@ -7,10 +7,6 @@ import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import MusicListItem from './components/MusicListItem'
 
-const AS = AutoSizer as any
-
-const L = List as any
-
 function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
   const { musicsQuery } = useMusicContext()
 
@@ -30,6 +26,10 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
         music.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
       )[index]
 
+      if (!music) {
+        return null
+      }
+
       return (
         <div key={key} style={style}>
           <MusicListItem music={music} />
@@ -42,23 +42,23 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
   return (
     <QueryWrapper query={musicsQuery}>
       {musics => (
-        <AS>
+        <AutoSizer>
           {({ height, width }: { height: number; width: number }) => (
-            <L
+            <List
               height={height}
               rowCount={
                 musics.filter(music =>
                   music.name
                     .toLowerCase()
                     .includes(debouncedSearchQuery.toLowerCase())
-                ).length
+                ).length + 2
               }
-              rowHeight={60}
+              rowHeight={66}
               rowRenderer={rowRenderer}
               width={width}
             />
           )}
-        </AS>
+        </AutoSizer>
       )}
     </QueryWrapper>
   )

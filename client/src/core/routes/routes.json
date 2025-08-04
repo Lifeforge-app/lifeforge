@@ -34,7 +34,8 @@
     "title": "Storage",
     "items": [
       "@apps/BooksLibrary",
-      "@apps/ScoresLibrary"
+      "@apps/ScoresLibrary",
+      "@apps/Music"
     ]
   },
   {

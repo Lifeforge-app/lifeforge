@@ -1,44 +1,40 @@
-import {
-  type UseQueryResult,
-  useQuery,
-  useQueryClient
-} from '@tanstack/react-query'
+import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { parse as parseCookie } from 'cookie'
 import {
   type ReactNode,
   createContext,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react'
 import { toast } from 'react-toastify'
-
-import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
+import type { InferOutput } from 'shared'
 
 import { useAuth } from '../../../core/providers/AuthProvider'
 
+export type MusicEntry = InferOutput<typeof forgeAPI.music.entries.list>[number]
+
 interface IMusicContext {
   // Audio related
-  audio: HTMLAudioElement
+  audio: React.RefObject<HTMLAudioElement>
   isPlaying: boolean
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
-  currentMusic: IMusicEntry | null
-  setCurrentMusic: React.Dispatch<React.SetStateAction<IMusicEntry | null>>
+  currentMusic: MusicEntry | null
+  setCurrentMusic: React.Dispatch<React.SetStateAction<MusicEntry | null>>
   currentDuration: number
   setCurrentDuration: React.Dispatch<React.SetStateAction<number>>
   volume: number
   setVolume: React.Dispatch<React.SetStateAction<number>>
-  togglePlay: (music: IMusicEntry) => Promise<void>
-  playMusic: (music: IMusicEntry) => Promise<void>
+  togglePlay: (music: MusicEntry) => Promise<void>
+  playMusic: (music: MusicEntry) => Promise<void>
   stopMusic: () => void
   lastMusic: () => void
   nextMusic: () => void
 
   // Music list related
-  musicsQuery: UseQueryResult<IMusicEntry[]>
-  toggleFavourite: (music: IMusicEntry) => Promise<void>
+  musicsQuery: UseQueryResult<MusicEntry[]>
 
   // Search related
   searchQuery: string
@@ -58,11 +54,9 @@ interface IMusicContext {
 const MusicContext = createContext<IMusicContext | undefined>(undefined)
 
 export function MusicProvider({ children }: { children: ReactNode }) {
-  const queryClient = useQueryClient()
-
   const { auth } = useAuth()
 
-  const [audio] = useState(new Audio())
+  const audio = useRef(new Audio())
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -76,7 +70,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const [currentMusic, setCurrentMusic] = useState<IMusicEntry | null>(null)
+  const [currentMusic, setCurrentMusic] = useState<MusicEntry | null>(null)
 
   const [currentDuration, setCurrentDuration] = useState(0)
 
@@ -86,9 +80,9 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   const [volume, setVolume] = useState(80)
 
-  const playMusic = async (music: IMusicEntry) => {
+  const playMusic = async (music: MusicEntry) => {
     setCurrentMusic(music)
-    audio.src = forgeAPI.media.input({
+    audio.current.src = forgeAPI.media.input({
       collectionId: music.collectionId,
       recordId: music.id,
       fieldId: music.file
@@ -96,61 +90,15 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
     setCurrentDuration(0)
     setIsPlaying(true)
-    await audio.play()
+    await audio.current.play()
   }
 
-  async function toggleFavourite(targetMusic: IMusicEntry) {
-    queryClient.setQueryData<IMusicEntry[]>(
-      ['music', 'entries'],
-      prevMusics =>
-        prevMusics?.map(music =>
-          music.id === targetMusic.id
-            ? { ...music, is_favourite: !music.is_favourite }
-            : music
-        ) ?? []
-    )
-
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_HOST}/music/entries/favourite/${
-          targetMusic.id
-        }`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${parseCookie(document.cookie).session}`
-          }
-        }
-      )
-
-      if (response.status !== 200) {
-        throw new Error('Failed to add music to favourites!')
-      }
-
-      if (targetMusic.is_favourite) {
-        toast.info('Music removed from favourites!')
-      } else {
-        toast.success('Music added to favourites!')
-      }
-
-      setCurrentMusic(prevMusic =>
-        prevMusic !== null && prevMusic.id === targetMusic.id
-          ? { ...prevMusic, is_favourite: !prevMusic.is_favourite }
-          : prevMusic
-      )
-    } catch (err) {
-      queryClient.invalidateQueries({ queryKey: ['music', 'entries'] })
-      toast.error(`Oops! Couldn't add music to favourites! ${err as string}`)
-    }
-  }
-
-  async function togglePlay(music: IMusicEntry) {
+  async function togglePlay(music: MusicEntry) {
     if (currentMusic?.id === music.id) {
       if (isPlaying) {
-        audio.pause()
+        audio.current.pause()
       } else {
-        await audio.play()
+        await audio.current.play()
       }
       setIsPlaying(!isPlaying)
     } else {
@@ -159,7 +107,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   }
 
   const stopMusic = () => {
-    audio.pause()
+    audio.current.pause()
     setCurrentDuration(0)
     setCurrentMusic(null)
     setIsPlaying(false)
@@ -221,15 +169,15 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     }
 
     const updateDuration = () => {
-      setCurrentDuration(audio.currentTime)
+      setCurrentDuration(audio.current.currentTime)
     }
 
-    audio.addEventListener('ended', onEnd)
+    audio.current.addEventListener('ended', onEnd)
 
     const interval = setInterval(updateDuration, 1000)
 
     return () => {
-      audio.removeEventListener('ended', onEnd)
+      audio.current.removeEventListener('ended', onEnd)
       clearInterval(interval)
     }
   }, [audio, musicsQuery.data, currentMusic, isShuffle, isRepeat])
@@ -254,7 +202,6 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
       // Music list related
       musicsQuery,
-      toggleFavourite,
 
       // Search related
       searchQuery,

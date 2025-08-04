@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 
-import { type IMusicEntry } from '../../../interfaces/music_interfaces'
+import type { MusicEntry } from '@apps/Music/providers/MusicProvider'
+
 import PlayStateIndicator from './components/PlayStateIndicator'
 import SideButtons from './components/SideButtons'
 
@@ -10,9 +11,9 @@ function formatDuration(duration: string): string {
     .format(+duration > 3600 ? 'H:mm:ss' : 'm:ss')
 }
 
-function MusicListItem({ music }: { music: IMusicEntry }) {
+function MusicListItem({ music }: { music: MusicEntry }) {
   return (
-    <div className="flex w-full min-w-0 items-center py-2">
+    <div className="component-bg shadow-custom flex w-full min-w-0 items-center rounded-md p-2">
       <div className="flex w-full min-w-0 items-center gap-2 sm:w-7/12 sm:shrink-0 lg:w-5/12">
         <PlayStateIndicator music={music} />
         <div className="w-full min-w-0">
