@@ -4,7 +4,7 @@ import humanNumber from 'human-number'
 
 function VideoInfo({ videoInfo }: { videoInfo: any }) {
   return (
-    <>
+    <div className="flex w-full items-center gap-6">
       <div className="border-bg-800 relative w-64 shrink-0 overflow-hidden rounded-md border">
         <img
           alt=""
@@ -22,18 +22,23 @@ function VideoInfo({ videoInfo }: { videoInfo: any }) {
         <p className="text-custom-500 mt-1">{videoInfo.uploader}</p>
         {videoInfo.uploadDate !== undefined && (
           <p className="text-bg-500 mt-4">
-            {humanNumber(+videoInfo.viewCount)} views •{' '}
-            {dayjs(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
+            {humanNumber(+videoInfo.viewCount, n =>
+              Number.parseFloat(`${n}`).toFixed(2)
+            )}{' '}
+            views • {dayjs(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
           </p>
         )}
         {videoInfo.likeCount !== undefined && (
           <p className="text-bg-500 mt-1 flex items-center gap-1">
-            <Icon icon="uil:thumbs-up" /> {humanNumber(+videoInfo.likeCount)}{' '}
+            <Icon icon="uil:thumbs-up" />{' '}
+            {humanNumber(+videoInfo.likeCount, n =>
+              Number.parseFloat(`${n}`).toFixed(2)
+            )}{' '}
             likes
           </p>
         )}
       </div>
-    </>
+    </div>
   )
 }
 
