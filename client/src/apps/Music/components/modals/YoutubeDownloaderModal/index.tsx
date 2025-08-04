@@ -38,6 +38,8 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
 
   const [targetMusicAuthor, setTargetMusicAuthor] = useState('')
 
+  const [aiParsingLoading, setAiParsingLoading] = useState(false)
+
   async function downloadVideo() {
     try {
       setDownloadProgress('Downloading...')
@@ -47,8 +49,8 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
           id: videoURL.match(URL_REGEX)?.groups?.id ?? ''
         })
         .mutate({
-          title: videoInfoQuery.data?.title ?? 'Unknown Title',
-          uploader: videoInfoQuery.data?.uploader ?? 'Unknown Author',
+          title: targetMusicName || videoInfoQuery.data?.title || '',
+          uploader: targetMusicAuthor || videoInfoQuery.data?.uploader || '',
           duration: parseInt(videoInfoQuery.data?.duration ?? '0', 10)
         })
 
@@ -88,7 +90,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   }, [videoInfoQuery.data])
 
   return (
-    <div className="max-w-[40vw] min-w-[40vw]">
+    <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:brand-youtube"
         namespace="apps.music"
@@ -108,16 +110,46 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
         setValue={setVideoURLInput}
         value={videoURLinput}
       />
-      <div className="mt-6">
+      <div className="mt-3">
         {URL_REGEX.test(videoURL) && (
           <QueryWrapper query={videoInfoQuery}>
             {videoInfo => (
-              <>
+              <div className="space-y-3">
                 <VideoInfo videoInfo={videoInfo} />
                 <TextInput
                   actionButtonProps={{
                     icon: 'mage:stars-c',
-                    onClick: () => {}
+                    loading: aiParsingLoading,
+                    onClick: async () => {
+                      if (!videoInfoQuery.data) return
+
+                      setAiParsingLoading(true)
+
+                      try {
+                        const response =
+                          await forgeAPI.music.youtube.parseMusicNameAndAuthor.mutate(
+                            {
+                              title: videoInfoQuery.data?.title || '',
+                              uploader: videoInfoQuery.data?.uploader || ''
+                            }
+                          )
+
+                        if (!response) {
+                          toast.error('Failed to parse music name and author')
+
+                          return
+                        }
+
+                        setTargetMusicName(response.name || '')
+                        setTargetMusicAuthor(response.author || '')
+                      } catch (error) {
+                        toast.error(
+                          `Failed to parse music name and author: ${error instanceof Error ? error.message : String(error)}`
+                        )
+                      } finally {
+                        setAiParsingLoading(false)
+                      }
+                    }
                   }}
                   icon="tabler:music"
                   label="Music Name"
@@ -151,7 +183,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
                     {downloadProgress}
                   </div>
                 )}
-              </>
+              </div>
             )}
           </QueryWrapper>
         )}

@@ -1,4 +1,3 @@
-/* eslint-disable react-compiler/react-compiler */
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
@@ -13,17 +12,15 @@ export default function VolumeControl() {
   const { audio, currentMusic, setCurrentMusic, setVolume, volume } =
     useMusicContext()
 
-  if (currentMusic === null) {
-    return <></>
-  }
-
   const toggleFavouriteMutation = useMutation(
     forgeAPI.music.entries.toggleFavourite
       .input({
-        id: currentMusic.id
+        id: currentMusic?.id || ''
       })
       .mutationOptions({
         onSuccess: () => {
+          if (!currentMusic) return
+
           queryClient.invalidateQueries({
             queryKey: ['music', 'entries']
           })
@@ -43,6 +40,10 @@ export default function VolumeControl() {
         }
       })
   )
+
+  if (currentMusic === null) {
+    return <></>
+  }
 
   return (
     <div className="hidden w-1/3 items-center justify-end gap-2 xl:flex">

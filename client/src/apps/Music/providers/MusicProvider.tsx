@@ -82,6 +82,13 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   const playMusic = async (music: MusicEntry) => {
     setCurrentMusic(music)
+    console.log(
+      forgeAPI.media.input({
+        collectionId: music.collectionId,
+        recordId: music.id,
+        fieldId: music.file
+      }).endpoint
+    )
     audio.current.src = forgeAPI.media.input({
       collectionId: music.collectionId,
       recordId: music.id,
