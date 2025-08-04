@@ -4,8 +4,8 @@ import humanNumber from 'human-number'
 
 function VideoInfo({ videoInfo }: { videoInfo: any }) {
   return (
-    <div className="flex w-full items-center gap-6">
-      <div className="border-bg-800 relative w-64 shrink-0 overflow-hidden rounded-md border">
+    <div className="component-bg-lighter shadow-custom flex w-full flex-col items-center gap-6 rounded-md p-4 md:flex-row">
+      <div className="border-bg-800 relative shrink-0 overflow-hidden rounded-md border md:w-64">
         <img
           alt=""
           className="size-full object-cover"

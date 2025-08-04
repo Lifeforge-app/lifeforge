@@ -10,7 +10,8 @@ function FAB({
   alwaysShow = false,
   as,
   isRed,
-  loading
+  loading,
+  className
 }: {
   onClick?: () => void
   icon?: string
@@ -20,6 +21,7 @@ function FAB({
   as?: React.ElementType
   isRed?: boolean
   loading?: boolean
+  className?: string
 }) {
   return (
     <Button
@@ -33,7 +35,8 @@ function FAB({
             md: 'md:hidden',
             lg: 'lg:hidden',
             xl: 'xl:hidden'
-          }[hideWhen]
+          }[hideWhen],
+        className
       )}
       icon={icon}
       isRed={isRed}

@@ -82,7 +82,7 @@ function Music() {
             </QueryWrapper>
           </Scrollbar>
         </div>
-        {currentMusic !== null && <BottomBar />}
+        <BottomBar />
       </div>
     </ModuleWrapper>
   )
