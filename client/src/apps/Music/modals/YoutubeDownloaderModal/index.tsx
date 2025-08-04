@@ -1,7 +1,10 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
 import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import VideoInfo from './components/VideoInfo'
 
@@ -11,63 +14,75 @@ const URL_REGEX =
 function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
 
-  const [loading, setLoading] = useState(false)
+  const socket = useSocketContext()
 
-  setLoading(false) //TODO
+  const [loading, setLoading] = useState(false)
 
   const [videoURLinput, setVideoURLInput] = useState('')
 
   const videoURL = useDebounce(videoURLinput, 300)
 
-  const videoInfoQuery = undefined
+  const videoInfoQuery = useQuery(
+    forgeAPI.music.youtube.getVideoInfo
+      .input({
+        id: videoURL.match(URL_REGEX)?.groups?.id ?? ''
+      })
+      .queryOptions({
+        enabled: URL_REGEX.test(videoURL)
+      })
+  )
 
   async function downloadVideo() {
-    //TODO
-    // setLoading(true)
-    // try {
-    //   await fetchAPI<{ status: string }>(
-    //     import.meta.env.VITE_API_HOST,
-    //     `/music/youtube/async-download/${videoURL.match(URL_REGEX)?.groups?.id}`,
-    //     {
-    //       method: 'POST',
-    //       body: {
-    //         title: videoInfoQuery.data?.title ?? 'Unknown Title',
-    //         uploader: videoInfoQuery.data?.uploader ?? 'Unknown Author',
-    //         duration: parseInt(videoInfoQuery.data?.duration ?? '0', 10)
-    //       }
-    //     }
-    //   )
-    //   intervalManager.setInterval(async () => {
-    //     const success = (
-    //       await fetchAPI<{ status: string }>(
-    //         import.meta.env.VITE_API_HOST,
-    //         'music/youtube/download-status'
-    //       )
-    //     ).status
-    //     switch (success) {
-    //       case 'completed':
-    //         toast.success('Music downloaded successfully!')
-    //         intervalManager.clearAllIntervals()
-    //         setLoading(false)
-    //         queryClient.invalidateQueries({
-    //           queryKey: ['music', 'entries']
-    //         })
-    //         onClose()
-    //         break
-    //       case 'failed':
-    //         toast.error('Failed to download music!')
-    //         intervalManager.clearAllIntervals()
-    //         setLoading(false)
-    //         break
-    //     }
-    //   }, 3000)
-    // } catch (error) {
-    //   console.error('Error downloading video:', error)
-    //   toast.error('Failed to download video')
-    //   setLoading(false)
-    // }
-  }
+    setLoading(true)
 
+    try {
+      const taskId = await forgeAPI.music.youtube.downloadVideo
+        .input({
+          id: videoURL.match(URL_REGEX)?.groups?.id ?? ''
+        })
+        .mutate({
+          title: videoInfoQuery.data?.title ?? 'Unknown Title',
+          uploader: videoInfoQuery.data?.uploader ?? 'Unknown Author',
+          duration: parseInt(videoInfoQuery.data?.duration ?? '0', 10)
+        })
+
+      setLoading(true)
+
+      socket.on('taskPoolUpdate', (data: SocketEvent<undefined, ''>) => {
+        if (!data || data.taskId !== taskId) return
+      })
+
+      // intervalManager.setInterval(async () => {
+      //   const success = (
+      //     await fetchAPI<{ status: string }>(
+      //       import.meta.env.VITE_API_HOST,
+      //       'music/youtube/download-status'
+      //     )
+      //   ).status
+
+      //   switch (success) {
+      //     case 'completed':
+      //       toast.success('Music downloaded successfully!')
+      //       intervalManager.clearAllIntervals()
+      //       setLoading(false)
+      //       queryClient.invalidateQueries({
+      //         queryKey: ['music', 'entries']
+      //       })
+      //       onClose()
+      //       break
+      //     case 'failed':
+      //       toast.error('Failed to download music!')
+      //       intervalManager.clearAllIntervals()
+      //       setLoading(false)
+      //       break
+      //   }
+      // }, 3000)
+    } catch (error) {
+      console.error('Error downloading video:', error)
+      toast.error('Failed to download video')
+      setLoading(false)
+    }
+  }
   useEffect(() => {
     setVideoURLInput('')
   }, [])
@@ -86,7 +101,6 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
         }}
       />
       <TextInput
-        className="mb-8"
         icon="tabler:link"
         label="Video URL"
         namespace="apps.music"
@@ -94,25 +108,25 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
         setValue={setVideoURLInput}
         value={videoURLinput}
       />
-      {URL_REGEX.test(videoURL) && (
-        <QueryWrapper query={videoInfoQuery}>
-          {videoInfo => (
-            <>
-              <div className="mt-6 flex w-full gap-6">
+      <div className="mt-6">
+        {URL_REGEX.test(videoURL) && (
+          <QueryWrapper query={videoInfoQuery}>
+            {videoInfo => (
+              <>
                 <VideoInfo videoInfo={videoInfo} />
-              </div>
-              <Button
-                className="mt-6 w-full"
-                icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-                loading={loading}
-                onClick={downloadVideo}
-              >
-                {loading ? 'Downloading' : 'Download'}
-              </Button>
-            </>
-          )}
-        </QueryWrapper>
-      )}
+                <Button
+                  className="mt-6 w-full"
+                  icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
+                  loading={loading}
+                  onClick={downloadVideo}
+                >
+                  {loading ? 'Downloading' : 'Download'}
+                </Button>
+              </>
+            )}
+          </QueryWrapper>
+        )}
+      </div>
     </div>
   )
 }
