@@ -44,12 +44,15 @@ function IdeaAndFolderList() {
                     <div className="mt-6">
                       {!viewArchived ? (
                         <EmptyStateScreen
-                          ctaContent="new"
-                          ctaTProps={{ item: t('items.idea') }}
+                          CTAButtonProps={{
+                            children: 'new',
+                            onClick: handleIdeaCreation,
+                            icon: 'tabler:plus',
+                            tProps: { item: t('items.idea') }
+                          }}
                           icon="tabler:bulb-off"
                           name="idea"
                           namespace="apps.ideaBox"
-                          onCTAClick={handleIdeaCreation}
                         />
                       ) : (
                         <EmptyStateScreen

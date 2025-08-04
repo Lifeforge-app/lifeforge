@@ -182,24 +182,23 @@ function Transactions() {
           <SearchBar />
           <div className="mt-6 size-full">
             <QueryWrapper query={transactionsQuery}>
-              {transactions => {
-                if (transactions.length === 0) {
-                  return (
-                    <EmptyStateScreen
-                      ctaContent="new"
-                      ctaTProps={{
-                        item: t('items.transaction')
-                      }}
-                      icon="tabler:wallet-off"
-                      name="transactions"
-                      namespace="apps.wallet"
-                      onCTAClick={handleCreateTransaction}
-                    />
-                  )
-                }
-
-                return <TransactionList />
-              }}
+              {transactions =>
+                transactions.length > 0 ? (
+                  <TransactionList />
+                ) : (
+                  <EmptyStateScreen
+                    CTAButtonProps={{
+                      children: 'new',
+                      icon: 'tabler:plus',
+                      onClick: handleCreateTransaction,
+                      tProps: { item: t('items.transaction') }
+                    }}
+                    icon="tabler:wallet-off"
+                    name="transactions"
+                    namespace="apps.wallet"
+                  />
+                )
+              }
             </QueryWrapper>
             {(transactionsQuery.data ?? []).length > 0 && (
               <Menu>
