@@ -23,6 +23,7 @@ import InnerHeader from './components/InnerHeader'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import TransactionList from './components/TransactionList'
+import ManageTemplatesModal from './modals/ManageTemplatesModal'
 import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ScanReceiptModal from './modals/ScanReceiptModal'
 
@@ -160,6 +161,16 @@ function Transactions() {
                   onClick={handleCreateTransaction}
                 />
                 <MenuItem
+                  icon="tabler:template"
+                  namespace="apps.wallet"
+                  text="From Template"
+                  onClick={() => {
+                    open(ManageTemplatesModal, {
+                      choosing: true
+                    })
+                  }}
+                />
+                <MenuItem
                   icon="tabler:scan"
                   namespace="apps.wallet"
                   text="Scan Receipt"
@@ -213,6 +224,16 @@ function Transactions() {
                     namespace="apps.wallet"
                     text="Add Manually"
                     onClick={handleCreateTransaction}
+                  />
+                  <MenuItem
+                    icon="tabler:template"
+                    namespace="apps.wallet"
+                    text="From Template"
+                    onClick={() => {
+                      open(ManageTemplatesModal, {
+                        choosing: true
+                      })
+                    }}
                   />
                   <MenuItem
                     icon="tabler:scan"
