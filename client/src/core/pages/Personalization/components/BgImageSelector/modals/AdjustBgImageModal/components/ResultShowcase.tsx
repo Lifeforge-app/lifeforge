@@ -21,19 +21,19 @@ function ResultShowcase({
 
   return (
     <div
-      className="relative isolate max-h-72 w-full overflow-y-auto rounded-md bg-cover bg-center bg-no-repeat md:shrink-0 md:overflow-hidden"
+      className="shadow-custom relative isolate max-h-84 w-full shrink-0 overflow-y-auto rounded-md bg-cover bg-center bg-no-repeat md:overflow-hidden"
       style={{
         backgroundImage: `url(${bgImage})`
       }}
     >
       <div
-        className="flex size-full flex-col p-8"
+        className="flex size-full flex-col p-12"
         style={{
           backdropFilter: `brightness(${bgBrightness}%) blur(${BG_BLURS[bgBlur]}) contrast(${bgContrast}%) saturate(${bgSaturation}%)`
         }}
       >
         <div
-          className="bg-bg-50 dark:bg-bg-950 absolute top-0 left-0 z-[-1] size-full"
+          className="bg-bg-50 shadow-custom dark:bg-bg-950 absolute top-0 left-0 z-[-1] size-full"
           style={{
             opacity: `${overlayOpacity}%`
           }}

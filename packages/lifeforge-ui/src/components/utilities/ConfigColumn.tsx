@@ -11,7 +11,6 @@ function ConfigColumn({
   vertical = false,
 
   tooltip,
-  hasDivider = true,
   children,
   wrapWhen = 'md',
   noDefaultBreakpoints = false,
@@ -22,7 +21,6 @@ function ConfigColumn({
   icon: string
   vertical?: boolean
   tooltip?: React.ReactNode
-  hasDivider?: boolean
   children: React.ReactNode
   wrapWhen?: 'sm' | 'md' | 'lg' | 'xl'
   noDefaultBreakpoints?: boolean

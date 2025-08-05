@@ -52,7 +52,7 @@ function DefaultThemeColorSelector({
       <div className="relative mt-1 w-full lg:w-56">
         <ListboxButton
           className={clsx(
-            'shadow-custom component-bg-with-hover flex w-full items-center gap-2 rounded-lg text-left outline-hidden transition-all focus:outline-hidden',
+            'shadow-custom component-bg-lighter-with-hover flex w-full items-center gap-2 rounded-lg text-left outline-hidden transition-all focus:outline-hidden',
             !themeColor.startsWith('#') ? 'py-4 pr-10 pl-4' : 'py-6 pr-12 pl-6'
           )}
         >
