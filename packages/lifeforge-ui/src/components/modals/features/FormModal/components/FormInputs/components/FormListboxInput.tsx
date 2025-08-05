@@ -5,6 +5,7 @@ import {
   type ListboxFieldProps
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
+import { useEffect } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
 function FormListboxInput({
@@ -13,6 +14,21 @@ function FormListboxInput({
   namespace,
   handleChange
 }: FormInputProps<ListboxFieldProps>) {
+  useEffect(() => {
+    if (field.multiple) {
+      handleChange(
+        selectedData.map(
+          (item: { value: string }) =>
+            field.options.find(option => option.value === item)?.value
+        )
+      )
+    } else {
+      handleChange(
+        field.options.find(option => option.value === selectedData)?.value
+      )
+    }
+  }, [field.options])
+
   return (
     <ListboxInput
       buttonContent={
@@ -90,8 +106,8 @@ function FormListboxInput({
       }
       disabled={field.disabled}
       icon={field.icon}
-      multiple={!!field.multiple}
       label={field.label}
+      multiple={!!field.multiple}
       namespace={namespace}
       required={field.required}
       setValue={handleChange}

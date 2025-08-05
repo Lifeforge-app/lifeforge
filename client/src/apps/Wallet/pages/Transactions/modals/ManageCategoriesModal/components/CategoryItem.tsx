@@ -9,12 +9,12 @@ import {
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import type { WalletCategory } from '../../..'
 import ModifyCategoryModal from '../../ModifyCategoryModal'
-import { toast } from 'react-toastify'
 
-function CategorySectionItem({ category }: { category: WalletCategory }) {
+function CategoryItem({ category }: { category: WalletCategory }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -53,8 +53,11 @@ function CategorySectionItem({ category }: { category: WalletCategory }) {
   }, [])
 
   return (
-    <li key={category.id} className="flex-between flex gap-3 px-2 py-4">
-      <div className="flex items-center gap-3">
+    <li
+      key={category.id}
+      className="flex-between component-bg-lighter dark:bg-bg-800/30 shadow-custom flex gap-3 rounded-md p-4"
+    >
+      <div className="flex w-full min-w-0 items-center gap-3">
         <div
           className="rounded-md p-2"
           style={{
@@ -69,8 +72,10 @@ function CategorySectionItem({ category }: { category: WalletCategory }) {
             }}
           />
         </div>
-        <div>
-          <p className="text-lg font-medium">{category.name}</p>
+        <div className="w-full min-w-0">
+          <p className="w-full min-w-0 truncate text-lg font-medium">
+            {category.name}
+          </p>
           <p className="text-bg-500 text-sm">
             {category.amount} {t('transactionCount')}
           </p>
@@ -93,4 +98,4 @@ function CategorySectionItem({ category }: { category: WalletCategory }) {
   )
 }
 
-export default CategorySectionItem
+export default CategoryItem

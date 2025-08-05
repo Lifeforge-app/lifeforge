@@ -4,6 +4,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
 import ManageCategoriesModal from '../modals/ManageCategoriesModal'
+import ManageTemplatesModal from '../modals/ManageTemplatesModal'
 
 function HeaderMenu() {
   const open = useModalStore(state => state.open)
@@ -28,6 +29,14 @@ function HeaderMenu() {
         namespace="apps.wallet"
         text="Manage Categories"
         onClick={handleManageCategories}
+      />
+      <MenuItem
+        icon="tabler:template"
+        namespace="apps.wallet"
+        text="Manage Templates"
+        onClick={() => {
+          open(ManageTemplatesModal, {})
+        }}
       />
     </>
   )
