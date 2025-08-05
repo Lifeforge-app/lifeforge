@@ -6,11 +6,31 @@ import { z } from 'zod/v4'
 const list = forgeController.query
   .description('Get all transaction templates')
   .input({})
-  .callback(({ pb }) =>
-    pb.getFullList
-      .collection('wallet__transaction_templates')
-      .sort(['type', 'name'])
-      .execute()
+  .callback(async ({ pb }) =>
+    (
+      await pb.getFullList
+        .collection('wallet__transaction_templates')
+        .sort(['type', 'name'])
+        .execute()
+    ).reduce(
+      (acc, template) => {
+        const type = template.type as 'income' | 'expenses'
+
+        if (!acc[type]) {
+          acc[type] = []
+        }
+        acc[type].push(template)
+
+        return acc
+      },
+      {
+        income: [],
+        expenses: []
+      } as Record<
+        'income' | 'expenses',
+        z.infer<typeof COLLECTION_SCHEMAS.wallet__transaction_templates>[]
+      >
+    )
   )
 
 const create = forgeController.mutation
