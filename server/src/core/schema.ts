@@ -313,6 +313,16 @@ export const SCHEMAS = {
       from: z.string(),
       to: z.string(),
     }),
+    transaction_templates: z.object({
+      name: z.string(),
+      type: z.enum(["income", "expenses"]),
+      particulars: z.string(),
+      asset: z.string(),
+      category: z.string(),
+      ledgers: z.array(z.string()),
+      location_name: z.string(),
+      location_coords: z.object({ lat: z.number(), lon: z.number() }),
+    }),
   },
   books_library: {
     collections: z.object({
