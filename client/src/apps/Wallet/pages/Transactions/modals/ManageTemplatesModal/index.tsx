@@ -18,7 +18,7 @@ function ManageTemplatesModal({
   data: { choosing }
 }: {
   onClose: () => void
-  data?: { choosing?: boolean }
+  data: { choosing?: boolean }
 }) {
   const { t } = useTranslation('apps.wallet')
 
@@ -35,11 +35,11 @@ function ManageTemplatesModal({
   return (
     <>
       <ModalHeader
-        actionButtonIcon={choosing ? 'tabler:plus' : undefined}
+        actionButtonIcon={!choosing ? 'tabler:plus' : undefined}
         className="min-w-[40vw]"
         icon="tabler:template"
         namespace="apps.wallet"
-        title="templates.manage"
+        title={`templates.${choosing ? 'choose' : 'manage'}`}
         onActionButtonClick={() => {
           open(ModifyTemplatesModal, {
             type: 'create'
@@ -74,7 +74,7 @@ function ManageTemplatesModal({
                 templates[selectedTab].map(template => (
                   <TemplateItem
                     key={template.id}
-                    choosing={choosing}
+                    choosing={!!choosing}
                     template={template}
                     onClose={onClose}
                   />

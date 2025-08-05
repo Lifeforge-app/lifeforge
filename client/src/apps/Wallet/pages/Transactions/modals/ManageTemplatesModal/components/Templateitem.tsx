@@ -87,19 +87,21 @@ function TemplateItem({
           {template.name}
         </p>
       </div>
-      <HamburgerMenu>
-        <MenuItem
-          icon="tabler:pencil"
-          text="Edit"
-          onClick={handleEditTemplate}
-        />
-        <MenuItem
-          isRed
-          icon="tabler:trash"
-          text="Delete"
-          onClick={handleDeleteTemplate}
-        />
-      </HamburgerMenu>
+      {!choosing && (
+        <HamburgerMenu>
+          <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={handleEditTemplate}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="Delete"
+            onClick={handleDeleteTemplate}
+          />
+        </HamburgerMenu>
+      )}
     </button>
   )
 }
