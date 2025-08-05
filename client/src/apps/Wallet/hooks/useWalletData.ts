@@ -20,6 +20,10 @@ export type WalletCategory = InferOutput<
   typeof forgeAPI.wallet.categories.list
 >[number]
 
+export type WalletTemplate = InferOutput<typeof forgeAPI.wallet.templates.list>[
+  | 'income'
+  | 'expenses'][number]
+
 export function useWalletData() {
   const transactionsQuery = useQuery(
     forgeAPI.wallet.transactions.list.queryOptions()
@@ -32,6 +36,8 @@ export function useWalletData() {
   const categoriesQuery = useQuery(
     forgeAPI.wallet.categories.list.queryOptions()
   )
+
+  const templatesQuery = useQuery(forgeAPI.wallet.templates.list.queryOptions())
 
   const typesCountQuery = useQuery(
     forgeAPI.wallet.utils.getTypesCount.queryOptions()
@@ -46,6 +52,7 @@ export function useWalletData() {
     assetsQuery,
     ledgersQuery,
     categoriesQuery,
+    templatesQuery,
     filteredTransactions,
     typesCountQuery
   }
