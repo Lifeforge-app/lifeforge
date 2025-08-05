@@ -49,10 +49,10 @@ function BgTempSelector() {
           <>
             <ColorInput
               className="w-full lg:w-min"
-              value={customBgTemp}
               label="Color Hex"
               namespace="core.personalization"
               setValue={setCustomBgTemp}
+              value={customBgTemp}
             />
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (

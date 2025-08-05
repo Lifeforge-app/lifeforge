@@ -28,7 +28,6 @@ function TwoFAColumn() {
     <>
       <ConfigColumn
         desc={t('settings.desc.twoFA')}
-        hasDivider={false}
         icon="tabler:lock-access"
         title={t('settings.title.twoFA')}
       >

@@ -20,11 +20,9 @@ import type { APIKeysEntry } from './ContentContainer'
 
 function EntryItem({
   entry,
-  hasDivider,
   masterPassword
 }: {
   entry: APIKeysEntry
-  hasDivider: boolean
   masterPassword: string
 }) {
   const queryClient = useQueryClient()
@@ -94,7 +92,6 @@ function EntryItem({
     <ConfigColumn
       key={entry.id}
       desc={entry.description}
-      hasDivider={hasDivider}
       icon={entry.icon}
       title={
         <>
