@@ -95,7 +95,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
   }, [])
 
   return (
-    <>
+    <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:adjustments"
         needTranslate={false}
@@ -117,7 +117,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
           Save
         </Button>
       </div>
-    </>
+    </div>
   )
 }
 

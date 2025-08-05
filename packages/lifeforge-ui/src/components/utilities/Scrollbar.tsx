@@ -17,7 +17,7 @@ function Scrollbar({
         <div {...props} className="bg-bg-300 dark:bg-bg-800 rounded-lg" />
       )}
       renderView={props => (
-        <div {...props} className="flex min-h-0 flex-1 flex-col" />
+        <div {...props} className="flex min-h-0 min-w-0 flex-1 flex-col" />
       )}
     >
       {children}

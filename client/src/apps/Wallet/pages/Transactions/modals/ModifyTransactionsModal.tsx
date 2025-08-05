@@ -3,6 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 import colors from 'tailwindcss/colors'
@@ -23,6 +24,8 @@ function ModifyTransactionsModal({
   }
   onClose: () => void
 }) {
+  const { t } = useTranslation('apps.wallet')
+
   const queryClient = useQueryClient()
 
   const { assetsQuery, categoriesQuery, ledgersQuery } = useWalletData()
@@ -82,19 +85,19 @@ function ModifyTransactionsModal({
         label: 'Transaction Type',
         options: [
           {
-            text: 'Income',
+            text: t('transactionTypes.income'),
             value: 'income',
             icon: 'tabler:login-2',
             color: colors.green[500]
           },
           {
-            text: 'Expenses',
+            text: t('transactionTypes.expenses'),
             value: 'expenses',
             icon: 'tabler:logout-2',
             color: colors.red[500]
           },
           {
-            text: 'Transfer',
+            text: t('transactionTypes.transfer'),
             value: 'transfer',
             icon: 'tabler:transfer',
             color: colors.blue[500]
