@@ -45,7 +45,7 @@ const create = forgeController.mutation
         location_name: true
       })
       .extend({
-        location: Location
+        location: Location.optional()
       })
   })
   .existenceCheck('body', {
@@ -80,7 +80,7 @@ const update = forgeController.mutation
         location_name: true
       })
       .extend({
-        location: Location
+        location: Location.optional()
       })
   })
   .existenceCheck('query', {
