@@ -136,7 +136,8 @@
     "templates": {
       "create": "Create Template",
       "update": "Update Template",
-      "manage": "Manage Templates"
+      "manage": "Manage Templates",
+      "choose": "Choose Template"
     }
   },
   "transactionTypes": {

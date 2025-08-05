@@ -156,7 +156,7 @@ const list = forgeController.query
       if (a.pinned && !b.pinned) return -1
       if (!a.pinned && b.pinned) return 1
 
-      return new Date(b.updated!).getTime() - new Date(a.updated!).getTime()
+      return new Date(b.created!).getTime() - new Date(a.created!).getTime()
     }) as Array<SchemaWithPB<z.infer<typeof _returnSchema>>>
   })
 

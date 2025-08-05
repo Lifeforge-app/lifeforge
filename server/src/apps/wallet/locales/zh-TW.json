@@ -136,7 +136,8 @@
     "templates": {
       "create": "建立模板",
       "update": "更新模板",
-      "manage": "管理模板"
+      "manage": "管理模板",
+      "choose": "選擇模板"
     }
   },
   "transactionTypes": {
