@@ -63,6 +63,10 @@
     "location": {
       "title": "Tiada Lokasi Tersedia",
       "description": "Tiada data lokasi dijumpai dalam mana-mana transaksi. Sila tambah transaksi dengan lokasi."
+    },
+    "templates": {
+      "title": "Tiada Templat Dijumpai",
+      "description": "Anda belum mencipta sebarang templat transaksi lagi. Klik butang di atas untuk menambah satu."
     }
   },
   "sidebar": {
@@ -101,7 +105,9 @@
     "addManually": "Tambah Secara Manual",
     "manageCategories": "Urus Kategori",
     "viewBalanceChart": "Lihat Carta Saldo",
-    "viewReceipt": "Lihat Resit"
+    "viewReceipt": "Lihat Resit",
+    "manageTemplates": "Urus Templat",
+    "fromTemplate": "Dari Templat"
   },
   "modals": {
     "transactions": {
@@ -126,7 +132,12 @@
       "scan": "Imbas Resit",
       "view": "Lihat Resit"
     },
-    "assetsBalanceChart": "Carta Baki Asset"
+    "assetsBalanceChart": "Carta Baki Asset",
+    "templates": {
+      "create": "Cipta Templat",
+      "update": "Kemas Kini Templat",
+      "manage": "Urus Templat"
+    }
   },
   "transactionTypes": {
     "income": "Pendapatan",
@@ -159,14 +170,16 @@
     "fromAsset": "Dari Aset",
     "toAsset": "Ke Aset",
     "month": "Bulan",
-    "year": "Tahun"
+    "year": "Tahun",
+    "templateName": "Nama Templat"
   },
   "items": {
     "transaction": "Transaksi",
     "asset": "Aset",
     "ledger": "Lejar",
     "category": "Kategori",
-    "receipt": "Resit"
+    "receipt": "Resit",
+    "template": "Templat"
   },
   "receipts": {
     "keepAfterScan": "Simpan Resit Selepas Imbasan"

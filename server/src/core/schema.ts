@@ -316,6 +316,7 @@ export const SCHEMAS = {
     transaction_templates: z.object({
       name: z.string(),
       type: z.enum(["income", "expenses"]),
+      amount: z.number(),
       particulars: z.string(),
       asset: z.string(),
       category: z.string(),

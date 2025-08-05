@@ -63,6 +63,10 @@
     "location": {
       "title": "没有可用的位置",
       "description": "在任何交易中找不到位置数据。请添加包含位置信息的交易。"
+    },
+    "templates": {
+      "title": "未找到模板",
+      "description": "您尚未创建任何交易模板。点击上面的按钮添加一个。"
     }
   },
   "sidebar": {
@@ -101,7 +105,9 @@
     "addManually": "手动添加",
     "manageCategories": "管理类别",
     "viewBalanceChart": "查看余额图表",
-    "viewReceipt": "查看收据"
+    "viewReceipt": "查看收据",
+    "manageTemplates": "管理模板",
+    "fromTemplate": "从模板"
   },
   "modals": {
     "transactions": {
@@ -126,7 +132,12 @@
       "scan": "扫描收据",
       "view": "查看收据"
     },
-    "assetsBalanceChart": "资产余额图表"
+    "assetsBalanceChart": "资产余额图表",
+    "templates": {
+      "create": "创建模板",
+      "update": "更新模板",
+      "manage": "管理模板"
+    }
   },
   "transactionTypes": {
     "income": "收入",
@@ -159,14 +170,16 @@
     "fromAsset": "转出资产",
     "toAsset": "转入资产",
     "month": "月份",
-    "year": "年份"
+    "year": "年份",
+    "templateName": "模板名称"
   },
   "items": {
     "transaction": "交易",
     "asset": "资产",
     "ledger": "帐本",
     "category": "类别",
-    "receipt": "收据"
+    "receipt": "收据",
+    "template": "模板"
   },
   "receipts": {
     "keepAfterScan": "扫描后保留收据"

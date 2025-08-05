@@ -63,6 +63,10 @@
     "location": {
       "title": "No Location Available",
       "description": "No location data found in any transactions. Please add a transaction with a location."
+    },
+    "templates": {
+      "title": "No Templates Found",
+      "description": "You haven't created any transaction templates yet. Click the button below to add one."
     }
   },
   "sidebar": {
@@ -101,7 +105,9 @@
     "addManually": "Add Manually",
     "manageCategories": "Manage Categories",
     "viewBalanceChart": "View Balance Chart",
-    "viewReceipt": "View Receipt"
+    "viewReceipt": "View Receipt",
+    "manageTemplates": "Manage Templates",
+    "fromTemplate": "From Template"
   },
   "modals": {
     "transactions": {
@@ -126,7 +132,12 @@
       "scan": "Scan Receipt",
       "view": "View Receipt"
     },
-    "assetsBalanceChart": "Assets Balance Chart"
+    "assetsBalanceChart": "Assets Balance Chart",
+    "templates": {
+      "create": "Create Template",
+      "update": "Update Template",
+      "manage": "Manage Templates"
+    }
   },
   "transactionTypes": {
     "income": "Income",
@@ -159,14 +170,16 @@
     "fromAsset": "From Asset",
     "toAsset": "To Asset",
     "month": "Month",
-    "year": "Year"
+    "year": "Year",
+    "templateName": "Template Name"
   },
   "items": {
     "transaction": "Transaction",
     "asset": "Asset",
     "ledger": "Ledger",
     "category": "Category",
-    "receipt": "Receipt"
+    "receipt": "Receipt",
+    "template": "Template"
   },
   "receipts": {
     "keepAfterScan": "Keep Receipt After Scan"
