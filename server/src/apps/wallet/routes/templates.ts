@@ -1,3 +1,4 @@
+import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
 import COLLECTION_SCHEMAS from '@schema'
 import { Location } from '@typescript/location.types'
@@ -28,7 +29,9 @@ const list = forgeController.query
         expenses: []
       } as Record<
         'income' | 'expenses',
-        z.infer<typeof COLLECTION_SCHEMAS.wallet__transaction_templates>[]
+        SchemaWithPB<
+          z.infer<typeof COLLECTION_SCHEMAS.wallet__transaction_templates>
+        >[]
       >
     )
   )
