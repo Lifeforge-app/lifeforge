@@ -8,8 +8,7 @@ function AdjustmentColumn({
   value,
   setValue,
   labels,
-  max,
-  needDivider = true
+  max
 }: {
   icon: string
   title: string
@@ -17,25 +16,24 @@ function AdjustmentColumn({
   setValue: (value: number) => void
   labels: string[]
   max: number
-  needDivider?: boolean
 }) {
   const { t } = useTranslation('core.personalization')
 
   return (
     <ConfigColumn
       noDefaultBreakpoints
+      className="dark:bg-bg-800/30 min-w-0"
       desc={t(
         `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.desc`
       )}
-      hasDivider={needDivider}
       icon={icon}
       title={t(
         `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.title`
       )}
     >
-      <div className="w-full">
+      <div className="w-full min-w-0">
         <input
-          className="range range-primary bg-bg-200 dark:bg-bg-800 w-full"
+          className="range range-primary bg-bg-200 dark:bg-bg-800 w-full min-w-0"
           max={max}
           min={0}
           step={1}
@@ -45,7 +43,7 @@ function AdjustmentColumn({
             setValue(parseInt(e.target.value, 10))
           }}
         />
-        <div className="mb-4 flex w-full justify-between px-2.5 text-xs">
+        <div className="mb-4 flex w-full min-w-0 justify-between px-2.5 text-xs">
           {labels.map((label, index) => (
             <div
               key={`title-${label}-${index}`}

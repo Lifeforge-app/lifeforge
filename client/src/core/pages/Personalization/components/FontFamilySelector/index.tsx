@@ -55,7 +55,6 @@ function FontFamilySelector() {
   return (
     <ConfigColumn
       desc={t('fontFamily.desc')}
-      hasDivider={false}
       icon="uil:font"
       title={t('fontFamily.title')}
       tooltip={

@@ -95,40 +95,29 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
   }, [])
 
   return (
-    <div className="min-h-0 min-h-[90vh] min-w-[40vw]">
+    <>
       <ModalHeader
         icon="tabler:adjustments"
         needTranslate={false}
         title={t('bgImageSelector.modals.adjustBackground.title')}
         onClose={onClose}
       />
-      <div className="flex h-full min-h-0 flex-col overflow-hidden">
-        <ResultShowcase
-          bgBlur={bgBlur}
-          bgBrightness={bgBrightness}
-          bgContrast={bgContrast}
-          bgSaturation={bgSaturation}
-          overlayOpacity={overlayOpacity}
-        />
-        <div className="my-6 size-full flex-1">
-          {ADJUSTMENTS_COLUMNS.map(({ title, ...props }, index) => (
-            <AdjustmentColumn
-              key={title}
-              title={title}
-              {...props}
-              needDivider={index !== ADJUSTMENTS_COLUMNS.length - 1}
-            />
-          ))}
-          <Button
-            className="mt-8 w-full"
-            icon="uil:save"
-            onClick={onSaveChanges}
-          >
-            Save
-          </Button>
-        </div>
+      <ResultShowcase
+        bgBlur={bgBlur}
+        bgBrightness={bgBrightness}
+        bgContrast={bgContrast}
+        bgSaturation={bgSaturation}
+        overlayOpacity={overlayOpacity}
+      />
+      <div className="mt-6 w-full min-w-0 flex-1 space-y-3">
+        {ADJUSTMENTS_COLUMNS.map(({ title, ...props }) => (
+          <AdjustmentColumn key={title} title={title} {...props} />
+        ))}
+        <Button className="mt-8 w-full" icon="uil:save" onClick={onSaveChanges}>
+          Save
+        </Button>
       </div>
-    </div>
+    </>
   )
 }
 
