@@ -64,7 +64,12 @@ function EmptyStateScreen({
           ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
           : description}
       </p>
-      {CTAButtonProps && <Button {...CTAButtonProps} />}
+      {CTAButtonProps && (
+        <Button
+          {...CTAButtonProps}
+          className={clsx('mt-4', CTAButtonProps.className)}
+        />
+      )}
     </div>
   )
 }
