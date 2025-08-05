@@ -136,7 +136,8 @@
     "templates": {
       "create": "Cipta Templat",
       "update": "Kemas Kini Templat",
-      "manage": "Urus Templat"
+      "manage": "Urus Templat",
+      "choose": "Pilih Templat"
     }
   },
   "transactionTypes": {
