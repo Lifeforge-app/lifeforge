@@ -41,6 +41,10 @@ export type ScoreLibrarySortType = InferInput<
   typeof forgeAPI.scoresLibrary.entries.list
 >['query']['sort']
 
+export type ScoreLibraryCollection = InferOutput<
+  typeof forgeAPI.scoresLibrary.collections.list
+>[number]
+
 function ScoresLibrary() {
   const { t } = useTranslation('apps.scoresLibrary')
 
