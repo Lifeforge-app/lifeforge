@@ -97,9 +97,8 @@ function BooksLibrary() {
               typeof filteredEntries !== 'string' ? filteredEntries.length : 0
             }
           />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center mt-4 gap-2">
             <SearchInput
-              className="mt-4"
               namespace="apps.booksLibrary"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
