@@ -70,6 +70,7 @@ const list = forgeController.query
       query: z.string().optional(),
       category: z.string().optional(),
       author: z.string().optional(),
+      collection: z.string().optional(),
       starred: z
         .string()
         .optional()
@@ -81,7 +82,10 @@ const list = forgeController.query
     })
   })
   .callback(
-    ({ pb, query: { page, query = '', category, author, starred, sort } }) => {
+    ({
+      pb,
+      query: { page, query = '', category, author, collection, starred, sort }
+    }) => {
       return pb.getList
         .collection('scores_library__entries')
         .page(page)
@@ -110,6 +114,11 @@ const list = forgeController.query
                   operator: '=',
                   value: author === '[na]' ? '' : author
                 }
+              ] as const)
+            : []),
+          ...(collection
+            ? ([
+                { field: 'collection', operator: '=', value: collection }
               ] as const)
             : []),
           ...(starred
@@ -244,14 +253,21 @@ const update = forgeController.mutation
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.scores_library.entries.pick({
-      name: true,
-      author: true,
-      type: true
-    })
+    body: SCHEMAS.scores_library.entries
+      .pick({
+        name: true,
+        author: true,
+        type: true
+      })
+      .extend({
+        collection: z.string().optional()
+      })
   })
   .existenceCheck('query', {
     id: 'scores_library__entries'
+  })
+  .existenceCheck('body', {
+    collection: '[scores_library__collections]'
   })
   .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('scores_library__entries').id(id).data(body).execute()

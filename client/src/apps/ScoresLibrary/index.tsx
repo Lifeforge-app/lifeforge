@@ -54,6 +54,10 @@ function ScoresLibrary() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(
+    null
+  )
+
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null)
 
   const [isStarred, setStarred] = useState<boolean>(false)
@@ -67,6 +71,7 @@ function ScoresLibrary() {
     page,
     debouncedSearchQuery,
     selectedCategory,
+    selectedCollection,
     isStarred,
     selectedAuthor,
     selectedSortType
@@ -78,6 +83,7 @@ function ScoresLibrary() {
         page,
         query: debouncedSearchQuery,
         category: selectedCategory ? selectedCategory : undefined,
+        collection: selectedCollection ? selectedCollection : undefined,
         starred: isStarred,
         author: selectedAuthor ? selectedAuthor : undefined,
         sort: selectedSortType
@@ -193,7 +199,13 @@ function ScoresLibrary() {
 
   useEffect(() => {
     setPage(1)
-  }, [selectedCategory, selectedAuthor, isStarred, selectedSortType])
+  }, [
+    selectedCategory,
+    selectedCollection,
+    selectedAuthor,
+    isStarred,
+    selectedSortType
+  ])
 
   return (
     <ModuleWrapper>
@@ -210,9 +222,11 @@ function ScoresLibrary() {
         <Sidebar
           author={selectedAuthor}
           category={selectedCategory}
+          collection={selectedCollection}
           isOpen={sidebarOpen}
           setAuthor={setSelectedAuthor}
           setCategory={setSelectedCategory}
+          setCollection={setSelectedCollection}
           setOpen={setSidebarOpen}
           setStarred={setStarred}
           sidebarDataQuery={sidebarDataQuery}
