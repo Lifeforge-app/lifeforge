@@ -122,7 +122,11 @@ export default function BooksLibraryProvider() {
           }
         >
       ) => {
-        if (data.module !== 'booksLibrary') return
+        if (
+          data.module !== 'booksLibrary' ||
+          !data.description.startsWith('Adding')
+        )
+          return
 
         if (!processes[data.taskId]) {
           setProcesses(prev => ({

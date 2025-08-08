@@ -11,6 +11,8 @@
 - **Music**: Music downloading is now handled by the task pool mechanism.
 - **Music**: Music download process is now shown to the user.
 - **Music**: Minor bug fixes and UI improvements.
+- **Calendar**: Fixed a bug where the `events/getToday` endpoint is not returning events from other modules.
+- **Books Library**: Fixed a bug where the `sendToKindle` endpoint is not returning anything, leading to infinite loading.
 - **Passwords**: User can now generate passwords in the `ModifyPasswordModal`.
 - **Passwords**: User can now rotate the password in the password list by clicking the rotate button in the context menu.
 - **CFOP Algorithms**: Added this module back.

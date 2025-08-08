@@ -38,8 +38,8 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
         </p>
       </DetailItem>
       <DetailItem icon="tabler:calendar" label="date">
-        <p className="text-center">
-          {dayjs(transaction.date).format('dddd, D MMM YYYY')}
+        <p className="sm:text-right">
+          {dayjs(transaction.date).format('ddd, D MMM YYYY')}
         </p>
       </DetailItem>
       {transaction.type !== 'transfer' &&
