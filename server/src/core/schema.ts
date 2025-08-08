@@ -383,6 +383,7 @@ export const SCHEMAS = {
       audio: z.string(),
       musescore: z.string(),
       isFavourite: z.boolean(),
+      collection: z.string(),
       created: z.string(),
       updated: z.string(),
     }),
@@ -398,6 +399,9 @@ export const SCHEMAS = {
       name: z.string(),
       icon: z.string(),
       amount: z.number(),
+    }),
+    collections: z.object({
+      name: z.string(),
     }),
   },
   code_time: {
