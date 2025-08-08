@@ -128,7 +128,7 @@ export class Update<
   > {
     if (!this.collectionKey) {
       throw new Error(
-        `FaiCollection key is required. Use .collection() method to set the collection key.`
+        `Collection key is required. Use .collection() method to set the collection key.`
       )
     }
 
