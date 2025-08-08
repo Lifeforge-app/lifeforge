@@ -243,9 +243,9 @@ const getToday = forgeController.query
     const day = moment().format('YYYY-MM-DD')
 
     // Manually call the getEventsByDateRange logic
-    const startMoment = moment(day).startOf('day').toISOString()
+    const startMoment = moment(day).startOf('day').format('YYYY-MM-DD HH:mm:ss')
 
-    const endMoment = moment(day).endOf('day').toISOString()
+    const endMoment = moment(day).endOf('day').format('YYYY-MM-DD HH:mm:ss')
 
     const allEvents: Array<{
       id: string

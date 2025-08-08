@@ -7,7 +7,9 @@
 - **Music**: User can now ask AI to parse the music name and author from the title and uploader.
 - **Music**: Fixed the behaviours of the shuffle and repeat buttons.
 - **Music**: Replaced custom `IconButton` with `Button` component from `lifeforge-ui`.
-- **Music**: Music will now be stopped igf the current music is deleted.
+- **Music**: Music will now be stopped if the current music is deleted.
+- **Music**: Music downloading is now handled by the task pool mechanism.
+- **Music**: Music download process is now shown to the user.
 - **Music**: Minor bug fixes and UI improvements.
 - **Passwords**: User can now generate passwords in the `ModifyPasswordModal`.
 - **Passwords**: User can now rotate the password in the password list by clicking the rotate button in the context menu.
