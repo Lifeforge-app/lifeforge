@@ -31,6 +31,10 @@ function ModifyEntryModal({
 
   const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
+  const collectionsQuery = useQuery(
+    forgeAPI.scoresLibrary.collections.list.queryOptions()
+  )
+
   const queryClient = useQueryClient()
 
   const formProps = defineForm<
@@ -47,7 +51,8 @@ function ModifyEntryModal({
     .typesMap({
       name: 'text',
       author: 'text',
-      type: 'listbox'
+      type: 'listbox',
+      collection: 'listbox'
     })
     .setupFields({
       name: {
@@ -80,6 +85,21 @@ function ModifyEntryModal({
             value: id,
             text: name,
             icon
+          })) || [])
+        ]
+      },
+      collection: {
+        required: false,
+        multiple: false,
+        label: 'Collection',
+        icon: 'tabler:folder',
+        type: 'listbox',
+        options: [
+          { value: '', text: 'None', icon: 'tabler:folder-off' },
+          ...(collectionsQuery.data?.map(({ id, name }) => ({
+            value: id,
+            text: name,
+            icon: 'tabler:folder'
           })) || [])
         ]
       }
