@@ -25,6 +25,20 @@ function useFaviconEffect(themeColor: string) {
       newFavIcon.href = `data:image/svg+xml;base64,${btoa(targetSVGString)}`
       document.head.appendChild(newFavIcon)
     }
+
+    const themeMeta = document.querySelector(
+      "meta[name='theme-color']"
+    ) as HTMLMetaElement
+
+    if (themeMeta) {
+      themeMeta.content = themeColor
+    } else {
+      const newThemeMeta = document.createElement('meta')
+
+      newThemeMeta.name = 'theme-color'
+      newThemeMeta.content = themeColor
+      document.head.appendChild(newThemeMeta)
+    }
   }, [themeColor])
 }
 

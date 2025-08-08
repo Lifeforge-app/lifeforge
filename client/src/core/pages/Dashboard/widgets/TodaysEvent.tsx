@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import dayjs from 'dayjs'
 import {
   Button,
   DashboardItem,
@@ -137,19 +136,6 @@ export default function TodaysEvent() {
     forgeAPI.calendar.categories.list.queryOptions()
   )
 
-  const filteredEvents = useMemo(
-    () =>
-      rawEventsQuery.data?.filter(event =>
-        dayjs().isBetween(
-          dayjs(event.start),
-          dayjs(event.end).subtract(1, 'second'),
-          'day',
-          '[]'
-        )
-      ),
-    [rawEventsQuery.data]
-  )
-
   return (
     <DashboardItem
       className="pr-4"
@@ -170,9 +156,9 @@ export default function TodaysEvent() {
           {categories => (
             <QueryWrapper query={rawEventsQuery}>
               {() =>
-                (filteredEvents ?? []).length > 0 ? (
+                (rawEventsQuery.data ?? []).length > 0 ? (
                   <ul className="flex flex-1 flex-col gap-2 pr-3">
-                    {filteredEvents?.map(event => (
+                    {rawEventsQuery.data?.map(event => (
                       <EventItem
                         key={event.id}
                         categories={categories}
