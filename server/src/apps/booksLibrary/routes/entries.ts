@@ -1,6 +1,11 @@
+/* eslint-disable padding-line-between-statements */
 import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
+import {
+  addToTaskPool,
+  updateTaskInPool
+} from '@middlewares/taskPoolMiddleware'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 
@@ -111,7 +116,14 @@ const sendToKindle = forgeController.mutation
   .existenceCheck('query', {
     id: 'books_library__entries'
   })
-  .callback(async ({ pb, query: { id }, body: { target } }) => {
+  .statusCode(202)
+  .callback(async ({ pb, io, query: { id }, body: { target } }) => {
+    const taskid = addToTaskPool(io, {
+      module: 'booksLibrary',
+      description: 'Send book to Kindle',
+      status: 'pending'
+    })
+
     const smtpUser = await getAPIKey('smtp-user', pb)
 
     const smtpPassword = await getAPIKey('smtp-pass', pb)
@@ -138,38 +150,50 @@ const sendToKindle = forgeController.mutation
       throw new ClientError('SMTP credentials are invalid')
     }
 
-    const entry = await pb.getOne
-      .collection('books_library__entries')
-      .id(id)
-      .execute()
+    ;(async () => {
+      const entry = await pb.getOne
+        .collection('books_library__entries')
+        .id(id)
+        .execute()
 
-    const fileLink = pb.instance.files.getURL(entry, entry.file)
+      const fileLink = pb.instance.files.getURL(entry, entry.file)
 
-    const content = await fetch(fileLink).then(res => res.arrayBuffer())
+      const content = await fetch(fileLink).then(res => res.arrayBuffer())
 
-    const fileName = `${entry.title}.${entry.extension}`
+      const fileName = `${entry.title}.${entry.extension}`
 
-    const mail = {
-      from: `"Lifeforge Books Library" <${smtpUser}>`,
-      to: target,
-      subject: '',
-      text: `Here is your book: ${entry.title}`,
-      attachments: [
-        {
-          filename: fileName,
-          content: Buffer.from(content)
+      const mail = {
+        from: `"Lifeforge Books Library" <${smtpUser}>`,
+        to: target,
+        subject: '',
+        text: `Here is your book: ${entry.title}`,
+        attachments: [
+          {
+            filename: fileName,
+            content: Buffer.from(content)
+          }
+        ],
+        headers: {
+          'X-SES-CONFIGURATION-SET': 'Kindle'
         }
-      ],
-      headers: {
-        'X-SES-CONFIGURATION-SET': 'Kindle'
       }
-    }
 
-    try {
-      await transporter.sendMail(mail)
-    } catch (err) {
-      throw new Error('Failed to send email to Kindle: ' + err)
-    }
+      try {
+        await transporter.sendMail(mail)
+
+        updateTaskInPool(io, taskid, {
+          status: 'completed'
+        })
+      } catch (err) {
+        console.error('Failed to send email:', err)
+        updateTaskInPool(io, taskid, {
+          status: 'failed',
+          error: 'Failed to send email'
+        })
+      }
+    })()
+
+    return taskid
   })
 
 const remove = forgeController.mutation
