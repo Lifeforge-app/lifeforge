@@ -403,6 +403,10 @@ export const SCHEMAS = {
     collections: z.object({
       name: z.string(),
     }),
+    collections_aggregated: z.object({
+      name: z.string(),
+      amount: z.number(),
+    }),
   },
   code_time: {
     projects: z.object({

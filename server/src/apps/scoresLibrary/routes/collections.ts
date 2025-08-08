@@ -7,7 +7,7 @@ const list = forgeController.query
   .input({})
   .callback(({ pb }) =>
     pb.getFullList
-      .collection('scores_library__collections')
+      .collection('scores_library__collections_aggregated')
       .sort(['name'])
       .execute()
   )
