@@ -47,7 +47,7 @@ export class Delete<TCollectionKey extends CollectionKey>
     }
 
     if (!this._recordId) {
-      throw new Error(`Failed Record ID is required. Use .id() method to set the ID.`)
+      throw new Error(`Failed to delete record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`)
     }
 
     return this._pb
