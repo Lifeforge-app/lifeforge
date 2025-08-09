@@ -21,9 +21,19 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
 
   const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
+  const collectionsQuery = useQuery(
+    forgeAPI.scoresLibrary.collections.list.queryOptions()
+  )
+
   const type = useMemo(() => {
     return typesQuery.data?.find(type => type.id === entry.type)
   }, [typesQuery.data, entry.type])
+
+  const collection = useMemo(() => {
+    return collectionsQuery.data?.find(
+      collection => collection.id === entry.collection
+    )
+  }, [collectionsQuery.data, entry.collection])
 
   const open = useModalStore(state => state.open)
 
@@ -59,8 +69,7 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
 
   const handleUpdateEntry = useCallback(() => {
     open(ModifyEntryModal, {
-      initialData: entry,
-      queryKey: ['scores-library']
+      initialData: entry
     })
   }, [entry])
 
@@ -143,6 +152,17 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
       </div>
       <div className="mt-4 flex w-full min-w-0 items-center justify-between gap-8">
         <div className="w-full min-w-0">
+          {collection && (
+            <div className="mb-2 flex items-center gap-2">
+              <Icon
+                className="text-bg-500 size-4 shrink-0"
+                icon="tabler:folder"
+              />
+              <span className="text-bg-500 truncate text-sm">
+                {collection.name}
+              </span>
+            </div>
+          )}
           {type && (
             <div className="mb-2 flex items-center gap-2">
               <Icon className="text-bg-500 size-4 shrink-0" icon={type.icon} />
