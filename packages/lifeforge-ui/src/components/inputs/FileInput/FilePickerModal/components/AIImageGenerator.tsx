@@ -1,8 +1,9 @@
 import { Button } from '@components/buttons'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI, useAPIEndpoint } from 'shared'
+import { useAPIEndpoint } from 'shared'
 
+import forgeAPI from '../../../../../utils/forgeAPI'
 import TextAreaInput from '../../../TextAreaInput'
 
 function AIImageGenerator({
@@ -32,14 +33,11 @@ function AIImageGenerator({
     setLoading(true)
 
     try {
-      const response = await fetchAPI<string>(
-        apiHost,
-        '/ai/image-generation/generate-image',
-        {
-          method: 'POST',
-          body: { prompt }
-        }
-      )
+      const response = await forgeAPI.ai.imageGeneration.generateImage
+        .setHost(apiHost)
+        .mutate({
+          prompt
+        })
 
       setFile(response)
       setPreview(response)
