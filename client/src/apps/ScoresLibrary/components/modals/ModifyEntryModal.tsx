@@ -8,12 +8,11 @@ import type { ScoreLibraryEntry } from '@apps/ScoresLibrary'
 
 function ModifyEntryModal({
   onClose,
-  data: { initialData, queryKey }
+  data: { initialData }
 }: {
   onClose: () => void
   data: {
     initialData: ScoreLibraryEntry
-    queryKey: unknown[]
   }
 }) {
   const { t } = useTranslation('apps.scoresLibrary')
@@ -23,7 +22,7 @@ function ModifyEntryModal({
       .input({ id: initialData.id })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey })
+          queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
           onClose()
         }
       })

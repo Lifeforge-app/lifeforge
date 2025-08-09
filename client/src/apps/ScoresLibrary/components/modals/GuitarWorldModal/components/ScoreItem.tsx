@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
 import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import type { ScoreLibraryGuitarWorldResponse } from '..'
 
@@ -58,21 +58,14 @@ function ScoreItem({
     setIsDownloading(true)
 
     try {
-      const taskId = await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        'scores-library/guitar-world/download',
-        {
-          method: 'POST',
-          body: {
-            cookie,
-            id: entry.id,
-            name: entry.name,
-            category: entry.category,
-            mainArtist: entry.mainArtist,
-            audioUrl: entry.audioUrl
-          }
-        }
-      )
+      const taskId = await forgeAPI.scoresLibrary.guitarWorld.download.mutate({
+        cookie,
+        id: entry.id,
+        name: entry.name,
+        category: entry.category,
+        mainArtist: entry.mainArtist,
+        audioUrl: entry.audioUrl
+      })
 
       socket.on(
         'taskPoolUpdate',
@@ -91,7 +84,7 @@ function ScoreItem({
             setIsDownloading(false)
 
             queryClient.invalidateQueries({
-              queryKey: ['scores-library', 'entries']
+              queryKey: ['scoresLibrary']
             })
           }
         }
@@ -146,7 +139,8 @@ function ScoreItem({
         />
         <Button
           className="shrink-0"
-          icon="tabler:download"
+          disabled={entry.existed}
+          icon={entry.existed ? 'tabler:check' : 'tabler:download'}
           loading={isDownloading}
           variant="plain"
           onClick={() => {
