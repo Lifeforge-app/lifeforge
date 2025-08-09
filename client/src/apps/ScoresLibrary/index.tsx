@@ -17,7 +17,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type Id, toast } from 'react-toastify'
 import type { InferInput, InferOutput } from 'shared'
-import { fetchAPI } from 'shared'
 
 import Header from './components/Header'
 import Searchbar from './components/Searchbar'
@@ -68,18 +67,6 @@ function ScoresLibrary() {
 
   const [selectedSortType, setSelectedSortType] =
     useState<ScoreLibrarySortType>('newest')
-
-  const queryKey = [
-    'scores-library',
-    'entries',
-    page,
-    debouncedSearchQuery,
-    selectedCategory,
-    selectedCollection,
-    isStarred,
-    selectedAuthor,
-    selectedSortType
-  ]
 
   const entriesQuery = useQuery(
     forgeAPI.scoresLibrary.entries.list
@@ -138,14 +125,8 @@ function ScoresLibrary() {
       }
 
       try {
-        const taskId = await fetchAPI<string>(
-          import.meta.env.VITE_API_HOST,
-          `scores-library/entries/upload`,
-          {
-            method: 'POST',
-            body: formData
-          }
-        )
+        const taskId =
+          await forgeAPI.scoresLibrary.entries.upload.mutate(formData)
 
         socket.on(
           'taskPoolUpdate',
@@ -161,8 +142,10 @@ function ScoresLibrary() {
             if (!data || data.taskId !== taskId) return
 
             if (data.status === 'failed') {
+              toast.done(toastId.current!)
+              console.log(data.error)
               toastId.current = null
-              toast.error('Failed to upload scores!')
+              setTimeout(() => toast.error('Failed to upload scores!'), 100)
 
               return
             }
@@ -185,17 +168,18 @@ function ScoresLibrary() {
             if (data.status === 'completed') {
               toast.done(toastId.current!)
               toastId.current = null
-              queryClient.invalidateQueries({ queryKey })
+              queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
             }
           }
         )
       } catch (error) {
         console.error(error)
-        toast.error('Failed to upload scores')
+        toast.done(toastId.current!)
+        setTimeout(() => toast.error('Failed to upload scores'), 100)
       }
     }
     input.click()
-  }, [queryKey, socket, queryClient])
+  }, [socket, queryClient])
 
   useEffect(() => {
     setPage(1)

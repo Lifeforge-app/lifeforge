@@ -9,8 +9,9 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyCollectionModal from '../../modals/ModifyCollectionModal'
 import type { ScoreLibraryCollection } from '@apps/ScoresLibrary'
+
+import ModifyCollectionModal from '../../modals/ModifyCollectionModal'
 
 function SidebarCollectionItem({
   data,
@@ -83,6 +84,7 @@ function SidebarCollectionItem({
       icon="tabler:folder"
       label={data.name}
       namespace="apps.scoresLibrary"
+      number={data.amount}
       onCancelButtonClick={onCancel}
       onClick={handleSelect}
     />
