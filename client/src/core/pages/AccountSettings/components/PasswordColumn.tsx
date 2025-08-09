@@ -1,8 +1,8 @@
+import forgeAPI from '@utils/forgeAPI'
 import { Button, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 function PasswordColumn() {
   const { t } = useTranslation('core.accountSettings')
@@ -13,13 +13,8 @@ function PasswordColumn() {
     setLoading(true)
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        '/user/settings/request-password-reset',
-        {
-          method: 'POST'
-        }
-      )
+      await forgeAPI.user.settings.requestPasswordReset.mutate({})
+
       toast.info('A password reset link has been sent to your email.')
     } catch {
       toast.error('Failed to send password reset link.')

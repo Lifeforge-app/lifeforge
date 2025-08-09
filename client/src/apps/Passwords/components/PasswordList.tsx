@@ -1,16 +1,16 @@
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { EmptyStateScreen, QueryWrapper, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import {
   type PasswordEntry,
   usePasswordContext
 } from '@apps/Passwords/providers/PasswordsProvider'
 
-import PasswordEntryItem from './PasswordEntryItem'
 import ModifyPasswordModal from '../modals/ModifyPasswordModal'
+import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList() {
   const queryClient = useQueryClient()
@@ -33,13 +33,7 @@ function PasswordList() {
     }
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `passwords/entries/pin/${id}`,
-        {
-          method: 'POST'
-        }
-      )
+      await forgeAPI.passwords.entries.togglePin.input({ id }).mutate({})
 
       queryClient.setQueryData<PasswordEntry[]>(
         ['passwords', 'entries'],

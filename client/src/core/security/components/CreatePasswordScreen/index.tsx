@@ -4,10 +4,15 @@ import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { ForgeAPIClientController } from 'shared'
 
 import CreatePasswordConfirmationModal from './modals/CreatePasswordConfirmationModal'
 
-function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
+function CreatePasswordScreen({
+  controller
+}: {
+  controller: ForgeAPIClientController
+}) {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('common.vault')
@@ -32,7 +37,7 @@ function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
     open(CreatePasswordConfirmationModal, {
       newPassword,
       confirmPassword,
-      endpoint
+      controller
     })
   }
 

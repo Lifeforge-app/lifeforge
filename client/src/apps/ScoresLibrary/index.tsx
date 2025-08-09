@@ -108,8 +108,6 @@ function ScoresLibrary() {
     input.onchange = async e => {
       const files = (e.target as HTMLInputElement).files
 
-      const formData = new FormData()
-
       if (files === null) {
         return
       }
@@ -120,13 +118,10 @@ function ScoresLibrary() {
         return
       }
 
-      for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i], encodeURIComponent(files[i].name))
-      }
-
       try {
-        const taskId =
-          await forgeAPI.scoresLibrary.entries.upload.mutate(formData)
+        const taskId = await forgeAPI.scoresLibrary.entries.upload.mutate({
+          files: Array.from(files)
+        })
 
         socket.on(
           'taskPoolUpdate',

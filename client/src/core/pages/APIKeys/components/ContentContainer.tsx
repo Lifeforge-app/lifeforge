@@ -54,7 +54,9 @@ function ContentContainer({
   }
 
   if (userData?.hasAPIKeysMasterPassword === false) {
-    return <CreatePasswordScreen endpoint="api-keys/auth" />
+    return (
+      <CreatePasswordScreen controller={forgeAPI.apiKeys.auth.createOrUpdate} />
+    )
   }
 
   if (masterPassword === '') {

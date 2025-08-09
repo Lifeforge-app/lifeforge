@@ -7,7 +7,6 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
-import { fetchAPI } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
 
 function AudioType({
@@ -143,8 +142,6 @@ function AudioType({
   async function onSubmit() {
     setSubmitLoading(true)
 
-    const body = new FormData()
-
     const file = new File(
       audioChunksRef.current,
       `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
@@ -153,19 +150,12 @@ function AudioType({
       }
     )
 
-    body.append('type', 'audio')
-    body.append('files', file)
-    body.append('transcription', transcription ?? '')
-
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        'momentVault/entries/create',
-        {
-          method: 'POST',
-          body
-        }
-      )
+      await forgeAPI.momentVault.entries.create.mutate({
+        type: 'audio',
+        files: [file],
+        transcription: transcription ?? ''
+      })
 
       onSuccess()
     } catch {

@@ -42,14 +42,10 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
     setSubmitLoading(true)
 
     try {
-      const formData = new FormData()
-
-      formData.append('type', 'photos')
-      photos.forEach(photo => {
-        formData.append('files', photo.file)
+      await forgeAPI.momentVault.entries.create.mutate({
+        type: 'photos',
+        files: photos.map(photo => photo.file)
       })
-
-      await forgeAPI.momentVault.entries.create.mutate(formData)
 
       onSuccess()
     } catch (err) {

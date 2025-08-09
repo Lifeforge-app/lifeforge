@@ -2,16 +2,16 @@ import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
+import { ForgeAPIClientController } from 'shared'
 
 function CreatePasswordConfirmationModal({
-  data: { newPassword, confirmPassword, endpoint },
+  data: { controller, newPassword, confirmPassword },
   onClose
 }: {
   data: {
+    controller: ForgeAPIClientController
     newPassword: string
     confirmPassword: string
-    endpoint: string
   }
   onClose: () => void
 }) {
@@ -35,10 +35,9 @@ function CreatePasswordConfirmationModal({
     setLoading(true)
 
     try {
-      await fetchAPI(import.meta.env.VITE_API_HOST, endpoint, {
-        method: 'POST',
-        body: { password: newPassword }
-      })
+      await controller.mutate({
+        password: newPassword
+      } as any)
 
       window.location.reload()
     } catch {
