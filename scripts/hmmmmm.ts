@@ -1,10 +1,7 @@
-import chalk from 'chalk'
 import dotenv from 'dotenv'
-import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
-import Pocketbase, { type CollectionModel } from 'pocketbase'
-import prettier from 'prettier'
+import Pocketbase from 'pocketbase'
 
 dotenv.config({
   path: path.resolve(__dirname, '../server/env/.env.local')
@@ -33,28 +30,17 @@ try {
   process.exit(1)
 }
 
-const allEntries = await pb.collection('idea_box__entries').getFullList()
+const allEntries = await pb.collection('scores_library__entries').getFullList()
 
 for (const entry of allEntries) {
-  if (entry.type === 'text') {
-    await pb.collection('idea_box__entries_text').create({
-      base_entry: entry.id,
-      content: entry.content,
-      title: entry.title
-    })
-  } else if (entry.type === 'image') {
-    const image = entry.image
-    const imageLink = pb.files.getURL(entry, entry.image)
-    const imageBuffer = await fetch(imageLink).then(res => res.arrayBuffer())
+  const firstPart = entry.pdf.split('_')[0] as string
+  if (firstPart.match(/^\d+$/)) {
+    const firstPartNumber = parseInt(firstPart, 10)
 
-    await pb.collection('idea_box__entries_image').create({
-      base_entry: entry.id,
-      image: new File([imageBuffer], image)
-    })
-  } else {
-    await pb.collection('idea_box__entries_link').create({
-      base_entry: entry.id,
-      link: entry.content
+    if (firstPartNumber < 1000) continue
+
+    await pb.collection('scores_library__entries').update(entry.id, {
+      guitar_world_id: firstPartNumber
     })
   }
 }

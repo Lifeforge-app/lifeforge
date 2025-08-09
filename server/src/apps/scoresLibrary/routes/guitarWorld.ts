@@ -19,7 +19,7 @@ const list = forgeController.query
         .transform(val => parseInt(val ?? '1', 10) || 1)
     })
   })
-  .callback(async ({ query: { cookie, page } }) => {
+  .callback(async ({ pb, query: { cookie, page } }) => {
     const data: {
       data: {
         list: {
@@ -47,7 +47,7 @@ const list = forgeController.query
       return res.json()
     })
 
-    return {
+    const finalData = {
       data: data.data.list
         .map(item => item.qupu)
         .map(item => ({
@@ -57,11 +57,40 @@ const list = forgeController.query
           category: item.category_txt,
           mainArtist: item.main_artist,
           uploader: item.creator_name,
-          audioUrl: item.audio
+          audioUrl: item.audio,
+          existed: false
         })),
       totalItems: data.data.total,
       perPage: data.data.page_size
     }
+
+    const allIds = finalData.data.map(item => item.id)
+
+    const existingEntries = await pb.getFullList
+      .collection('scores_library__entries')
+      .filter([
+        {
+          combination: '||',
+          filters: allIds.map(e => ({
+            field: 'id',
+            operator: '=',
+            value: e
+          }))
+        }
+      ])
+      .execute()
+
+    for (const entry of existingEntries) {
+      const index = finalData.data.findIndex(
+        e => e.id === entry.guitar_world_id
+      )
+
+      if (index !== -1) {
+        finalData.data[index].existed = true
+      }
+    }
+
+    return finalData
   })
 
 const download = forgeController.mutation
@@ -78,11 +107,7 @@ const download = forgeController.mutation
   })
   .statusCode(202)
   .callback(
-    async ({
-      pb,
-      body: { cookie, id, name, category, mainArtist, audioUrl },
-      io
-    }) => {
+    async ({ pb, body: { cookie, id, name, mainArtist, audioUrl }, io }) => {
       const taskId = addToTaskPool(io, {
         module: 'scoresLibrary',
         description: `Downloading tab ${name} (${id}) from Guitar World`,
