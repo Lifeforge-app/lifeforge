@@ -39,9 +39,13 @@ export type InferInput<T> = T extends {
           : (B extends ZodObjectOrIntersection
               ? z.infer<B>
               : Record<string, any>) & {
-              [K in keyof M]: M[K] extends { optional: true }
-                ? File | string | undefined
-                : File | string
+              [K in keyof M]: M[K] extends { multiple: true }
+                ? M[K] extends { optional: true }
+                  ? File[] | undefined
+                  : File[]
+                : M[K] extends { optional: true }
+                  ? File | string | undefined
+                  : File | string
             }
         query: Q extends ZodObjectOrIntersection ? z.infer<Q> : never
       }

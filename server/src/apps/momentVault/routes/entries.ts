@@ -97,7 +97,7 @@ const create = forgeController.mutation
   .media({
     files: {
       multiple: true,
-      optional: false
+      optional: true
     }
   })
   .statusCode(201)
