@@ -4,7 +4,6 @@ import { Button, ModalHeader } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -20,9 +19,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   async function onConfirm() {
     try {
       setLoading(true)
-      await fetchAPI(import.meta.env.VITE_API_HOST, `/user/2fa/disable`, {
-        method: 'POST'
-      })
+      await forgeAPI.user['2fa'].disable.mutate({})
 
       setUserData(userData =>
         userData ? { ...userData, twoFAEnabled: false } : null

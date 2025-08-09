@@ -1,11 +1,11 @@
 import { decrypt } from '@security/utils/encryption'
+import forgeAPI from '@utils/forgeAPI'
 import { parse as parseCookie } from 'cookie'
 import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
-import { fetchAPI } from 'shared'
 
 function QRCodeDisplay() {
   const { bgTempPalette, derivedTheme } = usePersonalization()
@@ -14,15 +14,9 @@ function QRCodeDisplay() {
 
   async function fetchLink() {
     try {
-      const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        '/user/2fa/challenge'
-      )
+      const challenge = await forgeAPI.user['2fa'].getChallenge.query()
 
-      const link = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        '/user/2fa/link'
-      )
+      const link = await forgeAPI.user['2fa'].generateAuthenticatorLink.query()
 
       const decrypted1 = decrypt(
         link,
