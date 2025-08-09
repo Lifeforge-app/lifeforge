@@ -9,7 +9,7 @@
     "currentStreak": "當前連續天數",
     "timeSpentToday": "今天花費的時間"
   },
-  "headers": {
+  "widgets": {
     "statistics": "統計",
     "activitiesCalendar": "活動日曆",
     "projects": "最常參與的專案",
