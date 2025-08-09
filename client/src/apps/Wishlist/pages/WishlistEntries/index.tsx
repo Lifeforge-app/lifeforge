@@ -139,7 +139,7 @@ function WishlistEntries() {
                   />
                   <EntryList
                     filteredEntries={filteredEntries || []}
-                    isTotallyEmpty={!!entriesQuery.data?.length}
+                    isTotallyEmpty={(entriesQuery.data?.length ?? 0) === 0}
                   />
                 </>
               )}
