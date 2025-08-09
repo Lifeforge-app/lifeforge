@@ -9,7 +9,7 @@
     "currentStreak": "当前连续天数",
     "timeSpentToday": "今天花费的时间"
   },
-  "headers": {
+  "widgets": {
     "statistics": "统计",
     "activitiesCalendar": "活动日历",
     "projects": "最常参与的项目",

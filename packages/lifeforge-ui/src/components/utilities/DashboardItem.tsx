@@ -30,11 +30,15 @@ function DashboardItem({
         className
       )}
     >
-      <div className="flex-between mb-2 flex">
+      <div className="mb-2 flex items-start justify-between">
         <h2 className="flex items-center gap-2 text-xl font-semibold">
           <Icon className="text-2xl" icon={icon} />
           <span className="ml-2">
-            {t(`widgets.${_.camelCase(title)}.title`)}
+            {t([
+              `widgets.${_.camelCase(title)}.title`,
+              `widgets.${_.camelCase(title)}`,
+              title
+            ])}
           </span>
         </h2>
         {componentBesideTitle}
