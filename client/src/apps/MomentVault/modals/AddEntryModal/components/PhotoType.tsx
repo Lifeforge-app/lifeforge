@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
+import forgeAPI from '@utils/forgeAPI'
 import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 async function getNaturalHeightWidth(file: File) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {
@@ -49,14 +49,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
         formData.append('files', photo.file)
       })
 
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        'momentVault/entries/create',
-        {
-          method: 'POST',
-          body: formData
-        }
-      )
+      await forgeAPI.momentVault.entries.create.mutate(formData)
 
       onSuccess()
     } catch (err) {

@@ -1,5 +1,4 @@
 import { FAB, ModuleHeader } from 'lifeforge-ui'
-import { useMemo } from 'react'
 
 import type { ScoreLibrarySortType } from '@apps/ScoresLibrary'
 
@@ -23,33 +22,24 @@ function Header({
   setSortType: React.Dispatch<React.SetStateAction<ScoreLibrarySortType>>
   uploadFiles: () => void
 }) {
-  const memoizedActionButton = useMemo(
-    () => (
-      <UploadTabButton
-        setGuitarWorldModalOpen={setGuitarWorldModalOpen}
-        uploadFiles={uploadFiles}
-      />
-    ),
-    []
-  )
-
-  const memoizedActionMenu = useMemo(
-    () => (
-      <ActionMenu
-        setSortType={setSortType}
-        setView={setView}
-        sortType={sortType}
-        view={view}
-      />
-    ),
-    [sortType, view]
-  )
-
   return (
     <>
       <ModuleHeader
-        actionButton={memoizedActionButton}
-        hamburgerMenuItems={memoizedActionMenu}
+        actionButton={
+          <UploadTabButton
+            setGuitarWorldModalOpen={setGuitarWorldModalOpen}
+            uploadFiles={uploadFiles}
+          />
+        }
+        hamburgerMenuClassName="flex md:hidden"
+        hamburgerMenuItems={
+          <ActionMenu
+            setSortType={setSortType}
+            setView={setView}
+            sortType={sortType}
+            view={view}
+          />
+        }
         icon="tabler:file-music"
         tips="If you want to append audio and Musescore files to your music scores, make sure to name them the same as the PDF file and upload them together."
         title="Scores Library"
