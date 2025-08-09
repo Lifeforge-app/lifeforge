@@ -52,7 +52,9 @@ function ContentContainer() {
   }
 
   if (userData?.hasMasterPassword === false) {
-    return <CreatePasswordScreen endpoint="passwords/master" />
+    return (
+      <CreatePasswordScreen controller={forgeAPI.passwords.master.create} />
+    )
   }
 
   return (

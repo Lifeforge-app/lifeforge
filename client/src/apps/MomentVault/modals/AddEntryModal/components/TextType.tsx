@@ -1,8 +1,8 @@
+import forgeAPI from '@utils/forgeAPI'
 import { Button, TextAreaInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 function TextType({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('apps.momentVault')
@@ -15,17 +15,11 @@ function TextType({ onSuccess }: { onSuccess: () => void }) {
     setSubmitLoading(true)
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        'momentVault/entries/create',
-        {
-          method: 'POST',
-          body: {
-            type: 'text',
-            content: text
-          }
-        }
-      )
+      await forgeAPI.momentVault.entries.create.mutate({
+        type: 'text',
+        content: text,
+        files: undefined
+      })
 
       onSuccess()
     } catch (err) {

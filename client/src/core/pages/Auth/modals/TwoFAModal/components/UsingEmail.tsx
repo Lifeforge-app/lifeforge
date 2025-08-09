@@ -1,10 +1,10 @@
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import ResendOTPButton from '@security/components/OTPScreen/components/ResendOTPButton'
+import forgeAPI from '@utils/forgeAPI'
 import { Button, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 import { useAuth } from '../../../../../providers/AuthProvider'
 
@@ -48,13 +48,7 @@ function UsingEmail({
     setSendOtpLoading(true)
 
     try {
-      const res = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        `user/2fa/otp?email=${encodeURIComponent(email)}`,
-        {
-          method: 'GET'
-        }
-      )
+      const res = await forgeAPI.user['2fa'].requestOTP.input({ email }).query()
 
       tid.current = res
       setOtpSent(true)

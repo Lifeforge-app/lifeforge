@@ -1,10 +1,10 @@
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import { encrypt } from '@security/utils/encryption'
+import forgeAPI from '@utils/forgeAPI'
 import { parse as parseCookie } from 'cookie'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { fetchAPI } from 'shared'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('core.accountSettings')
@@ -23,24 +23,14 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
     setVerifyOtpLoading(true)
 
     try {
-      const challenge = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        `/user/2fa/challenge`
-      )
+      const challenge = await forgeAPI.user['2fa'].getChallenge.query()
 
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `/user/2fa/verify-and-enable`,
-        {
-          method: 'POST',
-          body: {
-            otp: encrypt(
-              encrypt(otp, challenge),
-              parseCookie(document.cookie).session ?? ''
-            )
-          }
-        }
-      )
+      await forgeAPI.user['2fa'].verifyAndEnable.mutate({
+        otp: encrypt(
+          encrypt(otp, challenge),
+          parseCookie(document.cookie).session ?? ''
+        )
+      })
 
       onSuccess()
     } catch {
