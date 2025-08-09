@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { Checkbox } from 'lifeforge-ui'
-import { fetchAPI } from 'shared'
 
 import {
   type TodoListEntry,
@@ -50,13 +50,11 @@ function TaskItem({
     )
 
     try {
-      await fetchAPI(
-        import.meta.env.VITE_API_HOST,
-        `todo-list/entries/toggle/${entry.id}`,
-        {
-          method: 'POST'
-        }
-      )
+      await forgeAPI.todoList.entries.toggleEntry
+        .input({
+          id: entry.id
+        })
+        .mutate({})
 
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: entriesQueryKey })
