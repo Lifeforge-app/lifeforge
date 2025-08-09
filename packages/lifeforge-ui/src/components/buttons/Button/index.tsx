@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { memo, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
@@ -105,4 +105,4 @@ function Button<C extends React.ElementType = 'button'>({
   )
 }
 
-export default memo(Button) as typeof Button
+export default Button

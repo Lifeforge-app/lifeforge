@@ -1,112 +1,106 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { LoadingScreen, ModalManager } from 'lifeforge-ui'
-import { Suspense, useEffect, useState } from 'react'
-import { usePersonalization } from 'shared'
+import { useQuery } from '@tanstack/react-query'
+import { useDebounce } from '@uidotdev/usehooks'
+import {
+  EmptyStateScreen,
+  QueryWrapper,
+  SSOHeader,
+  SearchInput,
+  useModalStore
+} from 'lifeforge-ui'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import MainContent from './pages/MainContent'
-import LocaleManagerProvider from './providers/LocaleManagerProvider'
+import CreateEntryModal from './components/CreateEntryModal'
+import LocaleEditor from './components/LocaleEditor'
+import NamespaceSelector from './components/NamespaceSelector'
+import { useLocaleManager } from './providers/LocaleManagerProvider'
 import forgeAPI from './utils/forgeAPI'
 
-const LocaleAdmin = () => {
-  const [isAuthed, setIsAuthed] = useState<'loading' | boolean>('loading')
+function App() {
+  const { t } = useTranslation('utils.localeAdmin')
 
-  const { setFontFamily, setTheme, setRawThemeColor, setBgTemp, setLanguage } =
-    usePersonalization()
+  const open = useModalStore(state => state.open)
 
-  const failAuth = () => {
-    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-    setIsAuthed(false)
-  }
+  const { namespace, subNamespace } = useLocaleManager()
 
-  const verifyToken = async () => {
-    try {
-      const { userData } = await forgeAPI.user.auth.verifySessionToken.mutate(
-        {}
-      )
+  const localesQuery = useQuery(
+    forgeAPI.locales.manager.listLocales
+      .input({
+        namespace: namespace!,
+        subnamespace: subNamespace!
+      })
+      .queryOptions({
+        enabled: !!namespace && !!subNamespace
+      })
+  )
 
-      setIsAuthed(true)
+  const [searchQuery, setSearchQuery] = useState('')
 
-      setFontFamily(userData.fontFamily || 'Inter')
-      setTheme(userData.theme || 'system')
-      setRawThemeColor(
-        userData.color
-          ? userData.color.startsWith('#')
-            ? userData.color
-            : `theme-${userData.color}`
-          : 'theme-lime'
-      )
-      setBgTemp(
-        userData.bgTemp
-          ? userData.bgTemp.startsWith('#')
-            ? userData.bgTemp
-            : `bg-${userData.bgTemp}`
-          : 'bg-zinc'
-      )
-      setLanguage(userData.language || 'en')
-    } catch {
-      failAuth()
-    }
-  }
+  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+
+  const handleCreateEntryModalOpen = useCallback(
+    (targetEntry: string) => {
+      open(CreateEntryModal, {
+        target: [namespace ?? '', subNamespace ?? '', targetEntry ?? '']
+      })
+    },
+    [namespace, subNamespace]
+  )
 
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).has('token')) {
-      document.cookie = `token=${new URLSearchParams(
-        window.location.search
-      ).get('token')}; path=/; expires=${new Date(
-        Date.now() + 1000 * 60 * 60 * 24
-      ).toUTCString()}`
-
-      window.location.replace(window.location.origin)
-    }
-
-    if (document.cookie.includes('token')) {
-      verifyToken()
-    } else {
-      failAuth()
-    }
-  }, [])
+    setSearchQuery('')
+  }, [namespace, subNamespace])
 
   return (
-    <main
-      className="bg-bg-200/50 flex-center text-bg-800 dark:bg-bg-900/50 dark:text-bg-50 flex min-h-dvh w-full flex-col p-12"
-      id="app"
-    >
-      <Suspense fallback={<LoadingScreen />}>
-        {(() => {
-          if (isAuthed === 'loading') {
-            return <LoadingScreen />
-          }
-
-          if (isAuthed === false) {
-            return (
-              <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
-                <Icon className="mb-4 text-9xl" icon="tabler:lock-access" />
-                <h2 className="text-4xl">Unauthorized Personnel</h2>
-                <p className="text-bg-500 mt-4 text-center text-lg">
-                  Please authenticate through single sign-on (SSO) in the system
-                  to access the locale editor.
-                </p>
-                <a
-                  className="bg-custom-500 text-bg-800 hover:bg-custom-400 mt-16 flex items-center justify-center gap-2 rounded-md p-4 px-6 font-semibold tracking-widest uppercase transition-all"
-                  href={import.meta.env.VITE_FRONTEND_URL}
-                >
-                  <Icon className="text-2xl" icon="tabler:hammer" />
-                  Go to System
-                </a>
-              </div>
-            )
-          }
-
-          return (
-            <LocaleManagerProvider>
-              <MainContent />
-            </LocaleManagerProvider>
-          )
-        })()}
-      </Suspense>
-      <ModalManager />
-    </main>
+    <div className="flex h-full w-full flex-1 flex-col p-12">
+      <SSOHeader
+        actionButtonProps={
+          namespace && subNamespace
+            ? {
+                icon: 'tabler:plus',
+                tProps: {
+                  item: t('items.entry')
+                },
+                onClick: () => {
+                  handleCreateEntryModalOpen('')
+                },
+                children: 'new'
+              }
+            : undefined
+        }
+        icon="mingcute:translate-line"
+        link="https://github.com/Lifeforge-app/lifeforge/tree/main/apps/localization-manager"
+        namespace="core.localizationManager"
+      />
+      <NamespaceSelector />
+      {namespace && subNamespace ? (
+        <div className="mt-3 flex h-full flex-1 flex-col space-y-6">
+          <SearchInput
+            namespace="utils.localeAdmin"
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            stuffToSearch="entry"
+          />
+          <QueryWrapper query={localesQuery}>
+            {locales => (
+              <LocaleEditor
+                locales={locales}
+                searchQuery={debouncedSearchQuery}
+              />
+            )}
+          </QueryWrapper>
+        </div>
+      ) : (
+        <div className="flex-center flex-1">
+          <EmptyStateScreen
+            icon={namespace ? 'tabler:cube-off' : 'tabler:apps-off'}
+            name={namespace ? 'subNamespace' : 'namespace'}
+            namespace="utils.localeAdmin"
+          />
+        </div>
+      )}
+    </div>
   )
 }
 
-export default LocaleAdmin
+export default App

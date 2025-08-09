@@ -1,21 +1,22 @@
 import clsx from 'clsx'
 import {
   EmptyStateScreen,
+  SSOHeader,
   SearchInput,
   SidebarDivider,
   SidebarTitle
 } from 'lifeforge-ui'
 import { useState } from 'react'
 
-import Header from '../../components/Header'
-import METHOD_COLORS from '../../constants/methodColors'
+import { Route } from '../App'
+import METHOD_COLORS from '../constants/methodColors'
 
 function Sidebar({
   groupedEndpoints,
   searchQuery,
   setSearchQuery
 }: {
-  groupedEndpoints: Record<string, RouteCustomSchemas.IRoute[]>
+  groupedEndpoints: Record<string, Route[]>
   searchQuery: string
   setSearchQuery: (query: string) => void
 }) {
@@ -30,7 +31,12 @@ function Sidebar({
           : 'w-0 min-w-0 sm:w-[5.4rem]'
       )}
     >
-      <Header />
+      <SSOHeader
+        className="p-6"
+        icon="mynaui:api"
+        link="https://github.com/Lifeforge-app/lifeforge/tree/main/apps/api-explorer"
+        namespace="core.apiExplorer"
+      />
       <div className="px-4">
         <SearchInput
           className="mb-4"
@@ -45,7 +51,7 @@ function Sidebar({
           Object.entries(groupedEndpoints).map(([topLevelPath, endpoints]) => (
             <>
               <div key={topLevelPath} className="mb-6">
-                <SidebarTitle name={`${topLevelPath} (${endpoints.length})`} />
+                <SidebarTitle label={`${topLevelPath} (${endpoints.length})`} />
                 <div className="mt-2 space-y-4">
                   {endpoints.map(endpoint => (
                     <p

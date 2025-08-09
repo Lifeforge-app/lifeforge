@@ -10,11 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "shared": "workspace:*",
-    "lifeforge-ui": "workspace:*",
     "@headlessui/react": "^2.2.0",
     "@iconify/react": "^6.0.0",
     "@tailwindcss/postcss": "^4.0.12",
+    "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.80.6",
     "@types/tinycolor2": "^1.4.6",
     "@uidotdev/usehooks": "^2.4.1",
@@ -24,6 +23,7 @@
     "i18next": "24.2.3",
     "i18next-http-backend": "2.7.3",
     "javascript-color-gradient": "^2.5.0",
+    "lifeforge-ui": "workspace:*",
     "lodash": "^4.17.21",
     "path": "^0.12.7",
     "pocketbase": "^0.25.2",
@@ -33,6 +33,7 @@
     "react-dom": "^19.1.0",
     "react-i18next": "^15.5.1",
     "react-nestable": "^3.0.2",
+    "shared": "workspace:*",
     "tailwindcss": "^4.1.8",
     "tinycolor2": "^1.6.0",
     "zod": "^3.25.67"
@@ -43,7 +44,6 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "typescript": "^5.2.2",
     "vite": "^7.0.5"
   }
 }

@@ -1,128 +1,96 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Button, LoadingScreen, ModalManager } from 'lifeforge-ui'
-import React, { Suspense, useEffect, useState } from 'react'
-import { usePersonalization } from 'shared'
+import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
+import { QueryWrapper } from 'lifeforge-ui'
+import { useMemo, useState } from 'react'
+import { InferOutput } from 'shared'
 
-import Header from './components/Header'
-import MainContent from './content'
-import './i18n'
+import Sidebar from './components/Sidebar'
+import METHOD_COLORS from './constants/methodColors'
+import forgeAPI from './utils/forgeAPI'
 
-const LocaleAdmin = (): React.ReactElement => {
-  const [isAuthed, setIsAuthed] = useState(false)
+export type Route = InferOutput<typeof forgeAPI._listRoutes>[number]
 
-  const { setFontFamily, setTheme, setRawThemeColor, setBgTemp, setLanguage } =
-    usePersonalization()
+function App() {
+  const endpointsQuery = useQuery(forgeAPI._listRoutes.queryOptions())
 
-  const failAuth = () => {
-    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-    setIsAuthed(false)
-  }
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const verifyToken = async () => {
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
-      '$1'
+  const groupedEndpoints = useMemo(() => {
+    if (!endpointsQuery.data) return {}
+
+    return Object.fromEntries(
+      Object.entries(
+        endpointsQuery.data.reduce(
+          (acc, endpoint) => {
+            if (
+              !endpoint.path.toLowerCase().includes(searchQuery.toLowerCase())
+            ) {
+              return acc
+            }
+
+            const topLevelPath = endpoint.path.split('/')[0] || 'root'
+
+            if (!acc[topLevelPath]) {
+              acc[topLevelPath] = []
+            }
+            acc[topLevelPath].push(endpoint)
+
+            return acc
+          },
+          {} as Record<string, Route[]>
+        )
+      ).filter(([_, endpoints]) => endpoints.length > 0)
     )
-
-    if (!token) {
-      failAuth()
-    }
-
-    const res = await fetch(
-      `${import.meta.env.VITE_API_HOST}/user/auth/verify`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
-
-    if (!res.ok) {
-      failAuth()
-    }
-
-    const data = await res.json()
-
-    if (data.state === 'success') {
-      setIsAuthed(true)
-
-      const { userData } = data.data
-
-      setFontFamily(userData.fontFamily || 'Inter')
-      setTheme(userData.theme || 'system')
-      setRawThemeColor(
-        userData.color
-          ? userData.color.startsWith('#')
-            ? userData.color
-            : `theme-${userData.color}`
-          : 'theme-lime'
-      )
-      setBgTemp(
-        userData.bgTemp
-          ? userData.bgTemp.startsWith('#')
-            ? userData.bgTemp
-            : `bg-${userData.bgTemp}`
-          : 'bg-zinc'
-      )
-      setLanguage(userData.language || 'en')
-    } else {
-      failAuth()
-    }
-  }
-
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).has('token')) {
-      document.cookie = `token=${new URLSearchParams(
-        window.location.search
-      ).get('token')}; path=/; expires=${new Date(
-        Date.now() + 1000 * 60 * 60 * 24
-      ).toUTCString()}`
-
-      window.location.replace(window.location.origin)
-    }
-
-    if (document.cookie.includes('token')) {
-      verifyToken()
-    } else {
-      failAuth()
-    }
-  }, [])
+  }, [endpointsQuery.data, searchQuery])
 
   return (
-    <main
-      className="bg-bg-200/50 text-bg-800 dark:bg-bg-900/50 dark:text-bg-50 flex min-h-dvh w-full flex-col"
-      id="app"
-    >
-      <Suspense fallback={<LoadingScreen />}>
-        {isAuthed ? (
-          <MainContent />
-        ) : (
+    <div className="flex h-full w-full flex-1">
+      <QueryWrapper query={endpointsQuery}>
+        {data => (
           <>
-            <Header />
-            <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
-              <Icon className="mb-4 text-9xl" icon="tabler:lock-access" />
-              <h2 className="text-4xl">Unauthorized Personnel</h2>
-              <p className="text-bg-500 mt-4 text-center text-lg">
-                Please authenticate through single sign-on (SSO) in the system
-                to access the locale editor.
-              </p>
-              <Button
-                as="a"
-                className="mt-16"
-                href={import.meta.env.VITE_FRONTEND_URL}
-                icon="tabler:hammer"
-              >
-                Go to System
-              </Button>
+            <Sidebar
+              groupedEndpoints={groupedEndpoints}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+            <div className="flex-1 overflow-y-auto p-12">
+              <div className="space-y-3">
+                {data.map(endpoint => (
+                  <div
+                    key={endpoint.path}
+                    className="flex-between shadow-custom component-bg-with-hover gap-6 rounded-md p-4 text-lg"
+                  >
+                    <div className="flex items-center gap-6">
+                      <div className="text-bg-500 flex items-center gap-4">
+                        <span
+                          className={clsx(
+                            'w-24 text-center font-semibold tracking-wider',
+                            METHOD_COLORS[endpoint.method].color ||
+                              'text-gray-500'
+                          )}
+                        >
+                          {endpoint.method}
+                        </span>
+                        <code>{endpoint.path}</code>
+                      </div>
+                      <p className="text-bg-500 text-base">
+                        {endpoint.description}
+                      </p>
+                    </div>
+                    <Icon
+                      className="text-bg-400 dark:text-bg-600 mr-2 size-5"
+                      icon="tabler:chevron-down"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}
-      </Suspense>
-      <ModalManager />
-    </main>
+      </QueryWrapper>
+    </div>
   )
 }
 
-export default LocaleAdmin
+export default App

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
-import { isFolder } from '../../utils/locales'
+import { isFolder } from '../utils/locales'
 import NestedItem from './NestedItem'
 
 function LocaleEditor({

@@ -18,7 +18,7 @@ function LocalizationManager() {
     } else {
       const a = document.createElement('a')
 
-      a.href = `${import.meta.env.VITE_LOCALIZATION_MANAGER_URL}?token=${session}`
+      a.href = `${import.meta.env.VITE_LOCALIZATION_MANAGER_URL}?session=${session}`
       a.target = '_blank'
       a.click()
 
