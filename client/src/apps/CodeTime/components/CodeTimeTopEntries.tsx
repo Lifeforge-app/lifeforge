@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -26,25 +25,14 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
   )
 
   return (
-    <div className="space-y-6 pb-8">
-      <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center lg:gap-8">
-        <h1 className="mb-2 flex shrink gap-2 text-2xl font-semibold">
-          <Icon
-            className="mt-0.5 shrink-0 text-3xl"
-            icon={
-              {
-                languages: 'tabler:code',
-                projects: 'tabler:clipboard'
-              }[type]
-            }
-          />
-          <span className="ml-2">{t(`headers.${type}`)}</span>
-        </h1>
+    <DashboardItem
+      className="h-min"
+      componentBesideTitle={
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
           <p className="ml-2 shrink-0 font-medium tracking-wider sm:ml-0">
             {t('labels.inThePast')}
           </p>
-          <div className="flex shrink-0 gap-2 rounded-lg p-2">
+          <div className="ml-4 flex shrink-0 gap-2 rounded-lg">
             {['24 hours', '7 days', '30 days'].map((last, index) => (
               <button
                 key={index}
@@ -64,7 +52,16 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
             ))}
           </div>
         </div>
-      </div>
+      }
+      icon={
+        {
+          languages: 'tabler:code',
+          projects: 'tabler:clipboard'
+        }[type]
+      }
+      namespace="apps.codeTime"
+      title={type}
+    >
       <QueryWrapper query={topEntriesQuery}>
         {topEntries => (
           <>
@@ -135,7 +132,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
           </>
         )}
       </QueryWrapper>
-    </div>
+    </DashboardItem>
   )
 }
 
