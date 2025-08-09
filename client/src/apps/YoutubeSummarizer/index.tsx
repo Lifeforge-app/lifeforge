@@ -12,7 +12,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { InferOutput } from 'shared'
-import { fetchAPI } from 'shared'
 
 import CaptionSelector from './components/CaptionSelector'
 import SummaryDisplay from './components/SummaryDisplay'
@@ -63,14 +62,9 @@ function YoutubeSummarizer() {
     setSummarizeLoading(true)
 
     try {
-      const response = await fetchAPI<string>(
-        import.meta.env.VITE_API_HOST,
-        '/youtube-summarizer/summarize',
-        {
-          body: { url },
-          method: 'POST'
-        }
-      )
+      const response = await forgeAPI.youtubeSummarizer.summarizeVideo.mutate({
+        url
+      })
 
       setSummarizeResult(response)
     } catch {

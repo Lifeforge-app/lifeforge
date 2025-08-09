@@ -20,7 +20,8 @@
 - **Scores Library**: User can now create collections and add scores to them.
 - **Scores Library**: Scores downloaded from Guitar World will now be kept track of in the Guitar World modal, and the scores existed in the library will not be available for download to prevent duplication.
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
-- **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.                             
+- **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.
+- **Code**: Migrated all legacy `fetchAPI` logic into the new `forgeAPI` client.
 
 ## 📌 **dev 25w31 (7/28/2025 - 8/3/2025)**
 

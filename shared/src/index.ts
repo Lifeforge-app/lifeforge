@@ -1,7 +1,3 @@
-export { default as useAPIQuery } from './hooks/useAPIQuery'
-
-export { default as fetchAPI } from './utils/fetchAPI'
-
 export { useAPIEndpoint } from './providers/APIEndpointProvider'
 
 export { useAPIOnlineStatus } from './providers/APIOnlineStatusProvider'

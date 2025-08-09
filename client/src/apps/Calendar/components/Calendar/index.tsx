@@ -8,7 +8,6 @@ import withDragAndDrop, {
   type EventInteractionArgs
 } from 'react-big-calendar/lib/addons/dragAndDrop'
 import type { InferOutput } from 'shared'
-import { fetchAPI } from 'shared'
 
 import { useCalendarStore } from '@apps/Calendar/stores/useCalendarStore'
 
@@ -151,19 +150,15 @@ function CalendarComponent({
         }
       )
 
-      await fetchAPI<CalendarEvent>(
-        import.meta.env.VITE_API_HOST,
-        `calendar/events/${event.id}`,
-        {
-          method: 'PATCH',
-          body: {
-            title: event.title,
-            start: dayjs(start).toISOString(),
-            end: dayjs(end).toISOString(),
-            category: event.category
-          }
-        }
-      )
+      await forgeAPI.calendar.events.update
+        .input({
+          id: event.id
+        })
+        .mutate({
+          ...(event as any),
+          start: dayjs(start).toISOString(),
+          end: dayjs(end).toISOString()
+        })
     },
     [queryClient, start, end]
   )
