@@ -40,7 +40,13 @@ export function joinObjectsRecursively(
  * hasFile({ name: "Bob" }) // false
  */
 export const hasFile = (data: Record<string, any> | undefined): boolean =>
-  data ? Object.values(data).some(value => value instanceof File) : false
+  data
+    ? Object.values(data).some(
+        value =>
+          value instanceof File ||
+          (Array.isArray(value) && value.some(v => v instanceof File))
+      )
+    : false
 
 /**
  * Converts a flat object to FormData, auto-handling:
@@ -61,9 +67,9 @@ export function getFormData(data: Record<string, any> | undefined): FormData {
 
   const formData = new FormData()
 
-  const fileEntries: Record<string, File> = {}
+  const fileEntries: Record<string, File | File[]> = {}
 
-  const encodeValue = (value: any): string | File => {
+  const encodeValue = (value: any): string | File | File[] => {
     const type = typeof value
 
     if (value instanceof File) return value
@@ -73,6 +79,14 @@ export function getFormData(data: Record<string, any> | undefined): FormData {
     }
 
     if (Array.isArray(value)) {
+      if (value.some(e => e instanceof File)) {
+        if (!value.every(e => e instanceof File)) {
+          throw new Error('Array contains a mix of File and non-File values')
+        }
+
+        return value
+      }
+
       return `__type:array;${JSON.stringify(value)}`
     }
 
@@ -88,15 +102,19 @@ export function getFormData(data: Record<string, any> | undefined): FormData {
   }
 
   Object.entries(data).forEach(([key, value]) => {
-    if (value instanceof File) {
+    if (typeof value !== 'string') {
       fileEntries[key] = value
     } else {
-      formData.append(key, encodeValue(value))
+      formData.append(key, encodeValue(value) as string)
     }
   })
 
   Object.entries(fileEntries).forEach(([key, file]) => {
-    formData.append(key, file)
+    if (Array.isArray(file)) {
+      file.forEach(f => formData.append(key, f))
+    } else {
+      formData.append(key, file)
+    }
   })
 
   return formData
