@@ -6,7 +6,6 @@ import { useMemo, useState } from 'react'
 import { InferOutput } from 'shared'
 
 import Sidebar from './components/Sidebar'
-import METHOD_COLORS from './constants/methodColors'
 import forgeAPI from './utils/forgeAPI'
 
 export type Route = InferOutput<typeof forgeAPI._listRoutes>[number]
@@ -59,24 +58,36 @@ function App() {
                 {data.map(endpoint => (
                   <div
                     key={endpoint.path}
-                    className="flex-between shadow-custom component-bg-with-hover gap-6 rounded-md p-4 text-lg"
+                    className={
+                      'flex-between shadow-custom component-bg-with-hover gap-6 rounded-md p-4 text-lg'
+                    }
                   >
                     <div className="flex items-center gap-6">
                       <div className="text-bg-500 flex items-center gap-4">
-                        <span
+                        <div
                           className={clsx(
-                            'w-24 text-center font-semibold tracking-wider',
-                            METHOD_COLORS[endpoint.method].color ||
-                              'text-gray-500'
+                            'h-7 w-1 rounded-full',
+                            endpoint.method === 'GET'
+                              ? 'bg-blue-500'
+                              : 'bg-green-500'
                           )}
-                        >
-                          {endpoint.method}
-                        </span>
-                        <code>{endpoint.path}</code>
+                        />
+                        <Icon
+                          className="text-bg-500 size-6"
+                          icon={
+                            endpoint.method === 'GET'
+                              ? 'tabler:database-search'
+                              : 'tabler:pencil'
+                          }
+                        />
+                        <code>
+                          {endpoint.path.split('/').slice(0, -1).join('/')}
+                          <span className="text-custom-500">
+                            /{endpoint.path.split('/').slice(-1)}
+                          </span>
+                        </code>
                       </div>
-                      <p className="text-bg-500 text-base">
-                        {endpoint.description}
-                      </p>
+                      <p className="text-base">{endpoint.description}</p>
                     </div>
                     <Icon
                       className="text-bg-400 dark:text-bg-600 mr-2 size-5"

@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import {
   EmptyStateScreen,
@@ -9,7 +10,6 @@ import {
 import { useState } from 'react'
 
 import { Route } from '../App'
-import METHOD_COLORS from '../constants/methodColors'
 
 function Sidebar({
   groupedEndpoints,
@@ -54,23 +54,23 @@ function Sidebar({
                 <SidebarTitle label={`${topLevelPath} (${endpoints.length})`} />
                 <div className="mt-2 space-y-4">
                   {endpoints.map(endpoint => (
-                    <p
+                    <div
                       key={endpoint.path}
-                      className="text-bg-500 w-full min-w-0 gap-4 truncate px-8"
+                      className="text-bg-500 flex w-full min-w-0 items-center gap-2 px-8"
                     >
-                      <span
-                        className={clsx(
-                          'font-semibold tracking-wider',
-                          METHOD_COLORS[endpoint.method].color ||
-                            'text-gray-500'
-                        )}
-                      >
-                        {endpoint.method}
-                      </span>
-                      <code className="ml-2 w-full min-w-0">
-                        {endpoint.path}
+                      <Icon
+                        className="text-bg-500 size-6"
+                        icon={
+                          endpoint.method === 'GET'
+                            ? 'tabler:database-search'
+                            : 'tabler:pencil'
+                        }
+                      />
+                      <code className="ml-2 w-full min-w-0 truncate">
+                        {endpoint.path.split('/').slice(1).join('/') ||
+                          '<ROOT>'}
                       </code>
-                    </p>
+                    </div>
                   ))}
                 </div>
               </div>
