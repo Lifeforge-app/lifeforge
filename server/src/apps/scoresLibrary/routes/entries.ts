@@ -4,9 +4,7 @@ import {
   addToTaskPool,
   updateTaskInPool
 } from '@middlewares/taskPoolMiddleware'
-import { uploadMiddleware } from '@middlewares/uploadMiddleware'
 import { SCHEMAS } from '@schema'
-import fs from 'fs'
 import { z } from 'zod/v4'
 
 import { processFiles } from '../utils/uploadFiles'
@@ -156,11 +154,14 @@ const random = forgeController.query
 const upload = forgeController.mutation
   .description('Upload score files')
   .input({})
-  .middlewares(uploadMiddleware)
   .statusCode(202)
-  .callback(async ({ io, pb, req }) => {
-    const files = req.files
-
+  .media({
+    files: {
+      optional: false,
+      multiple: true
+    }
+  })
+  .callback(async ({ io, pb, media: { files } }) => {
     if (!files) {
       throw new ClientError('No files provided')
     }
@@ -209,12 +210,6 @@ const upload = forgeController.mutation
 
         for (const group of Object.values(groups)) {
           if (group.pdf) continue
-
-          for (const file of Object.values(group)) {
-            if (!file) continue
-
-            fs.unlinkSync(file.path)
-          }
         }
 
         groups = Object.fromEntries(

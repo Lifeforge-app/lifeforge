@@ -65,6 +65,10 @@ export const updateTaskInPool = (
     ...globalTaskPool[taskId]
   })
 
+  if (updates.status === 'failed') {
+    console.log(updates.error)
+  }
+
   if (updates.status === 'completed' || updates.status === 'failed') {
     delete globalTaskPool[taskId]
   }

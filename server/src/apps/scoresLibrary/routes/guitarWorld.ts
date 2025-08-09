@@ -72,7 +72,7 @@ const list = forgeController.query
         {
           combination: '||',
           filters: allIds.map(e => ({
-            field: 'id',
+            field: 'guitar_world_id',
             operator: '=',
             value: e
           }))
@@ -207,7 +207,8 @@ const download = forgeController.mutation
                 thumbnail: new File(
                   [fs.readFileSync(`./medium/${id}/0.jpg`)],
                   `${id}.jpeg`
-                )
+                ),
+                guitar_world_id: id
               })
               .execute()
 
