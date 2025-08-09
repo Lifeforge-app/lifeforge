@@ -593,7 +593,9 @@ export class ForgeControllerBuilder<
           ? [
               fieldsUploadMiddleware(
                 Object.fromEntries(
-                  Object.entries(this._media ?? {}).map(([key]) => [key, 1])
+                  Object.entries(this._media ?? ({} as MediaConfig)).map(
+                    ([key, value]) => [key, value.multiple ? 999 : 1]
+                  )
                 )
               )
             ]

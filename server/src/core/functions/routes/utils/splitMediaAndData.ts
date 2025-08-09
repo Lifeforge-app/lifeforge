@@ -1,20 +1,19 @@
 import { MediaConfig } from '../typescript/forge_controller.types'
 
+type MediaResponse = Record<
+  string,
+  Express.Multer.File | Express.Multer.File[] | undefined
+>
+
 export const splitMediaAndData = (
   _media: MediaConfig | null,
   data: Record<string, any>,
   requestFiles: Record<string, Express.Multer.File[]>
 ): {
   data: Record<string, any>
-  media: Record<
-    string,
-    string | Express.Multer.File | Express.Multer.File[] | undefined
-  >
+  media: MediaResponse
 } => {
-  const media: Record<
-    string,
-    string | Express.Multer.File | Express.Multer.File[] | undefined
-  > = {}
+  const media: MediaResponse = {}
 
   const result: Record<string, any> = {}
 
@@ -24,7 +23,11 @@ export const splitMediaAndData = (
         media[key] = undefined
       }
 
-      media[key] = requestFiles[key][0]
+      if (_media![key].multiple) {
+        media[key] = requestFiles[key]
+      } else {
+        media[key] = requestFiles[key][0]
+      }
     }
   }
 
@@ -33,6 +36,12 @@ export const splitMediaAndData = (
       media[key] = data[key]
     } else {
       result[key] = data[key]
+    }
+  }
+
+  for (const key in _media) {
+    if (!media[key]) {
+      media[key] = _media[key].multiple ? [] : undefined
     }
   }
 

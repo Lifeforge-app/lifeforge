@@ -1,7 +1,6 @@
 import { PBService } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { uploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 import { z } from 'zod/v4'
 
@@ -95,53 +94,56 @@ const create = forgeController.mutation
       transcription: z.string().optional()
     })
   })
-  .middlewares(uploadMiddleware)
-  .statusCode(201)
-  .callback(async ({ pb, body: { type, content, transcription }, req }) => {
-    if (type === 'audio') {
-      const { files } = req as {
-        files: Express.Multer.File[]
-      }
-
-      if (!files?.length) {
-        throw new ClientError('No file uploaded')
-      }
-
-      if (files.length > 1) {
-        throw new ClientError('Only one audio file is allowed')
-      }
-
-      if (!files[0].mimetype.startsWith('audio/')) {
-        throw new ClientError('File must be an audio file')
-      }
-
-      return await createAudioEntry(pb, {
-        file: files[0],
-        transcription
-      })
+  .media({
+    files: {
+      multiple: true,
+      optional: false
     }
-
-    if (type === 'text') {
-      if (!content) {
-        throw new ClientError('Content is required for text entries')
-      }
-
-      return await createTextEntry(pb, content)
-    }
-
-    if (type === 'photos') {
-      const { files } = req as {
-        files: Express.Multer.File[]
-      }
-
-      if (!files?.length) {
-        throw new ClientError('No files uploaded')
-      }
-
-      return await createPhotosEntry(pb, files)
-    }
-    throw new ClientError('Invalid entry type')
   })
+  .statusCode(201)
+  .callback(
+    async ({
+      pb,
+      body: { type, content, transcription },
+      media: { files }
+    }) => {
+      if (type === 'audio') {
+        if (!files?.length) {
+          throw new ClientError('No file uploaded')
+        }
+
+        if (files.length > 1) {
+          throw new ClientError('Only one audio file is allowed')
+        }
+
+        if (!files[0].mimetype.startsWith('audio/')) {
+          throw new ClientError('File must be an audio file')
+        }
+
+        return await createAudioEntry(pb, {
+          file: files[0],
+          transcription
+        })
+      }
+
+      if (type === 'text') {
+        if (!content) {
+          throw new ClientError('Content is required for text entries')
+        }
+
+        return await createTextEntry(pb, content)
+      }
+
+      if (type === 'photos') {
+        if (!files?.length) {
+          throw new ClientError('No files uploaded')
+        }
+
+        return await createPhotosEntry(pb, files)
+      }
+      throw new ClientError('Invalid entry type')
+    }
+  )
 
 const update = forgeController.mutation
   .description('Update a moment vault entry')

@@ -122,7 +122,8 @@ export class Create<
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .create(this._data, {
         expand: this._expand,
-        fields: this._fields
+        fields: this._fields,
+        requestKey: null
       }) as unknown as Promise<
       SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
     >
