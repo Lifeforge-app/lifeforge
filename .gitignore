@@ -38,4 +38,4 @@ pnpm-debug.log*
 bun.lock
 
 /database
-medium/*
+medium
