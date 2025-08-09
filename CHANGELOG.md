@@ -18,6 +18,7 @@
 - **CFOP Algorithms**: Added this module back.
 - **Changi Airport Flight Status**: Added this module back.
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
+- **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.                             
 
 ## 📌 **dev 25w31 (7/28/2025 - 8/3/2025)**
 
