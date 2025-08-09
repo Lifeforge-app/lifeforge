@@ -148,10 +148,15 @@ export class ForgeAPIClientController<
    * @param data The body data for the request
    * @returns Promise resolving to the API response
    */
-  mutate(data: InferInput<T>['body']) {
+  mutate(data: InferInput<T>['body'] | FormData) {
     return fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
       method: 'POST',
-      body: hasFile(data) ? getFormData(data) : data
+      body:
+        data instanceof FormData
+          ? data
+          : hasFile(data)
+            ? getFormData(data)
+            : data
     })
   }
 

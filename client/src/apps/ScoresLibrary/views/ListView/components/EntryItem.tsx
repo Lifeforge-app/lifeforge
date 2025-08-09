@@ -23,9 +23,19 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
 
   const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
+  const collectionsQuery = useQuery(
+    forgeAPI.scoresLibrary.collections.list.queryOptions()
+  )
+
   const type = useMemo(() => {
     return typesQuery.data?.find(type => type.id === entry.type)
   }, [typesQuery.data, entry.type])
+
+  const collection = useMemo(() => {
+    return collectionsQuery.data?.find(
+      collection => collection.id === entry.collection
+    )
+  }, [collectionsQuery.data, entry.collection])
 
   const toggleFavouriteStatusMutation = useMutation(
     forgeAPI.scoresLibrary.entries.toggleFavourite
@@ -59,8 +69,7 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
 
   const handleUpdateEntry = useCallback(() => {
     open(ModifyEntryModal, {
-      initialData: entry,
-      queryKey: ['scores-library']
+      initialData: entry
     })
   }, [entry])
 
@@ -125,12 +134,21 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
                 />
               )}
             </div>
-            <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
+            <div className="text-bg-500 mt-1 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
               <p className="min-w-0 truncate">
                 {entry.author !== '' ? entry.author : 'Unknown'}
               </p>
               <Icon className="size-1" icon="tabler:circle-filled" />
               <span>{entry.pageCount} pages</span>
+              {collection && (
+                <>
+                  <Icon className="size-1" icon="tabler:circle-filled" />
+                  <div className="flex items-center gap-2">
+                    <Icon className="size-4" icon="tabler:folder" />
+                    <span>{collection.name}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
