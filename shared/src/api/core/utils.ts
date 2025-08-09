@@ -102,7 +102,10 @@ export function getFormData(data: Record<string, any> | undefined): FormData {
   }
 
   Object.entries(data).forEach(([key, value]) => {
-    if (typeof value !== 'string') {
+    if (
+      value instanceof File ||
+      (Array.isArray(value) && value.some(v => v instanceof File))
+    ) {
       fileEntries[key] = value
     } else {
       formData.append(key, encodeValue(value) as string)
