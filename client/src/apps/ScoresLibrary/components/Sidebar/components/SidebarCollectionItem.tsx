@@ -9,10 +9,8 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-type Collection = {
-  id: string
-  name: string
-}
+import ModifyCollectionModal from '../../modals/ModifyCollectionModal'
+import type { ScoreLibraryCollection } from '@apps/ScoresLibrary'
 
 function SidebarCollectionItem({
   data,
@@ -20,7 +18,7 @@ function SidebarCollectionItem({
   onCancel,
   onSelect
 }: {
-  data: Collection
+  data: ScoreLibraryCollection
   isActive: boolean
   onCancel: () => void
   onSelect: (collection: string) => void
@@ -63,12 +61,24 @@ function SidebarCollectionItem({
       key={data.id}
       active={isActive}
       hamburgerMenuItems={
-        <MenuItem
-          isRed
-          icon="tabler:trash"
-          text="delete"
-          onClick={handleDelete}
-        />
+        <>
+          <MenuItem
+            icon="tabler:pencil"
+            text="edit"
+            onClick={() => {
+              open(ModifyCollectionModal, {
+                type: 'update',
+                initialData: data
+              })
+            }}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="delete"
+            onClick={handleDelete}
+          />
+        </>
       }
       icon="tabler:folder"
       label={data.name}

@@ -13,6 +13,7 @@ import { useCallback, useMemo } from 'react'
 
 import type { ScoreLibrarySidebarData } from '@apps/ScoresLibrary'
 
+import ModifyCollectionModal from '../modals/ModifyCollectionModal'
 import ModifyTypeModal from '../modals/ModifyTypeModal'
 import SidebarAuthorItem from './components/SidebarAuthorItem'
 import SidebarTypeItem from './components/SidebarCategoryItem'
@@ -104,15 +105,6 @@ function Sidebar({
     })
   }, [])
 
-  const handleCreateCollection = useCallback(async () => {
-    // Use a simple prompt for now; can be replaced with a modal later
-    const name = prompt('New collection name')?.trim()
-
-    if (!name) return
-    await forgeAPI.scoresLibrary.collections.create.mutate({ name })
-    await collectionsQuery.refetch()
-  }, [collectionsQuery])
-
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <QueryWrapper query={sidebarDataQuery}>
@@ -140,25 +132,36 @@ function Sidebar({
             <SidebarDivider />
             <SidebarTitle
               actionButtonIcon="tabler:plus"
-              actionButtonOnClick={handleCreateCollection}
+              actionButtonOnClick={() => {
+                open(ModifyCollectionModal, {
+                  type: 'create'
+                })
+              }}
               label="collections"
               namespace="apps.scoresLibrary"
             />
             <QueryWrapper query={collectionsQuery}>
-              {collections => (
-                <>
-                  {collections.map(c => (
-                    <SidebarCollectionItem
-                      key={c.id}
-                      data={c}
-                      isActive={collection === c.id}
-                      onCancel={handleResetCollection}
-                      onSelect={handleSelectCollection}
-                    />
-                  ))}
-                </>
-              )}
+              {collections =>
+                collections.length > 0 ? (
+                  <>
+                    {collections.map(c => (
+                      <SidebarCollectionItem
+                        key={c.id}
+                        data={c}
+                        isActive={collection === c.id}
+                        onCancel={handleResetCollection}
+                        onSelect={handleSelectCollection}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <p className="text-bg-500 text-center">
+                    No collections found
+                  </p>
+                )
+              }
             </QueryWrapper>
+            <SidebarDivider />
             <SidebarTitle
               actionButtonIcon="tabler:plus"
               actionButtonOnClick={handleCreate}
