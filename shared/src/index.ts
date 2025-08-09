@@ -18,6 +18,8 @@ export { default as SidebarStateProvider } from './providers/SidebarStateProvide
 
 export { default as ToastProvider } from './providers/ToastProvider'
 
+export { default as SSOAuthProvider } from './providers/SSOAuthProvider'
+
 export {
   createForgeAPIClient,
   ForgeAPIClientController

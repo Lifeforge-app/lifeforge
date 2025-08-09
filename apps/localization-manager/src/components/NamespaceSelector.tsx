@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { ListboxInput, ListboxOption, QueryWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useLocaleManager } from '../../providers/LocaleManagerProvider'
-import forgeAPI from '../../utils/forgeAPI'
+import { useLocaleManager } from '../providers/LocaleManagerProvider'
+import forgeAPI from '../utils/forgeAPI'
 
 function NamespaceSelector() {
   const { t } = useTranslation('utils.localeAdmin')
@@ -34,7 +34,7 @@ function NamespaceSelector() {
           }
           className={namespace ? 'w-1/2' : 'w-full'}
           icon="tabler:category-2"
-          name="namespace"
+          label="namespace"
           namespace="utils.localeAdmin"
           setValue={value => {
             setNamespace(value)
@@ -64,7 +64,7 @@ function NamespaceSelector() {
                 }
                 className="w-1/2"
                 icon="tabler:cube"
-                name="sub namespace"
+                label="sub namespace"
                 namespace="utils.localeAdmin"
                 setValue={setSubNamespace}
                 value={subNamespace}

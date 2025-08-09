@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-function useFaviconEffect(themeColor: string) {
+function useMetaEffect(themeColor: string) {
   useEffect(() => {
     const favIcon = document.querySelector(
       "link[rel*='icon']"
@@ -8,11 +8,9 @@ function useFaviconEffect(themeColor: string) {
 
     if (favIcon) {
       const targetSVGString = atob(favIcon.href.split(',')[1] || '').replace(
-        'fill="currentColor"',
-        `fill="${themeColor}"`
+        'currentColor',
+        themeColor
       )
-
-      console.log(targetSVGString)
 
       favIcon.href = `data:image/svg+xml;base64,${btoa(targetSVGString)}`
     } else {
@@ -42,4 +40,4 @@ function useFaviconEffect(themeColor: string) {
   }, [themeColor])
 }
 
-export default useFaviconEffect
+export default useMetaEffect
