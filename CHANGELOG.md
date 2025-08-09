@@ -22,6 +22,7 @@
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
 - **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.
 - **Code**: Migrated all legacy `fetchAPI` logic into the new `forgeAPI` client.
+- **Code**: The `theme-color` meta tag is now dynamically updated based on the selected theme.
 
 ## 📌 **dev 25w31 (7/28/2025 - 8/3/2025)**
 
@@ -31,6 +32,7 @@
 - **UI**: QrCodeScanner component now utilizes the global modal manager.
 - **UI**: Separated the `ListboxOrCombobox` component into two distinct components: `Listbox` and `Combobox`, to better reflect their individual functionalities.
 - **Code**: User data is now properly typed in the `useAuth` hook.
+- **Code**: Fixed a bug where the favicon is replaced by the default one no matter what.
 
 ## 📌 **dev 25w30 (7/21/2025 - 7/28/2025)**
 
