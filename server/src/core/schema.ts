@@ -384,6 +384,7 @@ export const SCHEMAS = {
       musescore: z.string(),
       isFavourite: z.boolean(),
       collection: z.string(),
+      guitar_world_id: z.number(),
       created: z.string(),
       updated: z.string(),
     }),
