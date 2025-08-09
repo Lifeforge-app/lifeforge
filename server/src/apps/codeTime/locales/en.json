@@ -9,7 +9,7 @@
     "currentStreak": "Current Streak",
     "timeSpentToday": "Time Spent Today"
   },
-  "headers": {
+  "widgets": {
     "statistics": "Statistics",
     "activitiesCalendar": "Activities Calendar",
     "projects": "Top Projects Worked On",

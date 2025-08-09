@@ -1,10 +1,10 @@
-import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
-import { QueryWrapper } from 'lifeforge-ui'
+import { clsx } from 'clsx'
+import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
+import Scrollbars from 'react-custom-scrollbars'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
 import type { InferOutput } from 'shared'
@@ -45,80 +45,99 @@ function CodeTimeActivityCalendar() {
   }, [dataQuery.isSuccess, dataQuery.data])
 
   return (
-    <div>
-      <h1 className="flex items-center gap-2 text-2xl font-semibold">
-        <Icon className="text-3xl" icon="tabler:activity" />
-        <span className="ml-2">{t('headers.activitiesCalendar')}</span>
-      </h1>
-      <div className="flex w-full items-center justify-between gap-6 overflow-x-auto">
-        <div
-          className={clsx(
-            'flex flex-1 items-center pt-8',
-            Array.isArray(activities) ? 'justify-start' : 'justify-center'
-          )}
+    <DashboardItem
+      className="h-min"
+      icon="tabler:activity"
+      namespace="apps.codeTime"
+      title="activitiesCalendar"
+    >
+      {/* {firstYear && (
+        <ListboxInput
+          buttonContent={<span>{year}</span>}
+          icon="tabler:calendar"
+          label="Year"
+          namespace="apps.codeTime"
+          setValue={setYear}
+          value={year}
         >
-          <QueryWrapper query={dataQuery}>
-            {() =>
-              Array.isArray(activities) ? (
-                <ActivityCalendar
-                  blockMargin={5}
-                  blockSize={15}
-                  data={activities}
-                  labels={{
-                    totalCount: `${
-                      Math.floor(
-                        activities.reduce((a, b) => a + b.count, 0) / 60
-                      ) > 0
-                        ? `${Math.floor(
-                            activities.reduce((a, b) => a + b.count, 0) / 60
-                          )} hours`
-                        : ''
-                    } ${
-                      Math.floor(
-                        activities.reduce((a, b) => a + b.count, 0) % 60
-                      ) > 0
-                        ? `${Math.floor(
-                            activities.reduce((a, b) => a + b.count, 0) % 60
-                          )} minutes`
-                        : ''
-                    } ${
-                      activities.reduce((a, b) => a + b.count, 0) === 0
-                        ? 'no time'
-                        : ''
-                    } spent on {{year}}`
-                  }}
-                  renderBlock={(block, activity) =>
-                    cloneElement(block, {
-                      'data-tooltip-id': 'react-tooltip',
-                      'data-tooltip-html': `${
-                        Math.floor(activity.count / 60) > 0
-                          ? `${Math.floor(activity.count / 60)} hours`
+          {Array(new Date().getFullYear() - firstYear + 1)
+            .fill(0)
+            .map((_, index) => (
+              <ListboxOption
+                key={index}
+                text={`${firstYear + index}`}
+                value={firstYear + index}
+              />
+            ))}
+        </ListboxInput>
+      )} */}
+      <div className="mt-4 flex w-full gap-8">
+        <QueryWrapper query={dataQuery}>
+          {() =>
+            Array.isArray(activities) ? (
+              <div className="h-60 w-full min-w-0">
+                <Scrollbars>
+                  <ActivityCalendar
+                    showWeekdayLabels
+                    blockMargin={5}
+                    blockSize={16}
+                    data={activities}
+                    labels={{
+                      totalCount: `${
+                        Math.floor(
+                          activities.reduce((a, b) => a + b.count, 0) / 60
+                        ) > 0
+                          ? `${Math.floor(
+                              activities.reduce((a, b) => a + b.count, 0) / 60
+                            )} hours`
                           : ''
                       } ${
-                        Math.floor(activity.count % 60) > 0
-                          ? `${Math.floor(activity.count % 60)} minutes`
+                        Math.floor(
+                          activities.reduce((a, b) => a + b.count, 0) % 60
+                        ) > 0
+                          ? `${Math.floor(
+                              activities.reduce((a, b) => a + b.count, 0) % 60
+                            )} minutes`
                           : ''
-                      } ${activity.count === 0 ? 'no time' : ''} spent on ${
-                        activity.date
-                      }`.trim()
-                    })
-                  }
-                  theme={{
-                    dark: [
-                      derivedTheme === 'dark'
-                        ? 'rgb(38, 38, 38)'
-                        : 'rgb(229, 229, 229)',
-                      themeColor
-                    ]
-                  }}
-                />
-              ) : (
-                <div className="text-bg-500">No activities found</div>
-              )
-            }
-          </QueryWrapper>
-        </div>
-        <Tooltip className="z-9999" id="react-tooltip" />
+                      } ${
+                        activities.reduce((a, b) => a + b.count, 0) === 0
+                          ? 'no time'
+                          : ''
+                      } spent on {{year}}`
+                    }}
+                    maxLevel={6}
+                    renderBlock={(block, activity) =>
+                      cloneElement(block, {
+                        'data-tooltip-id': 'react-tooltip',
+                        'data-tooltip-html': `${
+                          Math.floor(activity.count / 60) > 0
+                            ? `${Math.floor(activity.count / 60)} hours`
+                            : ''
+                        } ${
+                          Math.floor(activity.count % 60) > 0
+                            ? `${Math.floor(activity.count % 60)} minutes`
+                            : ''
+                        } ${activity.count === 0 ? 'no time' : ''} spent on ${
+                          activity.date
+                        }`.trim()
+                      })
+                    }
+                    theme={{
+                      dark: [
+                        derivedTheme === 'dark'
+                          ? 'rgb(38, 38, 38)'
+                          : 'rgb(229, 229, 229)',
+                        themeColor
+                      ]
+                    }}
+                  />
+                </Scrollbars>
+              </div>
+            ) : (
+              <div className="text-bg-500">No activities found</div>
+            )
+          }
+        </QueryWrapper>
         {firstYear && (
           <div className="space-y-2">
             {Array(new Date().getFullYear() - firstYear + 1)
@@ -142,7 +161,8 @@ function CodeTimeActivityCalendar() {
           </div>
         )}
       </div>
-    </div>
+      <Tooltip className="z-9999" id="react-tooltip" />
+    </DashboardItem>
   )
 }
 
