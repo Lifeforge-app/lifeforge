@@ -60,7 +60,7 @@ const login = forgeController.mutation
 
       const sanitizedUserData = removeSensitiveData(userData)
 
-      if (userData.twoFAEnabled) {
+      if (sanitizedUserData.twoFAEnabled) {
         currentSession.token = pb.authStore.token
         currentSession.tokenExpireAt = moment().add(5, 'minutes').toISOString()
         currentSession.tokenId = v4()
