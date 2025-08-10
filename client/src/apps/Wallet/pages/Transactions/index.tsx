@@ -191,7 +191,7 @@ function Transactions() {
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <InnerHeader />
           <SearchBar />
-          <div className="mt-6 size-full">
+          <div className="mt-6 mb-8 flex size-full flex-col gap-4">
             <QueryWrapper query={transactionsQuery}>
               {transactions =>
                 transactions.length > 0 ? (

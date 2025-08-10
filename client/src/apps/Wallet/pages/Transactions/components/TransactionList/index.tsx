@@ -1,6 +1,5 @@
-import { EmptyStateScreen, Scrollbar } from 'lifeforge-ui'
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
-import List from 'react-virtualized/dist/commonjs/List'
+import { EmptyStateScreen, Pagination, Scrollbar } from 'lifeforge-ui'
+import { useEffect, useState } from 'react'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
@@ -10,7 +9,13 @@ import TransactionItem from './components/TransactionItem'
 function TransactionList() {
   const { transactionsQuery } = useWalletData()
 
+  const [page, setPage] = useState(1)
+
   const transactions = useFilteredTransactions(transactionsQuery.data ?? [])
+
+  useEffect(() => {
+    setPage(1)
+  }, [transactions])
 
   if (transactions.length === 0) {
     return (
@@ -24,37 +29,17 @@ function TransactionList() {
 
   return (
     <>
+      <Pagination
+        currentPage={page}
+        totalPages={Math.ceil(transactions.length / 25)}
+        onPageChange={setPage}
+      />
       <Scrollbar>
-        <AutoSizer>
-          {({ height, width }: { height: number; width: number }) => (
-            <List
-              height={height}
-              rowCount={transactions.length + 1}
-              rowHeight={80}
-              rowRenderer={({
-                index,
-                key,
-                style
-              }: {
-                index: number
-                key: string
-                style: React.CSSProperties
-              }) => {
-                const transaction =
-                  index === transactions.length ? null : transactions[index]
-
-                return (
-                  <div key={key} style={style}>
-                    {transaction && (
-                      <TransactionItem transaction={transaction} />
-                    )}
-                  </div>
-                )
-              }}
-              width={width - 2}
-            />
-          )}
-        </AutoSizer>
+        <div className="w-full space-y-3">
+          {transactions.slice((page - 1) * 25, page * 25).map(transaction => (
+            <TransactionItem key={transaction.id} transaction={transaction} />
+          ))}
+        </div>
       </Scrollbar>
     </>
   )
