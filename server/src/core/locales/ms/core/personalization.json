@@ -62,6 +62,10 @@
       "fontFamilySelector": "Pemilih Keluarga Fon"
     }
   },
+  "fontScaleSelector": {
+    "title": "Skala Fon",
+    "desc": "Pilih skala fon yang sesuai dengan keluarga fon yang anda pilih."
+  },
   "bgImageSelector": {
     "title": "Imej Latar Belakang",
     "desc": "Muat naik atau cari imej latar belakang",

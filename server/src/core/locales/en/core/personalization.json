@@ -62,6 +62,10 @@
       "fontFamilySelector": "Font Family Selector"
     }
   },
+  "fontScaleSelector": {
+    "title": "Font Scale",
+    "desc": "Choose a font scale that suits the font family you chose."
+  },
   "bgImageSelector": {
     "title": "Background Image",
     "desc": "Upload or search for a background image",
