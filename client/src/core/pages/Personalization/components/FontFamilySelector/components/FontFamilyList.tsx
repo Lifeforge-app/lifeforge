@@ -1,15 +1,11 @@
-import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import type { UseQueryResult } from '@tanstack/react-query'
 import type forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
-import { Tooltip } from 'lifeforge-ui'
+import { Listbox, ListboxOption, Tooltip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import type { InferOutput } from 'shared'
 import { usePersonalization } from 'shared'
-
-import FontFamilyItem from './FontFamilyItem'
 
 function FontFamilyList({
   fontsQuery
@@ -31,43 +27,36 @@ function FontFamilyList({
   if (fontsQuery.isSuccess && fontsQuery.data.enabled) {
     return (
       <Listbox
-        value={fontFamily}
-        onChange={font => {
+        buttonContent={
+          <span
+            className="-mt-px block truncate"
+            style={{
+              fontFamily: `"${fontFamily}", sans-serif`
+            }}
+          >
+            {fontFamily || (
+              <span className="text-bg-500">
+                {t('fontFamily.pleaseSelect')}
+              </span>
+            )}
+          </span>
+        }
+        className="min-w-64"
+        setValue={font => {
           changeFontFamily(font)
         }}
+        value={fontFamily}
       >
-        <div className="relative mt-1 w-full md:w-64">
-          <ListboxButton
-            className={clsx(
-              'shadow-custom component-bg-lighter-with-hover flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden'
-            )}
-          >
-            <span
-              className="-mt-px block truncate"
-              style={{
-                fontFamily: `"${fontFamily}", sans-serif`
-              }}
-            >
-              {fontFamily || (
-                <span className="text-bg-500">
-                  {t('fontFamily.pleaseSelect')}
-                </span>
-              )}
-            </span>
-            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
-            </span>
-          </ListboxButton>
-          <ListboxOptions
-            transition
-            anchor="bottom end"
-            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-          >
-            {fontsQuery.data.items.map(({ family }) => (
-              <FontFamilyItem key={family} family={family} />
-            ))}
-          </ListboxOptions>
-        </div>
+        {fontsQuery.data.items.map(({ family }) => (
+          <ListboxOption
+            key={family}
+            style={{
+              fontFamily: `"${family}", sans-serif`
+            }}
+            text={family}
+            value={family}
+          />
+        ))}
       </Listbox>
     )
   }

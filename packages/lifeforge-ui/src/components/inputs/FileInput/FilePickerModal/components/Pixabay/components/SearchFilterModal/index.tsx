@@ -45,7 +45,7 @@ function SearchFilterModal({
           updateFilters={updateFilters}
         />
       </div>
-      <Button className="mt-6" icon="tabler:check" onClick={onClose}>
+      <Button className="mt-6 w-full" icon="tabler:check" onClick={onClose}>
         Apply Filters
       </Button>
     </ModalWrapper>

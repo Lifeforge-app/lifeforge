@@ -105,7 +105,6 @@ function Pixabay({
     <>
       <div className="flex w-full min-w-0 flex-col items-center gap-2 sm:flex-row">
         <SearchInput
-          lighter
           filterAmount={
             [
               filters.imageType !== 'all',

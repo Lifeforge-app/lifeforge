@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '../buttons'
 
 function SearchInput({
-  lighter,
   searchQuery,
   setSearchQuery,
   stuffToSearch,
@@ -21,7 +20,6 @@ function SearchInput({
   namespace,
   tKey = ''
 }: {
-  lighter?: boolean
   searchQuery: string
   setSearchQuery: (query: string) => void
   stuffToSearch: string
@@ -44,8 +42,7 @@ function SearchInput({
   return (
     <search
       className={clsx(
-        'shadow-custom flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg px-4 transition-all',
-        lighter ? 'component-bg-lighter-with-hover' : 'component-bg-with-hover',
+        'shadow-custom component-bg-lighter-with-hover bg-bg-50 relative flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg p-5 transition-all hover:bg-white',
         className
       )}
       onClick={e => {
@@ -73,36 +70,32 @@ function SearchInput({
         }}
         onKeyUp={onKeyUp}
       />
-      {onFilterIconClick !== undefined && (
-        <button
-          className={clsx(
-            'flex items-center gap-1 rounded-lg p-2',
-            filterAmount !== undefined && filterAmount > 0
-              ? 'text-bg-800 dark:text-bg-100'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100',
-            'hover:bg-bg-200 dark:hover:bg-bg-700/50 transition-all'
-          )}
-          onClick={onFilterIconClick}
-        >
-          <Icon className="text-xl" icon="tabler:filter" />
-          {filterAmount !== undefined && filterAmount > 0 && (
-            <span className="-mt-0.5">({filterAmount})</span>
-          )}
-        </button>
-      )}
-      {sideButtonIcon !== undefined && onSideButtonClick !== undefined && (
-        <Button
-          className="p-2!"
-          icon={sideButtonIcon}
-          loading={sideButtonLoading}
-          variant="plain"
-          onClick={e => {
-            e.stopPropagation()
-            e.preventDefault()
-            onSideButtonClick()
-          }}
-        />
-      )}
+      <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-2">
+        {onFilterIconClick !== undefined && (
+          <Button
+            className="p-2!"
+            icon="tabler:filter"
+            onClick={onFilterIconClick}
+          >
+            {filterAmount !== undefined && filterAmount > 0 && (
+              <span className="-mt-0.5">({filterAmount})</span>
+            )}
+          </Button>
+        )}
+        {sideButtonIcon !== undefined && onSideButtonClick !== undefined && (
+          <Button
+            className="p-2!"
+            icon={sideButtonIcon}
+            loading={sideButtonLoading}
+            variant="plain"
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              onSideButtonClick()
+            }}
+          />
+        )}
+      </div>
     </search>
   )
 }

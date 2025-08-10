@@ -9,7 +9,7 @@ export default function CodeTime() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:code" title="Code Time" />
-      <div className="my-6 min-h-0 w-full space-y-4">
+      <div className="mt-6 mb-12 min-h-0 w-full space-y-4">
         <CodeTimeStatistics />
         <CodeTimeActivityCalendar />
         {['projects', 'languages'].map(type => (

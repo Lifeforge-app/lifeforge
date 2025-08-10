@@ -4,9 +4,9 @@
     <style>.cls-1{fill:url(#linear-gradient);}</style>
     <linearGradient id="linear-gradient" y1="40.76" x2="190.24" y2="40.76"
       gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-value="#90cea1" />
-      <stop offset="0.56" stop-value="#3cbec9" />
-      <stop offset="1" stop-value="#00b3e5" />
+      <stop offset="0" stop-color="#90cea1" />
+      <stop offset="0.56" stop-color="#3cbec9" />
+      <stop offset="1" stop-color="#00b3e5" />
     </linearGradient>
   </defs>
   <title>Asset 2</title>

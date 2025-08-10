@@ -74,7 +74,6 @@ function IconSet({
         {iconData.title}
       </h1>
       <SearchInput
-        lighter
         namespace="common.modals"
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}

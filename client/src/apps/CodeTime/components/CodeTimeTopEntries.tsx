@@ -106,7 +106,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className="flex-between shadow-custom component-bg relative flex gap-8 rounded-lg p-6"
+                      className="flex-between shadow-custom component-bg-lighter relative flex gap-8 rounded-lg p-6"
                     >
                       <div className="flex items-center gap-3 text-lg font-medium break-all">
                         <div

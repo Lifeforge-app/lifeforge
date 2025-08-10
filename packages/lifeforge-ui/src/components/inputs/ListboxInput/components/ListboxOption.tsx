@@ -8,7 +8,10 @@ function ListboxOption({
   icon,
   iconAtEnd = false,
   color,
-  noCheckmark = false
+  noCheckmark = false,
+  className,
+  renderColorAndIcon,
+  style
 }: {
   value: unknown
   text: string | React.ReactElement
@@ -16,10 +19,20 @@ function ListboxOption({
   iconAtEnd?: boolean
   color?: string
   noCheckmark?: boolean
+  className?: string
+  renderColorAndIcon?: (params: {
+    color?: string
+    icon?: string | React.ReactElement
+  }) => React.ReactNode
+  style?: React.CSSProperties
 }) {
   return (
     <HeadlessListboxOption
-      className="flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer gap-8 p-4 transition-all select-none"
+      className={clsx(
+        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer gap-8 p-5 transition-all select-none',
+        className
+      )}
+      style={style}
       value={value}
     >
       {({ selected }: { selected: boolean }) => (
@@ -32,7 +45,9 @@ function ListboxOption({
               iconAtEnd && 'flex-between flex flex-row-reverse'
             )}
           >
-            {icon !== undefined ? (
+            {renderColorAndIcon ? (
+              renderColorAndIcon({ color, icon })
+            ) : icon !== undefined ? (
               <span
                 className={clsx('shrink-0 rounded-md', color ? 'p-2' : 'pr-2')}
                 style={
@@ -62,7 +77,7 @@ function ListboxOption({
           </div>
           {!noCheckmark && selected && (
             <Icon
-              className="text-custom-500 block shrink-0 text-lg"
+              className="text-bg-500 block shrink-0 text-lg"
               icon="tabler:check"
             />
           )}

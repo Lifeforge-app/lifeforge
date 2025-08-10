@@ -120,7 +120,6 @@ function Search({
     <div className="flex min-h-0 w-full flex-1 flex-col">
       <div className="flex w-full gap-2">
         <SearchInput
-          lighter
           namespace="common.modals"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
