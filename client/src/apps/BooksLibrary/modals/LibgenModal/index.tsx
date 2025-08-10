@@ -232,7 +232,6 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
               </ListboxOptions>
             </Listbox>
             <SearchInput
-              lighter
               namespace="apps.booksLibrary"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
