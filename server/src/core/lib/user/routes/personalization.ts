@@ -164,6 +164,7 @@ const updatePersonalization = forgeController.mutation
         color: z.string().optional(),
         bgTemp: z.string().optional(),
         language: z.string().optional(),
+        fontScale: z.number().optional(),
         dashboardLayout: z.record(z.string(), z.any()).optional(),
         backdropFilters: z.record(z.string(), z.any()).optional()
       })
@@ -179,6 +180,7 @@ const updatePersonalization = forgeController.mutation
       'color',
       'bgTemp',
       'language',
+      'fontScale',
       'dashboardLayout',
       'backdropFilters'
     ]) {
