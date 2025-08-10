@@ -499,7 +499,7 @@ export const SCHEMAS = {
       journalMasterPasswordHash: z.string(),
       APIKeysMasterPasswordHash: z.string(),
       twoFASecret: z.string(),
-      font_scale: z.number(),
+      fontScale: z.number(),
       created: z.string(),
       updated: z.string(),
     }),
