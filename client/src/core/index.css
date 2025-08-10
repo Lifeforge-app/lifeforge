@@ -30,7 +30,3 @@ layer(base);
 @import '@apps/Music/index.css';
 @import '@apps/Blog/index.css';
 @import '@apps/CodeTime/index.css';
-
-:root {
-  --custom-font-size: 16px;
-}

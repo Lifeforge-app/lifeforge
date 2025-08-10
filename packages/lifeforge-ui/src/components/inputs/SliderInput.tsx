@@ -4,8 +4,8 @@ import clsx from 'clsx'
 import useInputLabel from './shared/hooks/useInputLabel'
 
 interface SliderInputProps {
-  label: string
-  icon: string
+  label?: string
+  icon?: string
   value: number
   setValue: (value: number) => void
   required?: boolean
@@ -32,18 +32,20 @@ function SliderInput({
   namespace,
   tKey
 }: SliderInputProps) {
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel(namespace, label ?? '', tKey)
 
   return (
-    <div>
-      <div className="text-bg-400 dark:text-bg-600 flex items-center gap-2 font-medium tracking-wide">
-        <Icon className="size-6 shrink-0" icon={icon} />
-        <span>
-          {inputLabel}
-          {required && <span className="text-red-500"> *</span>}
-        </span>
-      </div>
-      <div className="mt-4 w-full pb-3">
+    <div className="w-full">
+      {icon && label && (
+        <div className="text-bg-400 dark:text-bg-600 mb-4 flex items-center gap-2 font-medium tracking-wide">
+          <Icon className="size-6 shrink-0" icon={icon} />
+          <span>
+            {inputLabel}
+            {required && <span className="text-red-500"> *</span>}
+          </span>
+        </div>
+      )}
+      <div className="w-full">
         <input
           className={clsx(
             'range range-primary bg-bg-200 dark:bg-bg-800 w-full',
@@ -56,11 +58,11 @@ function SliderInput({
           type="range"
           value={value}
           onChange={e => {
-            setValue(parseInt(e.target.value, 10))
+            setValue(parseFloat(e.target.value))
           }}
         />
         <div className="mb-4 flex w-full justify-between px-2.5 text-xs">
-          {[min, Math.round(min + max / 2), max].map((label, index) => (
+          {[min, ((min + max) / 2).toFixed(1), max].map((label, index) => (
             <div
               key={`title-${label}-${index}`}
               className="bg-bg-300 dark:bg-bg-700 relative h-2 w-0.5 rounded-full"

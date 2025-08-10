@@ -46,7 +46,7 @@ function FontListItem({
         />
       )}
       <p
-        className="relative mt-4 overflow-hidden text-4xl whitespace-nowrap"
+        className="relative mt-4 overflow-hidden p-4 text-4xl whitespace-nowrap"
         style={{
           fontFamily: font.family
         }}

@@ -30,19 +30,33 @@
   --color-bg-900: rgb(var(--color-bg-900)) !important;
   --color-bg-950: rgb(var(--color-bg-950)) !important;
 
-  --text-xs: calc(0.75 * var(--custom-font-size));
-  --text-sm: calc(0.875 * var(--custom-font-size));
-  --text-base: calc(1 * var(--custom-font-size));
-  --text-lg: calc(1.125 * var(--custom-font-size));
-  --text-xl: calc(1.25 * var(--custom-font-size));
-  --text-2xl: calc(1.5 * var(--custom-font-size));
-  --text-3xl: calc(1.875 * var(--custom-font-size));
-  --text-4xl: calc(2.25 * var(--custom-font-size));
-  --text-5xl: calc(3 * var(--custom-font-size));
-  --text-6xl: calc(3.75 * var(--custom-font-size));
-  --text-7xl: calc(4.5 * var(--custom-font-size));
-  --text-8xl: calc(6 * var(--custom-font-size));
-  --text-9xl: calc(8 * var(--custom-font-size));
+  --text-xs: calc(0.75rem * var(--custom-font-scale));
+  --text-sm: calc(0.875rem * var(--custom-font-scale));
+  --text-base: calc(1rem * var(--custom-font-scale));
+  --text-lg: calc(1.125rem * var(--custom-font-scale));
+  --text-xl: calc(1.25rem * var(--custom-font-scale));
+  --text-2xl: calc(1.5rem * var(--custom-font-scale));
+  --text-3xl: calc(1.875rem * var(--custom-font-scale));
+  --text-4xl: calc(2.25rem * var(--custom-font-scale));
+  --text-5xl: calc(3rem * var(--custom-font-scale));
+  --text-6xl: calc(3.75rem * var(--custom-font-scale));
+  --text-7xl: calc(4.5rem * var(--custom-font-scale));
+  --text-8xl: calc(6rem * var(--custom-font-scale));
+  --text-9xl: calc(8rem * var(--custom-font-scale));
+
+  --text-xs--line-height: calc(1 / 0.75);
+  --text-sm--line-height: calc(1.25 / 0.875);
+  --text-base--line-height: calc(1.5 / 1);
+  --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --text-4xl--line-height: calc(2.5 / 2.25);
+  --text-5xl--line-height: 1;
+  --text-6xl--line-height: 1;
+  --text-7xl--line-height: 1;
+  --text-8xl--line-height: 1;
+  --text-9xl--line-height: 1;
 }
 
 /* Overwriting daisyUI default colours */

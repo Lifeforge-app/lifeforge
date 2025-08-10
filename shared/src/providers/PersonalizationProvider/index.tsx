@@ -18,6 +18,7 @@ import { getColorPalette } from './utils/themeColors'
 
 const DEFAULT_VALUE: IPersonalizationData = {
   fontFamily: 'Onest',
+  fontScale: 1,
   theme: 'system',
   derivedTheme: 'dark',
   rawThemeColor: 'theme-lime',
@@ -37,6 +38,7 @@ const DEFAULT_VALUE: IPersonalizationData = {
   setDashboardLayout: () => {},
   setRawThemeColor: () => {},
   setFontFamily: () => {},
+  setFontScale: () => {},
   setTheme: () => {},
   setBgTemp: () => {},
   setBgImage: () => {},
@@ -63,6 +65,8 @@ export default function PersonalizationProvider({
   }, [defaultValueOverride])
 
   const [fontFamily, setFontFamily] = useState<string>(defaultValue.fontFamily)
+
+  const [fontScale, setFontScale] = useState<number>(defaultValue.fontScale)
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>(
     defaultValue.theme
@@ -114,7 +118,7 @@ export default function PersonalizationProvider({
       : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
 
-  useFontFamily(fontFamily)
+  useFontFamily(fontFamily, fontScale)
   useThemeEffect(derivedTheme, rawThemeColor, bgTemp)
   useRawThemeColorEffect(rawThemeColor, derivedTheme)
   useBgTempEffect(bgTemp, derivedTheme)
@@ -124,6 +128,7 @@ export default function PersonalizationProvider({
   const value = useMemo<IPersonalizationData>(
     () => ({
       fontFamily,
+      fontScale,
       theme,
       derivedTheme,
       rawThemeColor,
@@ -137,6 +142,7 @@ export default function PersonalizationProvider({
       setDashboardLayout,
       setRawThemeColor,
       setFontFamily,
+      setFontScale,
       setTheme,
       setBgTemp,
       setBgImage,
@@ -145,6 +151,7 @@ export default function PersonalizationProvider({
     }),
     [
       fontFamily,
+      fontScale,
       theme,
       rawThemeColor,
       themeColor,

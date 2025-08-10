@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import fetchAPI from '../../../utils/fetchAPI'
 import { useAPIEndpoint } from '../../APIEndpointProvider'
 
-function useFontFamily(fontFamily: string) {
+function useFontFamily(fontFamily: string, fontScale: number) {
   const apiEndpoint = useAPIEndpoint()
 
   useEffect(() => {
@@ -70,6 +70,13 @@ function useFontFamily(fontFamily: string) {
       styleTag?.remove()
     }
   }, [fontFamily])
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--custom-font-scale',
+      `${fontScale}`
+    )
+  }, [fontScale])
 }
 
 export default useFontFamily

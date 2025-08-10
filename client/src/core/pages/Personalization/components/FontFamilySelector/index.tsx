@@ -29,7 +29,7 @@ function FontFamilySelector() {
         </>
       }
     >
-      <div className="flex items-center gap-6">
+      <div className="flex w-full flex-col items-center gap-6 md:flex-row">
         <div
           className="shrink-0"
           style={{
@@ -39,6 +39,7 @@ function FontFamilySelector() {
           {fontFamily}
         </div>
         <Button
+          className="w-full md:w-auto"
           icon="tabler:text-size"
           onClick={() => {
             open(FontFamilySelectorModal, {})
