@@ -29,6 +29,20 @@
   --color-bg-800: rgb(var(--color-bg-800)) !important;
   --color-bg-900: rgb(var(--color-bg-900)) !important;
   --color-bg-950: rgb(var(--color-bg-950)) !important;
+
+  --text-xs: calc(0.75 * var(--custom-font-size));
+  --text-sm: calc(0.875 * var(--custom-font-size));
+  --text-base: calc(1 * var(--custom-font-size));
+  --text-lg: calc(1.125 * var(--custom-font-size));
+  --text-xl: calc(1.25 * var(--custom-font-size));
+  --text-2xl: calc(1.5 * var(--custom-font-size));
+  --text-3xl: calc(1.875 * var(--custom-font-size));
+  --text-4xl: calc(2.25 * var(--custom-font-size));
+  --text-5xl: calc(3 * var(--custom-font-size));
+  --text-6xl: calc(3.75 * var(--custom-font-size));
+  --text-7xl: calc(4.5 * var(--custom-font-size));
+  --text-8xl: calc(6 * var(--custom-font-size));
+  --text-9xl: calc(8 * var(--custom-font-size));
 }
 
 /* Overwriting daisyUI default colours */
