@@ -22,14 +22,18 @@
 - **Scores Library**: User can now create collections and add scores to them.
 - **Scores Library**: Scores downloaded from Guitar World will now be kept track of in the Guitar World modal, and the scores existed in the library will not be available for download to prevent duplication.
 - **Code Time**: Statistic dashboard now uses dashboard item component provided by `lifeforge-ui`.
+- **Personalization**: Created a modal for choosing font family.
+- **Personalization**: User can now adjust font scale.
 - **API Explorer**: Continue working on this application.
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
 - **UI**: Introduced reusable components for external SSO applications that ended up becoming a single comprehensive app wrapper component called `SSOMainAppWrapper` that handles everything from layout to authentication.
 - **UI**: Fixed a bug where the modal content will overflow horizontally when they should not.
+- **UI**: Lots of minor UI improvements and bug fixes.
 - **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.
 - **Code**: Migrated all legacy `fetchAPI` logic into the new `forgeAPI` client.
 - **Code**: The `theme-color` meta tag is now dynamically updated based on the selected theme.
 - **Code**: Introduced `SSOAuthProvider` in the `shared` package that handles authentication flows in external SSO applications.
+- **Code**: Removed all virtual list components due to the complexity of calculating item height dynamically.
 
 ## 📌 **dev 25w31 (7/28/2025 - 8/3/2025)**
 

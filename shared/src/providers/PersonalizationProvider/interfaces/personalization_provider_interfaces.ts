@@ -21,6 +21,7 @@ interface IBackdropFilters {
 
 interface IPersonalizationData {
   fontFamily: string
+  fontScale: number
   theme: 'light' | 'dark' | 'system'
   derivedTheme: 'light' | 'dark'
   rawThemeColor: string
@@ -33,6 +34,7 @@ interface IPersonalizationData {
   dashboardLayout: IDashboardLayout
 
   setFontFamily: React.Dispatch<React.SetStateAction<string>>
+  setFontScale: React.Dispatch<React.SetStateAction<number>>
   setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark' | 'system'>>
   setRawThemeColor: React.Dispatch<React.SetStateAction<string>>
   setBgTemp: React.Dispatch<React.SetStateAction<string>>
