@@ -62,6 +62,10 @@
       "fontFamilySelector": "字體家族選擇器"
     }
   },
+  "fontScaleSelector": {
+    "title": "字體大小",
+    "desc": "選擇一個適合你所選字體家族的字體大小。"
+  },
   "bgImageSelector": {
     "title": "背景圖片",
     "desc": "上傳或搜索背景圖片",
