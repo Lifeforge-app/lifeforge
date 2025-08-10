@@ -52,9 +52,14 @@
     "desc": "Choose a font that matches your preference",
     "tooltip": "For detailed information on all fonts, visit the Google Fonts website.",
     "tooltipTitle": "Powered by Google Fonts",
-    "disabled": {
-      "title": "Not Available",
-      "tooltip": "To enable this feature, please add the Google Cloud API key to your API vault. For more information, refer to"
+    "empty": {
+      "apiKey": {
+        "title": "Google Cloud API Key Not Found",
+        "description": "To enable this feature, please add the Google Cloud API key to your API vault."
+      }
+    },
+    "modals": {
+      "fontFamilySelector": "Font Family Selector"
     }
   },
   "bgImageSelector": {

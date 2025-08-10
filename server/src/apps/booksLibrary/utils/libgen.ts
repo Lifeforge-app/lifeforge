@@ -85,10 +85,23 @@ export function parseLibgenMirror(
       Year: e.querySelector('td:nth-child(5)')?.textContent?.trim() || '',
       Language: e.querySelector('td:nth-child(6)')?.textContent?.trim() || '',
       Pages: e.querySelector('td:nth-child(7)')?.textContent?.trim() || '',
-      Size:
-        parseInt(
-          e.querySelector('td:nth-child(8)')?.textContent?.trim() || '0'
-        ) * 1000000,
+      Size: (() => {
+        const raw =
+          e.querySelector('td:nth-child(8)')?.textContent?.trim() || '0 B'
+
+        const number = parseInt(raw, 10)
+
+        const unit = raw.split(' ').pop()?.toUpperCase() || 'B'
+
+        const CONVERSION_TABLE: Record<string, number> = {
+          B: 1,
+          KB: 1000,
+          MB: 1000000,
+          GB: 1000000000
+        }
+
+        return number * (CONVERSION_TABLE[unit] || 1)
+      })(),
       Extension: e.querySelector('td:nth-child(9)')?.textContent?.trim() || '',
       md5: (
         e.querySelector("a[href*='md5=']") as HTMLAnchorElement
