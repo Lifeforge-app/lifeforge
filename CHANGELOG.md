@@ -13,6 +13,8 @@
 - **Music**: Minor bug fixes and UI improvements.
 - **Calendar**: Fixed a bug where the `events/getToday` endpoint is not returning events from other modules.
 - **Books Library**: Fixed a bug where the `sendToKindle` endpoint is not returning anything, leading to infinite loading.
+- **Books Library**: Fixed a bug where the book size amount is not displayed correctly in the Libgen modal.
+- **Books Library**: Fixed a bug where the MD5 of the book downloaded from Libgen is not recorded in the database.
 - **Passwords**: User can now generate passwords in the `ModifyPasswordModal`.
 - **Passwords**: User can now rotate the password in the password list by clicking the rotate button in the context menu.
 - **CFOP Algorithms**: Added this module back.
@@ -23,6 +25,7 @@
 - **API Explorer**: Continue working on this application.
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
 - **UI**: Introduced reusable components for external SSO applications that ended up becoming a single comprehensive app wrapper component called `SSOMainAppWrapper` that handles everything from layout to authentication.
+- **UI**: Fixed a bug where the modal content will overflow horizontally when they should not.
 - **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.
 - **Code**: Migrated all legacy `fetchAPI` logic into the new `forgeAPI` client.
 - **Code**: The `theme-color` meta tag is now dynamically updated based on the selected theme.

@@ -1,56 +1,16 @@
 import { Icon } from '@iconify/react'
-import { useQuery } from '@tanstack/react-query'
-import forgeAPI from '@utils/forgeAPI'
-import { ConfigColumn } from 'lifeforge-ui'
-import { useEffect } from 'react'
+import { Button, ConfigColumn, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
 
-import FontFamilyList from './components/FontFamilyList'
-
-const addFontsToStylesheet = (fonts: any[]) => {
-  const sheet = window.document.styleSheets[0]
-
-  fonts.forEach(font => {
-    Object.entries(font.files).forEach(([variant, url]) => {
-      if (!['regular', '500'].includes(variant) || variant.includes('italic')) {
-        return
-      }
-
-      const fontFaceRule = `
-        @font-face {
-          font-family: '${font.family}';
-          src: url('${url}');
-          ${
-            !['regular', 'italic'].includes(variant)
-              ? `font-weight: ${variant};`
-              : ''
-          }
-          font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
-          font-display: swap;
-        }
-      `
-
-      try {
-        sheet.insertRule(fontFaceRule, sheet.cssRules.length)
-      } catch (err) {
-        console.error('Failed to insert font rule:', fontFaceRule, err)
-      }
-    })
-  })
-}
+import FontFamilySelectorModal from './components/FontFamilySelectorModal'
 
 function FontFamilySelector() {
   const { t } = useTranslation('core.personalization')
 
-  const fontsQuery = useQuery(
-    forgeAPI.user.personalization.listGoogleFonts.queryOptions()
-  )
+  const open = useModalStore(state => state.open)
 
-  useEffect(() => {
-    if (fontsQuery.data) {
-      addFontsToStylesheet(fontsQuery.data.items)
-    }
-  }, [fontsQuery.isSuccess])
+  const { fontFamily } = usePersonalization()
 
   return (
     <ConfigColumn
@@ -69,7 +29,24 @@ function FontFamilySelector() {
         </>
       }
     >
-      <FontFamilyList fontsQuery={fontsQuery} />
+      <div className="flex items-center gap-6">
+        <div
+          className="shrink-0"
+          style={{
+            fontFamily
+          }}
+        >
+          {fontFamily}
+        </div>
+        <Button
+          icon="tabler:text-size"
+          onClick={() => {
+            open(FontFamilySelectorModal, {})
+          }}
+        >
+          Select
+        </Button>
+      </div>
     </ConfigColumn>
   )
 }
