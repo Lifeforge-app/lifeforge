@@ -5,7 +5,6 @@ import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import Scrollbars from 'react-custom-scrollbars'
-import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
 import type { InferOutput } from 'shared'
 import { usePersonalization } from 'shared'
@@ -13,8 +12,6 @@ import { usePersonalization } from 'shared'
 const target = forgeAPI['code-time'].getActivities
 
 function CodeTimeActivityCalendar() {
-  const { t } = useTranslation('apps.codeTime')
-
   const { derivedTheme, derivedThemeColor: themeColor } = usePersonalization()
 
   const [year, setYear] = useState(new Date().getFullYear())

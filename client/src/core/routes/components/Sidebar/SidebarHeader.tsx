@@ -40,7 +40,6 @@ function SidebarHeader({
       {sidebarExpanded && (
         <div className="px-4">
           <SearchInput
-            lighter
             className="mb-4"
             namespace="common.sidebar"
             searchQuery={searchQuery}
