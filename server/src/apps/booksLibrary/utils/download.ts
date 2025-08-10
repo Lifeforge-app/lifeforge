@@ -55,7 +55,10 @@ export const processDownloadedFiles = async (
 
     await pb.create
       .collection('books_library__entries')
-      .data(metadata)
+      .data({
+        ...metadata,
+        md5
+      })
       .execute()
 
     updateTaskInPool(io, taskId, {
