@@ -47,7 +47,7 @@ function AddToLibraryButton({
 
   const text = useMemo(() => {
     if (targetProcess) {
-      return `${t('buttons.downloading')} (${targetProcess.progress?.percentage || 0}%)`
+      return `${t('buttons.downloading')} (${targetProcess.progress?.percentage || 0})`
     }
 
     if (entriesQuery.data?.some(entry => entry.md5 === md5)) {
