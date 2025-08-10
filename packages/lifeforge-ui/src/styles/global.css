@@ -66,3 +66,7 @@ input:-webkit-autofill:active {
     page-break-inside: avoid;
   }
 }
+
+#app {
+  @apply text-base;
+}

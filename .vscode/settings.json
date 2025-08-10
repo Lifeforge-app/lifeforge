@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
     "ITMDB",
+    "Sizer",
     "subnamespace"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
