@@ -39,7 +39,7 @@ function FontScaleSelector() {
             changeFontScale(selectedFontScale)
           }}
         >
-          Apply
+          save
         </Button>
       </div>
     </ConfigColumn>
