@@ -41,15 +41,15 @@ function SidebarItemContent({
               <div className="block w-full min-w-0 truncate">
                 {needTranslate
                   ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
-                  : label}
+                  : label}{' '}
               </div>
             )
           }
 
           return (
             sidebarExpanded && (
-              <span className="flex-between flex w-full gap-2 truncate">
-                <span className="max-w-48 min-w-0 truncate">
+              <span className="flex-between flex w-full gap-4 truncate">
+                <span className="w-full min-w-0 truncate">
                   {t(`common.sidebar:apps.${_.camelCase(label)}.title`)}
                 </span>
                 {hasAI && (

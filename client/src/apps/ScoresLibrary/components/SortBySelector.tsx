@@ -1,6 +1,5 @@
-import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { ListboxOption, ListboxOptions } from 'lifeforge-ui'
+import { Listbox, ListboxOption } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -28,12 +27,7 @@ function SortBySelector({
 
   return (
     <Listbox
-      as="div"
-      className="relative hidden md:block"
-      value={sortType}
-      onChange={handleChange}
-    >
-      <ListboxButton className="flex-between shadow-custom component-bg-with-hover flex w-48 gap-2 rounded-md p-4">
+      buttonContent={
         <div className="flex items-center gap-2">
           <Icon
             className="size-6"
@@ -51,18 +45,19 @@ function SortBySelector({
             )}
           </span>
         </div>
-        <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
-      </ListboxButton>
-      <ListboxOptions customWidth="min-w-48">
-        {SORT_TYPE.map(([icon, value]) => (
-          <ListboxOption
-            key={value}
-            icon={icon}
-            text={t(`sortTypes.${value}`)}
-            value={value}
-          />
-        ))}
-      </ListboxOptions>
+      }
+      className="bg-bg-50 w-min"
+      setValue={handleChange}
+      value={sortType}
+    >
+      {SORT_TYPE.map(([icon, value]) => (
+        <ListboxOption
+          key={value}
+          icon={icon}
+          text={t(`sortTypes.${value}`)}
+          value={value}
+        />
+      ))}
     </Listbox>
   )
 }

@@ -31,7 +31,7 @@ function SidebarSubsectionItem({
           .replace(_.kebabCase(label), '')
           .replace(/\//g, '') === '' &&
           subsectionLabel === 'Dashboard'))
-        ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800'
+        ? 'bg-bg-200/50 hover:bg-bg-200/50! shadow-custom dark:bg-bg-800 dark:hover:bg-bg-800!'
         : 'text-bg-500',
     [name, path, subsectionLabel, location.pathname]
   )
@@ -46,9 +46,9 @@ function SidebarSubsectionItem({
     <Link
       key={subsectionLabel}
       className={clsx(
-        'hover:bg-bg-100/50 dark:hover:bg-bg-800/50 mx-4 flex w-full items-center gap-3 rounded-lg py-4 font-medium transition-all',
+        'hover:bg-bg-200/30 dark:hover:bg-bg-800/30 mx-4 flex w-full items-center gap-3 rounded-lg py-4 font-medium transition-all',
         !sidebarExpanded ? 'justify-center' : '',
-        sidebarExpanded ? 'pl-[3.8rem]' : 'px-2',
+        sidebarExpanded ? 'pl-[3rem]' : 'px-2',
         locationDependentStyles
       )}
       to={`./${_.kebabCase(label)}/${path}`}
