@@ -19,6 +19,7 @@
 - **Changi Airport Flight Status**: Added this module back.
 - **Scores Library**: User can now create collections and add scores to them.
 - **Scores Library**: Scores downloaded from Guitar World will now be kept track of in the Guitar World modal, and the scores existed in the library will not be available for download to prevent duplication.
+- **Code Time**: Statistic dashboard now uses dashboard item component provided by `lifeforge-ui`.
 - **UI**: Added option to use external data state in `FormModal` to allow the modal to be controlled externally.
 - **API**: Implemented mechanism to handle multiple files uploads in `forgeController`.
 - **Code**: Migrated all legacy `fetchAPI` logic into the new `forgeAPI` client.
@@ -31,6 +32,7 @@
 - **UI**: Integrated the new `forgeAPI` client into the `lifeforge-ui` package to adapt to the new API structure.
 - **UI**: QrCodeScanner component now utilizes the global modal manager.
 - **UI**: Separated the `ListboxOrCombobox` component into two distinct components: `Listbox` and `Combobox`, to better reflect their individual functionalities.
+- **UI**: Cleaned up props for all the inputs.
 - **Code**: User data is now properly typed in the `useAuth` hook.
 - **Code**: Fixed a bug where the favicon is replaced by the default one no matter what.
 

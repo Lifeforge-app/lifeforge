@@ -48,6 +48,7 @@ function Searchbar({
     <div className="mt-4 flex gap-2">
       <SortBySelector setSortType={setSortType} sortType={sortType} />
       <SearchInput
+        className="bg-bg-50"
         namespace="apps.scoresLibrary"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -57,7 +58,7 @@ function Searchbar({
         onSideButtonClick={requestRandomEntry}
       />
       <ViewModeSelector
-        className="hidden md:flex"
+        className="bg-bg-50 hidden md:flex"
         options={[
           { value: 'list', icon: 'uil:list-ul' },
           { value: 'grid', icon: 'uil:apps' }

@@ -1,11 +1,10 @@
-import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import {
+  Listbox,
   ListboxOption,
-  ListboxOptions,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper,
@@ -47,16 +46,9 @@ function ChangiAirportFlightStatus() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:plane" title="Changi Airport Flight Status" />
-      <div className="mt-6 flex items-center gap-2">
+      <div className="my-6 flex items-center gap-2">
         <Listbox
-          as="div"
-          className="relative"
-          value={type}
-          onChange={value => {
-            setType(value)
-          }}
-        >
-          <ListboxButton className="flex-between shadow-custom component-bg-with-hover flex w-56 gap-2 rounded-md p-4">
+          buttonContent={
             <div className="flex items-center gap-2">
               <Icon
                 className="size-6"
@@ -69,27 +61,26 @@ function ChangiAirportFlightStatus() {
                 {SEARCH_TYPE.find(([, , t]) => t === type)?.[0] || 'Departure'}
               </span>
             </div>
-            <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
-          </ListboxButton>
-          <ListboxOptions>
-            {SEARCH_TYPE.map(([name, icon, value]) => (
-              <ListboxOption
-                key={value}
-                icon={icon}
-                text={name}
-                value={value}
-              />
-            ))}
-          </ListboxOptions>
+          }
+          className="bg-bg-50 w-min min-w-56"
+          setValue={value => {
+            setType(value)
+          }}
+          value={type}
+        >
+          {SEARCH_TYPE.map(([name, icon, value]) => (
+            <ListboxOption key={value} icon={icon} text={name} value={value} />
+          ))}
         </Listbox>
         <SearchInput
+          className="bg-bg-50"
           namespace="modules.changiAirport"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="flight"
         />
       </div>
-      <Scrollbar className="mt-6 w-full flex-1">
+      <Scrollbar className="w-full flex-1">
         <QueryWrapper query={flightsQuery}>
           {flights => (
             <table className="mr-8 mb-8 w-max">
