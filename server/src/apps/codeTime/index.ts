@@ -53,19 +53,9 @@ const getActivities = forgeController.query
       level: (() => {
         const hours = totalMinutes / 60
 
-        if (hours < 1) {
-          return 1
-        }
+        const levels = [1, 3, 5, 7, 9]
 
-        if (hours < 3) {
-          return 2
-        }
-
-        if (hours < 5) {
-          return 3
-        }
-
-        return 4
+        return levels.findIndex(threshold => hours < threshold) + 1 || 6
       })()
     }))
 
