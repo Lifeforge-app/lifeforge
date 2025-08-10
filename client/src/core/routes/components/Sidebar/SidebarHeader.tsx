@@ -21,7 +21,7 @@ function SidebarHeader({
         )}
       >
         <h1 className="ml-1 flex shrink-0 items-center gap-2 text-xl font-semibold whitespace-nowrap">
-          <Icon className="text-custom-500 text-3xl" icon="tabler:hammer" />
+          <Icon className="text-custom-500 size-6" icon="tabler:hammer" />
           {sidebarExpanded && (
             <div>
               LifeForge<span className="text-custom-500 text-2xl">.</span>
@@ -33,7 +33,7 @@ function SidebarHeader({
             className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50 p-6 transition-all"
             onClick={toggleSidebar}
           >
-            <Icon className="text-2xl" icon="tabler:menu" />
+            <Icon className="size-6" icon="tabler:menu" />
           </button>
         )}
       </div>

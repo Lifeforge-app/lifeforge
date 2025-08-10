@@ -8,6 +8,7 @@ import { useAuth } from './AuthProvider'
 
 const UserPersonalizationContext = createContext<{
   changeFontFamily: (font: string) => Promise<void>
+  changeFontScale: (scale: number) => Promise<void>
   changeTheme: (theme: 'light' | 'dark' | 'system') => Promise<void>
   changeThemeColor: (color: string) => Promise<void>
   changeBgTemp: (color: string) => Promise<void>
@@ -41,12 +42,18 @@ function UserPersonalizationProvider({
     setBackdropFilters,
     setLanguage,
     setDashboardLayout,
+    setFontScale,
     setBgImage
   } = usePersonalization()
 
   async function changeFontFamily(font: string) {
     setFontFamily(font)
     await syncUserData({ fontFamily: font })
+  }
+
+  async function changeFontScale(scale: number) {
+    setFontScale(scale)
+    await syncUserData({ fontScale: scale })
   }
 
   async function changeTheme(theme: 'light' | 'dark' | 'system') {
@@ -125,12 +132,17 @@ function UserPersonalizationProvider({
     if (userData?.fontFamily !== undefined) {
       setFontFamily(userData.fontFamily)
     }
+
+    if (userData?.fontScale !== undefined) {
+      setFontScale(userData.fontScale)
+    }
   }, [userData])
 
   return (
     <UserPersonalizationContext.Provider
       value={{
         changeFontFamily,
+        changeFontScale,
         changeTheme,
         changeThemeColor,
         changeBgTemp,

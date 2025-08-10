@@ -69,4 +69,5 @@ input:-webkit-autofill:active {
 
 #app {
   @apply text-base;
+  vertical-align: bottom;
 }
