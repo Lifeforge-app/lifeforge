@@ -73,7 +73,6 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       />
       <div className="flex flex-col items-center gap-2 sm:flex-row">
         <SearchInput
-          lighter
           namespace="apps.movies"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
