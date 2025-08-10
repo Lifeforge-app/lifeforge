@@ -52,9 +52,14 @@
     "desc": "选择一个符合你偏好的字体",
     "tooltip": "有关所有字体的详细信息，请访问Google字体网站。",
     "tooltipTitle": "由Google字体提供支持",
-    "disabled": {
-      "title": "不适用",
-      "tooltip": "要启用此功能，请将 Google Cloud API 密钥添加到您的 API 保险库中。欲了解更多信息，请参阅"
+    "empty": {
+      "apiKey": {
+        "title": "未找到 Google Cloud API 密钥",
+        "description": "要启用此功能，请将 Google Cloud API 密钥添加到您的 API 保险库中。"
+      }
+    },
+    "modals": {
+      "fontFamilySelector": "字体家族选择器"
     }
   },
   "bgImageSelector": {
