@@ -1,5 +1,6 @@
 import { useUserPersonalization } from '@providers/UserPersonalizationProvider'
 import { useQuery } from '@tanstack/react-query'
+import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
@@ -7,11 +8,14 @@ import {
   Listbox,
   ListboxOption,
   ModalHeader,
+  Pagination,
   QueryWrapper,
-  Scrollbar
+  Scrollbar,
+  SearchInput
 } from 'lifeforge-ui'
 import _ from 'lodash'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type Scrollbars from 'react-custom-scrollbars'
 import { toast } from 'react-toastify'
 import { AutoSizer } from 'react-virtualized'
 import { type InferOutput, usePersonalization } from 'shared'
@@ -33,46 +37,82 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
+  const [searchQuery, setSearchQuery] = useState<string>('')
+
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+
+  const [page, setPage] = useState(1)
+
   const [selectedFont, setSelectedFont] = useState<string | null>(fontFamily)
+
+  const scrollableRef = useRef<Scrollbars>(null)
 
   const filteredFonts = useMemo(
     () =>
       fontsQuery.data?.items.filter(font => {
-        if (!selectedCategory) return true
-
-        return font.category === selectedCategory
+        return (
+          (font.category === selectedCategory || !selectedCategory) &&
+          font.family.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+        )
       }),
-    [fontsQuery.data, selectedCategory]
+    [fontsQuery.data, selectedCategory, debouncedSearchQuery]
   )
 
+  useEffect(() => {
+    setPage(1)
+    scrollableRef.current?.scrollToTop()
+  }, [selectedCategory, debouncedSearchQuery])
+
+  useEffect(() => {
+    if (!fontsQuery.data) return
+
+    const indexOfCurrentFontFamily = fontsQuery.data.items.findIndex(
+      font => font.family === fontFamily
+    )
+
+    setPage(
+      indexOfCurrentFontFamily !== -1
+        ? Math.ceil((indexOfCurrentFontFamily + 1) / 10)
+        : 1
+    )
+  }, [fontsQuery.data])
+
   return (
-    <div className="flex h-full min-h-[80vh] min-w-[40vw] flex-col">
+    <div className="flex h-full min-h-[80vh] min-w-[60vw] flex-col">
       <ModalHeader
         icon="tabler:text-size"
         namespace="core.personalization"
         title="fontFamily.modals.fontFamilySelector"
         onClose={onClose}
       />
-      <Listbox
-        buttonContent={
-          <span>
-            {_.startCase(selectedCategory || '') || 'Select a category'}
-          </span>
-        }
-        className="mb-4"
-        setValue={setSelectedCategory}
-        value={selectedCategory}
-      >
-        {[...new Set(fontsQuery.data?.items.map(font => font.category))].map(
-          category => (
-            <ListboxOption
-              key={category}
-              text={_.startCase(category)}
-              value={category}
-            />
-          )
-        )}
-      </Listbox>
+      <div className="mb-4 flex flex-col items-center gap-2 md:flex-row">
+        <Listbox
+          buttonContent={
+            <span>{_.startCase(selectedCategory || '') || 'All category'}</span>
+          }
+          className="md:max-w-56"
+          setValue={setSelectedCategory}
+          value={selectedCategory}
+        >
+          <ListboxOption key="all" text="All category" value={null} />
+          {[...new Set(fontsQuery.data?.items.map(font => font.category))].map(
+            category => (
+              <ListboxOption
+                key={category}
+                text={_.startCase(category)}
+                value={category}
+              />
+            )
+          )}
+        </Listbox>
+        <SearchInput
+          namespace="core.personalization"
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          stuffToSearch="fontFamily"
+          tKey="fontFamily"
+        />
+      </div>
       <QueryWrapper query={fontsQuery}>
         {data =>
           !data.enabled ? (
@@ -87,20 +127,39 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
               <AutoSizer>
                 {({ height, width }) => (
                   <Scrollbar
+                    ref={scrollableRef}
                     style={{
                       height: `${height}px`,
                       width: `${width}px`
                     }}
                   >
                     <div className="w-full space-y-3">
-                      {filteredFonts?.map(font => (
-                        <FontListItem
-                          key={font.family}
-                          font={font}
-                          selectedFont={selectedFont}
-                          setSelectedFont={setSelectedFont}
-                        />
-                      ))}
+                      <Pagination
+                        currentPage={page}
+                        totalPages={Math.ceil(filteredFonts!.length / 10)}
+                        onPageChange={page => {
+                          setPage(page)
+                          scrollableRef.current?.scrollToTop()
+                        }}
+                      />
+                      {filteredFonts
+                        ?.slice((page - 1) * 10, page * 10)
+                        .map(font => (
+                          <FontListItem
+                            key={font.family}
+                            font={font}
+                            selectedFont={selectedFont}
+                            setSelectedFont={setSelectedFont}
+                          />
+                        ))}
+                      <Pagination
+                        currentPage={page}
+                        totalPages={Math.ceil(filteredFonts!.length / 10)}
+                        onPageChange={page => {
+                          setPage(page)
+                          scrollableRef.current?.scrollToTop()
+                        }}
+                      />
                     </div>
                   </Scrollbar>
                 )}

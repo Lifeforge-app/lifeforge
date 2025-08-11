@@ -1,23 +1,10 @@
-export interface ICollectionField {
-  name: string
-  type:
-    | 'text'
-    | 'richtext'
-    | 'number'
-    | 'bool'
-    | 'email'
-    | 'url'
-    | 'date'
-    | 'autodate'
-    | 'select'
-    | 'file'
-    | 'relation'
-    | 'json'
-    | 'geoPoint'
-    | 'password'
-  optional: boolean
-  values?: string[]
-}
+import type { InferOutput } from 'shared'
+
+import type forgeAPI from '../../../../utils/forgeAPI'
+
+export type ICollectionField = InferOutput<
+  typeof forgeAPI.database.collections.list
+>[number]['fields'][number]
 
 export interface ICollectionNodeData {
   name: string

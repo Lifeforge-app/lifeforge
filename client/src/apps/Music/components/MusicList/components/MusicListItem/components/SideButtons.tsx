@@ -108,7 +108,7 @@ function SideButtons({ music }: { music: MusicEntry }) {
               forgeAPI.media.input({
                 collectionId: music.collectionId,
                 recordId: music.id,
-                fieldId: 'file'
+                fieldId: music.file
               }).endpoint,
               music.name
             )

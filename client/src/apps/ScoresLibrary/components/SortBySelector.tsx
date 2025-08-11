@@ -30,13 +30,13 @@ function SortBySelector({
       buttonContent={
         <div className="flex items-center gap-2">
           <Icon
-            className="size-6"
+            className="size-6 shrink-0"
             icon={
               SORT_TYPE.find(([, value]) => value === sortType)?.[0] ??
               'tabler:clock'
             }
           />
-          <span className="font-medium whitespace-nowrap">
+          <span className="w-full truncate font-medium whitespace-nowrap">
             {t(
               `sortTypes.${
                 SORT_TYPE.find(([, value]) => value === sortType)?.[1] ??
@@ -46,7 +46,7 @@ function SortBySelector({
           </span>
         </div>
       }
-      className="bg-bg-50 w-min"
+      className="bg-bg-50 w-min min-w-56"
       setValue={handleChange}
       value={sortType}
     >

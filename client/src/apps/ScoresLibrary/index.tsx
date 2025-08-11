@@ -138,7 +138,7 @@ function ScoresLibrary() {
 
             if (data.status === 'failed') {
               toast.done(toastId.current!)
-              console.log(data.error)
+              console.error(data.error)
               toastId.current = null
               setTimeout(() => toast.error('Failed to upload scores!'), 100)
 

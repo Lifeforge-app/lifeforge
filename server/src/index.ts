@@ -40,8 +40,6 @@ io.use(async (socket, next) => {
 })
 
 io.on('connection', socket => {
-  console.log('a user connected')
-
   for (const task in globalTaskPool) {
     const taskData = globalTaskPool[task]
 

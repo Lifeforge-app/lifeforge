@@ -29,7 +29,7 @@ function ListboxOption({
   return (
     <HeadlessListboxOption
       className={clsx(
-        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer gap-8 p-5 transition-all select-none',
+        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex w-full min-w-0 cursor-pointer gap-4 p-5 transition-all select-none',
         className
       )}
       style={style}
@@ -39,7 +39,7 @@ function ListboxOption({
         <>
           <div
             className={clsx(
-              'flex w-full items-center',
+              'flex w-full min-w-0 items-center',
               color !== undefined ? 'gap-3' : 'gap-2',
               selected && 'text-bg-800 dark:text-bg-100 font-semibold',
               iconAtEnd && 'flex-between flex flex-row-reverse'
