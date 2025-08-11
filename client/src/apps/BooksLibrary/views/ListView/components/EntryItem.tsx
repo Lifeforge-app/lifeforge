@@ -124,7 +124,7 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
 
               return collection !== undefined ? (
                 <>
-                  <Icon className="text-bg-500 size-4" icon={collection.icon} />{' '}
+                  <Icon className="text-bg-500 size-4" icon={collection.icon} />
                   {collection.name}
                 </>
               ) : (

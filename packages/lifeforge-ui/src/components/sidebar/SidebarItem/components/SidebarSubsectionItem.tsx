@@ -68,7 +68,7 @@ function SidebarSubsectionItem({
             `apps.${_.camelCase(label)}.subsections.${_.camelCase(
               subsectionLabel
             )}`
-          )}{' '}
+          )}
         </span>
       )}
     </Link>

@@ -51,7 +51,6 @@ function TMDBResultItem({
         <h1 className="text-xl font-semibold">
           {data.title}
           <span className="text-bg-500 text-base font-medium">
-            {' '}
             ({data.original_title})
           </span>
         </h1>

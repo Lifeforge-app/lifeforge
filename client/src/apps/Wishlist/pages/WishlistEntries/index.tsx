@@ -131,7 +131,7 @@ function WishlistEntries() {
                     onNavClick={setActiveTab}
                   />
                   <SearchInput
-                    className="mt-0! mb-6"
+                    className="mt-4 mb-6"
                     namespace="apps.wishlist"
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
