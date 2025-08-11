@@ -25,7 +25,7 @@ function RouteMap() {
   }
 
   return (
-    <div className="mt-6 w-full flex-1 pb-8">
+    <div className="w-full flex-1 pb-8">
       {typeof shortestRoute === 'string' ? (
         <LoadingScreen />
       ) : (

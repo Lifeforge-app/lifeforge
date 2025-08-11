@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { useQuery } from '@tanstack/react-query'
 import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
-import { useAPIQuery } from 'shared'
 
+import forgeAPI from '../../../../../utils/forgeAPI'
 import type { ICollectionNodeData } from '../types'
 
 function CollectionSelector({
@@ -13,9 +14,8 @@ function CollectionSelector({
     onSelect: (collection: ICollectionNodeData) => void
   }
 }) {
-  const collectionsQuery = useAPIQuery<ICollectionNodeData[]>(
-    '/database/collections',
-    ['database', 'collections']
+  const collectionsQuery = useQuery(
+    forgeAPI.database.collections.list.queryOptions()
   )
 
   return (
@@ -48,7 +48,7 @@ function CollectionSelector({
                           name: 'id',
                           type: 'text',
                           optional: false,
-                          values: []
+                          options: []
                         },
                         ...collection.fields
                       ]

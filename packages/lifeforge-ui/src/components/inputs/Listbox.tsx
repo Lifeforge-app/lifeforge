@@ -21,12 +21,15 @@ function Listbox<T>({
     <HeadlessListbox value={value} onChange={setValue}>
       <ListboxButton
         className={clsx(
-          'shadow-custom component-bg-lighter-with-hover flex-between w-full gap-6 rounded-lg p-5 text-left outline-hidden transition-all focus:outline-hidden',
+          'shadow-custom component-bg-lighter-with-hover flex-between w-full min-w-0 gap-6 rounded-lg p-5 text-left outline-hidden transition-all focus:outline-hidden',
           className
         )}
       >
-        <div>{buttonContent}</div>
-        <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
+        <div className="w-full min-w-0 truncate">{buttonContent}</div>
+        <Icon
+          className="text-bg-500 size-5 shrink-0"
+          icon="tabler:chevron-down"
+        />
       </ListboxButton>
       <ListboxOptions>{children}</ListboxOptions>
     </HeadlessListbox>

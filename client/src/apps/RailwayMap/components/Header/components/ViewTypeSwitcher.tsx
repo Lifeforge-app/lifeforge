@@ -1,6 +1,5 @@
-import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { ListboxOption, ListboxOptions } from 'lifeforge-ui'
+import { Listbox, ListboxOption } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
@@ -22,14 +21,7 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
 
   return (
     <Listbox
-      as="div"
-      className="relative hidden lg:block"
-      value={viewType}
-      onChange={value => {
-        setViewType(value)
-      }}
-    >
-      <ListboxButton className="flex-between shadow-custom component-bg-with-hover flex gap-2 gap-12 rounded-md p-4">
+      buttonContent={
         <div className="flex items-center gap-2">
           <Icon
             className="size-6"
@@ -45,21 +37,21 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
             )}
           </span>
         </div>
-        <Icon
-          className="text-bg-500 size-5 shrink-0"
-          icon="tabler:chevron-down"
+      }
+      className="hidden max-w-64 lg:flex"
+      setValue={value => {
+        setViewType(value)
+      }}
+      value={viewType}
+    >
+      {VIEW_TYPES.map(([icon, name, value]) => (
+        <ListboxOption
+          key={value}
+          icon={icon}
+          text={t(`viewTypes.${_.camelCase(name)}`)}
+          value={value}
         />
-      </ListboxButton>
-      <ListboxOptions>
-        {VIEW_TYPES.map(([icon, name, value]) => (
-          <ListboxOption
-            key={value}
-            icon={icon}
-            text={t(`viewTypes.${_.camelCase(name)}`)}
-            value={value}
-          />
-        ))}
-      </ListboxOptions>
+      ))}
     </Listbox>
   )
 }

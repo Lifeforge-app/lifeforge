@@ -1,5 +1,9 @@
 # Change Log
 
+## 📌 **dev 25w32 (8/10/2025 - 8/16/2025)**
+
+- **Music**: Fixed a bug where the music is not able to be downloaded.
+
 ## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
 
 - **Music**: Added this module back.
@@ -45,6 +49,7 @@
 - **UI**: Cleaned up props for all the inputs.
 - **Code**: User data is now properly typed in the `useAuth` hook.
 - **Code**: Fixed a bug where the favicon is replaced by the default one no matter what.
+- **Code**: Replaced all custom `useAPIQuery` with vanilla `useQuery` from `@tanstack/react-query` and `forgeAPI`.
 
 ## 📌 **dev 25w30 (7/21/2025 - 7/28/2025)**
 
