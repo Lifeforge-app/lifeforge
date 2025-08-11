@@ -6,20 +6,28 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  QueryWrapper,
+  Tabs
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { InferInput, InferOutput } from 'shared'
+import colors from 'tailwindcss/colors'
 
-import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './components/ModifyAchievementModal'
 
-export type IAchievement = InferOutput<
+export type Achievement = InferOutput<
   typeof forgeAPI.achievements.entries.list
 >[number]
+
+const DIFFICULTIES = {
+  easy: colors.green[500],
+  medium: colors.yellow[500],
+  hard: colors.red[500],
+  impossible: colors.purple[500]
+}
 
 function Achievements() {
   const { t } = useTranslation('apps.achievements')
@@ -64,38 +72,50 @@ function Achievements() {
         icon="tabler:award"
         title="Achievements"
       />
-      <DifficultySelector
-        selectedDifficulty={selectedDifficulty}
-        setSelectedDifficulty={setSelectedDifficulty}
-      />
-      <QueryWrapper query={entriesQuery}>
-        {entries =>
-          entries.length > 0 ? (
-            <div className="mt-6 space-y-4">
-              {entries.map(entry => (
-                <EntryItem key={entry.id} entry={entry} />
-              ))}
-            </div>
-          ) : (
-            <EmptyStateScreen
-              CTAButtonProps={{
-                children: 'new',
-                icon: 'tabler:plus',
-                tProps: { item: t('items.achievement') },
-                onClick: () => {
-                  open(ModifyAchievementModal, {
-                    type: 'create',
-                    currentDifficulty: selectedDifficulty
-                  })
-                }
-              }}
-              icon="tabler:award-off"
-              name="achievement"
-              namespace="apps.achievements"
-            />
-          )
-        }
-      </QueryWrapper>
+      <div className="flex flex-1 flex-col gap-4">
+        <Tabs
+          active={selectedDifficulty}
+          enabled={Object.keys(DIFFICULTIES).map(
+            difficulty => difficulty as keyof typeof DIFFICULTIES
+          )}
+          items={Object.keys(DIFFICULTIES).map(difficulty => ({
+            id: difficulty,
+            name: t(`difficulties.${difficulty}`),
+            color: DIFFICULTIES[difficulty as keyof typeof DIFFICULTIES]
+          }))}
+          onNavClick={id => {
+            setSelectedDifficulty(id as Achievement['difficulty'])
+          }}
+        />
+        <QueryWrapper query={entriesQuery}>
+          {entries =>
+            entries.length > 0 ? (
+              <div className="space-y-3">
+                {entries.map(entry => (
+                  <EntryItem key={entry.id} entry={entry} />
+                ))}
+              </div>
+            ) : (
+              <EmptyStateScreen
+                CTAButtonProps={{
+                  children: 'new',
+                  icon: 'tabler:plus',
+                  tProps: { item: t('items.achievement') },
+                  onClick: () => {
+                    open(ModifyAchievementModal, {
+                      type: 'create',
+                      currentDifficulty: selectedDifficulty
+                    })
+                  }
+                }}
+                icon="tabler:award-off"
+                name="achievement"
+                namespace="apps.achievements"
+              />
+            )
+          }
+        </QueryWrapper>
+      </div>
       {entriesQuery.isSuccess && entriesQuery.data.length > 0 && (
         <FAB
           hideWhen="md"

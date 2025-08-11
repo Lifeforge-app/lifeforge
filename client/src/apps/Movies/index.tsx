@@ -8,6 +8,7 @@ import {
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper,
+  Scrollbar,
   SearchInput,
   Tabs,
   ViewModeSelector
@@ -111,7 +112,7 @@ function Movies() {
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
 
           return (
-            <>
+            <div className="flex flex-1 flex-col space-y-4">
               <Tabs
                 active={currentTab}
                 enabled={['unwatched', 'watched']}
@@ -137,7 +138,6 @@ function Movies() {
                 ]}
                 onNavClick={setCurrentTab}
               />
-
               {data.entries.length === 0 ? (
                 <EmptyStateScreen
                   CTAButtonProps={{
@@ -151,22 +151,24 @@ function Movies() {
                   namespace="apps.movies"
                 />
               ) : (
-                <FinalComponent
-                  data={data.entries.filter(entry => {
-                    const matchesSearch = entry.title
-                      .toLowerCase()
-                      .includes(debouncedSearchQuery.toLowerCase())
+                <Scrollbar>
+                  <FinalComponent
+                    data={data.entries.filter(entry => {
+                      const matchesSearch = entry.title
+                        .toLowerCase()
+                        .includes(debouncedSearchQuery.toLowerCase())
 
-                    const matchesTab =
-                      currentTab === 'unwatched'
-                        ? !entry.is_watched
-                        : entry.is_watched
+                      const matchesTab =
+                        currentTab === 'unwatched'
+                          ? !entry.is_watched
+                          : entry.is_watched
 
-                    return matchesSearch && matchesTab
-                  })}
-                />
+                      return matchesSearch && matchesTab
+                    })}
+                  />
+                </Scrollbar>
               )}
-            </>
+            </div>
           )
         }}
       </QueryWrapper>

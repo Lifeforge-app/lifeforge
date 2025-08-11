@@ -11,7 +11,8 @@ function Tabs<T extends string>({
   items: Array<{
     id: T
     name: string
-    icon: string
+    color?: string
+    icon?: string
     amount?: number
   }>
   enabled: T[]
@@ -20,24 +21,34 @@ function Tabs<T extends string>({
   className?: string
 }) {
   return (
-    <div className="mb-6 flex items-center">
+    <div className="flex items-center">
       {items
         .filter(({ id }) => enabled.includes(id))
-        .map(({ name, icon, id }) => (
+        .map(({ name, icon, id, color }) => (
           <button
             key={id}
             className={clsx(
               'flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
               active === id
-                ? 'border-custom-500 text-custom-500 font-medium'
+                ? `${
+                    !color ? 'border-custom-500 text-custom-500' : ''
+                  } font-medium`
                 : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200',
               className
             )}
+            style={
+              color && active === id
+                ? {
+                    borderColor: color,
+                    color: color
+                  }
+                : {}
+            }
             onClick={() => {
               onNavClick(id)
             }}
           >
-            <Icon className="size-5 shrink-0" icon={icon} />
+            {icon && <Icon className="size-5 shrink-0" icon={icon} />}
             <span className="truncate sm:block">{name}</span>
             {items.find(item => item.name === name)?.amount !== undefined && (
               <span className="hidden text-sm sm:block">
