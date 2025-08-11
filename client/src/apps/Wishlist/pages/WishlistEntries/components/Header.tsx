@@ -74,7 +74,7 @@ function Header({
               </div>
             </div>
             <span className="text-bg-500 block w-full min-w-0 truncate text-base">
-              {wishlistListDetails.description}{' '}
+              {wishlistListDetails.description}
             </span>
           </div>
         </h1>

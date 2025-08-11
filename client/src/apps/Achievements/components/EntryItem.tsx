@@ -6,10 +6,10 @@ import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import type { IAchievement } from '..'
+import type { Achievement } from '..'
 import ModifyAchievementModal from './ModifyAchievementModal'
 
-function EntryItem({ entry }: { entry: IAchievement }) {
+function EntryItem({ entry }: { entry: Achievement }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -57,7 +57,7 @@ function EntryItem({ entry }: { entry: IAchievement }) {
         >
           <Icon className="size-8" icon="tabler:award" />
         </div>
-        <div>
+        <div className="-mt-1">
           <h2 className="text-lg font-semibold">{entry.title}</h2>
           <p className="text-bg-500 mt-1 text-sm whitespace-pre-wrap">
             {entry.thoughts}

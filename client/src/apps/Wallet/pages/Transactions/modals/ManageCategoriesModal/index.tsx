@@ -1,7 +1,14 @@
-import { EmptyStateScreen, ModalHeader, QueryWrapper, Tabs } from 'lifeforge-ui'
+import {
+  EmptyStateScreen,
+  ModalHeader,
+  QueryWrapper,
+  Scrollbar,
+  Tabs
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AutoSizer } from 'react-virtualized'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
@@ -24,7 +31,7 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
     []
 
   return (
-    <div className="min-w-[40vw]">
+    <div className="flex min-h-[80vh] min-w-[40vw] flex-col">
       <ModalHeader
         actionButtonIcon="tabler:plus"
         icon="tabler:apps"
@@ -65,17 +72,30 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
       <QueryWrapper query={categoriesQuery}>
         {categories =>
           categories.length > 0 ? (
-            <ul className="mt-4 mb-4 space-y-3">
-              {filteredCategories.length > 0 ? (
-                filteredCategories.map(category => (
-                  <CategoryItem key={category.id} category={category} />
-                ))
-              ) : (
-                <p className="text-bg-500 text-center">
-                  No {selectedTab} categories found
-                </p>
-              )}
-            </ul>
+            <div className="mt-4 flex-1">
+              <AutoSizer>
+                {({ width, height }) => (
+                  <Scrollbar
+                    style={{
+                      width,
+                      height: height
+                    }}
+                  >
+                    <ul className="space-y-3">
+                      {filteredCategories.length > 0 ? (
+                        filteredCategories.map(category => (
+                          <CategoryItem key={category.id} category={category} />
+                        ))
+                      ) : (
+                        <p className="text-bg-500 text-center">
+                          No {selectedTab} categories found
+                        </p>
+                      )}
+                    </ul>
+                  </Scrollbar>
+                )}
+              </AutoSizer>
+            </div>
           ) : (
             <EmptyStateScreen
               CTAButtonProps={{

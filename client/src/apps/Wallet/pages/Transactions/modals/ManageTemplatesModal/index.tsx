@@ -4,11 +4,13 @@ import {
   EmptyStateScreen,
   ModalHeader,
   QueryWrapper,
+  Scrollbar,
   Tabs,
   useModalStore
 } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AutoSizer } from 'react-virtualized'
 
 import ModifyTemplatesModal from '../ModifyTemplatesModal'
 import TemplateItem from './components/Templateitem'
@@ -33,10 +35,9 @@ function ManageTemplatesModal({
   )
 
   return (
-    <>
+    <div className="flex min-h-[80vh] min-w-[40vw] flex-col">
       <ModalHeader
         actionButtonIcon={!choosing ? 'tabler:plus' : undefined}
-        className="min-w-[40vw]"
         icon="tabler:template"
         namespace="apps.wallet"
         title={`templates.${choosing ? 'choose' : 'manage'}`}
@@ -69,35 +70,48 @@ function ManageTemplatesModal({
       <QueryWrapper query={transactionTemplatesQuery}>
         {templates =>
           Object.values(templates).flat().length > 0 ? (
-            <ul className="mb-4 space-y-3">
-              {templates[selectedTab].length > 0 ? (
-                templates[selectedTab].map(template => (
-                  <TemplateItem
-                    key={template.id}
-                    choosing={!!choosing}
-                    template={template}
-                    onClose={onClose}
-                  />
-                ))
-              ) : (
-                <EmptyStateScreen
-                  smaller
-                  CTAButtonProps={{
-                    children: 'new',
-                    icon: 'tabler:plus',
-                    onClick: () => {
-                      open(ModifyTemplatesModal, {
-                        type: 'create'
-                      })
-                    },
-                    tProps: { item: t('items.template') }
-                  }}
-                  icon="tabler:template-off"
-                  name="templates"
-                  namespace="apps.wallet"
-                />
-              )}
-            </ul>
+            <div className="mt-4 flex-1">
+              <AutoSizer>
+                {({ width, height }) => (
+                  <Scrollbar
+                    style={{
+                      width,
+                      height: height
+                    }}
+                  >
+                    <ul className="space-y-3">
+                      {templates[selectedTab].length > 0 ? (
+                        templates[selectedTab].map(template => (
+                          <TemplateItem
+                            key={template.id}
+                            choosing={!!choosing}
+                            template={template}
+                            onClose={onClose}
+                          />
+                        ))
+                      ) : (
+                        <EmptyStateScreen
+                          smaller
+                          CTAButtonProps={{
+                            children: 'new',
+                            icon: 'tabler:plus',
+                            onClick: () => {
+                              open(ModifyTemplatesModal, {
+                                type: 'create'
+                              })
+                            },
+                            tProps: { item: t('items.template') }
+                          }}
+                          icon="tabler:template-off"
+                          name="templates"
+                          namespace="apps.wallet"
+                        />
+                      )}
+                    </ul>
+                  </Scrollbar>
+                )}
+              </AutoSizer>
+            </div>
           ) : (
             <EmptyStateScreen
               CTAButtonProps={{
@@ -117,7 +131,7 @@ function ManageTemplatesModal({
           )
         }
       </QueryWrapper>
-    </>
+    </div>
   )
 }
 
