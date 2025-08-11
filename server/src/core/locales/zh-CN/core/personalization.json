@@ -60,6 +60,9 @@
     },
     "modals": {
       "fontFamilySelector": "字体家族选择器"
+    },
+    "items": {
+      "fontFamily": "字体家族"
     }
   },
   "fontScaleSelector": {
