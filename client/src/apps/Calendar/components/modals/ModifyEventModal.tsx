@@ -15,6 +15,7 @@ function ModifyEventModal({
   }
   onClose: () => void
 }) {
+  //TODO
   console.log(initialData)
 
   const calendarsQuery = useQuery(

@@ -249,8 +249,6 @@ function ModifyTransactionsModal({
       setTransactionType(data.type)
     })
     .onSubmit(async data => {
-      console.log(data)
-
       if (data.type === 'transfer') {
         await mutation.mutateAsync({
           type: 'transfer',

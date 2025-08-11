@@ -65,7 +65,7 @@ function ModalHeader({
         {appendTitle}
       </h1>
       <div className="flex items-center gap-2">
-        {actionButtonIcon !== undefined && (
+        {actionButtonIcon && (
           <button
             className={clsx(
               'hover:bg-bg-100 dark:hover:bg-bg-800 rounded-md p-2 transition-all',
