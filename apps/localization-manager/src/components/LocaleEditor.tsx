@@ -1,15 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo } from 'react'
+import { ErrorScreen, LoadingScreen } from 'lifeforge-ui'
+import React, { useMemo } from 'react'
 
 import { isFolder } from '../utils/locales'
 import NestedItem from './NestedItem'
 
 function LocaleEditor({
+  oldLocales,
   locales,
-  searchQuery
+  setValue,
+  changedKeys,
+  setChangedKeys,
+  searchQuery,
+  onCreateEntry,
+  onRenameEntry,
+  onDeleteEntry,
+  fetchSuggestions
 }: {
-  locales: Record<string, any>
+  oldLocales: Record<string, any> | 'loading' | 'error'
+  locales: Record<string, any> | 'loading' | 'error'
+  setValue: (lng: string, path: string[], value: string) => void
+  changedKeys: string[]
+  setChangedKeys: React.Dispatch<React.SetStateAction<string[]>>
   searchQuery: string
+  onCreateEntry: (parent: string) => void
+  onRenameEntry: (path: string) => void
+  onDeleteEntry: (path: string) => void
+  fetchSuggestions: (path: string) => Promise<void>
 }) {
   const reconstructedLocales = useMemo<Record<string, any>>(() => {
     if (typeof locales === 'string') {
@@ -73,6 +90,14 @@ function LocaleEditor({
     return final
   }, [locales])
 
+  if (oldLocales === 'loading' || locales === 'loading') {
+    return <LoadingScreen />
+  }
+
+  if (oldLocales === 'error' || locales === 'error') {
+    return <ErrorScreen message="Failed to fetch locales" />
+  }
+
   return (
     <ul>
       {Object.entries(reconstructedLocales)
@@ -91,10 +116,18 @@ function LocaleEditor({
         .map(([key, value]) => (
           <NestedItem
             key={key}
+            changedKeys={changedKeys}
+            fetchSuggestions={fetchSuggestions}
             name={key}
+            oldLocales={oldLocales}
             path={[key]}
             searchQuery={searchQuery}
+            setChangedKeys={setChangedKeys}
+            setValue={setValue}
             value={value}
+            onCreateEntry={onCreateEntry}
+            onDeleteEntry={onDeleteEntry}
+            onRenameEntry={onRenameEntry}
           />
         ))}
     </ul>

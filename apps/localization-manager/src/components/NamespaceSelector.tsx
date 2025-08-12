@@ -2,14 +2,22 @@ import { useQuery } from '@tanstack/react-query'
 import { ListboxInput, ListboxOption, QueryWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useLocaleManager } from '../providers/LocaleManagerProvider'
 import forgeAPI from '../utils/forgeAPI'
 
-function NamespaceSelector() {
+function NamespaceSelector({
+  namespace,
+  setNamespace,
+  subNamespace,
+  setSubNamespace,
+  showWarning
+}: {
+  namespace: 'common' | 'core' | 'apps' | 'utils' | null
+  setNamespace: (value: 'common' | 'core' | 'apps' | 'utils' | null) => void
+  subNamespace: string | null
+  setSubNamespace: (value: string | null) => void
+  showWarning: boolean
+}) {
   const { t } = useTranslation('utils.localeAdmin')
-
-  const { namespace, setNamespace, subNamespace, setSubNamespace } =
-    useLocaleManager()
 
   const subNamespacesQuery = useQuery(
     forgeAPI.locales.manager.listSubnamespaces
@@ -37,6 +45,11 @@ function NamespaceSelector() {
           label="namespace"
           namespace="utils.localeAdmin"
           setValue={value => {
+            if (showWarning && namespace !== value) {
+              if (!window.confirm(t('warnings.unsavedChanges'))) {
+                return
+              }
+            }
             setNamespace(value)
             setSubNamespace(null)
           }}
@@ -66,7 +79,14 @@ function NamespaceSelector() {
                 icon="tabler:cube"
                 label="sub namespace"
                 namespace="utils.localeAdmin"
-                setValue={setSubNamespace}
+                setValue={value => {
+                  if (showWarning && subNamespace !== value) {
+                    if (!window.confirm(t('warnings.unsavedChanges'))) {
+                      return
+                    }
+                  }
+                  setSubNamespace(value)
+                }}
                 value={subNamespace}
               >
                 {subNamespaces.map(sns => (

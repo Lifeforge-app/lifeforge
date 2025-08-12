@@ -13,6 +13,7 @@ import FormIconInput from './components/FormIconInput'
 import FormListboxInput from './components/FormListboxInput'
 import FormLocationInput from './components/FormLocationInput'
 import FormNumberInput from './components/FormNumberInput'
+import FormRRuleInput from './components/FormRRuleInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
 
@@ -27,7 +28,8 @@ const COMPONENT_MAP: Record<FormFieldPropsUnion['type'], React.FC<any>> = {
   icon: FormIconInput,
   location: FormLocationInput,
   checkbox: FormCheckboxInput,
-  file: FormFileInput
+  file: FormFileInput,
+  rrule: FormRRuleInput
 } satisfies Record<FormFieldPropsUnion['type'], React.FC<any>>
 
 function FormInputs<T extends FormState>({

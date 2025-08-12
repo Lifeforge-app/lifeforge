@@ -1,6 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 
 import type { CalendarEvent } from '../Calendar'
@@ -18,12 +20,32 @@ function ModifyEventModal({
   //TODO
   console.log(initialData)
 
+  const queryClient = useQueryClient()
+
   const calendarsQuery = useQuery(
     forgeAPI.calendar.calendars.list.queryOptions()
   )
 
   const categoriesQuery = useQuery(
     forgeAPI.calendar.categories.list.queryOptions()
+  )
+
+  const [eventType, setEventType] = useState<'single' | 'recurring'>()
+
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.calendar.events.create
+      : forgeAPI.calendar.events.update.input({
+          id: initialData?.id || ''
+        })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['calendar'] })
+      },
+      onError: error => {
+        toast.error(`Error modifying event: ${error.message}`)
+      }
+    })
   )
 
   const formProps = defineForm<
@@ -50,9 +72,7 @@ function ModifyEventModal({
       type: 'listbox',
       start: 'datetime',
       end: 'datetime',
-      recurring_rule: 'text',
-      duration_amount: 'number',
-      duration_unit: 'listbox'
+      rrule: 'rrule'
     })
     .setupFields({
       title: {
@@ -103,10 +123,72 @@ function ModifyEventModal({
         label: 'Description',
         icon: 'tabler:file-text',
         placeholder: 'Event description'
+      },
+      type: {
+        multiple: false,
+        label: 'Event Type',
+        required: true,
+        icon: 'tabler:calendar',
+        options: [
+          { value: 'single', text: 'Single Event', icon: 'tabler:calendar' },
+          { value: 'recurring', text: 'Recurring Event', icon: 'tabler:repeat' }
+        ]
+      },
+      rrule: {
+        required: true,
+        hasDuration: true,
+        label: 'Recurring Rule',
+        hidden: eventType === 'single' || !eventType
+      },
+      start: {
+        hasTime: true,
+        label: 'Start Time',
+        icon: 'tabler:clock',
+        hidden: eventType === 'recurring' || !eventType
+      },
+      end: {
+        hasTime: true,
+        label: 'End Time',
+        icon: 'tabler:clock',
+        hidden: eventType === 'recurring' || !eventType
       }
     })
     // .initialData(initialData)
-    .onSubmit(async () => {})
+    .onChange(data => setEventType(data.type))
+    .onSubmit(async data => {
+      if (data.type === 'recurring') {
+        const finalData: InferInput<
+          (typeof forgeAPI.calendar.events)[typeof type]
+        >['body'] = {
+          title: data.title,
+          category: data.category,
+          calendar: data.calendar,
+          location: data.location,
+          reference_link: data.reference_link,
+          description: data.description,
+          type: data.type,
+          rrule: data.rrule
+        }
+
+        await mutation.mutateAsync(finalData)
+      } else {
+        const finalData: InferInput<
+          (typeof forgeAPI.calendar.events)[typeof type]
+        >['body'] = {
+          title: data.title,
+          category: data.category,
+          calendar: data.calendar,
+          location: data.location,
+          reference_link: data.reference_link,
+          description: data.description,
+          type: data.type,
+          start: data.start,
+          end: data.end
+        }
+
+        await mutation.mutateAsync(finalData)
+      }
+    })
     .build()
 
   return <FormModal {...formProps} />

@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { Button, ConfirmationModal, useModalStore } from 'lifeforge-ui'
-import { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { Button } from 'lifeforge-ui'
+import React, { useMemo, useState } from 'react'
 
-import { useLocaleManager } from '../providers/LocaleManagerProvider'
-import forgeAPI from '../utils/forgeAPI'
 import { isFolder } from '../utils/locales'
 import LocaleInput from './LocaleInput'
 
@@ -16,21 +11,29 @@ function NestedItem({
   name,
   value,
   path,
-  searchQuery
+  setValue,
+  changedKeys,
+  setChangedKeys,
+  oldLocales,
+  searchQuery,
+  onCreateEntry,
+  onRenameEntry,
+  onDeleteEntry,
+  fetchSuggestions
 }: {
   name: string
   value: Record<string, any>
   path: string[]
+  setValue: (lng: string, path: string[], value: string) => void
+  changedKeys: string[]
+  setChangedKeys: React.Dispatch<React.SetStateAction<string[]>>
+  oldLocales: Record<string, any> | 'loading' | 'error'
   searchQuery: string
-}) {
-  const { t } = useTranslation('utils.localeAdmin')
-
-  const queryClient = useQueryClient()
-
-  const open = useModalStore(state => state.open)
-
-  const { namespace, subNamespace } = useLocaleManager()
-
+  onCreateEntry: (parent: string) => void
+  onDeleteEntry: (path: string) => void
+  onRenameEntry: (path: string) => void
+  fetchSuggestions: (path: string) => Promise<void>
+}): React.ReactElement {
   const [suggestionsLoading, setSuggestionsLoading] = useState(false)
 
   const [collapsed, setCollapsed] = useState(true)
@@ -62,31 +65,19 @@ function NestedItem({
     [value, path, searchQuery]
   )
 
-  const deleteMutation = useMutation(
-    forgeAPI.locales.manager.remove
-      .input({
-        namespace: namespace!,
-        subnamespace: subNamespace!
-      })
-      .mutationOptions({
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['locales', 'manager'] })
-        },
-        onError: () => {
-          toast.error('Failed to delete entry')
-        }
-      })
-  )
-
   return (
-    <div
+    <li
       className={clsx(
-        'mt-2 w-full border-l-2',
-        collapsed ? 'border-bg-300 dark:border-bg-700' : 'border-custom-500'
+        'my-4 w-full border-l-2 shadow-md',
+        changedKeys.some(key => key.startsWith(path.join('.'))) &&
+          'border-yellow-500!',
+        collapsed
+          ? 'border-bg-300 dark:border-bg-500'
+          : 'border-bg-900 dark:border-bg-100 bg-bg-700/10'
       )}
     >
       <button
-        className="flex-between w-full gap-8 p-4 transition-all"
+        className="flex-between hover:bg-bg-200 dark:hover:bg-bg-900 w-full gap-8 p-4 transition-all"
         onClick={() => {
           setCollapsed(!collapsed)
         }}
@@ -107,6 +98,7 @@ function NestedItem({
               onClick={e => {
                 e.preventDefault()
                 e.stopPropagation()
+                onCreateEntry(path.join('.'))
               }}
             />
           ) : (
@@ -119,6 +111,9 @@ function NestedItem({
                 e.preventDefault()
                 e.stopPropagation()
                 setSuggestionsLoading(true)
+                fetchSuggestions(path.join('.')).finally(() => {
+                  setSuggestionsLoading(false)
+                })
               }}
             />
           )}
@@ -129,6 +124,7 @@ function NestedItem({
             onClick={e => {
               e.preventDefault()
               e.stopPropagation()
+              onRenameEntry(path.join('.'))
             }}
           />
           <Button
@@ -139,17 +135,7 @@ function NestedItem({
             onClick={e => {
               e.preventDefault()
               e.stopPropagation()
-
-              open(ConfirmationModal, {
-                title: t('modals.deleteEntry.title'),
-                description: t('modals.deleteEntry.description'),
-                buttonType: 'delete',
-                onConfirm: async () => {
-                  await deleteMutation.mutateAsync({
-                    path: path.join('.')
-                  })
-                }
-              })
+              onDeleteEntry(path.join('.'))
             }}
           />
           <div className="p-2">
@@ -161,7 +147,7 @@ function NestedItem({
         </div>
       </button>
       {!collapsed && (
-        <ul className="space-y-2 px-4 pb-4">
+        <ul className="mt-4 space-y-2 px-4 pb-4">
           {(() => {
             if (!filteredEntries.length) {
               return (
@@ -174,22 +160,37 @@ function NestedItem({
             return filteredEntries.map(([key, value]) =>
               typeof value === 'string' ? (
                 <li key={key} className="flex items-center gap-2">
-                  <LocaleInput name={key} value={value} />
+                  <LocaleInput
+                    name={key}
+                    oldLocales={oldLocales}
+                    path={path}
+                    setChangedKeys={setChangedKeys}
+                    setValue={setValue}
+                    value={value}
+                  />
                 </li>
               ) : (
                 <NestedItem
                   key={key}
+                  changedKeys={changedKeys}
+                  fetchSuggestions={fetchSuggestions}
                   name={key}
+                  oldLocales={oldLocales}
                   path={path.concat(key)}
                   searchQuery={searchQuery}
+                  setChangedKeys={setChangedKeys}
+                  setValue={setValue}
                   value={value}
+                  onCreateEntry={onCreateEntry}
+                  onDeleteEntry={onDeleteEntry}
+                  onRenameEntry={onRenameEntry}
                 />
               )
             )
           })()}
         </ul>
       )}
-    </div>
+    </li>
   )
 }
 

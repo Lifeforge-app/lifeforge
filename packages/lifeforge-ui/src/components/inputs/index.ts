@@ -12,6 +12,8 @@ export { default as FileInput } from './FileInput'
 
 export { default as DateInput } from './DateInput'
 
+export { default as RRuleInput } from './RRuleInput'
+
 export { default as CurrencyInput } from './CurrencyInput'
 
 export { default as SearchInput } from './SearchInput'

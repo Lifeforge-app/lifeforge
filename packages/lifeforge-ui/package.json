@@ -30,7 +30,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.2",
+    "@headlessui/react": "^2.2.7",
     "@iconify/collections": "^1.0.544",
     "@iconify/react": "^6.0.0",
     "@iconify/tools": "^4.1.2",

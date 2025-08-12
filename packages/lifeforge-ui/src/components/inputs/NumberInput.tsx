@@ -49,12 +49,19 @@ function NumberInput({
       tKey={tKey}
       value={currentStringValue}
       onBlur={() => {
+        if (currentStringValue.trim() === '') {
+          setValue(0)
+
+          return
+        }
+
         const numericValue = parseInt(currentStringValue)
 
         if (!isNaN(numericValue)) {
           setValue(numericValue)
         } else {
-          setValue(0)
+          setValue(value)
+          setCurrentStringValue(value.toString())
         }
       }}
     />
