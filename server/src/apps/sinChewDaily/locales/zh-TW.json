@@ -1,4 +1,84 @@
 {
   "title": "星洲日報",
-  "description": "獲取星洲日報的最新新聞。"
+  "description": "獲取星洲日報的最新新聞。",
+  "inputs": {
+    "category": "類別",
+    "subcategory": {
+      "label": "子類別",
+      "placeholder": "選擇子類別"
+    },
+    "range": "時間範圍",
+    "subSubcategory": {
+      "label": "子子類別",
+      "placeholder": "選擇子子類別"
+    }
+  },
+  "categories": {
+    "domestic": "國內",
+    "latest": "最新",
+    "realtime": "即時",
+    "editor-choice": "編輯精選",
+    "hot": "熱點",
+    "society": "社會",
+    "education": "教育",
+    "chinese-society": "華社",
+    "headline": "頭條",
+    "warm-action": "暖流",
+    "mixed": "綜合",
+    "politics": "政治",
+    "truth-seeking": "尋真",
+    "international": "國際",
+    "worldwide": "天下事",
+    "international-platter": "國際拼盤",
+    "explore-the-world": "看天下",
+    "finance": "財經",
+    "spotlight": "焦點",
+    "entertainment": "娛樂",
+    "foreign": "外國",
+    "msia": "大馬",
+    "local": "地方",
+    "johor": "柔佛",
+    "focus": "焦點",
+    "singapore": "新加坡",
+    "eye": "透視",
+    "metropolis": "大都會",
+    "dynamic": "動態",
+    "interesting": "有趣",
+    "story": "故事",
+    "perspective": "觀點",
+    "perak": "霹靂",
+    "special-column": "特別專欄",
+    "school": "校園",
+    "people": "人物",
+    "supplement": "副刊",
+    "topic": "話題",
+    "lifestyle": "生活",
+    "travel": "旅遊",
+    "food": "美食",
+    "column": "專欄",
+    "things": "好東西",
+    "fashion": "時尚",
+    "new-education": "新教育",
+    "e-trend": "e潮流",
+    "arts": "藝術",
+    "life-protection": "生活保健",
+    "car-viewing": "看車",
+    "wellness": "保健",
+    "family": "家庭",
+    "audio-video": "視聽",
+    "readers": "讀者",
+    "flower-trace": "花蹤",
+    "creation": "創作",
+    "airasia-news": "亞航新聞",
+    "xuehai": "學海",
+    "power-teens": "少年樂園",
+    "study-record": "求學記",
+    "hou-lang-fang": "後浪坊"
+  },
+  "empty": {
+    "subcategory": {
+      "title": "尚未選擇子類別",
+      "description": "請從上面的列表中選擇一個子類別。"
+    }
+  }
 }
