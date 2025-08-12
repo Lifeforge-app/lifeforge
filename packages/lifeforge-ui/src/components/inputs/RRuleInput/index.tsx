@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import DateInput from '../DateInput'
@@ -10,7 +10,7 @@ import HourlyForm from './components/HourlyForm'
 import MonthlyForm from './components/MonthlyForm'
 import WeeklyForm from './components/WeeklyForm'
 import YearlyForm from './components/YearlyForm'
-import getRRULEString from './utils/getRRuleString'
+import getRRULEString, { fromRRULEString } from './utils/getRRuleString'
 
 type BaseParams<K extends keyof FreqSpecificParams> = {
   freq: K
@@ -85,12 +85,13 @@ const DEFAULT_FREQ_SPECIFIC_PARAMS: FreqSpecificParams = {
 
 function createRRuleParams<K extends keyof FreqSpecificParams>(
   freq: K,
-  end: RRuleParams['end']
+  end: RRuleParams['end'],
+  data: FreqSpecificParams[K] = DEFAULT_FREQ_SPECIFIC_PARAMS[freq]
 ): RRuleParams {
   return {
     freq,
     end,
-    data: DEFAULT_FREQ_SPECIFIC_PARAMS[freq]
+    data
   } as RRuleParams
 }
 
@@ -103,27 +104,34 @@ function RRuleInput<HasDuration extends boolean = boolean>({
   setValue: (value: string) => void
   hasDuration: HasDuration
 }) {
-  // TODO
-  console.log(value)
-
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
 
-  const [start, setStart] = useState<Date | null>(null)
+  const valueParsed = useMemo(() => fromRRULEString(value), [value])
+
+  const [start, setStart] = useState<Date | null>(
+    valueParsed ? valueParsed.start : null
+  )
 
   const [duration, setDuration] = useState<{
     amount: number
     unit: 'hour' | 'day' | 'week' | 'month' | 'year'
   }>({
-    amount: 1,
-    unit: 'hour'
+    amount: valueParsed ? (valueParsed.duration?.duration_amt ?? 1) : 1,
+    unit: valueParsed ? (valueParsed.duration?.duration_unit ?? 'hour') : 'hour'
   })
 
   const [rruleParams, setRRuleParams] = useState<RRuleParams>(
-    createRRuleParams('yearly', {
-      type: 'never',
-      after: 1,
-      on: null
-    })
+    valueParsed
+      ? createRRuleParams(
+          valueParsed.rrule.freq,
+          valueParsed.rrule.end,
+          valueParsed.rrule.data
+        )
+      : createRRuleParams('yearly', {
+          type: 'never',
+          after: 1,
+          on: null
+        })
   )
 
   const forms = {

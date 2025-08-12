@@ -110,7 +110,7 @@ export default async function getEvents({
         .format('YYYY-MM-DD HH:mm:ss')
 
       allEvents.push({
-        id: `${baseEvent.id}-${moment(eventDate).format('YYYYMMDD')}`,
+        id: `${baseEvent.id}-${moment(eventDate).format('YYYYMMDD_HH:mm:ss')}`,
         type: 'recurring',
         start: eventStart,
         end: eventEnd,
