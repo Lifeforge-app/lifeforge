@@ -4,7 +4,6 @@ import { clsx } from 'clsx'
 import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
-import Scrollbars from 'react-custom-scrollbars'
 import { Tooltip } from 'react-tooltip'
 import type { InferOutput } from 'shared'
 import { usePersonalization } from 'shared'
@@ -73,62 +72,60 @@ function CodeTimeActivityCalendar() {
           {() =>
             Array.isArray(activities) ? (
               <div className="h-60 w-full min-w-0">
-                <Scrollbars>
-                  <ActivityCalendar
-                    showWeekdayLabels
-                    blockMargin={5}
-                    blockSize={16}
-                    data={activities}
-                    labels={{
-                      totalCount: `${
-                        Math.floor(
-                          activities.reduce((a, b) => a + b.count, 0) / 60
-                        ) > 0
-                          ? `${Math.floor(
-                              activities.reduce((a, b) => a + b.count, 0) / 60
-                            )} hours`
+                <ActivityCalendar
+                  showWeekdayLabels
+                  blockMargin={5}
+                  blockSize={16}
+                  data={activities}
+                  labels={{
+                    totalCount: `${
+                      Math.floor(
+                        activities.reduce((a, b) => a + b.count, 0) / 60
+                      ) > 0
+                        ? `${Math.floor(
+                            activities.reduce((a, b) => a + b.count, 0) / 60
+                          )} hours`
+                        : ''
+                    } ${
+                      Math.floor(
+                        activities.reduce((a, b) => a + b.count, 0) % 60
+                      ) > 0
+                        ? `${Math.floor(
+                            activities.reduce((a, b) => a + b.count, 0) % 60
+                          )} minutes`
+                        : ''
+                    } ${
+                      activities.reduce((a, b) => a + b.count, 0) === 0
+                        ? 'no time'
+                        : ''
+                    } spent on {{year}}`
+                  }}
+                  maxLevel={6}
+                  renderBlock={(block, activity) =>
+                    cloneElement(block, {
+                      'data-tooltip-id': 'react-tooltip',
+                      'data-tooltip-html': `${
+                        Math.floor(activity.count / 60) > 0
+                          ? `${Math.floor(activity.count / 60)} hours`
                           : ''
                       } ${
-                        Math.floor(
-                          activities.reduce((a, b) => a + b.count, 0) % 60
-                        ) > 0
-                          ? `${Math.floor(
-                              activities.reduce((a, b) => a + b.count, 0) % 60
-                            )} minutes`
+                        Math.floor(activity.count % 60) > 0
+                          ? `${Math.floor(activity.count % 60)} minutes`
                           : ''
-                      } ${
-                        activities.reduce((a, b) => a + b.count, 0) === 0
-                          ? 'no time'
-                          : ''
-                      } spent on {{year}}`
-                    }}
-                    maxLevel={6}
-                    renderBlock={(block, activity) =>
-                      cloneElement(block, {
-                        'data-tooltip-id': 'react-tooltip',
-                        'data-tooltip-html': `${
-                          Math.floor(activity.count / 60) > 0
-                            ? `${Math.floor(activity.count / 60)} hours`
-                            : ''
-                        } ${
-                          Math.floor(activity.count % 60) > 0
-                            ? `${Math.floor(activity.count % 60)} minutes`
-                            : ''
-                        } ${activity.count === 0 ? 'no time' : ''} spent on ${
-                          activity.date
-                        }`.trim()
-                      })
-                    }
-                    theme={{
-                      dark: [
-                        derivedTheme === 'dark'
-                          ? 'rgb(38, 38, 38)'
-                          : 'rgb(229, 229, 229)',
-                        themeColor
-                      ]
-                    }}
-                  />
-                </Scrollbars>
+                      } ${activity.count === 0 ? 'no time' : ''} spent on ${
+                        activity.date
+                      }`.trim()
+                    })
+                  }
+                  theme={{
+                    dark: [
+                      derivedTheme === 'dark'
+                        ? 'rgb(38, 38, 38)'
+                        : 'rgb(229, 229, 229)',
+                      themeColor
+                    ]
+                  }}
+                />
               </div>
             ) : (
               <div className="text-bg-500">No activities found</div>
