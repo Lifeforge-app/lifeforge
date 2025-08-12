@@ -3,6 +3,9 @@
 ## 📌 **dev 25w32 (8/10/2025 - 8/16/2025)**
 
 - **Music**: Fixed a bug where the music is not able to be downloaded.
+- **Calendar**: `ModifyEventModal` is now fully functioning.
+- **UI**: Created `RRuleInput` for recurring event rules.
+- **UI**: Fixed a bug where the listbox options will not be displayed correctly.
 
 ## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
 
