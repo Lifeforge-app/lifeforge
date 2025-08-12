@@ -29,7 +29,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
     forgeAPI.movies.tmdb.search
       .input({
         q: queryToSearch,
-        page
+        page: page.toString()
       })
       .queryOptions({
         enabled: !!queryToSearch
@@ -38,12 +38,12 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
   const onAddToLibrary = async () => {
     await queryClient.invalidateQueries({
-      queryKey: forgeAPI.movies.entries.list.input({ watched: false }).key
+      queryKey: forgeAPI.movies.entries.list.input({ watched: 'false' }).key
     })
     await queryClient.invalidateQueries({
       queryKey: forgeAPI.movies.tmdb.search.input({
         q: queryToSearch,
-        page
+        page: page.toString()
       }).key
     })
 

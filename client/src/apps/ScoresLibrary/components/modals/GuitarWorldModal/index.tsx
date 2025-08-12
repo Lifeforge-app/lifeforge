@@ -33,7 +33,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
 
   const dataQuery = useQuery(
     forgeAPI.scoresLibrary.guitarWorld.list
-      .input({ cookie: finalCookie, page })
+      .input({ cookie: finalCookie, page: page.toString() })
       .queryOptions({
         enabled: !!finalCookie
       })
