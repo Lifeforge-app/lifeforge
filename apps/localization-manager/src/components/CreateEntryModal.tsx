@@ -44,7 +44,7 @@ function CreateEntryModal({
                 targetObject = targetObject[path[i]]
               }
 
-              targetObject[variables.path.split('.').pop()!] =
+              targetObject[variables.path!.split('.').pop()!] =
                 variables.type === 'folder' ? {} : ''
             }
 
