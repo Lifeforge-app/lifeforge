@@ -126,6 +126,7 @@ const appRoutes = forgeRouter({
   backups: (await import('@lib/backups')).default,
   database: (await import('@lib/database')).default,
   music: (await import('@apps/music')).default,
+  sinChewDaily: (await import('@apps/sinChewDaily')).default,
   _listRoutes: listRoutes,
   status,
   getRoot,
