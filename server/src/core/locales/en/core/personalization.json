@@ -56,6 +56,10 @@
       "apiKey": {
         "title": "Google Cloud API Key Not Found",
         "description": "To enable this feature, please add the Google Cloud API key to your API vault."
+      },
+      "search": {
+        "title": "No Font Families Found",
+        "description": "No font families found for the given queries. Please try another one."
       }
     },
     "modals": {
