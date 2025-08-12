@@ -19,7 +19,7 @@ function CodeTimeActivityCalendar() {
   const dataQuery = useQuery(
     target
       .input({
-        year
+        year: year.toString()
       })
       .queryOptions()
   )

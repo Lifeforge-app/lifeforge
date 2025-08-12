@@ -34,7 +34,7 @@ function ExpensesBreakdownCard() {
 
   const expensesBreakdownQuery = useQuery(
     forgeAPI.wallet.utils.getExpensesBreakdown
-      .input({ year, month })
+      .input({ year: year.toString(), month: month.toString() })
       .queryOptions()
   )
 

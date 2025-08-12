@@ -71,11 +71,11 @@ function ScoresLibrary() {
   const entriesQuery = useQuery(
     forgeAPI.scoresLibrary.entries.list
       .input({
-        page,
+        page: page.toString(),
         query: debouncedSearchQuery,
         category: selectedCategory ? selectedCategory : undefined,
         collection: selectedCollection ? selectedCollection : undefined,
-        starred: isStarred,
+        starred: isStarred ? 'true' : 'false',
         author: selectedAuthor ? selectedAuthor : undefined,
         sort: selectedSortType
       })

@@ -20,15 +20,19 @@ function TMDBResultItem({
   const [loading, setLoading] = useState(false)
 
   const addToLibraryMutation = useMutation(
-    forgeAPI.movies.entries.create.input({ id: data.id }).mutationOptions({
-      onSuccess: async () => {
-        await onAddToLibrary()
-        setLoading(false)
-      },
-      onError: (error: any) => {
-        toast.error(`Failed to add movie: ${error.message || 'Unknown error'}`)
-      }
-    })
+    forgeAPI.movies.entries.create
+      .input({ id: data.id.toString() })
+      .mutationOptions({
+        onSuccess: async () => {
+          await onAddToLibrary()
+          setLoading(false)
+        },
+        onError: (error: any) => {
+          toast.error(
+            `Failed to add movie: ${error.message || 'Unknown error'}`
+          )
+        }
+      })
   )
 
   return (

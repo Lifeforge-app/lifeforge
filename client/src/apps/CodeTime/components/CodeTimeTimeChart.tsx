@@ -42,7 +42,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   const dataQuery = useQuery(
     forgeAPI['code-time'].getLastXDays
       .input({
-        days: lastFor
+        days: lastFor.toString()
       })
       .queryOptions()
   )

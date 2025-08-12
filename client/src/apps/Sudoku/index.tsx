@@ -40,7 +40,7 @@ function Sudoku() {
     forgeAPI.sudoku.generateBoard
       .input({
         difficulty,
-        count: 6
+        count: '6'
       })
       .queryOptions()
   )

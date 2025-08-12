@@ -48,7 +48,7 @@ function Movies() {
   const entriesQuery = useQuery(
     forgeAPI.movies.entries.list
       .input({
-        watched: currentTab === 'watched'
+        watched: currentTab === 'watched' ? 'true' : 'false'
       })
       .queryOptions()
   )

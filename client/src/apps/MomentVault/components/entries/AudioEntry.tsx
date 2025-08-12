@@ -69,7 +69,9 @@ function AudioEntry({
         .mutate({})
 
       queryClient.setQueryData(
-        forgeAPI.momentVault.entries.list.input({ page: currentPage }).key,
+        forgeAPI.momentVault.entries.list.input({
+          page: currentPage.toString()
+        }).key,
         (
           prev:
             | InferOutput<typeof forgeAPI.momentVault.entries.list>

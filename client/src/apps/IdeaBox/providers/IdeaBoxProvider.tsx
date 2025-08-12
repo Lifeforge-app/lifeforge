@@ -93,7 +93,7 @@ export default function IdeaBoxProvider({
       .input({
         container: id!,
         path: path || '',
-        archived: viewArchived
+        archived: viewArchived.toString()
       })
       .queryOptions({
         enabled: id !== undefined && pathValidQuery.data

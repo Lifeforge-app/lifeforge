@@ -61,7 +61,7 @@ function WishlistEntries() {
     forgeAPI.wishlist.entries.listByListId
       .input({
         id: id ?? '',
-        bought: activeTab === 'bought'
+        bought: activeTab === 'bought' ? 'true' : 'false'
       })
       .queryOptions()
   )
