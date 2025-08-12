@@ -1,4 +1,84 @@
 {
   "title": "Sin Chew Daily",
-  "description": "Get the latest news from Sin Chew Daily."
+  "description": "Get the latest news from Sin Chew Daily.",
+  "inputs": {
+    "category": "Category",
+    "subcategory": {
+      "label": "Subcategory",
+      "placeholder": "Select subcategory"
+    },
+    "range": "Time Range",
+    "subSubcategory": {
+      "label": "Sub Subcategory",
+      "placeholder": "Select sub subcategory"
+    }
+  },
+  "categories": {
+    "domestic": "Domestic",
+    "latest": "Latest",
+    "realtime": "Real-time",
+    "editor-choice": "Editor's Choice",
+    "hot": "Hot",
+    "society": "Society",
+    "education": "Education",
+    "chinese-society": "Chinese Society",
+    "headline": "Headlines",
+    "warm-action": "Warm Action",
+    "mixed": "Mixed",
+    "politics": "Politics",
+    "truth-seeking": "Truth Seeking",
+    "international": "International",
+    "worldwide": "World Affairs",
+    "international-platter": "International Platter",
+    "explore-the-world": "Explore the World",
+    "finance": "Finance",
+    "spotlight": "Spotlight",
+    "entertainment": "Entertainment",
+    "foreign": "Foreign",
+    "msia": "Malaysia",
+    "local": "Local",
+    "johor": "Johor",
+    "focus": "Focus",
+    "singapore": "Singapore",
+    "eye": "Perspective",
+    "metropolis": "Metropolis",
+    "dynamic": "Dynamic",
+    "interesting": "Interesting",
+    "story": "Story",
+    "perspective": "Opinion",
+    "perak": "Perak",
+    "special-column": "Special Column",
+    "school": "Campus",
+    "people": "People",
+    "supplement": "Supplement",
+    "topic": "Topic",
+    "lifestyle": "Lifestyle",
+    "travel": "Travel",
+    "food": "Food",
+    "column": "Column",
+    "things": "Good Things",
+    "fashion": "Fashion",
+    "new-education": "New Education",
+    "e-trend": "E-Trend",
+    "arts": "Arts",
+    "life-protection": "Health & Wellness",
+    "car-viewing": "Automotive",
+    "wellness": "Wellness",
+    "family": "Family",
+    "audio-video": "Audio & Video",
+    "readers": "Readers",
+    "flower-trace": "Flower Trace",
+    "creation": "Creation",
+    "airasia-news": "AirAsia News",
+    "xuehai": "Learning Ocean",
+    "power-teens": "Teen Zone",
+    "study-record": "Study Record",
+    "hou-lang-fang": "Young Generation"
+  },
+  "empty": {
+    "subcategory": {
+      "title": "No Subcategory Selected",
+      "description": "Please select a subcategory from the list above."
+    }
+  }
 }
