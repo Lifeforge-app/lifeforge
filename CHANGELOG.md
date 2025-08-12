@@ -4,8 +4,10 @@
 
 - **Music**: Fixed a bug where the music is not able to be downloaded.
 - **Calendar**: `ModifyEventModal` is now fully functioning.
+- **Sin Chew Daily**: Created and finished this module. Much easier than expected :)
 - **UI**: Created `RRuleInput` for recurring event rules.
 - **UI**: Fixed a bug where the listbox options will not be displayed correctly.
+- **Code**: Replaced `z.infer` with `z.input` in `forgeAPIBuilder` for more accurate type inference.
 
 ## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
 
