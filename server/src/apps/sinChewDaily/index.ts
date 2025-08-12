@@ -94,7 +94,7 @@ const list = forgeController.query
         .string()
         .default('1')
         .transform(val => parseInt(val, 10)),
-      range: z.enum(['6H', '24H', '1W']).default('6H')
+      range: z.enum(['6H', '24H', '1W']).optional().default('6H')
     })
   })
   .callback(async ({ query: { page, type, range } }) => {
@@ -109,8 +109,6 @@ const list = forgeController.query
         query.set('range', range)
       }
     }
-
-    console.log(`${targetEndpoint.root}?${query.toString()}`)
 
     const response = await fetch(`${targetEndpoint.root}?${query.toString()}`)
 
