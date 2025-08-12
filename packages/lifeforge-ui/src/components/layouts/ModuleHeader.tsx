@@ -52,8 +52,8 @@ function ModuleHeader({
           />
         )}
         {icon !== undefined && (
-          <div className="bg-custom-500/20 hidden size-14 shrink-0 items-center justify-center rounded-lg sm:flex sm:size-16">
-            <Icon className="text-custom-500 size-6 sm:size-8" icon={icon} />
+          <div className="bg-custom-500/20 flex size-14 shrink-0 items-center justify-center rounded-lg sm:size-16">
+            <Icon className="text-custom-500 size-8" icon={icon} />
           </div>
         )}
         <div className="w-full min-w-0 sm:space-y-1">
