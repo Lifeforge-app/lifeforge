@@ -122,7 +122,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
               namespace="core.personalization"
               tKey="fontFamily"
             />
-          ) : (
+          ) : filteredFonts!.length > 0 ? (
             <div className="h-full w-full flex-1">
               <AutoSizer>
                 {({ height, width }) => (
@@ -165,10 +165,19 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
                 )}
               </AutoSizer>
             </div>
+          ) : (
+            <div className="flex-center flex-1">
+              <EmptyStateScreen
+                icon="tabler:search-off"
+                name="search"
+                namespace="core.personalization"
+                tKey="fontFamily"
+              />
+            </div>
           )
         }
       </QueryWrapper>
-      {selectedFont && (
+      {selectedFont && selectedFont !== fontFamily && (
         <Button
           className="mt-6"
           icon="tabler:check"
