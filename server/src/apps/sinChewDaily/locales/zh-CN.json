@@ -1,4 +1,84 @@
 {
   "title": "星洲日报",
-  "description": "获取星洲日报的最新新闻。"
+  "description": "获取星洲日报的最新新闻。",
+  "inputs": {
+    "category": "类别",
+    "subcategory": {
+      "label": "子类别",
+      "placeholder": "选择子类别"
+    },
+    "range": "时间范围",
+    "subSubcategory": {
+      "label": "子子类别",
+      "placeholder": "选择子子类别"
+    }
+  },
+  "categories": {
+    "domestic": "国内",
+    "latest": "最新",
+    "realtime": "实时",
+    "editor-choice": "编辑精选",
+    "hot": "热点",
+    "society": "社会",
+    "education": "教育",
+    "chinese-society": "华社",
+    "headline": "头条",
+    "warm-action": "暖流",
+    "mixed": "综合",
+    "politics": "政治",
+    "truth-seeking": "寻真",
+    "international": "国际",
+    "worldwide": "天下事",
+    "international-platter": "国际拼盘",
+    "explore-the-world": "看天下",
+    "finance": "财经",
+    "spotlight": "焦点",
+    "entertainment": "娱乐",
+    "foreign": "外国",
+    "msia": "大马",
+    "local": "地方",
+    "johor": "柔佛",
+    "focus": "焦点",
+    "singapore": "新加坡",
+    "eye": "透视",
+    "metropolis": "大都会",
+    "dynamic": "动态",
+    "interesting": "有趣",
+    "story": "故事",
+    "perspective": "观点",
+    "perak": "霹雳",
+    "special-column": "特别专栏",
+    "school": "校园",
+    "people": "人物",
+    "supplement": "副刊",
+    "topic": "话题",
+    "lifestyle": "生活",
+    "travel": "旅游",
+    "food": "美食",
+    "column": "专栏",
+    "things": "好东西",
+    "fashion": "时尚",
+    "new-education": "新教育",
+    "e-trend": "e潮流",
+    "arts": "艺术",
+    "life-protection": "生活保健",
+    "car-viewing": "看车",
+    "wellness": "保健",
+    "family": "家庭",
+    "audio-video": "视听",
+    "readers": "读者",
+    "flower-trace": "花踪",
+    "creation": "创作",
+    "airasia-news": "亚航新闻",
+    "xuehai": "学海",
+    "power-teens": "少年乐园",
+    "study-record": "求学记",
+    "hou-lang-fang": "后浪坊"
+  },
+  "empty": {
+    "subcategory": {
+      "title": "未选择子类别",
+      "description": "请从上面的列表中选择一个子类别。"
+    }
+  }
 }
