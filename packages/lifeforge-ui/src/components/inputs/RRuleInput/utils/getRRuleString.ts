@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import {
   type ByWeekday,
   Frequency,
@@ -8,6 +9,8 @@ import {
 } from 'rrule'
 
 import type { FreqSpecificParams, RRuleParams } from '..'
+
+dayjs.extend(utc)
 
 const createStartDate = (start: Date | null) => {
   const startDate = dayjs(start)
@@ -428,8 +431,17 @@ export function fromRRULEString(rrule: string): {
       return null
   }
 
+  const startString = /DTSTART:(\d{8}T\d{6}Z)/.exec(rrule)
+
+  const start = startString
+    ? dayjs(
+        startString[1].replace('T', ' ').replace('Z', ''),
+        'YYYYMMDD HHmmss'
+      ).toDate()
+    : null
+
   return {
-    start: options.dtstart ? dayjs(options.dtstart).toDate() : null,
+    start,
     rrule: {
       freq: freqKey,
       data,
