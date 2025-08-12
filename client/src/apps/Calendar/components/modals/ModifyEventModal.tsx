@@ -130,7 +130,8 @@ function ModifyEventModal({
         options: [
           { value: 'single', text: 'Single Event', icon: 'tabler:calendar' },
           { value: 'recurring', text: 'Recurring Event', icon: 'tabler:repeat' }
-        ]
+        ],
+        disabled: type === 'update'
       },
       rrule: {
         required: true,
