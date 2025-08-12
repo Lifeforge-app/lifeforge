@@ -1,15 +1,4 @@
 {
-  "title": "Sudoku",
-  "description": "Generate printable Sudoku boards infinitely.",
-  "difficulties": {
-    "easy": "Easy",
-    "medium": "Medium",
-    "hard": "Hard",
-    "expert": "Expert",
-    "evil": "Evil",
-    "extreme": "Extreme"
-  },
-  "inputs": {
-    "difficulty": "Difficulty"
-  }
+  "title": "Sin Chew Daily",
+  "description": "Get the latest news from Sin Chew Daily."
 }

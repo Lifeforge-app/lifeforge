@@ -1,16 +1,25 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const listLatest = forgeController.query
+const ENDPOINT = {
+  latest: 'https://www.sinchew.com.my/ajx-api/latest_posts/?',
+  headline:
+    'https://www.sinchew.com.my/ajx-api/category_posts/?cat=640&nooffset=true&editorialcat=0&posts_per_pages=10&'
+}
+
+const list = forgeController.query
   .description('Get latest news from Sin Chew')
   .input({
     query: z.object({
+      type: z.enum(['latest', 'headline']),
       page: z.number().min(1).default(1)
     })
   })
-  .callback(async ({ query: { page } }) => {
+  .callback(async ({ query: { page, type } }) => {
+    const targetEndpoint = ENDPOINT[type]
+
     const response = await fetch(
-      `https://www.sinchew.com.my/ajx-api/latest_posts/?page=${page}`
+      `${targetEndpoint}${page === 1 ? '' : `?page=${page}`}`
     )
 
     const data = await response.json()
@@ -33,5 +42,5 @@ const listLatest = forgeController.query
   })
 
 export default forgeRouter({
-  listLatest
+  list
 })
