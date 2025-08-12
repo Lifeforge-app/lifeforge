@@ -20,6 +20,7 @@ export default async function getEvents({
     type: 'single' | 'recurring'
     start: string
     end: string
+    rrule?: string
     title: string
     calendar: string
     category: string
@@ -113,6 +114,7 @@ export default async function getEvents({
         type: 'recurring',
         start: eventStart,
         end: eventEnd,
+        rrule: `${event.recurring_rule}||duration_amt=${event.duration_amount};duration_unit=${event.duration_unit}`,
         title: baseEvent.title,
         calendar: baseEvent.calendar,
         category: baseEvent.category,

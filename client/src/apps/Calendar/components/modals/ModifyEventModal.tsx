@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
+import dayjs from 'dayjs'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -13,7 +14,11 @@ function ModifyEventModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData?: Partial<CalendarEvent>
+    initialData?: Partial<
+      CalendarEvent & {
+        rrule?: string
+      }
+    >
   }
   onClose: () => void
 }) {
@@ -153,7 +158,39 @@ function ModifyEventModal({
         hidden: eventType === 'recurring' || !eventType
       }
     })
-    // .initialData(initialData)
+    .initialData(
+      (() => {
+        if (!initialData) return {}
+
+        const base: Record<string, any> = {
+          title: initialData.title,
+          category: initialData.category,
+          calendar: initialData.calendar,
+          location: {
+            name: initialData.location || '',
+            location: {
+              longitude: initialData.location_coords?.lon || 0,
+              latitude: initialData.location_coords?.lat || 0
+            },
+            formattedAddress: initialData.location || ''
+          },
+          reference_link: initialData.reference_link,
+          description: initialData.description,
+          type: initialData.type
+        }
+
+        if (initialData.type === 'recurring') {
+          base.rrule = initialData.rrule
+        } else {
+          base.start = initialData.start
+            ? dayjs(initialData.start).toDate()
+            : null
+          base.end = initialData.end ? dayjs(initialData.end).toDate() : null
+        }
+
+        return base
+      })()
+    )
     .onChange(data => setEventType(data.type))
     .onSubmit(async data => {
       if (data.type === 'recurring') {
