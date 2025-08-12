@@ -30,7 +30,7 @@ function MomentVault() {
   const dataQuery = useQuery(
     forgeAPI.momentVault.entries.list
       .input({
-        page
+        page: page.toString()
       })
       .queryOptions()
   )

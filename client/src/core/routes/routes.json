@@ -50,7 +50,8 @@
     "items": [
       "@apps/RailwayMap",
       "@apps/ChangiAirportFlightStatus",
-      "@apps/CFOPAlgorithms"
+      "@apps/CFOPAlgorithms",
+      "@apps/SinChewDaily"
     ]
   },
   {
