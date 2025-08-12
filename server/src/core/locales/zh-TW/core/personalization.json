@@ -56,6 +56,10 @@
       "apiKey": {
         "title": "未找到 Google Cloud API 密钥",
         "description": "要启用此功能，请将 Google Cloud API 密钥添加到您的 API 保险库中。"
+      },
+      "search": {
+        "title": "未找到字型系列",
+        "description": "未找到符合查詢的字體家族。請再試一次。"
       }
     },
     "modals": {

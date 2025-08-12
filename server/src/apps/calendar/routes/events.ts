@@ -117,9 +117,15 @@ const create = forgeController.mutation
         throw new ClientError('Invalid duration format')
       }
 
-      const [amount, unit] = /duration_amt=(\d+)&duration_unit=(\w+)/
-        .exec(duration)!
-        .slice(1)
+      const matched = /duration_amt=(\d+);duration_unit=(\w+)/.exec(duration)!
+
+      if (!matched || matched.length < 3) {
+        throw new ClientError('Invalid duration format')
+      }
+
+      const amount = matched[1]
+
+      const unit = matched[2]
 
       if (
         Number.isNaN(Number(amount)) ||
@@ -132,7 +138,7 @@ const create = forgeController.mutation
         .collection('calendar__events_recurring')
         .data({
           base_event: baseEvent.id,
-          recurring_rule: eventData.rrule,
+          recurring_rule: eventData.rrule.split('||')[0],
           duration_amount: parseInt(amount),
           duration_unit: unit || 'day',
           exceptions: []

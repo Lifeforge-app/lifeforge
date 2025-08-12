@@ -56,6 +56,10 @@
       "apiKey": {
         "title": "Kunci API Tidak Ditemui",
         "description": "Untuk mengaktifkan ciri ini, sila tambahkan kunci API Google Cloud ke dalam peti API anda."
+      },
+      "search": {
+        "title": "Tiada Keluarga Fon Ditemui",
+        "description": "Tiada keluarga fon ditemui untuk pertanyaan yang diberikan. Sila cuba yang lain."
       }
     },
     "modals": {
