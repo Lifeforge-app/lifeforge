@@ -339,9 +339,69 @@ const update = forgeController.mutation
 
     await pb.update
       .collection('calendar__events')
-      .id(id.split('-')[0])
+      .id(id)
       .data(toBeUpdatedData)
       .execute()
+
+    if (eventData.type === 'recurring') {
+      const duration = eventData.rrule.split('||').pop()
+
+      if (!duration) {
+        throw new ClientError('Invalid duration format')
+      }
+
+      const [amount, unit] = /duration_amt=(\d+)&duration_unit=(\w+)/
+        .exec(duration)!
+        .slice(1)
+
+      if (
+        Number.isNaN(Number(amount)) ||
+        !['hour', 'day', 'week', 'month', 'year'].includes(unit)
+      ) {
+        throw new ClientError('Invalid duration format')
+      }
+
+      const subEvent = await pb.getFirstListItem
+        .collection('calendar__events_recurring')
+        .filter([
+          {
+            field: 'base_event',
+            operator: '=',
+            value: id
+          }
+        ])
+        .execute()
+
+      await pb.update
+        .collection('calendar__events_recurring')
+        .id(subEvent.id)
+        .data({
+          recurring_rule: eventData.rrule.split('||')[0],
+          duration_amount: Number(amount),
+          duration_unit: unit
+        })
+        .execute()
+    } else {
+      const subEvent = await pb.getFirstListItem
+        .collection('calendar__events_single')
+        .filter([
+          {
+            field: 'base_event',
+            operator: '=',
+            value: id
+          }
+        ])
+        .execute()
+
+      await pb.update
+        .collection('calendar__events_single')
+        .id(subEvent.id)
+        .data({
+          start: eventData.start,
+          end: eventData.end
+        })
+        .execute()
+    }
   })
 
 const remove = forgeController.mutation
