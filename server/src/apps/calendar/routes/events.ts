@@ -18,9 +18,11 @@ const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
     location: true,
     location_coords: true,
     created: true,
-    updated: true
+    updated: true,
+    calendar: true
   })
   .extend({
+    calendar: z.string().optional(),
     location: Location.optional()
   })
   .and(
@@ -34,16 +36,10 @@ const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
             base_event: true
           })
         ),
-      z
-        .object({
-          type: z.literal('recurring')
-        })
-        .and(
-          SCHEMAS.calendar.events_recurring.omit({
-            base_event: true,
-            exceptions: true
-          })
-        )
+      z.object({
+        type: z.literal('recurring'),
+        rrule: z.string()
+      })
     ])
   )
 
@@ -115,17 +111,30 @@ const create = forgeController.mutation
       .execute()
 
     if (eventData.type === 'recurring') {
-      if (!('recurring_rule' in eventData)) {
-        throw new Error('Recurring events must have a recurring rule')
+      const duration = eventData.rrule.split('||').pop()
+
+      if (!duration) {
+        throw new ClientError('Invalid duration format')
+      }
+
+      const [amount, unit] = /duration_amt=(\d+)&duration_unit=(\w+)/
+        .exec(duration)!
+        .slice(1)
+
+      if (
+        Number.isNaN(Number(amount)) ||
+        !['hour', 'day', 'week', 'month', 'year'].includes(unit)
+      ) {
+        throw new ClientError('Invalid duration format')
       }
 
       await pb.create
         .collection('calendar__events_recurring')
         .data({
           base_event: baseEvent.id,
-          recurring_rule: eventData.recurring_rule,
-          duration_amount: eventData.duration_amount || 1,
-          duration_unit: eventData.duration_unit || 'day',
+          recurring_rule: eventData.rrule,
+          duration_amount: parseInt(amount),
+          duration_unit: unit || 'day',
           exceptions: []
         })
         .execute()

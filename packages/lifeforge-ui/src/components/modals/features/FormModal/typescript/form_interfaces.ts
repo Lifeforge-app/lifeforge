@@ -50,7 +50,6 @@ type TextFieldProps = BaseFieldProps & {
   actionButtonProps?: React.ComponentProps<
     typeof TextInput
   >['actionButtonProps']
-
   __formDataType: string
   __finalDataType: string
 }
@@ -142,6 +141,13 @@ type CheckboxFieldProps = BaseFieldProps & {
   __finalDataType: boolean
 }
 
+type RRuleFieldProps = BaseFieldProps & {
+  type: 'rrule'
+  hasDuration?: boolean
+  __formDataType: string
+  __finalDataType: string
+}
+
 /** --------- Union of All Field Props ----------- */
 type FormFieldPropsUnion =
   | TextFieldProps
@@ -155,6 +161,7 @@ type FormFieldPropsUnion =
   | FileFieldProps
   | LocationFieldProps
   | CheckboxFieldProps
+  | RRuleFieldProps
 
 type FormFieldTypeMap = FieldsMap<FormFieldPropsUnion>
 /** --------- Associated/Helper Types ----------- */
@@ -282,6 +289,7 @@ export type {
   FileFieldProps,
   LocationFieldProps,
   CheckboxFieldProps,
+  RRuleFieldProps,
   // Utilities
   MatchFieldByFormDataType,
   MatchFieldByFieldType,

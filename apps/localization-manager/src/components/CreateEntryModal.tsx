@@ -1,23 +1,55 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
+import React from 'react'
 
 import forgeAPI from '../utils/forgeAPI'
 
 function CreateEntryModal({
   onClose,
-  data: { target }
+  data: { target, setLocales, setOldLocales }
 }: {
   onClose: () => void
   data: {
     target: [string, string, string]
+    setLocales: React.Dispatch<
+      React.SetStateAction<Record<string, any> | 'loading' | 'error'>
+    >
+    setOldLocales: React.Dispatch<
+      React.SetStateAction<Record<string, any> | 'loading' | 'error'>
+    >
   }
 }) {
-  const queryClient = useQueryClient()
-
   const mutation = useMutation(
     forgeAPI.locales.manager.create.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['locales', 'manager'] })
+      onSuccess: (_, variables) => {
+        ;[setLocales, setOldLocales].forEach(e =>
+          e(prev => {
+            if (typeof prev === 'string') {
+              return prev
+            }
+
+            const newData = JSON.parse(JSON.stringify(prev))
+
+            for (const lng in newData) {
+              let targetObject = newData[lng]
+
+              const path = target[2].split('.').filter(Boolean)
+
+              for (let i = 0; i < path.length; i++) {
+                if (!targetObject[path[i]]) {
+                  targetObject[path[i]] = {}
+                }
+
+                targetObject = targetObject[path[i]]
+              }
+
+              targetObject[variables.path.split('.').pop()!] =
+                variables.type === 'folder' ? {} : ''
+            }
+
+            return newData
+          })
+        )
       },
       onError: () => {
         alert('Failed to create entry')
