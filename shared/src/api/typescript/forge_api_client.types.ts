@@ -34,10 +34,10 @@ export type InferInput<T> = T extends {
     ? {
         body: M extends null
           ? B extends ZodObjectOrIntersection
-            ? z.infer<B>
+            ? z.input<B>
             : Record<string, any>
           : (B extends ZodObjectOrIntersection
-              ? z.infer<B>
+              ? z.input<B>
               : Record<string, any>) & {
               [K in keyof M]: M[K] extends { multiple: true }
                 ? M[K] extends { optional: true }
@@ -47,7 +47,7 @@ export type InferInput<T> = T extends {
                   ? File | string | undefined
                   : File | string
             }
-        query: Q extends ZodObjectOrIntersection ? z.infer<Q> : never
+        query: Q extends ZodObjectOrIntersection ? z.input<Q> : never
       }
     : never
   : never
@@ -87,17 +87,17 @@ export type InferClientControllerInput<
     ? {
         body: M extends null
           ? B extends ZodObjectOrIntersection
-            ? z.infer<B>
+            ? z.input<B>
             : Record<string, any>
           : (B extends ZodObjectOrIntersection
-              ? z.infer<B>
+              ? z.input<B>
               : Record<string, any>) & {
               [K in keyof M]: {
                 __type: 'media'
                 config: M[K]
               }
             }
-        query: Q extends ZodObjectOrIntersection ? z.infer<Q> : never
+        query: Q extends ZodObjectOrIntersection ? z.input<Q> : never
       }
     : never
   : never

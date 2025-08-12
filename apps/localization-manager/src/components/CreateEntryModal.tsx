@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import React from 'react'
+import { toast } from 'react-toastify'
 
 import forgeAPI from '../utils/forgeAPI'
 
@@ -120,15 +121,23 @@ function CreateEntryModal({
     .initialData({
       namespace: target[0],
       subNamespace: target[1],
-      parent: target[2] || 'root'
+      parent: target[2] || '<root>'
     })
     .onSubmit(async data => {
       const { namespace, subNamespace, parent, type, name } = data
 
+      if (name === '<root>') {
+        toast.error('Invalid name')
+
+        return
+      }
+
       await mutation.mutateAsync({
         namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
         subnamespace: subNamespace,
-        path: [parent, name].filter(Boolean).join('.'),
+        path: [parent === '<root>' ? undefined : parent, name]
+          .filter(Boolean)
+          .join('.'),
         type
       })
     })
