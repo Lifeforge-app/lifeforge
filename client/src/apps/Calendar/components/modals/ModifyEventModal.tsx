@@ -14,17 +14,10 @@ function ModifyEventModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData?: Partial<
-      CalendarEvent & {
-        rrule?: string
-      }
-    >
+    initialData?: Partial<CalendarEvent>
   }
   onClose: () => void
 }) {
-  //TODO
-  console.log(initialData)
-
   const queryClient = useQueryClient()
 
   const calendarsQuery = useQuery(
@@ -41,7 +34,7 @@ function ModifyEventModal({
     (type === 'create'
       ? forgeAPI.calendar.events.create
       : forgeAPI.calendar.events.update.input({
-          id: initialData?.id || ''
+          id: initialData?.id?.split('-')[0] || ''
         })
     ).mutationOptions({
       onSuccess: () => {
