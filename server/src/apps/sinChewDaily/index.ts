@@ -1,4 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
+import { JSDOM } from 'jsdom'
+import sanitizeHtml from 'sanitize-html'
 import { z } from 'zod/v4'
 
 function getCategoryPostsEndpoint(catNumber: number) {
@@ -127,6 +129,8 @@ const list = forgeController.query
         ]
     }
 
+    console.log(data)
+
     return (
       data.map((item: any) => ({
         id: item.ID,
@@ -134,7 +138,8 @@ const list = forgeController.query
         category: item.cat || item.catlabel,
         title: item.title || item.post_title,
         excerpt: item.excerpt || item.post_excerpt,
-        image: item.image
+        image: item.image,
+        link: item.permalink || item.the_permalink
       })) as Array<{
         id: number
         time_display: string
@@ -142,6 +147,7 @@ const list = forgeController.query
         title: string
         excerpt: string
         image: string
+        link: string
       }>
     ).filter(e => !['会员文', 'VIP文'].includes(e.category))
   })
@@ -158,11 +164,42 @@ const getContent = forgeController.query
 
     const text = await response.text()
 
-    const parser = new DOMParser()
+    const parser = new JSDOM(text)
 
-    const doc = parser.parseFromString(text, 'text/html')
+    const document = parser.window.document
 
-    console.log(doc)
+    const title =
+      document.querySelector('.article-page-title > h1')?.textContent?.trim() ||
+      ''
+
+    const time =
+      document.querySelector('.meta > .time')?.textContent?.trim() || ''
+
+    const viewCount =
+      document.querySelector('.post-view-counter')?.textContent?.trim() || ''
+
+    const contentElement = document.querySelector('.article-page-content')
+
+    const sanitizedContent = sanitizeHtml(contentElement?.innerHTML || '', {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+      allowedAttributes: Object.assign(
+        {},
+        sanitizeHtml.defaults.allowedAttributes,
+        {
+          img: ['src', 'alt']
+        }
+      ),
+      textFilter: (text: string) => {
+        return text === 'ADVERTISEMENT' ? '' : text.trim()
+      }
+    })
+
+    return {
+      title,
+      time,
+      viewCount,
+      content: sanitizedContent
+    }
   })
 
 export default forgeRouter({
