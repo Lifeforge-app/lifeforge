@@ -1,9 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, MenuItem } from 'lifeforge-ui'
+import { Button, ContextMenuItem, HeaderFilter } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 
 import LibgenModal from '../modals/LibgenModal'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
@@ -14,13 +13,11 @@ function Header({ itemCount }: { itemCount: number }) {
   const { t } = useTranslation('apps.booksLibrary')
 
   const {
-    // categories: { dataQuery: categoriesQuery },
-    // languages: { dataQuery: languagesQuery },
-    // fileTypes: { dataQuery: fileTypesQuery },
-    miscellaneous: { setSidebarOpen, searchQuery }
+    collectionsQuery,
+    fileTypesQuery,
+    languagesQuery,
+    miscellaneous: { setSidebarOpen, searchQuery, selected, setSelected }
   } = useBooksLibraryContext()
-
-  const [searchParams] = useSearchParams()
 
   const handleOpenLibgenModal = useCallback(() => {
     open(LibgenModal, {})
@@ -30,11 +27,9 @@ function Header({ itemCount }: { itemCount: number }) {
     <div>
       <div className="flex-between flex">
         <h1 className="text-3xl font-semibold">
-          {Array.from(searchParams.keys()).filter(e => e !== 'favourite')
-            .length === 0 || searchQuery !== ''
+          {Object.values(selected).every(value => !value) && !searchQuery.trim()
             ? 'All'
             : 'Filtered'}{' '}
-          {searchParams.get('favourite') === 'true' ? 'Favourite ' : ''}
           Books <span className="text-bg-500 text-base">({itemCount})</span>
         </h1>
         <div className="flex items-center gap-6">
@@ -55,13 +50,13 @@ function Header({ itemCount }: { itemCount: number }) {
               anchor="bottom end"
               className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:upload"
                 namespace="apps.booksLibrary"
                 text="Upload from device"
                 onClick={() => {}}
               />
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:books"
                 namespace="apps.booksLibrary"
                 text="Download from Libgen"
@@ -79,25 +74,52 @@ function Header({ itemCount }: { itemCount: number }) {
           />
         </div>
       </div>
-      {/* TODO <HeaderFilter
+      <HeaderFilter
         items={{
-          category: {
-            data: categoriesQuery.data ?? [],
-            isColored: true
-          },
-          language: {
-            data: languagesQuery.data ?? [],
-            isColored: true
+          collection: {
+            data: collectionsQuery.data ?? []
           },
           fileType: {
             data:
               fileTypesQuery.data?.map(e => ({
-                ...e,
+                id: e.id,
+                name: e.name,
                 icon: 'tabler:file-text'
               })) ?? []
+          },
+          language: {
+            data: languagesQuery.data ?? []
           }
         }}
-      /> */}
+        setValues={{
+          collection: value => {
+            if (value) {
+              setSelected('collection', value)
+            } else {
+              setSelected('collection', null)
+            }
+          },
+          fileType: value => {
+            if (value) {
+              setSelected('fileType', value)
+            } else {
+              setSelected('fileType', null)
+            }
+          },
+          language: value => {
+            if (value) {
+              setSelected('language', value)
+            } else {
+              setSelected('language', null)
+            }
+          }
+        }}
+        values={{
+          collection: selected.collection ?? '',
+          fileType: selected.fileType ?? '',
+          language: selected.language ?? ''
+        }}
+      />
     </div>
   )
 }
