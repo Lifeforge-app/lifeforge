@@ -146,6 +146,26 @@ const list = forgeController.query
     ).filter(e => !['会员文', 'VIP文'].includes(e.category))
   })
 
+const getContent = forgeController.query
+  .description('Get content of a news article')
+  .input({
+    query: z.object({
+      url: z.string().url()
+    })
+  })
+  .callback(async ({ query: { url } }) => {
+    const response = await fetch(url)
+
+    const text = await response.text()
+
+    const parser = new DOMParser()
+
+    const doc = parser.parseFromString(text, 'text/html')
+
+    console.log(doc)
+  })
+
 export default forgeRouter({
-  list
+  list,
+  getContent
 })
