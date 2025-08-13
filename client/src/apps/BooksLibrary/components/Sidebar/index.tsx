@@ -1,36 +1,38 @@
 import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
-import { useSearchParams } from 'react-router'
 
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar() {
-  const [searchParams, setSearchParams] = useSearchParams()
-
   const {
-    miscellaneous: { sidebarOpen, setSidebarOpen }
+    miscellaneous: { sidebarOpen, setSidebarOpen, selected, setSelected }
   } = useBooksLibraryContext()
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
-        active={Array.from(searchParams.keys()).length === 0}
+        active={Object.values(selected).every(value => !value)}
         icon="tabler:list"
         label="All books"
         namespace="apps.booksLibrary"
         onClick={() => {
-          setSearchParams({})
+          setSelected('collection', null)
+          setSelected('fileType', null)
+          setSelected('language', null)
           setSidebarOpen(false)
         }}
       />
       <SidebarItem
-        active={searchParams.get('favourite') === 'true'}
+        active={selected.favourite}
         icon="tabler:heart"
         label="Favourite"
         namespace="apps.booksLibrary"
+        onCancelButtonClick={() => {
+          setSelected('favourite', false)
+          setSidebarOpen(false)
+        }}
         onClick={() => {
-          searchParams.set('favourite', 'true')
-          setSearchParams(searchParams)
+          setSelected('favourite', true)
           setSidebarOpen(false)
         }}
       />
@@ -42,7 +44,7 @@ function Sidebar() {
       <SidebarSection
         fallbackIcon="tabler:file-text"
         hasActionButton={false}
-        hasHamburgerMenu={false}
+        hasContextMenu={false}
         stuff="fileTypes"
       />
     </SidebarWrapper>
