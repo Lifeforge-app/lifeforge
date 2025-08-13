@@ -71,7 +71,7 @@ function EventDetailsDescription({ event }: { event: CalendarEvent }) {
           </div>
         )}
         {event.description && (
-          <div className="prose max-w-auto! mt-8 w-full">
+          <div className="prose calendar-prose max-w-auto! mt-8 w-full">
             <Markdown>{event.description}</Markdown>
           </div>
         )}

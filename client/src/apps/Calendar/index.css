@@ -117,3 +117,22 @@
 .rbc-agenda-table tr:has(th) {
   @apply hidden;
 }
+
+.calendar-prose {
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    @apply mt-4;
+  }
+
+  & img {
+    @apply my-4 max-w-full rounded-md;
+  }
+
+  & p {
+    @apply dark:text-bg-400! text-bg-600! mt-2;
+  }
+}
