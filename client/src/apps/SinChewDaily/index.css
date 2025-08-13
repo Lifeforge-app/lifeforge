@@ -16,6 +16,10 @@
   }
 
   & p {
-    @apply my-4 leading-[2em];
+    @apply text-bg-600 dark:text-bg-300 my-4 leading-[2em];
+  }
+
+  & h5 {
+    @apply text-2xl font-semibold;
   }
 }
