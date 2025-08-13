@@ -32,7 +32,10 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
 
       open(ModifyEventModal, {
         type: 'create',
-        initialData: data
+        initialData: {
+          ...data,
+          type: 'single'
+        }
       })
       setFile(null)
       setPreview(null)
