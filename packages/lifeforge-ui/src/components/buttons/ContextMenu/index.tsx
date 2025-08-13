@@ -18,19 +18,19 @@ interface MenuProps {
   onClose?: () => void
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  buttonComponent?: React.ReactNode
 }
 
-function ContextMenu(props: MenuProps) {
-  const {
-    children,
-    classNames,
-    customIcon,
-    onClick,
-    onClose,
-    open,
-    onOpenChange
-  } = props
-
+function ContextMenu({
+  children,
+  classNames,
+  customIcon,
+  onClick,
+  onClose,
+  open,
+  onOpenChange,
+  buttonComponent
+}: MenuProps) {
   return (
     <DropdownMenuPrimitive.Root
       open={open}
@@ -44,17 +44,18 @@ function ContextMenu(props: MenuProps) {
     >
       <DropdownMenuPrimitive.Trigger asChild>
         <div className={classNames?.wrapper} role="menu">
-          <Button
-            className={classNames?.button}
-            icon={customIcon ?? 'tabler:dots-vertical'}
-            iconClassName={classNames?.icon}
-            tabIndex={0}
-            variant="plain"
-            onClick={onClick}
-          />
+          {buttonComponent || (
+            <Button
+              className={classNames?.button}
+              icon={customIcon ?? 'tabler:dots-vertical'}
+              iconClassName={classNames?.icon}
+              tabIndex={0}
+              variant="plain"
+              onClick={onClick}
+            />
+          )}
         </div>
       </DropdownMenuPrimitive.Trigger>
-
       <DropdownMenuPrimitive.Portal>
         <DropdownMenuPrimitive.Content
           align="end"
