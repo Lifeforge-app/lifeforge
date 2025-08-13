@@ -1,7 +1,6 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { createContext, useContext, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
 import type { InferOutput } from 'shared'
 
 export type TodoListEntry = InferOutput<
@@ -25,7 +24,6 @@ export type TodoListStatusCounter = InferOutput<
 >
 
 interface ITodoListData {
-  entriesQueryKey: unknown[]
   // Data
   prioritiesQuery: UseQueryResult<TodoListPriority[]>
   listsQuery: UseQueryResult<TodoListList[]>
@@ -33,6 +31,13 @@ interface ITodoListData {
   entriesQuery: UseQueryResult<TodoListEntry[]>
   statusCounterQuery: UseQueryResult<TodoListStatusCounter>
 
+  // State
+  filter: {
+    status: string | null
+    tag: string | null
+    list: string | null
+    priority: string | null
+  }
   selectedTask: InferOutput<typeof forgeAPI.todoList.entries.getById> | null
 
   // Modals
@@ -47,6 +52,10 @@ interface ITodoListData {
       typeof forgeAPI.todoList.entries.getById
     > | null>
   >
+  setFilter: (
+    key: 'status' | 'tag' | 'list' | 'priority',
+    value: string | null
+  ) => void
 }
 
 export const TodoListContext = createContext<ITodoListData | undefined>(
@@ -54,7 +63,17 @@ export const TodoListContext = createContext<ITodoListData | undefined>(
 )
 
 export function TodoListProvider({ children }: { children: React.ReactNode }) {
-  const [searchParams] = useSearchParams()
+  const [filter, setFilter] = useState<{
+    status: string | null
+    tag: string | null
+    list: string | null
+    priority: string | null
+  }>({
+    status: null,
+    tag: null,
+    list: null,
+    priority: null
+  })
 
   const statusCounterQuery = useQuery(
     forgeAPI.todoList.entries.getStatusCounter.queryOptions()
@@ -68,25 +87,13 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
 
   const tagsListQuery = useQuery(forgeAPI.todoList.tags.list.queryOptions())
 
-  const entriesQueryKey = useMemo(
-    () => [
-      'todo-list',
-      'entries',
-      searchParams.get('status') ?? '',
-      searchParams.get('tag') ?? '',
-      searchParams.get('list') ?? '',
-      searchParams.get('priority') ?? ''
-    ],
-    [searchParams]
-  )
-
   const entriesQuery = useQuery(
     forgeAPI.todoList.entries.list
       .input({
-        status: searchParams.get('status') ?? 'all',
-        tag: searchParams.get('tag') ?? undefined,
-        list: searchParams.get('list') ?? undefined,
-        priority: searchParams.get('priority') ?? undefined
+        status: filter.status ?? 'all',
+        tag: filter.tag ?? undefined,
+        list: filter.list ?? undefined,
+        priority: filter.priority ?? undefined
       })
       .queryOptions()
   )
@@ -104,20 +111,25 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({
-      entriesQueryKey,
       prioritiesQuery,
       listsQuery,
       tagsListQuery,
       entriesQuery,
       statusCounterQuery,
+      filter,
       selectedTask,
       modifyTaskWindowOpenType,
       setModifyTaskWindowOpenType,
       setDeleteTaskConfirmationModalOpen,
-      setSelectedTask
+      setSelectedTask,
+      setFilter: (key: keyof typeof filter, value: string | null) => {
+        setFilter(prev => ({
+          ...prev,
+          [key]: value
+        }))
+      }
     }),
     [
-      entriesQueryKey,
       prioritiesQuery,
       listsQuery,
       tagsListQuery,
@@ -125,7 +137,8 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
       statusCounterQuery,
       selectedTask,
       modifyTaskWindowOpenType,
-      deleteTaskConfirmationModalOpen
+      deleteTaskConfirmationModalOpen,
+      filter
     ]
   )
 
