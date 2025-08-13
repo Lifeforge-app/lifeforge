@@ -125,10 +125,6 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
           classNames={{
             wrapper: 'absolute right-2 top-2 shrink-0'
           }}
-          onClick={e => {
-            e.stopPropagation()
-            e.preventDefault()
-          }}
         >
           <ContextMenuItem
             icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
