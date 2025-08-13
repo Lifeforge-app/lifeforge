@@ -239,12 +239,10 @@ function FormModal({
   return (
     <div className="min-w-[50vw]">
       <ModalHeader
-        actionButtonIcon={actionButton?.icon}
-        actionButtonIsRed={actionButton?.isRed}
+        actionButtonProps={actionButton}
         icon={icon}
         namespace={namespace ? namespace : undefined}
         title={title}
-        onActionButtonClick={actionButton?.onClick}
         onClose={onClose}
       />
       {!loading ? (

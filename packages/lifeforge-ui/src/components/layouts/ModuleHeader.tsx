@@ -1,16 +1,17 @@
-import { Button, ContextMenu } from '@components/buttons'
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useSidebarState } from 'shared'
 
+import { Button, ContextMenu } from '../buttons'
+
 interface ModuleHeaderProps {
   icon?: string
   title: string | React.ReactNode
   totalItems?: number
   tips?: string
-  contextMenuItems?: React.ReactNode
+  contextMenuProps?: React.ComponentProps<typeof ContextMenu>
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
   namespace?: string
@@ -22,7 +23,7 @@ function ModuleHeader({
   title,
   totalItems,
   tips = '',
-  contextMenuItems,
+  contextMenuProps,
   actionButton,
   customElement,
   namespace,
@@ -110,9 +111,7 @@ function ModuleHeader({
           </div>
         )}
         {customElement}
-        {contextMenuItems !== undefined && (
-          <ContextMenu>{contextMenuItems}</ContextMenu>
-        )}
+        {contextMenuProps && <ContextMenu {...contextMenuProps} />}
       </div>
     </header>
   )
