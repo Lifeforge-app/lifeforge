@@ -1,0 +1,21 @@
+.news-article {
+  & figure {
+    @apply my-6 flex flex-col items-center gap-4;
+  }
+
+  & img {
+    @apply shadow-custom w-full rounded-xl md:max-w-1/2;
+  }
+
+  & p:has(img) {
+    @apply mb-6 flex flex-col items-center;
+  }
+
+  & figcaption {
+    @apply text-bg-500 text-center text-sm;
+  }
+
+  & p {
+    @apply my-4 leading-[2em];
+  }
+}
