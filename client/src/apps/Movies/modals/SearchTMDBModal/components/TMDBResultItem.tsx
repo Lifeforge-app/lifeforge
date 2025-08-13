@@ -53,7 +53,7 @@ function TMDBResultItem({
           {dayjs(data.release_date).year()}
         </p>
         <h1 className="text-xl font-semibold">
-          {data.title}
+          {data.title}{' '}
           <span className="text-bg-500 text-base font-medium">
             ({data.original_title})
           </span>
