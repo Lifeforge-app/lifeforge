@@ -8,9 +8,15 @@ import { toLinkCase, toTitleCase } from '../../../utils/string'
 function NavigationBar() {
   const location = useLocation()
 
-  const currentGroup = useMemo(() => location.pathname.split[1], [location])
+  const currentGroup = useMemo(
+    () => location.pathname.split('/')[1],
+    [location]
+  )
 
-  const currentSection = useMemo(() => location.pathname.split[2], [location])
+  const currentSection = useMemo(
+    () => location.pathname.split('/')[2],
+    [location]
+  )
 
   const nextSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(

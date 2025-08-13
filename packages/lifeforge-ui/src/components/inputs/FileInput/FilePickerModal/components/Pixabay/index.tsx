@@ -85,11 +85,11 @@ function Pixabay({
         .setHost(apiHost)
         .input({
           q: query,
-          page,
+          page: page.toString(),
           type: filters.imageType,
           category: filters.category,
           colors: filters.colors,
-          editors_choice: filters.isEditorsChoice
+          editors_choice: filters.isEditorsChoice ? 'true' : 'false'
         })
         .query()
 
