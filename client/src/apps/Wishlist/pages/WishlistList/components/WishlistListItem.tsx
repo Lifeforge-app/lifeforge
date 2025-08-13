@@ -106,10 +106,6 @@ function WishlistListItem({ list }: { list: WishlistList }) {
         classNames={{
           wrapper: 'absolute right-4 top-4'
         }}
-        onClick={e => {
-          e.preventDefault()
-          e.stopPropagation()
-        }}
       >
         <ContextMenuItem
           icon="tabler:pencil"

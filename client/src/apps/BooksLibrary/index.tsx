@@ -68,22 +68,26 @@ function BooksLibrary() {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        contextMenuItems={
-          <ContextMenuSelectorWrapper icon="tabler:eye" title="View as">
-            {['grid', 'list'].map(type => (
-              <ContextMenuItem
-                key={type}
-                icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
-                isToggled={view === type}
-                text={type.charAt(0).toUpperCase() + type.slice(1)}
-                onClick={() => {
-                  setView(type as 'grid' | 'list')
-                }}
-              />
-            ))}
-          </ContextMenuSelectorWrapper>
-        }
-        hamburgerMenuClassName="block md:hidden"
+        contextMenuProps={{
+          classNames: {
+            wrapper: 'block md:hidden'
+          },
+          children: (
+            <ContextMenuSelectorWrapper icon="tabler:eye" title="View as">
+              {['grid', 'list'].map(type => (
+                <ContextMenuItem
+                  key={type}
+                  icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                  isToggled={view === type}
+                  text={type.charAt(0).toUpperCase() + type.slice(1)}
+                  onClick={() => {
+                    setView(type as 'grid' | 'list')
+                  }}
+                />
+              ))}
+            </ContextMenuSelectorWrapper>
+          )
+        }}
         icon="tabler:books"
         title="Books Library"
       />

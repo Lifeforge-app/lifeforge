@@ -88,8 +88,8 @@ function WalletDashboard() {
             </MenuItems>
           </Menu>
         }
-        contextMenuItems={
-          <>
+        contextMenuProps={{
+          children: (
             <ContextMenuItem
               icon="tabler:eye-off"
               isToggled={isAmountHidden}
@@ -99,8 +99,8 @@ function WalletDashboard() {
                 toggleAmountVisibility()
               }}
             />
-          </>
-        }
+          )
+        }}
         icon="tabler:wallet"
         title="Wallet"
       />

@@ -98,7 +98,6 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
     <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:adjustments"
-        needTranslate={false}
         title={t('bgImageSelector.modals.adjustBackground.title')}
         onClose={onClose}
       />

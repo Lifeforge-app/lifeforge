@@ -50,24 +50,26 @@ function Dashboard() {
     <ModuleWrapper>
       <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
         <ModuleHeader
-          contextMenuItems={
-            <>
-              <ContextMenuItem
-                icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
-                namespace="core.dashboard"
-                text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
-                onClick={() => {
-                  setCanLayoutChange(!canLayoutChange)
-                }}
-              />
-              <ContextMenuItem
-                icon="tabler:apps"
-                namespace="core.dashboard"
-                text="Manage Widgets"
-                onClick={handleManageWidget}
-              />
-            </>
-          }
+          contextMenuProps={{
+            children: (
+              <>
+                <ContextMenuItem
+                  icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
+                  namespace="core.dashboard"
+                  text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
+                  onClick={() => {
+                    setCanLayoutChange(!canLayoutChange)
+                  }}
+                />
+                <ContextMenuItem
+                  icon="tabler:apps"
+                  namespace="core.dashboard"
+                  text="Manage Widgets"
+                  onClick={handleManageWidget}
+                />
+              </>
+            )
+          }}
           title="Dashboard"
         />
         {isReady && (

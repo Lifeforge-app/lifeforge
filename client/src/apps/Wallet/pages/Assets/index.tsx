@@ -63,29 +63,31 @@ function Assets() {
             )}
           </>
         }
-        contextMenuItems={
-          <>
-            <ContextMenuItem
-              icon="tabler:refresh"
-              text="Refresh"
-              onClick={() => {
-                queryClient.invalidateQueries({
-                  queryKey: ['wallet', 'assets']
-                })
-                assetsQuery.refetch()
-              }}
-            />
-            <ContextMenuItem
-              icon="tabler:eye-off"
-              isToggled={isAmountHidden}
-              namespace="apps.wallet"
-              text="Hide Amount"
-              onClick={() => {
-                toggleAmountVisibility()
-              }}
-            />
-          </>
-        }
+        contextMenuProps={{
+          children: (
+            <>
+              <ContextMenuItem
+                icon="tabler:refresh"
+                text="Refresh"
+                onClick={() => {
+                  queryClient.invalidateQueries({
+                    queryKey: ['wallet', 'assets']
+                  })
+                  assetsQuery.refetch()
+                }}
+              />
+              <ContextMenuItem
+                icon="tabler:eye-off"
+                isToggled={isAmountHidden}
+                namespace="apps.wallet"
+                text="Hide Amount"
+                onClick={() => {
+                  toggleAmountVisibility()
+                }}
+              />
+            </>
+          )
+        }}
         icon="tabler:wallet"
         namespace="apps.wallet"
         title="Assets"
