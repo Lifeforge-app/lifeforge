@@ -27,7 +27,7 @@ function BooksLibrary() {
   const {
     entriesQuery,
     fileTypesQuery,
-    miscellaneous: { selected, searchQuery, setSearchQuery }
+    miscellaneous: { filter, searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
@@ -41,24 +41,24 @@ function BooksLibrary() {
           entry.title
             .toLowerCase()
             .includes(debouncedSearchQuery.toLowerCase()) &&
-          (selected.collection !== null
-            ? entry.collection === selected.collection
+          (filter.collection !== null
+            ? entry.collection === filter.collection
             : true) &&
-          (selected.language !== null
-            ? entry.languages.includes(selected.language)
+          (filter.language !== null
+            ? entry.languages.includes(filter.language)
             : true) &&
-          (selected.collection !== null
-            ? entry.collection === selected.collection
+          (filter.collection !== null
+            ? entry.collection === filter.collection
             : true) &&
-          (selected.favourite ? entry.is_favourite : true) &&
-          (selected.fileType !== null
+          (filter.favourite ? entry.is_favourite : true) &&
+          (filter.fileType !== null
             ? entry.extension ===
               fileTypesQuery.data?.find(
-                fileType => fileType.id === selected.fileType
+                fileType => fileType.id === filter.fileType
               )?.name
             : true)
       ) ?? [],
-    [entriesQuery.data, debouncedSearchQuery, selected, fileTypesQuery.data]
+    [entriesQuery.data, debouncedSearchQuery, filter, fileTypesQuery.data]
   )
 
   const handleOpenLibgenModal = useCallback(() => {
