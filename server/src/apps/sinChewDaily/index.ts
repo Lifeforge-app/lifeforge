@@ -175,9 +175,6 @@ const getContent = forgeController.query
     const time =
       document.querySelector('.meta > .time')?.textContent?.trim() || ''
 
-    const viewCount =
-      document.querySelector('.post-view-counter')?.textContent?.trim() || ''
-
     const contentElement = document.querySelector('.article-page-content')
 
     const sanitizedContent = sanitizeHtml(contentElement?.innerHTML || '', {
@@ -190,14 +187,13 @@ const getContent = forgeController.query
         }
       ),
       textFilter: (text: string) => {
-        return text === 'ADVERTISEMENT' ? '' : text.trim()
+        return ['ADVERTISEMENT', '打开全文'].includes(text) ? '' : text.trim()
       }
     })
 
     return {
       title,
       time,
-      viewCount,
       content: sanitizedContent
     }
   })
