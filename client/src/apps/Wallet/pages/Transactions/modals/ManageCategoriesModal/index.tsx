@@ -78,7 +78,7 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
                   <Scrollbar
                     style={{
                       width,
-                      height: height
+                      height
                     }}
                   >
                     <ul className="space-y-3">
