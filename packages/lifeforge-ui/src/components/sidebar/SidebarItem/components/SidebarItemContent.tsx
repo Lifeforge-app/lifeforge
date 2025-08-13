@@ -93,13 +93,7 @@ function SidebarItemContent({
             ),
             button: 'p-2!'
           }}
-          onClick={e => {
-            e.stopPropagation()
-            setIsMenuOpen(true)
-          }}
-          onClose={() => {
-            setIsMenuOpen(false)
-          }}
+          onOpenChange={setIsMenuOpen}
         >
           {contextMenuItems}
         </ContextMenu>
