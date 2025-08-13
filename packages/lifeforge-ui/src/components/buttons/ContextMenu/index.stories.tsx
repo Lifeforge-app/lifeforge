@@ -91,8 +91,7 @@ export const CustomAnchor: Story = {
           onClick={() => {}}
         />
       </>
-    ),
-    anchor: 'right start'
+    )
   }
 }
 
