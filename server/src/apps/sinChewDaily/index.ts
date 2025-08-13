@@ -104,12 +104,10 @@ const list = forgeController.query
 
     const query = new URLSearchParams(targetEndpoint.defaultQuery)
 
-    if (page > 1) {
-      query.set('page', page.toString())
+    query.set('page', page.toString())
 
-      if (type === 'hot') {
-        query.set('range', range)
-      }
+    if (type === 'hot' && page > 1) {
+      query.set('range', range)
     }
 
     const response = await fetch(`${targetEndpoint.root}?${query.toString()}`)
@@ -128,8 +126,6 @@ const list = forgeController.query
             : 'result'
         ]
     }
-
-    console.log(data)
 
     return (
       data.map((item: any) => ({
