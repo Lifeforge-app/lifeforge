@@ -28,15 +28,18 @@ function FontListItem({
   return (
     <button
       className={clsx(
-        'component-bg-lighter-with-hover relative w-full rounded-lg p-6 pr-0 text-left',
+        'component-bg-lighter-with-hover relative w-full min-w-0 rounded-lg p-6 pr-0 text-left',
         selectedFont === font.family && 'border-custom-500 border-2'
       )}
       onClick={() => setSelectedFont(font.family)}
     >
-      <div className="flex items-center gap-2 text-lg font-medium">
-        <span>{font.family}</span>
-        <span className="text-bg-500 text-base">
+      <div className="flex w-full min-w-0 flex-col pr-6 text-lg font-medium md:flex-row md:items-center md:gap-2">
+        <span className="min-w-0 truncate">{font.family}</span>
+        <span className="text-bg-500 hidden text-base whitespace-nowrap md:block">
           ({font.variants.length} variants)
+        </span>
+        <span className="text-bg-500 block text-base whitespace-nowrap md:hidden">
+          {font.variants.length} variants
         </span>
       </div>
       {selectedFont === font.family && (
@@ -46,7 +49,7 @@ function FontListItem({
         />
       )}
       <p
-        className="relative mt-4 overflow-hidden p-4 text-4xl whitespace-nowrap"
+        className="relative mt-4 overflow-hidden py-4 text-4xl whitespace-nowrap"
         style={{
           fontFamily: font.family
         }}
