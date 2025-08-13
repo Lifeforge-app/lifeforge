@@ -30,7 +30,7 @@ function _SidebarItem({
   const open = useModalStore(state => state.open)
 
   const {
-    miscellaneous: { selected, setSelected, setSidebarOpen }
+    miscellaneous: { filter, setFilter, setSidebarOpen }
   } = useBooksLibraryContext()
 
   const singleStuff = (
@@ -84,7 +84,7 @@ function _SidebarItem({
   return (
     <>
       <SidebarItem
-        active={selected[singleStuff] === item.id}
+        active={filter[singleStuff] === item.id}
         contextMenuItems={
           hasContextMenu ? (
             <>
@@ -106,11 +106,11 @@ function _SidebarItem({
         label={item.name}
         number={item.amount}
         onCancelButtonClick={() => {
-          setSelected(singleStuff, null)
+          setFilter(singleStuff, null)
         }}
         onClick={() => {
           setSidebarOpen(false)
-          setSelected(singleStuff, item.id)
+          setFilter(singleStuff, item.id)
         }}
       />
     </>

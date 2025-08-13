@@ -5,34 +5,34 @@ import SidebarSection from './components/SidebarSection'
 
 function Sidebar() {
   const {
-    miscellaneous: { sidebarOpen, setSidebarOpen, selected, setSelected }
+    miscellaneous: { sidebarOpen, setSidebarOpen, filter, setFilter }
   } = useBooksLibraryContext()
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
-        active={Object.values(selected).every(value => !value)}
+        active={Object.values(filter).every(value => !value)}
         icon="tabler:list"
         label="All books"
         namespace="apps.booksLibrary"
         onClick={() => {
-          setSelected('collection', null)
-          setSelected('fileType', null)
-          setSelected('language', null)
+          setFilter('collection', null)
+          setFilter('fileType', null)
+          setFilter('language', null)
           setSidebarOpen(false)
         }}
       />
       <SidebarItem
-        active={selected.favourite}
+        active={filter.favourite}
         icon="tabler:heart"
         label="Favourite"
         namespace="apps.booksLibrary"
         onCancelButtonClick={() => {
-          setSelected('favourite', false)
+          setFilter('favourite', false)
           setSidebarOpen(false)
         }}
         onClick={() => {
-          setSelected('favourite', true)
+          setFilter('favourite', true)
           setSidebarOpen(false)
         }}
       />

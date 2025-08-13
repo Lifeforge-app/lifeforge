@@ -16,7 +16,7 @@ function Header({ itemCount }: { itemCount: number }) {
     collectionsQuery,
     fileTypesQuery,
     languagesQuery,
-    miscellaneous: { setSidebarOpen, searchQuery, selected, setSelected }
+    miscellaneous: { setSidebarOpen, searchQuery, filter, setFilter }
   } = useBooksLibraryContext()
 
   const handleOpenLibgenModal = useCallback(() => {
@@ -27,7 +27,7 @@ function Header({ itemCount }: { itemCount: number }) {
     <div>
       <div className="flex-between flex">
         <h1 className="text-3xl font-semibold">
-          {Object.values(selected).every(value => !value) && !searchQuery.trim()
+          {Object.values(filter).every(value => !value) && !searchQuery.trim()
             ? 'All'
             : 'Filtered'}{' '}
           Books <span className="text-bg-500 text-base">({itemCount})</span>
@@ -94,30 +94,30 @@ function Header({ itemCount }: { itemCount: number }) {
         setValues={{
           collection: value => {
             if (value) {
-              setSelected('collection', value)
+              setFilter('collection', value)
             } else {
-              setSelected('collection', null)
+              setFilter('collection', null)
             }
           },
           fileType: value => {
             if (value) {
-              setSelected('fileType', value)
+              setFilter('fileType', value)
             } else {
-              setSelected('fileType', null)
+              setFilter('fileType', null)
             }
           },
           language: value => {
             if (value) {
-              setSelected('language', value)
+              setFilter('language', value)
             } else {
-              setSelected('language', null)
+              setFilter('language', null)
             }
           }
         }}
         values={{
-          collection: selected.collection ?? '',
-          fileType: selected.fileType ?? '',
-          language: selected.language ?? ''
+          collection: filter.collection ?? '',
+          fileType: filter.fileType ?? '',
+          language: filter.language ?? ''
         }}
       />
     </div>

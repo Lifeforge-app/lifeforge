@@ -52,13 +52,13 @@ interface IBooksLibraryData {
     addToProcesses: (taskId: string) => void
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-    selected: {
+    filter: {
       collection: string | null
       fileType: string | null
       language: string | null
       favourite: boolean
     }
-    setSelected: (
+    setFilter: (
       key: 'collection' | 'fileType' | 'language' | 'favourite',
       value: string | null | boolean
     ) => void
@@ -98,7 +98,7 @@ export default function BooksLibraryProvider() {
     forgeAPI.booksLibrary.fileTypes.list.queryOptions()
   )
 
-  const [selected, setSelected] = useState<{
+  const [filter, setFilter] = useState<{
     collection: string | null
     fileType: string | null
     language: string | null
@@ -222,12 +222,12 @@ export default function BooksLibraryProvider() {
         setSidebarOpen,
         libgenModalOpen,
         setLibgenModalOpen,
-        selected,
-        setSelected: (
+        filter,
+        setFilter: (
           key: 'collection' | 'fileType' | 'language' | 'favourite',
           value: string | null | boolean
         ) => {
-          setSelected(prev => ({
+          setFilter(prev => ({
             ...prev,
             [key]: value
           }))
@@ -243,7 +243,7 @@ export default function BooksLibraryProvider() {
       searchQuery,
       sidebarOpen,
       libgenModalOpen,
-      selected
+      filter
     ]
   )
 
