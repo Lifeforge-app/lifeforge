@@ -55,7 +55,7 @@ function CategoryItem({ category }: { category: WalletCategory }) {
   return (
     <li
       key={category.id}
-      className="flex-between component-bg-lighter dark:bg-bg-800/30 shadow-custom flex gap-3 rounded-md p-4"
+      className="flex-between component-bg-lighter bg-bg-50 shadow-custom flex gap-3 rounded-md p-4"
     >
       <div className="flex w-full min-w-0 items-center gap-3">
         <div
