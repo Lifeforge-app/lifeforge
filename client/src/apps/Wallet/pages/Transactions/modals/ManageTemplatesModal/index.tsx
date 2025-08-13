@@ -37,15 +37,21 @@ function ManageTemplatesModal({
   return (
     <div className="flex min-h-[80vh] min-w-[40vw] flex-col">
       <ModalHeader
-        actionButtonIcon={!choosing ? 'tabler:plus' : undefined}
+        actionButtonProps={
+          !choosing
+            ? {
+                icon: 'tabler:plus',
+                onClick: () => {
+                  open(ModifyTemplatesModal, {
+                    type: 'create'
+                  })
+                }
+              }
+            : undefined
+        }
         icon="tabler:template"
         namespace="apps.wallet"
         title={`templates.${choosing ? 'choose' : 'manage'}`}
-        onActionButtonClick={() => {
-          open(ModifyTemplatesModal, {
-            type: 'create'
-          })
-        }}
         onClose={onClose}
       />
       <Tabs

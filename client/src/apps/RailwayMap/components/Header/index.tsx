@@ -54,29 +54,31 @@ function Header() {
             {hasRoute ? 'clear Route' : 'Plan Route'}
           </Button>
         }
-        contextMenuItems={
-          <>
-            <ContextMenuSelectorWrapper
-              className="lg:hidden"
-              icon="tabler:eye"
-              title={t('viewTypes.selectorTitle')}
-            >
-              {VIEW_TYPES.map(([icon, title, value]) => (
-                <ContextMenuItem
-                  key={value}
-                  icon={icon}
-                  isToggled={viewType === value}
-                  namespace={false}
-                  text={t(`viewTypes.${_.camelCase(title)}`)}
-                  onClick={() => {
-                    setViewType(value)
-                  }}
-                />
-              ))}
-            </ContextMenuSelectorWrapper>
-            <LineFilter />
-          </>
-        }
+        contextMenuProps={{
+          children: (
+            <>
+              <ContextMenuSelectorWrapper
+                className="lg:hidden"
+                icon="tabler:eye"
+                title={t('viewTypes.selectorTitle')}
+              >
+                {VIEW_TYPES.map(([icon, title, value]) => (
+                  <ContextMenuItem
+                    key={value}
+                    icon={icon}
+                    isToggled={viewType === value}
+                    namespace={false}
+                    text={t(`viewTypes.${_.camelCase(title)}`)}
+                    onClick={() => {
+                      setViewType(value)
+                    }}
+                  />
+                ))}
+              </ContextMenuSelectorWrapper>
+              <LineFilter />
+            </>
+          )
+        }}
         icon="uil:subway"
         title="Railway Map"
       />

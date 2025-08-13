@@ -51,23 +51,29 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="min-w-[50vw]">
       <ModalHeader
-        actionButtonIsRed
-        actionButtonIcon={finalCookie && 'tabler:cookie-off'}
+        actionButtonProps={
+          finalCookie
+            ? {
+                isRed: true,
+                icon: 'tabler:cookie-off',
+                onClick: () => {
+                  open(ConfirmationModal, {
+                    title: 'Remove session cookie',
+                    description:
+                      'Are you sure you want to remove the Guitar World session cookie? You will have to re-enter it.',
+                    onConfirm: async () => {
+                      setFinalCookie('')
+                      setCookie('')
+                      localStorage.removeItem('guitarWorldCookie')
+                    }
+                  })
+                }
+              }
+            : undefined
+        }
         icon="mingcute:guitar-line"
         namespace="apps.scoresLibrary"
         title="Guitar World"
-        onActionButtonClick={() => {
-          open(ConfirmationModal, {
-            title: 'Remove session cookie',
-            description:
-              'Are you sure you want to remove the Guitar World session cookie? You will have to re-enter it.',
-            onConfirm: async () => {
-              setFinalCookie('')
-              setCookie('')
-              localStorage.removeItem('guitarWorldCookie')
-            }
-          })
-        }}
         onClose={onClose}
       />
       {!finalCookie ? (
