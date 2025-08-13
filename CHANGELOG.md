@@ -15,6 +15,8 @@
 - **UI**: Added `ContextMenuSelectorWrapper` and `ContextMenuSeparator` components for better context menu organization.
 - **UI**: Adjusted styles and storybook entries for the new context menu components.
 - **Code**: Replaced `z.infer` with `z.input` in `forgeAPIBuilder` for more accurate type inference.
+- **Code**: Changelog will now be written in commit message, and branches will be utilized to group weekly changes.
+- **Code**: This changelog file will not be updated any more.
 
 ## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
 
