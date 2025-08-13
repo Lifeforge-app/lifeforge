@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ConfirmationModal, MenuItem, SidebarItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenuItem, SidebarItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useMemo } from 'react'
-import { useSearchParams } from 'react-router'
+import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
@@ -19,27 +18,28 @@ function _SidebarItem({
   item,
   stuff,
   fallbackIcon,
-  hasHamburgerMenu = true
+  hasContextMenu = true
 }: {
   item: BooksLibraryCollection | BooksLibraryLanguage | BooksLibraryFileType
   stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
-  hasHamburgerMenu?: boolean
+  hasContextMenu?: boolean
 }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
 
-  const [searchParams, setSearchParams] = useSearchParams()
-
   const {
-    miscellaneous: { setSidebarOpen }
+    miscellaneous: { selected, setSelected, setSidebarOpen }
   } = useBooksLibraryContext()
 
-  const singleStuff = useMemo(
-    () => stuff.replace(/ies$/, 'y').replace(/s$/, ''),
-    [stuff]
-  )
+  const singleStuff = (
+    {
+      collections: 'collection',
+      languages: 'language',
+      fileTypes: 'fileType'
+    } as const
+  )[stuff]
 
   const handleUpdateStuff = useCallback(() => {
     open(ModifyModal, {
@@ -84,16 +84,16 @@ function _SidebarItem({
   return (
     <>
       <SidebarItem
-        active={searchParams.get(singleStuff) === item.id}
-        hamburgerMenuItems={
-          hasHamburgerMenu ? (
+        active={selected[singleStuff] === item.id}
+        contextMenuItems={
+          hasContextMenu ? (
             <>
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:pencil"
                 text="Edit"
                 onClick={handleUpdateStuff}
               />
-              <MenuItem
+              <ContextMenuItem
                 isRed
                 icon="tabler:trash"
                 text="Delete"
@@ -106,16 +106,11 @@ function _SidebarItem({
         label={item.name}
         number={item.amount}
         onCancelButtonClick={() => {
-          searchParams.delete(singleStuff)
-          setSearchParams(searchParams)
-          setSidebarOpen(false)
+          setSelected(singleStuff, null)
         }}
         onClick={() => {
           setSidebarOpen(false)
-          setSearchParams({
-            ...Object.fromEntries(searchParams.entries()),
-            [singleStuff]: item.id
-          })
+          setSelected(singleStuff, item.id)
         }}
       />
     </>
