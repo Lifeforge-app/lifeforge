@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import HamburgerMenu from '..'
-import MenuItem from './MenuItem'
+import ContextMenu from '..'
+import ContextMenuItem from './ContextMenuItem'
 
 const meta = {
-  component: MenuItem
-} satisfies Meta<typeof MenuItem>
+  component: ContextMenuItem
+} satisfies Meta<typeof ContextMenuItem>
 
 export default meta
 
@@ -18,9 +18,9 @@ export const Default: Story = {
     onClick: () => {}
   },
   render: props => (
-    <HamburgerMenu>
-      <MenuItem {...props} />
-    </HamburgerMenu>
+    <ContextMenu>
+      <ContextMenuItem {...props} />
+    </ContextMenu>
   )
 }
 
@@ -32,9 +32,9 @@ export const RedVariant: Story = {
     onClick: () => {}
   },
   render: props => (
-    <HamburgerMenu>
-      <MenuItem {...props} />
-    </HamburgerMenu>
+    <ContextMenu>
+      <ContextMenuItem {...props} />
+    </ContextMenu>
   )
 }
 
@@ -46,9 +46,9 @@ export const Loading: Story = {
     onClick: () => {}
   },
   render: props => (
-    <HamburgerMenu>
-      <MenuItem {...props} />
-    </HamburgerMenu>
+    <ContextMenu>
+      <ContextMenuItem {...props} />
+    </ContextMenu>
   )
 }
 
@@ -60,9 +60,9 @@ export const Disabled: Story = {
     onClick: () => {}
   },
   render: props => (
-    <HamburgerMenu>
-      <MenuItem {...props} />
-    </HamburgerMenu>
+    <ContextMenu>
+      <ContextMenuItem {...props} />
+    </ContextMenu>
   )
 }
 
@@ -73,11 +73,11 @@ export const Togglable: Story = {
     onClick: () => {}
   },
   render: props => (
-    <HamburgerMenu>
+    <ContextMenu>
       {Array(3)
         .fill(null)
         .map((_, i) => (
-          <MenuItem
+          <ContextMenuItem
             key={i}
             icon={props.icon}
             isToggled={i === 1}
@@ -85,7 +85,7 @@ export const Togglable: Story = {
             onClick={props.onClick}
           />
         ))}
-    </HamburgerMenu>
+    </ContextMenu>
   )
 }
 
@@ -97,8 +97,8 @@ export const RemainsOpenOnClick: Story = {
     onClick: () => {}
   },
   render: props => (
-    <HamburgerMenu>
-      <MenuItem {...props} />
-    </HamburgerMenu>
+    <ContextMenu>
+      <ContextMenuItem {...props} />
+    </ContextMenu>
   )
 }

@@ -11,7 +11,7 @@ interface ModuleHeaderProps {
   title: string | React.ReactNode
   totalItems?: number
   tips?: string
-  hamburgerMenuItems?: React.ReactNode
+  contextMenuItems?: React.ReactNode
   hamburgerMenuClassName?: string
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
@@ -24,7 +24,7 @@ function ModuleHeader({
   title,
   totalItems,
   tips = '',
-  hamburgerMenuItems,
+  contextMenuItems,
   hamburgerMenuClassName,
   actionButton,
   customElement,
@@ -113,7 +113,7 @@ function ModuleHeader({
           </div>
         )}
         {customElement}
-        {hamburgerMenuItems !== undefined && (
+        {contextMenuItems !== undefined && (
           <Menu
             as="div"
             className={clsx(
@@ -129,7 +129,7 @@ function ModuleHeader({
               anchor="bottom end"
               className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
-              {hamburgerMenuItems}
+              {contextMenuItems}
             </MenuItems>
           </Menu>
         )}
