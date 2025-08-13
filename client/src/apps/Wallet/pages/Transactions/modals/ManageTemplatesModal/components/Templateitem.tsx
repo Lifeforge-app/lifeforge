@@ -66,8 +66,8 @@ function TemplateItem({
       className={clsx(
         'flex-between shadow-custom flex w-full min-w-0 gap-3 rounded-md p-4 text-left',
         !choosing
-          ? 'component-bg-lighter dark:bg-bg-800/30 cursor-default!'
-          : 'component-bg-lighter-with-hover dark:bg-bg-800/30 dark:hover:bg-bg-800 cursor-pointer'
+          ? 'component-bg-lighter bg-bg-50 cursor-default!'
+          : 'component-bg-lighter-with-hover cursor-pointer'
       )}
       onClick={
         choosing
