@@ -1,4 +1,0 @@
-[build]
-base    = ""             
-publish = "client/dist"  
-command = "cd client && bun run build" 
