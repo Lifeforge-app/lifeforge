@@ -7,11 +7,13 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import ModifyListModal from '@apps/TodoList/modals/ModifyListModal'
-import type { TodoListList } from '@apps/TodoList/providers/TodoListProvider'
+import {
+  type TodoListList,
+  useTodoListContext
+} from '@apps/TodoList/providers/TodoListProvider'
 
 function TaskListListItem({
   item,
@@ -22,9 +24,9 @@ function TaskListListItem({
 }) {
   const queryClient = useQueryClient()
 
-  const open = useModalStore(state => state.open)
+  const { filter, setFilter } = useTodoListContext()
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const open = useModalStore(state => state.open)
 
   const handleUpdateList = useCallback(() => {
     open(ModifyListModal, {
@@ -41,10 +43,10 @@ function TaskListListItem({
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['todo-list'] })
-          setSearchParams({
-            ...Object.fromEntries(searchParams.entries()),
-            list: ''
-          })
+
+          if (filter.list === item.id) {
+            setFilter('list', null)
+          }
         },
         onError: () => {
           toast.error(
@@ -67,7 +69,7 @@ function TaskListListItem({
 
   return (
     <SidebarItem
-      active={searchParams.get('list') === item.id}
+      active={filter.list === item.id}
       contextMenuItems={
         <>
           <ContextMenuItem
@@ -88,15 +90,11 @@ function TaskListListItem({
       number={item.amount}
       sideStripColor={item.color}
       onCancelButtonClick={() => {
-        searchParams.delete('list')
-        setSearchParams(searchParams)
+        setFilter('list', null)
         setSidebarOpen(false)
       }}
       onClick={() => {
-        setSearchParams({
-          ...Object.fromEntries(searchParams.entries()),
-          list: item.id
-        })
+        setFilter('list', item.id)
         setSidebarOpen(false)
       }}
     />

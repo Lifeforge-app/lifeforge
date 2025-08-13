@@ -65,19 +65,6 @@ function TodoListContainer() {
       newSearchParams.delete('entry')
       setSearchParams(newSearchParams, { replace: true })
     }
-
-    const status = searchParams.get('status')
-
-    if (status === null || status === '') return
-
-    if (
-      !['all', 'today', 'scheduled', 'overdue', 'completed'].includes(status)
-    ) {
-      setSearchParams({
-        ...Object.fromEntries(searchParams.entries()),
-        status: 'all'
-      })
-    }
   }, [searchParams, entriesQuery.data])
 
   useEffect(() => {
