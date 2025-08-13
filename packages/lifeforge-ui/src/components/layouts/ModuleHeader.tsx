@@ -1,7 +1,6 @@
-import { Button } from '@components/buttons'
+import { Button, ContextMenu } from '@components/buttons'
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useSidebarState } from 'shared'
@@ -12,7 +11,6 @@ interface ModuleHeaderProps {
   totalItems?: number
   tips?: string
   contextMenuItems?: React.ReactNode
-  hamburgerMenuClassName?: string
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
   namespace?: string
@@ -25,7 +23,6 @@ function ModuleHeader({
   totalItems,
   tips = '',
   contextMenuItems,
-  hamburgerMenuClassName,
   actionButton,
   customElement,
   namespace,
@@ -114,24 +111,7 @@ function ModuleHeader({
         )}
         {customElement}
         {contextMenuItems !== undefined && (
-          <Menu
-            as="div"
-            className={clsx(
-              'relative z-50 overscroll-contain',
-              hamburgerMenuClassName
-            )}
-          >
-            <MenuButton className="text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50 rounded-lg p-4 transition-all">
-              <Icon className="size-5" icon="tabler:dots-vertical" />
-            </MenuButton>
-            <MenuItems
-              transition
-              anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-            >
-              {contextMenuItems}
-            </MenuItems>
-          </Menu>
+          <ContextMenu>{contextMenuItems}</ContextMenu>
         )}
       </div>
     </header>
