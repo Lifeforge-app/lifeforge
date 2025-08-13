@@ -1,4 +1,4 @@
-import { HamburgerMenu } from '@components/buttons'
+import { ContextMenu } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
@@ -11,7 +11,7 @@ function SidebarItemContent({
   isMainSidebarItem,
   hasAI,
   number,
-  hamburgerMenuItems,
+  contextMenuItems,
   active,
   onCancelButtonClick,
   namespace,
@@ -22,7 +22,7 @@ function SidebarItemContent({
   isMainSidebarItem: boolean
   hasAI: boolean
   number?: number
-  hamburgerMenuItems?: React.ReactElement
+  contextMenuItems?: React.ReactElement
   active: boolean
   onCancelButtonClick?: () => void
   namespace?: string
@@ -72,7 +72,7 @@ function SidebarItemContent({
                   (onCancelButtonClick !== undefined && active)
                 ) {
                   return 'hidden'
-                } else if (hamburgerMenuItems !== undefined) {
+                } else if (contextMenuItems !== undefined) {
                   return 'group-hover:hidden'
                 } else {
                   return 'block'
@@ -84,8 +84,8 @@ function SidebarItemContent({
           </span>
         )}
       </div>
-      {!active && hamburgerMenuItems !== undefined && (
-        <HamburgerMenu
+      {!active && contextMenuItems !== undefined && (
+        <ContextMenu
           classNames={{
             wrapper: clsx(
               'relative overscroll-contain',
@@ -101,8 +101,8 @@ function SidebarItemContent({
             setIsMenuOpen(false)
           }}
         >
-          {hamburgerMenuItems}
-        </HamburgerMenu>
+          {contextMenuItems}
+        </ContextMenu>
       )}
     </>
   )
