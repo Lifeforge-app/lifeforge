@@ -63,7 +63,7 @@ function CategoryListItem({
     [item]
   )
 
-  const hamburgerMenuItems = useMemo(
+  const contextMenuItems = useMemo(
     () =>
       modifiable ? (
         <ActionMenu onDelete={handleDelete} onEdit={handleEdit} />
@@ -78,7 +78,7 @@ function CategoryListItem({
   return (
     <SidebarItem
       active={isSelected}
-      hamburgerMenuItems={hamburgerMenuItems}
+      contextMenuItems={contextMenuItems}
       icon={item.icon}
       label={item.name}
       number={item.amount}

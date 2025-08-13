@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -116,23 +116,23 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
         className="absolute top-0 left-0 size-full"
         to={`/idea-box/${container.id}`}
       />
-      <HamburgerMenu
+      <ContextMenu
         classNames={{
           wrapper: 'absolute z-[100] right-4 top-4'
         }}
       >
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:pencil"
           text="Edit"
           onClick={handleUpdateContainer}
         />
-        <MenuItem
+        <ContextMenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
           onClick={handleDeleteContainer}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

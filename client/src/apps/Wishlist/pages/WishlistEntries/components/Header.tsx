@@ -1,7 +1,12 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { Button, GoBackButton, MenuItem, useModalStore } from 'lifeforge-ui'
+import {
+  Button,
+  ContextMenuItem,
+  GoBackButton,
+  useModalStore
+} from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
@@ -93,13 +98,13 @@ function Header({
             anchor="bottom end"
             className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:plus"
               namespace="apps.wishlist"
               text="Add Manually"
               onClick={handleAddManually}
             />
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:apps"
               namespace="apps.wishlist"
               text="From Other Apps"

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import Zoom from 'react-medium-image-zoom'
 import PhotoAlbum from 'react-photo-album'
@@ -106,14 +106,14 @@ function PhotosEntry({
                 </Zoom>
               )}
             </div>
-            <HamburgerMenu>
-              <MenuItem
+            <ContextMenu>
+              <ContextMenuItem
                 isRed
                 icon="tabler:trash"
                 text="Delete"
                 onClick={onDelete}
               />
-            </HamburgerMenu>
+            </ContextMenu>
           </>
         )}
       </div>

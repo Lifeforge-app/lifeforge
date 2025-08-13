@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { HamburgerMenu } from 'lifeforge-ui'
+import { ContextMenu } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
@@ -38,13 +38,13 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
         rel="noreferrer"
         target="_blank"
       />
-      <HamburgerMenu
+      <ContextMenu
         classNames={{
           wrapper: 'absolute right-6 top-6 z-20'
         }}
       >
         <EntryContextMenu item={item} />
-      </HamburgerMenu>
+      </ContextMenu>
       <div className="flex-center bg-bg-200/70 shadow-custom dark:bg-bg-800/50 relative isolate aspect-9/12 w-full overflow-hidden rounded-lg">
         <img
           alt=""

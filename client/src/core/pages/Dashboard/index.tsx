@@ -11,7 +11,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { MenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ContextMenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
@@ -50,9 +50,9 @@ function Dashboard() {
     <ModuleWrapper>
       <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
         <ModuleHeader
-          hamburgerMenuItems={
+          contextMenuItems={
             <>
-              <MenuItem
+              <ContextMenuItem
                 icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
                 namespace="core.dashboard"
                 text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
@@ -60,7 +60,7 @@ function Dashboard() {
                   setCanLayoutChange(!canLayoutChange)
                 }}
               />
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:apps"
                 namespace="core.dashboard"
                 text="Manage Widgets"

@@ -1,9 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query'
 import {
   Button,
+  ContextMenuItem,
   EmptyStateScreen,
   FAB,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
@@ -63,9 +63,9 @@ function Assets() {
             )}
           </>
         }
-        hamburgerMenuItems={
+        contextMenuItems={
           <>
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:refresh"
               text="Refresh"
               onClick={() => {
@@ -75,7 +75,7 @@ function Assets() {
                 assetsQuery.refetch()
               }}
             />
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:eye-off"
               isToggled={isAmountHidden}
               namespace="apps.wallet"
