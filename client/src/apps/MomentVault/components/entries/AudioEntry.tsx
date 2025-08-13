@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
-import { Button, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { Button, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -164,21 +164,26 @@ function AudioEntry({
       <p className="text-bg-500 mt-4 flex items-center gap-2">
         <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
       </p>
-      <HamburgerMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
+      <ContextMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
         {entry.transcription === '' && (
-          <MenuItem
+          <ContextMenuItem
             preventDefault
             icon="tabler:file-text"
             loading={transcriptionLoading}
             namespace="apps.momentVault"
             text="Transcribe to Text"
-            onClick={(_, close) => {
-              addTranscription().then(close).catch(console.error)
+            onClick={() => {
+              addTranscription().catch(console.error)
             }}
           />
         )}
-        <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
-      </HamburgerMenu>
+        <ContextMenuItem
+          isRed
+          icon="tabler:trash"
+          text="Delete"
+          onClick={onDelete}
+        />
+      </ContextMenu>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, MenuItem } from 'lifeforge-ui'
+import { Button, ContextMenuItem } from 'lifeforge-ui'
 import { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -38,13 +38,13 @@ function UploadTabButton({
         anchor="bottom end"
         className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
       >
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:upload"
           namespace="apps.scoresLibrary"
           text="Upload from local"
           onClick={uploadFiles}
         />
-        <MenuItem
+        <ContextMenuItem
           icon="mingcute:guitar-line"
           namespace="apps.scoresLibrary"
           text="Download from Guitar World"

@@ -3,8 +3,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
@@ -160,8 +160,8 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
           />
         )}
         <DownloadMenu entry={entry} />
-        <HamburgerMenu>
-          <MenuItem
+        <ContextMenu>
+          <ContextMenuItem
             icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
             text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
             onClick={e => {
@@ -169,18 +169,18 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
               toggleFavouriteStatusMutation.mutateAsync({})
             }}
           />
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
             text="Edit"
             onClick={handleUpdateEntry}
           />
-          <MenuItem
+          <ContextMenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
             onClick={handleDeleteEntry}
           />
-        </HamburgerMenu>
+        </ContextMenu>
       </a>
     </li>
   )

@@ -1,6 +1,6 @@
 import {
-  HamburgerMenuSelectorWrapper,
-  MenuItem,
+  ContextMenuItem,
+  ContextMenuSelectorWrapper,
   SidebarDivider
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -31,12 +31,12 @@ function ActionMenu({
     <>
       <div className="block md:hidden">
         <SidebarDivider noMargin />
-        <HamburgerMenuSelectorWrapper
+        <ContextMenuSelectorWrapper
           icon="tabler:sort-ascending"
           title={t('hamburgerMenu.sortBy')}
         >
           {SORT_TYPE.map(([icon, id]) => (
-            <MenuItem
+            <ContextMenuItem
               key={id}
               icon={icon}
               isToggled={sortType === id}
@@ -47,14 +47,14 @@ function ActionMenu({
               }}
             />
           ))}
-        </HamburgerMenuSelectorWrapper>
+        </ContextMenuSelectorWrapper>
         <SidebarDivider noMargin />
-        <HamburgerMenuSelectorWrapper
+        <ContextMenuSelectorWrapper
           icon="tabler:eye"
           title={t('hamburgerMenu.viewAs')}
         >
           {['grid', 'list'].map(type => (
-            <MenuItem
+            <ContextMenuItem
               key={type}
               icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
               isToggled={view === type}
@@ -64,7 +64,7 @@ function ActionMenu({
               }}
             />
           ))}
-        </HamburgerMenuSelectorWrapper>
+        </ContextMenuSelectorWrapper>
       </div>
     </>
   )

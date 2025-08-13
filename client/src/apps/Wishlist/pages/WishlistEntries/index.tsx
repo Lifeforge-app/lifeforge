@@ -4,7 +4,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
-  MenuItem,
+  ContextMenuItem,
   ModuleWrapper,
   QueryWrapper,
   SearchInput,
@@ -154,13 +154,13 @@ function WishlistEntries() {
           anchor="top end"
           className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:plus"
             namespace="apps.wishlist"
             text="Add Manually"
             onClick={handleAddManually}
           />
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:apps"
             namespace="apps.wishlist"
             text="From Other Apps"

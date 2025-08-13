@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -102,7 +102,7 @@ function WishlistListItem({ list }: { list: WishlistList }) {
           </p>
         </div>
       </div>
-      <HamburgerMenu
+      <ContextMenu
         classNames={{
           wrapper: 'absolute right-4 top-4'
         }}
@@ -111,14 +111,18 @@ function WishlistListItem({ list }: { list: WishlistList }) {
           e.stopPropagation()
         }}
       >
-        <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateList} />
-        <MenuItem
+        <ContextMenuItem
+          icon="tabler:pencil"
+          text="Edit"
+          onClick={handleUpdateList}
+        />
+        <ContextMenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
           onClick={handleDeleteList}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </Link>
   )
 }

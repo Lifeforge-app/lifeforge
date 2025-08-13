@@ -3,8 +3,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
@@ -121,7 +121,7 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
         <div className="bg-bg-500/80 absolute right-0 bottom-0 rounded-tl-md rounded-br-md p-1 px-2">
           <p className="text-xs text-white">{entry.pageCount} pages</p>
         </div>
-        <HamburgerMenu
+        <ContextMenu
           classNames={{
             wrapper: 'absolute right-2 top-2 shrink-0'
           }}
@@ -130,25 +130,25 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
             e.preventDefault()
           }}
         >
-          <MenuItem
+          <ContextMenuItem
             icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
             text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
             onClick={() => {
               toggleFavouriteStatusMutation.mutateAsync({})
             }}
           />
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
             text="Edit"
             onClick={handleUpdateEntry}
           />
-          <MenuItem
+          <ContextMenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
             onClick={handleDeleteEntry}
           />
-        </HamburgerMenu>
+        </ContextMenu>
       </div>
       <div className="mt-4 flex w-full min-w-0 items-center justify-between gap-8">
         <div className="w-full min-w-0">

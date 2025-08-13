@@ -62,7 +62,7 @@ function CalendarListItem({
     [item]
   )
 
-  const hamburgerMenuItems = useMemo(
+  const contextMenuItems = useMemo(
     () =>
       modifiable ? (
         <ActionMenu onDelete={handleDelete} onEdit={handleEdit} />
@@ -77,7 +77,7 @@ function CalendarListItem({
   return (
     <SidebarItem
       active={isSelected}
-      hamburgerMenuItems={hamburgerMenuItems}
+      contextMenuItems={contextMenuItems}
       label={item.name}
       sideStripColor={item.color}
       onCancelButtonClick={onCancelSelect}

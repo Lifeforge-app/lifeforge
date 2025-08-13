@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useParams } from 'react-router'
@@ -124,9 +124,9 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
   }, [entry, id, path, viewArchived, debouncedSearchQuery, selectedTags])
 
   return (
-    <HamburgerMenu classNames={{ button: 'w-10 h-10' }}>
+    <ContextMenu classNames={{ button: 'w-10 h-10' }}>
       {!entry.archived && (
-        <MenuItem
+        <ContextMenuItem
           icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
           text={entry.pinned ? 'Unpin' : 'Pin'}
           onClick={() => {
@@ -134,16 +134,20 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
           }}
         />
       )}
-      <MenuItem
+      <ContextMenuItem
         icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
         text={entry.archived ? 'Unarchive' : 'Archive'}
         onClick={() => {
           archiveIdeaMutation.mutate({})
         }}
       />
-      <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateIdea} />
+      <ContextMenuItem
+        icon="tabler:pencil"
+        text="Edit"
+        onClick={handleUpdateIdea}
+      />
       {!debouncedSearchQuery && selectedTags.length === 0 && path !== '' && (
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:folder-minus"
           namespace="apps.ideaBox"
           text="Remove from folder"
@@ -152,13 +156,13 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
           }}
         />
       )}
-      <MenuItem
+      <ContextMenuItem
         isRed
         icon="tabler:trash"
         text="Delete"
         onClick={handleDeleteIdea}
       />
-    </HamburgerMenu>
+    </ContextMenu>
   )
 }
 

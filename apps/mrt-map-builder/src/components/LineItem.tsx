@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   NumberInput,
   useModalStore
 } from 'lifeforge-ui'
@@ -69,12 +69,12 @@ function LineItem({
               setCollapsed(!collapsed)
             }}
           />
-          <HamburgerMenu
+          <ContextMenu
             classNames={{
               button: 'p-2!'
             }}
           >
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:edit"
               text="Edit Line"
               onClick={() => {
@@ -90,7 +90,7 @@ function LineItem({
                 })
               }}
             />
-            <MenuItem
+            <ContextMenuItem
               isRed
               icon="tabler:trash"
               text="Delete Line"
@@ -110,7 +110,7 @@ function LineItem({
                 })
               }}
             />
-          </HamburgerMenu>
+          </ContextMenu>
         </div>
       </div>
       {!collapsed && (

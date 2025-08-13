@@ -1,4 +1,4 @@
-import { HamburgerMenuSelectorWrapper, MenuItem } from 'lifeforge-ui'
+import { ContextMenuItem, ContextMenuSelectorWrapper } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -21,12 +21,12 @@ function LineFilter() {
   }, [])
 
   return (
-    <HamburgerMenuSelectorWrapper
+    <ContextMenuSelectorWrapper
       icon="lucide:rail-symbol"
       title={t('railwayLinesSelectorTitle')}
     >
       {lines.map(line => (
-        <MenuItem
+        <ContextMenuItem
           key={line.id}
           preventDefault
           icon={
@@ -45,7 +45,7 @@ function LineFilter() {
           onClick={() => onClick(line)}
         />
       ))}
-    </HamburgerMenuSelectorWrapper>
+    </ContextMenuSelectorWrapper>
   )
 }
 

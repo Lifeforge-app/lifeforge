@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
+  ContextMenuItem,
   FAB,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper
 } from 'lifeforge-ui'
@@ -69,7 +69,7 @@ function MomentVault() {
                 { icon: 'tabler:camera', type: 'photos' },
                 { icon: 'tabler:video', type: 'video' }
               ].map(({ icon, type }) => (
-                <MenuItem
+                <ContextMenuItem
                   key={type}
                   icon={icon}
                   namespace="apps.momentVault"
@@ -97,7 +97,7 @@ function MomentVault() {
             { icon: 'tabler:camera', type: 'photos' },
             { icon: 'tabler:video', type: 'video' }
           ].map(({ icon, type }) => (
-            <MenuItem
+            <ContextMenuItem
               key={type}
               icon={icon}
               namespace="apps.momentVault"

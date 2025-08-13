@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  MenuItem,
+  ContextMenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
@@ -69,14 +69,14 @@ function TaskTagListItem({
   return (
     <SidebarItem
       active={searchParams.get('tag') === item.id}
-      hamburgerMenuItems={
+      contextMenuItems={
         <>
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
             text="Edit"
             onClick={handleUpdateTag}
           />
-          <MenuItem
+          <ContextMenuItem
             isRed
             icon="tabler:trash"
             text="Delete"

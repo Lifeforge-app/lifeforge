@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -81,19 +81,19 @@ function CategoryItem({ category }: { category: WalletCategory }) {
           </p>
         </div>
       </div>
-      <HamburgerMenu>
-        <MenuItem
+      <ContextMenu>
+        <ContextMenuItem
           icon="tabler:pencil"
           text="Edit"
           onClick={handleEditCategory}
         />
-        <MenuItem
+        <ContextMenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
           onClick={handleDeleteCategory}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </li>
   )
 }
