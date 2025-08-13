@@ -6,8 +6,8 @@ import {
   Button,
   Checkbox,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -143,19 +143,23 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
             toggleBoughtMutation.mutate({})
           }}
         />
-        <HamburgerMenu
+        <ContextMenu
           classNames={{
             wrapper: 'absolute right-4 top-4 sm:static'
           }}
         >
-          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
-          <MenuItem
+          <ContextMenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={handleEdit}
+          />
+          <ContextMenuItem
             isRed
             icon="tabler:trash"
             text="Delete"
             onClick={handleDelete}
           />
-        </HamburgerMenu>
+        </ContextMenu>
       </div>
     </li>
   )

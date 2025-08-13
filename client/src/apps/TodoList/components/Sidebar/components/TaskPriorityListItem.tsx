@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  MenuItem,
+  ContextMenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
@@ -68,14 +68,14 @@ function TaskPriorityListItem({
   return (
     <SidebarItem
       active={searchParams.get('priority') === item.id}
-      hamburgerMenuItems={
+      contextMenuItems={
         <>
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
             text="Edit"
             onClick={handleUpdatePriority}
           />
-          <MenuItem
+          <ContextMenuItem
             isRed
             icon="tabler:trash"
             text="Delete"

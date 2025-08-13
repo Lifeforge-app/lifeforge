@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forceDown from '@utils/forceDown'
 import forgeAPI from '@utils/forgeAPI'
-import { ConfirmationModal, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -102,7 +102,7 @@ export default function EntryContextMenu({
 
   return (
     <>
-      <MenuItem
+      <ContextMenuItem
         icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
@@ -112,20 +112,24 @@ export default function EntryContextMenu({
           readStatusChangeMutation.mutate({})
         }}
       />
-      <MenuItem
+      <ContextMenuItem
         icon="tabler:brand-amazon"
         namespace="apps.booksLibrary"
         text="Send to Kindle"
         onClick={handleSendToKindle}
       />
-      <MenuItem
+      <ContextMenuItem
         disabled={downloadLoading}
         icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
         text="Download"
         onClick={handleDownload}
       />
-      <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateEntry} />
-      <MenuItem
+      <ContextMenuItem
+        icon="tabler:pencil"
+        text="Edit"
+        onClick={handleUpdateEntry}
+      />
+      <ContextMenuItem
         isRed
         icon="tabler:trash"
         text="Delete"

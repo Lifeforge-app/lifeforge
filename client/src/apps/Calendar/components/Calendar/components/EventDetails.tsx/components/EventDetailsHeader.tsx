@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -119,14 +119,18 @@ function EventDetailsHeader({
         </h3>
       </div>
       {!event.category.startsWith('_') && editable && (
-        <HamburgerMenu
+        <ContextMenu
           classNames={{
             button: 'dark:hover:bg-bg-700/50! p-2!'
           }}
         >
-          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
+          <ContextMenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={handleEdit}
+          />
           {event.type === 'recurring' ? (
-            <MenuItem
+            <ContextMenuItem
               isRed
               icon="tabler:calendar-off"
               namespace="apps.calendar"
@@ -134,14 +138,14 @@ function EventDetailsHeader({
               onClick={handleAddException}
             />
           ) : (
-            <MenuItem
+            <ContextMenuItem
               isRed
               icon="tabler:trash"
               text="Delete"
               onClick={handleDelete}
             />
           )}
-        </HamburgerMenu>
+        </ContextMenu>
       )}
     </header>
   )

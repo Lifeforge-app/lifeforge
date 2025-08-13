@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, MenuItem } from 'lifeforge-ui'
+import { Button, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,7 +30,7 @@ function AddMusicButton() {
         anchor="bottom end"
         className="bg-bg-100 dark:bg-bg-800 mt-2 w-64 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
       >
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:brand-youtube"
           namespace="apps.music"
           text="Download from YouTube"

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
-import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
@@ -35,14 +35,19 @@ function TextEntry({
           <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
         </p>
       </div>
-      <HamburgerMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
-        <MenuItem
+      <ContextMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
+        <ContextMenuItem
           icon="tabler:pencil"
           text="Edit"
           onClick={handleUpdateEntry}
         />
-        <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
-      </HamburgerMenu>
+        <ContextMenuItem
+          isRed
+          icon="tabler:trash"
+          text="Delete"
+          onClick={onDelete}
+        />
+      </ContextMenu>
     </div>
   )
 }

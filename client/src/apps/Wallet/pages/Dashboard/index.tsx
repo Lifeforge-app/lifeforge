@@ -14,8 +14,8 @@ import {
 } from 'chart.js'
 import {
   Button,
+  ContextMenuItem,
   FAB,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper
 } from 'lifeforge-ui'
@@ -71,14 +71,14 @@ function WalletDashboard() {
               anchor="bottom end"
               className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:plus"
                 text="Add Manually"
                 onClick={() => {
                   navigate('/wallet/transactions#new')
                 }}
               />
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:scan"
                 text="Scan Receipt"
                 onClick={() => {
@@ -88,9 +88,9 @@ function WalletDashboard() {
             </MenuItems>
           </Menu>
         }
-        hamburgerMenuItems={
+        contextMenuItems={
           <>
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:eye-off"
               isToggled={isAmountHidden}
               namespace="apps.wallet"
@@ -120,7 +120,7 @@ function WalletDashboard() {
           anchor="bottom end"
           className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:plus"
             namespace="apps.wallet"
             text="Add Manually"
@@ -128,7 +128,7 @@ function WalletDashboard() {
               navigate('/wallet/transactions#new')
             }}
           />
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:scan"
             namespace="apps.wallet"
             text="Scan Receipt"

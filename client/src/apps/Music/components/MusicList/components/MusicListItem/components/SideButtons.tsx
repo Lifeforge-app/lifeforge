@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forceDown from '@utils/forceDown'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
@@ -99,8 +99,8 @@ function SideButtons({ music }: { music: MusicEntry }) {
           icon={!music.is_favourite ? 'tabler:heart' : 'tabler:heart-filled'}
         />
       </button>
-      <HamburgerMenu>
-        <MenuItem
+      <ContextMenu>
+        <ContextMenuItem
           icon="tabler:download"
           text="Download"
           onClick={() => {
@@ -114,18 +114,18 @@ function SideButtons({ music }: { music: MusicEntry }) {
             )
           }}
         />
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:pencil"
           text="Edit"
           onClick={handleUpdateEntry}
         />
-        <MenuItem
+        <ContextMenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
           onClick={handleDeleteEntry}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

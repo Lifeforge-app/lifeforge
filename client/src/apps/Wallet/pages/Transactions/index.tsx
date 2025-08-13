@@ -1,11 +1,11 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { MenuItems, Menu, MenuButton } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
+  ContextMenuItem,
   EmptyStateScreen,
   FAB,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
@@ -154,13 +154,13 @@ function Transactions() {
                 anchor="bottom end"
                 className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
               >
-                <MenuItem
+                <ContextMenuItem
                   icon="tabler:plus"
                   namespace="apps.wallet"
                   text="Add Manually"
                   onClick={handleCreateTransaction}
                 />
-                <MenuItem
+                <ContextMenuItem
                   icon="tabler:template"
                   namespace="apps.wallet"
                   text="From Template"
@@ -170,7 +170,7 @@ function Transactions() {
                     })
                   }}
                 />
-                <MenuItem
+                <ContextMenuItem
                   icon="tabler:scan"
                   namespace="apps.wallet"
                   text="Scan Receipt"
@@ -180,7 +180,7 @@ function Transactions() {
             </Menu>
           )
         }
-        hamburgerMenuItems={memoizedHeaderMenu}
+        contextMenuItems={memoizedHeaderMenu}
         icon="tabler:arrows-exchange"
         namespace="apps.wallet"
         title="Transactions"
@@ -219,13 +219,13 @@ function Transactions() {
                   anchor="bottom end"
                   className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
                 >
-                  <MenuItem
+                  <ContextMenuItem
                     icon="tabler:plus"
                     namespace="apps.wallet"
                     text="Add Manually"
                     onClick={handleCreateTransaction}
                   />
-                  <MenuItem
+                  <ContextMenuItem
                     icon="tabler:template"
                     namespace="apps.wallet"
                     text="From Template"
@@ -235,7 +235,7 @@ function Transactions() {
                       })
                     }}
                   />
-                  <MenuItem
+                  <ContextMenuItem
                     icon="tabler:scan"
                     namespace="apps.wallet"
                     text="Scan Receipt"

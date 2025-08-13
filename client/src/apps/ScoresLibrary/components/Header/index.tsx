@@ -32,7 +32,7 @@ function Header({
           />
         }
         hamburgerMenuClassName="flex md:hidden"
-        hamburgerMenuItems={
+        contextMenuItems={
           <ActionMenu
             setSortType={setSortType}
             setView={setView}

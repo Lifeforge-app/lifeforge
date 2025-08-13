@@ -6,8 +6,8 @@ import dayjs from 'dayjs'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem
+  ContextMenu,
+  ContextMenuItem
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -221,13 +221,13 @@ function MovieItem({
           )}
         </div>
       </div>
-      <HamburgerMenu
+      <ContextMenu
         classNames={{
           wrapper: 'absolute right-4 top-4'
         }}
       >
         {data.is_watched && (
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:eye-off"
             namespace="apps.movies"
             text="Mark as Unwatched"
@@ -237,19 +237,19 @@ function MovieItem({
             }}
           />
         )}
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:ticket"
           namespace="apps.movies"
           text={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
           onClick={handleUpdateTicket}
         />
-        <MenuItem
+        <ContextMenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
           onClick={handleDeleteTicket}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

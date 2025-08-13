@@ -6,9 +6,9 @@ import dayjs from 'dayjs'
 import {
   Button,
   ConfirmationModal,
+  ContextMenu,
+  ContextMenuItem,
   DateInput,
-  HamburgerMenu,
-  MenuItem,
   Scrollbar,
   Switch,
   TextAreaInput,
@@ -211,14 +211,14 @@ function ModifyTaskDrawer() {
               />
               {t(`modals.tasks.${innerOpenType ?? 'create'}`)}
             </h1>
-            <HamburgerMenu>
-              <MenuItem
+            <ContextMenu>
+              <ContextMenuItem
                 isRed
                 icon="tabler:trash"
                 text="Delete"
                 onClick={handleDeleteTask}
               />
-            </HamburgerMenu>
+            </ContextMenu>
           </div>
           <div className="space-y-3">
             <TextInput

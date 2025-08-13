@@ -1,8 +1,8 @@
 import {
   Button,
+  ContextMenuItem,
+  ContextMenuSelectorWrapper,
   FAB,
-  HamburgerMenuSelectorWrapper,
-  MenuItem,
   ModuleHeader
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -54,15 +54,15 @@ function Header() {
             {hasRoute ? 'clear Route' : 'Plan Route'}
           </Button>
         }
-        hamburgerMenuItems={
+        contextMenuItems={
           <>
-            <HamburgerMenuSelectorWrapper
+            <ContextMenuSelectorWrapper
               className="lg:hidden"
               icon="tabler:eye"
               title={t('viewTypes.selectorTitle')}
             >
               {VIEW_TYPES.map(([icon, title, value]) => (
-                <MenuItem
+                <ContextMenuItem
                   key={value}
                   icon={icon}
                   isToggled={viewType === value}
@@ -73,7 +73,7 @@ function Header() {
                   }}
                 />
               ))}
-            </HamburgerMenuSelectorWrapper>
+            </ContextMenuSelectorWrapper>
             <LineFilter />
           </>
         }

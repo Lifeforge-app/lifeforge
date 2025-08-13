@@ -3,8 +3,8 @@ import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -78,19 +78,19 @@ function TransactionItem({ transaction }: { transaction: WalletTransaction }) {
       ) : (
         <TransactionIncomeExpensesItem transaction={transaction} />
       )}
-      <HamburgerMenu>
-        <MenuItem
+      <ContextMenu>
+        <ContextMenuItem
           icon="tabler:pencil"
           text="Edit"
           onClick={handleEditTransaction}
         />
-        <MenuItem
+        <ContextMenuItem
           isRed
           icon="tabler:trash"
           text="Delete"
           onClick={handleDeleteTransaction}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

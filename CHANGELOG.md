@@ -5,8 +5,15 @@
 - **Music**: Fixed a bug where the music is not able to be downloaded.
 - **Calendar**: `ModifyEventModal` is now fully functioning.
 - **Sin Chew Daily**: Created and finished this module. Much easier than expected :)
+- **Books Library**: Migrated filter logic from search params to state management.
+- **Books Library**: Added back header filter.
 - **UI**: Created `RRuleInput` for recurring event rules.
 - **UI**: Fixed a bug where the listbox options will not be displayed correctly.
+- **UI**: Renamed `HamburgerMenu` to `ContextMenu` for better clarity.
+- **UI**: Migrated the context menu to use the dropdown component from Radix UI instead of Headless UI.
+- **UI**: Replaced `HamburgerMenu` and `MenuItem` components with `ContextMenu` and `ContextMenuItem` implementations.
+- **UI**: Added `ContextMenuSelectorWrapper` and `ContextMenuSeparator` components for better context menu organization.
+- **UI**: Adjusted styles and storybook entries for the new context menu components.
 - **Code**: Replaced `z.infer` with `z.input` in `forgeAPIBuilder` for more accurate type inference.
 
 ## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
@@ -423,7 +430,7 @@
 - **UI**: Improved styling for button component.
 - **UI**: Started integrating Storybook for visualizing and documenting the design system.
 - **UI**: Removed `CreateOrUpdateButton` component.
-- **UI**: Restructured the props of `HamburgerMenu` and remove redundant props.
+- **UI**: Restructured the props of `ContextMenu` and remove redundant props.
 - **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
 - **UI**: Main sidebar item with a subsection will now open the subsection menu without navigating anywhere.
 - **API**: Renamed `uploads` folder to `medium`.

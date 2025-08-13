@@ -8,8 +8,8 @@ import dayjs from 'dayjs'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem
+  ContextMenu,
+  ContextMenuItem
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -203,8 +203,8 @@ function PasswordEntryItem({
             variant="plain"
             onClick={copyPassword}
           />
-          <HamburgerMenu>
-            <MenuItem
+          <ContextMenu>
+            <ContextMenuItem
               icon="tabler:rotate"
               loading={rotateLoading}
               text="Rotate Password"
@@ -262,7 +262,7 @@ function PasswordEntryItem({
                 setDecryptedPassword(generatedPassword)
               }}
             />
-            <MenuItem
+            <ContextMenuItem
               className="flex sm:hidden"
               icon={
                 decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'
@@ -273,28 +273,32 @@ function PasswordEntryItem({
               }
               onClick={decryptPassword}
             />
-            <MenuItem
+            <ContextMenuItem
               className="flex sm:hidden"
               icon="tabler:copy"
               loading={copyLoading}
               text="Copy Password"
               onClick={copyPassword}
             />
-            <MenuItem
+            <ContextMenuItem
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
               text={password.pinned ? 'Unpin' : 'Pin'}
               onClick={() => {
                 pinPassword(password.id)
               }}
             />
-            <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
-            <MenuItem
+            <ContextMenuItem
+              icon="tabler:pencil"
+              text="Edit"
+              onClick={handleEdit}
+            />
+            <ContextMenuItem
               isRed
               icon="tabler:trash"
               text="Delete"
               onClick={handleDeletePassword}
             />
-          </HamburgerMenu>
+          </ContextMenu>
         </div>
       </div>
       {decryptedPassword !== null && (

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  MenuItem,
+  ContextMenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
@@ -61,9 +61,9 @@ function SidebarCollectionItem({
     <SidebarItem
       key={data.id}
       active={isActive}
-      hamburgerMenuItems={
+      contextMenuItems={
         <>
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
             text="edit"
             onClick={() => {
@@ -73,7 +73,7 @@ function SidebarCollectionItem({
               })
             }}
           />
-          <MenuItem
+          <ContextMenuItem
             isRed
             icon="tabler:trash"
             text="delete"

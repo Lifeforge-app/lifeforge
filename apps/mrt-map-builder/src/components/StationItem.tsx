@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
+  ContextMenu,
+  ContextMenuItem,
   ListboxInput,
   ListboxOption,
-  MenuItem,
   NumberInput,
   SliderInput,
   TagsInput,
@@ -71,13 +71,17 @@ function StationItem({
               setCollapsed(!collapsed)
             }}
           />
-          <HamburgerMenu
+          <ContextMenu
             classNames={{
               button: 'p-2!'
             }}
           >
-            <MenuItem icon="tabler:edit" text="Edit Line" onClick={() => {}} />
-            <MenuItem
+            <ContextMenuItem
+              icon="tabler:edit"
+              text="Edit Line"
+              onClick={() => {}}
+            />
+            <ContextMenuItem
               isRed
               icon="tabler:trash"
               text="Delete Line"
@@ -94,7 +98,7 @@ function StationItem({
                 })
               }}
             />
-          </HamburgerMenu>
+          </ContextMenu>
         </div>
       </div>
       {!collapsed && (

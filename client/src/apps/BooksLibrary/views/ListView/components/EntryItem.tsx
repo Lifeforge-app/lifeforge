@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { Button, HamburgerMenu } from 'lifeforge-ui'
+import { Button, ContextMenu } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
@@ -67,9 +67,9 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
             toggleFavouriteStatusMutation.mutate({})
           }}
         />
-        <HamburgerMenu>
+        <ContextMenu>
           <EntryContextMenu item={item} />
-        </HamburgerMenu>
+        </ContextMenu>
       </div>
       <a
         className="absolute inset-0 z-10 size-full rounded-lg"
