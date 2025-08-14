@@ -26,12 +26,9 @@ function ModuleItem({
     <li className="shadow-custom component-bg flex flex-col items-center rounded-lg p-4">
       <div className="flex-between flex w-full gap-3">
         <div className="flex items-center gap-3">
-          <div className="component-bg-lighter rounded-lg p-3">
+          <div className="component-bg-lighter text-bg-500! rounded-lg p-3">
             {typeof module.icon === 'string' ? (
-              <Icon
-                className="text-custom-500 dark:text-bg-50 text-2xl"
-                icon={module.icon}
-              />
+              <Icon className="text-2xl" icon={module.icon} />
             ) : (
               module.icon
             )}
