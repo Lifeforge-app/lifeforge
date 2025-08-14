@@ -22,6 +22,19 @@ const config: StorybookConfig = {
     name: getAbsolutePath('@storybook/react-vite'),
     options: {}
   },
+  typescript: {
+    reactDocgen:
+      process.env.NODE_ENV === 'production'
+        ? 'react-docgen-typescript'
+        : 'react-docgen',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      tsconfigPath: '../tsconfig.json',
+      include: ['src/**/*.tsx']
+    },
+    check: false,
+    skipCompiler: true
+  },
   async babel(config) {
     config.plugins.push(['babel-plugin-react-compiler', ReactCompilerConfig])
   },
