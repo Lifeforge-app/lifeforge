@@ -1,12 +1,19 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import ContextMenuGroup from './components/ContextMenuGroup'
 import ContextMenuItem from './components/ContextMenuItem'
-import ContextMenuSelectorWrapper from './components/ContextMenuSelectorWrapper'
 import ContextMenuSeparator from './components/ContextMenuSeparator'
 import Index from './index'
+import ContextMenu from './index'
 
 const meta = {
-  component: Index
+  component: Index,
+  argTypes: {
+    children: {
+      control: false
+    }
+  }
 } satisfies Meta<typeof Index>
 
 export default meta
@@ -15,35 +22,60 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: (
-      <>
-        <ContextMenuItem icon="tabler:pencil" text="Edit" onClick={() => {}} />
-        <ContextMenuItem
-          isRed
-          icon="tabler:trash"
-          text="Delete"
-          onClick={() => {}}
-        />
-      </>
-    )
-  }
+    children: <></>
+  },
+  render: props => (
+    <div className="shadow-custom component-bg mx-64 h-full w-full rounded-lg p-4">
+      <div className="flex-between">
+        <div className="flex items-center gap-4">
+          <div className="bg-custom-500/30 rounded-md p-2">
+            <Icon className="text-custom-500 size-6" icon="tabler:cube" />
+          </div>
+          <h1 className="text-2xl font-medium">Something Cool</h1>
+        </div>
+        <ContextMenu>
+          <ContextMenuItem
+            icon="tabler:pencil"
+            label="Edit"
+            onClick={() => {}}
+          />
+          <ContextMenuItem
+            dangerous
+            icon="tabler:trash"
+            label="Delete"
+            onClick={() => {}}
+          />
+        </ContextMenu>
+      </div>
+      <p className="text-bg-500 mt-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </p>
+    </div>
+  )
 }
 
 export const WithSeparator: Story = {
   args: {
     children: (
       <>
-        <ContextMenuItem icon="tabler:pencil" text="Edit" onClick={() => {}} />
+        <ContextMenuItem icon="tabler:pin" label="Pin" onClick={() => {}} />
+        <ContextMenuItem icon="tabler:pencil" label="Edit" onClick={() => {}} />
         <ContextMenuItem
           icon="tabler:copy"
-          text="Duplicate"
+          label="Duplicate"
           onClick={() => {}}
         />
         <ContextMenuSeparator />
         <ContextMenuItem
-          isRed
+          dangerous
+          icon="tabler:archive"
+          label="Archive"
+          onClick={() => {}}
+        />
+        <ContextMenuItem
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={() => {}}
         />
       </>
@@ -51,27 +83,24 @@ export const WithSeparator: Story = {
   }
 }
 
-export const WithGroupWrapper: Story = {
+export const WithGroup: Story = {
   args: {
     children: (
       <>
-        <ContextMenuSelectorWrapper icon="tabler:settings" title="Actions">
+        <ContextMenuGroup icon="tabler:eye" label="View">
+          <ContextMenuItem icon="tabler:list" label="List" onClick={() => {}} />
           <ContextMenuItem
-            icon="tabler:pencil"
-            text="Edit"
+            checked
+            icon="tabler:category-2"
+            label="Grid"
             onClick={() => {}}
           />
-          <ContextMenuItem
-            icon="tabler:copy"
-            text="Duplicate"
-            onClick={() => {}}
-          />
-        </ContextMenuSelectorWrapper>
+        </ContextMenuGroup>
         <ContextMenuSeparator />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={() => {}}
         />
       </>
@@ -81,13 +110,15 @@ export const WithGroupWrapper: Story = {
 
 export const CustomAnchor: Story = {
   args: {
+    side: 'right',
+    align: 'end',
     children: (
       <>
-        <ContextMenuItem icon="tabler:pencil" text="Edit" onClick={() => {}} />
+        <ContextMenuItem icon="tabler:pencil" label="Edit" onClick={() => {}} />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={() => {}}
         />
       </>
@@ -102,15 +133,19 @@ export const CustomIcon: Story = {
       <>
         <ContextMenuItem
           icon="tabler:file-text"
-          text="Documents"
+          label="Documents"
           onClick={() => {}}
         />
         <ContextMenuItem
           icon="tabler:photo"
-          text="Pictures"
+          label="Pictures"
           onClick={() => {}}
         />
-        <ContextMenuItem icon="tabler:video" text="Videos" onClick={() => {}} />
+        <ContextMenuItem
+          icon="tabler:video"
+          label="Videos"
+          onClick={() => {}}
+        />
       </>
     )
   }

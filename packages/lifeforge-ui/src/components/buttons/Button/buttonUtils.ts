@@ -9,11 +9,11 @@ export const generateBaseClass = (
   } font-medium tracking-wide transition-all disabled:cursor-not-allowed`
 
 export const generateColorClass = (
-  isRed: boolean,
+  dangerous: boolean,
   variant: string,
   themeColor: string
 ): string => {
-  if (isRed) {
+  if (dangerous) {
     switch (variant) {
       case 'plain':
         return 'hover:bg-red-500/10 dark:hover:bg-red-500/10 text-red-500 hover:text-red-500 dark:hover:text-red-500 disabled:text-red-300 disabled:hover:text-red-300 disabled:hover:bg-transparent disabled:dark:hover:bg-transparent disabled:bg-transparent dark:disabled:bg-transparent dark:disabled:text-red-900/50 dark:disabled:hover:bg-transparent'
@@ -52,12 +52,12 @@ export const generateClassName = (
   themeColor: string,
   hasChildren: boolean,
   iconAtEnd: boolean,
-  isRed: boolean,
+  dangerous: boolean,
   variant: string,
   className: string
 ): string =>
   `${generateBaseClass(hasChildren, iconAtEnd)} ${generateColorClass(
-    isRed,
+    dangerous,
     variant,
     themeColor
   )} ${className}`

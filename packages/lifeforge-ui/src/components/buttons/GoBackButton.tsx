@@ -2,7 +2,17 @@ import { useTranslation } from 'react-i18next'
 
 import Button from './Button'
 
-function GoBackButton({ onClick }: { onClick: () => void }) {
+/**
+ * Nothing too fancy either, just a button saying 'Go Back'
+ */
+function GoBackButton({
+  onClick
+}: {
+  /**
+   * Callback function to handle the button click event.
+   */
+  onClick: () => void
+}) {
   const { t } = useTranslation('common.misc')
 
   return (

@@ -136,7 +136,7 @@ function FormModal({
   }
   actionButton?: {
     icon: string
-    isRed?: boolean
+    dangerous?: boolean
     onClick?: () => void
   }
   externalData?: {

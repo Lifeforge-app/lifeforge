@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:pencil',
-    text: 'Edit',
+    label: 'Edit',
     onClick: () => {}
   },
   render: props => (
@@ -24,11 +24,11 @@ export const Default: Story = {
   )
 }
 
-export const RedVariant: Story = {
+export const Dangerous: Story = {
   args: {
     icon: 'tabler:trash',
-    text: 'Delete',
-    isRed: true,
+    label: 'Delete',
+    dangerous: true,
     onClick: () => {}
   },
   render: props => (
@@ -41,7 +41,7 @@ export const RedVariant: Story = {
 export const Loading: Story = {
   args: {
     icon: 'tabler:pencil',
-    text: 'Processing',
+    label: 'Processing',
     loading: true,
     onClick: () => {}
   },
@@ -54,14 +54,19 @@ export const Loading: Story = {
 
 export const Disabled: Story = {
   args: {
-    icon: 'tabler:pencil',
-    text: 'Edit',
+    icon: 'tabler:mood-angry',
+    label: 'DO NOT CLICK ME',
     disabled: true,
     onClick: () => {}
   },
   render: props => (
     <ContextMenu>
       <ContextMenuItem {...props} />
+      <ContextMenuItem
+        icon="tabler:mood-happy"
+        label="Yay"
+        onClick={() => {}}
+      />
     </ContextMenu>
   )
 }
@@ -69,7 +74,7 @@ export const Disabled: Story = {
 export const Togglable: Story = {
   args: {
     icon: 'tabler:category',
-    text: 'Option',
+    label: 'Option',
     onClick: () => {}
   },
   render: props => (
@@ -79,9 +84,9 @@ export const Togglable: Story = {
         .map((_, i) => (
           <ContextMenuItem
             key={i}
+            checked={i === 1}
             icon={props.icon}
-            isToggled={i === 1}
-            text={`${props.text} ${i + 1}`}
+            label={`${props.label} ${i + 1}`}
             onClick={props.onClick}
           />
         ))}
@@ -91,9 +96,9 @@ export const Togglable: Story = {
 
 export const RemainsOpenOnClick: Story = {
   args: {
-    icon: 'tabler:pencil',
-    text: 'Edit',
-    preventDefault: true,
+    icon: 'tabler:pointer',
+    label: 'Do Something',
+    shouldCloseMenuOnClick: false,
     onClick: () => {}
   },
   render: props => (

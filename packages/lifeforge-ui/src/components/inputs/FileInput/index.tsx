@@ -102,7 +102,7 @@ function FileInput({
                 <img alt="" className="max-h-96 rounded-md" src={preview} />
               </Zoom>
               <Button
-                isRed
+                dangerous
                 className="mt-6 w-full"
                 icon="tabler:x"
                 onClick={() => {

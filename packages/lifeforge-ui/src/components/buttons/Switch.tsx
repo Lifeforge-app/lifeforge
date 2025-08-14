@@ -3,13 +3,21 @@ import clsx from 'clsx'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-function Switch({
-  checked,
-  onChange
-}: {
+interface SwitchProps {
+  /**
+   * Indicates whether the switch is checked (on) or not (off).
+   */
   checked: boolean
+  /**
+   * Callback function called when the switch state changes.
+   */
   onChange: () => void
-}) {
+}
+
+/**
+ * A switch component for toggling between two states.
+ */
+function Switch({ checked, onChange }: SwitchProps) {
   const { derivedThemeColor } = usePersonalization()
 
   const getStateClassName = () => {
