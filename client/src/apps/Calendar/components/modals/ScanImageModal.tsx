@@ -78,7 +78,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           }}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           className="mt-6 w-full"
           icon="tabler:arrow-right"
           loading={loading}
