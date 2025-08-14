@@ -79,7 +79,7 @@ function ConfirmationModal({
             !!confirmationPrompt && confirmationPrompt !== confirmationTextState
           }
           icon={buttonType === 'delete' ? 'tabler:trash' : 'tabler:check'}
-          isRed={buttonType === 'delete'}
+          dangerous={buttonType === 'delete'}
           loading={loading}
           onClick={onClick}
         >

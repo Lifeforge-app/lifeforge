@@ -13,6 +13,16 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     checked: true,
-    onChange: () => {}
+    onCheckedChange: () => {},
+    disabled: false,
+    label: ''
+  }
+}
+
+export const WithLabel: Story = {
+  args: {
+    checked: true,
+    disabled: false,
+    label: 'Accept terms and conditions'
   }
 }

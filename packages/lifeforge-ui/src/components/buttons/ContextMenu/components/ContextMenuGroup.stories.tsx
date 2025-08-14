@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import ContextMenu from '..'
+import ContextMenuGroup from './ContextMenuGroup'
 import ContextMenuItem from './ContextMenuItem'
-import ContextMenuSelectorWrapper from './ContextMenuSelectorWrapper'
 
 const meta = {
-  component: ContextMenuSelectorWrapper
-} satisfies Meta<typeof ContextMenuSelectorWrapper>
+  component: ContextMenuGroup,
+  argTypes: {
+    children: {
+      control: false
+    }
+  }
+} satisfies Meta<typeof ContextMenuGroup>
 
 export default meta
 
@@ -15,22 +20,22 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:cube',
-    title: 'Categories',
+    label: 'Categories',
     children: (
       <>
         <ContextMenuItem
           icon="tabler:category"
-          text="Item 1"
+          label="Item 1"
           onClick={() => {}}
         />
         <ContextMenuItem
           icon="tabler:category"
-          text="Item 2"
+          label="Item 2"
           onClick={() => {}}
         />
         <ContextMenuItem
           icon="tabler:category"
-          text="Item 3"
+          label="Item 3"
           onClick={() => {}}
         />
       </>
@@ -38,7 +43,7 @@ export const Default: Story = {
   },
   render: props => (
     <ContextMenu classNames={{ menu: 'w-64' }}>
-      <ContextMenuSelectorWrapper {...props} />
+      <ContextMenuGroup {...props} />
     </ContextMenu>
   )
 }
@@ -46,23 +51,23 @@ export const Default: Story = {
 export const Togglable: Story = {
   args: {
     icon: 'tabler:cube',
-    title: 'Categories',
+    label: 'Categories',
     children: (
       <>
         <ContextMenuItem
           icon="tabler:category"
-          text="Item 1"
+          label="Item 1"
           onClick={() => {}}
         />
         <ContextMenuItem
-          isToggled
+          checked
           icon="tabler:category"
-          text="Item 2"
+          label="Item 2"
           onClick={() => {}}
         />
         <ContextMenuItem
           icon="tabler:category"
-          text="Item 3"
+          label="Item 3"
           onClick={() => {}}
         />
       </>
@@ -70,7 +75,7 @@ export const Togglable: Story = {
   },
   render: props => (
     <ContextMenu classNames={{ menu: 'w-64' }}>
-      <ContextMenuSelectorWrapper {...props} />
+      <ContextMenuGroup {...props} />
     </ContextMenu>
   )
 }
