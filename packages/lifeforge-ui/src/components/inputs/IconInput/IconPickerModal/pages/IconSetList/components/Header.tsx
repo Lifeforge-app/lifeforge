@@ -58,7 +58,7 @@ function Header({
           }}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           icon="tabler:arrow-right"
           onClick={() => {
             if (searchQuery !== '') setCurrentIconSet({ search: searchQuery })

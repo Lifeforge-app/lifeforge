@@ -69,7 +69,7 @@ function ContentContainer({
               onKeyDown={handleKeyDown}
             />
             <Button
-              iconAtEnd
+              iconPosition="end"
               className="w-full"
               disabled={!kindleEmail.match(/^[\w-.]+@kindle\.com$/)}
               icon="tabler:send"

@@ -252,7 +252,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
               }}
             />
             <Button
-              iconAtEnd
+              iconPosition="end"
               className="w-full sm:w-auto"
               disabled={providerOnlineStatuses[provider] === false}
               icon="tabler:arrow-right"

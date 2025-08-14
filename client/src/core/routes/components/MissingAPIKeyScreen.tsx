@@ -20,7 +20,12 @@ function MissingAPIKeyScreen({
       <p className="text-bg-500 mt-4 mb-8 text-center text-lg">
         {t('missing.requiredKeysAre')} <code>{requiredAPIKeys.join(', ')}</code>
       </p>
-      <Button iconAtEnd as={Link} icon="tabler:arrow-right" to="/api-keys">
+      <Button
+        iconPosition="end"
+        as={Link}
+        icon="tabler:arrow-right"
+        to="/api-keys"
+      >
         Config API Keys
       </Button>
     </div>
