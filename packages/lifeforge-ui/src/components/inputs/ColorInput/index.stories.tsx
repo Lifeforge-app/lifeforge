@@ -21,10 +21,6 @@ export const Default: Story = {
   render: args => {
     const [color, setColor] = useState<string>('')
 
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <Index {...args} value={color} setValue={setColor} />
-      </div>
-    )
+    return <Index {...args} setValue={setColor} value={color} />
   }
 }
