@@ -52,9 +52,11 @@ const PersonalizationContext = createContext<IPersonalizationData | undefined>(
 
 export default function PersonalizationProvider({
   defaultValueOverride = {},
+  rootElement = document.body,
   children
 }: {
   defaultValueOverride?: Partial<IPersonalizationData>
+  rootElement?: HTMLElement
   children: React.ReactNode
 }) {
   const defaultValue = useMemo(() => {
@@ -118,10 +120,10 @@ export default function PersonalizationProvider({
       : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
 
-  useFontFamily(fontFamily, fontScale)
-  useThemeEffect(derivedTheme, rawThemeColor, bgTemp)
-  useRawThemeColorEffect(rawThemeColor, derivedTheme)
-  useBgTempEffect(bgTemp, derivedTheme)
+  useFontFamily(rootElement, fontFamily, fontScale)
+  useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)
+  useRawThemeColorEffect(rootElement, rawThemeColor, derivedTheme)
+  useBgTempEffect(rootElement, bgTemp, derivedTheme)
   useLanguageEffect(language)
   useMetaEffect(themeColor)
 

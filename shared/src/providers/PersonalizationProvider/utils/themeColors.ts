@@ -32,6 +32,7 @@ export function getColorPalette(
 }
 
 export function interpolateColors(
+  rootElement: HTMLElement,
   theme: 'light' | 'dark',
   color: string,
   type: 'bg' | 'theme'
@@ -39,18 +40,21 @@ export function interpolateColors(
   const colorPalette = getColorPalette(color, type, theme)
 
   Object.entries(colorPalette).forEach(([key, value]) => {
-    document.body.style.setProperty(
+    rootElement.style.setProperty(
       `--color-${type === 'bg' ? 'bg' : 'custom'}-${key}`,
       tinycolor(value).toRgbString()
     )
   })
 }
 
-export function clearCustomColorProperties(type: 'bg' | 'theme') {
+export function clearCustomColorProperties(
+  rootElement: HTMLElement,
+  type: 'bg' | 'theme'
+) {
   const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
   for (let i = 0; i < number.length; i++) {
-    document.body.style.removeProperty(
+    rootElement.style.removeProperty(
       `--color-${type === 'bg' ? 'bg' : 'custom'}-${number[i]}`
     )
   }
