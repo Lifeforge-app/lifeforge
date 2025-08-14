@@ -124,7 +124,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
       </div>
       <div className="flex-between gap-3">
         <Button
-          iconAtEnd
+          iconPosition="end"
           as="a"
           className="w-auto px-0! sm:px-4!"
           href={entry.url}

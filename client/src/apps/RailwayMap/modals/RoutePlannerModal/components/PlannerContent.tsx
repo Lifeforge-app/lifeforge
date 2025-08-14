@@ -119,7 +119,7 @@ function PlannerContent({
         />
       </div>
       <Button
-        iconAtEnd
+        iconPosition="end"
         className="mt-6 w-full"
         disabled={start === '' || end === '' || start === end}
         icon="tabler:arrow-right"

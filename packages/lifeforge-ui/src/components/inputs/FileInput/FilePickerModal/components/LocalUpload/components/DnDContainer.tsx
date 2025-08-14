@@ -78,7 +78,6 @@ function DnDContainer({
         className="mt-2 min-w-1/2 cursor-pointer"
         icon="tabler:clipboard"
         namespace="common.misc"
-        tKey="dnd"
         variant="secondary"
         onClick={pasteFromClipboard}
       >
