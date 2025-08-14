@@ -14,7 +14,7 @@ function SignInButton({
 
   return (
     <Button
-      iconAtEnd
+      iconPosition="end"
       className="w-full"
       icon="tabler:arrow-right"
       loading={loading || auth}

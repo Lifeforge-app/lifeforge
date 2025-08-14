@@ -87,7 +87,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
           }}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           className="w-full sm:w-auto"
           disabled={searchQuery.trim() === ''}
           icon="tabler:arrow-right"

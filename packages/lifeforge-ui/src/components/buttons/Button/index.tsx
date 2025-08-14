@@ -9,7 +9,7 @@ import ButtonIcon from './components/ButtonIcon'
 export interface ButtonProps {
   children?: React.ReactNode
   icon: string
-  iconAtEnd?: boolean
+  iconPosition?: 'start' | 'end'
   iconClassName?: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   loading?: boolean
@@ -18,7 +18,6 @@ export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'plain'
   isRed?: boolean
   namespace?: string
-  tKey?: string
   tProps?: Record<string, unknown>
 }
 
@@ -28,7 +27,7 @@ type ButtonComponentProps<C extends React.ElementType = 'button'> = {
   Omit<React.ComponentPropsWithoutRef<C>, keyof ButtonProps>
 
 const defaultProps = {
-  iconAtEnd: false,
+  iconPosition: 'start',
   loading: false,
   disabled: false,
   className: '',
@@ -53,7 +52,7 @@ function Button<C extends React.ElementType = 'button'>({
   const finalClassName = generateClassName(
     derivedThemeColor,
     Boolean(children),
-    finalProps.iconAtEnd,
+    finalProps.iconPosition === 'end',
     finalProps.isRed,
     finalProps.variant,
     finalProps.className
@@ -69,7 +68,7 @@ function Button<C extends React.ElementType = 'button'>({
       type="button"
       onClick={onClick}
     >
-      {!finalProps.iconAtEnd && (
+      {finalProps.iconPosition === 'start' && (
         <ButtonIcon
           disabled={finalProps.disabled}
           icon={icon}
@@ -82,9 +81,9 @@ function Button<C extends React.ElementType = 'button'>({
         <div className="min-w-0 truncate">
           {t(
             [
-              `common.buttons:${_.camelCase(children as string)}`,
-              `buttons.${_.camelCase(children as string)}`,
-              `${finalProps.tKey}.buttons.${_.camelCase(children as string)}`,
+              `${_.camelCase(children)}`,
+              `buttons.${_.camelCase(children)}`,
+              `common.buttons:${_.camelCase(children)}`,
               children
             ],
             finalProps.tProps
@@ -93,7 +92,7 @@ function Button<C extends React.ElementType = 'button'>({
       ) : (
         children
       )}
-      {finalProps.iconAtEnd && (
+      {finalProps.iconPosition === 'end' && (
         <ButtonIcon
           disabled={finalProps.disabled}
           icon={icon}

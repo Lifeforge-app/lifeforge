@@ -4,3 +4,21 @@
 @plugin 'daisyui';
 
 @import '../src/styles/index.css';
+
+.sb-show-main {
+  & input[type='radio'] {
+    @apply bg-bg-200! h-4 w-4 appearance-none rounded-full;
+
+    &:checked {
+      @apply border-transparent bg-blue-500!;
+    }
+  }
+}
+
+#storybook-root {
+  @apply flex h-full w-full flex-1 flex-col;
+}
+
+.sb-show-main {
+  @apply flex! flex-col;
+}

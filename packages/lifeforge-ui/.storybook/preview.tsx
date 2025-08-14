@@ -1,4 +1,13 @@
-import type { Preview } from '@storybook/react'
+import {
+  Canvas,
+  Controls,
+  Description,
+  Primary,
+  Stories,
+  Subtitle,
+  Title
+} from '@storybook/addon-docs/blocks'
+import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { APIEndpointProvider, PersonalizationProvider } from 'shared'
@@ -45,9 +54,9 @@ const withBodyClass = (Story: any, context: any) => {
             rawThemeColor: 'theme-blue'
           }}
         >
-          <main className="bg-white" id="app">
+          <main className="flex flex-1 flex-col bg-white" id="app">
             <div
-              className={`bg-zinc theme-blue flex min-h-dvh w-full items-center justify-center transition-all ${
+              className={`bg-zinc theme-blue flex w-full flex-1 items-center justify-center py-12 transition-all ${
                 context.globals.theme === 'dark' ? 'dark' : ''
               } ${context.globals.theme === 'dark' ? 'bg-bg-900' : 'bg-bg-200/50'}`}
             >
@@ -70,7 +79,21 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i
-      }
+      },
+      expanded: true
+    },
+    docs: {
+      toc: true,
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Controls sort="requiredFirst" />
+          <Stories />
+        </>
+      )
     }
   },
   decorators: [withBodyClass],
@@ -98,6 +121,7 @@ const preview: Preview = {
       }
     }
   },
+  tags: ['autodocs'],
   initialGlobals: {
     theme: 'light'
   }

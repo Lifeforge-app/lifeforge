@@ -31,7 +31,7 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
         children: 'Start Backup',
         icon: 'tabler:arrow-right',
         namespace: 'core.backups',
-        iconAtEnd: true
+        iconPosition: 'end'
       },
       title: 'Create Backup',
       onClose

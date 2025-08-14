@@ -87,7 +87,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
             value={cookie}
           />
           <Button
-            iconAtEnd
+            iconPosition="end"
             className="mt-4 w-full"
             icon="tabler:arrow-right"
             onClick={() => {
