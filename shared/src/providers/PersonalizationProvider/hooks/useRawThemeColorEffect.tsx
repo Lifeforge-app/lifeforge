@@ -6,12 +6,13 @@ import {
 } from '../utils/themeColors'
 
 function useRawThemeColorEffect(
+  rootElement: HTMLElement,
   rawThemeColor: string,
   theme: 'light' | 'dark'
 ) {
   useEffect(() => {
     if (rawThemeColor) {
-      document.body.classList.remove(
+      rootElement.classList.remove(
         ...[
           'theme-red',
           'theme-pink',
@@ -35,14 +36,14 @@ function useRawThemeColorEffect(
         ]
       )
 
-      clearCustomColorProperties('theme')
+      clearCustomColorProperties(rootElement, 'theme')
 
-      document.body.classList.add(
+      rootElement.classList.add(
         rawThemeColor.startsWith('#') ? 'theme-custom' : rawThemeColor
       )
 
       if (rawThemeColor.startsWith('#')) {
-        interpolateColors(theme, rawThemeColor, 'theme')
+        interpolateColors(rootElement, theme, rawThemeColor, 'theme')
       }
     }
   }, [rawThemeColor])

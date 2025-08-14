@@ -6,26 +6,27 @@ import {
 } from '../utils/themeColors'
 
 function useThemeEffect(
+  rootElement: HTMLElement,
   theme: 'light' | 'dark',
   rawThemeColor: string,
   bgTemp: string
 ) {
   useEffect(() => {
     if (theme === 'dark') {
-      document.body.classList.add('dark')
+      rootElement.classList.add('dark')
     } else {
-      document.body.classList.remove('dark')
+      rootElement.classList.remove('dark')
     }
 
-    clearCustomColorProperties('theme')
-    clearCustomColorProperties('bg')
+    clearCustomColorProperties(rootElement, 'theme')
+    clearCustomColorProperties(rootElement, 'bg')
 
     if (rawThemeColor.startsWith('#')) {
-      interpolateColors(theme, rawThemeColor, 'theme')
+      interpolateColors(rootElement, theme, rawThemeColor, 'theme')
     }
 
     if (bgTemp.startsWith('#')) {
-      interpolateColors(theme, bgTemp, 'bg')
+      interpolateColors(rootElement, theme, bgTemp, 'bg')
     }
   }, [theme])
 }

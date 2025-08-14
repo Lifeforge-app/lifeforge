@@ -5,10 +5,14 @@ import {
   interpolateColors
 } from '../utils/themeColors'
 
-function useBgTempEffect(bgTemp: string, theme: 'light' | 'dark') {
+function useBgTempEffect(
+  rootElement: HTMLElement,
+  bgTemp: string,
+  theme: 'light' | 'dark'
+) {
   useEffect(() => {
     if (bgTemp) {
-      document.body.classList.remove(
+      rootElement.classList.remove(
         'bg-slate',
         'bg-gray',
         'bg-neutral',
@@ -16,13 +20,13 @@ function useBgTempEffect(bgTemp: string, theme: 'light' | 'dark') {
         'bg-stone',
         'bg-custom'
       )
-      document.body.classList.add(bgTemp.startsWith('#') ? 'bg-custom' : bgTemp)
+      rootElement.classList.add(bgTemp.startsWith('#') ? 'bg-custom' : bgTemp)
     }
 
-    clearCustomColorProperties('bg')
+    clearCustomColorProperties(rootElement, 'bg')
 
     if (bgTemp.startsWith('#')) {
-      interpolateColors(theme, bgTemp, 'bg')
+      interpolateColors(rootElement, theme, bgTemp, 'bg')
     }
   }, [bgTemp])
 }
