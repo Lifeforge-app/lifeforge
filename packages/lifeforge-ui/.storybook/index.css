@@ -14,3 +14,11 @@
     }
   }
 }
+
+#storybook-root {
+  @apply flex h-full w-full flex-1 flex-col;
+}
+
+.sb-show-main {
+  @apply flex! flex-col;
+}
