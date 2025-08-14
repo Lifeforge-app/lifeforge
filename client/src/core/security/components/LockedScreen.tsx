@@ -93,12 +93,11 @@ function LockedScreen({
         icon="tabler:lock"
         loading={loading}
         namespace="common.vault"
-        tKey="vault"
         onClick={() => {
           onSubmit().catch(console.error)
         }}
       >
-        Unlock
+        vault.buttons.unlock
       </Button>
     </div>
   )
