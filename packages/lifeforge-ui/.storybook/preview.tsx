@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook/react'
+import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { APIEndpointProvider, PersonalizationProvider } from 'shared'
@@ -47,7 +47,7 @@ const withBodyClass = (Story: any, context: any) => {
         >
           <main className="bg-white" id="app">
             <div
-              className={`bg-zinc theme-blue flex min-h-dvh w-full items-center justify-center transition-all ${
+              className={`bg-zinc theme-blue flex w-full items-center justify-center py-12 transition-all ${
                 context.globals.theme === 'dark' ? 'dark' : ''
               } ${context.globals.theme === 'dark' ? 'bg-bg-900' : 'bg-bg-200/50'}`}
             >
@@ -98,6 +98,7 @@ const preview: Preview = {
       }
     }
   },
+  tags: ['autodocs'],
   initialGlobals: {
     theme: 'light'
   }
