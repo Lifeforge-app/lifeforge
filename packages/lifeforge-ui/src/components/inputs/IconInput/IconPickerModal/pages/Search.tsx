@@ -132,7 +132,7 @@ function Search({
           }}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           icon="tabler:arrow-right"
           onClick={() => {
             if (searchQuery !== '') {

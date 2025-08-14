@@ -141,10 +141,9 @@ function UsingEmail({
               icon="tabler:mail"
               loading={sendOtpLoading}
               namespace="common.vault"
-              tKey="otp"
               onClick={requestOTP}
             >
-              Request
+              otp.buttons.request
             </Button>
           </>
         )}

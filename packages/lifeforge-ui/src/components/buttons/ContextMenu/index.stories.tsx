@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import ContextMenuItem from './components/ContextMenuItem'
 import ContextMenuSelectorWrapper from './components/ContextMenuSelectorWrapper'

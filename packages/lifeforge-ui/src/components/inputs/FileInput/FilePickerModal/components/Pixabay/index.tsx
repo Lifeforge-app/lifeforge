@@ -129,7 +129,7 @@ function Pixabay({
           }}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           className="w-full sm:w-auto"
           icon="tabler:arrow-right"
           loading={loading}
