@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { Checkbox } from 'lifeforge-ui'
+import { toast } from 'react-toastify'
 
 import {
   type TodoListEntry,
@@ -24,31 +25,15 @@ function TaskItem({
   const queryClient = useQueryClient()
 
   const {
-    entriesQueryKey,
-    entriesQuery,
     statusCounterQuery,
     listsQuery,
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
 
-  const entries = entriesQuery.data ?? []
-
   const lists = listsQuery.data ?? []
 
   async function toggleTaskCompletion() {
-    queryClient.setQueryData(
-      entriesQueryKey,
-      entries.map(e =>
-        e.id === entry.id
-          ? {
-              ...e,
-              done: !e.done
-            }
-          : e
-      )
-    )
-
     try {
       await forgeAPI.todoList.entries.toggleEntry
         .input({
@@ -57,11 +42,11 @@ function TaskItem({
         .mutate({})
 
       setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: entriesQueryKey })
+        queryClient.invalidateQueries({ queryKey: ['todoList'] })
         statusCounterQuery.refetch()
       }, 500)
     } catch {
-      queryClient.invalidateQueries({ queryKey: entriesQueryKey })
+      toast.error('Error toggling task completion')
     }
   }
 
