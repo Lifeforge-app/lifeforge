@@ -14,4 +14,4 @@ export type { ModalComponent } from './core/useModalStore'
 
 export type { Location } from './features/FormModal/typescript/form_interfaces'
 
-export { default as defineForm } from './features/FormModal/utils/FormBuilder'
+export { default as defineForm } from './features/FormModal/formBuilder'
