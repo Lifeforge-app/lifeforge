@@ -43,11 +43,11 @@ export default function IconSetList({
     <div className="flex h-full min-h-0 flex-1 flex-col">
       <Header
         iconFilterTerm={iconFilterTerm}
-        value={searchQuery}
+        searchQuery={searchQuery}
         selectedCategory={selectedCategory}
         setCurrentIconSet={setCurrentIconSet}
         setIconFilterTerm={setIconFilterTerm}
-        setValue={setSearchQuery}
+        setSearchQuery={setSearchQuery}
         setSelectedCategory={setSelectedCategory}
       />
       <Scrollbar autoHeight autoHeightMax="60vh">
