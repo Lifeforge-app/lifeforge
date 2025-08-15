@@ -5,7 +5,6 @@ import fetchAPI from '../../../utils/fetchAPI'
 import { useAPIEndpoint } from '../../APIEndpointProvider'
 
 function useFontFamily(
-  rootElement: HTMLElement,
   fontFamily: string,
   fontScale: number
 ) {
@@ -34,7 +33,7 @@ function useFontFamily(
         )
 
         if (!data.enabled) {
-          rootElement.style.fontFamily = 'Onest, sans-serif'
+          document.body.style.fontFamily = 'Onest, sans-serif'
 
           return
         }
@@ -58,13 +57,13 @@ function useFontFamily(
 
               css += fontFace + '\n'
             })
-            rootElement.style.fontFamily = `"${font.family}", sans-serif`
+            document.body.style.fontFamily = `"${font.family}", sans-serif`
           })
         }
 
         styleTag!.textContent = css
       } catch {
-        rootElement.style.fontFamily = 'Onest, sans-serif'
+        document.body.style.fontFamily = 'Onest, sans-serif'
         console.error('Failed to update font family')
       }
     }

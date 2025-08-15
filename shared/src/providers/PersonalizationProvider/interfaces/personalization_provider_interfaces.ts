@@ -20,6 +20,7 @@ interface IBackdropFilters {
 }
 
 interface IPersonalizationData {
+  rootElement: HTMLElement | null
   fontFamily: string
   fontScale: number
   theme: 'light' | 'dark' | 'system'
