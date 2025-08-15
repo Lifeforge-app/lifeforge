@@ -26,7 +26,7 @@ Lifeforge Localization Manager tackles these issues head-on with a streamlined, 
 ## 📷 Screenshots
 
 <div align="center">
-<img width="1680" alt="图片" src="https://github.com/melvinchia3636/lifeforgeLocalizationManager/assets/64565584/a56de0ca-b44b-48f7-8057-20d96ff51b49">
+<img width="1680" alt="" src="https://github.com/Lifeforge-app/lifeforgeLocalizationManager/assets/64565584/a56de0ca-b44b-48f7-8057-20d96ff51b49">
 
 </div>
 
@@ -45,8 +45,8 @@ Lifeforge Localization Manager tackles these issues head-on with a streamlined, 
 
 To run this project on your local machine:
 
-1. Clone the repository: `git clone https://github.com/melvinchia3636/lifeforgeLocalizationManager`.
-2. Navigate to the project directory: `cd lifeforgeLocalizationManager`.
+1. Clone the repository: `git clone https://github.com/Lifeforge-app/lifeforge`.
+2. Navigate to the project directory: `cd lifeforge/apps/localization-manager`.
 3. Install dependencies: `npm install` in both client and server folder.
 4. Create a `.env` file and put in your `VITE_API_HOST` and `VITE_FRONTEND_URL`.
 5. Start the development server: `npm run dev`.
@@ -61,4 +61,4 @@ Contributions are welcome! Please fork this repository and open a pull request t
 
 ## 📄 License
 
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/melvinchia3636/lifeforge">Lifeforge</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://thecodeblog.net">Melvin Chia</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Lifeforge-app/lifeforge">Lifeforge</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://thecodeblog.net">Melvin Chia</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>

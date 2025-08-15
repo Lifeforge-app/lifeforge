@@ -12,5 +12,34 @@ const options = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), mdx(options), tailwindcss()]
+  plugins: [react(), mdx(options), tailwindcss()],
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true
+    },
+    target: 'esnext',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id
+              .toString()
+              .split('node_modules/')[1]
+              .split('/')[0]
+              .toString()
+          } else if (id.endsWith('.mdx')) {
+            const mdxPath = id.toString().split('src/')[1]
+            return `mdx-${mdxPath.replace(/\//g, '-').replace('.mdx', '')}`
+          }
+        }
+      }
+    }
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      sourcemap: false,
+      target: 'esnext'
+    }
+  }
 })

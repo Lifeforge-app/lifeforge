@@ -56,7 +56,7 @@ function Header({
         </button>
         <a
           className="text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 block p-2"
-          href="https://github.com/melvinchia3636/lifeforge-documentation"
+          href="https://github.com/Lifeforge-app/lifeforge"
           rel="noreferrer"
           target="_blank"
         >
