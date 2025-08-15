@@ -1,8 +1,5 @@
 import { PBService } from '@functions/database'
-import {
-  globalTaskPool,
-  updateTaskInPool
-} from '@middlewares/taskPoolMiddleware'
+import { globalTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import fs from 'fs'
 // @ts-expect-error - No types available
 import pdfPageCounter from 'pdf-page-counter'

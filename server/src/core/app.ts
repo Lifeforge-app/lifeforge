@@ -1,4 +1,3 @@
-import taskPoolMiddleware from '@middlewares/taskPoolMiddleware'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
@@ -34,7 +33,6 @@ app.use(express.raw())
 app.use(express.json({ limit: '50mb' }))
 app.use(morganMiddleware)
 app.use(pocketbaseMiddleware)
-app.use(taskPoolMiddleware)
 app.use(rateLimitingMiddleware)
 
 app.use('/', router)
