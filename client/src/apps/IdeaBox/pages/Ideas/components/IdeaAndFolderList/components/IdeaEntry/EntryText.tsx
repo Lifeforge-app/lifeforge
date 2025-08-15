@@ -9,8 +9,8 @@ import Markdown from 'react-markdown'
 import type { IdeaBoxIdea } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import EntryContextMenu from './components/EntryContextMenu'
-import TagChip from './components/TagChip'
 import InFolderChip from './components/InFolderChip'
+import TagChip from './components/TagChip'
 
 function EntryText({ entry }: { entry: IdeaBoxIdea }) {
   const { t } = useTranslation('apps.ideaBox')

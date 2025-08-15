@@ -207,7 +207,7 @@ function PasswordEntryItem({
             <ContextMenuItem
               icon="tabler:rotate"
               loading={rotateLoading}
-              text="Rotate Password"
+              label="Rotate Password"
               onClick={async () => {
                 setRotateLoading(true)
 
@@ -268,7 +268,7 @@ function PasswordEntryItem({
                 decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'
               }
               loading={loading}
-              text={
+              label={
                 decryptedPassword === null ? 'Show Password' : 'Hide Password'
               }
               onClick={decryptPassword}
@@ -277,25 +277,25 @@ function PasswordEntryItem({
               className="flex sm:hidden"
               icon="tabler:copy"
               loading={copyLoading}
-              text="Copy Password"
+              label="Copy Password"
               onClick={copyPassword}
             />
             <ContextMenuItem
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
-              text={password.pinned ? 'Unpin' : 'Pin'}
+              label={password.pinned ? 'Unpin' : 'Pin'}
               onClick={() => {
                 pinPassword(password.id)
               }}
             />
             <ContextMenuItem
               icon="tabler:pencil"
-              text="Edit"
+              label="Edit"
               onClick={handleEdit}
             />
             <ContextMenuItem
-              isRed
+              dangerous
               icon="tabler:trash"
-              text="Delete"
+              label="Delete"
               onClick={handleDeletePassword}
             />
           </ContextMenu>

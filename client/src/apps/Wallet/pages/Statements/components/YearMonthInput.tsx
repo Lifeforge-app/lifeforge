@@ -71,7 +71,7 @@ function YearMonthInput({
         {monthsOptions.map(mon => (
           <ListboxOption
             key={mon}
-            text={dayjs().month(mon).format('MMMM')}
+            label={dayjs().month(mon).format('MMMM')}
             value={mon}
           />
         ))}
@@ -90,7 +90,7 @@ function YearMonthInput({
         value={year}
       >
         {yearsOptions.map(yr => (
-          <ListboxOption key={yr} text={yr.toString()} value={yr} />
+          <ListboxOption key={yr} label={yr.toString()} value={yr} />
         ))}
       </ListboxInput>
     </div>

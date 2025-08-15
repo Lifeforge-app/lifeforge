@@ -74,13 +74,13 @@ function TaskListListItem({
         <>
           <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleUpdateList}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDeleteList}
           />
         </>

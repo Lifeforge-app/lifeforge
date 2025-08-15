@@ -48,7 +48,7 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
         <ListboxOption
           key={value}
           icon={icon}
-          text={t(`viewTypes.${_.camelCase(name)}`)}
+          label={t(`viewTypes.${_.camelCase(name)}`)}
           value={value}
         />
       ))}

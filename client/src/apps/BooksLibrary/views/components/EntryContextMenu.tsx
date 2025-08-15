@@ -106,7 +106,7 @@ export default function EntryContextMenu({
         icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
-        text={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
+        label={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
         onClick={() => {
           setReadStatusChangeLoading(true)
           readStatusChangeMutation.mutate({})
@@ -115,24 +115,24 @@ export default function EntryContextMenu({
       <ContextMenuItem
         icon="tabler:brand-amazon"
         namespace="apps.booksLibrary"
-        text="Send to Kindle"
+        label="Send to Kindle"
         onClick={handleSendToKindle}
       />
       <ContextMenuItem
         disabled={downloadLoading}
         icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
-        text="Download"
+        label="Download"
         onClick={handleDownload}
       />
       <ContextMenuItem
         icon="tabler:pencil"
-        text="Edit"
+        label="Edit"
         onClick={handleUpdateEntry}
       />
       <ContextMenuItem
-        isRed
+        dangerous
         icon="tabler:trash"
-        text="Delete"
+        label="Delete"
         onClick={handleDeleteEntry}
       />
     </>

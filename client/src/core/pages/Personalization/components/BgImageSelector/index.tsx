@@ -109,7 +109,7 @@ function BgImageSelector() {
               adjust
             </Button>
             <Button
-              isRed
+              dangerous
               className="w-1/2 md:w-auto"
               icon="tabler:trash"
               variant="plain"

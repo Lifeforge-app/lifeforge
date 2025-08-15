@@ -65,7 +65,7 @@ function SidebarCollectionItem({
         <>
           <ContextMenuItem
             icon="tabler:pencil"
-            text="edit"
+            label="edit"
             onClick={() => {
               open(ModifyCollectionModal, {
                 type: 'update',
@@ -74,9 +74,9 @@ function SidebarCollectionItem({
             }}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="delete"
+            label="delete"
             onClick={handleDelete}
           />
         </>

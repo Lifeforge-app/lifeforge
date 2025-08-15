@@ -22,9 +22,9 @@ function Ideas() {
         <SearchInput
           className="mt-4"
           namespace="apps.ideaBox"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch={path === '' ? 'idea' : 'idea In Folder'}
+          value={searchQuery}
+          setValue={setSearchQuery}
+          searchTarget={path === '' ? 'idea' : 'idea In Folder'}
         />
       )}
       <TagsSelector />

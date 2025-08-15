@@ -90,13 +90,13 @@ function _SidebarItem({
             <>
               <ContextMenuItem
                 icon="tabler:pencil"
-                text="Edit"
+                label="Edit"
                 onClick={handleUpdateStuff}
               />
               <ContextMenuItem
-                isRed
+                dangerous
                 icon="tabler:trash"
-                text="Delete"
+                label="Delete"
                 onClick={handleDeleteStuff}
               />
             </>

@@ -112,18 +112,18 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
         <ContextMenuItem
           icon="tabler:chart-line"
           namespace="apps.wallet"
-          text="View Balance Chart"
+          label="View Balance Chart"
           onClick={handleOpenBalanceChart}
         />
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleEditAsset}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteAsset}
         />
       </ContextMenu>

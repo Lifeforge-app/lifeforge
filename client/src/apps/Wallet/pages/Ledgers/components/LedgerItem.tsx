@@ -85,13 +85,13 @@ function LedgerItem({ ledger }: { ledger: WalletLedger }) {
       <ContextMenu>
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleEditLedger}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteLedger}
         />
       </ContextMenu>

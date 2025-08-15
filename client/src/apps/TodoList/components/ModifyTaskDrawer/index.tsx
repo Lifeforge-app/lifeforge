@@ -213,9 +213,9 @@ function ModifyTaskDrawer() {
             </h1>
             <ContextMenu>
               <ContextMenuItem
-                isRed
+                dangerous
                 icon="tabler:trash"
-                text="Delete"
+                label="Delete"
                 onClick={handleDeleteTask}
               />
             </ContextMenu>

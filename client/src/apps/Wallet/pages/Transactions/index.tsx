@@ -138,13 +138,13 @@ function Transactions() {
               <ContextMenuItem
                 icon="tabler:plus"
                 namespace="apps.wallet"
-                text="Add Manually"
+                label="Add Manually"
                 onClick={handleCreateTransaction}
               />
               <ContextMenuItem
                 icon="tabler:template"
                 namespace="apps.wallet"
-                text="From Template"
+                label="From Template"
                 onClick={() => {
                   open(ManageTemplatesModal, {
                     choosing: true
@@ -154,7 +154,7 @@ function Transactions() {
               <ContextMenuItem
                 icon="tabler:scan"
                 namespace="apps.wallet"
-                text="Scan Receipt"
+                label="Scan Receipt"
                 onClick={handleUploadReceipt}
               />
             </ContextMenu>
@@ -203,13 +203,13 @@ function Transactions() {
                 <ContextMenuItem
                   icon="tabler:plus"
                   namespace="apps.wallet"
-                  text="Add Manually"
+                  label="Add Manually"
                   onClick={handleCreateTransaction}
                 />
                 <ContextMenuItem
                   icon="tabler:template"
                   namespace="apps.wallet"
-                  text="From Template"
+                  label="From Template"
                   onClick={() => {
                     open(ManageTemplatesModal, {
                       choosing: true
@@ -219,7 +219,7 @@ function Transactions() {
                 <ContextMenuItem
                   icon="tabler:scan"
                   namespace="apps.wallet"
-                  text="Scan Receipt"
+                  label="Scan Receipt"
                   onClick={handleUploadReceipt}
                 />
               </ContextMenu>

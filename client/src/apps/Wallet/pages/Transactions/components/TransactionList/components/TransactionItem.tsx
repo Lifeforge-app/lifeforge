@@ -81,13 +81,13 @@ function TransactionItem({ transaction }: { transaction: WalletTransaction }) {
       <ContextMenu>
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleEditTransaction}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteTransaction}
         />
       </ContextMenu>

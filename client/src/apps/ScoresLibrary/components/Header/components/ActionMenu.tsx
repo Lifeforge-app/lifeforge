@@ -1,8 +1,4 @@
-import {
-  ContextMenuItem,
-  ContextMenuSelectorWrapper,
-  SidebarDivider
-} from 'lifeforge-ui'
+import { ContextMenuGroup, ContextMenuItem, SidebarDivider } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import type { ScoreLibrarySortType } from '@apps/ScoresLibrary'
@@ -31,40 +27,37 @@ function ActionMenu({
     <>
       <div className="block md:hidden">
         <SidebarDivider noMargin />
-        <ContextMenuSelectorWrapper
+        <ContextMenuGroup
           icon="tabler:sort-ascending"
-          title={t('hamburgerMenu.sortBy')}
+          label={t('hamburgerMenu.sortBy')}
         >
           {SORT_TYPE.map(([icon, id]) => (
             <ContextMenuItem
               key={id}
+              checked={sortType === id}
               icon={icon}
-              isToggled={sortType === id}
+              label={t(`sortTypes.${id}`)}
               namespace="apps.scoresLibrary"
-              text={t(`sortTypes.${id}`)}
               onClick={() => {
                 setSortType(id)
               }}
             />
           ))}
-        </ContextMenuSelectorWrapper>
+        </ContextMenuGroup>
         <SidebarDivider noMargin />
-        <ContextMenuSelectorWrapper
-          icon="tabler:eye"
-          title={t('hamburgerMenu.viewAs')}
-        >
+        <ContextMenuGroup icon="tabler:eye" label={t('hamburgerMenu.viewAs')}>
           {['grid', 'list'].map(type => (
             <ContextMenuItem
               key={type}
+              checked={view === type}
               icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
-              isToggled={view === type}
-              text={t(`viewTypes.${type}`)}
+              label={t(`viewTypes.${type}`)}
               onClick={() => {
                 setView(type as 'grid' | 'list')
               }}
             />
           ))}
-        </ContextMenuSelectorWrapper>
+        </ContextMenuGroup>
       </div>
     </>
   )

@@ -84,13 +84,13 @@ function CategoryItem({ category }: { category: WalletCategory }) {
       <ContextMenu>
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleEditCategory}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteCategory}
         />
       </ContextMenu>

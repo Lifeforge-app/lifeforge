@@ -56,7 +56,7 @@ function Dashboard() {
                 <ContextMenuItem
                   icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
                   namespace="core.dashboard"
-                  text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
+                  label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
                   onClick={() => {
                     setCanLayoutChange(!canLayoutChange)
                   }}
@@ -64,7 +64,7 @@ function Dashboard() {
                 <ContextMenuItem
                   icon="tabler:apps"
                   namespace="core.dashboard"
-                  text="Manage Widgets"
+                  label="Manage Widgets"
                   onClick={handleManageWidget}
                 />
               </>
@@ -79,7 +79,7 @@ function Dashboard() {
           />
         )}
       </div>
-      {/* <FAB alwaysShow text="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
+      {/* <FAB alwaysShow label="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
     </ModuleWrapper>
   )
 }

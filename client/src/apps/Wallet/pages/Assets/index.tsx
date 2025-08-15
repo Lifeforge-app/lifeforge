@@ -68,7 +68,7 @@ function Assets() {
             <>
               <ContextMenuItem
                 icon="tabler:refresh"
-                text="Refresh"
+                label="Refresh"
                 onClick={() => {
                   queryClient.invalidateQueries({
                     queryKey: ['wallet', 'assets']
@@ -78,9 +78,9 @@ function Assets() {
               />
               <ContextMenuItem
                 icon="tabler:eye-off"
-                isToggled={isAmountHidden}
+                checked={isAmountHidden}
                 namespace="apps.wallet"
-                text="Hide Amount"
+                label="Hide Amount"
                 onClick={() => {
                   toggleAmountVisibility()
                 }}

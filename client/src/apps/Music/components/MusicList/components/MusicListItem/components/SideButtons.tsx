@@ -102,7 +102,7 @@ function SideButtons({ music }: { music: MusicEntry }) {
       <ContextMenu>
         <ContextMenuItem
           icon="tabler:download"
-          text="Download"
+          label="Download"
           onClick={() => {
             forceDown(
               forgeAPI.media.input({
@@ -116,13 +116,13 @@ function SideButtons({ music }: { music: MusicEntry }) {
         />
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleUpdateEntry}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteEntry}
         />
       </ContextMenu>

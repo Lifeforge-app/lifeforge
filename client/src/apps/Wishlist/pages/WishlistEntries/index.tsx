@@ -133,9 +133,9 @@ function WishlistEntries() {
                   <SearchInput
                     className="mt-4 mb-6"
                     namespace="apps.wishlist"
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    stuffToSearch="entry"
+                    value={searchQuery}
+                    setValue={setSearchQuery}
+                    searchTarget="entry"
                   />
                   <EntryList
                     filteredEntries={filteredEntries || []}
@@ -157,13 +157,13 @@ function WishlistEntries() {
           <ContextMenuItem
             icon="tabler:plus"
             namespace="apps.wishlist"
-            text="Add Manually"
+            label="Add Manually"
             onClick={handleAddManually}
           />
           <ContextMenuItem
             icon="tabler:apps"
             namespace="apps.wishlist"
-            text="From Other Apps"
+            label="From Other Apps"
             onClick={handleAddFromOtherApps}
           />
         </MenuItems>

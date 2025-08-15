@@ -61,9 +61,9 @@ function ContentContainer() {
     <>
       <SearchInput
         namespace="apps.passwords"
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        stuffToSearch="password"
+        value={query}
+        setValue={setQuery}
+        searchTarget="password"
       />
       <PasswordList />
       {masterPassword !== '' && (

@@ -126,13 +126,13 @@ function EntryItem({
         <ContextMenu>
           <ContextMenuItem
             icon="tabler:pencil"
-            text="edit"
+            label="edit"
             onClick={handleUpdateEntry}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="delete"
+            label="delete"
             onClick={handleDeleteEntry}
           />
         </ContextMenu>

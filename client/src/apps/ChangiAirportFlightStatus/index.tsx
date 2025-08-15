@@ -69,15 +69,15 @@ function ChangiAirportFlightStatus() {
           value={type}
         >
           {SEARCH_TYPE.map(([name, icon, value]) => (
-            <ListboxOption key={value} icon={icon} text={name} value={value} />
+            <ListboxOption key={value} icon={icon} label={name} value={value} />
           ))}
         </Listbox>
         <SearchInput
           className="bg-bg-50"
           namespace="modules.changiAirport"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="flight"
+          value={searchQuery}
+          setValue={setSearchQuery}
+          searchTarget="flight"
         />
       </div>
       <Scrollbar className="w-full flex-1">

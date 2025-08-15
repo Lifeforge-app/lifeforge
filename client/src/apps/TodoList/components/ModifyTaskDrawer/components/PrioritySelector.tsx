@@ -36,9 +36,9 @@ function PrioritySelector({
       setValue={setPriority}
       value={priority}
     >
-      <ListboxOption key={'none'} color="lightgray" text="None" value="" />
+      <ListboxOption key={'none'} color="lightgray" label="None" value="" />
       {priorities.map(({ name, color, id }, i) => (
-        <ListboxOption key={i} color={color} text={name} value={id} />
+        <ListboxOption key={i} color={color} label={name} value={id} />
       ))}
     </ListboxInput>
   )

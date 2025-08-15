@@ -1,4 +1,4 @@
-import { ContextMenuItem, ContextMenuSelectorWrapper } from 'lifeforge-ui'
+import { ContextMenuGroup, ContextMenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -21,14 +21,14 @@ function LineFilter() {
   }, [])
 
   return (
-    <ContextMenuSelectorWrapper
+    <ContextMenuGroup
       icon="lucide:rail-symbol"
-      title={t('railwayLinesSelectorTitle')}
+      label={t('railwayLinesSelectorTitle')}
     >
       {lines.map(line => (
         <ContextMenuItem
           key={line.id}
-          preventDefault
+          checked={filteredLines.includes(line.id)}
           icon={
             <span
               className="text-bg-100 rounded-full px-2.5 py-0.5 font-['LTAIdentityMedium'] text-sm"
@@ -39,13 +39,12 @@ function LineFilter() {
               {line.code}
             </span>
           }
-          isToggled={filteredLines.includes(line.id)}
-          namespace={false}
-          text={line.name}
+          label={line.name}
+          shouldCloseMenuOnClick={false}
           onClick={() => onClick(line)}
         />
       ))}
-    </ContextMenuSelectorWrapper>
+    </ContextMenuGroup>
   )
 }
 

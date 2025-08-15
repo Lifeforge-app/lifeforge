@@ -76,7 +76,7 @@ function LineItem({
           >
             <ContextMenuItem
               icon="tabler:edit"
-              text="Edit Line"
+              label="Edit Line"
               onClick={() => {
                 open(ModifyLineModal, {
                   type: 'update',
@@ -91,9 +91,9 @@ function LineItem({
               }}
             />
             <ContextMenuItem
-              isRed
+              dangerous
               icon="tabler:trash"
-              text="Delete Line"
+              label="Delete Line"
               onClick={() => {
                 open(ConfirmationModal, {
                   title: 'Delete MRT Line',
@@ -125,7 +125,6 @@ function LineItem({
                   className="w-full"
                   icon="tabler:square-letter-x"
                   name="X Coordinate"
-                  namespace={false}
                   placeholder="X Coordinate"
                   setValue={value => {
                     setMrtLines(prevLines =>
@@ -146,7 +145,6 @@ function LineItem({
                   className="w-full"
                   icon="tabler:square-letter-y"
                   name="Y Coordinate"
-                  namespace={false}
                   placeholder="Y Coordinate"
                   setValue={value => {
                     setMrtLines(prevLines =>

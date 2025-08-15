@@ -93,9 +93,9 @@ function TodoListContainer() {
             <SearchInput
               className="mt-4"
               namespace="apps.todoList"
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              stuffToSearch="task"
+              value={searchQuery}
+              setValue={setSearchQuery}
+              searchTarget="task"
             />
           </div>
           <QueryWrapper query={entriesQuery}>

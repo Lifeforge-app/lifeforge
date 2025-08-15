@@ -108,9 +108,9 @@ function PhotosEntry({
             </div>
             <ContextMenu>
               <ContextMenuItem
-                isRed
+                dangerous
                 icon="tabler:trash"
-                text="Delete"
+                label="Delete"
                 onClick={onDelete}
               />
             </ContextMenu>

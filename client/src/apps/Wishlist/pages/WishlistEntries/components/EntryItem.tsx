@@ -116,7 +116,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
         <Checkbox
           checked={bought}
           className="hidden! sm:flex! md:hidden!"
-          onChange={() => {
+          onCheckedChange={() => {
             setBought(prev => !prev)
             toggleBoughtMutation.mutate({})
           }}
@@ -124,11 +124,11 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
       </div>
       <div className="flex-between gap-3">
         <Button
-          iconPosition="end"
           as="a"
           className="w-auto px-0! sm:px-4!"
           href={entry.url}
           icon="iconamoon:arrow-top-right-1"
+          iconPosition="end"
           namespace="apps.wishlist"
           target="_blank"
           variant="plain"
@@ -138,7 +138,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
         <Checkbox
           checked={bought}
           className="flex! sm:hidden! md:flex!"
-          onChange={() => {
+          onCheckedChange={() => {
             setBought(prev => !prev)
             toggleBoughtMutation.mutate({})
           }}
@@ -150,13 +150,13 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
         >
           <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleEdit}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDelete}
           />
         </ContextMenu>

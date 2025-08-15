@@ -38,13 +38,13 @@ function TextEntry({
       <ContextMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleUpdateEntry}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={onDelete}
         />
       </ContextMenu>

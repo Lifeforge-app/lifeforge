@@ -25,19 +25,19 @@ function HeaderMenu() {
     <>
       <ContextMenuItem
         icon="tabler:refresh"
-        text="Refresh"
+        label="Refresh"
         onClick={handleRefresh}
       />
       <ContextMenuItem
         icon="tabler:apps"
         namespace="apps.wallet"
-        text="Manage Categories"
+        label="Manage Categories"
         onClick={handleManageCategories}
       />
       <ContextMenuItem
         icon="tabler:template"
         namespace="apps.wallet"
-        text="Manage Templates"
+        label="Manage Templates"
         onClick={() => {
           open(ManageTemplatesModal, {})
         }}

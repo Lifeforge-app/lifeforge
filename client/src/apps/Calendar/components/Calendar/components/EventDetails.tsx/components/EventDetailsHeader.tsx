@@ -126,22 +126,22 @@ function EventDetailsHeader({
         >
           <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleEdit}
           />
           {event.type === 'recurring' ? (
             <ContextMenuItem
-              isRed
+              dangerous
               icon="tabler:calendar-off"
               namespace="apps.calendar"
-              text="Except This Time"
+              label="Except This Time"
               onClick={handleAddException}
             />
           ) : (
             <ContextMenuItem
-              isRed
+              dangerous
               icon="tabler:trash"
-              text="Delete"
+              label="Delete"
               onClick={handleDelete}
             />
           )}

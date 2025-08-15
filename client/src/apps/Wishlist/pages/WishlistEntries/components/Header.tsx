@@ -101,13 +101,13 @@ function Header({
             <ContextMenuItem
               icon="tabler:plus"
               namespace="apps.wishlist"
-              text="Add Manually"
+              label="Add Manually"
               onClick={handleAddManually}
             />
             <ContextMenuItem
               icon="tabler:apps"
               namespace="apps.wishlist"
-              text="From Other Apps"
+              label="From Other Apps"
               onClick={handleAddFromOtherApps}
             />
           </MenuItems>

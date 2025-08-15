@@ -33,7 +33,7 @@ function AddMusicButton() {
         <ContextMenuItem
           icon="tabler:brand-youtube"
           namespace="apps.music"
-          text="Download from YouTube"
+          label="Download from YouTube"
           onClick={handleYoutubeDownloaderOpen}
         />
       </MenuItems>

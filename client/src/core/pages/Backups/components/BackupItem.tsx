@@ -112,7 +112,7 @@ function BackupItem({
           onClick={handleDownloadBackup}
         />
         <Button
-          isRed
+          dangerous
           icon="tabler:trash"
           variant="plain"
           onClick={handleDeleteBackup}
@@ -126,13 +126,13 @@ function BackupItem({
         <ContextMenuItem
           icon="tabler:download"
           loading={downloadLoading}
-          text="Download"
+          label="Download"
           onClick={handleDownloadBackup}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteBackup}
         />
       </ContextMenu>

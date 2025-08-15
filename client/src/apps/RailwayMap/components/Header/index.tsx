@@ -1,7 +1,7 @@
 import {
   Button,
+  ContextMenuGroup,
   ContextMenuItem,
-  ContextMenuSelectorWrapper,
   FAB,
   ModuleHeader
 } from 'lifeforge-ui'
@@ -45,8 +45,8 @@ function Header() {
         actionButton={
           <Button
             className="hidden md:flex"
+            dangerous={hasRoute}
             icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
-            isRed={hasRoute}
             namespace="apps.railwayMap"
             variant={hasRoute ? 'plain' : 'primary'}
             onClick={handleRoutePlannerToggle}
@@ -57,24 +57,23 @@ function Header() {
         contextMenuProps={{
           children: (
             <>
-              <ContextMenuSelectorWrapper
+              <ContextMenuGroup
                 className="lg:hidden"
                 icon="tabler:eye"
-                title={t('viewTypes.selectorTitle')}
+                label={t('viewTypes.selectorTitle')}
               >
                 {VIEW_TYPES.map(([icon, title, value]) => (
                   <ContextMenuItem
                     key={value}
+                    checked={viewType === value}
                     icon={icon}
-                    isToggled={viewType === value}
-                    namespace={false}
-                    text={t(`viewTypes.${_.camelCase(title)}`)}
+                    label={t(`viewTypes.${_.camelCase(title)}`)}
                     onClick={() => {
                       setViewType(value)
                     }}
                   />
                 ))}
-              </ContextMenuSelectorWrapper>
+              </ContextMenuGroup>
               <LineFilter />
             </>
           )
@@ -87,9 +86,9 @@ function Header() {
         <SearchBar />
       </div>
       <FAB
+        dangerous={shortestRoute.length > 0}
         hideWhen="md"
         icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
-        isRed={shortestRoute.length > 0}
         loading={typeof shortestRoute === 'string'}
         onClick={handleRoutePlannerToggle}
       />

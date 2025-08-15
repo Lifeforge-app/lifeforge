@@ -73,7 +73,7 @@ function MomentVault() {
                   key={type}
                   icon={icon}
                   namespace="apps.momentVault"
-                  text={type}
+                  label={type}
                   onClick={handleAddEntry(type)}
                 />
               ))}
@@ -101,7 +101,7 @@ function MomentVault() {
               key={type}
               icon={icon}
               namespace="apps.momentVault"
-              text={type}
+              label={type}
               onClick={handleAddEntry(type)}
             />
           ))}

@@ -79,7 +79,7 @@ function TaskItem({
       </div>
       <Checkbox
         checked={entry.done}
-        onChange={() => {
+        onCheckedChange={() => {
           toggleTaskCompletion()
         }}
       />

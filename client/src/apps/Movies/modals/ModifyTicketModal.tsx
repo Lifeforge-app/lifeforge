@@ -131,7 +131,7 @@ function ModifyTicketModal({
   return (
     <FormModal
       actionButton={{
-        isRed: true,
+        dangerous: true,
         icon: 'tabler:trash',
         onClick: handleDeleteTicket
       }}
