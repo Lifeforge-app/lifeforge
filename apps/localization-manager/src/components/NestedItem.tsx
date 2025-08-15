@@ -177,7 +177,7 @@ function NestedItem({
                   name={key}
                   oldLocales={oldLocales}
                   path={path.concat(key)}
-                  value={searchQuery}
+                  searchQuery={searchQuery}
                   setChangedKeys={setChangedKeys}
                   setValue={setValue}
                   value={value}
