@@ -8,14 +8,23 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import TextInputBox from './components/TextInputBox'
 
 export type TextInputProps = {
+  /** The label text displayed above the input field. */
   label: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
   icon: string
+  /** The placeholder text shown when the input is empty. */
   placeholder: string
+  /** The current text value of the input field. */
   value: string
+  /** Callback function called when the input value changes. */
   setValue: (value: string) => void
+  /** Whether the input field is required for form validation. */
   required?: boolean
+  /** Whether the input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should be masked as a password field. */
   isPassword?: boolean
+  /** The input mode hint for virtual keyboards on mobile devices. */
   inputMode?:
     | 'text'
     | 'none'
@@ -25,10 +34,12 @@ export type TextInputProps = {
     | 'numeric'
     | 'decimal'
     | 'search'
+  /** Properties for constructing the action button component at the right hand side. */
   actionButtonProps?: React.ComponentProps<typeof Button>
+  /** Additional CSS class names to apply to the input container. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 } & React.HTMLAttributes<HTMLInputElement>
 
 function TextInput({
@@ -44,14 +55,13 @@ function TextInput({
   actionButtonProps,
   className,
   namespace,
-  tKey,
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   return (
     <InputWrapper className={className} disabled={disabled} inputRef={inputRef}>

@@ -48,14 +48,16 @@ function Searchbar({
     <div className="mt-4 flex gap-2">
       <SortBySelector setSortType={setSortType} sortType={sortType} />
       <SearchInput
+        actionButtonProps={{
+          icon: 'tabler:dice',
+          onClick: requestRandomEntry,
+          loading: requestRandomLoading
+        }}
         className="bg-bg-50"
         namespace="apps.scoresLibrary"
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        sideButtonIcon="tabler:dice"
-        sideButtonLoading={requestRandomLoading}
-        stuffToSearch="score"
-        onSideButtonClick={requestRandomEntry}
+        searchTarget="score"
+        setValue={setSearchQuery}
+        value={searchQuery}
       />
       <ViewModeSelector
         className="bg-bg-50 hidden md:flex"

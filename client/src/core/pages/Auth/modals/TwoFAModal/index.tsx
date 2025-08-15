@@ -60,13 +60,12 @@ function TwoFAModal({ onClose }: { onClose: () => void }) {
         className="mt-6 w-full"
         icon={authMethod === 'app' ? 'tabler:mail' : 'tabler:device-mobile'}
         namespace="common.auth"
-        tKey="modals.twoFA"
         variant="secondary"
         onClick={() => {
           setAuthMethod(authMethod === 'app' ? 'email' : 'app')
         }}
       >
-        {authMethod === 'app' ? 'use email Otp' : 'use Auth App'}
+        modals.twoFA.{authMethod === 'app' ? 'useEmailOtp' : 'useAuthApp'}
       </Button>
     </div>
   )

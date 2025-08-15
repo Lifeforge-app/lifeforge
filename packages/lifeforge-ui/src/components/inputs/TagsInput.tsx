@@ -7,25 +7,43 @@ import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 
+/**
+ * Props for the TagsInput component.
+ */
 interface TagsInputProps {
+  /** The label text displayed above the tags input field. */
   label: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
   icon: string
+  /** The placeholder text displayed when the input is empty. */
   placeholder: string
+  /** The current array of tag values. */
   value: string[]
+  /** Callback function called when the tags array changes. */
   setValue: (tags: string[]) => void
+  /** Whether the field is required for form validation. */
   required?: boolean
+  /** Whether the input is disabled and non-interactive. */
   disabled?: boolean
+  /** The maximum number of tags allowed. */
   maxTags?: number
+  /** Custom render function for individual tags. */
   renderTags?: (
     tag: string,
     index: number,
     onRemoveTag: () => void
   ) => React.ReactNode
+  /** Additional CSS class names to apply to the input container. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** Properties for constructing the action button component at the right hand side. */
+  actionButtonProps?: React.ComponentProps<typeof Button>
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
+/**
+ * A tags input component that allows users to add, remove, and manage multiple tags.
+ */
 function TagsInput({
   label,
   icon,
@@ -37,10 +55,10 @@ function TagsInput({
   maxTags = 100,
   renderTags,
   className = '',
-  namespace,
-  tKey
+  actionButtonProps,
+  namespace
 }: TagsInputProps) {
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const [currentTag, setCurrentTag] = useState<string>('')
 
@@ -77,14 +95,14 @@ function TagsInput({
           label={inputLabel}
           required={required === true}
         />
-        <div className="mt-12 mb-4 ml-[14px] flex flex-wrap items-center gap-2">
+        <div className="mt-10 mb-4 ml-[14px] flex w-full flex-wrap items-center gap-2">
           {value.map((tag, index) =>
             renderTags ? (
               renderTags(tag, index, () => removeTag(index))
             ) : (
               <div
                 key={index}
-                className="bg-bg-200 dark:bg-bg-700/50 flex items-center rounded-full py-1 pr-2 pl-3"
+                className="component-bg shadow-custom flex items-center rounded-full py-1 pr-2 pl-3"
               >
                 <span className="mr-2 text-sm">{tag}</span>
                 {!disabled && (
@@ -103,7 +121,7 @@ function TagsInput({
           )}
           {!disabled && (
             <TextInputBox
-              className="my-0! w-auto! flex-1 py-0 pl-0!"
+              className="my-0! h-auto w-min! py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}
               setValue={setCurrentTag}
@@ -113,6 +131,19 @@ function TagsInput({
             />
           )}
         </div>
+        {actionButtonProps && (
+          <Button
+            className="mr-4 p-2!"
+            variant="plain"
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+
+              actionButtonProps.onClick?.(e)
+            }}
+            {...actionButtonProps}
+          />
+        )}
       </div>
     </InputWrapper>
   )

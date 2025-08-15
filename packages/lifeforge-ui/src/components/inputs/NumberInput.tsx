@@ -3,15 +3,22 @@ import { useEffect, useState } from 'react'
 import TextInput from './TextInput'
 
 interface NumberInputProps {
+  /** The label text displayed above the number input field. */
   label: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
   icon: string
+  /** The current numeric value of the input. */
   value: number
+  /** Callback function called when the input value changes. */
   setValue: (value: number) => void
+  /** Whether the number input field is required for form validation. */
   required?: boolean
+  /** Whether the number input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Additional CSS class names to apply to the number input component. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function NumberInput({
@@ -22,8 +29,7 @@ function NumberInput({
   required = false,
   disabled = false,
   className,
-  namespace,
-  tKey
+  namespace
 }: NumberInputProps) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
@@ -46,7 +52,6 @@ function NumberInput({
       setValue={(value: string) => {
         setCurrentStringValue(value)
       }}
-      tKey={tKey}
       value={currentStringValue}
       onBlur={() => {
         if (currentStringValue.trim() === '') {

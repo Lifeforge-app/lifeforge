@@ -353,16 +353,16 @@ function App() {
         <div className="mt-3 flex h-full flex-1 flex-col">
           <SearchInput
             namespace="utils.localeAdmin"
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            stuffToSearch="entry"
+            value={searchQuery}
+            setValue={setSearchQuery}
+            searchTarget="entry"
           />
           <LocaleEditor
             changedKeys={changedKeys}
             fetchSuggestions={fetchSuggestions}
             locales={locales}
             oldLocales={oldLocales}
-            searchQuery={debouncedSearchQuery}
+            value={debouncedSearchQuery}
             setChangedKeys={setChangedKeys}
             setValue={setValue}
             onCreateEntry={parent => {

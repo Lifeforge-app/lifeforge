@@ -1,7 +1,7 @@
 import parseOCR from '@functions/external/ocr'
 import { forgeController, forgeRouter } from '@functions/routes'
+import { Location } from '@lib/locations/typescript/location.types'
 import { SCHEMAS } from '@schema'
-import { Location } from '@typescript/location.types'
 import fs from 'fs'
 import z from 'zod/v4'
 
@@ -88,7 +88,7 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
           type: z.literal('transfer')
         })
     ])
-)
+  )
 
 const create = forgeController.mutation
   .description('Create a new wallet transaction')

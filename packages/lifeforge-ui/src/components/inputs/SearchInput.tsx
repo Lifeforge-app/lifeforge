@@ -5,35 +5,38 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '../buttons'
 
-function SearchInput({
-  searchQuery,
-  setSearchQuery,
-  stuffToSearch,
-  onKeyUp,
-  customIcon,
-  onFilterIconClick,
-  filterAmount,
-  sideButtonIcon,
-  sideButtonLoading,
-  onSideButtonClick,
-  className,
-  namespace,
-  tKey = ''
-}: {
-  searchQuery: string
-  setSearchQuery: (query: string) => void
-  stuffToSearch: string
+interface SearchInputProps {
+  /** The icon to display in the search input. Should be a valid icon name from Iconify. */
+  icon?: string
+  /** The current search query value of the input field. */
+  value: string
+  /** Callback function called when the search query changes. */
+  setValue: (query: string) => void
+  /** The target or context being searched for accessibility and labeling purposes. */
+  searchTarget: string
+  /** Properties to construct the action button component at the right hand side of the searchbar. */
+  actionButtonProps?: React.ComponentProps<typeof Button>
+  /** Callback function called when a key is released in the input field. */
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  customIcon?: string
-  onFilterIconClick?: () => void
-  filterAmount?: number
-  sideButtonIcon?: string
-  sideButtonLoading?: boolean
-  onSideButtonClick?: () => void
+  /** Additional CSS class names to apply to the search input container. */
   className?: string
-  namespace: string | false
-  tKey?: string
-}) {
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
+}
+
+/**
+ * SearchInput component for entering search queries.
+ */
+function SearchInput({
+  icon = 'tabler:search',
+  value,
+  setValue,
+  searchTarget,
+  actionButtonProps,
+  onKeyUp,
+  className,
+  namespace
+}: SearchInputProps) {
   const { t } = useTranslation([
     'common.misc',
     ...(namespace ? [namespace] : [])
@@ -49,52 +52,34 @@ function SearchInput({
         e.currentTarget.querySelector('input')?.focus()
       }}
     >
-      <Icon
-        className="text-bg-500 size-5 shrink-0"
-        icon={customIcon ?? 'tabler:search'}
-      />
+      <Icon className="text-bg-500 size-5 shrink-0" icon={icon} />
       <input
-        className="caret-custom-500 placeholder:text-bg-500 w-full bg-transparent"
+        className={clsx(
+          'caret-custom-500 placeholder:text-bg-500 w-full bg-transparent',
+          actionButtonProps ? 'pr-12' : ''
+        )}
         placeholder={t(`search`, {
           item: t([
-            `${namespace}:${[tKey, 'items', _.camelCase(stuffToSearch)]
-              .filter(e => e)
-              .join('.')}`,
-            stuffToSearch
+            `${namespace}:items.${_.camelCase(searchTarget)}`,
+            `${namespace}:items.${searchTarget}`,
+            `${namespace}:${_.camelCase(searchTarget)}`,
+            `${namespace}:${searchTarget}`,
+            `common.misc:items.${_.camelCase(searchTarget)}`,
+            `common.misc:items.${searchTarget}`,
+            `common.misc:${_.camelCase(searchTarget)}`,
+            `common.misc:${searchTarget}`,
+            searchTarget
           ])
         })}
         type="text"
-        value={searchQuery}
+        value={value}
         onChange={e => {
-          setSearchQuery(e.target.value)
+          setValue(e.target.value)
         }}
         onKeyUp={onKeyUp}
       />
-      <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-2">
-        {onFilterIconClick !== undefined && (
-          <Button
-            className="p-2!"
-            icon="tabler:filter"
-            onClick={onFilterIconClick}
-          >
-            {filterAmount !== undefined && filterAmount > 0 && (
-              <span className="-mt-0.5">({filterAmount})</span>
-            )}
-          </Button>
-        )}
-        {sideButtonIcon !== undefined && onSideButtonClick !== undefined && (
-          <Button
-            className="p-2!"
-            icon={sideButtonIcon}
-            loading={sideButtonLoading}
-            variant="plain"
-            onClick={e => {
-              e.stopPropagation()
-              e.preventDefault()
-              onSideButtonClick()
-            }}
-          />
-        )}
+      <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-2">
+        {actionButtonProps && <Button {...actionButtonProps} />}
       </div>
     </search>
   )

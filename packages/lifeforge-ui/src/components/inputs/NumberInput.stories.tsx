@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import NumberInput from './NumberInput'
 
@@ -14,7 +14,7 @@ export const Default: Story = {
   args: {
     value: 0,
     setValue: () => {},
-    namespace: false,
+
     label: 'Price',
     icon: 'tabler:currency-dollar'
   }

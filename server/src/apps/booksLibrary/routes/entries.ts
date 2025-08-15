@@ -2,10 +2,7 @@
 import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import {
-  addToTaskPool,
-  updateTaskInPool
-} from '@middlewares/taskPoolMiddleware'
+import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 

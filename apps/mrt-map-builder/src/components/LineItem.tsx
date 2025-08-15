@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   NumberInput,
   useModalStore
 } from 'lifeforge-ui'
@@ -69,14 +69,14 @@ function LineItem({
               setCollapsed(!collapsed)
             }}
           />
-          <HamburgerMenu
+          <ContextMenu
             classNames={{
               button: 'p-2!'
             }}
           >
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:edit"
-              text="Edit Line"
+              label="Edit Line"
               onClick={() => {
                 open(ModifyLineModal, {
                   type: 'update',
@@ -90,10 +90,10 @@ function LineItem({
                 })
               }}
             />
-            <MenuItem
-              isRed
+            <ContextMenuItem
+              dangerous
               icon="tabler:trash"
-              text="Delete Line"
+              label="Delete Line"
               onClick={() => {
                 open(ConfirmationModal, {
                   title: 'Delete MRT Line',
@@ -110,7 +110,7 @@ function LineItem({
                 })
               }}
             />
-          </HamburgerMenu>
+          </ContextMenu>
         </div>
       </div>
       {!collapsed && (
@@ -125,7 +125,6 @@ function LineItem({
                   className="w-full"
                   icon="tabler:square-letter-x"
                   name="X Coordinate"
-                  namespace={false}
                   placeholder="X Coordinate"
                   setValue={value => {
                     setMrtLines(prevLines =>
@@ -146,7 +145,6 @@ function LineItem({
                   className="w-full"
                   icon="tabler:square-letter-y"
                   name="Y Coordinate"
-                  namespace={false}
                   placeholder="Y Coordinate"
                   setValue={value => {
                     setMrtLines(prevLines =>

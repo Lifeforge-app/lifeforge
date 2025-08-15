@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function CustomLink({ text, to }: { text: string; to: string }) {
   return (
     <Link
-      className="text-custom-500 mt-6 flex items-center gap-2 text-lg font-medium hover:underline"
+      className="text-custom-500 mt-4 flex items-center gap-2 text-lg font-medium hover:underline"
       to={to}
     >
       {text}

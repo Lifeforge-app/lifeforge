@@ -225,37 +225,39 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                         ? 'svg-spinners:180-ring'
                         : undefined
                     }
-                    text={value}
+                    label={value}
                     value={value}
                   />
                 ))}
               </ListboxOptions>
             </Listbox>
             <SearchInput
+              actionButtonProps={{
+                icon: 'tabler:scan',
+                onClick: () => {
+                  open(QRCodeScanner, {
+                    formats: ['linear_codes'],
+                    onScanned: data => {
+                      setSearchQuery(data)
+                    }
+                  })
+                }
+              }}
               namespace="apps.booksLibrary"
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              sideButtonIcon="tabler:scan"
-              stuffToSearch="Libgen Book"
+              searchTarget="Libgen Book"
+              setValue={setSearchQuery}
+              value={searchQuery}
               onKeyUp={e => {
                 if (e.key === 'Enter') {
                   searchBooks().catch(console.error)
                 }
               }}
-              onSideButtonClick={() => {
-                open(QRCodeScanner, {
-                  formats: ['linear_codes'],
-                  onScanned: data => {
-                    setSearchQuery(data)
-                  }
-                })
-              }}
             />
             <Button
-              iconAtEnd
               className="w-full sm:w-auto"
               disabled={providerOnlineStatuses[provider] === false}
               icon="tabler:arrow-right"
+              iconPosition="end"
               loading={
                 loading || providerOnlineStatuses[provider] === 'loading'
               }

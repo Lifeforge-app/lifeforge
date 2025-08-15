@@ -9,29 +9,34 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import ColorPickerModal from './ColorPickerModal'
 
 interface ColorInputProps {
+  /** The label text displayed above the color input field. */
   label: string
+  /** The current color value in hex format (e.g., "#FF0000"). */
   value: string
+  /** Callback function called when the color value changes. */
   setValue: (value: string) => void
+  /** Whether the color input field is required for form validation. */
   required?: boolean
+  /** Whether the color input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Additional CSS class names to apply to the color input component. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function ColorInput({
   label,
   value,
   setValue,
-  required,
-  disabled,
+  required = false,
+  disabled = false,
   className,
-  namespace,
-  tKey
+  namespace
 }: ColorInputProps) {
   const open = useModalStore(state => state.open)
 
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const ref = useRef<HTMLInputElement | null>(null)
 
@@ -49,7 +54,7 @@ function ColorInput({
         <InputLabel active={!!value} label={inputLabel} required={required} />
         <div className="mt-6 mr-4 flex w-full items-center gap-2 pl-4">
           <div
-            className={`group-focus-within:border-bg-300 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
+            className={`group-focus-within:border-bg-400 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
             style={{
               backgroundColor: value
             }}

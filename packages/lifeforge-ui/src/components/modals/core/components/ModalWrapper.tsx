@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { createPortal } from 'react-dom'
+import { usePersonalization } from 'shared'
 
 function ModalWrapper({
   isOpen,
@@ -22,6 +23,8 @@ function ModalWrapper({
   zIndex?: number
   onExited?: () => void
 }) {
+  const { rootElement } = usePersonalization()
+
   return createPortal(
     <div
       ref={modalRef}
@@ -51,7 +54,7 @@ function ModalWrapper({
         <div className="p-6">{children}</div>
       </div>
     </div>,
-    (document.querySelector('#app') as HTMLElement) || document.body
+    rootElement || document.body
   )
 }
 

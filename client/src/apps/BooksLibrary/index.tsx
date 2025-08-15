@@ -2,9 +2,9 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import {
   Button,
+  ContextMenuGroup,
+  ContextMenuItem,
   EmptyStateScreen,
-  HamburgerMenuSelectorWrapper,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper,
@@ -13,7 +13,6 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -25,12 +24,10 @@ import ListView from './views/ListView'
 function BooksLibrary() {
   const open = useModalStore(state => state.open)
 
-  const [searchParams] = useSearchParams()
-
   const {
     entriesQuery,
     fileTypesQuery,
-    miscellaneous: { searchQuery, setSearchQuery }
+    miscellaneous: { filter, searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
@@ -44,23 +41,24 @@ function BooksLibrary() {
           entry.title
             .toLowerCase()
             .includes(debouncedSearchQuery.toLowerCase()) &&
-          (searchParams.get('collection') !== null
-            ? entry.collection === searchParams.get('collection')
+          (filter.collection !== null
+            ? entry.collection === filter.collection
             : true) &&
-          (searchParams.get('language') !== null
-            ? entry.languages.includes(searchParams.get('language') as string)
+          (filter.language !== null
+            ? entry.languages.includes(filter.language)
             : true) &&
-          (searchParams.get('favourite') === 'true'
-            ? entry.is_favourite
+          (filter.collection !== null
+            ? entry.collection === filter.collection
             : true) &&
-          (searchParams.get('fileType') !== null
+          (filter.favourite ? entry.is_favourite : true) &&
+          (filter.fileType !== null
             ? entry.extension ===
               fileTypesQuery.data?.find(
-                fileType => fileType.id === searchParams.get('fileType')
+                fileType => fileType.id === filter.fileType
               )?.name
             : true)
       ) ?? [],
-    [entriesQuery.data, debouncedSearchQuery, searchParams, fileTypesQuery.data]
+    [entriesQuery.data, debouncedSearchQuery, filter, fileTypesQuery.data]
   )
 
   const handleOpenLibgenModal = useCallback(() => {
@@ -70,22 +68,26 @@ function BooksLibrary() {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        hamburgerMenuClassName="block md:hidden"
-        hamburgerMenuItems={
-          <HamburgerMenuSelectorWrapper icon="tabler:eye" title="View as">
-            {['grid', 'list'].map(type => (
-              <MenuItem
-                key={type}
-                icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
-                isToggled={view === type}
-                text={type.charAt(0).toUpperCase() + type.slice(1)}
-                onClick={() => {
-                  setView(type as 'grid' | 'list')
-                }}
-              />
-            ))}
-          </HamburgerMenuSelectorWrapper>
-        }
+        contextMenuProps={{
+          classNames: {
+            wrapper: 'block md:hidden'
+          },
+          children: (
+            <ContextMenuGroup icon="tabler:eye" label="View as">
+              {['grid', 'list'].map(type => (
+                <ContextMenuItem
+                  key={type}
+                  checked={view === type}
+                  icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                  label={type.charAt(0).toUpperCase() + type.slice(1)}
+                  onClick={() => {
+                    setView(type as 'grid' | 'list')
+                  }}
+                />
+              ))}
+            </ContextMenuGroup>
+          )
+        }}
         icon="tabler:books"
         title="Books Library"
       />
@@ -97,12 +99,12 @@ function BooksLibrary() {
               typeof filteredEntries !== 'string' ? filteredEntries.length : 0
             }
           />
-          <div className="flex items-center mt-4 gap-2">
+          <div className="mt-4 flex items-center gap-2">
             <SearchInput
               namespace="apps.booksLibrary"
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              stuffToSearch="book"
+              searchTarget="book"
+              setValue={setSearchQuery}
+              value={searchQuery}
             />
             <ViewModeSelector
               className="hidden md:flex"
@@ -153,16 +155,16 @@ function BooksLibrary() {
           anchor="top end"
           className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:6px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:upload"
+            label="Upload from device"
             namespace="apps.booksLibrary"
-            text="Upload from device"
             onClick={() => {}}
           />
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:books"
+            label="Download from Libgen"
             namespace="apps.booksLibrary"
-            text="Download from Libgen"
             onClick={handleOpenLibgenModal}
           />
         </MenuItems>

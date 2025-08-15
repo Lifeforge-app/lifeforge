@@ -5,8 +5,8 @@ import dayjs from 'dayjs'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import prettyBytes from 'pretty-bytes'
@@ -112,30 +112,30 @@ function BackupItem({
           onClick={handleDownloadBackup}
         />
         <Button
-          isRed
+          dangerous
           icon="tabler:trash"
           variant="plain"
           onClick={handleDeleteBackup}
         />
       </div>
-      <HamburgerMenu
+      <ContextMenu
         classNames={{
           wrapper: 'flex sm:hidden'
         }}
       >
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:download"
           loading={downloadLoading}
-          text="Download"
+          label="Download"
           onClick={handleDownloadBackup}
         />
-        <MenuItem
-          isRed
+        <ContextMenuItem
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteBackup}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

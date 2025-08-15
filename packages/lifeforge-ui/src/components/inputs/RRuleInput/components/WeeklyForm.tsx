@@ -22,7 +22,6 @@ function WeeklyForm({
           className="flex-1"
           icon="tabler:repeat"
           label={t('inputs.weekly.inputs.every')}
-          namespace={false}
           setValue={every => setData({ ...data, every })}
           value={data.every}
         />
@@ -54,14 +53,13 @@ function WeeklyForm({
         customActive={data.onDays.length > 0}
         icon="tabler:calendar"
         label={t('inputs.weekly.inputs.onDays')}
-        namespace={false}
         setValue={onDays => setData({ ...data, onDays: onDays })}
         value={data.onDays}
       >
         {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map(day => (
           <ListboxOption
             key={day}
-            text={t(
+            label={t(
               `common.misc:dates.days.${[
                 'mon',
                 'tue',

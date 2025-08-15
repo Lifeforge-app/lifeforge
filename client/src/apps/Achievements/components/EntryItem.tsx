@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { ConfirmationModal, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
@@ -64,10 +64,10 @@ function EntryItem({ entry }: { entry: Achievement }) {
           </p>
         </div>
       </div>
-      <HamburgerMenu>
-        <MenuItem
+      <ContextMenu>
+        <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={() => {
             open(ModifyAchievementModal, {
               type: 'update',
@@ -76,13 +76,13 @@ function EntryItem({ entry }: { entry: Achievement }) {
             })
           }}
         />
-        <MenuItem
-          isRed
+        <ContextMenuItem
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteEntry}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

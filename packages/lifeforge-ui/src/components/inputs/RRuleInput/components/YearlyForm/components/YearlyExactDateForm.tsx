@@ -21,7 +21,6 @@ function YearlyExactDateForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.exactDate.inputs.month')}
-        namespace={false}
         setValue={value => setData({ ...data, month: value })}
         value={data.month}
       >
@@ -30,7 +29,7 @@ function YearlyExactDateForm({
           .map((_, month) => (
             <ListboxOption
               key={month}
-              text={t(`common.misc:dates.months.${month}`)}
+              label={t(`common.misc:dates.months.${month}`)}
               value={month + 1}
             />
           ))}
@@ -40,7 +39,6 @@ function YearlyExactDateForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.exactDate.inputs.date')}
-        namespace={false}
         setValue={value => setData({ ...data, date: value })}
         value={data.date}
       />

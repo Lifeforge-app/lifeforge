@@ -4,18 +4,28 @@ import clsx from 'clsx'
 import useInputLabel from './shared/hooks/useInputLabel'
 
 interface SliderInputProps {
+  /** The label text displayed above the slider field. */
   label?: string
+  /** The icon to display next to the slider. Should be a valid icon name from Iconify. */
   icon?: string
+  /** The current numeric value of the slider. */
   value: number
+  /** Callback function called when the slider value changes. */
   setValue: (value: number) => void
+  /** Whether the slider field is required for form validation. */
   required?: boolean
+  /** Whether the slider is disabled and non-interactive. */
   disabled?: boolean
+  /** The minimum value allowed for the slider. */
   min?: number
+  /** The maximum value allowed for the slider. */
   max?: number
+  /** The step increment for slider value changes. */
   step?: number
+  /** Additional CSS class names to apply to the slider container. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function SliderInput({
@@ -29,10 +39,9 @@ function SliderInput({
   max = 100,
   step = 1,
   className,
-  namespace,
-  tKey
+  namespace
 }: SliderInputProps) {
-  const inputLabel = useInputLabel(namespace, label ?? '', tKey)
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   return (
     <div className="w-full">

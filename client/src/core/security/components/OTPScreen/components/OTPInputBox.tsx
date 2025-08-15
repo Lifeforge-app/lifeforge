@@ -43,19 +43,18 @@ function OTPInputBox({
         onChange={setOtp}
       />
       <Button
-        iconAtEnd
         className={clsx('mt-6 w-full', !buttonFullWidth && 'md:w-3/4 xl:w-1/2')}
         icon="tabler:arrow-right"
+        iconPosition="end"
         loading={verifyOtpLoading}
         namespace="common.vault"
-        tKey="otp"
         onClick={() => {
           verifyOTP(otp).catch(err => {
             console.error(err)
           })
         }}
       >
-        verify
+        otp.buttons.verify
       </Button>
     </>
   )

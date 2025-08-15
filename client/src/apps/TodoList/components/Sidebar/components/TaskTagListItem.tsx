@@ -2,16 +2,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  MenuItem,
+  ContextMenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import ModifyTagModal from '@apps/TodoList/modals/ModifyTagModal'
-import type { TodoListTag } from '@apps/TodoList/providers/TodoListProvider'
+import {
+  type TodoListTag,
+  useTodoListContext
+} from '@apps/TodoList/providers/TodoListProvider'
 
 function TaskTagListItem({
   item,
@@ -24,7 +26,7 @@ function TaskTagListItem({
 
   const open = useModalStore(state => state.open)
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { filter, setFilter } = useTodoListContext()
 
   const handleUpdateTag = useCallback(() => {
     open(ModifyTagModal, {
@@ -41,10 +43,10 @@ function TaskTagListItem({
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['todo-list'] })
-          setSearchParams({
-            ...Object.fromEntries(searchParams.entries()),
-            tag: ''
-          })
+
+          if (item.id === filter.tag) {
+            setFilter('tag', null)
+          }
         },
         onError: () => {
           toast.error(
@@ -68,18 +70,18 @@ function TaskTagListItem({
 
   return (
     <SidebarItem
-      active={searchParams.get('tag') === item.id}
-      hamburgerMenuItems={
+      active={filter.tag === item.id}
+      contextMenuItems={
         <>
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleUpdateTag}
           />
-          <MenuItem
-            isRed
+          <ContextMenuItem
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDeleteTag}
           />
         </>
@@ -88,15 +90,11 @@ function TaskTagListItem({
       label={item.name}
       number={item.amount}
       onCancelButtonClick={() => {
-        searchParams.delete('tag')
-        setSearchParams(searchParams)
+        setFilter('tag', null)
         setSidebarOpen(false)
       }}
       onClick={() => {
-        setSearchParams({
-          ...Object.fromEntries(searchParams.entries()),
-          tag: item.id
-        })
+        setFilter('tag', item.id)
         setSidebarOpen(false)
       }}
     />

@@ -11,7 +11,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { MenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ContextMenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
@@ -50,24 +50,26 @@ function Dashboard() {
     <ModuleWrapper>
       <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
         <ModuleHeader
-          hamburgerMenuItems={
-            <>
-              <MenuItem
-                icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
-                namespace="core.dashboard"
-                text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
-                onClick={() => {
-                  setCanLayoutChange(!canLayoutChange)
-                }}
-              />
-              <MenuItem
-                icon="tabler:apps"
-                namespace="core.dashboard"
-                text="Manage Widgets"
-                onClick={handleManageWidget}
-              />
-            </>
-          }
+          contextMenuProps={{
+            children: (
+              <>
+                <ContextMenuItem
+                  icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
+                  namespace="core.dashboard"
+                  label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
+                  onClick={() => {
+                    setCanLayoutChange(!canLayoutChange)
+                  }}
+                />
+                <ContextMenuItem
+                  icon="tabler:apps"
+                  namespace="core.dashboard"
+                  label="Manage Widgets"
+                  onClick={handleManageWidget}
+                />
+              </>
+            )
+          }}
           title="Dashboard"
         />
         {isReady && (
@@ -77,7 +79,7 @@ function Dashboard() {
           />
         )}
       </div>
-      {/* <FAB alwaysShow text="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
+      {/* <FAB alwaysShow label="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
     </ModuleWrapper>
   )
 }

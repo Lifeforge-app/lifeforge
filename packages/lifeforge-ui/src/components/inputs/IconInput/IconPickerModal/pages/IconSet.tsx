@@ -75,10 +75,9 @@ function IconSet({
       </h1>
       <SearchInput
         namespace="common.modals"
-        searchQuery={searchTerm}
-        setSearchQuery={setSearchTerm}
-        stuffToSearch="icon"
-        tKey="iconPicker"
+        searchTarget="iconPicker.icon"
+        setValue={setSearchTerm}
+        value={searchTerm}
       />
       <ChipSelector
         options={Object.keys(iconData.categories ?? {})}

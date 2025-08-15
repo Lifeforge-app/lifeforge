@@ -82,11 +82,10 @@ function CreatePasswordScreen({
           }}
           className="w-1/2"
           icon="tabler:lock"
-          label="New Password"
+          label="vault.inputs.newPassword"
           namespace="common.vault"
           placeholder="••••••••••••••••"
           setValue={setNewPassword}
-          tKey="vault"
           value={newPassword}
         />
         <TextInput
@@ -94,11 +93,10 @@ function CreatePasswordScreen({
           isPassword
           className="w-1/2"
           icon="tabler:lock-check"
-          label="Confirm Password"
+          label="vault.inputs.confirmPassword"
           namespace="common.vault"
           placeholder="••••••••••••••••"
           setValue={setConfirmPassword}
-          tKey="vault"
           value={confirmPassword}
           onKeyDown={e => {
             if (e.key === 'Enter') {

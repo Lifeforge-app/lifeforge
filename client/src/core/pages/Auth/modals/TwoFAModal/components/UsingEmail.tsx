@@ -129,11 +129,10 @@ function UsingEmail({
               className="mb-4 w-full"
               icon="tabler:mail"
               inputMode="email"
-              label="email"
+              label="modals.twoFA.inputs.email"
               namespace="common.auth"
               placeholder="johndoe@gmail.com"
               setValue={setEmail}
-              tKey="modals.twoFA"
               value={email}
             />
             <Button
@@ -141,10 +140,9 @@ function UsingEmail({
               icon="tabler:mail"
               loading={sendOtpLoading}
               namespace="common.vault"
-              tKey="otp"
               onClick={requestOTP}
             >
-              Request
+              otp.buttons.request
             </Button>
           </>
         )}

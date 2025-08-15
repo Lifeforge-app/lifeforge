@@ -32,8 +32,8 @@ function ChipSelector({
           .map(option => (
             <Chip
               key={option}
+              label={option}
               selected={value === option}
-              text={option}
               onClick={() => {
                 setValue(value === option ? null : option)
                 setExpanded(false)

@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { MenuItem } from 'lifeforge-ui'
+import { ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
@@ -23,17 +23,21 @@ function HeaderMenu() {
 
   return (
     <>
-      <MenuItem icon="tabler:refresh" text="Refresh" onClick={handleRefresh} />
-      <MenuItem
+      <ContextMenuItem
+        icon="tabler:refresh"
+        label="Refresh"
+        onClick={handleRefresh}
+      />
+      <ContextMenuItem
         icon="tabler:apps"
         namespace="apps.wallet"
-        text="Manage Categories"
+        label="Manage Categories"
         onClick={handleManageCategories}
       />
-      <MenuItem
+      <ContextMenuItem
         icon="tabler:template"
         namespace="apps.wallet"
-        text="Manage Templates"
+        label="Manage Templates"
         onClick={() => {
           open(ManageTemplatesModal, {})
         }}

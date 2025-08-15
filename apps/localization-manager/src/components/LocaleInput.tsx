@@ -40,7 +40,6 @@ function LocaleInput({
       className="w-full"
       icon={`circle-flags:${LANG_FLAG[name as keyof typeof LANG_FLAG]}`}
       label={t(`inputs.languages.${_.camelCase(name)}`)}
-      namespace={false}
       placeholder={t(`inputs.translationPlaceholder`, {
         key: path.join('.')
       })}

@@ -1,20 +1,24 @@
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-export default function useInputLabel(
-  namespace: string | false,
-  name: string,
-  tKey?: string
-) {
-  const { t } = useTranslation(namespace ? namespace : undefined)
+export default function useInputLabel({
+  namespace,
+  label
+}: {
+  namespace?: string
+  label: string
+}) {
+  const { t } = useTranslation(namespace)
 
-  if (!namespace) return name
+  if (!namespace) return label
 
-  const nameKey = _.camelCase(name)
+  const nameKey = _.camelCase(label)
 
-  const labelKey = [tKey, 'inputs', nameKey, 'label'].filter(Boolean).join('.')
-
-  const fallbackKey = [tKey, 'inputs', nameKey].filter(Boolean).join('.')
-
-  return t([labelKey, fallbackKey, name])
+  return t([
+    `inputs.${nameKey}.label`,
+    `inputs.${nameKey}`,
+    `${nameKey}.label`,
+    nameKey,
+    label
+  ])
 }
