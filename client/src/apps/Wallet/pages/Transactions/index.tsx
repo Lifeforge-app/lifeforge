@@ -1,17 +1,17 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
+  ContextMenu,
+  ContextMenuItem,
   EmptyStateScreen,
   FAB,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 import type { InferOutput } from 'shared'
@@ -50,18 +50,6 @@ function Transactions() {
 
   const navigate = useNavigate()
 
-  const [visibleColumn, setVisibleColumn] = useState([
-    'Date',
-    'Type',
-    'Ledger',
-    'Asset',
-    'Location',
-    'Particulars',
-    'Category',
-    'Amount',
-    'Receipt'
-  ])
-
   const transactionsQuery = useQuery(
     forgeAPI.wallet.transactions.list.queryOptions()
   )
@@ -69,11 +57,6 @@ function Transactions() {
   const [searchParams] = useSearchParams()
 
   const { hash } = useLocation()
-
-  const memoizedHeaderMenu = useMemo(
-    () => <HeaderMenu />,
-    [visibleColumn, setVisibleColumn]
-  )
 
   const handleCreateTransaction = useCallback(() => {
     open(ModifyTransactionsModal, {
@@ -138,49 +121,48 @@ function Transactions() {
       <ModuleHeader
         actionButton={
           (transactionsQuery.data?.length || 0) > 0 && (
-            <Menu as="div" className="relative z-50 hidden md:block">
-              <Button
-                as={MenuButton}
-                className="hidden md:flex"
-                icon="tabler:plus"
-                onClick={() => {}}
-              >
-                {t('common.buttons:new', {
-                  item: t('apps.wallet:items.transaction')
-                })}
-              </Button>
-              <MenuItems
-                transition
-                anchor="bottom end"
-                className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-              >
-                <MenuItem
+            <ContextMenu
+              buttonComponent={
+                <Button
+                  className="hidden md:flex"
                   icon="tabler:plus"
-                  namespace="apps.wallet"
-                  text="Add Manually"
-                  onClick={handleCreateTransaction}
-                />
-                <MenuItem
-                  icon="tabler:template"
-                  namespace="apps.wallet"
-                  text="From Template"
-                  onClick={() => {
-                    open(ManageTemplatesModal, {
-                      choosing: true
-                    })
-                  }}
-                />
-                <MenuItem
-                  icon="tabler:scan"
-                  namespace="apps.wallet"
-                  text="Scan Receipt"
-                  onClick={handleUploadReceipt}
-                />
-              </MenuItems>
-            </Menu>
+                  onClick={() => {}}
+                >
+                  {t('common.buttons:new', {
+                    item: t('apps.wallet:items.transaction')
+                  })}
+                </Button>
+              }
+              classNames={{ button: 'hidden:md:block' }}
+            >
+              <ContextMenuItem
+                icon="tabler:plus"
+                namespace="apps.wallet"
+                label="Add Manually"
+                onClick={handleCreateTransaction}
+              />
+              <ContextMenuItem
+                icon="tabler:template"
+                namespace="apps.wallet"
+                label="From Template"
+                onClick={() => {
+                  open(ManageTemplatesModal, {
+                    choosing: true
+                  })
+                }}
+              />
+              <ContextMenuItem
+                icon="tabler:scan"
+                namespace="apps.wallet"
+                label="Scan Receipt"
+                onClick={handleUploadReceipt}
+              />
+            </ContextMenu>
           )
         }
-        hamburgerMenuItems={memoizedHeaderMenu}
+        contextMenuProps={{
+          children: <HeaderMenu />
+        }}
         icon="tabler:arrows-exchange"
         namespace="apps.wallet"
         title="Transactions"
@@ -212,37 +194,35 @@ function Transactions() {
               }
             </QueryWrapper>
             {(transactionsQuery.data ?? []).length > 0 && (
-              <Menu>
-                <FAB as={MenuButton} hideWhen="md" />
-                <MenuItems
-                  transition
-                  anchor="bottom end"
-                  className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-                >
-                  <MenuItem
-                    icon="tabler:plus"
-                    namespace="apps.wallet"
-                    text="Add Manually"
-                    onClick={handleCreateTransaction}
-                  />
-                  <MenuItem
-                    icon="tabler:template"
-                    namespace="apps.wallet"
-                    text="From Template"
-                    onClick={() => {
-                      open(ManageTemplatesModal, {
-                        choosing: true
-                      })
-                    }}
-                  />
-                  <MenuItem
-                    icon="tabler:scan"
-                    namespace="apps.wallet"
-                    text="Scan Receipt"
-                    onClick={handleUploadReceipt}
-                  />
-                </MenuItems>
-              </Menu>
+              <ContextMenu
+                buttonComponent={<FAB className="static!" hideWhen="md" />}
+                classNames={{
+                  wrapper: 'w-min! fixed right-6 bottom-6'
+                }}
+              >
+                <ContextMenuItem
+                  icon="tabler:plus"
+                  namespace="apps.wallet"
+                  label="Add Manually"
+                  onClick={handleCreateTransaction}
+                />
+                <ContextMenuItem
+                  icon="tabler:template"
+                  namespace="apps.wallet"
+                  label="From Template"
+                  onClick={() => {
+                    open(ManageTemplatesModal, {
+                      choosing: true
+                    })
+                  }}
+                />
+                <ContextMenuItem
+                  icon="tabler:scan"
+                  namespace="apps.wallet"
+                  label="Scan Receipt"
+                  onClick={handleUploadReceipt}
+                />
+              </ContextMenu>
             )}
           </div>
         </div>

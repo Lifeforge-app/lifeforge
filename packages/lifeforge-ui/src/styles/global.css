@@ -1,6 +1,5 @@
 :root {
   interpolate-size: allow-keywords;
-  font-size: 14px;
 }
 
 * {
@@ -20,6 +19,10 @@ textarea {
 
 button {
   @apply cursor-pointer;
+
+  & > svg {
+    @apply pointer-events-none;
+  }
 }
 
 code {

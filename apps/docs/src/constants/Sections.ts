@@ -14,7 +14,7 @@ const SECTIONS = {
   ],
   'Developer Guide': [
     'Introduction',
-    'Architecture',
+    'Project Structure',
     'UI Library',
     'API Reference',
     'Localization',

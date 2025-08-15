@@ -129,7 +129,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
               key={i}
               color={color}
               icon={icon}
-              text={name}
+              label={name}
               value={id}
             />
           ))}
@@ -147,7 +147,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
           value={url}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           className="w-full"
           icon="tabler:arrow-right"
           loading={loading === 'loading'}

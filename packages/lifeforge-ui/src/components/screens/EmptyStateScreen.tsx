@@ -20,10 +20,10 @@ function EmptyStateScreen({
   description?: string
   icon?: string | React.ReactElement
   smaller?: boolean
-  namespace: string | false
+  namespace?: string
   tKey?: string
 }) {
-  const { t } = useTranslation(namespace ? namespace : undefined)
+  const { t } = useTranslation(namespace)
 
   return (
     <div

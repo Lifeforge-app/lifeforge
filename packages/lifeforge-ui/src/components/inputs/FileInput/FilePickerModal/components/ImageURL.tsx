@@ -14,14 +14,13 @@ function ImageURL({
     <>
       <TextInput
         icon="tabler:link"
-        label="Image link"
+        label="imagePicker.inputs.imageLink"
         namespace="common.modals"
         placeholder="https://example.com/image.jpg"
         setValue={(value: string) => {
           setFile(value)
           setPreview(value)
         }}
-        tKey="imagePicker"
         value={file === null ? '' : (file as string)}
       />
 

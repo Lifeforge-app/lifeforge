@@ -1,4 +1,4 @@
-import { GoBackButton, HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ContextMenu, ContextMenuItem, GoBackButton } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
 import { useNavigate } from 'react-router'
 
@@ -28,14 +28,14 @@ function GoBackButtonAndMenu() {
   return (
     <div className="flex-between w-full">
       <GoBackButton onClick={handleGoBack} />
-      <HamburgerMenu>
-        <MenuItem
+      <ContextMenu>
+        <ContextMenuItem
           icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
           namespace="apps.ideaBox"
-          text={viewArchived ? 'View Active' : 'View Archived'}
+          label={viewArchived ? 'View Active' : 'View Archived'}
           onClick={handleViewArchive}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

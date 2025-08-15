@@ -37,9 +37,7 @@ function SelectableFormWrapper({
             />
           )}
         </div>
-        <p
-          className={clsx('mt-1 transition-all', selected ? '' : 'text-bg-500')}
-        >
+        <p className={clsx('transition-all', selected ? '' : 'text-bg-500')}>
           {t(`inputs.${formId}.title`)}
         </p>
       </div>

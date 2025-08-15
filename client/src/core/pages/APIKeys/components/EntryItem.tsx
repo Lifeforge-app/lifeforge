@@ -7,8 +7,8 @@ import {
   Button,
   ConfigColumn,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem
+  ContextMenu,
+  ContextMenuItem
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -123,19 +123,19 @@ function EntryItem({
             copyKey().catch(console.error)
           }}
         />
-        <HamburgerMenu>
-          <MenuItem
+        <ContextMenu>
+          <ContextMenuItem
             icon="tabler:pencil"
-            text="edit"
+            label="edit"
             onClick={handleUpdateEntry}
           />
-          <MenuItem
-            isRed
+          <ContextMenuItem
+            dangerous
             icon="tabler:trash"
-            text="delete"
+            label="delete"
             onClick={handleDeleteEntry}
           />
-        </HamburgerMenu>
+        </ContextMenu>
       </div>
     </ConfigColumn>
   )

@@ -20,14 +20,13 @@ function MonthlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.monthly.relativeDay.inputs.onThe')}
-        namespace={false}
         setValue={onThe => setData({ ...data, onThe })}
         value={data.onThe}
       >
         {['first', 'second', 'third', 'fourth', 'last'].map(day => (
           <ListboxOption
             key={day}
-            text={t(`recurring.onThe.${day}`)}
+            label={t(`recurring.onThe.${day}`)}
             value={day}
           />
         ))}
@@ -54,7 +53,6 @@ function MonthlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.monthly.relativeDay.inputs.onTheDay')}
-        namespace={false}
         setValue={onTheDay => setData({ ...data, onTheDay })}
         value={data.onTheDay}
       >
@@ -72,7 +70,7 @@ function MonthlyRelativeDayForm({
         ].map((day, idx) => (
           <ListboxOption
             key={day}
-            text={t(
+            label={t(
               idx < 7
                 ? `common.misc:dates.days.${[
                     'mon',

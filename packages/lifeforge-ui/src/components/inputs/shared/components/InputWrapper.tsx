@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
@@ -5,11 +6,13 @@ function InputWrapper({
   className = '',
   disabled = false,
   inputRef,
+  onFocus,
   children
 }: {
   className?: string
   disabled?: boolean
-  inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
+  inputRef?: React.RefObject<any | null>
+  onFocus?: () => void
   children: React.ReactNode
 }) {
   const focusInput = useCallback(
@@ -30,8 +33,10 @@ function InputWrapper({
           )
         }
       }
+
+      onFocus?.()
     },
-    [inputRef]
+    [inputRef, onFocus]
   )
 
   const handleKeyDown = useCallback(

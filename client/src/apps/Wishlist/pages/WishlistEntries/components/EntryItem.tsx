@@ -6,8 +6,8 @@ import {
   Button,
   Checkbox,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -116,7 +116,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
         <Checkbox
           checked={bought}
           className="hidden! sm:flex! md:hidden!"
-          onChange={() => {
+          onCheckedChange={() => {
             setBought(prev => !prev)
             toggleBoughtMutation.mutate({})
           }}
@@ -124,11 +124,11 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
       </div>
       <div className="flex-between gap-3">
         <Button
-          iconAtEnd
           as="a"
           className="w-auto px-0! sm:px-4!"
           href={entry.url}
           icon="iconamoon:arrow-top-right-1"
+          iconPosition="end"
           namespace="apps.wishlist"
           target="_blank"
           variant="plain"
@@ -138,24 +138,28 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
         <Checkbox
           checked={bought}
           className="flex! sm:hidden! md:flex!"
-          onChange={() => {
+          onCheckedChange={() => {
             setBought(prev => !prev)
             toggleBoughtMutation.mutate({})
           }}
         />
-        <HamburgerMenu
+        <ContextMenu
           classNames={{
             wrapper: 'absolute right-4 top-4 sm:static'
           }}
         >
-          <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
-          <MenuItem
-            isRed
+          <ContextMenuItem
+            icon="tabler:pencil"
+            label="Edit"
+            onClick={handleEdit}
+          />
+          <ContextMenuItem
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDelete}
           />
-        </HamburgerMenu>
+        </ContextMenu>
       </div>
     </li>
   )

@@ -61,7 +61,7 @@ function CodeTimeActivityCalendar() {
             .map((_, index) => (
               <ListboxOption
                 key={index}
-                text={`${firstYear + index}`}
+                label={`${firstYear + index}`}
                 value={firstYear + index}
               />
             ))}

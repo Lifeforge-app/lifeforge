@@ -50,8 +50,8 @@ function App() {
           <>
             <Sidebar
               groupedEndpoints={groupedEndpoints}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
+              value={searchQuery}
+              setValue={setSearchQuery}
             />
             <div className="flex-1 overflow-y-auto p-12">
               <div className="space-y-3">

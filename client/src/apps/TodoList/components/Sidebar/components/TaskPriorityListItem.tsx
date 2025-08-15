@@ -2,16 +2,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  MenuItem,
+  ContextMenuItem,
   SidebarItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import ModifyPriorityModal from '@apps/TodoList/modals/ModifyPriorityModal'
-import type { TodoListPriority } from '@apps/TodoList/providers/TodoListProvider'
+import {
+  type TodoListPriority,
+  useTodoListContext
+} from '@apps/TodoList/providers/TodoListProvider'
 
 function TaskPriorityListItem({
   item,
@@ -24,7 +26,7 @@ function TaskPriorityListItem({
 
   const open = useModalStore(state => state.open)
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { filter, setFilter } = useTodoListContext()
 
   const handleUpdatePriority = useCallback(() => {
     open(ModifyPriorityModal, {
@@ -41,10 +43,10 @@ function TaskPriorityListItem({
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['todo-list'] })
-          setSearchParams({
-            ...Object.fromEntries(searchParams.entries()),
-            priority: ''
-          })
+
+          if (item.id === filter.priority) {
+            setFilter('priority', null)
+          }
         },
         onError: () => {
           toast.error(
@@ -67,18 +69,18 @@ function TaskPriorityListItem({
 
   return (
     <SidebarItem
-      active={searchParams.get('priority') === item.id}
-      hamburgerMenuItems={
+      active={filter.priority === item.id}
+      contextMenuItems={
         <>
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleUpdatePriority}
           />
-          <MenuItem
-            isRed
+          <ContextMenuItem
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDeletePriority}
           />
         </>
@@ -87,15 +89,11 @@ function TaskPriorityListItem({
       number={item.amount}
       sideStripColor={item.color}
       onCancelButtonClick={() => {
-        searchParams.delete('priority')
-        setSearchParams(searchParams)
+        setFilter('priority', null)
         setSidebarOpen(false)
       }}
       onClick={() => {
-        setSearchParams({
-          ...Object.fromEntries(searchParams.entries()),
-          priority: item.id
-        })
+        setFilter('priority', item.id)
         setSidebarOpen(false)
       }}
     />

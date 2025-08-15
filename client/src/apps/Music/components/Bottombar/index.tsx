@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, MenuItem, useModalStore } from 'lifeforge-ui'
+import { Button, ContextMenuItem, useModalStore } from 'lifeforge-ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
@@ -23,10 +23,10 @@ function BottomBar() {
           anchor="top end"
           className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:6px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:brand-youtube"
             namespace="apps.music"
-            text="Download from YouTube"
+            label="Download from YouTube"
             onClick={() => open(YoutubeDownloaderModal, {})}
           />
         </MenuItems>

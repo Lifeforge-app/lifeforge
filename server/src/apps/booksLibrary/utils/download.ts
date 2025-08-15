@@ -1,5 +1,5 @@
 import { PBService } from '@functions/database'
-import { updateTaskInPool } from '@middlewares/taskPoolMiddleware'
+import { updateTaskInPool } from '@functions/socketio/taskPool'
 import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import { Server } from 'socket.io'

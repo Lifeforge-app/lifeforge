@@ -12,13 +12,18 @@ import { Tooltip } from '../utilities'
 import useInputLabel from './shared/hooks/useInputLabel'
 
 interface LocationInputProps {
+  /** The label text displayed above the location input field. */
   label?: string
+  /** The current location value of the input. */
   value: Location | null
+  /** Callback function called when the location value changes. */
   setValue: (value: Location | null) => void
+  /** Whether the location field is required for form validation. */
   required?: boolean
+  /** Whether the location input is disabled and non-interactive. */
   disabled?: boolean
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function LocationInput({
@@ -27,12 +32,11 @@ function LocationInput({
   setValue,
   required,
   disabled,
-  namespace,
-  tKey
+  namespace
 }: LocationInputProps) {
   const { t } = useTranslation('common.misc')
 
-  const inputLabel = useInputLabel(namespace, label || 'Location', tKey)
+  const inputLabel = useInputLabel({ namespace, label: label || 'Location' })
 
   const apiHost = useAPIEndpoint()
 
@@ -89,7 +93,7 @@ function LocationInput({
               {dataQuery.data.map(loc => (
                 <ComboboxOption
                   key={JSON.stringify(loc.location)}
-                  text={
+                  label={
                     <div className="w-full min-w-0">
                       {loc.name}
                       <p className="text-bg-400 dark:text-bg-600 w-full min-w-0 truncate text-sm">

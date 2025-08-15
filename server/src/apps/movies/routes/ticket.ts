@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
+import { Location } from '@lib/locations/typescript/location.types'
 import { SCHEMAS } from '@schema'
-import { Location } from '@typescript/location.types'
 import { z } from 'zod/v4'
 
 const update = forgeController.mutation

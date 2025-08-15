@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import Checkbox from './Checkbox'
 
@@ -13,6 +13,16 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     checked: true,
-    onChange: () => {}
+    onCheckedChange: () => {},
+    disabled: false,
+    label: ''
+  }
+}
+
+export const WithLabel: Story = {
+  args: {
+    checked: true,
+    disabled: false,
+    label: 'Accept terms and conditions'
   }
 }

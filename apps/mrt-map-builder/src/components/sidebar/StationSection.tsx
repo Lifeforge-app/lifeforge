@@ -33,10 +33,9 @@ function StationSection({
         <SearchInput
           lighter
           className="mb-4"
-          namespace={false}
-          searchQuery={searchStationQuery}
-          setSearchQuery={setSearchStationQuery}
-          stuffToSearch="stations"
+          value={searchStationQuery}
+          setValue={setSearchStationQuery}
+          searchTarget="stations"
         />
         {mrtStations.length > 0 ? (
           filteredStations.length > 0 ? (
@@ -56,7 +55,6 @@ function StationSection({
               description="No stations found matching your search query."
               icon="tabler:search-off"
               name={false}
-              namespace={false}
               title="No Stations Found"
             />
           )
@@ -66,7 +64,6 @@ function StationSection({
             description="Click the button below to add a new MRT station."
             icon="tabler:map-pin-off"
             name={false}
-            namespace={false}
             title="No MRT Stations"
           />
         )}

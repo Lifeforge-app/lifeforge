@@ -14,8 +14,8 @@ import {
 } from 'chart.js'
 import {
   Button,
+  ContextMenuItem,
   FAB,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper
 } from 'lifeforge-ui'
@@ -71,16 +71,16 @@ function WalletDashboard() {
               anchor="bottom end"
               className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:plus"
-                text="Add Manually"
+                label="Add Manually"
                 onClick={() => {
                   navigate('/wallet/transactions#new')
                 }}
               />
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:scan"
-                text="Scan Receipt"
+                label="Scan Receipt"
                 onClick={() => {
                   navigate('/wallet/transactions#scan')
                 }}
@@ -88,19 +88,19 @@ function WalletDashboard() {
             </MenuItems>
           </Menu>
         }
-        hamburgerMenuItems={
-          <>
-            <MenuItem
+        contextMenuProps={{
+          children: (
+            <ContextMenuItem
+              checked={isAmountHidden}
               icon="tabler:eye-off"
-              isToggled={isAmountHidden}
+              label="Hide Amount"
               namespace="apps.wallet"
-              text="Hide Amount"
               onClick={() => {
                 toggleAmountVisibility()
               }}
             />
-          </>
-        }
+          )
+        }}
         icon="tabler:wallet"
         title="Wallet"
       />
@@ -120,18 +120,18 @@ function WalletDashboard() {
           anchor="bottom end"
           className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:plus"
+            label="Add Manually"
             namespace="apps.wallet"
-            text="Add Manually"
             onClick={() => {
               navigate('/wallet/transactions#new')
             }}
           />
-          <MenuItem
+          <ContextMenuItem
             icon="tabler:scan"
+            label="Scan Receipt"
             namespace="apps.wallet"
-            text="Scan Receipt"
             onClick={() => {
               navigate('/wallet/transactions#scan')
             }}

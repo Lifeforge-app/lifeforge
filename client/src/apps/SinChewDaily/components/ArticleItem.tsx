@@ -23,7 +23,7 @@ function ArticleItem({ item }: { item: NewsArticle }) {
           />
         )}
       </div>
-      <div>
+      <div className="w-full">
         <p className="text-custom-500 mb-2 text-lg font-semibold">
           {item.category}
         </p>

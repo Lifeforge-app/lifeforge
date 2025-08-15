@@ -48,7 +48,7 @@ function HeaderFilter<T extends Record<string, string | null>>({
                       : undefined
                   }
                   icon={target.icon ?? ''}
-                  text={target.name ?? ''}
+                  label={target.name ?? ''}
                   onRemove={() => {
                     setValues[query](null)
                   }}

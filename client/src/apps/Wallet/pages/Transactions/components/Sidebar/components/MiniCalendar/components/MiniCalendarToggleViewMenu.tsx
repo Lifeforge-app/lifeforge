@@ -1,8 +1,4 @@
-import {
-  HamburgerMenu,
-  HamburgerMenuSelectorWrapper,
-  MenuItem
-} from 'lifeforge-ui'
+import { ContextMenu, ContextMenuGroup, ContextMenuItem } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import type { WalletTransaction } from '@apps/Wallet/pages/Transactions'
@@ -23,23 +19,21 @@ function MiniCalendarToggleViewMenu({
   const { t } = useTranslation('apps.wallet')
 
   return (
-    <HamburgerMenu>
-      <HamburgerMenuSelectorWrapper icon="tabler:eye" title="Toggle view">
+    <ContextMenu>
+      <ContextMenuGroup icon="tabler:eye" label="Toggle view">
         {VIEWS.map(([icon, id]) => (
-          <MenuItem
+          <ContextMenuItem
             key={id}
+            checked={viewsFilter.includes(id)}
             icon={icon}
-            isToggled={viewsFilter.includes(id)}
-            namespace={false}
-            text={t(`transactionTypes.${id}`)}
-            onClick={e => {
-              e.preventDefault()
+            label={t(`transactionTypes.${id}`)}
+            onClick={() => {
               toggleView(id)
             }}
           />
         ))}
-      </HamburgerMenuSelectorWrapper>
-    </HamburgerMenu>
+      </ContextMenuGroup>
+    </ContextMenu>
   )
 }
 

@@ -1,5 +1,4 @@
 import { QueryWrapper, SidebarItem } from 'lifeforge-ui'
-import { useSearchParams } from 'react-router'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -8,9 +7,7 @@ function TaskStatusList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }) {
-  const [searchParams, setSearchParams] = useSearchParams()
-
-  const { statusCounterQuery } = useTodoListContext()
+  const { statusCounterQuery, filter, setFilter } = useTodoListContext()
 
   return (
     <QueryWrapper query={statusCounterQuery}>
@@ -26,8 +23,8 @@ function TaskStatusList({
             <SidebarItem
               key={name}
               active={
-                searchParams.get('status') === name.toLowerCase() ||
-                (name === 'All' && !searchParams.get('status'))
+                filter.status === name.toLowerCase() ||
+                (name === 'All' && !filter.status)
               }
               autoActive={false}
               icon={icon}
@@ -38,16 +35,12 @@ function TaskStatusList({
               }
               onClick={() => {
                 if (name === 'All') {
-                  searchParams.delete('status')
-                  setSearchParams(searchParams)
+                  setFilter('status', null)
                   setSidebarOpen(false)
 
                   return
                 }
-                setSearchParams({
-                  ...Object.fromEntries(searchParams.entries()),
-                  status: name.toLowerCase()
-                })
+                setFilter('status', name.toLowerCase())
                 setSidebarOpen(false)
               }}
             />

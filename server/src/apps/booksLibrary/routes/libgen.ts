@@ -1,8 +1,5 @@
 import { forgeController, forgeRouter } from '@functions/routes'
-import {
-  addToTaskPool,
-  updateTaskInPool
-} from '@middlewares/taskPoolMiddleware'
+import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import { spawn } from 'child_process'
 import { JSDOM } from 'jsdom'
 import { z } from 'zod/v4'
