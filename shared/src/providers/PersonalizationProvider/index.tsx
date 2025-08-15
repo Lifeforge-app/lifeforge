@@ -17,7 +17,7 @@ import type {
 import { getColorPalette } from './utils/themeColors'
 
 const DEFAULT_VALUE: IPersonalizationData = {
-  rootElement: document.querySelector<HTMLElement>('#app'),
+  rootElement: document.body,
   fontFamily: 'Onest',
   fontScale: 1,
   theme: 'system',
