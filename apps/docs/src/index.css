@@ -6,7 +6,7 @@
 @source "../../../node_modules/lifeforge-ui/dist";
 
 :root {
-  --custom-font-scale: 1.2;
+  --custom-font-scale: 1;
 }
 
 *:not(code *) {
@@ -23,7 +23,7 @@
 
 code {
   font-family: 'JetBrains Mono', monospace !important;
-  @apply text-bg-100! text-sm! break-all! sm:text-base!;
+  @apply text-bg-800! dark:text-bg-100! text-sm! break-all! sm:text-base!;
 }
 
 pre,
@@ -33,4 +33,12 @@ pre * {
 
 article section {
   @apply scroll-mt-24;
+}
+
+::marker {
+  @apply text-bg-300;
+}
+
+.dark ::marker {
+  @apply text-bg-700!;
 }

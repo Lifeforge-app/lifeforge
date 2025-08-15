@@ -139,7 +139,7 @@ function Rightbar() {
   return (
     <aside className="fixed top-20 right-0 hidden h-full min-h-0 w-80 overflow-y-auto p-12 lg:block">
       <h2 className="text-lg font-semibold">On This Page</h2>
-      <ul className="before:border-bg-800 relative isolate mt-4 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:border-r-[1.5px]">
+      <ul className="before:border-bg-200 dark:before:border-bg-800 relative isolate mt-4 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:border-r-[1.5px]">
         {allSections.map((item, index) => {
           const itemId = toLinkCase(item.replace(/\./g, ''))
 
@@ -147,7 +147,7 @@ function Rightbar() {
             <a
               key={index}
               aria-current={activeSection === itemId ? 'page' : undefined}
-              className="aria-[current=page]:text-custom-500 aria-[current=page]:border-custom-500 text-bg-500 hover:text-bg-100 block cursor-pointer px-4 py-2 hover:font-medium aria-[current=page]:border-l-[2.5px] aria-[current=page]:font-semibold"
+              className="aria-[current=page]:text-custom-500! aria-[current=page]:border-custom-500 text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 block cursor-pointer px-4 py-2 hover:font-medium aria-[current=page]:border-l-[2.5px] aria-[current=page]:font-semibold"
               href={`#${itemId}`}
               id={itemId}
               onClick={e => {
@@ -162,7 +162,7 @@ function Rightbar() {
       </ul>
       <a
         className="text-bg-100 mt-6 flex items-center gap-2 font-medium hover:underline"
-        href={`https://github.com/melvinchia3636/lifeforge-documentation/edit/main/src/contents/${
+        href={`https://github.com/melvinchia3636/lifeforge/edit/main/apps/docs/src/contents/${
           location.pathname.split('/')?.[1]
         }/${toTitleCase(
           location.pathname.split('/')?.[2]?.replace(/-/g, ' ') || ''
