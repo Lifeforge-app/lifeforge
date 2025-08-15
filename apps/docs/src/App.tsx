@@ -8,6 +8,7 @@ import Header from './components/Header'
 import Rightbar from './components/Rightbar'
 import Sidebar from './components/Sidebar'
 import DeveloperIntroduction from './contents/developer-guide/Introduction.mdx'
+import ProjectStructure from './contents/developer-guide/ProjectStructure.mdx'
 import Configuration from './contents/getting-started/Configuration.mdx'
 import Deployment from './contents/getting-started/Deployment.mdx'
 import Installation from './contents/getting-started/Installation.mdx'
@@ -49,13 +50,18 @@ const components: MDXComponents = {
     )
   },
   p(properties) {
-    return <p {...properties} className="text-bg-500 mt-4 sm:mt-6 sm:text-lg" />
+    return (
+      <p
+        {...properties}
+        className="text-bg-600 dark:text-bg-400 mt-4 sm:mt-6 sm:text-lg"
+      />
+    )
   },
   hr(properties) {
     return (
       <hr
         {...properties}
-        className="border-bg-800 mt-8 mb-4 border-t-[1.5px] sm:mt-12 sm:mb-8"
+        className="border-bg-200 dark:border-bg-800 mt-8 mb-4 border-t-[1.5px] sm:mt-12 sm:mb-8"
       />
     )
   },
@@ -73,10 +79,17 @@ const components: MDXComponents = {
     return <ul {...properties} className="mt-4 list-disc space-y-4 pl-6" />
   },
   li(properties) {
-    return <li {...properties} className="text-bg-500 sm:text-lg" />
+    return (
+      <li {...properties} className="dark:text-bg-400 text-bg-600 sm:text-lg" />
+    )
   },
   strong(properties) {
-    return <strong {...properties} className="text-bg-100 font-semibold" />
+    return (
+      <strong
+        {...properties}
+        className="text-bg-800 dark:text-bg-100 font-semibold"
+      />
+    )
   },
   code() {
     return (
@@ -89,7 +102,7 @@ const components: MDXComponents = {
     return (
       <table
         {...properties}
-        className="border-bg-800 mt-6 w-full border-collapse border-[1.5px]"
+        className="border-bg-200 dark:border-bg-800 mt-6 w-full border-collapse border-[1.5px]"
       />
     )
   },
@@ -97,7 +110,7 @@ const components: MDXComponents = {
     return (
       <th
         {...properties}
-        className="border-bg-800 border-[1.5px] px-4 py-2 text-left"
+        className="border-bg-200 dark:border-bg-800 border-[1.5px] px-4 py-2 text-left"
       />
     )
   },
@@ -105,12 +118,12 @@ const components: MDXComponents = {
     return (
       <td
         {...properties}
-        className="border-bg-800 border-[1.5px] px-4 py-2 text-left first:break-all"
+        className="border-bg-200 dark:border-bg-800 border-[1.5px] px-4 py-2 text-left first:break-all"
       />
     )
   },
   img(properties) {
-    return <img {...properties} className="w-full rounded-lg" />
+    return <img {...properties} alt="" className="w-full rounded-lg" />
   }
 }
 
@@ -118,7 +131,10 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <main className="bg-bg-900 text-bg-200 flex h-dvh w-full flex-col">
+    <main
+      className="bg-bg-100 dark:bg-bg-900 text-bg-800 dark:text-bg-100 flex h-dvh w-full flex-col transition-colors"
+      id="app"
+    >
       <Header setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
       <div className="flex flex-1">
         <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
@@ -172,6 +188,10 @@ function App() {
               <Route
                 element={<DeveloperIntroduction components={components} />}
                 path="introduction"
+              />
+              <Route
+                element={<ProjectStructure components={components} />}
+                path="project-structure"
               />
             </Route>
           </Route>
