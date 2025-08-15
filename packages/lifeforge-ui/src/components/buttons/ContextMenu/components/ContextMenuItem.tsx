@@ -11,7 +11,7 @@ interface ContextMenuItemProps {
   icon?: string | React.ReactElement
   /** Whether the menu item should be styled as dangerous/destructive. */
   dangerous?: boolean
-  /** Whether the menu item is in a checked state. Will display a check icon when true. */
+  /** Whether the menu item is in a checked state. Displays a check icon when true. */
   checked?: boolean
   /** Whether the menu item is disabled and non-interactive. */
   disabled?: boolean
@@ -21,17 +21,11 @@ interface ContextMenuItemProps {
   shouldCloseMenuOnClick?: boolean
   /** Additional CSS class names to apply to the menu item. */
   className?: string
-  /**
-   * The translation namespace for internationalization.
-   * Refer to the [main documentation](https://docs.lifeforge.melvinchia.dev) for more information on internationalization.
-   */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
-  /**
-   * Translation properties to pass to the translation function. Used for dynamic translations.
-   * Refer to the [main documentation](https://docs.lifeforge.melvinchia.dev) for more information on internationalization.
-   */
+  /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   tProps?: Record<string, unknown>
-  /** Callback function executed when the menu item is clicked. */
+  /** Callback function called when the menu item is clicked. */
   onClick: () => void
 }
 

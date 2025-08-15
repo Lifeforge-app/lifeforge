@@ -105,22 +105,22 @@ function Pixabay({
     <>
       <div className="flex w-full min-w-0 flex-col items-center gap-2 sm:flex-row">
         <SearchInput
-          filterAmount={
-            [
+          actionButtonProps={{
+            icon: 'tabler:filter',
+            onClick: () => {
+              setIsSearchFilterModalOpen(true)
+            },
+            children: [
               filters.imageType !== 'all',
               filters.category,
               filters.colors,
               filters.isEditorsChoice
             ].filter(e => e).length
-          }
-          namespace="common.modals"
-          searchQuery={query}
-          setSearchQuery={setQuery}
-          stuffToSearch="pixabay"
-          tKey="pixabay"
-          onFilterIconClick={() => {
-            setIsSearchFilterModalOpen(true)
           }}
+          namespace="common.modals"
+          searchTarget="pixabay.items.pixabay"
+          setValue={setQuery}
+          value={query}
           onKeyUp={e => {
             if (e.key === 'Enter') {
               setPage(1)
@@ -129,9 +129,9 @@ function Pixabay({
           }}
         />
         <Button
-          iconPosition="end"
           className="w-full sm:w-auto"
           icon="tabler:arrow-right"
+          iconPosition="end"
           loading={loading}
           onClick={() => {
             setPage(1)

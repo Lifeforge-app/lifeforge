@@ -33,19 +33,18 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
         </>
       }
       icon="tabler:list"
-      label="image type"
+      label="imagePicker.inputs.imageType"
       namespace="common.modals"
       setValue={value => {
         updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })
       }}
-      tKey="imagePicker"
       value={imageType}
     >
       {IMAGE_TYPES.map(({ icon, id }, i) => (
         <ListboxOption
           key={i}
           icon={icon}
-          text={t(`imagePicker.imageType.${id}`)}
+          label={t(`imagePicker.imageType.${id}`)}
           value={id}
         />
       ))}

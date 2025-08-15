@@ -20,7 +20,6 @@ function DailyForm({
           className="flex-1"
           icon="tabler:repeat"
           label={t('inputs.daily.inputs.every')}
-          namespace={false}
           setValue={every => setData({ ...data, every })}
           value={data.every}
         />

@@ -8,9 +8,13 @@ export default function Tooltip({
   children,
   tooltipProps
 }: {
+  /** The unique identifier for the tooltip element. */
   id: string
+  /** The icon to display as the tooltip trigger. Should be a valid icon name from Iconify. */
   icon: string
+  /** The content to display inside the tooltip when triggered. */
   children: React.ReactNode
+  /** Additional properties to pass to the underlying ReactTooltip component. */
   tooltipProps?: Record<string, unknown>
 }) {
   return (

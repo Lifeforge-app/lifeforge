@@ -9,27 +9,27 @@ import ButtonIcon from './components/ButtonIcon'
 export interface ButtonProps {
   /** The content to display inside the button. Can be text or any valid React node. */
   children?: React.ReactNode
-  /** The icon to display in the button. Should be a valid icon name from Iconify in the form of `<icon-library>:<icon-name>`. */
+  /** The icon to display in the button. Should be a valid icon name from Iconify in the format `<icon-library>:<icon-name>`. */
   icon: string
-  /** The position of the icon within the button. */
+  /** The position of the icon within the button. Defaults to 'start'. */
   iconPosition?: 'start' | 'end'
-  /** The class name to apply to the icon. Can be used to customize the icon's appearance. If it doesn't work, try putting an exclamation mark at the end (applicable for valid Tailwind CSS classes). */
+  /** Additional CSS class names to apply to the icon. Use `!` suffix for Tailwind CSS class overrides. */
   iconClassName?: string
-  /** Callback function to handle button click events. */
+  /** Callback function called when the button is clicked. */
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  /** Indicates whether the button is in a loading state. When true, a spinner icon is displayed and user interactions are not allowed. */
+  /** Whether the button is in a loading state. When true, displays a spinner and disables interactions. */
   loading?: boolean
-  /** Indicates whether the button is disabled. When true, user interactions are not allowed. */
+  /** Whether the button is disabled and non-interactive. */
   disabled?: boolean
-  /** The class name to apply to the button. Can be used to customize the button's appearance. If it doesn't work, try putting an exclamation mark at the end (applicable for valid Tailwind CSS classes). */
+  /** Additional CSS class names to apply to the button. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  /** The visual style variant of the button. Can be one of "primary", "secondary", "tertiary", or "plain". @default "primary" */
+  /** The visual style variant of the button. Defaults to 'primary'. */
   variant?: 'primary' | 'secondary' | 'tertiary' | 'plain'
-  /** Indicates whether the button has a red background. */
+  /** Whether the button should be styled as dangerous/destructive with a red background. */
   dangerous?: boolean
-  /** The i18n namespace to use for the button content translation. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details on internationalization. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
-  /** Additional properties to pass to the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details on internationalization. */
+  /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   tProps?: Record<string, unknown>
 }
 

@@ -1,4 +1,5 @@
-import { ModalWrapper } from '@components/modals'
+import { Button } from '@components/buttons'
+import { useModalStore } from '@components/modals'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import Index from './index'
@@ -17,10 +18,12 @@ export const Default: Story = {
     onClose: () => {}
   },
   render: args => {
+    const open = useModalStore(state => state.open)
+
     return (
-      <ModalWrapper isOpen={true}>
-        <Index {...args} />
-      </ModalWrapper>
+      <Button icon="tabler:icons" onClick={() => open(Index, args.data)}>
+        Open Icon Picker
+      </Button>
     )
   }
 }

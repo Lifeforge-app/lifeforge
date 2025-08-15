@@ -11,14 +11,39 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+/**
+ * Default DateInput component.
+ * <br/>
+ * NOTE: The datepicker isn't displayed correctly due to how the Storybook docs page is styled. Please head to each individual story for proper rendering.
+ */
 export const Default: Story = {
   args: {
     value: new Date(),
     setValue: () => {},
     label: 'Date',
-    icon: 'tabler:calendar',
-    namespace: false
+    icon: 'tabler:calendar'
   },
+  render: args => {
+    const [date, setDate] = useState(args.value)
+
+    return <DateInput {...args} setValue={setDate} value={date} />
+  }
+}
+
+/**
+ * DateInput component with time selection enabled.
+ * <br />
+ * NOTE: The datepicker isn't displayed correctly due to how the Storybook docs page is styled. Please head to each individual story for proper rendering.
+ */
+export const WithTime: Story = {
+  args: {
+    value: new Date(),
+    setValue: () => {},
+    label: 'Date',
+    icon: 'tabler:clock',
+    hasTime: true
+  },
+
   render: args => {
     const [date, setDate] = useState(args.value)
 

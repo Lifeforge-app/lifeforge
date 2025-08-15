@@ -7,11 +7,11 @@ function FAB({
   visibilityBreakpoint,
   ...props
 }: {
-  /** Icon identifier string, defaults to 'tabler:plus' */
+  /** The icon identifier string. Defaults to 'tabler:plus'. */
   icon?: string
-  /** Breakpoint at which the FAB should be hidden, defaults to 'sm' */
+  /** The responsive breakpoint at which the FAB should be hidden. Defaults to 'sm'. */
   visibilityBreakpoint?: 'sm' | 'md' | 'lg' | 'xl'
-} & React.ComponentProps<typeof Button>) {
+} & Omit<React.ComponentProps<typeof Button>, 'icon'>) {
   return (
     <Button
       {...props}
