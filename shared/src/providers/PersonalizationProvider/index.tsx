@@ -17,6 +17,7 @@ import type {
 import { getColorPalette } from './utils/themeColors'
 
 const DEFAULT_VALUE: IPersonalizationData = {
+  rootElement: document.querySelector<HTMLElement>('#app'),
   fontFamily: 'Onest',
   fontScale: 1,
   theme: 'system',
@@ -52,11 +53,9 @@ const PersonalizationContext = createContext<IPersonalizationData | undefined>(
 
 export default function PersonalizationProvider({
   defaultValueOverride = {},
-  rootElement = document.body,
   children
 }: {
   defaultValueOverride?: Partial<IPersonalizationData>
-  rootElement?: HTMLElement
   children: React.ReactNode
 }) {
   const defaultValue = useMemo(() => {
@@ -65,6 +64,8 @@ export default function PersonalizationProvider({
       ...defaultValueOverride
     }
   }, [defaultValueOverride])
+
+  const rootElement = defaultValue.rootElement || document.createElement('body')
 
   const [fontFamily, setFontFamily] = useState<string>(defaultValue.fontFamily)
 
@@ -120,7 +121,7 @@ export default function PersonalizationProvider({
       : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
 
-  useFontFamily(rootElement, fontFamily, fontScale)
+  useFontFamily(fontFamily, fontScale)
   useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)
   useRawThemeColorEffect(rootElement, rawThemeColor, derivedTheme)
   useBgTempEffect(rootElement, bgTemp, derivedTheme)
@@ -129,6 +130,7 @@ export default function PersonalizationProvider({
 
   const value = useMemo<IPersonalizationData>(
     () => ({
+      rootElement,
       fontFamily,
       fontScale,
       theme,
@@ -152,6 +154,7 @@ export default function PersonalizationProvider({
       setLanguage
     }),
     [
+      rootElement,
       fontFamily,
       fontScale,
       theme,
