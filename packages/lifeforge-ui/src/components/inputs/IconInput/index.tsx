@@ -100,7 +100,7 @@ function IconInput({
           type="button"
           onClick={handleIconSelectorOpen}
         >
-          <Icon className="size-5" icon="tabler:chevron-down" />
+          <Icon className="size-6" icon="heroicons:chevron-up-down-16-solid" />
         </button>
       </div>
     </InputWrapper>
