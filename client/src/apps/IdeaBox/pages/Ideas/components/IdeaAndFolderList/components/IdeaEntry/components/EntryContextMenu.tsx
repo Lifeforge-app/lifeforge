@@ -128,7 +128,7 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
       {!entry.archived && (
         <ContextMenuItem
           icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-          text={entry.pinned ? 'Unpin' : 'Pin'}
+          label={entry.pinned ? 'Unpin' : 'Pin'}
           onClick={() => {
             pinIdeaMutation.mutate({})
           }}
@@ -136,30 +136,30 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
       )}
       <ContextMenuItem
         icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
-        text={entry.archived ? 'Unarchive' : 'Archive'}
+        label={entry.archived ? 'Unarchive' : 'Archive'}
         onClick={() => {
           archiveIdeaMutation.mutate({})
         }}
       />
       <ContextMenuItem
         icon="tabler:pencil"
-        text="Edit"
+        label="Edit"
         onClick={handleUpdateIdea}
       />
       {!debouncedSearchQuery && selectedTags.length === 0 && path !== '' && (
         <ContextMenuItem
           icon="tabler:folder-minus"
           namespace="apps.ideaBox"
-          text="Remove from folder"
+          label="Remove from folder"
           onClick={() => {
             removeFromFolderMutation.mutate({})
           }}
         />
       )}
       <ContextMenuItem
-        isRed
+        dangerous
         icon="tabler:trash"
-        text="Delete"
+        label="Delete"
         onClick={handleDeleteIdea}
       />
     </ContextMenu>

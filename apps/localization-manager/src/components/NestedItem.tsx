@@ -128,7 +128,7 @@ function NestedItem({
             }}
           />
           <Button
-            isRed
+            dangerous
             className="p-2!"
             icon="tabler:trash"
             variant="plain"
@@ -177,7 +177,7 @@ function NestedItem({
                   name={key}
                   oldLocales={oldLocales}
                   path={path.concat(key)}
-                  searchQuery={searchQuery}
+                  value={searchQuery}
                   setChangedKeys={setChangedKeys}
                   setValue={setValue}
                   value={value}

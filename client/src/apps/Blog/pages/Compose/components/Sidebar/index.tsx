@@ -95,7 +95,7 @@ function Sidebar({
             <ListboxOption
               key={option.label}
               icon={option.icon}
-              text={option.label}
+              label={option.label}
               value={option.label.toLowerCase()}
             />
           ))}

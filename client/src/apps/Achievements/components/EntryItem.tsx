@@ -67,7 +67,7 @@ function EntryItem({ entry }: { entry: Achievement }) {
       <ContextMenu>
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={() => {
             open(ModifyAchievementModal, {
               type: 'update',
@@ -77,9 +77,9 @@ function EntryItem({ entry }: { entry: Achievement }) {
           }}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteEntry}
         />
       </ContextMenu>

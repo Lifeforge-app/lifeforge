@@ -80,15 +80,15 @@ function SidebarBottomBar() {
           <div className="py-1">
             <ContextMenuItem
               icon="tabler:user-cog"
+              label="Account settings"
               namespace="common.sidebar"
-              text="Account settings"
               onClick={handleNavigateToAccountSettings}
             />
             <ContextMenuItem
-              isRed
+              dangerous
               icon="tabler:logout"
+              label="Sign out"
               namespace="common.sidebar"
-              text="Sign out"
               onClick={handleLoggingOut}
             />
           </div>

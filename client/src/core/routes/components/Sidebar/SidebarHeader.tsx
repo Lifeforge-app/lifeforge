@@ -42,9 +42,9 @@ function SidebarHeader({
           <SearchInput
             className="mb-4"
             namespace="common.sidebar"
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            stuffToSearch="module"
+            searchTarget="module"
+            setValue={setSearchQuery}
+            value={searchQuery}
           />
         </div>
       )}

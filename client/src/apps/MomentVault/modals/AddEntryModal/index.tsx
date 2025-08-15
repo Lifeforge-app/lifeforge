@@ -1,6 +1,11 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ConfirmationModal, ListboxInput, ListboxOption, ModalHeader } from 'lifeforge-ui'
+import {
+  ConfirmationModal,
+  ListboxInput,
+  ListboxOption,
+  ModalHeader
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -102,7 +107,7 @@ function AddEntryModal({
             <ListboxOption
               key={i}
               icon={icon}
-              text={t(`entryTypes.${id}`)}
+              label={t(`entryTypes.${id}`)}
               value={id}
             />
           ))}

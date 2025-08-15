@@ -230,7 +230,7 @@ function MovieItem({
           <ContextMenuItem
             icon="tabler:eye-off"
             namespace="apps.movies"
-            text="Mark as Unwatched"
+            label="Mark as Unwatched"
             onClick={() => {
               setToggleWatchedLoading(true)
               toggleWatchedMutation.mutateAsync({})
@@ -240,13 +240,13 @@ function MovieItem({
         <ContextMenuItem
           icon="tabler:ticket"
           namespace="apps.movies"
-          text={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
+          label={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
           onClick={handleUpdateTicket}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteTicket}
         />
       </ContextMenu>

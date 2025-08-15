@@ -167,20 +167,20 @@ function AudioEntry({
       <ContextMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
         {entry.transcription === '' && (
           <ContextMenuItem
-            preventDefault
             icon="tabler:file-text"
+            label="Transcribe to Text"
             loading={transcriptionLoading}
             namespace="apps.momentVault"
-            text="Transcribe to Text"
+            shouldCloseMenuOnClick={false}
             onClick={() => {
               addTranscription().catch(console.error)
             }}
           />
         )}
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={onDelete}
         />
       </ContextMenu>

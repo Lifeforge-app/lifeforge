@@ -89,13 +89,13 @@ function CalendarModule() {
             <ContextMenuItem
               icon="tabler:photo"
               namespace="apps.calendar"
-              text="Scan from Image"
+              label="Scan from Image"
               onClick={handleScanImageModalOpen}
             />
             <ContextMenuItem
               icon="tabler:plus"
               namespace="apps.calendar"
-              text="Input Manually"
+              label="Input Manually"
               onClick={handleCreateEvent}
             />
           </MenuItems>

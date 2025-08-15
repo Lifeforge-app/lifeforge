@@ -73,14 +73,14 @@ function WalletDashboard() {
             >
               <ContextMenuItem
                 icon="tabler:plus"
-                text="Add Manually"
+                label="Add Manually"
                 onClick={() => {
                   navigate('/wallet/transactions#new')
                 }}
               />
               <ContextMenuItem
                 icon="tabler:scan"
-                text="Scan Receipt"
+                label="Scan Receipt"
                 onClick={() => {
                   navigate('/wallet/transactions#scan')
                 }}
@@ -91,10 +91,10 @@ function WalletDashboard() {
         contextMenuProps={{
           children: (
             <ContextMenuItem
+              checked={isAmountHidden}
               icon="tabler:eye-off"
-              isToggled={isAmountHidden}
+              label="Hide Amount"
               namespace="apps.wallet"
-              text="Hide Amount"
               onClick={() => {
                 toggleAmountVisibility()
               }}
@@ -122,16 +122,16 @@ function WalletDashboard() {
         >
           <ContextMenuItem
             icon="tabler:plus"
+            label="Add Manually"
             namespace="apps.wallet"
-            text="Add Manually"
             onClick={() => {
               navigate('/wallet/transactions#new')
             }}
           />
           <ContextMenuItem
             icon="tabler:scan"
+            label="Scan Receipt"
             namespace="apps.wallet"
-            text="Scan Receipt"
             onClick={() => {
               navigate('/wallet/transactions#scan')
             }}

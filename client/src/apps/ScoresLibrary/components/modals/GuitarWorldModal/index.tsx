@@ -54,7 +54,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
         actionButtonProps={
           finalCookie
             ? {
-                isRed: true,
+                dangerous: true,
                 icon: 'tabler:cookie-off',
                 onClick: () => {
                   open(ConfirmationModal, {

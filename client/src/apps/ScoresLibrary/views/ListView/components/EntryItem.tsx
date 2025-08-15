@@ -163,21 +163,21 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
         <ContextMenu>
           <ContextMenuItem
             icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
-            text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
-            onClick={e => {
-              e.preventDefault()
+            label={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
+            shouldCloseMenuOnClick={false}
+            onClick={() => {
               toggleFavouriteStatusMutation.mutateAsync({})
             }}
           />
           <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleUpdateEntry}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDeleteEntry}
           />
         </ContextMenu>

@@ -75,13 +75,13 @@ function TaskTagListItem({
         <>
           <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleUpdateTag}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDeleteTag}
           />
         </>

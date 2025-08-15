@@ -22,7 +22,7 @@ function ModifyLineModal({
     .ui({
       title: `${type === 'create' ? 'Create' : 'Update'} MRT Line`,
       icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      namespace: false,
+
       onClose,
       submitButton: 'create'
     })

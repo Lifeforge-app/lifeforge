@@ -35,9 +35,9 @@ function ListSelector({
       setValue={setList}
       value={list ?? ''}
     >
-      <ListboxOption color="lightgray" text="None" value="" />
+      <ListboxOption color="lightgray" label="None" value="" />
       {lists.map(({ name, color, id }) => (
-        <ListboxOption key={id} color={color} text={name} value={id} />
+        <ListboxOption key={id} color={color} label={name} value={id} />
       ))}
     </ListboxInput>
   )
