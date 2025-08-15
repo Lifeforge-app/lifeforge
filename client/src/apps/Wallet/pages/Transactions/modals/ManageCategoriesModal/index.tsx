@@ -33,15 +33,17 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex min-h-[80vh] min-w-[40vw] flex-col">
       <ModalHeader
-        actionButtonIcon="tabler:plus"
+        actionButtonProps={{
+          icon: 'tabler:plus',
+          onClick: () => {
+            open(ModifyCategoryModal, {
+              type: 'create'
+            })
+          }
+        }}
         icon="tabler:apps"
         namespace="apps.wallet"
         title="categories.manage"
-        onActionButtonClick={() => {
-          open(ModifyCategoryModal, {
-            type: 'create'
-          })
-        }}
         onClose={onClose}
       />
       <Tabs

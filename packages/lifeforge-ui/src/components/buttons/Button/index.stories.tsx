@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import Index from './index'
 
@@ -10,16 +10,25 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+/**
+ * A primary button variant. Suitable for main actions.
+ */
 export const PrimaryVariant: Story = {
   args: {
     as: 'button',
     icon: 'tabler:cube',
+    disabled: false,
     children: 'Button',
-    tProps: {}
+    tProps: {},
+    iconPosition: 'start',
+    variant: 'primary'
   },
   render: props => <Index {...props} />
 }
 
+/**
+ * A secondary button variant. Suitable for less prominent actions.
+ */
 export const SecondaryVariant: Story = {
   args: {
     as: 'button',
@@ -28,10 +37,12 @@ export const SecondaryVariant: Story = {
     tProps: {},
     variant: 'secondary'
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A tertiary button variant. Suitable for less prominent actions.
+ */
 export const TertiaryVariant: Story = {
   args: {
     as: 'button',
@@ -44,6 +55,9 @@ export const TertiaryVariant: Story = {
   render: props => <Index {...props} />
 }
 
+/**
+ * A plain button variant. Suitable for actions without emphasis, or button with icon only.
+ */
 export const PlaintVariant: Story = {
   args: {
     as: 'button',
@@ -52,23 +66,27 @@ export const PlaintVariant: Story = {
     tProps: {},
     variant: 'plain'
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A button with the icon positioned at the end.
+ */
 export const IconAtEnd: Story = {
   args: {
     as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Proceed',
     tProps: {},
-    iconAtEnd: true,
+    iconPosition: 'end',
     loading: false
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A button that is not interactive, indicating an action that is not available.
+ */
 export const Disabled: Story = {
   args: {
     as: 'button',
@@ -78,24 +96,28 @@ export const Disabled: Story = {
     loading: false,
     disabled: true
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A button that indicates an action is in progress. A loading spinner is shown, and user input is disabled.
+ */
 export const Loading: Story = {
   args: {
     as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Loading',
     tProps: {},
-    iconAtEnd: true,
+    iconPosition: 'end',
     loading: true,
     disabled: false
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A button that displays only an icon.
+ */
 export const IconsOnly: Story = {
   args: {
     as: 'button',
@@ -103,10 +125,12 @@ export const IconsOnly: Story = {
     children: '',
     tProps: {}
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A plain button that displays only an icon.
+ */
 export const IconsOnlyWithNoBg: Story = {
   args: {
     as: 'button',
@@ -115,19 +139,20 @@ export const IconsOnlyWithNoBg: Story = {
     tProps: {},
     variant: 'plain'
   },
-
   render: props => <Index {...props} />
 }
 
+/**
+ * A red button variant. Suitable for destructive actions like deleting an item.
+ */
 export const RedButton: Story = {
   args: {
     as: 'button',
-    icon: 'tabler:cube',
-    children: 'Button',
+    icon: 'tabler:trash',
+    children: 'Delete',
     tProps: {},
     variant: 'primary',
-    isRed: true
+    dangerous: true
   },
-
   render: props => <Index {...props} />
 }

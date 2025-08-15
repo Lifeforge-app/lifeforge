@@ -63,9 +63,9 @@ function Wishlist() {
       />
       <SearchInput
         namespace="apps.wishlist"
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        stuffToSearch="wishlist"
+        value={searchQuery}
+        setValue={setSearchQuery}
+        searchTarget="wishlist"
       />
       <QueryWrapper query={listsQuery}>
         {lists =>

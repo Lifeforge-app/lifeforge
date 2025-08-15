@@ -31,15 +31,19 @@ function Header({
             uploadFiles={uploadFiles}
           />
         }
-        hamburgerMenuClassName="flex md:hidden"
-        hamburgerMenuItems={
-          <ActionMenu
-            setSortType={setSortType}
-            setView={setView}
-            sortType={sortType}
-            view={view}
-          />
-        }
+        contextMenuProps={{
+          classNames: {
+            wrapper: 'flex md:hidden'
+          },
+          children: (
+            <ActionMenu
+              setSortType={setSortType}
+              setView={setView}
+              sortType={sortType}
+              view={view}
+            />
+          )
+        }}
         icon="tabler:file-music"
         tips="If you want to append audio and Musescore files to your music scores, make sure to name them the same as the PDF file and upload them together."
         title="Scores Library"

@@ -35,7 +35,6 @@ function MonthlyForm({
           className="flex-1"
           icon="tabler:repeat"
           label={t('inputs.monthly.inputs.every')}
-          namespace={false}
           setValue={every => setData({ ...data, every })}
           value={data.every}
         />

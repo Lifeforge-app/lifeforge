@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import Index from './index'
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'name',
+    label: 'Cube Color',
     value: '',
     setValue: () => {},
     namespace: 'namespace'
@@ -21,10 +21,6 @@ export const Default: Story = {
   render: args => {
     const [color, setColor] = useState<string>('')
 
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <Index {...args} value={color} setValue={setColor} />
-      </div>
-    )
+    return <Index {...args} setValue={setColor} value={color} />
   }
 }

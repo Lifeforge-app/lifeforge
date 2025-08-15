@@ -59,7 +59,7 @@ function NamespaceSelector({
             <ListboxOption
               key={ns}
               icon="tabler:category-2"
-              text={t(`namespaces.${ns}`)}
+              label={t(`namespaces.${ns}`)}
               value={ns}
             />
           ))}
@@ -93,7 +93,7 @@ function NamespaceSelector({
                   <ListboxOption
                     key={sns}
                     icon="tabler:cube"
-                    text={sns}
+                    label={sns}
                     value={sns}
                   />
                 ))}

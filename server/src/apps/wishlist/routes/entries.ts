@@ -1,5 +1,5 @@
+import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
-import fs from 'fs'
 import { z } from 'zod/v4'
 
 import scrapeProviders from '../helpers/scrapers'
@@ -75,31 +75,16 @@ const create = forgeController.mutation
     list: 'wishlist__lists'
   })
   .statusCode(201)
-  .callback(async ({ pb, body, media: { image } }) => {
-    let imageFile: File | null = null
-
-    if (image) {
-      if (typeof image === 'string') {
-        const response = await fetch(image)
-
-        const buffer = await response.arrayBuffer()
-
-        imageFile = new File([buffer], 'image.jpg')
-      } else {
-        const fileBuffer = fs.readFileSync(image.path)
-
-        imageFile = new File([fileBuffer], image.originalname)
-      }
-    }
-
-    const data = {
-      ...body,
-      bought: false,
-      image: imageFile
-    }
-
-    return await pb.create.collection('wishlist__entries').data(data).execute()
-  })
+  .callback(({ pb, body, media: { image } }) =>
+    pb.create
+      .collection('wishlist__entries')
+      .data({
+        ...body,
+        bought: false,
+        ...getMedia('image', image)
+      })
+      .execute()
+  )
 
 const update = forgeController.mutation
   .description('Update an existing wishlist entry')
@@ -126,31 +111,13 @@ const update = forgeController.mutation
     list: 'wishlist__lists'
   })
   .callback(
-    async ({
+    ({
       pb,
       query: { id },
       body: { list, name, url, price },
       media: { image }
-    }) => {
-      let finalFile: null | File = null
-
-      if (image === 'removed') {
-        finalFile = null
-      } else if (image) {
-        if (typeof image === 'string') {
-          const response = await fetch(image)
-
-          const buffer = await response.arrayBuffer()
-
-          finalFile = new File([buffer], 'image.jpg')
-        } else {
-          const fileBuffer = fs.readFileSync(image.path)
-
-          finalFile = new File([fileBuffer], image.originalname)
-        }
-      }
-
-      return await pb.update
+    }) =>
+      pb.update
         .collection('wishlist__entries')
         .id(id)
         .data({
@@ -158,14 +125,9 @@ const update = forgeController.mutation
           name,
           url,
           price,
-          ...(image === 'removed' || finalFile
-            ? {
-                image: finalFile
-              }
-            : {})
+          ...getMedia('image', image)
         })
         .execute()
-    }
   )
 
 const updateBoughtStatus = forgeController.mutation

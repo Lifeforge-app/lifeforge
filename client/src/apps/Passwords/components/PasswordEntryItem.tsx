@@ -8,8 +8,8 @@ import dayjs from 'dayjs'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem
+  ContextMenu,
+  ContextMenuItem
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -203,11 +203,11 @@ function PasswordEntryItem({
             variant="plain"
             onClick={copyPassword}
           />
-          <HamburgerMenu>
-            <MenuItem
+          <ContextMenu>
+            <ContextMenuItem
               icon="tabler:rotate"
               loading={rotateLoading}
-              text="Rotate Password"
+              label="Rotate Password"
               onClick={async () => {
                 setRotateLoading(true)
 
@@ -262,39 +262,43 @@ function PasswordEntryItem({
                 setDecryptedPassword(generatedPassword)
               }}
             />
-            <MenuItem
+            <ContextMenuItem
               className="flex sm:hidden"
               icon={
                 decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'
               }
               loading={loading}
-              text={
+              label={
                 decryptedPassword === null ? 'Show Password' : 'Hide Password'
               }
               onClick={decryptPassword}
             />
-            <MenuItem
+            <ContextMenuItem
               className="flex sm:hidden"
               icon="tabler:copy"
               loading={copyLoading}
-              text="Copy Password"
+              label="Copy Password"
               onClick={copyPassword}
             />
-            <MenuItem
+            <ContextMenuItem
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
-              text={password.pinned ? 'Unpin' : 'Pin'}
+              label={password.pinned ? 'Unpin' : 'Pin'}
               onClick={() => {
                 pinPassword(password.id)
               }}
             />
-            <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEdit} />
-            <MenuItem
-              isRed
+            <ContextMenuItem
+              icon="tabler:pencil"
+              label="Edit"
+              onClick={handleEdit}
+            />
+            <ContextMenuItem
+              dangerous
               icon="tabler:trash"
-              text="Delete"
+              label="Delete"
               onClick={handleDeletePassword}
             />
-          </HamburgerMenu>
+          </ContextMenu>
         </div>
       </div>
       {decryptedPassword !== null && (

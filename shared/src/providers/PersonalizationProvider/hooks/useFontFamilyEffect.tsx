@@ -1,9 +1,13 @@
+/* eslint-disable react-compiler/react-compiler */
 import { useEffect } from 'react'
 
 import fetchAPI from '../../../utils/fetchAPI'
 import { useAPIEndpoint } from '../../APIEndpointProvider'
 
-function useFontFamily(fontFamily: string, fontScale: number) {
+function useFontFamily(
+  fontFamily: string,
+  fontScale: number
+) {
   const apiEndpoint = useAPIEndpoint()
 
   useEffect(() => {

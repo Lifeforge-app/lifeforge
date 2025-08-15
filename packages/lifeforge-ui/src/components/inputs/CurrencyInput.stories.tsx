@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import CurrencyInput from './CurrencyInput'
 
@@ -16,7 +16,6 @@ export const Default: Story = {
     placeholder: '8.70',
     icon: 'tabler:currency-dollar',
     value: 0,
-    setValue: () => {},
-    namespace: false
+    setValue: () => {}
   }
 }

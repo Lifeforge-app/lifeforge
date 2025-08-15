@@ -1,8 +1,8 @@
 import {
   Button,
+  ContextMenuGroup,
+  ContextMenuItem,
   FAB,
-  HamburgerMenuSelectorWrapper,
-  MenuItem,
   ModuleHeader
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -45,8 +45,8 @@ function Header() {
         actionButton={
           <Button
             className="hidden md:flex"
+            dangerous={hasRoute}
             icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
-            isRed={hasRoute}
             namespace="apps.railwayMap"
             variant={hasRoute ? 'plain' : 'primary'}
             onClick={handleRoutePlannerToggle}
@@ -54,29 +54,30 @@ function Header() {
             {hasRoute ? 'clear Route' : 'Plan Route'}
           </Button>
         }
-        hamburgerMenuItems={
-          <>
-            <HamburgerMenuSelectorWrapper
-              className="lg:hidden"
-              icon="tabler:eye"
-              title={t('viewTypes.selectorTitle')}
-            >
-              {VIEW_TYPES.map(([icon, title, value]) => (
-                <MenuItem
-                  key={value}
-                  icon={icon}
-                  isToggled={viewType === value}
-                  namespace={false}
-                  text={t(`viewTypes.${_.camelCase(title)}`)}
-                  onClick={() => {
-                    setViewType(value)
-                  }}
-                />
-              ))}
-            </HamburgerMenuSelectorWrapper>
-            <LineFilter />
-          </>
-        }
+        contextMenuProps={{
+          children: (
+            <>
+              <ContextMenuGroup
+                className="lg:hidden"
+                icon="tabler:eye"
+                label={t('viewTypes.selectorTitle')}
+              >
+                {VIEW_TYPES.map(([icon, title, value]) => (
+                  <ContextMenuItem
+                    key={value}
+                    checked={viewType === value}
+                    icon={icon}
+                    label={t(`viewTypes.${_.camelCase(title)}`)}
+                    onClick={() => {
+                      setViewType(value)
+                    }}
+                  />
+                ))}
+              </ContextMenuGroup>
+              <LineFilter />
+            </>
+          )
+        }}
         icon="uil:subway"
         title="Railway Map"
       />
@@ -85,9 +86,9 @@ function Header() {
         <SearchBar />
       </div>
       <FAB
+        dangerous={shortestRoute.length > 0}
         hideWhen="md"
         icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
-        isRed={shortestRoute.length > 0}
         loading={typeof shortestRoute === 'string'}
         onClick={handleRoutePlannerToggle}
       />

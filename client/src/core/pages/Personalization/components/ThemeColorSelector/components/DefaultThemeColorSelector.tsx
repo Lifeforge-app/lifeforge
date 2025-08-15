@@ -82,7 +82,7 @@ function DefaultThemeColorSelector({
               )}
             />
           )}
-          text={t(
+          label={t(
             `themeColorSelector.colors.${_.camelCase(
               color
                 .split('-')
@@ -98,7 +98,7 @@ function DefaultThemeColorSelector({
         renderColorAndIcon={() => (
           <span className="border-bg-500 inline-block size-4 rounded-full border-2" />
         )}
-        text={t('themeColorSelector.colors.custom')}
+        label={t('themeColorSelector.colors.custom')}
         value="theme-custom"
       />
     </Listbox>

@@ -1,6 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap');
 @import 'tailwindcss';
 
-@plugin 'daisyui';
+@plugin 'daisyui' {
+  themes: false;
+}
+@plugin 'tailwindcss-animate';
 
 @import '../src/styles/index.css';
+
+.sb-show-main {
+  & input[type='radio'] {
+    @apply bg-bg-200! h-4 w-4 appearance-none rounded-full;
+
+    &:checked {
+      @apply border-transparent bg-blue-500!;
+    }
+  }
+}
+
+#storybook-root {
+  @apply flex h-full w-full flex-1 flex-col;
+}
+
+.sb-show-main {
+  @apply flex! flex-col;
+}
+
+.sbdocs-title {
+  @apply mb-0!;
+
+  & + p {
+    @apply mt-2!;
+  }
+}
+
+.css-o1d7ko {
+  @apply whitespace-nowrap!;
+}
+
+.css-1ije3e2 * {
+  @apply max-w-72 break-all!;
+}
+
+.css-wzniqs {
+  @apply mb-0!;
+
+  & + p {
+    @apply mt-2!;
+  }
+}
+
+.sb-show-main {
+  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
+
+  &.sb-main-padded {
+    @apply p-0!;
+  }
+}

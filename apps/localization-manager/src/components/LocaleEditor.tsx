@@ -121,7 +121,7 @@ function LocaleEditor({
             name={key}
             oldLocales={oldLocales}
             path={[key]}
-            searchQuery={searchQuery}
+            value={searchQuery}
             setChangedKeys={setChangedKeys}
             setValue={setValue}
             value={value}

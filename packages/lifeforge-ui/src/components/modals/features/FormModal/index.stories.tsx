@@ -1,13 +1,13 @@
 import ModalWrapper from '@components/modals/core/components/ModalWrapper'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import defineForm from './formBuilder'
 import Index from './index'
 import FormModal from './index'
-import defineForm from './utils/FormBuilder'
 
 type CuteForm = {
   title: string
-  rrule: string
+  subtitle: string
 }
 
 const meta = {
@@ -19,15 +19,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    ui: {
-      title: 'Form Modal',
-      onClose: () => {},
-      icon: 'tabler:form',
-      namespace: 'form-modal',
-      loading: false
-    }
-  } as never,
+  args: {} as never,
   render: () => {
     const formProps = defineForm<CuteForm>()
       .ui({
@@ -38,21 +30,27 @@ export const Default: Story = {
         loading: false,
         submitButton: {
           icon: 'tabler:check',
-          text: 'Submit'
+          children: 'Submit'
         }
       })
       .typesMap({
         title: 'text',
-        rrule: 'rrule'
+        subtitle: 'text'
       })
       .setupFields({
-        rrule: {
-          hasDuration: true,
-          label: 'Recurrence Rule'
+        title: {
+          label: 'Title',
+          icon: 'tabler:text-size',
+          placeholder: 'Enter title'
+        },
+        subtitle: {
+          label: 'Subtitle',
+          icon: 'tabler:text-size',
+          placeholder: 'Enter subtitle'
         }
       })
       .initialData({
-        rrule: ''
+        subtitle: ''
       })
       .onSubmit(async formData => {
         alert(`Form submitted with data: ${JSON.stringify(formData)}`)

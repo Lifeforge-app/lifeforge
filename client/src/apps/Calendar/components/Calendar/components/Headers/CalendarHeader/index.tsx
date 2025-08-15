@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, MenuItem } from 'lifeforge-ui'
+import { Button, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
@@ -72,16 +72,16 @@ function CalendarHeader({
               anchor="bottom end"
               className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:photo"
                 namespace="apps.calendar"
-                text="Scan from Image"
+                label="Scan from Image"
                 onClick={handleScanImageModalOpen}
               />
-              <MenuItem
+              <ContextMenuItem
                 icon="tabler:plus"
                 namespace="apps.calendar"
-                text="Input Manually"
+                label="Input Manually"
                 onClick={handleCreateEvent}
               />
             </MenuItems>

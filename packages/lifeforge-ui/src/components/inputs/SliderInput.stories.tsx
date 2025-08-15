@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import SliderInput from './SliderInput'
@@ -15,9 +15,7 @@ export const Default: Story = {
   args: {
     icon: 'tabler:rotate',
     label: 'Slider Input',
-    namespace: false,
     value: 0,
-    required: true,
     setValue: () => {}
   },
   render: args => {

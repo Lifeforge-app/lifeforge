@@ -29,16 +29,15 @@ function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
         </>
       }
       icon="tabler:color-swatch"
-      label="Image Color"
+      label="imagePicker.inputs.imageColor"
       namespace="common.modals"
       setValue={value => {
         updateFilters({ type: 'SET_COLORS', payload: value })
       }}
-      tKey="imagePicker"
       value={colors}
     >
       {COLORS.map(({ name, color, id }, i) => (
-        <ListboxOption key={i} color={color} text={name} value={id} />
+        <ListboxOption key={i} color={color} label={name} value={id} />
       ))}
     </ListboxInput>
   )

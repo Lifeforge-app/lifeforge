@@ -45,7 +45,7 @@ function StationSelector({
           iconAtEnd
           noCheckmark
           icon={<StationCodes codes={station.codes} />}
-          text={station.name}
+          label={station.name}
           value={station.id}
         />
       ))}

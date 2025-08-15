@@ -52,6 +52,16 @@ interface IBooksLibraryData {
     addToProcesses: (taskId: string) => void
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+    filter: {
+      collection: string | null
+      fileType: string | null
+      language: string | null
+      favourite: boolean
+    }
+    setFilter: (
+      key: 'collection' | 'fileType' | 'language' | 'favourite',
+      value: string | null | boolean
+    ) => void
     sidebarOpen: boolean
     setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
   }
@@ -87,6 +97,18 @@ export default function BooksLibraryProvider() {
   const fileTypesQuery = useQuery(
     forgeAPI.booksLibrary.fileTypes.list.queryOptions()
   )
+
+  const [filter, setFilter] = useState<{
+    collection: string | null
+    fileType: string | null
+    language: string | null
+    favourite: boolean
+  }>({
+    collection: null,
+    fileType: null,
+    language: null,
+    favourite: false
+  })
 
   const [processes, setProcesses] = useState<
     Record<
@@ -199,7 +221,17 @@ export default function BooksLibraryProvider() {
         sidebarOpen,
         setSidebarOpen,
         libgenModalOpen,
-        setLibgenModalOpen
+        setLibgenModalOpen,
+        filter,
+        setFilter: (
+          key: 'collection' | 'fileType' | 'language' | 'favourite',
+          value: string | null | boolean
+        ) => {
+          setFilter(prev => ({
+            ...prev,
+            [key]: value
+          }))
+        }
       }
     }),
     [
@@ -210,7 +242,8 @@ export default function BooksLibraryProvider() {
       processes,
       searchQuery,
       sidebarOpen,
-      libgenModalOpen
+      libgenModalOpen,
+      filter
     ]
   )
 

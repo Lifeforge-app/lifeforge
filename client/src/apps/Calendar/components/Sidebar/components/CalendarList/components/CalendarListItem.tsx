@@ -36,33 +36,25 @@ function CalendarListItem({
     })
   )
 
-  const handleEdit = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      open(ModifyCalendarModal, {
-        initialData: item,
-        type: 'update'
-      })
-    },
-    [item]
-  )
+  const handleEdit = useCallback(() => {
+    open(ModifyCalendarModal, {
+      initialData: item,
+      type: 'update'
+    })
+  }, [item])
 
-  const handleDelete = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      open(ConfirmationModal, {
-        title: 'Delete Calendar',
-        description: `Are you sure you want to delete the calendar "${item.name}"?`,
-        onConfirm: async () => {
-          await deleteMutation.mutateAsync({})
-        },
-        confirmationPrompt: item.name
-      })
-    },
-    [item]
-  )
+  const handleDelete = useCallback(() => {
+    open(ConfirmationModal, {
+      title: 'Delete Calendar',
+      description: `Are you sure you want to delete the calendar "${item.name}"?`,
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      },
+      confirmationPrompt: item.name
+    })
+  }, [item])
 
-  const hamburgerMenuItems = useMemo(
+  const contextMenuItems = useMemo(
     () =>
       modifiable ? (
         <ActionMenu onDelete={handleDelete} onEdit={handleEdit} />
@@ -77,7 +69,7 @@ function CalendarListItem({
   return (
     <SidebarItem
       active={isSelected}
-      hamburgerMenuItems={hamburgerMenuItems}
+      contextMenuItems={contextMenuItems}
       label={item.name}
       sideStripColor={item.color}
       onCancelButtonClick={onCancelSelect}

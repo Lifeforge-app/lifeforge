@@ -41,7 +41,7 @@ function CurrencySelector({
           {filteredCurrencies.from.map(currency => (
             <ComboboxOption
               key={currency.code}
-              text={`${currency.code} - ${currency.name}`}
+              label={`${currency.code} - ${currency.name}`}
               value={currency.code}
             />
           ))}
@@ -71,7 +71,7 @@ function CurrencySelector({
           {filteredCurrencies.to.map(currency => (
             <ComboboxOption
               key={currency.code}
-              text={`${currency.code} - ${currency.name}`}
+              label={`${currency.code} - ${currency.name}`}
               value={currency.code}
             />
           ))}

@@ -2,12 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 function Chip({
-  text,
+  label,
   icon,
   selected,
   onClick
 }: {
-  text?: string
+  label?: string
   icon?: string
   selected: boolean
   onClick: () => void
@@ -24,7 +24,7 @@ function Chip({
       onClick={onClick}
     >
       {icon !== undefined && <Icon className="size-5" icon={icon} />}
-      {text}
+      {label}
     </button>
   )
 }

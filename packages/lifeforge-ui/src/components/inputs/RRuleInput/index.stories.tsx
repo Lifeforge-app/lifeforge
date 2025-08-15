@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import Index from './index'
@@ -21,7 +21,7 @@ export const Default: Story = {
     const [value, setValue] = useState('')
 
     return (
-      <div>
+      <div className="px-32">
         Current RRule: {value}
         <Index {...args} hasDuration setValue={setValue} value={value} />
       </div>

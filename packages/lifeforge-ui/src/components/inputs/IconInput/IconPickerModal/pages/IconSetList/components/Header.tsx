@@ -47,10 +47,9 @@ function Header({
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         <SearchInput
           namespace="common.modals"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="icon"
-          tKey="iconPicker"
+          searchTarget="iconPicker.items.icon"
+          setValue={setSearchQuery}
+          value={searchQuery}
           onKeyUp={e => {
             if (e.key === 'Enter' && searchQuery !== '') {
               setCurrentIconSet({ search: searchQuery })
@@ -58,8 +57,8 @@ function Header({
           }}
         />
         <Button
-          iconAtEnd
           icon="tabler:arrow-right"
+          iconPosition="end"
           onClick={() => {
             if (searchQuery !== '') setCurrentIconSet({ search: searchQuery })
           }}
@@ -72,8 +71,8 @@ function Header({
           {categories.map(category => (
             <Chip
               key={category}
+              label={category}
               selected={selectedCategory === category}
-              text={category}
               onClick={() => {
                 setSelectedCategory(
                   selectedCategory === category ? null : category
@@ -84,12 +83,11 @@ function Header({
         </div>
         <div className="w-full lg:w-3/5 xl:w-1/3">
           <SearchInput
-            customIcon="tabler:filter"
+            icon="tabler:filter"
             namespace="common.modals"
-            searchQuery={iconFilterTerm}
-            setSearchQuery={setIconFilterTerm}
-            stuffToSearch="Icon Set"
-            tKey="iconPicker"
+            searchTarget="iconPicker.items.iconSet"
+            setValue={setIconFilterTerm}
+            value={iconFilterTerm}
           />
         </div>
       </div>

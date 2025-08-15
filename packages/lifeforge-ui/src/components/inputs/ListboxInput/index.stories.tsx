@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import colors from 'tailwindcss/colors'
 
@@ -73,7 +73,7 @@ export const Default: Story = {
             key={index}
             color={color}
             icon={icon}
-            text={text}
+            label={text}
             value={value}
           />
         ))}
@@ -140,7 +140,7 @@ export const MultipleSelection: Story = {
             key={index}
             color={color}
             icon={icon}
-            text={text}
+            label={text}
             value={value}
           />
         ))}

@@ -1,5 +1,5 @@
 import { PBService } from '@functions/database'
-import { ITaskPoolTask } from '@middlewares/taskPoolMiddleware'
+import { ITaskPoolTask } from '@functions/socketio/taskPool'
 
 declare global {
   namespace Express {

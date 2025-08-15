@@ -121,10 +121,9 @@ function Search({
       <div className="flex w-full gap-2">
         <SearchInput
           namespace="common.modals"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="icon"
-          tKey="iconPicker"
+          searchTarget="iconPicker.icon"
+          setValue={setSearchQuery}
+          value={searchQuery}
           onKeyUp={e => {
             if (e.key === 'Enter' && searchQuery !== '') {
               setCurrentIconSetProp({ search: searchQuery })
@@ -132,8 +131,8 @@ function Search({
           }}
         />
         <Button
-          iconAtEnd
           icon="tabler:arrow-right"
+          iconPosition="end"
           onClick={() => {
             if (searchQuery !== '') {
               setCurrentIconSetProp({ search: searchQuery })

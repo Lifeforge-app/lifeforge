@@ -38,7 +38,7 @@ interface MainSidebarItemProps {
 
   number?: never
   onCancelButtonClick?: never
-  hamburgerMenuItems?: never
+  contextMenuItems?: never
 
   isCollapsed?: never
   onCollapseButtonClick?: never
@@ -61,7 +61,7 @@ interface SubSidebarItemProps {
 
   number?: number
   onCancelButtonClick?: () => void
-  hamburgerMenuItems?: React.ReactElement
+  contextMenuItems?: React.ReactElement
 
   isCollapsed?: boolean
   onCollapseButtonClick?: () => void
@@ -94,7 +94,7 @@ function SidebarItem({
   prefix = '',
   number,
   onCancelButtonClick,
-  hamburgerMenuItems,
+  contextMenuItems,
 
   isCollapsed,
   onCollapseButtonClick,
@@ -179,7 +179,7 @@ function SidebarItem({
         />
         <SidebarItemContent
           active={autoActive ? isLocationMatched : active}
-          hamburgerMenuItems={hamburgerMenuItems}
+          contextMenuItems={contextMenuItems}
           hasAI={showAIIcon}
           isMainSidebarItem={isMainSidebarItem}
           label={label}

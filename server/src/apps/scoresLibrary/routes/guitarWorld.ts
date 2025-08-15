@@ -1,8 +1,5 @@
 import { forgeController, forgeRouter } from '@functions/routes'
-import {
-  addToTaskPool,
-  updateTaskInPool
-} from '@middlewares/taskPoolMiddleware'
+import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import fs from 'fs'
 import PDFDocument from 'pdfkit'
 import sharp from 'sharp'

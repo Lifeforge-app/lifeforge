@@ -54,7 +54,7 @@ function SortBySelector({
         <ListboxOption
           key={value}
           icon={icon}
-          text={t(`sortTypes.${value}`)}
+          label={t(`sortTypes.${value}`)}
           value={value}
         />
       ))}

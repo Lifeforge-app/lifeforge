@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -82,15 +82,19 @@ function LedgerItem({ ledger }: { ledger: WalletLedger }) {
           </p>
         </div>
       </div>
-      <HamburgerMenu>
-        <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEditLedger} />
-        <MenuItem
-          isRed
+      <ContextMenu>
+        <ContextMenuItem
+          icon="tabler:pencil"
+          label="Edit"
+          onClick={handleEditLedger}
+        />
+        <ContextMenuItem
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteLedger}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

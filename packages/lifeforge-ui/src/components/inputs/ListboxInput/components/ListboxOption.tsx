@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 function ListboxOption({
   value,
-  text,
+  label,
   icon,
   iconAtEnd = false,
   color,
@@ -15,7 +15,7 @@ function ListboxOption({
   selected
 }: {
   value: unknown
-  text: string | React.ReactElement
+  label: string | React.ReactElement
   icon?: string | React.ReactElement
   iconAtEnd?: boolean
   color?: string
@@ -82,7 +82,7 @@ function ListboxOption({
                   />
                 )
               )}
-              <div className="w-full min-w-0 truncate">{text}</div>
+              <div className="w-full min-w-0 truncate">{label}</div>
             </div>
             {!noCheckmark && finalSelected && (
               <Icon

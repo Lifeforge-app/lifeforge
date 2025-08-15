@@ -4,8 +4,8 @@ import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -66,8 +66,8 @@ function TemplateItem({
       className={clsx(
         'flex-between shadow-custom flex w-full min-w-0 gap-3 rounded-md p-4 text-left',
         !choosing
-          ? 'component-bg-lighter dark:bg-bg-800/30 cursor-default!'
-          : 'component-bg-lighter-with-hover dark:bg-bg-800/30 dark:hover:bg-bg-800 cursor-pointer'
+          ? 'component-bg-lighter bg-bg-50 cursor-default!'
+          : 'component-bg-lighter-with-hover cursor-pointer'
       )}
       onClick={
         choosing
@@ -88,19 +88,19 @@ function TemplateItem({
         </p>
       </div>
       {!choosing && (
-        <HamburgerMenu>
-          <MenuItem
+        <ContextMenu>
+          <ContextMenuItem
             icon="tabler:pencil"
-            text="Edit"
+            label="Edit"
             onClick={handleEditTemplate}
           />
-          <MenuItem
-            isRed
+          <ContextMenuItem
+            dangerous
             icon="tabler:trash"
-            text="Delete"
+            label="Delete"
             onClick={handleDeleteTemplate}
           />
-        </HamburgerMenu>
+        </ContextMenu>
       )}
     </button>
   )

@@ -50,9 +50,9 @@ function Music() {
       <div className="music relative flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
           namespace="apps.music"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="music"
+          searchTarget="music"
+          setValue={setSearchQuery}
+          value={searchQuery}
         />
         <div className="relative mt-4 flex size-full min-w-0">
           <Scrollbar>

@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -81,7 +81,7 @@ function FolderContextMenu({
   )
 
   return (
-    <HamburgerMenu
+    <ContextMenu
       classNames={{
         button: 'p-2!',
         wrapper: 'relative z-10',
@@ -93,21 +93,25 @@ function FolderContextMenu({
       }}
     >
       {folder.parent !== '' && (
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:folder-minus"
           namespace="apps.ideaBox"
-          text="Remove from folder"
+          label="Remove from folder"
           onClick={() => removeFromFolderMutation.mutate({})}
         />
       )}
-      <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateFolder} />
-      <MenuItem
-        isRed
+      <ContextMenuItem
+        icon="tabler:pencil"
+        label="Edit"
+        onClick={handleUpdateFolder}
+      />
+      <ContextMenuItem
+        dangerous
         icon="tabler:trash"
-        text="Delete"
+        label="Delete"
         onClick={handleDeleteFolder}
       />
-    </HamburgerMenu>
+    </ContextMenu>
   )
 }
 

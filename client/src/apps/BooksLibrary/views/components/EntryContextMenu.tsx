@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forceDown from '@utils/forceDown'
 import forgeAPI from '@utils/forgeAPI'
-import { ConfirmationModal, MenuItem } from 'lifeforge-ui'
+import { ConfirmationModal, ContextMenuItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -102,33 +102,37 @@ export default function EntryContextMenu({
 
   return (
     <>
-      <MenuItem
+      <ContextMenuItem
         icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
-        text={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
+        label={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
         onClick={() => {
           setReadStatusChangeLoading(true)
           readStatusChangeMutation.mutate({})
         }}
       />
-      <MenuItem
+      <ContextMenuItem
         icon="tabler:brand-amazon"
         namespace="apps.booksLibrary"
-        text="Send to Kindle"
+        label="Send to Kindle"
         onClick={handleSendToKindle}
       />
-      <MenuItem
+      <ContextMenuItem
         disabled={downloadLoading}
         icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
-        text="Download"
+        label="Download"
         onClick={handleDownload}
       />
-      <MenuItem icon="tabler:pencil" text="Edit" onClick={handleUpdateEntry} />
-      <MenuItem
-        isRed
+      <ContextMenuItem
+        icon="tabler:pencil"
+        label="Edit"
+        onClick={handleUpdateEntry}
+      />
+      <ContextMenuItem
+        dangerous
         icon="tabler:trash"
-        text="Delete"
+        label="Delete"
         onClick={handleDeleteEntry}
       />
     </>

@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ContentWrapperWithSidebar,
+  ContextMenuItem,
   FAB,
   LayoutWithSidebar,
-  MenuItem,
   ModuleHeader,
   ModuleWrapper,
   Scrollbar
@@ -86,16 +86,16 @@ function CalendarModule() {
             anchor="bottom end"
             className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:photo"
               namespace="apps.calendar"
-              text="Scan from Image"
+              label="Scan from Image"
               onClick={handleScanImageModalOpen}
             />
-            <MenuItem
+            <ContextMenuItem
               icon="tabler:plus"
               namespace="apps.calendar"
-              text="Input Manually"
+              label="Input Manually"
               onClick={handleCreateEvent}
             />
           </MenuItems>

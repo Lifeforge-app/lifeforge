@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import Index from './index'
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:file',
-    label: 'name',
+    label: 'Upload Image',
     file: null,
     preview: null,
     setData: () => {},

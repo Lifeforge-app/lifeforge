@@ -143,9 +143,9 @@ function Pagination({
       {currentPage < totalPages ? (
         <>
           <Button
-            iconAtEnd
             className={clsx('w-12 sm:hidden')}
             icon="uil:angle-right"
+            iconPosition="end"
             variant="plain"
             onClick={() => {
               if (currentPage < totalPages) {
@@ -154,10 +154,10 @@ function Pagination({
             }}
           />
           <Button
-            iconAtEnd
             className={clsx('hidden w-32 sm:flex')}
             disabled={currentPage === totalPages}
             icon="uil:angle-right"
+            iconPosition="end"
             variant="plain"
             onClick={() => {
               if (currentPage < totalPages) {

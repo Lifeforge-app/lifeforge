@@ -32,7 +32,10 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
 
       open(ModifyEventModal, {
         type: 'create',
-        initialData: data
+        initialData: {
+          ...data,
+          type: 'single'
+        }
       })
       setFile(null)
       setPreview(null)
@@ -75,7 +78,7 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           }}
         />
         <Button
-          iconAtEnd
+          iconPosition="end"
           className="mt-6 w-full"
           icon="tabler:arrow-right"
           loading={loading}

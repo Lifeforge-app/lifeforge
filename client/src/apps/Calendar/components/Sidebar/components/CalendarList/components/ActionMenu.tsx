@@ -1,17 +1,21 @@
-import { MenuItem } from 'lifeforge-ui'
-import React from 'react'
+import { ContextMenuItem } from 'lifeforge-ui'
 
 function ActionMenu({
   onEdit,
   onDelete
 }: {
-  onEdit: (e: React.MouseEvent) => void
-  onDelete: (e: React.MouseEvent) => void
+  onEdit: () => void
+  onDelete: () => void
 }) {
   return (
     <>
-      <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
-      <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
+      <ContextMenuItem icon="tabler:pencil" label="Edit" onClick={onEdit} />
+      <ContextMenuItem
+        dangerous
+        icon="tabler:trash"
+        label="Delete"
+        onClick={onDelete}
+      />
     </>
   )
 }

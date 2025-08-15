@@ -1,6 +1,6 @@
 import { Button } from '@components/buttons'
 import { useModalStore } from '@components/modals'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import QrCodeScanner from './QRCodeScanner'
 

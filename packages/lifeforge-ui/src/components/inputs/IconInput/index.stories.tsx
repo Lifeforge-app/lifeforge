@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import Index from './index'
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'name',
+    label: 'Icon of Something',
     value: 'tabler:cube',
     setValue: () => {},
     namespace: 'namespace'
@@ -21,6 +21,22 @@ export const Default: Story = {
   render: args => {
     const [icon, setIcon] = useState(args.value)
 
-    return <Index {...args} disabled={false} value={icon} setValue={setIcon} />
+    return <Index {...args} disabled={false} setValue={setIcon} value={icon} />
+  }
+}
+
+export const Required: Story = {
+  args: {
+    label: 'Icon of Something',
+    value: 'tabler:cube',
+    setValue: () => {},
+    namespace: 'namespace',
+    required: true
+  },
+
+  render: args => {
+    const [icon, setIcon] = useState(args.value)
+
+    return <Index {...args} disabled={false} setValue={setIcon} value={icon} />
   }
 }

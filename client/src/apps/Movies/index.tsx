@@ -93,9 +93,9 @@ function Movies() {
       <div className="flex items-center gap-2">
         <SearchInput
           namespace="apps.movies"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="movie"
+          value={searchQuery}
+          setValue={setSearchQuery}
+          searchTarget="movie"
         />
         <ViewModeSelector
           className="hidden md:flex"

@@ -1,14 +1,14 @@
 import forceDown from '@utils/forceDown'
-import { HamburgerMenu, MenuItem } from 'lifeforge-ui'
+import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 
 import type { ScoreLibraryEntry } from '..'
 
 function DownloadMenu({ entry }: { entry: ScoreLibraryEntry }) {
   return (
-    <HamburgerMenu customIcon="tabler:download">
-      <MenuItem
+    <ContextMenu customIcon="tabler:download">
+      <ContextMenuItem
         icon="tabler:file-text"
-        text="PDF"
+        label="PDF"
         onClick={() => {
           forceDown(
             `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -19,9 +19,9 @@ function DownloadMenu({ entry }: { entry: ScoreLibraryEntry }) {
         }}
       />
       {entry.audio !== '' && (
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:music"
-          text="Audio"
+          label="Audio"
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -33,9 +33,9 @@ function DownloadMenu({ entry }: { entry: ScoreLibraryEntry }) {
         />
       )}
       {entry.musescore !== '' && (
-        <MenuItem
+        <ContextMenuItem
           icon="simple-icons:musescore"
-          text="Musescore"
+          label="Musescore"
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -46,7 +46,7 @@ function DownloadMenu({ entry }: { entry: ScoreLibraryEntry }) {
           }}
         />
       )}
-    </HamburgerMenu>
+    </ContextMenu>
   )
 }
 

@@ -10,7 +10,7 @@ function Notes({
 }) {
   return (
     <div
-      className={`quote bg-bg-800/70 border-custom-500 mt-6 w-full rounded-md border-l-4 p-4 ${className}`}
+      className={`quote bg-bg-200/50 dark:bg-bg-800/70 border-custom-500 mt-6 w-full rounded-md border-l-4 p-4 ${className}`}
     >
       <div className="flex items-center gap-2">
         <Icon className="text-custom-500 h-6 w-6" icon="tabler:info-circle" />

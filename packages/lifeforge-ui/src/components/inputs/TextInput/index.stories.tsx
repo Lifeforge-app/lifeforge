@@ -1,10 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import TextInput from '.'
 
 const meta = {
-  component: TextInput
+  component: TextInput,
+  argTypes: {
+    actionButtonProps: {
+      table: {
+        type: {
+          summary: 'ButtonProps'
+        }
+      }
+    }
+  }
 } satisfies Meta<typeof TextInput>
 
 export default meta
@@ -17,8 +26,9 @@ export const Default: Story = {
     label: 'Username',
     placeholder: 'John Doe',
     setValue: () => {},
-    namespace: false,
-    value: ''
+    value: '',
+    namespace: '',
+    required: false
   },
   render: args => {
     const [value, setValue] = useState('')
@@ -32,7 +42,6 @@ export const PasswordInput: Story = {
     icon: 'tabler:key',
     label: 'Password',
     placeholder: 'Type your password here',
-    namespace: false,
     value: '',
     isPassword: true,
     setValue: () => {}
@@ -50,13 +59,30 @@ export const WithActionButton: Story = {
     icon: 'tabler:barcode',
     label: 'Barcode',
     placeholder: '0123456789',
-    namespace: false,
     value: '',
     actionButtonProps: {
       icon: 'tabler:scan',
       onClick: () => {}
     },
     setValue: () => {}
+  },
+
+  render: args => {
+    const [value, setValue] = useState('')
+
+    return <TextInput {...args} setValue={setValue} value={value} />
+  }
+}
+
+export const Required: Story = {
+  args: {
+    icon: 'tabler:user',
+    label: 'Username',
+    placeholder: 'John Doe',
+    value: '',
+    setValue: () => {},
+    namespace: '',
+    required: true
   },
 
   render: args => {

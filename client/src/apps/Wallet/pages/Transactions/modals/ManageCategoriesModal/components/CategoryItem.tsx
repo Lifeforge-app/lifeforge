@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -55,7 +55,7 @@ function CategoryItem({ category }: { category: WalletCategory }) {
   return (
     <li
       key={category.id}
-      className="flex-between component-bg-lighter dark:bg-bg-800/30 shadow-custom flex gap-3 rounded-md p-4"
+      className="flex-between component-bg-lighter bg-bg-50 shadow-custom flex gap-3 rounded-md p-4"
     >
       <div className="flex w-full min-w-0 items-center gap-3">
         <div
@@ -81,19 +81,19 @@ function CategoryItem({ category }: { category: WalletCategory }) {
           </p>
         </div>
       </div>
-      <HamburgerMenu>
-        <MenuItem
+      <ContextMenu>
+        <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleEditCategory}
         />
-        <MenuItem
-          isRed
+        <ContextMenuItem
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteCategory}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </li>
   )
 }

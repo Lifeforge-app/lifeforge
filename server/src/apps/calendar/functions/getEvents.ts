@@ -176,6 +176,8 @@ export default async function getEvents({
     location: entry.theatre_location ?? '',
     location_coords: entry.theatre_location_coords,
     description: `
+![${entry.title}](http://image.tmdb.org/t/p/w300/${entry.poster})
+
 ### Movie Description:
 ${entry.overview}
 

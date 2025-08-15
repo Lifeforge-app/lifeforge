@@ -12,12 +12,12 @@ function SidebarSection({
   stuff,
   fallbackIcon,
   hasActionButton = true,
-  hasHamburgerMenu = true
+  hasContextMenu = true
 }: {
   stuff: 'collections' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasActionButton?: boolean
-  hasHamburgerMenu?: boolean
+  hasContextMenu?: boolean
 }) {
   const open = useModalStore(state => state.open)
 
@@ -64,7 +64,7 @@ function SidebarSection({
                 <SidebarItem
                   key={item.id}
                   fallbackIcon={fallbackIcon}
-                  hasHamburgerMenu={hasHamburgerMenu}
+                  hasContextMenu={hasContextMenu}
                   item={item}
                   stuff={stuff}
                 />

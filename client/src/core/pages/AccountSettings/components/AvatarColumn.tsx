@@ -109,7 +109,7 @@ function AvatarColumn() {
         </Button>
         {userData.avatar !== '' && (
           <Button
-            isRed
+            dangerous
             icon="tabler:trash"
             variant="plain"
             onClick={handleDeleteAvatar}

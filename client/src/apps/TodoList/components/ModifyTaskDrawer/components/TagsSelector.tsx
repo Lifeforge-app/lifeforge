@@ -32,7 +32,7 @@ function TagsSelector({
       value={tags}
     >
       {tagsList.map(({ name, id }, i) => (
-        <ListboxOption key={i} icon="tabler:hash" text={name} value={id} />
+        <ListboxOption key={i} icon="tabler:hash" label={name} value={id} />
       ))}
     </ListboxInput>
   )

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import TextAreaInput from './TextAreaInput'
@@ -17,8 +17,7 @@ export const Default: Story = {
     label: 'Description',
     placeholder: 'Something amazing about yourself...',
     value: '',
-    setValue: () => {},
-    namespace: false
+    setValue: () => {}
   },
   render: args => {
     const [value, setValue] = useState(args.value)

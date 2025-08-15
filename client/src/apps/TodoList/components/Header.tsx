@@ -1,6 +1,5 @@
-import { Button } from 'lifeforge-ui'
+import { Button, HeaderFilter } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -13,19 +12,22 @@ function Header({
 
   const {
     entriesQuery,
-    // prioritiesQuery,
-    // listsQuery,
-    // tagsListQuery,
+    prioritiesQuery,
+    listsQuery,
+    tagsListQuery,
     setSelectedTask,
-    setModifyTaskWindowOpenType
+    setModifyTaskWindowOpenType,
+    filter,
+    setFilter
   } = useTodoListContext()
 
-  const [searchParams] = useSearchParams()
-
   const entries = entriesQuery.data ?? []
-  // const priorities = prioritiesQuery.data ?? []
-  // const lists = listsQuery.data ?? []
-  // const tags = tagsListQuery.data ?? []
+
+  const priorities = prioritiesQuery.data ?? []
+
+  const lists = listsQuery.data ?? []
+
+  const tags = tagsListQuery.data ?? []
 
   return (
     <div className="flex-between flex px-4">
@@ -33,12 +35,12 @@ function Header({
         <h1 className="text-3xl font-semibold md:text-4xl">
           {`${t(
             `headers.${(() => {
-              const status = searchParams.get('status')
+              const status = filter.status
 
               const hasFilter =
-                searchParams.has('list') ||
-                searchParams.has('tag') ||
-                searchParams.has('priority')
+                filter.list !== null ||
+                filter.tag !== null ||
+                filter.priority !== null
 
               if (status === null || status === '') {
                 return hasFilter ? 'filtered' : 'all'
@@ -49,7 +51,7 @@ function Header({
           )}`.trim()}{' '}
           <span className="text-bg-500 text-base">({entries.length})</span>
         </h1>
-        {/* TODO <HeaderFilter
+        <HeaderFilter
           items={{
             list: {
               data: lists,
@@ -66,7 +68,17 @@ function Header({
               isColored: true
             }
           }}
-        /> */}
+          setValues={{
+            tag: setFilter.bind(null, 'tag'),
+            list: setFilter.bind(null, 'list'),
+            priority: setFilter.bind(null, 'priority')
+          }}
+          values={{
+            tag: filter.tag,
+            list: filter.list,
+            priority: filter.priority
+          }}
+        />
       </div>
       <div className="flex items-center gap-6">
         <Button

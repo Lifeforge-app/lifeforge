@@ -31,9 +31,9 @@ function NodeSelector({
       <SearchInput
         lighter
         namespace="core.apiBuilder"
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        stuffToSearch="node"
+        value={searchQuery}
+        setValue={setSearchQuery}
+        searchTarget="node"
       />
       {NODES_CATEGORIES.map(category => (
         <div key={category.name} className="mt-6">

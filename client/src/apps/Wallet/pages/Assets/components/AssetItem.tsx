@@ -5,8 +5,8 @@ import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
-  HamburgerMenu,
-  MenuItem,
+  ContextMenu,
+  ContextMenuItem,
   useModalStore
 } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
@@ -104,25 +104,29 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
       >
         View Transactions
       </Button>
-      <HamburgerMenu
+      <ContextMenu
         classNames={{
           wrapper: 'absolute right-4 top-4'
         }}
       >
-        <MenuItem
+        <ContextMenuItem
           icon="tabler:chart-line"
           namespace="apps.wallet"
-          text="View Balance Chart"
+          label="View Balance Chart"
           onClick={handleOpenBalanceChart}
         />
-        <MenuItem icon="tabler:pencil" text="Edit" onClick={handleEditAsset} />
-        <MenuItem
-          isRed
+        <ContextMenuItem
+          icon="tabler:pencil"
+          label="Edit"
+          onClick={handleEditAsset}
+        />
+        <ContextMenuItem
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteAsset}
         />
-      </HamburgerMenu>
+      </ContextMenu>
     </div>
   )
 }

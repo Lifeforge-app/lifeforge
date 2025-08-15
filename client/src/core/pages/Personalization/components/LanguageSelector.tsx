@@ -63,7 +63,7 @@ function LanguageSelector() {
         value={language}
       >
         {LANGUAGES.map(({ name, code, icon }) => (
-          <ListboxOption key={code} icon={icon} text={name} value={code} />
+          <ListboxOption key={code} icon={icon} label={name} value={code} />
         ))}
       </Listbox>
     </ConfigColumn>

@@ -76,11 +76,10 @@ function LockedScreen({
         isPassword
         className="w-full md:w-3/4 xl:w-1/2"
         icon="tabler:lock"
-        label="Master Password"
+        label="vault.inputs.masterPassword"
         namespace="common.vault"
         placeholder={'••••••••••••••••'}
         setValue={setMasterPassWordInputContent}
-        tKey="vault"
         value={masterPassWordInputContent}
         onKeyDown={e => {
           if (e.key === 'Enter') {
@@ -93,12 +92,11 @@ function LockedScreen({
         icon="tabler:lock"
         loading={loading}
         namespace="common.vault"
-        tKey="vault"
         onClick={() => {
           onSubmit().catch(console.error)
         }}
       >
-        Unlock
+        vault.buttons.unlock
       </Button>
     </div>
   )

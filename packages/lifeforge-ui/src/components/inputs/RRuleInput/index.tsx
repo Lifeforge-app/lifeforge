@@ -224,7 +224,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
         {['hourly', 'daily', 'weekly', 'monthly', 'yearly'].map(freq => (
           <ListboxOption
             key={freq}
-            text={t(`recurring.freqs.${freq}`)}
+            label={t(`recurring.freqs.${freq}`)}
             value={freq}
           />
         ))}
@@ -252,7 +252,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
           {['never', 'after', 'on'].map(type => (
             <ListboxOption
               key={type}
-              text={t(`recurring.endTypes.${type}`)}
+              label={t(`recurring.endTypes.${type}`)}
               value={type}
             />
           ))}
@@ -266,7 +266,6 @@ function RRuleInput<HasDuration extends boolean = boolean>({
                   className="flex-1"
                   icon="tabler:repeat"
                   label={t('recurring.inputs.after')}
-                  namespace={false}
                   setValue={value => {
                     setRRuleParams({
                       ...rruleParams,
@@ -289,7 +288,6 @@ function RRuleInput<HasDuration extends boolean = boolean>({
                 className="flex-1"
                 icon="tabler:calendar"
                 label={t('recurring.inputs.on')}
-                namespace={false}
                 setValue={date => {
                   setRRuleParams({
                     ...rruleParams,
@@ -312,7 +310,6 @@ function RRuleInput<HasDuration extends boolean = boolean>({
             className="flex-1"
             icon="tabler:clock"
             label={t('recurring.inputs.durationAmount')}
-            namespace={false}
             setValue={amt => {
               setDuration({
                 ...duration,
@@ -327,7 +324,6 @@ function RRuleInput<HasDuration extends boolean = boolean>({
             className="flex-1"
             icon="tabler:clock"
             label={t('recurring.inputs.durationUnit')}
-            namespace={false}
             setValue={unit => {
               setDuration({
                 ...duration,
@@ -339,7 +335,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
             {['minute', 'hour', 'day', 'week', 'month', 'year'].map(unit => (
               <ListboxOption
                 key={unit}
-                text={t(`recurring.durationUnits.${unit}`)}
+                label={t(`recurring.durationUnits.${unit}`)}
                 value={unit}
               />
             ))}

@@ -19,7 +19,7 @@ function TwoFAEnableProcedure({ onSuccess }: { onSuccess: () => void }) {
       </p>
       <QRCodeDisplay />
       <Button
-        iconAtEnd
+        iconPosition="end"
         className="mt-6 w-full"
         icon="tabler:arrow-right"
         onClick={() => {
