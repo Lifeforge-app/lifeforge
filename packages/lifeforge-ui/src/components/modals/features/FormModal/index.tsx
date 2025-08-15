@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@components/buttons'
 import type {
-  FieldsConfig,
   FormFieldPropsUnion,
   FormState,
   InferFormFinalState,
@@ -15,103 +13,10 @@ import { toast } from 'react-toastify'
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
-
-const transformExistedData = (fieldType: string, value: unknown): unknown => {
-  if (fieldType === 'datetime' && value) {
-    return dayjs(value as string).toDate()
-  }
-
-  return value
-}
-
-const checkEmpty = (value: unknown): boolean => {
-  if (value === null || value === undefined) {
-    return true
-  }
-
-  if (typeof value === 'string' && value.trim() === '') {
-    return true
-  }
-
-  if (Array.isArray(value) && value.length === 0) {
-    return true
-  }
-
-  if (value instanceof Date) {
-    return isNaN(value.getTime())
-  }
-
-  if (typeof value === 'object') {
-    if (Object.keys(value).length === 0) {
-      return true
-    }
-
-    if ('file' in value && (!value.file || value.file === 'removed')) {
-      return true
-    }
-
-    if (
-      'name' in value &&
-      'formattedAddress' in value &&
-      !value.name &&
-      !value.formattedAddress
-    ) {
-      return true
-    }
-  }
-
-  return false
-}
-
-const getInitialData = <TFormConfig extends FieldsConfig<any, any>>(
-  fieldTypes: Record<string, FormFieldPropsUnion['type']>,
-  fields: TFormConfig,
-  formExistedData?: Partial<InferFormState<any, TFormConfig>>
-) => {
-  return Object.fromEntries(
-    Object.entries(fieldTypes).map(([key, fieldType]) => {
-      if (formExistedData && key in formExistedData && formExistedData[key]) {
-        return [key, transformExistedData(fieldType, formExistedData[key])]
-      }
-
-      let finalValue: unknown = ''
-
-      switch (fieldType) {
-        case 'number':
-        case 'currency':
-          finalValue = 0
-          break
-        case 'datetime':
-        case 'location':
-          finalValue = null
-          break
-        case 'listbox':
-          finalValue = fields[key]?.multiple ? [] : null
-          break
-        case 'checkbox':
-          finalValue = false
-          break
-        case 'file':
-          finalValue = { file: null, preview: null }
-          break
-        default:
-          finalValue = ''
-      }
-
-      return [key, finalValue]
-    })
-  )
-}
+import { checkEmpty, getInitialData } from './utils/formUtils'
 
 function FormModal({
-  form: {
-    fields,
-    fieldTypes,
-    initialData,
-    additionalFields,
-    onSubmit,
-    onChange
-  },
+  form: { fields, fieldTypes, initialData, onSubmit, onChange },
   ui: { title, icon, namespace, loading = false, onClose, submitButton },
   actionButton,
   externalData
@@ -120,7 +25,6 @@ function FormModal({
     fields: Record<string, FormFieldPropsUnion>
     fieldTypes: Record<string, FormFieldPropsUnion['type']>
     initialData?: Partial<InferFormState<typeof fieldTypes, typeof fields>>
-    additionalFields?: React.ReactNode
     onSubmit: (
       data: InferFormFinalState<typeof fieldTypes, typeof fields>
     ) => Promise<void>
@@ -130,7 +34,7 @@ function FormModal({
     title: string
     icon: string
     onClose: () => void
-    namespace: string | false
+    namespace?: string
     loading?: boolean
     submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
   }
@@ -155,13 +59,31 @@ function FormModal({
     >
   )
 
+  // Determine the source of form data
+  // If external data is provided, use it; otherwise, use internal state
   const data = externalData ? externalData.data : internalData
 
   const setData = externalData ? externalData.setData : setInternalData
 
   const [submitLoading, setSubmitLoading] = useState(false)
 
+  /**
+   * Handles the form submission process for the FormModal component.
+   *
+   * @remarks
+   * The function handles various field types with specific transformations:
+   * - `datetime`: Converts to ISO 8601 format (YYYY-MM-DDTHH:mm:ssZ)
+   * - `location`: Ensures undefined for falsy values
+   * - `currency`/`number`: Converts to Number type
+   * - `file`: Extracts the file property from the file object
+   * - `checkbox`: Converts to Boolean type
+   *
+   * @returns A Promise that resolves when the submission process is complete
+   *
+   * @throws Will not throw errors directly, but may propagate errors from the onSubmit callback
+   */
   async function onSubmitButtonClick(): Promise<void> {
+    // Validates that all required, non-hidden fields have been filled
     const requiredFields = Object.entries(fields).filter(
       field => field[1]?.required && !field[1].hidden
     )
@@ -170,6 +92,7 @@ function FormModal({
       checkEmpty(data[field[0]])
     )
 
+    // Show error toast if any required fields are missing
     if (missingFields.length) {
       toast.error(
         `The following fields are required: ${missingFields
@@ -182,6 +105,7 @@ function FormModal({
 
     setSubmitLoading(true)
 
+    // Transform field values based on their types
     const finalData = Object.fromEntries(
       Object.entries(data).map(([key, value]) => {
         const fieldType = fields[key]?.type
@@ -220,6 +144,8 @@ function FormModal({
       })
     )
 
+    // Call the onSubmit callback with the final data
+    // Close the modal on successful submission
     if (onSubmit) {
       try {
         await onSubmit(
@@ -232,6 +158,7 @@ function FormModal({
     }
   }
 
+  // Notify parent component of data changes
   useEffect(() => {
     onChange?.(data)
   }, [data, onChange])
@@ -253,7 +180,6 @@ function FormModal({
             namespace={namespace}
             setData={setData as React.Dispatch<React.SetStateAction<FormState>>}
           />
-          {additionalFields}
           <SubmitButton
             submitButton={submitButton}
             submitLoading={submitLoading}
