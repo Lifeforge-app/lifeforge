@@ -4,14 +4,14 @@ import clsx from 'clsx'
 
 function ComboboxOption({
   value,
-  text,
+  label,
   icon,
   iconAtEnd = false,
   color,
   noCheckmark = false
 }: {
   value: unknown
-  text: string | React.ReactElement
+  label: string | React.ReactElement
   icon?: string | React.ReactElement
   iconAtEnd?: boolean
   color?: string
@@ -58,7 +58,7 @@ function ComboboxOption({
                 />
               )
             )}
-            <div className="w-full min-w-0 truncate">{text}</div>
+            <div className="w-full min-w-0 truncate">{label}</div>
           </div>
           {!noCheckmark && selected && (
             <Icon

@@ -18,7 +18,6 @@ function MonthlyExactDateForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.monthly.exactDate.inputs.date')}
-        namespace={false}
         setValue={date => setData({ ...data, onDate: date })}
         value={data.onDate}
       />

@@ -68,7 +68,7 @@ function IconPickerModal({
       ) : (
         <ModalHeader
           appendTitle={
-            <p className="shrink-0 text-right text-sm sm:text-base">
+            <p className="text-bg-500 shrink-0 text-right text-sm sm:text-base">
               powered by&nbsp;
               <a
                 className="underline"

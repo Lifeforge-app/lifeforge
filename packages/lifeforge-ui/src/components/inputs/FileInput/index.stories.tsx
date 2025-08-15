@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:file',
-    label: 'name',
+    label: 'Upload Image',
     file: null,
     preview: null,
     setData: () => {},

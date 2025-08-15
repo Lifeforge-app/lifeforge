@@ -11,7 +11,7 @@ function IconSetEntry({
   return (
     <button
       key={iconSet.prefix}
-      className="bg-bg-50 shadow-custom hover:bg-bg-200/70 dark:bg-bg-800 dark:hover:bg-bg-700/50 flex w-full grow flex-col overflow-hidden rounded-md transition-all"
+      className="bg-bg-50 shadow-custom component-bg-lighter flex w-full grow flex-col overflow-hidden rounded-md transition-all"
       type="button"
       onClick={() => {
         setCurrentIconSet({ iconSet: iconSet.prefix })
@@ -22,7 +22,7 @@ function IconSetEntry({
           {iconSet.samples?.map(sampleIcon => (
             <Icon
               key={sampleIcon}
-              className="size-8 shrink-0"
+              className="text-bg-500 size-8 shrink-0"
               icon={`${iconSet.prefix}:${sampleIcon}`}
             />
           ))}
@@ -43,7 +43,7 @@ function IconSetEntry({
                 icon="icon-park-outline:auto-height-one"
                 width="20"
               />
-              <p className="ml-1">{iconSet.height}</p>
+              <p className="ml-2">{iconSet.height}</p>
             </div>
           )}
         </div>

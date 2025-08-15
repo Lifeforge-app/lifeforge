@@ -73,7 +73,7 @@ export const Default: Story = {
             key={index}
             color={color}
             icon={icon}
-            text={text}
+            label={text}
             value={value}
           />
         ))}
@@ -140,7 +140,7 @@ export const MultipleSelection: Story = {
             key={index}
             color={color}
             icon={icon}
-            text={text}
+            label={text}
             value={value}
           />
         ))}

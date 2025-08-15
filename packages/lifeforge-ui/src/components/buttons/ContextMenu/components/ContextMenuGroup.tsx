@@ -2,21 +2,13 @@ import { Icon } from '@iconify/react'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 
 interface ContextMenuGroupProps {
-  /**
-   * The Iconify icon name to display before the group label.
-   */
+  /** The icon to display before the group label. Should be a valid icon name from Iconify. */
   icon: string
-  /**
-   * The text label for the group header.
-   */
+  /** The text label for the group header. */
   label: string
-  /**
-   * The menu items or content to render within this group. Normally will be one or more `<ContextMenuItem />`.
-   */
+  /** The menu items or content to render within this group. Typically one or more `<ContextMenuItem>` components. */
   children: React.ReactNode
-  /**
-   * Optional CSS classes to apply to the root group element.
-   */
+  /** Additional CSS class names to apply to the root group element. */
   className?: string
 }
 

@@ -17,8 +17,7 @@ export const Default: Story = {
     label: 'Description',
     placeholder: 'Something amazing about yourself...',
     value: '',
-    setValue: () => {},
-    namespace: false
+    setValue: () => {}
   },
   render: args => {
     const [value, setValue] = useState(args.value)

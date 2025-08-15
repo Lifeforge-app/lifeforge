@@ -124,8 +124,8 @@ function FormListboxInput({
           key={value}
           color={color}
           icon={icon}
+          label={text}
           selected={JSON.stringify(selectedData) === JSON.stringify(value)}
-          text={text}
           value={value}
         />
       ))}

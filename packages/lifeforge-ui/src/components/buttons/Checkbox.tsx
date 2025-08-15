@@ -14,15 +14,15 @@ function Checkbox({
   className,
   label
 }: {
-  /** Whether the checkbox is currently checked */
+  /** Whether the checkbox is currently checked. */
   checked?: boolean
-  /** Callback function called when the checked state changes */
+  /** Callback function called when the checked state changes. */
   onCheckedChange?: (checked: boolean) => void
-  /** Whether the checkbox is disabled and non-interactive */
+  /** Whether the checkbox is disabled and non-interactive. */
   disabled?: boolean
-  /** Additional CSS classes to apply to the checkbox root element */
+  /** Additional CSS class names to apply to the checkbox root element. */
   className?: string
-  /** Optional text label to display next to the checkbox */
+  /** Optional text label to display next to the checkbox. */
   label?: string
 }) {
   const { derivedThemeColor } = usePersonalization()

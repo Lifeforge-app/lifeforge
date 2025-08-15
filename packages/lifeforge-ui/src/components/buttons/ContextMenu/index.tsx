@@ -4,10 +4,7 @@ import clsx from 'clsx'
 import Button from '../Button'
 
 interface MenuProps {
-  /**
-   * The content to be displayed inside the menu.
-   * Normally will be one or more `<ContextMenuItem>` component.
-   */
+  /** The content to be displayed inside the menu. Typically one or more `<ContextMenuItem>` components. */
   children: React.ReactNode
   /** Optional CSS class names for styling different parts of the menu component. */
   classNames?: {
@@ -16,22 +13,15 @@ interface MenuProps {
     icon?: string
     menu?: string
   }
-  /**
-   * Any valid icon identifier from Iconify.
-   * Used to replace the default hamburger menu icon while keeping the default button component.
-   */
+  /** The icon identifier from Iconify to replace the default hamburger menu icon. */
   customIcon?: string
-  /** Callback function triggered when the menu open state changes. */
+  /** Callback function called when the menu open state changes. */
   onOpenChange?: (open: boolean) => void
-  /**
-   * Custom React component to use as the menu trigger button instead of the
-   * default button with three vertical dots.
-   * Can be any valid React node.
-   */
+  /** Custom React component to use as the menu trigger button instead of the default three-dots button. */
   buttonComponent?: React.ReactNode
-  /** Horizontal alignment of the menu relative to the trigger button. */
+  /** The horizontal alignment of the menu relative to the trigger button. */
   align?: 'start' | 'center' | 'end'
-  /** Side of the trigger button where the menu should appear. */
+  /** The side of the trigger button where the menu should appear. */
   side?: 'top' | 'right' | 'bottom' | 'left'
 }
 

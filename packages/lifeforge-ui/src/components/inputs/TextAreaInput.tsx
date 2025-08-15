@@ -6,16 +6,24 @@ import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 
 export interface TextAreaInputProps {
+  /** The label text displayed above the textarea field. */
   label: string
+  /** The icon to display next to the label. Should be a valid icon name from Iconify. */
   icon: string
+  /** The placeholder text displayed when the textarea is empty. */
   placeholder: string
+  /** The current text value of the textarea. */
   value: string
+  /** Callback function called when the textarea value changes. */
   setValue: (value: string) => void
+  /** Whether the textarea field is required for form validation. */
   required?: boolean
+  /** Whether the textarea is disabled and non-interactive. */
   disabled?: boolean
+  /** Additional CSS class names to apply to the textarea element. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function TextAreaInput({
@@ -27,10 +35,9 @@ function TextAreaInput({
   required,
   disabled,
   className,
-  namespace,
-  tKey
+  namespace
 }: TextAreaInputProps) {
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const ref = useRef<HTMLTextAreaElement>(null)
 

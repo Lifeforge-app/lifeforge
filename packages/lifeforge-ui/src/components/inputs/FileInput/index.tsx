@@ -38,7 +38,7 @@ function FileInput({
   }) => void
   onImageRemoved?: () => void
   required?: boolean
-  namespace: string | false
+  namespace?: string
   disabled?: boolean
   enablePixabay?: boolean
   enableUrl?: boolean
@@ -53,7 +53,7 @@ function FileInput({
     'common.buttons'
   ])
 
-  const inputLabel = useInputLabel(namespace, label)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const handleFilePickerOpen = useCallback(() => {
     open(FilePickerModal, {

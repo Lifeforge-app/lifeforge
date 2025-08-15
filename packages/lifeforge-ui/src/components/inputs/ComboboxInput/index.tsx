@@ -8,19 +8,30 @@ import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ComboboxOptions from './components/ComboboxOptions'
 
 interface ComboboxInputProps<T> {
+  /** The label text displayed above the combobox field. */
   label: string
+  /** The icon to display in the combobox. Should be a valid icon name from Iconify. */
   icon: string
+  /** The current selected value of the combobox. */
   value: T
+  /** Callback function called when the selected value changes. */
   setValue: (value: T) => void
+  /** Callback function called when the search query changes. */
   setQuery: (query: string) => void
+  /** Function that returns the display text for a given value. */
   displayValue: (value: T) => string
+  /** Whether the combobox is required for form validation. */
   required?: boolean
+  /** Whether the combobox is disabled and non-interactive. */
   disabled?: boolean
+  /** The dropdown options to display in the combobox. */
   children: React.ReactNode
+  /** Whether the combobox should show as active regardless of focus state. */
   customActive?: boolean
+  /** Additional CSS class names to apply to the combobox. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function ComboboxInput<T>({
@@ -35,10 +46,9 @@ function ComboboxInput<T>({
   children,
   customActive,
   className,
-  namespace,
-  tKey
+  namespace
 }: ComboboxInputProps<T>) {
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {

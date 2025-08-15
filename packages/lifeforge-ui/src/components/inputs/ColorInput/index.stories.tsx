@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    label: 'name',
+    label: 'Cube Color',
     value: '',
     setValue: () => {},
     namespace: 'namespace'

@@ -189,7 +189,7 @@ type Field<TField extends FormFieldPropsUnion> = TField & BaseFieldProps
 type FormInputProps<TField extends FormFieldPropsUnion> = {
   field: Field<TField>
   selectedData: TField['__formDataType']
-  namespace: string
+  namespace?: string
   handleChange: (value: TField['__formDataType']) => void
 }
 

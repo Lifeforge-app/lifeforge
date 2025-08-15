@@ -3,12 +3,12 @@ import clsx from 'clsx'
 
 function FilterChip({
   icon,
-  text,
+  label,
   color,
   onRemove
 }: {
   icon: string
-  text: string
+  label: string
   color?: string
   onRemove: () => void
 }) {
@@ -24,7 +24,7 @@ function FilterChip({
       }
     >
       <Icon className="size-4" icon={icon} />
-      {text}
+      {label}
       <button onClick={onRemove}>
         <Icon className="size-4" icon="tabler:x" />
       </button>

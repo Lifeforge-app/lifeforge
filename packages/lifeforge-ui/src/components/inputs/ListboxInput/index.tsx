@@ -9,19 +9,30 @@ import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOptions from './components/ListboxOptions'
 
 interface ListboxInputProps<T> {
+  /** The label text displayed above the listbox field. */
   label: string
+  /** The icon to display in the listbox button. Should be a valid icon name from Iconify. */
   icon: string
+  /** The current selected value of the listbox. */
   value: T
+  /** Callback function called when the selected value changes. */
   setValue: (value: T) => void
+  /** Whether the field is required for form validation. */
   required?: boolean
+  /** Whether the listbox is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the listbox allows multiple selections. */
   multiple?: boolean
+  /** Additional CSS class names to apply to the listbox container. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
+  /** The child elements to render as listbox options. */
   children: React.ReactNode
+  /** Whether the listbox uses custom active state styling. */
   customActive?: boolean
+  /** The custom content to display in the listbox button. */
   buttonContent: React.ReactElement
-  namespace: string | false
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function ListboxInput<T>({
@@ -36,10 +47,9 @@ function ListboxInput<T>({
   children,
   customActive,
   buttonContent,
-  namespace,
-  tKey
+  namespace
 }: ListboxInputProps<T>) {
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {

@@ -15,9 +15,7 @@ export const Default: Story = {
   args: {
     icon: 'tabler:rotate',
     label: 'Slider Input',
-    namespace: false,
     value: 0,
-    required: true,
     setValue: () => {}
   },
   render: args => {

@@ -14,7 +14,7 @@ export const Default: Story = {
   args: {
     value: 0,
     setValue: () => {},
-    namespace: false,
+
     label: 'Price',
     icon: 'tabler:currency-dollar'
   }
