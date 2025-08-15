@@ -25,7 +25,6 @@ export default function APIOnlineStatusWrapper({
         description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
         icon="tabler:wifi-off"
         name={false}
-        namespace={false}
         title="API is Offline"
       />
     )

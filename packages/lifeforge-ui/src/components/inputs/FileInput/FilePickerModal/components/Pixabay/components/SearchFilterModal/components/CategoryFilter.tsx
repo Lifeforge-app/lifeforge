@@ -28,16 +28,15 @@ function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
         </>
       }
       icon="tabler:category"
-      label="image Category"
+      label="imagePicker.inputs.imageCategory"
       namespace="common.modals"
       setValue={value => {
         updateFilters({ type: 'SET_CATEGORY', payload: value })
       }}
-      tKey="imagePicker"
       value={category}
     >
       {CATEGORIES.map(({ name, icon, id }, i) => (
-        <ListboxOption key={i} icon={icon} text={name} value={id} />
+        <ListboxOption key={i} icon={icon} label={name} value={id} />
       ))}
     </ListboxInput>
   )

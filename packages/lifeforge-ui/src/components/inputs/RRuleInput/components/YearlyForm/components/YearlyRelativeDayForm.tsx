@@ -20,14 +20,13 @@ function YearlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.relativeDay.inputs.onThe')}
-        namespace={false}
         setValue={value => setData({ ...data, onThe: value })}
         value={data.onThe}
       >
         {['first', 'second', 'third', 'fourth', 'last'].map(day => (
           <ListboxOption
             key={day}
-            text={t(`recurring.onThe.${day}`)}
+            label={t(`recurring.onThe.${day}`)}
             value={day}
           />
         ))}
@@ -54,7 +53,6 @@ function YearlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.relativeDay.inputs.onTheDay')}
-        namespace={false}
         setValue={value => setData({ ...data, onTheDay: value })}
         value={data.onTheDay}
       >
@@ -72,7 +70,7 @@ function YearlyRelativeDayForm({
         ].map((day, idx) => (
           <ListboxOption
             key={day}
-            text={t(
+            label={t(
               idx < 7
                 ? `common.misc:dates.days.${[
                     'mon',
@@ -97,7 +95,6 @@ function YearlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.relativeDay.inputs.ofTheMonth')}
-        namespace={false}
         setValue={value => setData({ ...data, onTheDayOfMonth: value })}
         value={data.onTheDayOfMonth}
       >
@@ -106,7 +103,7 @@ function YearlyRelativeDayForm({
           .map((_, month) => (
             <ListboxOption
               key={month}
-              text={t(`common.misc:dates.months.${month}`)}
+              label={t(`common.misc:dates.months.${month}`)}
               value={month + 1}
             />
           ))}

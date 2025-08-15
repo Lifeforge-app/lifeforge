@@ -4,13 +4,9 @@ import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
 interface SwitchProps {
-  /**
-   * Indicates whether the switch is checked (on) or not (off).
-   */
+  /** Whether the switch is currently checked (on) or unchecked (off). */
   checked: boolean
-  /**
-   * Callback function called when the switch state changes.
-   */
+  /** Callback function called when the switch state changes. */
   onChange: () => void
 }
 

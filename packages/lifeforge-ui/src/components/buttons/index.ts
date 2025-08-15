@@ -10,7 +10,7 @@ export { default as GoBackButton } from './GoBackButton'
 
 export { default as ContextMenu } from './ContextMenu'
 
-export { default as ContextMenuSelectorWrapper } from './ContextMenu/components/ContextMenuSelectorWrapper'
+export { default as ContextMenuGroup } from './ContextMenu/components/ContextMenuGroup'
 
 export { default as ContextMenuItem } from './ContextMenu/components/ContextMenuItem'
 

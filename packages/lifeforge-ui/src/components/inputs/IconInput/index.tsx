@@ -10,13 +10,18 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import IconPickerModal from './IconPickerModal'
 
 interface IconInputProps {
+  /** The label text displayed above the icon input field. */
   label: string
+  /** The current icon value of the input. Should be a valid icon name from Iconify. */
   value: string
+  /** Callback function called when the icon value changes. */
   setValue: (value: string) => void
+  /** Whether the field is required for form validation. */
   required?: boolean
+  /** Whether the input is disabled and non-interactive. */
   disabled?: boolean
-  namespace: string
-  tKey?: string
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string
 }
 
 function IconInput({
@@ -25,13 +30,11 @@ function IconInput({
   setValue,
   required,
   disabled,
-  namespace,
-  tKey
+  namespace
 }: IconInputProps) {
-  // Hooks & State
   const open = useModalStore(state => state.open)
 
-  const inputLabel = useInputLabel(namespace, label, tKey)
+  const inputLabel = useInputLabel({ namespace, label })
 
   const [iconExists, setIconExists] = useState(false)
 
