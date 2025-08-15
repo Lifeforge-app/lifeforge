@@ -121,7 +121,6 @@ function AuthForm({ providers }: { providers: string[] }) {
           {...input}
           disabled={formDisabled}
           isPassword={input.label === 'Password'}
-          namespace={false}
           onKeyDown={onInputKeyDown}
         />
       ))}

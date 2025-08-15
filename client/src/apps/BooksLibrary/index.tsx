@@ -2,8 +2,8 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import {
   Button,
+  ContextMenuGroup,
   ContextMenuItem,
-  ContextMenuSelectorWrapper,
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
@@ -73,19 +73,19 @@ function BooksLibrary() {
             wrapper: 'block md:hidden'
           },
           children: (
-            <ContextMenuSelectorWrapper icon="tabler:eye" title="View as">
+            <ContextMenuGroup icon="tabler:eye" label="View as">
               {['grid', 'list'].map(type => (
                 <ContextMenuItem
                   key={type}
+                  checked={view === type}
                   icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
-                  isToggled={view === type}
-                  text={type.charAt(0).toUpperCase() + type.slice(1)}
+                  label={type.charAt(0).toUpperCase() + type.slice(1)}
                   onClick={() => {
                     setView(type as 'grid' | 'list')
                   }}
                 />
               ))}
-            </ContextMenuSelectorWrapper>
+            </ContextMenuGroup>
           )
         }}
         icon="tabler:books"
@@ -102,9 +102,9 @@ function BooksLibrary() {
           <div className="mt-4 flex items-center gap-2">
             <SearchInput
               namespace="apps.booksLibrary"
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              stuffToSearch="book"
+              searchTarget="book"
+              setValue={setSearchQuery}
+              value={searchQuery}
             />
             <ViewModeSelector
               className="hidden md:flex"
@@ -157,14 +157,14 @@ function BooksLibrary() {
         >
           <ContextMenuItem
             icon="tabler:upload"
+            label="Upload from device"
             namespace="apps.booksLibrary"
-            text="Upload from device"
             onClick={() => {}}
           />
           <ContextMenuItem
             icon="tabler:books"
+            label="Download from Libgen"
             namespace="apps.booksLibrary"
-            text="Download from Libgen"
             onClick={handleOpenLibgenModal}
           />
         </MenuItems>

@@ -69,13 +69,13 @@ function SidebarTypeItem({
         <>
           <ContextMenuItem
             icon="tabler:pencil"
-            text="update"
+            label="update"
             onClick={handleUpdate}
           />
           <ContextMenuItem
-            isRed
+            dangerous
             icon="tabler:trash"
-            text="delete"
+            label="delete"
             onClick={handleDelete}
           />
         </>

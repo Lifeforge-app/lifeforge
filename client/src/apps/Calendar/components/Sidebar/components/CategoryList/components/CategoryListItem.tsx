@@ -37,31 +37,23 @@ function CategoryListItem({
     })
   )
 
-  const handleEdit = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      open(ModifyCategoryModal, {
-        initialData: item,
-        type: 'update'
-      })
-    },
-    [item]
-  )
+  const handleEdit = useCallback(() => {
+    open(ModifyCategoryModal, {
+      initialData: item,
+      type: 'update'
+    })
+  }, [item])
 
-  const handleDelete = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      open(ConfirmationModal, {
-        title: 'Delete Category',
-        description: `Are you sure you want to delete the category "${item.name}"?`,
-        onConfirm: async () => {
-          await deleteMutation.mutateAsync({})
-        },
-        confirmationPrompt: item.name
-      })
-    },
-    [item]
-  )
+  const handleDelete = useCallback(() => {
+    open(ConfirmationModal, {
+      title: 'Delete Category',
+      description: `Are you sure you want to delete the category "${item.name}"?`,
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync({})
+      },
+      confirmationPrompt: item.name
+    })
+  }, [item])
 
   const contextMenuItems = useMemo(
     () =>

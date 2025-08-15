@@ -60,7 +60,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
               Cancel
             </Button>
             <Button
-              isRed
+              dangerous
               className="sm:w-1/2"
               icon="tabler:check"
               loading={loading}

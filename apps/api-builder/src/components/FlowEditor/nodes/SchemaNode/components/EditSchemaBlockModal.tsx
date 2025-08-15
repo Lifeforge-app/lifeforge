@@ -117,7 +117,7 @@ export default function EditSchemaNodeModal({
                     <ListboxOption
                       key={type.label}
                       icon={type.icon}
-                      text={type.label}
+                      label={type.label}
                       value={type.label.toLowerCase()}
                     />
                   ))}
@@ -137,7 +137,7 @@ export default function EditSchemaNodeModal({
               </div>
             </div>
             <Button
-              isRed
+              dangerous
               icon="tabler:trash"
               variant="plain"
               onClick={() => removeField(i)}

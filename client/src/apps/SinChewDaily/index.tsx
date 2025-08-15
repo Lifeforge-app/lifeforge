@@ -255,7 +255,7 @@ function SinChewDaily() {
           {Object.keys(categoryStructure).map(cat => (
             <ListboxOption
               key={cat}
-              text={t(`categories.${cat}`)}
+              label={t(`categories.${cat}`)}
               value={cat}
             />
           ))}
@@ -278,7 +278,7 @@ function SinChewDaily() {
             {availableSubCategories.map(subCat => (
               <ListboxOption
                 key={subCat}
-                text={t(`categories.${subCat}`)}
+                label={t(`categories.${subCat}`)}
                 value={subCat}
               />
             ))}
@@ -303,7 +303,7 @@ function SinChewDaily() {
             {availableSubSubCategories.map(subSubCat => (
               <ListboxOption
                 key={subSubCat}
-                text={t(`categories.${subSubCat}`)}
+                label={t(`categories.${subSubCat}`)}
                 value={subSubCat}
               />
             ))}
@@ -321,7 +321,7 @@ function SinChewDaily() {
             value={range}
           >
             {RANGES.map(rng => (
-              <ListboxOption key={rng} text={rng} value={rng} />
+              <ListboxOption key={rng} label={rng} value={rng} />
             ))}
           </ListboxInput>
         )}

@@ -5,6 +5,7 @@ layer(base);
 
 @import 'tailwindcss';
 
+@plugin 'tailwindcss-animate';
 @plugin 'daisyui';
 @plugin '@tailwindcss/typography';
 

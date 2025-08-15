@@ -41,13 +41,13 @@ function UploadTabButton({
         <ContextMenuItem
           icon="tabler:upload"
           namespace="apps.scoresLibrary"
-          text="Upload from local"
+          label="Upload from local"
           onClick={uploadFiles}
         />
         <ContextMenuItem
           icon="mingcute:guitar-line"
           namespace="apps.scoresLibrary"
-          text="Download from Guitar World"
+          label="Download from Guitar World"
           onClick={handleOpenGuitarWorldModal}
         />
       </MenuItems>

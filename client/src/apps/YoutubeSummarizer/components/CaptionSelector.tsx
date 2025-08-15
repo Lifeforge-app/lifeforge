@@ -83,7 +83,6 @@ function CaptionSelector({
           })}
           icon="tabler:language-off"
           name={false}
-          namespace={false}
           title={t('empty.captions.title')}
         />
       </DashboardItem>
@@ -129,12 +128,12 @@ function CaptionSelector({
       >
         <ListboxOption
           icon="tabler:robot"
-          text={t('captionTypes.auto')}
+          label={t('captionTypes.auto')}
           value="auto"
         />
         <ListboxOption
           icon="tabler:message-language"
-          text={t('captionTypes.manual')}
+          label={t('captionTypes.manual')}
           value="manual"
         />
       </ListboxInput>
@@ -174,7 +173,7 @@ function CaptionSelector({
                   <ListboxOption
                     key={language}
                     icon="tabler:language"
-                    text={meta[0].name ?? ''}
+                    label={meta[0].name ?? ''}
                     value={JSON.stringify({ language, meta })}
                   />
                 ))}
@@ -210,7 +209,6 @@ function CaptionSelector({
               })}
               icon="tabler:language-off"
               name={false}
-              namespace={false}
               title={t('empty.captions.title')}
             />
           </div>

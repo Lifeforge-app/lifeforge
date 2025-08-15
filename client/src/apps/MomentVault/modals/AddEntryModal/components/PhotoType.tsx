@@ -131,7 +131,7 @@ function PhotoType({ onSuccess }: { onSuccess: () => void }) {
         )}
         {photos.length ? (
           <Button
-            isRed
+            dangerous
             className="mt-6"
             icon="tabler:trash"
             variant="secondary"

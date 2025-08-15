@@ -94,12 +94,12 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
           setValue={setSelectedCategory}
           value={selectedCategory}
         >
-          <ListboxOption key="all" text="All category" value={null} />
+          <ListboxOption key="all" label="All category" value={null} />
           {[...new Set(fontsQuery.data?.items.map(font => font.category))].map(
             category => (
               <ListboxOption
                 key={category}
-                text={_.startCase(category)}
+                label={_.startCase(category)}
                 value={category}
               />
             )
@@ -107,10 +107,9 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
         </Listbox>
         <SearchInput
           namespace="core.personalization"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="fontFamily"
-          tKey="fontFamily"
+          searchTarget="fontFamily.inputs.fontFamily"
+          setValue={setSearchQuery}
+          value={searchQuery}
         />
       </div>
       <QueryWrapper query={fontsQuery}>

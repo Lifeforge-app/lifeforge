@@ -78,13 +78,13 @@ function StationItem({
           >
             <ContextMenuItem
               icon="tabler:edit"
-              text="Edit Line"
+              label="Edit Line"
               onClick={() => {}}
             />
             <ContextMenuItem
-              isRed
+              dangerous
               icon="tabler:trash"
-              text="Delete Line"
+              label="Delete Line"
               onClick={() => {
                 open(ConfirmationModal, {
                   title: 'Delete Station',
@@ -106,7 +106,6 @@ function StationItem({
           <TagsInput
             icon="tabler:code"
             name="Station Codes"
-            namespace={false}
             placeholder="Enter station codes..."
             renderTags={(tag, tagIndex, onRemove) => (
               <div
@@ -176,7 +175,6 @@ function StationItem({
             className="w-full"
             icon="tabler:category"
             name="Station Type"
-            namespace={false}
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -205,7 +203,7 @@ function StationItem({
               <ListboxOption
                 key={option.value}
                 icon={option.icon}
-                text={option.text}
+                label={option.text}
                 value={option.value}
               />
             ))}
@@ -237,7 +235,6 @@ function StationItem({
             }
             icon="tabler:route"
             name="Lines"
-            namespace={false}
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -256,7 +253,7 @@ function StationItem({
                 key={line.name}
                 color={line.color}
                 icon="tabler:route"
-                text={line.name}
+                label={line.name}
                 value={line.name}
               />
             ))}
@@ -265,7 +262,6 @@ function StationItem({
             className="flex-1"
             icon="tabler:map-pin"
             name="Station Name"
-            namespace={false}
             placeholder="Station Name"
             setValue={value => {
               setMrtStations(prevStations =>
@@ -284,7 +280,6 @@ function StationItem({
             className="flex-1"
             icon="tabler:square-letter-x"
             name="X Coordinate"
-            namespace={false}
             placeholder="X Coordinate"
             setValue={value => {
               setMrtStations(prevStations =>
@@ -303,7 +298,6 @@ function StationItem({
             className="flex-1"
             icon="tabler:square-letter-y"
             name="Y Coordinate"
-            namespace={false}
             placeholder="Y Coordinate"
             setValue={value => {
               setMrtStations(prevStations =>
@@ -324,7 +318,6 @@ function StationItem({
                 className="flex-1"
                 icon="tabler:arrows-horizontal"
                 name="Width"
-                namespace={false}
                 placeholder="Width"
                 setValue={value => {
                   setMrtStations(prevStations =>
@@ -343,7 +336,6 @@ function StationItem({
                 className="flex-1"
                 icon="tabler:arrows-vertical"
                 name="Height"
-                namespace={false}
                 placeholder="Height"
                 setValue={value => {
                   setMrtStations(prevStations =>
@@ -362,7 +354,6 @@ function StationItem({
                 className="flex-1"
                 icon="tabler:rotate-2"
                 name="Rotation"
-                namespace={false}
                 placeholder="Rotation"
                 setValue={value => {
                   setMrtStations(prevStations =>
@@ -385,7 +376,6 @@ function StationItem({
             max={100}
             min={-100}
             name="Text Offset X"
-            namespace={false}
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -405,7 +395,6 @@ function StationItem({
             max={100}
             min={-100}
             name="Text Offset Y"
-            namespace={false}
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {

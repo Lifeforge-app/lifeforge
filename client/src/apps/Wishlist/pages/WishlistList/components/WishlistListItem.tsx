@@ -109,13 +109,13 @@ function WishlistListItem({ list }: { list: WishlistList }) {
       >
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleUpdateList}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteList}
         />
       </ContextMenu>

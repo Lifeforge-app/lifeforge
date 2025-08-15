@@ -168,7 +168,7 @@ export default function ConversionRatesHistoryGraph() {
                   icon={`circle-flags:${CURRENCIES[code]?.[3].toLowerCase()}`}
                 />
               }
-              text={`${code} - ${CURRENCIES[code]?.[0] || ''}`}
+              label={`${code} - ${CURRENCIES[code]?.[0] || ''}`}
               value={code}
             />
           ))}
@@ -209,7 +209,7 @@ export default function ConversionRatesHistoryGraph() {
                   icon={`circle-flags:${CURRENCIES[code]?.[3].toLowerCase()}`}
                 />
               }
-              text={`${code} - ${CURRENCIES[code]?.[0] || ''}`}
+              label={`${code} - ${CURRENCIES[code]?.[0] || ''}`}
               value={code}
             />
           ))}

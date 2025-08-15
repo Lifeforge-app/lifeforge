@@ -123,13 +123,13 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
       >
         <ContextMenuItem
           icon="tabler:pencil"
-          text="Edit"
+          label="Edit"
           onClick={handleUpdateContainer}
         />
         <ContextMenuItem
-          isRed
+          dangerous
           icon="tabler:trash"
-          text="Delete"
+          label="Delete"
           onClick={handleDeleteContainer}
         />
       </ContextMenu>

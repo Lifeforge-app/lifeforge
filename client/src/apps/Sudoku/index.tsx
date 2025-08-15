@@ -76,7 +76,7 @@ function Sudoku() {
           <ListboxOption
             key={index}
             color={diff.color}
-            text={t(`difficulties.${diff.value}`)}
+            label={t(`difficulties.${diff.value}`)}
             value={diff.value}
           />
         ))}

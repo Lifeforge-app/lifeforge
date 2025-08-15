@@ -62,7 +62,6 @@ function LineSection({
           description="Click the button above to add a new MRT line."
           icon="tabler:route-off"
           name={false}
-          namespace={false}
           title="No MRT Lines"
         />
       )}

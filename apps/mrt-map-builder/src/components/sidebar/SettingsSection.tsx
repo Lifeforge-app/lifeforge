@@ -44,7 +44,6 @@ function SettingsSection({
           className="w-full"
           color={settings.colorOfCurrentLine}
           name="Color of Selected Line"
-          namespace={false}
           setColor={color => {
             setSettings({
               colorOfCurrentLine: color
@@ -60,7 +59,6 @@ function SettingsSection({
           file={settings.bgImage}
           icon="tabler:photo"
           name="Background Image"
-          namespace={false}
           preview={settings.bgImagePreview}
           setData={({ file, preview }) => {
             setSettings({
@@ -74,7 +72,6 @@ function SettingsSection({
           max={200}
           min={10}
           name="Background Image Scale"
-          namespace={false}
           setValue={value => {
             setSettings({
               bgImageScale: value
@@ -130,7 +127,7 @@ function SettingsSection({
           </Button>
         </div>
         <Button
-          isRed
+          dangerous
           className="-mt-2 w-full"
           icon="tabler:trash"
           variant="secondary"

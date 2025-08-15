@@ -129,7 +129,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
               key={i}
               color={color}
               icon={icon}
-              text={name}
+              label={name}
               value={id}
             />
           ))}
