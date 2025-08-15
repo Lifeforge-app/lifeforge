@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from 'express'
 import { Server } from 'socket.io'
 import { v4 } from 'uuid'
 
@@ -14,11 +13,6 @@ export interface ITaskPoolTask {
 }
 
 export const globalTaskPool: Record<string, ITaskPoolTask> = {}
-
-const taskPoolMiddleware = (req: Request, _: Response, next: NextFunction) => {
-  req.taskPool = globalTaskPool
-  next()
-}
 
 export const addToTaskPool = (
   io: Server,
@@ -73,5 +67,3 @@ export const updateTaskInPool = (
     delete globalTaskPool[taskId]
   }
 }
-
-export default taskPoolMiddleware
