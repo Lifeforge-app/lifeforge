@@ -20,6 +20,10 @@ textarea {
 
 button {
   @apply cursor-pointer;
+
+  & > svg {
+    @apply pointer-events-none;
+  }
 }
 
 code {
