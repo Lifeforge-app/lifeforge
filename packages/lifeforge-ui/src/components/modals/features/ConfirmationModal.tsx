@@ -1,5 +1,6 @@
+import clsx from 'clsx'
 import _ from 'lodash'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from '../../buttons/Button'
@@ -10,7 +11,7 @@ function ConfirmationModal({
   data: {
     title,
     description,
-    buttonType = 'confirm',
+    confirmationButton = 'confirm',
     confirmationPrompt,
     onConfirm
   }
@@ -19,7 +20,10 @@ function ConfirmationModal({
   data: {
     title: string
     description: string
-    buttonType?: 'delete' | 'confirm'
+    confirmationButton?:
+      | 'delete'
+      | 'confirm'
+      | React.ComponentProps<typeof Button>
     confirmationPrompt?: string
     onConfirm: () => Promise<void>
   }
@@ -51,7 +55,7 @@ function ConfirmationModal({
         <TextInput
           className="mt-4"
           icon="tabler:alert-triangle"
-          label="Confirmation"
+          label="deleteConfirmation.confirmation"
           namespace="common.modals"
           placeholder={t(
             'common.modals:deleteConfirmation.inputs.confirmation.placeholder',
@@ -60,7 +64,6 @@ function ConfirmationModal({
             }
           )}
           setValue={setConfirmationTextState}
-          tKey="deleteConfirmation"
           value={confirmationTextState}
         />
       )}
@@ -73,21 +76,32 @@ function ConfirmationModal({
         >
           Cancel
         </Button>
-        <Button
-          className="w-full"
-          disabled={
-            !!confirmationPrompt && confirmationPrompt !== confirmationTextState
-          }
-          icon={buttonType === 'delete' ? 'tabler:trash' : 'tabler:check'}
-          dangerous={buttonType === 'delete'}
-          loading={loading}
-          onClick={onClick}
-        >
-          {t([
-            `common.buttons:${buttonType === 'delete' ? 'delete' : 'confirm'}`,
-            _.upperFirst(buttonType)
-          ])}
-        </Button>
+        {typeof confirmationButton === 'string' ? (
+          <Button
+            className="w-full"
+            dangerous={confirmationButton === 'delete'}
+            disabled={
+              !!confirmationPrompt &&
+              confirmationPrompt !== confirmationTextState
+            }
+            icon={
+              confirmationButton === 'delete' ? 'tabler:trash' : 'tabler:check'
+            }
+            loading={loading}
+            onClick={onClick}
+          >
+            {t([
+              `common.buttons:${confirmationButton === 'delete' ? 'delete' : 'confirm'}`,
+              _.upperFirst(confirmationButton)
+            ])}
+          </Button>
+        ) : (
+          <Button
+            {...confirmationButton}
+            className={clsx('w-full', confirmationButton.className)}
+            onClick={onClick}
+          />
+        )}
       </div>
     </div>
   )
