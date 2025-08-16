@@ -1,8 +1,11 @@
 import { Outlet } from 'react-router'
 
+import useTitleEffect from '../hooks/useTitleEffect'
 import Sidebar from './Sidebar/Sidebar'
 
 function MainApplication() {
+  useTitleEffect()
+
   return (
     <>
       <Sidebar />

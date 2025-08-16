@@ -1,6 +1,6 @@
 import { LoadingScreen, ModalManager } from 'lifeforge-ui'
 import { Suspense } from 'react'
-import { Route } from 'react-router'
+import type { RouteObject } from 'react-router'
 
 import type { ModuleConfig } from '../interfaces/routes_interfaces'
 import APIKeyStatusProvider from '../providers/APIKeyStatusProvider'
@@ -9,33 +9,30 @@ function ChildRoutesRenderer({
   routes,
   isNested = false,
   APIKeys = [],
-  t
+  loadingMessage = 'loadingModule'
 }: {
   routes: ModuleConfig['routes']
-  t: any
+  loadingMessage: any
   isNested?: boolean
   APIKeys?: string[]
-}) {
+}): RouteObject[] {
   return Object.entries(routes).map(([path, component]) => {
     const Comp = component
 
-    return (
-      <Route
-        key={`path-${path}`}
-        element={
-          <APIKeyStatusProvider APIKeys={APIKeys}>
-            <Suspense
-              key={`path-${path}`}
-              fallback={<LoadingScreen customMessage={t('loadingModule')} />}
-            >
-              <Comp />
-            </Suspense>
-            <ModalManager />
-          </APIKeyStatusProvider>
-        }
-        path={(!isNested ? '/' : '') + path}
-      />
-    )
+    return {
+      path: (!isNested ? '/' : '') + path,
+      element: (
+        <APIKeyStatusProvider APIKeys={APIKeys}>
+          <Suspense
+            key={`path-${path}`}
+            fallback={<LoadingScreen customMessage={loadingMessage} />}
+          >
+            <Comp />
+          </Suspense>
+          <ModalManager />
+        </APIKeyStatusProvider>
+      )
+    }
   })
 }
 
