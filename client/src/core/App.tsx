@@ -14,11 +14,10 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { ErrorScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { BrowserRouter } from 'react-router'
 
 import './i18n'
 import './index.css'
-import AppRouter from './routes'
+import MainRoutesRenderer from './routes/components/MainRoutesRenderer'
 
 dayjs.extend(duration)
 dayjs.extend(isBetween)
@@ -41,16 +40,14 @@ function App() {
     <ErrorBoundary
       fallback={<ErrorScreen message="An unexpected error occurred." />}
     >
-      <BrowserRouter>
-        <main
-          className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
-          id="app"
-        >
-          <Providers>
-            <AppRouter />
-          </Providers>
-        </main>
-      </BrowserRouter>
+      <main
+        className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
+        id="app"
+      >
+        <Providers>
+          <MainRoutesRenderer />
+        </Providers>
+      </main>
     </ErrorBoundary>
   )
 }

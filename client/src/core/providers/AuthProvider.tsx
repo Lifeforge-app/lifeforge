@@ -13,7 +13,6 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import type { InferOutput } from 'shared'
 
@@ -71,8 +70,6 @@ export default function AuthProvider({
   const [quota, setQuota] = useState(5)
 
   const [authLoading, setAuthLoading] = useState(true)
-
-  const navigate = useNavigate()
 
   const tid = useRef('')
 
@@ -324,7 +321,9 @@ export default function AuthProvider({
             setAuthLoading(false)
           })
       } catch {
-        navigate('/auth')
+        setAuth(false)
+        setUserData(null)
+        setAuthLoading(false)
         toast.error(toast.error(t('messages.invalidLoginAttempt')))
       }
     },

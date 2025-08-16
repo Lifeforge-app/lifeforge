@@ -1,9 +1,12 @@
 import _ from 'lodash'
 import { useEffect } from 'react'
+import { useLocation } from 'react-router'
 
 import ROUTES from '../Routes'
 
 function useTitleEffect() {
+  const location = useLocation()
+
   useEffect(() => {
     const target =
       ROUTES.flatMap(e => e.items).filter(item =>

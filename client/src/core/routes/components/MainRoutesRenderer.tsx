@@ -1,10 +1,16 @@
+import Auth from '@core/pages/Auth'
 import MainApplication from '@core/routes/components/Layout'
-import { NotFoundScreen } from 'lifeforge-ui'
+import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
 import _ from 'lodash'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Route, Routes } from 'react-router'
+import {
+  Navigate,
+  type RouteObject,
+  RouterProvider,
+  createBrowserRouter
+} from 'react-router'
 
-import Auth from '../../pages/Auth'
 import { useAuth } from '../../providers/AuthProvider'
 import ROUTES from '../Routes'
 import ChildRoutesRenderer from './ChildRoutesRenderer'
@@ -12,53 +18,83 @@ import ChildRoutesRenderer from './ChildRoutesRenderer'
 function MainRoutesRenderer() {
   const { t } = useTranslation('common.misc')
 
-  const { userData } = useAuth()
+  const { userData, authLoading, auth } = useAuth()
 
-  return (
-    <Routes>
-      <Route element={<MainApplication />} path="/">
-        {userData !== null ? (
-          ROUTES.flatMap(e => e.items)
-            .filter(
-              item =>
-                (!item.togglable ||
-                  userData.enabledModules.includes(_.kebabCase(item.name))) &&
-                !item.forceDisable
-            )
-            .map(item =>
-              item.provider !== undefined
-                ? (() => {
-                    const Provider: React.FC = item.provider
+  const router = useMemo(() => {
+    if (!auth) {
+      return createBrowserRouter([
+        {
+          path: '/',
+          element: <Auth />
+        },
+        {
+          path: '/auth',
+          element: <Auth />
+        },
+        {
+          path: '*',
+          element: <Navigate replace to="/" />
+        }
+      ])
+    }
 
-                    return (
-                      <Route
-                        key={item.name}
-                        element={<Provider />}
-                        path={'/' + _.kebabCase(item.name)}
-                      >
-                        {ChildRoutesRenderer({
-                          routes: item.routes,
-                          APIKeys: item.requiredAPIKeys,
-                          isNested: true,
-                          t
-                        })}
-                      </Route>
-                    )
-                  })()
-                : ChildRoutesRenderer({
-                    routes: item.routes,
-                    APIKeys: item.requiredAPIKeys,
-                    t
-                  })
-            )
-        ) : (
-          <Route element={<NotFoundScreen />} path="*" />
-        )}
-      </Route>
-      <Route element={<Auth />} path="auth" />
-      <Route element={<NotFoundScreen />} path="*" />
-    </Routes>
-  )
+    return createBrowserRouter([
+      {
+        path: '/',
+        element: <MainApplication />,
+        children: ROUTES.flatMap(e => e.items)
+          .filter(
+            item =>
+              (!item.togglable ||
+                userData?.enabledModules.includes(_.kebabCase(item.name))) &&
+              !item.forceDisable
+          )
+          .flatMap(item => {
+            if (item.provider) {
+              const Provider: React.FC = item.provider
+
+              return {
+                path: '/' + _.kebabCase(item.name),
+                element: <Provider />,
+                children: ChildRoutesRenderer({
+                  routes: item.routes,
+                  APIKeys: item.requiredAPIKeys,
+                  isNested: true,
+                  loadingMessage: t('loadingModule')
+                })
+              } as RouteObject
+            } else {
+              return ChildRoutesRenderer({
+                routes: item.routes,
+                APIKeys: item.requiredAPIKeys,
+                loadingMessage: t('loadingModule')
+              })
+            }
+          })
+          .concat([
+            {
+              path: '/auth/*',
+              element: <Navigate replace to="/dashboard" />
+            },
+
+            {
+              path: '/',
+              element: <Navigate replace to="/dashboard" />
+            },
+            {
+              path: '*',
+              element: <NotFoundScreen />
+            }
+          ])
+      }
+    ])
+  }, [userData, auth])
+
+  if (authLoading) {
+    return <LoadingScreen customMessage={t('loadingUserData')} />
+  }
+
+  return <RouterProvider router={router} />
 }
 
 export default MainRoutesRenderer
