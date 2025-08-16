@@ -11,7 +11,9 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import { ErrorScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { BrowserRouter } from 'react-router'
 
 import './i18n'
@@ -36,16 +38,20 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <main
-        className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
-        id="app"
-      >
-        <Providers>
-          <AppRouter />
-        </Providers>
-      </main>
-    </BrowserRouter>
+    <ErrorBoundary
+      fallback={<ErrorScreen message="An unexpected error occurred." />}
+    >
+      <BrowserRouter>
+        <main
+          className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
+          id="app"
+        >
+          <Providers>
+            <AppRouter />
+          </Providers>
+        </main>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 
