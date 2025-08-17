@@ -14,9 +14,9 @@ function CalendarList({
   setSidebarOpen,
   setSelectedCalendar
 }: {
-  selectedCalendar: string | undefined
+  selectedCalendar: string | null
   setSidebarOpen: (value: boolean) => void
-  setSelectedCalendar: React.Dispatch<React.SetStateAction<string | undefined>>
+  setSelectedCalendar: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const calendarsQuery = useQuery(
     forgeAPI.calendar.calendars.list.queryOptions()
@@ -33,7 +33,7 @@ function CalendarList({
   )
 
   const handleCancelSelect = useCallback(() => {
-    setSelectedCalendar(undefined)
+    setSelectedCalendar(null)
     setSidebarOpen(false)
   }, [setSelectedCalendar, setSidebarOpen])
 
