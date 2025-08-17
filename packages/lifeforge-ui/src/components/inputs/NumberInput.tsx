@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import { useEffect, useState } from 'react'
 
 import TextInput from './TextInput'
@@ -15,10 +16,13 @@ interface NumberInputProps {
   required?: boolean
   /** Whether the number input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Additional CSS class names to apply to the number input component. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
   errorMsg?: string
 }
 
@@ -29,6 +33,7 @@ function NumberInput({
   setValue,
   required = false,
   disabled = false,
+  autoFocus = false,
   className,
   namespace,
   errorMsg
@@ -43,6 +48,7 @@ function NumberInput({
 
   return (
     <TextInput
+      autoFocus={autoFocus}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}

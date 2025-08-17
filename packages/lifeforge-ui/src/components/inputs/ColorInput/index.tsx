@@ -6,6 +6,7 @@ import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import ColorPickerModal from './ColorPickerModal'
 
 interface ColorInputProps {
@@ -19,10 +20,13 @@ interface ColorInputProps {
   required?: boolean
   /** Whether the color input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Additional CSS class names to apply to the color input component. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
   errorMsg?: string
 }
 
@@ -32,6 +36,7 @@ function ColorInput({
   setValue,
   required = false,
   disabled = false,
+  autoFocus = false,
   className,
   namespace,
   errorMsg
@@ -76,9 +81,9 @@ function ColorInput({
                 ? value
                 : undefined
             }}
-          ></div>
+          />
           <input
-            ref={ref}
+            ref={autoFocusableRef(autoFocus, ref)}
             className="focus:placeholder:text-bg-500 h-8 w-full min-w-28 rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden"
             placeholder="#FFFFFF"
             value={value}

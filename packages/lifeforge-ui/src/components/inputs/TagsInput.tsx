@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import { useRef, useState } from 'react'
 
 import Button from '../buttons/Button'
@@ -25,6 +26,8 @@ interface TagsInputProps {
   required?: boolean
   /** Whether the input is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** The maximum number of tags allowed. */
   maxTags?: number
   /** Custom render function for individual tags. */
@@ -39,6 +42,7 @@ interface TagsInputProps {
   actionButtonProps?: React.ComponentProps<typeof Button>
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
   errorMsg?: string
 }
 
@@ -51,8 +55,9 @@ function TagsInput({
   placeholder,
   value,
   setValue,
-  required,
+  required = false,
   disabled = false,
+  autoFocus = false,
   maxTags = 100,
   renderTags,
   className = '',
@@ -133,6 +138,7 @@ function TagsInput({
           )}
           {!disabled && (
             <TextInputBox
+              autoFocus={autoFocus}
               className="my-0! h-auto w-min! py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}

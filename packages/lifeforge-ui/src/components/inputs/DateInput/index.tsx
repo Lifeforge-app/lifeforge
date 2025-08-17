@@ -9,6 +9,7 @@ import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import CalendarHeader from './components/CalendarHeader'
 
 /**
@@ -27,12 +28,16 @@ interface DateInputProps {
   required?: boolean
   /** Whether the date input is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Additional CSS class names to apply to the date input. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
   /** Whether the date input includes time selection. */
   hasTime?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
+  errorMsg?: string
 }
 
 /**
@@ -45,9 +50,11 @@ function DateInput({
   setValue,
   required = false,
   disabled = false,
+  autoFocus = false,
   className,
   hasTime = false,
-  namespace
+  namespace,
+  errorMsg
 }: DateInputProps) {
   const inputLabel = useInputLabel({ namespace, label })
 
@@ -61,18 +68,27 @@ function DateInput({
     <InputWrapper
       className={className}
       disabled={disabled}
+      errorMsg={errorMsg}
       onFocus={() => ref.current?.input?.focus()}
     >
-      <InputIcon active={!!value} icon={icon} isFocused={isCalendarOpen} />
+      <InputIcon
+        active={!!value}
+        hasError={!!errorMsg}
+        icon={icon}
+        isFocused={isCalendarOpen}
+      />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!value}
           focused={isCalendarOpen}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />
         <DatePicker
-          ref={ref}
+          ref={autoFocusableRef(autoFocus, ref, e => {
+            e.input?.focus()
+          })}
           shouldCloseOnSelect
           calendarClassName={
             tinycolor(derivedThemeColor).isLight()

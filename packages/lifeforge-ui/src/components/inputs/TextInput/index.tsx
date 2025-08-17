@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import { memo, useRef, useState } from 'react'
 
 import { Button } from '../../buttons'
@@ -22,6 +23,8 @@ export type TextInputProps = {
   required?: boolean
   /** Whether the input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Whether the input should be masked as a password field. */
   isPassword?: boolean
   /** The input mode hint for virtual keyboards on mobile devices. */
@@ -40,6 +43,7 @@ export type TextInputProps = {
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
   errorMsg?: string
 } & React.HTMLAttributes<HTMLInputElement>
 
@@ -49,14 +53,15 @@ function TextInput({
   placeholder,
   value,
   setValue,
-  required,
-  disabled,
+  required = false,
+  disabled = false,
   isPassword = false,
   inputMode = 'text',
   actionButtonProps,
   className,
   namespace,
   errorMsg,
+  autoFocus = false,
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
@@ -85,6 +90,7 @@ function TextInput({
           required={required === true}
         />
         <TextInputBox
+          autoFocus={autoFocus}
           disabled={disabled}
           inputMode={inputMode}
           inputRef={inputRef}
