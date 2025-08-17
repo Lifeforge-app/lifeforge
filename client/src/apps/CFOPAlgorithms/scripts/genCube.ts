@@ -34,6 +34,7 @@ function applyMove(cube: Cube, move: string): Cube {
 
   if (move === 'U') {
     newCube.top = rotateFace(top)
+
     for (let i = 0; i < 3; i++) {
       newCube.front[0][i] = right[0][i]
       newCube.right[0][i] = back[0][i]
@@ -42,6 +43,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === "U'") {
     newCube.top = rotateFaceCounter(top)
+
     for (let i = 0; i < 3; i++) {
       newCube.front[0][i] = left[0][i]
       newCube.right[0][i] = front[0][i]
@@ -50,6 +52,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === 'D') {
     newCube.bottom = rotateFace(bottom)
+
     for (let i = 0; i < 3; i++) {
       newCube.front[2][i] = left[2][i]
       newCube.right[2][i] = front[2][i]
@@ -58,6 +61,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === "D'") {
     newCube.bottom = rotateFaceCounter(bottom)
+
     for (let i = 0; i < 3; i++) {
       newCube.front[2][i] = right[2][i]
       newCube.right[2][i] = back[2][i]
@@ -66,6 +70,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === 'F') {
     newCube.front = rotateFace(front)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[2][i] = left[2 - i][2]
       newCube.right[i][0] = top[2][i]
@@ -74,6 +79,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === "F'") {
     newCube.front = rotateFaceCounter(front)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[2][i] = right[i][0]
       newCube.right[i][0] = bottom[0][2 - i]
@@ -82,6 +88,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === 'B') {
     newCube.back = rotateFace(back)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[0][i] = right[i][2]
       newCube.right[i][2] = bottom[2][2 - i]
@@ -90,6 +97,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === "B'") {
     newCube.back = rotateFaceCounter(back)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[0][i] = left[i][0]
       newCube.right[i][2] = top[0][i]
@@ -98,6 +106,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === 'L') {
     newCube.left = rotateFace(left)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[i][0] = back[2 - i][2]
       newCube.front[i][0] = top[i][0]
@@ -106,6 +115,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === "L'") {
     newCube.left = rotateFaceCounter(left)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[i][0] = front[i][0]
       newCube.front[i][0] = bottom[i][0]
@@ -114,6 +124,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === 'R') {
     newCube.right = rotateFace(right)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[i][2] = front[i][2]
       newCube.front[i][2] = bottom[i][2]
@@ -122,6 +133,7 @@ function applyMove(cube: Cube, move: string): Cube {
     }
   } else if (move === "R'") {
     newCube.right = rotateFaceCounter(right)
+
     for (let i = 0; i < 3; i++) {
       newCube.top[i][2] = back[2 - i][0]
       newCube.front[i][2] = top[i][2]
@@ -173,6 +185,7 @@ function applyMove(cube: Cube, move: string): Cube {
   } else if (move === 'x') {
     newCube.right = rotateFace(right)
     newCube.left = rotateFaceCounter(left)
+
     const [front, bottom, back, top] = [
       [...cube.front],
       [...cube.bottom],
@@ -187,6 +200,7 @@ function applyMove(cube: Cube, move: string): Cube {
   } else if (move === "x'") {
     newCube.right = rotateFaceCounter(right)
     newCube.left = rotateFace(left)
+
     const [front, bottom, back, top] = [
       [...cube.front],
       [...cube.bottom],
@@ -201,6 +215,7 @@ function applyMove(cube: Cube, move: string): Cube {
   } else if (move === 'y') {
     newCube.top = rotateFace(top)
     newCube.bottom = rotateFaceCounter(bottom)
+
     const [front, back, left, right] = [
       [...cube.front],
       [...cube.back],
@@ -215,6 +230,7 @@ function applyMove(cube: Cube, move: string): Cube {
   } else if (move === "y'") {
     newCube.top = rotateFaceCounter(top)
     newCube.bottom = rotateFace(bottom)
+
     const [front, back, left, right] = [
       [...cube.front],
       [...cube.back],
@@ -229,6 +245,7 @@ function applyMove(cube: Cube, move: string): Cube {
   } else if (move === 'z') {
     newCube.front = rotateFace(front)
     newCube.back = rotateFaceCounter(back)
+
     const [top, bottom, left, right] = [
       [...cube.top],
       [...cube.bottom],
@@ -243,6 +260,7 @@ function applyMove(cube: Cube, move: string): Cube {
   } else if (move === "z'") {
     newCube.front = rotateFaceCounter(front)
     newCube.back = rotateFace(back)
+
     const [top, bottom, left, right] = [
       [...cube.top],
       [...cube.bottom],
@@ -295,21 +313,26 @@ function applyMoves(cube: Cube, moves: string): Cube {
   const movesArray = moves.split(' ')
 
   let resultCube = copyCube(cube)
+
   for (const move of movesArray) {
     let needTwoTimes = false
     if (move.endsWith('2')) needTwoTimes = true
 
     resultCube = applyMove(resultCube, move.toUpperCase().replace('2', ''))
+
     if (move === move.toLowerCase()) {
       resultCube = performMiddleMove(resultCube, move)
     }
+
     if (needTwoTimes) {
       resultCube = applyMove(resultCube, move.toUpperCase().replace('2', ''))
+
       if (move === move.toLowerCase()) {
         resultCube = performMiddleMove(resultCube, move)
       }
     }
   }
+
   return resultCube
 }
 

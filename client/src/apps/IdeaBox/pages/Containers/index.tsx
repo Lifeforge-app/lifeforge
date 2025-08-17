@@ -60,9 +60,9 @@ function IdeaBox() {
       <ModuleHeader icon="tabler:bulb" title="Idea Box" />
       <SearchInput
         namespace="apps.ideaBox"
-        value={searchQuery}
-        setValue={setSearchQuery}
         searchTarget="container"
+        setValue={setSearchQuery}
+        value={searchQuery}
       />
       <QueryWrapper query={query}>
         {data =>

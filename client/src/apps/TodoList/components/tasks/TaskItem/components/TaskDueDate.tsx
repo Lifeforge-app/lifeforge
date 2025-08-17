@@ -14,7 +14,7 @@ function TaskDueDate({ entry }: { entry: TodoListEntry }) {
         entry.due_date !== '' && (
           <div
             className={clsx(
-              'text-sm whitespace-nowrap',
+              'truncate text-sm',
               dayjs(entry.due_date).isBefore(dayjs())
                 ? 'text-red-500'
                 : 'text-bg-500'

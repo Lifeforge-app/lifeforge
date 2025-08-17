@@ -74,14 +74,6 @@ function DefaultThemeColorSelector({
       {COLORS.map(color => (
         <ListboxOption
           key={color}
-          renderColorAndIcon={() => (
-            <span
-              className={clsx(
-                'bg-custom-500 inline-block size-4 rounded-full',
-                `theme-${color}`
-              )}
-            />
-          )}
           label={t(
             `themeColorSelector.colors.${_.camelCase(
               color
@@ -90,15 +82,23 @@ function DefaultThemeColorSelector({
                 .join(' ')
             )}`
           )}
+          renderColorAndIcon={() => (
+            <span
+              className={clsx(
+                'bg-custom-500 inline-block size-4 rounded-full',
+                `theme-${color}`
+              )}
+            />
+          )}
           value={`theme-${color}`}
         />
       ))}
       <ListboxOption
         key="custom"
+        label={t('themeColorSelector.colors.custom')}
         renderColorAndIcon={() => (
           <span className="border-bg-500 inline-block size-4 rounded-full border-2" />
         )}
-        label={t('themeColorSelector.colors.custom')}
         value="theme-custom"
       />
     </Listbox>

@@ -95,8 +95,8 @@ function FolderContextMenu({
       {folder.parent !== '' && (
         <ContextMenuItem
           icon="tabler:folder-minus"
-          namespace="apps.ideaBox"
           label="Remove from folder"
+          namespace="apps.ideaBox"
           onClick={() => removeFromFolderMutation.mutate({})}
         />
       )}

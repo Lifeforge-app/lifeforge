@@ -63,9 +63,9 @@ function Wishlist() {
       />
       <SearchInput
         namespace="apps.wishlist"
-        value={searchQuery}
-        setValue={setSearchQuery}
         searchTarget="wishlist"
+        setValue={setSearchQuery}
+        value={searchQuery}
       />
       <QueryWrapper query={listsQuery}>
         {lists =>
@@ -101,8 +101,8 @@ function Wishlist() {
         }
       </QueryWrapper>
       <FAB
-        hideWhen="md"
         icon="tabler:plus"
+        visibilityBreakpoint="md"
         onClick={handleCreateWishlistList}
       />
     </ModuleWrapper>

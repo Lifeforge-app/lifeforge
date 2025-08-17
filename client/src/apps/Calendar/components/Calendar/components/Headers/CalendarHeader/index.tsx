@@ -74,14 +74,14 @@ function CalendarHeader({
             >
               <ContextMenuItem
                 icon="tabler:photo"
-                namespace="apps.calendar"
                 label="Scan from Image"
+                namespace="apps.calendar"
                 onClick={handleScanImageModalOpen}
               />
               <ContextMenuItem
                 icon="tabler:plus"
-                namespace="apps.calendar"
                 label="Input Manually"
+                namespace="apps.calendar"
                 onClick={handleCreateEvent}
               />
             </MenuItems>

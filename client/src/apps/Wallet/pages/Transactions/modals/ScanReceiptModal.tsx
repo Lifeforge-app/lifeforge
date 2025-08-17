@@ -97,9 +97,9 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
         />
       </div>
       <Button
-        iconPosition="end"
         className="mt-6 w-full"
         icon="tabler:arrow-right"
+        iconPosition="end"
         loading={loading}
         onClick={() => {
           onSubmit().catch(console.error)

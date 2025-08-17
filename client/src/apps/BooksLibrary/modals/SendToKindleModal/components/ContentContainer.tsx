@@ -69,10 +69,10 @@ function ContentContainer({
               onKeyDown={handleKeyDown}
             />
             <Button
-              iconPosition="end"
               className="w-full"
               disabled={!kindleEmail.match(/^[\w-.]+@kindle\.com$/)}
               icon="tabler:send"
+              iconPosition="end"
               loading={loading}
               namespace="apps.booksLibrary"
               onClick={handleSubmit}
