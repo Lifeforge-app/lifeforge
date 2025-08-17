@@ -9,9 +9,9 @@ import {
   ListboxOption,
   ModalHeader,
   Pagination,
-  QueryWrapper,
   Scrollbar,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -112,7 +112,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
           value={searchQuery}
         />
       </div>
-      <QueryWrapper query={fontsQuery}>
+      <WithQuery query={fontsQuery}>
         {data =>
           !data.enabled ? (
             <EmptyStateScreen
@@ -175,7 +175,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
             </div>
           )
         }
-      </QueryWrapper>
+      </WithQuery>
       {selectedFont && selectedFont !== fontFamily && (
         <Button
           className="mt-6"

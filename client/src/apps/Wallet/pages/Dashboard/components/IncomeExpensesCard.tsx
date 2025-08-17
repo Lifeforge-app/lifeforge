@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, WithQuery } from 'lifeforge-ui'
 
 import { useWalletStore } from '@apps/Wallet/stores/useWalletStore'
 import numberToCurrency from '@apps/Wallet/utils/numberToCurrency'
@@ -28,7 +28,7 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
       namespace="apps.wallet"
       title={isIncome ? 'income' : 'expenses'}
     >
-      <QueryWrapper query={incomeExpensesQuery}>
+      <WithQuery query={incomeExpensesQuery}>
         {data => (
           <div className="flex h-full flex-col justify-evenly">
             <p className="flex w-full items-end justify-start gap-2 text-4xl font-medium xl:text-5xl">
@@ -85,7 +85,7 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
             </p>
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </DashboardItem>
   )
 }

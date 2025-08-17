@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import {
   DashboardItem,
   EmptyStateScreen,
-  QueryWrapper,
-  Scrollbar
+  Scrollbar,
+  WithQuery
 } from 'lifeforge-ui'
 import { Link } from 'react-router'
 
@@ -30,7 +30,7 @@ function TransactionsCard() {
       namespace="apps.wallet"
       title="Recent Transactions"
     >
-      <QueryWrapper query={transactionsQuery}>
+      <WithQuery query={transactionsQuery}>
         {transactions => (
           <div className="size-full min-h-96 xl:min-h-0">
             <Scrollbar>
@@ -45,7 +45,7 @@ function TransactionsCard() {
             </Scrollbar>
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </DashboardItem>
   )
 }

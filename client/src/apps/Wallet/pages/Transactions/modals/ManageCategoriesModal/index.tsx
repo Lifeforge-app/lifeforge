@@ -1,9 +1,9 @@
 import {
   EmptyStateScreen,
   ModalHeader,
-  QueryWrapper,
   Scrollbar,
-  Tabs
+  Tabs,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
@@ -71,7 +71,7 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
         ]}
         onNavClick={setSelectedTab}
       />
-      <QueryWrapper query={categoriesQuery}>
+      <WithQuery query={categoriesQuery}>
         {categories =>
           categories.length > 0 ? (
             <div className="mt-4 flex-1">
@@ -116,7 +116,7 @@ function ManageCategoriesModal({ onClose }: { onClose: () => void }) {
             />
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

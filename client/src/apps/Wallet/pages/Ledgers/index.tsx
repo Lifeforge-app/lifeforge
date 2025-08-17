@@ -4,7 +4,7 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useEffect } from 'react'
@@ -61,7 +61,7 @@ function Ledgers() {
         title="Ledgers"
         tKey="subsectionsTitleAndDesc"
       />
-      <QueryWrapper query={ledgersQuery}>
+      <WithQuery query={ledgersQuery}>
         {ledgers => (
           <>
             {ledgers.length > 0 ? (
@@ -88,7 +88,7 @@ function Ledgers() {
             )}
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </ModuleWrapper>
   )
 }

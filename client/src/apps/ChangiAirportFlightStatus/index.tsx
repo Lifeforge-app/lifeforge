@@ -7,9 +7,9 @@ import {
   ListboxOption,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   Scrollbar,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useState } from 'react'
 
@@ -81,7 +81,7 @@ function ChangiAirportFlightStatus() {
         />
       </div>
       <Scrollbar className="w-full flex-1">
-        <QueryWrapper query={flightsQuery}>
+        <WithQuery query={flightsQuery}>
           {flights => (
             <table className="mr-8 mb-8 w-max">
               <thead>
@@ -193,7 +193,7 @@ function ChangiAirportFlightStatus() {
               </tbody>
             </table>
           )}
-        </QueryWrapper>
+        </WithQuery>
       </Scrollbar>
     </ModuleWrapper>
   )

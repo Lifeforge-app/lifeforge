@@ -3,9 +3,9 @@ import forgeAPI from '@utils/forgeAPI'
 import {
   EmptyStateScreen,
   ModalHeader,
-  QueryWrapper,
   Scrollbar,
   Tabs,
+  WithQuery,
   useModalStore
 } from 'lifeforge-ui'
 import { useState } from 'react'
@@ -73,7 +73,7 @@ function ManageTemplatesModal({
         ]}
         onNavClick={setSelectedTab}
       />
-      <QueryWrapper query={transactionTemplatesQuery}>
+      <WithQuery query={transactionTemplatesQuery}>
         {templates =>
           Object.values(templates).flat().length > 0 ? (
             <div className="mt-4 flex-1">
@@ -136,7 +136,7 @@ function ManageTemplatesModal({
             />
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

@@ -6,8 +6,8 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
-  Tabs
+  Tabs,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
@@ -87,7 +87,7 @@ function Achievements() {
             setSelectedDifficulty(id as Achievement['difficulty'])
           }}
         />
-        <QueryWrapper query={entriesQuery}>
+        <WithQuery query={entriesQuery}>
           {entries =>
             entries.length > 0 ? (
               <div className="space-y-3">
@@ -114,7 +114,7 @@ function Achievements() {
               />
             )
           }
-        </QueryWrapper>
+        </WithQuery>
       </div>
       {entriesQuery.isSuccess && entriesQuery.data.length > 0 && (
         <FAB

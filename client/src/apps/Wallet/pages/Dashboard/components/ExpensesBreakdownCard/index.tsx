@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
-import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, WithQuery } from 'lifeforge-ui'
 import { createContext, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import type { InferOutput } from 'shared'
@@ -80,7 +80,7 @@ function ExpensesBreakdownCard() {
         namespace="apps.wallet"
         title="Expenses Breakdown"
       >
-        <QueryWrapper query={expensesBreakdownQuery}>
+        <WithQuery query={expensesBreakdownQuery}>
           {() => (
             <>
               <BreakdownDoughnutChart />
@@ -88,7 +88,7 @@ function ExpensesBreakdownCard() {
               <BreakdownDetails />
             </>
           )}
-        </QueryWrapper>
+        </WithQuery>
       </DashboardItem>
     </ExpensesBreakdownContext>
   )

@@ -1,4 +1,4 @@
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -40,7 +40,7 @@ function LedgerSection() {
         }}
         label={t('sidebar.ledgers')}
       />
-      <QueryWrapper query={ledgersQuery}>
+      <WithQuery query={ledgersQuery}>
         {() => (
           <>
             {ledgers.map(({ icon, name, color, id, amount }) => (
@@ -55,7 +55,7 @@ function LedgerSection() {
             ))}
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </>
   )
 }

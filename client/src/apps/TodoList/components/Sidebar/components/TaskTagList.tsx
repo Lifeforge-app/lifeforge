@@ -1,4 +1,4 @@
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,7 +33,7 @@ function TaskTagList({
         label="Tags"
         namespace="apps.todoList"
       />
-      <QueryWrapper query={tagsListQuery}>
+      <WithQuery query={tagsListQuery}>
         {tags =>
           tags.length > 0 ? (
             <>
@@ -49,7 +49,7 @@ function TaskTagList({
             <p className="text-bg-500 text-center">{t('empty.tags')}</p>
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </>
   )
 }

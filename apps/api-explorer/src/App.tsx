@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 import { InferOutput } from 'shared'
 
@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div className="flex h-full w-full flex-1">
-      <QueryWrapper query={endpointsQuery}>
+      <WithQuery query={endpointsQuery}>
         {data => (
           <>
             <Sidebar
@@ -99,7 +99,7 @@ function App() {
             </div>
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { Button, EmptyStateScreen, QueryWrapper, TextInput } from 'lifeforge-ui'
+import { Button, EmptyStateScreen, TextInput, WithQuery } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -53,7 +53,7 @@ function ContentContainer({
   }
 
   return (
-    <QueryWrapper query={enabledQuery}>
+    <WithQuery query={enabledQuery}>
       {enabled =>
         enabled ? (
           <div className="space-y-4">
@@ -90,7 +90,7 @@ function ContentContainer({
           </div>
         )
       }
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

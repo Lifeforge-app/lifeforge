@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
+import { ModalHeader, WithQuery } from 'lifeforge-ui'
 
 function ContentModal({
   onClose,
@@ -22,7 +22,7 @@ function ContentModal({
   return (
     <div className="min-w-[60vw]">
       <ModalHeader icon="tabler:news" title="View Article" onClose={onClose} />
-      <QueryWrapper query={contentQuery}>
+      <WithQuery query={contentQuery}>
         {content => (
           <>
             <h1 className="mb-2 text-3xl font-semibold">{content.title}</h1>
@@ -35,7 +35,7 @@ function ContentModal({
             />
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

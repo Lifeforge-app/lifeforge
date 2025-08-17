@@ -4,8 +4,8 @@ import {
   Button,
   EmptyStateScreen,
   ModalHeader,
-  QueryWrapper,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -102,7 +102,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       </div>
       <div className="mt-6">
         {queryToSearch ? (
-          <QueryWrapper query={searchResultsQuery}>
+          <WithQuery query={searchResultsQuery}>
             {searchResults => (
               <TMDBResultsList
                 page={page}
@@ -111,7 +111,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
                 onAddToLibrary={onAddToLibrary}
               />
             )}
-          </QueryWrapper>
+          </WithQuery>
         ) : (
           <div className="h-96">
             <EmptyStateScreen

@@ -7,11 +7,11 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   Scrollbar,
   SearchInput,
   Tabs,
-  ViewModeSelector
+  ViewModeSelector,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
@@ -107,7 +107,7 @@ function Movies() {
           viewMode={viewMode}
         />
       </div>
-      <QueryWrapper query={entriesQuery}>
+      <WithQuery query={entriesQuery}>
         {data => {
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
 
@@ -171,7 +171,7 @@ function Movies() {
             </div>
           )
         }}
-      </QueryWrapper>
+      </WithQuery>
       <FAB visibilityBreakpoint="md" onClick={handleOpenTMDBModal} />
     </ModuleWrapper>
   )

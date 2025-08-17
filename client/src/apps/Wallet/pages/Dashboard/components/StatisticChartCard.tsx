@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { DashboardItem, EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -92,7 +92,7 @@ function StatisticChardCard() {
       title="Statistics"
     >
       <div className="flex-center size-full min-h-0 flex-1">
-        <QueryWrapper query={transactionsQuery}>
+        <WithQuery query={transactionsQuery}>
           {transactions =>
             transactions.length === 0 ? (
               <EmptyStateScreen name="transactions" namespace="apps.wallet" />
@@ -122,7 +122,7 @@ function StatisticChardCard() {
               />
             )
           }
-        </QueryWrapper>
+        </WithQuery>
       </div>
       <div className="flex-center mt-4 gap-8 sm:hidden">
         <div className="flex items-center gap-2">

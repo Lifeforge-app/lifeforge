@@ -6,9 +6,9 @@ import {
   Button,
   ContextMenuItem,
   ModuleWrapper,
-  QueryWrapper,
   SearchInput,
-  Tabs
+  Tabs,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -98,11 +98,11 @@ function WishlistEntries() {
 
   return (
     <ModuleWrapper>
-      <QueryWrapper query={wishlistListDetailsQuery}>
+      <WithQuery query={wishlistListDetailsQuery}>
         {wishlistListDetails => (
           <>
             <Header wishlistListDetails={wishlistListDetails} />
-            <QueryWrapper query={entriesQuery}>
+            <WithQuery query={entriesQuery}>
               {entries => (
                 <>
                   <Tabs
@@ -143,10 +143,10 @@ function WishlistEntries() {
                   />
                 </>
               )}
-            </QueryWrapper>
+            </WithQuery>
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
       <Menu as="div" className="absolute right-6 bottom-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}} />
         <MenuItems

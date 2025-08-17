@@ -3,9 +3,9 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   Scrollbar,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useEffect } from 'react'
 
@@ -56,7 +56,7 @@ function Music() {
         />
         <div className="relative mt-4 flex size-full min-w-0">
           <Scrollbar>
-            <QueryWrapper query={musicsQuery}>
+            <WithQuery query={musicsQuery}>
               {musics =>
                 musics.filter(music =>
                   music.name
@@ -76,7 +76,7 @@ function Music() {
                   />
                 )
               }
-            </QueryWrapper>
+            </WithQuery>
           </Scrollbar>
         </div>
         <BottomBar />

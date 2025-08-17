@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { EmptyStateScreen, ModuleWrapper, QueryWrapper } from 'lifeforge-ui'
+import { EmptyStateScreen, ModuleWrapper, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -26,7 +26,7 @@ function APIKeyStatusProvider({
   return (
     <>
       {APIKeys.length > 0 ? (
-        <QueryWrapper query={hasRequiredAPIKeysQuery}>
+        <WithQuery query={hasRequiredAPIKeysQuery}>
           {hasRequiredAPIKeys =>
             hasRequiredAPIKeys ? (
               <>{children}</>
@@ -59,7 +59,7 @@ function APIKeyStatusProvider({
               </ModuleWrapper>
             )
           }
-        </QueryWrapper>
+        </WithQuery>
       ) : (
         children
       )}

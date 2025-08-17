@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 
 import { useWalletData } from '@apps/Wallet/hooks/useWalletData'
 
@@ -14,7 +14,7 @@ function ListView() {
   const categories = categoriesQuery.data ?? []
 
   return (
-    <QueryWrapper query={transactionsQuery}>
+    <WithQuery query={transactionsQuery}>
       {transactions => (
         <ul className="divide-bg-800/50 flex flex-col divide-y lg:hidden">
           {transactions.slice(0, 20).map(transaction => (
@@ -76,7 +76,7 @@ function ListView() {
           ))}
         </ul>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

@@ -8,7 +8,7 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect } from 'react'
@@ -174,7 +174,7 @@ function Transactions() {
           <InnerHeader />
           <SearchBar />
           <div className="mt-6 mb-8 flex size-full flex-col gap-4">
-            <QueryWrapper query={transactionsQuery}>
+            <WithQuery query={transactionsQuery}>
               {transactions =>
                 transactions.length > 0 ? (
                   <TransactionList />
@@ -192,7 +192,7 @@ function Transactions() {
                   />
                 )
               }
-            </QueryWrapper>
+            </WithQuery>
             {(transactionsQuery.data ?? []).length > 0 && (
               <ContextMenu
                 buttonComponent={
