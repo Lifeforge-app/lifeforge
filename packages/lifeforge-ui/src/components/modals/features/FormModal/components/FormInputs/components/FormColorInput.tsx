@@ -6,18 +6,19 @@ import {
 
 function FormColorInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<ColorFieldProps>) {
   return (
     <ColorInput
-      value={selectedData}
       disabled={field.disabled}
+      errorMsg={field.errorMsg}
       label={field.label}
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
+      value={value}
     />
   )
 }

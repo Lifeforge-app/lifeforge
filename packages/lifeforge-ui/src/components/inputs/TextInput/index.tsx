@@ -40,6 +40,7 @@ export type TextInputProps = {
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  errorMsg?: string
 } & React.HTMLAttributes<HTMLInputElement>
 
 function TextInput({
@@ -55,6 +56,7 @@ function TextInput({
   actionButtonProps,
   className,
   namespace,
+  errorMsg,
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
@@ -64,11 +66,21 @@ function TextInput({
   const inputLabel = useInputLabel({ namespace, label })
 
   return (
-    <InputWrapper className={className} disabled={disabled} inputRef={inputRef}>
-      <InputIcon active={!!value && String(value).length > 0} icon={icon} />
+    <InputWrapper
+      className={className}
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={inputRef}
+    >
+      <InputIcon
+        active={!!value && String(value).length > 0}
+        hasError={!!errorMsg}
+        icon={icon}
+      />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!value && String(value).length > 0}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />

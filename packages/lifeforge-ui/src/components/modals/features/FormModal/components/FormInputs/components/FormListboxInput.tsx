@@ -10,32 +10,30 @@ import { Fragment } from 'react/jsx-runtime'
 
 function FormListboxInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<ListboxFieldProps>) {
   useEffect(() => {
     if (field.multiple) {
       handleChange(
-        selectedData.map(
+        value.map(
           (item: { value: string }) =>
             field.options.find(option => option.value === item)?.value
         )
       )
     } else {
-      handleChange(
-        field.options.find(option => option.value === selectedData)?.value
-      )
+      handleChange(field.options.find(option => option.value === value)?.value)
     }
   }, [field.options])
 
   return (
     <ListboxInput
       buttonContent={
-        field.multiple === true && Array.isArray(selectedData) ? (
+        field.multiple === true && Array.isArray(value) ? (
           <div className="flex flex-wrap items-center gap-3">
-            {selectedData.length > 0 ? (
-              selectedData.map((item: string, i: number) => (
+            {value.length > 0 ? (
+              value.map((item: string, i: number) => (
                 <Fragment key={item}>
                   <div className="flex items-center gap-1">
                     <Icon
@@ -52,7 +50,7 @@ function FormListboxInput({
                         'None'}
                     </span>
                   </div>
-                  {i !== selectedData.length - 1 && (
+                  {i !== value.length - 1 && (
                     <Icon className="size-1" icon="tabler:circle-filled" />
                   )}
                 </Fragment>
@@ -69,19 +67,18 @@ function FormListboxInput({
         ) : (
           <>
             {!!(
-              field.options.find(l => l.value === selectedData)?.icon ??
+              field.options.find(l => l.value === value)?.icon ??
               field.nullOption
             ) && (
               <Icon
                 className="size-5"
                 icon={
-                  field.options.find(l => l.value === selectedData)?.icon ??
+                  field.options.find(l => l.value === value)?.icon ??
                   field.nullOption ??
                   ''
                 }
                 style={{
-                  color: field.options.find(l => l.value === selectedData)
-                    ?.color
+                  color: field.options.find(l => l.value === value)?.color
                 }}
               />
             )}
@@ -91,15 +88,13 @@ function FormListboxInput({
                 <span
                   className="size-2 rounded-full"
                   style={{
-                    backgroundColor: field.options.find(
-                      l => l.value === selectedData
-                    )?.color
+                    backgroundColor: field.options.find(l => l.value === value)
+                      ?.color
                   }}
                 />
               )}
             <span className="-mt-px block truncate">
-              {field.options.find(l => l.value === selectedData)?.text ??
-                'None'}
+              {field.options.find(l => l.value === value)?.text ?? 'None'}
             </span>
           </>
         )
@@ -111,7 +106,7 @@ function FormListboxInput({
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     >
       {field.nullOption !== undefined && (
         <ListboxNullOption
@@ -125,7 +120,7 @@ function FormListboxInput({
           color={color}
           icon={icon}
           label={text}
-          selected={JSON.stringify(selectedData) === JSON.stringify(value)}
+          selected={JSON.stringify(value) === JSON.stringify(value)}
           value={value}
         />
       ))}

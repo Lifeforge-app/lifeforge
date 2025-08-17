@@ -39,6 +39,7 @@ interface TagsInputProps {
   actionButtonProps?: React.ComponentProps<typeof Button>
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  errorMsg?: string
 }
 
 /**
@@ -56,7 +57,8 @@ function TagsInput({
   renderTags,
   className = '',
   actionButtonProps,
-  namespace
+  namespace,
+  errorMsg
 }: TagsInputProps) {
   const inputLabel = useInputLabel({ namespace, label })
 
@@ -87,11 +89,21 @@ function TagsInput({
   }
 
   return (
-    <InputWrapper className={className} disabled={disabled} inputRef={inputRef}>
-      <InputIcon active={String(value).length > 0} icon={icon} />
+    <InputWrapper
+      className={className}
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={inputRef}
+    >
+      <InputIcon
+        active={String(value).length > 0}
+        hasError={!!errorMsg}
+        icon={icon}
+      />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={String(value).length > 0}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />

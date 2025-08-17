@@ -4,6 +4,7 @@ import { memo, useMemo } from 'react'
 import {
   type FieldsConfig,
   type FormFieldPropsUnion,
+  type FormInputProps,
   type FormState
 } from '../../typescript/form_interfaces'
 import FormCheckboxInput from './components/FormCheckboxInput'
@@ -20,7 +21,10 @@ import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
 
 // Map of form field types to their corresponding components
-const COMPONENT_MAP: Record<FormFieldPropsUnion['type'], React.FC<any>> = {
+const COMPONENT_MAP: Record<
+  FormFieldPropsUnion['type'],
+  React.FC<FormInputProps<any>>
+> = {
   text: FormTextInput,
   number: FormNumberInput,
   currency: FormCurrencyInput,
@@ -33,20 +37,22 @@ const COMPONENT_MAP: Record<FormFieldPropsUnion['type'], React.FC<any>> = {
   checkbox: FormCheckboxInput,
   file: FormFileInput,
   rrule: FormRRuleInput
-} satisfies Record<FormFieldPropsUnion['type'], React.FC<any>>
+}
 
 // Memoized individual form field component to prevent unnecessary rerenders
 const MemoizedFormField = memo(
   ({
     id,
     field,
-    selectedData,
+    value,
     namespace,
+    errorMsg,
     onFieldChange
   }: {
     id: string
     field: FormFieldPropsUnion
-    selectedData: any
+    errorMsg?: string
+    value: any
     namespace?: string
     onFieldChange: (value: any) => void
   }) => {
@@ -61,10 +67,10 @@ const MemoizedFormField = memo(
     return (
       <FormComponent
         key={id}
-        field={field}
+        field={{ ...field, errorMsg }}
         handleChange={onFieldChange}
         namespace={namespace}
-        selectedData={selectedData}
+        value={value}
       />
     )
   }
@@ -76,11 +82,15 @@ function FormInputs<T extends FormState>({
   fields,
   data,
   setData,
+  errorMsgs,
+  removeErrorMsg,
   namespace
 }: {
   fields: FieldsConfig<T>
   data: T
   setData: React.Dispatch<React.SetStateAction<T>>
+  errorMsgs: Record<string, string | undefined>
+  removeErrorMsg: (fieldId: string) => void
   namespace?: string
 }) {
   const changeHandlers = useMemo(() => {
@@ -89,6 +99,7 @@ function FormInputs<T extends FormState>({
     Object.keys(fields).forEach(id => {
       handlers[id] = (value: any) => {
         setData(prev => ({ ...prev, [id]: value }))
+        removeErrorMsg(id)
       }
     })
 
@@ -99,15 +110,18 @@ function FormInputs<T extends FormState>({
     <div className="space-y-3">
       {Object.entries(fields).map(([id, field]) => {
         // Render corresponding form field component based on field type
-        const selectedData = data[id]
+        const value = data[id]
+
+        const errorMsg = errorMsgs[id]
 
         return (
           <MemoizedFormField
             key={id}
+            errorMsg={errorMsg}
             field={field}
             id={id}
             namespace={namespace}
-            selectedData={selectedData}
+            value={value}
             onFieldChange={changeHandlers[id]}
           />
         )

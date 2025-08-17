@@ -6,7 +6,7 @@ import {
 
 function FormTextAreaInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<TextAreaFieldProps>) {
@@ -19,7 +19,7 @@ function FormTextAreaInput({
       placeholder={field.placeholder}
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }
