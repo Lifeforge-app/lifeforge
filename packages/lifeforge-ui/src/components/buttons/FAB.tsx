@@ -4,14 +4,14 @@ import Button from './Button'
 
 function FAB({
   icon = 'tabler:plus',
-  visibilityBreakpoint,
+  visibilityBreakpoint = 'md',
   ...props
 }: {
   /** The icon identifier string. Defaults to 'tabler:plus'. */
   icon?: string
   /** The responsive breakpoint at which the FAB should be hidden. Defaults to 'sm'. */
   visibilityBreakpoint?: 'sm' | 'md' | 'lg' | 'xl'
-} & Omit<React.ComponentProps<typeof Button>, 'icon'>) {
+} & React.ComponentProps<typeof Button>) {
   return (
     <Button
       {...props}
