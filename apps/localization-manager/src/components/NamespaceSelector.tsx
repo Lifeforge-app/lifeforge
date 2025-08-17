@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { ListboxInput, ListboxOption, QueryWrapper } from 'lifeforge-ui'
+import { ListboxInput, ListboxOption, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import forgeAPI from '../utils/forgeAPI'
@@ -65,7 +65,7 @@ function NamespaceSelector({
           ))}
         </ListboxInput>
         {namespace && (
-          <QueryWrapper query={subNamespacesQuery}>
+          <WithQuery query={subNamespacesQuery}>
             {subNamespaces => (
               <ListboxInput
                 buttonContent={
@@ -99,7 +99,7 @@ function NamespaceSelector({
                 ))}
               </ListboxInput>
             )}
-          </QueryWrapper>
+          </WithQuery>
         )}
       </div>
     </div>

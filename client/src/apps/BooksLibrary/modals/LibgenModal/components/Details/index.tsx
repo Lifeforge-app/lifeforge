@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { GoBackButton, QueryWrapper } from 'lifeforge-ui'
+import { GoBackButton, WithQuery } from 'lifeforge-ui'
 import type { InferOutput } from 'shared'
 
 import AddToLibraryButton from '../AddToLibraryButton'
@@ -31,7 +31,7 @@ function Details({
     <>
       <GoBackButton onClick={onClose} />
       <div className="mt-4">
-        <QueryWrapper query={booksQuery}>
+        <WithQuery query={booksQuery}>
           {data => (
             <section className="flex flex-1 flex-col justify-center gap-8 md:flex-row">
               <ThumbnailAndHashes data={data} />
@@ -64,7 +64,7 @@ function Details({
               </div>
             </section>
           )}
-        </QueryWrapper>
+        </WithQuery>
       </div>
     </>
   )

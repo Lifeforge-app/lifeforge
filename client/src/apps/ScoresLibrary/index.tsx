@@ -9,8 +9,8 @@ import {
   LayoutWithSidebar,
   ModuleWrapper,
   Pagination,
-  QueryWrapper,
-  Scrollbar
+  Scrollbar,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -274,7 +274,7 @@ function ScoresLibrary() {
             sortType={selectedSortType}
             view={view}
           />
-          <QueryWrapper query={entriesQuery}>
+          <WithQuery query={entriesQuery}>
             {entries => (
               <Scrollbar className="mt-6 pb-16">
                 <Pagination
@@ -297,7 +297,7 @@ function ScoresLibrary() {
                 />
               </Scrollbar>
             )}
-          </QueryWrapper>
+          </WithQuery>
         </ContentWrapperWithSidebar>
       </LayoutWithSidebar>
     </ModuleWrapper>

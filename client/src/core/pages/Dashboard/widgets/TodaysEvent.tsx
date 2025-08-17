@@ -6,8 +6,8 @@ import {
   Button,
   DashboardItem,
   EmptyStateScreen,
-  QueryWrapper,
-  Scrollbar
+  Scrollbar,
+  WithQuery
 } from 'lifeforge-ui'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -152,9 +152,9 @@ export default function TodaysEvent() {
       title="Todays Event"
     >
       <Scrollbar>
-        <QueryWrapper query={categoriesQuery}>
+        <WithQuery query={categoriesQuery}>
           {categories => (
-            <QueryWrapper query={rawEventsQuery}>
+            <WithQuery query={rawEventsQuery}>
               {() =>
                 (rawEventsQuery.data ?? []).length > 0 ? (
                   <ul className="flex flex-1 flex-col gap-2 pr-3">
@@ -178,9 +178,9 @@ export default function TodaysEvent() {
                   </div>
                 )
               }
-            </QueryWrapper>
+            </WithQuery>
           )}
-        </QueryWrapper>
+        </WithQuery>
       </Scrollbar>
     </DashboardItem>
   )

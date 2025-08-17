@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { Button, DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { Button, DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
@@ -25,7 +25,7 @@ export default function AssetsBalance() {
       icon="tabler:wallet"
       title="Assets Balance"
     >
-      <QueryWrapper query={assetsQuery}>
+      <WithQuery query={assetsQuery}>
         {assets => (
           <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-2 overflow-y-auto">
             {assets.map(asset => (
@@ -72,7 +72,7 @@ export default function AssetsBalance() {
             ))}
           </ul>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </DashboardItem>
   )
 }

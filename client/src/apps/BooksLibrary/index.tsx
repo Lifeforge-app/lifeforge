@@ -7,9 +7,9 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   SearchInput,
-  ViewModeSelector
+  ViewModeSelector,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
@@ -116,7 +116,7 @@ function BooksLibrary() {
               viewMode={view}
             />
           </div>
-          <QueryWrapper query={entriesQuery}>
+          <WithQuery query={entriesQuery}>
             {entries => {
               if (filteredEntries.length === 0) {
                 if (entries.length === 0) {
@@ -145,7 +145,7 @@ function BooksLibrary() {
                   return <ListView books={filteredEntries} />
               }
             }}
-          </QueryWrapper>
+          </WithQuery>
         </div>
       </div>
       <Menu as="div" className="fixed right-6 bottom-6 z-50 block md:hidden">
