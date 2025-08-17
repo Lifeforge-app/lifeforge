@@ -84,7 +84,7 @@ function Ledgers() {
               />
             )}
             {ledgers.length > 0 && (
-              <FAB hideWhen="md" onClick={handleCreateLedger} />
+              <FAB visibilityBreakpoint="md" onClick={handleCreateLedger} />
             )}
           </>
         )}

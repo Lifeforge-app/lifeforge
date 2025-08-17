@@ -14,6 +14,7 @@ import {
 } from 'chart.js'
 import {
   Button,
+  ContextMenu,
   ContextMenuItem,
   FAB,
   ModuleHeader,
@@ -113,31 +114,29 @@ function WalletDashboard() {
         <TransactionsCard />
         <ExpensesBreakdownCard />
       </div>
-      <Menu>
-        <FAB as={MenuButton} hideWhen="md" />
-        <MenuItems
-          transition
-          anchor="bottom end"
-          className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-        >
-          <ContextMenuItem
-            icon="tabler:plus"
-            label="Add Manually"
-            namespace="apps.wallet"
-            onClick={() => {
-              navigate('/wallet/transactions#new')
-            }}
-          />
-          <ContextMenuItem
-            icon="tabler:scan"
-            label="Scan Receipt"
-            namespace="apps.wallet"
-            onClick={() => {
-              navigate('/wallet/transactions#scan')
-            }}
-          />
-        </MenuItems>
-      </Menu>
+      <ContextMenu
+        buttonComponent={<FAB className="static!" isibilityBreakpoint="md" />}
+        classNames={{
+          wrapper: 'fixed right-6 bottom-6'
+        }}
+      >
+        <ContextMenuItem
+          icon="tabler:plus"
+          label="Add Manually"
+          namespace="apps.wallet"
+          onClick={() => {
+            navigate('/wallet/transactions#new')
+          }}
+        />
+        <ContextMenuItem
+          icon="tabler:scan"
+          label="Scan Receipt"
+          namespace="apps.wallet"
+          onClick={() => {
+            navigate('/wallet/transactions#scan')
+          }}
+        />
+      </ContextMenu>
     </ModuleWrapper>
   )
 }

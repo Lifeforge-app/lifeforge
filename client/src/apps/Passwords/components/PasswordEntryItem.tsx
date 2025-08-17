@@ -206,8 +206,8 @@ function PasswordEntryItem({
           <ContextMenu>
             <ContextMenuItem
               icon="tabler:rotate"
-              loading={rotateLoading}
               label="Rotate Password"
+              loading={rotateLoading}
               onClick={async () => {
                 setRotateLoading(true)
 
@@ -267,17 +267,17 @@ function PasswordEntryItem({
               icon={
                 decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'
               }
-              loading={loading}
               label={
                 decryptedPassword === null ? 'Show Password' : 'Hide Password'
               }
+              loading={loading}
               onClick={decryptPassword}
             />
             <ContextMenuItem
               className="flex sm:hidden"
               icon="tabler:copy"
-              loading={copyLoading}
               label="Copy Password"
+              loading={copyLoading}
               onClick={copyPassword}
             />
             <ContextMenuItem

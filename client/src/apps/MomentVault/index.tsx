@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
+  ContextMenu,
   ContextMenuItem,
   FAB,
   ModuleHeader,
@@ -72,8 +73,8 @@ function MomentVault() {
                 <ContextMenuItem
                   key={type}
                   icon={icon}
-                  namespace="apps.momentVault"
                   label={type}
+                  namespace="apps.momentVault"
                   onClick={handleAddEntry(type)}
                 />
               ))}
@@ -84,29 +85,27 @@ function MomentVault() {
         title="Moment Vault"
       />
       <EntryList dataQuery={dataQuery} page={page} setPage={setPage} />
-      <Menu>
-        <FAB as={MenuButton} hideWhen="md" />
-        <MenuItems
-          transition
-          anchor="bottom end"
-          className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-        >
-          {[
-            { icon: 'tabler:file-text', type: 'text' },
-            { icon: 'tabler:microphone', type: 'audio' },
-            { icon: 'tabler:camera', type: 'photos' },
-            { icon: 'tabler:video', type: 'video' }
-          ].map(({ icon, type }) => (
-            <ContextMenuItem
-              key={type}
-              icon={icon}
-              namespace="apps.momentVault"
-              label={type}
-              onClick={handleAddEntry(type)}
-            />
-          ))}
-        </MenuItems>
-      </Menu>
+      <ContextMenu
+        buttonComponent={<FAB className="static!" visibilityBreakpoint="md" />}
+        classNames={{
+          wrapper: 'fixed bottom-6 right-6'
+        }}
+      >
+        {[
+          { icon: 'tabler:file-text', type: 'text' },
+          { icon: 'tabler:microphone', type: 'audio' },
+          { icon: 'tabler:camera', type: 'photos' },
+          { icon: 'tabler:video', type: 'video' }
+        ].map(({ icon, type }) => (
+          <ContextMenuItem
+            key={type}
+            icon={icon}
+            label={type}
+            namespace="apps.momentVault"
+            onClick={handleAddEntry(type)}
+          />
+        ))}
+      </ContextMenu>
     </ModuleWrapper>
   )
 }

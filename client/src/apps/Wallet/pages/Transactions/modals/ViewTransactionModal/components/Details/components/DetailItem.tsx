@@ -18,11 +18,11 @@ function DetailItem({
   return (
     <div
       className={clsx(
-        'bg-bg-50/50 dark:bg-bg-800/50 shadow-custom rounded-lg p-4 w-full min-w-0',
-        vertical ? 'space-y-4' : 'space-y-4 sm:space-y-0 sm:flex-between gap-6'
+        'bg-bg-50/50 dark:bg-bg-800/50 shadow-custom w-full min-w-0 rounded-lg p-4',
+        vertical ? 'space-y-4' : 'sm:flex-between gap-6 space-y-4 sm:space-y-0'
       )}
     >
-      <div className="text-bg-500 min-w-0 flex items-center gap-3">
+      <div className="text-bg-500 flex min-w-0 items-center gap-3">
         <Icon className="size-6 shrink-0" icon={icon} />
         <h3 className="w-full min-w-0 truncate text-lg font-medium">
           {t(`inputs.${label}`)}

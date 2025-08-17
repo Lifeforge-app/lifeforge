@@ -74,9 +74,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       <div className="flex flex-col items-center gap-2 sm:flex-row">
         <SearchInput
           namespace="apps.movies"
-          value={searchQuery}
-          setValue={setSearchQuery}
           searchTarget="movie"
+          setValue={setSearchQuery}
+          value={searchQuery}
           onKeyUp={e => {
             if (e.key === 'Enter') {
               if (searchQuery.trim() !== '') {
@@ -87,10 +87,10 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
           }}
         />
         <Button
-          iconPosition="end"
           className="w-full sm:w-auto"
           disabled={searchQuery.trim() === ''}
           icon="tabler:arrow-right"
+          iconPosition="end"
           loading={searchResultsQuery.isLoading}
           onClick={() => {
             setPage(1)

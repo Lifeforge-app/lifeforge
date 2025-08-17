@@ -75,9 +75,9 @@ function ChangiAirportFlightStatus() {
         <SearchInput
           className="bg-bg-50"
           namespace="modules.changiAirport"
-          value={searchQuery}
-          setValue={setSearchQuery}
           searchTarget="flight"
+          setValue={setSearchQuery}
+          value={searchQuery}
         />
       </div>
       <Scrollbar className="w-full flex-1">

@@ -147,9 +147,9 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
           value={url}
         />
         <Button
-          iconPosition="end"
           className="w-full"
           icon="tabler:arrow-right"
+          iconPosition="end"
           loading={loading === 'loading'}
           onClick={() => {
             fetchData().catch(console.error)

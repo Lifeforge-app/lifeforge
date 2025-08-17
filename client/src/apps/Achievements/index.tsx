@@ -61,7 +61,7 @@ function Achievements() {
             }}
             onClick={() => {
               open(ModifyAchievementModal, {
-                type: 'create',
+                modifyType: 'create',
                 currentDifficulty: selectedDifficulty
               })
             }}
@@ -103,7 +103,7 @@ function Achievements() {
                   tProps: { item: t('items.achievement') },
                   onClick: () => {
                     open(ModifyAchievementModal, {
-                      type: 'create',
+                      modifyType: 'create',
                       currentDifficulty: selectedDifficulty
                     })
                   }
@@ -118,10 +118,10 @@ function Achievements() {
       </div>
       {entriesQuery.isSuccess && entriesQuery.data.length > 0 && (
         <FAB
-          hideWhen="md"
+          visibilityBreakpoint="md"
           onClick={() => {
             open(ModifyAchievementModal, {
-              type: 'create',
+              modifyType: 'create',
               currentDifficulty: selectedDifficulty
             })
           }}
