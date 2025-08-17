@@ -78,9 +78,9 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
           }}
         />
         <Button
-          iconPosition="end"
           className="mt-6 w-full"
           icon="tabler:arrow-right"
+          iconPosition="end"
           loading={loading}
           onClick={() => {
             onSubmit().catch(console.error)

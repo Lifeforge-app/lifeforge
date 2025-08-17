@@ -31,8 +31,8 @@ function GoBackButtonAndMenu() {
       <ContextMenu>
         <ContextMenuItem
           icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
-          namespace="apps.ideaBox"
           label={viewArchived ? 'View Active' : 'View Archived'}
+          namespace="apps.ideaBox"
           onClick={handleViewArchive}
         />
       </ContextMenu>

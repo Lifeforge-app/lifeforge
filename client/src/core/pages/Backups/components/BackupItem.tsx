@@ -125,8 +125,8 @@ function BackupItem({
       >
         <ContextMenuItem
           icon="tabler:download"
-          loading={downloadLoading}
           label="Download"
+          loading={downloadLoading}
           onClick={handleDownloadBackup}
         />
         <ContextMenuItem

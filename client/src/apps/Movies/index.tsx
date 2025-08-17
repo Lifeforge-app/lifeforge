@@ -93,9 +93,9 @@ function Movies() {
       <div className="flex items-center gap-2">
         <SearchInput
           namespace="apps.movies"
-          value={searchQuery}
-          setValue={setSearchQuery}
           searchTarget="movie"
+          setValue={setSearchQuery}
+          value={searchQuery}
         />
         <ViewModeSelector
           className="hidden md:flex"
@@ -172,7 +172,7 @@ function Movies() {
           )
         }}
       </QueryWrapper>
-      <FAB hideWhen="md" onClick={handleOpenTMDBModal} />
+      <FAB visibilityBreakpoint="md" onClick={handleOpenTMDBModal} />
     </ModuleWrapper>
   )
 }

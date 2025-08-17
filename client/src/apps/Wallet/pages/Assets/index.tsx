@@ -77,10 +77,10 @@ function Assets() {
                 }}
               />
               <ContextMenuItem
-                icon="tabler:eye-off"
                 checked={isAmountHidden}
-                namespace="apps.wallet"
+                icon="tabler:eye-off"
                 label="Hide Amount"
+                namespace="apps.wallet"
                 onClick={() => {
                   toggleAmountVisibility()
                 }}

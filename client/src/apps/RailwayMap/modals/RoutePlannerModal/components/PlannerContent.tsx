@@ -119,10 +119,10 @@ function PlannerContent({
         />
       </div>
       <Button
-        iconPosition="end"
         className="mt-6 w-full"
         disabled={start === '' || end === '' || start === end}
         icon="tabler:arrow-right"
+        iconPosition="end"
         loading={loading}
         onClick={handleSubmit}
       >

@@ -14,7 +14,7 @@ function TaskTags({ entry }: { entry: TodoListEntry }) {
         entry.tags.slice(0, 3).map(tag => (
           <span
             key={tag}
-            className="text-custom-500 relative isolate truncate px-2 py-0.5 text-xs whitespace-nowrap"
+            className="text-custom-500 relative isolate min-w-12 truncate px-2 py-0.5 text-xs whitespace-nowrap"
           >
             <div className="bg-custom-500 absolute top-0 left-0 z-[-1] size-full rounded-full opacity-20" />
             #{tags.find(t => t.id === tag)?.name}

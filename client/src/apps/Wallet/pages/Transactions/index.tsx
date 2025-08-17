@@ -137,14 +137,14 @@ function Transactions() {
             >
               <ContextMenuItem
                 icon="tabler:plus"
-                namespace="apps.wallet"
                 label="Add Manually"
+                namespace="apps.wallet"
                 onClick={handleCreateTransaction}
               />
               <ContextMenuItem
                 icon="tabler:template"
-                namespace="apps.wallet"
                 label="From Template"
+                namespace="apps.wallet"
                 onClick={() => {
                   open(ManageTemplatesModal, {
                     choosing: true
@@ -153,8 +153,8 @@ function Transactions() {
               />
               <ContextMenuItem
                 icon="tabler:scan"
-                namespace="apps.wallet"
                 label="Scan Receipt"
+                namespace="apps.wallet"
                 onClick={handleUploadReceipt}
               />
             </ContextMenu>
@@ -195,21 +195,23 @@ function Transactions() {
             </QueryWrapper>
             {(transactionsQuery.data ?? []).length > 0 && (
               <ContextMenu
-                buttonComponent={<FAB className="static!" hideWhen="md" />}
+                buttonComponent={
+                  <FAB className="static!" visibilityBreakpoint="md" />
+                }
                 classNames={{
                   wrapper: 'w-min! fixed right-6 bottom-6'
                 }}
               >
                 <ContextMenuItem
                   icon="tabler:plus"
-                  namespace="apps.wallet"
                   label="Add Manually"
+                  namespace="apps.wallet"
                   onClick={handleCreateTransaction}
                 />
                 <ContextMenuItem
                   icon="tabler:template"
-                  namespace="apps.wallet"
                   label="From Template"
+                  namespace="apps.wallet"
                   onClick={() => {
                     open(ManageTemplatesModal, {
                       choosing: true
@@ -218,8 +220,8 @@ function Transactions() {
                 />
                 <ContextMenuItem
                   icon="tabler:scan"
-                  namespace="apps.wallet"
                   label="Scan Receipt"
+                  namespace="apps.wallet"
                   onClick={handleUploadReceipt}
                 />
               </ContextMenu>

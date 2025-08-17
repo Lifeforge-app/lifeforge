@@ -52,14 +52,14 @@ function Header({ itemCount }: { itemCount: number }) {
             >
               <ContextMenuItem
                 icon="tabler:upload"
-                namespace="apps.booksLibrary"
                 label="Upload from device"
+                namespace="apps.booksLibrary"
                 onClick={() => {}}
               />
               <ContextMenuItem
                 icon="tabler:books"
-                namespace="apps.booksLibrary"
                 label="Download from Libgen"
+                namespace="apps.booksLibrary"
                 onClick={handleOpenLibgenModal}
               />
             </MenuItems>

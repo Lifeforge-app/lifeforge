@@ -111,8 +111,8 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
       >
         <ContextMenuItem
           icon="tabler:chart-line"
-          namespace="apps.wallet"
           label="View Balance Chart"
+          namespace="apps.wallet"
           onClick={handleOpenBalanceChart}
         />
         <ContextMenuItem
