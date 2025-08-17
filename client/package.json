@@ -46,6 +46,7 @@
     "leaflet": "^1.9.4",
     "lifeforge-ui": "workspace:*",
     "lodash": "^4.17.21",
+    "nuqs": "^2.4.3",
     "postcss": "^8.5.3",
     "pretty-bytes": "^6.1.1",
     "qrcode.react": "^4.2.0",

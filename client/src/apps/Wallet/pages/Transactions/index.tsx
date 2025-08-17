@@ -40,6 +40,7 @@ function Transactions() {
 
   const { t } = useTranslation('apps.wallet')
 
+  // TODO: Migrate to nuqs
   const {
     setSelectedType,
     setSelectedLedger,
