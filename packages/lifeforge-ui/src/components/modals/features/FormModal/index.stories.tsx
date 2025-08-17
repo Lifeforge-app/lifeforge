@@ -6,7 +6,7 @@ import Index from './index'
 import FormModal from './index'
 
 type CuteForm = {
-  title: string
+  name: string
   age: number
   color: string
   icon: string
@@ -83,19 +83,18 @@ export const Default: Story = {
     }
   } as never,
   render: args => {
-    const formProps = defineForm<CuteForm>()
-      .ui(args.ui)
+    const formProps = defineForm<CuteForm>(args.ui)
       .typesMap({
-        title: 'text',
+        name: 'text',
         age: 'number',
         color: 'color',
-        icon: 'icon'
+        icon: 'listbox'
       })
       .setupFields({
-        title: {
-          label: 'Title',
-          icon: 'tabler:text-size',
-          placeholder: 'Title Of The Document',
+        name: {
+          label: 'Name',
+          icon: 'tabler:user',
+          placeholder: 'John Doe',
           required: true,
           validator(value) {
             if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
@@ -120,10 +119,24 @@ export const Default: Story = {
           label: 'Color'
         },
         icon: {
+          multiple: false,
           label: 'Icon',
-          required: true
+          icon: 'tabler:icons',
+          required: true,
+          options: [
+            {
+              text: 'Heart',
+              value: 'tabler:heart',
+              icon: 'tabler:heart',
+              color: '#FF0000'
+            },
+            { text: 'Star', value: 'tabler:star', icon: 'tabler:star' },
+            { text: 'Check', value: 'tabler:check', icon: 'tabler:check' },
+            { text: 'X', value: 'tabler:x', icon: 'tabler:x' }
+          ]
         }
       })
+      .autoFocusField('name')
       .initialData({})
       .onSubmit(async formData => {
         alert(`Form submitted with data: ${JSON.stringify(formData)}`)

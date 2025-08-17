@@ -34,7 +34,11 @@ export type FileData = {
 
 /** --------- Field Props Definitions ----------- */
 
-export type BaseFieldProps<TFormDataType, TFinalDataType> = {
+export type BaseFieldProps<
+  TFormDataType,
+  TFinalDataType,
+  TAutoFocus extends boolean = false
+> = {
   label: string
   hidden?: boolean
   required?: boolean
@@ -42,9 +46,10 @@ export type BaseFieldProps<TFormDataType, TFinalDataType> = {
   validator?: (value: TFinalDataType) => boolean | string
   __formDataType: TFormDataType
   __finalDataType: TFinalDataType
+  __autoFocusable?: TAutoFocus
 }
 
-type TextFieldProps = BaseFieldProps<string, string> & {
+type TextFieldProps = BaseFieldProps<string, string, true> & {
   type: 'text'
   icon: string
   isPassword?: boolean
@@ -55,23 +60,23 @@ type TextFieldProps = BaseFieldProps<string, string> & {
   >['actionButtonProps']
 }
 
-type NumberFieldProps = BaseFieldProps<number, number> & {
+type NumberFieldProps = BaseFieldProps<number, number, true> & {
   type: 'number'
   icon: string
 }
 
-type CurrencyFieldProps = BaseFieldProps<number, number> & {
+type CurrencyFieldProps = BaseFieldProps<number, number, true> & {
   type: 'currency'
   icon: string
 }
 
-type TextAreaFieldProps = BaseFieldProps<string, string> & {
+type TextAreaFieldProps = BaseFieldProps<string, string, true> & {
   type: 'textarea'
   icon: string
   placeholder: string
 }
 
-type DateFieldProps = BaseFieldProps<Date | null, string> & {
+type DateFieldProps = BaseFieldProps<Date | null, string, true> & {
   type: 'datetime'
   icon: string
   hasTime?: boolean
@@ -96,11 +101,11 @@ type ListboxFieldProps<
   nullOption?: string
 }
 
-type ColorFieldProps = BaseFieldProps<string, string> & {
+type ColorFieldProps = BaseFieldProps<string, string, true> & {
   type: 'color'
 }
 
-type IconFieldProps = BaseFieldProps<string, string> & {
+type IconFieldProps = BaseFieldProps<string, string, true> & {
   type: 'icon'
 }
 
@@ -119,7 +124,7 @@ type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps<
   acceptedMimeTypes?: Record<string, string[]>
 }
 
-type LocationFieldProps = BaseFieldProps<Location | null, Location> & {
+type LocationFieldProps = BaseFieldProps<Location | null, Location, true> & {
   type: 'location'
 }
 
@@ -177,6 +182,7 @@ type FormInputProps<TField extends FormFieldPropsUnion> = {
     errorMsg?: string
   }
   value: TField['__formDataType']
+  autoFocus?: boolean
   namespace?: string
   handleChange: (value: TField['__formDataType']) => void
 }
@@ -223,25 +229,25 @@ type InferListboxOptions<TOption> = TOption extends {
   ? TValue
   : never
 
-// Infer form state type from fields
+type InferListBoxFormState<TField> = TField extends {
+  options: Array<infer TOption>
+}
+  ? TField extends {
+      multiple: true
+    }
+    ? InferListboxOptions<TOption>[]
+    : InferListboxOptions<TOption>
+  : never
+
 type InferFormState<TFieldTypes, TFields> = {
   [K in keyof TFieldTypes]: TFieldTypes[K] extends infer TFieldType
     ? TFieldType extends 'listbox'
-      ? TFields[K extends keyof TFields ? K : never] extends {
-          options: Array<infer TOption>
-        }
-        ? TFields[K extends keyof TFields ? K : never] extends {
-            multiple: true
-          }
-          ? InferListboxOptions<TOption>[]
-          : InferListboxOptions<TOption>
-        : never
+      ? InferListBoxFormState<TFields[K extends keyof TFields ? K : never]>
       : MatchFieldByType<TFieldType>['__formDataType']
     : never
 }
 
-// Infer final form data type
-type InferListBoxDataType<TField> = TField extends {
+type InferListBoxFinalState<TField> = TField extends {
   options: Array<infer TOption>
 }
   ? TField extends { multiple: true }
@@ -255,14 +261,25 @@ type InferFormFinalState<
   TFieldTypes,
   TFieldProps extends FieldsConfig<any, any>
 > = {
-  [key in keyof TFieldTypes]: TFieldTypes[key] extends infer TFieldType
-    ? TFieldType extends FormFieldPropsUnion['type']
-      ? TFieldType extends 'listbox'
-        ? InferListBoxDataType<TFieldProps[key]>
-        : MatchFieldByType<TFieldType>['__finalDataType']
-      : never
+  [K in keyof TFieldTypes]: TFieldTypes[K] extends infer TFieldType
+    ? TFieldType extends 'listbox'
+      ? InferListBoxFinalState<TFieldProps[K]>
+      : MatchFieldByType<TFieldType>['__finalDataType']
     : never
 }
+
+type IsAutoFocusable<TType> =
+  MatchFieldByType<TType> extends infer TField
+    ? TField extends { __autoFocusable?: true }
+      ? true
+      : false
+    : false
+
+type InferAutoFocusableFieldIds<TFieldTypes> = {
+  [K in keyof TFieldTypes]: IsAutoFocusable<TFieldTypes[K]> extends true
+    ? K
+    : never
+}[keyof TFieldTypes]
 
 /** --------- Types exported for business developers ----------- */
 export type {
@@ -290,5 +307,6 @@ export type {
   InferFormState,
   InferFormFinalState,
   FormInputProps,
+  InferAutoFocusableFieldIds,
   Field
 }

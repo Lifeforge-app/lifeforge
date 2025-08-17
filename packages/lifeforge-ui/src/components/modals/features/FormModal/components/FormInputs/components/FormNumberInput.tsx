@@ -7,11 +7,13 @@ import {
 function FormNumberInput({
   field,
   value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<NumberFieldProps>) {
   return (
     <NumberInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       errorMsg={field.errorMsg}
       icon={field.icon}

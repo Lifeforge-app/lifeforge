@@ -7,11 +7,13 @@ import {
 function FormLocationInput({
   field,
   value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<LocationFieldProps>) {
   return (
     <LocationInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       label={field.label}
       namespace={namespace}
