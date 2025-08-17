@@ -16,6 +16,7 @@ const SECTIONS = {
     'Introduction',
     'Project Structure',
     'UI Library',
+    'Forms',
     'API Reference',
     'Localization',
     'Extending Modules',
