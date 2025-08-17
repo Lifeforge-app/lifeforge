@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
@@ -7,13 +8,15 @@ function InputWrapper({
   disabled = false,
   inputRef,
   onFocus,
-  children
+  children,
+  errorMsg
 }: {
   className?: string
   disabled?: boolean
   inputRef?: React.RefObject<any | null>
   onFocus?: () => void
   children: React.ReactNode
+  errorMsg?: string
 }) {
   const focusInput = useCallback(
     (e: React.MouseEvent | React.FocusEvent) => {
@@ -53,19 +56,31 @@ function InputWrapper({
   )
 
   return (
-    <div
-      className={clsx(
-        'border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 hover:bg-bg-200 group component-bg-lighter-with-hover relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 pl-6 transition-all',
-        className,
-        disabled ? 'pointer-events-none! opacity-50' : 'cursor-text'
-      )}
-      role="button"
-      tabIndex={0}
-      onClick={focusInput}
-      onFocus={focusInput}
-      onKeyDown={handleKeyDown}
-    >
-      {children}
+    <div className="w-full space-y-2">
+      <div
+        className={clsx(
+          'bg-bg-200/50 shadow-custom hover:bg-bg-200 group component-bg-lighter-with-hover relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 pl-6 transition-all',
+          className,
+          errorMsg
+            ? 'border-red-500 focus-within:!border-red-500'
+            : 'border-bg-500 focus-within:!border-custom-500',
+          disabled ? 'pointer-events-none! opacity-50' : 'cursor-text'
+        )}
+        role="button"
+        tabIndex={0}
+        onClick={focusInput}
+        onFocus={focusInput}
+        onKeyDown={handleKeyDown}
+      >
+        {children}
+        {errorMsg && (
+          <Icon
+            className="mr-6 size-6 text-red-500"
+            icon="tabler:alert-circle"
+          />
+        )}
+      </div>
+      {errorMsg && <div className="px-6 text-sm text-red-500">{errorMsg}</div>}
     </div>
   )
 }

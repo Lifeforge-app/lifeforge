@@ -24,6 +24,7 @@ export interface TextAreaInputProps {
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  errorMsg?: string
 }
 
 function TextAreaInput({
@@ -35,7 +36,8 @@ function TextAreaInput({
   required,
   disabled,
   className,
-  namespace
+  namespace,
+  errorMsg
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label })
 
@@ -49,11 +51,21 @@ function TextAreaInput({
   }, [value])
 
   return (
-    <InputWrapper className={className} disabled={disabled} inputRef={ref}>
-      <InputIcon active={!!value && String(value).length > 0} icon={icon} />
+    <InputWrapper
+      className={className}
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={ref}
+    >
+      <InputIcon
+        active={!!value && String(value).length > 0}
+        hasError={!!errorMsg}
+        icon={icon}
+      />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!value && String(value).length > 0}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />

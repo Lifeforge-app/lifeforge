@@ -19,6 +19,7 @@ interface NumberInputProps {
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  errorMsg?: string
 }
 
 function NumberInput({
@@ -29,7 +30,8 @@ function NumberInput({
   required = false,
   disabled = false,
   className,
-  namespace
+  namespace,
+  errorMsg
 }: NumberInputProps) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
@@ -43,6 +45,7 @@ function NumberInput({
     <TextInput
       className={className}
       disabled={disabled}
+      errorMsg={errorMsg}
       icon={icon}
       inputMode="numeric"
       label={label}
@@ -60,14 +63,21 @@ function NumberInput({
           return
         }
 
-        const numericValue = parseInt(currentStringValue)
-
-        if (!isNaN(numericValue)) {
-          setValue(numericValue)
-        } else {
+        //negative value as well
+        if (!currentStringValue.match(/^(-?)\d*\.?\d*$/)) {
           setValue(value)
-          setCurrentStringValue(value.toString())
+          setCurrentStringValue(
+            value.toString() === '0' ? '' : value.toString()
+          )
+
+          return
         }
+
+        const numericValue = currentStringValue.includes('.')
+          ? parseFloat(currentStringValue)
+          : parseInt(currentStringValue)
+
+        setValue(numericValue)
       }}
     />
   )

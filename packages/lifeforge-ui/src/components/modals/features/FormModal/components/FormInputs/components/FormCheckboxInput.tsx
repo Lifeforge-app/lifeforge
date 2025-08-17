@@ -9,31 +9,36 @@ import { useTranslation } from 'react-i18next'
 
 function FormCheckboxInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<CheckboxFieldProps>) {
   const { t } = useTranslation(namespace)
 
   return (
-    <div className="flex items-center justify-between py-2">
-      <div className="flex items-center gap-2">
-        <Icon className="size-6" icon={field.icon} />
-        <span className="text-lg">
-          {t([
-            ['inputs', _.camelCase(field.label), 'label']
-              .filter(e => e)
-              .join('.'),
-            ['inputs', _.camelCase(field.label)].filter(e => e).join('.')
-          ])}
-        </span>
+    <div className="w-full space-y-2">
+      <div className="flex items-center justify-between py-2">
+        <div className="flex items-center gap-2">
+          <Icon className="size-6" icon={field.icon} />
+          <span className="text-lg">
+            {t([
+              ['inputs', _.camelCase(field.label), 'label']
+                .filter(e => e)
+                .join('.'),
+              ['inputs', _.camelCase(field.label)].filter(e => e).join('.')
+            ])}
+          </span>
+        </div>
+        <Switch
+          checked={value}
+          onChange={() => {
+            handleChange(!value)
+          }}
+        />
       </div>
-      <Switch
-        checked={selectedData}
-        onChange={() => {
-          handleChange(!selectedData)
-        }}
-      />
+      {field.errorMsg && (
+        <div className="text-sm text-red-500">{field.errorMsg}</div>
+      )}
     </div>
   )
 }

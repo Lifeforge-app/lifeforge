@@ -34,14 +34,17 @@ export type FileData = {
 
 /** --------- Field Props Definitions ----------- */
 
-export type BaseFieldProps = {
+export type BaseFieldProps<TFormDataType, TFinalDataType> = {
   label: string
   hidden?: boolean
   required?: boolean
   disabled?: boolean
+  validator?: (value: TFinalDataType) => boolean | string
+  __formDataType: TFormDataType
+  __finalDataType: TFinalDataType
 }
 
-type TextFieldProps = BaseFieldProps & {
+type TextFieldProps = BaseFieldProps<string, string> & {
   type: 'text'
   icon: string
   isPassword?: boolean
@@ -50,44 +53,37 @@ type TextFieldProps = BaseFieldProps & {
   actionButtonProps?: React.ComponentProps<
     typeof TextInput
   >['actionButtonProps']
-  __formDataType: string
-  __finalDataType: string
 }
 
-type NumberFieldProps = BaseFieldProps & {
+type NumberFieldProps = BaseFieldProps<number, number> & {
   type: 'number'
   icon: string
-  __formDataType: number
-  __finalDataType: number
 }
 
-type CurrencyFieldProps = BaseFieldProps & {
+type CurrencyFieldProps = BaseFieldProps<number, number> & {
   type: 'currency'
   icon: string
-  __formDataType: number
-  __finalDataType: number
 }
 
-type TextAreaFieldProps = BaseFieldProps & {
+type TextAreaFieldProps = BaseFieldProps<string, string> & {
   type: 'textarea'
   icon: string
   placeholder: string
-  __formDataType: string
-  __finalDataType: string
 }
 
-type DateFieldProps = BaseFieldProps & {
+type DateFieldProps = BaseFieldProps<Date | null, string> & {
   type: 'datetime'
   icon: string
   hasTime?: boolean
-  __formDataType: Date | null
-  __finalDataType: string
 }
 
 type ListboxFieldProps<
   TOption = any,
   TMultiple extends boolean = boolean
-> = BaseFieldProps & {
+> = BaseFieldProps<
+  TMultiple extends true ? TOption[] : TOption | null,
+  TMultiple extends true ? TOption[] : TOption | undefined
+> & {
   type: 'listbox'
   icon: string
   multiple: TMultiple
@@ -98,23 +94,20 @@ type ListboxFieldProps<
     color?: string
   }>
   nullOption?: string
-  __formDataType: TMultiple extends true ? TOption[] : TOption | null
-  __finalDataType: TMultiple extends true ? TOption[] : TOption | undefined
 }
 
-type ColorFieldProps = BaseFieldProps & {
+type ColorFieldProps = BaseFieldProps<string, string> & {
   type: 'color'
-  __formDataType: string
-  __finalDataType: string
 }
 
-type IconFieldProps = BaseFieldProps & {
+type IconFieldProps = BaseFieldProps<string, string> & {
   type: 'icon'
-  __formDataType: string
-  __finalDataType: string
 }
 
-type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps & {
+type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps<
+  FileData,
+  string | File
+> & {
   type: 'file'
   icon: string
   optional: TOptional
@@ -124,28 +117,20 @@ type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps & {
   enableAIImageGeneration?: boolean
   defaultImageGenerationPrompt?: string
   acceptedMimeTypes?: Record<string, string[]>
-  __formDataType: FileData
-  __finalDataType: string | File
 }
 
-type LocationFieldProps = BaseFieldProps & {
+type LocationFieldProps = BaseFieldProps<Location | null, Location> & {
   type: 'location'
-  __formDataType: Location | null
-  __finalDataType: Location
 }
 
-type CheckboxFieldProps = BaseFieldProps & {
+type CheckboxFieldProps = BaseFieldProps<boolean, boolean> & {
   type: 'checkbox'
   icon: string
-  __formDataType: boolean
-  __finalDataType: boolean
 }
 
-type RRuleFieldProps = BaseFieldProps & {
+type RRuleFieldProps = BaseFieldProps<string, string> & {
   type: 'rrule'
   hasDuration?: boolean
-  __formDataType: string
-  __finalDataType: string
 }
 
 /** --------- Union of All Field Props ----------- */
@@ -183,17 +168,37 @@ type MatchFieldByFieldType<TField> = TField extends {
   : never
 
 // Single field inference
-type Field<TField extends FormFieldPropsUnion> = TField & BaseFieldProps
+type Field<TField extends FormFieldPropsUnion> = TField &
+  BaseFieldProps<TField['__formDataType'], TField['__finalDataType']>
 
 // Props for component usage
 type FormInputProps<TField extends FormFieldPropsUnion> = {
-  field: Field<TField>
-  selectedData: TField['__formDataType']
+  field: Field<TField> & {
+    errorMsg?: string
+  }
+  value: TField['__formDataType']
   namespace?: string
   handleChange: (value: TField['__formDataType']) => void
 }
 
 /** --------- Form Field Configuration (for business developers) ----------- */
+
+type InferFinalField<
+  TFieldType extends FormFieldPropsUnion['type'],
+  TFormState
+> = TFieldType extends 'listbox'
+  ? ListboxFieldProps<
+      TFormState extends Array<infer TOption> ? TOption : TFormState
+    >
+  : TFieldType extends 'file'
+    ? FileFieldProps<
+        TFormState extends { config: { optional: infer TOptional } }
+          ? TOptional extends boolean
+            ? TOptional
+            : false
+          : false
+      >
+    : FormFieldTypeMap[TFieldType]
 
 type FieldsConfig<
   TFormState extends FormState = FormState,
@@ -203,23 +208,12 @@ type FieldsConfig<
     [K in keyof TFormState]: MatchFieldByFormDataType<TFormState[K]>['type']
   }
 > = Partial<{
-  [K in keyof TFormState]: DistributiveOmit<
-    TFieldType[K] extends 'listbox'
-      ? ListboxFieldProps<
-          TFormState[K] extends Array<infer TOption> ? TOption : TFormState[K]
-        >
-      : TFieldType[K] extends 'file'
-        ? FileFieldProps<
-            TFormState[K] extends { config: { optional: infer TOptional } }
-              ? TOptional extends boolean
-                ? TOptional
-                : false
-              : false
-          >
-        : FormFieldTypeMap[TFieldType[K]],
-    '__formDataType' | '__finalDataType' | 'type'
-  > &
-    BaseFieldProps
+  [K in keyof TFormState]: InferFinalField<
+    TFieldType[K],
+    TFormState[K]
+  > extends infer TField
+    ? DistributiveOmit<TField, 'type' | '__finalDataType' | '__formDataType'>
+    : never
 }>
 
 type InferListboxOptions<TOption> = TOption extends {

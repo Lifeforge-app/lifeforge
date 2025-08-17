@@ -6,18 +6,19 @@ import {
 
 function FormIconInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<IconFieldProps>) {
   return (
     <IconInput
       disabled={field.disabled}
-      value={selectedData}
       label={field.label}
+      errorMsg={field.errorMsg}
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
+      value={value}
     />
   )
 }

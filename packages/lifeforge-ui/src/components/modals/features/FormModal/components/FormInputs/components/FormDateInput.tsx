@@ -6,7 +6,7 @@ import {
 
 function FormDateInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<DateFieldProps>) {
@@ -19,7 +19,7 @@ function FormDateInput({
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }
