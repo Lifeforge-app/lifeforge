@@ -1,3 +1,4 @@
+import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 import clsx from 'clsx'
 
 function TextInputBox({
@@ -10,6 +11,7 @@ function TextInputBox({
   inputRef,
   disabled = false,
   className = '',
+  autoFocus = false,
   ...inputProps
 }: {
   value: string
@@ -38,7 +40,7 @@ function TextInputBox({
         <input hidden type="password" value="" onChange={() => {}} />
       )}
       <input
-        ref={inputRef}
+        ref={autoFocusableRef(autoFocus, inputRef)}
         aria-label={placeholder}
         autoComplete="off"
         className={clsx(
