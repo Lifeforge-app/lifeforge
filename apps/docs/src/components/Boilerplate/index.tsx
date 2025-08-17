@@ -43,7 +43,7 @@ function Boilerplate() {
         <div className="w-full min-w-0 lg:w-[calc(100%-20rem)]">
           <Outlet />
           <NavigationBar />
-          <hr className="border-bg-800 my-12 border-t-[1.5px]" />
+          <hr className="border-bg-200 dark:border-bg-800 my-12 border-t-[1.5px]" />
           <div className="flex flex-col items-center justify-center gap-2 pb-6 sm:pb-12">
             <div className="text-bg-500 flex items-center gap-2">
               <Icon className="size-6" icon="tabler:creative-commons" />
