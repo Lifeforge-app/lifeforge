@@ -3,7 +3,6 @@ import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { type IBackdropFilters, type IDashboardLayout } from 'shared'
 import { usePersonalization } from 'shared'
-
 import { useAuth } from './AuthProvider'
 
 const UserPersonalizationContext = createContext<{
