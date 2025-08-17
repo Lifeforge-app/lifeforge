@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
@@ -16,7 +16,7 @@ function CodeTimeStatistics() {
   )
 
   return (
-    <QueryWrapper query={statsQuery}>
+    <WithQuery query={statsQuery}>
       {stats => (
         <div className="space-y-4">
           <div className="flex-between component-bg shadow-custom w-full flex-col gap-6 rounded-lg p-3 pb-6 sm:flex-row sm:p-6">
@@ -84,7 +84,7 @@ function CodeTimeStatistics() {
           </div>
         </div>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

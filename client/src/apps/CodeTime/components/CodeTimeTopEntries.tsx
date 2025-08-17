@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -62,7 +62,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
       namespace="apps.codeTime"
       title={type}
     >
-      <QueryWrapper query={topEntriesQuery}>
+      <WithQuery query={topEntriesQuery}>
         {topEntries => (
           <>
             <div className="flex w-full">
@@ -131,7 +131,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
             </ul>
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </DashboardItem>
   )
 }

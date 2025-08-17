@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { QueryWrapper, SidebarTitle, useModalStore } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
 import type { CalendarCalendar } from '@apps/Calendar/components/Calendar'
@@ -44,7 +44,7 @@ function CalendarList({
   }, [])
 
   return (
-    <QueryWrapper query={calendarsQuery}>
+    <WithQuery query={calendarsQuery}>
       {calendars => (
         <section className="flex w-full min-w-0 flex-1 flex-col">
           <SidebarTitle
@@ -76,7 +76,7 @@ function CalendarList({
           )}
         </section>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

@@ -5,8 +5,8 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
@@ -64,7 +64,7 @@ function IdeaBox() {
         setValue={setSearchQuery}
         value={searchQuery}
       />
-      <QueryWrapper query={query}>
+      <WithQuery query={query}>
         {data =>
           data.length > 0 ? (
             <ContainerList filteredList={filteredList} />
@@ -82,7 +82,7 @@ function IdeaBox() {
             />
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </ModuleWrapper>
   )
 }

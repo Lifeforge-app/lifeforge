@@ -3,7 +3,7 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router'
@@ -134,7 +134,7 @@ function SpendingHeatmap() {
         tKey="subsectionsTitleAndDesc"
       />
 
-      <QueryWrapper query={transactionsQuery}>
+      <WithQuery query={transactionsQuery}>
         {() =>
           spendingData.length > 0 ? (
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
@@ -190,7 +190,7 @@ function SpendingHeatmap() {
             />
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </ModuleWrapper>
   )
 }

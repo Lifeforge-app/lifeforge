@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 
 import MiniCalendarContent from './components/MiniCalendarContent'
@@ -42,7 +42,7 @@ function MiniCalendar() {
           setCurrentMonth={setCurrentMonth}
           setCurrentYear={setCurrentYear}
         />
-        <QueryWrapper query={eventsQuery}>
+        <WithQuery query={eventsQuery}>
           {events => (
             <MiniCalendarContent
               currentMonth={currentMonth}
@@ -50,7 +50,7 @@ function MiniCalendar() {
               events={events}
             />
           )}
-        </QueryWrapper>
+        </WithQuery>
       </div>
     </section>
   )

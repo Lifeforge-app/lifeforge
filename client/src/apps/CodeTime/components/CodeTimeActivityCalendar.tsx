@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { clsx } from 'clsx'
-import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, WithQuery } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
@@ -68,7 +68,7 @@ function CodeTimeActivityCalendar() {
         </ListboxInput>
       )} */}
       <div className="mt-4 flex w-full gap-8">
-        <QueryWrapper query={dataQuery}>
+        <WithQuery query={dataQuery}>
           {() =>
             Array.isArray(activities) ? (
               <div className="h-60 w-full min-w-0">
@@ -131,7 +131,7 @@ function CodeTimeActivityCalendar() {
               <div className="text-bg-500">No activities found</div>
             )
           }
-        </QueryWrapper>
+        </WithQuery>
         {firstYear && (
           <div className="space-y-2">
             {Array(new Date().getFullYear() - firstYear + 1)

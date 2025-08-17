@@ -6,7 +6,7 @@ import {
   ListboxOption,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -81,7 +81,7 @@ function Sudoku() {
           />
         ))}
       </ListboxInput>
-      <QueryWrapper query={dataQuery}>
+      <WithQuery query={dataQuery}>
         {data => (
           <div className="mt-4 space-y-2">
             <Button
@@ -115,7 +115,7 @@ function Sudoku() {
             </div>
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </ModuleWrapper>
   )
 }

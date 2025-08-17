@@ -1,4 +1,4 @@
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
@@ -8,7 +8,7 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
   const { musicsQuery } = useMusicContext()
 
   return (
-    <QueryWrapper query={musicsQuery}>
+    <WithQuery query={musicsQuery}>
       {musics => (
         <div className="space-y-3 pb-12">
           {musics
@@ -22,7 +22,7 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
             ))}
         </div>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

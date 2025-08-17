@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { DashboardItem, QueryWrapper, Scrollbar } from 'lifeforge-ui'
+import { DashboardItem, Scrollbar, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -32,7 +32,7 @@ function TransactionsCountCard() {
       namespace="apps.wallet"
       title="Transactions Count"
     >
-      <QueryWrapper query={transactionsQuery}>
+      <WithQuery query={transactionsQuery}>
         {transactions => (
           <Scrollbar>
             <ul className="space-y-2">
@@ -114,7 +114,7 @@ function TransactionsCountCard() {
             </ul>
           </Scrollbar>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </DashboardItem>
   )
 }

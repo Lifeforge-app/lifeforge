@@ -5,8 +5,8 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
-  TextInput
+  TextInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -98,7 +98,7 @@ function YoutubeSummarizer() {
         />
       ) : (
         <div className="my-6">
-          <QueryWrapper query={videoInfoQuery}>
+          <WithQuery query={videoInfoQuery}>
             {videoInfo =>
               videoInfo ? (
                 <>
@@ -118,7 +118,7 @@ function YoutubeSummarizer() {
                 />
               )
             }
-          </QueryWrapper>
+          </WithQuery>
         </div>
       )}
     </ModuleWrapper>

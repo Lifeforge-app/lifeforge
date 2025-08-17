@@ -1,6 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import { EmptyStateScreen, FAB, QueryWrapper, SearchInput } from 'lifeforge-ui'
+import { EmptyStateScreen, FAB, SearchInput, WithQuery } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -98,7 +98,7 @@ function TodoListContainer() {
               value={searchQuery}
             />
           </div>
-          <QueryWrapper query={entriesQuery}>
+          <WithQuery query={entriesQuery}>
             {() =>
               filteredEntries.length > 0 ? (
                 <TaskList entries={filteredEntries} />
@@ -118,7 +118,7 @@ function TodoListContainer() {
                 />
               )
             }
-          </QueryWrapper>
+          </WithQuery>
         </div>
       </div>
       <ModifyTaskDrawer />
