@@ -133,13 +133,21 @@ function SidebarItem({
         return
       }
 
-      navigate(`./${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label)}`)
+      navigate(`/${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label)}`)
     }
 
     if (window.innerWidth < 1024) {
       toggleSidebar?.()
     }
-  }, [isMainSidebarItem, subsectionExpanded, subsection, prefix, label])
+  }, [
+    isMainSidebarItem,
+    subsectionExpanded,
+    subsection,
+    prefix,
+    label,
+    navigate,
+    toggleSidebar
+  ])
 
   const handleToggleSubsection = useCallback(() => {
     if (subsection !== undefined) {
