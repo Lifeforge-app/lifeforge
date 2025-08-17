@@ -8,6 +8,7 @@ interface InputLabelProps {
   isCombobox?: boolean
   isListboxOrCombobox?: boolean
   required?: boolean
+  hasError?: boolean
 }
 
 function InputLabel({
@@ -16,7 +17,8 @@ function InputLabel({
   focused,
   isListboxOrCombobox = false,
   isCombobox = false,
-  required = false
+  required = false,
+  hasError = false
 }: InputLabelProps) {
   const labelPositionClasses = useMemo(() => {
     if (!active) {
@@ -33,8 +35,12 @@ function InputLabel({
   return (
     <span
       className={clsx(
-        'text-bg-500 group-focus-within:text-custom-500! group-data-open:text-custom-500! pointer-events-none absolute left-[4.2rem] font-medium tracking-wide transition-all',
-        focused && 'text-custom-500',
+        'pointer-events-none absolute left-[4.2rem] font-medium tracking-wide transition-all',
+        hasError
+          ? 'text-red-500 group-focus-within:text-red-500! group-data-open:text-red-500!'
+          : focused
+            ? 'text-custom-500'
+            : 'text-bg-500 group-focus-within:text-custom-500! group-data-open:text-custom-500!',
         labelPositionClasses
       )}
     >

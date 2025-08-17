@@ -22,6 +22,7 @@ interface IconInputProps {
   disabled?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  errorMsg?: string
 }
 
 function IconInput({
@@ -30,7 +31,8 @@ function IconInput({
   setValue,
   required,
   disabled,
-  namespace
+  namespace,
+  errorMsg
 }: IconInputProps) {
   const open = useModalStore(state => state.open)
 
@@ -66,10 +68,15 @@ function IconInput({
   }, [value])
 
   return (
-    <InputWrapper disabled={disabled} inputRef={ref}>
-      <InputIcon active={!!value} icon="tabler:icons" />
+    <InputWrapper disabled={disabled} errorMsg={errorMsg} inputRef={ref}>
+      <InputIcon active={!!value} hasError={!!errorMsg} icon="tabler:icons" />
       <div className="flex w-full items-center gap-2">
-        <InputLabel active={!!value} label={inputLabel} required={required} />
+        <InputLabel
+          active={!!value}
+          hasError={!!errorMsg}
+          label={inputLabel}
+          required={required}
+        />
         <div className="mt-6 mr-12 flex w-full items-center gap-2 pl-4">
           <span className="icon-input-icon size-5 shrink-0">
             <Icon
@@ -89,6 +96,9 @@ function IconInput({
             name={label}
             placeholder="tabler:cube"
             value={value}
+            onBlur={e => {
+              setValue(e.target.value.trim())
+            }}
             onChange={e => setValue(e.target.value)}
           />
         </div>

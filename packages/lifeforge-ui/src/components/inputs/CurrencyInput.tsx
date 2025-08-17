@@ -25,6 +25,7 @@ interface CurrencyInputProps {
   className?: string
   /** The i18n namespace for internationalization. Use false to disable translation. */
   namespace?: string
+  errorMsg?: string
 }
 
 function CurrencyInputComponent({
@@ -36,7 +37,8 @@ function CurrencyInputComponent({
   required,
   disabled,
   className,
-  namespace
+  namespace,
+  errorMsg
 }: CurrencyInputProps) {
   const inputLabel = useInputLabel({ namespace, label })
 
@@ -51,11 +53,17 @@ function CurrencyInputComponent({
   }, [value])
 
   return (
-    <InputWrapper className={className} disabled={disabled} inputRef={inputRef}>
-      <InputIcon active={!!innerValue} icon={icon} />
+    <InputWrapper
+      className={className}
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={inputRef}
+    >
+      <InputIcon active={!!innerValue} hasError={!!errorMsg} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!innerValue}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />

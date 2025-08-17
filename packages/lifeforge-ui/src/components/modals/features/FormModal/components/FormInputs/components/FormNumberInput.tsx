@@ -6,19 +6,20 @@ import {
 
 function FormNumberInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<NumberFieldProps>) {
   return (
     <NumberInput
       disabled={field.disabled}
+      errorMsg={field.errorMsg}
       icon={field.icon}
       label={field.label}
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }
