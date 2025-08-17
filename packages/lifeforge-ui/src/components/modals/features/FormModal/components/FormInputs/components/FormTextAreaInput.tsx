@@ -7,11 +7,13 @@ import {
 function FormTextAreaInput({
   field,
   value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<TextAreaFieldProps>) {
   return (
     <TextAreaInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       icon={field.icon}
       label={field.label}

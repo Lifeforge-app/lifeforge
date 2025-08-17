@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useMemo } from 'react'
 
@@ -45,15 +46,17 @@ const MemoizedFormField = memo(
     id,
     field,
     value,
+    autoFocus,
     namespace,
     errorMsg,
     onFieldChange
   }: {
     id: string
     field: FormFieldPropsUnion
-    errorMsg?: string
     value: any
+    autoFocus?: boolean
     namespace?: string
+    errorMsg?: string
     onFieldChange: (value: any) => void
   }) => {
     const fieldType = field.type as FormFieldPropsUnion['type']
@@ -67,6 +70,7 @@ const MemoizedFormField = memo(
     return (
       <FormComponent
         key={id}
+        autoFocus={autoFocus}
         field={{ ...field, errorMsg }}
         handleChange={onFieldChange}
         namespace={namespace}
@@ -80,6 +84,7 @@ MemoizedFormField.displayName = 'MemoizedFormField'
 
 function FormInputs<T extends FormState>({
   fields,
+  autoFocusableFieldId,
   data,
   setData,
   errorMsgs,
@@ -87,6 +92,7 @@ function FormInputs<T extends FormState>({
   namespace
 }: {
   fields: FieldsConfig<T>
+  autoFocusableFieldId?: string
   data: T
   setData: React.Dispatch<React.SetStateAction<T>>
   errorMsgs: Record<string, string | undefined>
@@ -117,6 +123,7 @@ function FormInputs<T extends FormState>({
         return (
           <MemoizedFormField
             key={id}
+            autoFocus={autoFocusableFieldId === id}
             errorMsg={errorMsg}
             field={field}
             id={id}
