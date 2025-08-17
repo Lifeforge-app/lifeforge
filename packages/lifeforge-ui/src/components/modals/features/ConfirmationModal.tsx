@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePromiseLoading } from 'shared'
 
 import Button from '../../buttons/Button'
 import { TextInput } from '../../inputs'
@@ -30,22 +31,9 @@ function ConfirmationModal({
 }) {
   const { t } = useTranslation(['common.modals', 'common.buttons'])
 
-  const [loading, setLoading] = useState(false)
+  const [isLoading, onClick] = usePromiseLoading(onConfirm)
 
   const [confirmationTextState, setConfirmationTextState] = useState('')
-
-  const onClick = async () => {
-    setLoading(true)
-
-    try {
-      await onConfirm()
-      onClose()
-    } catch (error) {
-      console.error('Error during confirmation:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <div className="min-w-[40vw]">
@@ -87,7 +75,7 @@ function ConfirmationModal({
             icon={
               confirmationButton === 'delete' ? 'tabler:trash' : 'tabler:check'
             }
-            loading={loading}
+            loading={isLoading}
             onClick={onClick}
           >
             {t([
@@ -99,6 +87,7 @@ function ConfirmationModal({
           <Button
             {...confirmationButton}
             className={clsx('w-full', confirmationButton.className)}
+            loading={isLoading}
             onClick={onClick}
           />
         )}

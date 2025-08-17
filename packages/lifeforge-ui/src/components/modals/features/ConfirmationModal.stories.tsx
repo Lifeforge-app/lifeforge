@@ -20,6 +20,7 @@ export const Default: Story = {
       description:
         "Are you sure you want to revert to the time where LifeForge didn't exist? This will trigger a serious chaos in the universe and the consequences will be dire.",
       onConfirm: async () => {
+        await new Promise(resolve => setTimeout(resolve, 2000))
         alert(
           "Omg I can't believe you have the audacity to click this button lol"
         )

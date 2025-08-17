@@ -3,6 +3,7 @@ import { ModalHeader } from '@components/modals'
 import { Tabs } from '@components/utilities'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePromiseLoading } from 'shared'
 
 import AIImageGenerator from './components/AIImageGenerator'
 import ImageURL from './components/ImageURL'
@@ -38,7 +39,13 @@ function FilePickerModal({
 
   const [mode, setMode] = useState<'local' | 'url' | 'pixabay' | 'ai'>('local')
 
-  const [loading, setLoading] = useState(false)
+  const [loading, onClick] = usePromiseLoading(() =>
+    onSelect(file as string | File, preview)
+      .catch(console.error)
+      .finally(() => {
+        onClose()
+      })
+  )
 
   useEffect(() => {
     setFile(null)
@@ -136,15 +143,7 @@ function FilePickerModal({
         disabled={file === null}
         icon="tabler:check"
         loading={loading}
-        onClick={() => {
-          setLoading(true)
-          onSelect(file as string | File, preview)
-            .catch(console.error)
-            .finally(() => {
-              setLoading(false)
-              onClose()
-            })
-        }}
+        onClick={onClick}
       >
         select
       </Button>
