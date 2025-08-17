@@ -114,14 +114,14 @@ function FormListboxInput({
           icon={field.nullOption}
         />
       )}
-      {field.options.map(({ text, color, icon, value }) => (
+      {field.options.map(({ text, color, icon, value: v }) => (
         <ListboxOption
-          key={value}
+          key={v}
           color={color}
           icon={icon}
           label={text}
-          selected={JSON.stringify(value) === JSON.stringify(value)}
-          value={value}
+          selected={JSON.stringify(v) === JSON.stringify(value)}
+          value={v}
         />
       ))}
     </ListboxInput>

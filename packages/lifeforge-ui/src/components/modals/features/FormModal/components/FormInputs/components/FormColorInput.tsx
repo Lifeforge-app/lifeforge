@@ -7,11 +7,13 @@ import {
 function FormColorInput({
   field,
   value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<ColorFieldProps>) {
   return (
     <ColorInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       errorMsg={field.errorMsg}
       label={field.label}

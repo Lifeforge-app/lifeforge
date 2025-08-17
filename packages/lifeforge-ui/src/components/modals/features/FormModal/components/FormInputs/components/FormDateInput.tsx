@@ -7,11 +7,13 @@ import {
 function FormDateInput({
   field,
   value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<DateFieldProps>) {
   return (
     <DateInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       hasTime={field.hasTime}
       icon={field.icon}

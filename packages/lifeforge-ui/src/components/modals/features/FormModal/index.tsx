@@ -18,7 +18,14 @@ import SubmitButton from './components/SubmitButton'
 import { checkEmpty, getInitialData } from './utils/formUtils'
 
 function FormModal({
-  form: { fields, fieldTypes, initialData, onSubmit, onChange },
+  form: {
+    fields,
+    fieldTypes,
+    autoFocusableFieldId,
+    initialData,
+    onSubmit,
+    onChange
+  },
   ui: { title, icon, namespace, loading = false, onClose, submitButton },
   actionButton,
   externalData
@@ -27,6 +34,7 @@ function FormModal({
   form: {
     fields: Record<string, FormFieldPropsUnion>
     fieldTypes: Record<string, FormFieldPropsUnion['type']>
+    autoFocusableFieldId?: string
     initialData?: Partial<InferFormState<typeof fieldTypes, typeof fields>>
     onSubmit: (
       data: InferFormFinalState<typeof fieldTypes, typeof fields>
@@ -227,6 +235,7 @@ function FormModal({
       {!loading ? (
         <>
           <FormInputs
+            autoFocusableFieldId={autoFocusableFieldId}
             data={data as FormState}
             errorMsgs={errorMsgs}
             fields={fields}
