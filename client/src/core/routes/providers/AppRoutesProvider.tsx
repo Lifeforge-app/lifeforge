@@ -1,24 +1,73 @@
 import Auth from '@core/pages/Auth'
-import MainApplication from '@core/routes/components/Layout'
-import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
+import RootLayout from '@core/routes/components/RootLayout'
+import { useAuth } from '@providers/AuthProvider'
+import { LoadingScreen, ModalManager, NotFoundScreen } from 'lifeforge-ui'
 import _ from 'lodash'
-import { useMemo } from 'react'
+import { Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Navigate,
   type RouteObject,
   RouterProvider,
-  createBrowserRouter
+  createBrowserRouter,
+  useLocation
 } from 'react-router'
 
-import { useAuth } from '../../providers/AuthProvider'
 import ROUTES from '../Routes'
-import ChildRoutesRenderer from './ChildRoutesRenderer'
+import type { ModuleConfig } from '../interfaces/routes_interfaces'
+import APIKeyStatusProvider from '../../providers/APIKeyStatusProvider'
 
-function MainRoutesRenderer() {
+function NavigateToDashBoardWithRedirect() {
+  const { search } = useLocation()
+
+  if (search) {
+    const params = new URLSearchParams(search)
+
+    const redirect = params.get('redirect')
+
+    if (redirect) {
+      return <Navigate replace to={redirect} />
+    }
+  }
+
+  return <Navigate replace to="/dashboard" />
+}
+
+function ChildRoutesRenderer({
+  routes,
+  isNested = false,
+  APIKeys = [],
+  loadingMessage = 'loadingModule'
+}: {
+  routes: ModuleConfig['routes']
+  loadingMessage: any
+  isNested?: boolean
+  APIKeys?: string[]
+}): RouteObject[] {
+  return Object.entries(routes).map(([path, component]) => {
+    const Comp = component
+
+    return {
+      path: (!isNested ? '/' : '') + path,
+      element: (
+        <APIKeyStatusProvider APIKeys={APIKeys}>
+          <Suspense
+            key={`path-${path}`}
+            fallback={<LoadingScreen customMessage={loadingMessage} />}
+          >
+            <Comp />
+          </Suspense>
+          <ModalManager />
+        </APIKeyStatusProvider>
+      )
+    }
+  })
+}
+
+function AppRoutesProvider() {
   const { t } = useTranslation('common.misc')
 
-  const { userData, authLoading, auth } = useAuth()
+  const { userData, auth } = useAuth()
 
   const router = useMemo(() => {
     if (!auth) {
@@ -41,7 +90,7 @@ function MainRoutesRenderer() {
     return createBrowserRouter([
       {
         path: '/',
-        element: <MainApplication />,
+        element: <RootLayout />,
         children: ROUTES.flatMap(e => e.items)
           .filter(
             item =>
@@ -74,7 +123,7 @@ function MainRoutesRenderer() {
           .concat([
             {
               path: '/auth/*',
-              element: <Navigate replace to="/dashboard" />
+              element: <NavigateToDashBoardWithRedirect />
             },
 
             {
@@ -88,13 +137,9 @@ function MainRoutesRenderer() {
           ])
       }
     ])
-  }, [userData, auth])
-
-  if (authLoading) {
-    return <LoadingScreen customMessage={t('loadingUserData')} />
-  }
+  }, [userData, auth, t])
 
   return <RouterProvider router={router} />
 }
 
-export default MainRoutesRenderer
+export default AppRoutesProvider

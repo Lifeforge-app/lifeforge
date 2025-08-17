@@ -3,7 +3,7 @@ import { Outlet } from 'react-router'
 import useTitleEffect from '../hooks/useTitleEffect'
 import Sidebar from './Sidebar/Sidebar'
 
-function MainApplication() {
+function RootLayout() {
   useTitleEffect()
 
   return (
@@ -16,4 +16,4 @@ function MainApplication() {
   )
 }
 
-export default MainApplication
+export default RootLayout

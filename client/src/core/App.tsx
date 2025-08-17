@@ -1,31 +1,30 @@
-import Providers from '@providers/index'
-import dayjs from 'dayjs'
-import 'dayjs/locale/en'
-import 'dayjs/locale/my'
-import 'dayjs/locale/zh-cn'
-import 'dayjs/locale/zh-tw'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import duration from 'dayjs/plugin/duration'
-import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
+import AuthProvider from '@providers/AuthProvider'
+import SocketProvider from '@providers/SocketProvider'
+import UserPersonalizationProvider from '@providers/UserPersonalizationProvider'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ErrorScreen } from 'lifeforge-ui'
+import { APIOnlineStatusWrapper } from 'lifeforge-ui'
 import { useEffect } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { ErrorBoundary } from 'react-error-boundary'
+import {
+  APIEndpointProvider,
+  APIOnlineStatusProvider,
+  BackgroundProvider,
+  PersonalizationProvider,
+  SidebarStateProvider,
+  ToastProvider
+} from 'shared'
+
+import { MusicProvider } from '@apps/Music/providers/MusicProvider'
 
 import './i18n'
 import './index.css'
-import MainRoutesRenderer from './routes/components/MainRoutesRenderer'
+import AppRoutesProvider from './routes/providers/AppRoutesProvider'
+import './utils/extendDayJs'
 
-dayjs.extend(duration)
-dayjs.extend(isBetween)
-dayjs.extend(relativeTime)
-dayjs.extend(isSameOrAfter)
-dayjs.extend(isSameOrBefore)
-dayjs.extend(weekOfYear)
-dayjs.extend(customParseFormat)
+const queryClient = new QueryClient()
 
 function App() {
   useEffect(() => {
@@ -44,9 +43,33 @@ function App() {
         className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
         id="app"
       >
-        <Providers>
-          <MainRoutesRenderer />
-        </Providers>
+        <APIEndpointProvider endpoint={import.meta.env.VITE_API_HOST}>
+          <QueryClientProvider client={queryClient}>
+            <DndProvider backend={HTML5Backend}>
+              <APIOnlineStatusProvider>
+                <APIOnlineStatusWrapper>
+                  <AuthProvider>
+                    <SidebarStateProvider>
+                      <PersonalizationProvider>
+                        <UserPersonalizationProvider>
+                          <ToastProvider>
+                            <BackgroundProvider>
+                              <SocketProvider>
+                                <MusicProvider>
+                                  <AppRoutesProvider />
+                                </MusicProvider>
+                              </SocketProvider>
+                            </BackgroundProvider>
+                          </ToastProvider>
+                        </UserPersonalizationProvider>
+                      </PersonalizationProvider>
+                    </SidebarStateProvider>
+                  </AuthProvider>
+                </APIOnlineStatusWrapper>
+              </APIOnlineStatusProvider>
+            </DndProvider>
+          </QueryClientProvider>
+        </APIEndpointProvider>
       </main>
     </ErrorBoundary>
   )

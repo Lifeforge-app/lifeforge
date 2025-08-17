@@ -1,13 +1,6 @@
 import type { ModuleCategory } from './interfaces/routes_interfaces'
 import RouteItems from './routes.json'
 
-export const ROUTES: ModuleCategory[] = []
-
-const modules = import.meta.glob([
-  '../../apps/**/config.tsx',
-  '../pages/**/config.tsx'
-])
-
 function resolveAlias(path: string): string {
   if (path.startsWith('@apps')) {
     return path.replace('@apps', '../../apps')
@@ -20,31 +13,33 @@ function resolveAlias(path: string): string {
   return path
 }
 
-const routePromises = RouteItems.map(async route => {
-  const { title, items } = route
+async function loadRoutes(): Promise<ModuleCategory[]> {
+  const routePromises = RouteItems.map(async route => {
+    const { title, items } = route
 
-  const importPromises = items.map(async item => {
-    const resolved = `${resolveAlias(item)}/config.tsx`
+    const importPromises = items.map(async item => {
+      const resolved = `${resolveAlias(item)}/config.tsx`
 
-    const importer = modules[resolved]
+      try {
+        const mod = await import(resolved)
 
-    if (!importer) throw new Error(`Module not found: ${resolved}`)
+        return mod.default
+      } catch {
+        throw new Error(`Module not found: ${resolved}`)
+      }
+    })
 
-    const mod = (await importer()) as { default: any }
+    const awaitedRoutes = await Promise.all(importPromises)
 
-    return mod.default
+    return {
+      title,
+      items: awaitedRoutes
+    }
   })
 
-  const awaitedRoutes = await Promise.all(importPromises)
+  return Promise.all(routePromises)
+}
 
-  return {
-    title,
-    items: awaitedRoutes
-  }
-})
-
-await Promise.all(routePromises).then(resolvedRoutes => {
-  ROUTES.push(...resolvedRoutes)
-})
+export const ROUTES = await loadRoutes()
 
 export default ROUTES
