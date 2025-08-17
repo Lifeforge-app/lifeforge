@@ -19,9 +19,9 @@ function CategoryList({
   setSidebarOpen,
   setSelectedCategory
 }: {
-  selectedCategory: string | undefined
+  selectedCategory: string | null
   setSidebarOpen: (value: boolean) => void
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const categoriesQuery = useQuery(
     forgeAPI.calendar.categories.list.queryOptions()
@@ -35,7 +35,7 @@ function CategoryList({
   }, [])
 
   const handleCancelSelect = useCallback(() => {
-    setSelectedCategory(undefined)
+    setSelectedCategory(null)
     setSidebarOpen(false)
   }, [])
 

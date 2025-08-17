@@ -120,7 +120,7 @@ function AuthForm({ providers }: { providers: string[] }) {
           key={index}
           {...input}
           disabled={formDisabled}
-          isPassword={input.label === 'Password'}
+          isPassword={index === 1}
           onKeyDown={onInputKeyDown}
         />
       ))}

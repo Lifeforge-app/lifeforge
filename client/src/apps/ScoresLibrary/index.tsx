@@ -13,6 +13,12 @@ import {
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
+import {
+  parseAsBoolean,
+  parseAsString,
+  parseAsStringEnum,
+  useQueryState
+} from 'nuqs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type Id, toast } from 'react-toastify'
@@ -36,9 +42,9 @@ export type ScoreLibrarySidebarData = InferOutput<
   typeof forgeAPI.scoresLibrary.entries.sidebarData
 >
 
-export type ScoreLibrarySortType = InferInput<
-  typeof forgeAPI.scoresLibrary.entries.list
->['query']['sort']
+export type ScoreLibrarySortType = NonNullable<
+  InferInput<typeof forgeAPI.scoresLibrary.entries.list>['query']['sort']
+> | null
 
 export type ScoreLibraryCollection = InferOutput<
   typeof forgeAPI.scoresLibrary.collections.list
@@ -51,22 +57,39 @@ function ScoresLibrary() {
 
   const [page, setPage] = useState<number>(1)
 
-  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchQuery, setSearchQuery] = useQueryState(
+    'q',
+    parseAsString.withDefault('')
+  )
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-
-  const [selectedCollection, setSelectedCollection] = useState<string | null>(
-    null
+  const [selectedCategory, setSelectedCategory] = useQueryState(
+    'category',
+    parseAsString.withDefault('')
   )
 
-  const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null)
+  const [selectedCollection, setSelectedCollection] = useQueryState(
+    'collection',
+    parseAsString.withDefault('')
+  )
 
-  const [isStarred, setStarred] = useState<boolean>(false)
+  const [selectedAuthor, setSelectedAuthor] = useQueryState(
+    'author',
+    parseAsString.withDefault('')
+  )
 
-  const [selectedSortType, setSelectedSortType] =
-    useState<ScoreLibrarySortType>('newest')
+  const [isStarred, setStarred] = useQueryState(
+    'starred',
+    parseAsBoolean.withDefault(false)
+  )
+
+  const [selectedSortType, setSelectedSortType] = useQueryState(
+    'sort',
+    parseAsStringEnum(['newest', 'oldest', 'author', 'name']).withDefault(
+      'newest'
+    )
+  )
 
   const entriesQuery = useQuery(
     forgeAPI.scoresLibrary.entries.list
@@ -221,7 +244,7 @@ function ScoresLibrary() {
               <h1 className="truncate text-3xl font-semibold">
                 {[
                   isStarred && t('header.starred'),
-                  selectedAuthor || selectedCategory
+                  selectedAuthor || selectedCategory || selectedCollection
                     ? t('header.filteredScores')
                     : t('header.allScores')
                 ]

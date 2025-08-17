@@ -1,6 +1,6 @@
 import Auth from '@core/pages/Auth'
 import RootLayout from '@core/routes/components/RootLayout'
-import { NotFoundScreen } from 'lifeforge-ui'
+import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
 import type { RouteObject } from 'react-router'
 import { Navigate } from 'react-router'
 
@@ -27,6 +27,16 @@ export function DashboardRedirectHandler() {
   }
 
   return <Navigate replace to="/dashboard" />
+}
+
+export function AuthRedirectHandler() {
+  const { pathname, search, hash } = window.location
+
+  const fullPath = `${pathname}${search}${hash}`
+
+  return (
+    <Navigate replace to={`/auth?redirect=${encodeURIComponent(fullPath)}`} />
+  )
 }
 
 /**
@@ -83,7 +93,19 @@ export function createAuthRouterConfig(): RouteObject[] {
     },
     {
       path: '*',
-      element: <Navigate replace to="/" />
+      element: <AuthRedirectHandler />
+    }
+  ]
+}
+
+/**
+ * Creates a loading screen configuration for when session token is being verified
+ */
+export function createAuthLoadingConfig(): RouteObject[] {
+  return [
+    {
+      path: '*',
+      element: <LoadingScreen customMessage="Loading user data..." />
     }
   ]
 }

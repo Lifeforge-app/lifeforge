@@ -5,6 +5,7 @@ import { createBrowserRouter } from 'react-router'
 
 import ROUTES from '../Routes'
 import {
+  createAuthLoadingConfig,
   createAuthRouterConfig,
   createRouterConfig
 } from '../utils/routerFactory'
@@ -16,9 +17,14 @@ import {
 export function useAppRouter() {
   const { t } = useTranslation('common.misc')
 
-  const { userData, auth } = useAuth()
+  const { userData, auth, authLoading } = useAuth()
 
   const router = useMemo(() => {
+    if (authLoading) {
+      // If authentication is still loading, return a placeholder router
+      return createBrowserRouter(createAuthLoadingConfig())
+    }
+
     // If user is not authenticated, return auth-only routes
     if (!auth) {
       return createBrowserRouter(createAuthRouterConfig())

@@ -11,6 +11,7 @@ import {
   Scrollbar
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
+import { parseAsString, useQueryState } from 'nuqs'
 import { useCallback, useState } from 'react'
 
 import CalendarComponent from './components/Calendar'
@@ -35,12 +36,14 @@ function CalendarModule() {
       .queryOptions()
   )
 
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    undefined
+  const [selectedCategory, setSelectedCategory] = useQueryState(
+    'category',
+    parseAsString.withDefault('')
   )
 
-  const [selectedCalendar, setSelectedCalendar] = useState<string | undefined>(
-    undefined
+  const [selectedCalendar, setSelectedCalendar] = useQueryState(
+    'calendar',
+    parseAsString.withDefault('')
   )
 
   const handleScanImageModalOpen = useCallback(() => {
