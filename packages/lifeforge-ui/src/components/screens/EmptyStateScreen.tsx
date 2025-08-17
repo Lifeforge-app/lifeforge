@@ -54,18 +54,18 @@ function EmptyStateScreen({
           ? t([tKey, 'empty', name, 'title'].filter(e => e).join('.'))
           : title}
       </h2>
-      {typeof description === 'string' ? (
+      {typeof description === 'string' || !description ? (
         <p
           className={clsx(
             'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
-            smaller ? 'text-base' : 'text-lg'
+            smaller ? 'text-lg' : 'text-xl'
           )}
         >
           {name
             ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
             : description}
         </p>
-      ) : ( 
+      ) : (
         description
       )}
       {CTAButtonProps && (
