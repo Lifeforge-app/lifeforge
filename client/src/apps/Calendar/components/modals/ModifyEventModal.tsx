@@ -48,18 +48,17 @@ function ModifyEventModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.calendar.events)[typeof type]>['body']
-  >()
-    .ui({
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type!],
-      title: `event.${type}`,
-      namespace: 'apps.calendar',
-      onClose,
-      loading: categoriesQuery.isLoading || calendarsQuery.isLoading,
-      submitButton: type
-    })
+  >({
+    icon: {
+      create: 'tabler:plus',
+      update: 'tabler:pencil'
+    }[type!],
+    title: `event.${type}`,
+    namespace: 'apps.calendar',
+    onClose,
+    loading: categoriesQuery.isLoading || calendarsQuery.isLoading,
+    submitButton: type
+  })
     .typesMap({
       title: 'text',
       category: 'listbox',

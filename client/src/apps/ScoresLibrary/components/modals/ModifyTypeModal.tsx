@@ -31,14 +31,13 @@ function ModifyTypeModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.scoresLibrary.types)[typeof openType]>['body']
-  >()
-    .ui({
-      icon: openType === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `types.${openType}`,
-      namespace: 'apps.scoresLibrary',
-      onClose,
-      submitButton: openType
-    })
+  >({
+    icon: openType === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `types.${openType}`,
+    namespace: 'apps.scoresLibrary',
+    onClose,
+    submitButton: openType
+  })
     .typesMap({
       name: 'text',
       icon: 'icon'

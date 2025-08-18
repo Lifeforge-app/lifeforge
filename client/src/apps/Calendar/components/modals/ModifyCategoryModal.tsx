@@ -35,14 +35,13 @@ function ModifyCategoryModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `category.${type}`,
-      onClose,
-      namespace: 'apps.calendar',
-      submitButton: type
-    })
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `category.${type}`,
+    onClose,
+    namespace: 'apps.calendar',
+    submitButton: type
+  })
     .typesMap({
       name: 'text',
       icon: 'icon',

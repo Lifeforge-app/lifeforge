@@ -64,14 +64,13 @@ function CreateEntryModal({
     parent: string
     type: 'folder' | 'entry'
     name: string
-  }>()
-    .ui({
-      icon: 'tabler:plus',
-      namespace: 'utils.localeAdmin',
-      title: 'entry.create',
-      onClose,
-      submitButton: 'create'
-    })
+  }>({
+    icon: 'tabler:plus',
+    namespace: 'utils.localeAdmin',
+    title: 'entry.create',
+    onClose,
+    submitButton: 'create'
+  })
     .typesMap({
       namespace: 'text',
       subNamespace: 'text',

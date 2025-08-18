@@ -63,14 +63,13 @@ function ModifyTicketModal({
 
   const formProps = defineForm<
     InferInput<typeof forgeAPI.movies.ticket.update>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `ticket.${type}`,
-      namespace: 'apps.movies',
-      onClose,
-      submitButton: type
-    })
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `ticket.${type}`,
+    namespace: 'apps.movies',
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       ticket_number: 'text',
       theatre_seat: 'text',

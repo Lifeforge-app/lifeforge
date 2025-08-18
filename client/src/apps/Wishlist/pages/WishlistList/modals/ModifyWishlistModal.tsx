@@ -32,14 +32,13 @@ function ModifyWishlistListModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wishlist.lists)[typeof type]>['body']
-  >()
-    .ui({
-      namespace: 'apps.wishlist',
-      title: `wishlist.${type}`,
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      onClose,
-      submitButton: type
-    })
+  >({
+    namespace: 'apps.wishlist',
+    title: `wishlist.${type}`,
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       name: 'text',
       icon: 'icon',

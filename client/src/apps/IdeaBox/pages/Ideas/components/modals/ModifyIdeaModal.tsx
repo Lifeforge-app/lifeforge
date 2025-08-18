@@ -58,15 +58,14 @@ function ModifyIdeaModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.ideas)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `idea.${type}`,
-      onClose,
-      namespace: 'apps.ideaBox',
-      loading: tagsQuery.isLoading,
-      submitButton: type
-    })
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `idea.${type}`,
+    onClose,
+    namespace: 'apps.ideaBox',
+    loading: tagsQuery.isLoading,
+    submitButton: type
+  })
     .typesMap({
       content: 'textarea',
       link: 'text',

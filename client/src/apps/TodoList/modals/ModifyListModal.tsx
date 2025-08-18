@@ -36,13 +36,17 @@ function ModifyListModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.todoList.lists)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      namespace: 'apps.todoList',
-      title: `list.${type}`,
-      onClose,
-      submitButton: type
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    namespace: 'apps.todoList',
+    title: `list.${type}`,
+    onClose,
+    submitButton: type
+  })
+    .typesMap({
+      name: 'text',
+      icon: 'icon',
+      color: 'color'
     })
     .setupFields({
       name: {

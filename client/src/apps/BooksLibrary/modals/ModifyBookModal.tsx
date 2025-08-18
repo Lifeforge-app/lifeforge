@@ -41,15 +41,14 @@ function ModifyBookModal({
 
   const formProps = defineForm<
     InferInput<typeof forgeAPI.booksLibrary.entries.update>['body']
-  >()
-    .ui({
-      icon: 'tabler:pencil',
-      loading: languagesQuery.isLoading || collectionsQuery.isLoading,
-      namespace: 'apps.booksLibrary',
-      title: 'Modify Book Data',
-      onClose,
-      submitButton: 'update'
-    })
+  >({
+    icon: 'tabler:pencil',
+    loading: languagesQuery.isLoading || collectionsQuery.isLoading,
+    namespace: 'apps.booksLibrary',
+    title: 'Modify Book Data',
+    onClose,
+    submitButton: 'update'
+  })
     .typesMap({
       authors: 'text',
       collection: 'listbox',
