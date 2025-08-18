@@ -38,14 +38,13 @@ function ModifyAssetModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wallet.assets)[typeof type]>['body']
-  >()
-    .ui({
-      namespace: 'apps.wallet',
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `assets.${type}`,
-      submitButton: type,
-      onClose
-    })
+  >({
+    namespace: 'apps.wallet',
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `assets.${type}`,
+    submitButton: type,
+    onClose
+  })
     .typesMap({
       icon: 'icon',
       name: 'text',

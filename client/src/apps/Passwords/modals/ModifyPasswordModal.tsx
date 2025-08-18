@@ -56,14 +56,13 @@ function ModifyPasswordModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.passwords.entries)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      namespace: 'apps.passwords',
-      title: `password.${type}`,
-      onClose,
-      submitButton: type
-    })
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    namespace: 'apps.passwords',
+    title: `password.${type}`,
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       icon: 'icon',
       color: 'color',

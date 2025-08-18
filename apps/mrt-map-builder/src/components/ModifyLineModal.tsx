@@ -18,14 +18,13 @@ function ModifyLineModal({
   const formProps = defineForm<{
     name: string
     color: string
-  }>()
-    .ui({
-      title: `${type === 'create' ? 'Create' : 'Update'} MRT Line`,
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+  }>({
+    title: `${type === 'create' ? 'Create' : 'Update'} MRT Line`,
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
 
-      onClose,
-      submitButton: 'create'
-    })
+    onClose,
+    submitButton: 'create'
+  })
     .typesMap({
       name: 'text',
       color: 'color',

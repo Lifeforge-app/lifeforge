@@ -38,15 +38,14 @@ function ModifyEntryModal({
 
   const formProps = defineForm<
     InferInput<typeof forgeAPI.scoresLibrary.entries.update>['body']
-  >()
-    .ui({
-      icon: 'tabler:pencil',
-      title: 'scoresLibrary.update',
-      namespace: 'apps.scoresLibrary',
-      onClose,
-      loading: typesQuery.isLoading,
-      submitButton: 'update'
-    })
+  >({
+    icon: 'tabler:pencil',
+    title: 'scoresLibrary.update',
+    namespace: 'apps.scoresLibrary',
+    onClose,
+    loading: typesQuery.isLoading,
+    submitButton: 'update'
+  })
     .typesMap({
       name: 'text',
       author: 'text',

@@ -38,14 +38,13 @@ function ModifyCollectionModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.scoresLibrary.collections)[typeof type]>['body']
-  >()
-    .ui({
-      namespace: 'apps.scoresLibrary',
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `collections.${type}`,
-      onClose,
-      submitButton: type
-    })
+  >({
+    namespace: 'apps.scoresLibrary',
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `collections.${type}`,
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       name: 'text'
     })

@@ -58,14 +58,13 @@ function ModifyTransactionsModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wallet.transactions)[typeof type]>['body']
-  >()
-    .ui({
-      namespace: 'apps.wallet',
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `transactions.${type}`,
-      submitButton: type,
-      onClose
-    })
+  >({
+    namespace: 'apps.wallet',
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `transactions.${type}`,
+    submitButton: type,
+    onClose
+  })
     .typesMap({
       type: 'listbox',
       date: 'datetime',
