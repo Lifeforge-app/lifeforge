@@ -81,7 +81,7 @@ function DnDContainer({
         variant="secondary"
         onClick={pasteFromClipboard}
       >
-        paste from clipboard
+        dnd.buttons.pasteFromClipboard
       </Button>
     </div>
   )
