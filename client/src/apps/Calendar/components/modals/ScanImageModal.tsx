@@ -3,6 +3,7 @@ import { Button, FileInput, ModalHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import ModifyEventModal from './ModifyEventModal'
 
@@ -13,15 +14,12 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
 
   const [preview, setPreview] = useState<string | null>(null)
 
-  const [loading, setLoading] = useState(false)
-
-  async function onSubmit() {
+  async function handleSubmit() {
     if (file === null) {
       toast.error('Please select a file')
 
       return
     }
-    setLoading(true)
 
     try {
       const data = await forgeAPI.calendar.events.scanImage.mutate({
@@ -43,10 +41,10 @@ function ScanImageModal({ onClose }: { onClose: () => void }) {
     } catch (error) {
       console.error(error)
       toast.error('Error scanning image')
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   return (
     <>

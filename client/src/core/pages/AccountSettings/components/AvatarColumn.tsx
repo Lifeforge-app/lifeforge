@@ -8,9 +8,10 @@ import {
   FilePickerModal
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -18,8 +19,6 @@ function AvatarColumn() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('core.accountSettings')
-
-  const [loading, setLoading] = useState(false)
 
   const { getAvatarURL, userData, setUserData } = useAuth()
 
@@ -48,6 +47,8 @@ function AvatarColumn() {
       setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(changeAvatar)
 
   const deleteAvatarMutation = useMutation(
     forgeAPI.user.settings.deleteAvatar.mutationOptions({
@@ -103,7 +104,7 @@ function AvatarColumn() {
           icon="tabler:photo-hexagon"
           loading={loading}
           variant={userData.avatar !== '' ? 'plain' : 'primary'}
-          onClick={handleChangeAvatar}
+          onClick={onSubmit}
         >
           select
         </Button>

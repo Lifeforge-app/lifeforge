@@ -17,7 +17,7 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import type { InferOutput } from 'shared'
+import { type InferOutput, usePromiseLoading } from 'shared'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
@@ -46,8 +46,6 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   const [hasSearched, setHasSearched] = useState(false)
 
   const [data, setData] = useState<LibgenSearchResult | null>(null)
-
-  const [loading, setLoading] = useState(false)
 
   const [totalPages, setTotalPages] = useState(0)
 
@@ -92,29 +90,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
     }))
   }
 
-  async function fetchBookResults(page: number) {
-    setLoading(true)
-
-    try {
-      const response = await forgeAPI.booksLibrary.libgen.searchBooks
-        .input({
-          provider,
-          req: searchQuery.trim(),
-          page: page.toString()
-        })
-        .query()
-
-      setData(response.data.length === 0 ? null : response)
-      setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))
-    } catch {
-      toast.error('Failed to fetch search results')
-      setData(null)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function searchBooks() {
+  async function fetchBookResults(page = 1) {
     if (
       loading ||
       providerOnlineStatuses[provider] === 'loading' ||
@@ -131,10 +107,24 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
 
     setHasSearched(true)
 
-    await fetchBookResults(1)
+    try {
+      const response = await forgeAPI.booksLibrary.libgen.searchBooks
+        .input({
+          provider,
+          req: searchQuery.trim(),
+          page: page.toString()
+        })
+        .query()
 
-    setLoading(false)
+      setData(response.data.length === 0 ? null : response)
+      setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))
+    } catch {
+      toast.error('Failed to fetch search results')
+      setData(null)
+    }
   }
+
+  const [loading, triggerFetch] = usePromiseLoading(fetchBookResults)
 
   useEffect(() => {
     setProviderOnlineStatuses(() =>
@@ -249,7 +239,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
               value={searchQuery}
               onKeyUp={e => {
                 if (e.key === 'Enter') {
-                  searchBooks().catch(console.error)
+                  triggerFetch()
                 }
               }}
             />
@@ -262,7 +252,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                 loading || providerOnlineStatuses[provider] === 'loading'
               }
               onClick={() => {
-                searchBooks().catch(console.error)
+                triggerFetch()
               }}
             >
               search
@@ -313,7 +303,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                       currentPage={data.page}
                       totalPages={totalPages}
                       onPageChange={page => {
-                        fetchBookResults(page).catch(console.error)
+                        triggerFetch(page).catch(console.error)
                       }}
                     />
                     <ul className="space-y-4">
@@ -331,7 +321,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                       currentPage={data.page}
                       totalPages={totalPages}
                       onPageChange={page => {
-                        fetchBookResults(page).catch(console.error)
+                        triggerFetch(page).catch(console.error)
                       }}
                     />
                   </>

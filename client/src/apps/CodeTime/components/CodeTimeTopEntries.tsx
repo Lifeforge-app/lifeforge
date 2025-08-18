@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { DashboardItem, WithQuery } from 'lifeforge-ui'
+import { DashboardItem, WithQueryData } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,16 +11,6 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
 
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
-  )
-
-  const topEntriesQuery = useQuery(
-    forgeAPI['code-time'][
-      type === 'languages' ? 'getTopLanguages' : 'getTopProjects'
-    ]
-      .input({
-        last: lastFor
-      })
-      .queryOptions()
   )
 
   return (
@@ -62,7 +51,13 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
       namespace="apps.codeTime"
       title={type}
     >
-      <WithQuery query={topEntriesQuery}>
+      <WithQueryData
+        controller={forgeAPI['code-time'][
+          type === 'languages' ? 'getTopLanguages' : 'getTopProjects'
+        ].input({
+          last: lastFor
+        })}
+      >
         {topEntries => (
           <>
             <div className="flex w-full">
@@ -131,7 +126,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
             </ul>
           </>
         )}
-      </WithQuery>
+      </WithQueryData>
     </DashboardItem>
   )
 }

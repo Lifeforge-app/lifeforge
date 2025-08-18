@@ -15,6 +15,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import {
   type PasswordEntry,
@@ -42,8 +43,6 @@ function PasswordEntryItem({
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
-
-  const [loading, setLoading] = useState(false)
 
   const [copyLoading, setCopyLoading] = useState(false)
 
@@ -103,8 +102,6 @@ function PasswordEntryItem({
       return
     }
 
-    setLoading(true)
-
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
 
@@ -112,10 +109,10 @@ function PasswordEntryItem({
     } catch {
       toast.error('Couldn’t decrypt the password. Please try again.')
       setDecryptedPassword(null)
-    } finally {
-      setLoading(false)
     }
   }, [masterPassword, password.id, decryptedPassword])
+
+  const [loading, onDecrypt] = usePromiseLoading(decryptPassword)
 
   const handleDeletePassword = useCallback(() => {
     open(ConfirmationModal, {
@@ -194,7 +191,7 @@ function PasswordEntryItem({
             iconClassName="size-6"
             loading={loading}
             variant="plain"
-            onClick={decryptPassword}
+            onClick={onDecrypt}
           />
           <Button
             className="hidden p-2! sm:flex"
@@ -271,7 +268,7 @@ function PasswordEntryItem({
                 decryptedPassword === null ? 'Show Password' : 'Hide Password'
               }
               loading={loading}
-              onClick={decryptPassword}
+              onClick={onDecrypt}
             />
             <ContextMenuItem
               className="flex sm:hidden"

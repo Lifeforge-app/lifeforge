@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import { Button } from 'lifeforge-ui'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import { filterStations } from '../utils/stations'
@@ -31,8 +32,6 @@ function PlannerContent({
     setShortestRoute
   } = useRailwayMapContext()
 
-  const [loading, setLoading] = useState(false)
-
   const filteredStart = useMemo(
     () => filterStations(stations, startQuery),
     [stations, startQuery]
@@ -50,7 +49,6 @@ function PlannerContent({
       return
     }
 
-    setLoading(true)
     setShortestRoute('loading')
 
     try {
@@ -83,10 +81,10 @@ function PlannerContent({
     } catch (error) {
       setShortestRoute('error')
       console.error('Error fetching shortest route:', error)
-    } finally {
-      setLoading(false)
     }
   }, [start, end])
+
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   return (
     <>
@@ -124,7 +122,7 @@ function PlannerContent({
         icon="tabler:arrow-right"
         iconPosition="end"
         loading={loading}
-        onClick={handleSubmit}
+        onClick={onSubmit}
       >
         submit
       </Button>

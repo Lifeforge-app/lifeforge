@@ -3,7 +3,7 @@ import { Button, TextInput } from 'lifeforge-ui'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import type { ForgeAPIClientController } from 'shared'
+import { type ForgeAPIClientController, usePromiseLoading } from 'shared'
 
 import { encrypt } from '../utils/encryption'
 
@@ -19,18 +19,14 @@ function LockedScreen({
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
 
-  const [loading, setLoading] = useState(false)
-
   const { t } = useTranslation('common.vault')
 
-  async function onSubmit(): Promise<void> {
+  async function handleSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
       toast.error('Please fill in all the field')
 
       return
     }
-
-    setLoading(true)
 
     try {
       const challenge = (await challengeController.query()) as string
@@ -60,10 +56,10 @@ function LockedScreen({
           action: t('fetch.unlock')
         })
       )
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   return (
     <div className="flex-center size-full flex-1 flex-col gap-3">

@@ -36,7 +36,6 @@ export type BooksLibraryFileType = InferOutput<
 >[number]
 
 interface IBooksLibraryData {
-  entriesQuery: UseQueryResult<BooksLibraryEntry[]>
   collectionsQuery: UseQueryResult<BooksLibraryCollection[]>
   languagesQuery: UseQueryResult<BooksLibraryLanguage[]>
   fileTypesQuery: UseQueryResult<BooksLibraryFileType[]>
@@ -89,10 +88,6 @@ export default function BooksLibraryProvider() {
   const [searchQuery, setSearchQuery] = useQueryState(
     'q',
     parseAsString.withDefault('')
-  )
-
-  const entriesQuery = useQuery(
-    forgeAPI.booksLibrary.entries.list.queryOptions()
   )
 
   const collectionsQuery = useQuery(
@@ -206,7 +201,6 @@ export default function BooksLibraryProvider() {
 
   const value = useMemo(
     () => ({
-      entriesQuery,
       collectionsQuery,
       languagesQuery,
       fileTypesQuery,
@@ -244,7 +238,6 @@ export default function BooksLibraryProvider() {
       }
     }),
     [
-      entriesQuery,
       collectionsQuery,
       languagesQuery,
       fileTypesQuery,

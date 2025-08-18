@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import AddToLibraryModal from '../../AddToLibraryModal'
 
+// TODO: Check whether the book is already in the library
 function AddToLibraryButton({
   book,
   provider,
@@ -22,7 +23,6 @@ function AddToLibraryButton({
   const { t } = useTranslation('apps.booksLibrary')
 
   const {
-    entriesQuery,
     miscellaneous: { processes }
   } = useBooksLibraryContext()
 
@@ -38,24 +38,26 @@ function AddToLibraryButton({
       return 'svg-spinners:180-ring'
     }
 
-    if (entriesQuery.data?.some(entry => entry.md5 === md5)) {
+    if (false) {
+      //entriesQuery.data?.some(entry => entry.md5 === md5)
       return 'tabler:check'
     }
 
     return 'tabler:plus'
-  }, [entriesQuery.data, md5, processes])
+  }, [md5, processes])
 
   const text = useMemo(() => {
     if (targetProcess) {
       return `${t('buttons.downloading')} (${targetProcess.progress?.percentage || 0})`
     }
 
-    if (entriesQuery.data?.some(entry => entry.md5 === md5)) {
+    if (false) {
+      //entriesQuery.data?.some(entry => entry.md5 === md5)
       return t('buttons.alreadyInLibrary')
     }
 
     return t('buttons.addToLibrary')
-  }, [entriesQuery.data, md5, processes])
+  }, [md5, processes])
 
   const handleAddToLibrary = useCallback(() => {
     open(AddToLibraryModal, { provider, book })
@@ -67,12 +69,12 @@ function AddToLibraryButton({
         fullWidth ? `w-full ${provider === 'libgen.is' && 'lg:w-1/2'}` : ''
       }
       disabled={
-        !!targetProcess || entriesQuery.data?.some(entry => entry.md5 === md5)
+        !!targetProcess // || entriesQuery.data?.some(entry => entry.md5 === md5)
       }
       icon={icon}
       namespace="apps.booksLibrary"
       variant={
-        targetProcess || entriesQuery.data?.some(entry => entry.md5 === md5)
+        targetProcess //|| entriesQuery.data?.some(entry => entry.md5 === md5)
           ? 'plain'
           : 'primary'
       }
