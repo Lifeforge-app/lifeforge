@@ -36,13 +36,16 @@ function ModifyPriorityModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.todoList.priorities)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      namespace: 'apps.todoList',
-      title: `priority.${type}`,
-      onClose,
-      submitButton: type
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    namespace: 'apps.todoList',
+    title: `priority.${type}`,
+    onClose,
+    submitButton: type
+  })
+    .typesMap({
+      name: 'text',
+      color: 'color'
     })
     .setupFields({
       name: {

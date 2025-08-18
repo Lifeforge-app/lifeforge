@@ -43,7 +43,7 @@ function ConfirmationModal({
         <TextInput
           className="mt-4"
           icon="tabler:alert-triangle"
-          label="deleteConfirmation.confirmation"
+          label="deleteConfirmation.inputs.confirmation"
           namespace="common.modals"
           placeholder={t(
             'common.modals:deleteConfirmation.inputs.confirmation.placeholder',

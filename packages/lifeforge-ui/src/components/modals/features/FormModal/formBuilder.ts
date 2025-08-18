@@ -46,8 +46,7 @@ type FlattenUnion<T> = {
  * }
  *
  * // Build form configuration
- * const formConfig = defineForm<UserForm>()
- *   .ui({
+ * const formConfig = defineForm<UserForm>({
  *     title: 'Create User',
  *     icon: 'user-plus',
  *     onClose: () => setModalOpen(false),
@@ -121,59 +120,6 @@ class FormBuilder<
       this._onChange = opts.onChange
       this._onSubmit = opts.onSubmit
     }
-  }
-
-  /**
-   * Configures the UI appearance and behavior of the form modal.
-   *
-   * @param uiConfig - Configuration object for the modal UI with the following properties:
-   *   - `title`: Modal title text (required)
-   *   - `icon`: Icon identifier for the modal header (required)
-   *   - `onClose`: Function called when modal is closed (required)
-   *   - `namespace`: Optional translation namespace for internationalization
-   *   - `loading`: Optional loading state flag
-   *   - `submitButton`: Either 'create'/'update' preset or custom Button component props
-   * @returns A new FormBuilder instance with the UI configuration applied
-   *
-   * @example
-   * ```tsx
-   * .ui({
-   *   title: 'Create New User',
-   *   icon: 'user-plus',
-   *   onClose: () => setModalOpen(false),
-   *   namespace: 'users',
-   *   loading: false,
-   *   submitButton: 'create'
-   * })
-   *
-   * // Or with custom submit button
-   * .ui({
-   *   title: 'Update Profile',
-   *   icon: 'edit',
-   *   onClose: handleClose,
-   *   submitButton: {
-   *     variant: 'primary',
-   *     children: 'Save Changes',
-   *     icon: "tabler:check"
-   *   }
-   * })
-   * ```
-   */
-  ui(
-    uiConfig: React.ComponentProps<typeof FormModal>['ui']
-  ): FormBuilder<
-    TFormState,
-    TFieldType,
-    TFieldsConfig,
-    TFinalFields,
-    TInitialData,
-    TOnSubmit,
-    TOnChange
-  > {
-    return new FormBuilder({
-      ...this,
-      uiConfig
-    })
   }
 
   /**
@@ -411,9 +357,11 @@ class FormBuilder<
    * defineForm<{
    *   country: string
    *   state: string
-   * }>()
-   * .ui({
-   *   ...
+   * }>({
+   *   title: 'Create User',
+   *   icon: 'user-plus',
+   *   onClose: () => setModalOpen(false),
+   *   submitButton: 'tabler:plus'
    * })
    * .typesMap({
    *   country: 'listbox',
@@ -474,8 +422,12 @@ class FormBuilder<
    *
    * @example
    * ```tsx
-   * const formConfig = defineForm<UserForm>()
-   *   .ui({ title: 'Create User' })
+   * const formConfig = defineForm<UserForm>({
+   *   title: 'Create User',
+   *   icon: 'user-plus',
+   *   onClose: () => setModalOpen(false),
+   *   submitButton: 'tabler:plus'
+   * })
    *   .typesMap({ name: 'text', email: 'email' })
    *   .setupFields({ name: { label: 'Name' }, email: { label: 'Email' } })
    *   .onSubmit(async (data) => { await saveUser(data) })
@@ -505,7 +457,7 @@ class FormBuilder<
         fieldTypes: fieldType,
         fields: finalFields,
         initialData: _initialData as any,
-        autoFocusableFieldId: this._autoFocusableFieldId,
+        autoFocusableFieldId: this._autoFocusableFieldId as string,
         onSubmit: _onSubmit as unknown as (
           data: InferFormFinalState<any, any>
         ) => Promise<void>,
@@ -555,8 +507,7 @@ class FormBuilderWithoutTypesMap<TFormState extends FormState> {
  * }
  *
  * // Create a type-safe form builder
- * const userFormConfig = defineForm<CreateUserForm>()
- *   .ui({
+ * const userFormConfig = defineForm<CreateUserForm>({
  *     title: 'Create New User',
  *     icon: 'user-plus',
  *     onClose: () => setModalOpen(false),

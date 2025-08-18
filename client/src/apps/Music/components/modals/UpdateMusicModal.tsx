@@ -44,14 +44,13 @@ function UpdateMusicModal({
   const formProps = defineForm<{
     name: string
     author: string
-  }>()
-    .ui({
-      namespace: 'apps.music',
-      icon: 'tabler:pencil',
-      title: 'updateMusic',
-      submitButton: 'update',
-      onClose
-    })
+  }>({
+    namespace: 'apps.music',
+    icon: 'tabler:pencil',
+    title: 'updateMusic',
+    submitButton: 'update',
+    onClose
+  })
     .typesMap({
       name: 'text',
       author: 'text'

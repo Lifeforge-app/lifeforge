@@ -11,7 +11,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -22,16 +21,12 @@ function AvatarColumn() {
 
   const { getAvatarURL, userData, setUserData } = useAuth()
 
-  if (!userData) return null
-
   async function changeAvatar(file: File | string | null) {
     if (file === null) {
       toast.error('No file selected')
 
       return
     }
-
-    setLoading(true)
 
     try {
       const data = await forgeAPI.user.settings.updateAvatar.mutate({
@@ -43,12 +38,8 @@ function AvatarColumn() {
       toast.success('Avatar updated successfully')
     } catch {
       toast.error('An error occurred')
-    } finally {
-      setLoading(false)
     }
   }
-
-  const [loading, onSubmit] = usePromiseLoading(changeAvatar)
 
   const deleteAvatarMutation = useMutation(
     forgeAPI.user.settings.deleteAvatar.mutationOptions({
@@ -74,17 +65,7 @@ function AvatarColumn() {
     })
   }, [])
 
-  const handleChangeAvatar = useCallback(() => {
-    open(FilePickerModal, {
-      acceptedMimeTypes: {
-        'image/*': ['.jpg', '.jpeg', '.png', '.gif']
-      },
-      enablePixabay: true,
-      enableUrl: true,
-      enableAI: true,
-      onSelect: file => changeAvatar(file)
-    })
-  }, [])
+  if (!userData) return null
 
   return (
     <ConfigColumn
@@ -102,9 +83,18 @@ function AvatarColumn() {
       <div className="flex items-center">
         <Button
           icon="tabler:photo-hexagon"
-          loading={loading}
           variant={userData.avatar !== '' ? 'plain' : 'primary'}
-          onClick={onSubmit}
+          onClick={() =>
+            open(FilePickerModal, {
+              acceptedMimeTypes: {
+                'image/*': ['.jpg', '.jpeg', '.png', '.gif']
+              },
+              enablePixabay: true,
+              enableUrl: true,
+              enableAI: true,
+              onSelect: file => changeAvatar(file)
+            })
+          }
         >
           select
         </Button>

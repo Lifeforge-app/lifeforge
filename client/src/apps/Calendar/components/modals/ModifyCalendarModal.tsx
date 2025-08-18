@@ -33,14 +33,13 @@ function ModifyCalendarModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.calendar.calendars)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `calendar.${type}`,
-      onClose,
-      namespace: 'apps.calendar',
-      submitButton: type
-    })
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `calendar.${type}`,
+    onClose,
+    namespace: 'apps.calendar',
+    submitButton: type
+  })
     .typesMap({
       name: 'text',
       color: 'color'

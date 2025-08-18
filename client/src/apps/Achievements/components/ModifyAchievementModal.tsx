@@ -48,14 +48,13 @@ function ModifyAchievementModal({
     InferInput<
       (typeof forgeAPI.achievements.entries)[typeof modifyType]
     >['body']
-  >()
-    .ui({
-      icon: modifyType === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `achievement.${modifyType}`,
-      onClose,
-      namespace: 'apps.achievements',
-      submitButton: modifyType
-    })
+  >({
+    icon: modifyType === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `achievement.${modifyType}`,
+    onClose,
+    namespace: 'apps.achievements',
+    submitButton: modifyType
+  })
     .typesMap({
       difficulty: 'listbox',
       title: 'text',
