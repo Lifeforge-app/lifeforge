@@ -5,6 +5,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import ModifyTransactionsModal from './ModifyTransactionsModal'
 
@@ -19,16 +20,12 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
 
   const [keepReceiptAfterScan, setKeepReceiptAfterScan] = useState(true)
 
-  const [loading, setLoading] = useState(false)
-
-  async function onSubmit() {
+  async function handleSubmit() {
     if (file === null) {
       toast.error('Please select a file')
 
       return
     }
-
-    setLoading(true)
 
     try {
       const data = await forgeAPI.wallet.transactions.scanReceipt.mutate({
@@ -46,10 +43,10 @@ function ScanReceiptModal({ onClose }: { onClose: () => void }) {
       })
     } catch {
       toast.error('Failed to scan receipt')
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   useEffect(() => {
     if (!open) {

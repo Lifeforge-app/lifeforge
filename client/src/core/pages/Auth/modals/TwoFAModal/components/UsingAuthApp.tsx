@@ -1,6 +1,7 @@
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePromiseLoading } from 'shared'
 
 function UsingAuthApp({
   callback
@@ -11,7 +12,7 @@ function UsingAuthApp({
 
   const [otp, setOTP] = useState('')
 
-  const [loading, setLoading] = useState(false)
+  const [loading, onCallback] = usePromiseLoading(callback)
 
   return (
     <>
@@ -22,12 +23,7 @@ function UsingAuthApp({
           lighter
           otp={otp}
           setOtp={setOTP}
-          verifyOTP={async otp => {
-            setLoading(true)
-            callback(otp).finally(() => {
-              setLoading(false)
-            })
-          }}
+          verifyOTP={onCallback}
           verifyOtpLoading={loading}
         />
       </div>
