@@ -11,6 +11,7 @@ import { stringToIcon, validateIconName } from '@iconify/utils'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePromiseLoading } from 'shared'
 
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
@@ -84,8 +85,6 @@ function FormModal({
     Record<string, string | undefined>
   >({})
 
-  const [submitLoading, setSubmitLoading] = useState(false)
-
   /**
    * Handles the form submission process for the FormModal component.
    *
@@ -101,12 +100,10 @@ function FormModal({
    *
    * @throws Will not throw errors directly, but may propagate errors from the onSubmit callback
    */
-  async function onSubmitButtonClick(): Promise<void> {
+  async function handleSubmit(): Promise<void> {
     const nonHiddenFields = Object.entries(fields).filter(
       field => !field[1].hidden
     )
-
-    setSubmitLoading(true)
 
     // Transform field values based on their types
     const finalData = Object.fromEntries(
@@ -195,7 +192,6 @@ function FormModal({
       !Object.values(validationResults).every(result => result === undefined)
     ) {
       setErrorMsgs(validationResults)
-      setSubmitLoading(false)
 
       return
     }
@@ -208,8 +204,9 @@ function FormModal({
           finalData as InferFormFinalState<typeof fieldTypes, typeof fields>
         )
         onClose()
-      } finally {
-        setSubmitLoading(false)
+      } catch (error) {
+        // Leave the error handling to the parent component
+        console.log('Form submission error:', error)
       }
     }
   }
@@ -217,6 +214,9 @@ function FormModal({
   const removeErrorMsg = (fieldId: string) => {
     setErrorMsgs(prev => ({ ...prev, [fieldId]: undefined }))
   }
+
+  const [submitButtonLoading, onSubmitButtonClick] =
+    usePromiseLoading(handleSubmit)
 
   // Notify parent component of data changes
   useEffect(() => {
@@ -245,7 +245,7 @@ function FormModal({
           />
           <SubmitButton
             submitButton={submitButton}
-            submitLoading={submitLoading}
+            submitLoading={submitButtonLoading}
             onSubmitButtonClick={onSubmitButtonClick}
           />
         </>

@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
@@ -7,7 +6,7 @@ import {
   ModuleHeader,
   ModuleWrapper,
   Tabs,
-  WithQuery
+  WithQueryData
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
@@ -40,14 +39,6 @@ function Achievements() {
         typeof forgeAPI.achievements.entries.list
       >['query']['difficulty']
     >('impossible')
-
-  const entriesQuery = useQuery(
-    forgeAPI.achievements.entries.list
-      .input({
-        difficulty: selectedDifficulty
-      })
-      .queryOptions()
-  )
 
   return (
     <ModuleWrapper>
@@ -87,14 +78,29 @@ function Achievements() {
             setSelectedDifficulty(id as Achievement['difficulty'])
           }}
         />
-        <WithQuery query={entriesQuery}>
+        <WithQueryData
+          controller={forgeAPI.achievements.entries.list.input({
+            difficulty: selectedDifficulty
+          })}
+        >
           {entries =>
             entries.length > 0 ? (
-              <div className="space-y-3">
-                {entries.map(entry => (
-                  <EntryItem key={entry.id} entry={entry} />
-                ))}
-              </div>
+              <>
+                <div className="space-y-3">
+                  {entries.map(entry => (
+                    <EntryItem key={entry.id} entry={entry} />
+                  ))}
+                </div>
+                <FAB
+                  visibilityBreakpoint="md"
+                  onClick={() => {
+                    open(ModifyAchievementModal, {
+                      modifyType: 'create',
+                      currentDifficulty: selectedDifficulty
+                    })
+                  }}
+                />
+              </>
             ) : (
               <EmptyStateScreen
                 CTAButtonProps={{
@@ -114,19 +120,8 @@ function Achievements() {
               />
             )
           }
-        </WithQuery>
+        </WithQueryData>
       </div>
-      {entriesQuery.isSuccess && entriesQuery.data.length > 0 && (
-        <FAB
-          visibilityBreakpoint="md"
-          onClick={() => {
-            open(ModifyAchievementModal, {
-              modifyType: 'create',
-              currentDifficulty: selectedDifficulty
-            })
-          }}
-        />
-      )}
     </ModuleWrapper>
   )
 }

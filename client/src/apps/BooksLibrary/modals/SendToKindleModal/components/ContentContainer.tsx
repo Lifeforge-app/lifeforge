@@ -4,6 +4,7 @@ import { Button, EmptyStateScreen, TextInput, WithQuery } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 function ContentContainer({
   bookId,
@@ -22,11 +23,7 @@ function ContentContainer({
 
   const [kindleEmail, setKindleEmail] = useState('')
 
-  const [loading, setLoading] = useState(false)
-
   const handleSubmit = useCallback(async () => {
-    setLoading(true)
-
     try {
       await forgeAPI.booksLibrary.entries.sendToKindle
         .input({
@@ -41,14 +38,14 @@ function ContentContainer({
     } catch (error) {
       console.error(error)
       toast.error('Failed to send book to Kindle.')
-    } finally {
-      setLoading(false)
     }
   }, [kindleEmail])
 
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && kindleEmail) {
-      handleSubmit()
+      onSubmit()
     }
   }
 
@@ -75,7 +72,7 @@ function ContentContainer({
               iconPosition="end"
               loading={loading}
               namespace="apps.booksLibrary"
-              onClick={handleSubmit}
+              onClick={onSubmit}
             >
               Send to Kindle
             </Button>
