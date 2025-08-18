@@ -31,9 +31,18 @@ function ConfirmationModal({
 }) {
   const { t } = useTranslation(['common.modals', 'common.buttons'])
 
-  const [isLoading, onClick] = usePromiseLoading(onConfirm)
-
   const [confirmationTextState, setConfirmationTextState] = useState('')
+
+  const handleClick = async () => {
+    try {
+      await onConfirm()
+      onClose()
+    } catch (error) {
+      console.error('Error during confirmation:', error)
+    }
+  }
+
+  const [isLoading, onClick] = usePromiseLoading(handleClick)
 
   return (
     <div className="min-w-[40vw]">
@@ -43,7 +52,7 @@ function ConfirmationModal({
         <TextInput
           className="mt-4"
           icon="tabler:alert-triangle"
-          label="deleteConfirmation.inputs.confirmation"
+          label="deleteConfirmation.inputs.confirmation.label"
           namespace="common.modals"
           placeholder={t(
             'common.modals:deleteConfirmation.inputs.confirmation.placeholder',
@@ -87,6 +96,10 @@ function ConfirmationModal({
           <Button
             {...confirmationButton}
             className={clsx('w-full', confirmationButton.className)}
+            disabled={
+              !!confirmationPrompt &&
+              confirmationPrompt !== confirmationTextState
+            }
             loading={isLoading}
             onClick={onClick}
           />
