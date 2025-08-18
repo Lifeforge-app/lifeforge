@@ -82,7 +82,7 @@ function IconInput({
           label={inputLabel}
           required={required}
         />
-        <div className="mt-6 mr-12 flex w-full items-center gap-2 pl-4">
+        <div className="mt-6 flex w-full items-center gap-2 pl-4">
           <span className="icon-input-icon size-5 shrink-0">
             <Icon
               className={clsx(
@@ -96,7 +96,7 @@ function IconInput({
           <input
             ref={autoFocusableRef(autoFocus, ref)}
             autoComplete="off"
-            className="focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none"
+            className="focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent py-6 tracking-wide placeholder:text-transparent focus:outline-none"
             disabled={disabled}
             name={label}
             placeholder="tabler:cube"
