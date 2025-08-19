@@ -10,5 +10,5 @@ export default {
     'moment-vault': lazy(() => import('.'))
   },
   togglable: true,
-  requiredAPIKeys: ['openaffi']
+  requiredAPIKeys: ['openai']
 } satisfies ModuleConfig
