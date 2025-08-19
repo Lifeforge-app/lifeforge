@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
@@ -17,7 +17,7 @@ function FolderList() {
         <Icon className="size-6" icon="tabler:folder" />
         {t('entryType.folder')}
       </h2>
-      <QueryWrapper query={foldersQuery}>
+      <WithQuery query={foldersQuery}>
         {folders => (
           <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
             {folders.map(folder => (
@@ -25,7 +25,7 @@ function FolderList() {
             ))}
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </>
   )
 }

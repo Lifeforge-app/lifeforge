@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { usePromiseLoading } from 'shared'
 
 import Button from '../../buttons/Button'
 import { TextInput } from '../../inputs'
@@ -30,22 +31,18 @@ function ConfirmationModal({
 }) {
   const { t } = useTranslation(['common.modals', 'common.buttons'])
 
-  const [loading, setLoading] = useState(false)
-
   const [confirmationTextState, setConfirmationTextState] = useState('')
 
-  const onClick = async () => {
-    setLoading(true)
-
+  const handleClick = async () => {
     try {
       await onConfirm()
       onClose()
     } catch (error) {
       console.error('Error during confirmation:', error)
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [isLoading, onClick] = usePromiseLoading(handleClick)
 
   return (
     <div className="min-w-[40vw]">
@@ -55,7 +52,7 @@ function ConfirmationModal({
         <TextInput
           className="mt-4"
           icon="tabler:alert-triangle"
-          label="deleteConfirmation.confirmation"
+          label="deleteConfirmation.inputs.confirmation.label"
           namespace="common.modals"
           placeholder={t(
             'common.modals:deleteConfirmation.inputs.confirmation.placeholder',
@@ -87,7 +84,7 @@ function ConfirmationModal({
             icon={
               confirmationButton === 'delete' ? 'tabler:trash' : 'tabler:check'
             }
-            loading={loading}
+            loading={isLoading}
             onClick={onClick}
           >
             {t([
@@ -99,6 +96,11 @@ function ConfirmationModal({
           <Button
             {...confirmationButton}
             className={clsx('w-full', confirmationButton.className)}
+            disabled={
+              !!confirmationPrompt &&
+              confirmationPrompt !== confirmationTextState
+            }
+            loading={isLoading}
             onClick={onClick}
           />
         )}

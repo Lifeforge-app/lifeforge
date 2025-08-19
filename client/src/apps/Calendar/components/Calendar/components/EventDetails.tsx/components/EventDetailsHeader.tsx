@@ -133,8 +133,8 @@ function EventDetailsHeader({
             <ContextMenuItem
               dangerous
               icon="tabler:calendar-off"
-              namespace="apps.calendar"
               label="Except This Time"
+              namespace="apps.calendar"
               onClick={handleAddException}
             />
           ) : (

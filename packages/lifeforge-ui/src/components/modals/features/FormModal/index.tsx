@@ -6,9 +6,12 @@ import type {
   InferFormState
 } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
+import { loadIcon } from '@iconify/react/dist/iconify.js'
+import { stringToIcon, validateIconName } from '@iconify/utils'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+import { usePromiseLoading } from 'shared'
 
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
@@ -16,14 +19,23 @@ import SubmitButton from './components/SubmitButton'
 import { checkEmpty, getInitialData } from './utils/formUtils'
 
 function FormModal({
-  form: { fields, fieldTypes, initialData, onSubmit, onChange },
+  form: {
+    fields,
+    fieldTypes,
+    autoFocusableFieldId,
+    initialData,
+    onSubmit,
+    onChange
+  },
   ui: { title, icon, namespace, loading = false, onClose, submitButton },
   actionButton,
   externalData
 }: {
+  /** Form data and field configs. See the [main documentation](https://docs.lifeforge/melvinchia.dev/frontend/forms) for more details. */
   form: {
     fields: Record<string, FormFieldPropsUnion>
     fieldTypes: Record<string, FormFieldPropsUnion['type']>
+    autoFocusableFieldId?: string
     initialData?: Partial<InferFormState<typeof fieldTypes, typeof fields>>
     onSubmit: (
       data: InferFormFinalState<typeof fieldTypes, typeof fields>
@@ -38,11 +50,13 @@ function FormModal({
     loading?: boolean
     submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
   }
+  /** Action button to be displayed at the top right corner besides the close button. */
   actionButton?: {
     icon: string
     dangerous?: boolean
     onClick?: () => void
   }
+  /** State of the form modal. Passing external data will override internal state, making the form state accessible from outside the component. */
   externalData?: {
     data: InferFormState<typeof fieldTypes, typeof fields>
     setData: React.Dispatch<
@@ -50,6 +64,8 @@ function FormModal({
     >
   }
 }) {
+  const { t } = useTranslation('common.misc')
+
   const [internalData, setInternalData] = useState<
     InferFormState<typeof fieldTypes, typeof fields>
   >(
@@ -65,7 +81,9 @@ function FormModal({
 
   const setData = externalData ? externalData.setData : setInternalData
 
-  const [submitLoading, setSubmitLoading] = useState(false)
+  const [errorMsgs, setErrorMsgs] = useState<
+    Record<string, string | undefined>
+  >({})
 
   /**
    * Handles the form submission process for the FormModal component.
@@ -82,28 +100,10 @@ function FormModal({
    *
    * @throws Will not throw errors directly, but may propagate errors from the onSubmit callback
    */
-  async function onSubmitButtonClick(): Promise<void> {
-    // Validates that all required, non-hidden fields have been filled
-    const requiredFields = Object.entries(fields).filter(
-      field => field[1]?.required && !field[1].hidden
+  async function handleSubmit(): Promise<void> {
+    const nonHiddenFields = Object.entries(fields).filter(
+      field => !field[1].hidden
     )
-
-    const missingFields = requiredFields.filter(field =>
-      checkEmpty(data[field[0]])
-    )
-
-    // Show error toast if any required fields are missing
-    if (missingFields.length) {
-      toast.error(
-        `The following fields are required: ${missingFields
-          .map(field => field[1]?.label)
-          .join(', ')}`
-      )
-
-      return
-    }
-
-    setSubmitLoading(true)
 
     // Transform field values based on their types
     const finalData = Object.fromEntries(
@@ -144,6 +144,58 @@ function FormModal({
       })
     )
 
+    const validationResults: Record<string, string | undefined> = {}
+
+    for (const [key, field] of nonHiddenFields) {
+      const value = finalData[key]
+
+      const isEmpty = checkEmpty(value)
+
+      // If the field is empty and required, set the validation message,
+      // otherwise skip the validation
+      if (isEmpty) {
+        validationResults[key] = field.required ? t('fieldRequired') : undefined
+        continue
+      }
+
+      // Validate color format
+      // Should be a valid hex color code
+      if (field.type === 'color' && !/^#[0-9A-F]{6}$/i.test(value as string)) {
+        validationResults[key] = t('invalidColor')
+        continue
+      }
+
+      if (field.type === 'icon') {
+        if (!validateIconName(stringToIcon(value as string))) {
+          validationResults[key] = t('invalidIcon')
+          continue
+        }
+
+        try {
+          await loadIcon(value as string)
+        } catch {
+          validationResults[key] = t('invalidIcon')
+          continue
+        }
+      }
+
+      const result = field.validator ? field.validator(value as never) : true
+
+      if (typeof result === 'string') {
+        validationResults[key] = result
+      }
+
+      validationResults[key] = result === true ? undefined : 'Invalid field'
+    }
+
+    if (
+      !Object.values(validationResults).every(result => result === undefined)
+    ) {
+      setErrorMsgs(validationResults)
+
+      return
+    }
+
     // Call the onSubmit callback with the final data
     // Close the modal on successful submission
     if (onSubmit) {
@@ -152,11 +204,19 @@ function FormModal({
           finalData as InferFormFinalState<typeof fieldTypes, typeof fields>
         )
         onClose()
-      } finally {
-        setSubmitLoading(false)
+      } catch (error) {
+        // Leave the error handling to the parent component
+        console.log('Form submission error:', error)
       }
     }
   }
+
+  const removeErrorMsg = (fieldId: string) => {
+    setErrorMsgs(prev => ({ ...prev, [fieldId]: undefined }))
+  }
+
+  const [submitButtonLoading, onSubmitButtonClick] =
+    usePromiseLoading(handleSubmit)
 
   // Notify parent component of data changes
   useEffect(() => {
@@ -175,14 +235,17 @@ function FormModal({
       {!loading ? (
         <>
           <FormInputs
+            autoFocusableFieldId={autoFocusableFieldId}
             data={data as FormState}
+            errorMsgs={errorMsgs}
             fields={fields}
             namespace={namespace}
+            removeErrorMsg={removeErrorMsg}
             setData={setData as React.Dispatch<React.SetStateAction<FormState>>}
           />
           <SubmitButton
             submitButton={submitButton}
-            submitLoading={submitLoading}
+            submitLoading={submitButtonLoading}
             onSubmitButtonClick={onSubmitButtonClick}
           />
         </>

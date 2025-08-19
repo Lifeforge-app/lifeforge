@@ -44,14 +44,13 @@ function ModifyContainerModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.containers)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `container.${type}`,
-      onClose,
-      namespace: 'apps.ideaBox',
-      submitButton: type
-    })
+  >({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `container.${type}`,
+    onClose,
+    namespace: 'apps.ideaBox',
+    submitButton: type
+  })
     .typesMap({
       name: 'text',
       icon: 'icon',

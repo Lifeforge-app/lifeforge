@@ -6,7 +6,7 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
+  WithQuery,
   useModalStore
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +43,7 @@ function Backups() {
         totalItems={backupsQuery.data?.length ?? 0}
       />
       <div className="flex-1">
-        <QueryWrapper query={backupsQuery}>
+        <WithQuery query={backupsQuery}>
           {data =>
             data.length > 0 ? (
               <div className="flex flex-col gap-3">
@@ -59,7 +59,7 @@ function Backups() {
               />
             )
           }
-        </QueryWrapper>
+        </WithQuery>
       </div>
       <FAB
         onClick={() => {

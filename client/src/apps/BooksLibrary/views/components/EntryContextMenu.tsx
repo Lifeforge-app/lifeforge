@@ -104,9 +104,9 @@ export default function EntryContextMenu({
     <>
       <ContextMenuItem
         icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
+        label={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
-        label={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
         onClick={() => {
           setReadStatusChangeLoading(true)
           readStatusChangeMutation.mutate({})
@@ -114,8 +114,8 @@ export default function EntryContextMenu({
       />
       <ContextMenuItem
         icon="tabler:brand-amazon"
-        namespace="apps.booksLibrary"
         label="Send to Kindle"
+        namespace="apps.booksLibrary"
         onClick={handleSendToKindle}
       />
       <ContextMenuItem

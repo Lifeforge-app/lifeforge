@@ -23,19 +23,18 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
 
   const formProps = defineForm<
     InferInput<typeof forgeAPI.backups.create>['body']
-  >()
-    .ui({
-      icon: 'tabler:plus',
+  >({
+    icon: 'tabler:plus',
+    namespace: 'core.backups',
+    submitButton: {
+      children: 'Start Backup',
+      icon: 'tabler:arrow-right',
       namespace: 'core.backups',
-      submitButton: {
-        children: 'Start Backup',
-        icon: 'tabler:arrow-right',
-        namespace: 'core.backups',
-        iconPosition: 'end'
-      },
-      title: 'Create Backup',
-      onClose
-    })
+      iconPosition: 'end'
+    },
+    title: 'Create Backup',
+    onClose
+  })
     .typesMap({
       backupName: 'text'
     })

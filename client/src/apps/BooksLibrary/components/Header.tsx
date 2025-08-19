@@ -1,5 +1,9 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, ContextMenuItem, HeaderFilter } from 'lifeforge-ui'
+import {
+  Button,
+  ContextMenu,
+  ContextMenuItem,
+  HeaderFilter
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,37 +37,34 @@ function Header({ itemCount }: { itemCount: number }) {
           Books <span className="text-bg-500 text-base">({itemCount})</span>
         </h1>
         <div className="flex items-center gap-6">
-          <Menu as="div" className="relative z-50 hidden md:block">
-            <Button
-              as={MenuButton}
-              className="hidden sm:flex"
-              icon="tabler:plus"
-              tProps={{
-                item: t('items.book')
-              }}
-              onClick={() => {}}
-            >
-              new
-            </Button>
-            <MenuItems
-              transition
-              anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-            >
-              <ContextMenuItem
-                icon="tabler:upload"
-                namespace="apps.booksLibrary"
-                label="Upload from device"
+          <ContextMenu
+            buttonComponent={
+              <Button
+                className="hidden sm:flex"
+                icon="tabler:plus"
+                tProps={{
+                  item: t('items.book')
+                }}
                 onClick={() => {}}
-              />
-              <ContextMenuItem
-                icon="tabler:books"
-                namespace="apps.booksLibrary"
-                label="Download from Libgen"
-                onClick={handleOpenLibgenModal}
-              />
-            </MenuItems>
-          </Menu>
+              >
+                new
+              </Button>
+            }
+            classNames={{ wrapper: 'hidden md:block', menu: 'w-64' }}
+          >
+            <ContextMenuItem
+              icon="tabler:upload"
+              label="Upload from device"
+              namespace="apps.booksLibrary"
+              onClick={() => {}}
+            />
+            <ContextMenuItem
+              icon="tabler:books"
+              label="Download from Libgen"
+              namespace="apps.booksLibrary"
+              onClick={handleOpenLibgenModal}
+            />
+          </ContextMenu>
           <Button
             className="lg:hidden"
             icon="tabler:menu"

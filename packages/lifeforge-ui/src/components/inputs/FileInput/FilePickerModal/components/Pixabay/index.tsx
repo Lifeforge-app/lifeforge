@@ -7,7 +7,7 @@ import {
 } from '@components/screens'
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
-import { useAPIEndpoint } from 'shared'
+import { useAPIEndpoint, usePromiseLoading } from 'shared'
 
 import forgeAPI from '../../../../../../utils/forgeAPI'
 import SearchFilterModal from './components/SearchFilterModal'
@@ -62,13 +62,11 @@ function Pixabay({
 
   const [page, setPage] = useState(1)
 
-  const [loading, setLoading] = useState(false)
-
   const [filters, updateFilters] = useReducer(reducer, initialFilter)
 
   const [isSearchFilterModalOpen, setIsSearchFilterModalOpen] = useState(false)
 
-  async function onSearch(page: number): Promise<void> {
+  const [loading, onSearch] = usePromiseLoading(async (page: number) => {
     if (loading) return
 
     if (query === '') {
@@ -78,7 +76,6 @@ function Pixabay({
     }
 
     setResults(null)
-    setLoading(true)
 
     try {
       const data = await forgeAPI.pixabay.searchImages
@@ -96,10 +93,8 @@ function Pixabay({
       setResults(data)
     } catch {
       setResults('error')
-    } finally {
-      setLoading(false)
     }
-  }
+  })
 
   return (
     <>

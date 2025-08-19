@@ -3,8 +3,8 @@ import { useMutation } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { Button } from 'lifeforge-ui'
-import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import type { TMDBSearchResults } from '..'
 
@@ -17,15 +17,12 @@ function TMDBResultItem({
   isAdded: boolean
   onAddToLibrary: () => Promise<void>
 }) {
-  const [loading, setLoading] = useState(false)
-
   const addToLibraryMutation = useMutation(
     forgeAPI.movies.entries.create
       .input({ id: data.id.toString() })
       .mutationOptions({
         onSuccess: async () => {
           await onAddToLibrary()
-          setLoading(false)
         },
         onError: (error: any) => {
           toast.error(
@@ -33,6 +30,10 @@ function TMDBResultItem({
           )
         }
       })
+  )
+
+  const [loading, onSubmit] = usePromiseLoading(() =>
+    addToLibraryMutation.mutateAsync({})
   )
 
   return (
@@ -66,10 +67,7 @@ function TMDBResultItem({
           loading={loading}
           namespace="apps.movies"
           variant={isAdded ? 'plain' : 'primary'}
-          onClick={() => {
-            setLoading(true)
-            addToLibraryMutation.mutateAsync({})
-          }}
+          onClick={onSubmit}
         >
           {isAdded ? 'Already in Library' : 'Add to Library'}
         </Button>

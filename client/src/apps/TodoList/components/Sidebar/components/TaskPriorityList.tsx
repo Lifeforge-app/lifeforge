@@ -1,4 +1,4 @@
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,7 +33,7 @@ function TaskPriorityList({
         label="priorities"
         namespace="apps.todoList"
       />
-      <QueryWrapper query={prioritiesQuery}>
+      <WithQuery query={prioritiesQuery}>
         {priorities =>
           priorities.length > 0 ? (
             <>
@@ -49,7 +49,7 @@ function TaskPriorityList({
             <p className="text-bg-500 text-center">{t('empty.priorities')}</p>
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </>
   )
 }

@@ -37,17 +37,16 @@ function ModifyTagModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.tags)[typeof type]>['body']
-  >()
-    .ui({
-      title: `tag.${type}`,
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type],
-      namespace: 'apps.ideaBox',
-      onClose,
-      submitButton: type
-    })
+  >({
+    title: `tag.${type}`,
+    icon: {
+      create: 'tabler:plus',
+      update: 'tabler:pencil'
+    }[type],
+    namespace: 'apps.ideaBox',
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       name: 'text',
       icon: 'icon',

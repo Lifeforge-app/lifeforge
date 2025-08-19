@@ -1,4 +1,4 @@
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -59,7 +59,7 @@ function CategoriesSection() {
         actionButtonOnClick={handleActionButtonClick}
         label={t('sidebar.categories')}
       />
-      <QueryWrapper query={categoriesQuery}>
+      <WithQuery query={categoriesQuery}>
         {() => (
           <>
             {categories.map(({ icon, name, color, id, type, amount }) => (
@@ -75,7 +75,7 @@ function CategoriesSection() {
             ))}
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </>
   ) : (
     <></>

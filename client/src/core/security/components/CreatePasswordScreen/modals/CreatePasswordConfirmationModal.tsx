@@ -1,8 +1,7 @@
 import { Button } from 'lifeforge-ui'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { ForgeAPIClientController } from 'shared'
+import { ForgeAPIClientController, usePromiseLoading } from 'shared'
 
 function CreatePasswordConfirmationModal({
   data: { controller, newPassword, confirmPassword },
@@ -15,11 +14,9 @@ function CreatePasswordConfirmationModal({
   }
   onClose: () => void
 }) {
-  const [loading, setLoading] = useState(false)
-
   const { t } = useTranslation('common.vault')
 
-  async function onSubmit(): Promise<void> {
+  async function handleSubmit(): Promise<void> {
     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
       toast.error(t('input.error.fieldEmpty'))
 
@@ -32,8 +29,6 @@ function CreatePasswordConfirmationModal({
       return
     }
 
-    setLoading(true)
-
     try {
       await controller.mutate({
         password: newPassword
@@ -42,11 +37,10 @@ function CreatePasswordConfirmationModal({
       window.location.reload()
     } catch {
       toast.error('An error occurred')
-    } finally {
-      setLoading(false)
-      onClose()
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   return (
     <>

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
@@ -27,11 +27,11 @@ export default function Quotes() {
         className="text-bg-800/10 absolute bottom-2 left-2 rotate-180 text-8xl"
         icon="tabler:quote"
       />
-      <QueryWrapper query={quoteQuery}>
+      <WithQuery query={quoteQuery}>
         {quote => (
           <div
             className={clsx(
-              'text-center text-xl font-medium',
+              'text-center text-xl',
               tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50'
             )}
           >
@@ -40,7 +40,7 @@ export default function Quotes() {
             <span className="mt-4 block text-base">- {quote[0].a}</span>
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

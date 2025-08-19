@@ -6,24 +6,12 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@components/*": [
-        "./src/components/general/*"
-      ],
-      "@providers/*": [
-        "./src/providers/*"
-      ],
-      "@hooks/*": [
-        "./src/core/hooks/*"
-      ],
-      "@interfaces/*": [
-        "./src/core/interfaces/*"
-      ],
-      "@utils/*": [
-        "./src/core/utils/*"
-      ]
+      "@components/*": ["./src/components/general/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@hooks/*": ["./src/core/hooks/*"],
+      "@interfaces/*": ["./src/core/interfaces/*"],
+      "@utils/*": ["./src/core/utils/*"]
     }
   },
-  "include": [
-    "vite.config.ts"
-  ]
+  "include": ["vite.config.ts"]
 }

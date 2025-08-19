@@ -6,6 +6,8 @@ export { default as EmptyStateScreen } from './EmptyStateScreen'
 
 export { default as NotFoundScreen } from './NotFoundScreen'
 
-export { default as QueryWrapper } from './QueryWrapper'
+export { default as WithQuery } from './WithQuery'
 
 export { default as APIOnlineStatusWrapper } from './APIOnlineStatusWrapper'
+
+export { default as WithQueryData } from './WithQueryData'

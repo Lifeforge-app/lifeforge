@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ContextMenuGroup,
@@ -7,12 +8,12 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   SearchInput,
-  ViewModeSelector
+  ViewModeSelector,
+  WithQueryData
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -25,7 +26,6 @@ function BooksLibrary() {
   const open = useModalStore(state => state.open)
 
   const {
-    entriesQuery,
     fileTypesQuery,
     miscellaneous: { filter, searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
@@ -33,33 +33,6 @@ function BooksLibrary() {
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   const [view, setView] = useState<'list' | 'grid'>('list')
-
-  const filteredEntries = useMemo(
-    () =>
-      entriesQuery.data?.filter(
-        entry =>
-          entry.title
-            .toLowerCase()
-            .includes(debouncedSearchQuery.toLowerCase()) &&
-          (filter.collection !== null
-            ? entry.collection === filter.collection
-            : true) &&
-          (filter.language !== null
-            ? entry.languages.includes(filter.language)
-            : true) &&
-          (filter.collection !== null
-            ? entry.collection === filter.collection
-            : true) &&
-          (filter.favourite ? entry.is_favourite : true) &&
-          (filter.fileType !== null
-            ? entry.extension ===
-              fileTypesQuery.data?.find(
-                fileType => fileType.id === filter.fileType
-              )?.name
-            : true)
-      ) ?? [],
-    [entriesQuery.data, debouncedSearchQuery, filter, fileTypesQuery.data]
-  )
 
   const handleOpenLibgenModal = useCallback(() => {
     open(LibgenModal, {})
@@ -94,30 +67,32 @@ function BooksLibrary() {
       <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
-          <Header
-            itemCount={
-              typeof filteredEntries !== 'string' ? filteredEntries.length : 0
-            }
-          />
-          <div className="mt-4 flex items-center gap-2">
-            <SearchInput
-              namespace="apps.booksLibrary"
-              searchTarget="book"
-              setValue={setSearchQuery}
-              value={searchQuery}
-            />
-            <ViewModeSelector
-              className="hidden md:flex"
-              options={[
-                { value: 'list', icon: 'uil:list-ul' },
-                { value: 'grid', icon: 'uil:apps' }
-              ]}
-              setViewMode={setView}
-              viewMode={view}
-            />
-          </div>
-          <QueryWrapper query={entriesQuery}>
+          <WithQueryData controller={forgeAPI.booksLibrary.entries.list}>
             {entries => {
+              // TODO: Move this to backend
+              const filteredEntries = entries.filter(
+                entry =>
+                  entry.title
+                    .toLowerCase()
+                    .includes(debouncedSearchQuery.toLowerCase()) &&
+                  (filter.collection !== null
+                    ? entry.collection === filter.collection
+                    : true) &&
+                  (filter.language !== null
+                    ? entry.languages.includes(filter.language)
+                    : true) &&
+                  (filter.collection !== null
+                    ? entry.collection === filter.collection
+                    : true) &&
+                  (filter.favourite ? entry.is_favourite : true) &&
+                  (filter.fileType !== null
+                    ? entry.extension ===
+                      fileTypesQuery.data?.find(
+                        fileType => fileType.id === filter.fileType
+                      )?.name
+                    : true)
+              )
+
               if (filteredEntries.length === 0) {
                 if (entries.length === 0) {
                   return (
@@ -138,14 +113,39 @@ function BooksLibrary() {
                 )
               }
 
-              switch (view) {
-                case 'grid':
-                  return <GridView books={filteredEntries} />
-                case 'list':
-                  return <ListView books={filteredEntries} />
-              }
+              const FinalComponent = view === 'grid' ? GridView : ListView
+
+              return (
+                <>
+                  <Header
+                    itemCount={
+                      typeof filteredEntries !== 'string'
+                        ? filteredEntries.length
+                        : 0
+                    }
+                  />
+                  <div className="mt-4 flex items-center gap-2">
+                    <SearchInput
+                      namespace="apps.booksLibrary"
+                      searchTarget="book"
+                      setValue={setSearchQuery}
+                      value={searchQuery}
+                    />
+                    <ViewModeSelector
+                      className="hidden md:flex"
+                      options={[
+                        { value: 'list', icon: 'uil:list-ul' },
+                        { value: 'grid', icon: 'uil:apps' }
+                      ]}
+                      setViewMode={setView}
+                      viewMode={view}
+                    />
+                  </div>
+                  <FinalComponent books={filteredEntries} />
+                </>
+              )
             }}
-          </QueryWrapper>
+          </WithQueryData>
         </div>
       </div>
       <Menu as="div" className="fixed right-6 bottom-6 z-50 block md:hidden">

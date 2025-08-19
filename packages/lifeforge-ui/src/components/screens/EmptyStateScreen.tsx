@@ -17,7 +17,7 @@ function EmptyStateScreen({
   CTAButtonProps?: React.ComponentProps<typeof Button>
   name: string | false
   title?: string
-  description?: string
+  description?: string | React.ReactNode
   icon?: string | React.ReactElement
   smaller?: boolean
   namespace?: string
@@ -54,16 +54,20 @@ function EmptyStateScreen({
           ? t([tKey, 'empty', name, 'title'].filter(e => e).join('.'))
           : title}
       </h2>
-      <p
-        className={clsx(
-          'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
-          smaller ? 'text-base' : 'text-lg'
-        )}
-      >
-        {name
-          ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
-          : description}
-      </p>
+      {typeof description === 'string' || !description ? (
+        <p
+          className={clsx(
+            'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
+            smaller ? 'text-lg' : 'text-xl'
+          )}
+        >
+          {name
+            ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
+            : description}
+        </p>
+      ) : (
+        description
+      )}
       {CTAButtonProps && (
         <Button
           {...CTAButtonProps}

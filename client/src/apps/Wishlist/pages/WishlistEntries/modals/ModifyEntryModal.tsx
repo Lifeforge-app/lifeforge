@@ -41,14 +41,13 @@ function ModifyEntryModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wishlist.entries)[typeof type]>['body']
-  >()
-    .ui({
-      title: `entry.${type}`,
-      namespace: 'apps.wishlist',
-      onClose,
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      submitButton: type
-    })
+  >({
+    title: `entry.${type}`,
+    namespace: 'apps.wishlist',
+    onClose,
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    submitButton: type
+  })
     .typesMap({
       list: 'listbox',
       url: 'text',

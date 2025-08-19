@@ -39,17 +39,16 @@ function ModifyFolderModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.folders)[typeof type]>['body']
-  >()
-    .ui({
-      icon: {
-        create: 'tabler:plus',
-        update: 'tabler:pencil'
-      }[type],
-      namespace: 'apps.ideaBox',
-      title: `folder.${type}`,
-      onClose,
-      submitButton: type
-    })
+  >({
+    icon: {
+      create: 'tabler:plus',
+      update: 'tabler:pencil'
+    }[type],
+    namespace: 'apps.ideaBox',
+    title: `folder.${type}`,
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       container: 'text',
       parent: 'text',

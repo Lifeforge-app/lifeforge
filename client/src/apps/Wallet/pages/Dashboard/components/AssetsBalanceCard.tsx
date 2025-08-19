@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import {
   DashboardItem,
   EmptyStateScreen,
-  QueryWrapper,
-  Scrollbar
+  Scrollbar,
+  WithQuery
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
@@ -37,7 +37,7 @@ function AssetsBalanceCard() {
       namespace="apps.wallet"
       title="Assets Balance"
     >
-      <QueryWrapper query={assetsQuery}>
+      <WithQuery query={assetsQuery}>
         {assets =>
           assets.length > 0 ? (
             <Scrollbar>
@@ -98,7 +98,7 @@ function AssetsBalanceCard() {
             />
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </DashboardItem>
   )
 }

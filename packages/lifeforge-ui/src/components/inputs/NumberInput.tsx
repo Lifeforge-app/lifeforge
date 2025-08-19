@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import { useEffect, useState } from 'react'
 
 import TextInput from './TextInput'
@@ -15,10 +16,14 @@ interface NumberInputProps {
   required?: boolean
   /** Whether the number input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Additional CSS class names to apply to the number input component. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
+  errorMsg?: string
 }
 
 function NumberInput({
@@ -28,8 +33,10 @@ function NumberInput({
   setValue,
   required = false,
   disabled = false,
+  autoFocus = false,
   className,
-  namespace
+  namespace,
+  errorMsg
 }: NumberInputProps) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
@@ -41,8 +48,10 @@ function NumberInput({
 
   return (
     <TextInput
+      autoFocus={autoFocus}
       className={className}
       disabled={disabled}
+      errorMsg={errorMsg}
       icon={icon}
       inputMode="numeric"
       label={label}
@@ -60,14 +69,21 @@ function NumberInput({
           return
         }
 
-        const numericValue = parseInt(currentStringValue)
-
-        if (!isNaN(numericValue)) {
-          setValue(numericValue)
-        } else {
+        //negative value as well
+        if (!currentStringValue.match(/^(-?)\d*\.?\d*$/)) {
           setValue(value)
-          setCurrentStringValue(value.toString())
+          setCurrentStringValue(
+            value.toString() === '0' ? '' : value.toString()
+          )
+
+          return
         }
+
+        const numericValue = currentStringValue.includes('.')
+          ? parseFloat(currentStringValue)
+          : parseInt(currentStringValue)
+
+        setValue(numericValue)
       }}
     />
   )

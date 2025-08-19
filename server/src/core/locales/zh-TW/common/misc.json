@@ -108,5 +108,10 @@
       "5": "星期六",
       "6": "星期日"
     }
-  }
+  },
+  "fieldRequired": "此欄位為必填。",
+  "invalidField": "無效欄位。",
+  "invalidColor": "無效顏色。請輸入有效的十六進制值，格式為#RRGGBB。",
+  "invalidIcon": "無效圖標。必須是來自Iconify的有效圖標識別符，格式為<icon-set>:<icon-name>。",
+  "loadingUserData": "正在加載用戶數據..."
 }

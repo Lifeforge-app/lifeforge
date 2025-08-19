@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ModalManager, QueryWrapper } from 'lifeforge-ui'
+import { ModalManager, WithQuery } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { useAuth } from '../../providers/AuthProvider'
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
@@ -30,7 +30,7 @@ function Auth() {
   }, [searchParams])
 
   return (
-    <QueryWrapper query={oauthProvidersQuery}>
+    <WithQuery query={oauthProvidersQuery}>
       {providers => (
         <>
           <section className="flex-center size-full flex-col overflow-y-auto px-8 pt-12 pb-4 sm:px-12 lg:w-1/2">
@@ -72,7 +72,7 @@ function Auth() {
           <ModalManager />
         </>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

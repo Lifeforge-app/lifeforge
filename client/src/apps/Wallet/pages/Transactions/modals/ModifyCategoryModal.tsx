@@ -46,14 +46,13 @@ function ModifyCategoryModal({
         ? 'update'
         : 'create']
     >['body']
-  >()
-    .ui({
-      namespace: 'apps.wallet',
-      icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
-      title: `categories.${type === 'update' ? 'update' : 'create'}`,
-      submitButton: type === 'update' ? 'update' : 'create',
-      onClose
-    })
+  >({
+    namespace: 'apps.wallet',
+    icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
+    title: `categories.${type === 'update' ? 'update' : 'create'}`,
+    submitButton: type === 'update' ? 'update' : 'create',
+    onClose
+  })
     .typesMap({
       type: 'listbox',
       icon: 'icon',

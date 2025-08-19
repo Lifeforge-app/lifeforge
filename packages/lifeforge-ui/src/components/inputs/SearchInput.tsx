@@ -79,7 +79,12 @@ function SearchInput({
         onKeyUp={onKeyUp}
       />
       <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-2">
-        {actionButtonProps && <Button {...actionButtonProps} />}
+        {actionButtonProps && (
+          <Button
+            {...actionButtonProps}
+            variant={actionButtonProps.variant || 'plain'}
+          />
+        )}
       </div>
     </search>
   )
