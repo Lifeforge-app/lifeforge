@@ -17,6 +17,6 @@ export default async function getAPIKey(id: string, pb: PBService) {
 
     return decrypt2(key, process.env.MASTER_KEY!)
   } catch {
-    return null
+    throw new Error(`API key with ID ${id} not found`)
   }
 }
