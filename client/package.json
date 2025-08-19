@@ -18,6 +18,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ai-sdk/react": "^2.0.15",
     "@headlessui/react": "^2.2.7",
     "@iconify/react": "^6.0.0",
     "@tabler/icons-react": "^3.31.0",
@@ -27,6 +28,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "@vis.gl/react-google-maps": "^1.5.3",
     "@wavesurfer/react": "^1.0.11",
+    "ai-elements": "^1.0.3",
     "babel-plugin-react-compiler": "^19.1.0-rc.2",
     "chart.js": "^4.4.9",
     "clsx": "^2.1.1",

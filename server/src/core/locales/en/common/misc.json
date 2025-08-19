@@ -53,5 +53,10 @@
       "5": "Saturday",
       "6": "Sunday"
     }
-  }
+  },
+  "fieldRequired": "This field is required.",
+  "invalidField": "Invalid field.",
+  "invalidColor": "Invalid color. Please enter a valid hex value in the format #RRGGBB.",
+  "invalidIcon": "Invalid icon. It must be a valid icon identifier from Iconify in the format of <icon-set>:<icon-name>.",
+  "loadingUserData": "Loading user data..."
 }
