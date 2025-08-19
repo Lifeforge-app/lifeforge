@@ -152,7 +152,7 @@ export class GetList<
         .hex('#34ace0')
         .bold(
           'getList'
-        )} Fetched ${result.items} items${result.totalItems ? ` out of ${result.totalItems} items` : ''} from ${chalk
+        )} Fetched ${result.perPage} items${result.totalItems ? ` out of ${result.totalItems} items` : ''} from ${chalk
         .hex('#34ace0')
         .bold(this.collectionKey)}`,
       'DB'
