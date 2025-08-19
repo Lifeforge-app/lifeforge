@@ -6,6 +6,8 @@ import {
   FilterType,
   MultiItemsReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -124,7 +126,7 @@ export class GetFullList<
    * @returns Promise that resolves to an array of records with applied filters, sorting, field selection, and expansions
    * @throws Error if collection key is not set
    */
-  execute(): Promise<
+  async execute(): Promise<
     MultiItemsReturnType<TCollectionKey, TExpandConfig, TFields>
   > {
     if (!this.collectionKey) {
@@ -137,16 +139,29 @@ export class GetFullList<
       ? this._pb.filter(this._filterExpression, this._filterParams)
       : undefined
 
-    return this._pb
+    const result = (await this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getFullList({
         filter: filterString,
         sort: this._sort,
         expand: this._expand,
         fields: this._fields
-      }) as unknown as Promise<
-      MultiItemsReturnType<TCollectionKey, TExpandConfig, TFields>
+      })) as unknown as MultiItemsReturnType<
+      TCollectionKey,
+      TExpandConfig,
+      TFields
     >
+
+    LoggingService.debug(
+      `${chalk
+        .hex('#34ace0')
+        .bold('getFullList')} Fetched ${result.length} items from ${chalk
+        .hex('#34ace0')
+        .bold(this.collectionKey)}`,
+      'DB'
+    )
+
+    return result
   }
 }
 
