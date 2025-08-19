@@ -11,11 +11,12 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { ContextMenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ContextMenuItem, FAB, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
 import DashboardGrid from './components/DashboardGrid'
+import ForgeAgentModal from './modals/ForgeAgentModal'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'
 
 ChartJS.register(

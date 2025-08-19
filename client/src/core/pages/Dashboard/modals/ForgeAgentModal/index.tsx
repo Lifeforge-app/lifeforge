@@ -44,7 +44,7 @@ function ForgeAgentModal({ onClose }: { onClose: () => void }) {
   const [input, setInput] = useState('')
 
   return (
-    <div className="flex min-h-[80vh] min-w-[80vw] flex-col">
+    <div className="min-h-[80vh] min-w-[80vw]">
       <ModalHeader
         hasAI
         icon="tabler:hammer"
