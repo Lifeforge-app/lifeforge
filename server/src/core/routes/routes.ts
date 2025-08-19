@@ -1,3 +1,4 @@
+import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import traceRouteStack from '@functions/utils/traceRouteStack'
@@ -71,8 +72,8 @@ const corsAnywhere = forgeController.query
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
       }
-    }).catch(error => {
-      console.error(`Error fetching URL: ${url}`, error)
+    }).catch(() => {
+      LoggingService.error(`Failed to fetch URL: ${url}`)
     })
 
     if (!response) {
