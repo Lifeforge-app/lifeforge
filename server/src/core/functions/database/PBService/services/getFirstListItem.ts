@@ -6,6 +6,8 @@ import {
   FilterType,
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -105,6 +107,18 @@ export class GetFirstListItem<
         sort: this._sort,
         expand: this._expand,
         fields: this._fields
+      })
+      .then(result => {
+        LoggingService.debug(
+          `${chalk
+            .hex('#34ace0')
+            .bold('getFirstListItem')} Fetched first item from ${chalk
+            .hex('#34ace0')
+            .bold(this.collectionKey)}`,
+          'DB'
+        )
+
+        return result
       }) as unknown as Promise<
       SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
     >
