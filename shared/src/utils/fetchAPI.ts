@@ -1,4 +1,4 @@
-import { parse as parseCookie } from 'cookie'
+import getAuthorizationToken from './getAuthorizationToken'
 
 interface ApiResponse<T> {
   state: 'success' | 'error'
@@ -80,9 +80,7 @@ export default async function fetchAPI<T>(
       body instanceof Blob
     )
 
-  const cookies = parseCookie(document.cookie)
-
-  const session = cookies.session || cookies.token
+  const session = getAuthorizationToken()
 
   const url = isExternal ? new URL(endpoint) : new URL(endpoint, apiHost)
 
