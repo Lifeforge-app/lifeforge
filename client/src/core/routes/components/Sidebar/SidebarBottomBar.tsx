@@ -78,6 +78,9 @@ function SidebarBottomBar() {
             />
           </button>
         }
+        classNames={{
+          wrapper: 'w-full'
+        }}
       >
         <ContextMenuItem
           icon="tabler:user-cog"
