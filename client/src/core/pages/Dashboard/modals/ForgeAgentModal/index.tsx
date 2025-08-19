@@ -1,16 +1,27 @@
 import { useChat } from '@ai-sdk/react'
+import forgeAPI from '@utils/forgeAPI'
 import {
   DefaultChatTransport,
   lastAssistantMessageIsCompleteWithToolCalls
 } from 'ai'
-import { ModalHeader } from 'lifeforge-ui'
+import clsx from 'clsx'
+import { Button, ModalHeader, Scrollbar } from 'lifeforge-ui'
 import { useState } from 'react'
+import Markdown from 'react-markdown'
+import { AutoSizer } from 'react-virtualized'
+import remarkGfm from 'remark-gfm'
+import { getAuthorizationToken, usePersonalization } from 'shared'
+import tinycolor from 'tinycolor2'
 
 function ForgeAgentModal({ onClose }: { onClose: () => void }) {
+  const { derivedThemeColor } = usePersonalization()
+
   const { messages, sendMessage, addToolResult } = useChat({
     transport: new DefaultChatTransport({
-      api: ,
-      headers
+      api: forgeAPI.ai.forgeAgent.callTool.endpoint,
+      headers: {
+        Authorization: `Bearer ${getAuthorizationToken()}`
+      }
     }),
 
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
@@ -33,142 +44,97 @@ function ForgeAgentModal({ onClose }: { onClose: () => void }) {
   const [input, setInput] = useState('')
 
   return (
-    <div className="min-h-[80vh] min-w-[80vw]">
+    <div className="flex min-h-[80vh] min-w-[80vw] flex-col">
       <ModalHeader
         hasAI
         icon="tabler:hammer"
         title="Forge Agent"
         onClose={onClose}
       />
-      {messages?.map(message => (
-        <div key={message.id}>
-          <strong>{`${message.role}: `}</strong>
-          {message.parts.map(part => {
-            switch (part.type) {
-              // render text parts as simple text:
-              case 'text':
-                return part.text
+      <div className="w-full flex-1 space-y-6">
+        <AutoSizer>
+          {({ width, height }) => (
+            <Scrollbar
+              style={{
+                width,
+                height
+              }}
+            >
+              {messages?.map(message => {
+                const role = message.role === 'user' ? 'User' : 'Agent'
 
-              // for tool parts, use the typed tool part names:
-              case 'tool-askForConfirmation': {
-                const callId = part.toolCallId
-
-                switch (part.state) {
-                  case 'input-streaming':
-                    return (
-                      <div key={callId}>Loading confirmation request...</div>
-                    )
-                  case 'input-available':
-                    return (
-                      <div key={callId}>
-                        {part.input.message}
-                        <div>
-                          <button
-                            onClick={() =>
-                              addToolResult({
-                                tool: 'askForConfirmation',
-                                toolCallId: callId,
-                                output: 'Yes, confirmed.'
-                              })
-                            }
-                          >
-                            Yes
-                          </button>
-                          <button
-                            onClick={() =>
-                              addToolResult({
-                                tool: 'askForConfirmation',
-                                toolCallId: callId,
-                                output: 'No, denied'
-                              })
-                            }
-                          >
-                            No
-                          </button>
-                        </div>
+                if (role === 'User') {
+                  return (
+                    <div key={message.id} className="flex w-full justify-end">
+                      <div
+                        className={clsx(
+                          'shadow-custom rounded-lg p-4 px-5',
+                          tinycolor(derivedThemeColor).isDark()
+                            ? 'text-bg-100'
+                            : 'text-bg-800'
+                        )}
+                        style={{
+                          backgroundColor: derivedThemeColor
+                        }}
+                      >
+                        {message.parts.map(part => {
+                          switch (part.type) {
+                            case 'text':
+                              return part.text
+                            default:
+                              return null
+                          }
+                        })}
                       </div>
-                    )
-                  case 'output-available':
-                    return (
-                      <div key={callId}>
-                        Location access allowed: {part.output}
-                      </div>
-                    )
-                  case 'output-error':
-                    return <div key={callId}>Error: {part.errorText}</div>
+                    </div>
+                  )
                 }
-                break
-              }
 
-              case 'tool-getLocation': {
-                const callId = part.toolCallId
-
-                switch (part.state) {
-                  case 'input-streaming':
-                    return <div key={callId}>Preparing location request...</div>
-                  case 'input-available':
-                    return <div key={callId}>Getting location...</div>
-                  case 'output-available':
-                    return <div key={callId}>Location: {part.output}</div>
-                  case 'output-error':
-                    return (
-                      <div key={callId}>
-                        Error getting location: {part.errorText}
-                      </div>
-                    )
-                }
-                break
-              }
-
-              case 'tool-getWeatherInformation': {
-                const callId = part.toolCallId
-
-                switch (part.state) {
-                  // example of pre-rendering streaming tool inputs:
-                  case 'input-streaming':
-                    return (
-                      <pre key={callId}>{JSON.stringify(part, null, 2)}</pre>
-                    )
-                  case 'input-available':
-                    return (
-                      <div key={callId}>
-                        Getting weather information for {part.input.city}...
-                      </div>
-                    )
-                  case 'output-available':
-                    return (
-                      <div key={callId}>
-                        Weather in {part.input.city}: {part.output}
-                      </div>
-                    )
-                  case 'output-error':
-                    return (
-                      <div key={callId}>
-                        Error getting weather for {part.input.city}:{' '}
-                        {part.errorText}
-                      </div>
-                    )
-                }
-                break
-              }
+                return (
+                  <>
+                    {message.parts.map(part => {
+                      switch (part.type) {
+                        case 'text':
+                          return (
+                            <div key={message.id} className="flex w-full">
+                              <div className="agent-response component-bg-lighter shadow-custom space-y-3 rounded-lg px-5 py-4">
+                                <Markdown remarkPlugins={[remarkGfm]}>
+                                  {part.text}
+                                </Markdown>
+                              </div>
+                            </div>
+                          )
+                      }
+                    })}
+                    <br />
+                  </>
+                )
+              })}
+            </Scrollbar>
+          )}
+        </AutoSizer>
+      </div>
+      <div className="component-bg-lighter shadow-custom mt-6 flex w-full items-center gap-8 rounded-xl p-2">
+        <input
+          className="placeholder:text-bg-500 w-full p-2"
+          placeholder="Ask anything..."
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && input.trim()) {
+              setInput('')
+              sendMessage({ text: input })
             }
-          })}
-          <br />
-        </div>
-      ))}
-
-      <form
-        onSubmit={e => {
-          e.preventDefault()
-
-          if (input.trim()) {
+          }}
+        />
+        <Button
+          icon="tabler:send"
+          onClick={() => {
             sendMessage({ text: input })
             setInput('')
-          }
-        }}
-      >
-        <input value={input} onChange={e => setInput(e.target.value)} />
-      </form>
+          }}
+        />
+      </div>
     </div>
   )
 }
