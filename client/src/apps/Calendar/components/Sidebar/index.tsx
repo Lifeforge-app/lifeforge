@@ -12,10 +12,10 @@ function Sidebar({
   sidebarOpen,
   setSidebarOpen
 }: {
-  selectedCalendar: string | undefined
-  setSelectedCalendar: React.Dispatch<React.SetStateAction<string | undefined>>
-  selectedCategory: string | undefined
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
+  selectedCalendar: string | null
+  setSelectedCalendar: React.Dispatch<React.SetStateAction<string | null>>
+  selectedCategory: string | null
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
 }) {

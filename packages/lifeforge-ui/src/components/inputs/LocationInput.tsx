@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import { ComboboxInput, ComboboxOption } from '@components/inputs'
 import type { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
@@ -22,6 +23,8 @@ interface LocationInputProps {
   required?: boolean
   /** Whether the location input is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
 }
@@ -30,8 +33,9 @@ function LocationInput({
   label,
   value,
   setValue,
-  required,
-  disabled,
+  required = false,
+  disabled = false,
+  autoFocus = false,
   namespace
 }: LocationInputProps) {
   const { t } = useTranslation('common.misc')
@@ -73,6 +77,7 @@ function LocationInput({
   return (
     <div className="relative flex w-full items-center gap-3">
       <ComboboxInput<Location | null>
+        autoFocus={autoFocus}
         className="w-full"
         customActive={(value?.name?.length || 0) > 0}
         disabled={!enabled || disabled || enabled === 'loading'}

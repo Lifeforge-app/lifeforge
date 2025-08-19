@@ -5,7 +5,7 @@ import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -34,7 +34,7 @@ function Blog() {
         icon="tabler:pencil-heart"
         title="Blog"
       />
-      <QueryWrapper query={entriesQuery}>
+      <WithQuery query={entriesQuery}>
         {entries =>
           entries.length > 0 ? (
             <></>
@@ -46,7 +46,7 @@ function Blog() {
             />
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </ModuleWrapper>
   )
 }

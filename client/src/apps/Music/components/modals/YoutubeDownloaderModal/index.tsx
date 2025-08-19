@@ -2,7 +2,7 @@ import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
-import { Button, ModalHeader, QueryWrapper, TextInput } from 'lifeforge-ui'
+import { Button, ModalHeader, TextInput, WithQuery } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -112,7 +112,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
       />
       <div className="mt-3">
         {URL_REGEX.test(videoURL) && (
-          <QueryWrapper query={videoInfoQuery}>
+          <WithQuery query={videoInfoQuery}>
             {videoInfo => (
               <div className="space-y-3">
                 <VideoInfo videoInfo={videoInfo} />
@@ -185,7 +185,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
                 )}
               </div>
             )}
-          </QueryWrapper>
+          </WithQuery>
         )}
       </div>
     </div>

@@ -8,6 +8,12 @@ import {
   useQueryClient
 } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
+import {
+  parseAsBoolean,
+  parseAsString,
+  useQueryState,
+  useQueryStates
+} from 'nuqs'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
@@ -30,7 +36,6 @@ export type BooksLibraryFileType = InferOutput<
 >[number]
 
 interface IBooksLibraryData {
-  entriesQuery: UseQueryResult<BooksLibraryEntry[]>
   collectionsQuery: UseQueryResult<BooksLibraryCollection[]>
   languagesQuery: UseQueryResult<BooksLibraryLanguage[]>
   fileTypesQuery: UseQueryResult<BooksLibraryFileType[]>
@@ -80,10 +85,9 @@ export default function BooksLibraryProvider() {
 
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
 
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const entriesQuery = useQuery(
-    forgeAPI.booksLibrary.entries.list.queryOptions()
+  const [searchQuery, setSearchQuery] = useQueryState(
+    'q',
+    parseAsString.withDefault('')
   )
 
   const collectionsQuery = useQuery(
@@ -98,16 +102,11 @@ export default function BooksLibraryProvider() {
     forgeAPI.booksLibrary.fileTypes.list.queryOptions()
   )
 
-  const [filter, setFilter] = useState<{
-    collection: string | null
-    fileType: string | null
-    language: string | null
-    favourite: boolean
-  }>({
-    collection: null,
-    fileType: null,
-    language: null,
-    favourite: false
+  const [filter, setFilter] = useQueryStates({
+    collection: parseAsString.withDefault(''),
+    fileType: parseAsString.withDefault(''),
+    language: parseAsString.withDefault(''),
+    favourite: parseAsBoolean.withDefault(false)
   })
 
   const [processes, setProcesses] = useState<
@@ -202,7 +201,6 @@ export default function BooksLibraryProvider() {
 
   const value = useMemo(
     () => ({
-      entriesQuery,
       collectionsQuery,
       languagesQuery,
       fileTypesQuery,
@@ -222,7 +220,12 @@ export default function BooksLibraryProvider() {
         setSidebarOpen,
         libgenModalOpen,
         setLibgenModalOpen,
-        filter,
+        filter: {
+          collection: filter.collection || null,
+          fileType: filter.fileType || null,
+          language: filter.language || null,
+          favourite: filter.favourite
+        },
         setFilter: (
           key: 'collection' | 'fileType' | 'language' | 'favourite',
           value: string | null | boolean
@@ -235,7 +238,6 @@ export default function BooksLibraryProvider() {
       }
     }),
     [
-      entriesQuery,
       collectionsQuery,
       languagesQuery,
       fileTypesQuery,

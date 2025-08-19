@@ -36,13 +36,16 @@ function ModifyTagModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.todoList.tags)[typeof type]>['body']
-  >()
-    .ui({
-      icon: 'tabler:tag',
-      namespace: 'apps.todoList',
-      title: `tag.${type}`,
-      onClose,
-      submitButton: type
+  >({
+    icon: 'tabler:tag',
+    namespace: 'apps.todoList',
+    title: `tag.${type}`,
+    onClose,
+    submitButton: type
+  })
+    .typesMap({
+      name: 'text',
+      color: 'color'
     })
     .setupFields({
       name: {

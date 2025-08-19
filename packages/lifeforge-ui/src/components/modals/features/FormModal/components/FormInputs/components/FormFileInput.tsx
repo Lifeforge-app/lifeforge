@@ -6,7 +6,7 @@ import {
 
 function FormFileInput({
   field,
-  selectedData,
+  value,
   namespace,
   handleChange
 }: FormInputProps<FileFieldProps>) {
@@ -22,11 +22,11 @@ function FormFileInput({
       enableAI={field.enableAIImageGeneration}
       enablePixabay={field.enablePixabay}
       enableUrl={field.enableUrl}
-      file={selectedData.file}
+      file={value.file}
       icon={field.icon}
       label={field.label}
       namespace={namespace}
-      preview={selectedData.preview}
+      preview={value.preview}
       required={field.required}
       setData={handleChange}
       onImageRemoved={() => {

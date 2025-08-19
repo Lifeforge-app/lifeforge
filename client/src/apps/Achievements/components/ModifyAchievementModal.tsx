@@ -15,11 +15,11 @@ const difficulties = [
 ]
 
 function ModifyAchievementModal({
-  data: { type, initialData, currentDifficulty },
+  data: { modifyType, initialData, currentDifficulty },
   onClose
 }: {
   data: {
-    type: 'create' | 'update'
+    modifyType: 'create' | 'update'
     initialData?: Achievement
     currentDifficulty: Achievement['difficulty']
   }
@@ -30,7 +30,7 @@ function ModifyAchievementModal({
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    (type === 'create'
+    (modifyType === 'create'
       ? forgeAPI.achievements.entries.create
       : forgeAPI.achievements.entries.update.input({
           id: initialData?.id || '' || ''
@@ -45,15 +45,16 @@ function ModifyAchievementModal({
   )
 
   const formProps = defineForm<
-    InferInput<(typeof forgeAPI.achievements.entries)[typeof type]>['body']
-  >()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `achievement.${type}`,
-      onClose,
-      namespace: 'apps.achievements',
-      submitButton: type
-    })
+    InferInput<
+      (typeof forgeAPI.achievements.entries)[typeof modifyType]
+    >['body']
+  >({
+    icon: modifyType === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `achievement.${modifyType}`,
+    onClose,
+    namespace: 'apps.achievements',
+    submitButton: modifyType
+  })
     .typesMap({
       difficulty: 'listbox',
       title: 'text',

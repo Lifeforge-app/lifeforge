@@ -7,8 +7,8 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
@@ -63,11 +63,11 @@ function Wishlist() {
       />
       <SearchInput
         namespace="apps.wishlist"
-        value={searchQuery}
-        setValue={setSearchQuery}
         searchTarget="wishlist"
+        setValue={setSearchQuery}
+        value={searchQuery}
       />
-      <QueryWrapper query={listsQuery}>
+      <WithQuery query={listsQuery}>
         {lists =>
           (() => {
             if (!lists.length) {
@@ -99,10 +99,10 @@ function Wishlist() {
             )
           })()
         }
-      </QueryWrapper>
+      </WithQuery>
       <FAB
-        hideWhen="md"
         icon="tabler:plus"
+        visibilityBreakpoint="md"
         onClick={handleCreateWishlistList}
       />
     </ModuleWrapper>

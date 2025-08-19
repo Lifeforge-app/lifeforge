@@ -4,8 +4,8 @@ import {
   Button,
   EmptyStateScreen,
   ModalHeader,
-  QueryWrapper,
-  SearchInput
+  SearchInput,
+  WithQuery
 } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -74,9 +74,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       <div className="flex flex-col items-center gap-2 sm:flex-row">
         <SearchInput
           namespace="apps.movies"
-          value={searchQuery}
-          setValue={setSearchQuery}
           searchTarget="movie"
+          setValue={setSearchQuery}
+          value={searchQuery}
           onKeyUp={e => {
             if (e.key === 'Enter') {
               if (searchQuery.trim() !== '') {
@@ -87,10 +87,10 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
           }}
         />
         <Button
-          iconPosition="end"
           className="w-full sm:w-auto"
           disabled={searchQuery.trim() === ''}
           icon="tabler:arrow-right"
+          iconPosition="end"
           loading={searchResultsQuery.isLoading}
           onClick={() => {
             setPage(1)
@@ -102,7 +102,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
       </div>
       <div className="mt-6">
         {queryToSearch ? (
-          <QueryWrapper query={searchResultsQuery}>
+          <WithQuery query={searchResultsQuery}>
             {searchResults => (
               <TMDBResultsList
                 page={page}
@@ -111,7 +111,7 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
                 onAddToLibrary={onAddToLibrary}
               />
             )}
-          </QueryWrapper>
+          </WithQuery>
         ) : (
           <div className="h-96">
             <EmptyStateScreen

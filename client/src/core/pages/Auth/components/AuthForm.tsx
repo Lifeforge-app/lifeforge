@@ -3,6 +3,7 @@ import { TextInput } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
@@ -15,8 +16,6 @@ function AuthForm({ providers }: { providers: string[] }) {
   const emailOrUsernameRef = useRef(emailOrUsername)
 
   const passwordRef = useRef(password)
-
-  const [loading, setLoading] = useState(false)
 
   const [formDisabled, setFormDisabled] = useState(false)
 
@@ -45,7 +44,7 @@ function AuthForm({ providers }: { providers: string[] }) {
     }
   ] as const
 
-  const signIn = useCallback(() => {
+  const signIn = useCallback(async () => {
     const emailOrUsername = emailOrUsernameRef.current
 
     const password = passwordRef.current
@@ -61,8 +60,8 @@ function AuthForm({ providers }: { providers: string[] }) {
 
       return
     }
-    setLoading(true)
-    authenticate({ email: emailOrUsername, password })
+
+    await authenticate({ email: emailOrUsername, password })
       .then(res => {
         if (res === '2FA required' || !res) {
           setFormDisabled(true)
@@ -91,9 +90,6 @@ function AuthForm({ providers }: { providers: string[] }) {
         toast.error(t(`messages.unknownError`))
         setFormDisabled(false)
       })
-      .finally(() => {
-        setLoading(false)
-      })
   }, [authenticate, t, quota, dismissQuota])
 
   const onInputKeyDown = useCallback(
@@ -104,6 +100,8 @@ function AuthForm({ providers }: { providers: string[] }) {
     },
     [signIn]
   )
+
+  const [loading, onSubmit] = usePromiseLoading(signIn)
 
   useEffect(() => {
     emailOrUsernameRef.current = emailOrUsername
@@ -120,14 +118,14 @@ function AuthForm({ providers }: { providers: string[] }) {
           key={index}
           {...input}
           disabled={formDisabled}
-          isPassword={input.label === 'Password'}
+          isPassword={index === 1}
           onKeyDown={onInputKeyDown}
         />
       ))}
       <AuthSignInButton
         loading={loading}
         providers={providers}
-        signIn={signIn}
+        signIn={onSubmit}
       />
     </div>
   )

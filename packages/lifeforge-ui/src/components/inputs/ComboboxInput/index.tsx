@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ComboboxOptions from './components/ComboboxOptions'
 
@@ -24,6 +25,8 @@ interface ComboboxInputProps<T> {
   required?: boolean
   /** Whether the combobox is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** The dropdown options to display in the combobox. */
   children: React.ReactNode
   /** Whether the combobox should show as active regardless of focus state. */
@@ -41,8 +44,9 @@ function ComboboxInput<T>({
   setValue,
   setQuery,
   displayValue,
-  required,
-  disabled,
+  required = false,
+  disabled = false,
+  autoFocus = false,
   children,
   customActive,
   className,
@@ -99,6 +103,7 @@ function ComboboxInput<T>({
           required={required === true}
         />
         <HeadlessComboboxInput
+          ref={autoFocusableRef(autoFocus)}
           className="relative mt-10 mb-3 flex w-full items-center gap-2 rounded-lg bg-transparent! pr-5 pl-17 text-left focus:outline-hidden"
           displayValue={displayValue}
           onChange={e => {

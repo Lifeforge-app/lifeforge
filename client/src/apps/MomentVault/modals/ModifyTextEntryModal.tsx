@@ -37,14 +37,13 @@ function ModifyTextEntryModal({
 
   const formProps = defineForm<
     InferInput<typeof forgeAPI.momentVault.entries.update>['body']
-  >()
-    .ui({
-      title: 'Update Entry',
-      namespace: 'apps.momentVault',
-      icon: 'tabler:pencil',
-      onClose,
-      submitButton: 'update'
-    })
+  >({
+    title: 'Update Entry',
+    namespace: 'apps.momentVault',
+    icon: 'tabler:pencil',
+    onClose,
+    submitButton: 'update'
+  })
     .typesMap({
       content: 'textarea'
     })

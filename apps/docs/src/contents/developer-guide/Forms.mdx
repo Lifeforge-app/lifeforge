@@ -1,0 +1,159 @@
+import Code from "../../components/Code";
+
+###### Forms
+
+# Taking Input Gracefully
+
+Instead of relying on third-party libraries for form handling like <code>Formik</code>, <code>React Hook Form</code> or <code>Tanstack Form</code>, I decided to implement a custom solution that fits my needs more closely. This approach, although sacrifices some flexibility, allows for a more unified and consistent way of handling forms in the LifeForge ecosystem.
+
+---
+
+<section id="motivation">
+  ## Motivation
+
+  > Why don't you just use a form library?
+
+  No one can deny the fact that prebuilt form libraries offer a lot of functionality out of the box that meet industry standards. If you are building an application that requires form handling, most people would recommend using libraries like these. However, I found that these libraries often come with a lot of overhead and complexity that I didn't need for my specific use case, and their design philosophy are often quite opinionated while not in sync with my personal preferences.
+
+  With that being said, all of above is actually my realization after I got my hands dirty with building forms in LifeForge already. While having a custom form system that already works well for my needs, I was also exploring other popular form solutions available in the React ecosystem, getting ideas from their implementations and identifying patterns that could be beneficial for my own solution. 
+  
+  There were once a time when I thought about switching to a more established form library, but I eventually decided to stick with my own implementation because it was already working well for me and I just didn't want to introduce unnecessary complexity into my codebase.
+
+  So yeah, **since I am just building forms for LifeForge instead of a general-purpose form library, I felt it was more beneficial to create a solution that is tailored specifically to the needs of my application.**
+</section>
+
+<section id="gist">
+    ## Gist
+    
+    The form system in LifeForge is built around the concept of defining forms and their fields in a declarative way using chained methods. This allows you to define a form with its fields, validation rules, and submission logic in a single place, making it easy to manage and maintain.
+    
+    Here's a simple example of how you can define a form in LifeForge:
+    
+    <Code language="tsx">
+    {`const formProps = defineForm<{
+      title: string
+      age: number
+      color: string
+      icon: string
+    }>({
+      icon: 'tabler:forms',
+      title: 'Form Modal',
+      namespace: '',
+      onClose: () => {},
+      loading: false,
+      submitButton: {
+        icon: 'tabler:check',
+        children: 'Submit'
+      }
+    })
+    .typesMap({
+      title: 'text',
+      age: 'number',
+      color: 'color',
+      icon: 'icon'
+    })
+    .setupFields({
+      title: {
+        label: 'Title',
+        icon: 'tabler:text-size',
+        placeholder: 'Title Of The Document',
+        required: true,
+        validator(value) {
+          if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
+            return 'Invalid title. Only alphanumeric characters and spaces are allowed.'
+          }
+
+          return true
+        }
+      },
+      age: {
+        icon: 'tabler:number-123',
+        label: 'Age',
+        validator: value => {
+          if (value < 0) {
+            return 'Invalid age. Age must be positive.'
+          }
+
+          return true
+        }
+      },
+      color: {
+        label: 'Color'
+      },
+      icon: {
+        label: 'Icon',
+        required: true
+      }
+    })
+    .initialData({})
+    .onSubmit(async formData => {
+      // Handle form submission logic here
+      alert(\`Form submitted with data: \${JSON.stringify(formData)}\`)
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      alert('Form submitted successfully!')
+    })
+    .build()`}
+    </Code>
+
+    For the <code>.typesMap()</code> method, the availability of options depends on the type of the field. For example, if the type of the field is <code>number</code>, only the <code>number</code> type and the <code>currency</code> type are available.
+
+    Similarly, the availability of options for the subsequence methods depends on the value you passed to the previous method(s) or the form state generic. More on that later.
+
+    in the <code>onSubmit</code> method, the <code>formData</code> parameter is guaranteed to be type-safe and in sync with the expected data structure generic defined in the <code>defineForm</code> method. This means that you can be confident that the data you are submitting is always valid and in the correct format.
+</section>
+
+<section id="design-philosophy">
+  ## Design Philosophy
+  
+  I want to quote a passage from the documentation of [@tanstack/form](https://tanstack.com/form/latest/docs/philosophy):
+  
+  > "Every well-established project should have a philosophy that guides its development. Without a core philosophy, development can languish in endless decision-making and have weaker APIs as a result."
+  
+  So let's talk about my design philosophy for building forms in LifeForge.
+
+  ### Flexibility? Hmm...
+
+  If I were to use a library like <code>@tanstack/form</code>, I would have to write something like this:
+
+  <Code language="tsx">
+  {`<form.Field
+    {...otherProps}
+    children={(field) => {
+        // Avoid hasty abstractions. Render props are great!
+        return (
+        <>
+            <label htmlFor={field.name}>First Name:</label>
+            <input
+            id={field.name}
+            name={field.name}
+            value={field.state.value}
+            onBlur={field.handleBlur}
+            onChange={(e) => field.handleChange(e.target.value)}
+            />
+            <FieldInfo field={field} />
+        </>
+        )
+    }}
+/>`}
+  </Code>
+
+  This is the exact example code from the documentation of <code>@tanstack/form</code>. See the comment in the code? It says 
+  
+  > "Avoid hasty abstractions. Render props are great!"
+  
+  I don't know about you, but I find this approach to be quite verbose and repetitive. **It might be ideal for applications with only a few forms, but for a project like LifeForge that is literally built around forms, this approach quickly becomes cumbersome and hard to maintain.**
+
+  Therefore, I want to create a solution that allows me to define form fields in a more declarative way, without having to repeat myself for every single field. I want to be able to define a form field once and reuse it across different forms.
+
+  ### Absolute Type Safety
+
+  If you have worked with data submission before, you know the pain of dealing with type mismatches between the form data and the expected data structure by the backend. Therefore, since LifeForge already has a strong API type system in place (see [here](/backend/api)), I want to leverage it to ensure that the form data is always in sync with the expected data structure.
+
+  In LifeForge, you can do this:
+
+  <Code language="tsx">
+  {`defineForm<InferOutput<typeof forgeAPI.myApp.coolStuff.create>['body']>()`}
+  </Code>
+
+  And the subsequence configuration of the form will be type-safe, so will the final data being yielded by the form. This way, I can ensure that the form data is always in sync with the expected data structure, and you can be confident that the data you are submitting is always valid.
+</section>

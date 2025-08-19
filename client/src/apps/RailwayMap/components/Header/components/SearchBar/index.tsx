@@ -22,9 +22,9 @@ function SearchBar() {
     <div className="relative z-[500] w-full">
       <SearchInput
         namespace="apps.railwayMap"
-        value={searchQuery}
-        setValue={setSearchQuery}
         searchTarget="station"
+        setValue={setSearchQuery}
+        value={searchQuery}
       />
       {searchQuery.length > 0 && (
         <div

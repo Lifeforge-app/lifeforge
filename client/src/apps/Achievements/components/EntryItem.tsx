@@ -70,7 +70,7 @@ function EntryItem({ entry }: { entry: Achievement }) {
           label="Edit"
           onClick={() => {
             open(ModifyAchievementModal, {
-              type: 'update',
+              modifyType: 'update',
               initialData: entry,
               currentDifficulty: entry.difficulty
             })

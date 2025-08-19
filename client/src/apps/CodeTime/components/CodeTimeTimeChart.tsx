@@ -14,7 +14,7 @@ import {
 } from 'chart.js'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { DashboardItem, QueryWrapper } from 'lifeforge-ui'
+import { DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -182,7 +182,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
       title={`${type}TimeGraph`}
     >
       <div className="h-96 w-full">
-        <QueryWrapper query={dataQuery}>
+        <WithQuery query={dataQuery}>
           {data => (
             <Chart
               data={{
@@ -232,7 +232,7 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
               type="bar"
             />
           )}
-        </QueryWrapper>
+        </WithQuery>
       </div>
     </DashboardItem>
   )

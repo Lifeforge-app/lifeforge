@@ -30,14 +30,14 @@ function HeaderMenu() {
       />
       <ContextMenuItem
         icon="tabler:apps"
-        namespace="apps.wallet"
         label="Manage Categories"
+        namespace="apps.wallet"
         onClick={handleManageCategories}
       />
       <ContextMenuItem
         icon="tabler:template"
-        namespace="apps.wallet"
         label="Manage Templates"
+        namespace="apps.wallet"
         onClick={() => {
           open(ManageTemplatesModal, {})
         }}

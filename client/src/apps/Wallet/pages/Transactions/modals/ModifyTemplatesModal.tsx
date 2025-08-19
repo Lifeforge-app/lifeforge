@@ -56,14 +56,13 @@ function ModifyTemplatesModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wallet.templates)[typeof type]>['body']
-  >()
-    .ui({
-      namespace: 'apps.wallet',
-      title: `templates.${type}`,
-      icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
-      submitButton: type,
-      onClose
-    })
+  >({
+    namespace: 'apps.wallet',
+    title: `templates.${type}`,
+    icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
+    submitButton: type,
+    onClose
+  })
     .typesMap({
       type: 'listbox',
       name: 'text',

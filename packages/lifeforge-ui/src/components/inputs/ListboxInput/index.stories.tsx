@@ -130,7 +130,6 @@ export const MultipleSelection: Story = {
               : 'Select options'}
           </span>
         }
-        className="w-96"
         disabled={false}
         setValue={setValue}
         value={value}

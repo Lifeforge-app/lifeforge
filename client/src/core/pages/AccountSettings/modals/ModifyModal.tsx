@@ -39,14 +39,13 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
 
   const formProps = defineForm<{
     [key in string]: string
-  }>()
-    .ui({
-      namespace: 'core.accountSettings',
-      icon: 'tabler:pencil',
-      title: `${_.camelCase(title)}.update`,
-      onClose,
-      submitButton: 'update'
-    })
+  }>({
+    namespace: 'core.accountSettings',
+    icon: 'tabler:pencil',
+    title: `${_.camelCase(title)}.update`,
+    onClose,
+    submitButton: 'update'
+  })
     .typesMap({
       [id]: type
     })

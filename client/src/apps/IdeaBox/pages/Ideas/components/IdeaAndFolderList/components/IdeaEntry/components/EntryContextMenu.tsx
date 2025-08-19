@@ -149,8 +149,8 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
       {!debouncedSearchQuery && selectedTags.length === 0 && path !== '' && (
         <ContextMenuItem
           icon="tabler:folder-minus"
-          namespace="apps.ideaBox"
           label="Remove from folder"
+          namespace="apps.ideaBox"
           onClick={() => {
             removeFromFolderMutation.mutate({})
           }}

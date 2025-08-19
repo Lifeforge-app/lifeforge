@@ -4,7 +4,7 @@ import OTPScreen from '@security/components/OTPScreen'
 import { encrypt } from '@security/utils/encryption'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
+import { EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import type { InferOutput } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
@@ -71,7 +71,7 @@ function ContentContainer({
 
   return (
     <>
-      <QueryWrapper query={entriesQuery}>
+      <WithQuery query={entriesQuery}>
         {entries => (
           <div className="mt-6 mb-24 flex-1 space-y-3 lg:mb-12">
             {entries.length > 0 ? (
@@ -91,7 +91,7 @@ function ContentContainer({
             )}
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </>
   )
 }

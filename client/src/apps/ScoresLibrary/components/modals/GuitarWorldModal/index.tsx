@@ -4,8 +4,8 @@ import {
   Button,
   ConfirmationModal,
   ModalHeader,
-  QueryWrapper,
   TextInput,
+  WithQuery,
   useModalStore
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
@@ -87,9 +87,9 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
             value={cookie}
           />
           <Button
-            iconPosition="end"
             className="mt-4 w-full"
             icon="tabler:arrow-right"
+            iconPosition="end"
             onClick={() => {
               setFinalCookie(cookie)
             }}
@@ -98,7 +98,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
           </Button>
         </>
       ) : (
-        <QueryWrapper query={dataQuery}>
+        <WithQuery query={dataQuery}>
           {data => (
             <ScoreList
               cookie={cookie}
@@ -107,7 +107,7 @@ function GuitarWorldModal({ onClose }: { onClose: () => void }) {
               setPage={setPage}
             />
           )}
-        </QueryWrapper>
+        </WithQuery>
       )}
     </div>
   )

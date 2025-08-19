@@ -1,7 +1,7 @@
 import { Button } from '@components/buttons'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { useAPIEndpoint } from 'shared'
+import { useAPIEndpoint, usePromiseLoading } from 'shared'
 
 import forgeAPI from '../../../../../utils/forgeAPI'
 import TextAreaInput from '../../../TextAreaInput'
@@ -21,16 +21,12 @@ function AIImageGenerator({
 
   const [prompt, setPrompt] = useState('')
 
-  const [loading, setLoading] = useState(false)
-
-  async function onSubmit() {
+  const [loading, onSubmit] = usePromiseLoading(async () => {
     if (prompt === '') {
       toast.error('Please enter a prompt')
 
       return
     }
-
-    setLoading(true)
 
     try {
       const response = await forgeAPI.ai.imageGeneration.generateImage
@@ -44,7 +40,7 @@ function AIImageGenerator({
     } catch {
       toast.error('Failed to generate image')
     }
-  }
+  })
 
   useEffect(() => {
     setPrompt(defaultPrompt)

@@ -14,9 +14,9 @@ function SignInButton({
 
   return (
     <Button
-      iconPosition="end"
       className="w-full"
       icon="tabler:arrow-right"
+      iconPosition="end"
       loading={loading || auth}
       namespace="common.auth"
       onClick={signIn}

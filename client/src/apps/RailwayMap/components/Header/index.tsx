@@ -87,9 +87,9 @@ function Header() {
       </div>
       <FAB
         dangerous={shortestRoute.length > 0}
-        hideWhen="md"
         icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
         loading={typeof shortestRoute === 'string'}
+        visibilityBreakpoint="md"
         onClick={handleRoutePlannerToggle}
       />
       <DetailBox />

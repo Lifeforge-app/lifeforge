@@ -6,12 +6,14 @@ import {
 
 function FormDateInput({
   field,
-  selectedData,
+  value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<DateFieldProps>) {
   return (
     <DateInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       hasTime={field.hasTime}
       icon={field.icon}
@@ -19,7 +21,7 @@ function FormDateInput({
       namespace={namespace}
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }

@@ -229,8 +229,8 @@ function MovieItem({
         {data.is_watched && (
           <ContextMenuItem
             icon="tabler:eye-off"
-            namespace="apps.movies"
             label="Mark as Unwatched"
+            namespace="apps.movies"
             onClick={() => {
               setToggleWatchedLoading(true)
               toggleWatchedMutation.mutateAsync({})
@@ -239,8 +239,8 @@ function MovieItem({
         )}
         <ContextMenuItem
           icon="tabler:ticket"
-          namespace="apps.movies"
           label={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
+          namespace="apps.movies"
           onClick={handleUpdateTicket}
         />
         <ContextMenuItem

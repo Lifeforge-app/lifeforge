@@ -11,7 +11,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
+import { ModalHeader, WithQuery } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { usePersonalization } from 'shared'
@@ -148,7 +148,7 @@ function BalanceChartModal({
         title="assetsBalanceChart"
         onClose={onClose}
       />
-      <QueryWrapper query={assetBalanceQuery}>
+      <WithQuery query={assetBalanceQuery}>
         {assetBalance => (
           <div className="p-6">
             {chartData && Object.keys(assetBalance).length > 0 ? (
@@ -166,7 +166,7 @@ function BalanceChartModal({
             )}
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

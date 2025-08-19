@@ -8,7 +8,7 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect } from 'react'
@@ -40,6 +40,7 @@ function Transactions() {
 
   const { t } = useTranslation('apps.wallet')
 
+  // TODO: Migrate to nuqs
   const {
     setSelectedType,
     setSelectedLedger,
@@ -137,14 +138,14 @@ function Transactions() {
             >
               <ContextMenuItem
                 icon="tabler:plus"
-                namespace="apps.wallet"
                 label="Add Manually"
+                namespace="apps.wallet"
                 onClick={handleCreateTransaction}
               />
               <ContextMenuItem
                 icon="tabler:template"
-                namespace="apps.wallet"
                 label="From Template"
+                namespace="apps.wallet"
                 onClick={() => {
                   open(ManageTemplatesModal, {
                     choosing: true
@@ -153,8 +154,8 @@ function Transactions() {
               />
               <ContextMenuItem
                 icon="tabler:scan"
-                namespace="apps.wallet"
                 label="Scan Receipt"
+                namespace="apps.wallet"
                 onClick={handleUploadReceipt}
               />
             </ContextMenu>
@@ -174,7 +175,7 @@ function Transactions() {
           <InnerHeader />
           <SearchBar />
           <div className="mt-6 mb-8 flex size-full flex-col gap-4">
-            <QueryWrapper query={transactionsQuery}>
+            <WithQuery query={transactionsQuery}>
               {transactions =>
                 transactions.length > 0 ? (
                   <TransactionList />
@@ -192,24 +193,26 @@ function Transactions() {
                   />
                 )
               }
-            </QueryWrapper>
+            </WithQuery>
             {(transactionsQuery.data ?? []).length > 0 && (
               <ContextMenu
-                buttonComponent={<FAB className="static!" hideWhen="md" />}
+                buttonComponent={
+                  <FAB className="static!" visibilityBreakpoint="md" />
+                }
                 classNames={{
                   wrapper: 'w-min! fixed right-6 bottom-6'
                 }}
               >
                 <ContextMenuItem
                   icon="tabler:plus"
-                  namespace="apps.wallet"
                   label="Add Manually"
+                  namespace="apps.wallet"
                   onClick={handleCreateTransaction}
                 />
                 <ContextMenuItem
                   icon="tabler:template"
-                  namespace="apps.wallet"
                   label="From Template"
+                  namespace="apps.wallet"
                   onClick={() => {
                     open(ManageTemplatesModal, {
                       choosing: true
@@ -218,8 +221,8 @@ function Transactions() {
                 />
                 <ContextMenuItem
                   icon="tabler:scan"
-                  namespace="apps.wallet"
                   label="Scan Receipt"
+                  namespace="apps.wallet"
                   onClick={handleUploadReceipt}
                 />
               </ContextMenu>

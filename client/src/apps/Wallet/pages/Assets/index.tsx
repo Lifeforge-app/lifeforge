@@ -6,7 +6,7 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect } from 'react'
@@ -77,10 +77,10 @@ function Assets() {
                 }}
               />
               <ContextMenuItem
-                icon="tabler:eye-off"
                 checked={isAmountHidden}
-                namespace="apps.wallet"
+                icon="tabler:eye-off"
                 label="Hide Amount"
+                namespace="apps.wallet"
                 onClick={() => {
                   toggleAmountVisibility()
                 }}
@@ -93,7 +93,7 @@ function Assets() {
         title="Assets"
         tKey="subsectionsTitleAndDesc"
       />
-      <QueryWrapper query={assetsQuery}>
+      <WithQuery query={assetsQuery}>
         {assets => (
           <>
             {assets.length > 0 ? (
@@ -119,7 +119,7 @@ function Assets() {
             )}
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </ModuleWrapper>
   )
 }

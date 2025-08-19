@@ -1,4 +1,4 @@
-import { EmptyStateScreen, QueryWrapper } from 'lifeforge-ui'
+import { EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,9 +35,9 @@ function IdeaAndFolderList() {
   return (
     <div className="mt-6 mb-20">
       {debouncedSearchQuery.trim().length === 0 && selectedTags.length === 0 ? (
-        <QueryWrapper query={entriesQuery}>
+        <WithQuery query={entriesQuery}>
           {data => (
-            <QueryWrapper query={foldersQuery}>
+            <WithQuery query={foldersQuery}>
               {folders => (
                 <>
                   {data.length === 0 && folders.length === 0 ? (
@@ -70,11 +70,11 @@ function IdeaAndFolderList() {
                   )}
                 </>
               )}
-            </QueryWrapper>
+            </WithQuery>
           )}
-        </QueryWrapper>
+        </WithQuery>
       ) : (
-        <QueryWrapper query={searchResultsQuery}>
+        <WithQuery query={searchResultsQuery}>
           {searchResults => (
             <>
               {searchResults.length === 0 ? (
@@ -90,7 +90,7 @@ function IdeaAndFolderList() {
               )}
             </>
           )}
-        </QueryWrapper>
+        </WithQuery>
       )}
     </div>
   )

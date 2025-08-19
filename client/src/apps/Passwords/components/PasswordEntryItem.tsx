@@ -15,6 +15,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import {
   type PasswordEntry,
@@ -42,8 +43,6 @@ function PasswordEntryItem({
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
-
-  const [loading, setLoading] = useState(false)
 
   const [copyLoading, setCopyLoading] = useState(false)
 
@@ -103,8 +102,6 @@ function PasswordEntryItem({
       return
     }
 
-    setLoading(true)
-
     try {
       const decrypted = await getDecryptedPassword(masterPassword, password.id)
 
@@ -112,10 +109,10 @@ function PasswordEntryItem({
     } catch {
       toast.error('Couldn’t decrypt the password. Please try again.')
       setDecryptedPassword(null)
-    } finally {
-      setLoading(false)
     }
   }, [masterPassword, password.id, decryptedPassword])
+
+  const [loading, onDecrypt] = usePromiseLoading(decryptPassword)
 
   const handleDeletePassword = useCallback(() => {
     open(ConfirmationModal, {
@@ -194,7 +191,7 @@ function PasswordEntryItem({
             iconClassName="size-6"
             loading={loading}
             variant="plain"
-            onClick={decryptPassword}
+            onClick={onDecrypt}
           />
           <Button
             className="hidden p-2! sm:flex"
@@ -206,8 +203,8 @@ function PasswordEntryItem({
           <ContextMenu>
             <ContextMenuItem
               icon="tabler:rotate"
-              loading={rotateLoading}
               label="Rotate Password"
+              loading={rotateLoading}
               onClick={async () => {
                 setRotateLoading(true)
 
@@ -267,17 +264,17 @@ function PasswordEntryItem({
               icon={
                 decryptedPassword === null ? 'tabler:eye' : 'tabler:eye-off'
               }
-              loading={loading}
               label={
                 decryptedPassword === null ? 'Show Password' : 'Hide Password'
               }
-              onClick={decryptPassword}
+              loading={loading}
+              onClick={onDecrypt}
             />
             <ContextMenuItem
               className="flex sm:hidden"
               icon="tabler:copy"
-              loading={copyLoading}
               label="Copy Password"
+              loading={copyLoading}
               onClick={copyPassword}
             />
             <ContextMenuItem

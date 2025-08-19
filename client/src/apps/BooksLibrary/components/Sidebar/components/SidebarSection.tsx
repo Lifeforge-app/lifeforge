@@ -1,4 +1,4 @@
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -56,7 +56,7 @@ function SidebarSection({
             }
           : {})}
       />
-      <QueryWrapper query={dataQuery}>
+      <WithQuery query={dataQuery}>
         {data =>
           data.length > 0 ? (
             <>
@@ -74,7 +74,7 @@ function SidebarSection({
             <p className="text-bg-500 text-center">{t(`empty.${stuff}`)}</p>
           )
         }
-      </QueryWrapper>
+      </WithQuery>
     </>
   )
 }

@@ -2,10 +2,11 @@ import tinycolor from 'tinycolor2'
 
 export const generateBaseClass = (
   hasChildren: boolean,
+  hasIcon: boolean,
   iconAtEnd: boolean
 ): string =>
   `flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg p-4 ${
-    hasChildren && (iconAtEnd ? 'pl-5' : 'pr-5')
+    hasChildren && hasIcon && (iconAtEnd ? 'pl-5' : 'pr-5')
   } font-medium tracking-wide transition-all disabled:cursor-not-allowed`
 
 export const generateColorClass = (
@@ -51,12 +52,13 @@ export const generateColorClass = (
 export const generateClassName = (
   themeColor: string,
   hasChildren: boolean,
+  hasIcon: boolean,
   iconAtEnd: boolean,
   dangerous: boolean,
   variant: string,
   className: string
 ): string =>
-  `${generateBaseClass(hasChildren, iconAtEnd)} ${generateColorClass(
+  `${generateBaseClass(hasChildren, hasIcon, iconAtEnd)} ${generateColorClass(
     dangerous,
     variant,
     themeColor

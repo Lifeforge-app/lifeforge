@@ -1,27 +1,23 @@
 import forgeAPI from '@utils/forgeAPI'
 import { Button, ConfigColumn } from 'lifeforge-ui'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 function PasswordColumn() {
   const { t } = useTranslation('core.accountSettings')
 
-  const [loading, setLoading] = useState(false)
-
-  async function onPasswordChange() {
-    setLoading(true)
-
+  async function handlePasswordChange() {
     try {
       await forgeAPI.user.settings.requestPasswordReset.mutate({})
 
       toast.info('A password reset link has been sent to your email.')
     } catch {
       toast.error('Failed to send password reset link.')
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(handlePasswordChange)
 
   return (
     <ConfigColumn
@@ -35,9 +31,7 @@ function PasswordColumn() {
         loading={loading}
         namespace="core.accountSettings"
         variant="secondary"
-        onClick={() => {
-          onPasswordChange().catch(console.error)
-        }}
+        onClick={onSubmit}
       >
         change password
       </Button>

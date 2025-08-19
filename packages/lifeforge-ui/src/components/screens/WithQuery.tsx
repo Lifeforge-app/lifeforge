@@ -3,7 +3,7 @@ import type { UseQueryResult } from '@tanstack/react-query'
 import ErrorScreen from './ErrorScreen'
 import LoadingScreen from './LoadingScreen'
 
-function QueryWrapper<T>({
+function WithQuery<T>({
   query,
   children,
   showLoading = true
@@ -23,4 +23,4 @@ function QueryWrapper<T>({
   return <>{children(query.data as T)}</>
 }
 
-export default QueryWrapper
+export default WithQuery

@@ -6,12 +6,14 @@ import {
 
 function FormTextAreaInput({
   field,
-  selectedData,
+  value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<TextAreaFieldProps>) {
   return (
     <TextAreaInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       icon={field.icon}
       label={field.label}
@@ -19,7 +21,7 @@ function FormTextAreaInput({
       placeholder={field.placeholder}
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }

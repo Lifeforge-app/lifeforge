@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -18,7 +18,7 @@ function TableView() {
   const categories = categoriesQuery.data ?? []
 
   return (
-    <QueryWrapper query={transactionsQuery}>
+    <WithQuery query={transactionsQuery}>
       {transactions => (
         <table className="hidden w-full text-base! lg:table">
           <thead>
@@ -110,7 +110,7 @@ function TableView() {
           </tbody>
         </table>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

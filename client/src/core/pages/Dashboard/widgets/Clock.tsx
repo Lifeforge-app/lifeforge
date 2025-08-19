@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function Clock() {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
@@ -9,10 +9,14 @@ function Clock() {
 
   const ref = useRef<HTMLDivElement>(null)
 
-  setInterval(() => {
-    setTime(dayjs().format('HH:mm'))
-    setSecond(dayjs().format('ss'))
-  }, 1000)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(dayjs().format('HH:mm'))
+      setSecond(dayjs().format('ss'))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div

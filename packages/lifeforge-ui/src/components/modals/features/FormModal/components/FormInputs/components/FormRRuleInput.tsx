@@ -6,14 +6,14 @@ import {
 
 function FormRRuleInput({
   field,
-  selectedData,
+  value,
   handleChange
 }: FormInputProps<RRuleFieldProps>) {
   return (
     <RRuleInput
       hasDuration={!!field.hasDuration}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }

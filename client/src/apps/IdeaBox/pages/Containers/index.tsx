@@ -1,53 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
-  SearchInput
+  SearchInput,
+  WithQueryData
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { InferOutput } from 'shared'
 
 import ContainerList from './components/ContainerList'
 import ModifyContainerModal from './components/ModifyContainerModal'
-
-type IdeaBoxContainer = InferOutput<
-  typeof forgeAPI.ideaBox.containers.list
->[number]
 
 function IdeaBox() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.ideaBox')
 
-  const query = useQuery(forgeAPI.ideaBox.containers.list.queryOptions())
-
-  const [filteredList, setFilteredList] = useState<IdeaBoxContainer[]>([])
-
   const [searchQuery, setSearchQuery] = useState('')
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
-
-  useEffect(() => {
-    if (Array.isArray(query.data)) {
-      if (debouncedSearchQuery.length === 0) {
-        setFilteredList(query.data)
-      } else {
-        setFilteredList(
-          query.data.filter(container =>
-            container.name
-              .toLowerCase()
-              .includes(debouncedSearchQuery.toLowerCase())
-          )
-        )
-      }
-    }
-  }, [debouncedSearchQuery, query.data])
 
   const handleCreateContainer = useCallback(() => {
     open(ModifyContainerModal, {
@@ -60,29 +34,45 @@ function IdeaBox() {
       <ModuleHeader icon="tabler:bulb" title="Idea Box" />
       <SearchInput
         namespace="apps.ideaBox"
-        value={searchQuery}
-        setValue={setSearchQuery}
         searchTarget="container"
+        setValue={setSearchQuery}
+        value={searchQuery}
       />
-      <QueryWrapper query={query}>
-        {data =>
-          data.length > 0 ? (
-            <ContainerList filteredList={filteredList} />
-          ) : (
-            <EmptyStateScreen
-              CTAButtonProps={{
-                children: 'new',
-                onClick: handleCreateContainer,
-                icon: 'tabler:plus',
-                tProps: { item: t('items.container') }
-              }}
-              icon="tabler:cube-off"
-              name="container"
-              namespace="apps.ideaBox"
-            />
+      <WithQueryData controller={forgeAPI.ideaBox.containers.list}>
+        {data => {
+          if (data.length === 0) {
+            return (
+              <EmptyStateScreen
+                CTAButtonProps={{
+                  children: 'new',
+                  onClick: handleCreateContainer,
+                  icon: 'tabler:plus',
+                  tProps: { item: t('items.container') }
+                }}
+                icon="tabler:cube-off"
+                name="container"
+                namespace="apps.ideaBox"
+              />
+            )
+          }
+
+          const filteredList = data.filter(container =>
+            container.name.toLowerCase().includes(debouncedSearchQuery)
           )
-        }
-      </QueryWrapper>
+
+          if (filteredList.length === 0) {
+            return (
+              <EmptyStateScreen
+                icon="tabler:search-off"
+                name="containerSearch"
+                namespace="apps.ideaBox"
+              />
+            )
+          }
+
+          return <ContainerList filteredList={filteredList} />
+        }}
+      </WithQueryData>
     </ModuleWrapper>
   )
 }

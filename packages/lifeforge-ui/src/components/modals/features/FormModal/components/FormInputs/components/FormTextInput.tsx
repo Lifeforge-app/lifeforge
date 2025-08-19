@@ -7,7 +7,8 @@ import {
 
 function FormTextInput({
   field,
-  selectedData,
+  value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<TextFieldProps>) {
@@ -34,7 +35,9 @@ function FormTextInput({
                 }
               : undefined
         }
+        autoFocus={autoFocus}
         disabled={field.disabled}
+        errorMsg={field.errorMsg}
         icon={field.icon}
         isPassword={field.isPassword}
         label={field.label}
@@ -42,7 +45,7 @@ function FormTextInput({
         placeholder={field.placeholder}
         required={field.required}
         setValue={handleChange}
-        value={selectedData}
+        value={value}
       />
     </>
   )

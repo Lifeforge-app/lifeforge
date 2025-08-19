@@ -10,7 +10,7 @@ export interface ButtonProps {
   /** The content to display inside the button. Can be text or any valid React node. */
   children?: React.ReactNode
   /** The icon to display in the button. Should be a valid icon name from Iconify in the format `<icon-library>:<icon-name>`. */
-  icon: string
+  icon?: string
   /** The position of the icon within the button. Defaults to 'start'. */
   iconPosition?: 'start' | 'end'
   /** Additional CSS class names to apply to the icon. Use `!` suffix for Tailwind CSS class overrides. */
@@ -65,6 +65,7 @@ function Button<C extends React.ElementType = 'button'>({
   const finalClassName = generateClassName(
     derivedThemeColor,
     Boolean(children),
+    !!icon,
     iconPosition === 'end',
     dangerous,
     variant,
@@ -81,7 +82,7 @@ function Button<C extends React.ElementType = 'button'>({
       type="button"
       onClick={onClick}
     >
-      {iconPosition === 'start' && (
+      {icon && iconPosition === 'start' && (
         <ButtonIcon
           disabled={disabled}
           icon={icon}
@@ -89,7 +90,6 @@ function Button<C extends React.ElementType = 'button'>({
           loading={loading}
         />
       )}
-
       {children && typeof children === 'string' ? (
         <div className="min-w-0 truncate">
           {t(
@@ -105,7 +105,7 @@ function Button<C extends React.ElementType = 'button'>({
       ) : (
         children
       )}
-      {iconPosition === 'end' && (
+      {icon && iconPosition === 'end' && (
         <ButtonIcon
           disabled={disabled}
           icon={icon}

@@ -38,14 +38,13 @@ function ModifyLedgerModal({
 
   const formProps = defineForm<
     InferInput<(typeof forgeAPI.wallet.ledgers)[typeof type]>['body']
-  >()
-    .ui({
-      namespace: 'apps.wallet',
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      title: `ledgers.${type}`,
-      submitButton: type,
-      onClose
-    })
+  >({
+    namespace: 'apps.wallet',
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    title: `ledgers.${type}`,
+    submitButton: type,
+    onClose
+  })
     .typesMap({
       icon: 'icon',
       name: 'text',

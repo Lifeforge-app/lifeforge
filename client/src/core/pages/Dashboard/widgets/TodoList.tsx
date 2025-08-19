@@ -2,8 +2,8 @@ import {
   Button,
   DashboardItem,
   EmptyStateScreen,
-  QueryWrapper,
-  Scrollbar
+  Scrollbar,
+  WithQuery
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
@@ -22,7 +22,7 @@ function TodoListContent() {
   const { entriesQuery } = useTodoListContext()
 
   return (
-    <QueryWrapper query={entriesQuery}>
+    <WithQuery query={entriesQuery}>
       {entries => (
         <ul className="flex flex-1 flex-col gap-2 pr-4">
           {entries.length > 0 ? (
@@ -53,7 +53,7 @@ function TodoListContent() {
           )}
         </ul>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

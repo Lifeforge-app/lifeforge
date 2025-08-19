@@ -1,6 +1,6 @@
 import { type UseQueryResult, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ConfirmationModal, Pagination, QueryWrapper } from 'lifeforge-ui'
+import { ConfirmationModal, Pagination, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect } from 'react'
 import { toast } from 'react-toastify'
@@ -61,7 +61,7 @@ function EntryList({
   }, [dataQuery.data])
 
   return (
-    <QueryWrapper query={dataQuery}>
+    <WithQuery query={dataQuery}>
       {data => (
         <>
           <Pagination
@@ -112,7 +112,7 @@ function EntryList({
           />
         </>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

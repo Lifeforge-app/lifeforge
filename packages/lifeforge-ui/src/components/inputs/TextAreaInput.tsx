@@ -4,6 +4,7 @@ import InputIcon from './shared/components/InputIcon'
 import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
+import { autoFocusableRef } from './shared/utils/autoFocusableRef'
 
 export interface TextAreaInputProps {
   /** The label text displayed above the textarea field. */
@@ -20,10 +21,14 @@ export interface TextAreaInputProps {
   required?: boolean
   /** Whether the textarea is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the textarea should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Additional CSS class names to apply to the textarea element. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
+  errorMsg?: string
 }
 
 function TextAreaInput({
@@ -32,10 +37,12 @@ function TextAreaInput({
   placeholder,
   value,
   setValue,
-  required,
-  disabled,
+  required = false,
+  disabled = false,
+  autoFocus = false,
   className,
-  namespace
+  namespace,
+  errorMsg
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label })
 
@@ -49,16 +56,26 @@ function TextAreaInput({
   }, [value])
 
   return (
-    <InputWrapper className={className} disabled={disabled} inputRef={ref}>
-      <InputIcon active={!!value && String(value).length > 0} icon={icon} />
+    <InputWrapper
+      className={className}
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={ref}
+    >
+      <InputIcon
+        active={!!value && String(value).length > 0}
+        hasError={!!errorMsg}
+        icon={icon}
+      />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           active={!!value && String(value).length > 0}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />
         <textarea
-          ref={ref}
+          ref={autoFocusableRef(autoFocus, ref)}
           className="focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 mt-3 -mb-3 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
           placeholder={placeholder}
           value={value}

@@ -61,13 +61,13 @@ function ContentContainer() {
     <>
       <SearchInput
         namespace="apps.passwords"
-        value={query}
-        setValue={setQuery}
         searchTarget="password"
+        setValue={setQuery}
+        value={query}
       />
       <PasswordList />
       {masterPassword !== '' && (
-        <FAB hideWhen="lg" onClick={handleCreatePassword} />
+        <FAB visibilityBreakpoint="lg" onClick={handleCreatePassword} />
       )}
     </>
   )

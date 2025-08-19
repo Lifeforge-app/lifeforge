@@ -59,7 +59,10 @@ export default [
   // JSX Accessibility Presets
   {
     files: ['**/*.{js,jsx,ts,tsx,mjs,cjs}'],
-    ...jsxA11y.flatConfigs.recommended
+    ...jsxA11y.flatConfigs.recommended,
+    rules: {
+      'jsx-a11y/no-autofocus': 'off'
+    }
   },
 
   // SonarJS
