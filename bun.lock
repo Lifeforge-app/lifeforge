@@ -384,9 +384,12 @@
       "name": "lifeforge-server",
       "version": "0.0.0",
       "dependencies": {
+        "@ai-sdk/gateway": "^1.0.7",
+        "@ai-sdk/openai": "^2.0.0-beta.16",
         "@ts-rest/express": "^3.52.1",
         "@zodios/express": "^10.6.1",
         "aewx-metar-parser": "^1.0.0",
+        "ai": "^5.0.0-beta.34",
         "base64": "^2.1.0",
         "bcrypt": "^5.1.1",
         "chalk": "^5.4.1",
@@ -493,6 +496,8 @@
     "@adobe/css-tools": ["@adobe/css-tools@4.4.3", "", {}, "sha512-VQKMkwriZbaOgVCby1UDY/LDk5fIjhQicCvVPFqfe+69fWaPWydbWJ3wRt59/YzIwda1I81loas3oCoHxnqvdA=="],
 
     "@ai-sdk/gateway": ["@ai-sdk/gateway@1.0.7", "", { "dependencies": { "@ai-sdk/provider": "2.0.0", "@ai-sdk/provider-utils": "3.0.3" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-Athrq7OARuNc0iHZJP6InhSQ53tImCc990vMWyR1UHaZgPZJbXjKhIMiOj54F0I0Nlemx48V4fHYUTfLkJotnQ=="],
+
+    "@ai-sdk/openai": ["@ai-sdk/openai@2.0.0-beta.16", "", { "dependencies": { "@ai-sdk/provider": "2.0.0-beta.2", "@ai-sdk/provider-utils": "3.0.0-beta.10" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-0fG8U2b4CAxwgvEs05hQj+E8Qkf0WaQrqu/7a9AmutyNuhPtqnMdFsqKYS5t0x2Jo1/0q0lTyCbvHSh5rdHtmw=="],
 
     "@ai-sdk/provider": ["@ai-sdk/provider@2.0.0", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-6o7Y2SeO9vFKB8lArHXehNuusnpddKPk7xqL7T2/b+OvXMRIXUO1rR4wcv1hAFUAT9avGZshty3Wlua/XA7TvA=="],
 
@@ -4390,6 +4395,10 @@
 
     "zxing-wasm": ["zxing-wasm@2.2.0", "", { "dependencies": { "@types/emscripten": "^1.40.1", "type-fest": "^4.41.0" } }, "sha512-RyHxVaAHsLSDzmwcAG05IF8sVOE5Ta2JT1dRDh0mzVZOIiDXZstsjkqvKHasN1n4lvFSbX7ngkHDufnt/XI07Q=="],
 
+    "@ai-sdk/openai/@ai-sdk/provider": ["@ai-sdk/provider@2.0.0-beta.2", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-vqhtZA7R24q1XnmfmIb1fZSmHMIaJH1BVQ+0kFnNJgqWsc+V8i+yfetZ37gUc4fXATFmBuS/6O7+RPoHsZ2Fqg=="],
+
+    "@ai-sdk/openai/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@3.0.0-beta.10", "", { "dependencies": { "@ai-sdk/provider": "2.0.0-beta.2", "@standard-schema/spec": "^1.0.0", "eventsource-parser": "^3.0.3", "zod-to-json-schema": "^3.24.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-e6WSsgM01au04/1L/v5daXHn00eKjPBQXl3jq3BfvQbQ1jo8Rls2pvrdkyVc25jBW4TV4Zm+tw+v6NAh5NPXMA=="],
+
     "@antfu/install-pkg/tinyexec": ["tinyexec@1.0.1", "", {}, "sha512-5uC6DDlmeqiOwCPmK9jMSdOuZTh8bU39Ys6yidB+UTt5hfZUPGAypSgFRiEp+jbi9qH40BLDvy85jIU88wKSqw=="],
 
     "@asamuzakjp/css-color/lru-cache": ["lru-cache@10.4.3", "", {}, "sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ=="],
@@ -4543,6 +4552,12 @@
     "@vitest/utils/loupe": ["loupe@2.3.7", "", { "dependencies": { "get-func-name": "^2.0.1" } }, "sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA=="],
 
     "@xyflow/react/zustand": ["zustand@4.5.7", "", { "dependencies": { "use-sync-external-store": "^1.2.2" }, "peerDependencies": { "@types/react": ">=16.8", "immer": ">=9.0.6", "react": ">=16.8" }, "optionalPeers": ["@types/react", "immer", "react"] }, "sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw=="],
+
+    "ai/@ai-sdk/gateway": ["@ai-sdk/gateway@1.0.0-beta.19", "", { "dependencies": { "@ai-sdk/provider": "2.0.0-beta.2", "@ai-sdk/provider-utils": "3.0.0-beta.10" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-felWPMuECZRGx8xnmvH5dW3jywKTkGnw/tXN8szphGzEDr/BfxywuXijfPBG2WBUS6frPXsvSLDRdCm5W38PXA=="],
+
+    "ai/@ai-sdk/provider": ["@ai-sdk/provider@2.0.0-beta.2", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-vqhtZA7R24q1XnmfmIb1fZSmHMIaJH1BVQ+0kFnNJgqWsc+V8i+yfetZ37gUc4fXATFmBuS/6O7+RPoHsZ2Fqg=="],
+
+    "ai/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@3.0.0-beta.10", "", { "dependencies": { "@ai-sdk/provider": "2.0.0-beta.2", "@standard-schema/spec": "^1.0.0", "eventsource-parser": "^3.0.3", "zod-to-json-schema": "^3.24.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-e6WSsgM01au04/1L/v5daXHn00eKjPBQXl3jq3BfvQbQ1jo8Rls2pvrdkyVc25jBW4TV4Zm+tw+v6NAh5NPXMA=="],
 
     "ansi-escapes/type-fest": ["type-fest@0.21.3", "", {}, "sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w=="],
 
