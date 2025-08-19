@@ -27,6 +27,10 @@
     "result": {
       "title": "沒有結果",
       "description": "找不到與您的搜索條件匹配的創意。"
+    },
+    "containerSearch": {
+      "title": "未找到容器",
+      "description": "未找到與您的搜尋查詢相關的容器。請再試一次。"
     }
   },
   "modals": {
