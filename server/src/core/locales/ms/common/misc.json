@@ -108,5 +108,10 @@
       "5": "Sabtu",
       "6": "Ahad"
     }
-  }
+  },
+  "fieldRequired": "Ruangan ini adalah wajib.",
+  "invalidField": "Medan tidak sah.",
+  "invalidColor": "Warna tidak sah. Sila masukkan nilai hex yang sah dalam format #RRGGBB.",
+  "invalidIcon": "Ikon tidak sah. Ia mesti pengenalan ikon yang sah dari Iconify dalam format <icon-set>:<icon-name>.",
+  "loadingUserData": "Memuatkan data pengguna..."
 }

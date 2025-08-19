@@ -27,6 +27,10 @@
     "result": {
       "title": "Tiada Keputusan",
       "description": "Tiada idea yang sepadan dengan kriteria carian anda."
+    },
+    "containerSearch": {
+      "title": "Tiada Kontena Ditemui",
+      "description": "Tiada kontena yang ditemui berkaitan dengan pertanyaan carian anda. Sila cuba yang lain."
     }
   },
   "modals": {
