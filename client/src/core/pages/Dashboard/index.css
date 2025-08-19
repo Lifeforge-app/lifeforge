@@ -13,3 +13,13 @@
 .react-grid-item.react-grid-placeholder {
   @apply bg-custom-500!;
 }
+
+.agent-response {
+  & ul {
+    @apply list-disc pl-5;
+  }
+
+  & ol {
+    @apply list-decimal pl-5;
+  }
+}
