@@ -1,3 +1,4 @@
+import { LoggingService } from '@functions/logging/loggingService'
 import { setupSocket } from '@functions/socketio/setupSocket'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import { createServer } from 'node:http'
@@ -18,6 +19,6 @@ app.request.io = io
 server.listen(process.env.PORT, () => {
   const routes = traceRouteStack(app._router.stack)
 
-  console.log(`Registered routes: ${routes.length}`)
-  console.log(`REST API server running on port ${process.env.PORT}`)
+  LoggingService.debug(`Registered routes: ${routes.length}`)
+  LoggingService.info(`REST API server running on port ${process.env.PORT}`)
 })
