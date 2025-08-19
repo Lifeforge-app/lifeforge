@@ -30,6 +30,7 @@
  * ```
  */
 import { checkExistence } from '@functions/database'
+import { LoggingService } from '@functions/logging/loggingService'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import type { Request, Response, Router } from 'express'
@@ -530,9 +531,8 @@ export class ForgeControllerBuilder<
           if (ClientError.isClientError(err)) {
             return clientError(res, err.message, err.code)
           }
-          console.error(
-            'Internal error:',
-            err instanceof Error ? err.message : err
+          LoggingService.error(
+            err instanceof Error ? err.message : (err as string)
           )
           serverError(res, 'Internal server error')
         }

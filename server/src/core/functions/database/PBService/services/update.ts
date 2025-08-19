@@ -5,6 +5,8 @@ import {
   FieldSelection,
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -133,11 +135,15 @@ export class Update<
     }
 
     if (!this._recordId) {
-      throw new Error(`Failed to update record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`)
+      throw new Error(
+        `Failed to update record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`
+      )
     }
 
     if (Object.keys(this._data).length === 0) {
-      throw new Error(`Failed to update record in collection "${this.collectionKey}". Data is required. Use .data() method to set the data.`)
+      throw new Error(
+        `Failed to update record in collection "${this.collectionKey}". Data is required. Use .data() method to set the data.`
+      )
     }
 
     return this._pb
@@ -145,6 +151,18 @@ export class Update<
       .update(this._recordId, this._data, {
         expand: this._expand,
         fields: this._fields
+      })
+      .then(result => {
+        LoggingService.debug(
+          `${chalk.hex('#2ed573').bold('update')} Updated record with ID ${chalk
+            .hex('#34ace0')
+            .bold(
+              this._recordId
+            )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+          'DB'
+        )
+
+        return result
       }) as unknown as Promise<
       SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
     >
