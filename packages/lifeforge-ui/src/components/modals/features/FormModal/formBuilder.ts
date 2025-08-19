@@ -3,6 +3,7 @@ import FormModal from '.'
 import type {
   FieldsConfig,
   FormState,
+  InferAutoFocusableFieldIds,
   InferFormFinalState,
   InferFormState,
   MatchFieldByFormDataType
@@ -45,8 +46,7 @@ type FlattenUnion<T> = {
  * }
  *
  * // Build form configuration
- * const formConfig = defineForm<UserForm>()
- *   .ui({
+ * const formConfig = defineForm<UserForm>({
  *     title: 'Create User',
  *     icon: 'user-plus',
  *     onClose: () => setModalOpen(false),
@@ -84,6 +84,8 @@ class FormBuilder<
   private readonly fieldType?: TFieldType
   /** Raw field configuration object */
   private readonly fields?: TFieldsConfig
+  /** Field ID to be autofocused */
+  private readonly _autoFocusableFieldId?: keyof TFormState
   /** Final processed field configuration with types */
   private readonly finalFields?: TFinalFields
   /** Initial data for form fields */
@@ -102,6 +104,7 @@ class FormBuilder<
     uiConfig?: React.ComponentProps<typeof FormModal>['ui']
     fieldType?: TFieldType
     fields?: TFieldsConfig
+    autoFocusableFieldId?: keyof TFormState
     finalFields?: TFinalFields
     initialData?: TInitialData
     onSubmit?: TOnSubmit
@@ -111,64 +114,12 @@ class FormBuilder<
       this.uiConfig = opts.uiConfig
       this.fieldType = opts.fieldType
       this.fields = opts.fields
+      this._autoFocusableFieldId = opts.autoFocusableFieldId
       this.finalFields = opts.finalFields
       this._initialData = opts.initialData
       this._onChange = opts.onChange
       this._onSubmit = opts.onSubmit
     }
-  }
-
-  /**
-   * Configures the UI appearance and behavior of the form modal.
-   *
-   * @param uiConfig - Configuration object for the modal UI with the following properties:
-   *   - `title`: Modal title text (required)
-   *   - `icon`: Icon identifier for the modal header (required)
-   *   - `onClose`: Function called when modal is closed (required)
-   *   - `namespace`: Optional translation namespace for internationalization
-   *   - `loading`: Optional loading state flag
-   *   - `submitButton`: Either 'create'/'update' preset or custom Button component props
-   * @returns A new FormBuilder instance with the UI configuration applied
-   *
-   * @example
-   * ```tsx
-   * .ui({
-   *   title: 'Create New User',
-   *   icon: 'user-plus',
-   *   onClose: () => setModalOpen(false),
-   *   namespace: 'users',
-   *   loading: false,
-   *   submitButton: 'create'
-   * })
-   *
-   * // Or with custom submit button
-   * .ui({
-   *   title: 'Update Profile',
-   *   icon: 'edit',
-   *   onClose: handleClose,
-   *   submitButton: {
-   *     variant: 'primary',
-   *     children: 'Save Changes',
-   *     icon: "tabler:check"
-   *   }
-   * })
-   * ```
-   */
-  ui(
-    uiConfig: React.ComponentProps<typeof FormModal>['ui']
-  ): FormBuilder<
-    TFormState,
-    TFieldType,
-    TFieldsConfig,
-    TFinalFields,
-    TInitialData,
-    TOnSubmit,
-    TOnChange
-  > {
-    return new FormBuilder({
-      ...this,
-      uiConfig
-    })
   }
 
   /**
@@ -274,6 +225,41 @@ class FormBuilder<
   }
 
   /**
+   * Sets the field that should be automatically focused when the form is opened.
+   * This is useful for improving user experience by focusing on the most relevant input.
+   *
+   * @param fieldId - The ID of the field to focus on
+   * @returns A new FormBuilder instance with the auto-focus field set
+   *
+   * @example
+   * ```tsx
+   * .autoFocusField('name')
+   * ```
+   */
+  autoFocusField(
+    fieldId: InferAutoFocusableFieldIds<TFieldType>
+  ): FormBuilder<
+    TFormState,
+    TFieldType,
+    TFieldsConfig,
+    TFinalFields,
+    TInitialData,
+    TOnSubmit,
+    TOnChange
+  > {
+    return new FormBuilder({
+      uiConfig: this.uiConfig,
+      fieldType: this.fieldType,
+      fields: this.fields,
+      autoFocusableFieldId: fieldId as string,
+      finalFields: this.finalFields,
+      initialData: this._initialData,
+      onSubmit: this._onSubmit,
+      onChange: this._onChange
+    })
+  }
+
+  /**
    * Sets the initial data for the form fields. This is optional and allows pre-populating fields.
    *
    * @param initialData - Partial object containing initial values for form fields
@@ -306,6 +292,9 @@ class FormBuilder<
       fieldType: this.fieldType,
       fields: this.fields,
       finalFields: this.finalFields,
+      autoFocusableFieldId: this._autoFocusableFieldId,
+      onChange: this._onChange,
+      onSubmit: this._onSubmit,
       initialData
     })
   }
@@ -347,6 +336,7 @@ class FormBuilder<
       fieldType: this.fieldType,
       fields: this.fields,
       finalFields: this.finalFields,
+      autoFocusableFieldId: this._autoFocusableFieldId,
       initialData: this._initialData,
       onSubmit: callback,
       onChange: this._onChange
@@ -367,9 +357,11 @@ class FormBuilder<
    * defineForm<{
    *   country: string
    *   state: string
-   * }>()
-   * .ui({
-   *   ...
+   * }>({
+   *   title: 'Create User',
+   *   icon: 'user-plus',
+   *   onClose: () => setModalOpen(false),
+   *   submitButton: 'tabler:plus'
    * })
    * .typesMap({
    *   country: 'listbox',
@@ -413,6 +405,7 @@ class FormBuilder<
       fieldType: this.fieldType,
       fields: this.fields,
       finalFields: this.finalFields,
+      autoFocusableFieldId: this._autoFocusableFieldId,
       initialData: this._initialData,
       onSubmit: this._onSubmit,
       onChange: callback
@@ -429,8 +422,12 @@ class FormBuilder<
    *
    * @example
    * ```tsx
-   * const formConfig = defineForm<UserForm>()
-   *   .ui({ title: 'Create User' })
+   * const formConfig = defineForm<UserForm>({
+   *   title: 'Create User',
+   *   icon: 'user-plus',
+   *   onClose: () => setModalOpen(false),
+   *   submitButton: 'tabler:plus'
+   * })
    *   .typesMap({ name: 'text', email: 'email' })
    *   .setupFields({ name: { label: 'Name' }, email: { label: 'Email' } })
    *   .onSubmit(async (data) => { await saveUser(data) })
@@ -460,6 +457,7 @@ class FormBuilder<
         fieldTypes: fieldType,
         fields: finalFields,
         initialData: _initialData as any,
+        autoFocusableFieldId: this._autoFocusableFieldId as string,
         onSubmit: _onSubmit as unknown as (
           data: InferFormFinalState<any, any>
         ) => Promise<void>,
@@ -469,6 +467,22 @@ class FormBuilder<
       },
       ui: uiConfig
     }
+  }
+}
+
+class FormBuilderWithoutTypesMap<TFormState extends FormState> {
+  constructor(private uiConfig: React.ComponentProps<typeof FormModal>['ui']) {}
+
+  typesMap<
+    TFieldType2 extends {
+      [K in keyof TFormState]: MatchFieldByFormDataType<TFormState[K]>['type']
+    }
+  >(fieldType: TFieldType2): FormBuilder<TFormState, TFieldType2> {
+    return new FormBuilder({
+      ...this,
+      uiConfig: this.uiConfig,
+      fieldType
+    })
   }
 }
 
@@ -493,8 +507,7 @@ class FormBuilder<
  * }
  *
  * // Create a type-safe form builder
- * const userFormConfig = defineForm<CreateUserForm>()
- *   .ui({
+ * const userFormConfig = defineForm<CreateUserForm>({
  *     title: 'Create New User',
  *     icon: 'user-plus',
  *     onClose: () => setModalOpen(false),
@@ -553,8 +566,8 @@ class FormBuilder<
  * }
  * ```
  */
-export default function defineForm<T extends FormState>(): FormBuilder<
-  FlattenUnion<T>
-> {
-  return new FormBuilder<FlattenUnion<T>>()
+export default function defineForm<T extends FormState>(
+  uiConfig: React.ComponentProps<typeof FormModal>['ui']
+) {
+  return new FormBuilderWithoutTypesMap<FlattenUnion<T>>(uiConfig)
 }

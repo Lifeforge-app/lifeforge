@@ -27,6 +27,10 @@
     "result": {
       "title": "No Results",
       "description": "No ideas match your search criteria."
+    },
+    "containerSearch": {
+      "title": "No Container Found",
+      "description": "No container found associated with your search query. Please try another one."
     }
   },
   "modals": {

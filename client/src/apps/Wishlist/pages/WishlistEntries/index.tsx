@@ -6,9 +6,9 @@ import {
   Button,
   ContextMenuItem,
   ModuleWrapper,
-  QueryWrapper,
   SearchInput,
-  Tabs
+  Tabs,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -98,11 +98,11 @@ function WishlistEntries() {
 
   return (
     <ModuleWrapper>
-      <QueryWrapper query={wishlistListDetailsQuery}>
+      <WithQuery query={wishlistListDetailsQuery}>
         {wishlistListDetails => (
           <>
             <Header wishlistListDetails={wishlistListDetails} />
-            <QueryWrapper query={entriesQuery}>
+            <WithQuery query={entriesQuery}>
               {entries => (
                 <>
                   <Tabs
@@ -133,9 +133,9 @@ function WishlistEntries() {
                   <SearchInput
                     className="mt-4 mb-6"
                     namespace="apps.wishlist"
-                    value={searchQuery}
-                    setValue={setSearchQuery}
                     searchTarget="entry"
+                    setValue={setSearchQuery}
+                    value={searchQuery}
                   />
                   <EntryList
                     filteredEntries={filteredEntries || []}
@@ -143,10 +143,10 @@ function WishlistEntries() {
                   />
                 </>
               )}
-            </QueryWrapper>
+            </WithQuery>
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
       <Menu as="div" className="absolute right-6 bottom-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}} />
         <MenuItems
@@ -156,14 +156,14 @@ function WishlistEntries() {
         >
           <ContextMenuItem
             icon="tabler:plus"
-            namespace="apps.wishlist"
             label="Add Manually"
+            namespace="apps.wishlist"
             onClick={handleAddManually}
           />
           <ContextMenuItem
             icon="tabler:apps"
-            namespace="apps.wishlist"
             label="From Other Apps"
+            namespace="apps.wishlist"
             onClick={handleAddFromOtherApps}
           />
         </MenuItems>

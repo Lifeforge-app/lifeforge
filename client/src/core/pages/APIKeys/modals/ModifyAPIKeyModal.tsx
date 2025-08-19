@@ -41,14 +41,13 @@ function ModifyAPIKeyModal({
     description: string
     icon: string
     key: string
-  }>()
-    .ui({
-      icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-      namespace: 'core.apiKeys',
-      title: `apiKey.${type}`,
-      onClose,
-      submitButton: type
-    })
+  }>({
+    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+    namespace: 'core.apiKeys',
+    title: `apiKey.${type}`,
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       keyId: 'text',
       name: 'text',

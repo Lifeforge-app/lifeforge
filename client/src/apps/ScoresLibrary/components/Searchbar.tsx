@@ -51,7 +51,8 @@ function Searchbar({
         actionButtonProps={{
           icon: 'tabler:dice',
           onClick: requestRandomEntry,
-          loading: requestRandomLoading
+          loading: requestRandomLoading,
+          variant: 'plain'
         }}
         className="bg-bg-50"
         namespace="apps.scoresLibrary"

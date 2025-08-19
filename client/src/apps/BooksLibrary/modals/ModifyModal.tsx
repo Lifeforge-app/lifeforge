@@ -43,14 +43,13 @@ function ModifyModal({
     InferInput<
       (typeof forgeAPI.booksLibrary)[typeof stuff][typeof type]
     >['body']
-  >()
-    .ui({
-      icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
-      namespace: 'apps.booksLibrary',
-      title: `${_.camelCase(singleStuff)}.${type}`,
-      onClose,
-      submitButton: type
-    })
+  >({
+    icon: type === 'update' ? 'tabler:pencil' : 'tabler:plus',
+    namespace: 'apps.booksLibrary',
+    title: `${_.camelCase(singleStuff)}.${type}`,
+    onClose,
+    submitButton: type
+  })
     .typesMap({
       name: 'text',
       icon: 'icon'

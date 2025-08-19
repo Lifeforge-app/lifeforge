@@ -6,6 +6,7 @@ import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import ColorPickerModal from './ColorPickerModal'
 
 interface ColorInputProps {
@@ -19,10 +20,14 @@ interface ColorInputProps {
   required?: boolean
   /** Whether the color input field is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** Additional CSS class names to apply to the color input component. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
+  errorMsg?: string
 }
 
 function ColorInput({
@@ -31,8 +36,10 @@ function ColorInput({
   setValue,
   required = false,
   disabled = false,
+  autoFocus = false,
   className,
-  namespace
+  namespace,
+  errorMsg
 }: ColorInputProps) {
   const open = useModalStore(state => state.open)
 
@@ -48,22 +55,41 @@ function ColorInput({
   }, [value])
 
   return (
-    <InputWrapper className={className} disabled={disabled} inputRef={ref}>
-      <InputIcon active={value !== ''} icon="tabler:palette" />
+    <InputWrapper
+      className={className}
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={ref}
+    >
+      <InputIcon
+        active={value !== ''}
+        hasError={!!errorMsg}
+        icon="tabler:palette"
+      />
       <div className="flex w-full items-center gap-2">
-        <InputLabel active={!!value} label={inputLabel} required={required} />
+        <InputLabel
+          active={!!value}
+          hasError={!!errorMsg}
+          label={inputLabel}
+          required={required}
+        />
         <div className="mt-6 mr-4 flex w-full items-center gap-2 pl-4">
           <div
             className={`group-focus-within:border-bg-400 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
             style={{
-              backgroundColor: value
+              backgroundColor: value.match(/^#[0-9A-F]{6}$/i)
+                ? value
+                : undefined
             }}
-          ></div>
+          />
           <input
-            ref={ref}
+            ref={autoFocusableRef(autoFocus, ref)}
             className="focus:placeholder:text-bg-500 h-8 w-full min-w-28 rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden"
             placeholder="#FFFFFF"
             value={value}
+            onBlur={e => {
+              setValue(e.target.value.trim().toUpperCase())
+            }}
             onChange={e => {
               setValue(e.target.value)
             }}

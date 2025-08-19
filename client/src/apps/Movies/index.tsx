@@ -7,11 +7,11 @@ import {
   FAB,
   ModuleHeader,
   ModuleWrapper,
-  QueryWrapper,
   Scrollbar,
   SearchInput,
   Tabs,
-  ViewModeSelector
+  ViewModeSelector,
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useState } from 'react'
@@ -93,9 +93,9 @@ function Movies() {
       <div className="flex items-center gap-2">
         <SearchInput
           namespace="apps.movies"
-          value={searchQuery}
-          setValue={setSearchQuery}
           searchTarget="movie"
+          setValue={setSearchQuery}
+          value={searchQuery}
         />
         <ViewModeSelector
           className="hidden md:flex"
@@ -107,7 +107,7 @@ function Movies() {
           viewMode={viewMode}
         />
       </div>
-      <QueryWrapper query={entriesQuery}>
+      <WithQuery query={entriesQuery}>
         {data => {
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
 
@@ -171,8 +171,8 @@ function Movies() {
             </div>
           )
         }}
-      </QueryWrapper>
-      <FAB hideWhen="md" onClick={handleOpenTMDBModal} />
+      </WithQuery>
+      <FAB visibilityBreakpoint="md" onClick={handleOpenTMDBModal} />
     </ModuleWrapper>
   )
 }

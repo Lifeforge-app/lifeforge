@@ -7,7 +7,7 @@ import {
   DashboardItem,
   EmptyStateScreen,
   LoadingScreen,
-  QueryWrapper
+  WithQuery
 } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
@@ -177,9 +177,7 @@ const CodeTime = () => {
       title="Code Time"
     >
       <div className="flex-1">
-        <QueryWrapper query={dataQuery}>
-          {() => <>{renderContent()}</>}
-        </QueryWrapper>
+        <WithQuery query={dataQuery}>{() => <>{renderContent()}</>}</WithQuery>
       </div>
     </DashboardItem>
   )

@@ -11,6 +11,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import ModifyEntryModal from './ModifyEntryModal'
 
@@ -44,11 +45,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
 
   const [url, setUrl] = useState('')
 
-  const [loading, setLoading] = useState<'loading' | 'error' | false>(false)
-
   async function fetchData() {
-    setLoading('loading')
-
     try {
       const { name, price, image } =
         await forgeAPI.wishlist.entries.scrapeExternal.mutate({
@@ -68,11 +65,10 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
       })
     } catch {
       toast.error('Failed to import product')
-      setLoading('error')
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(fetchData)
 
   useEffect(() => {
     setProvider('')
@@ -147,13 +143,11 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
           value={url}
         />
         <Button
-          iconPosition="end"
           className="w-full"
           icon="tabler:arrow-right"
-          loading={loading === 'loading'}
-          onClick={() => {
-            fetchData().catch(console.error)
-          }}
+          iconPosition="end"
+          loading={loading}
+          onClick={onSubmit}
         >
           Import
         </Button>

@@ -1,8 +1,8 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   ContentWrapperWithSidebar,
+  ContextMenu,
   ContextMenuItem,
   FAB,
   LayoutWithSidebar,
@@ -11,6 +11,7 @@ import {
   Scrollbar
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
+import { parseAsString, useQueryState } from 'nuqs'
 import { useCallback, useState } from 'react'
 
 import CalendarComponent from './components/Calendar'
@@ -35,12 +36,14 @@ function CalendarModule() {
       .queryOptions()
   )
 
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    undefined
+  const [selectedCategory, setSelectedCategory] = useQueryState(
+    'category',
+    parseAsString.withDefault('')
   )
 
-  const [selectedCalendar, setSelectedCalendar] = useState<string | undefined>(
-    undefined
+  const [selectedCalendar, setSelectedCalendar] = useQueryState(
+    'calendar',
+    parseAsString.withDefault('')
   )
 
   const handleScanImageModalOpen = useCallback(() => {
@@ -79,27 +82,27 @@ function CalendarModule() {
             </Scrollbar>
           </ContentWrapperWithSidebar>
         </LayoutWithSidebar>
-        <Menu as="div" className="relative z-[9991]">
-          <FAB as={MenuButton} hideWhen="md" />
-          <MenuItems
-            transition
-            anchor="bottom end"
-            className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-          >
-            <ContextMenuItem
-              icon="tabler:photo"
-              namespace="apps.calendar"
-              label="Scan from Image"
-              onClick={handleScanImageModalOpen}
-            />
-            <ContextMenuItem
-              icon="tabler:plus"
-              namespace="apps.calendar"
-              label="Input Manually"
-              onClick={handleCreateEvent}
-            />
-          </MenuItems>
-        </Menu>
+        <ContextMenu
+          buttonComponent={
+            <FAB className="static!" visibilityBreakpoint="md" />
+          }
+          classNames={{
+            wrapper: 'fixed right-6 bottom-6'
+          }}
+        >
+          <ContextMenuItem
+            icon="tabler:photo"
+            label="Scan from Image"
+            namespace="apps.calendar"
+            onClick={handleScanImageModalOpen}
+          />
+          <ContextMenuItem
+            icon="tabler:plus"
+            label="Input Manually"
+            namespace="apps.calendar"
+            onClick={handleCreateEvent}
+          />
+        </ContextMenu>
       </ModuleWrapper>
     </>
   )

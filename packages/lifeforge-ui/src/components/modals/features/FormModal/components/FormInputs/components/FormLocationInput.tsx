@@ -6,18 +6,20 @@ import {
 
 function FormLocationInput({
   field,
-  selectedData,
+  value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<LocationFieldProps>) {
   return (
     <LocationInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       label={field.label}
-      value={selectedData}
       namespace={namespace}
       required={field.required}
       setValue={value => handleChange(value)}
+      value={value}
     />
   )
 }

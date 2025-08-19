@@ -7,6 +7,7 @@ import Boilerplate from './components/Boilerplate'
 import Header from './components/Header'
 import Rightbar from './components/Rightbar'
 import Sidebar from './components/Sidebar'
+import Forms from './contents/developer-guide/Forms.mdx'
 import DeveloperIntroduction from './contents/developer-guide/Introduction.mdx'
 import ProjectStructure from './contents/developer-guide/ProjectStructure.mdx'
 import Configuration from './contents/getting-started/Configuration.mdx'
@@ -46,7 +47,7 @@ const components: MDXComponents = {
   },
   h3(properties) {
     return (
-      <h3 {...properties} className="mt-6 text-xl font-semibold sm:text-2xl" />
+      <h3 {...properties} className="mt-10 text-xl font-semibold sm:text-2xl" />
     )
   },
   p(properties) {
@@ -124,6 +125,14 @@ const components: MDXComponents = {
   },
   img(properties) {
     return <img {...properties} alt="" className="w-full rounded-lg" />
+  },
+  blockquote(properties) {
+    return (
+      <blockquote
+        {...properties}
+        className="border-bg-200 dark:border-bg-800 border-l-4 pl-4 italic"
+      />
+    )
   }
 }
 
@@ -193,6 +202,7 @@ function App() {
                 element={<ProjectStructure components={components} />}
                 path="project-structure"
               />
+              <Route element={<Forms components={components} />} path="forms" />
             </Route>
           </Route>
         </Routes>

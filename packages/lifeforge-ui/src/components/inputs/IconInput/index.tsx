@@ -7,6 +7,7 @@ import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import IconPickerModal from './IconPickerModal'
 
 interface IconInputProps {
@@ -20,17 +21,23 @@ interface IconInputProps {
   required?: boolean
   /** Whether the input is disabled and non-interactive. */
   disabled?: boolean
+  /** Whether the input should automatically focus when rendered. */
+  autoFocus?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
+  errorMsg?: string
 }
 
 function IconInput({
   label,
   value,
   setValue,
-  required,
-  disabled,
-  namespace
+  required = false,
+  disabled = false,
+  autoFocus = false,
+  namespace,
+  errorMsg
 }: IconInputProps) {
   const open = useModalStore(state => state.open)
 
@@ -66,11 +73,16 @@ function IconInput({
   }, [value])
 
   return (
-    <InputWrapper disabled={disabled} inputRef={ref}>
-      <InputIcon active={!!value} icon="tabler:icons" />
+    <InputWrapper disabled={disabled} errorMsg={errorMsg} inputRef={ref}>
+      <InputIcon active={!!value} hasError={!!errorMsg} icon="tabler:icons" />
       <div className="flex w-full items-center gap-2">
-        <InputLabel active={!!value} label={inputLabel} required={required} />
-        <div className="mt-6 mr-12 flex w-full items-center gap-2 pl-4">
+        <InputLabel
+          active={!!value}
+          hasError={!!errorMsg}
+          label={inputLabel}
+          required={required}
+        />
+        <div className="mt-6 flex w-full items-center gap-2 pl-4">
           <span className="icon-input-icon size-5 shrink-0">
             <Icon
               className={clsx(
@@ -82,13 +94,16 @@ function IconInput({
             />
           </span>
           <input
-            ref={ref}
+            ref={autoFocusableRef(autoFocus, ref)}
             autoComplete="off"
-            className="focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none"
+            className="focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent py-6 tracking-wide placeholder:text-transparent focus:outline-none"
             disabled={disabled}
             name={label}
             placeholder="tabler:cube"
             value={value}
+            onBlur={e => {
+              setValue(e.target.value.trim())
+            }}
             onChange={e => setValue(e.target.value)}
           />
         </div>

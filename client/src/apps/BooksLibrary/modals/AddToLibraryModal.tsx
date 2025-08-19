@@ -48,18 +48,17 @@ function AddToLibraryModal({
 
   const formProps = defineForm<
     InferInput<typeof forgeAPI.booksLibrary.libgen.addToLibrary>['body']
-  >()
-    .ui({
-      icon: 'majesticons:book-plus-line',
-      loading: fetchedDataQuery.isLoading && languagesQuery.isLoading,
-      namespace: 'apps.booksLibrary',
-      submitButton: {
-        children: 'Download',
-        icon: 'tabler:download'
-      },
-      title: 'Add to library',
-      onClose
-    })
+  >({
+    icon: 'majesticons:book-plus-line',
+    loading: fetchedDataQuery.isLoading && languagesQuery.isLoading,
+    namespace: 'apps.booksLibrary',
+    submitButton: {
+      children: 'Download',
+      icon: 'tabler:download'
+    },
+    title: 'Add to library',
+    onClose
+  })
     .typesMap({
       isbn: 'text',
       thumbnail: 'text',

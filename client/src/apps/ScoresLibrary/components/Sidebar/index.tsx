@@ -2,11 +2,11 @@ import type { UseQueryResult } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
-  QueryWrapper,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper,
+  WithQuery,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
@@ -107,7 +107,7 @@ function Sidebar({
 
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
-      <QueryWrapper query={sidebarDataQuery}>
+      <WithQuery query={sidebarDataQuery}>
         {sidebarData => (
           <>
             <SidebarItem
@@ -140,7 +140,7 @@ function Sidebar({
               label="collections"
               namespace="apps.scoresLibrary"
             />
-            <QueryWrapper query={collectionsQuery}>
+            <WithQuery query={collectionsQuery}>
               {collections =>
                 collections.length > 0 ? (
                   <>
@@ -160,7 +160,7 @@ function Sidebar({
                   </p>
                 )
               }
-            </QueryWrapper>
+            </WithQuery>
             <SidebarDivider />
             <SidebarTitle
               actionButtonIcon="tabler:plus"
@@ -191,7 +191,7 @@ function Sidebar({
             ))}
           </>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </SidebarWrapper>
   )
 }

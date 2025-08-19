@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useQuery } from '@tanstack/react-query'
-import { ModalHeader, QueryWrapper } from 'lifeforge-ui'
+import { ModalHeader, WithQuery } from 'lifeforge-ui'
 
 import forgeAPI from '../../../../../utils/forgeAPI'
 import type { ICollectionNodeData } from '../types'
@@ -26,7 +26,7 @@ function CollectionSelector({
         title="Select Collection"
         onClose={onClose}
       />
-      <QueryWrapper query={collectionsQuery}>
+      <WithQuery query={collectionsQuery}>
         {data => (
           <div className="space-y-2">
             {data
@@ -76,7 +76,7 @@ function CollectionSelector({
               ))}
           </div>
         )}
-      </QueryWrapper>
+      </WithQuery>
     </div>
   )
 }

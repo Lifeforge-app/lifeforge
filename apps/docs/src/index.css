@@ -29,6 +29,7 @@ code {
 pre,
 pre * {
   @apply bg-transparent!;
+  text-shadow: none !important;
 }
 
 article section {

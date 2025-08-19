@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { QueryWrapper } from 'lifeforge-ui'
+import { WithQuery } from 'lifeforge-ui'
 
 import {
   type WalletAsset,
@@ -22,7 +22,6 @@ function getAmounts({
   year: number
 }) {
   const balance = asset.current_balance
-
 
   const transactionsForAsset = transactions.filter(transaction =>
     transaction.type !== 'transfer'
@@ -99,7 +98,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
   const transactions = transactionsQuery.data ?? []
 
   return (
-    <QueryWrapper query={assetsQuery}>
+    <WithQuery query={assetsQuery}>
       {assets => (
         <div className="overflow-x-auto">
           <table className="mt-6 w-full">
@@ -318,7 +317,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
           </table>
         </div>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

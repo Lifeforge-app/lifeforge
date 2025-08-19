@@ -4,6 +4,7 @@ import { Button, ModalHeader } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import { useAuth } from '../../../providers/AuthProvider'
 
@@ -14,11 +15,8 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
 
   const [otpSuccess, setOtpSuccess] = useState(false)
 
-  const [loading, setLoading] = useState(false)
-
-  async function onConfirm() {
+  async function handleConfirm() {
     try {
-      setLoading(true)
       await forgeAPI.user['2fa'].disable.mutate({})
 
       setUserData(userData =>
@@ -28,10 +26,10 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
       onClose()
     } catch {
       toast.error('Failed to disable 2FA')
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onConfirm] = usePromiseLoading(handleConfirm)
 
   return (
     <div>

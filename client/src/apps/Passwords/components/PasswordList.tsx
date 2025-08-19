@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { EmptyStateScreen, QueryWrapper, useModalStore } from 'lifeforge-ui'
+import { EmptyStateScreen, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -50,7 +50,7 @@ function PasswordList() {
   }
 
   return (
-    <QueryWrapper query={passwordListQuery}>
+    <WithQuery query={passwordListQuery}>
       {() =>
         filteredPasswordList.length === 0 ? (
           <EmptyStateScreen
@@ -80,7 +80,7 @@ function PasswordList() {
           </div>
         )
       }
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

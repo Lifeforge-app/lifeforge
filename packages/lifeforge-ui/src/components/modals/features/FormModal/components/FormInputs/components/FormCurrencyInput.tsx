@@ -6,7 +6,8 @@ import {
 
 function FormCurrencyInput({
   field,
-  selectedData,
+  value,
+  autoFocus,
   namespace,
   handleChange
 }: FormInputProps<CurrencyFieldProps>) {
@@ -15,11 +16,12 @@ function FormCurrencyInput({
       disabled={field.disabled}
       icon={field.icon}
       label={field.label}
+      autoFocus={autoFocus}
       namespace={namespace}
       placeholder="0.00"
       required={field.required}
       setValue={handleChange}
-      value={selectedData}
+      value={value}
     />
   )
 }

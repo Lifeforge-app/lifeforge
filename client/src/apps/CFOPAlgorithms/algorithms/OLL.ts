@@ -353,6 +353,7 @@ const algsetAlgs: AlgSet[] = [
     prob: 2
   }
 ]
+
 const algsetScrambles: string[][] = [
   [
     "F' U2 B L' U2 B L F' D2 R2 U B2 U F2 R2 B2 D B2 D L2",

@@ -1,4 +1,4 @@
-import { QueryWrapper, SidebarItem } from 'lifeforge-ui'
+import { SidebarItem, WithQuery } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -10,7 +10,7 @@ function TaskStatusList({
   const { statusCounterQuery, filter, setFilter } = useTodoListContext()
 
   return (
-    <QueryWrapper query={statusCounterQuery}>
+    <WithQuery query={statusCounterQuery}>
       {statusCounter => (
         <>
           {[
@@ -47,7 +47,7 @@ function TaskStatusList({
           ))}
         </>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

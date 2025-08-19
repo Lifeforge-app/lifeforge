@@ -18,6 +18,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
@@ -57,13 +58,11 @@ function ModifyTaskDrawer() {
     'create' | 'update' | null
   >(openType)
 
-  const [loading, setLoading] = useState(false)
-
   const summaryInputRef = useRef<HTMLInputElement>(null)
 
   const ref = useRef<HTMLInputElement>(null)
 
-  async function onSubmitButtonClick() {
+  async function handleSubmit() {
     if (openType === null) return
 
     if (summary.trim().length === 0) {
@@ -71,8 +70,6 @@ function ModifyTaskDrawer() {
 
       return
     }
-
-    setLoading(true)
 
     const task = {
       summary: summary.trim(),
@@ -101,10 +98,10 @@ function ModifyTaskDrawer() {
       })
     } catch {
       toast.error('Error')
-    } finally {
-      setLoading(false)
     }
   }
+
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   function closeWindow() {
     setInnerOpenType(null)
@@ -283,9 +280,7 @@ function ModifyTaskDrawer() {
                 innerOpenType === 'update' ? 'tabler:pencil' : 'tabler:plus'
               }
               loading={loading}
-              onClick={() => {
-                onSubmitButtonClick().catch(console.error)
-              }}
+              onClick={onSubmit}
             >
               {innerOpenType === 'update' ? 'Update' : 'Create'}
             </Button>

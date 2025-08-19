@@ -1,12 +1,11 @@
-import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import {
   Button,
   EmptyStateScreen,
+  Listbox,
   ListboxOption,
-  ListboxOptions,
   LoadingScreen,
   ModalHeader,
   Pagination,
@@ -17,7 +16,7 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import type { InferOutput } from 'shared'
+import { type InferOutput, usePromiseLoading } from 'shared'
 
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
@@ -46,8 +45,6 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
   const [hasSearched, setHasSearched] = useState(false)
 
   const [data, setData] = useState<LibgenSearchResult | null>(null)
-
-  const [loading, setLoading] = useState(false)
 
   const [totalPages, setTotalPages] = useState(0)
 
@@ -92,29 +89,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
     }))
   }
 
-  async function fetchBookResults(page: number) {
-    setLoading(true)
-
-    try {
-      const response = await forgeAPI.booksLibrary.libgen.searchBooks
-        .input({
-          provider,
-          req: searchQuery.trim(),
-          page: page.toString()
-        })
-        .query()
-
-      setData(response.data.length === 0 ? null : response)
-      setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))
-    } catch {
-      toast.error('Failed to fetch search results')
-      setData(null)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function searchBooks() {
+  async function fetchBookResults(page = 1) {
     if (
       loading ||
       providerOnlineStatuses[provider] === 'loading' ||
@@ -131,10 +106,24 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
 
     setHasSearched(true)
 
-    await fetchBookResults(1)
+    try {
+      const response = await forgeAPI.booksLibrary.libgen.searchBooks
+        .input({
+          provider,
+          req: searchQuery.trim(),
+          page: page.toString()
+        })
+        .query()
 
-    setLoading(false)
+      setData(response.data.length === 0 ? null : response)
+      setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))
+    } catch {
+      toast.error('Failed to fetch search results')
+      setData(null)
+    }
   }
+
+  const [loading, triggerFetch] = usePromiseLoading(fetchBookResults)
 
   useEffect(() => {
     setProviderOnlineStatuses(() =>
@@ -168,15 +157,8 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
         <>
           <div className="flex flex-col items-center gap-2 sm:flex-row">
             <Listbox
-              as="div"
-              className="relative w-full sm:w-auto"
-              value={provider}
-              onChange={value => {
-                setProvider(value)
-              }}
-            >
-              <ListboxButton className="flex-between shadow-custom component-bg-lighter-with-hover flex w-full gap-2 rounded-md p-4 sm:w-48">
-                <div className="flex items-center gap-2">
+              buttonContent={
+                <div className="flex w-56 items-center gap-2">
                   {(() => {
                     if (providerOnlineStatuses[provider] === 'loading') {
                       return (
@@ -202,34 +184,34 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                     {PROVIDERS.find(value => value === provider) ?? 'Unknown'}
                   </span>
                 </div>
-                <Icon
-                  className="text-bg-500 size-5"
-                  icon="tabler:chevron-down"
-                />
-              </ListboxButton>
-              <ListboxOptions customWidth="min-w-48 w-[var(--button-width)]">
-                {PROVIDERS.map(value => (
-                  <ListboxOption
-                    key={value}
-                    color={(() => {
-                      if (providerOnlineStatuses[value] === 'loading') {
-                        return 'oklch(70.8% 0 0)'
-                      }
-
-                      return providerOnlineStatuses[value]
-                        ? 'oklch(79.2% 0.209 151.711)'
-                        : 'oklch(63.7% 0.237 25.331)'
-                    })()}
-                    icon={
-                      providerOnlineStatuses[value] === 'loading'
-                        ? 'svg-spinners:180-ring'
-                        : undefined
+              }
+              className="relative w-full sm:w-auto"
+              setValue={value => {
+                setProvider(value)
+              }}
+              value={provider}
+            >
+              {PROVIDERS.map(value => (
+                <ListboxOption
+                  key={value}
+                  color={(() => {
+                    if (providerOnlineStatuses[value] === 'loading') {
+                      return 'oklch(70.8% 0 0)'
                     }
-                    label={value}
-                    value={value}
-                  />
-                ))}
-              </ListboxOptions>
+
+                    return providerOnlineStatuses[value]
+                      ? 'oklch(79.2% 0.209 151.711)'
+                      : 'oklch(63.7% 0.237 25.331)'
+                  })()}
+                  icon={
+                    providerOnlineStatuses[value] === 'loading'
+                      ? 'svg-spinners:180-ring'
+                      : undefined
+                  }
+                  label={value}
+                  value={value}
+                />
+              ))}
             </Listbox>
             <SearchInput
               actionButtonProps={{
@@ -249,7 +231,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
               value={searchQuery}
               onKeyUp={e => {
                 if (e.key === 'Enter') {
-                  searchBooks().catch(console.error)
+                  triggerFetch()
                 }
               }}
             />
@@ -262,7 +244,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                 loading || providerOnlineStatuses[provider] === 'loading'
               }
               onClick={() => {
-                searchBooks().catch(console.error)
+                triggerFetch()
               }}
             >
               search
@@ -313,7 +295,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                       currentPage={data.page}
                       totalPages={totalPages}
                       onPageChange={page => {
-                        fetchBookResults(page).catch(console.error)
+                        triggerFetch(page).catch(console.error)
                       }}
                     />
                     <ul className="space-y-4">
@@ -331,7 +313,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                       currentPage={data.page}
                       totalPages={totalPages}
                       onPageChange={page => {
-                        fetchBookResults(page).catch(console.error)
+                        triggerFetch(page).catch(console.error)
                       }}
                     />
                   </>

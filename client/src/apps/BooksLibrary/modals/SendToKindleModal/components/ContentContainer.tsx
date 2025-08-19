@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { Button, EmptyStateScreen, QueryWrapper, TextInput } from 'lifeforge-ui'
+import { Button, EmptyStateScreen, TextInput, WithQuery } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { usePromiseLoading } from 'shared'
 
 function ContentContainer({
   bookId,
@@ -22,11 +23,7 @@ function ContentContainer({
 
   const [kindleEmail, setKindleEmail] = useState('')
 
-  const [loading, setLoading] = useState(false)
-
   const handleSubmit = useCallback(async () => {
-    setLoading(true)
-
     try {
       await forgeAPI.booksLibrary.entries.sendToKindle
         .input({
@@ -41,19 +38,19 @@ function ContentContainer({
     } catch (error) {
       console.error(error)
       toast.error('Failed to send book to Kindle.')
-    } finally {
-      setLoading(false)
     }
   }, [kindleEmail])
 
+  const [loading, onSubmit] = usePromiseLoading(handleSubmit)
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && kindleEmail) {
-      handleSubmit()
+      onSubmit()
     }
   }
 
   return (
-    <QueryWrapper query={enabledQuery}>
+    <WithQuery query={enabledQuery}>
       {enabled =>
         enabled ? (
           <div className="space-y-4">
@@ -69,13 +66,13 @@ function ContentContainer({
               onKeyDown={handleKeyDown}
             />
             <Button
-              iconPosition="end"
               className="w-full"
               disabled={!kindleEmail.match(/^[\w-.]+@kindle\.com$/)}
               icon="tabler:send"
+              iconPosition="end"
               loading={loading}
               namespace="apps.booksLibrary"
-              onClick={handleSubmit}
+              onClick={onSubmit}
             >
               Send to Kindle
             </Button>
@@ -90,7 +87,7 @@ function ContentContainer({
           </div>
         )
       }
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 

@@ -8,7 +8,7 @@ import {
   FilePickerModal
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -19,11 +19,7 @@ function AvatarColumn() {
 
   const { t } = useTranslation('core.accountSettings')
 
-  const [loading, setLoading] = useState(false)
-
   const { getAvatarURL, userData, setUserData } = useAuth()
-
-  if (!userData) return null
 
   async function changeAvatar(file: File | string | null) {
     if (file === null) {
@@ -31,8 +27,6 @@ function AvatarColumn() {
 
       return
     }
-
-    setLoading(true)
 
     try {
       const data = await forgeAPI.user.settings.updateAvatar.mutate({
@@ -44,8 +38,6 @@ function AvatarColumn() {
       toast.success('Avatar updated successfully')
     } catch {
       toast.error('An error occurred')
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -73,17 +65,7 @@ function AvatarColumn() {
     })
   }, [])
 
-  const handleChangeAvatar = useCallback(() => {
-    open(FilePickerModal, {
-      acceptedMimeTypes: {
-        'image/*': ['.jpg', '.jpeg', '.png', '.gif']
-      },
-      enablePixabay: true,
-      enableUrl: true,
-      enableAI: true,
-      onSelect: file => changeAvatar(file)
-    })
-  }, [])
+  if (!userData) return null
 
   return (
     <ConfigColumn
@@ -101,9 +83,18 @@ function AvatarColumn() {
       <div className="flex items-center">
         <Button
           icon="tabler:photo-hexagon"
-          loading={loading}
           variant={userData.avatar !== '' ? 'plain' : 'primary'}
-          onClick={handleChangeAvatar}
+          onClick={() =>
+            open(FilePickerModal, {
+              acceptedMimeTypes: {
+                'image/*': ['.jpg', '.jpeg', '.png', '.gif']
+              },
+              enablePixabay: true,
+              enableUrl: true,
+              enableAI: true,
+              onSelect: file => changeAvatar(file)
+            })
+          }
         >
           select
         </Button>

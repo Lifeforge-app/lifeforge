@@ -54,7 +54,7 @@ function TaskItem({
     <li
       key={entry.id}
       className={clsx(
-        'flex-between shadow-custom relative isolate flex gap-6 rounded-lg p-4 pr-6 pl-5 transition-all',
+        'flex-between shadow-custom relative isolate flex gap-6 rounded-lg p-4 transition-all',
         lighter ? 'component-bg-lighter' : 'component-bg-with-hover'
       )}
     >

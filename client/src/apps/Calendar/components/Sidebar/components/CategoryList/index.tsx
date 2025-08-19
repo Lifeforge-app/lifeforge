@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { QueryWrapper, SidebarTitle } from 'lifeforge-ui'
+import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
@@ -19,9 +19,9 @@ function CategoryList({
   setSidebarOpen,
   setSelectedCategory
 }: {
-  selectedCategory: string | undefined
+  selectedCategory: string | null
   setSidebarOpen: (value: boolean) => void
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string | undefined>>
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const categoriesQuery = useQuery(
     forgeAPI.calendar.categories.list.queryOptions()
@@ -35,7 +35,7 @@ function CategoryList({
   }, [])
 
   const handleCancelSelect = useCallback(() => {
-    setSelectedCategory(undefined)
+    setSelectedCategory(null)
     setSidebarOpen(false)
   }, [])
 
@@ -46,7 +46,7 @@ function CategoryList({
   }, [])
 
   return (
-    <QueryWrapper query={categoriesQuery}>
+    <WithQuery query={categoriesQuery}>
       {categories => (
         <section className="flex w-full min-w-0 flex-1 flex-col">
           <SidebarTitle
@@ -90,7 +90,7 @@ function CategoryList({
           )}
         </section>
       )}
-    </QueryWrapper>
+    </WithQuery>
   )
 }
 
