@@ -108,5 +108,10 @@
       "5": "星期六",
       "6": "星期日"
     }
-  }
+  },
+  "fieldRequired": "该字段是必填的。",
+  "invalidField": "无效字段。",
+  "invalidColor": "无效颜色。请输入有效的十六进制值，格式为#RRGGBB。",
+  "invalidIcon": "无效图标。必须是来自Iconify的有效图标标识符，格式为<icon-set>:<icon-name>。",
+  "loadingUserData": "正在加载用户数据..."
 }
