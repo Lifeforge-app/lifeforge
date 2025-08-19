@@ -58,7 +58,7 @@ function ListboxOption({
   return (
     <Select.Item
       className={clsx(
-        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 data-[highlighted]:bg-bg-200 dark:data-[highlighted]:bg-bg-700/50 relative flex w-full min-w-0 cursor-pointer gap-4 rounded-lg p-5 transition-all outline-none select-none',
+        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 data-[highlighted]:bg-bg-200 dark:data-[highlighted]:bg-bg-700/50 relative flex w-full min-w-0 cursor-pointer gap-4 rounded-lg p-4 transition-all outline-none select-none',
         className
       )}
       style={style}
