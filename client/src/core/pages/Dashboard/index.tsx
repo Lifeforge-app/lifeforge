@@ -79,7 +79,15 @@ function Dashboard() {
           />
         )}
       </div>
-      {/* <FAB alwaysShow label="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
+      {/* <FAB
+        icon="mage:stars-c"
+        visibilityBreakpoint={false}
+        onClick={() => {
+          open(ForgeAgentModal, {})
+        }}
+      >
+        Forge Agent
+      </FAB> */}
     </ModuleWrapper>
   )
 }
