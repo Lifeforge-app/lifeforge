@@ -5,6 +5,8 @@ import {
   FieldSelection,
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -124,6 +126,18 @@ export class Create<
         expand: this._expand,
         fields: this._fields,
         requestKey: null
+      })
+      .then(result => {
+        LoggingService.debug(
+          `${chalk.hex('#2ed573').bold('create')} Created record with ID ${chalk
+            .hex('#34ace0')
+            .bold(
+              result.id
+            )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+          'DB'
+        )
+
+        return result
       }) as unknown as Promise<
       SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
     >

@@ -6,6 +6,8 @@ import {
   FilterType,
   MultiItemsReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -119,7 +121,7 @@ export class GetList<
     return newInstance
   }
 
-  execute(): Promise<
+  async execute(): Promise<
     GetListReturnType<TCollectionKey, TExpandConfig, TFields>
   > {
     if (!this.collectionKey) {
@@ -132,16 +134,31 @@ export class GetList<
       ? this._pb.filter(this._filterExpression, this._filterParams)
       : undefined
 
-    return this._pb
+    const result = (await this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getList(this._page, this._perPage, {
         filter: filterString,
         sort: this._sort,
         expand: this._expand,
         fields: this._fields
-      }) as unknown as Promise<
-      GetListReturnType<TCollectionKey, TExpandConfig, TFields>
+      })) as unknown as GetListReturnType<
+      TCollectionKey,
+      TExpandConfig,
+      TFields
     >
+
+    LoggingService.debug(
+      `${chalk
+        .hex('#34ace0')
+        .bold(
+          'getList'
+        )} Fetched ${result.items} items${result.totalItems ? ` out of ${result.totalItems} items` : ''} from ${chalk
+        .hex('#34ace0')
+        .bold(this.collectionKey)}`,
+      'DB'
+    )
+
+    return result
   }
 }
 

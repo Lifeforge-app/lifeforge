@@ -1,4 +1,6 @@
 import { CollectionKey } from '@functions/database/PBService/typescript/pb_service'
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -47,12 +49,26 @@ export class Delete<TCollectionKey extends CollectionKey>
     }
 
     if (!this._recordId) {
-      throw new Error(`Failed to delete record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`)
+      throw new Error(
+        `Failed to delete record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`
+      )
     }
 
     return this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .delete(this._recordId)
+      .then(result => {
+        LoggingService.debug(
+          `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
+            .hex('#34ace0')
+            .bold(
+              this._recordId
+            )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+          'DB'
+        )
+
+        return result
+      })
   }
 }
 
