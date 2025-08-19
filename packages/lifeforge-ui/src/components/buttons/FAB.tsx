@@ -10,7 +10,7 @@ function FAB({
   /** The icon identifier string. Defaults to 'tabler:plus'. */
   icon?: string
   /** The responsive breakpoint at which the FAB should be hidden. Defaults to 'sm'. */
-  visibilityBreakpoint?: 'sm' | 'md' | 'lg' | 'xl'
+  visibilityBreakpoint?: 'sm' | 'md' | 'lg' | 'xl' | false
 } & React.ComponentProps<typeof Button>) {
   return (
     <Button
