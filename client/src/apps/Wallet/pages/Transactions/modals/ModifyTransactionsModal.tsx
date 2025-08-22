@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
@@ -35,10 +34,6 @@ function ModifyTransactionsModal({
   const categories = categoriesQuery.data ?? []
 
   const ledgers = ledgersQuery.data ?? []
-
-  const [transactionType, setTransactionType] = useState(
-    initialData?.type || 'income'
-  )
 
   const mutation = useMutation(
     (type === 'create'
@@ -147,14 +142,15 @@ function ModifyTransactionsModal({
       category: {
         multiple: false,
         label: 'Category',
-        options: categories
-          .filter(cat => cat.type === transactionType)
-          .map(category => ({
-            text: category.name,
-            value: category.id,
-            icon: category.icon,
-            color: category.color
-          })),
+        options: value =>
+          categories
+            .filter(cat => cat.type === value.type)
+            .map(category => ({
+              text: category.name,
+              value: category.id,
+              icon: category.icon,
+              color: category.color
+            })),
         icon: 'tabler:category',
         required: true
       },
@@ -246,7 +242,6 @@ function ModifyTransactionsModal({
             }
           })
     })
-    .onChange(data => setTransactionType(data.type))
     .onSubmit(async data => {
       if (data.type === 'transfer') {
         await mutation.mutateAsync({

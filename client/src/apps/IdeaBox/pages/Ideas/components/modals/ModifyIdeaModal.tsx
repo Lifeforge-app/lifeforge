@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -32,8 +31,6 @@ function ModifyIdeaModal({
       })
       .queryOptions()
   )
-
-  const [ideaType, setIdeaType] = useState<'text' | 'link' | 'image'>('text')
 
   const mutation = useMutation(
     (type === 'create'
@@ -95,23 +92,20 @@ function ModifyIdeaModal({
         required: true,
         label: 'Idea content',
         icon: 'tabler:text-wrap',
-        placeholder: 'Idea content',
-        hidden: ideaType !== 'text'
+        placeholder: 'Idea content'
       },
       link: {
         required: true,
         label: 'Idea link',
         icon: 'tabler:link',
-        placeholder: 'https://example.com/your-idea',
-        hidden: ideaType !== 'link'
+        placeholder: 'https://example.com/your-idea'
       },
       image: {
         label: 'Idea image',
         icon: 'tabler:photo',
         optional: true,
         required: true,
-        enableUrl: true,
-        hidden: ideaType !== 'image'
+        enableUrl: true
       },
       tags: {
         multiple: true,
@@ -170,8 +164,10 @@ function ModifyIdeaModal({
           ) || []
       }
     )
-    .onChange(({ type }) => {
-      setIdeaType(type)
+    .conditionalFields({
+      content: data => data.type === 'text',
+      link: data => data.type === 'link',
+      image: data => data.type === 'image'
     })
     .onSubmit(async data => {
       data.tags =
