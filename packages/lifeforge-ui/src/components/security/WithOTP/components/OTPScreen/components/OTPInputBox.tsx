@@ -1,5 +1,6 @@
+import { Button } from '@components/buttons'
 import clsx from 'clsx'
-import { Button } from 'lifeforge-ui'
+import { memo } from 'react'
 import OtpInput from 'react-otp-input'
 
 function OTPInputBox({
@@ -26,7 +27,7 @@ function OTPInputBox({
           <input
             {...props}
             className={clsx(
-              'border-bg-200 text-bg-800 shadow-custom dark:border-bg-800 dark:text-bg-200 mx-2 size-12! rounded-md border-[1.5px] text-lg md:size-16! md:text-2xl',
+              'border-bg-200 text-bg-800 shadow-custom dark:border-bg-700 dark:text-bg-200 mx-2 size-12! rounded-md !border-[1.5px] border-solid! text-lg md:size-16! md:text-2xl',
               lighter ? 'component-bg-lighter' : 'component-bg'
             )}
             inputMode="numeric"
@@ -60,4 +61,4 @@ function OTPInputBox({
   )
 }
 
-export default OTPInputBox
+export default memo(OTPInputBox)

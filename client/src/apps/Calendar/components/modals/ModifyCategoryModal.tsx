@@ -33,7 +33,7 @@ function ModifyCategoryModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.calendar.categories)[typeof type]>['body']
   >({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',

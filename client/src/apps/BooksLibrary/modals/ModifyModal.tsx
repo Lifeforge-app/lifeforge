@@ -39,7 +39,7 @@ function ModifyModal({
     languages: 'language'
   }[stuff]
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<
       (typeof forgeAPI.booksLibrary)[typeof stuff][typeof type]
     >['body']

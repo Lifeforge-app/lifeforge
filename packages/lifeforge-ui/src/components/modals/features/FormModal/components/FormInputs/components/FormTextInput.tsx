@@ -1,9 +1,21 @@
 import { QRCodeScanner, TextInput } from '@components/inputs'
 import { useModalStore } from '@components/modals/core/useModalStore'
-import {
-  type FormInputProps,
-  type TextFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type TextFieldProps = BaseFieldProps<string, string, true> & {
+  type: 'text'
+  icon: string
+  isPassword?: boolean
+  placeholder: string
+  qrScanner?: boolean
+  actionButtonProps?: React.ComponentProps<
+    typeof TextInput
+  >['actionButtonProps']
+}
 
 function FormTextInput({
   field,

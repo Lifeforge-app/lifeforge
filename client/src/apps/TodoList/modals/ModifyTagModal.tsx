@@ -34,7 +34,7 @@ function ModifyTagModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.todoList.tags)[typeof type]>['body']
   >({
     icon: 'tabler:tag',

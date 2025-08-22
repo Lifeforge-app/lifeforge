@@ -23,7 +23,15 @@
 
 code {
   font-family: 'JetBrains Mono', monospace !important;
-  @apply text-bg-800! dark:text-bg-100! text-sm! break-all! sm:text-base!;
+  @apply text-sm! whitespace-pre-wrap! sm:text-base!;
+}
+
+pre code {
+  @apply text-bg-800! dark:text-bg-100! break-all!;
+}
+
+code:not(pre code, h3 code) {
+  @apply bg-bg-200/30 text-bg-700 dark:bg-bg-800 dark:text-bg-300 rounded-sm px-1.5 py-1 shadow-sm;
 }
 
 pre,
@@ -42,4 +50,8 @@ article section {
 
 .dark ::marker {
   @apply text-bg-700!;
+}
+
+li p:first-of-type {
+  @apply mt-2!;
 }

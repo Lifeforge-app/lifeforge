@@ -40,7 +40,7 @@ function ModifyCategoryModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<
       (typeof forgeAPI.wallet.categories)[typeof type extends 'update'
         ? 'update'

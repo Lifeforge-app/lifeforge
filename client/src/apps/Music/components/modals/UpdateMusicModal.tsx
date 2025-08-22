@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import type { MusicEntry } from '../../providers/MusicProvider'
@@ -16,13 +15,6 @@ function UpdateMusicModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-
-  const [data, setData] = useState({
-    name: initialData?.name || '',
-    author: initialData?.author || ''
-  })
-
-  const [aiParsingLoading, setAiParsingLoading] = useState(false)
 
   const mutation = useMutation(
     forgeAPI.music.entries.update
@@ -41,7 +33,7 @@ function UpdateMusicModal({
       })
   )
 
-  const formProps = defineForm<{
+  const { formProps, formStateStore } = defineForm<{
     name: string
     author: string
   }>({
@@ -63,35 +55,7 @@ function UpdateMusicModal({
         required: true,
         actionButtonProps: {
           icon: 'mage:stars-c',
-          loading: aiParsingLoading,
-          onClick: async () => {
-            setAiParsingLoading(true)
-
-            try {
-              const response =
-                await forgeAPI.music.youtube.parseMusicNameAndAuthor.mutate({
-                  title: initialData?.name || '',
-                  uploader: initialData?.author || ''
-                })
-
-              if (!response) {
-                toast.error('Failed to parse music name and author')
-
-                return
-              }
-
-              setData({
-                name: response.name || '',
-                author: response.author || ''
-              })
-            } catch (error) {
-              toast.error(
-                `Failed to parse music name and author: ${error instanceof Error ? error.message : String(error)}`
-              )
-            } finally {
-              setAiParsingLoading(false)
-            }
-          }
+          onClick: parseAi
         }
       },
       author: {
@@ -107,15 +71,34 @@ function UpdateMusicModal({
     })
     .build()
 
-  return (
-    <FormModal
-      {...formProps}
-      externalData={{
-        data,
-        setData
-      }}
-    />
-  )
+  async function parseAi() {
+    try {
+      const { name, author } = formStateStore.getState()
+
+      const response =
+        await forgeAPI.music.youtube.parseMusicNameAndAuthor.mutate({
+          title: name || '',
+          uploader: author || ''
+        })
+
+      if (!response) {
+        toast.error('Failed to parse music name and author')
+
+        return
+      }
+
+      formStateStore.setState(() => ({
+        name: response.name || '',
+        author: response.author || ''
+      }))
+    } catch (error) {
+      toast.error(
+        `Failed to parse music name and author: ${error instanceof Error ? error.message : String(error)}`
+      )
+    }
+  }
+
+  return <FormModal {...formProps} />
 }
 
 export default UpdateMusicModal

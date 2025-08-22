@@ -10,6 +10,11 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import FilePickerModal from './FilePickerModal'
 import FILE_ICONS from './FilePickerModal/constants/file_icons'
 
+export type FileData = {
+  file: string | File | null
+  preview: string | null
+}
+
 function FileInput({
   icon,
   label,

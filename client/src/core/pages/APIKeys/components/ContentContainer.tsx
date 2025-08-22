@@ -1,31 +1,28 @@
-import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
-import LockedScreen from '@security/components/LockedScreen'
-import OTPScreen from '@security/components/OTPScreen'
-import { encrypt } from '@security/utils/encryption'
 import { useQuery } from '@tanstack/react-query'
+import { encrypt } from '@utils/encryption'
 import forgeAPI from '@utils/forgeAPI'
-import { EmptyStateScreen, WithQuery } from 'lifeforge-ui'
+import {
+  Button,
+  EmptyStateScreen,
+  FAB,
+  ModuleHeader,
+  WithQuery,
+  useModalStore
+} from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
 import type { InferOutput } from 'shared'
 
-import { useAuth } from '../../../providers/AuthProvider'
+import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import EntryItem from './EntryItem'
 
 export type APIKeysEntry = InferOutput<
   typeof forgeAPI.apiKeys.entries.list
 >[number]
 
-function ContentContainer({
-  masterPassword,
-  setMasterPassword,
-  otpSuccess,
-  setOtpSuccess
-}: {
-  masterPassword: string
-  setMasterPassword: React.Dispatch<React.SetStateAction<string>>
-  otpSuccess: boolean
-  setOtpSuccess: React.Dispatch<React.SetStateAction<boolean>>
-}) {
-  const { userData } = useAuth()
+function ContentContainer({ masterPassword }: { masterPassword: string }) {
+  const open = useModalStore(state => state.open)
+
+  const { t } = useTranslation('core.apiKeys')
 
   const challengeQuery = useQuery(
     forgeAPI.apiKeys.auth.getChallenge.queryOptions()
@@ -37,40 +34,35 @@ function ContentContainer({
         master: encrypt(masterPassword, challengeQuery.data || '')
       })
       .queryOptions({
-        enabled: !!masterPassword && otpSuccess && challengeQuery.isSuccess
+        enabled: challengeQuery.isSuccess
       })
   )
 
-  if (!otpSuccess) {
-    return (
-      <OTPScreen
-        callback={() => {
-          setOtpSuccess(true)
-        }}
-        challengeController={forgeAPI.apiKeys.auth.getChallenge}
-        verifyController={forgeAPI.apiKeys.auth.verifyOTP}
-      />
-    )
-  }
-
-  if (userData?.hasAPIKeysMasterPassword === false) {
-    return (
-      <CreatePasswordScreen controller={forgeAPI.apiKeys.auth.createOrUpdate} />
-    )
-  }
-
-  if (masterPassword === '') {
-    return (
-      <LockedScreen
-        challengeController={forgeAPI.apiKeys.auth.getChallenge}
-        setMasterPassword={setMasterPassword}
-        verifyController={forgeAPI.apiKeys.auth.verify}
-      />
-    )
+  const handleCreateAPIKey = () => {
+    open(ModifyAPIKeyModal, {
+      masterPassword,
+      type: 'create'
+    })
   }
 
   return (
     <>
+      <ModuleHeader
+        actionButton={
+          <Button
+            className="hidden lg:flex"
+            icon="tabler:plus"
+            tProps={{
+              item: t('core.apiKeys:items.apiKey')
+            }}
+            onClick={handleCreateAPIKey}
+          >
+            new
+          </Button>
+        }
+        icon="tabler:password"
+        title="API Keys"
+      />
       <WithQuery query={entriesQuery}>
         {entries => (
           <div className="mt-6 mb-24 flex-1 space-y-3 lg:mb-12">
@@ -92,6 +84,7 @@ function ContentContainer({
           </div>
         )}
       </WithQuery>
+      <FAB onClick={handleCreateAPIKey} />
     </>
   )
 }

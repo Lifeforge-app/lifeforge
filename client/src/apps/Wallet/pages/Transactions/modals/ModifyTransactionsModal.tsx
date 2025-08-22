@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
@@ -36,10 +35,6 @@ function ModifyTransactionsModal({
 
   const ledgers = ledgersQuery.data ?? []
 
-  const [transactionType, setTransactionType] = useState<
-    'income' | 'expenses' | 'transfer'
-  >(initialData?.type ?? 'income')
-
   const mutation = useMutation(
     (type === 'create'
       ? forgeAPI.wallet.transactions.create
@@ -56,7 +51,7 @@ function ModifyTransactionsModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wallet.transactions)[typeof type]>['body']
   >({
     namespace: 'apps.wallet',
@@ -114,8 +109,7 @@ function ModifyTransactionsModal({
         label: 'Particulars',
         required: true,
         icon: 'tabler:file-description',
-        placeholder: 'Enter details about the transaction',
-        hidden: transactionType === 'transfer'
+        placeholder: 'Enter details about the transaction'
       },
       amount: {
         required: true,
@@ -132,8 +126,7 @@ function ModifyTransactionsModal({
           value: asset.id,
           icon: asset.icon
         })),
-        icon: 'tabler:arrow-left-circle',
-        hidden: transactionType !== 'transfer'
+        icon: 'tabler:arrow-left-circle'
       },
       to: {
         required: true,
@@ -144,23 +137,22 @@ function ModifyTransactionsModal({
           value: asset.id,
           icon: asset.icon
         })),
-        icon: 'tabler:arrow-right-circle',
-        hidden: transactionType !== 'transfer'
+        icon: 'tabler:arrow-right-circle'
       },
       category: {
         multiple: false,
         label: 'Category',
-        options: categories
-          .filter(cat => cat.type === transactionType)
-          .map(category => ({
-            text: category.name,
-            value: category.id,
-            icon: category.icon,
-            color: category.color
-          })),
+        options: value =>
+          categories
+            .filter(cat => cat.type === value.type)
+            .map(category => ({
+              text: category.name,
+              value: category.id,
+              icon: category.icon,
+              color: category.color
+            })),
         icon: 'tabler:category',
-        required: true,
-        hidden: transactionType === 'transfer'
+        required: true
       },
       asset: {
         multiple: false,
@@ -171,8 +163,7 @@ function ModifyTransactionsModal({
           icon: asset.icon
         })),
         icon: 'tabler:coin',
-        required: true,
-        hidden: transactionType === 'transfer'
+        required: true
       },
       ledgers: {
         multiple: true,
@@ -183,12 +174,10 @@ function ModifyTransactionsModal({
           icon: ledger.icon,
           color: ledger.color
         })),
-        icon: 'tabler:book',
-        hidden: transactionType === 'transfer'
+        icon: 'tabler:book'
       },
       location: {
-        label: 'Location',
-        hidden: transactionType === 'transfer'
+        label: 'Location'
       },
       receipt: {
         label: 'Receipt',
@@ -199,6 +188,15 @@ function ModifyTransactionsModal({
           documents: ['application/pdf']
         }
       }
+    })
+    .conditionalFields({
+      asset: data => data.type !== 'transfer',
+      category: data => data.type !== 'transfer',
+      ledgers: data => data.type !== 'transfer',
+      particulars: data => data.type !== 'transfer',
+      location: data => data.type !== 'transfer',
+      from: data => data.type === 'transfer',
+      to: data => data.type === 'transfer'
     })
     .initialData({
       type: initialData?.type || 'income',
@@ -243,9 +241,6 @@ function ModifyTransactionsModal({
               formattedAddress: initialData?.location_name || ''
             }
           })
-    })
-    .onChange(data => {
-      setTransactionType(data.type)
     })
     .onSubmit(async data => {
       if (data.type === 'transfer') {

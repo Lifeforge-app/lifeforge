@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
@@ -28,10 +27,6 @@ function ModifyTemplatesModal({
 
   const { categoriesQuery, assetsQuery, ledgersQuery } = useWalletData()
 
-  const [transactionType, setTransactionType] = useState<'income' | 'expenses'>(
-    initialData?.type ?? 'income'
-  )
-
   const assets = assetsQuery.data ?? []
 
   const categories = categoriesQuery.data ?? []
@@ -54,7 +49,7 @@ function ModifyTemplatesModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wallet.templates)[typeof type]>['body']
   >({
     namespace: 'apps.wallet',
@@ -114,14 +109,15 @@ function ModifyTemplatesModal({
       category: {
         multiple: false,
         label: 'Category',
-        options: categories
-          .filter(cat => cat.type === transactionType)
-          .map(category => ({
-            text: category.name,
-            value: category.id,
-            icon: category.icon,
-            color: category.color
-          })),
+        options: formState =>
+          categories
+            .filter(cat => cat.type === formState.type)
+            .map(category => ({
+              text: category.name,
+              value: category.id,
+              icon: category.icon,
+              color: category.color
+            })),
         icon: 'tabler:category',
         required: true
       },
@@ -154,9 +150,6 @@ function ModifyTemplatesModal({
     .initialData({
       ...initialData,
       type: initialData?.type ?? 'income'
-    })
-    .onChange(data => {
-      setTransactionType(data.type)
     })
     .onSubmit(async data => {
       await mutation.mutateAsync(data)

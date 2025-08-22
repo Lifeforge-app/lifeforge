@@ -36,7 +36,7 @@ function ModifyAssetModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wallet.assets)[typeof type]>['body']
   >({
     namespace: 'apps.wallet',

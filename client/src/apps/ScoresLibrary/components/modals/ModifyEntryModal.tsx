@@ -36,7 +36,7 @@ function ModifyEntryModal({
 
   const queryClient = useQueryClient()
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<typeof forgeAPI.scoresLibrary.entries.update>['body']
   >({
     icon: 'tabler:pencil',

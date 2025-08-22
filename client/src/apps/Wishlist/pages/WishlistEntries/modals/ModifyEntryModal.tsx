@@ -39,7 +39,7 @@ function ModifyEntryModal({
 
   const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wishlist.entries)[typeof type]>['body']
   >({
     title: `entry.${type}`,

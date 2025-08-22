@@ -1,31 +1,50 @@
 import { ListboxInput, ListboxNullOption } from '@components/inputs'
 import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
-import {
-  type FormInputProps,
-  type ListboxFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
-import { useEffect } from 'react'
 import { Fragment } from 'react/jsx-runtime'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type ListboxFieldProps<
+  TOption = any,
+  TMultiple extends boolean = boolean,
+  TFormState = any
+> = BaseFieldProps<
+  TMultiple extends true ? TOption[] : TOption | null,
+  TMultiple extends true ? TOption[] : TOption | undefined
+> & {
+  type: 'listbox'
+  icon: string
+  multiple: TMultiple
+  options:
+    | Array<{
+        value: TOption
+        text: string
+        icon?: string
+        color?: string
+      }>
+    | ((formState: TFormState) => Array<{
+        value: TOption
+        text: string
+        icon?: string
+        color?: string
+      }>)
+  nullOption?: string
+}
 
 function FormListboxInput({
   field,
   value,
   namespace,
-  handleChange
+  handleChange,
+  options
 }: FormInputProps<ListboxFieldProps>) {
-  useEffect(() => {
-    if (field.multiple) {
-      handleChange(
-        value.map(
-          (item: { value: string }) =>
-            field.options.find(option => option.value === item)?.value
-        )
-      )
-    } else {
-      handleChange(field.options.find(option => option.value === value)?.value)
-    }
-  }, [field.options])
+  if (!options) {
+    return null
+  }
 
   return (
     <ListboxInput
@@ -38,16 +57,13 @@ function FormListboxInput({
                   <div className="flex items-center gap-1">
                     <Icon
                       className="size-5"
-                      icon={
-                        field.options.find(l => l.value === item)?.icon ?? ''
-                      }
+                      icon={options.find(l => l.value === item)?.icon ?? ''}
                       style={{
-                        color: field.options.find(l => l.value === item)?.color
+                        color: options.find(l => l.value === item)?.color
                       }}
                     />
                     <span className="-mt-px block truncate">
-                      {field.options.find(l => l.value === item)?.text ??
-                        'None'}
+                      {options.find(l => l.value === item)?.text ?? 'None'}
                     </span>
                   </div>
                   {i !== value.length - 1 && (
@@ -67,39 +83,38 @@ function FormListboxInput({
         ) : (
           <>
             {!!(
-              field.options.find(l => l.value === value)?.icon ??
-              field.nullOption
+              options.find(l => l.value === value)?.icon ?? field.nullOption
             ) && (
               <Icon
                 className="size-5"
                 icon={
-                  field.options.find(l => l.value === value)?.icon ??
+                  options.find(l => l.value === value)?.icon ??
                   field.nullOption ??
                   ''
                 }
                 style={{
-                  color: field.options.find(l => l.value === value)?.color
+                  color: options.find(l => l.value === value)?.color
                 }}
               />
             )}
-            {field.options.length &&
-              field.options[0].icon === undefined &&
-              field.options[0].color !== undefined && (
+            {options.length &&
+              options[0].icon === undefined &&
+              options[0].color !== undefined && (
                 <span
                   className="size-2 rounded-full"
                   style={{
-                    backgroundColor: field.options.find(l => l.value === value)
-                      ?.color
+                    backgroundColor: options.find(l => l.value === value)?.color
                   }}
                 />
               )}
             <span className="-mt-px block truncate">
-              {field.options.find(l => l.value === value)?.text ?? 'None'}
+              {options.find(l => l.value === value)?.text ?? 'None'}
             </span>
           </>
         )
       }
       disabled={field.disabled}
+      errorMsg={field.errorMsg}
       icon={field.icon}
       label={field.label}
       multiple={!!field.multiple}
@@ -110,11 +125,11 @@ function FormListboxInput({
     >
       {field.nullOption !== undefined && (
         <ListboxNullOption
-          hasBgColor={field.options[0]?.color !== undefined}
+          hasBgColor={options[0]?.color !== undefined}
           icon={field.nullOption}
         />
       )}
-      {field.options.map(({ text, color, icon, value: v }) => (
+      {options.map(({ text, color, icon, value: v }) => (
         <ListboxOption
           key={v}
           color={color}

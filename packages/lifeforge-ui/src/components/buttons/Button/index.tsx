@@ -16,7 +16,7 @@ export interface ButtonProps {
   /** Additional CSS class names to apply to the icon. Use `!` suffix for Tailwind CSS class overrides. */
   iconClassName?: string
   /** Callback function called when the button is clicked. */
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>
   /** Whether the button is in a loading state. When true, displays a spinner and disables interactions. */
   loading?: boolean
   /** Whether the button is disabled and non-interactive. */

@@ -1,8 +1,15 @@
 import { DateInput } from '@components/inputs'
-import {
-  type DateFieldProps,
-  type FormInputProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type DateFieldProps = BaseFieldProps<Date | null, string, true> & {
+  type: 'datetime'
+  icon: string
+  hasTime?: boolean
+}
 
 function FormDateInput({
   field,
