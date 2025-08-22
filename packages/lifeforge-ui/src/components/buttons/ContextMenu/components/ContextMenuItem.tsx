@@ -73,10 +73,11 @@ function ContextMenuItem({
         className
       )}
       disabled={disabled || loading}
-      onSelect={e => {
+      onClick={e => {
+        e.stopPropagation()
+
         if (!shouldCloseMenuOnClick) {
           e.preventDefault()
-          e.stopPropagation()
         }
 
         onClick()
