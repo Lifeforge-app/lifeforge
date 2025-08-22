@@ -1,11 +1,17 @@
 import { Switch } from '@components/buttons'
-import {
-  type CheckboxFieldProps,
-  type FormInputProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type CheckboxFieldProps = BaseFieldProps<boolean, boolean> & {
+  type: 'checkbox'
+  icon: string
+}
 
 function FormCheckboxInput({
   field,

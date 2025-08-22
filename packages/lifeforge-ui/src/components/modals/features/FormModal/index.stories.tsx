@@ -151,13 +151,17 @@ export const Default: Story = {
           label: 'Icon',
           icon: 'tabler:icons',
           required: true,
-          options: [
-            {
-              text: 'Heart',
-              value: 'tabler:heart',
-              icon: 'tabler:heart',
-              color: '#FF0000'
-            },
+          options: formState => [
+            ...(formState.name === 'Melvin'
+              ? [
+                  {
+                    text: 'Heart',
+                    value: 'tabler:heart',
+                    icon: 'tabler:heart',
+                    color: '#FF0000'
+                  }
+                ]
+              : []),
             { text: 'Star', value: 'tabler:star', icon: 'tabler:star' },
             { text: 'Check', value: 'tabler:check', icon: 'tabler:check' },
             { text: 'X', value: 'tabler:x', icon: 'tabler:x' }
@@ -192,8 +196,8 @@ export const Default: Story = {
           placeholder: '••••••••',
           isPassword: true,
           required: true,
-          validator: value => {
-            if (value !== formStateStore.getState().password) {
+          validator: (value, formState) => {
+            if (value !== formState.password) {
               return 'Passwords must match'
             }
 

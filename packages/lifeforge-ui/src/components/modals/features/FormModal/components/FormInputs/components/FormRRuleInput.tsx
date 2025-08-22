@@ -1,8 +1,14 @@
 import { RRuleInput } from '@components/inputs'
-import {
-  type FormInputProps,
-  type RRuleFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type RRuleFieldProps = BaseFieldProps<string, string> & {
+  type: 'rrule'
+  hasDuration?: boolean
+}
 
 function FormRRuleInput({
   field,
