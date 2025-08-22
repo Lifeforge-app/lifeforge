@@ -130,11 +130,12 @@ export default function IdeaBoxProvider({
         folder: path?.split('/').pop() || ''
       })
       .queryOptions({
-        enabled:
+        enabled: !!(
           id !== undefined &&
           path !== undefined &&
           pathValidQuery.data &&
           (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0)
+        )
       })
   )
 

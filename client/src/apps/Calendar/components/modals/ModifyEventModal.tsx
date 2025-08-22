@@ -46,7 +46,7 @@ function ModifyEventModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.calendar.events)[typeof type]>['body']
   >({
     icon: {

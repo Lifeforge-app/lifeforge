@@ -54,7 +54,7 @@ function ModifyTemplatesModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wallet.templates)[typeof type]>['body']
   >({
     namespace: 'apps.wallet',

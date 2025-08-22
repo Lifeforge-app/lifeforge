@@ -30,7 +30,7 @@ function ModifyWishlistListModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wishlist.lists)[typeof type]>['body']
   >({
     namespace: 'apps.wishlist',

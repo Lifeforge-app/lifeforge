@@ -33,7 +33,7 @@ function TwoFAColumn() {
       >
         <div className="flex w-full items-center justify-between gap-3">
           <span className="text-bg-500">
-            {userData.twoFAEnabled ? 'Enabled' : 'Disabled'}
+            {t(userData.twoFAEnabled ? 'misc.enabled' : 'misc.disabled')}
           </span>
           <Switch
             checked={userData.twoFAEnabled}
