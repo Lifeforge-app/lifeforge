@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TextInput } from '@components/inputs'
+import type { ZodType } from 'zod/v4'
 
 /** --------- Utility Types ----------- */
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
@@ -37,16 +38,16 @@ export type FileData = {
 export type BaseFieldProps<
   TFormDataType,
   TFinalDataType,
-  TAutoFocus extends boolean = false
+  TAutoFocusable extends boolean = false
 > = {
   label: string
   hidden?: boolean
   required?: boolean
   disabled?: boolean
-  validator?: (value: TFinalDataType) => boolean | string
+  validator?: ((value: TFinalDataType) => boolean | string) | ZodType
   __formDataType: TFormDataType
   __finalDataType: TFinalDataType
-  __autoFocusable?: TAutoFocus
+  __autoFocusable?: TAutoFocusable
 }
 
 type TextFieldProps = BaseFieldProps<string, string, true> & {
@@ -218,7 +219,10 @@ type FieldsConfig<
     TFieldType[K],
     TFormState[K]
   > extends infer TField
-    ? DistributiveOmit<TField, 'type' | '__finalDataType' | '__formDataType'>
+    ? DistributiveOmit<
+        TField,
+        'type' | '__finalDataType' | '__formDataType' | '__autoFocusable'
+      >
     : never
 }>
 
