@@ -10,7 +10,7 @@ import type {
   InferFormFinalState,
   InferFormState,
   MatchFieldByFormDataType
-} from './typescript/form_interfaces'
+} from './typescript/form.types'
 import { getInitialData } from './utils/formUtils'
 
 /**
@@ -38,7 +38,6 @@ type FlattenUnion<T> = {
  * @template TFinalFields - Final processed field configuration with type information
  * @template TInitialData - Initial form data type (initially undefined)
  * @template TOnSubmit - Submit handler function type (initially undefined)
- * @template TOnChange - Change handler function type (initially undefined)
  *
  * @example
  * ```tsx
@@ -79,8 +78,7 @@ class FormBuilder<
   TFieldsConfig = undefined,
   TFinalFields = undefined,
   TInitialData = undefined,
-  TOnSubmit = undefined,
-  TOnChange = undefined
+  TOnSubmit = undefined
 > {
   /** UI configuration for the form modal */
   private readonly uiConfig?: React.ComponentProps<typeof FormModal>['ui']
@@ -97,8 +95,6 @@ class FormBuilder<
   private readonly finalFields?: TFinalFields
   /** Initial data for form fields */
   private readonly _initialData?: TInitialData
-  /** Form change event handler */
-  private readonly _onChange?: TOnChange
   /** Form submission handler */
   private readonly _onSubmit?: TOnSubmit
 
@@ -115,7 +111,6 @@ class FormBuilder<
     finalFields?: TFinalFields
     initialData?: TInitialData
     onSubmit?: TOnSubmit
-    onChange?: TOnChange
     conditionalFields?: {
       [K in keyof TFormState]?: (data: TFormState) => boolean
     }
@@ -127,7 +122,6 @@ class FormBuilder<
       this._autoFocusableFieldId = opts.autoFocusableFieldId
       this.finalFields = opts.finalFields
       this._initialData = opts.initialData
-      this._onChange = opts.onChange
       this._onSubmit = opts.onSubmit
       this._conditionalFields = opts.conditionalFields
     }
@@ -165,8 +159,7 @@ class FormBuilder<
     TFieldsConfig,
     TFinalFields,
     TInitialData,
-    TOnSubmit,
-    TOnChange
+    TOnSubmit
   > {
     return new FormBuilder({
       ...this,
@@ -215,8 +208,7 @@ class FormBuilder<
       }
     },
     TInitialData,
-    TOnSubmit,
-    TOnChange
+    TOnSubmit
   > {
     // Merge field types into field configurations
     for (const key in fields) {
@@ -255,8 +247,7 @@ class FormBuilder<
     TFieldsConfig,
     TFinalFields,
     TInitialData,
-    TOnSubmit,
-    TOnChange
+    TOnSubmit
   > {
     return new FormBuilder({
       uiConfig: this.uiConfig,
@@ -266,8 +257,7 @@ class FormBuilder<
       conditionalFields: this._conditionalFields,
       finalFields: this.finalFields,
       initialData: this._initialData,
-      onSubmit: this._onSubmit,
-      onChange: this._onChange
+      onSubmit: this._onSubmit
     })
   }
 
@@ -279,8 +269,7 @@ class FormBuilder<
     TFieldsConfig,
     TFinalFields,
     TInitialData,
-    TOnSubmit,
-    TOnChange
+    TOnSubmit
   > {
     return new FormBuilder({
       uiConfig: this.uiConfig,
@@ -290,8 +279,7 @@ class FormBuilder<
       conditionalFields: fields,
       finalFields: this.finalFields,
       initialData: this._initialData,
-      onSubmit: this._onSubmit,
-      onChange: this._onChange
+      onSubmit: this._onSubmit
     })
   }
 
@@ -320,8 +308,7 @@ class FormBuilder<
     TFieldsConfig,
     TFinalFields,
     typeof initialData,
-    TOnSubmit,
-    TOnChange
+    TOnSubmit
   > {
     return new FormBuilder({
       uiConfig: this.uiConfig,
@@ -330,7 +317,6 @@ class FormBuilder<
       finalFields: this.finalFields,
       autoFocusableFieldId: this._autoFocusableFieldId,
       conditionalFields: this._conditionalFields,
-      onChange: this._onChange,
       onSubmit: this._onSubmit,
       initialData
     })
@@ -365,77 +351,6 @@ class FormBuilder<
     TFieldsConfig,
     TFinalFields,
     TInitialData,
-    typeof callback,
-    TOnChange
-  > {
-    return new FormBuilder({
-      uiConfig: this.uiConfig,
-      fieldType: this.fieldType,
-      fields: this.fields,
-      finalFields: this.finalFields,
-      autoFocusableFieldId: this._autoFocusableFieldId,
-      conditionalFields: this._conditionalFields,
-      initialData: this._initialData,
-      onSubmit: callback,
-      onChange: this._onChange
-    })
-  }
-
-  /**
-   * Sets a change handler that fires whenever form data changes. This is optional.
-   * Useful for dependent field updates, or other reactive behavior.
-   *
-   * @param callback - Function that handles form data changes
-   * @returns A new FormBuilder instance with the change handler configured
-   *
-   * @example
-   * ```tsx
-   * const [country, setCountry] = useState<string | undefined>(undefined)
-   *
-   * defineForm<{
-   *   country: string
-   *   state: string
-   * }>({
-   *   title: 'Create User',
-   *   icon: 'user-plus',
-   *   onClose: () => setModalOpen(false),
-   *   submitButton: 'tabler:plus'
-   * })
-   * .typesMap({
-   *   country: 'listbox',
-   *   state: 'text'
-   * })
-   * .setupFields({
-   *   country: {
-   *     label: 'Country',
-   *     options: [
-   *       { value: 'US', label: 'United States' },
-   *       { value: 'CA', label: 'Canada' }
-   *     ]
-   *   },
-   *   state: {
-   *     label: 'State',
-   *     placeholder: 'Enter your state',
-   *     // Show this field only if a country is selected
-   *     hidden: !country
-   *   }
-   * })
-   * .onChange((data) => {
-   *    setCountry(data.country)
-   * })
-   * ```
-   */
-  onChange(
-    callback: (
-      data: InferFormState<NonNullable<TFieldType>, NonNullable<TFinalFields>>
-    ) => void
-  ): FormBuilder<
-    TFormState,
-    TFieldType,
-    TFieldsConfig,
-    TFinalFields,
-    TInitialData,
-    TOnSubmit,
     typeof callback
   > {
     return new FormBuilder({
@@ -446,8 +361,7 @@ class FormBuilder<
       autoFocusableFieldId: this._autoFocusableFieldId,
       conditionalFields: this._conditionalFields,
       initialData: this._initialData,
-      onSubmit: this._onSubmit,
-      onChange: callback
+      onSubmit: callback
     })
   }
 
@@ -486,7 +400,6 @@ class FormBuilder<
       finalFields,
       _initialData,
       _onSubmit,
-      _onChange,
       _conditionalFields
     } = this
 
@@ -514,10 +427,7 @@ class FormBuilder<
             conditionalFields: _conditionalFields as any,
             onSubmit: _onSubmit as unknown as (
               data: InferFormFinalState<any, any>
-            ) => Promise<void>,
-            onChange: _onChange as unknown as (
-              data: InferFormFinalState<any, any>
-            ) => void
+            ) => Promise<void>
           },
           ui: uiConfig,
           dataStore: formStateStore
@@ -607,10 +517,6 @@ class FormBuilderWithoutTypesMap<TFormState extends FormState> {
  *   .onSubmit(async (data) => {
  *     // data is fully typed as CreateUserForm
  *     await createUser(data)
- *   })
- *   .onChange((data) => {
- *     // Optional: handle real-time form changes
- *     console.log('Form changed:', data)
  *   })
  *   .build()
  *

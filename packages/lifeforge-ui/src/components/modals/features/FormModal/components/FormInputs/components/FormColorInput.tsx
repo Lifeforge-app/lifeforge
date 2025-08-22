@@ -1,8 +1,13 @@
 import { ColorInput } from '@components/inputs'
-import {
-  type ColorFieldProps,
-  type FormInputProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type ColorFieldProps = BaseFieldProps<string, string, true> & {
+  type: 'color'
+}
 
 function FormColorInput({
   field,

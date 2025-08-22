@@ -1,8 +1,17 @@
-import { LocationInput } from '@components/inputs'
-import {
-  type FormInputProps,
-  type LocationFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+import { type Location, LocationInput } from '@components/inputs'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type LocationFieldProps = BaseFieldProps<
+  Location | null,
+  Location,
+  true
+> & {
+  type: 'location'
+}
 
 function FormLocationInput({
   field,

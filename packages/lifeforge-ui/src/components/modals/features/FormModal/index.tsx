@@ -1,10 +1,5 @@
+/* eslint-disable no-case-declarations */
 import { Button } from '@components/buttons'
-import type {
-  FormFieldPropsUnion,
-  FormState,
-  InferFormFinalState,
-  InferFormState
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { LoadingScreen } from '@components/screens'
 import { loadIcon } from '@iconify/react/dist/iconify.js'
 import { stringToIcon, validateIconName } from '@iconify/utils'
@@ -18,14 +13,21 @@ import type { StoreApi, UseBoundStore } from 'zustand'
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
+import type {
+  FormFieldPropsUnion,
+  FormState,
+  InferFormFinalState,
+  InferFormState
+} from './typescript/form.types'
 import { checkEmpty } from './utils/formUtils'
 
 function validateField(
-  validator: ((value: any) => boolean | string) | ZodType,
-  value: any
+  validator: ((value: any, formState: FormState) => boolean | string) | ZodType,
+  value: any,
+  formState: FormState
 ) {
   if (typeof validator === 'function') {
-    return validator(value)
+    return validator(value, formState)
   }
 
   const result = validator.safeParse(value)
@@ -88,7 +90,6 @@ function FormModal({
   useEffect(() => {
     const unsubscribe = dataStore.subscribe(data => {
       setData(data)
-      console.log(data)
     })
 
     return unsubscribe
@@ -98,21 +99,6 @@ function FormModal({
     Record<string, string | undefined>
   >({})
 
-  /**
-   * Handles the form submission process for the FormModal component.
-   *
-   * @remarks
-   * The function handles various field types with specific transformations:
-   * - `datetime`: Converts to ISO 8601 format (YYYY-MM-DDTHH:mm:ssZ)
-   * - `location`: Ensures undefined for falsy values
-   * - `currency`/`number`: Converts to Number type
-   * - `file`: Extracts the file property from the file object
-   * - `checkbox`: Converts to Boolean type
-   *
-   * @returns A Promise that resolves when the submission process is complete
-   *
-   * @throws Will not throw errors directly, but may propagate errors from the onSubmit callback
-   */
   async function handleSubmit(): Promise<void> {
     const visibleFields = Object.entries(fields).filter(field => {
       // Explicitly defined hidden state takes precedence
@@ -154,11 +140,27 @@ function FormModal({
             finalValue = Number(value)
             break
           case 'file':
-            finalValue =
-              (value as { file: string | File | null }).file ?? undefined
+            finalValue = (value as any).file ?? undefined
             break
           case 'checkbox':
             finalValue = Boolean(value)
+            break
+
+          case 'listbox':
+            const options =
+              typeof fields[key].options === 'function'
+                ? fields[key].options(data)
+                : fields[key].options
+
+            if (Array.isArray(value)) {
+              finalValue = value.filter(v =>
+                options.find(option => option.value === v)
+              )
+            } else {
+              finalValue = options.find(option => option.value === value)
+                ? value
+                : undefined
+            }
             break
           default:
             finalValue = value
@@ -203,8 +205,16 @@ function FormModal({
         }
       }
 
-      const result = field.validator
-        ? validateField(field.validator, value as never)
+      const validator = (
+        field as FormFieldPropsUnion & {
+          validator?:
+            | ((value: any, formState: FormState) => boolean | string)
+            | ZodType
+        }
+      ).validator
+
+      const result = validator
+        ? validateField(validator, value as never, data)
         : true
 
       if (typeof result === 'string') {
