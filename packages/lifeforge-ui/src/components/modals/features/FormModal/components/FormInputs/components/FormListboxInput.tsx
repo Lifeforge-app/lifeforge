@@ -100,6 +100,7 @@ function FormListboxInput({
         )
       }
       disabled={field.disabled}
+      errorMsg={field.errorMsg}
       icon={field.icon}
       label={field.label}
       multiple={!!field.multiple}
