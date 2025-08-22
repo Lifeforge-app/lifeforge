@@ -11,7 +11,8 @@ function ListboxInputWrapper<T>({
   className,
   children,
   disabled,
-  onClick
+  onClick,
+  errorMsg
 }: {
   value: T
   onChange: (value: T) => void
@@ -20,6 +21,7 @@ function ListboxInputWrapper<T>({
   children: React.ReactNode
   disabled?: boolean
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  errorMsg?: string
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -106,24 +108,31 @@ function ListboxInputWrapper<T>({
     // For multiple selection, we render a custom dropdown-like interface
     return (
       <ListboxProvider value={{ currentValue: value, multiple }}>
-        <div
-          className={clsx(
-            'border-bg-400 dark:border-bg-600 bg-bg-200/50 shadow-custom hover:bg-bg-200 focus-within:border-custom-500! data-open:border-custom-500! dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex items-center gap-1 rounded-t-lg border-b-2 transition-all',
-            className,
-            disabled ? 'pointer-events-none! opacity-50' : '',
-            isOpen && 'data-open'
-          )}
-          onClick={onClick}
-        >
-          <Select.Root
-            disabled={disabled}
-            open={isOpen}
-            value=""
-            onOpenChange={setIsOpen}
-            onValueChange={handleValueChange}
+        <div className={clsx('space-y-2', className)}>
+          <div
+            className={clsx(
+              'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex w-full items-center gap-1 rounded-t-lg border-b-2 transition-all',
+              errorMsg
+                ? 'border-red-500 dark:border-red-500'
+                : 'border-bg-500 data-open:border-custom-500! focus-within:border-custom-500!',
+              disabled ? 'pointer-events-none! opacity-50' : '',
+              isOpen && 'data-open'
+            )}
+            onClick={onClick}
           >
-            {children}
-          </Select.Root>
+            <Select.Root
+              disabled={disabled}
+              open={isOpen}
+              value=""
+              onOpenChange={setIsOpen}
+              onValueChange={handleValueChange}
+            >
+              {children}
+            </Select.Root>
+          </div>
+          {errorMsg && (
+            <div className="px-6 text-sm text-red-500">{errorMsg}</div>
+          )}
         </div>
       </ListboxProvider>
     )
@@ -136,15 +145,22 @@ function ListboxInputWrapper<T>({
         value={stringValue}
         onValueChange={handleValueChange}
       >
-        <div
-          className={clsx(
-            'border-bg-400 dark:border-bg-600 bg-bg-200/50 shadow-custom hover:bg-bg-200 focus-within:border-custom-500! data-open:border-custom-500! dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex items-center gap-1 rounded-t-lg border-b-2 transition-all',
-            className,
-            disabled ? 'pointer-events-none! opacity-50' : ''
+        <div className={clsx('space-y-2', className)}>
+          <div
+            className={clsx(
+              'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex items-center gap-1 rounded-t-lg border-b-2 transition-all',
+              errorMsg
+                ? 'border-red-500 dark:border-red-500'
+                : 'border-bg-400 dark:border-bg-600 data-open:border-custom-500! focus-within:border-custom-500!',
+              disabled ? 'pointer-events-none! opacity-50' : ''
+            )}
+            onClick={onClick}
+          >
+            {children}
+          </div>
+          {errorMsg && (
+            <div className="px-6 text-sm text-red-500">{errorMsg}</div>
           )}
-          onClick={onClick}
-        >
-          {children}
         </div>
       </Select.Root>
     </ListboxProvider>
