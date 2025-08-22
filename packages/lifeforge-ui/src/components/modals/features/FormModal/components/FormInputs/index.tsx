@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useMemo } from 'react'
 
@@ -45,6 +44,7 @@ const MemoizedFormField = memo(
   ({
     id,
     field,
+    hidden,
     value,
     autoFocus,
     namespace,
@@ -54,6 +54,7 @@ const MemoizedFormField = memo(
     id: string
     field: FormFieldPropsUnion
     value: any
+    hidden?: boolean
     autoFocus?: boolean
     namespace?: string
     errorMsg?: string
@@ -63,7 +64,7 @@ const MemoizedFormField = memo(
 
     const FormComponent = COMPONENT_MAP[fieldType] || (() => <></>)
 
-    if (field.hidden) {
+    if (hidden) {
       return null
     }
 
@@ -85,16 +86,20 @@ MemoizedFormField.displayName = 'MemoizedFormField'
 function FormInputs<T extends FormState>({
   fields,
   autoFocusableFieldId,
+  conditionalFields,
   data,
-  setData,
+  setStore,
   errorMsgs,
   removeErrorMsg,
   namespace
 }: {
   fields: FieldsConfig<T>
   autoFocusableFieldId?: string
+  conditionalFields?: {
+    [K in keyof T]?: (data: T) => boolean
+  }
   data: T
-  setData: React.Dispatch<React.SetStateAction<T>>
+  setStore: (data: Record<string, any>) => void
   errorMsgs: Record<string, string | undefined>
   removeErrorMsg: (fieldId: string) => void
   namespace?: string
@@ -104,13 +109,13 @@ function FormInputs<T extends FormState>({
 
     Object.keys(fields).forEach(id => {
       handlers[id] = (value: any) => {
-        setData(prev => ({ ...prev, [id]: value }))
         removeErrorMsg(id)
+        setStore({ [id]: value })
       }
     })
 
     return handlers
-  }, [fields, setData])
+  }, [fields])
 
   return (
     <div className="space-y-3">
@@ -120,12 +125,23 @@ function FormInputs<T extends FormState>({
 
         const errorMsg = errorMsgs[id]
 
+        const conditionalCall = conditionalFields?.[id]?.(data)
+
+        // Determine whether there is a conditional hidden state,
+        // if not, the field should be visible
+        const conditionalHidden =
+          typeof conditionalCall === 'boolean' ? !conditionalCall : false
+
+        // If the field is explicitly hidden, conditionalHidden should be overridden
+        const hidden = field.hidden ? true : conditionalHidden
+
         return (
           <MemoizedFormField
             key={id}
             autoFocus={autoFocusableFieldId === id}
             errorMsg={errorMsg}
             field={field}
+            hidden={hidden}
             id={id}
             namespace={namespace}
             value={value}

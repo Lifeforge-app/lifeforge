@@ -1,11 +1,5 @@
 import dayjs from 'dayjs'
 
-import type {
-  FieldsConfig,
-  FormFieldPropsUnion,
-  InferFormState
-} from '../typescript/form_interfaces'
-
 /**
  * Transforms existing data based on field type to ensure proper format for form inputs.
  *
@@ -182,16 +176,16 @@ export const checkEmpty = (value: unknown): boolean => {
  * // }
  * ```
  */
-export const getInitialData = <TFormConfig extends FieldsConfig<any, any>>(
-  fieldTypes: Record<string, FormFieldPropsUnion['type']>,
-  fields: TFormConfig,
-  formExistedData?: Partial<InferFormState<any, TFormConfig>>
-) => {
+export const getInitialData = (
+  fieldTypes: Record<string, any>,
+  fields: Record<string, any>,
+  initialData?: Record<string, any>
+): Record<string, any> => {
   return Object.fromEntries(
     Object.entries(fieldTypes).map(([key, fieldType]) => {
       // Use existing data if available and not empty
-      if (formExistedData && key in formExistedData && formExistedData[key]) {
-        return [key, transformExistedData(fieldType, formExistedData[key])]
+      if (initialData && key in initialData && initialData[key]) {
+        return [key, transformExistedData(fieldType, initialData[key])]
       }
 
       // Set appropriate default value based on field type

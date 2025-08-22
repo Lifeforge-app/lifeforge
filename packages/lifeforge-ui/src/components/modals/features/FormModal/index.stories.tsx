@@ -1,5 +1,6 @@
 import ModalWrapper from '@components/modals/core/components/ModalWrapper'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { z } from 'zod/v4'
 
 import defineForm from './formBuilder'
 import Index from './index'
@@ -10,6 +11,8 @@ type CuteForm = {
   age: number
   color: string
   icon: string
+  password: string
+  confirmPassword: string
 }
 
 const meta = {
@@ -42,6 +45,11 @@ const meta = {
         summary: "'create' | 'update' | React.ComponentProps<typeof Button>",
         required: true
       },
+      table: {
+        type: {
+          summary: "'create' | 'update' | React.ComponentProps<typeof Button>"
+        }
+      },
       description: 'The props for the submit button in the form modal.',
       control: false
     },
@@ -51,6 +59,11 @@ const meta = {
       type: {
         summary: '() => void',
         required: true
+      },
+      table: {
+        type: {
+          summary: '() => void'
+        }
       }
     },
     'ui.namespace': {
@@ -60,6 +73,20 @@ const meta = {
     'ui.loading': {
       description:
         'Whether the form modal is in a loading state. A loading spinner will be shown instead of the form fields.'
+    },
+    'ui.actionButton': {
+      description:
+        'Action button to be displayed at the top right corner besides the close button.',
+      type: {
+        summary: 'React.ComponentProps<typeof Button>',
+        required: false
+      },
+      table: {
+        type: {
+          summary: 'React.ComponentProps<typeof Button>'
+        }
+      },
+      control: false
     }
   } as never
 } satisfies Meta<typeof Index>
@@ -76,19 +103,24 @@ export const Default: Story = {
       namespace: '',
       onClose: () => {},
       loading: false,
-      submitButton: {
-        icon: 'tabler:check',
-        children: 'Submit'
-      }
+      submitButton: 'update'
     }
   } as never,
   render: args => {
-    const formProps = defineForm<CuteForm>(args.ui)
+    const { formProps, formStateStore } = defineForm<CuteForm>({
+      ...args.ui,
+      actionButton: {
+        icon: 'tabler:cube',
+        variant: 'plain'
+      }
+    })
       .typesMap({
         name: 'text',
         age: 'number',
         color: 'color',
-        icon: 'listbox'
+        icon: 'listbox',
+        password: 'text',
+        confirmPassword: 'text'
       })
       .setupFields({
         name: {
@@ -96,24 +128,20 @@ export const Default: Story = {
           icon: 'tabler:user',
           placeholder: 'John Doe',
           required: true,
-          validator(value) {
-            if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
-              return 'Invalid title. Only alphanumeric characters and spaces are allowed.'
-            }
-
-            return true
-          }
+          validator: z
+            .string()
+            .refine(
+              value => /^[a-zA-Z ]+$/.test(value),
+              'Invalid name. Only alphabetic characters and spaces are allowed.'
+            )
         },
         age: {
           icon: 'tabler:number-123',
           label: 'Age',
-          validator: value => {
-            if (value < 0) {
-              return 'Invalid age. Age must be positive.'
-            }
-
-            return true
-          }
+          validator: z
+            .number()
+            .int('Invalid age. Age must be an integer.')
+            .nonnegative('Invalid age. Age must be positive.')
         },
         color: {
           label: 'Color'
@@ -134,9 +162,50 @@ export const Default: Story = {
             { text: 'Check', value: 'tabler:check', icon: 'tabler:check' },
             { text: 'X', value: 'tabler:x', icon: 'tabler:x' }
           ]
+        },
+        password: {
+          label: 'Password',
+          icon: 'tabler:lock',
+          placeholder: '••••••••',
+          required: true,
+          isPassword: true,
+          validator: z
+            .string()
+            .min(8, 'Password must be at least 8 characters long.')
+            .max(100, 'Password must be at most 100 characters long.'),
+          actionButtonProps: {
+            variant: 'plain',
+            icon: 'tabler:dice',
+            onClick: () => {
+              const randomPassword = Math.random().toString(36).slice(-8)
+
+              formStateStore.setState(() => ({
+                password: randomPassword,
+                confirmPassword: randomPassword
+              }))
+            }
+          }
+        },
+        confirmPassword: {
+          label: 'Confirm Password',
+          icon: 'tabler:lock',
+          placeholder: '••••••••',
+          isPassword: true,
+          required: true,
+          validator: value => {
+            if (value !== formStateStore.getState().password) {
+              return 'Passwords must match'
+            }
+
+            return true
+          }
         }
       })
       .autoFocusField('name')
+      .conditionalFields({
+        age: data => data.name.trim() !== '',
+        confirmPassword: data => data.password.trim() !== ''
+      })
       .initialData({})
       .onSubmit(async formData => {
         alert(`Form submitted with data: ${JSON.stringify(formData)}`)
