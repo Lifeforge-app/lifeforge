@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMemo } from 'react'
+import { type StoreApi, type UseBoundStore, create } from 'zustand'
+
 import FormModal from '.'
 import type {
   FieldsConfig,
@@ -8,6 +11,7 @@ import type {
   InferFormState,
   MatchFieldByFormDataType
 } from './typescript/form_interfaces'
+import { getInitialData } from './utils/formUtils'
 
 /**
  * Since the inferred body input data from `forgeAPI` might be complex unions,
@@ -86,6 +90,9 @@ class FormBuilder<
   private readonly fields?: TFieldsConfig
   /** Field ID to be autofocused */
   private readonly _autoFocusableFieldId?: keyof TFormState
+  private readonly _conditionalFields?: {
+    [K in keyof TFormState]?: (data: TFormState) => boolean
+  }
   /** Final processed field configuration with types */
   private readonly finalFields?: TFinalFields
   /** Initial data for form fields */
@@ -109,6 +116,9 @@ class FormBuilder<
     initialData?: TInitialData
     onSubmit?: TOnSubmit
     onChange?: TOnChange
+    conditionalFields?: {
+      [K in keyof TFormState]?: (data: TFormState) => boolean
+    }
   }) {
     if (opts) {
       this.uiConfig = opts.uiConfig
@@ -119,6 +129,7 @@ class FormBuilder<
       this._initialData = opts.initialData
       this._onChange = opts.onChange
       this._onSubmit = opts.onSubmit
+      this._conditionalFields = opts.conditionalFields
     }
   }
 
@@ -252,6 +263,31 @@ class FormBuilder<
       fieldType: this.fieldType,
       fields: this.fields,
       autoFocusableFieldId: fieldId as string,
+      conditionalFields: this._conditionalFields,
+      finalFields: this.finalFields,
+      initialData: this._initialData,
+      onSubmit: this._onSubmit,
+      onChange: this._onChange
+    })
+  }
+
+  conditionalFields(fields: {
+    [K in keyof TFormState]?: (data: TFormState) => boolean
+  }): FormBuilder<
+    TFormState,
+    TFieldType,
+    TFieldsConfig,
+    TFinalFields,
+    TInitialData,
+    TOnSubmit,
+    TOnChange
+  > {
+    return new FormBuilder({
+      uiConfig: this.uiConfig,
+      fieldType: this.fieldType,
+      fields: this.fields,
+      autoFocusableFieldId: this._autoFocusableFieldId,
+      conditionalFields: fields,
       finalFields: this.finalFields,
       initialData: this._initialData,
       onSubmit: this._onSubmit,
@@ -293,6 +329,7 @@ class FormBuilder<
       fields: this.fields,
       finalFields: this.finalFields,
       autoFocusableFieldId: this._autoFocusableFieldId,
+      conditionalFields: this._conditionalFields,
       onChange: this._onChange,
       onSubmit: this._onSubmit,
       initialData
@@ -337,6 +374,7 @@ class FormBuilder<
       fields: this.fields,
       finalFields: this.finalFields,
       autoFocusableFieldId: this._autoFocusableFieldId,
+      conditionalFields: this._conditionalFields,
       initialData: this._initialData,
       onSubmit: callback,
       onChange: this._onChange
@@ -406,6 +444,7 @@ class FormBuilder<
       fields: this.fields,
       finalFields: this.finalFields,
       autoFocusableFieldId: this._autoFocusableFieldId,
+      conditionalFields: this._conditionalFields,
       initialData: this._initialData,
       onSubmit: this._onSubmit,
       onChange: callback
@@ -437,14 +476,18 @@ class FormBuilder<
    * <FormModal {...formConfig} isOpen={isOpen} onClose={onClose} />
    * ```
    */
-  build(): React.ComponentProps<typeof FormModal> {
+  build(): {
+    formProps: React.ComponentProps<typeof FormModal>
+    formStateStore: UseBoundStore<StoreApi<TFormState>>
+  } {
     const {
       uiConfig,
       fieldType,
       finalFields,
       _initialData,
       _onSubmit,
-      _onChange
+      _onChange,
+      _conditionalFields
     } = this
 
     // Validate that all required configuration steps are complete
@@ -452,21 +495,38 @@ class FormBuilder<
       throw new Error('FormBuilder: Some required steps not complete')
     }
 
-    return {
-      form: {
-        fieldTypes: fieldType,
-        fields: finalFields,
-        initialData: _initialData as any,
-        autoFocusableFieldId: this._autoFocusableFieldId as string,
-        onSubmit: _onSubmit as unknown as (
-          data: InferFormFinalState<any, any>
-        ) => Promise<void>,
-        onChange: _onChange as unknown as (
-          data: InferFormFinalState<any, any>
-        ) => void
-      },
-      ui: uiConfig
-    }
+    const formStateStore = create(
+      () =>
+        getInitialData(
+          fieldType,
+          finalFields,
+          _initialData as any
+        ) as TFormState
+    )
+
+    const memoizedValue = useMemo(() => {
+      return {
+        formProps: {
+          form: {
+            fieldTypes: fieldType,
+            fields: finalFields,
+            autoFocusableFieldId: this._autoFocusableFieldId as string,
+            conditionalFields: _conditionalFields as any,
+            onSubmit: _onSubmit as unknown as (
+              data: InferFormFinalState<any, any>
+            ) => Promise<void>,
+            onChange: _onChange as unknown as (
+              data: InferFormFinalState<any, any>
+            ) => void
+          },
+          ui: uiConfig,
+          dataStore: formStateStore
+        },
+        formStateStore
+      }
+    }, [formStateStore])
+
+    return memoizedValue
   }
 }
 
