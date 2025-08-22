@@ -64,10 +64,11 @@
   background-color: var(--color-bg-500);
 }
 
-#app {
+body {
   --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
 
-  .dark & {
+  .dark &,
+  &.dark {
     --custom-shadow: 0px 0px 0px 0px var(--color-bg-800);
   }
 }
