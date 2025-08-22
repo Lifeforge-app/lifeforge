@@ -59,5 +59,9 @@
       "enableSuccess": "双重身份验证成功启用。",
       "disableSuccess": "双重身份验证已成功禁用。"
     }
+  },
+  "misc": {
+    "enabled": "已启用",
+    "disabled": "已禁用"
   }
 }
