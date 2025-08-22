@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import type { MusicEntry } from '../../providers/MusicProvider'
@@ -74,10 +73,12 @@ function UpdateMusicModal({
 
   async function parseAi() {
     try {
+      const { name, author } = formStateStore.getState()
+
       const response =
         await forgeAPI.music.youtube.parseMusicNameAndAuthor.mutate({
-          title: initialData?.name || '',
-          uploader: initialData?.author || ''
+          title: name || '',
+          uploader: author || ''
         })
 
       if (!response) {
@@ -96,16 +97,6 @@ function UpdateMusicModal({
       )
     }
   }
-
-  useEffect(() => {
-    const unsubscribe = formStateStore.subscribe(state => {
-      console.log(state)
-    })
-
-    return () => {
-      unsubscribe()
-    }
-  }, [formStateStore])
 
   return <FormModal {...formProps} />
 }

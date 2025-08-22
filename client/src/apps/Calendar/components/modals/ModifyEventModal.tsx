@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 
@@ -27,8 +26,6 @@ function ModifyEventModal({
   const categoriesQuery = useQuery(
     forgeAPI.calendar.categories.list.queryOptions()
   )
-
-  const [eventType, setEventType] = useState<'single' | 'recurring'>()
 
   const mutation = useMutation(
     (type === 'create'
@@ -135,20 +132,17 @@ function ModifyEventModal({
       rrule: {
         required: true,
         hasDuration: true,
-        label: 'Recurring Rule',
-        hidden: eventType === 'single' || !eventType
+        label: 'Recurring Rule'
       },
       start: {
         hasTime: true,
         label: 'Start Time',
-        icon: 'tabler:clock',
-        hidden: eventType === 'recurring' || !eventType
+        icon: 'tabler:clock'
       },
       end: {
         hasTime: true,
         label: 'End Time',
-        icon: 'tabler:clock',
-        hidden: eventType === 'recurring' || !eventType
+        icon: 'tabler:clock'
       }
     })
     .initialData(
@@ -184,7 +178,11 @@ function ModifyEventModal({
         return base
       })()
     )
-    .onChange(data => setEventType(data.type))
+    .conditionalFields({
+      rrule: data => data.type === 'recurring',
+      start: data => data.type === 'single',
+      end: data => data.type === 'single'
+    })
     .onSubmit(async data => {
       if (data.type === 'recurring') {
         const finalData: InferInput<
