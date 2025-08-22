@@ -59,5 +59,9 @@
       "enableSuccess": "Two-factor authentication enabled successfully.",
       "disableSuccess": "Two-factor authentication disabled successfully."
     }
+  },
+  "misc": {
+    "enabled": "Enabled",
+    "disabled": "Disabled"
   }
 }
