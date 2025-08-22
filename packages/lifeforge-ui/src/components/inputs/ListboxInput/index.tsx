@@ -33,6 +33,7 @@ interface ListboxInputProps<T> {
   buttonContent: React.ReactElement
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  errorMsg?: string
 }
 
 function ListboxInput<T>({
@@ -47,7 +48,8 @@ function ListboxInput<T>({
   children,
   customActive,
   buttonContent,
-  namespace
+  namespace,
+  errorMsg
 }: ListboxInputProps<T>) {
   const inputLabel = useInputLabel({ namespace, label })
 
@@ -85,16 +87,18 @@ function ListboxInput<T>({
     <ListboxInputWrapper
       className={className}
       disabled={disabled}
+      errorMsg={errorMsg}
       multiple={multiple}
       value={value}
       onChange={setValue}
       onClick={focusInput}
     >
       <Select.Trigger className="group flex w-full min-w-64 items-center pl-6">
-        <InputIcon active={isActive} icon={icon} />
+        <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
         <InputLabel
           isListboxOrCombobox
           active={isActive}
+          hasError={!!errorMsg}
           label={inputLabel}
           required={required === true}
         />
@@ -108,6 +112,12 @@ function ListboxInput<T>({
               icon="heroicons:chevron-up-down-16-solid"
             />
           </Select.Icon>
+          {errorMsg && (
+            <Icon
+              className="ml-6 size-6 text-red-500"
+              icon="tabler:alert-circle"
+            />
+          )}
         </span>
       </Select.Trigger>
       <ListboxOptions>{children}</ListboxOptions>
