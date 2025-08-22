@@ -10,7 +10,11 @@ import {
 import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { APIEndpointProvider, PersonalizationProvider } from 'shared'
+import {
+  APIEndpointProvider,
+  PersonalizationProvider,
+  usePersonalization
+} from 'shared'
 import { themes } from 'storybook/theming'
 
 import ModalManager from '../src/components/modals/core/ModalManager'
@@ -18,6 +22,27 @@ import './i18n'
 import './index.css'
 
 const queryClient = new QueryClient()
+
+function MainElement({
+  theme,
+  children
+}: {
+  theme: string
+  children: React.ReactNode
+}) {
+  const { setTheme } = usePersonalization()
+
+  useEffect(() => {
+    setTheme(theme as 'light' | 'dark')
+  }, [theme, setTheme])
+
+  return (
+    <main className="flex-center w-full flex-1 flex-col" id="app">
+      {children}
+      <ModalManager />
+    </main>
+  )
+}
 
 const withBodyClass = (Story: any, context: any) => {
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
@@ -27,35 +52,29 @@ const withBodyClass = (Story: any, context: any) => {
     if (!body) return
 
     body.classList.remove(
-      'bg-bg-50!',
-      'bg-bg-900!',
-      'text-bg-800!',
-      'text-bg-100!'
+      'bg-bg-950!',
+      'text-bg-50',
+      'bg-bg-200/50!',
+      'text-bg-800'
     )
+
     body.classList.add(
       'flex',
       'items-center',
       'justify-center',
-      'theme-blue',
-      'bg-zinc',
+      'theme-custom',
       'h-full',
       'transition-all',
       'flex',
       'flex-col',
       ...(context.globals.theme === 'dark'
-        ? ['bg-bg-900!', 'text-bg-100!']
-        : ['bg-bg-50!', 'text-bg-800!'])
+        ? ['bg-bg-950!', 'text-bg-50']
+        : ['bg-bg-200/50!', 'text-bg-800'])
     )
 
     document.querySelectorAll('html, body').forEach(html => {
       html.classList.add('h-full')
     })
-
-    if (context.globals.theme === 'dark') {
-      body.classList.add('dark')
-    } else {
-      body.classList.remove('dark')
-    }
   }, [context.globals.theme])
 
   useEffect(() => {
@@ -65,24 +84,20 @@ const withBodyClass = (Story: any, context: any) => {
   return (
     <APIEndpointProvider endpoint={'https://lifeforge-api-proxy.onrender.com'}>
       <QueryClientProvider client={queryClient}>
-        <div id="body">
-          <PersonalizationProvider
-            defaultValueOverride={{
-              rawThemeColor: 'theme-blue',
-              rootElement: rootElement
-            }}
-          >
-            <main className="flex w-full flex-1 flex-col bg-white" id="app">
-              <div
-                className={`bg-zinc theme-blue flex w-full flex-1 items-center justify-center px-32 py-12 transition-all ${
-                  context.globals.theme === 'dark' ? 'dark' : ''
-                } ${context.globals.theme === 'dark' ? 'bg-bg-900' : 'bg-bg-200/50'}`}
-              >
+        <div id="body" className="flex-center h-full flex-col transition-all">
+          {rootElement && (
+            <PersonalizationProvider
+              defaultValueOverride={{
+                rawThemeColor: '#a9d066',
+                theme: context.globals.theme,
+                rootElement: rootElement
+              }}
+            >
+              <MainElement theme={context.globals.theme}>
                 <Story />
-                <ModalManager />
-              </div>
-            </main>
-          </PersonalizationProvider>
+              </MainElement>
+            </PersonalizationProvider>
+          )}
         </div>
       </QueryClientProvider>
     </APIEndpointProvider>
