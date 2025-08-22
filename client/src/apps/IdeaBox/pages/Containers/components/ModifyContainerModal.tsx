@@ -42,7 +42,7 @@ function ModifyContainerModal({
     forgeAPI.ai.imageGeneration.verifyAPIKey.queryOptions()
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.containers)[typeof type]>['body']
   >({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',

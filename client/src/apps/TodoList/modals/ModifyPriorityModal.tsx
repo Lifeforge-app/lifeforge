@@ -34,7 +34,7 @@ function ModifyPriorityModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.todoList.priorities)[typeof type]>['body']
   >({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',

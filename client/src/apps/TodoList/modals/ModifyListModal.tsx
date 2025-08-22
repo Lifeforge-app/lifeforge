@@ -34,7 +34,7 @@ function ModifyListModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.todoList.lists)[typeof type]>['body']
   >({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',

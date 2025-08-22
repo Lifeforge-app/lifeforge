@@ -29,7 +29,7 @@ function ModifyTypeModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.scoresLibrary.types)[typeof openType]>['body']
   >({
     icon: openType === 'create' ? 'tabler:plus' : 'tabler:pencil',
