@@ -48,7 +48,14 @@ const withBodyClass = (Story: any, context: any) => {
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
 
   useEffect(() => {
-    const body = document.getElementById('body')
+    const body = document.body
+    document.querySelectorAll('.sbdocs-preview').forEach(preview => {
+      preview.classList.add('bg-white!', 'border-bg-800!')
+    })
+
+    const sbDocsPreviews = document.querySelectorAll(
+      '.sbdocs-preview .docs-story'
+    )
     if (!body) return
 
     body.classList.remove(
@@ -58,18 +65,35 @@ const withBodyClass = (Story: any, context: any) => {
       'text-bg-800'
     )
 
+    sbDocsPreviews.forEach(preview => {
+      preview.classList.remove(
+        'bg-bg-900!',
+        'text-bg-50',
+        'bg-bg-200/50!',
+        'text-bg-800'
+      )
+
+      preview.classList.add(
+        ...(context.globals.theme === 'dark'
+          ? ['bg-bg-900!', 'text-bg-50']
+          : ['bg-bg-200/50!', 'text-bg-800'])
+      )
+    })
+
     body.classList.add(
       'flex',
-      'items-center',
-      'justify-center',
       'theme-custom',
       'h-full',
       'transition-all',
       'flex',
       'flex-col',
-      ...(context.globals.theme === 'dark'
-        ? ['bg-bg-950!', 'text-bg-50']
-        : ['bg-bg-200/50!', 'text-bg-800'])
+      ...(!document.querySelector('#storybook-docs:not([hidden])')
+        ? [
+            ...(context.globals.theme === 'dark'
+              ? ['bg-bg-950!', 'text-bg-50']
+              : ['bg-bg-200/50!', 'text-bg-800'])
+          ]
+        : [])
     )
 
     document.querySelectorAll('html, body').forEach(html => {
@@ -78,7 +102,7 @@ const withBodyClass = (Story: any, context: any) => {
   }, [context.globals.theme])
 
   useEffect(() => {
-    setRootElement(document.getElementById('body'))
+    setRootElement(document.body)
   }, [])
 
   return (
@@ -95,6 +119,7 @@ const withBodyClass = (Story: any, context: any) => {
             >
               <MainElement theme={context.globals.theme}>
                 <Story />
+                <div id="headlessui-portal-root" />
               </MainElement>
             </PersonalizationProvider>
           )}
