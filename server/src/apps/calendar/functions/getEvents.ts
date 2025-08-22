@@ -11,9 +11,12 @@ export default async function getEvents({
   start: string
   end: string
 }) {
-  const startMoment = moment(start).startOf('day').toISOString()
+  const startMoment = moment(start)
+    .startOf('day')
+    .utc()
+    .format('YYYY-MM-DD HH:mm:ss')
 
-  const endMoment = moment(end).endOf('day').toISOString()
+  const endMoment = moment(end).endOf('day').utc().format('YYYY-MM-DD HH:mm:ss')
 
   const allEvents: Array<{
     id: string

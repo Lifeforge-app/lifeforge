@@ -15,7 +15,7 @@ function ModifyLineModal({
     initialData?: Partial<Line>
   }
 }) {
-  const formProps = defineForm<{
+  const { formProps } = defineForm<{
     name: string
     color: string
   }>({

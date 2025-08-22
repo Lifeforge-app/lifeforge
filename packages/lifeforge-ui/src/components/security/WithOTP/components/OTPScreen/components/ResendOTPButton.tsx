@@ -1,5 +1,5 @@
+import { Button } from '@components/buttons'
 import clsx from 'clsx'
-import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 function ResendOTPButton({
