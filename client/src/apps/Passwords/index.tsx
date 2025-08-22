@@ -1,46 +1,39 @@
-import { Button, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
+import { useAuth } from '@providers/AuthProvider'
+import forgeAPI from '@utils/forgeAPI'
+import { ModuleWrapper, WithMasterPassword, WithOTP } from 'lifeforge-ui'
+import type { InferOutput } from 'shared'
 
 import ContentContainer from './components/ContentContainer'
-import ModifyPasswordModal from './modals/ModifyPasswordModal'
+
+export type PasswordEntry = InferOutput<
+  typeof forgeAPI.passwords.entries.list
+>[number]
 
 function Passwords() {
-  const open = useModalStore(state => state.open)
-
-  const { t } = useTranslation('apps.passwords')
-
-  const { masterPassword, otpSuccess } = usePasswordContext()
-
-  const handleCreatePassword = useCallback(() => {
-    open(ModifyPasswordModal, {
-      type: 'create'
-    })
-  }, [])
+  const { userData } = useAuth()
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        actionButton={
-          otpSuccess &&
-          masterPassword !== '' && (
-            <Button
-              className="hidden lg:flex"
-              icon="tabler:plus"
-              tProps={{ item: t('items.password') }}
-              onClick={handleCreatePassword}
-            >
-              new
-            </Button>
-          )
-        }
-        icon="tabler:key"
-        title="Passwords"
-      />
-      <ContentContainer />
+      <WithOTP
+        controllers={{
+          getChallenge: forgeAPI.passwords.master.getChallenge,
+          verifyOTP: forgeAPI.passwords.master.validateOTP,
+          generateOTP: forgeAPI.user.auth.generateOTP
+        }}
+      >
+        <WithMasterPassword
+          controllers={{
+            createPassword: forgeAPI.passwords.master.create,
+            getChallenge: forgeAPI.passwords.master.getChallenge,
+            verifyPassword: forgeAPI.passwords.master.verify
+          }}
+          hasMasterPassword={!!userData?.hasMasterPassword}
+        >
+          {masterPassword => (
+            <ContentContainer masterPassword={masterPassword} />
+          )}
+        </WithMasterPassword>
+      </WithOTP>
     </ModuleWrapper>
   )
 }

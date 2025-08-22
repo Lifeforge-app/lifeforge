@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
-import { encrypt } from '@security/utils/encryption'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { encrypt } from '@utils/encryption'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
@@ -17,28 +17,24 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
-import {
-  type PasswordEntry,
-  usePasswordContext
-} from '@apps/Passwords/providers/PasswordsProvider'
-
+import type { PasswordEntry } from '..'
 import ModifyPasswordModal from '../modals/ModifyPasswordModal'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 
 function PasswordEntryItem({
   password,
-  pinPassword
+  pinPassword,
+  masterPassword
 }: {
   password: PasswordEntry
   pinPassword: (id: string) => Promise<void>
+  masterPassword: string
 }) {
   const queryClient = useQueryClient()
 
   const { t } = useTranslation('apps.passwords')
 
   const open = useModalStore(state => state.open)
-
-  const { masterPassword } = usePasswordContext()
 
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
@@ -88,7 +84,8 @@ function PasswordEntryItem({
         initialData: {
           ...password,
           decrypted
-        }
+        },
+        masterPassword
       })
     } catch {
       toast.error('Couldn’t fetch the password. Please try again.')
