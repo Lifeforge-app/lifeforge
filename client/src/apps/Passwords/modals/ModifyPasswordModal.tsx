@@ -2,19 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import copy from 'copy-to-clipboard'
 import { FormModal, defineForm } from 'lifeforge-ui'
-import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import {
-  type PasswordEntry,
-  usePasswordContext
-} from '@apps/Passwords/providers/PasswordsProvider'
-
-import { encrypt } from '../../../core/security/utils/encryption'
+import type { PasswordEntry } from '..'
+import { encrypt } from '../../../core/utils/encryption'
 
 function ModifyPasswordModal({
-  data: { type, initialData },
+  data: { type, initialData, masterPassword },
   onClose
 }: {
   data: {
@@ -22,21 +17,11 @@ function ModifyPasswordModal({
     initialData?: PasswordEntry & {
       decrypted?: string
     }
+    masterPassword: string
   }
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-
-  const { masterPassword } = usePasswordContext()
-
-  const [data, setData] = useState({
-    name: initialData?.name ?? '',
-    icon: initialData?.icon ?? '',
-    color: initialData?.color ?? '',
-    website: initialData?.website ?? '',
-    username: initialData?.username ?? '',
-    password: initialData?.decrypted ?? ''
-  })
 
   const mutation = useMutation(
     (type === 'create'
@@ -54,7 +39,7 @@ function ModifyPasswordModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps, formStateStore } = defineForm<
     InferInput<(typeof forgeAPI.passwords.entries)[typeof type]>['body']
   >({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
@@ -129,10 +114,9 @@ function ModifyPasswordModal({
               generatedPassword += allCharacters[randomIndex]
             }
 
-            setData(prev => ({
-              ...prev,
+            formStateStore.setState({
               password: generatedPassword
-            }))
+            })
 
             copy(generatedPassword)
             toast.success('Password copied to clipboard')
@@ -155,15 +139,7 @@ function ModifyPasswordModal({
     })
     .build()
 
-  return (
-    <FormModal
-      {...formProps}
-      externalData={{
-        data,
-        setData
-      }}
-    />
-  )
+  return <FormModal {...formProps} />
 }
 
 export default ModifyPasswordModal
