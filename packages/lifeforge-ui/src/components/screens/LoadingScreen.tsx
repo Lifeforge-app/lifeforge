@@ -1,3 +1,5 @@
+import { Icon } from '@iconify/react'
+
 export default function LoadingScreen({
   customMessage
 }: {
@@ -5,7 +7,7 @@ export default function LoadingScreen({
 }) {
   return (
     <div className="flex-center size-full flex-1 flex-col gap-6">
-      <span className="loader"></span>
+      <Icon className="text-bg-500 size-10" icon="svg-spinners:180-ring" />
       <p className="text-bg-500 text-lg font-medium">{customMessage ?? ''}</p>
     </div>
   )

@@ -1,40 +1,40 @@
+import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
-import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
-import { Button } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { ForgeAPIClientController } from 'shared'
 
-import { encrypt } from '../../utils/encryption'
+import { encrypt } from '../../../../../utils/encryption'
 import OTPInputBox from './components/OTPInputBox'
 import ResendOTPButton from './components/ResendOTPButton'
 
 function OTPScreen({
-  challengeController,
-  verifyController,
-  callback,
-  buttonsFullWidth
+  controllers,
+  callback
 }: {
-  challengeController: ForgeAPIClientController
-  verifyController: ForgeAPIClientController
+  controllers: {
+    getChallenge: ForgeAPIClientController
+    generateOTP: ForgeAPIClientController
+    verifyOTP: ForgeAPIClientController
+  }
   callback: () => void
-  buttonsFullWidth?: boolean
 }) {
   const { t } = useTranslation('common.vault')
 
   const [otpSent, setOtpSent] = useState(false)
 
   const [otpId, setOtpId] = useState(
-    localStorage.getItem(`otpId:${verifyController.endpoint}`) ?? ''
+    localStorage.getItem(`otpId:${controllers.verifyOTP.endpoint}`) ?? ''
   )
 
   const [otpCooldown, setOtpCooldown] = useState(
-    localStorage.getItem(`otpCooldown:${verifyController.endpoint}`)
+    localStorage.getItem(`otpCooldown:${controllers.verifyOTP.endpoint}`)
       ? Math.floor(
           (Number(
-            localStorage.getItem(`otpCooldown:${verifyController.endpoint}`)
+            localStorage.getItem(
+              `otpCooldown:${controllers.verifyOTP.endpoint}`
+            )
           ) -
             new Date().getTime()) /
             1000
@@ -59,7 +59,7 @@ function OTPScreen({
     setSendOtpLoading(true)
 
     try {
-      const data = await forgeAPI.user.auth.generateOTP.query()
+      const data = (await controllers.generateOTP.query()) as string
 
       setOtpSent(true)
       setOtpId(data)
@@ -67,9 +67,9 @@ function OTPScreen({
 
       const coolDown = new Date().getTime() + 60000
 
-      localStorage.setItem(`otpId:${verifyController.endpoint}`, data)
+      localStorage.setItem(`otpId:${controllers.verifyOTP.endpoint}`, data)
       localStorage.setItem(
-        `otpCooldown:${verifyController.endpoint}`,
+        `otpCooldown:${controllers.verifyOTP.endpoint}`,
         coolDown.toString()
       )
       toast.success(t('otp.messages.success'))
@@ -80,36 +80,41 @@ function OTPScreen({
     }
   }
 
-  async function verityOTP(otp: string): Promise<void> {
-    if (otp.length !== 6) {
-      toast.error(t('otp.messages.invalid'))
+  const verifyOTP = useCallback(
+    async (otp: string): Promise<void> => {
+      if (otp.length !== 6) {
+        toast.error(t('otp.messages.invalid'))
 
-      return
-    }
-
-    setVerifyOtpLoading(true)
-
-    try {
-      const challenge = (await challengeController.query()) as string
-
-      const data = (await verifyController.mutate({
-        otp: encrypt(otp, challenge),
-        otpId
-      } as never)) as boolean
-
-      if (data) {
-        callback()
-        localStorage.removeItem(`otpCooldown:${verifyController.endpoint}`)
-        toast.success(t('otp.messages.verify.success'))
-      } else {
-        toast.error(t('otp.messages.verify.failed'))
+        return
       }
-    } catch {
-      toast.error(t('otp.messages.verify.failed'))
-    } finally {
-      setVerifyOtpLoading(false)
-    }
-  }
+
+      setVerifyOtpLoading(true)
+
+      try {
+        const challenge = (await controllers.getChallenge.query()) as string
+
+        const data = (await controllers.verifyOTP.mutate({
+          otp: encrypt(otp, challenge),
+          otpId
+        } as never)) as boolean
+
+        if (data) {
+          callback()
+          localStorage.removeItem(
+            `otpCooldown:${controllers.verifyOTP.endpoint}`
+          )
+          toast.success(t('otp.messages.verify.success'))
+        } else {
+          toast.error(t('otp.messages.verify.failed'))
+        }
+      } catch {
+        toast.error(t('otp.messages.verify.failed'))
+      } finally {
+        setVerifyOtpLoading(false)
+      }
+    },
+    [otpId]
+  )
 
   useEffect(() => {
     if (otpCooldown > 0) {
@@ -143,14 +148,12 @@ function OTPScreen({
         {otpSent ? (
           <>
             <OTPInputBox
-              buttonFullWidth={buttonsFullWidth}
               otp={otp}
               setOtp={setOtp}
-              verifyOTP={verityOTP}
+              verifyOTP={verifyOTP}
               verifyOtpLoading={verifyOtpLoading}
             />
             <ResendOTPButton
-              buttonFullWidth={buttonsFullWidth}
               otpCooldown={otpCooldown}
               sendOtpLoading={sendOtpLoading}
               onClick={requestOTP}
@@ -159,10 +162,7 @@ function OTPScreen({
         ) : (
           <>
             <Button
-              className={clsx(
-                'w-full',
-                !buttonsFullWidth && 'md:w-3/4 xl:w-1/2'
-              )}
+              className="w-full md:w-3/4 xl:w-1/2"
               icon="tabler:mail"
               loading={sendOtpLoading}
               namespace="common.vault"

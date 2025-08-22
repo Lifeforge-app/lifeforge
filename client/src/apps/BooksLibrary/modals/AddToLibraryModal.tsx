@@ -46,7 +46,7 @@ function AddToLibraryModal({
       })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<typeof forgeAPI.booksLibrary.libgen.addToLibrary>['body']
   >({
     icon: 'majesticons:book-plus-line',

@@ -99,7 +99,7 @@ function NavigationBar() {
           to={`/${lastSection.group}/${lastSection.section}`}
         >
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-left" />
-          {toTitleCase(lastSection.section)}
+          {toTitleCase(lastSection.section.replace(/-/g, ' '))}
         </Link>
       ) : (
         <span />
@@ -109,7 +109,7 @@ function NavigationBar() {
           className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
           to={`/${nextSection.group}/${nextSection.section}`}
         >
-          {toTitleCase(nextSection.section)}
+          {toTitleCase(nextSection.section.replace(/-/g, ' '))}
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-right" />
         </Link>
       )}
