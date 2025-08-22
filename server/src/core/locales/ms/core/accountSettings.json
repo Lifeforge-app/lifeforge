@@ -59,5 +59,9 @@
       "enableSuccess": "Pengesahan dua faktor berjaya diaktifkan.",
       "disableSuccess": "Pengesahan dua faktor berjaya dilumpuhkan."
     }
+  },
+  "misc": {
+    "enabled": "Diaktifkan",
+    "disabled": "Dinonaktifkan"
   }
 }
