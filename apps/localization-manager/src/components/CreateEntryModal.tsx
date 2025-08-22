@@ -58,7 +58,7 @@ function CreateEntryModal({
     })
   )
 
-  const formProps = defineForm<{
+  const { formProps } = defineForm<{
     namespace?: string
     subNamespace: string
     parent: string
