@@ -37,7 +37,7 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
     })
   )
 
-  const formProps = defineForm<{
+  const { formProps } = defineForm<{
     [key in string]: string
   }>({
     namespace: 'core.accountSettings',

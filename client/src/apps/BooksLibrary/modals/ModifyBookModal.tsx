@@ -39,7 +39,7 @@ function ModifyBookModal({
       })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<typeof forgeAPI.booksLibrary.entries.update>['body']
   >({
     icon: 'tabler:pencil',

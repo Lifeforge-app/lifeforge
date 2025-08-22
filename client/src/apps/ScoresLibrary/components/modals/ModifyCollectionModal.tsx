@@ -36,7 +36,7 @@ function ModifyCollectionModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.scoresLibrary.collections)[typeof type]>['body']
   >({
     namespace: 'apps.scoresLibrary',

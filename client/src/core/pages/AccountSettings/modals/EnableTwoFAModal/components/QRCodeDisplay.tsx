@@ -1,4 +1,4 @@
-import { decrypt } from '@security/utils/encryption'
+import { decrypt } from '@utils/encryption'
 import forgeAPI from '@utils/forgeAPI'
 import { parse as parseCookie } from 'cookie'
 import { LoadingScreen } from 'lifeforge-ui'

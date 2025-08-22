@@ -1,7 +1,5 @@
-import OTPScreen from '@security/components/OTPScreen'
 import forgeAPI from '@utils/forgeAPI'
-import { Button, ModalHeader } from 'lifeforge-ui'
-import { useState } from 'react'
+import { Button, ModalHeader, WithOTP } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
@@ -12,8 +10,6 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
 
   const { setUserData } = useAuth()
-
-  const [otpSuccess, setOtpSuccess] = useState(false)
 
   async function handleConfirm() {
     try {
@@ -39,37 +35,30 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
         title="disable2FA"
         onClose={onClose}
       />
-      {!otpSuccess ? (
-        <div className="shadow-custom component-bg-lighter mt-6 rounded-lg p-6">
-          <OTPScreen
-            buttonsFullWidth
-            callback={() => {
-              setOtpSuccess(true)
-            }}
-            challengeController={forgeAPI.user['2fa'].getChallenge}
-            verifyController={forgeAPI.user['2fa'].validateOTP}
-          />
+      <WithOTP
+        controllers={{
+          getChallenge: forgeAPI.user['2fa'].getChallenge,
+          verifyOTP: forgeAPI.user['2fa'].validateOTP,
+          generateOTP: forgeAPI.user.auth.generateOTP
+        }}
+      >
+        <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
+        <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
+          <Button className="sm:w-1/2" icon="" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            dangerous
+            className="sm:w-1/2"
+            icon="tabler:check"
+            loading={loading}
+            variant="secondary"
+            onClick={onConfirm}
+          >
+            Confirm
+          </Button>
         </div>
-      ) : (
-        <>
-          <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
-          <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
-            <Button className="sm:w-1/2" icon="" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              dangerous
-              className="sm:w-1/2"
-              icon="tabler:check"
-              loading={loading}
-              variant="secondary"
-              onClick={onConfirm}
-            >
-              Confirm
-            </Button>
-          </div>
-        </>
-      )}
+      </WithOTP>
     </div>
   )
 }

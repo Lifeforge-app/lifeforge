@@ -1,7 +1,6 @@
-import OTPScreen from '@security/components/OTPScreen'
 import forgeAPI from '@utils/forgeAPI'
-import { ModalHeader } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
+import { ModalHeader, WithOTP } from 'lifeforge-ui'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -12,8 +11,6 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('core.accountSettings')
 
   const { setUserData } = useAuth()
-
-  const [otpSuccess, setOtpSuccess] = useState(false)
 
   const handleSuccess = useCallback(() => {
     setUserData(userData =>
@@ -31,20 +28,15 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
         title="enable2FA"
         onClose={onClose}
       />
-      {!otpSuccess ? (
-        <div className="shadow-custom component-bg-lighter mt-6 rounded-lg p-6">
-          <OTPScreen
-            buttonsFullWidth
-            callback={() => {
-              setOtpSuccess(true)
-            }}
-            challengeController={forgeAPI.user['2fa'].getChallenge}
-            verifyController={forgeAPI.user['2fa'].validateOTP}
-          />
-        </div>
-      ) : (
+      <WithOTP
+        controllers={{
+          getChallenge: forgeAPI.user['2fa'].getChallenge,
+          verifyOTP: forgeAPI.user['2fa'].validateOTP,
+          generateOTP: forgeAPI.user.auth.generateOTP
+        }}
+      >
         <TwoFAEnableProcedure onSuccess={handleSuccess} />
-      )}
+      </WithOTP>
     </div>
   )
 }

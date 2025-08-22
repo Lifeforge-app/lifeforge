@@ -35,7 +35,7 @@ function ModifyTagModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.tags)[typeof type]>['body']
   >({
     title: `tag.${type}`,

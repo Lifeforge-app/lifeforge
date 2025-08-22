@@ -35,7 +35,7 @@ function ModifyTextEntryModal({
       })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<typeof forgeAPI.momentVault.entries.update>['body']
   >({
     title: 'Update Entry',
