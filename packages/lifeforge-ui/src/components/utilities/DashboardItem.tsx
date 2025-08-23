@@ -30,10 +30,10 @@ function DashboardItem({
         className
       )}
     >
-      <div className="mb-2 flex items-start justify-between">
-        <h2 className="flex items-center gap-2 text-xl font-semibold">
-          <Icon className="text-2xl" icon={icon} />
-          <span className="ml-2">
+      <div className="mb-2 flex items-center justify-between gap-12">
+        <h2 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
+          <Icon className="size-6 shrink-0" icon={icon} />
+          <span className="ml-2 w-full min-w-0 truncate">
             {t([
               `widgets.${_.camelCase(title)}.title`,
               `widgets.${_.camelCase(title)}`,
