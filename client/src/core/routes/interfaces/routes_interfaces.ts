@@ -1,3 +1,5 @@
+import type { ForgeAPIClientController } from 'shared'
+
 export interface ModuleConfig {
   name: string
   icon: React.ReactElement | string
@@ -11,6 +13,10 @@ export interface ModuleConfig {
   >
   togglable: boolean
   hasAI?: boolean
+  otpControllers?: {
+    getChallenge: ForgeAPIClientController
+    verifyOTP: ForgeAPIClientController
+  }
   requiredAPIKeys?: string[]
   subsection?: {
     label: string
