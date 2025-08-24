@@ -1,4 +1,7 @@
 {
   "title": "樟宜機場航班狀態",
-  "description": "了解樟宜機場的最新航班資訊"
+  "description": "了解樟宜機場的最新航班資訊",
+  "items": {
+    "flight": "航班"
+  }
 }

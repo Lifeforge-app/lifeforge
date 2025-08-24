@@ -113,5 +113,6 @@
   "invalidField": "Medan tidak sah.",
   "invalidColor": "Warna tidak sah. Sila masukkan nilai hex yang sah dalam format #RRGGBB.",
   "invalidIcon": "Ikon tidak sah. Ia mesti pengenalan ikon yang sah dari Iconify dalam format <icon-set>:<icon-name>.",
-  "loadingUserData": "Memuatkan data pengguna..."
+  "loadingUserData": "Memuatkan data pengguna...",
+  "invalidSelection": "Pemilihan tidak sah. Sila pilih pilihan yang sah dari senarai."
 }

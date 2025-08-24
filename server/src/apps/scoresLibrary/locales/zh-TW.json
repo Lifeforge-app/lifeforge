@@ -8,7 +8,8 @@
     "fingerStyle": "指彈",
     "uncategorized": "未分類",
     "authors": "作者",
-    "categories": "分類"
+    "categories": "分類",
+    "collections": "收藏"
   },
   "scoreTypes": {
     "singalong": "跟唱",

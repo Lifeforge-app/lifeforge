@@ -21,8 +21,8 @@
     "allBooks": "所有书籍",
     "favourite": "最爱书籍",
     "languages": "语言",
-    "filetypes": "文件类型",
-    "collections": "收藏"
+    "collections": "收藏",
+    "fileTypes": "文件类型"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",

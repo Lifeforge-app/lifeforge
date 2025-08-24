@@ -8,7 +8,8 @@
     "fingerStyle": "Fingerstyle",
     "uncategorized": "Uncategorized",
     "authors": "Authors",
-    "categories": "Categories"
+    "categories": "Categories",
+    "collections": "Collections"
   },
   "scoreTypes": {
     "singalong": "Sing Along",

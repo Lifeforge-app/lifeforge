@@ -1,4 +1,7 @@
 {
   "title": "Status Penerbangan Lapangan Terbang Changi",
-  "description": "Dapatkan maklumat penerbangan terkini di Lapangan Terbang Changi"
+  "description": "Dapatkan maklumat penerbangan terkini di Lapangan Terbang Changi",
+  "items": {
+    "flight": "Penerbangan"
+  }
 }

@@ -21,8 +21,8 @@
     "allBooks": "All Books",
     "favourite": "Favourite Books",
     "languages": "Languages",
-    "filetypes": "File Types",
-    "collections": "Collections"
+    "collections": "Collections",
+    "fileTypes": "File Types"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",

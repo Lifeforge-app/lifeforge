@@ -58,5 +58,6 @@
   "invalidField": "Invalid field.",
   "invalidColor": "Invalid color. Please enter a valid hex value in the format #RRGGBB.",
   "invalidIcon": "Invalid icon. It must be a valid icon identifier from Iconify in the format of <icon-set>:<icon-name>.",
-  "loadingUserData": "Loading user data..."
+  "loadingUserData": "Loading user data...",
+  "invalidSelection": "Invalid selection. Please choose a valid option from the list."
 }

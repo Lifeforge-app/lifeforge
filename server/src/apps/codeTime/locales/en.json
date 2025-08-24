@@ -24,6 +24,7 @@
     "h": "h",
     "m": "m",
     "days": "Days",
-    "hours": "Hours"
+    "hours": "Hours",
+    "noTime": "No Time Recorded"
   }
 }
