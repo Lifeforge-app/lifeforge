@@ -5,7 +5,6 @@ import { ClientError } from '@functions/routes/utils/response'
 import COLLECTION_SCHEMAS from '@schema'
 import bcrypt from 'bcrypt'
 import PocketBase from 'pocketbase'
-import wordsCount from 'words-count'
 import { z } from 'zod/v4'
 
 import { challenge } from '..'
@@ -104,7 +103,7 @@ const list = forgeController.query
         ...journal,
         summary: undefined,
         raw: undefined,
-        wordCount: wordsCount(journal.content)
+        wordCount: 0 //wordsCount(journal.content) TODO: implement word count
       }
     })
   })
