@@ -127,11 +127,10 @@ function Transactions() {
                 <Button
                   className="hidden md:flex"
                   icon="tabler:plus"
+                  tProps={{ item: t('apps.wallet:items.transaction') }}
                   onClick={() => {}}
                 >
-                  {t('common.buttons:new', {
-                    item: t('apps.wallet:items.transaction')
-                  })}
+                  new
                 </Button>
               }
               classNames={{ button: 'hidden:md:block' }}

@@ -5,9 +5,7 @@
 @import 'lifeforge-ui/dist/index.css';
 @source "../../../node_modules/lifeforge-ui/dist";
 
-:root {
-  --custom-font-scale: 1;
-}
+@import 'react-medium-image-zoom/dist/styles.css';
 
 *:not(code *) {
   font-family: 'Albert Sans', sans-serif;
@@ -31,7 +29,7 @@ pre code {
 }
 
 code:not(pre code, h3 code) {
-  @apply bg-bg-200/30 text-bg-700 dark:bg-bg-800 dark:text-bg-300 rounded-sm px-1.5 py-1 shadow-sm;
+  @apply bg-bg-200/50 text-bg-700 dark:bg-bg-800 dark:text-bg-300 rounded-sm px-1.5 py-1 text-[15px]! shadow-sm;
 }
 
 pre,
@@ -54,4 +52,21 @@ article section {
 
 li p:first-of-type {
   @apply mt-2!;
+}
+
+hr + section > h2 {
+  @apply mt-4!;
+}
+
+.notes h3 {
+  @apply mt-8! text-xl;
+
+  & + p {
+    @apply mt-4;
+  }
+}
+
+.notes code,
+.notes .code {
+  @apply bg-bg-100! dark:bg-bg-800!;
 }

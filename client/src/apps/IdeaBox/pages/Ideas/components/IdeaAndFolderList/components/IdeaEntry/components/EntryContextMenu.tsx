@@ -116,7 +116,7 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
     open(ConfirmationModal, {
       title: 'Delete Idea',
       description: `Are you sure you want to delete this idea? This action cannot be undone.`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

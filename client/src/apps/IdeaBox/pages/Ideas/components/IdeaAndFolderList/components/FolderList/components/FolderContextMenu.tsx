@@ -51,7 +51,7 @@ function FolderContextMenu({
     open(ConfirmationModal, {
       title: 'Delete Folder',
       description: `Are you sure you want to delete the folder "${folder.name}"? This action cannot be undone.`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       confirmationPrompt: folder.name,
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})

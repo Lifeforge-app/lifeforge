@@ -48,7 +48,7 @@ function WishlistListItem({ list }: { list: WishlistList }) {
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       },
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       confirmationPrompt: list.name
     })
   }, [list])

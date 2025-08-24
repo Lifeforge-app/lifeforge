@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 function CustomLink({ text, to }: { text: string; to: string }) {
   return (

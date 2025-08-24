@@ -1,7 +1,9 @@
 [
   {
     "title": "",
-    "items": ["@core/Dashboard"]
+    "items": [
+      "@core/Dashboard"
+    ]
   },
   {
     "title": "Productivity",
@@ -23,15 +25,25 @@
   },
   {
     "title": "Finance",
-    "items": ["@apps/Wallet", "@apps/Wishlist"]
+    "items": [
+      "@apps/Wallet",
+      "@apps/Wishlist"
+    ]
   },
   {
     "title": "Storage",
-    "items": ["@apps/BooksLibrary", "@apps/ScoresLibrary", "@apps/Music"]
+    "items": [
+      "@apps/BooksLibrary",
+      "@apps/ScoresLibrary",
+      "@apps/Music"
+    ]
   },
   {
     "title": "Confidential",
-    "items": ["@core/APIKeys", "@apps/Passwords"]
+    "items": [
+      "@core/APIKeys",
+      "@apps/Passwords"
+    ]
   },
   {
     "title": "Information",
@@ -52,14 +64,24 @@
   },
   {
     "title": "Settings",
-    "items": ["@core/Personalization", "@core/Modules", "@core/Backups"]
+    "items": [
+      "@core/Personalization",
+      "@core/Modules",
+      "@core/Backups"
+    ]
   },
   {
     "title": "sso",
-    "items": ["@core/APIExplorer", "@core/LocalizationManager"]
+    "items": [
+      "@core/APIExplorer",
+      "@core/LocalizationManager"
+    ]
   },
   {
     "title": "",
-    "items": ["@core/Documentation", "@core/AccountSettings"]
+    "items": [
+      "@core/Documentation",
+      "@core/AccountSettings"
+    ]
   }
 ]

@@ -89,7 +89,7 @@ function StationItem({
                 open(ConfirmationModal, {
                   title: 'Delete Station',
                   description: `Are you sure you want to delete the station "${station.name}"? This action cannot be undone.`,
-                  buttonType: 'delete',
+                  confirmationButton: 'delete',
                   onConfirm: async () => {
                     setMrtStations(prevStations =>
                       prevStations.filter(s => s.id !== station.id)
@@ -105,7 +105,7 @@ function StationItem({
         <div className="mt-4 space-y-3">
           <TagsInput
             icon="tabler:code"
-            name="Station Codes"
+            label="Station Codes"
             placeholder="Enter station codes..."
             renderTags={(tag, tagIndex, onRemove) => (
               <div
@@ -174,7 +174,7 @@ function StationItem({
             }
             className="w-full"
             icon="tabler:category"
-            name="Station Type"
+            label="Station Type"
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -234,7 +234,7 @@ function StationItem({
               </div>
             }
             icon="tabler:route"
-            name="Lines"
+            label="Lines"
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -261,7 +261,7 @@ function StationItem({
           <TextInput
             className="flex-1"
             icon="tabler:map-pin"
-            name="Station Name"
+            label="Station Name"
             placeholder="Station Name"
             setValue={value => {
               setMrtStations(prevStations =>
@@ -279,8 +279,7 @@ function StationItem({
           <NumberInput
             className="flex-1"
             icon="tabler:square-letter-x"
-            name="X Coordinate"
-            placeholder="X Coordinate"
+            label="X Coordinate"
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -297,8 +296,7 @@ function StationItem({
           <NumberInput
             className="flex-1"
             icon="tabler:square-letter-y"
-            name="Y Coordinate"
-            placeholder="Y Coordinate"
+            label="Y Coordinate"
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -317,8 +315,7 @@ function StationItem({
               <NumberInput
                 className="flex-1"
                 icon="tabler:arrows-horizontal"
-                name="Width"
-                placeholder="Width"
+                label="Width"
                 setValue={value => {
                   setMrtStations(prevStations =>
                     prevStations.map(s => {
@@ -335,8 +332,7 @@ function StationItem({
               <NumberInput
                 className="flex-1"
                 icon="tabler:arrows-vertical"
-                name="Height"
-                placeholder="Height"
+                label="Height"
                 setValue={value => {
                   setMrtStations(prevStations =>
                     prevStations.map(s => {
@@ -353,8 +349,7 @@ function StationItem({
               <NumberInput
                 className="flex-1"
                 icon="tabler:rotate-2"
-                name="Rotation"
-                placeholder="Rotation"
+                label="Rotation"
                 setValue={value => {
                   setMrtStations(prevStations =>
                     prevStations.map(s => {
@@ -373,9 +368,9 @@ function StationItem({
           <SliderInput
             className="flex-1"
             icon="tabler:arrows-move-horizontal"
+            label="Text Offset X"
             max={100}
             min={-100}
-            name="Text Offset X"
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
@@ -392,9 +387,9 @@ function StationItem({
           <SliderInput
             className="flex-1"
             icon="tabler:arrows-move-vertical"
+            label="Text Offset Y"
             max={100}
             min={-100}
-            name="Text Offset Y"
             setValue={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
