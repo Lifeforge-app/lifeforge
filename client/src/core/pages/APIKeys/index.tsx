@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
-import { ModuleWrapper, WithMasterPassword, WithOTP } from 'lifeforge-ui'
+import { ModuleWrapper, WithMasterPassword } from 'lifeforge-ui'
 
 import ContentContainer from './components/ContentContainer'
 
@@ -9,26 +9,16 @@ function APIKeys() {
 
   return (
     <ModuleWrapper>
-      <WithOTP
+      <WithMasterPassword
         controllers={{
-          generateOTP: forgeAPI.user.auth.generateOTP,
+          createPassword: forgeAPI.apiKeys.auth.createOrUpdate,
           getChallenge: forgeAPI.apiKeys.auth.getChallenge,
-          verifyOTP: forgeAPI.apiKeys.auth.verifyOTP
+          verifyPassword: forgeAPI.apiKeys.auth.verify
         }}
+        hasMasterPassword={!!userData?.hasAPIKeysMasterPassword}
       >
-        <WithMasterPassword
-          controllers={{
-            createPassword: forgeAPI.apiKeys.auth.createOrUpdate,
-            getChallenge: forgeAPI.apiKeys.auth.getChallenge,
-            verifyPassword: forgeAPI.apiKeys.auth.verify
-          }}
-          hasMasterPassword={!!userData?.hasAPIKeysMasterPassword}
-        >
-          {masterPassword => (
-            <ContentContainer masterPassword={masterPassword} />
-          )}
-        </WithMasterPassword>
-      </WithOTP>
+        {masterPassword => <ContentContainer masterPassword={masterPassword} />}
+      </WithMasterPassword>
     </ModuleWrapper>
   )
 }
