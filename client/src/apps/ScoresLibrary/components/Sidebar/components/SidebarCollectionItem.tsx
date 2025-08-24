@@ -50,7 +50,7 @@ function SidebarCollectionItem({
       title: 'Delete Collection',
       description:
         'Are you sure you want to delete this collection?\n\nNote: Items will not be deleted.',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
@@ -83,7 +83,6 @@ function SidebarCollectionItem({
       }
       icon="tabler:folder"
       label={data.name}
-      namespace="apps.scoresLibrary"
       number={data.amount}
       onCancelButtonClick={onCancel}
       onClick={handleSelect}

@@ -59,7 +59,7 @@ function BgImageSelector() {
     open(ConfirmationModal, {
       title: 'Delete Background Image',
       description: 'Are you sure you want to delete your background image?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
