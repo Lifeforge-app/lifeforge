@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { Button, ContextMenu } from 'lifeforge-ui'
@@ -9,10 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import {
-  type BooksLibraryEntry,
-  useBooksLibraryContext
-} from '../../../providers/BooksLibraryProvider'
+import { type BooksLibraryEntry } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
@@ -23,7 +19,9 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
 
   const queryClient = useQueryClient()
 
-  const { collectionsQuery } = useBooksLibraryContext()
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 
