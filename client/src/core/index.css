@@ -9,10 +9,6 @@ layer(base);
 @plugin 'daisyui';
 @plugin '@tailwindcss/typography';
 
-/* Core styles */
-@import 'lifeforge-ui/dist/index.css';
-@source '../../../node_modules/lifeforge-ui/dist';
-
 /* NPM package styles */
 @import 'leaflet/dist/leaflet.css';
 @import 'react-grid-layout/css/styles.css';
@@ -23,6 +19,10 @@ layer(base);
 @import 'react-datepicker/dist/react-datepicker.css';
 @import 'lifeforge-ui/dist/index.css';
 @import 'quill/dist/quill.snow.css';
+
+/* Core styles */
+@import 'lifeforge-ui/dist/index.css';
+@source '../../../node_modules/lifeforge-ui/dist';
 
 /* App styles */
 @import '@core/pages/Dashboard/index.css';
