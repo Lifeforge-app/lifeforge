@@ -1,6 +1,7 @@
 import { v4 } from 'uuid'
 
 import AuthRouter from './routes/auth'
+import EntriesRouter from './routes/entries'
 
 export let challenge = v4()
 
@@ -9,5 +10,6 @@ setTimeout(() => {
 }, 1000 * 60)
 
 export default {
-  auth: AuthRouter
+  auth: AuthRouter,
+  entries: EntriesRouter
 }
