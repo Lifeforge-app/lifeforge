@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
-import { ModuleWrapper, WithMasterPassword, WithOTP } from 'lifeforge-ui'
+import { ModuleWrapper, WithMasterPassword } from 'lifeforge-ui'
 import type { InferOutput } from 'shared'
 
 import ContentContainer from './components/ContentContainer'
@@ -14,26 +14,16 @@ function Passwords() {
 
   return (
     <ModuleWrapper>
-      <WithOTP
+      <WithMasterPassword
         controllers={{
+          createPassword: forgeAPI.passwords.master.create,
           getChallenge: forgeAPI.passwords.master.getChallenge,
-          verifyOTP: forgeAPI.passwords.master.validateOTP,
-          generateOTP: forgeAPI.user.auth.generateOTP
+          verifyPassword: forgeAPI.passwords.master.verify
         }}
+        hasMasterPassword={!!userData?.hasMasterPassword}
       >
-        <WithMasterPassword
-          controllers={{
-            createPassword: forgeAPI.passwords.master.create,
-            getChallenge: forgeAPI.passwords.master.getChallenge,
-            verifyPassword: forgeAPI.passwords.master.verify
-          }}
-          hasMasterPassword={!!userData?.hasMasterPassword}
-        >
-          {masterPassword => (
-            <ContentContainer masterPassword={masterPassword} />
-          )}
-        </WithMasterPassword>
-      </WithOTP>
+        {masterPassword => <ContentContainer masterPassword={masterPassword} />}
+      </WithMasterPassword>
     </ModuleWrapper>
   )
 }

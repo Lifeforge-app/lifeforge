@@ -7,7 +7,7 @@ function WithOTP({
   controllers,
   children
 }: {
-  controllers: {
+  controllers?: {
     getChallenge: ForgeAPIClientController
     generateOTP: ForgeAPIClientController
     verifyOTP: ForgeAPIClientController
@@ -15,6 +15,10 @@ function WithOTP({
   children: React.ReactNode
 }) {
   const [otpSuccess, setOtpSuccess] = useState(false)
+
+  if (!controllers) {
+    return children
+  }
 
   if (!otpSuccess) {
     return (
