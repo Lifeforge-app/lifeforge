@@ -60,7 +60,7 @@ function TaskListListItem({
     open(ConfirmationModal, {
       title: 'Delete List',
       description: 'Are you sure you want to delete this list?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

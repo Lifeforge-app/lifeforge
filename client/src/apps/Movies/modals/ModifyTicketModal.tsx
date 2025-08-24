@@ -55,7 +55,7 @@ function ModifyTicketModal({
     open(ConfirmationModal, {
       title: 'Delete Ticket',
       description: 'Are you sure you want to delete this ticket?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

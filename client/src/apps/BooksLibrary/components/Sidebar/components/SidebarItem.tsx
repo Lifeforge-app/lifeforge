@@ -74,7 +74,7 @@ function _SidebarItem({
     open(ConfirmationModal, {
       title: `Delete ${singleStuff}`,
       description: `Are you sure you want to delete this ${singleStuff}?`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

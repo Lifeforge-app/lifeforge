@@ -51,7 +51,7 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       },
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       confirmationPrompt: container.name
     })
   }, [container])

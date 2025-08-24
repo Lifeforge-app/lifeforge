@@ -58,7 +58,7 @@ function AvatarColumn() {
       title: 'Delete Avatar',
       description:
         'Are you sure you want to delete your avatar? This action cannot be undone.',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteAvatarMutation.mutateAsync({})
       }

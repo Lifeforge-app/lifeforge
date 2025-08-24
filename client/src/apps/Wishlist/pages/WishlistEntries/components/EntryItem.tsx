@@ -69,7 +69,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
     open(ConfirmationModal, {
       title: 'Delete Entry',
       description: 'Are you sure you want to delete this entry?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
