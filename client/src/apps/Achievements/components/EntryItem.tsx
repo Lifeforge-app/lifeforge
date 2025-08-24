@@ -32,7 +32,7 @@ function EntryItem({ entry }: { entry: Achievement }) {
     open(ConfirmationModal, {
       title: 'Delete Achievement',
       description: 'Are you sure you want to delete this achievement?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

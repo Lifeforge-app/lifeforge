@@ -25,10 +25,25 @@ i18n
     returnedObjectHandler: (key, value, options) => {
       return JSON.stringify({ key, value, options })
     },
+    fallbackNS: false,
+    defaultNS: false,
+    saveMissing: true,
+    missingKeyHandler: async (_, namespace, key) => {
+      if (
+        !['utils', 'apps', 'common', 'core'].includes(namespace.split('.')[0])
+      ) {
+        return
+      }
+
+      await forgeAPI.locales.notifyMissing.mutate({
+        namespace,
+        key
+      })
+    },
     backend: {
       loadPath: (langs: string[], namespaces: string[]) => {
         if (
-          !['en', 'zh', 'zh-TW', 'zh-CN', 'ms'].includes(langs[0]) ||
+          !['en', 'zh-TW', 'zh-CN', 'ms'].includes(langs[0]) ||
           !namespaces.filter(e => e && e !== 'undefined').length
         ) {
           return

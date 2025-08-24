@@ -58,7 +58,7 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
     open(ConfirmationModal, {
       title: 'Delete Asset',
       description: `Are you sure you want to delete the asset "${asset.name}"? This action cannot be undone.`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

@@ -82,7 +82,7 @@ function EntryItem({
     open(ConfirmationModal, {
       title: 'Delete API Key',
       description: `Are you sure you want to delete the API Key "${entry.name}"? This action cannot be undone.`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
