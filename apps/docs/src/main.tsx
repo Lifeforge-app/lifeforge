@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router } from 'react-router-dom'
 import { APIEndpointProvider, PersonalizationProvider } from 'shared'
 
 import App from './App.tsx'
@@ -10,12 +9,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <PersonalizationProvider
       defaultValueOverride={{
         rawThemeColor: '#a9d066',
-        theme: (localStorage.getItem('theme') as 'light' | 'dark') || 'system'
+        theme: (localStorage.getItem('theme') as 'light' | 'dark') || 'system',
+        fontScale: 1.1
       }}
     >
-      <Router>
-        <App />
-      </Router>
+      <App />
     </PersonalizationProvider>
   </APIEndpointProvider>
 )

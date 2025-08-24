@@ -60,7 +60,7 @@ function TaskPriorityListItem({
     open(ConfirmationModal, {
       title: 'Delete Priority',
       description: 'Are you sure you want to delete this priority?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

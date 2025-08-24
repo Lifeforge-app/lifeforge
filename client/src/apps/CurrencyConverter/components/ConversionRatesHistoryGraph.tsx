@@ -139,7 +139,7 @@ export default function ConversionRatesHistoryGraph() {
 
   return (
     <>
-      <div className="flex-center flex flex-col gap-3 sm:flex-row">
+      <div className="flex-center flex w-full flex-col gap-3 sm:flex-row">
         <ListboxInput
           buttonContent={
             <div className="flex items-center gap-2">
@@ -153,7 +153,7 @@ export default function ConversionRatesHistoryGraph() {
               </span>
             </div>
           }
-          className="w-full sm:w-1/2"
+          className="w-full"
           icon="tabler:arrow-up"
           label="From"
           namespace="apps.currencyConverter"
@@ -194,7 +194,7 @@ export default function ConversionRatesHistoryGraph() {
               </span>
             </div>
           }
-          className="w-full sm:w-1/2"
+          className="w-full"
           icon="tabler:arrow-down"
           label="To"
           namespace="apps.currencyConverter"

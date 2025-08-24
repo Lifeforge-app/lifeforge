@@ -2,13 +2,11 @@ import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { DashboardItem, WithQueryData } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
+import IntervalSelector from './IntervalSelector'
 
 function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
-  const { t } = useTranslation('apps.codeTime')
-
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
   )
@@ -17,30 +15,12 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
     <DashboardItem
       className="h-min"
       componentBesideTitle={
-        <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
-          <p className="ml-2 shrink-0 font-medium tracking-wider sm:ml-0">
-            {t('labels.inThePast')}
-          </p>
-          <div className="ml-4 flex shrink-0 gap-2 rounded-lg">
-            {['24 hours', '7 days', '30 days'].map((last, index) => (
-              <button
-                key={index}
-                className={clsx(
-                  'rounded-md p-4 px-6 tracking-wide',
-                  lastFor === last
-                    ? 'bg-bg-200 text-bg-800 dark:bg-bg-700/50 dark:text-bg-50 font-semibold'
-                    : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                )}
-                onClick={() => {
-                  setLastFor(last as '24 hours' | '7 days' | '30 days')
-                }}
-              >
-                {last.split(' ')[0]}{' '}
-                {t(`units.${last.split(' ')[1].toLowerCase()}`)}
-              </button>
-            ))}
-          </div>
-        </div>
+        <IntervalSelector
+          className="hidden md:flex"
+          lastFor={lastFor}
+          options={['24 hours', '7 days', '30 days']}
+          setLastFor={setLastFor}
+        />
       }
       icon={
         {
@@ -51,6 +31,12 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
       namespace="apps.codeTime"
       title={type}
     >
+      <IntervalSelector
+        className="mb-4 flex md:hidden"
+        lastFor={lastFor}
+        options={['24 hours', '7 days', '30 days']}
+        setLastFor={setLastFor}
+      />
       <WithQueryData
         controller={forgeAPI['code-time'][
           type === 'languages' ? 'getTopLanguages' : 'getTopProjects'
@@ -101,9 +87,9 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className="flex-between shadow-custom component-bg-lighter relative flex gap-8 rounded-lg p-6"
+                      className="flex-between shadow-custom component-bg-lighter relative flex w-full min-w-0 flex-col gap-8 rounded-lg p-6 sm:flex-row"
                     >
-                      <div className="flex items-center gap-3 text-lg font-medium break-all">
+                      <div className="flex w-full min-w-0 items-center gap-3 text-lg font-medium">
                         <div
                           className={clsx(
                             'size-4 shrink-0 rounded-full rounded-md border',
@@ -116,7 +102,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                             ][index]
                           )}
                         ></div>
-                        {key}
+                        <span className="w-full min-w-0 truncate">{key}</span>
                       </div>
                       <div className="shrink-0 text-3xl font-semibold">
                         <HoursAndMinutesFromSeconds seconds={value} />

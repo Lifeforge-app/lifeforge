@@ -1,4 +1,4 @@
-import Notes from '../../components/Notes'
+import Note from '../../components/Note'
 
 ###### API Keys
 
@@ -13,23 +13,23 @@ import Notes from '../../components/Notes'
 
 To manage your API keys, head to the **API Keys** page, which is accessible from the sidebar under the **Confidential** section. Here, you can add, edit, and delete API keys for different services. All the API keys you add will be encrypted and stored securely in the database.
 
-<Notes>
+<Note>
   For an additional layer of security, accessing the vault requires an OTP
   (One-Time Password) that will be sent to your email. Therefore, **make sure
   you have the email settings properly configured in the database settings.**
-</Notes>
+</Note>
 
 Once the OTP is verified, you'll be prompted to create a master password for the API key vault. This master password will be used to encrypt and decrypt the sensitive information stored in the vault.
 
 ![Set New Password](/assets/user-api-keys/set-new-password.png)
 
-<Notes>
+<Note>
   If you forget the master password, there is NO WAY to recover it, even if you
   access the database directly, since the password itself is stored in the
   database as a hash that can only be used for the purpose of verification.
   You'll need to reset the vault, which will delete all the API keys stored in
   the vault. Therefore, **make sure to remember the master password**.
-</Notes>
+</Note>
 
 ### Adding API Keys
 
@@ -69,10 +69,10 @@ Lifeforge provides a location autocomplete input field that can be used in forms
 
 Head to the [Google Cloud Console](https://console.cloud.google.com/), initialize a project, enable the Places API, and create an API key. Then, add the API key to the vault with the key ID as <code>gcloud</code>
 
-<Notes>
+<Note>
   You can enable the Places API in the same project where you have enabled the
   Google Fonts API, and use the same API key for both services.
-</Notes>
+</Note>
 
 ### Pixabay API Key
 
@@ -80,12 +80,12 @@ Lifeforge provides an image picker modal that can be used in forms across variou
 
 Head to the [Pixabay API website](https://pixabay.com/service/about/api/), create an account, and generate an API key. Then, add the API key to the vault with the key ID as <code>pixabay</code>.
 
-<Notes>
+<Note>
 The API key is located in the documentation page of the Pixabay API website once you've created an account and logged in, in the green box shown below:
 
 ![Pixabay](/assets/user-api-keys/pixabay.png)
 
-</Notes>
+</Note>
 
 Once you've added the key, if the module you're using supports the Pixabay image picker, you should see the option to select images from Pixabay. One example is the background image selector in the **Personalization** page.
 

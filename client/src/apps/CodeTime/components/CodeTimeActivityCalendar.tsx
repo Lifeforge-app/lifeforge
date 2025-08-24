@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { clsx } from 'clsx'
-import { DashboardItem, WithQuery } from 'lifeforge-ui'
+import { DashboardItem, Listbox, ListboxOption, WithQuery } from 'lifeforge-ui'
 import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
@@ -47,12 +47,10 @@ function CodeTimeActivityCalendar() {
       namespace="apps.codeTime"
       title="activitiesCalendar"
     >
-      {/* {firstYear && (
-        <ListboxInput
+      {firstYear && (
+        <Listbox
           buttonContent={<span>{year}</span>}
-          icon="tabler:calendar"
-          label="Year"
-          namespace="apps.codeTime"
+          className="md:hidden"
           setValue={setYear}
           value={year}
         >
@@ -65,8 +63,8 @@ function CodeTimeActivityCalendar() {
                 value={firstYear + index}
               />
             ))}
-        </ListboxInput>
-      )} */}
+        </Listbox>
+      )}
       <div className="mt-4 flex w-full gap-8">
         <WithQuery query={dataQuery}>
           {() =>
@@ -133,7 +131,7 @@ function CodeTimeActivityCalendar() {
           }
         </WithQuery>
         {firstYear && (
-          <div className="space-y-2">
+          <div className="hidden space-y-2 md:block">
             {Array(new Date().getFullYear() - firstYear + 1)
               .fill(0)
               .map((_, index) => (

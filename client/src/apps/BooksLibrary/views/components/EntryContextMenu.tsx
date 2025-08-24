@@ -93,7 +93,7 @@ export default function EntryContextMenu({
     open(ConfirmationModal, {
       title: 'Delete Book',
       description: `Are you sure you want to delete ${item.title}?`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

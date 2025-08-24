@@ -1,4 +1,3 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import {
   ArcElement,
   BarElement,
@@ -56,38 +55,38 @@ function WalletDashboard() {
     <ModuleWrapper>
       <ModuleHeader
         actionButton={
-          <Menu as="div" className="relative z-50 hidden md:block">
-            <Button
-              as={MenuButton}
-              className="hidden md:flex"
-              icon="tabler:plus"
-              onClick={() => {}}
-            >
-              {t('common.buttons:new', {
-                item: t('apps.wallet:items.transaction')
-              })}
-            </Button>
-            <MenuItems
-              transition
-              anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-            >
-              <ContextMenuItem
+          <ContextMenu
+            buttonComponent={
+              <Button
+                className="hidden md:flex"
                 icon="tabler:plus"
-                label="Add Manually"
-                onClick={() => {
-                  navigate('/wallet/transactions#new')
+                tProps={{
+                  item: t('apps.wallet:items.transaction')
                 }}
-              />
-              <ContextMenuItem
-                icon="tabler:scan"
-                label="Scan Receipt"
-                onClick={() => {
-                  navigate('/wallet/transactions#scan')
-                }}
-              />
-            </MenuItems>
-          </Menu>
+                onClick={() => {}}
+              >
+                new
+              </Button>
+            }
+            classNames={{ wrapper: 'hidden md:block' }}
+          >
+            <ContextMenuItem
+              icon="tabler:plus"
+              label="Add Manually"
+              namespace="apps.wallet"
+              onClick={() => {
+                navigate('/wallet/transactions#new')
+              }}
+            />
+            <ContextMenuItem
+              icon="tabler:scan"
+              label="Scan Receipt"
+              namespace="apps.wallet"
+              onClick={() => {
+                navigate('/wallet/transactions#scan')
+              }}
+            />
+          </ContextMenu>
         }
         contextMenuProps={{
           children: (

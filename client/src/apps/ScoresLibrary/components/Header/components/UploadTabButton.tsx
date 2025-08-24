@@ -1,5 +1,4 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Button, ContextMenuItem } from 'lifeforge-ui'
+import { Button, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -24,34 +23,27 @@ function UploadTabButton({
   )
 
   return (
-    <Menu as="div" className="relative z-50 hidden md:block">
-      <Button
-        as={MenuButton}
-        className="hidden md:flex"
-        icon="tabler:plus"
-        tProps={tProps}
-      >
-        new
-      </Button>
-      <MenuItems
-        transition
-        anchor="bottom end"
-        className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-      >
-        <ContextMenuItem
-          icon="tabler:upload"
-          label="Upload from local"
-          namespace="apps.scoresLibrary"
-          onClick={uploadFiles}
-        />
-        <ContextMenuItem
-          icon="mingcute:guitar-line"
-          label="Download from Guitar World"
-          namespace="apps.scoresLibrary"
-          onClick={handleOpenGuitarWorldModal}
-        />
-      </MenuItems>
-    </Menu>
+    <ContextMenu
+      buttonComponent={
+        <Button className="hidden md:flex" icon="tabler:plus" tProps={tProps}>
+          new
+        </Button>
+      }
+      classNames={{ wrapper: 'hidden md:block' }}
+    >
+      <ContextMenuItem
+        icon="tabler:upload"
+        label="Upload from local"
+        namespace="apps.scoresLibrary"
+        onClick={uploadFiles}
+      />
+      <ContextMenuItem
+        icon="mingcute:guitar-line"
+        label="Download from Guitar World"
+        namespace="apps.scoresLibrary"
+        onClick={handleOpenGuitarWorldModal}
+      />
+    </ContextMenu>
   )
 }
 

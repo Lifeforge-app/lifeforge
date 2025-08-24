@@ -12,14 +12,14 @@ import {
   Tooltip,
   type TooltipItem
 } from 'chart.js'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useCallback, useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
-import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
+
+import IntervalSelector from './IntervalSelector'
 
 ChartJS.register(
   CategoryScale,
@@ -33,11 +33,9 @@ ChartJS.register(
 )
 
 function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
-  const { t } = useTranslation('apps.codeTime')
-
   const { bgTempPalette, derivedTheme } = usePersonalization()
 
-  const [lastFor, setLastFor] = useState<7 | 30>(7)
+  const [lastFor, setLastFor] = useState<'7 days' | '30 days'>('7 days')
 
   const dataQuery = useQuery(
     forgeAPI['code-time'].getLastXDays
@@ -148,29 +146,12 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
     <DashboardItem
       className="h-min"
       componentBesideTitle={
-        <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
-          <p className="ml-2 shrink-0 font-medium tracking-wider sm:ml-0">
-            {t('labels.inThePast')}
-          </p>
-          <div className="ml-4 flex shrink-0 gap-2 rounded-lg">
-            {([7, 30] as const).map((last, index) => (
-              <button
-                key={index}
-                className={clsx(
-                  'rounded-md p-4 px-6 tracking-wide',
-                  lastFor === last
-                    ? 'bg-bg-200 text-bg-800 dark:bg-bg-700/50 dark:text-bg-50 font-semibold'
-                    : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                )}
-                onClick={() => {
-                  setLastFor(last)
-                }}
-              >
-                {last} {t('units.days')}
-              </button>
-            ))}
-          </div>
-        </div>
+        <IntervalSelector
+          className="hidden md:flex"
+          lastFor={lastFor}
+          options={['7 days', '30 days']}
+          setLastFor={setLastFor}
+        />
       }
       icon={
         {
@@ -181,6 +162,12 @@ function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
       namespace="apps.codeTime"
       title={`${type}TimeGraph`}
     >
+      <IntervalSelector
+        className="mb-4 flex md:hidden"
+        lastFor={lastFor}
+        options={['7 days', '30 days']}
+        setLastFor={setLastFor}
+      />
       <div className="h-96 w-full">
         <WithQuery query={dataQuery}>
           {data => (
