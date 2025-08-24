@@ -10,12 +10,72 @@ import { SCHEMAS } from '../../../core/schema'
 
 const list = forgeController.query
   .description('Get all entries in the books library')
-  .input({})
-  .callback(({ pb }) =>
-    pb.getFullList
-      .collection('books_library__entries')
-      .sort(['-is_favourite', '-created'])
-      .execute()
+  .input({
+    query: z.object({
+      collection: z.string().optional(),
+      language: z.string().optional(),
+      favourite: z.boolean().optional(),
+      fileType: z.string().optional(),
+      query: z.string().optional()
+    })
+  })
+  .existenceCheck('query', {
+    collection: '[books_library__collections]',
+    language: '[books_library__languages]',
+    fileType: '[books_library__file_types]'
+  })
+  .callback(
+    async ({
+      pb,
+      query: { collection, language, favourite, fileType, query }
+    }) => {
+      const fileTypeRecord = fileType
+        ? await pb.getOne
+            .collection('books_library__file_types')
+            .id(fileType)
+            .execute()
+        : undefined
+
+      return await pb.getFullList
+        .collection('books_library__entries')
+        .filter([
+          collection
+            ? {
+                field: 'collection',
+                operator: '=',
+                value: collection
+              }
+            : undefined,
+          language
+            ? {
+                field: 'languages',
+                operator: '~',
+                value: language
+              }
+            : undefined,
+          favourite !== undefined
+            ? {
+                field: 'is_favourite',
+                operator: '=',
+                value: favourite
+              }
+            : undefined,
+          fileTypeRecord && {
+            field: 'extension',
+            operator: '=',
+            value: fileTypeRecord.id
+          },
+          query
+            ? {
+                field: 'title',
+                operator: '~',
+                value: query
+              }
+            : undefined
+        ])
+        .sort(['-is_favourite', '-created'])
+        .execute()
+    }
   )
 
 const update = forgeController.mutation
