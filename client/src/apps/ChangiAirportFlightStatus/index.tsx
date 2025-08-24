@@ -74,7 +74,7 @@ function ChangiAirportFlightStatus() {
         </Listbox>
         <SearchInput
           className="bg-bg-50"
-          namespace="modules.changiAirport"
+          namespace="apps.changiAirportFlightStatus"
           searchTarget="flight"
           setValue={setSearchQuery}
           value={searchQuery}

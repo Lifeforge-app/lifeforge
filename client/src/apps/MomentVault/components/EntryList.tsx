@@ -30,7 +30,7 @@ function EntryList({
       open(ConfirmationModal, {
         title: 'Delete Entry',
         description: 'Are you sure you want to delete this entry?',
-        buttonType: 'delete',
+        confirmationButton: 'delete',
         onConfirm: async () => {
           try {
             await forgeAPI.momentVault.entries.remove

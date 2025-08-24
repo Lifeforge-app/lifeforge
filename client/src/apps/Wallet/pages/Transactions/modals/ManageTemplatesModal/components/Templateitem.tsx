@@ -53,7 +53,7 @@ function TemplateItem({
     open(ConfirmationModal, {
       title: 'Delete Template',
       description: 'Are you sure you want to delete this template?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
