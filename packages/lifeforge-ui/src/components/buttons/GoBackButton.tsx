@@ -1,5 +1,3 @@
-import { useTranslation } from 'react-i18next'
-
 import Button from './Button'
 
 /**
@@ -13,8 +11,6 @@ function GoBackButton({
    */
   onClick: () => void
 }) {
-  const { t } = useTranslation('common.misc')
-
   return (
     <Button
       className="mb-2 w-min px-0 py-2 pl-2 hover:bg-transparent! dark:hover:bg-transparent!"
@@ -22,7 +18,7 @@ function GoBackButton({
       variant="plain"
       onClick={onClick}
     >
-      {t(['buttons.goBack', 'Go Back'])}
+      Go Back
     </Button>
   )
 }
