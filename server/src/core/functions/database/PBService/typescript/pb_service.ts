@@ -72,6 +72,7 @@ type FilterType<
       combination: '&&' | '||'
       filters: FilterType<TCollectionKey, TExpandConfig>
     }
+  | undefined
 >
 
 // Helper type for field selection object
