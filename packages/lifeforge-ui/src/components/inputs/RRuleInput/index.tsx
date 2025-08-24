@@ -230,7 +230,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
         ))}
       </ListboxInput>
       <div className="space-y-3">{forms[rruleParams.freq]}</div>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex w-full flex-wrap items-center gap-2">
         <ListboxInput
           required
           buttonContent={<>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>}

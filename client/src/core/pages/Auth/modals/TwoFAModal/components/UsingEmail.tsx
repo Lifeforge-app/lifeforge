@@ -1,7 +1,5 @@
-import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
-import ResendOTPButton from '@security/components/OTPScreen/components/ResendOTPButton'
 import forgeAPI from '@utils/forgeAPI'
-import { Button, TextInput } from 'lifeforge-ui'
+import { Button, OTPInputBox, ResendOTPButton, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -98,7 +96,6 @@ function UsingEmail({
         {otpSent ? (
           <div className="space-y-4">
             <OTPInputBox
-              buttonFullWidth
               lighter
               otp={otp}
               setOtp={setOTP}

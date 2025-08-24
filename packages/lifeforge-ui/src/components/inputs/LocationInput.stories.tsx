@@ -1,8 +1,7 @@
-import type { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import LocationInput from './LocationInput'
+import LocationInput, { type Location } from './LocationInput'
 
 const meta = {
   component: LocationInput

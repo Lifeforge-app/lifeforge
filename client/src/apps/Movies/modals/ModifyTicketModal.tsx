@@ -61,14 +61,19 @@ function ModifyTicketModal({
       }
     })
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<typeof forgeAPI.movies.ticket.update>['body']
   >({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
     title: `ticket.${type}`,
     namespace: 'apps.movies',
     onClose,
-    submitButton: type
+    submitButton: type,
+    actionButton: {
+      dangerous: true,
+      icon: 'tabler:trash',
+      onClick: handleDeleteTicket
+    }
   })
     .typesMap({
       ticket_number: 'text',
@@ -127,16 +132,7 @@ function ModifyTicketModal({
     })
     .build()
 
-  return (
-    <FormModal
-      actionButton={{
-        dangerous: true,
-        icon: 'tabler:trash',
-        onClick: handleDeleteTicket
-      }}
-      {...formProps}
-    />
-  )
+  return <FormModal {...formProps} />
 }
 
 export default ModifyTicketModal

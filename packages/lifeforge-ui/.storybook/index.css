@@ -57,3 +57,7 @@
     @apply p-0!;
   }
 }
+
+body:has(#storybook-docs) {
+  background-color: rgb(27, 28, 29) !important;
+}

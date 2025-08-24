@@ -37,7 +37,7 @@ function ModifyFolderModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.ideaBox.folders)[typeof type]>['body']
   >({
     icon: {

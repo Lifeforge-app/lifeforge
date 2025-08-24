@@ -1,6 +1,6 @@
 import forgeAPI from '@utils/forgeAPI'
 
-import { decrypt, encrypt } from '../../../core/security/utils/encryption'
+import { decrypt, encrypt } from '../../../core/utils/encryption'
 
 export async function getDecryptedPassword(
   masterPassword: string,

@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import { memo, useRef, useState } from 'react'
+import { usePromiseLoading } from 'shared'
 
 import { Button } from '../../buttons'
 import InputIcon from '../shared/components/InputIcon'
@@ -70,6 +70,11 @@ function TextInput({
 
   const inputLabel = useInputLabel({ namespace, label })
 
+  const [actionButtonLoading, handleClick] = usePromiseLoading(
+    (actionButtonProps?.onClick as () => Promise<void>) ||
+      (async (): Promise<void> => {})
+  )
+
   return (
     <InputWrapper
       className={className}
@@ -122,15 +127,16 @@ function TextInput({
         )}
         {actionButtonProps && (
           <Button
+            {...actionButtonProps}
             className="mr-4 p-2!"
+            loading={actionButtonLoading}
             variant="plain"
             onClick={e => {
               e.preventDefault()
               e.stopPropagation()
 
-              actionButtonProps.onClick?.(e)
+              handleClick()
             }}
-            {...actionButtonProps}
           />
         )}
       </div>

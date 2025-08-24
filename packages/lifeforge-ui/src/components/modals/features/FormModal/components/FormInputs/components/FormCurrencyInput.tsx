@@ -1,8 +1,14 @@
 import { CurrencyInput } from '@components/inputs'
-import {
-  type CurrencyFieldProps,
-  type FormInputProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type CurrencyFieldProps = BaseFieldProps<number, number, true> & {
+  type: 'currency'
+  icon: string
+}
 
 function FormCurrencyInput({
   field,
@@ -13,10 +19,10 @@ function FormCurrencyInput({
 }: FormInputProps<CurrencyFieldProps>) {
   return (
     <CurrencyInput
+      autoFocus={autoFocus}
       disabled={field.disabled}
       icon={field.icon}
       label={field.label}
-      autoFocus={autoFocus}
       namespace={namespace}
       placeholder="0.00"
       required={field.required}

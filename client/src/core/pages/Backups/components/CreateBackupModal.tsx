@@ -21,7 +21,7 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<typeof forgeAPI.backups.create>['body']
   >({
     icon: 'tabler:plus',

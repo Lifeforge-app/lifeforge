@@ -1,8 +1,25 @@
 import { FileInput } from '@components/inputs'
-import {
-  type FileFieldProps,
-  type FormInputProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+import type { FileData } from '@components/inputs/FileInput'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps<
+  FileData,
+  string | File
+> & {
+  type: 'file'
+  icon: string
+  optional: TOptional
+  onFileRemoved?: () => void
+  enablePixabay?: boolean
+  enableUrl?: boolean
+  enableAIImageGeneration?: boolean
+  defaultImageGenerationPrompt?: string
+  acceptedMimeTypes?: Record<string, string[]>
+}
 
 function FormFileInput({
   field,

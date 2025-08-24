@@ -3,7 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
-import { encrypt } from '../../../security/utils/encryption'
+import { encrypt } from '../../../utils/encryption'
 import type { APIKeysEntry } from '../components/ContentContainer'
 
 function ModifyAPIKeyModal({
@@ -35,7 +35,7 @@ function ModifyAPIKeyModal({
     })
   )
 
-  const formProps = defineForm<{
+  const { formProps } = defineForm<{
     keyId: string
     name: string
     description: string

@@ -1,4 +1,4 @@
-import { decrypt, encrypt } from '@security/utils/encryption'
+import { decrypt, encrypt } from '@utils/encryption'
 import forgeAPI from '@utils/forgeAPI'
 
 import type { APIKeysEntry } from '../components/ContentContainer'

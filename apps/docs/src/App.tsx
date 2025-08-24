@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/heading-has-content */
 import { MDXComponents } from 'mdx/types'
 import { useState } from 'react'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
@@ -48,6 +47,11 @@ const components: MDXComponents = {
   h3(properties) {
     return (
       <h3 {...properties} className="mt-10 text-xl font-semibold sm:text-2xl" />
+    )
+  },
+  h4(properties) {
+    return (
+      <h4 {...properties} className="mt-8 text-lg font-semibold sm:text-xl" />
     )
   },
   p(properties) {
@@ -124,7 +128,11 @@ const components: MDXComponents = {
     )
   },
   img(properties) {
-    return <img {...properties} alt="" className="w-full rounded-lg" />
+    return (
+      <div className="flex-center w-full py-4">
+        <img {...properties} alt="" className="w-[80%] rounded-lg" />
+      </div>
+    )
   },
   blockquote(properties) {
     return (

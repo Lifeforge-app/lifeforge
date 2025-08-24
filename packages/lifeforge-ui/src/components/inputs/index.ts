@@ -55,3 +55,5 @@ export { default as DnDContainer } from './FileInput/FilePickerModal/components/
 export { default as PreviewContainer } from './FileInput/FilePickerModal/components/LocalUpload/components/PreviewContainer'
 
 export { default as Listbox } from './Listbox'
+
+export type { Location } from './LocationInput'

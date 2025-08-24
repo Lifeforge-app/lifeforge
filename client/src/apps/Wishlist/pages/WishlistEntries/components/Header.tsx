@@ -1,8 +1,8 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import {
   Button,
+  ContextMenu,
   ContextMenuItem,
   GoBackButton,
   useModalStore
@@ -83,35 +83,34 @@ function Header({
             </span>
           </div>
         </h1>
-        <Menu as="div" className="relative z-50 hidden md:block">
-          <Button
-            as={MenuButton}
-            className="hidden md:flex"
-            icon="tabler:plus"
-            tProps={{ item: t('items.entry') }}
-            onClick={() => {}}
-          >
-            new
-          </Button>
-          <MenuItems
-            transition
-            anchor="bottom end"
-            className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-          >
-            <ContextMenuItem
+        <ContextMenu
+          buttonComponent={
+            <Button
+              className="hidden md:flex"
               icon="tabler:plus"
-              label="Add Manually"
-              namespace="apps.wishlist"
-              onClick={handleAddManually}
-            />
-            <ContextMenuItem
-              icon="tabler:apps"
-              label="From Other Apps"
-              namespace="apps.wishlist"
-              onClick={handleAddFromOtherApps}
-            />
-          </MenuItems>
-        </Menu>
+              tProps={{ item: t('items.entry') }}
+              onClick={() => {}}
+            >
+              new
+            </Button>
+          }
+          classNames={{
+            wrapper: 'hidden md:block'
+          }}
+        >
+          <ContextMenuItem
+            icon="tabler:plus"
+            label="Add Manually"
+            namespace="apps.wishlist"
+            onClick={handleAddManually}
+          />
+          <ContextMenuItem
+            icon="tabler:apps"
+            label="From Other Apps"
+            namespace="apps.wishlist"
+            onClick={handleAddFromOtherApps}
+          />
+        </ContextMenu>
       </div>
     </header>
   )

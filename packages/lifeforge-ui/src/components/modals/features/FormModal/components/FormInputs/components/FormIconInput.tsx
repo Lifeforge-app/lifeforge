@@ -1,8 +1,13 @@
 import { IconInput } from '@components/inputs'
-import {
-  type FormInputProps,
-  type IconFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type IconFieldProps = BaseFieldProps<string, string, true> & {
+  type: 'icon'
+}
 
 function FormIconInput({
   field,
