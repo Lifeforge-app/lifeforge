@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 
-import Notes from '../../components/Notes'
+import Note from '../../components/Note'
 
 ###### Configuration
 
@@ -21,10 +21,10 @@ cd database && ./pocketbase serve --http="192.168.x.x:8090"
 
 where <code>192.168.x.x</code> is the local IP of your server.
 
-<Notes>
+<Note>
   Small tips: place an ampersand (<code>&</code>) at the end of the command to
   run it in the background.
-</Notes>
+</Note>
 
 If you're starting the database instance for the very first time (which you probably are), you'll be given a link in the terminal to create an admin account, like so:
 
@@ -36,11 +36,11 @@ Head to the link and fill in the details to create an admin account. Alternative
 ./pocketbase superuser upsert EMAIL PASS
 ```
 
-<Notes>
+<Note>
   Make sure to set a decently strong password for your admin account, as the
   database will eventually be exposed to the public internet.If someone
   maliciously gains access to your database, they can do **A LOT** of damage.
-</Notes>
+</Note>
 
 Once logged in, head to the settings page (the bottommost icon on the left sidebar). In the **Application** tab, there will be two input box at the top for the **Application Name** and **Application URL**. Fill in the details accordingly. The **Application URL** should be the local IP of your server for now, e.g. <code>http://192.168.x.x:8090</code>.
 
@@ -61,10 +61,10 @@ I'm using Gmail for this, so I'll fill in the following fields:
 | **SMTP Username** | \<YOUR_GMAIL_EMAIL\>        |
 | **SMTP Password** | \<YOUR_GMAIL_APP_PASSWORD\> |
 
-<Notes>
+<Note>
   You can generate an app password for your Gmail account by following the
   instructions [here](https://support.google.com/accounts/answer/185833?hl=en).
-</Notes>
+</Note>
 
 Once done, there will be a **Send test email** button showing up at the bottom right corner. Click on it to send a test email to your email address. If you receive the email, then the mail settings are configured correctly.
 
@@ -137,10 +137,10 @@ where <code>XXXX</code> should be the port that you have set in the <code>.env.l
 
 [![Lifeforge API Server](/assets/configurations/api-running.png)](/assets/configurations/api-running.png)
 
-<Notes>
+<Note>
   If you don't plan to develop the API server, you can run the{' '}
   <code>bun start</code> to start the server in production mode.
-</Notes>
+</Note>
 
 And that's it! You have successfully configured your Lifeforge API server. Now, let's continue tackling the database configuration.
 
@@ -180,10 +180,10 @@ Click on the **users** collection, which should be located at the top of the lis
 
 For now, you just have to fill in the **email**, **password**, **username** and **name** fields. Make sure to check the **Verified** checkbox as well. Once done, click on the **Create** button at the bottom right corner of the screen.
 
-<Notes>
+<Note>
   You may use a completely different set of credentials from the admin account
   that you have just created.
-</Notes>
+</Note>
 
 ### Setup OAuth Providers (Optional)
 
@@ -191,14 +191,14 @@ Lifeforge. provides two OAuth providers for users to sign in with: Google and Gi
 
 [![Pocketbase OAuth Providers](/assets/configurations/pocketbase-oauth-providers.png)](/assets/configurations/pocketbase-oauth-providers.png)
 
-<Notes>
+<Note>
 For the Google OAuth provider, you'll need to create a project in the Google Cloud console and enable the Google OAuth API. You can find the instructions [here](https://developers.google.com/identity/protocols/oauth2).
 
 For the Github OAuth provider, you'll need to create a Github OAuth app. You can find the instructions [here](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
 
 Make sure to point the **Redirect URL** to <code>\<YOUR_FRONTEND_SERVER_URL\>/auth</code>.
 
-</Notes>
+</Note>
 
 </section>
 
@@ -211,11 +211,11 @@ This is the last step towards setting up your Lifeforge system. Navigate to the 
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **VITE_API_HOST** | The URL to your Lifeforge API server. This should be the URL that your API server is running on. (Make sure to put full URL, including the <code>http(s)://</code>prefix) |
 
-<Notes>
+<Note>
   For the Google API key, you might have to search up how to generate one from
   the Google Cloud console. It won't be covered in this documentation. Make sure
   to enable the Google Maps and Google Fonts API for the key.
-</Notes>
+</Note>
 
 Finally, you can start the dev server by running the following command:
 

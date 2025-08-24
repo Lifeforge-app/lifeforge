@@ -134,7 +134,7 @@ function ModifyTaskDrawer() {
     open(ConfirmationModal, {
       title: 'Delete Task',
       description: 'Are you sure you want to delete this task?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

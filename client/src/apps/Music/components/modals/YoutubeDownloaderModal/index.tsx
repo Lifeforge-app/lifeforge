@@ -94,7 +94,7 @@ function YoutubeDownloaderModal({ onClose }: { onClose: () => void }) {
       <ModalHeader
         icon="tabler:brand-youtube"
         namespace="apps.music"
-        title="Download from YouTube"
+        title="Download from Youtube"
         onClose={() => {
           onClose()
           queryClient.invalidateQueries({

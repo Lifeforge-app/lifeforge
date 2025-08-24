@@ -372,7 +372,7 @@ function App() {
               open(ConfirmationModal, {
                 title: t('modals.deleteEntry.title'),
                 description: t('modals.deleteEntry.description'),
-                buttonType: 'delete',
+                confirmationButton: 'delete',
                 onConfirm: () => deleteEntry(path)
               })
             }}

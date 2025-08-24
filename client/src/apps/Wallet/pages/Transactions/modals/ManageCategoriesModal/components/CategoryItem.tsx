@@ -45,7 +45,7 @@ function CategoryItem({ category }: { category: WalletCategory }) {
     open(ConfirmationModal, {
       title: 'Delete Category',
       description: 'Are you sure you want to delete this category?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

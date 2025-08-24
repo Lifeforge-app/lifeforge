@@ -21,15 +21,14 @@ function ListboxInputWrapper<T>({
   errorMsg?: string
 }) {
   return (
-    <div className="flex-1 space-y-2">
+    <div className={clsx('flex-1 space-y-2', className)}>
       <Listbox
         as="div"
         className={clsx(
-          'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex items-center gap-1 rounded-t-lg border-b-2 transition-all',
+          'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex w-full items-center gap-1 rounded-t-lg border-b-2 transition-all',
           errorMsg
             ? 'border-red-500'
             : 'border-bg-500 focus-within:border-custom-500! data-open:border-custom-500!',
-          className,
           disabled ? 'pointer-events-none! opacity-50' : ''
         )}
         multiple={multiple}
