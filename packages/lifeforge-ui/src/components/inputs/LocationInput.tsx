@@ -1,6 +1,4 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import { ComboboxInput, ComboboxOption } from '@components/inputs'
-import type { Location } from '@components/modals/features/FormModal/typescript/form_interfaces'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
@@ -11,6 +9,12 @@ import { useAPIEndpoint } from 'shared'
 import forgeAPI from '../../utils/forgeAPI'
 import { Tooltip } from '../utilities'
 import useInputLabel from './shared/hooks/useInputLabel'
+
+export type Location = {
+  name: string
+  formattedAddress: string
+  location: { latitude: number; longitude: number }
+}
 
 interface LocationInputProps {
   /** The label text displayed above the location input field. */

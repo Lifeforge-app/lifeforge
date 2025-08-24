@@ -1,13 +1,11 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useMemo } from 'react'
 
 import {
-  type FieldsConfig,
   type FormFieldPropsUnion,
   type FormInputProps,
   type FormState
-} from '../../typescript/form_interfaces'
+} from '../../typescript/form.types'
 import FormCheckboxInput from './components/FormCheckboxInput'
 import FormColorInput from './components/FormColorInput'
 import FormCurrencyInput from './components/FormCurrencyInput'
@@ -49,6 +47,7 @@ const MemoizedFormField = memo(
     autoFocus,
     namespace,
     errorMsg,
+    options,
     onFieldChange
   }: {
     id: string
@@ -57,15 +56,17 @@ const MemoizedFormField = memo(
     autoFocus?: boolean
     namespace?: string
     errorMsg?: string
+    options?: {
+      value: string
+      text: string
+      icon?: string
+      color?: string
+    }[]
     onFieldChange: (value: any) => void
   }) => {
     const fieldType = field.type as FormFieldPropsUnion['type']
 
     const FormComponent = COMPONENT_MAP[fieldType] || (() => <></>)
-
-    if (field.hidden) {
-      return null
-    }
 
     return (
       <FormComponent
@@ -74,8 +75,18 @@ const MemoizedFormField = memo(
         field={{ ...field, errorMsg }}
         handleChange={onFieldChange}
         namespace={namespace}
+        options={options}
         value={value}
       />
+    )
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.id === nextProps.id &&
+      prevProps.value === nextProps.value &&
+      prevProps.errorMsg === nextProps.errorMsg &&
+      prevProps.onFieldChange === nextProps.onFieldChange &&
+      JSON.stringify(prevProps.options) === JSON.stringify(nextProps.options)
     )
   }
 )
@@ -85,16 +96,20 @@ MemoizedFormField.displayName = 'MemoizedFormField'
 function FormInputs<T extends FormState>({
   fields,
   autoFocusableFieldId,
+  conditionalFields,
   data,
-  setData,
+  setStore,
   errorMsgs,
   removeErrorMsg,
   namespace
 }: {
-  fields: FieldsConfig<T>
+  fields: Record<string, FormFieldPropsUnion>
   autoFocusableFieldId?: string
+  conditionalFields?: {
+    [K in keyof T]?: (data: T) => boolean
+  }
   data: T
-  setData: React.Dispatch<React.SetStateAction<T>>
+  setStore: (data: Record<string, any>) => void
   errorMsgs: Record<string, string | undefined>
   removeErrorMsg: (fieldId: string) => void
   namespace?: string
@@ -104,35 +119,69 @@ function FormInputs<T extends FormState>({
 
     Object.keys(fields).forEach(id => {
       handlers[id] = (value: any) => {
-        setData(prev => ({ ...prev, [id]: value }))
         removeErrorMsg(id)
+        setStore({ [id]: value })
       }
     })
 
     return handlers
-  }, [fields, setData])
+  }, [fields])
 
   return (
     <div className="space-y-3">
-      {Object.entries(fields).map(([id, field]) => {
-        // Render corresponding form field component based on field type
-        const value = data[id]
+      {Object.entries(fields as Record<string, FormFieldPropsUnion>).map(
+        ([id, field]) => {
+          // Render corresponding form field component based on field type
+          const value = data[id]
 
-        const errorMsg = errorMsgs[id]
+          const errorMsg = errorMsgs[id]
 
-        return (
-          <MemoizedFormField
-            key={id}
-            autoFocus={autoFocusableFieldId === id}
-            errorMsg={errorMsg}
-            field={field}
-            id={id}
-            namespace={namespace}
-            value={value}
-            onFieldChange={changeHandlers[id]}
-          />
-        )
-      })}
+          const conditionalCall = conditionalFields?.[id]?.(data)
+
+          // Determine whether there is a conditional hidden state,
+          // if not, the field should be visible
+          const conditionalHidden =
+            typeof conditionalCall === 'boolean' ? !conditionalCall : false
+
+          // If the field is explicitly hidden, conditionalHidden should be overridden
+          const hidden = field.hidden ? true : conditionalHidden
+
+          let options:
+            | {
+                value: string
+                text: string
+                icon?: string
+                color?: string
+              }[]
+            | undefined = undefined
+
+          if (field.type === 'listbox') {
+            if (typeof field.options === 'function') {
+              options = field.options(data)
+            } else {
+              options = field.options
+            }
+          }
+
+          if (hidden) {
+            return null
+          }
+
+          return (
+            <MemoizedFormField
+              key={id}
+              autoFocus={autoFocusableFieldId === id}
+              errorMsg={errorMsg}
+              field={field}
+              id={id}
+              namespace={namespace}
+              options={options}
+              value={value}
+              onFieldChange={changeHandlers[id]}
+            />
+          )
+        }
+      )}
     </div>
   )
 }

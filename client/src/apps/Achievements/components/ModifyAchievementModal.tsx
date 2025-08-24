@@ -44,7 +44,7 @@ function ModifyAchievementModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<
       (typeof forgeAPI.achievements.entries)[typeof modifyType]
     >['body']

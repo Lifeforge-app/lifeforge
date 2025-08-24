@@ -1,12 +1,12 @@
+import { Button } from '@components/buttons'
+import { TextInput } from '@components/inputs'
+import { ConfirmationModal, useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
-import { Button, TextInput } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { ForgeAPIClientController } from 'shared'
-
-import CreatePasswordConfirmationModal from './modals/CreatePasswordConfirmationModal'
 
 function CreatePasswordScreen({
   controller
@@ -21,6 +21,17 @@ function CreatePasswordScreen({
 
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
+  const createPasswordMutation = useMutation(
+    controller.mutationOptions({
+      onSuccess: () => {
+        window.location.reload()
+      },
+      onError: () => {
+        toast.error('Failed to create password')
+      }
+    })
+  )
+
   function confirmAction(): void {
     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
       toast.error(t('input.error.fieldEmpty'))
@@ -34,10 +45,15 @@ function CreatePasswordScreen({
       return
     }
 
-    open(CreatePasswordConfirmationModal, {
-      newPassword,
-      confirmPassword,
-      controller
+    open(ConfirmationModal, {
+      title: 'Make sure you remember your master password!',
+      description:
+        'This master password is unchangable for now! If you accidentally forget the password, you lose everything. This password is hashed and stored in your user profile, and it is not decryptable. It will be used to encrypt and decrypt the data you store in your vault.',
+      onConfirm: async () => {
+        await createPasswordMutation.mutateAsync({
+          password: newPassword
+        } as never)
+      }
     })
   }
 
