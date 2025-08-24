@@ -1,0 +1,28 @@
+{
+  "title": "日記",
+  "description": "你的私人日記，僅供你查看。",
+  "lockedMessage": "日記已鎖定",
+  "passwordRequired": "需要密碼才能解密你的日記條目",
+  "failedToUnlock": "日記解鎖失敗",
+  "modals": {
+    "journal": {
+      "create": "創建日記條目",
+      "update": "更新日記條目",
+      "view": "查看日記條目"
+    }
+  },
+  "journal": {
+    "moodOfTheDay": "今天的心情",
+    "emoji": "表情符號",
+    "journalTitle": "日記標題"
+  },
+  "items": {
+    "entry": "日記"
+  },
+  "empty": {
+    "entry": {
+      "title": "沒有日記條目",
+      "description": "您還沒有添加任何日記條目。點擊下面的按鈕添加一個。"
+    }
+  }
+}
