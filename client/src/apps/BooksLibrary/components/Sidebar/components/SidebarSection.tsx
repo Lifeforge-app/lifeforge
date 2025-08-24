@@ -1,10 +1,11 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
-import { useBooksLibraryContext } from '@apps/BooksLibrary/providers/BooksLibraryProvider'
 
 import SidebarItem from './SidebarItem'
 
@@ -23,8 +24,17 @@ function SidebarSection({
 
   const { t } = useTranslation('apps.booksLibrary')
 
-  const { collectionsQuery, languagesQuery, fileTypesQuery } =
-    useBooksLibraryContext()
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
+
+  const fileTypesQuery = useQuery(
+    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
+  )
 
   const handleCreateItem = useCallback(() => {
     open(ModifyModal, {

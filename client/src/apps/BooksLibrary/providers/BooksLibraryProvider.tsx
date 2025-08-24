@@ -2,11 +2,7 @@ import {
   type SocketEvent,
   useSocketContext as useSocket
 } from '@providers/SocketProvider'
-import {
-  type UseQueryResult,
-  useQuery,
-  useQueryClient
-} from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
   parseAsBoolean,
@@ -36,9 +32,6 @@ export type BooksLibraryFileType = InferOutput<
 >[number]
 
 interface IBooksLibraryData {
-  collectionsQuery: UseQueryResult<BooksLibraryCollection[]>
-  languagesQuery: UseQueryResult<BooksLibraryLanguage[]>
-  fileTypesQuery: UseQueryResult<BooksLibraryFileType[]>
   miscellaneous: {
     processes: Record<
       string,
@@ -54,14 +47,13 @@ interface IBooksLibraryData {
         >
       | undefined
     >
-    addToProcesses: (taskId: string) => void
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     filter: {
       collection: string | null
       fileType: string | null
       language: string | null
-      favourite: boolean
+      favourite: boolean | null
     }
     setFilter: (
       key: 'collection' | 'fileType' | 'language' | 'favourite',
@@ -83,23 +75,9 @@ export default function BooksLibraryProvider() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const [libgenModalOpen, setLibgenModalOpen] = useState(false)
-
   const [searchQuery, setSearchQuery] = useQueryState(
     'q',
     parseAsString.withDefault('')
-  )
-
-  const collectionsQuery = useQuery(
-    forgeAPI.booksLibrary.collections.list.queryOptions()
-  )
-
-  const languagesQuery = useQuery(
-    forgeAPI.booksLibrary.languages.list.queryOptions()
-  )
-
-  const fileTypesQuery = useQuery(
-    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
   )
 
   const [filter, setFilter] = useQueryStates({
@@ -201,25 +179,12 @@ export default function BooksLibraryProvider() {
 
   const value = useMemo(
     () => ({
-      collectionsQuery,
-      languagesQuery,
-      fileTypesQuery,
       miscellaneous: {
         processes,
-        addToProcesses: (taskId: string) => {
-          if (!processes[taskId]) {
-            setProcesses(prev => ({
-              ...prev,
-              [taskId]: undefined
-            }))
-          }
-        },
         searchQuery,
         setSearchQuery,
         sidebarOpen,
         setSidebarOpen,
-        libgenModalOpen,
-        setLibgenModalOpen,
         filter: {
           collection: filter.collection || null,
           fileType: filter.fileType || null,
@@ -237,16 +202,7 @@ export default function BooksLibraryProvider() {
         }
       }
     }),
-    [
-      collectionsQuery,
-      languagesQuery,
-      fileTypesQuery,
-      processes,
-      searchQuery,
-      sidebarOpen,
-      libgenModalOpen,
-      filter
-    ]
+    [processes, searchQuery, sidebarOpen, filter]
   )
 
   return (
