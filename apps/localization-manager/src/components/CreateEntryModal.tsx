@@ -120,7 +120,8 @@ function CreateEntryModal({
     .initialData({
       namespace: target[0],
       subNamespace: target[1],
-      parent: target[2] || '<root>'
+      parent: target[2] || '<root>',
+      type: 'entry'
     })
     .onSubmit(async data => {
       const { namespace, subNamespace, parent, type, name } = data
