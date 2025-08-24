@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-
-import { toLinkCase, toTitleCase } from '../utils/string'
+import { useLocation } from 'react-router'
 
 function Rightbar() {
   const [allSections, setAllSections] = useState<string[]>([])
@@ -52,7 +51,7 @@ function Rightbar() {
         entries.forEach(entry => {
           const id = entry.target.id || ''
 
-          const sanitizedId = toLinkCase(id)
+          const sanitizedId = _.kebabCase(id)
 
           sectionIntersectionRatios.set(sanitizedId, entry.intersectionRatio)
         })
@@ -84,7 +83,7 @@ function Rightbar() {
         const heading = section.querySelector('h2,h6')
 
         if (heading && heading.textContent) {
-          section.id = toLinkCase(heading.textContent.replace(/\./g, ''))
+          section.id = _.kebabCase(heading.textContent.replace(/\./g, ''))
           observer.observe(section)
         }
       }
@@ -92,7 +91,7 @@ function Rightbar() {
 
     // Set the first section as active after processing all sections
     if (_allSections.length > 0) {
-      const firstSectionId = toLinkCase(_allSections[0].replace(/\./g, ''))
+      const firstSectionId = _.kebabCase(_allSections[0].replace(/\./g, ''))
 
       setActiveSection(firstSectionId)
     }
@@ -141,7 +140,7 @@ function Rightbar() {
       <h2 className="text-lg font-semibold">On This Page</h2>
       <ul className="border-bg-200 dark:border-bg-800 relative isolate mt-4 border-l-[1.5px]">
         {allSections.map((item, index) => {
-          const itemId = toLinkCase(item.replace(/\./g, ''))
+          const itemId = _.kebabCase(item.replace(/\./g, ''))
 
           return (
             <a
@@ -164,8 +163,10 @@ function Rightbar() {
         className="text-bg-100 mt-6 flex items-center gap-2 font-medium hover:underline"
         href={`https://github.com/Lifeforge-app/lifeforge/edit/main/apps/docs/src/contents/${
           location.pathname.split('/')?.[1]
-        }/${toTitleCase(
-          location.pathname.split('/')?.[2]?.replace(/-/g, ' ') || ''
+        }/${_.upperFirst(
+          _.camelCase(
+            location.pathname.split('/')?.[2]?.replace(/-/g, ' ') || ''
+          )
         )}.mdx`}
         rel="noreferrer"
         target="_blank"
