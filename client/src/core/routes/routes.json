@@ -18,6 +18,7 @@
     "title": "Lifestyle",
     "items": [
       "@apps/MomentVault",
+      "@apps/Journal",
       "@apps/Blog",
       "@apps/Movies",
       "@apps/Achievements"
