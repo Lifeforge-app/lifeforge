@@ -116,14 +116,14 @@ const getLocale = forgeController.query
 const notifyMissing = forgeController.mutation
   .input({
     body: z.object({
-      lang: z.enum(ALLOWED_LANG),
+      lang: z.array(z.enum(ALLOWED_LANG)),
       namespace: z.enum(ALLOWED_NAMESPACE),
       key: z.string()
     })
   })
   .callback(async ({ body: { lang, namespace, key } }) => {
     LoggingService.warn(
-      `Missing locale for language ${lang} ==> ${namespace}: ${key}`
+      `Missing locale for language ${lang.join(', ')} ==> ${namespace}: ${key}`
     )
   })
 
