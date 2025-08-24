@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router } from 'react-router-dom'
 import { APIEndpointProvider, PersonalizationProvider } from 'shared'
 
 import App from './App.tsx'
@@ -13,9 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         theme: (localStorage.getItem('theme') as 'light' | 'dark') || 'system'
       }}
     >
-      <Router>
-        <App />
-      </Router>
+      <App />
     </PersonalizationProvider>
   </APIEndpointProvider>
 )

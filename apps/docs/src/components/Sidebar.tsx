@@ -1,8 +1,8 @@
+import _ from 'lodash'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 
-import SECTIONS from '../constants/Sections'
-import { toLinkCase } from '../utils/string'
+import SECTIONS from '../routes/Sections'
 
 function Sidebar({
   sidebarOpen,
@@ -51,11 +51,11 @@ function Sidebar({
                       key={`${title}-${item}`}
                       className={`before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:top-1/2 before:-left-[2px] before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all ${
                         location.pathname ===
-                        `/${toLinkCase(title)}/${toLinkCase(item)}`
+                        `/${_.kebabCase(title)}/${_.kebabCase(item)}`
                           ? 'text-custom-500 font-semibold before:h-full'
                           : 'text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 before:h-0 hover:font-medium'
                       }`}
-                      to={`/${toLinkCase(title)}/${toLinkCase(item)}`}
+                      to={`/${_.kebabCase(title)}/${_.kebabCase(item)}`}
                       onClick={() => {
                         document.querySelector('main')?.scrollTo(0, 0)
                         setSidebarOpen(false)

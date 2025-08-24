@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { Outlet, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import NavigationBar from './components/NavigationBar'
 
-function Boilerplate() {
+function Boilerplate({ children }: { children: React.ReactNode }) {
   const location = useLocation()
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function Boilerplate() {
         )}
       >
         <div className="w-full min-w-0 lg:w-[calc(100%-20rem)]">
-          <Outlet />
+          {children}
           <NavigationBar />
           <hr className="border-bg-200 dark:border-bg-800 my-12 border-t-[1.5px]" />
           <div className="flex flex-col items-center justify-center gap-2 pb-6 sm:pb-12">

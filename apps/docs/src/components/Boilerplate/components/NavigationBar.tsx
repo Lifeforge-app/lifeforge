@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import _ from 'lodash'
 import { useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 
-import SECTIONS from '../../../constants/Sections'
-import { toLinkCase, toTitleCase } from '../../../utils/string'
+import SECTIONS from '../../../routes/Sections'
 
 function NavigationBar() {
   const location = useLocation()
@@ -21,7 +21,7 @@ function NavigationBar() {
   const nextSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(
       Object.entries(SECTIONS).map(([title, items]) => {
-        return [toLinkCase(title), items.map(toLinkCase)]
+        return [_.kebabCase(title), items.map(_.kebabCase)]
       })
     )
 
@@ -57,7 +57,7 @@ function NavigationBar() {
   const lastSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(
       Object.entries(SECTIONS).map(([title, items]) => {
-        return [toLinkCase(title), items.map(toLinkCase)]
+        return [_.kebabCase(title), items.map(_.kebabCase)]
       })
     )
 
@@ -99,7 +99,7 @@ function NavigationBar() {
           to={`/${lastSection.group}/${lastSection.section}`}
         >
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-left" />
-          {toTitleCase(lastSection.section.replace(/-/g, ' '))}
+          {_.upperFirst(_.camelCase(lastSection.section.replace(/-/g, ' ')))}
         </Link>
       ) : (
         <span />
@@ -109,7 +109,7 @@ function NavigationBar() {
           className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
           to={`/${nextSection.group}/${nextSection.section}`}
         >
-          {toTitleCase(nextSection.section.replace(/-/g, ' '))}
+          {_.upperFirst(_.camelCase(nextSection.section.replace(/-/g, ' ')))}
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-right" />
         </Link>
       )}

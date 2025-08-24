@@ -12,16 +12,7 @@ const SECTIONS = {
     'Personalization',
     'API Keys'
   ],
-  'Developer Guide': [
-    'Introduction',
-    'Project Structure',
-    'UI Library',
-    'Forms',
-    'API Reference',
-    'Localization',
-    'Extending Modules',
-    'Contributing'
-  ]
+  'Developer Guide': ['Introduction', 'Project Structure', 'Forms']
 }
 
 export default SECTIONS
