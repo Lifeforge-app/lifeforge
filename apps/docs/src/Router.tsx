@@ -1,31 +1,43 @@
 import _ from 'lodash'
 import { RouteObject } from 'react-router'
 
-import { components as COMPONENTS } from '../components/MdxComponents'
-import SectionItems from './Sections'
+import { components as COMPONENTS } from './components/MdxComponents'
 
 const modules = import.meta.glob(['../contents/**/*.mdx'])
 
+const sectionItems = Object.groupBy(Object.keys(modules), item =>
+  _.kebabCase(item.split('/')[2])
+)
+
 const ROUTES: any[] = []
 
-const routePromises = Object.entries(SectionItems).map(
+const routePromises = Object.entries(sectionItems).map(
   async ([title, items]) => {
-    const importPromises = items.map(async item => {
-      const path = `../contents/${_.kebabCase(title)}/${_.upperFirst(_.camelCase(item))}.mdx`
+    if (!items) return
 
+    const importPromises = items.map(async path => {
       const importer = modules[path]
 
       if (!importer) throw new Error(`Module not found: ${path}`)
 
       const mod = (await importer()) as { default: any }
 
-      return [_.kebabCase(item), mod.default] as const
+      return [
+        _.kebabCase(
+          path
+            .split('/')
+            .pop()!
+            .replace(/^\d{2}\./, '')
+            .split('.')[0]
+        ),
+        mod.default
+      ] as const
     })
 
     const awaitedRoutes = await Promise.all(importPromises)
 
     return {
-      path: `/${_.kebabCase(title)}`,
+      path: `/${title}`,
       children: awaitedRoutes.map(([path, Element]) => ({
         path,
         element: <Element components={COMPONENTS} />
@@ -37,5 +49,7 @@ const routePromises = Object.entries(SectionItems).map(
 await Promise.all(routePromises).then(resolvedRoutes => {
   ROUTES.push(...resolvedRoutes)
 })
+
+console.log(ROUTES)
 
 export default ROUTES
