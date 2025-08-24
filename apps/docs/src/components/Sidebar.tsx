@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, useLocation } from 'react-router'
 
-import SECTIONS from '../routes/Sections'
+import ROUTES from '../Router'
 
 function Sidebar({
   sidebarOpen,
@@ -42,26 +42,27 @@ function Sidebar({
           )}
         >
           <div className="space-y-6 p-12">
-            {Object.entries(SECTIONS).map(([title, items]) => (
-              <div key={title}>
-                <h2 className="text-lg font-semibold">{title}</h2>
+            {ROUTES.map(({ path, children }) => (
+              <div key={path}>
+                <h2 className="text-lg font-semibold">
+                  {_.startCase(path?.slice(1).replace(/-/g, ' '))}
+                </h2>
                 <div className="border-bg-200 dark:border-bg-800 relative isolate mt-4 border-l-[1.5px]">
-                  {items.map(item => (
+                  {children!.map(({ path: subpath }) => (
                     <Link
-                      key={`${title}-${item}`}
+                      key={`${path}-${subpath}`}
                       className={`before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:top-1/2 before:-left-[2px] before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all ${
-                        location.pathname ===
-                        `/${_.kebabCase(title)}/${_.kebabCase(item)}`
+                        location.pathname === `${path}/${subpath}`
                           ? 'text-custom-500 font-semibold before:h-full'
                           : 'text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 before:h-0 hover:font-medium'
                       }`}
-                      to={`/${_.kebabCase(title)}/${_.kebabCase(item)}`}
+                      to={`${path}/${subpath}`}
                       onClick={() => {
                         document.querySelector('main')?.scrollTo(0, 0)
                         setSidebarOpen(false)
                       }}
                     >
-                      {item}
+                      {_.startCase(subpath!.replace(/-/g, ' '))}
                     </Link>
                   ))}
                 </div>
