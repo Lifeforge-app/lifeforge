@@ -97,7 +97,6 @@ export async function recursivelySearchFolder(
       .execute()
   ).map(result => ({
     ...result.expand!.base_entry,
-    id: result.id,
     collectionId: result.collectionId,
     collectionName: result.collectionName,
     content: result.content,
@@ -108,104 +107,8 @@ export async function recursivelySearchFolder(
     fullPath: parents
   }))
 
-  const imageResults = (
-    await pb.getFullList
-      .collection('idea_box__entries_image')
-      .expand({ base_entry: 'idea_box__entries' })
-      .filter([
-        {
-          field: 'base_entry.container',
-          operator: '=',
-          value: container
-        },
-        {
-          field: 'base_entry.archived',
-          operator: '=',
-          value: false
-        },
-        {
-          field: 'base_entry.folder',
-          operator: '=',
-          value: folderId
-        },
-        ...(tags
-          ? tags.split(',').map(
-              tag =>
-                ({
-                  field: 'base_entry.tags',
-                  operator: '~',
-                  value: tag
-                }) as const
-            )
-          : [])
-      ])
-      .execute()
-  ).map(result => ({
-    ...result.expand!.base_entry,
-    id: result.id,
-    collectionId: result.collectionId,
-    collectionName: result.collectionName,
-    image: result.image,
-    child: {
-      id: result.id,
-      collectionId: result.collectionId
-    },
-    expand: {
-      folder: thisFolder
-    },
-    type: 'image' as const,
-    fullPath: parents
-  }))
-
-  const linkResults = (
-    await pb.getFullList
-      .collection('idea_box__entries_link')
-      .expand({ base_entry: 'idea_box__entries' })
-      .filter([
-        {
-          field: 'base_entry.container',
-          operator: '=',
-          value: container
-        },
-        {
-          field: 'base_entry.archived',
-          operator: '=',
-          value: false
-        },
-        {
-          field: 'base_entry.folder',
-          operator: '=',
-          value: folderId
-        },
-        ...(tags
-          ? tags.split(',').map(
-              tag =>
-                ({
-                  field: 'base_entry.tags',
-                  operator: '~',
-                  value: tag
-                }) as const
-            )
-          : [])
-      ])
-      .execute()
-  ).map(result => ({
-    ...result.expand!.base_entry,
-    id: result.id,
-    collectionId: result.collectionId,
-    collectionName: result.collectionName,
-    link: result.link,
-    expand: {
-      folder: thisFolder
-    },
-    type: 'link' as const,
-    fullPath: parents
-  }))
-
-  const allResults = [...textResults, ...imageResults, ...linkResults]
-
   if (folderInsideFolder.length === 0) {
-    return allResults
+    return textResults
   }
 
   for (const folder of folderInsideFolder) {
@@ -218,8 +121,8 @@ export async function recursivelySearchFolder(
       pb
     )
 
-    allResults.push(...results)
+    textResults.push(...results)
   }
 
-  return allResults
+  return textResults
 }
