@@ -1,0 +1,283 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import Code from "../../components/Code"
+import Note from "../../components/Note"
+import Warning from "../../components/Warning"
+
+###### Database operations
+
+# Handling Your CRUD Actions
+
+LifeForge utilizes <span className="text-bg-800 dark:text-bg-100 font-semibold items-baseline inline-flex gap-2"><Icon icon="simple-icons:pocketbase" className='translate-y-0.5' /> 
+PocketBase</span>, an extremely lightweight backend solution, to manage its database operations. It provides a native Javascript SDK for interacting with the database, but the SDK doesn't work that well with TypeScript.
+
+To bridge this gap, I have created a wrapper around the PocketBase SDK that automatically infers types from your database schema. This means you can work with your database in a type-safe manner without worrying too much about runtime errors or type mismatches, and the return values from the SDK will be correctly typed.
+
+---
+
+<section id="accessing-pb-instance">
+  ## Accessing PB Instance
+
+  In the callback function of your <code>forgeController</code>, you can access the PocketBase instance via the <code>pb</code> property of the context object. This instance is already authenticated with the current user (if any), so you can directly perform operations without worrying about authentication.
+  
+  <Code language='typescript'>
+{`const action = forgeController.mutate
+    .input({...})
+    .callback(({ pb }) => {
+        // You can now use the PocketBase instance to interact with your database
+    })`}
+  </Code>
+
+  <Note>
+  ### Accessing Native PocketBase Instance
+
+  You can access the native PocketBase instance by using the <code>pb.instance</code> property, which grants you access to the underlying SDK directly. This is useful when you need to perform operations that are not covered by the wrapper, like generating OTPs.
+
+  <Code language='typescript'>
+{`const action = forgeController.mutate
+    .input({...})
+    .callback(({ pb }) => {
+        // You can now use the native PocketBase instance to interact with your database
+        const nativeInstance = pb.instance;
+    })`}
+  </Code>
+  </Note>
+</section>
+
+<section id="basic-usage">
+  ## Basic Usage
+
+  If you have worked with native PocketBase SDK before, you should be familiar with how their functions are called:
+
+  <Code language='typescript'>
+    {`const data = await pb.collection("my_collection").getFullList();`}
+  </Code>
+
+  But, in LifeForge, stuff works a bit differently. Instead of specifying collection first, you specify the action you want to perform (<code>getFullList</code>, <code>create</code>, etc.), followed by the collection name. A <code>.execute()</code> chain function is then called to perform the action.
+
+  <Code language='typescript'>
+    {`const data = await pb.getFullList.collection("my_collection").execute();`}
+  </Code>
+
+  Available actions are the same as the native SDK:
+
+  - <code>getFullList</code>
+  - <code>getList</code>
+  - <code>getOne</code>
+  - <code>getFirstListItem</code>
+  - <code>create</code>
+  - <code>update</code>
+  - <code>delete</code>
+
+  Other functionalities like filtering, sorting, and field selection, and data input can be chained after the collection has been specified and before <code>.execute()</code> as needed. The availability of these options will depend on the specific action being performed. IntelliSense in your code editor should provide you with autocompletion suggestions based on that. For more information, refer to the [PocketBase documentation](https://pocketbase.io/docs/api-records).
+
+  <Note>
+  The available options for the <code>.collection()</code> method are derived from your <code>schema.ts</code> file. IntelliSense in your code editor should provide you with autocompletion suggestions based on that.
+
+  ![Collection IntelliSense](/assets/developer-database-operations/collection-intellisense.png)
+  </Note>
+</section>
+
+<section id="extending-relations">
+  ## Extending Relations
+
+  You can extend the normalized relations between your collections by using the <code>.expand()</code> method. This method accepts an object where the keys are the names of the relation fields to include in the response, and the values are the collection names.
+
+  <Code language='typescript'>
+{`const data = await pb.getFullList.collection("posts").expand({
+    "author": "users"
+}).execute();`}
+  </Code>
+
+  The resulting data will include an additional <code>expand</code> field for each record (if applicable) containing the expanded relations. For more information, refer to the [PocketBase documentation](https://pocketbase.io/docs/working-with-relations/).
+
+  <Note>
+  The available options for both the keys and the values of the object being passed into the <code>.expand()</code> method are derived from your <code>schema.ts</code> file. IntelliSense in your code editor should provide you with autocompletion suggestions based on that.
+  </Note>
+
+  <Warning>
+  - This will only work when you have defined the appropriate relations for the fields in your PocketBase admin panel with appropriate access permissions.
+
+  - Please call this method **before** filtering, sorting, and field selection, as it will affect the IntelliSense inference of these operations.
+
+  - Back relations using the <code>via</code> keyword is **NOT** supported. If it must be used, fetch the data using the native PocketBase SDK directly.
+  </Warning>
+</section>
+
+<section id="filtering-results">
+  ## Filtering Results
+
+  You can filter the results of your queries by using the <code>.filter()</code> method. This method accepts a list of filter conditions.
+
+  <Code language='typescript'>
+{`const data = await pb.getFullList.collection("my_collection").filter([
+    { field: "status", operator: "=", value: "active" },
+    { field: "age", operator: ">", value: 18 }
+]).execute();`}
+  </Code>
+
+   The list will be concatenated with AND (<code>&amp;&amp;</code>) logic into a single query string:
+
+   <Code language='sql'>
+    {`status = "active" && age > 18`}
+   </Code>
+
+   Condition nesting is supported, allowing you to create more complex queries. You can nest conditions as follows:
+
+   <Code language='typescript'>
+{`const data = await pb.getFullList.collection("my_collection").filter([
+    { combination: "||", fields: [
+        { field: "status", operator: "=", value: "active" },
+        { combination: "&&", fields: [
+            { field: "age", operator: ">", value: 18 },
+            { field: "location", operator: "=", value: "USA"}
+        ]}
+    ]},
+    { field: "created", operator: ">", value: "2022-01-01" }
+]).execute();`}
+  </Code>
+
+  This will generate the following SQL query:
+
+  <Code language='sql'>
+  {`(status = "active" || (age > 18 && location = "USA")) && created > "2022-01-01"`}
+  </Code>
+
+  If you have expanded relations in your query, you may filter based on the expanded fields as well:
+
+  <Code language='typescript'>
+{`const data = await pb.getFullList.collection("posts").expand({
+    "author": "users"
+}).filter([
+    { field: "author.name", operator: "=", value: "John Doe" }
+]).execute();`}
+  </Code>
+
+  <Note>
+  - IntelliSense in your code editor should provide you with autocompletion suggestions for the <code>field</code> field based on the available fields, including those from expanded relations.
+
+  - Available comparison operations are the same as the native SDK. Please refer to the [PocketBase documentation](https://pocketbase.io/docs/api-records/#listsearch-records) for more information.
+  </Note>
+</section>
+
+<section id="sorting-records">
+  ## Sorting Records
+
+    You can sort the results of your queries by using the <code>.sort()</code> method. This method accepts a list of fields to sort by. Prefix a field with a minus sign (<code>-</code>) to sort in descending order. 
+
+    <Code language='typescript'>
+    {`const data = await pb.getFullList.collection("my_collection").sort([
+        "name",
+        "-created"
+    ]).execute();`}
+    </Code>
+    
+    This will sort the results first by the <code>name</code> field in ascending order, and then by the <code>created</code> field in descending order.
+    
+    If you have expanded relations in your query, you may sort based on the expanded fields as well:
+    
+    <Code language='typescript'>
+    {`const data = await pb.getFullList.collection("posts").expand({
+        "author": "users"
+    }).sort([
+        "author.name",
+        "-created"
+    ]).execute();`}
+    </Code>
+    
+    <Note>
+    IntelliSense in your code editor should provide you with autocompletion suggestions for the fields based on the available fields, including those from expanded relations.
+    </Note>
+</section>
+
+<section id="fields-selection">
+  ## Fields Selection
+
+  You can specify which fields to include in the results by using the <code>.select()</code> method. This method accepts a list of field names to include.
+
+  <Code language='typescript'>
+{`const data = await pb.getFullList.collection("my_collection").fields({
+    "name": true,
+    "age": true,
+    "location": true
+}).execute();`}
+  </Code>
+
+  This will include only the <code>name</code>, <code>age</code>, and <code>location</code> fields in the results.
+
+  If you have expanded relations in your query, you may select fields from the expanded relations as well.
+
+  <Code language='typescript'>
+{`const data = await pb.getFullList.collection("posts").expand({
+    "author": "users"
+}).fields({
+    "expand.author.name": true,
+    "title": true,
+    "content": true,
+    "created": true
+}).execute();`}
+  </Code>
+
+  <Note>
+  IntelliSense in your code editor should provide you with autocompletion suggestions for the fields based on the available fields, including those from expanded relations.
+  </Note>
+
+  <>
+  Note that unlike sorting and filtering, you must prefix the expanded fields with <code>expand.</code>.
+  </>
+</section>
+
+<section id="mutating-record">
+  ## Mutating Record
+
+  You can create, update, and delete records using the <code>create</code>, <code>update</code>, and <code>delete</code> actions respectively.
+
+  <Note>
+  When creating or updating records, ensure that you provide all required fields as per your collection schema. The power of TypeScript will help you catch any missing fields at compile time.
+  </Note>
+
+  ### <div className="inline-flex gap-2 items-baseline"><Icon icon="tabler:plus" className='translate-y-1.5 size-8' /> Creating a Record</div>
+
+  To create a new record, use the <code>create</code> action and provide the data to be inserted using the <code>.data()</code> method.
+
+  <Code language='typescript'>
+{`const newRecord = await pb.create.collection("my_collection").data({
+    "name": "John Doe",
+    "age": 30,
+    "location": "USA"
+}).execute();`}
+  </Code>
+
+  ### <div className="inline-flex gap-2 items-baseline"><Icon icon="tabler:pencil" className='translate-y-1.5 size-8' /> Updating a Record</div>
+
+  To update an existing record, use the <code>update</code> action, specify the record ID using the <code>.id()</code> method, and provide the updated data using the <code>.data()</code> method.
+
+  <Code language='typescript'>
+{`const updatedRecord = await pb.update.collection("my_collection").id("record_id").data({
+    "age": 31
+}).execute();`}
+  </Code>
+
+  <Note>
+  The object passed into the <code>.data()</code> method need not include all fields from the original record. You can specify only the fields you want to update.
+  </Note>
+
+  ### <div className="inline-flex gap-2 items-baseline"><Icon icon="tabler:trash" className='translate-y-1.5 size-8' /> Deleting a Record</div>
+
+  To delete a record, use the <code>delete</code> action and specify the record ID using the <code>.id()</code> method.
+
+  <Code language='typescript'>
+{`await pb.delete.collection("my_collection").id("record_id").execute();`}
+  </Code>
+</section>
+
+<section id="pagination">
+  ## Pagination
+
+  You can paginate your results using the <code>.getList()</code> method and providing the <code>page</code> and <code>perPage</code> parameters.
+
+  <Code language='typescript'>
+{`const data = await pb.getList.collection("my_collection").page(1).perPage(10).execute();`}
+  </Code>
+
+  This will return the first page of results, with 10 items per page.
+</section>
