@@ -15,3 +15,5 @@ export * from './components/utilities'
 export * from './components/layouts'
 
 export * from './components/sso'
+
+export * from './components/security'

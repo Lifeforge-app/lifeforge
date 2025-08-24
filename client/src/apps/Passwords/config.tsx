@@ -5,9 +5,8 @@ import type { ModuleConfig } from '../../core/routes/interfaces/routes_interface
 export default {
   name: 'Passwords',
   icon: 'tabler:key',
-  provider: lazy(() => import('./providers/PasswordsProvider')),
   routes: {
-    '': lazy(() => import('.'))
+    passwords: lazy(() => import('.'))
   },
   togglable: true
 } satisfies ModuleConfig

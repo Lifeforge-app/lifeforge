@@ -36,7 +36,7 @@ function ModifyLedgerModal({
     })
   )
 
-  const formProps = defineForm<
+  const { formProps } = defineForm<
     InferInput<(typeof forgeAPI.wallet.ledgers)[typeof type]>['body']
   >({
     namespace: 'apps.wallet',

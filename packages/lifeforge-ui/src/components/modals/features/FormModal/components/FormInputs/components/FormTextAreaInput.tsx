@@ -1,8 +1,15 @@
 import { TextAreaInput } from '@components/inputs'
-import {
-  type FormInputProps,
-  type TextAreaFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type TextAreaFieldProps = BaseFieldProps<string, string, true> & {
+  type: 'textarea'
+  icon: string
+  placeholder: string
+}
 
 function FormTextAreaInput({
   field,

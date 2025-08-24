@@ -1,8 +1,14 @@
 import { NumberInput } from '@components/inputs'
-import {
-  type FormInputProps,
-  type NumberFieldProps
-} from '@components/modals/features/FormModal/typescript/form_interfaces'
+
+import type {
+  BaseFieldProps,
+  FormInputProps
+} from '../../../typescript/form.types'
+
+export type NumberFieldProps = BaseFieldProps<number, number, true> & {
+  type: 'number'
+  icon: string
+}
 
 function FormNumberInput({
   field,

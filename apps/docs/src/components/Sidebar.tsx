@@ -45,15 +45,15 @@ function Sidebar({
             {Object.entries(SECTIONS).map(([title, items]) => (
               <div key={title}>
                 <h2 className="text-lg font-semibold">{title}</h2>
-                <div className="before:border-bg-200 dark:before:border-bg-800 relative isolate mt-4 before:absolute before:top-0 before:left-0 before:z-[-1] before:h-full before:border-r-[1.5px]">
+                <div className="border-bg-200 dark:border-bg-800 relative isolate mt-4 border-l-[1.5px]">
                   {items.map(item => (
                     <Link
                       key={`${title}-${item}`}
-                      className={`block cursor-pointer px-4 py-2 transition-all ${
+                      className={`before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:top-1/2 before:-left-[2px] before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all ${
                         location.pathname ===
                         `/${toLinkCase(title)}/${toLinkCase(item)}`
-                          ? 'text-custom-500 border-custom-500 hover:border-custom-500 border-l-[2.5px] font-semibold'
-                          : 'text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 hover:font-medium'
+                          ? 'text-custom-500 font-semibold before:h-full'
+                          : 'text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 before:h-0 hover:font-medium'
                       }`}
                       to={`/${toLinkCase(title)}/${toLinkCase(item)}`}
                       onClick={() => {
