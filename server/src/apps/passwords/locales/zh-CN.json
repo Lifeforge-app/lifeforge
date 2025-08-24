@@ -28,5 +28,11 @@
       "description": "未找到您搜索查询的任何条目。请尝试其他查询。"
     }
   },
-  "lastUpdated": "最后更新"
+  "lastUpdated": "最后更新",
+  "buttons": {
+    "copyPassword": "复制密码",
+    "rotatePassword": "旋转密码",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码"
+  }
 }

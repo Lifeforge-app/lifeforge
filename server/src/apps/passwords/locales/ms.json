@@ -28,5 +28,11 @@
       "description": "Tiada entri ditemukan untuk carian anda. Sila cuba lagi."
     }
   },
-  "lastUpdated": "Terakhir Dikemas kini"
+  "lastUpdated": "Terakhir Dikemas kini",
+  "buttons": {
+    "copyPassword": "Salin Kata Laluan",
+    "rotatePassword": "Putar Kata Laluan",
+    "showPassword": "Tunjukkan Kata Laluan",
+    "hidePassword": "Sembunyikan Kata Laluan"
+  }
 }

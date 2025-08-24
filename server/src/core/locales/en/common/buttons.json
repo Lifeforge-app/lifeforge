@@ -36,5 +36,6 @@
   "downloading": "Downloading ...",
   "generate": "Generate",
   "regenerate": "Regenerate",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "goBack": "Go Back"
 }

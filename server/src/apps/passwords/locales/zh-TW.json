@@ -28,5 +28,11 @@
       "description": "未找到您搜索查詢的任何條目。請再試一次。"
     }
   },
-  "lastUpdated": "最後更新"
+  "lastUpdated": "最後更新",
+  "buttons": {
+    "copyPassword": "複製密碼",
+    "rotatePassword": "旋轉密碼",
+    "showPassword": "顯示密碼",
+    "hidePassword": "隱藏密碼"
+  }
 }
