@@ -26,7 +26,6 @@ function BooksLibrary() {
   const open = useModalStore(state => state.open)
 
   const {
-    fileTypesQuery,
     miscellaneous: { filter, searchQuery, setSearchQuery }
   } = useBooksLibraryContext()
 
@@ -67,38 +66,25 @@ function BooksLibrary() {
       <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
-          <WithQueryData controller={forgeAPI.booksLibrary.entries.list}>
+          <WithQueryData
+            controller={forgeAPI.booksLibrary.entries.list.input({
+              collection: filter.collection || undefined,
+              language: filter.language || undefined,
+              favourite: filter.favourite || undefined,
+              fileType: filter.fileType || undefined,
+              query: debouncedSearchQuery.trim() || undefined
+            })}
+          >
             {entries => {
-              // TODO: Move this to backend
-              const filteredEntries = entries.filter(
-                entry =>
-                  entry.title
-                    .toLowerCase()
-                    .includes(debouncedSearchQuery.toLowerCase()) &&
-                  (filter.collection !== null
-                    ? entry.collection === filter.collection
-                    : true) &&
-                  (filter.language !== null
-                    ? entry.languages.includes(filter.language)
-                    : true) &&
-                  (filter.collection !== null
-                    ? entry.collection === filter.collection
-                    : true) &&
-                  (filter.favourite ? entry.is_favourite : true) &&
-                  (filter.fileType !== null
-                    ? entry.extension ===
-                      fileTypesQuery.data?.find(
-                        fileType => fileType.id === filter.fileType
-                      )?.name
-                    : true)
-              )
-
-              if (filteredEntries.length === 0) {
-                if (entries.length === 0) {
+              if (entries.length === 0) {
+                if (
+                  debouncedSearchQuery.trim() ||
+                  Object.values(filter).some(v => v)
+                ) {
                   return (
                     <EmptyStateScreen
-                      icon="tabler:books-off"
-                      name="book"
+                      icon="tabler:search-off"
+                      name="result"
                       namespace="apps.booksLibrary"
                     />
                   )
@@ -106,8 +92,8 @@ function BooksLibrary() {
 
                 return (
                   <EmptyStateScreen
-                    icon="tabler:search-off"
-                    name="result"
+                    icon="tabler:books-off"
+                    name="book"
                     namespace="apps.booksLibrary"
                   />
                 )
@@ -117,13 +103,7 @@ function BooksLibrary() {
 
               return (
                 <>
-                  <Header
-                    itemCount={
-                      typeof filteredEntries !== 'string'
-                        ? filteredEntries.length
-                        : 0
-                    }
-                  />
+                  <Header itemCount={entries.length} />
                   <div className="mt-4 flex items-center gap-2">
                     <SearchInput
                       namespace="apps.booksLibrary"
@@ -141,7 +121,7 @@ function BooksLibrary() {
                       viewMode={view}
                     />
                   </div>
-                  <FinalComponent books={filteredEntries} />
+                  <FinalComponent books={entries} />
                 </>
               )
             }}
