@@ -1,0 +1,28 @@
+{
+  "title": "Jurnal",
+  "description": "Jurnal peribadi anda, hanya untuk anda lihat.",
+  "lockedMessage": "Jurnal dikunci",
+  "passwordRequired": "Kata laluan diperlukan untuk menyahsulit entri jurnal anda",
+  "failedToUnlock": "Gagal membuka jurnal",
+  "modals": {
+    "journal": {
+      "create": "Buat Entri Jurnal",
+      "update": "Kemas kini Entri Jurnal",
+      "view": "Lihat Entri Jurnal"
+    }
+  },
+  "journal": {
+    "moodOfTheDay": "Mood Hari Ini",
+    "emoji": "Emoji",
+    "journalTitle": "Tajuk Jurnal"
+  },
+  "items": {
+    "entry": "Jurnal"
+  },
+  "empty": {
+    "entry": {
+      "title": "Tiada Entri Jurnal",
+      "description": "Anda belum menambah sebarang entri jurnal lagi. Klik butang di bawah untuk menambah satu."
+    }
+  }
+}
