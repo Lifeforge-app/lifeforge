@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ContextMenu,
@@ -16,10 +18,19 @@ function Header({ itemCount }: { itemCount: number }) {
 
   const { t } = useTranslation('apps.booksLibrary')
 
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
+
+  const fileTypesQuery = useQuery(
+    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
+  )
+
   const {
-    collectionsQuery,
-    fileTypesQuery,
-    languagesQuery,
     miscellaneous: { setSidebarOpen, searchQuery, filter, setFilter }
   } = useBooksLibraryContext()
 

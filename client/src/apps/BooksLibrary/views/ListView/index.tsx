@@ -1,4 +1,6 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { Scrollbar } from 'lifeforge-ui'
 
 import {
@@ -9,9 +11,12 @@ import BookMeta from '../components/BookMeta'
 import EntryItem from './components/EntryItem'
 
 function ListView({ books }: { books: BooksLibraryEntry[] }) {
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
   const {
-    miscellaneous: { processes },
-    collectionsQuery
+    miscellaneous: { processes }
   } = useBooksLibraryContext()
 
   return (

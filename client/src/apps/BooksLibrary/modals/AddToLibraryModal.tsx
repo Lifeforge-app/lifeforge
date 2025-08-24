@@ -4,8 +4,6 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
-
 function AddToLibraryModal({
   onClose,
   data: { provider, book }
@@ -16,11 +14,13 @@ function AddToLibraryModal({
     book: Record<string, any>
   }
 }) {
-  const {
-    collectionsQuery,
-    languagesQuery,
-    miscellaneous: { addToProcesses }
-  } = useBooksLibraryContext()
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
 
   const fetchedDataQuery = useQuery(
     forgeAPI.booksLibrary.libgen.getLocalLibraryData
@@ -36,8 +36,7 @@ function AddToLibraryModal({
         md5: book.md5
       })
       .mutationOptions({
-        onSuccess: taskId => {
-          addToProcesses(taskId)
+        onSuccess: () => {
           toast.success('Book added to download queue')
         },
         onError: () => {
