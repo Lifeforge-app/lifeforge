@@ -36,5 +36,6 @@
   "downloading": "下载中 ...",
   "generate": "生成",
   "regenerate": "重新生成",
-  "confirm": "确认"
+  "confirm": "确认",
+  "goBack": "返回"
 }

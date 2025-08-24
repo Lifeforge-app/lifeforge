@@ -28,5 +28,11 @@
       "description": "No entries found for your search query. Please try another one."
     }
   },
-  "lastUpdated": "Last Updated"
+  "lastUpdated": "Last Updated",
+  "buttons": {
+    "copyPassword": "Copy Password",
+    "rotatePassword": "Rotate Password",
+    "showPassword": "Show Password",
+    "hidePassword": "Hide Password"
+  }
 }
