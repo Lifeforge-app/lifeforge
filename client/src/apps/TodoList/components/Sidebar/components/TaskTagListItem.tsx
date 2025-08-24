@@ -61,7 +61,7 @@ function TaskTagListItem({
       title: 'Delete Tag',
       description:
         'Are you sure you want to delete this tag? The tasks with this tag will not be deleted.',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

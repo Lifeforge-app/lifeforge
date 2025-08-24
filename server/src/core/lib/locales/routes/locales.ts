@@ -1,4 +1,5 @@
-import { forgeController } from '@functions/routes'
+import { LoggingService } from '@functions/logging/loggingService'
+import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import fs from 'fs'
 import { z } from 'zod/v4'
@@ -112,4 +113,21 @@ const getLocale = forgeController.query
     return data
   })
 
-export default getLocale
+const notifyMissing = forgeController.mutation
+  .input({
+    body: z.object({
+      lang: z.array(z.enum(ALLOWED_LANG)),
+      namespace: z.enum(ALLOWED_NAMESPACE),
+      key: z.string()
+    })
+  })
+  .callback(async ({ body: { lang, namespace, key } }) => {
+    LoggingService.warn(
+      `Missing locale for language ${lang.join(', ')} ==> ${namespace}: ${key}`
+    )
+  })
+
+export default forgeRouter({
+  getLocale,
+  notifyMissing
+})

@@ -60,7 +60,7 @@ function AddEntryModal({
     open(ConfirmationModal, {
       title: 'Overwrite Audio',
       description: 'Are you sure you want to overwrite the current audio?',
-      buttonType: 'confirm',
+      confirmationButton: 'confirm',
       onConfirm: async () => {
         setAudioURL(null)
         setTranscription(null)

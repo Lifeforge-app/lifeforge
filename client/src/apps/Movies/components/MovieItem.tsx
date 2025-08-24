@@ -83,7 +83,7 @@ function MovieItem({
     open(ConfirmationModal, {
       title: 'Delete Movie',
       description: 'Are you sure you want to delete this movie?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

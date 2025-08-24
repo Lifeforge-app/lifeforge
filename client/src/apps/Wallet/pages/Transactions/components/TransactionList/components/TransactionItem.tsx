@@ -45,7 +45,7 @@ function TransactionItem({ transaction }: { transaction: WalletTransaction }) {
     open(ConfirmationModal, {
       title: 'Delete Transaction',
       description: 'Are you sure you want to delete this transaction?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
