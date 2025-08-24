@@ -23,7 +23,7 @@ To bridge this gap, I have created a wrapper around the PocketBase SDK that auto
 {`const action = forgeController.mutate
     .input({...})
     .callback(({ pb }) => {
-        // You can now use the PocketBase instance to interact with your database
+        // You can now use the custom PocketBase wrapper instance to interact with your database
     })`}
   </Code>
 
@@ -36,8 +36,9 @@ To bridge this gap, I have created a wrapper around the PocketBase SDK that auto
 {`const action = forgeController.mutate
     .input({...})
     .callback(({ pb }) => {
-        // You can now use the native PocketBase instance to interact with your database
         const nativeInstance = pb.instance;
+
+        // You can now use the native PocketBase instance to interact with your database
     })`}
   </Code>
   </Note>
