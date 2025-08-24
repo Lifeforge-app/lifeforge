@@ -136,6 +136,7 @@
         "react": "^19.1.0",
         "react-custom-scrollbars": "^4.2.1",
         "react-dom": "^19.1.0",
+        "react-medium-image-zoom": "^5.3.0",
         "react-router": "^7.8.2",
         "react-syntax-highlighter": "^15.6.1",
         "rehype-highlight": "^7.0.2",

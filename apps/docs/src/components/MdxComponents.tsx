@@ -1,4 +1,5 @@
 import { MDXComponents } from 'mdx/types'
+import Zoom from 'react-medium-image-zoom'
 import { Link } from 'react-router'
 
 export const components: MDXComponents = {
@@ -11,12 +12,7 @@ export const components: MDXComponents = {
     )
   },
   h1(properties) {
-    return (
-      <h1
-        {...properties}
-        className="mt-2 mb-6 text-3xl font-bold sm:mb-8 sm:text-4xl"
-      />
-    )
+    return <h1 {...properties} className="mt-2 mb-6 text-4xl font-bold" />
   },
   h2(properties) {
     return (
@@ -37,12 +33,7 @@ export const components: MDXComponents = {
     )
   },
   p(properties) {
-    return (
-      <p
-        {...properties}
-        className="text-bg-600 dark:text-bg-400 mt-4 sm:mt-6 sm:text-lg"
-      />
-    )
+    return <p {...properties} className="text-bg-600 dark:text-bg-400 mt-6" />
   },
   hr(properties) {
     return (
@@ -111,9 +102,11 @@ export const components: MDXComponents = {
   },
   img(properties) {
     return (
-      <div className="flex-center w-full py-4">
-        <img {...properties} alt="" className="w-[80%] rounded-lg" />
-      </div>
+      <Zoom zoomImg={properties.src}>
+        <div className="flex-center w-full pt-2 pb-4">
+          <img {...properties} alt="" className="w-[80%] rounded-lg" />
+        </div>
+      </Zoom>
     )
   },
   blockquote(properties) {

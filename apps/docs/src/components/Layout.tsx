@@ -11,7 +11,7 @@ function Layout() {
 
   return (
     <main
-      className="bg-bg-100 dark:bg-bg-900 text-bg-800 dark:text-bg-100 flex h-dvh w-full flex-col transition-colors"
+      className="bg-bg-100 dark:bg-bg-900 text-bg-800 dark:text-bg-100 flex h-dvh w-full flex-col text-base transition-colors"
       id="app"
     >
       <Header setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
