@@ -30,5 +30,4 @@ layer(base);
 @import '@apps/RailwayMap/index.css';
 @import '@apps/Music/index.css';
 @import '@apps/Blog/index.css';
-@import '@apps/CodeTime/index.css';
 @import '@apps/SinChewDaily/index.css';
