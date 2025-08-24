@@ -14,7 +14,10 @@ const list = forgeController.query
     query: z.object({
       collection: z.string().optional(),
       language: z.string().optional(),
-      favourite: z.boolean().optional(),
+      favourite: z
+        .string()
+        .optional()
+        .transform(val => val === 'true'),
       fileType: z.string().optional(),
       query: z.string().optional()
     })
@@ -63,7 +66,7 @@ const list = forgeController.query
           fileTypeRecord && {
             field: 'extension',
             operator: '=',
-            value: fileTypeRecord.id
+            value: fileTypeRecord.name
           },
           query
             ? {
