@@ -54,7 +54,7 @@ function SidebarTypeItem({
     open(ConfirmationModal, {
       title: 'Delete Type',
       description: 'Are you sure you want to delete this type?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
@@ -82,7 +82,6 @@ function SidebarTypeItem({
       }
       icon={data.icon}
       label={data.name}
-      namespace="apps.scoresLibrary"
       number={data.amount}
       onCancelButtonClick={onCancel}
       onClick={handleSelect}

@@ -87,7 +87,7 @@ function EventDetailsHeader({
     open(ConfirmationModal, {
       title: 'Delete Event',
       description: 'Are you sure you want to delete this event?',
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }

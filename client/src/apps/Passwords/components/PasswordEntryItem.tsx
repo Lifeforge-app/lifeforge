@@ -115,7 +115,7 @@ function PasswordEntryItem({
     open(ConfirmationModal, {
       title: 'Delete Password',
       description: `Are you sure you want to delete the password for ${password.name}? This action cannot be undone.`,
-      buttonType: 'delete',
+      confirmationButton: 'delete',
       onConfirm: async () => {
         await deleteMutation.mutateAsync({})
       }
@@ -202,6 +202,7 @@ function PasswordEntryItem({
               icon="tabler:rotate"
               label="Rotate Password"
               loading={rotateLoading}
+              namespace="apps.passwords"
               onClick={async () => {
                 setRotateLoading(true)
 
@@ -265,6 +266,7 @@ function PasswordEntryItem({
                 decryptedPassword === null ? 'Show Password' : 'Hide Password'
               }
               loading={loading}
+              namespace="apps.passwords"
               onClick={onDecrypt}
             />
             <ContextMenuItem
@@ -272,6 +274,7 @@ function PasswordEntryItem({
               icon="tabler:copy"
               label="Copy Password"
               loading={copyLoading}
+              namespace="apps.passwords"
               onClick={copyPassword}
             />
             <ContextMenuItem

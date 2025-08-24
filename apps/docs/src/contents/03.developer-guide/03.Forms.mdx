@@ -1,5 +1,5 @@
 import Code from "../../components/Code";
-import Notes from "../../components/Notes";
+import Note from "../../components/Note";
 
 ###### Forms
 
@@ -296,9 +296,9 @@ With LifeForge's declarative approach:
   `}
   </Code>
 
-  <Notes>
+  <Note>
   The <code>FormModal</code> component should be the only thing being returned by the modal component.
-  </Notes>
+  </Note>
 
   ### 3. Configuring the Form
 
@@ -361,11 +361,11 @@ With LifeForge's declarative approach:
 
   Using this method is pretty straightforward, it accepts a mapping object where the keys are the field keys and the values are the corresponding input component types. 
   
-  <Notes>
+  <Note>
   Available input component types can be found in the IntelliSense suggestions.
 
   ![types-map-intellisense](/assets/developer-forms/typesMapIntellisense.png)
-  </Notes>
+  </Note>
 
   ### 5. Configuring Fields
 
@@ -389,11 +389,11 @@ With LifeForge's declarative approach:
   }).build()`}
   </Code>
 
-  <Notes>
+  <Note>
   Available field configurations can be found in the IntelliSense suggestions.
 
   ![setup-fields-intellisense](/assets/developer-forms/setupFields.png)
-  </Notes>
+  </Note>
 
   ### 6. Conditional Fields (optional)
 
@@ -418,11 +418,11 @@ With LifeForge's declarative approach:
   {`const { formProps } = defineForm<FormData>().autoFocusField('name').build()`}
   </Code>
 
-  <Notes>
+  <Note>
   The options for this method is determined by your definition in the <code>.typesMap()</code> chain method, and only fields that are auto-focusable will be available. IntelliSense will help you identify these fields.
 
   ![auto-focus-field-intellisense](/assets/developer-forms/autofocus.png)
-  </Notes>
+  </Note>
 
   ### 8. Populate the Form
 
@@ -437,7 +437,7 @@ With LifeForge's declarative approach:
   }).build()`}
   </Code>
 
-  <Notes>
+  <Note>
   The data type of the argument of this method is the same as the form data type generic parameter, with all fields being optional. IntelliSense is available to help you construct the initial data object. Feel free to pass in the entire data record being passed into the parent component if it has the fields that the form requires, or you can make some slight modifications to it to match the form data type.
 
   <Code language="tsx">
@@ -469,7 +469,7 @@ With LifeForge's declarative approach:
   }
   `}
   </Code>
-  </Notes>
+  </Note>
 
   ### 9. Submitting the Form
   
