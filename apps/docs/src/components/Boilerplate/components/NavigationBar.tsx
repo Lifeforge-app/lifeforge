@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useMemo } from 'react'
 import { Link, useLocation } from 'react-router'
 
-import SECTIONS from '../../../routes/Sections'
+import ROUTES from '../../../Router'
 
 function NavigationBar() {
   const location = useLocation()
@@ -20,8 +20,11 @@ function NavigationBar() {
 
   const nextSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(
-      Object.entries(SECTIONS).map(([title, items]) => {
-        return [_.kebabCase(title), items.map(_.kebabCase)]
+      ROUTES.map(({ path, children }) => {
+        return [
+          _.kebabCase(path),
+          children!.map(({ path }) => _.kebabCase(path))
+        ]
       })
     )
 
@@ -56,8 +59,11 @@ function NavigationBar() {
 
   const lastSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(
-      Object.entries(SECTIONS).map(([title, items]) => {
-        return [_.kebabCase(title), items.map(_.kebabCase)]
+      ROUTES.map(({ path, children }) => {
+        return [
+          _.kebabCase(path),
+          children!.map(({ path }) => _.kebabCase(path))
+        ]
       })
     )
 
@@ -99,7 +105,7 @@ function NavigationBar() {
           to={`/${lastSection.group}/${lastSection.section}`}
         >
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-left" />
-          {_.upperFirst(_.camelCase(lastSection.section.replace(/-/g, ' ')))}
+          {_.startCase(lastSection.section.replace(/-/g, ' '))}
         </Link>
       ) : (
         <span />
@@ -109,7 +115,7 @@ function NavigationBar() {
           className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
           to={`/${nextSection.group}/${nextSection.section}`}
         >
-          {_.upperFirst(_.camelCase(nextSection.section.replace(/-/g, ' ')))}
+          {_.startCase(nextSection.section.replace(/-/g, ' '))}
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-right" />
         </Link>
       )}

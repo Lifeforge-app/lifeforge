@@ -3,17 +3,17 @@ import { RouteObject } from 'react-router'
 
 import { components as COMPONENTS } from './components/MdxComponents'
 
-const modules = import.meta.glob(['../contents/**/*.mdx'])
+const modules = import.meta.glob(['./contents/**/*.mdx'])
 
 const sectionItems = Object.groupBy(Object.keys(modules), item =>
-  _.kebabCase(item.split('/')[2])
+  _.kebabCase(item.split('/')[2].replace(/^\d{2}\./, ''))
 )
 
-const ROUTES: any[] = []
+const ROUTES: RouteObject[] = []
 
 const routePromises = Object.entries(sectionItems).map(
   async ([title, items]) => {
-    if (!items) return
+    if (!items) return {}
 
     const importPromises = items.map(async path => {
       const importer = modules[path]
@@ -49,7 +49,5 @@ const routePromises = Object.entries(sectionItems).map(
 await Promise.all(routePromises).then(resolvedRoutes => {
   ROUTES.push(...resolvedRoutes)
 })
-
-console.log(ROUTES)
 
 export default ROUTES
