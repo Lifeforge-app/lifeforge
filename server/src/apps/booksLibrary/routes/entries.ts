@@ -18,6 +18,19 @@ const list = forgeController.query
         .string()
         .optional()
         .transform(val => val === 'true'),
+      readStatus: z
+        .enum(['1', '2', '3'])
+        .optional()
+        .transform(val => {
+          switch (val) {
+            case '1':
+              return 'read'
+            case '2':
+              return 'reading'
+            case '3':
+              return 'unread'
+          }
+        }),
       fileType: z.string().optional(),
       query: z.string().optional()
     })
@@ -30,7 +43,7 @@ const list = forgeController.query
   .callback(
     async ({
       pb,
-      query: { collection, language, favourite, fileType, query }
+      query: { collection, language, favourite, fileType, readStatus, query }
     }) => {
       const fileTypeRecord = fileType
         ? await pb.getOne
@@ -61,6 +74,13 @@ const list = forgeController.query
                 field: 'is_favourite',
                 operator: '=',
                 value: true
+              }
+            : undefined,
+          readStatus
+            ? {
+                field: 'read_status',
+                operator: '=',
+                value: readStatus
               }
             : undefined,
           fileTypeRecord && {
@@ -163,7 +183,9 @@ const toggleReadStatus = forgeController.mutation
           reading: 'read'
         }[book.read_status],
         time_finished:
-          book.read_status === 'reading' ? new Date().toISOString() : ''
+          book.read_status === 'reading' ? new Date().toISOString() : '',
+        time_started:
+          book.read_status === 'unread' ? new Date().toISOString() : ''
       })
       .execute()
   })
