@@ -16,7 +16,7 @@ function JournalView({
   rawText,
   photos
 }: {
-  date: string
+  date: Date | null
   title: string
   mood: { text: string; emoji: string }
   cleanedUpText: string

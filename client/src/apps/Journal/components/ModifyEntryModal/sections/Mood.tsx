@@ -86,9 +86,8 @@ function Mood({
           <>
             <div className="w-full flex-1">
               <TextInput
-                darker
                 icon="tabler:mood-neutral"
-                name="Mood of the day"
+                label="Mood of the day"
                 namespace="modules.journal"
                 placeholder="How do you feel?"
                 setValue={value => {
@@ -97,10 +96,9 @@ function Mood({
                 value={mood.text}
               />
               <TextInput
-                darker
                 className="mt-4"
                 icon="uil:icons"
-                name="Emoji"
+                label="Emoji"
                 namespace="modules.journal"
                 placeholder="Emoji"
                 setValue={value => {
@@ -133,9 +131,9 @@ function Mood({
           Previous
         </Button>
         <Button
-          iconAtEnd
           disabled={mood.text.trim() === ''}
           icon="tabler:arrow-right"
+          iconPosition="end"
           onClick={() => {
             setStep(6)
           }}
