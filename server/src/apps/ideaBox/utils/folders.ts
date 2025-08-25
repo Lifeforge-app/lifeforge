@@ -96,7 +96,7 @@ export async function recursivelySearchFolder(
       ])
       .execute()
   ).map(result => ({
-    ...result.expand!.base_entry,
+    ...result.expand!.base_entry!,
     collectionId: result.collectionId,
     collectionName: result.collectionName,
     content: result.content,
