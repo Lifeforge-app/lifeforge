@@ -22,7 +22,11 @@
     "favourite": "Favourite Books",
     "languages": "Languages",
     "collections": "Collections",
-    "fileTypes": "File Types"
+    "fileTypes": "File Types",
+    "read": "Read",
+    "reading": "Reading",
+    "unread": "Unread",
+    "readStatus": "Read Status"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
@@ -102,6 +106,5 @@
     }
   },
   "checkingKeys": "Checking SMTP API keys...",
-  "kindleSent": "Fired process to send the selected document to the targeted email address.",
-  "readLabel": "Read"
+  "kindleSent": "Fired process to send the selected document to the targeted email address."
 }

@@ -22,7 +22,11 @@
     "favourite": "Buku Kegemaran",
     "languages": "Bahasa",
     "collections": "Koleksi",
-    "fileTypes": "Jenis Fail"
+    "fileTypes": "Jenis Fail",
+    "read": "Dibaca",
+    "reading": "Sedang Dibaca",
+    "unread": "Belum Dibaca",
+    "readStatus": "Status Bacaan"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
@@ -102,6 +106,5 @@
     }
   },
   "checkingKeys": "Memeriksa kunci API SMTP...",
-  "kindleSent": "Proses dijalankan untuk menghantar dokumen yang dipilih ke alamat e-mel yang ditujukan.",
-  "readLabel": "Dibaca"
+  "kindleSent": "Proses dijalankan untuk menghantar dokumen yang dipilih ke alamat e-mel yang ditujukan."
 }
