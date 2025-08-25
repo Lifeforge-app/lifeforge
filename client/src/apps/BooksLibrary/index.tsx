@@ -30,6 +30,7 @@ function BooksLibrary() {
     language,
     favourite,
     fileType,
+    readStatus,
     searchQuery,
     setSearchQuery
   } = useFilter()
@@ -77,6 +78,7 @@ function BooksLibrary() {
               language: language || undefined,
               favourite: favourite.toString() || undefined,
               fileType: fileType || undefined,
+              readStatus: readStatus || undefined,
               query: debouncedSearchQuery.trim() || undefined
             })}
           >
