@@ -1,4 +1,4 @@
-import { Button, HeaderFilter } from 'lifeforge-ui'
+import { Button, HeaderFilter, useModuleSidebarState } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import { useFilteredTransactions } from '@apps/Wallet/hooks/useFilteredTransactions'
@@ -18,9 +18,10 @@ function InnerHeader() {
     setSelectedType,
     setSelectedCategory,
     setSelectedAsset,
-    setSelectedLedger,
-    setSidebarOpen
+    setSelectedLedger
   } = useWalletStore()
+
+  const { setIsSidebarOpen } = useModuleSidebarState()
 
   const { t } = useTranslation(['common.buttons', 'apps.wallet'])
 
@@ -109,7 +110,7 @@ function InnerHeader() {
         icon="tabler:menu"
         variant="plain"
         onClick={() => {
-          setSidebarOpen(true)
+          setIsSidebarOpen(true)
         }}
       />
     </div>

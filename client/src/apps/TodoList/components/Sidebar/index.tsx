@@ -5,23 +5,17 @@ import TaskPriorityList from './components/TaskPriorityList'
 import TaskStatusList from './components/TaskStatusList'
 import TaskTagList from './components/TaskTagList'
 
-function Sidebar({
-  isOpen,
-  setOpen
-}: {
-  isOpen: boolean
-  setOpen: (value: boolean) => void
-}) {
+function Sidebar() {
   return (
-    <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
+    <SidebarWrapper>
       <SidebarTitle label="tasks" namespace="apps.todoList" />
-      <TaskStatusList setSidebarOpen={setOpen} />
+      <TaskStatusList />
       <SidebarDivider />
-      <TaskPriorityList setSidebarOpen={setOpen} />
+      <TaskPriorityList />
       <SidebarDivider />
-      <TaskListList setSidebarOpen={setOpen} />
+      <TaskListList />
       <SidebarDivider />
-      <TaskTagList setSidebarOpen={setOpen} />
+      <TaskTagList />
     </SidebarWrapper>
   )
 }

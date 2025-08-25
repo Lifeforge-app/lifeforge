@@ -5,13 +5,13 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
+import useFilter from '@apps/BooksLibrary/hooks/useFilter'
 import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
 import {
   type BooksLibraryCollection,
   type BooksLibraryFileType,
-  type BooksLibraryLanguage,
-  useBooksLibraryContext
+  type BooksLibraryLanguage
 } from '../../../providers/BooksLibraryProvider'
 
 function _SidebarItem({
@@ -29,9 +29,7 @@ function _SidebarItem({
 
   const open = useModalStore(state => state.open)
 
-  const {
-    miscellaneous: { filter, setFilter, setSidebarOpen }
-  } = useBooksLibraryContext()
+  const { updateFilter, collection, fileType, language } = useFilter()
 
   const singleStuff = (
     {
@@ -84,7 +82,13 @@ function _SidebarItem({
   return (
     <>
       <SidebarItem
-        active={filter[singleStuff] === item.id}
+        active={
+          {
+            collection,
+            fileType,
+            language
+          }[singleStuff] === item.id
+        }
         contextMenuItems={
           hasContextMenu ? (
             <>
@@ -106,11 +110,10 @@ function _SidebarItem({
         label={item.name}
         number={item.amount}
         onCancelButtonClick={() => {
-          setFilter(singleStuff, null)
+          updateFilter(singleStuff, null)
         }}
         onClick={() => {
-          setSidebarOpen(false)
-          setFilter(singleStuff, item.id)
+          updateFilter(singleStuff, item.id)
         }}
       />
     </>

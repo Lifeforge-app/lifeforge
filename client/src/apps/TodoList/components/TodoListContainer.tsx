@@ -21,8 +21,6 @@ function TodoListContainer() {
   const { entriesQuery, setModifyTaskWindowOpenType, setSelectedTask } =
     useTodoListContext()
 
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-
   const [searchQuery, setSearchQuery] = useState('')
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
@@ -86,9 +84,9 @@ function TodoListContainer() {
   return (
     <>
       <div className="flex size-full min-h-0 flex-1">
-        <Sidebar isOpen={sidebarOpen} setOpen={setSidebarOpen} />
+        <Sidebar />
         <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
-          <Header setSidebarOpen={setSidebarOpen} />
+          <Header />
           <div className="w-full px-4">
             <SearchInput
               className="mt-4"
