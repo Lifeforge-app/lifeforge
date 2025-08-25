@@ -362,8 +362,8 @@ export const SCHEMAS = {
       file: z.string(),
       thumbnail: z.string(),
       is_favourite: z.boolean(),
-      is_read: z.boolean(),
       time_finished: z.string(),
+      read_status: z.enum(["read", "unread", "reading"]),
       created: z.string(),
       updated: z.string(),
     }),
@@ -382,6 +382,10 @@ export const SCHEMAS = {
     collections_aggregated: z.object({
       name: z.string(),
       icon: z.string(),
+      amount: z.number(),
+    }),
+    read_status_aggregated: z.object({
+      read_status: z.enum(["read", "unread", "reading"]),
       amount: z.number(),
     }),
   },
