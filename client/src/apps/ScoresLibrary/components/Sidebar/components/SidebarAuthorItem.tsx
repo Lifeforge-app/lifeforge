@@ -1,25 +1,20 @@
 import { SidebarItem } from 'lifeforge-ui'
-import { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import useFilter from '@apps/ScoresLibrary/hooks/useFilter'
 
 function SidebarAuthorItem({
   author,
   count,
-  isActive,
-  onCancel,
-  onSelect
+  isActive
 }: {
   author: string | null
   count: number
   isActive: boolean
-  onCancel: () => void
-  onSelect: (author: string | null) => void
 }) {
   const { t } = useTranslation('apps.scoresLibrary')
 
-  const handleClick = useCallback(() => {
-    onSelect(author || '[na]')
-  }, [])
+  const { updateFilter } = useFilter()
 
   return (
     <SidebarItem
@@ -28,16 +23,10 @@ function SidebarAuthorItem({
       icon="tabler:user"
       label={author || t('unknownAuthor')}
       number={count}
-      onCancelButtonClick={onCancel}
-      onClick={handleClick}
+      onCancelButtonClick={() => updateFilter('author', null)}
+      onClick={() => updateFilter('author', author || '[na]')}
     />
   )
 }
 
-export default memo(SidebarAuthorItem, (prevProps, nextProps) => {
-  return (
-    prevProps.author === nextProps.author &&
-    prevProps.count === nextProps.count &&
-    prevProps.isActive === nextProps.isActive
-  )
-})
+export default SidebarAuthorItem

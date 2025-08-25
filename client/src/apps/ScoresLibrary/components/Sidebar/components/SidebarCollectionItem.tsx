@@ -16,21 +16,15 @@ import ModifyCollectionModal from '../../modals/ModifyCollectionModal'
 function SidebarCollectionItem({
   data,
   isActive,
-  onCancel,
   onSelect
 }: {
   data: ScoreLibraryCollection
   isActive: boolean
-  onCancel: () => void
-  onSelect: (collection: string) => void
+  onSelect: (collection: string | null) => void
 }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
-
-  const handleSelect = useCallback(() => {
-    onSelect(data.id)
-  }, [])
 
   const deleteMutation = useMutation(
     forgeAPI.scoresLibrary.collections.remove
@@ -84,8 +78,8 @@ function SidebarCollectionItem({
       icon="tabler:folder"
       label={data.name}
       number={data.amount}
-      onCancelButtonClick={onCancel}
-      onClick={handleSelect}
+      onCancelButtonClick={() => onSelect(null)}
+      onClick={() => onSelect(data.id)}
     />
   )
 }
