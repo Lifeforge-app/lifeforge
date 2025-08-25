@@ -21,7 +21,7 @@ function ModifyAchievementModal({
   data: {
     modifyType: 'create' | 'update'
     initialData?: Achievement
-    currentDifficulty: Achievement['difficulty']
+    currentDifficulty: string
   }
   onClose: () => void
 }) {
@@ -88,7 +88,9 @@ function ModifyAchievementModal({
     .initialData({
       title: initialData?.title || '',
       thoughts: initialData?.thoughts || '',
-      difficulty: initialData?.difficulty || currentDifficulty || 'easy'
+      difficulty: (initialData?.difficulty ||
+        currentDifficulty ||
+        'easy') as Achievement['difficulty']
     })
     .onSubmit(async formData => {
       await mutation.mutateAsync(formData)
