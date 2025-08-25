@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
 
 import useFilter from '@apps/BooksLibrary/hooks/useFilter'
@@ -7,6 +9,22 @@ import SidebarSection from './components/SidebarSection'
 function Sidebar() {
   const { updateFilter, collection, favourite, fileType, language } =
     useFilter()
+
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
+
+  const fileTypesQuery = useQuery(
+    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
+  )
+
+  const readStatusQuery = useQuery(
+    forgeAPI.booksLibrary.readStatus.list.queryOptions()
+  )
 
   return (
     <SidebarWrapper>
@@ -24,6 +42,7 @@ function Sidebar() {
           updateFilter('collection', null)
           updateFilter('fileType', null)
           updateFilter('language', null)
+          updateFilter('favourite', false)
         }}
       />
       <SidebarItem
@@ -39,11 +58,21 @@ function Sidebar() {
         }}
       />
       <SidebarDivider />
-      <SidebarSection stuff="collections" />
+      <SidebarSection
+        useNamespace
+        dataQuery={readStatusQuery}
+        fallbackIcon="tabler:book"
+        hasActionButton={false}
+        hasContextMenu={false}
+        stuff="readStatus"
+      />
       <SidebarDivider />
-      <SidebarSection stuff="languages" />
+      <SidebarSection dataQuery={collectionsQuery} stuff="collections" />
+      <SidebarDivider />
+      <SidebarSection dataQuery={languagesQuery} stuff="languages" />
       <SidebarDivider />
       <SidebarSection
+        dataQuery={fileTypesQuery}
         fallbackIcon="tabler:file-text"
         hasActionButton={false}
         hasContextMenu={false}

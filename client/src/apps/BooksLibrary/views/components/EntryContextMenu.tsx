@@ -49,6 +49,9 @@ export default function EntryContextMenu({
           queryClient.invalidateQueries({
             queryKey: ['booksLibrary', 'entries']
           })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'readStatus']
+          })
         },
         onSettled: () => {
           setReadStatusChangeLoading(false)
@@ -103,8 +106,20 @@ export default function EntryContextMenu({
   return (
     <>
       <ContextMenuItem
-        icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
-        label={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
+        icon={
+          {
+            unread: 'tabler:progress-bolt',
+            read: 'tabler:progress',
+            reading: 'tabler:progress-check'
+          }[item.read_status]
+        }
+        label={`Mark as ${
+          {
+            unread: 'Reading',
+            read: 'Unread',
+            reading: 'Read'
+          }[item.read_status]
+        }`}
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
         onClick={() => {

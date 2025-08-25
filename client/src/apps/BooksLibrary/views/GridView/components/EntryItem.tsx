@@ -1,24 +1,17 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
 import { ContextMenu } from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
-import tinycolor from 'tinycolor2'
 
 import { type BooksLibraryEntry } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
+import ReadStatusChip from '../../components/ReadStatusChip'
 
 function EntryItem({ item }: { item: BooksLibraryEntry }) {
-  const { derivedThemeColor } = usePersonalization()
-
   const collectionsQuery = useQuery(
     forgeAPI.booksLibrary.collections.list.queryOptions()
   )
-
-  const { t } = useTranslation('apps.booksLibrary')
 
   return (
     <li
@@ -62,18 +55,7 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
         />
       </div>
       <div className="mt-4">
-        {item.is_read && (
-          <span
-            className={clsx(
-              'bg-custom-500 mb-3 rounded-full px-3 py-1 text-xs font-semibold tracking-wide',
-              tinycolor(derivedThemeColor).isDark()
-                ? 'text-bg-100'
-                : 'text-bg-800'
-            )}
-          >
-            {t('readLabel')}
-          </span>
-        )}
+        <ReadStatusChip item={item} />
         {collectionsQuery.data &&
           (() => {
             const collection = collectionsQuery.data.find(
