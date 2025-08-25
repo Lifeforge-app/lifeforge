@@ -47,10 +47,10 @@ function RawText({
         />
       </div>
       <Button
-        iconAtEnd
         className="mt-6"
         disabled={rawText.trim() === ''}
         icon="tabler:arrow-right"
+        iconPosition="end"
         onClick={() => {
           if (rawText.trim() !== '') setStep(2)
         }}

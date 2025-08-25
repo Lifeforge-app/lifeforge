@@ -44,7 +44,7 @@ function JournalViewModal({
         {entry => (
           <JournalView
             cleanedUpText={entry.content}
-            date={entry.date}
+            date={new Date(entry.date)}
             mood={entry.mood}
             photos={entry.photos.map(
               photo =>

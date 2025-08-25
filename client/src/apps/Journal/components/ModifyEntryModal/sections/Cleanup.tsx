@@ -119,9 +119,9 @@ function Cleanup({
           Previous
         </Button>
         <Button
-          iconAtEnd
           disabled={cleanedUpText.trim() === ''}
           icon="tabler:arrow-right"
+          iconPosition="end"
           onClick={() => {
             setStep(3)
           }}

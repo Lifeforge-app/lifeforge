@@ -1,11 +1,12 @@
 import { encrypt } from '@utils/encryption'
+import type forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { DateInput, ModalHeader, ModalWrapper, TextInput } from 'lifeforge-ui'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { InferOutput } from 'shared'
 
-import type { JournalEntry } from '../JournalList'
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
 import Photos from './sections/Photos'
@@ -20,7 +21,7 @@ function ModifyEntryModal({
   onClose: () => void
   data: {
     openType: 'create' | 'update'
-    initialData?: JournalEntry
+    initialData?: InferOutput<typeof forgeAPI.journal.entries.getById>
     masterPassword: string
   }
 }) {
@@ -28,7 +29,7 @@ function ModifyEntryModal({
 
   const [step, setStep] = useState<number>(1)
 
-  const [date, setDate] = useState<Date>(new Date())
+  const [date, setDate] = useState<Date | null>(new Date())
 
   const [title, setTitle] = useState<string>('')
 
@@ -93,29 +94,17 @@ function ModifyEntryModal({
   useEffect(() => {
     setStep(1)
 
-    if (initialData !== null && openType === 'update') {
+    if (initialData && openType === 'update') {
       setTimeout(() => {
         setTitle(initialData.title)
         setRawText(initialData.raw)
         setCleanedUpText(initialData.content)
         setSummarizedText(initialData.summary)
-        setDate(initialData.date)
+        setDate(new Date(initialData.date))
         setPhotos(initialData.photos)
         setMood(initialData.mood)
         setOriginalPhotosLength(initialData.photos.length)
       }, 500)
-    } else {
-      setTitle('')
-      setRawText('')
-      setCleanedUpText('')
-      setSummarizedText('')
-      setDate(new Date().toISOString())
-      setPhotos([])
-      setMood({
-        text: '',
-        emoji: ''
-      })
-      setOriginalPhotosLength(0)
     }
   }, [initialData, openType])
 
@@ -135,28 +124,25 @@ function ModifyEntryModal({
         onClose={onClose}
       />
       <DateInput
-        hasMargin={false}
         icon="tabler:calendar"
-        modalRef={ref}
-        name="Date"
+        label="Date"
         namespace="modules.journal"
-        setDate={setDate}
+        setValue={setDate}
         value={date}
       />
       <TextInput
-        actionButtonIcon={
-          titleGenerationLoading ? 'svg-spinners:180-ring' : 'mage:stars-c'
-        }
+        actionButtonProps={{
+          icon: 'mage:stars-c',
+          loading: titleGenerationLoading,
+          onClick: generateTitle
+        }}
         className="mt-4"
         icon="tabler:file-text"
-        name="Journal Title"
+        label="Journal Title"
         namespace="modules.journal"
         placeholder="A Beautiful Day"
         setValue={setTitle}
         value={title}
-        onActionButtonClick={() => {
-          generateTitle().catch(console.error)
-        }}
       />
       <ul className="steps mt-6 shrink-0">
         {['Raw Text', 'Cleanup', 'Summarize', 'Photos', 'Mood', 'Review'].map(
