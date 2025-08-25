@@ -137,6 +137,37 @@ const toggleFavouriteStatus = forgeController.mutation
       .execute()
   })
 
+const toggleReadStatus = forgeController.mutation
+  .description('Toggle the read status of an entry in the books library')
+  .input({
+    query: z.object({
+      id: z.string()
+    })
+  })
+  .existenceCheck('query', {
+    id: 'books_library__entries'
+  })
+  .callback(async ({ pb, query: { id } }) => {
+    const book = await pb.getOne
+      .collection('books_library__entries')
+      .id(id)
+      .execute()
+
+    return await pb.update
+      .collection('books_library__entries')
+      .id(id)
+      .data({
+        read_status: {
+          unread: 'reading',
+          read: 'unread',
+          reading: 'read'
+        }[book.read_status],
+        time_finished:
+          book.read_status === 'reading' ? new Date().toISOString() : ''
+      })
+      .execute()
+  })
+
 const sendToKindle = forgeController.mutation
   .description('Send an entry to a Kindle email address')
   .input({
