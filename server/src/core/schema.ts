@@ -385,7 +385,9 @@ export const SCHEMAS = {
       amount: z.number(),
     }),
     read_status_aggregated: z.object({
-      read_status: z.enum(["read", "unread", "reading"]),
+      name: z.any(),
+      icon: z.any(),
+      color: z.any(),
       amount: z.number(),
     }),
   },
