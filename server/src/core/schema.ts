@@ -362,6 +362,7 @@ export const SCHEMAS = {
       file: z.string(),
       thumbnail: z.string(),
       is_favourite: z.boolean(),
+      time_started: z.string(),
       time_finished: z.string(),
       read_status: z.enum(["read", "unread", "reading"]),
       created: z.string(),
