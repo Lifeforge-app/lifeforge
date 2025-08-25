@@ -9,9 +9,9 @@ import {
   WithQueryData
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useState } from 'react'
+import { parseAsStringEnum, useQueryState } from 'nuqs'
 import { useTranslation } from 'react-i18next'
-import type { InferInput, InferOutput } from 'shared'
+import type { InferOutput } from 'shared'
 import colors from 'tailwindcss/colors'
 
 import EntryItem from './components/EntryItem'
@@ -33,12 +33,10 @@ function Achievements() {
 
   const open = useModalStore(state => state.open)
 
-  const [selectedDifficulty, setSelectedDifficulty] =
-    useState<
-      InferInput<
-        typeof forgeAPI.achievements.entries.list
-      >['query']['difficulty']
-    >('impossible')
+  const [difficulty, setDifficulty] = useQueryState(
+    'difficulty',
+    parseAsStringEnum(Object.keys(DIFFICULTIES)).withDefault('easy')
+  )
 
   return (
     <ModuleWrapper>
@@ -53,7 +51,7 @@ function Achievements() {
             onClick={() => {
               open(ModifyAchievementModal, {
                 modifyType: 'create',
-                currentDifficulty: selectedDifficulty
+                currentDifficulty: difficulty
               })
             }}
           >
@@ -65,7 +63,7 @@ function Achievements() {
       />
       <div className="flex flex-1 flex-col gap-4">
         <Tabs
-          active={selectedDifficulty}
+          active={difficulty}
           enabled={Object.keys(DIFFICULTIES).map(
             difficulty => difficulty as keyof typeof DIFFICULTIES
           )}
@@ -75,12 +73,12 @@ function Achievements() {
             color: DIFFICULTIES[difficulty as keyof typeof DIFFICULTIES]
           }))}
           onNavClick={id => {
-            setSelectedDifficulty(id as Achievement['difficulty'])
+            setDifficulty(id as Achievement['difficulty'])
           }}
         />
         <WithQueryData
           controller={forgeAPI.achievements.entries.list.input({
-            difficulty: selectedDifficulty
+            difficulty: difficulty as Achievement['difficulty']
           })}
         >
           {entries =>
@@ -96,7 +94,7 @@ function Achievements() {
                   onClick={() => {
                     open(ModifyAchievementModal, {
                       modifyType: 'create',
-                      currentDifficulty: selectedDifficulty
+                      currentDifficulty: difficulty
                     })
                   }}
                 />
@@ -110,7 +108,7 @@ function Achievements() {
                   onClick: () => {
                     open(ModifyAchievementModal, {
                       modifyType: 'create',
-                      currentDifficulty: selectedDifficulty
+                      currentDifficulty: difficulty
                     })
                   }
                 }}
