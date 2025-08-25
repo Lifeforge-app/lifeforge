@@ -56,11 +56,11 @@ const list = forgeController.query
                 value: language
               }
             : undefined,
-          favourite !== undefined
+          favourite === true
             ? {
                 field: 'is_favourite',
                 operator: '=',
-                value: favourite
+                value: true
               }
             : undefined,
           fileTypeRecord && {
@@ -133,32 +133,6 @@ const toggleFavouriteStatus = forgeController.mutation
       .id(id)
       .data({
         is_favourite: !book.is_favourite
-      })
-      .execute()
-  })
-
-const toggleReadStatus = forgeController.mutation
-  .description('Toggle the read status of an entry in the books library')
-  .input({
-    query: z.object({
-      id: z.string()
-    })
-  })
-  .existenceCheck('query', {
-    id: 'books_library__entries'
-  })
-  .callback(async ({ pb, query: { id } }) => {
-    const book = await pb.getOne
-      .collection('books_library__entries')
-      .id(id)
-      .execute()
-
-    return await pb.update
-      .collection('books_library__entries')
-      .id(id)
-      .data({
-        is_read: !book.is_read,
-        time_finished: !book.is_read ? new Date().toISOString() : ''
       })
       .execute()
   })
