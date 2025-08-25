@@ -1,39 +1,41 @@
 import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
 
-import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
+import useFilter from '@apps/BooksLibrary/hooks/useFilter'
+
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar() {
-  const {
-    miscellaneous: { sidebarOpen, setSidebarOpen, filter, setFilter }
-  } = useBooksLibraryContext()
+  const { updateFilter, collection, favourite, fileType, language } =
+    useFilter()
 
   return (
-    <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
+    <SidebarWrapper>
       <SidebarItem
-        active={Object.values(filter).every(value => !value)}
+        active={Object.values([
+          collection,
+          favourite,
+          fileType,
+          language
+        ]).every(value => !value)}
         icon="tabler:list"
         label="All books"
         namespace="apps.booksLibrary"
         onClick={() => {
-          setFilter('collection', null)
-          setFilter('fileType', null)
-          setFilter('language', null)
-          setSidebarOpen(false)
+          updateFilter('collection', null)
+          updateFilter('fileType', null)
+          updateFilter('language', null)
         }}
       />
       <SidebarItem
-        active={filter.favourite}
+        active={favourite}
         icon="tabler:heart"
         label="Favourite"
         namespace="apps.booksLibrary"
         onCancelButtonClick={() => {
-          setFilter('favourite', false)
-          setSidebarOpen(false)
+          updateFilter('favourite', false)
         }}
         onClick={() => {
-          setFilter('favourite', true)
-          setSidebarOpen(false)
+          updateFilter('favourite', true)
         }}
       />
       <SidebarDivider />

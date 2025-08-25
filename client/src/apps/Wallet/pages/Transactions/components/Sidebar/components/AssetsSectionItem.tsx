@@ -14,20 +14,17 @@ function AssetsSectionItem({
   id: string | null
   amount: number | undefined
 }) {
-  const { selectedAsset, setSelectedAsset, setSidebarOpen } = useWalletStore()
+  const { selectedAsset, setSelectedAsset } = useWalletStore()
 
   const handleCancelButtonClick = useCallback(() => {
     setSelectedAsset(null)
-    setSidebarOpen(false)
   }, [])
 
   const handleClick = useCallback(() => {
     if (id === null) {
       setSelectedAsset(null)
-      setSidebarOpen(false)
     } else {
       setSelectedAsset(id)
-      setSidebarOpen(false)
     }
   }, [])
 

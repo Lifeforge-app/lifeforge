@@ -12,7 +12,7 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { parseAsString, useQueryState } from 'nuqs'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
@@ -22,8 +22,6 @@ import { useCalendarStore } from './stores/useCalendarStore'
 
 function CalendarModule() {
   const open = useModalStore(state => state.open)
-
-  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const { start, end } = useCalendarStore()
 
@@ -66,8 +64,6 @@ function CalendarModule() {
             selectedCategory={selectedCategory}
             setSelectedCalendar={setSelectedCalendar}
             setSelectedCategory={setSelectedCategory}
-            setSidebarOpen={setSidebarOpen}
-            sidebarOpen={sidebarOpen}
           />
           <ContentWrapperWithSidebar>
             <Scrollbar>
@@ -76,7 +72,6 @@ function CalendarModule() {
                   events={rawEventsQuery.data ?? []}
                   selectedCalendar={selectedCalendar}
                   selectedCategory={selectedCategory}
-                  setSidebarOpen={setSidebarOpen}
                 />
               </div>
             </Scrollbar>

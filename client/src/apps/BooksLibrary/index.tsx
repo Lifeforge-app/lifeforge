@@ -17,8 +17,8 @@ import { useCallback, useState } from 'react'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import useFilter from './hooks/useFilter'
 import LibgenModal from './modals/LibgenModal'
-import { useBooksLibraryContext } from './providers/BooksLibraryProvider'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 
@@ -26,8 +26,13 @@ function BooksLibrary() {
   const open = useModalStore(state => state.open)
 
   const {
-    miscellaneous: { filter, searchQuery, setSearchQuery }
-  } = useBooksLibraryContext()
+    collection,
+    language,
+    favourite,
+    fileType,
+    searchQuery,
+    setSearchQuery
+  } = useFilter()
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
@@ -68,10 +73,10 @@ function BooksLibrary() {
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
           <WithQueryData
             controller={forgeAPI.booksLibrary.entries.list.input({
-              collection: filter.collection || undefined,
-              language: filter.language || undefined,
-              favourite: filter.favourite || undefined,
-              fileType: filter.fileType || undefined,
+              collection: collection || undefined,
+              language: language || undefined,
+              favourite: favourite.toString() || undefined,
+              fileType: fileType || undefined,
               query: debouncedSearchQuery.trim() || undefined
             })}
           >
@@ -79,7 +84,7 @@ function BooksLibrary() {
               if (entries.length === 0) {
                 if (
                   debouncedSearchQuery.trim() ||
-                  Object.values(filter).some(v => v)
+                  [collection, language, favourite, fileType].some(v => v)
                 ) {
                   return (
                     <EmptyStateScreen

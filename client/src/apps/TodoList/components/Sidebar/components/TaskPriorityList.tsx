@@ -8,11 +8,7 @@ import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskPriorityListItem from './TaskPriorityListItem'
 
-function TaskPriorityList({
-  setSidebarOpen
-}: {
-  setSidebarOpen: (value: boolean) => void
-}) {
+function TaskPriorityList() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.todoList')
@@ -38,11 +34,7 @@ function TaskPriorityList({
           priorities.length > 0 ? (
             <>
               {priorities.map(item => (
-                <TaskPriorityListItem
-                  key={item.id}
-                  item={item}
-                  setSidebarOpen={setSidebarOpen}
-                />
+                <TaskPriorityListItem key={item.id} item={item} />
               ))}
             </>
           ) : (

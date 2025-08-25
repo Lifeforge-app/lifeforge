@@ -16,14 +16,13 @@ export default function LedgerSectionItem({
   id: string | null
   amount: number | undefined
 }) {
-  const { selectedLedger, setSelectedLedger, setSidebarOpen } = useWalletStore()
+  const { selectedLedger, setSelectedLedger } = useWalletStore()
 
   const active =
     selectedLedger === id || (selectedLedger === null && id === null)
 
   const handleCancelButtonClick = useCallback(() => {
     setSelectedLedger(null)
-    setSidebarOpen(false)
   }, [])
 
   const handleClick = useCallback(() => {
@@ -33,7 +32,6 @@ export default function LedgerSectionItem({
       return
     }
     setSelectedLedger(id)
-    setSidebarOpen(false)
   }, [])
 
   return (

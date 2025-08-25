@@ -20,12 +20,8 @@ function CategoriesSectionItem({
   type: 'income' | 'expenses' | null
   amount: number | undefined
 }) {
-  const {
-    selectedCategory,
-    setSelectedCategory,
-    setSelectedType,
-    setSidebarOpen
-  } = useWalletStore()
+  const { selectedCategory, setSelectedCategory, setSelectedType } =
+    useWalletStore()
 
   const memoizedIcon = useMemo(
     () => <CategoriesSectionItemIcon icon={icon} id={id} type={type} />,
@@ -34,17 +30,14 @@ function CategoriesSectionItem({
 
   const handleCancelButtonClick = useCallback(() => {
     setSelectedCategory(null)
-    setSidebarOpen(false)
   }, [])
 
   const handleClick = useCallback(() => {
     if (id === null) {
       setSelectedCategory(null)
-      setSidebarOpen(false)
     } else {
       setSelectedCategory(id)
       setSelectedType(type)
-      setSidebarOpen(false)
     }
   }, [])
 
