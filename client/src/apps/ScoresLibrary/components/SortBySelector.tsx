@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import { Listbox, ListboxOption } from 'lifeforge-ui'
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { ScoreLibrarySortType } from '..'
+import useFilter from '../hooks/useFilter'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
@@ -12,18 +11,10 @@ const SORT_TYPE = [
   ['tabler:abc', 'name']
 ]
 
-function SortBySelector({
-  sortType,
-  setSortType
-}: {
-  sortType: ScoreLibrarySortType
-  setSortType: (sortType: ScoreLibrarySortType) => void
-}) {
+function SortBySelector() {
   const { t } = useTranslation('apps.scoresLibrary')
 
-  const handleChange = useCallback((value: ScoreLibrarySortType) => {
-    setSortType(value)
-  }, [])
+  const { sort, updateFilter } = useFilter()
 
   return (
     <Listbox
@@ -32,23 +23,22 @@ function SortBySelector({
           <Icon
             className="size-6 shrink-0"
             icon={
-              SORT_TYPE.find(([, value]) => value === sortType)?.[0] ??
+              SORT_TYPE.find(([, value]) => value === sort)?.[0] ??
               'tabler:clock'
             }
           />
           <span className="w-full truncate font-medium whitespace-nowrap">
             {t(
               `sortTypes.${
-                SORT_TYPE.find(([, value]) => value === sortType)?.[1] ??
-                'newest'
+                SORT_TYPE.find(([, value]) => value === sort)?.[1] ?? 'newest'
               }`
             )}
           </span>
         </div>
       }
       className="bg-bg-50 w-min min-w-56"
-      setValue={handleChange}
-      value={sortType}
+      setValue={value => updateFilter('sort', value)}
+      value={sort}
     >
       {SORT_TYPE.map(([icon, value]) => (
         <ListboxOption
