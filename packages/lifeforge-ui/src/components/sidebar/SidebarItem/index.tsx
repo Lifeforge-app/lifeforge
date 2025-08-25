@@ -1,3 +1,4 @@
+import { useModuleSidebarState } from '@components/layouts'
 import _ from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -104,6 +105,8 @@ function SidebarItem({
 }: SidebarItemProps) {
   const navigate = useNavigate()
 
+  const { setIsSidebarOpen } = useModuleSidebarState()
+
   const [subsectionExpanded, setSubsectionExpanded] = useState(
     isMainSidebarItem
       ? false
@@ -121,6 +124,7 @@ function SidebarItem({
 
   const handleNavigation = useCallback(() => {
     if (onClick !== undefined) {
+      setIsSidebarOpen(false)
       onClick()
 
       return
