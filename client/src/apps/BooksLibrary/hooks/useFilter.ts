@@ -1,6 +1,7 @@
 import {
   parseAsBoolean,
   parseAsString,
+  parseAsStringEnum,
   useQueryState,
   useQueryStates
 } from 'nuqs'
@@ -15,10 +16,14 @@ export default function useFilter() {
     collection: parseAsString.withDefault(''),
     fileType: parseAsString.withDefault(''),
     language: parseAsString.withDefault(''),
-    favourite: parseAsBoolean.withDefault(false)
+    favourite: parseAsBoolean.withDefault(false),
+    readStatus: parseAsStringEnum(['', '1', '2', '3']).withDefault('')
   })
 
-  const updateFilter = (key: keyof typeof filter, value: any) => {
+  const updateFilter = (
+    key: keyof typeof filter,
+    value: string | boolean | null
+  ) => {
     setFilter(prev => ({
       ...prev,
       [key]: value

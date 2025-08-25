@@ -18,24 +18,28 @@ function _SidebarItem({
   item,
   stuff,
   fallbackIcon,
-  hasContextMenu = true
+  hasContextMenu = true,
+  useNamespace = false
 }: {
   item: BooksLibraryCollection | BooksLibraryLanguage | BooksLibraryFileType
-  stuff: 'collections' | 'languages' | 'fileTypes'
+  stuff: 'collections' | 'languages' | 'fileTypes' | 'readStatus'
   fallbackIcon?: string
   hasContextMenu?: boolean
+  useNamespace?: boolean
 }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
 
-  const { updateFilter, collection, fileType, language } = useFilter()
+  const { updateFilter, collection, fileType, language, readStatus } =
+    useFilter()
 
   const singleStuff = (
     {
       collections: 'collection',
       languages: 'language',
-      fileTypes: 'fileType'
+      fileTypes: 'fileType',
+      readStatus: 'readStatus'
     } as const
   )[stuff]
 
@@ -86,7 +90,8 @@ function _SidebarItem({
           {
             collection,
             fileType,
-            language
+            language,
+            readStatus
           }[singleStuff] === item.id
         }
         contextMenuItems={
@@ -108,7 +113,9 @@ function _SidebarItem({
         }
         icon={'icon' in item ? item.icon : fallbackIcon}
         label={item.name}
+        namespace={useNamespace ? 'apps.booksLibrary' : undefined}
         number={item.amount}
+        sideStripColor={'color' in item ? (item.color as string) : undefined}
         onCancelButtonClick={() => {
           updateFilter(singleStuff, null)
         }}
