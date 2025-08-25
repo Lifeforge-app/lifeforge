@@ -27,6 +27,7 @@ function Photos({
 }) {
   async function uploadPhotos(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files
+
     if (files === null) {
       return
     }
@@ -38,12 +39,14 @@ function Photos({
       .map(async file => {
         return await new Promise(resolve => {
           const reader = new FileReader()
+
           reader.onload = () => {
             const photo = {
               file,
               preview: reader.result as string,
               caption: ''
             }
+
             resolve(photo)
           }
           reader.readAsDataURL(file)
@@ -62,10 +65,12 @@ function Photos({
   function onUploadClick() {
     if (photos.length >= 50) {
       toast.error('You can only upload up to 50 photos')
+
       return
     }
 
     const input = document.createElement('input')
+
     input.type = 'file'
     input.multiple = true
     input.accept = 'image/*'
@@ -153,8 +158,8 @@ function Photos({
           Previous
         </Button>
         <Button
-          iconAtEnd
           icon="tabler:arrow-right"
+          iconPosition="end"
           onClick={() => {
             setStep(5)
           }}

@@ -1,10 +1,10 @@
+import { encrypt } from '@utils/encryption'
 import { Button } from 'lifeforge-ui'
 import moment from 'moment'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import JournalView from '../../JournalView'
-import { encrypt } from '@utils/encryption'
 
 function Review({
   id,
@@ -21,7 +21,7 @@ function Review({
   openType
 }: {
   id: string
-  date: string
+  date: Date | null
   title: string
   setStep: React.Dispatch<React.SetStateAction<number>>
   rawText: string
@@ -123,9 +123,9 @@ function Review({
           Previous
         </Button>
         <Button
-          iconAtEnd
           disabled={summarizedText.trim() === ''}
           icon="tabler:arrow-right"
+          iconPosition="end"
           loading={loading}
           onClick={() => {
             onSubmit().catch(console.error)

@@ -119,9 +119,9 @@ function Summarize({
           Previous
         </Button>
         <Button
-          iconAtEnd
           disabled={summarizedText?.trim() === ''}
           icon="tabler:arrow-right"
+          iconPosition="end"
           onClick={() => {
             setStep(4)
           }}
