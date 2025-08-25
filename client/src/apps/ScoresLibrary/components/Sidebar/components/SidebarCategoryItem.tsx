@@ -10,27 +10,22 @@ import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import type { ScoreLibraryType } from '@apps/ScoresLibrary'
+import useFilter from '@apps/ScoresLibrary/hooks/useFilter'
 
 import ModifyTypeModal from '../../modals/ModifyTypeModal'
 
 function SidebarTypeItem({
   data,
-  isActive,
-  onCancel,
-  onSelect
+  isActive
 }: {
   data: ScoreLibraryType
   isActive: boolean
-  onCancel: () => void
-  onSelect: (category: string) => void
 }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
 
-  const handleSelect = useCallback(() => {
-    onSelect(data.id)
-  }, [])
+  const { updateFilter } = useFilter()
 
   const handleUpdate = useCallback(() => {
     open(ModifyTypeModal, {
@@ -83,8 +78,8 @@ function SidebarTypeItem({
       icon={data.icon}
       label={data.name}
       number={data.amount}
-      onCancelButtonClick={onCancel}
-      onClick={handleSelect}
+      onCancelButtonClick={() => updateFilter('category', null)}
+      onClick={() => updateFilter('category', data.id)}
     />
   )
 }

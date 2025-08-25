@@ -3,7 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
-  Button,
   ContentWrapperWithSidebar,
   HeaderFilter,
   LayoutWithSidebar,
@@ -13,21 +12,16 @@ import {
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import {
-  parseAsBoolean,
-  parseAsString,
-  parseAsStringEnum,
-  useQueryState
-} from 'nuqs'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCallback, useEffect, useRef } from 'react'
 import { type Id, toast } from 'react-toastify'
-import type { InferInput, InferOutput } from 'shared'
+import { type InferInput, type InferOutput } from 'shared'
 
 import Header from './components/Header'
+import InnerHeader from './components/InnerHeader'
 import Searchbar from './components/Searchbar'
 import Sidebar from './components/Sidebar'
 import GuitarWorldModal from './components/modals/GuitarWorldModal'
+import useFilter from './hooks/useFilter'
 import Views from './views'
 
 export type ScoreLibraryEntry = InferOutput<
@@ -51,56 +45,29 @@ export type ScoreLibraryCollection = InferOutput<
 >[number]
 
 function ScoresLibrary() {
-  const { t } = useTranslation('apps.scoresLibrary')
-
-  const [view, setView] = useState<'grid' | 'list'>('grid')
-
-  const [page, setPage] = useState<number>(1)
-
-  const [searchQuery, setSearchQuery] = useQueryState(
-    'q',
-    parseAsString.withDefault('')
-  )
+  const {
+    searchQuery,
+    category,
+    collection,
+    starred,
+    author,
+    sort,
+    page,
+    updateFilter
+  } = useFilter()
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
-
-  const [selectedCategory, setSelectedCategory] = useQueryState(
-    'category',
-    parseAsString.withDefault('')
-  )
-
-  const [selectedCollection, setSelectedCollection] = useQueryState(
-    'collection',
-    parseAsString.withDefault('')
-  )
-
-  const [selectedAuthor, setSelectedAuthor] = useQueryState(
-    'author',
-    parseAsString.withDefault('')
-  )
-
-  const [isStarred, setStarred] = useQueryState(
-    'starred',
-    parseAsBoolean.withDefault(false)
-  )
-
-  const [selectedSortType, setSelectedSortType] = useQueryState(
-    'sort',
-    parseAsStringEnum(['newest', 'oldest', 'author', 'name']).withDefault(
-      'newest'
-    )
-  )
 
   const entriesQuery = useQuery(
     forgeAPI.scoresLibrary.entries.list
       .input({
         page: page.toString(),
         query: debouncedSearchQuery,
-        category: selectedCategory ? selectedCategory : undefined,
-        collection: selectedCollection ? selectedCollection : undefined,
-        starred: isStarred ? 'true' : 'false',
-        author: selectedAuthor ? selectedAuthor : undefined,
-        sort: selectedSortType
+        category: category ? category : undefined,
+        collection: collection ? collection : undefined,
+        starred: starred ? 'true' : 'false',
+        author: author ? author : undefined,
+        sort
       })
       .queryOptions()
   )
@@ -111,7 +78,9 @@ function ScoresLibrary() {
 
   const typesQuery = useQuery(forgeAPI.scoresLibrary.types.list.queryOptions())
 
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const collectionsQuery = useQuery(
+    forgeAPI.scoresLibrary.collections.list.queryOptions()
+  )
 
   const open = useModalStore(state => state.open)
 
@@ -200,70 +169,20 @@ function ScoresLibrary() {
   }, [socket, queryClient])
 
   useEffect(() => {
-    setPage(1)
-  }, [debouncedSearchQuery])
-
-  useEffect(() => {
-    setPage(1)
-  }, [
-    selectedCategory,
-    selectedCollection,
-    selectedAuthor,
-    isStarred,
-    selectedSortType
-  ])
+    updateFilter('page', 1)
+  }, [debouncedSearchQuery, category, collection, starred, author, sort])
 
   return (
     <ModuleWrapper>
       <Header
         setGuitarWorldModalOpen={() => open(GuitarWorldModal, null)}
-        setSortType={setSelectedSortType}
-        setView={setView}
-        sortType={selectedSortType}
         totalItems={entriesQuery.data?.totalItems}
         uploadFiles={uploadFiles}
-        view={view}
       />
       <LayoutWithSidebar>
-        <Sidebar
-          author={selectedAuthor}
-          category={selectedCategory}
-          collection={selectedCollection}
-          isOpen={sidebarOpen}
-          setAuthor={setSelectedAuthor}
-          setCategory={setSelectedCategory}
-          setCollection={setSelectedCollection}
-          setOpen={setSidebarOpen}
-          setStarred={setStarred}
-          sidebarDataQuery={sidebarDataQuery}
-          starred={isStarred}
-        />
+        <Sidebar sidebarDataQuery={sidebarDataQuery} />
         <ContentWrapperWithSidebar>
-          <header className="flex-between flex w-full">
-            <div className="flex min-w-0 items-end">
-              <h1 className="truncate text-3xl font-semibold">
-                {[
-                  isStarred && t('header.starred'),
-                  selectedAuthor || selectedCategory || selectedCollection
-                    ? t('header.filteredScores')
-                    : t('header.allScores')
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-              </h1>
-              <span className="text-bg-500 mr-8 ml-2 text-base">
-                ({entriesQuery.data?.totalItems ?? 0})
-              </span>
-            </div>
-            <Button
-              className="lg:hidden"
-              icon="tabler:menu"
-              variant="plain"
-              onClick={() => {
-                setSidebarOpen(true)
-              }}
-            />
-          </header>
+          <InnerHeader totalItemsCount={entriesQuery.data?.totalItems ?? 0} />
           <HeaderFilter
             items={{
               type: {
@@ -278,25 +197,23 @@ function ScoresLibrary() {
                       icon: 'tabler:user'
                     })
                   ) ?? []
+              },
+              collection: {
+                data: collectionsQuery.data ?? []
               }
             }}
             setValues={{
-              type: setSelectedCategory,
-              author: setSelectedAuthor
+              type: value => updateFilter('category', value),
+              author: value => updateFilter('author', value),
+              collection: value => updateFilter('collection', value)
             }}
             values={{
-              type: selectedCategory,
-              author: selectedAuthor
+              type: category,
+              author,
+              collection
             }}
           />
-          <Searchbar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            setSortType={setSelectedSortType}
-            setView={setView}
-            sortType={selectedSortType}
-            view={view}
-          />
+          <Searchbar />
           <WithQuery query={entriesQuery}>
             {entries => (
               <Scrollbar className="mt-6 pb-16">
@@ -304,19 +221,18 @@ function ScoresLibrary() {
                   className="mb-4"
                   currentPage={entries.page}
                   totalPages={entries.totalPages}
-                  onPageChange={setPage}
+                  onPageChange={page => updateFilter('page', page)}
                 />
                 <Views
                   debouncedSearchQuery={debouncedSearchQuery}
                   entries={entries.items}
                   totalItems={entries.totalItems}
-                  view={view}
                 />
                 <Pagination
                   className="mt-4 pb-12"
                   currentPage={entries.page}
                   totalPages={entries.totalPages}
-                  onPageChange={setPage}
+                  onPageChange={page => updateFilter('page', page)}
                 />
               </Scrollbar>
             )}
