@@ -41,7 +41,7 @@
   },
   "dnd": {
     "dropHere": "Letakkan item di sini",
-    "dragAndDropToUpload": "Seret dan lepaskan untuk memuat naik",
+    "dragAndDropToUpload": "Seret dan lepas atau klik untuk memuat naik",
     "or": "atau",
     "buttons": {
       "pasteFromClipboard": "Tampal dari Papan Klip"
@@ -114,5 +114,6 @@
   "invalidColor": "Warna tidak sah. Sila masukkan nilai hex yang sah dalam format #RRGGBB.",
   "invalidIcon": "Ikon tidak sah. Ia mesti pengenalan ikon yang sah dari Iconify dalam format <icon-set>:<icon-name>.",
   "loadingUserData": "Memuatkan data pengguna...",
-  "invalidSelection": "Pemilihan tidak sah. Sila pilih pilihan yang sah dari senarai."
+  "invalidSelection": "Pemilihan tidak sah. Sila pilih pilihan yang sah dari senarai.",
+  "fileInputSupportedFormat": "Format yang disokong: {{format}}"
 }

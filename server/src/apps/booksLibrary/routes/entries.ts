@@ -3,7 +3,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
-import Epub from 'epub2'
+import { EPub } from 'epub2'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 
@@ -339,7 +339,7 @@ const sendToKindle = forgeController.mutation
     return taskid
   })
 
-const getEpubMetadata = forgeController.query
+const getEpubMetadata = forgeController.mutation
   .description('Get metadata for an EPUB file')
   .input({})
   .media({
@@ -353,9 +353,9 @@ const getEpubMetadata = forgeController.query
       throw new ClientError('Invalid media type')
     }
 
-    const epubInstance = await Epub.createAsync(file.path)
+    const epubInstance = await EPub.createAsync(file.path)
 
-    console.log(epubInstance)
+    console.log(epubInstance.metadata)
 
     return 'cool'
   })
