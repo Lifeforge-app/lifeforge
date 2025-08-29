@@ -19,7 +19,9 @@ export const Default: Story = {
     preview: null,
     setData: () => {},
     namespace: 'namespace',
-    acceptedMimeTypes: {}
+    acceptedMimeTypes: {
+      image: ['jpeg']
+    }
   },
   render: args => {
     const [image, setImage] = useState<string | File | null>(null)
