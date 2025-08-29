@@ -1,5 +1,6 @@
 import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
+import { useMemo } from 'react'
 import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
 
@@ -8,15 +9,23 @@ function DnDContainer({
   getInputProps,
   isDragActive,
   setPreview,
-  setFile
+  setFile,
+  acceptedMimeTypes
 }: {
   getRootProps: (props?: DropzoneRootProps) => DropzoneRootProps
   getInputProps: (props?: DropzoneInputProps) => DropzoneInputProps
   isDragActive: boolean
   setPreview: (preview: string | null) => void
   setFile: (file: File | string | null) => void
+  acceptedMimeTypes: Record<string, string[]>
 }) {
   const { t } = useTranslation('common.misc')
+
+  const acceptedMimeTypesFlattened = useMemo(() => {
+    return Object.entries(acceptedMimeTypes)
+      .flatMap(([type, exts]) => exts.map(ext => `${type}/${ext}`))
+      .join(', ')
+  }, [acceptedMimeTypes])
 
   const pasteFromClipboard = async (e: React.MouseEvent) => {
     if (!navigator.clipboard) {
@@ -55,27 +64,21 @@ function DnDContainer({
       className="flex-center border-bg-500 size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed py-12"
       {...getRootProps()}
     >
-      <input {...getInputProps()} multiple={false} type="file" />
+      <input
+        {...getInputProps()}
+        accept={acceptedMimeTypesFlattened}
+        multiple={false}
+        type="file"
+      />
       <Icon className="text-bg-500 size-20 shrink-0" icon="tabler:drag-drop" />
       <div className="text-bg-500 mt-4 text-center text-2xl font-medium">
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
       </div>
-      <div className="text-bg-500 mt-4 text-center text-lg font-semibold tracking-widest uppercase">
+      <div className="text-bg-500 mt-4 text-center text-lg tracking-widest uppercase">
         {t('dnd.or')}
       </div>
       <Button
-        as="label"
         className="mt-4 min-w-1/2 cursor-pointer"
-        icon="tabler:upload"
-        variant="secondary"
-      >
-        upload
-      </Button>
-      <div className="text-bg-500 mt-4 text-center text-lg font-semibold tracking-widest uppercase">
-        {t('dnd.or')}
-      </div>
-      <Button
-        className="mt-2 min-w-1/2 cursor-pointer"
         icon="tabler:clipboard"
         namespace="common.misc"
         variant="secondary"
@@ -83,6 +86,11 @@ function DnDContainer({
       >
         dnd.buttons.pasteFromClipboard
       </Button>
+      <p className="text-bg-500 mt-6 text-center text-sm">
+        {t('fileInputSupportedFormat', {
+          format: acceptedMimeTypesFlattened || 'N/A'
+        })}
+      </p>
     </div>
   )
 }

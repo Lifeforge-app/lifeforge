@@ -1,6 +1,7 @@
 import { parse } from 'file-type-mime'
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { toast } from 'react-toastify'
 
 import DnDContainer from './components/DnDContainer'
 import PreviewContainer from './components/PreviewContainer'
@@ -19,11 +20,20 @@ function LocalUpload({
   preview: string | null
 }) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    setPreview(null)
     acceptedFiles[0]
       .arrayBuffer()
       .then(buffer => {
+        const acceptedMimeTypesFlattened = Object.entries(acceptedMimeTypes)
+          .flatMap(([type, exts]) => exts.map(ext => `${type}/${ext}`))
+          .join(', ')
+
         const mimeType = parse(buffer)
+
+        if (!acceptedMimeTypesFlattened.includes(mimeType?.mime ?? '')) {
+          toast.error(`Unsupported file type: ${mimeType?.mime ?? ''}`)
+
+          return
+        }
 
         if (mimeType !== undefined && mimeType.mime.startsWith('image')) {
           const file = new FileReader()
@@ -47,6 +57,7 @@ function LocalUpload({
 
   return file === null ? (
     <DnDContainer
+      acceptedMimeTypes={acceptedMimeTypes}
       getInputProps={getInputProps}
       getRootProps={getRootProps}
       isDragActive={isDragActive}
