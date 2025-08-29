@@ -1,5 +1,5 @@
 import forgeAPI from '@utils/forgeAPI'
-import { LoadingScreen, WithOTP } from 'lifeforge-ui'
+import { LoadingScreen, ModalManager, WithOTP } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Suspense } from 'react'
 import type { RouteObject } from 'react-router'
@@ -56,6 +56,7 @@ export function buildChildRoutes({
               <Component />
             </WithOTP>
           </Suspense>
+          <ModalManager />
         </APIKeyStatusProvider>
       )
     }
