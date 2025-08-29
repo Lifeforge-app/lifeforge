@@ -3,6 +3,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
+import Epub from 'epub2'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 
@@ -338,6 +339,27 @@ const sendToKindle = forgeController.mutation
     return taskid
   })
 
+const getEpubMetadata = forgeController.query
+  .description('Get metadata for an EPUB file')
+  .input({})
+  .media({
+    file: {
+      optional: false,
+      multiple: false
+    }
+  })
+  .callback(async ({ media: { file } }) => {
+    if (typeof file === 'string') {
+      throw new ClientError('Invalid media type')
+    }
+
+    const epubInstance = await Epub.createAsync(file.path)
+
+    console.log(epubInstance)
+
+    return 'cool'
+  })
+
 const remove = forgeController.mutation
   .description('Delete an existing entry in the books library')
   .input({
@@ -360,5 +382,6 @@ export default forgeRouter({
   toggleFavouriteStatus,
   toggleReadStatus,
   sendToKindle,
+  getEpubMetadata,
   remove
 })
