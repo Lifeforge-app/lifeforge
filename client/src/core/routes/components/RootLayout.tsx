@@ -1,4 +1,4 @@
-import { ErrorScreen } from 'lifeforge-ui'
+import { ErrorScreen, ModalManager } from 'lifeforge-ui'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Outlet } from 'react-router'
 
@@ -16,6 +16,7 @@ function RootLayout() {
           fallback={<ErrorScreen message="An unexpected error occurred." />}
         >
           <Outlet />
+          <ModalManager />
         </ErrorBoundary>
       </main>
     </>

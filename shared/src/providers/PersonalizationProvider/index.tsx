@@ -65,7 +65,7 @@ export default function PersonalizationProvider({
     }
   }, [defaultValueOverride])
 
-  const rootElement = defaultValue.rootElement || document.createElement('body')
+  const rootElement = defaultValue.rootElement || document.body
 
   const [fontFamily, setFontFamily] = useState<string>(defaultValue.fontFamily)
 
