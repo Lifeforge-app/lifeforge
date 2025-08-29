@@ -40,7 +40,8 @@
     "collection": {
       "create": "Cipta Koleksi",
       "update": "Kemas kini Koleksi"
-    }
+    },
+    "uploadFromDevice": "Muatturun dari Peranti"
   },
   "buttons": {
     "addToLibrary": "Tambah ke Perpustakaan",
@@ -70,7 +71,8 @@
     "kindleEmail": "Alamat Emel Kindle",
     "collection": "Koleksi Buku",
     "collectionName": "Nama Koleksi",
-    "collectionIcon": "Ikon Koleksi"
+    "collectionIcon": "Ikon Koleksi",
+    "uploadBookFile": "Muat Naik Fail Buku"
   },
   "items": {
     "book": "Buku",
