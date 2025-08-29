@@ -41,7 +41,7 @@
   },
   "dnd": {
     "dropHere": "将项目拖放到这里",
-    "dragAndDropToUpload": "拖放上传",
+    "dragAndDropToUpload": "拖放或点击上传",
     "or": "或",
     "buttons": {
       "pasteFromClipboard": "从剪贴板粘贴"
@@ -114,5 +114,6 @@
   "invalidColor": "无效颜色。请输入有效的十六进制值，格式为#RRGGBB。",
   "invalidIcon": "无效图标。必须是来自Iconify的有效图标标识符，格式为<icon-set>:<icon-name>。",
   "loadingUserData": "正在加载用户数据...",
-  "invalidSelection": "无效选择。请从列表中选择一个有效的值。"
+  "invalidSelection": "无效选择。请从列表中选择一个有效的值。",
+  "fileInputSupportedFormat": "支持的格式：{{format}}"
 }
