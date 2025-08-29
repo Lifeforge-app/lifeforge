@@ -40,7 +40,8 @@
     "collection": {
       "create": "Create Collection",
       "update": "Update Collection"
-    }
+    },
+    "uploadFromDevice": "Upload from Device"
   },
   "buttons": {
     "addToLibrary": "Add to Library",
@@ -70,7 +71,8 @@
     "kindleEmail": "Kindle Email Address",
     "collection": "Book Collection",
     "collectionName": "Collection Name",
-    "collectionIcon": "Collection Icon"
+    "collectionIcon": "Collection Icon",
+    "uploadBookFile": "Upload Book File"
   },
   "items": {
     "book": "Book",
