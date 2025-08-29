@@ -239,7 +239,6 @@
         "daisyui": "^5.0.35",
         "dayjs": "^1.11.13",
         "dnd-core": "^16.0.1",
-        "epub2": "^3.0.2",
         "eslint-plugin-react-compiler": "^19.1.0-rc.2",
         "file-type-mime": "^0.4.6",
         "human-number": "^2.0.4",
