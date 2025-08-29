@@ -52,54 +52,103 @@ const list = forgeController.query
             .execute()
         : undefined
 
-      return await pb.getFullList
-        .collection('books_library__entries')
-        .filter([
-          collection
-            ? {
-                field: 'collection',
-                operator: '=',
-                value: collection
-              }
-            : undefined,
-          language
-            ? {
-                field: 'languages',
-                operator: '~',
-                value: language
-              }
-            : undefined,
-          favourite === true
-            ? {
-                field: 'is_favourite',
-                operator: '=',
-                value: true
-              }
-            : undefined,
-          readStatus
-            ? {
-                field: 'read_status',
-                operator: '=',
-                value: readStatus
-              }
-            : undefined,
-          fileTypeRecord && {
-            field: 'extension',
-            operator: '=',
-            value: fileTypeRecord.name
-          },
-          query
-            ? {
-                field: 'title',
-                operator: '~',
-                value: query
-              }
-            : undefined
-        ])
-        .sort(['-is_favourite', '-created'])
-        .execute()
+      return (
+        await pb.getFullList
+          .collection('books_library__entries')
+          .filter([
+            collection
+              ? {
+                  field: 'collection',
+                  operator: '=',
+                  value: collection
+                }
+              : undefined,
+            language
+              ? {
+                  field: 'languages',
+                  operator: '~',
+                  value: language
+                }
+              : undefined,
+            favourite === true
+              ? {
+                  field: 'is_favourite',
+                  operator: '=',
+                  value: true
+                }
+              : undefined,
+            readStatus
+              ? {
+                  field: 'read_status',
+                  operator: '=',
+                  value: readStatus
+                }
+              : undefined,
+            fileTypeRecord && {
+              field: 'extension',
+              operator: '=',
+              value: fileTypeRecord.name
+            },
+            query
+              ? {
+                  field: 'title',
+                  operator: '~',
+                  value: query
+                }
+              : undefined
+          ])
+          .execute()
+      ).sort((a, b) => {
+        // First sort by read status (reading -> unread -> read).
+        // If the read status is the same, sort by time started (newest first).
+        // Otherwise, sort by favourite status (favourite -> normal), then by title
+
+        const readStatusOrder = {
+          reading: 1,
+          unread: 2,
+          read: 3
+        }
+
+        if (a.read_status !== b.read_status) {
+          return readStatusOrder[a.read_status] - readStatusOrder[b.read_status]
+        }
+
+        if (a.read_status === 'reading') {
+          return (
+            new Date(b.time_started).getTime() -
+            new Date(a.time_started).getTime()
+          )
+        }
+
+        return (
+          +b.is_favourite - +a.is_favourite || a.title.localeCompare(b.title)
+        )
+      })
     }
   )
+
+const upload = forgeController.mutation
+  .description('Upload a new entry to the books library')
+  .input({
+    body: SCHEMAS.books_library.entries.pick({
+      title: true,
+      authors: true,
+      edition: true,
+      languages: true,
+      isbn: true,
+      publisher: true,
+      year_published: true
+    })
+  })
+  .media({
+    file: {
+      optional: false,
+      multiple: false
+    }
+  })
+  .callback(async ({ pb, body, media: { file } }) => {
+    pb.create.collection('books_library__entries').data(body).execute()
+  })
 
 const update = forgeController.mutation
   .input({
@@ -182,10 +231,16 @@ const toggleReadStatus = forgeController.mutation
           read: 'unread',
           reading: 'read'
         }[book.read_status],
-        time_finished:
-          book.read_status === 'reading' ? new Date().toISOString() : '',
-        time_started:
-          book.read_status === 'unread' ? new Date().toISOString() : ''
+        time_finished: {
+          unread: undefined,
+          read: '',
+          reading: new Date().toISOString()
+        }[book.read_status],
+        time_started: {
+          unread: new Date().toISOString(),
+          read: '',
+          reading: undefined
+        }[book.read_status]
       })
       .execute()
   })
@@ -300,6 +355,7 @@ const remove = forgeController.mutation
 
 export default forgeRouter({
   list,
+  upload,
   update,
   toggleFavouriteStatus,
   toggleReadStatus,
