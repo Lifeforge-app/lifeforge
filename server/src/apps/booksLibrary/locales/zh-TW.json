@@ -40,7 +40,8 @@
     "collection": {
       "create": "建立收藏",
       "update": "更新收藏"
-    }
+    },
+    "uploadFromDevice": "從設備上傳"
   },
   "buttons": {
     "addToLibrary": "添加到圖書館",
@@ -70,7 +71,8 @@
     "kindleEmail": "Kindle 電子郵件地址",
     "collection": "書籍收藏",
     "collectionName": "收藏名稱",
-    "collectionIcon": "收藏圖標"
+    "collectionIcon": "收藏圖標",
+    "uploadBookFile": "上傳書籍檔案"
   },
   "items": {
     "book": "書籍",
