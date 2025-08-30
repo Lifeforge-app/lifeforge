@@ -52,7 +52,8 @@
     "downloading": "下載中",
     "sendToKindle": "發送到 Kindle",
     "markAsRead": "標記為已讀",
-    "markAsUnread": "標記為未讀"
+    "markAsUnread": "標記為未讀",
+    "markAsReading": "標記為正在閱讀"
   },
   "inputs": {
     "isbn": "ISBN 碼",
