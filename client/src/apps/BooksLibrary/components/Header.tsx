@@ -12,7 +12,8 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useFilter from '../hooks/useFilter'
-import LibgenModal from '../modals/LibgenModal'
+import LibgenModal from './modals/LibgenModal'
+import UploadFromDeviceModal from './modals/UploadFromDeviceModal'
 
 function Header({ itemCount }: { itemCount: number }) {
   const open = useModalStore(state => state.open)
@@ -39,7 +40,8 @@ function Header({ itemCount }: { itemCount: number }) {
     collection,
     favourite,
     fileType,
-    language
+    language,
+    readStatus
   } = useFilter()
 
   const handleOpenLibgenModal = useCallback(() => {
@@ -50,9 +52,13 @@ function Header({ itemCount }: { itemCount: number }) {
     <div>
       <div className="flex-between flex">
         <h1 className="text-3xl font-semibold">
-          {Object.values([collection, favourite, fileType, language]).every(
-            value => !value
-          ) && !searchQuery.trim()
+          {Object.values([
+            collection,
+            favourite,
+            fileType,
+            language,
+            readStatus
+          ]).every(value => !value) && !searchQuery.trim()
             ? 'All'
             : 'Filtered'}{' '}
           Books <span className="text-bg-500 text-base">({itemCount})</span>
@@ -77,7 +83,9 @@ function Header({ itemCount }: { itemCount: number }) {
               icon="tabler:upload"
               label="Upload from device"
               namespace="apps.booksLibrary"
-              onClick={() => {}}
+              onClick={() => {
+                open(UploadFromDeviceModal, {})
+              }}
             />
             <ContextMenuItem
               icon="tabler:books"

@@ -5,8 +5,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
+import ModifyModal from '@apps/BooksLibrary/components/modals/ModifyModal'
 import useFilter from '@apps/BooksLibrary/hooks/useFilter'
-import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
 
 import {
   type BooksLibraryCollection,
