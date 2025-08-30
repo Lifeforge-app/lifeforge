@@ -36,14 +36,12 @@ const DnDCalendar = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
   events: CalendarEvent[]
-  setSidebarOpen: (value: boolean) => void
   selectedCategory: string | undefined
   selectedCalendar: string | undefined
 }
 
 function CalendarComponent({
   events: rawEvents,
-  setSidebarOpen,
   selectedCategory,
   selectedCalendar
 }: CalendarComponentProps) {
@@ -110,7 +108,7 @@ function CalendarComponent({
   const calendarComponents = useMemo(
     (): Components => ({
       toolbar: (props: any) => {
-        return <CalendarHeader setSidebarOpen={setSidebarOpen} {...props} />
+        return <CalendarHeader {...props} />
       },
       event: ({ event }: { event: object }) => {
         return <EventItem event={event as CalendarEvent} />

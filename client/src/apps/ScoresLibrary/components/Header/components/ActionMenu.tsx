@@ -1,7 +1,7 @@
 import { ContextMenuGroup, ContextMenuItem, SidebarDivider } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import type { ScoreLibrarySortType } from '@apps/ScoresLibrary'
+import useFilter from '@apps/ScoresLibrary/hooks/useFilter'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
@@ -10,18 +10,10 @@ const SORT_TYPE = [
   ['tabler:abc', 'name']
 ] as const
 
-function ActionMenu({
-  setView,
-  view,
-  sortType,
-  setSortType
-}: {
-  setView: (view: 'grid' | 'list') => void
-  view: 'grid' | 'list'
-  sortType: ScoreLibrarySortType
-  setSortType: React.Dispatch<React.SetStateAction<ScoreLibrarySortType>>
-}) {
+function ActionMenu() {
   const { t } = useTranslation('apps.scoresLibrary')
+
+  const { view, sort, updateFilter } = useFilter()
 
   return (
     <>
@@ -34,12 +26,12 @@ function ActionMenu({
           {SORT_TYPE.map(([icon, id]) => (
             <ContextMenuItem
               key={id}
-              checked={sortType === id}
+              checked={sort === id}
               icon={icon}
               label={t(`sortTypes.${id}`)}
               namespace="apps.scoresLibrary"
               onClick={() => {
-                setSortType(id)
+                updateFilter('sort', id)
               }}
             />
           ))}
@@ -53,7 +45,7 @@ function ActionMenu({
               icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
               label={t(`viewTypes.${type}`)}
               onClick={() => {
-                setView(type as 'grid' | 'list')
+                updateFilter('view', type as 'grid' | 'list')
               }}
             />
           ))}

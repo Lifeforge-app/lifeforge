@@ -1,47 +1,78 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
 
-import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
+import useFilter from '@apps/BooksLibrary/hooks/useFilter'
+
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar() {
-  const {
-    miscellaneous: { sidebarOpen, setSidebarOpen, filter, setFilter }
-  } = useBooksLibraryContext()
+  const { updateFilter, collection, favourite, fileType, language } =
+    useFilter()
+
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
+
+  const fileTypesQuery = useQuery(
+    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
+  )
+
+  const readStatusQuery = useQuery(
+    forgeAPI.booksLibrary.readStatus.list.queryOptions()
+  )
 
   return (
-    <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
+    <SidebarWrapper>
       <SidebarItem
-        active={Object.values(filter).every(value => !value)}
+        active={Object.values([
+          collection,
+          favourite,
+          fileType,
+          language
+        ]).every(value => !value)}
         icon="tabler:list"
         label="All books"
         namespace="apps.booksLibrary"
         onClick={() => {
-          setFilter('collection', null)
-          setFilter('fileType', null)
-          setFilter('language', null)
-          setSidebarOpen(false)
+          updateFilter('collection', null)
+          updateFilter('fileType', null)
+          updateFilter('language', null)
+          updateFilter('favourite', false)
         }}
       />
       <SidebarItem
-        active={filter.favourite}
+        active={favourite}
         icon="tabler:heart"
         label="Favourite"
         namespace="apps.booksLibrary"
         onCancelButtonClick={() => {
-          setFilter('favourite', false)
-          setSidebarOpen(false)
+          updateFilter('favourite', false)
         }}
         onClick={() => {
-          setFilter('favourite', true)
-          setSidebarOpen(false)
+          updateFilter('favourite', true)
         }}
       />
       <SidebarDivider />
-      <SidebarSection stuff="collections" />
+      <SidebarSection
+        useNamespace
+        dataQuery={readStatusQuery}
+        fallbackIcon="tabler:book"
+        hasActionButton={false}
+        hasContextMenu={false}
+        stuff="readStatus"
+      />
       <SidebarDivider />
-      <SidebarSection stuff="languages" />
+      <SidebarSection dataQuery={collectionsQuery} stuff="collections" />
+      <SidebarDivider />
+      <SidebarSection dataQuery={languagesQuery} stuff="languages" />
       <SidebarDivider />
       <SidebarSection
+        dataQuery={fileTypesQuery}
         fallbackIcon="tabler:file-text"
         hasActionButton={false}
         hasContextMenu={false}

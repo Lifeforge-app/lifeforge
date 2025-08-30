@@ -1,0 +1,28 @@
+{
+  "title": "日记",
+  "description": "你的私人日记，仅供你查看。",
+  "lockedMessage": "日记已锁定",
+  "passwordRequired": "需要密码才能解密你的日记条目",
+  "failedToUnlock": "日记解锁失败",
+  "modals": {
+    "journal": {
+      "create": "创建日记条目",
+      "update": "更新日记条目",
+      "view": "查看日记条目"
+    }
+  },
+  "journal": {
+    "moodOfTheDay": "今天的心情",
+    "emoji": "表情符号",
+    "journalTitle": "日记标题"
+  },
+  "items": {
+    "entry": "日记"
+  },
+  "empty": {
+    "entry": {
+      "title": "没有日记条目",
+      "description": "您还没有添加任何日记条目。点击下面的按钮添加一个。"
+    }
+  }
+}

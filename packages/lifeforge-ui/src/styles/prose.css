@@ -12,7 +12,7 @@
 
 .prose {
   & * {
-    @apply text-bg-800 dark:text-bg-100 my-0 leading-normal select-text;
+    @apply text-bg-600 dark:text-bg-400 my-0 leading-normal select-text;
   }
 
   & :is(h1, h2, h3, h4, h5, h6) {

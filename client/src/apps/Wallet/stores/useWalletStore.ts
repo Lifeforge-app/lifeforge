@@ -12,7 +12,6 @@ interface WalletState {
   searchQuery: string
   nextToSelect: 'start' | 'end'
   isAmountHidden: boolean
-  sidebarOpen: boolean
 
   // actions
   setSelectedType: (t: WalletState['selectedType']) => void
@@ -24,7 +23,6 @@ interface WalletState {
   setSearchQuery: (q: string) => void
   setNextToSelect: (s: WalletState['nextToSelect']) => void
   toggleAmountVisibility: () => void
-  setSidebarOpen: (s: boolean) => void
 }
 
 export const useWalletStore = create<WalletState>()(set => ({
@@ -37,7 +35,6 @@ export const useWalletStore = create<WalletState>()(set => ({
   searchQuery: '',
   nextToSelect: 'start',
   isAmountHidden: true,
-  sidebarOpen: false,
 
   setSelectedType: t => set({ selectedType: t }),
   setSelectedCategory: c => set({ selectedCategory: c }),
@@ -48,6 +45,5 @@ export const useWalletStore = create<WalletState>()(set => ({
   setSearchQuery: q => set({ searchQuery: q }),
   setNextToSelect: s => set({ nextToSelect: s }),
   toggleAmountVisibility: () =>
-    set(state => ({ isAmountHidden: !state.isAmountHidden })),
-  setSidebarOpen: s => set({ sidebarOpen: s })
+    set(state => ({ isAmountHidden: !state.isAmountHidden }))
 }))

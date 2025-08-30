@@ -2,11 +2,7 @@ import { SidebarItem, WithQuery } from 'lifeforge-ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-function TaskStatusList({
-  setSidebarOpen
-}: {
-  setSidebarOpen: (value: boolean) => void
-}) {
+function TaskStatusList() {
   const { statusCounterQuery, filter, setFilter } = useTodoListContext()
 
   return (
@@ -34,14 +30,7 @@ function TaskStatusList({
                 statusCounter[name.toLowerCase() as keyof typeof statusCounter]
               }
               onClick={() => {
-                if (name === 'All') {
-                  setFilter('status', null)
-                  setSidebarOpen(false)
-
-                  return
-                }
-                setFilter('status', name.toLowerCase())
-                setSidebarOpen(false)
+                setFilter('status', name === 'All' ? null : name.toLowerCase())
               }}
             />
           ))}

@@ -3,12 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
 
-import type {
-  CalendarCalendar,
-  CalendarCategory
-} from '@apps/Calendar/components/Calendar'
+import type { CalendarCategory } from '@apps/Calendar/components/Calendar'
 import ModifyCategoryModal from '@apps/Calendar/components/modals/ModifyCategoryModal'
 import { INTERNAL_CATEGORIES } from '@apps/Calendar/constants/internalCategories'
 
@@ -16,11 +12,9 @@ import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({
   selectedCategory,
-  setSidebarOpen,
   setSelectedCategory
 }: {
   selectedCategory: string | null
-  setSidebarOpen: (value: boolean) => void
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const categoriesQuery = useQuery(
@@ -29,29 +23,17 @@ function CategoryList({
 
   const open = useModalStore(state => state.open)
 
-  const handleSelect = useCallback((item: CalendarCalendar) => {
-    setSelectedCategory(item.id)
-    setSidebarOpen(false)
-  }, [])
-
-  const handleCancelSelect = useCallback(() => {
-    setSelectedCategory(null)
-    setSidebarOpen(false)
-  }, [])
-
-  const handleCreate = useCallback(() => {
-    open(ModifyCategoryModal, {
-      type: 'create'
-    })
-  }, [])
-
   return (
     <WithQuery query={categoriesQuery}>
       {categories => (
         <section className="flex w-full min-w-0 flex-1 flex-col">
           <SidebarTitle
             actionButtonIcon="tabler:plus"
-            actionButtonOnClick={handleCreate}
+            actionButtonOnClick={() =>
+              open(ModifyCategoryModal, {
+                type: 'create'
+              })
+            }
             label="Categories"
             namespace="apps.calendar"
           />
@@ -65,8 +47,8 @@ function CategoryList({
                   isSelected={selectedCategory === key}
                   item={value}
                   modifiable={false}
-                  onCancelSelect={handleCancelSelect}
-                  onSelect={handleSelect}
+                  onCancelSelect={() => setSelectedCategory(null)}
+                  onSelect={() => setSelectedCategory(value.id)}
                 />
               ))}
               {categories.map(item => (
@@ -74,8 +56,8 @@ function CategoryList({
                   key={item.id}
                   isSelected={selectedCategory === item.id}
                   item={item}
-                  onCancelSelect={handleCancelSelect}
-                  onSelect={handleSelect}
+                  onCancelSelect={() => setSelectedCategory(null)}
+                  onSelect={() => setSelectedCategory(item.id)}
                 />
               ))}
             </ul>

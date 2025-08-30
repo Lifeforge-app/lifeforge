@@ -3,24 +3,12 @@ import { SearchInput, ViewModeSelector } from 'lifeforge-ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import type { ScoreLibrarySortType } from '..'
+import useFilter from '../hooks/useFilter'
 import SortBySelector from './SortBySelector'
 
-function Searchbar({
-  view,
-  setView,
-  searchQuery,
-  setSearchQuery,
-  sortType,
-  setSortType
-}: {
-  view: 'grid' | 'list'
-  setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
-  searchQuery: string
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-  sortType: ScoreLibrarySortType
-  setSortType: React.Dispatch<React.SetStateAction<ScoreLibrarySortType>>
-}) {
+function Searchbar() {
+  const { searchQuery, setSearchQuery, view, updateFilter } = useFilter()
+
   const [requestRandomLoading, setRequestRandomLoading] = useState(false)
 
   async function requestRandomEntry() {
@@ -46,7 +34,7 @@ function Searchbar({
 
   return (
     <div className="mt-4 flex gap-2">
-      <SortBySelector setSortType={setSortType} sortType={sortType} />
+      <SortBySelector />
       <SearchInput
         actionButtonProps={{
           icon: 'tabler:dice',
@@ -66,7 +54,7 @@ function Searchbar({
           { value: 'list', icon: 'uil:list-ul' },
           { value: 'grid', icon: 'uil:apps' }
         ]}
-        setViewMode={setView}
+        setViewMode={mode => updateFilter('view', mode)}
         viewMode={view}
       />
     </div>
