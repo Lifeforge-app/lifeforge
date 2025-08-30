@@ -1,5 +1,6 @@
 import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { useMemo } from 'react'
 import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
@@ -61,7 +62,12 @@ function DnDContainer({
 
   return (
     <div
-      className="flex-center border-bg-500 size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed py-12"
+      className={clsx(
+        'flex-center size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] py-12 transition-all',
+        isDragActive
+          ? 'bg-custom-500/5 border-custom-500!'
+          : 'border-bg-500 border-dashed'
+      )}
       {...getRootProps()}
     >
       <input
