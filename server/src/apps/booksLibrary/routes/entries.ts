@@ -4,6 +4,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import { EPub } from 'epub2'
+import moment from 'moment'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 
@@ -355,9 +356,17 @@ const getEpubMetadata = forgeController.mutation
 
     const epubInstance = await EPub.createAsync(file.path)
 
-    console.log(epubInstance.metadata)
+    const metadata = epubInstance.metadata
 
-    return 'cool'
+    return {
+      isbn: metadata.ISBN,
+      title: metadata.title,
+      authors: metadata.creator,
+      publisher: metadata.publisher,
+      year_published: moment(metadata.date).year(),
+      languages: [metadata.language],
+      size: file.size
+    }
   })
 
 const remove = forgeController.mutation
