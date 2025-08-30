@@ -54,7 +54,7 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
           icon="tabler:book"
         />
       </div>
-      <div className="mt-4">
+      <div className="mt-4 w-full min-w-0">
         <ReadStatusChip item={item} />
         {collectionsQuery.data &&
           (() => {
