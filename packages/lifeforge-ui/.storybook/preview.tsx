@@ -15,6 +15,7 @@ import {
   PersonalizationProvider,
   usePersonalization
 } from 'shared'
+import { ToastProvider } from 'shared'
 import { themes } from 'storybook/theming'
 
 import ModalManager from '../src/components/modals/core/ModalManager'
@@ -117,10 +118,11 @@ const withBodyClass = (Story: any, context: any) => {
                 rootElement: rootElement
               }}
             >
-              <MainElement theme={context.globals.theme}>
-                <Story />
-                <div id="headlessui-portal-root" />
-              </MainElement>
+              <ToastProvider>
+                <MainElement theme={context.globals.theme}>
+                  <Story />
+                </MainElement>
+              </ToastProvider>
             </PersonalizationProvider>
           )}
         </div>

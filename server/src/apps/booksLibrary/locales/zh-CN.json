@@ -22,7 +22,11 @@
     "favourite": "最爱书籍",
     "languages": "语言",
     "collections": "收藏",
-    "fileTypes": "文件类型"
+    "fileTypes": "文件类型",
+    "read": "已读",
+    "reading": "阅读中",
+    "unread": "未读",
+    "readStatus": "阅读状态"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
@@ -36,7 +40,8 @@
     "collection": {
       "create": "创建收藏",
       "update": "更新收藏"
-    }
+    },
+    "uploadFromDevice": "从设备上传"
   },
   "buttons": {
     "addToLibrary": "添加到图书馆",
@@ -66,7 +71,8 @@
     "kindleEmail": "Kindle 电子邮件地址",
     "collection": "书籍收藏",
     "collectionName": "收藏名称",
-    "collectionIcon": "收藏图标"
+    "collectionIcon": "收藏图标",
+    "uploadBookFile": "上传书籍文件"
   },
   "items": {
     "book": "书籍",
@@ -102,6 +108,5 @@
     }
   },
   "checkingKeys": "正在检查SMTP API密钥...",
-  "kindleSent": "已启动进程，将所选文档发送到目标电子邮件地址。",
-  "readLabel": "已阅读"
+  "kindleSent": "已启动进程，将所选文档发送到目标电子邮件地址。"
 }

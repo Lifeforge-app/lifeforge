@@ -22,7 +22,11 @@
     "favourite": "Buku Kegemaran",
     "languages": "Bahasa",
     "collections": "Koleksi",
-    "fileTypes": "Jenis Fail"
+    "fileTypes": "Jenis Fail",
+    "read": "Dibaca",
+    "reading": "Sedang Dibaca",
+    "unread": "Belum Dibaca",
+    "readStatus": "Status Bacaan"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
@@ -36,7 +40,8 @@
     "collection": {
       "create": "Cipta Koleksi",
       "update": "Kemas kini Koleksi"
-    }
+    },
+    "uploadFromDevice": "Muatturun dari Peranti"
   },
   "buttons": {
     "addToLibrary": "Tambah ke Perpustakaan",
@@ -66,7 +71,8 @@
     "kindleEmail": "Alamat Emel Kindle",
     "collection": "Koleksi Buku",
     "collectionName": "Nama Koleksi",
-    "collectionIcon": "Ikon Koleksi"
+    "collectionIcon": "Ikon Koleksi",
+    "uploadBookFile": "Muat Naik Fail Buku"
   },
   "items": {
     "book": "Buku",
@@ -102,6 +108,5 @@
     }
   },
   "checkingKeys": "Memeriksa kunci API SMTP...",
-  "kindleSent": "Proses dijalankan untuk menghantar dokumen yang dipilih ke alamat e-mel yang ditujukan.",
-  "readLabel": "Dibaca"
+  "kindleSent": "Proses dijalankan untuk menghantar dokumen yang dipilih ke alamat e-mel yang ditujukan."
 }

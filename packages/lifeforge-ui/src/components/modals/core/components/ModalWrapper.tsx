@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { createPortal } from 'react-dom'
 
 function ModalWrapper({
   isOpen,
@@ -21,7 +22,7 @@ function ModalWrapper({
   zIndex?: number
   onExited?: () => void
 }) {
-  return (
+  return createPortal(
     <div
       ref={modalRef}
       className={clsx(
@@ -49,7 +50,8 @@ function ModalWrapper({
       >
         <div className="p-6">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.getElementById('app') || document.body
   )
 }
 

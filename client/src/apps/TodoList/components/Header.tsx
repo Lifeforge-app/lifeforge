@@ -1,14 +1,12 @@
-import { Button, HeaderFilter } from 'lifeforge-ui'
+import { Button, HeaderFilter, useModuleSidebarState } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-function Header({
-  setSidebarOpen
-}: {
-  setSidebarOpen: (value: boolean) => void
-}) {
+function Header() {
   const { t } = useTranslation('apps.todoList')
+
+  const { setIsSidebarOpen } = useModuleSidebarState()
 
   const {
     entriesQuery,
@@ -97,7 +95,7 @@ function Header({
           icon="tabler:menu"
           variant="plain"
           onClick={() => {
-            setSidebarOpen(true)
+            setIsSidebarOpen(true)
           }}
         />
       </div>

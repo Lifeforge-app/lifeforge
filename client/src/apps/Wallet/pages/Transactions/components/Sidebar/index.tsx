@@ -11,10 +11,10 @@ import MiniCalendar from './components/MiniCalendar'
 import TypeSection from './components/TypeSection'
 
 function Sidebar() {
-  const { selectedType, sidebarOpen, setSidebarOpen } = useWalletStore()
+  const { selectedType } = useWalletStore()
 
   return (
-    <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
+    <SidebarWrapper>
       <AllTransactionsButton />
       <SidebarDivider />
       <MiniCalendar />

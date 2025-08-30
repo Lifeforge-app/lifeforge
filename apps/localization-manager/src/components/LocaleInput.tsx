@@ -46,10 +46,18 @@ function LocaleInput({
       setValue={value => {
         setValue(name, path, value)
 
+        const pathKey = path.join('.')
+
         if (value !== originalValue) {
-          setChangedKeys(keys => [...keys, path.join('.')])
+          setChangedKeys(keys => {
+            if (!keys.includes(pathKey)) {
+              return [...keys, pathKey]
+            }
+
+            return keys
+          })
         } else {
-          setChangedKeys(keys => keys.filter(key => key !== path.join('.')))
+          setChangedKeys(keys => keys.filter(key => key !== pathKey))
         }
       }}
       value={value}

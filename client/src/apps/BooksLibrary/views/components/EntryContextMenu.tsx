@@ -6,8 +6,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyBookModal from '@apps/BooksLibrary/modals/ModifyBookModal'
-import SendToKindleModal from '@apps/BooksLibrary/modals/SendToKindleModal'
+import ModifyBookModal from '@apps/BooksLibrary/components/modals/ModifyBookModal'
+import SendToKindleModal from '@apps/BooksLibrary/components/modals/SendToKindleModal'
 import type { BooksLibraryEntry } from '@apps/BooksLibrary/providers/BooksLibraryProvider'
 
 export default function EntryContextMenu({
@@ -48,6 +48,9 @@ export default function EntryContextMenu({
         onSuccess: () => {
           queryClient.invalidateQueries({
             queryKey: ['booksLibrary', 'entries']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'readStatus']
           })
         },
         onSettled: () => {
@@ -103,8 +106,20 @@ export default function EntryContextMenu({
   return (
     <>
       <ContextMenuItem
-        icon={item.is_read ? 'tabler:check' : 'tabler:circle'}
-        label={item.is_read ? 'Mark as Unread' : 'Mark as Read'}
+        icon={
+          {
+            unread: 'tabler:progress-bolt',
+            read: 'tabler:progress',
+            reading: 'tabler:progress-check'
+          }[item.read_status]
+        }
+        label={`Mark as ${
+          {
+            unread: 'Reading',
+            read: 'Unread',
+            reading: 'Read'
+          }[item.read_status]
+        }`}
         loading={readStatusChangeLoading}
         namespace="apps.booksLibrary"
         onClick={() => {

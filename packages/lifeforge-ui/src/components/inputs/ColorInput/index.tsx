@@ -1,6 +1,6 @@
 import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
-import { useCallback, useRef } from 'react'
+import { useRef } from 'react'
 
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
@@ -47,13 +47,6 @@ function ColorInput({
 
   const ref = useRef<HTMLInputElement | null>(null)
 
-  const handleColorPickerOpen = useCallback(() => {
-    open(ColorPickerModal, {
-      value,
-      setValue
-    })
-  }, [value])
-
   return (
     <InputWrapper
       className={className}
@@ -98,7 +91,12 @@ function ColorInput({
         <button
           className="text-bg-500 hover:bg-bg-200 hover:text-bg-800 dark:hover:bg-bg-700/70 dark:hover:text-bg-200 mr-4 shrink-0 rounded-lg p-2 transition-all focus:outline-hidden"
           type="button"
-          onClick={handleColorPickerOpen}
+          onClick={() => {
+            open(ColorPickerModal, {
+              value,
+              setValue
+            })
+          }}
         >
           <Icon className="size-6" icon="tabler:color-picker" />
         </button>

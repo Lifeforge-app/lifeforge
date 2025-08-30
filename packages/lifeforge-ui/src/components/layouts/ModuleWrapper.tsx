@@ -1,6 +1,8 @@
 import { Scrollbar } from '@components/utilities'
 import clsx from 'clsx'
 
+import ModuleSidebarStateProvider from './ModuleSidebarStateProvider'
+
 function ModuleWrapper({
   children,
   className = '',
@@ -11,21 +13,23 @@ function ModuleWrapper({
   innerContainerClassName?: string
 }) {
   return (
-    <Scrollbar
-      className={clsx(
-        'no-overflow-x flex min-h-0 flex-col transition-all',
-        className
-      )}
-    >
-      <div
+    <ModuleSidebarStateProvider>
+      <Scrollbar
         className={clsx(
-          'flex w-full flex-1 flex-col px-4 pt-8 sm:px-12',
-          innerContainerClassName
+          'no-overflow-x flex min-h-0 flex-col transition-all',
+          className
         )}
       >
-        {children}
-      </div>
-    </Scrollbar>
+        <div
+          className={clsx(
+            'flex w-full flex-1 flex-col px-4 pt-8 sm:px-12',
+            innerContainerClassName
+          )}
+        >
+          {children}
+        </div>
+      </Scrollbar>
+    </ModuleSidebarStateProvider>
   )
 }
 

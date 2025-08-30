@@ -15,13 +15,7 @@ import {
   useTodoListContext
 } from '@apps/TodoList/providers/TodoListProvider'
 
-function TaskTagListItem({
-  item,
-  setSidebarOpen
-}: {
-  item: TodoListTag
-  setSidebarOpen: (value: boolean) => void
-}) {
+function TaskTagListItem({ item }: { item: TodoListTag }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -91,11 +85,9 @@ function TaskTagListItem({
       number={item.amount}
       onCancelButtonClick={() => {
         setFilter('tag', null)
-        setSidebarOpen(false)
       }}
       onClick={() => {
         setFilter('tag', item.id)
-        setSidebarOpen(false)
       }}
     />
   )

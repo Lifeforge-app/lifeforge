@@ -22,7 +22,11 @@
     "favourite": "最愛書籍",
     "languages": "語言",
     "collections": "收藏",
-    "fileTypes": "文件類型"
+    "fileTypes": "文件類型",
+    "read": "已讀",
+    "reading": "閱讀中",
+    "unread": "未讀",
+    "readStatus": "閱讀狀態"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
@@ -36,7 +40,8 @@
     "collection": {
       "create": "建立收藏",
       "update": "更新收藏"
-    }
+    },
+    "uploadFromDevice": "從設備上傳"
   },
   "buttons": {
     "addToLibrary": "添加到圖書館",
@@ -66,7 +71,8 @@
     "kindleEmail": "Kindle 電子郵件地址",
     "collection": "書籍收藏",
     "collectionName": "收藏名稱",
-    "collectionIcon": "收藏圖標"
+    "collectionIcon": "收藏圖標",
+    "uploadBookFile": "上傳書籍檔案"
   },
   "items": {
     "book": "書籍",
@@ -102,6 +108,5 @@
     }
   },
   "checkingKeys": "正在檢查SMTP API金鑰...",
-  "kindleSent": "已啟動進程，以將選定的文件發送到目標電子郵件地址。",
-  "readLabel": "已閱讀"
+  "kindleSent": "已啟動進程，以將選定的文件發送到目標電子郵件地址。"
 }

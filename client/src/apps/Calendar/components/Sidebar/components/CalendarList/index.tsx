@@ -11,11 +11,9 @@ import CalendarListItem from './components/CalendarListItem'
 
 function CalendarList({
   selectedCalendar,
-  setSidebarOpen,
   setSelectedCalendar
 }: {
   selectedCalendar: string | null
-  setSidebarOpen: (value: boolean) => void
   setSelectedCalendar: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const calendarsQuery = useQuery(
@@ -27,15 +25,13 @@ function CalendarList({
   const handleSelect = useCallback(
     (item: CalendarCalendar) => {
       setSelectedCalendar(item.id)
-      setSidebarOpen(false)
     },
-    [setSelectedCalendar, setSidebarOpen]
+    [setSelectedCalendar]
   )
 
   const handleCancelSelect = useCallback(() => {
     setSelectedCalendar(null)
-    setSidebarOpen(false)
-  }, [setSelectedCalendar, setSidebarOpen])
+  }, [setSelectedCalendar])
 
   const handleCreate = useCallback(() => {
     open(ModifyCalendarModal, {

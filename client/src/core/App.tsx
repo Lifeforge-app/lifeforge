@@ -48,11 +48,11 @@ function App() {
           <APIEndpointProvider endpoint={import.meta.env.VITE_API_HOST}>
             <QueryClientProvider client={queryClient}>
               <DndProvider backend={HTML5Backend}>
-                <APIOnlineStatusProvider>
-                  <APIOnlineStatusWrapper>
-                    <AuthProvider>
-                      <SidebarStateProvider>
-                        <PersonalizationProvider>
+                <PersonalizationProvider>
+                  <APIOnlineStatusProvider>
+                    <APIOnlineStatusWrapper>
+                      <AuthProvider>
+                        <SidebarStateProvider>
                           <UserPersonalizationProvider>
                             <ToastProvider>
                               <BackgroundProvider>
@@ -64,11 +64,11 @@ function App() {
                               </BackgroundProvider>
                             </ToastProvider>
                           </UserPersonalizationProvider>
-                        </PersonalizationProvider>
-                      </SidebarStateProvider>
-                    </AuthProvider>
-                  </APIOnlineStatusWrapper>
-                </APIOnlineStatusProvider>
+                        </SidebarStateProvider>
+                      </AuthProvider>
+                    </APIOnlineStatusWrapper>
+                  </APIOnlineStatusProvider>
+                </PersonalizationProvider>
               </DndProvider>
             </QueryClientProvider>
           </APIEndpointProvider>

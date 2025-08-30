@@ -1,27 +1,48 @@
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ContextMenu,
   ContextMenuItem,
-  HeaderFilter
+  HeaderFilter,
+  useModuleSidebarState
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import LibgenModal from '../modals/LibgenModal'
-import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
+import useFilter from '../hooks/useFilter'
+import LibgenModal from './modals/LibgenModal'
+import UploadFromDeviceModal from './modals/UploadFromDeviceModal'
 
 function Header({ itemCount }: { itemCount: number }) {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.booksLibrary')
 
+  const { setIsSidebarOpen } = useModuleSidebarState()
+
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
+
+  const fileTypesQuery = useQuery(
+    forgeAPI.booksLibrary.fileTypes.list.queryOptions()
+  )
+
   const {
-    collectionsQuery,
-    fileTypesQuery,
-    languagesQuery,
-    miscellaneous: { setSidebarOpen, searchQuery, filter, setFilter }
-  } = useBooksLibraryContext()
+    searchQuery,
+    updateFilter,
+    collection,
+    favourite,
+    fileType,
+    language,
+    readStatus
+  } = useFilter()
 
   const handleOpenLibgenModal = useCallback(() => {
     open(LibgenModal, {})
@@ -31,7 +52,13 @@ function Header({ itemCount }: { itemCount: number }) {
     <div>
       <div className="flex-between flex">
         <h1 className="text-3xl font-semibold">
-          {Object.values(filter).every(value => !value) && !searchQuery.trim()
+          {Object.values([
+            collection,
+            favourite,
+            fileType,
+            language,
+            readStatus
+          ]).every(value => !value) && !searchQuery.trim()
             ? 'All'
             : 'Filtered'}{' '}
           Books <span className="text-bg-500 text-base">({itemCount})</span>
@@ -56,7 +83,9 @@ function Header({ itemCount }: { itemCount: number }) {
               icon="tabler:upload"
               label="Upload from device"
               namespace="apps.booksLibrary"
-              onClick={() => {}}
+              onClick={() => {
+                open(UploadFromDeviceModal, {})
+              }}
             />
             <ContextMenuItem
               icon="tabler:books"
@@ -70,7 +99,7 @@ function Header({ itemCount }: { itemCount: number }) {
             icon="tabler:menu"
             variant="plain"
             onClick={() => {
-              setSidebarOpen(true)
+              setIsSidebarOpen(true)
             }}
           />
         </div>
@@ -93,32 +122,14 @@ function Header({ itemCount }: { itemCount: number }) {
           }
         }}
         setValues={{
-          collection: value => {
-            if (value) {
-              setFilter('collection', value)
-            } else {
-              setFilter('collection', null)
-            }
-          },
-          fileType: value => {
-            if (value) {
-              setFilter('fileType', value)
-            } else {
-              setFilter('fileType', null)
-            }
-          },
-          language: value => {
-            if (value) {
-              setFilter('language', value)
-            } else {
-              setFilter('language', null)
-            }
-          }
+          collection: value => updateFilter('collection', value || null),
+          fileType: value => updateFilter('fileType', value || null),
+          language: value => updateFilter('language', value || null)
         }}
         values={{
-          collection: filter.collection ?? '',
-          fileType: filter.fileType ?? '',
-          language: filter.language ?? ''
+          collection: collection ?? '',
+          fileType: fileType ?? '',
+          language: language ?? ''
         }}
       />
     </div>

@@ -30,7 +30,7 @@ i18n
     saveMissing: true,
     missingKeyHandler: async (_, namespace, key) => {
       if (
-        !['utils', 'apps', 'common', 'core'].includes(namespace.split('.')[0])
+        !['utils', 'apps', 'common', 'core'].includes(namespace?.split('.')[0])
       ) {
         return
       }

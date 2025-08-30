@@ -9,43 +9,31 @@ import {
   WithQuery,
   useModalStore
 } from 'lifeforge-ui'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import type { ScoreLibrarySidebarData } from '@apps/ScoresLibrary'
+import useFilter from '@apps/ScoresLibrary/hooks/useFilter'
 
 import ModifyCollectionModal from '../modals/ModifyCollectionModal'
 import ModifyTypeModal from '../modals/ModifyTypeModal'
 import SidebarAuthorItem from './components/SidebarAuthorItem'
 import SidebarTypeItem from './components/SidebarCategoryItem'
 import SidebarCollectionItem from './components/SidebarCollectionItem'
-import SidebarStarredItem from './components/SidebarStarredItem'
 
 function Sidebar({
-  sidebarDataQuery,
-  isOpen,
-  setOpen,
-  author,
-  setAuthor,
-  starred,
-  setStarred,
-  category: type,
-  setCategory,
-  collection,
-  setCollection
+  sidebarDataQuery
 }: {
   sidebarDataQuery: UseQueryResult<ScoreLibrarySidebarData>
-  isOpen: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  author: string | null
-  setAuthor: React.Dispatch<React.SetStateAction<string | null>>
-  starred: boolean
-  setStarred: React.Dispatch<React.SetStateAction<boolean>>
-  category: string | null
-  setCategory: React.Dispatch<React.SetStateAction<string | null>>
-  collection: string | null
-  setCollection: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const open = useModalStore(state => state.open)
+
+  const {
+    author,
+    starred,
+    category: type,
+    collection,
+    updateFilter
+  } = useFilter()
 
   const collectionsQuery = useQuery(
     forgeAPI.scoresLibrary.collections.list.queryOptions()
@@ -61,73 +49,33 @@ function Sidebar({
     [sidebarDataQuery]
   )
 
-  const handleResetAll = useCallback(() => {
-    setCategory(null)
-    setCollection(null)
-    setAuthor(null)
-    setStarred(false)
-    setOpen(false)
-  }, [])
-
-  const handleResetAuthor = useCallback(() => {
-    setAuthor(null)
-    setOpen(false)
-  }, [])
-
-  const handleOnSelectAuthor = useCallback((author: string | null) => {
-    setAuthor(author)
-    setOpen(false)
-  }, [])
-
-  const handleResetCategory = useCallback(() => {
-    setCategory(null)
-    setOpen(false)
-  }, [])
-
-  const handleSelectCategory = useCallback((category: string | null) => {
-    setCategory(category)
-    setOpen(false)
-  }, [])
-
-  const handleResetCollection = useCallback(() => {
-    setCollection(null)
-    setOpen(false)
-  }, [])
-
-  const handleSelectCollection = useCallback((collection: string | null) => {
-    setCollection(collection)
-    setOpen(false)
-  }, [])
-
-  const handleCreate = useCallback(() => {
-    open(ModifyTypeModal, {
-      openType: 'create'
-    })
-  }, [])
-
   return (
-    <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
+    <SidebarWrapper>
       <WithQuery query={sidebarDataQuery}>
         {sidebarData => (
           <>
             <SidebarItem
-              active={
-                type === null &&
-                author === null &&
-                !starred &&
-                collection === null
-              }
+              active={[type, author, starred, collection].every(v => !v)}
               icon="tabler:list"
               label="All scores"
               namespace="apps.scoresLibrary"
               number={sidebarData.total}
-              onClick={handleResetAll}
+              onClick={() => {
+                updateFilter('category', null)
+                updateFilter('collection', null)
+                updateFilter('author', null)
+                updateFilter('starred', false)
+              }}
             />
-            <SidebarStarredItem
-              count={sidebarData.favourites}
-              isActive={starred}
-              setActive={setStarred}
-              setOpen={setOpen}
+            <SidebarItem
+              active={starred}
+              icon="tabler:star-filled"
+              label="Starred"
+              namespace="apps.scoresLibrary"
+              number={sidebarData.favourites}
+              onClick={() => {
+                updateFilter('starred', true)
+              }}
             />
             <SidebarDivider />
             <SidebarTitle
@@ -149,8 +97,9 @@ function Sidebar({
                         key={c.id}
                         data={c}
                         isActive={collection === c.id}
-                        onCancel={handleResetCollection}
-                        onSelect={handleSelectCollection}
+                        onSelect={(collection: string | null) => {
+                          updateFilter('collection', collection)
+                        }}
                       />
                     ))}
                   </>
@@ -164,29 +113,25 @@ function Sidebar({
             <SidebarDivider />
             <SidebarTitle
               actionButtonIcon="tabler:plus"
-              actionButtonOnClick={handleCreate}
+              actionButtonOnClick={() => {
+                open(ModifyTypeModal, {
+                  openType: 'create'
+                })
+              }}
               label="categories"
               namespace="apps.scoresLibrary"
             />
             {sidebarData.types.map(t => (
-              <SidebarTypeItem
-                key={t.id}
-                data={t}
-                isActive={type === t.id}
-                onCancel={handleResetCategory}
-                onSelect={handleSelectCategory}
-              />
+              <SidebarTypeItem key={t.id} data={t} isActive={type === t.id} />
             ))}
             <SidebarDivider />
             <SidebarTitle label="authors" namespace="apps.scoresLibrary" />
             {sortedAuthors.map(([auth, count]) => (
               <SidebarAuthorItem
                 key={auth}
-                author={auth === 'na' ? null : auth}
+                author={auth}
                 count={count}
-                isActive={auth === author}
-                onCancel={handleResetAuthor}
-                onSelect={handleOnSelectAuthor}
+                isActive={(auth || '[na]') === author}
               />
             ))}
           </>

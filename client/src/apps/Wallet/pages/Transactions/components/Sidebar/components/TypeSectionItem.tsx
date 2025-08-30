@@ -20,7 +20,7 @@ function TypeSectionItem({
 
   const { bgTempPalette } = usePersonalization()
 
-  const { selectedType, setSelectedType, setSelectedCategory, setSidebarOpen } =
+  const { selectedType, setSelectedType, setSelectedCategory } =
     useWalletStore()
 
   const sidebarStripColor = useMemo(
@@ -36,17 +36,14 @@ function TypeSectionItem({
 
   const handleCancelButtonClick = useCallback(() => {
     setSelectedType(null)
-    setSidebarOpen(false)
   }, [])
 
   const handleClick = useCallback(() => {
     if (label === 'All Types') {
       setSelectedType(null)
-      setSidebarOpen(false)
     } else {
       setSelectedCategory(null)
       setSelectedType(label.toLowerCase() as 'income' | 'expenses' | 'transfer')
-      setSidebarOpen(false)
     }
   }, [])
 

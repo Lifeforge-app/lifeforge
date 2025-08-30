@@ -98,7 +98,7 @@ function FormInputs<T extends FormState>({
   autoFocusableFieldId,
   conditionalFields,
   data,
-  setStore,
+  setData,
   errorMsgs,
   removeErrorMsg,
   namespace
@@ -109,7 +109,7 @@ function FormInputs<T extends FormState>({
     [K in keyof T]?: (data: T) => boolean
   }
   data: T
-  setStore: (data: Record<string, any>) => void
+  setData: React.Dispatch<React.SetStateAction<T>>
   errorMsgs: Record<string, string | undefined>
   removeErrorMsg: (fieldId: string) => void
   namespace?: string
@@ -120,7 +120,8 @@ function FormInputs<T extends FormState>({
     Object.keys(fields).forEach(id => {
       handlers[id] = (value: any) => {
         removeErrorMsg(id)
-        setStore({ [id]: value })
+        console.log('Changed', value)
+        setData(prev => ({ ...prev, [id]: value }))
       }
     })
 

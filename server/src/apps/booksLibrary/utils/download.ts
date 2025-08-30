@@ -15,7 +15,8 @@ export const processDownloadedFiles = async (
     | 'thumbnail'
     | 'file'
     | 'is_favourite'
-    | 'is_read'
+    | 'read_status'
+    | 'time_started'
     | 'time_finished'
     | 'created'
     | 'updated'
@@ -23,7 +24,7 @@ export const processDownloadedFiles = async (
     | 'md5'
   > & {
     thumbnail: string | File
-    file?: File
+    file?: File | string
     collection?: string
   }
 ): Promise<void> => {

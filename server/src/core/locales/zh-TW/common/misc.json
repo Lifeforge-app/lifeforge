@@ -41,7 +41,7 @@
   },
   "dnd": {
     "dropHere": "將項目拖放到這裡",
-    "dragAndDropToUpload": "拖放上傳",
+    "dragAndDropToUpload": "拖放或點擊上傳",
     "or": "或",
     "buttons": {
       "pasteFromClipboard": "從剪貼簿貼上"
@@ -114,5 +114,6 @@
   "invalidColor": "無效顏色。請輸入有效的十六進制值，格式為#RRGGBB。",
   "invalidIcon": "無效圖標。必須是來自Iconify的有效圖標識別符，格式為<icon-set>:<icon-name>。",
   "loadingUserData": "正在加載用戶數據...",
-  "invalidSelection": "無效選擇。請從清單中選擇一個有效的值。"
+  "invalidSelection": "無效選擇。請從清單中選擇一個有效的值。",
+  "fileInputSupportedFormat": "支持的格式：{{format}}"
 }

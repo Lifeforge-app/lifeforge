@@ -15,13 +15,7 @@ import {
   useTodoListContext
 } from '@apps/TodoList/providers/TodoListProvider'
 
-function TaskListListItem({
-  item,
-  setSidebarOpen
-}: {
-  item: TodoListList
-  setSidebarOpen: (value: boolean) => void
-}) {
+function TaskListListItem({ item }: { item: TodoListList }) {
   const queryClient = useQueryClient()
 
   const { filter, setFilter } = useTodoListContext()
@@ -91,11 +85,9 @@ function TaskListListItem({
       sideStripColor={item.color}
       onCancelButtonClick={() => {
         setFilter('list', null)
-        setSidebarOpen(false)
       }}
       onClick={() => {
         setFilter('list', item.id)
-        setSidebarOpen(false)
       }}
     />
   )

@@ -1,4 +1,9 @@
-import { Button, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
+import {
+  Button,
+  ContextMenu,
+  ContextMenuItem,
+  useModuleSidebarState
+} from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
@@ -13,7 +18,6 @@ import ViewSelector from './components/ViewSelector'
 interface CalendarHeaderProps {
   label: string
   view: View
-  setSidebarOpen: (value: boolean) => void
   onNavigate: (direction: NavigateAction) => void
   onView: (view: View) => void
 }
@@ -21,13 +25,14 @@ interface CalendarHeaderProps {
 function CalendarHeader({
   label,
   view: currentView,
-  setSidebarOpen,
   onNavigate,
   onView
 }: CalendarHeaderProps) {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.calendar')
+
+  const { setIsSidebarOpen } = useModuleSidebarState()
 
   const handleScanImageModalOpen = useCallback(() => {
     open(ScanImageModal, {})
@@ -87,7 +92,7 @@ function CalendarHeader({
           icon="tabler:menu"
           variant="plain"
           onClick={() => {
-            setSidebarOpen(true)
+            setIsSidebarOpen(true)
           }}
         />
       </div>

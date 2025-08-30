@@ -8,31 +8,25 @@ function Sidebar({
   selectedCalendar,
   setSelectedCalendar,
   selectedCategory,
-  setSelectedCategory,
-  sidebarOpen,
-  setSidebarOpen
+  setSelectedCategory
 }: {
   selectedCalendar: string | null
   setSelectedCalendar: React.Dispatch<React.SetStateAction<string | null>>
   selectedCategory: string | null
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
-  sidebarOpen: boolean
-  setSidebarOpen: (value: boolean) => void
 }) {
   return (
-    <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
+    <SidebarWrapper>
       <MiniCalendar />
       <SidebarDivider />
       <CalendarList
         selectedCalendar={selectedCalendar}
         setSelectedCalendar={setSelectedCalendar}
-        setSidebarOpen={setSidebarOpen}
       />
       <SidebarDivider />
       <CategoryList
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
-        setSidebarOpen={setSidebarOpen}
       />
     </SidebarWrapper>
   )

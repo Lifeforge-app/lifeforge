@@ -5,39 +5,41 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
+import ModifyModal from '@apps/BooksLibrary/components/modals/ModifyModal'
+import useFilter from '@apps/BooksLibrary/hooks/useFilter'
 
 import {
   type BooksLibraryCollection,
   type BooksLibraryFileType,
-  type BooksLibraryLanguage,
-  useBooksLibraryContext
+  type BooksLibraryLanguage
 } from '../../../providers/BooksLibraryProvider'
 
 function _SidebarItem({
   item,
   stuff,
   fallbackIcon,
-  hasContextMenu = true
+  hasContextMenu = true,
+  useNamespace = false
 }: {
   item: BooksLibraryCollection | BooksLibraryLanguage | BooksLibraryFileType
-  stuff: 'collections' | 'languages' | 'fileTypes'
+  stuff: 'collections' | 'languages' | 'fileTypes' | 'readStatus'
   fallbackIcon?: string
   hasContextMenu?: boolean
+  useNamespace?: boolean
 }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
 
-  const {
-    miscellaneous: { filter, setFilter, setSidebarOpen }
-  } = useBooksLibraryContext()
+  const { updateFilter, collection, fileType, language, readStatus } =
+    useFilter()
 
   const singleStuff = (
     {
       collections: 'collection',
       languages: 'language',
-      fileTypes: 'fileType'
+      fileTypes: 'fileType',
+      readStatus: 'readStatus'
     } as const
   )[stuff]
 
@@ -84,7 +86,14 @@ function _SidebarItem({
   return (
     <>
       <SidebarItem
-        active={filter[singleStuff] === item.id}
+        active={
+          {
+            collection,
+            fileType,
+            language,
+            readStatus
+          }[singleStuff] === item.id
+        }
         contextMenuItems={
           hasContextMenu ? (
             <>
@@ -104,13 +113,14 @@ function _SidebarItem({
         }
         icon={'icon' in item ? item.icon : fallbackIcon}
         label={item.name}
+        namespace={useNamespace ? 'apps.booksLibrary' : undefined}
         number={item.amount}
+        sideStripColor={'color' in item ? (item.color as string) : undefined}
         onCancelButtonClick={() => {
-          setFilter(singleStuff, null)
+          updateFilter(singleStuff, null)
         }}
         onClick={() => {
-          setSidebarOpen(false)
-          setFilter(singleStuff, item.id)
+          updateFilter(singleStuff, item.id)
         }}
       />
     </>

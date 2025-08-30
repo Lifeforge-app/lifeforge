@@ -107,7 +107,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
         </Listbox>
         <SearchInput
           namespace="core.personalization"
-          searchTarget="fontFamily.inputs.fontFamily"
+          searchTarget="fontFamily.items.fontFamily"
           setValue={setSearchQuery}
           value={searchQuery}
         />

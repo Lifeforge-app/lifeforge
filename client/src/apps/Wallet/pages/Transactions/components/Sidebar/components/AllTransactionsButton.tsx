@@ -12,7 +12,6 @@ function AllTransactionsButton() {
     selectedAsset,
     selectedLedger,
     selectedCategory,
-    setSidebarOpen,
     setSelectedType,
     setSelectedCategory,
     setSelectedAsset,
@@ -29,13 +28,11 @@ function AllTransactionsButton() {
   )
 
   const handleAllTransactionsClick = useCallback(() => {
-    setSidebarOpen(false)
     setSelectedType(null)
     setSelectedCategory(null)
     setSelectedAsset(null)
     setSelectedLedger(null)
   }, [
-    setSidebarOpen,
     setSelectedType,
     setSelectedCategory,
     setSelectedAsset,
