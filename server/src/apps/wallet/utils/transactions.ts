@@ -1,6 +1,5 @@
 import { PBService } from '@functions/database'
 import { fetchAI } from '@functions/external/ai'
-import fs from 'fs'
 import { fromPath } from 'pdf2pic'
 import z from 'zod/v4'
 
@@ -72,8 +71,6 @@ export function convertPDFToImage(path: string): Promise<File | undefined> {
           })
 
           resolve(thumbnailFile)
-
-          fs.unlinkSync(path)
         }
       )
     } catch (error) {
