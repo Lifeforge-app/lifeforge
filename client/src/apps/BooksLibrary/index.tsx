@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
@@ -10,15 +11,15 @@ import {
   ModuleWrapper,
   SearchInput,
   ViewModeSelector,
-  WithQueryData
+  WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import LibgenModal from './components/modals/LibgenModal'
 import useFilter from './hooks/useFilter'
-import LibgenModal from './modals/LibgenModal'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 
@@ -38,6 +39,19 @@ function BooksLibrary() {
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   const [view, setView] = useState<'list' | 'grid'>('list')
+
+  const dataQuery = useQuery(
+    forgeAPI.booksLibrary.entries.list
+      .input({
+        collection: collection || undefined,
+        language: language || undefined,
+        favourite: favourite.toString() || undefined,
+        fileType: fileType || undefined,
+        readStatus: readStatus || undefined,
+        query: debouncedSearchQuery.trim() || undefined
+      })
+      .queryOptions()
+  )
 
   const handleOpenLibgenModal = useCallback(() => {
     open(LibgenModal, {})
@@ -72,67 +86,64 @@ function BooksLibrary() {
       <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
-          <WithQueryData
-            controller={forgeAPI.booksLibrary.entries.list.input({
-              collection: collection || undefined,
-              language: language || undefined,
-              favourite: favourite.toString() || undefined,
-              fileType: fileType || undefined,
-              readStatus: readStatus || undefined,
-              query: debouncedSearchQuery.trim() || undefined
-            })}
-          >
-            {entries => {
-              if (entries.length === 0) {
-                if (
-                  debouncedSearchQuery.trim() ||
-                  [collection, language, favourite, fileType].some(v => v)
-                ) {
-                  return (
-                    <EmptyStateScreen
-                      icon="tabler:search-off"
-                      name="result"
-                      namespace="apps.booksLibrary"
-                    />
-                  )
-                }
+          <Header itemCount={dataQuery.data?.length || 0} />
+          <div className="mt-4 flex items-center gap-2">
+            <SearchInput
+              namespace="apps.booksLibrary"
+              searchTarget="book"
+              setValue={setSearchQuery}
+              value={searchQuery}
+            />
+            <ViewModeSelector
+              className="hidden md:flex"
+              options={[
+                { value: 'list', icon: 'uil:list-ul' },
+                { value: 'grid', icon: 'uil:apps' }
+              ]}
+              setViewMode={setView}
+              viewMode={view}
+            />
+          </div>
+          <WithQuery query={dataQuery}>
+            {entries => (
+              <>
+                {(() => {
+                  {
+                    if (entries.length === 0) {
+                      if (
+                        debouncedSearchQuery.trim() ||
+                        [collection, language, favourite, fileType].some(v => v)
+                      ) {
+                        return (
+                          <EmptyStateScreen
+                            icon="tabler:search-off"
+                            name="result"
+                            namespace="apps.booksLibrary"
+                          />
+                        )
+                      }
 
-                return (
-                  <EmptyStateScreen
-                    icon="tabler:books-off"
-                    name="book"
-                    namespace="apps.booksLibrary"
-                  />
-                )
-              }
+                      return (
+                        <EmptyStateScreen
+                          icon="tabler:books-off"
+                          name="book"
+                          namespace="apps.booksLibrary"
+                        />
+                      )
+                    }
 
-              const FinalComponent = view === 'grid' ? GridView : ListView
+                    const FinalComponent = view === 'grid' ? GridView : ListView
 
-              return (
-                <>
-                  <Header itemCount={entries.length} />
-                  <div className="mt-4 flex items-center gap-2">
-                    <SearchInput
-                      namespace="apps.booksLibrary"
-                      searchTarget="book"
-                      setValue={setSearchQuery}
-                      value={searchQuery}
-                    />
-                    <ViewModeSelector
-                      className="hidden md:flex"
-                      options={[
-                        { value: 'list', icon: 'uil:list-ul' },
-                        { value: 'grid', icon: 'uil:apps' }
-                      ]}
-                      setViewMode={setView}
-                      viewMode={view}
-                    />
-                  </div>
-                  <FinalComponent books={entries} />
-                </>
-              )
-            }}
-          </WithQueryData>
+                    return (
+                      <>
+                        <FinalComponent books={entries} />
+                      </>
+                    )
+                  }
+                })()}
+              </>
+            )}
+          </WithQuery>
         </div>
       </div>
       <Menu as="div" className="fixed right-6 bottom-6 z-50 block md:hidden">

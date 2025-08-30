@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import { type BooksLibraryEntry } from '../providers/BooksLibraryProvider'
+import { type BooksLibraryEntry } from '../../providers/BooksLibraryProvider'
 
 function ModifyBookModal({
   data: { initialData },
@@ -34,6 +34,12 @@ function ModifyBookModal({
         onSuccess: () => {
           queryClient.invalidateQueries({
             queryKey: ['booksLibrary', 'entries']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'collections']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'languages']
           })
         },
         onError: () => {

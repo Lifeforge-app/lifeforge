@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
@@ -14,6 +14,8 @@ function AddToLibraryModal({
     book: Record<string, any>
   }
 }) {
+  const queryClient = useQueryClient()
+
   const collectionsQuery = useQuery(
     forgeAPI.booksLibrary.collections.list.queryOptions()
   )
@@ -31,29 +33,36 @@ function AddToLibraryModal({
   )
 
   const mutation = useMutation(
-    forgeAPI.booksLibrary.libgen.addToLibrary
-      .input({
-        md5: book.md5
-      })
-      .mutationOptions({
-        onSuccess: () => {
-          toast.success('Book added to download queue')
-        },
-        onError: () => {
-          toast.error('Failed to add book to download queue')
-        }
-      })
+    (provider !== 'local'
+      ? forgeAPI.booksLibrary.libgen.addToLibrary.input({
+          md5: book.md5
+        })
+      : forgeAPI.booksLibrary.entries.upload
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['booksLibrary']
+        })
+
+        toast.success('Book added to download queue')
+      },
+      onError: () => {
+        toast.error('Failed to add book to download queue')
+      }
+    })
   )
 
   const { formProps } = defineForm<
-    InferInput<typeof forgeAPI.booksLibrary.libgen.addToLibrary>['body']
+    InferInput<typeof forgeAPI.booksLibrary.libgen.addToLibrary>['body'] & {
+      file: string | File | null
+    }
   >({
     icon: 'majesticons:book-plus-line',
     loading: fetchedDataQuery.isLoading && languagesQuery.isLoading,
     namespace: 'apps.booksLibrary',
     submitButton: {
-      children: 'Download',
-      icon: 'tabler:download'
+      children: provider === 'local' ? 'Upload' : 'Download',
+      icon: provider === 'local' ? 'tabler:upload' : 'tabler:download'
     },
     title: 'Add to library',
     onClose
@@ -69,13 +78,15 @@ function AddToLibraryModal({
       year_published: 'number',
       languages: 'listbox',
       extension: 'text',
-      size: 'number'
+      size: 'number',
+      file: 'file'
     })
     .setupFields({
       isbn: {
         label: 'ISBN',
         icon: 'tabler:barcode',
-        placeholder: 'ISBN'
+        placeholder: 'ISBN',
+        qrScanner: true
       },
       collection: {
         multiple: false,
@@ -145,6 +156,12 @@ function AddToLibraryModal({
         icon: 'tabler:dimensions',
         placeholder: 'Size',
         disabled: true
+      },
+      file: {
+        icon: 'tabler:file-upload',
+        label: 'Upload file',
+        optional: false,
+        hidden: true
       }
     })
     .initialData(
@@ -173,7 +190,11 @@ function AddToLibraryModal({
               .map(lang => lang.id),
             thumbnail: book['image'],
             extension: book.Extension || '',
-            size: parseInt(book.Size, 10) || 0
+            size: parseInt(book.Size, 10) || 0,
+            file: {
+              file: book.File || null,
+              preview: null
+            }
           }
     )
     .onSubmit(async data => {
