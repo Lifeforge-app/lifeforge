@@ -24,7 +24,7 @@ export const processDownloadedFiles = async (
     | 'md5'
   > & {
     thumbnail: string | File
-    file?: File
+    file?: File | string
     collection?: string
   }
 ): Promise<void> => {
