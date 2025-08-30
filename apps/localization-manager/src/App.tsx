@@ -17,7 +17,7 @@ import NamespaceSelector from './components/NamespaceSelector'
 import forgeAPI from './utils/forgeAPI'
 
 function App() {
-  const { t } = useTranslation('utils.localeAdmin')
+  const { t } = useTranslation(['utils.localeAdmin'])
 
   const open = useModalStore(state => state.open)
 
@@ -89,15 +89,17 @@ function App() {
       return
     }
 
-    const newData = { ...locales }
+    setLocales(prevLocales => {
+      const newData = JSON.parse(JSON.stringify(prevLocales)) // Deep copy
 
-    const target = path
-      .slice(0, -1)
-      .reduce((acc, key) => acc[key], newData[lng])
+      const target = path
+        .slice(0, -1)
+        .reduce((acc, key) => acc[key], newData[lng])
 
-    target[path[path.length - 1]] = value
+      target[path[path.length - 1]] = value
 
-    setLocales(newData)
+      return newData
+    })
   }
 
   async function renameEntry(path: string) {
@@ -290,14 +292,12 @@ function App() {
   )
 
   useEffect(() => {
+    setChangedKeys([])
+    setSearchQuery('')
+
     if (namespace && subNamespace) {
       fetchLocales()
     }
-  }, [namespace, subNamespace, fetchLocales])
-
-  useEffect(() => {
-    setChangedKeys([])
-    setSearchQuery('')
   }, [namespace, subNamespace])
 
   return (
@@ -349,7 +349,7 @@ function App() {
         subNamespace={subNamespace}
       />
 
-      {namespace && subNamespace ? (
+      {namespace && subNamespace && JSON.stringify(locales) !== '{}' ? (
         <div className="mt-3 flex h-full flex-1 flex-col">
           <SearchInput
             namespace="utils.localeAdmin"

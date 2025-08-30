@@ -1,6 +1,6 @@
 import { LoadingScreen } from '@components/screens'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React, { Suspense } from 'react'
+import React from 'react'
 import {
   APIEndpointProvider,
   PersonalizationProvider,
@@ -39,26 +39,24 @@ function SSOAppMainView({
               className="bg-bg-200/50 text-bg-800 dark:bg-bg-900/50 dark:text-bg-50 flex min-h-dvh w-full flex-col"
               id="app"
             >
-              <Suspense fallback={<LoadingScreen />}>
-                <SSOAuthProvider forgeAPI={forgeAPI}>
-                  {isAuthed =>
-                    isAuthed === 'loading' ? (
-                      <LoadingScreen />
-                    ) : isAuthed ? (
-                      children
-                    ) : (
-                      <>
-                        <SSOHeader
-                          icon={icon}
-                          link={link}
-                          namespace={namespace}
-                        />
-                        <UnauthorizedScreen frontendURL={frontendURL} />
-                      </>
-                    )
-                  }
-                </SSOAuthProvider>
-              </Suspense>
+              <SSOAuthProvider forgeAPI={forgeAPI}>
+                {isAuthed =>
+                  isAuthed === 'loading' ? (
+                    <LoadingScreen />
+                  ) : isAuthed ? (
+                    children
+                  ) : (
+                    <>
+                      <SSOHeader
+                        icon={icon}
+                        link={link}
+                        namespace={namespace}
+                      />
+                      <UnauthorizedScreen frontendURL={frontendURL} />
+                    </>
+                  )
+                }
+              </SSOAuthProvider>
               <ModalManager />
             </main>
           </ToastProvider>
