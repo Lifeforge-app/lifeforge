@@ -3,6 +3,7 @@ import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
 import useInputLabel from '../shared/hooks/useInputLabel'
@@ -52,6 +53,8 @@ function FileInput({
 }) {
   const open = useModalStore(state => state.open)
 
+  const { t } = useTranslation('common.misc')
+
   const inputLabel = useInputLabel({ namespace, label })
 
   const handleFilePickerOpen = useCallback(() => {
@@ -91,7 +94,17 @@ function FileInput({
           >
             Select
           </Button>
-          <p className="text-bg-500 text-xs">{reminderText}</p>
+          <p className="text-bg-500 text-sm">
+            {reminderText ||
+              t('fileInputSupportedFormat', {
+                format:
+                  Object.entries(acceptedMimeTypes)
+                    .flatMap(([type, exts]) =>
+                      exts.map(ext => `${type}/${ext}`)
+                    )
+                    .join(', ') || 'N/A'
+              })}
+          </p>
         </div>
       ) : (
         <>

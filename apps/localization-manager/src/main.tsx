@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './i18n'
 import './index.css'
-import LocaleManagerProvider from './providers/LocaleManagerProvider'
 import forgeAPI from './utils/forgeAPI'
 
 const config = {
@@ -18,8 +17,6 @@ const config = {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <SSOAppMainView config={config}>
-    <LocaleManagerProvider>
-      <App />
-    </LocaleManagerProvider>
+    <App />
   </SSOAppMainView>
 )
