@@ -57,3 +57,5 @@ export { default as PreviewContainer } from './FileInput/FilePickerModal/compone
 export { default as Listbox } from './Listbox'
 
 export type { Location } from './LocationInput'
+
+export type { FileData } from './FileInput'
