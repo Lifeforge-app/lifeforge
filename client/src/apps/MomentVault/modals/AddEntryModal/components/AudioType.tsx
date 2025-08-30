@@ -216,6 +216,7 @@ function AudioType({
               className="mt-6 w-full"
               icon="tabler:transfer"
               loading={transcribeLoading}
+              namespace="apps.momentVault"
               variant="plain"
               onClick={() => {
                 transcribeText()
