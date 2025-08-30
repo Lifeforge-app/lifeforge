@@ -4,6 +4,7 @@ import { LoadingScreen } from '@components/screens'
 import { loadIcon } from '@iconify/react/dist/iconify.js'
 import { stringToIcon, validateIconName } from '@iconify/utils'
 import dayjs from 'dayjs'
+import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePromiseLoading } from 'shared'
@@ -88,6 +89,8 @@ function FormModal({
   const [data, setData] = useState(() => dataStore.getState())
 
   useEffect(() => {
+    dataStore.setState(data)
+
     const unsubscribe = dataStore.subscribe(data => {
       setData(data)
     })
@@ -258,6 +261,14 @@ function FormModal({
   // Notify parent component of data changes
   useEffect(() => {
     onChange?.(data)
+
+    if (_.isEqual(data, dataStore.getState())) {
+      // If the data is shallow equal to the previous data,
+      // we can skip the update
+      return
+    }
+
+    dataStore.setState(data)
   }, [data, onChange])
 
   return (
@@ -279,7 +290,7 @@ function FormModal({
             fields={fields}
             namespace={namespace}
             removeErrorMsg={removeErrorMsg}
-            setStore={dataStore.setState}
+            setData={setData}
           />
           <SubmitButton
             submitButton={submitButton}
