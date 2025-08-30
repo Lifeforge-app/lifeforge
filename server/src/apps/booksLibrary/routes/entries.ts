@@ -1,5 +1,6 @@
 /* eslint-disable padding-line-between-statements */
 import { getAPIKey } from '@functions/database'
+import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
@@ -149,7 +150,15 @@ const upload = forgeController.mutation
     }
   })
   .callback(async ({ pb, body, media: { file } }) => {
-    pb.create.collection('books_library__entries').data(body).execute()
+    await pb.create
+      .collection('books_library__entries')
+      .data({
+        ...body,
+        ...getMedia('file', file)
+      })
+      .execute()
+
+    return 'ok'
   })
 
 const update = forgeController.mutation
@@ -359,13 +368,13 @@ const getEpubMetadata = forgeController.mutation
     const metadata = epubInstance.metadata
 
     return {
-      isbn: metadata.ISBN,
-      title: metadata.title,
-      authors: metadata.creator,
-      publisher: metadata.publisher,
-      year_published: moment(metadata.date).year(),
-      languages: [metadata.language],
-      size: file.size
+      ISBN: metadata.ISBN,
+      Title: metadata.title,
+      'Author(s)': metadata.creator,
+      Publisher: metadata.publisher,
+      Year: moment(metadata.date).year().toString(),
+      Size: file.size.toString(),
+      Extension: 'epub'
     }
   })
 
