@@ -89,6 +89,10 @@ export const checkEmpty = (value: unknown): boolean => {
     return isNaN(value.getTime())
   }
 
+  if (value instanceof File) {
+    return false
+  }
+
   if (typeof value === 'object') {
     if (Object.keys(value).length === 0) {
       return true
