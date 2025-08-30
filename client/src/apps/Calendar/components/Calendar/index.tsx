@@ -166,7 +166,8 @@ function CalendarComponent({
       open(ModifyEventModal, {
         type: 'create',
         initialData: {
-          start: dayjs(start).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          type: 'single',
+          start: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
           end: dayjs(end).subtract(1, 'minute').format('YYYY-MM-DD HH:mm:ss')
         }
       })
