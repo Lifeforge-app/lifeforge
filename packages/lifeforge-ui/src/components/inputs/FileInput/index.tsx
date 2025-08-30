@@ -94,7 +94,7 @@ function FileInput({
           >
             Select
           </Button>
-          <p className="text-bg-500 text-sm">
+          <p className="text-bg-500 text-center text-sm">
             {reminderText ||
               t('fileInputSupportedFormat', {
                 format:
