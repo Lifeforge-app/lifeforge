@@ -174,7 +174,7 @@ const addToLibrary = forgeController.mutation
       size: z.number().int().min(0),
       title: z.string(),
       year_published: z.number().int().min(0),
-      file: z.undefined()
+      file: z.union([z.string(), z.file()])
     })
   })
   .statusCode(202)
