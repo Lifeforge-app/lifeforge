@@ -23,6 +23,25 @@ export default function EntryContextMenu({
 
   const [readStatusChangeLoading, setReadStatusChangeLoading] = useState(false)
 
+  const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
+
+  const toggleFavouriteStatusMutation = useMutation(
+    forgeAPI.booksLibrary.entries.toggleFavouriteStatus
+      .input({
+        id: item.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'entries']
+          })
+        },
+        onSettled: () => {
+          setAddToFavouritesLoading(false)
+        }
+      })
+  )
+
   const handleDownload = useCallback(() => {
     setDownloadLoading(true)
     forceDown(
@@ -125,6 +144,16 @@ export default function EntryContextMenu({
         onClick={() => {
           setReadStatusChangeLoading(true)
           readStatusChangeMutation.mutate({})
+        }}
+      />
+      <ContextMenuItem
+        icon={item.is_favourite ? 'tabler:heart-off' : 'tabler:heart'}
+        label="Add to Favourites"
+        loading={addToFavouritesLoading}
+        namespace="apps.booksLibrary"
+        onClick={() => {
+          setAddToFavouritesLoading(true)
+          toggleFavouriteStatusMutation.mutate({})
         }}
       />
       <ContextMenuItem

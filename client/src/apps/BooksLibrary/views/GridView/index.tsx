@@ -21,7 +21,7 @@ function GridView({ books }: { books: BooksLibraryEntry[] }) {
 
   return (
     <Scrollbar className="mt-6">
-      <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 px-4 pb-8 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] sm:gap-3">
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-2 px-4 pb-8 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] sm:gap-3">
         {Object.entries(processes).map(
           ([key, value]) =>
             value && (
