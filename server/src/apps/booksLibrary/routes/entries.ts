@@ -5,9 +5,12 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import { EPub } from 'epub2'
+import fs from 'fs'
 import moment from 'moment'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
+
+import { convertPDFToImage } from '@apps/wallet/utils/transactions'
 
 import { SCHEMAS } from '../../../core/schema'
 
@@ -130,6 +133,33 @@ const list = forgeController.query
     }
   )
 
+const getEpubThumbnail = (epubInstance: EPub): Promise<File | undefined> => {
+  return new Promise((resolve, reject) => {
+    const coverId = epubInstance
+      .listImage()
+      .find(item => item.id?.toLowerCase().includes('cover'))?.id
+    if (!coverId) {
+      return resolve(undefined)
+    }
+
+    epubInstance.getImage(coverId, (error, data, MimeType) => {
+      if (error) {
+        return reject(error)
+      }
+
+      if (!data) {
+        return resolve(undefined)
+      }
+
+      const file = new File([Buffer.from(data)], 'cover.jpg', {
+        type: MimeType
+      })
+
+      resolve(file)
+    })
+  })
+}
+
 const upload = forgeController.mutation
   .description('Upload a new entry to the books library')
   .input({
@@ -137,7 +167,9 @@ const upload = forgeController.mutation
       title: true,
       authors: true,
       edition: true,
+      size: true,
       languages: true,
+      extension: true,
       isbn: true,
       publisher: true,
       year_published: true
@@ -150,13 +182,33 @@ const upload = forgeController.mutation
     }
   })
   .callback(async ({ pb, body, media: { file } }) => {
+    if (typeof file === 'string') {
+      throw new ClientError('Invalid file')
+    }
+
+    let thumbnail: File | undefined = undefined
+
+    if (file.mimetype === 'application/epub+zip') {
+      const epubInstance = await EPub.createAsync(file.path)
+
+      thumbnail = await getEpubThumbnail(epubInstance)
+    } else if (file.mimetype === 'application/pdf') {
+      thumbnail = await convertPDFToImage(file.path)
+    }
+
     await pb.create
       .collection('books_library__entries')
       .data({
         ...body,
-        ...getMedia('file', file)
+        ...(await getMedia('file', file)),
+        thumbnail,
+        read_status: 'unread'
       })
       .execute()
+
+    if (fs.existsSync(file.path)) {
+      fs.unlinkSync(file.path)
+    }
 
     return 'ok'
   })
