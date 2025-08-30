@@ -25,7 +25,7 @@
     }
   },
   "imagePicker": {
-    "title": "Select Image",
+    "title": "Select File",
     "local": "Upload local image",
     "url": "Image URL",
     "pixabay": "Download from Pixabay",
