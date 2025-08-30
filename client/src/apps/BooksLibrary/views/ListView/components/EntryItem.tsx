@@ -1,29 +1,21 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { Button, ContextMenu } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
-import tinycolor from 'tinycolor2'
 
-import {
-  type BooksLibraryEntry,
-  useBooksLibraryContext
-} from '../../../providers/BooksLibraryProvider'
+import { type BooksLibraryEntry } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
+import ReadStatusChip from '../../components/ReadStatusChip'
 
 export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
-  const { t } = useTranslation('apps.booksLibrary')
-
-  const { derivedThemeColor } = usePersonalization()
-
   const queryClient = useQueryClient()
 
-  const { collectionsQuery } = useBooksLibraryContext()
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 
@@ -101,20 +93,7 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
         />
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        {item.is_read && (
-          <span
-            className={clsx(
-              'bg-custom-500 mb-2 flex w-min items-center gap-1 rounded-full py-1 pr-3 pl-2.5 text-xs font-semibold tracking-wide whitespace-nowrap',
-              tinycolor(derivedThemeColor).isDark()
-                ? 'text-bg-100'
-                : 'text-bg-800'
-            )}
-            data-tooltip-id={`read-label-${item.id}`}
-          >
-            <Icon className="size-4" icon="tabler:check" />
-            {t('readLabel')}
-          </span>
-        )}
+        <ReadStatusChip item={item} />
         {collectionsQuery.data && (
           <div className="text-bg-500 mb-1 flex items-center gap-1 text-sm font-medium">
             {(() => {
@@ -133,13 +112,13 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
             })()}
           </div>
         )}
-        <div className="mr-24 line-clamp-3 text-lg font-semibold">
+        <div className="mr-28 line-clamp-3 text-lg font-semibold">
           {item.title}{' '}
           {item.edition !== '' && (
             <span className="text-bg-500 text-sm">({item.edition} ed)</span>
           )}
         </div>
-        <div className="text-custom-500 mr-20 text-sm font-medium">
+        <div className="text-custom-500 mt-1 mr-28 text-sm font-medium">
           {item.authors}
         </div>
         <BookMeta item={item} />

@@ -8,11 +8,7 @@ import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskTagListItem from './TaskTagListItem'
 
-function TaskTagList({
-  setSidebarOpen
-}: {
-  setSidebarOpen: (value: boolean) => void
-}) {
+function TaskTagList() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.todoList')
@@ -38,11 +34,7 @@ function TaskTagList({
           tags.length > 0 ? (
             <>
               {tags.map(item => (
-                <TaskTagListItem
-                  key={item.id}
-                  item={item}
-                  setSidebarOpen={setSidebarOpen}
-                />
+                <TaskTagListItem key={item.id} item={item} />
               ))}
             </>
           ) : (

@@ -1,20 +1,21 @@
 import { EmptyStateScreen } from 'lifeforge-ui'
 
 import type { ScoreLibraryEntry } from '..'
+import useFilter from '../hooks/useFilter'
 import GridView from './GridView'
 import ListView from './ListView'
 
 function Views({
   entries,
-  view,
   debouncedSearchQuery,
   totalItems
 }: {
   entries: ScoreLibraryEntry[]
-  view: 'grid' | 'list'
   debouncedSearchQuery: string
   totalItems: number
 }) {
+  const { view } = useFilter()
+
   if (totalItems === 0) {
     if (debouncedSearchQuery.trim() === '') {
       return (

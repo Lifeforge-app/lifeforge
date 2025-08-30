@@ -15,13 +15,7 @@ import {
   useTodoListContext
 } from '@apps/TodoList/providers/TodoListProvider'
 
-function TaskPriorityListItem({
-  item,
-  setSidebarOpen
-}: {
-  item: TodoListPriority
-  setSidebarOpen: (value: boolean) => void
-}) {
+function TaskPriorityListItem({ item }: { item: TodoListPriority }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -90,11 +84,9 @@ function TaskPriorityListItem({
       sideStripColor={item.color}
       onCancelButtonClick={() => {
         setFilter('priority', null)
-        setSidebarOpen(false)
       }}
       onClick={() => {
         setFilter('priority', item.id)
-        setSidebarOpen(false)
       }}
     />
   )

@@ -1,22 +1,217 @@
 /* eslint-disable padding-line-between-statements */
 import { getAPIKey } from '@functions/database'
+import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
+import { EPub } from 'epub2'
+import fs from 'fs'
+import moment from 'moment'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
+
+import { convertPDFToImage } from '@apps/wallet/utils/transactions'
 
 import { SCHEMAS } from '../../../core/schema'
 
 const list = forgeController.query
   .description('Get all entries in the books library')
-  .input({})
-  .callback(({ pb }) =>
-    pb.getFullList
-      .collection('books_library__entries')
-      .sort(['-is_favourite', '-created'])
-      .execute()
+  .input({
+    query: z.object({
+      collection: z.string().optional(),
+      language: z.string().optional(),
+      favourite: z
+        .string()
+        .optional()
+        .transform(val => val === 'true'),
+      readStatus: z
+        .enum(['1', '2', '3'])
+        .optional()
+        .transform(val => {
+          switch (val) {
+            case '1':
+              return 'read'
+            case '2':
+              return 'reading'
+            case '3':
+              return 'unread'
+          }
+        }),
+      fileType: z.string().optional(),
+      query: z.string().optional()
+    })
+  })
+  .existenceCheck('query', {
+    collection: '[books_library__collections]',
+    language: '[books_library__languages]',
+    fileType: '[books_library__file_types]'
+  })
+  .callback(
+    async ({
+      pb,
+      query: { collection, language, favourite, fileType, readStatus, query }
+    }) => {
+      const fileTypeRecord = fileType
+        ? await pb.getOne
+            .collection('books_library__file_types')
+            .id(fileType)
+            .execute()
+        : undefined
+
+      return (
+        await pb.getFullList
+          .collection('books_library__entries')
+          .filter([
+            collection
+              ? {
+                  field: 'collection',
+                  operator: '=',
+                  value: collection
+                }
+              : undefined,
+            language
+              ? {
+                  field: 'languages',
+                  operator: '~',
+                  value: language
+                }
+              : undefined,
+            favourite === true
+              ? {
+                  field: 'is_favourite',
+                  operator: '=',
+                  value: true
+                }
+              : undefined,
+            readStatus
+              ? {
+                  field: 'read_status',
+                  operator: '=',
+                  value: readStatus
+                }
+              : undefined,
+            fileTypeRecord && {
+              field: 'extension',
+              operator: '=',
+              value: fileTypeRecord.name
+            },
+            query
+              ? {
+                  field: 'title',
+                  operator: '~',
+                  value: query
+                }
+              : undefined
+          ])
+          .execute()
+      ).sort((a, b) => {
+        // First sort by read status (reading -> unread -> read).
+        // If the read status is the same, sort by time started (newest first).
+        // Otherwise, sort by favourite status (favourite -> normal), then by title
+
+        const readStatusOrder = {
+          reading: 1,
+          unread: 2,
+          read: 3
+        }
+
+        if (a.read_status !== b.read_status) {
+          return readStatusOrder[a.read_status] - readStatusOrder[b.read_status]
+        }
+
+        if (a.read_status === 'reading') {
+          return (
+            new Date(b.time_started).getTime() -
+            new Date(a.time_started).getTime()
+          )
+        }
+
+        return (
+          +b.is_favourite - +a.is_favourite || a.title.localeCompare(b.title)
+        )
+      })
+    }
   )
+
+const getEpubThumbnail = (epubInstance: EPub): Promise<File | undefined> => {
+  return new Promise((resolve, reject) => {
+    const coverId = epubInstance
+      .listImage()
+      .find(item => item.id?.toLowerCase().includes('cover'))?.id
+    if (!coverId) {
+      return resolve(undefined)
+    }
+
+    epubInstance.getImage(coverId, (error, data, MimeType) => {
+      if (error) {
+        return reject(error)
+      }
+
+      if (!data) {
+        return resolve(undefined)
+      }
+
+      const file = new File([Buffer.from(data)], 'cover.jpg', {
+        type: MimeType
+      })
+
+      resolve(file)
+    })
+  })
+}
+
+const upload = forgeController.mutation
+  .description('Upload a new entry to the books library')
+  .input({
+    body: SCHEMAS.books_library.entries.pick({
+      title: true,
+      authors: true,
+      edition: true,
+      size: true,
+      languages: true,
+      extension: true,
+      isbn: true,
+      publisher: true,
+      year_published: true
+    })
+  })
+  .media({
+    file: {
+      optional: false,
+      multiple: false
+    }
+  })
+  .callback(async ({ pb, body, media: { file } }) => {
+    if (typeof file === 'string') {
+      throw new ClientError('Invalid file')
+    }
+
+    let thumbnail: File | undefined = undefined
+
+    if (file.mimetype === 'application/epub+zip') {
+      const epubInstance = await EPub.createAsync(file.path)
+
+      thumbnail = await getEpubThumbnail(epubInstance)
+    } else if (file.mimetype === 'application/pdf') {
+      thumbnail = await convertPDFToImage(file.path)
+    }
+
+    await pb.create
+      .collection('books_library__entries')
+      .data({
+        ...body,
+        ...(await getMedia('file', file)),
+        thumbnail,
+        read_status: 'unread'
+      })
+      .execute()
+
+    if (fs.existsSync(file.path)) {
+      fs.unlinkSync(file.path)
+    }
+
+    return 'ok'
+  })
 
 const update = forgeController.mutation
   .input({
@@ -94,8 +289,21 @@ const toggleReadStatus = forgeController.mutation
       .collection('books_library__entries')
       .id(id)
       .data({
-        is_read: !book.is_read,
-        time_finished: !book.is_read ? new Date().toISOString() : ''
+        read_status: {
+          unread: 'reading',
+          read: 'unread',
+          reading: 'read'
+        }[book.read_status],
+        time_finished: {
+          unread: undefined,
+          read: '',
+          reading: new Date().toISOString()
+        }[book.read_status],
+        time_started: {
+          unread: new Date().toISOString(),
+          read: '',
+          reading: undefined
+        }[book.read_status]
       })
       .execute()
   })
@@ -193,6 +401,35 @@ const sendToKindle = forgeController.mutation
     return taskid
   })
 
+const getEpubMetadata = forgeController.mutation
+  .description('Get metadata for an EPUB file')
+  .input({})
+  .media({
+    file: {
+      optional: false,
+      multiple: false
+    }
+  })
+  .callback(async ({ media: { file } }) => {
+    if (typeof file === 'string') {
+      throw new ClientError('Invalid media type')
+    }
+
+    const epubInstance = await EPub.createAsync(file.path)
+
+    const metadata = epubInstance.metadata
+
+    return {
+      ISBN: metadata.ISBN,
+      Title: metadata.title,
+      'Author(s)': metadata.creator,
+      Publisher: metadata.publisher,
+      Year: moment(metadata.date).year().toString(),
+      Size: file.size.toString(),
+      Extension: 'epub'
+    }
+  })
+
 const remove = forgeController.mutation
   .description('Delete an existing entry in the books library')
   .input({
@@ -210,9 +447,11 @@ const remove = forgeController.mutation
 
 export default forgeRouter({
   list,
+  upload,
   update,
   toggleFavouriteStatus,
   toggleReadStatus,
   sendToKindle,
+  getEpubMetadata,
   remove
 })

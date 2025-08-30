@@ -39,7 +39,7 @@ function ModuleHeader({
   const { toggleSidebar, sidebarExpanded } = useSidebarState()
 
   return (
-    <header className="flex-between z-80 mb-6 flex w-full min-w-0 gap-8">
+    <header className="flex-between mb-6 flex w-full min-w-0 gap-8">
       <div className="flex w-full min-w-0 items-center gap-2">
         {!sidebarExpanded && (
           <Button

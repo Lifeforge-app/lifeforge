@@ -1,10 +1,10 @@
+import type { UseQueryResult } from '@tanstack/react-query'
 import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import ModifyModal from '@apps/BooksLibrary/modals/ModifyModal'
-import { useBooksLibraryContext } from '@apps/BooksLibrary/providers/BooksLibraryProvider'
+import ModifyModal from '@apps/BooksLibrary/components/modals/ModifyModal'
 
 import SidebarItem from './SidebarItem'
 
@@ -12,19 +12,20 @@ function SidebarSection({
   stuff,
   fallbackIcon,
   hasActionButton = true,
-  hasContextMenu = true
+  hasContextMenu = true,
+  dataQuery,
+  useNamespace = false
 }: {
-  stuff: 'collections' | 'languages' | 'fileTypes'
+  stuff: 'collections' | 'languages' | 'fileTypes' | 'readStatus'
   fallbackIcon?: string
   hasActionButton?: boolean
   hasContextMenu?: boolean
+  dataQuery: UseQueryResult<any[]>
+  useNamespace?: boolean
 }) {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.booksLibrary')
-
-  const { collectionsQuery, languagesQuery, fileTypesQuery } =
-    useBooksLibraryContext()
 
   const handleCreateItem = useCallback(() => {
     open(ModifyModal, {
@@ -33,16 +34,6 @@ function SidebarSection({
       stuff: stuff as 'collections' | 'languages'
     })
   }, [stuff])
-
-  const dataQuery = useMemo(
-    () =>
-      ({
-        collections: collectionsQuery,
-        languages: languagesQuery,
-        fileTypes: fileTypesQuery
-      })[stuff],
-    [stuff, collectionsQuery, languagesQuery, fileTypesQuery]
-  )
 
   return (
     <>
@@ -67,6 +58,7 @@ function SidebarSection({
                   hasContextMenu={hasContextMenu}
                   item={item}
                   stuff={stuff}
+                  useNamespace={useNamespace}
                 />
               ))}
             </>

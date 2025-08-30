@@ -1,13 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import {
-  type BooksLibraryEntry,
-  useBooksLibraryContext
-} from '../providers/BooksLibraryProvider'
+import { type BooksLibraryEntry } from '../../providers/BooksLibraryProvider'
 
 function ModifyBookModal({
   data: { initialData },
@@ -20,7 +17,13 @@ function ModifyBookModal({
 }) {
   const queryClient = useQueryClient()
 
-  const { languagesQuery, collectionsQuery } = useBooksLibraryContext()
+  const collectionsQuery = useQuery(
+    forgeAPI.booksLibrary.collections.list.queryOptions()
+  )
+
+  const languagesQuery = useQuery(
+    forgeAPI.booksLibrary.languages.list.queryOptions()
+  )
 
   const mutation = useMutation(
     forgeAPI.booksLibrary.entries.update
@@ -31,6 +34,12 @@ function ModifyBookModal({
         onSuccess: () => {
           queryClient.invalidateQueries({
             queryKey: ['booksLibrary', 'entries']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'collections']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['booksLibrary', 'languages']
           })
         },
         onError: () => {

@@ -22,7 +22,11 @@
     "favourite": "Favourite Books",
     "languages": "Languages",
     "collections": "Collections",
-    "fileTypes": "File Types"
+    "fileTypes": "File Types",
+    "read": "Read",
+    "reading": "Reading",
+    "unread": "Unread",
+    "readStatus": "Read Status"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
@@ -36,7 +40,8 @@
     "collection": {
       "create": "Create Collection",
       "update": "Update Collection"
-    }
+    },
+    "uploadFromDevice": "Upload from Device"
   },
   "buttons": {
     "addToLibrary": "Add to Library",
@@ -66,7 +71,8 @@
     "kindleEmail": "Kindle Email Address",
     "collection": "Book Collection",
     "collectionName": "Collection Name",
-    "collectionIcon": "Collection Icon"
+    "collectionIcon": "Collection Icon",
+    "uploadBookFile": "Upload Book File"
   },
   "items": {
     "book": "Book",
@@ -102,6 +108,5 @@
     }
   },
   "checkingKeys": "Checking SMTP API keys...",
-  "kindleSent": "Fired process to send the selected document to the targeted email address.",
-  "readLabel": "Read"
+  "kindleSent": "Fired process to send the selected document to the targeted email address."
 }

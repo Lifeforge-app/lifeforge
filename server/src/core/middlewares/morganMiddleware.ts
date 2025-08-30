@@ -44,7 +44,7 @@ const m =
               : RESPONSE_TIME_COLOR.slow
 
         const statusColor =
-          STATUS_COLOR[status.toString()[0] as keyof typeof STATUS_COLOR] ||
+          STATUS_COLOR[status?.toString()?.[0] as keyof typeof STATUS_COLOR] ||
           '#ffffff'
 
         LoggingService.info(

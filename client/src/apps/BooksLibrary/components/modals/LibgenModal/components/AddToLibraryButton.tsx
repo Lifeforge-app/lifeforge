@@ -3,7 +3,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
+import { useBooksLibraryContext } from '../../../../providers/BooksLibraryProvider'
 import AddToLibraryModal from '../../AddToLibraryModal'
 
 // TODO: Check whether the book is already in the library

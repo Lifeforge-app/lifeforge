@@ -1,6 +1,6 @@
 import { FileInput } from '@components/inputs'
-import type { FileData } from '@components/inputs/FileInput'
 
+import type { FileData } from '../../../../../../inputs/FileInput'
 import type {
   BaseFieldProps,
   FormInputProps
