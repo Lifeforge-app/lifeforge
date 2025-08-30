@@ -6,6 +6,7 @@
     "packages/*/.storybook",
     "client/src",
     "server/src",
-    "shared/src"
+    "shared/src",
+    "scripts/*"
   ]
 }
