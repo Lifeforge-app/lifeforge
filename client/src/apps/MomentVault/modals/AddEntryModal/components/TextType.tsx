@@ -37,7 +37,7 @@ function TextType({ onSuccess }: { onSuccess: () => void }) {
         icon="tabler:file-text"
         label="Text Content"
         namespace="apps.momentVault"
-        placeholder={t('apps.momentVault:placeholders.textEntry')}
+        placeholder="What a beautiful day..."
         setValue={setText}
         value={text}
       />
