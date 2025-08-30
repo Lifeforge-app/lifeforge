@@ -52,7 +52,8 @@
     "downloading": "Sedang dimuat turun",
     "sendToKindle": "Hantar ke Kindle",
     "markAsRead": "Tandakan sebagai Dibaca",
-    "markAsUnread": "Tandakan sebagai Belum Dibaca"
+    "markAsUnread": "Tandakan sebagai Belum Dibaca",
+    "markAsReading": "Tandakan sebagai Sedang Membaca"
   },
   "inputs": {
     "isbn": "ISBN",

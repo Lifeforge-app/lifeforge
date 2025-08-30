@@ -52,7 +52,8 @@
     "downloading": "Downloading",
     "sendToKindle": "Send to Kindle",
     "markAsRead": "Mark as Read",
-    "markAsUnread": "Mark as Unread"
+    "markAsUnread": "Mark as Unread",
+    "markAsReading": "Mark as Reading"
   },
   "inputs": {
     "isbn": "ISBN",
