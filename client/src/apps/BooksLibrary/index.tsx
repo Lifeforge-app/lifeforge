@@ -1,12 +1,12 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
-  Button,
+  ContextMenu,
   ContextMenuGroup,
   ContextMenuItem,
   EmptyStateScreen,
+  FAB,
   ModuleHeader,
   ModuleWrapper,
   SearchInput,
@@ -14,11 +14,12 @@ import {
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import LibgenModal from './components/modals/LibgenModal'
+import UploadFromDeviceModal from './components/modals/UploadFromDeviceModal'
 import useFilter from './hooks/useFilter'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
@@ -52,10 +53,6 @@ function BooksLibrary() {
       })
       .queryOptions()
   )
-
-  const handleOpenLibgenModal = useCallback(() => {
-    open(LibgenModal, {})
-  }, [])
 
   return (
     <ModuleWrapper>
@@ -146,27 +143,30 @@ function BooksLibrary() {
           </WithQuery>
         </div>
       </div>
-      <Menu as="div" className="fixed right-6 bottom-6 z-50 block md:hidden">
-        <Button as={MenuButton} icon="tabler:plus" onClick={() => {}}></Button>
-        <MenuItems
-          transition
-          anchor="top end"
-          className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:6px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
-        >
-          <ContextMenuItem
-            icon="tabler:upload"
-            label="Upload from device"
-            namespace="apps.booksLibrary"
-            onClick={() => {}}
-          />
-          <ContextMenuItem
-            icon="tabler:books"
-            label="Download from Libgen"
-            namespace="apps.booksLibrary"
-            onClick={handleOpenLibgenModal}
-          />
-        </MenuItems>
-      </Menu>
+      <ContextMenu
+        buttonComponent={<FAB className="static!" />}
+        classNames={{
+          wrapper: 'fixed right-6 bottom-6 z-50',
+          menu: 'w-72'
+        }}
+      >
+        <ContextMenuItem
+          icon="tabler:upload"
+          label="Upload from device"
+          namespace="apps.booksLibrary"
+          onClick={() => {
+            open(UploadFromDeviceModal, {})
+          }}
+        />
+        <ContextMenuItem
+          icon="tabler:books"
+          label="Download from Libgen"
+          namespace="apps.booksLibrary"
+          onClick={() => {
+            open(LibgenModal, {})
+          }}
+        />
+      </ContextMenu>
     </ModuleWrapper>
   )
 }
