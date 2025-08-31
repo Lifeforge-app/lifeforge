@@ -30,7 +30,7 @@ function UploadFromDeviceModal({ onClose }: { onClose: () => void }) {
 
     const metadata = await forgeAPI.booksLibrary.entries.getEpubMetadata.mutate(
       {
-        file
+        document: file
       }
     )
 
