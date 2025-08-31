@@ -113,7 +113,7 @@ function Pixabay({
             ].filter(e => e).length
           }}
           namespace="common.modals"
-          searchTarget="pixabay.items.pixabay"
+          searchTarget="imagePicker.items.pixabay"
           setValue={setQuery}
           value={query}
           onKeyUp={e => {
