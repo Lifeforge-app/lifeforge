@@ -19,7 +19,7 @@ function EditorsChoiceSwitch({
     <div className="flex items-center justify-between py-2">
       <div className="flex items-center gap-2">
         <Icon className="size-6" icon="tabler:user-star" />
-        <span className="text-lg">{t('imageUpload.inputs.editorsChoice')}</span>
+        <span className="text-lg">{t('imagePicker.inputs.editorsChoice')}</span>
       </div>
       <Switch
         checked={isEditorsChoice}

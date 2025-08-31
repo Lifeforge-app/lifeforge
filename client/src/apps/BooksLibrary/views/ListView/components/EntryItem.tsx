@@ -1,9 +1,7 @@
 import { Icon } from '@iconify/react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
-import { Button, ContextMenu } from 'lifeforge-ui'
-import { useState } from 'react'
+import { ContextMenu } from 'lifeforge-ui'
 
 import { type BooksLibraryEntry } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
@@ -11,54 +9,16 @@ import EntryContextMenu from '../../components/EntryContextMenu'
 import ReadStatusChip from '../../components/ReadStatusChip'
 
 export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
-  const queryClient = useQueryClient()
-
   const collectionsQuery = useQuery(
     forgeAPI.booksLibrary.collections.list.queryOptions()
-  )
-
-  const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
-
-  const toggleFavouriteStatusMutation = useMutation(
-    forgeAPI.booksLibrary.entries.toggleFavouriteStatus
-      .input({
-        id: item.id
-      })
-      .mutationOptions({
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['booksLibrary', 'entries']
-          })
-        },
-        onSettled: () => {
-          setAddToFavouritesLoading(false)
-        }
-      })
   )
 
   return (
     <li
       key={item.id}
-      className="shadow-custom component-bg-with-hover relative flex gap-4 rounded-lg p-4"
+      className="shadow-custom component-bg-with-hover relative flex flex-col gap-4 rounded-lg p-4 sm:flex-row"
     >
       <div className="absolute top-4 right-3 z-20 flex">
-        <Button
-          className={clsx(
-            'aspect-square size-12',
-            item.is_favourite && 'text-red-500!'
-          )}
-          icon={(() => {
-            if (addToFavouritesLoading) {
-              return 'svg-spinners:180-ring'
-            }
-
-            return item.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
-          })()}
-          variant="plain"
-          onClick={() => {
-            toggleFavouriteStatusMutation.mutate({})
-          }}
-        />
         <ContextMenu>
           <EntryContextMenu item={item} />
         </ContextMenu>
@@ -75,7 +35,7 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
         rel="noreferrer"
         target="_blank"
       />
-      <div className="flex-center component-bg-lighter relative isolate aspect-10/12 h-min w-28 rounded-lg p-2">
+      <div className="flex-center component-bg-lighter relative isolate aspect-10/12 h-min w-[calc(100%-4rem)] rounded-lg p-2 sm:w-28">
         <img
           alt=""
           className="h-full object-cover"
@@ -92,7 +52,7 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
           icon="tabler:book"
         />
       </div>
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex w-full min-w-0 flex-1 flex-col">
         <ReadStatusChip item={item} />
         {collectionsQuery.data && (
           <div className="text-bg-500 mb-1 flex items-center gap-1 text-sm font-medium">
@@ -112,13 +72,13 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
             })()}
           </div>
         )}
-        <div className="mr-28 line-clamp-3 text-lg font-semibold">
+        <div className="line-clamp-3 text-lg font-semibold sm:mr-28">
           {item.title}{' '}
           {item.edition !== '' && (
             <span className="text-bg-500 text-sm">({item.edition} ed)</span>
           )}
         </div>
-        <div className="text-custom-500 mt-1 mr-28 text-sm font-medium">
+        <div className="text-custom-500 mt-1 text-sm font-medium sm:mr-28">
           {item.authors}
         </div>
         <BookMeta item={item} />
