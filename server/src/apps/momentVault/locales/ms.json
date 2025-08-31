@@ -19,7 +19,8 @@
     "entryType": "Jenis Entri",
     "audio": "Audio",
     "transcription": "Transkripsi",
-    "textContent": "Kandungan Teks"
+    "textContent": "Kandungan Teks",
+    "photos": "Gambar"
   },
   "entryTypes": {
     "audio": "Audio",

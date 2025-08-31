@@ -53,7 +53,9 @@
     "sendToKindle": "發送到 Kindle",
     "markAsRead": "標記為已讀",
     "markAsUnread": "標記為未讀",
-    "markAsReading": "標記為正在閱讀"
+    "markAsReading": "標記為正在閱讀",
+    "addToFavourites": "添加到最愛",
+    "removeFromFavourites": "從收藏中移除"
   },
   "inputs": {
     "isbn": "ISBN 碼",
