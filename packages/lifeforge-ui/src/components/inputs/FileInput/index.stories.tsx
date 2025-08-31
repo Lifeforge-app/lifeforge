@@ -20,7 +20,8 @@ export const Default: Story = {
     setData: () => {},
     namespace: 'namespace',
     acceptedMimeTypes: {
-      image: ['jpeg']
+      image: ['jpeg'],
+      application: ['pdf']
     }
   },
   render: args => {

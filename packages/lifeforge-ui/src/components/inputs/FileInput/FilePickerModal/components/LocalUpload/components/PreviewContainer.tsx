@@ -28,7 +28,7 @@ function PreviewContainer({
   }, [file, fileName])
 
   return (
-    <div className="flex-center flex-1">
+    <div className="flex-center w-full min-w-0 flex-1">
       {preview !== null && (
         <div className="bg-bg-200/50 shadow-custom dark:bg-bg-800/50 relative flex min-h-32 w-full flex-col overflow-hidden rounded-lg p-4">
           <div className="flex-between mb-6 ml-4 flex">
@@ -61,8 +61,8 @@ function PreviewContainer({
         </div>
       )}
       {file !== null && preview === null && (
-        <div className="mb-6 flex w-full items-center justify-between gap-8">
-          <div className="flex w-full items-center gap-3">
+        <div className="mb-6 flex w-full min-w-0 items-center justify-between gap-8">
+          <div className="flex w-full min-w-0 items-center gap-3">
             <Icon
               className="text-bg-500 size-6"
               icon={
@@ -71,7 +71,7 @@ function PreviewContainer({
                 ] || 'tabler:file'
               }
             />
-            <p className="w-full truncate">{finalFileName}</p>
+            <p className="w-full min-w-0 truncate">{finalFileName}</p>
           </div>
           <Button
             className="p-2!"
