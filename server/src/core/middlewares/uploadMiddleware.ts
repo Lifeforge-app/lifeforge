@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, 'medium/')
   },
   filename: (req, file, cb) => {
-    cb(null, `${uuidv4()}-${file.originalname}`)
+    cb(null, `${uuidv4()}.${file.originalname.split('.').pop()}`)
   }
 })
 
