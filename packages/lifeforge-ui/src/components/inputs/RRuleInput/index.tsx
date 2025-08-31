@@ -188,7 +188,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
     }
 
     setValue(rrule)
-  }, [start, rruleParams])
+  }, [start, rruleParams, duration])
 
   return (
     <div className="space-y-3">
@@ -304,10 +304,10 @@ function RRuleInput<HasDuration extends boolean = boolean>({
         )}
       </div>
       {hasDuration && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col flex-wrap items-center gap-2 sm:flex-row">
           <NumberInput
             required
-            className="flex-1"
+            className="w-full min-w-48 flex-1"
             icon="tabler:clock"
             label={t('recurring.inputs.durationAmount')}
             setValue={amt => {
@@ -321,7 +321,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
           <ListboxInput
             required
             buttonContent={<>{t(`recurring.durationUnits.${duration.unit}`)}</>}
-            className="flex-1"
+            className="w-full min-w-48 flex-1"
             icon="tabler:clock"
             label={t('recurring.inputs.durationUnit')}
             setValue={unit => {

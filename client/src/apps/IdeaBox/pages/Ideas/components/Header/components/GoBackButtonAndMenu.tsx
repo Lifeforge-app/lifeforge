@@ -1,11 +1,13 @@
 import { ContextMenu, ContextMenuItem, GoBackButton } from 'lifeforge-ui'
 import { memo, useCallback } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 function GoBackButtonAndMenu() {
   const navigate = useNavigate()
+
+  const location = useLocation()
 
   const { viewArchived, setViewArchived, setSearchQuery, setSelectedTags } =
     useIdeaBoxContext()
@@ -17,7 +19,7 @@ function GoBackButtonAndMenu() {
     setSearchQuery('')
     setSelectedTags([])
     navigate(location.pathname.split('/').slice(0, -1).join('/'))
-  }, [viewArchived])
+  }, [viewArchived, location])
 
   const handleViewArchive = useCallback(() => {
     setViewArchived(prev => !prev)

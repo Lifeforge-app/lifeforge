@@ -96,6 +96,7 @@ function UsingEmail({
         {otpSent ? (
           <div className="space-y-4">
             <OTPInputBox
+              buttonFullWidth
               lighter
               otp={otp}
               setOtp={setOTP}
