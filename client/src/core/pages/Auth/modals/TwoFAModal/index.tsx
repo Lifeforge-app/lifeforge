@@ -65,7 +65,9 @@ function TwoFAModal({ onClose }: { onClose: () => void }) {
           setAuthMethod(authMethod === 'app' ? 'email' : 'app')
         }}
       >
-        modals.twoFA.{authMethod === 'app' ? 'useEmailOtp' : 'useAuthApp'}
+        {authMethod === 'app'
+          ? 'modals.twoFA.buttons.useEmailOtp'
+          : 'modals.twoFA.buttons.useAuthApp'}
       </Button>
     </div>
   )

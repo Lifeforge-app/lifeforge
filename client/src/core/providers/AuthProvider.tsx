@@ -39,12 +39,8 @@ interface AuthData {
   verifySession: (
     session: string
   ) => Promise<{ success: boolean; userData: UserData | null }>
-  verifyOAuth: (code: string, state: string) => void
+  verifyOAuth: (code: string, state: string) => Promise<boolean>
   logout: () => void
-  loginQuota: {
-    quota: number
-    dismissQuota: () => void
-  }
   authLoading: boolean
   userData: UserData | null
   setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
@@ -67,8 +63,6 @@ export default function AuthProvider({
 
   const [userData, setUserData] = useState<UserData | null>(null)
 
-  const [quota, setQuota] = useState(5)
-
   const [authLoading, setAuthLoading] = useState(true)
 
   const tid = useRef('')
@@ -83,58 +77,6 @@ export default function AuthProvider({
     },
     [_setAuth]
   )
-
-  const updateQuota = useCallback((): number => {
-    const storedQuota = window.localStorage.getItem('quota')
-
-    if (storedQuota) {
-      if (storedQuota !== '0') {
-        setQuota(parseInt(storedQuota, 10))
-
-        return parseInt(storedQuota, 10)
-      }
-
-      let lastQuotaExceeded: number | string | null =
-        window.localStorage.getItem('lastQuotaExceeded')
-
-      if (lastQuotaExceeded) {
-        lastQuotaExceeded = parseInt(lastQuotaExceeded, 10)
-
-        if (Date.now() - lastQuotaExceeded > 60 * 60 * 1000) {
-          setQuota(5)
-          window.localStorage.setItem('quota', '5')
-          window.localStorage.removeItem('lastQuotaExceeded')
-
-          return 5
-        }
-
-        return 0
-      }
-
-      return 0
-    } else {
-      setQuota(5)
-
-      return 5
-    }
-  }, [])
-
-  const dismissQuota = useCallback(() => {
-    const _quota = updateQuota()
-
-    if (_quota - 1 <= 0) {
-      window.localStorage.setItem('lastQuotaExceeded', Date.now().toString())
-    }
-
-    if (_quota - 1 >= 0) {
-      setQuota(_quota - 1)
-      window.localStorage.setItem('quota', (_quota - 1).toString())
-
-      return
-    }
-
-    toast.error(t('messages.quotaExceeded'))
-  }, [updateQuota])
 
   const verifySession = useCallback(
     async (
@@ -173,56 +115,38 @@ export default function AuthProvider({
       email: string
       password: string
     }): Promise<string | void> => {
-      const res = fetch(forgeAPI.user.auth.login.endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      })
-        .then(async res => {
-          if (!res.ok) {
-            try {
-              const data = await res.json()
-
-              if (data.message) {
-                if (data.message === 'Invalid credentials') {
-                  return 'invalid'
-                }
-
-                throw new Error(data.message)
-              }
-            } catch {
-              throw new Error('Unknown error')
-            }
-          }
-
-          const { data } = await res.json()
-
-          if (data.state === 'success') {
-            window.localStorage.setItem('quota', '5')
-            window.localStorage.removeItem('lastQuotaExceeded')
-
-            document.cookie = `session=${data.session}; path=/; expires=${new Date(
-              Date.now() + 7 * 24 * 60 * 60 * 1000
-            ).toUTCString()}`
-
-            setUserData(data.userData)
-            setAuth(true)
-
-            return 'success: ' + data.userData.name
-          } else if (data.state === '2fa_required') {
-            handleTwoFAModalOpen()
-            tid.current = data.tid
-
-            return '2FA required'
-          }
-        })
-        .catch(err => {
-          toast.error(err)
+      try {
+        const data = await forgeAPI.user.auth.login.mutate({
+          email,
+          password
         })
 
-      return await res
+        if (data.state === 'success') {
+          document.cookie = `session=${data.session}; path=/; expires=${new Date(
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+          ).toUTCString()}`
+
+          setUserData(data.userData)
+          setAuth(true)
+
+          return 'success: ' + data.userData.name
+        } else if (data.state === '2fa_required') {
+          handleTwoFAModalOpen()
+          tid.current = data.tid
+
+          return '2FA required'
+        }
+      } catch (err) {
+        if (!(err instanceof Error)) {
+          throw new Error('Unknown error')
+        }
+
+        if (err.message === 'Invalid credentials') {
+          return 'invalid'
+        }
+
+        throw err
+      }
     },
     []
   )
@@ -247,9 +171,6 @@ export default function AuthProvider({
         const data = await res.json()
 
         if (res.ok && data.state === 'success') {
-          window.localStorage.setItem('quota', '5')
-          window.localStorage.removeItem('lastQuotaExceeded')
-
           document.cookie = `session=${data.data.session}; path=/; expires=${new Date(
             Date.now() + 7 * 24 * 60 * 60 * 1000
           ).toUTCString()}`
@@ -269,7 +190,7 @@ export default function AuthProvider({
   )
 
   const verifyOAuth = useCallback(
-    async (code: string, state: string) => {
+    async (code: string, state: string): Promise<boolean> => {
       try {
         const storedState = localStorage.getItem('authState')
 
@@ -293,38 +214,39 @@ export default function AuthProvider({
 
         if (typeof session !== 'string') {
           if (session.state !== '2fa_required') {
-            throw new Error()
+            throw new Error('Invalid session')
           }
           handleTwoFAModalOpen()
           tid.current = session.tid
 
-          return
+          return true
         }
 
-        document.cookie = `session=${session}; path=/; expires=${new Date(
-          Date.now() + 7 * 24 * 60 * 60 * 1000
-        ).toUTCString()}`
+        const { success, userData } = await verifySession(session)
 
-        verifySession(session)
-          .then(async ({ success, userData }) => {
-            if (success) {
-              setUserData(userData)
-              setAuth(true)
+        if (success) {
+          setUserData(userData)
+          setAuth(true)
 
-              toast.success(t('auth.welcome') + userData?.username)
-            }
-          })
-          .catch(() => {
-            setAuth(false)
-          })
-          .finally(() => {
-            setAuthLoading(false)
-          })
+          document.cookie = `session=${session}; path=/; expires=${new Date(
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+          ).toUTCString()}`
+
+          toast.success(t('auth.welcome') + userData?.username)
+
+          return true
+        } else {
+          throw new Error('Invalid session')
+        }
       } catch {
         setAuth(false)
         setUserData(null)
         setAuthLoading(false)
-        toast.error(toast.error(t('messages.invalidLoginAttempt')))
+        toast.error(t('messages.invalidLoginAttempt'))
+
+        return false
+      } finally {
+        setAuthLoading(false)
       }
     },
     [verifySession]
@@ -334,9 +256,6 @@ export default function AuthProvider({
     setAuth(false)
     document.cookie = `session=; path=/; expires=${new Date(0).toUTCString()}`
     setUserData(null)
-
-    window.localStorage.setItem('quota', '5')
-    window.localStorage.removeItem('lastQuotaExceeded')
   }, [])
 
   const getAvatarURL = useCallback((): string => {
@@ -354,7 +273,6 @@ export default function AuthProvider({
 
   const doUseEffect = useCallback(() => {
     setAuthLoading(true)
-    updateQuota()
 
     if (document.cookie.includes('session')) {
       verifySession(cookieParse(document.cookie).session)
@@ -388,17 +306,13 @@ export default function AuthProvider({
       verifySession,
       verifyOAuth,
       logout,
-      loginQuota: {
-        quota,
-        dismissQuota
-      },
       authLoading,
       userData,
       setUserData,
       getAvatarURL,
       tid
     }),
-    [auth, quota, authLoading, userData, tid]
+    [auth, authLoading, userData, tid]
   )
 
   return <AuthContext value={value}>{children}</AuthContext>
