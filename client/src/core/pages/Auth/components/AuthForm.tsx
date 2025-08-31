@@ -2,6 +2,7 @@
 import { TextInput } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
@@ -19,12 +20,11 @@ function AuthForm({ providers }: { providers: string[] }) {
 
   const [formDisabled, setFormDisabled] = useState(false)
 
+  const [searchParams] = useSearchParams()
+
   const { t } = useTranslation('common.auth')
 
-  const {
-    authenticate,
-    loginQuota: { quota, dismissQuota }
-  } = useAuth()
+  const { authenticate } = useAuth()
 
   const INPUT_FIELDS = [
     {
@@ -55,23 +55,16 @@ function AuthForm({ providers }: { providers: string[] }) {
       return
     }
 
-    if (quota === 0) {
-      dismissQuota()
-
-      return
-    }
+    setFormDisabled(true)
 
     await authenticate({ email: emailOrUsername, password })
       .then(res => {
         if (res === '2FA required' || !res) {
-          setFormDisabled(true)
-
           return
         }
 
         if (res === 'invalid') {
           toast.error(t('messages.invalidCredentials'))
-          dismissQuota()
 
           return
         }
@@ -88,20 +81,22 @@ function AuthForm({ providers }: { providers: string[] }) {
       })
       .catch(() => {
         toast.error(t(`messages.unknownError`))
+      })
+      .finally(() => {
         setFormDisabled(false)
       })
-  }, [authenticate, t, quota, dismissQuota])
+  }, [authenticate, t])
+
+  const [loading, onSubmit] = usePromiseLoading(signIn)
 
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
-        signIn()
+        onSubmit()
       }
     },
-    [signIn]
+    [onSubmit]
   )
-
-  const [loading, onSubmit] = usePromiseLoading(signIn)
 
   useEffect(() => {
     emailOrUsernameRef.current = emailOrUsername
@@ -117,7 +112,11 @@ function AuthForm({ providers }: { providers: string[] }) {
         <TextInput
           key={index}
           {...input}
-          disabled={formDisabled}
+          disabled={
+            formDisabled ||
+            (searchParams.get('code') !== null &&
+              searchParams.get('state') !== null)
+          }
           isPassword={index === 1}
           onKeyDown={onInputKeyDown}
         />
