@@ -405,19 +405,23 @@ const getEpubMetadata = forgeController.mutation
   .description('Get metadata for an EPUB file')
   .input({})
   .media({
-    file: {
+    document: {
       optional: false,
       multiple: false
     }
   })
-  .callback(async ({ media: { file } }) => {
-    if (typeof file === 'string') {
+  .callback(async ({ media: { document } }) => {
+    if (typeof document === 'string') {
       throw new ClientError('Invalid media type')
     }
 
-    const epubInstance = await EPub.createAsync(file.path)
+    const epubInstance = await EPub.createAsync(document.path)
 
     const metadata = epubInstance.metadata
+
+    if (fs.existsSync(document.path)) {
+      fs.unlinkSync(document.path)
+    }
 
     return {
       ISBN: metadata.ISBN,
@@ -425,7 +429,7 @@ const getEpubMetadata = forgeController.mutation
       'Author(s)': metadata.creator,
       Publisher: metadata.publisher,
       Year: moment(metadata.date).year().toString(),
-      Size: file.size.toString(),
+      Size: document.size.toString(),
       Extension: 'epub'
     }
   })
