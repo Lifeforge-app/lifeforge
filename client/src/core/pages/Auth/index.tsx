@@ -13,7 +13,7 @@ import AuthSideImage from './components/AuthSideImage'
 function Auth() {
   const { verifyOAuth } = useAuth()
 
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const oauthProvidersQuery = useQuery(
     forgeAPI.user.oauth.listProviders.queryOptions()
@@ -26,7 +26,11 @@ function Auth() {
 
     if (!code || !state) return
 
-    verifyOAuth(code, state)
+    verifyOAuth(code, state).then(state => {
+      if (!state) {
+        setSearchParams({})
+      }
+    })
   }, [searchParams])
 
   return (
