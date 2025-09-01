@@ -98,7 +98,8 @@ const listRoutes = forgeController.query
   .input({})
   .callback(async () => traceRouteStack(router.stack))
 
-const appRoutes = forgeRouter({
+// First, create routes without AI to avoid circular dependency
+const coreRoutes = {
   achievements: (await import('@apps/achievements')).default,
   calendar: (await import('@apps/calendar')).default,
   todoList: (await import('@apps/todoList')).default,
@@ -122,7 +123,6 @@ const appRoutes = forgeRouter({
   apiKeys: (await import('@lib/apiKeys')).default,
   pixabay: (await import('@lib/pixabay')).default,
   locations: (await import('@lib/locations')).default,
-  ai: (await import('@lib/ai')).default,
   modules: (await import('@lib/modules')).default,
   backups: (await import('@lib/backups')).default,
   database: (await import('@lib/database')).default,
@@ -134,6 +134,17 @@ const appRoutes = forgeRouter({
   getRoot,
   media: getMedia,
   corsAnywhere
+}
+
+// Now create AI router with core routes as dependency
+const { createAIRouter } = await import('@lib/ai')
+
+const aiRoutes = createAIRouter(coreRoutes)
+
+// Final complete routes including AI
+const appRoutes = forgeRouter({
+  ...coreRoutes,
+  ai: aiRoutes
 })
 
 router.use('/', registerRoutes(appRoutes))
