@@ -120,7 +120,6 @@ function FormInputs<T extends FormState>({
     Object.keys(fields).forEach(id => {
       handlers[id] = (value: any) => {
         removeErrorMsg(id)
-        console.log('Changed', value)
         setData(prev => ({ ...prev, [id]: value }))
       }
     })

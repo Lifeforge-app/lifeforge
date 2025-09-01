@@ -19,7 +19,8 @@
     "entryType": "條目類型",
     "audio": "音訊",
     "transcription": "轉錄內容",
-    "textContent": "文本內容"
+    "textContent": "文本內容",
+    "photos": "照片"
   },
   "entryTypes": {
     "audio": "音頻",

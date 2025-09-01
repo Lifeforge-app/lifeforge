@@ -33,6 +33,7 @@ import { checkExistence } from '@functions/database'
 import { LoggingService } from '@functions/logging/loggingService'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
+import { Tool } from 'ai'
 import type { Request, Response, Router } from 'express'
 import { z } from 'zod/v4'
 
@@ -116,7 +117,18 @@ export class ForgeControllerBuilder<
   /** Whether this endpoint returns downloadable content */
   protected _isDownloadable = false
 
+  /** Media input configuration for the response */
   protected _media: TMedia = {} as TMedia
+
+  protected _isAIToolCallingEnabled = false
+
+  /** The main callback function to handle the request */
+  protected _callback: (
+    context: Context<TInput, TOutput, TMedia>
+  ) => Promise<TOutput> = async () => {
+    // Default implementation
+    return {} as TOutput
+  }
 
   /** The main request handler function with proper typing for request/response objects */
   protected _handler?: (
@@ -161,6 +173,7 @@ export class ForgeControllerBuilder<
     builder._noDefaultResponse = this._noDefaultResponse
     builder._description = this._description
     builder._isDownloadable = this._isDownloadable
+    builder._callback = this._callback as any
 
     return builder
   }
@@ -323,6 +336,12 @@ export class ForgeControllerBuilder<
    */
   description(desc: string) {
     this._description = desc
+
+    return this
+  }
+
+  enableAIToolCall() {
+    this._isAIToolCallingEnabled = true
 
     return this
   }
@@ -564,8 +583,45 @@ export class ForgeControllerBuilder<
     newBuilder._description = this._description
     newBuilder._isDownloadable = this._isDownloadable
     newBuilder._handler = _handler(this._media)
+    newBuilder._callback = cb
 
     return newBuilder
+  }
+
+  public getToolConfig(
+    ctx: Omit<Context<TInput, TOutput, TMedia>, 'body' | 'query' | 'media'>
+  ): Tool {
+    if (!this._isAIToolCallingEnabled) {
+      throw new Error('AI tool calling is not enabled for this controller')
+    }
+
+    if (!this._handler) {
+      throw new Error(
+        'Missing handler. Have you called .callback() when defining the controller?'
+      )
+    }
+
+    return {
+      description: this._description,
+      inputSchema: z.object({
+        body: this._schema.body || z.object({}),
+        query: this._schema.query || z.object({})
+      }),
+      execute: async input => {
+        LoggingService.info(
+          `AI tool calling controller - ${
+            this._description || '(no description)'
+          }`,
+          "AGENT"
+        )
+
+        return await this._callback({ ...ctx, ...input })
+      }
+    } satisfies Tool
+  }
+
+  get isAIToolCallingEnabled() {
+    return this._isAIToolCallingEnabled
   }
 
   /**
