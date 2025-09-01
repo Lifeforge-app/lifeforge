@@ -51,7 +51,7 @@ function ForgeAgentModal({ onClose }: { onClose: () => void }) {
         title="Forge Agent"
         onClose={onClose}
       />
-      <div className="w-full flex-1 space-y-6">
+      <div className="w-full flex-1">
         <AutoSizer>
           {({ width, height }) => (
             <Scrollbar
@@ -60,56 +60,57 @@ function ForgeAgentModal({ onClose }: { onClose: () => void }) {
                 height
               }}
             >
-              {messages?.map(message => {
-                const role = message.role === 'user' ? 'User' : 'Agent'
+              <div className="space-y-6">
+                {messages?.map(message => {
+                  const role = message.role === 'user' ? 'User' : 'Agent'
 
-                if (role === 'User') {
-                  return (
-                    <div key={message.id} className="flex w-full justify-end">
-                      <div
-                        className={clsx(
-                          'shadow-custom rounded-lg p-4 px-5',
-                          tinycolor(derivedThemeColor).isDark()
-                            ? 'text-bg-100'
-                            : 'text-bg-800'
-                        )}
-                        style={{
-                          backgroundColor: derivedThemeColor
-                        }}
-                      >
-                        {message.parts.map(part => {
-                          switch (part.type) {
-                            case 'text':
-                              return part.text
-                            default:
-                              return null
-                          }
-                        })}
+                  if (role === 'User') {
+                    return (
+                      <div key={message.id} className="flex w-full justify-end">
+                        <div
+                          className={clsx(
+                            'shadow-custom rounded-lg p-4 px-5',
+                            tinycolor(derivedThemeColor).isDark()
+                              ? 'text-bg-100'
+                              : 'text-bg-800'
+                          )}
+                          style={{
+                            backgroundColor: derivedThemeColor
+                          }}
+                        >
+                          {message.parts.map(part => {
+                            switch (part.type) {
+                              case 'text':
+                                return part.text
+                              default:
+                                return null
+                            }
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )
-                }
+                    )
+                  }
 
-                return (
-                  <>
-                    {message.parts.map(part => {
-                      switch (part.type) {
-                        case 'text':
-                          return (
-                            <div key={message.id} className="flex w-full">
-                              <div className="agent-response component-bg-lighter shadow-custom space-y-3 rounded-lg px-5 py-4">
-                                <Markdown remarkPlugins={[remarkGfm]}>
-                                  {part.text}
-                                </Markdown>
+                  return (
+                    <>
+                      {message.parts.map(part => {
+                        switch (part.type) {
+                          case 'text':
+                            return (
+                              <div key={message.id} className="flex w-full">
+                                <div className="agent-response component-bg-lighter shadow-custom space-y-3 rounded-lg px-5 py-4">
+                                  <Markdown remarkPlugins={[remarkGfm]}>
+                                    {part.text}
+                                  </Markdown>
+                                </div>
                               </div>
-                            </div>
-                          )
-                      }
-                    })}
-                    <br />
-                  </>
-                )
-              })}
+                            )
+                        }
+                      })}
+                    </>
+                  )
+                })}
+              </div>
             </Scrollbar>
           )}
         </AutoSizer>
