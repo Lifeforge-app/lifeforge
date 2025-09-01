@@ -19,7 +19,8 @@
     "entryType": "Entry Type",
     "audio": "Audio",
     "transcription": "Transcription",
-    "textContent": "Text Content"
+    "textContent": "Text Content",
+    "photos": "Photos"
   },
   "entryTypes": {
     "audio": "Audio",
