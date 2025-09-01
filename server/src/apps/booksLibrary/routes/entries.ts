@@ -15,28 +15,29 @@ import { convertPDFToImage } from '@apps/wallet/utils/transactions'
 import { SCHEMAS } from '../../../core/schema'
 
 const list = forgeController.query
-  .description('Get all entries in the books library')
+  .description(
+    `Get all entries in the books library. 
+    
+    If the user asks to get a book from a specific collection, do not call this tool directly with the name of the collection, call the tool to retrieve the collection ID first, then pass the collection ID to the query.
+
+    If the user ask about read status, the mapping is: {
+      '1': 'read',
+      '2': 'reading',
+      '3': 'unread'
+    }
+
+    If the user ask about book name, straight up use the query field in the query input.
+    `
+  )
   .input({
     query: z.object({
-      collection: z.string().optional(),
-      language: z.string().optional(),
-      favourite: z
+      collection: z
         .string()
         .optional()
-        .transform(val => val === 'true'),
-      readStatus: z
-        .enum(['1', '2', '3'])
-        .optional()
-        .transform(val => {
-          switch (val) {
-            case '1':
-              return 'read'
-            case '2':
-              return 'reading'
-            case '3':
-              return 'unread'
-          }
-        }),
+        .describe('Collection ID of the collection'),
+      language: z.string().optional(),
+      favourite: z.enum(['true', 'false']).optional(),
+      readStatus: z.enum(['1', '2', '3']).optional(),
       fileType: z.string().optional(),
       query: z.string().optional()
     })
@@ -76,7 +77,7 @@ const list = forgeController.query
                   value: language
                 }
               : undefined,
-            favourite === true
+            favourite === 'true'
               ? {
                   field: 'is_favourite',
                   operator: '=',
@@ -87,7 +88,11 @@ const list = forgeController.query
               ? {
                   field: 'read_status',
                   operator: '=',
-                  value: readStatus
+                  value: {
+                    '1': 'read',
+                    '2': 'reading',
+                    '3': 'unread'
+                  }[readStatus]
                 }
               : undefined,
             fileTypeRecord && {
@@ -132,6 +137,7 @@ const list = forgeController.query
       })
     }
   )
+  .enableAIToolCall()
 
 const getEpubThumbnail = (epubInstance: EPub): Promise<File | undefined> => {
   return new Promise((resolve, reject) => {
@@ -168,6 +174,7 @@ const upload = forgeController.mutation
       authors: true,
       edition: true,
       size: true,
+      collection: true,
       languages: true,
       extension: true,
       isbn: true,
@@ -190,7 +197,6 @@ const upload = forgeController.mutation
 
     if (file.mimetype === 'application/epub+zip') {
       const epubInstance = await EPub.createAsync(file.path)
-
       thumbnail = await getEpubThumbnail(epubInstance)
     } else if (file.mimetype === 'application/pdf') {
       thumbnail = await convertPDFToImage(file.path)
