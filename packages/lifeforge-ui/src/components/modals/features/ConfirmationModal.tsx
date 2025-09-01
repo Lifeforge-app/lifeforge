@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import _ from 'lodash'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePromiseLoading } from 'shared'
@@ -87,10 +86,7 @@ function ConfirmationModal({
             loading={isLoading}
             onClick={onClick}
           >
-            {t([
-              `common.buttons:${confirmationButton === 'delete' ? 'delete' : 'confirm'}`,
-              _.upperFirst(confirmationButton)
-            ])}
+            {confirmationButton}
           </Button>
         ) : (
           <Button
