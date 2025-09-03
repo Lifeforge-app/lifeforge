@@ -71,7 +71,7 @@ function DateRangeSelector() {
               handleDateChange(date, type)
             }}
             value={
-              (type === 'start_date' ? startDate : endDate) !== null &&
+              (type === 'start_date' ? startDate : endDate) &&
               dayjs(type === 'start_date' ? startDate : endDate).isValid()
                 ? dayjs(type === 'start_date' ? startDate : endDate).toDate()
                 : null
