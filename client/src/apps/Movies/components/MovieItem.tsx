@@ -61,6 +61,8 @@ function MovieItem({
         await queryClient.invalidateQueries({
           queryKey: ['movies', 'entries']
         })
+
+        toast.success('Movie data updated successfully.')
       },
       onError: () => {
         toast.error('Failed to update movie data.')
