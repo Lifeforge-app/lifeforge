@@ -53,6 +53,7 @@ import {
 } from '../utils/response'
 import restoreFormDataType from '../utils/restoreDataType'
 import { splitMediaAndData } from '../utils/splitMediaAndData'
+import { validateAuthToken } from '../utils/updateAuth'
 
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
@@ -122,6 +123,8 @@ export class ForgeControllerBuilder<
 
   protected _isAIToolCallingEnabled = false
 
+  protected _noAuth = false
+
   /** The main callback function to handle the request */
   protected _callback: (
     context: Context<TInput, TOutput, TMedia>
@@ -173,6 +176,8 @@ export class ForgeControllerBuilder<
     builder._noDefaultResponse = this._noDefaultResponse
     builder._description = this._description
     builder._isDownloadable = this._isDownloadable
+    builder._isAIToolCallingEnabled = this._isAIToolCallingEnabled
+    builder._noAuth = this._noAuth
     builder._callback = this._callback as any
 
     return builder
@@ -346,6 +351,12 @@ export class ForgeControllerBuilder<
     return this
   }
 
+  noAuth() {
+    this._noAuth = true
+
+    return this
+  }
+
   /**
    * Marks this endpoint as returning downloadable content.
    * Sets appropriate headers and disables the default response wrapper.
@@ -406,7 +417,7 @@ export class ForgeControllerBuilder<
       isDownloadable: this._isDownloadable
     }
 
-    const _handler = (__media: TMedia) => {
+    const _handler = (__media: TMedia, noAuth: boolean) => {
       async function __handler(
         req: Request<
           never,
@@ -416,6 +427,10 @@ export class ForgeControllerBuilder<
         >,
         res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
       ): Promise<void> {
+        const isValid = await validateAuthToken(req, res, noAuth)
+
+        if (!isValid) return
+
         try {
           let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
 
@@ -582,7 +597,9 @@ export class ForgeControllerBuilder<
     newBuilder._noDefaultResponse = this._noDefaultResponse
     newBuilder._description = this._description
     newBuilder._isDownloadable = this._isDownloadable
-    newBuilder._handler = _handler(this._media)
+    newBuilder._isAIToolCallingEnabled = this._isAIToolCallingEnabled
+    newBuilder._noAuth = this._noAuth
+    newBuilder._handler = _handler(this._media, this._noAuth)
     newBuilder._callback = cb
 
     return newBuilder
@@ -612,7 +629,7 @@ export class ForgeControllerBuilder<
           `AI tool calling controller - ${
             this._description || '(no description)'
           }`,
-          "AGENT"
+          'AGENT'
         )
 
         return await this._callback({ ...ctx, ...input })
@@ -674,6 +691,7 @@ class ForgeControllerBuilderWithoutSchema<
 > {
   /** Human-readable description of what this endpoint does */
   protected _description = ''
+  protected _noAuth = false
 
   constructor(public _method: TMethod) {}
 
@@ -685,6 +703,12 @@ class ForgeControllerBuilderWithoutSchema<
    */
   description(desc: string) {
     this._description = desc
+
+    return this
+  }
+
+  noAuth() {
+    this._noAuth = true
 
     return this
   }
@@ -711,10 +735,16 @@ class ForgeControllerBuilderWithoutSchema<
    * ```
    */
   input<T extends InputSchema>(input: T) {
-    return new ForgeControllerBuilder<TMethod, T>()
+    let controller = new ForgeControllerBuilder<TMethod, T>()
       .method(this._method)
       .input(input)
       .description(this._description)
+
+    if (this._noAuth) {
+      controller = controller.noAuth()
+    }
+
+    return controller
   }
 }
 

@@ -31,6 +31,7 @@ const getChallenge = forgeController.query
   .callback(async () => challenge)
 
 const requestOTP = forgeController.query
+  .noAuth()
   .description('Request OTP for 2FA')
   .input({
     query: z.object({
@@ -55,6 +56,7 @@ const requestOTP = forgeController.query
   })
 
 const validateOTP = forgeController.mutation
+  .noAuth()
   .description('Validate OTP for 2FA')
   .input({
     body: z.object({
@@ -172,6 +174,7 @@ const disable = forgeController.mutation
   })
 
 const verify = forgeController.mutation
+  .noAuth()
   .description('Verify 2FA code')
   .input({
     body: z.object({
