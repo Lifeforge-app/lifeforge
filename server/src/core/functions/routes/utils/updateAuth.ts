@@ -1,43 +1,21 @@
 import { PBService } from '@functions/database'
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import Pocketbase from 'pocketbase'
 
-import { ENDPOINT_WHITELIST } from '../constants/endpointWhitelist'
-
-if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
-  throw new Error('Pocketbase environment variables not set')
-}
-
-const pocketbaseMiddleware = async (
-  req: Request,
+export async function validateAuthToken(
+  req: Request<unknown, unknown, unknown, unknown>,
   res: Response,
-  next: NextFunction
-) => {
+  noAuth: boolean
+): Promise<boolean> {
   const bearerToken = req.headers.authorization?.split(' ')[1]
 
   const pb = new Pocketbase(process.env.PB_HOST)
 
-  if (process.env.NODE_ENV === 'test') {
-    const pb = new Pocketbase(process.env.PB_HOST)
-
-    await pb
-      .collection('users')
-      .authWithPassword(process.env.PB_EMAIL!, process.env.PB_PASSWORD!)
-
-    req.pb = new PBService(pb)
-
-    return next()
-  }
-
   if (!bearerToken || req.url.startsWith('/user/auth')) {
-    if (
-      req.url === '/' ||
-      ENDPOINT_WHITELIST.some(route => req.url.startsWith(route))
-    ) {
+    if (req.url === '/' || noAuth) {
       req.pb = new PBService(pb)
-      next()
 
-      return
+      return true
     }
   }
 
@@ -47,7 +25,7 @@ const pocketbaseMiddleware = async (
       message: 'Authorization token is required'
     })
 
-    return
+    return false
   }
 
   try {
@@ -62,18 +40,19 @@ const pocketbaseMiddleware = async (
           message: 'Invalid authorization credentials'
         })
 
-        return
+        return false
       }
     }
 
     req.pb = new PBService(pb)
-    next()
+
+    return true
   } catch {
     res.status(500).send({
       state: 'error',
       message: 'Internal server error'
     })
+
+    return false
   }
 }
-
-export default pocketbaseMiddleware
