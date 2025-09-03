@@ -10,11 +10,11 @@ import {
   ContextMenuItem
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { InferOutput } from 'shared'
-import { usePersonalization } from 'shared'
+import { usePersonalization, usePromiseLoading } from 'shared'
 
 import ModifyTicketModal from '../modals/ModifyTicketModal'
 import ShowTicketModal from '../modals/ShowTicketModal'
@@ -34,8 +34,6 @@ function MovieItem({
 
   const open = useModalStore(state => state.open)
 
-  const [toggleWatchedLoading, setToggleWatchedLoading] = useState(false)
-
   const toggleWatchedMutation = useMutation(
     forgeAPI.movies.entries.toggleWatchStatus
       .input({
@@ -46,13 +44,32 @@ function MovieItem({
           await queryClient.invalidateQueries({
             queryKey: ['movies', 'entries']
           })
-
-          setToggleWatchedLoading(false)
         },
         onError: () => {
           toast.error('Failed to mark movie as watched.')
         }
       })
+  )
+
+  const [toggleWatchedLoading, handleToggleWatched] = usePromiseLoading(() =>
+    toggleWatchedMutation.mutateAsync({})
+  )
+
+  const updateMovieDataMutation = useMutation(
+    forgeAPI.movies.entries.update.input({ id: data.id }).mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ['movies', 'entries']
+        })
+      },
+      onError: () => {
+        toast.error('Failed to update movie data.')
+      }
+    })
+  )
+
+  const [updateMovieDataLoading, handleUpdateMovieData] = usePromiseLoading(
+    () => updateMovieDataMutation.mutateAsync({})
   )
 
   const handleShowTicket = useCallback(() => {
@@ -192,10 +209,7 @@ function MovieItem({
               loading={toggleWatchedLoading}
               namespace="apps.movies"
               variant="secondary"
-              onClick={() => {
-                setToggleWatchedLoading(true)
-                toggleWatchedMutation.mutateAsync({})
-              }}
+              onClick={handleToggleWatched}
             >
               Mark as Watched
             </Button>
@@ -231,10 +245,7 @@ function MovieItem({
             icon="tabler:eye-off"
             label="Mark as Unwatched"
             namespace="apps.movies"
-            onClick={() => {
-              setToggleWatchedLoading(true)
-              toggleWatchedMutation.mutateAsync({})
-            }}
+            onClick={handleToggleWatched}
           />
         )}
         <ContextMenuItem
@@ -242,6 +253,14 @@ function MovieItem({
           label={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
           namespace="apps.movies"
           onClick={handleUpdateTicket}
+        />
+        <ContextMenuItem
+          icon="tabler:refresh"
+          label="Update Movie Data"
+          loading={updateMovieDataLoading}
+          namespace="apps.movies"
+          shouldCloseMenuOnClick={false}
+          onClick={handleUpdateMovieData}
         />
         <ContextMenuItem
           dangerous
