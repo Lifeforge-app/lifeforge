@@ -126,6 +126,9 @@ const update = forgeController.mutation
       id: z.string()
     })
   })
+  .existenceCheck('query', {
+    id: 'movies__entries'
+  })
   .callback(async ({ pb, query: { id } }) => {
     const apiKey = await getAPIKey('tmdb', pb)
 
@@ -133,11 +136,19 @@ const update = forgeController.mutation
       throw new Error('API key not found')
     }
 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`
+    const movieEntry = await pb.getOne
+      .collection('movies__entries')
+      .id(id)
+      .execute()
+
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieEntry.tmdb_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`
+        }
       }
-    })
+    )
       .then(res => res.json())
       .catch(err => {
         throw new Error(`Failed to fetch data from TMDB: ${err.message}`)
