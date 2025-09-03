@@ -119,6 +119,50 @@ const create = forgeController.mutation
       .execute()
   })
 
+const update = forgeController.mutation
+  .description('Update entries with the latest movie data from TMDB')
+  .input({
+    query: z.object({
+      id: z.string()
+    })
+  })
+  .callback(async ({ pb, query: { id } }) => {
+    const apiKey = await getAPIKey('tmdb', pb)
+
+    if (!apiKey) {
+      throw new Error('API key not found')
+    }
+
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`
+      }
+    })
+      .then(res => res.json())
+      .catch(err => {
+        throw new Error(`Failed to fetch data from TMDB: ${err.message}`)
+      })
+
+    const entryData = {
+      tmdb_id: response.id,
+      title: response.title,
+      original_title: response.original_title,
+      poster: response.poster_path,
+      genres: response.genres.map((genre: { name: string }) => genre.name),
+      duration: response.runtime,
+      overview: response.overview,
+      release_date: response.release_date,
+      countries: response.origin_country,
+      language: response.original_language
+    }
+
+    return await pb.update
+      .collection('movies__entries')
+      .id(id)
+      .data(entryData)
+      .execute()
+  })
+
 const remove = forgeController.mutation
   .description('Delete a movie entry')
   .input({
@@ -162,6 +206,7 @@ const toggleWatchStatus = forgeController.mutation
 export default forgeRouter({
   list,
   create,
+  update,
   remove,
   toggleWatchStatus
 })
