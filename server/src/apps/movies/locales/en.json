@@ -38,7 +38,8 @@
     "watched": "Watched",
     "showTicket": "Show Ticket",
     "addToCalendar": "Add to Calendar",
-    "addedToCalendar": "Added to Calendar"
+    "addedToCalendar": "Added to Calendar",
+    "updateMovieData": "Update Movie Data"
   },
   "inputs": {
     "ticketNumber": "Ticket Number",
