@@ -3,6 +3,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import express from 'express'
+import moment from 'moment'
 import request from 'request'
 import { z } from 'zod/v4'
 
@@ -14,7 +15,21 @@ router.get('/', (req, res) => {
   })
 })
 
+const ping = forgeController.mutation
+  .noAuth()
+  .description('Ping the server')
+  .input({
+    body: z.object({
+      timestamp: z.number().min(0)
+    })
+  })
+  .callback(
+    async ({ body: { timestamp } }) =>
+      `Pong at ${moment(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
+  )
+
 const status = forgeController.query
+  .noAuth()
   .description('Get server status')
   .input({})
   .callback(async () => ({
@@ -27,6 +42,7 @@ const getRoot = forgeController.query
   .callback(async () => 'Welcome to LifeForge API!' as const)
 
 const getMedia = forgeController.query
+  .noAuth()
   .description('Get media file from PocketBase')
   .input({
     query: z.object({
@@ -130,6 +146,7 @@ const coreRoutes = {
   sinChewDaily: (await import('@apps/sinChewDaily')).default,
   journal: (await import('@apps/journal')).default,
   _listRoutes: listRoutes,
+  ping,
   status,
   getRoot,
   media: getMedia,

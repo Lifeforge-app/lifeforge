@@ -32,6 +32,7 @@ const generateOTP = forgeController.query
   )
 
 const login = forgeController.mutation
+  .noAuth()
   .description('User login')
   .input({
     body: z.object({
