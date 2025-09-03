@@ -58,7 +58,12 @@ function ModalHeader({
         )}
       </h1>
       <div className="flex items-center gap-2">
-        {actionButtonProps && <Button {...actionButtonProps} />}
+        {actionButtonProps && (
+          <Button
+            {...actionButtonProps}
+            variant={actionButtonProps.variant || 'plain'}
+          />
+        )}
         <Button
           icon="tabler:x"
           iconClassName="size-6"
