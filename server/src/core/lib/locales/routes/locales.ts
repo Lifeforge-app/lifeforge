@@ -8,6 +8,7 @@ import { z } from 'zod/v4'
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../../../constants/locales'
 
 const getLocale = forgeController.query
+  .noAuth()
   .description(
     'Get locales for a specific language, namespace, and subnamespace'
   )
