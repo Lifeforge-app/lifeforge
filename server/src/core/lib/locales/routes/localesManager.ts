@@ -5,7 +5,7 @@ import { ClientError } from '@functions/routes/utils/response'
 import fs from 'fs'
 import { z } from 'zod/v4'
 
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../../../constants/locales'
+import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 const listSubnamespaces = forgeController.query
   .description('List subnamespaces for a namespace')

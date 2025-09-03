@@ -3,9 +3,9 @@ import dotenv from 'dotenv'
 import express from 'express'
 import helmet from 'helmet'
 
-import { CORS_ALLOWED_ORIGINS } from './constants/corsAllowedOrigins'
 import morganMiddleware from './middlewares/morganMiddleware'
 import rateLimitingMiddleware from './middlewares/rateLimitingMiddleware'
+import { CORS_ALLOWED_ORIGINS } from './routes/constants/corsAllowedOrigins'
 import router from './routes/routes'
 
 dotenv.config({
