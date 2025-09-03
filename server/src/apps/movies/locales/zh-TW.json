@@ -38,7 +38,8 @@
     "watched": "已觀看",
     "showTicket": "顯示票據",
     "addToCalendar": "添加到日曆",
-    "addedToCalendar": "已加入日曆"
+    "addedToCalendar": "已加入日曆",
+    "updateMovieData": "更新電影資料"
   },
   "inputs": {
     "ticketNumber": "票券號碼",
