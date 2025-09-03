@@ -261,6 +261,7 @@ const getEachDay = forgeController.query
   })
 
 const getUserMinutes = forgeController.query
+  .noAuth()
   .description('Get user minutes')
   .input({
     query: z.object({
@@ -287,6 +288,7 @@ const getUserMinutes = forgeController.query
   })
 
 const eventLog = forgeController.mutation
+  .noAuth()
   .description('Log a code time event')
   .input({
     body: z.object({}).passthrough()
@@ -375,6 +377,7 @@ const eventLog = forgeController.mutation
   })
 
 const readme = forgeController.query
+  .noAuth()
   .description('Get readme image')
   .input({})
   .noDefaultResponse()
