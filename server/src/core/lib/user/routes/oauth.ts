@@ -9,6 +9,7 @@ import { currentSession } from '..'
 let currentCodeVerifier: string | null = null
 
 const listProviders = forgeController.query
+  .noAuth()
   .description('List available OAuth providers')
   .input({})
   .callback(async ({ pb }) => {
@@ -18,6 +19,7 @@ const listProviders = forgeController.query
   })
 
 const getEndpoint = forgeController.query
+  .noAuth()
   .description('Get OAuth endpoint for a provider')
   .input({
     query: z.object({
@@ -43,6 +45,7 @@ const getEndpoint = forgeController.query
   })
 
 const verify = forgeController.mutation
+  .noAuth()
   .description('Verify OAuth callback')
   .input({
     body: z.object({
