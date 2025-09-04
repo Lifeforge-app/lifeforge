@@ -120,6 +120,7 @@ function Search({
     <div className="flex min-h-0 w-full flex-1 flex-col">
       <div className="flex w-full gap-2">
         <SearchInput
+          className="component-bg-lighter-with-hover"
           namespace="common.modals"
           searchTarget="iconPicker.icon"
           setValue={setSearchQuery}

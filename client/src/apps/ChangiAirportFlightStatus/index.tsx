@@ -62,7 +62,7 @@ function ChangiAirportFlightStatus() {
               </span>
             </div>
           }
-          className="bg-bg-50 w-min min-w-56"
+          className="component-bg-with-hover! w-min min-w-56"
           setValue={value => {
             setType(value)
           }}
@@ -73,7 +73,6 @@ function ChangiAirportFlightStatus() {
           ))}
         </Listbox>
         <SearchInput
-          className="bg-bg-50"
           namespace="apps.changiAirportFlightStatus"
           searchTarget="flight"
           setValue={setSearchQuery}
