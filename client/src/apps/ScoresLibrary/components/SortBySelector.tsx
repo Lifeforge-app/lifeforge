@@ -36,7 +36,7 @@ function SortBySelector() {
           </span>
         </div>
       }
-      className="bg-bg-50 w-full min-w-56 md:w-min"
+      className="component-bg-with-hover! w-full min-w-56 md:w-min"
       setValue={value => updateFilter('sort', value)}
       value={sort}
     >
