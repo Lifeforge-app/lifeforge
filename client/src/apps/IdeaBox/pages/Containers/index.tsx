@@ -1,6 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
+  Button,
   EmptyStateScreen,
   ModuleHeader,
   ModuleWrapper,
@@ -31,7 +32,23 @@ function IdeaBox() {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader icon="tabler:bulb" title="Idea Box" />
+      <ModuleHeader
+        actionButton={
+          <Button
+            className="ml-4 hidden md:flex"
+            icon="tabler:plus"
+            namespace="apps.ideaBox"
+            tProps={{
+              item: t('items.container')
+            }}
+            onClick={handleCreateContainer}
+          >
+            new
+          </Button>
+        }
+        icon="tabler:bulb"
+        title="Idea Box"
+      />
       <SearchInput
         namespace="apps.ideaBox"
         searchTarget="container"
