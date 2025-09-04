@@ -225,6 +225,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                   })
                 }
               }}
+              className="component-bg-lighter-with-hover"
               namespace="apps.booksLibrary"
               searchTarget="Libgen Book"
               setValue={setSearchQuery}
