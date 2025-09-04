@@ -114,7 +114,9 @@ function Rightbar() {
 
     // Manually scroll to the section
     setTimeout(() => {
-      const sectionElement = document.getElementById(itemId)
+      const sectionElement = document.querySelector(`section#${itemId}`)
+
+      console.log(`section#${itemId}`, sectionElement)
 
       if (sectionElement) {
         sectionElement.scrollIntoView({ behavior: 'smooth' })
