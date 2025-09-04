@@ -28,7 +28,7 @@ pre code {
   @apply text-bg-800! dark:text-bg-100! break-all!;
 }
 
-code:not(pre code, h3 code) {
+code:not(pre code, h3 code, .commit code) {
   @apply bg-bg-200/50 text-bg-700 dark:bg-bg-800 dark:text-bg-300 rounded-sm px-1.5 py-1 text-[15px]! shadow-sm;
 }
 
