@@ -38,7 +38,7 @@ function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
           </span>
         </div>
       }
-      className="hidden max-w-64 lg:flex"
+      className="component-bg-with-hover! hidden max-w-64 lg:flex"
       setValue={value => {
         setViewType(value)
       }}
