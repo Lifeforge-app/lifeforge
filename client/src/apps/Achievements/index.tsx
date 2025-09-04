@@ -84,11 +84,11 @@ function Achievements() {
           {entries =>
             entries.length > 0 ? (
               <>
-                <div className="space-y-3">
+                <ul className="space-y-3">
                   {entries.map(entry => (
                     <EntryItem key={entry.id} entry={entry} />
                   ))}
-                </div>
+                </ul>
                 <FAB
                   visibilityBreakpoint="md"
                   onClick={() => {
