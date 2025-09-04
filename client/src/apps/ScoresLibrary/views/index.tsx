@@ -16,32 +16,22 @@ function Views({
 }) {
   const { view } = useFilter()
 
-  if (totalItems === 0) {
-    if (debouncedSearchQuery.trim() === '') {
-      return (
-        <EmptyStateScreen
-          icon="tabler:music-off"
-          name="score"
-          namespace="apps.scoresLibrary"
-        />
-      )
-    }
+  const Component = {
+    grid: GridView,
+    list: ListView
+  }[view]
 
+  if (totalItems === 0) {
     return (
       <EmptyStateScreen
-        icon="tabler:search-off"
-        name="result"
+        icon="tabler:music-off"
+        name={debouncedSearchQuery.trim() === '' ? 'score' : 'result'}
         namespace="apps.scoresLibrary"
       />
     )
   }
 
-  switch (view) {
-    case 'grid':
-      return <GridView entries={entries} />
-    case 'list':
-      return <ListView entries={entries} />
-  }
+  return <Component entries={entries} />
 }
 
 export default Views
