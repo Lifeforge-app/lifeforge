@@ -33,7 +33,7 @@ function Version({
   return (
     <section id={`${prefix}-${dayjs().year(year).format('YY')}-w-${week}`}>
       <header className="space-y-2">
-        <div className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
+        <div className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
           <div className="bg-custom-500/20 text-custom-500 rounded-lg p-3">
             <Icon className="size-10" icon="tabler:history" />
           </div>

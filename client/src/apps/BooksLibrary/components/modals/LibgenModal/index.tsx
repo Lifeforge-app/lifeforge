@@ -299,7 +299,7 @@ function LibgenModal({ onClose }: { onClose: () => void }) {
                         triggerFetch(page).catch(console.error)
                       }}
                     />
-                    <ul className="space-y-4">
+                    <ul className="space-y-3">
                       {data.data.map((book: any) => (
                         <SearchResultItem
                           key={book.id}

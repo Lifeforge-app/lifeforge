@@ -7,7 +7,7 @@ function LightAndDarkMode() {
   return (
     <div className="mt-6 flex w-full min-w-0">
       <div className="bg-bg-800/50 w-full rounded-md p-4">
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
           <h3 className="w-full text-left text-xl font-semibold">
             Light/Dark Theme Preview
           </h3>

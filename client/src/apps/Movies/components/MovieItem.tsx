@@ -7,7 +7,8 @@ import {
   Button,
   ConfirmationModal,
   ContextMenu,
-  ContextMenuItem
+  ContextMenuItem,
+  ItemWrapper
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -110,9 +111,10 @@ function MovieItem({
   }, [data])
 
   return (
-    <div
+    <ItemWrapper
+      as="li"
       className={clsx(
-        'shadow-custom component-bg relative flex items-center gap-6 rounded-md p-6',
+        'flex items-center gap-6',
         type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >
@@ -271,7 +273,7 @@ function MovieItem({
           onClick={handleDeleteTicket}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

@@ -5,6 +5,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
@@ -85,104 +86,95 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
   }, [entry])
 
   return (
-    <li
+    <ItemWrapper
       key={entry.id}
-      className="shadow-custom component-bg-with-hover relative rounded-lg transition-all"
+      as="a"
+      className="flex items-center justify-between gap-3"
+      href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
+        entry.id
+      }/${entry.pdf}`}
+      rel="noreferrer"
+      target="_blank"
     >
-      <a
-        key={entry.id}
-        className="flex items-center justify-between gap-3 p-4"
-        href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
-          entry.id
-        }/${entry.pdf}`}
-        rel="noreferrer"
-        target="_blank"
-      >
-        <div className="flex w-full min-w-0 items-center gap-5">
-          <div className="flex-center bg-bg-200 dark:bg-bg-800 w-16 overflow-hidden rounded-sm">
-            <img
-              alt=""
-              className="h-full"
-              src={
-                forgeAPI.media.input({
-                  collectionId: entry.collectionId,
-                  recordId: entry.id,
-                  fieldId: entry.thumbnail,
-                  thumb: '0x512'
-                }).endpoint
-              }
-            />
-          </div>
-          <div className="flex w-full min-w-0 flex-1 flex-col">
-            {type && (
-              <div className="mb-2 flex items-center gap-2">
-                <Icon
-                  className="text-bg-500 size-4 shrink-0"
-                  icon={type.icon}
-                />
-                <span className="text-bg-500 truncate text-sm">
-                  {type.name}
-                </span>
-              </div>
+      <div className="flex w-full min-w-0 items-center gap-5">
+        <div className="flex-center bg-bg-200 dark:bg-bg-800 w-16 overflow-hidden rounded-sm">
+          <img
+            alt=""
+            className="h-full"
+            src={
+              forgeAPI.media.input({
+                collectionId: entry.collectionId,
+                recordId: entry.id,
+                fieldId: entry.thumbnail,
+                thumb: '0x512'
+              }).endpoint
+            }
+          />
+        </div>
+        <div className="flex w-full min-w-0 flex-1 flex-col">
+          {type && (
+            <div className="mb-2 flex items-center gap-2">
+              <Icon className="text-bg-500 size-4 shrink-0" icon={type.icon} />
+              <span className="text-bg-500 truncate text-sm">{type.name}</span>
+            </div>
+          )}
+          <div className="flex w-full items-center gap-2">
+            <h3 className="truncate text-lg font-semibold">{entry.name}</h3>
+            {entry.isFavourite && (
+              <Icon
+                className="size-4 shrink-0 text-yellow-500"
+                icon="tabler:star-filled"
+              />
             )}
-            <div className="flex w-full items-center gap-2">
-              <h3 className="truncate text-lg font-semibold">{entry.name}</h3>
-              {entry.isFavourite && (
-                <Icon
-                  className="size-4 shrink-0 text-yellow-500"
-                  icon="tabler:star-filled"
-                />
-              )}
-            </div>
-            <div className="text-bg-500 mt-1 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
-              <p className="min-w-0 truncate">
-                {entry.author !== '' ? entry.author : 'Unknown'}
-              </p>
-              <Icon className="size-1" icon="tabler:circle-filled" />
-              <span>{entry.pageCount} pages</span>
-              {collection && (
-                <>
-                  <Icon className="size-1" icon="tabler:circle-filled" />
-                  <div className="flex items-center gap-2">
-                    <Icon className="size-4" icon="tabler:folder" />
-                    <span>{collection.name}</span>
-                  </div>
-                </>
-              )}
-            </div>
+          </div>
+          <div className="text-bg-500 mt-1 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
+            <p className="min-w-0 truncate">
+              {entry.author !== '' ? entry.author : 'Unknown'}
+            </p>
+            <Icon className="size-1" icon="tabler:circle-filled" />
+            <span>{entry.pageCount} pages</span>
+            {collection && (
+              <>
+                <Icon className="size-1" icon="tabler:circle-filled" />
+                <div className="flex items-center gap-2">
+                  <Icon className="size-4" icon="tabler:folder" />
+                  <span>{collection.name}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
-        {entry.audio && (
-          <AudioPlayer
-            url={`${import.meta.env.VITE_API_HOST}/media/${
-              entry.collectionId
-            }/${entry.id}/${entry.audio}`}
-          />
-        )}
-        <DownloadMenu entry={entry} />
-        <ContextMenu>
-          <ContextMenuItem
-            icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
-            label={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
-            shouldCloseMenuOnClick={false}
-            onClick={() => {
-              toggleFavouriteStatusMutation.mutateAsync({})
-            }}
-          />
-          <ContextMenuItem
-            icon="tabler:pencil"
-            label="Edit"
-            onClick={handleUpdateEntry}
-          />
-          <ContextMenuItem
-            dangerous
-            icon="tabler:trash"
-            label="Delete"
-            onClick={handleDeleteEntry}
-          />
-        </ContextMenu>
-      </a>
-    </li>
+      </div>
+      {entry.audio && (
+        <AudioPlayer
+          url={`${import.meta.env.VITE_API_HOST}/media/${
+            entry.collectionId
+          }/${entry.id}/${entry.audio}`}
+        />
+      )}
+      <DownloadMenu entry={entry} />
+      <ContextMenu>
+        <ContextMenuItem
+          icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
+          label={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
+          shouldCloseMenuOnClick={false}
+          onClick={() => {
+            toggleFavouriteStatusMutation.mutateAsync({})
+          }}
+        />
+        <ContextMenuItem
+          icon="tabler:pencil"
+          label="Edit"
+          onClick={handleUpdateEntry}
+        />
+        <ContextMenuItem
+          dangerous
+          icon="tabler:trash"
+          label="Delete"
+          onClick={handleDeleteEntry}
+        />
+      </ContextMenu>
+    </ItemWrapper>
   )
 }
 

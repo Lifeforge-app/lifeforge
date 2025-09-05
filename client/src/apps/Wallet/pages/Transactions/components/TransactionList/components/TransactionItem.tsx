@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
 import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -59,19 +59,10 @@ function TransactionItem({ transaction }: { transaction: WalletTransaction }) {
   }, [transaction])
 
   return (
-    <div
-      className={clsx(
-        'flex-between component-bg-with-hover shadow-custom relative flex w-full min-w-0 gap-4 rounded-md p-4'
-      )}
-      role="button"
-      tabIndex={0}
+    <ItemWrapper
+      isInteractive
+      className="flex-between flex gap-3"
       onClick={handleViewTransaction}
-      onKeyDown={e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          handleViewTransaction()
-        }
-      }}
     >
       {transaction.type === 'transfer' ? (
         <TransactionTransferItem transaction={transaction} />
@@ -91,7 +82,7 @@ function TransactionItem({ transaction }: { transaction: WalletTransaction }) {
           onClick={handleDeleteTransaction}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

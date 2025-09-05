@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useModalStore } from 'lifeforge-ui'
+import { ItemWrapper, useModalStore } from 'lifeforge-ui'
 
 import type { NewsArticle } from '..'
 import ContentModal from './ContentModal'
@@ -8,7 +8,11 @@ function ArticleItem({ item }: { item: NewsArticle }) {
   const open = useModalStore(state => state.open)
 
   return (
-    <article className="shadow-custom component-bg-with-hover relative flex flex-col items-center gap-6 rounded-xl p-4 md:flex-row">
+    <ItemWrapper
+      isInteractive
+      as="article"
+      className="flex flex-col items-center gap-6 md:flex-row"
+    >
       <div className="component-bg-lighter relative aspect-video w-full shrink-0 overflow-hidden rounded-lg md:w-96">
         <Icon
           className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2 transform"
@@ -41,7 +45,7 @@ function ArticleItem({ item }: { item: NewsArticle }) {
           })
         }}
       />
-    </article>
+    </ItemWrapper>
   )
 }
 

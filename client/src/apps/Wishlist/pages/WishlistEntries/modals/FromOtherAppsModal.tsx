@@ -95,7 +95,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
         title="Import from other apps"
         onClose={onClose}
       />
-      <div className="space-y-4">
+      <div className="space-y-3">
         <ListboxInput
           buttonContent={
             <>

@@ -13,7 +13,7 @@ function Header() {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   return (
-    <header className="space-y-4">
+    <header className="space-y-3">
       <GoBackButtonAndMenu />
       <div
         className="bg-bg-900 relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-cover bg-center bg-no-repeat p-6 sm:h-72"

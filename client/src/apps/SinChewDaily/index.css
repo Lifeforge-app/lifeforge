@@ -1,6 +1,6 @@
 .news-article {
   & figure {
-    @apply my-6 flex flex-col items-center gap-4;
+    @apply my-6 flex flex-col items-center gap-3;
   }
 
   & img {

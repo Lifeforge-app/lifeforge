@@ -1,6 +1,6 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { Icon } from '@iconify/react'
-import { Switch } from 'lifeforge-ui'
+import { ItemWrapper, Switch } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +23,7 @@ function ModuleItem({
   }
 
   return (
-    <li className="shadow-custom component-bg flex flex-col items-center rounded-lg p-4">
+    <ItemWrapper as="li" className="flex flex-col items-center">
       <div className="flex-between flex w-full gap-3">
         <div className="flex items-center gap-3">
           <div className="component-bg-lighter text-bg-500! rounded-lg p-3">
@@ -60,7 +60,7 @@ function ModuleItem({
           </button>
         </div>
       </div>
-    </li>
+    </ItemWrapper>
   )
 }
 

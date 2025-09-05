@@ -9,7 +9,8 @@ import {
   Button,
   ConfirmationModal,
   ContextMenu,
-  ContextMenuItem
+  ContextMenuItem,
+  ItemWrapper
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -123,7 +124,7 @@ function PasswordEntryItem({
   }, [password])
 
   return (
-    <div className="shadow-custom component-bg relative flex flex-col items-center gap-3 rounded-md p-4">
+    <ItemWrapper className="space-y-3">
       {password.pinned && (
         <Icon
           className="text-custom-500 absolute top-0 left-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90"
@@ -303,7 +304,7 @@ function PasswordEntryItem({
           {decryptedPassword}
         </code>
       )}
-    </div>
+    </ItemWrapper>
   )
 }
 

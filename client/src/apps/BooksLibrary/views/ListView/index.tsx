@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { Scrollbar } from 'lifeforge-ui'
+import { ItemWrapper, Scrollbar } from 'lifeforge-ui'
 
 import {
   type BooksLibraryEntry,
@@ -21,13 +21,14 @@ function ListView({ books }: { books: BooksLibraryEntry[] }) {
 
   return (
     <Scrollbar className="mt-6">
-      <ul className="space-y-4 px-4 pb-8">
+      <ul className="space-y-3 px-4 pb-8">
         {Object.entries(processes).map(
           ([key, value]) =>
             value && (
-              <li
+              <ItemWrapper
                 key={key}
-                className="bg-bg-50 shadow-custom dark:bg-bg-900 relative flex items-center gap-3 rounded-lg p-4"
+                as="li"
+                className="flex flex-col gap-3 sm:flex-row"
               >
                 <div className="flex-center bg-bg-50/50 dark:bg-bg-900/70 absolute top-0 left-0 size-full rounded-lg text-center font-medium">
                   Downloading... {value.progress!.percentage}
@@ -72,7 +73,7 @@ function ListView({ books }: { books: BooksLibraryEntry[] }) {
                   </div>
                   <BookMeta item={value.data!} />
                 </div>
-              </li>
+              </ItemWrapper>
             )
         )}
         {books.map(item => (

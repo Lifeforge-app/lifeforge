@@ -14,7 +14,7 @@ function ViewTransactionModal({
   onClose: () => void
 }) {
   return (
-    <div className="min-w-[30vw] space-y-4">
+    <div className="min-w-[30vw] space-y-3">
       <ModalHeader
         icon="tabler:eye"
         namespace="apps.wallet"

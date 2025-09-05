@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ContextMenu } from 'lifeforge-ui'
+import { ContextMenu, ItemWrapper } from 'lifeforge-ui'
 
 import { type BooksLibraryEntry } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
@@ -14,9 +14,10 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
   )
 
   return (
-    <li
+    <ItemWrapper
       key={item.id}
-      className="shadow-custom component-bg-with-hover relative flex flex-col gap-4 rounded-lg p-4 sm:flex-row"
+      as="li"
+      className="flex flex-col gap-3 sm:flex-row"
     >
       <div className="absolute top-4 right-3 z-20 flex">
         <ContextMenu>
@@ -83,6 +84,6 @@ export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
         </div>
         <BookMeta item={item} />
       </div>
-    </li>
+    </ItemWrapper>
   )
 }

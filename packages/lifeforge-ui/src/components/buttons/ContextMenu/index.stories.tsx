@@ -26,7 +26,7 @@ export const Default: Story = {
   render: () => (
     <div className="shadow-custom component-bg mx-64 h-full w-full rounded-lg p-4">
       <div className="flex-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <div className="bg-custom-500/30 rounded-md p-2">
             <Icon className="text-custom-500 size-6" icon="tabler:cube" />
           </div>
