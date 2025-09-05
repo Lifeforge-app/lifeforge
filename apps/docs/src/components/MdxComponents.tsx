@@ -54,7 +54,7 @@ export const components: MDXComponents = {
     )
   },
   ul(properties) {
-    return <ul {...properties} className="mt-4 list-disc space-y-4 pl-6" />
+    return <ul {...properties} className="mt-4 list-disc space-y-3 pl-6" />
   },
   li(properties) {
     return (

@@ -45,6 +45,7 @@ function Achievements() {
           <Button
             className="ml-4 hidden md:flex"
             icon="tabler:plus"
+            namespace="apps.achievements"
             tProps={{
               item: t('items.achievement')
             }}
@@ -61,7 +62,7 @@ function Achievements() {
         icon="tabler:award"
         title="Achievements"
       />
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-3">
         <Tabs
           active={difficulty}
           enabled={Object.keys(DIFFICULTIES).map(

@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ItemWrapper, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
 import { Link } from 'react-router'
 
 function CFOPAlgorithms() {
@@ -11,9 +11,10 @@ function CFOPAlgorithms() {
           OLL: 'Orientation of the Last Layer',
           PLL: 'Permutation of the Last Layer'
         }).map(([key, value]) => (
-          <Link
+          <ItemWrapper
             key={key}
-            className="shadow-custom component-bg-with-hover flex flex-col items-center justify-center rounded-md p-4 transition-all"
+            as={Link}
+            className="flex-center flex-col"
             to={`/cfop-algorithms/${key.toLowerCase()}`}
           >
             <img
@@ -25,7 +26,7 @@ function CFOPAlgorithms() {
               {key}
             </h2>
             <p className="mt-2 text-center text-xl">{value}</p>
-          </Link>
+          </ItemWrapper>
         ))}
       </div>
     </ModuleWrapper>

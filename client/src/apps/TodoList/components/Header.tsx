@@ -29,7 +29,7 @@ function Header() {
 
   return (
     <div className="flex-between flex px-4">
-      <div className="space-y-4">
+      <div className="space-y-3">
         <h1 className="text-3xl font-semibold md:text-4xl">
           {`${t(
             `headers.${(() => {

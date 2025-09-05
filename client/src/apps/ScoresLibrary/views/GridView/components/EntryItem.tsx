@@ -5,6 +5,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
@@ -85,9 +86,9 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
   }, [entry])
 
   return (
-    <a
+    <ItemWrapper
       key={entry.id}
-      className="shadow-custom component-bg-with-hover block rounded-lg p-4 transition-all"
+      as="a"
       href={
         forgeAPI.media.input({
           collectionId: entry.collectionId,
@@ -190,7 +191,7 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
           )}
         </div>
       </div>
-    </a>
+    </ItemWrapper>
   )
 }
 

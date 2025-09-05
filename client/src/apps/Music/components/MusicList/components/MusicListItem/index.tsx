@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { ItemWrapper } from 'lifeforge-ui'
 
 import type { MusicEntry } from '@apps/Music/providers/MusicProvider'
 
@@ -13,7 +14,7 @@ function formatDuration(duration: string): string {
 
 function MusicListItem({ music }: { music: MusicEntry }) {
   return (
-    <div className="component-bg shadow-custom flex w-full min-w-0 items-center rounded-md p-2">
+    <ItemWrapper className="flex items-center p-2!">
       <div className="flex w-full min-w-0 items-center gap-2 sm:w-7/12 sm:shrink-0 lg:w-5/12">
         <PlayStateIndicator music={music} />
         <div className="w-full min-w-0">
@@ -31,7 +32,7 @@ function MusicListItem({ music }: { music: MusicEntry }) {
         {formatDuration(music.duration)}
       </div>
       <SideButtons music={music} />
-    </div>
+    </ItemWrapper>
   )
 }
 

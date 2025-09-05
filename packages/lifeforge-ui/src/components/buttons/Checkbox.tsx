@@ -1,8 +1,6 @@
 import { Icon } from '@iconify/react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
-import { usePersonalization } from 'shared'
-import tinycolor from 'tinycolor2'
 
 /**
  * A checkbox component with optional label support.
@@ -25,8 +23,6 @@ function Checkbox({
   /** Optional text label to display next to the checkbox. */
   label?: string
 }) {
-  const { derivedThemeColor } = usePersonalization()
-
   return (
     <div className="flex items-center gap-3">
       <CheckboxPrimitive.Root
@@ -41,10 +37,7 @@ function Checkbox({
         <CheckboxPrimitive.Indicator asChild>
           <Icon
             className={clsx(
-              'stroke-0.5 size-5 transition-all',
-              tinycolor(derivedThemeColor).isDark()
-                ? 'text-bg-100 stroke-bg-100'
-                : 'text-bg-800 stroke-bg-800'
+              'stroke-0.5 text-bg-100 stroke-bg-100 dark:text-bg-800 dark:stroke-bg-800 size-5 transition-all'
             )}
             icon="uil:check"
           />

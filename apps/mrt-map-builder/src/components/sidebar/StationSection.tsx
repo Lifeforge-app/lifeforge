@@ -24,12 +24,12 @@ function StationSection({
 
   return (
     <>
-      <div className="mb-4 flex items-center gap-4 px-4">
+      <div className="mb-4 flex items-center gap-3 px-4">
         <Icon className="text-2xl" icon="tabler:map-pin" />
         <h2 className="text-xl font-medium">Stations</h2>
       </div>
 
-      <div className="flex flex-col space-y-4 px-4">
+      <div className="flex flex-col space-y-3 px-4">
         <SearchInput
           lighter
           className="mb-4"

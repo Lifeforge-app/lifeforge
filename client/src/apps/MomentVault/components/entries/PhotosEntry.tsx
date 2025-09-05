@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
+import { ContextMenu, ContextMenuItem, ItemWrapper } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import Zoom from 'react-medium-image-zoom'
 import PhotoAlbum from 'react-photo-album'
@@ -66,11 +65,7 @@ function PhotosEntry({
   }, [entry.file])
 
   return (
-    <div
-      className={clsx(
-        'shadow-custom component-bg relative w-full rounded-md p-6'
-      )}
-    >
+    <ItemWrapper as="li">
       <div className="flex w-full items-start gap-3">
         {loading ? (
           <div className="flex-center h-96 w-full">
@@ -120,7 +115,7 @@ function PhotosEntry({
       <p className="text-bg-500 mt-4 flex items-center gap-2">
         <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
       </p>
-    </div>
+    </ItemWrapper>
   )
 }
 

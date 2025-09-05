@@ -156,7 +156,7 @@ function BalanceChartModal({
                 <Line data={chartData} options={chartOptions} />
               </div>
             ) : (
-              <div className="flex-center h-96 flex-col gap-4 text-gray-500">
+              <div className="flex-center h-96 flex-col gap-3 text-gray-500">
                 <div className="text-6xl">📊</div>
                 <div className="text-lg font-medium">No Balance History</div>
                 <div className="text-sm">

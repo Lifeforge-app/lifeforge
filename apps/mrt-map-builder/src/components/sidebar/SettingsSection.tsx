@@ -35,11 +35,11 @@ function SettingsSection({
 
   return (
     <>
-      <div className="mb-4 flex items-center gap-4 px-4">
+      <div className="mb-4 flex items-center gap-3 px-4">
         <Icon className="text-2xl" icon="tabler:settings" />
         <h2 className="text-xl font-medium">Settings</h2>
       </div>
-      <div className="space-y-4 px-4">
+      <div className="space-y-3 px-4">
         <ColorInput
           className="w-full"
           color={settings.colorOfCurrentLine}

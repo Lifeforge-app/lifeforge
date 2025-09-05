@@ -46,13 +46,13 @@ function Sidebar({
           searchTarget="endpoints"
         />
       </div>
-      <div className="mt-2 flex-1 space-y-4 overflow-y-auto">
+      <div className="mt-2 flex-1 space-y-3 overflow-y-auto">
         {Object.entries(groupedEndpoints).length ? (
           Object.entries(groupedEndpoints).map(([topLevelPath, endpoints]) => (
             <>
               <div key={topLevelPath} className="mb-6">
                 <SidebarTitle label={`${topLevelPath} (${endpoints.length})`} />
-                <div className="mt-2 space-y-4">
+                <div className="mt-2 space-y-3">
                   {endpoints.map(endpoint => (
                     <div
                       key={endpoint.path}

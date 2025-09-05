@@ -44,7 +44,7 @@ function GroupNode({ selected, id }: { selected: boolean; id: string }) {
           !selected ? 'border-bg-500' : 'border-bg-900 dark:border-bg-100'
         )}
       >
-        <div className="text-bg-100 dark:text-bg-800 flex-between bg-bg-500 absolute -top-3 left-4 max-w-[calc(100%-2rem)] -translate-y-full gap-4 rounded-t-2xl p-2 pl-4">
+        <div className="text-bg-100 dark:text-bg-800 flex-between bg-bg-500 absolute -top-3 left-4 max-w-[calc(100%-2rem)] -translate-y-full gap-3 rounded-t-2xl p-2 pl-4">
           <div className="flex w-full min-w-0 items-center gap-3">
             <Icon className="size-8 shrink-0" icon={icon || 'tabler:box'} />
             <span className="w-full min-w-0 truncate text-2xl font-medium">

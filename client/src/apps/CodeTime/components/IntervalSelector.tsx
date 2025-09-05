@@ -16,7 +16,7 @@ function IntervalSelector<T extends string>({
   const { t } = useTranslation('apps.codeTime')
 
   return (
-    <div className={clsx('shrink-0 items-center gap-4', className)}>
+    <div className={clsx('shrink-0 items-center gap-3', className)}>
       <p className="text-bg-500 hidden shrink-0 font-medium tracking-wider md:block">
         {t('labels.inThePast')}
       </p>

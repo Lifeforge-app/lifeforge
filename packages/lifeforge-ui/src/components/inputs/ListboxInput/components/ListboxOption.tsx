@@ -31,7 +31,7 @@ function ListboxOption({
   return (
     <HeadlessListboxOption
       className={clsx(
-        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex w-full min-w-0 cursor-pointer gap-4 p-5 transition-all select-none',
+        'flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex w-full min-w-0 cursor-pointer gap-3 p-5 transition-all select-none',
         className
       )}
       style={style}

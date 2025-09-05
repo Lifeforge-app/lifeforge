@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
-import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
+import { ContextMenu, ContextMenuItem, ItemWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
@@ -23,10 +23,7 @@ function TextEntry({
   }, [entry])
 
   return (
-    <div
-      className="shadow-custom component-bg relative w-full gap-6 rounded-md p-6"
-      id={`audio-entry-${entry.id}`}
-    >
+    <ItemWrapper as="li">
       <div className="mr-16">
         <div className="border-custom-500 border-l-4 pl-4">
           <p className="text-bg-500 whitespace-pre-wrap">{entry.content}</p>
@@ -48,7 +45,7 @@ function TextEntry({
           onClick={onDelete}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 
