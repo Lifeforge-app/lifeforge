@@ -46,11 +46,11 @@ function Backups() {
         <WithQuery query={backupsQuery}>
           {data =>
             data.length > 0 ? (
-              <div className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-3">
                 {data.map(backup => (
                   <BackupItem key={backup.key} backup={backup} />
                 ))}
-              </div>
+              </ul>
             ) : (
               <EmptyStateScreen
                 icon="tabler:history-off"

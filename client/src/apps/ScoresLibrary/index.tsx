@@ -129,7 +129,7 @@ function ScoresLibrary() {
           <Searchbar />
           <WithQuery query={entriesQuery}>
             {entries => (
-              <Scrollbar className="mt-6 space-y-4 pb-16">
+              <Scrollbar className="mt-6 space-y-3">
                 <Pagination
                   currentPage={entries.page}
                   totalPages={entries.totalPages}
@@ -141,6 +141,7 @@ function ScoresLibrary() {
                   totalItems={entries.totalItems}
                 />
                 <Pagination
+                  className="mb-6"
                   currentPage={entries.page}
                   totalPages={entries.totalPages}
                   onPageChange={page => updateFilter('page', page)}

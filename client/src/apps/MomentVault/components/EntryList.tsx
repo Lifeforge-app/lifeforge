@@ -70,7 +70,7 @@ function EntryList({
             totalPages={data.totalPages}
             onPageChange={setPage}
           />
-          <div className="space-y-4">
+          <ul className="space-y-3">
             {data.items.map(entry => {
               if (entry.type === 'audio') {
                 return (
@@ -103,7 +103,7 @@ function EntryList({
                 )
               }
             })}
-          </div>
+          </ul>
           <Pagination
             className="pagination mt-6 mb-24 md:mb-6"
             currentPage={page}

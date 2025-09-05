@@ -48,7 +48,7 @@ function SidebarItemContent({
 
           return (
             sidebarExpanded && (
-              <span className="flex-between flex w-full gap-4 truncate">
+              <span className="flex-between flex w-full gap-3 truncate">
                 <span className="w-full min-w-0 truncate">
                   {t(`common.sidebar:apps.${_.camelCase(label)}.title`)}
                 </span>

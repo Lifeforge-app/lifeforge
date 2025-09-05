@@ -242,7 +242,7 @@ function SinChewDaily() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:news" title="Sin Chew Daily" />
-      <div className="flex w-full flex-wrap items-center gap-4">
+      <div className="flex w-full flex-wrap items-center gap-3">
         <ListboxInput
           buttonContent={<span>{t(`categories.${mainCategory}`)}</span>}
           className="flex-1"

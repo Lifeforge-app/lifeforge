@@ -112,7 +112,7 @@ function Movies() {
           const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
 
           return (
-            <div className="flex flex-1 flex-col space-y-4">
+            <div className="flex flex-1 flex-col space-y-3">
               <Tabs
                 active={currentTab}
                 enabled={['unwatched', 'watched']}

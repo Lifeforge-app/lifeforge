@@ -94,7 +94,7 @@ function UsingEmail({
       <p className="mb-6">{t('modals.twoFA.emailDescription')}</p>
       <div className="flex-center w-full flex-col">
         {otpSent ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <OTPInputBox
               buttonFullWidth
               lighter
