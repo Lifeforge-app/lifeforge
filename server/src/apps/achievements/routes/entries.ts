@@ -3,7 +3,7 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-export const list = forgeController.query
+const list = forgeController.query
   .description('Get all achievements entries by difficulty')
   .input({
     query: SCHEMAS.achievements.entries.pick({
@@ -24,7 +24,7 @@ export const list = forgeController.query
   )
   .enableAIToolCall()
 
-export const create = forgeController.mutation
+const create = forgeController.mutation
   .description('Create a new achievements entry')
   .input({
     body: SCHEMAS.achievements.entries.omit({
@@ -37,7 +37,7 @@ export const create = forgeController.mutation
     pb.create.collection('achievements__entries').data(body).execute()
   )
 
-export const update = forgeController.mutation
+const update = forgeController.mutation
   .description('Update an existing achievements entry')
   .input({
     query: z.object({

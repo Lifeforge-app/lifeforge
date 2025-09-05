@@ -78,7 +78,7 @@ import { validateAuthToken } from '../utils/updateAuth'
  */
 export class ForgeControllerBuilder<
   TMethod extends 'get' | 'post' = 'get',
-  TInput extends InputSchema = InputSchema,
+  TInput extends InputSchema<TMethod> = InputSchema<TMethod>,
   TOutput = unknown,
   TMedia extends MediaConfig | null = null
 > {
@@ -127,7 +127,7 @@ export class ForgeControllerBuilder<
 
   /** The main callback function to handle the request */
   protected _callback: (
-    context: Context<TInput, TOutput, TMedia>
+    context: Context<TMethod, TInput, TOutput, TMedia>
   ) => Promise<TOutput> = async () => {
     // Default implementation
     return {} as TOutput
@@ -156,10 +156,10 @@ export class ForgeControllerBuilder<
    */
   private cloneWith<
     NewMethod extends TMethod = TMethod,
-    NewInput extends InputSchema = TInput,
+    NewInput extends InputSchema<NewMethod> = InputSchema<NewMethod>,
     NewOutput = TOutput,
     NewMedia extends MediaConfig | null = TMedia
-  >(overrides: Partial<InputSchema>, media: NewMedia) {
+  >(overrides: Partial<InputSchema<NewMethod>>, media: NewMedia) {
     const builder = new ForgeControllerBuilder<
       NewMethod,
       NewInput,
@@ -233,7 +233,7 @@ export class ForgeControllerBuilder<
    * })
    * ```
    */
-  input<T extends InputSchema>(input: T) {
+  input<T extends InputSchema<TMethod>>(input: T) {
     return this.cloneWith<TMethod, T, TOutput>(
       {
         ...input
@@ -405,7 +405,9 @@ export class ForgeControllerBuilder<
    * // controller now has the return type { success: boolean, user: User } as OutputType
    * ```
    */
-  callback<CB extends (context: Context<TInput, any, TMedia>) => Promise<any>>(
+  callback<
+    CB extends (context: Context<TMethod, TInput, any, TMedia>) => Promise<any>
+  >(
     cb: CB
   ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia> {
     const schema = this._schema
@@ -606,7 +608,10 @@ export class ForgeControllerBuilder<
   }
 
   public getToolConfig(
-    ctx: Omit<Context<TInput, TOutput, TMedia>, 'body' | 'query' | 'media'>
+    ctx: Omit<
+      Context<TMethod, TInput, TOutput, TMedia>,
+      'body' | 'query' | 'media'
+    >
   ): Tool {
     if (!this._isAIToolCallingEnabled) {
       throw new Error('AI tool calling is not enabled for this controller')
@@ -734,7 +739,7 @@ class ForgeControllerBuilderWithoutSchema<
    *   })
    * ```
    */
-  input<T extends InputSchema>(input: T) {
+  input<T extends InputSchema<TMethod>>(input: T) {
     let controller = new ForgeControllerBuilder<TMethod, T>()
       .method(this._method)
       .input(input)
