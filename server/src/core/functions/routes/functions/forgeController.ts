@@ -183,16 +183,10 @@ export class ForgeControllerBuilder<
     return builder
   }
 
-  /**
-   * Sets the HTTP method for the route.
-   *
-   * @param method - HTTP method ('get' | 'post')
-   * @returns This builder instance for method chaining
-   */
-  method(method: TMethod) {
-    this._method = method
-
-    return this
+  constructor(method?: TMethod) {
+    if (method) {
+      this._method = method
+    }
   }
 
   /**
@@ -740,8 +734,7 @@ class ForgeControllerBuilderWithoutSchema<
    * ```
    */
   input<T extends InputSchema<TMethod>>(input: T) {
-    let controller = new ForgeControllerBuilder<TMethod, T>()
-      .method(this._method)
+    let controller = new ForgeControllerBuilder<TMethod, T>(this._method)
       .input(input)
       .description(this._description)
 
