@@ -1,171 +1,35 @@
-import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import traceRouteStack from '@functions/utils/traceRouteStack'
+import { createAIRouter } from '@lib/ai'
 import express from 'express'
-import moment from 'moment'
-import request from 'request'
-import { z } from 'zod/v4'
+
+import appRoutes from './app.routes'
+import coreRoutes from './core.routes'
 
 const router = express.Router()
-
-router.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to LifeForge API!'
-  })
-})
-
-const ping = forgeController.mutation
-  .noAuth()
-  .description('Ping the server')
-  .input({
-    body: z.object({
-      timestamp: z.number().min(0)
-    })
-  })
-  .callback(
-    async ({ body: { timestamp } }) =>
-      `Pong at ${moment(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
-  )
-
-const status = forgeController.query
-  .noAuth()
-  .description('Get server status')
-  .input({})
-  .callback(async () => ({
-    environment: process.env.NODE_ENV || 'development'
-  }))
-
-const getRoot = forgeController.query
-  .description('Get root endpoint')
-  .input({})
-  .callback(async () => 'Welcome to LifeForge API!' as const)
-
-const getMedia = forgeController.query
-  .noAuth()
-  .description('Get media file from PocketBase')
-  .input({
-    query: z.object({
-      collectionId: z.string(),
-      recordId: z.string(),
-      fieldId: z.string(),
-      thumb: z.string().optional(),
-      token: z.string().optional()
-    })
-  })
-  .noDefaultResponse()
-  .callback(
-    async ({
-      query: { collectionId, recordId, fieldId, thumb, token },
-      res
-    }) => {
-      const searchParams = new URLSearchParams()
-
-      if (thumb) {
-        searchParams.append('thumb', thumb)
-      }
-
-      if (token) {
-        searchParams.append('token', token)
-      }
-
-      request(
-        `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${searchParams.toString()}`
-      ).pipe(res)
-    }
-  )
-
-const corsAnywhere = forgeController.query
-  .description('Proxy request to bypass CORS')
-  .input({
-    query: z.object({
-      url: z.url()
-    })
-  })
-  .callback(async ({ query: { url } }) => {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-      }
-    }).catch(() => {
-      LoggingService.error(`Failed to fetch URL: ${url}`)
-    })
-
-    if (!response) {
-      return
-    }
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch URL: ${url}`)
-    }
-
-    if (response.headers.get('content-type')?.includes('application/json')) {
-      const json = await response.json()
-
-      return json
-    }
-
-    return response.text()
-  })
 
 const listRoutes = forgeController.query
   .description('Get all registered routes')
   .input({})
   .callback(async () => traceRouteStack(router.stack))
 
-// First, create routes without AI to avoid circular dependency
-const coreRoutes = {
-  achievements: (await import('@apps/achievements')).default,
-  calendar: (await import('@apps/calendar')).default,
-  todoList: (await import('@apps/todoList')).default,
-  ideaBox: (await import('@apps/ideaBox')).default,
-  'code-time': (await import('@apps/codeTime')).default,
-  booksLibrary: (await import('@apps/booksLibrary')).default,
-  wallet: (await import('@apps/wallet')).default,
-  wishlist: (await import('@apps/wishlist')).default,
-  scoresLibrary: (await import('@apps/scoresLibrary')).default,
-  passwords: (await import('@apps/passwords')).default,
-  sudoku: (await import('@apps/sudoku')).default,
-  momentVault: (await import('@apps/momentVault')).default,
-  movies: (await import('@apps/movies')).default,
-  railwayMap: (await import('@apps/railwayMap')).default,
-  youtubeSummarizer: (await import('@apps/youtubeSummarizer')).default,
-  blog: (await import('@apps/blog')).default,
-  changiAirportFlightStatus: (await import('@apps/changiAirportFlightStatus'))
-    .default,
-  locales: (await import('@lib/locales')).default,
-  user: (await import('@lib/user')).default,
-  apiKeys: (await import('@lib/apiKeys')).default,
-  pixabay: (await import('@lib/pixabay')).default,
-  locations: (await import('@lib/locations')).default,
-  modules: (await import('@lib/modules')).default,
-  backups: (await import('@lib/backups')).default,
-  database: (await import('@lib/database')).default,
-  music: (await import('@apps/music')).default,
-  sinChewDaily: (await import('@apps/sinChewDaily')).default,
-  journal: (await import('@apps/journal')).default,
-  _listRoutes: listRoutes,
-  ping,
-  status,
-  getRoot,
-  media: getMedia,
-  corsAnywhere
-}
+const mainRoutes = forgeRouter({
+  ...appRoutes,
+  ...coreRoutes,
+  listRoutes
+})
 
-// Now create AI router with core routes as dependency
-const { createAIRouter } = await import('@lib/ai')
+// Split the router to prevent circular dependency issues
+const aiRoutes = createAIRouter(mainRoutes)
 
-const aiRoutes = createAIRouter(coreRoutes)
-
-// Final complete routes including AI
-const appRoutes = forgeRouter({
+const allRoutes = forgeRouter({
   ...coreRoutes,
   ai: aiRoutes
 })
 
-router.use('/', registerRoutes(appRoutes))
+router.use('/', registerRoutes(allRoutes))
 
-export { appRoutes }
+export { allRoutes }
 
 export default router
