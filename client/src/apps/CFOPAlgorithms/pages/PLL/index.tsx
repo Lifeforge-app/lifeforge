@@ -1,4 +1,4 @@
-import { GoBackButton, ModuleWrapper } from 'lifeforge-ui'
+import { GoBackButton } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
 
 import { algsetScrambles } from '../../algorithms/PLL'
@@ -9,7 +9,7 @@ function CFOPPLL() {
   const navigate = useNavigate()
 
   return (
-    <ModuleWrapper>
+    <>
       <header className="space-y-1">
         <GoBackButton
           onClick={() => {
@@ -35,7 +35,7 @@ function CFOPPLL() {
           return <AlgEntry key={index} cube={cube} index={index} />
         })}
       </ul>
-    </ModuleWrapper>
+    </>
   )
 }
 

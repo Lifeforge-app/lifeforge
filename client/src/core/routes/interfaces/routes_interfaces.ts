@@ -1,6 +1,6 @@
 export interface ModuleConfig {
   name: string
-  icon: React.ReactElement | string
+  icon: string
   provider?:
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
@@ -14,7 +14,7 @@ export interface ModuleConfig {
   requiredAPIKeys?: string[]
   subsection?: {
     label: string
-    icon: React.ReactElement | string
+    icon: string
     path: string
   }[]
   hidden?: boolean

@@ -1,4 +1,4 @@
-import { ModuleWrapper, SearchInput } from 'lifeforge-ui'
+import { SearchInput } from 'lifeforge-ui'
 import { useParams } from 'react-router'
 
 import IdeaBoxProvider, {
@@ -16,7 +16,7 @@ function Ideas() {
   const { searchQuery, setSearchQuery, viewArchived } = useIdeaBoxContext()
 
   return (
-    <ModuleWrapper>
+    <>
       <Header />
       {!viewArchived && (
         <SearchInput
@@ -30,7 +30,7 @@ function Ideas() {
       <TagsSelector />
       <IdeaAndFolderList />
       <FAB />
-    </ModuleWrapper>
+    </>
   )
 }
 

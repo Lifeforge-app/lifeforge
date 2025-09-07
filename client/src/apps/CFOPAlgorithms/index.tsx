@@ -1,10 +1,10 @@
-import { ItemWrapper, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ItemWrapper, ModuleHeader } from 'lifeforge-ui'
 import { Link } from 'react-router'
 
 function CFOPAlgorithms() {
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:cube" title="CFOP Algorithms" />
+    <>
+      <ModuleHeader />
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries({
           F2L: 'First Two Layers',
@@ -29,7 +29,7 @@ function CFOPAlgorithms() {
           </ItemWrapper>
         ))}
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

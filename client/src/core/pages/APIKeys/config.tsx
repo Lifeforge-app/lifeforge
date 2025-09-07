@@ -1,10 +1,9 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
-import { IconPassword } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 export default {
   name: 'API Keys',
-  icon: <IconPassword />,
+  icon: 'tabler:password',
   routes: {
     'api-keys': lazy(() => import('.'))
   },

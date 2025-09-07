@@ -1,6 +1,6 @@
 import ROUTES from '@core/routes/Routes'
 import forgeAPI from '@utils/forgeAPI'
-import { LoadingScreen, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { LoadingScreen, ModuleHeader } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -45,8 +45,8 @@ function Modules() {
   }
 
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:plug" title="Modules" />
+    <>
+      <ModuleHeader />
       {userData ? (
         <ul className="mb-8 space-y-12">
           {ROUTES.map(
@@ -79,7 +79,7 @@ function Modules() {
       ) : (
         <LoadingScreen />
       )}
-    </ModuleWrapper>
+    </>
   )
 }
 

@@ -4,7 +4,6 @@ import {
   Button,
   EmptyStateScreen,
   ModuleHeader,
-  ModuleWrapper,
   SearchInput,
   WithQueryData
 } from 'lifeforge-ui'
@@ -31,7 +30,7 @@ function IdeaBox() {
   }, [])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
@@ -46,8 +45,6 @@ function IdeaBox() {
             new
           </Button>
         }
-        icon="tabler:bulb"
-        title="Idea Box"
       />
       <SearchInput
         namespace="apps.ideaBox"
@@ -90,7 +87,7 @@ function IdeaBox() {
           return <ContainerList filteredList={filteredList} />
         }}
       </WithQueryData>
-    </ModuleWrapper>
+    </>
   )
 }
 

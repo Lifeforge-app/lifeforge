@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
-import { ModuleWrapper, WithMasterPassword, WithOTP } from 'lifeforge-ui'
+import { WithMasterPassword, WithOTP } from 'lifeforge-ui'
 import type { InferOutput } from 'shared'
 
 import ContentContainer from './components/ContentContainer'
@@ -13,7 +13,7 @@ function Passwords() {
   const { userData } = useAuth()
 
   return (
-    <ModuleWrapper>
+    <>
       <WithOTP
         controllers={{
           getChallenge: forgeAPI.passwords.master.getChallenge,
@@ -34,7 +34,7 @@ function Passwords() {
           )}
         </WithMasterPassword>
       </WithOTP>
-    </ModuleWrapper>
+    </>
   )
 }
 
