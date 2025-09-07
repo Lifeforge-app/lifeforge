@@ -7,7 +7,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -118,7 +117,7 @@ function Transactions() {
   }, [searchParams])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           (transactionsQuery.data?.length || 0) > 0 && (
@@ -229,7 +228,7 @@ function Transactions() {
           </div>
         </div>
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

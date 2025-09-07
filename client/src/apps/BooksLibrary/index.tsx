@@ -8,7 +8,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   SearchInput,
   ViewModeSelector,
   WithQuery
@@ -46,7 +45,7 @@ function BooksLibrary() {
       .input({
         collection: collection || undefined,
         language: language || undefined,
-        favourite: favourite.toString() || undefined,
+        favourite: (favourite.toString() as 'true' | 'false') || undefined,
         fileType: fileType || undefined,
         readStatus: readStatus || undefined,
         query: debouncedSearchQuery.trim() || undefined
@@ -55,7 +54,7 @@ function BooksLibrary() {
   )
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         contextMenuProps={{
           classNames: {
@@ -77,8 +76,6 @@ function BooksLibrary() {
             </ContextMenuGroup>
           )
         }}
-        icon="tabler:books"
-        title="Books Library"
       />
       <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
@@ -167,7 +164,7 @@ function BooksLibrary() {
           }}
         />
       </ContextMenu>
-    </ModuleWrapper>
+    </>
   )
 }
 

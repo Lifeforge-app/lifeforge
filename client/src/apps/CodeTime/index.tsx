@@ -1,4 +1,4 @@
-import { ContextMenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ContextMenuItem, ModuleHeader } from 'lifeforge-ui'
 
 import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
 import CodeTimeStatistics from './components/CodeTimeStatistics'
@@ -7,7 +7,7 @@ import CodeTimeTopEntries from './components/CodeTimeTopEntries'
 
 export default function CodeTime() {
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         contextMenuProps={{
           children: (
@@ -20,8 +20,6 @@ export default function CodeTime() {
             </>
           )
         }}
-        icon="tabler:code"
-        title="Code Time"
       />
       <div className="mt-6 mb-12 min-h-0 w-full space-y-3">
         <CodeTimeStatistics />
@@ -39,6 +37,6 @@ export default function CodeTime() {
           </>
         ))}
       </div>
-    </ModuleWrapper>
+    </>
   )
 }

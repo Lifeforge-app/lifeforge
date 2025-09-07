@@ -1,10 +1,9 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
-import { IconPalette } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 export default {
   name: 'Personalization',
-  icon: <IconPalette />,
+  icon: 'tabler:palette',
   routes: {
     personalization: lazy(() => import('.'))
   },

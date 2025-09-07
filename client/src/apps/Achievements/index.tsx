@@ -4,7 +4,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   Tabs,
   WithQueryData
 } from 'lifeforge-ui'
@@ -39,7 +38,7 @@ function Achievements() {
   )
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
@@ -59,8 +58,6 @@ function Achievements() {
             new
           </Button>
         }
-        icon="tabler:award"
-        title="Achievements"
       />
       <div className="flex flex-1 flex-col gap-3">
         <Tabs
@@ -121,7 +118,7 @@ function Achievements() {
           }
         </WithQueryData>
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

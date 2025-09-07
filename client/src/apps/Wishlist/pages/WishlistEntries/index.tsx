@@ -5,7 +5,6 @@ import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
   ContextMenuItem,
-  ModuleWrapper,
   SearchInput,
   Tabs,
   WithQuery
@@ -97,7 +96,7 @@ function WishlistEntries() {
   }, [validQuery.data])
 
   return (
-    <ModuleWrapper>
+    <>
       <WithQuery query={wishlistListDetailsQuery}>
         {wishlistListDetails => (
           <>
@@ -168,7 +167,7 @@ function WishlistEntries() {
           />
         </MenuItems>
       </Menu>
-    </ModuleWrapper>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { GoBackButton, ItemWrapper, ModuleWrapper } from 'lifeforge-ui'
+import { GoBackButton, ItemWrapper } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
 
 import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
@@ -9,7 +9,7 @@ function CFOPF2L() {
   const navigate = useNavigate()
 
   return (
-    <ModuleWrapper>
+    <>
       <header className="space-y-1">
         <GoBackButton
           onClick={() => {
@@ -115,7 +115,7 @@ function CFOPF2L() {
           )
         })}
       </ul>
-    </ModuleWrapper>
+    </>
   )
 }
 

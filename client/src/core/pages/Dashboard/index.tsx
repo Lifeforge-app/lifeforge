@@ -11,7 +11,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import { ContextMenuItem, ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ContextMenuItem, ModuleHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
@@ -47,7 +47,7 @@ function Dashboard() {
   }, [])
 
   return (
-    <ModuleWrapper>
+    <>
       <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
         <ModuleHeader
           contextMenuProps={{
@@ -70,7 +70,6 @@ function Dashboard() {
               </>
             )
           }}
-          title="Dashboard"
         />
         {isReady && (
           <DashboardGrid
@@ -88,7 +87,7 @@ function Dashboard() {
       >
         Forge Agent
       </FAB> */}
-    </ModuleWrapper>
+    </>
   )
 }
 

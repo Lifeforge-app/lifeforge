@@ -1,10 +1,9 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
-import { IconDashboard } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 export default {
   name: 'Dashboard',
-  icon: <IconDashboard />,
+  icon: 'tabler:dashboard',
   routes: {
     dashboard: lazy(() => import('.'))
   },

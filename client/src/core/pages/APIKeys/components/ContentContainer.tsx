@@ -60,8 +60,6 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
             new
           </Button>
         }
-        icon="tabler:password"
-        title="API Keys"
       />
       <WithQuery query={entriesQuery}>
         {entries => (

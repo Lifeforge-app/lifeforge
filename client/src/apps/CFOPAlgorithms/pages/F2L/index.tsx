@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { GoBackButton, ItemWrapper, ModuleWrapper } from 'lifeforge-ui'
+import { GoBackButton, ItemWrapper } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
 
 import Cube from './Cube'
@@ -162,7 +162,7 @@ function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()
 
   return (
-    <ModuleWrapper>
+    <>
       <header className="space-y-1">
         <GoBackButton
           onClick={() => {
@@ -232,7 +232,7 @@ function CFOPF2L(): React.ReactElement {
           ))}
         </section>
       ))}
-    </ModuleWrapper>
+    </>
   )
 }
 

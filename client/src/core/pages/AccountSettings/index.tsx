@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ModuleHeader } from 'lifeforge-ui'
 
 import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from './components/OrdinaryColumn'
@@ -7,8 +7,8 @@ import TwoFAColumn from './components/TwoFAColumn'
 
 function AccountSettings() {
   return (
-    <ModuleWrapper>
-      <ModuleHeader title="Account Settings" />
+    <>
+      <ModuleHeader />
       <div className="mb-8 space-y-3">
         <AvatarColumn />
         <OrdinaryColumn
@@ -38,7 +38,7 @@ function AccountSettings() {
         <PasswordColumn />
         <TwoFAColumn />
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

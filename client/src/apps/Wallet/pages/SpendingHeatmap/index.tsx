@@ -1,10 +1,5 @@
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps'
-import {
-  EmptyStateScreen,
-  ModuleHeader,
-  ModuleWrapper,
-  WithQuery
-} from 'lifeforge-ui'
+import { EmptyStateScreen, ModuleHeader, WithQuery } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import colors from 'tailwindcss/colors'
@@ -126,7 +121,7 @@ function SpendingHeatmap() {
   }, [spendingData])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         icon="uil:map-marker"
         namespace="apps.wallet"
@@ -191,7 +186,7 @@ function SpendingHeatmap() {
           )
         }
       </WithQuery>
-    </ModuleWrapper>
+    </>
   )
 }
 

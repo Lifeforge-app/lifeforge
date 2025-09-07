@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
-import { ModuleWrapper, WithMasterPassword, WithOTP } from 'lifeforge-ui'
+import { WithMasterPassword, WithOTP } from 'lifeforge-ui'
 
 import ContentContainer from './components/ContentContainer'
 
@@ -8,7 +8,7 @@ function APIKeys() {
   const { userData } = useAuth()
 
   return (
-    <ModuleWrapper>
+    <>
       <WithOTP
         controllers={{
           generateOTP: forgeAPI.user.auth.generateOTP,
@@ -29,7 +29,7 @@ function APIKeys() {
           )}
         </WithMasterPassword>
       </WithOTP>
-    </ModuleWrapper>
+    </>
   )
 }
 

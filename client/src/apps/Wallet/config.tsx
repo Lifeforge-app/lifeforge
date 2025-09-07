@@ -1,37 +1,28 @@
-import {
-  IconArrowsExchange,
-  IconBook,
-  IconCurrencyDollar,
-  IconDashboard,
-  IconFileText,
-  IconMapPin,
-  IconWallet
-} from '@tabler/icons-react'
 import { lazy } from 'react'
 
 import type { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Wallet',
-  icon: <IconCurrencyDollar />,
+  icon: 'tabler:currency-dollar',
   hasAI: true,
   subsection: [
-    { label: 'Dashboard', icon: <IconDashboard />, path: '' },
+    { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
     {
       label: 'Transactions',
-      icon: <IconArrowsExchange />,
+      icon: 'tabler:arrows-exchange',
       path: 'transactions'
     },
-    { label: 'Assets', icon: <IconWallet />, path: 'assets' },
-    { label: 'Ledgers', icon: <IconBook />, path: 'ledgers' },
+    { label: 'Assets', icon: 'tabler:wallet', path: 'assets' },
+    { label: 'Ledgers', icon: 'tabler:book', path: 'ledgers' },
     {
       label: 'Spending Heatmap',
-      icon: <IconMapPin />,
+      icon: 'tabler:map-pin',
       path: 'spending-heatmap'
     },
     {
       label: 'Financial Statements',
-      icon: <IconFileText />,
+      icon: 'tabler:file-text',
       path: 'statements'
     }
   ],

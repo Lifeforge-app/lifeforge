@@ -1,10 +1,9 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
-import { IconUserCog } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 export default {
   name: 'Account Settings',
-  icon: <IconUserCog />,
+  icon: 'tabler:user-cog',
   routes: {
     account: lazy(() => import('.'))
   },

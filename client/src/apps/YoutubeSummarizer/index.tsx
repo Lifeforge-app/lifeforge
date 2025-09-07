@@ -4,7 +4,6 @@ import forgeAPI from '@utils/forgeAPI'
 import {
   EmptyStateScreen,
   ModuleHeader,
-  ModuleWrapper,
   TextInput,
   WithQuery
 } from 'lifeforge-ui'
@@ -79,8 +78,8 @@ function YoutubeSummarizer() {
   }, [videoID])
 
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:brand-youtube" title="Youtube Summarizer" />
+    <>
+      <ModuleHeader />
       <TextInput
         disabled={summarizeLoading}
         icon="tabler:link"
@@ -121,7 +120,7 @@ function YoutubeSummarizer() {
           </WithQuery>
         </div>
       )}
-    </ModuleWrapper>
+    </>
   )
 }
 

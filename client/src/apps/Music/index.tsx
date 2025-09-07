@@ -2,7 +2,6 @@ import { useDebounce } from '@uidotdev/usehooks'
 import {
   EmptyStateScreen,
   ModuleHeader,
-  ModuleWrapper,
   Scrollbar,
   SearchInput,
   WithQuery
@@ -40,11 +39,9 @@ function Music() {
   })
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={<AddMusicButton />}
-        icon="tabler:music"
-        title="Music"
         totalItems={musicsQuery.data?.length}
       />
       <div className="music relative flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
@@ -81,7 +78,7 @@ function Music() {
         </div>
         <BottomBar />
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

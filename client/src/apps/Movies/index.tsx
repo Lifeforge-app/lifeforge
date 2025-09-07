@@ -6,7 +6,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   Scrollbar,
   SearchInput,
   Tabs,
@@ -75,7 +74,7 @@ function Movies() {
   }, [entriesQuery.data])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
@@ -87,8 +86,6 @@ function Movies() {
             new
           </Button>
         }
-        icon="tabler:movie"
-        title="Movies"
       />
       <div className="flex items-center gap-2">
         <SearchInput
@@ -173,7 +170,7 @@ function Movies() {
         }}
       </WithQuery>
       <FAB visibilityBreakpoint="md" onClick={handleOpenTMDBModal} />
-    </ModuleWrapper>
+    </>
   )
 }
 
