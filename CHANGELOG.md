@@ -1,5 +1,8 @@
 # Change Log
 
+> [!IMPORTANT]  
+> For latest changelog after version dev 25w32, visit <a href="https://docs.lifeforge.dev/progress/changelog">the documentation</a>.
+
 ## 📌 **dev 25w32 (8/3/2025 - 8/9/2025)**
 
 - **Music**: Added this module back.
