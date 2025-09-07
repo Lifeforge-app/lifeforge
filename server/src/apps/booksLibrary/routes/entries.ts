@@ -169,18 +169,21 @@ const getEpubThumbnail = (epubInstance: EPub): Promise<File | undefined> => {
 const upload = forgeController.mutation
   .description('Upload a new entry to the books library')
   .input({
-    body: SCHEMAS.books_library.entries.pick({
-      title: true,
-      authors: true,
-      edition: true,
-      size: true,
-      collection: true,
-      languages: true,
-      extension: true,
-      isbn: true,
-      publisher: true,
-      year_published: true
-    })
+    body: SCHEMAS.books_library.entries
+      .pick({
+        title: true,
+        authors: true,
+        edition: true,
+        size: true,
+        languages: true,
+        extension: true,
+        isbn: true,
+        publisher: true,
+        year_published: true
+      })
+      .extend({
+        collection: z.string().optional()
+      })
   })
   .media({
     file: {
