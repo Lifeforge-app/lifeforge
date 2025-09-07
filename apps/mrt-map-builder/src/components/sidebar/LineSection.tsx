@@ -26,8 +26,8 @@ function LineSection({
 
   return (
     <>
-      <div className="flex-between mb-4 gap-4 px-4">
-        <div className="flex items-center gap-4">
+      <div className="flex-between mb-4 gap-3 px-4">
+        <div className="flex items-center gap-3">
           <Icon className="text-2xl" icon="tabler:route" />
           <h2 className="text-xl font-medium">Lines</h2>
         </div>

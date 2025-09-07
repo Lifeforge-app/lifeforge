@@ -33,6 +33,7 @@ import { checkExistence } from '@functions/database'
 import { LoggingService } from '@functions/logging/loggingService'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
+import { Tool } from 'ai'
 import type { Request, Response, Router } from 'express'
 import { z } from 'zod/v4'
 
@@ -52,6 +53,7 @@ import {
 } from '../utils/response'
 import restoreFormDataType from '../utils/restoreDataType'
 import { splitMediaAndData } from '../utils/splitMediaAndData'
+import { validateAuthToken } from '../utils/updateAuth'
 
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
@@ -76,7 +78,7 @@ import { splitMediaAndData } from '../utils/splitMediaAndData'
  */
 export class ForgeControllerBuilder<
   TMethod extends 'get' | 'post' = 'get',
-  TInput extends InputSchema = InputSchema,
+  TInput extends InputSchema<TMethod> = InputSchema<TMethod>,
   TOutput = unknown,
   TMedia extends MediaConfig | null = null
 > {
@@ -116,7 +118,20 @@ export class ForgeControllerBuilder<
   /** Whether this endpoint returns downloadable content */
   protected _isDownloadable = false
 
+  /** Media input configuration for the response */
   protected _media: TMedia = {} as TMedia
+
+  protected _isAIToolCallingEnabled = false
+
+  protected _noAuth = false
+
+  /** The main callback function to handle the request */
+  protected _callback: (
+    context: Context<TMethod, TInput, TOutput, TMedia>
+  ) => Promise<TOutput> = async () => {
+    // Default implementation
+    return {} as TOutput
+  }
 
   /** The main request handler function with proper typing for request/response objects */
   protected _handler?: (
@@ -141,10 +156,10 @@ export class ForgeControllerBuilder<
    */
   private cloneWith<
     NewMethod extends TMethod = TMethod,
-    NewInput extends InputSchema = TInput,
+    NewInput extends InputSchema<NewMethod> = InputSchema<NewMethod>,
     NewOutput = TOutput,
     NewMedia extends MediaConfig | null = TMedia
-  >(overrides: Partial<InputSchema>, media: NewMedia) {
+  >(overrides: Partial<InputSchema<NewMethod>>, media: NewMedia) {
     const builder = new ForgeControllerBuilder<
       NewMethod,
       NewInput,
@@ -161,20 +176,17 @@ export class ForgeControllerBuilder<
     builder._noDefaultResponse = this._noDefaultResponse
     builder._description = this._description
     builder._isDownloadable = this._isDownloadable
+    builder._isAIToolCallingEnabled = this._isAIToolCallingEnabled
+    builder._noAuth = this._noAuth
+    builder._callback = this._callback as any
 
     return builder
   }
 
-  /**
-   * Sets the HTTP method for the route.
-   *
-   * @param method - HTTP method ('get' | 'post')
-   * @returns This builder instance for method chaining
-   */
-  method(method: TMethod) {
-    this._method = method
-
-    return this
+  constructor(method?: TMethod) {
+    if (method) {
+      this._method = method
+    }
   }
 
   /**
@@ -215,7 +227,7 @@ export class ForgeControllerBuilder<
    * })
    * ```
    */
-  input<T extends InputSchema>(input: T) {
+  input<T extends InputSchema<TMethod>>(input: T) {
     return this.cloneWith<TMethod, T, TOutput>(
       {
         ...input
@@ -327,6 +339,18 @@ export class ForgeControllerBuilder<
     return this
   }
 
+  enableAIToolCall() {
+    this._isAIToolCallingEnabled = true
+
+    return this
+  }
+
+  noAuth() {
+    this._noAuth = true
+
+    return this
+  }
+
   /**
    * Marks this endpoint as returning downloadable content.
    * Sets appropriate headers and disables the default response wrapper.
@@ -375,7 +399,9 @@ export class ForgeControllerBuilder<
    * // controller now has the return type { success: boolean, user: User } as OutputType
    * ```
    */
-  callback<CB extends (context: Context<TInput, any, TMedia>) => Promise<any>>(
+  callback<
+    CB extends (context: Context<TMethod, TInput, any, TMedia>) => Promise<any>
+  >(
     cb: CB
   ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia> {
     const schema = this._schema
@@ -387,7 +413,7 @@ export class ForgeControllerBuilder<
       isDownloadable: this._isDownloadable
     }
 
-    const _handler = (__media: TMedia) => {
+    const _handler = (__media: TMedia, noAuth: boolean) => {
       async function __handler(
         req: Request<
           never,
@@ -397,6 +423,10 @@ export class ForgeControllerBuilder<
         >,
         res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
       ): Promise<void> {
+        const isValid = await validateAuthToken(req, res, noAuth)
+
+        if (!isValid) return
+
         try {
           let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
 
@@ -563,9 +593,51 @@ export class ForgeControllerBuilder<
     newBuilder._noDefaultResponse = this._noDefaultResponse
     newBuilder._description = this._description
     newBuilder._isDownloadable = this._isDownloadable
-    newBuilder._handler = _handler(this._media)
+    newBuilder._isAIToolCallingEnabled = this._isAIToolCallingEnabled
+    newBuilder._noAuth = this._noAuth
+    newBuilder._handler = _handler(this._media, this._noAuth)
+    newBuilder._callback = cb
 
     return newBuilder
+  }
+
+  public getToolConfig(
+    ctx: Omit<
+      Context<TMethod, TInput, TOutput, TMedia>,
+      'body' | 'query' | 'media'
+    >
+  ): Tool {
+    if (!this._isAIToolCallingEnabled) {
+      throw new Error('AI tool calling is not enabled for this controller')
+    }
+
+    if (!this._handler) {
+      throw new Error(
+        'Missing handler. Have you called .callback() when defining the controller?'
+      )
+    }
+
+    return {
+      description: this._description,
+      inputSchema: z.object({
+        body: this._schema.body || z.object({}),
+        query: this._schema.query || z.object({})
+      }),
+      execute: async input => {
+        LoggingService.info(
+          `AI tool calling controller - ${
+            this._description || '(no description)'
+          }`,
+          'AGENT'
+        )
+
+        return await this._callback({ ...ctx, ...input })
+      }
+    } satisfies Tool
+  }
+
+  get isAIToolCallingEnabled() {
+    return this._isAIToolCallingEnabled
   }
 
   /**
@@ -618,6 +690,7 @@ class ForgeControllerBuilderWithoutSchema<
 > {
   /** Human-readable description of what this endpoint does */
   protected _description = ''
+  protected _noAuth = false
 
   constructor(public _method: TMethod) {}
 
@@ -629,6 +702,12 @@ class ForgeControllerBuilderWithoutSchema<
    */
   description(desc: string) {
     this._description = desc
+
+    return this
+  }
+
+  noAuth() {
+    this._noAuth = true
 
     return this
   }
@@ -654,11 +733,16 @@ class ForgeControllerBuilderWithoutSchema<
    *   })
    * ```
    */
-  input<T extends InputSchema>(input: T) {
-    return new ForgeControllerBuilder<TMethod, T>()
-      .method(this._method)
+  input<T extends InputSchema<TMethod>>(input: T) {
+    let controller = new ForgeControllerBuilder<TMethod, T>(this._method)
       .input(input)
       .description(this._description)
+
+    if (this._noAuth) {
+      controller = controller.noAuth()
+    }
+
+    return controller
   }
 }
 

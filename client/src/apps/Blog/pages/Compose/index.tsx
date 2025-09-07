@@ -1,8 +1,7 @@
 import {
   ContentWrapperWithSidebar,
   GoBackButton,
-  LayoutWithSidebar,
-  ModuleWrapper
+  LayoutWithSidebar
 } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useQuill } from 'react-quilljs'
@@ -40,7 +39,7 @@ function Compose() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (
-    <ModuleWrapper>
+    <>
       <LayoutWithSidebar>
         <ContentWrapperWithSidebar>
           <GoBackButton onClick={() => navigate('/blog')} />
@@ -60,7 +59,7 @@ function Compose() {
           setOpen={setIsSidebarOpen}
         />
       </LayoutWithSidebar>
-    </ModuleWrapper>
+    </>
   )
 }
 

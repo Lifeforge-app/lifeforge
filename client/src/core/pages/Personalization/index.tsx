@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ModuleHeader } from 'lifeforge-ui'
 
 import BgImageSelector from './components/BgImageSelector'
 import BgTempSelector from './components/BgTempSelector'
@@ -10,8 +10,8 @@ import ThemeSelector from './components/ThemeSelector'
 
 function Personalization() {
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:palette" title="Personalization" />
+    <>
+      <ModuleHeader />
       <div className="mb-8 space-y-3">
         <LanguageSelector />
         <ThemeSelector />
@@ -21,7 +21,7 @@ function Personalization() {
         <FontFamilySelector />
         <FontScaleSelector />
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

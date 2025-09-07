@@ -5,6 +5,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -57,7 +58,11 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
   }, [container])
 
   return (
-    <div className="shadow-custom group component-bg-with-hover relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg">
+    <ItemWrapper
+      isInteractive
+      as="li"
+      className="group flex flex-col items-center justify-start gap-6 overflow-hidden p-0!"
+    >
       <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-video w-full">
         {container.cover !== '' ? (
           <img
@@ -133,7 +138,7 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
           onClick={handleDeleteContainer}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

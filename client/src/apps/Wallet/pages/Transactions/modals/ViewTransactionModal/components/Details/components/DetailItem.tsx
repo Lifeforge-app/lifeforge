@@ -19,7 +19,7 @@ function DetailItem({
     <div
       className={clsx(
         'bg-bg-50/50 dark:bg-bg-800/50 shadow-custom w-full min-w-0 rounded-lg p-4',
-        vertical ? 'space-y-4' : 'sm:flex-between gap-6 space-y-4 sm:space-y-0'
+        vertical ? 'space-y-3' : 'sm:flex-between gap-6 space-y-3 sm:space-y-0'
       )}
     >
       <div className="text-bg-500 flex min-w-0 items-center gap-3">

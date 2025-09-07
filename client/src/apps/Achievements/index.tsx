@@ -4,7 +4,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   Tabs,
   WithQueryData
 } from 'lifeforge-ui'
@@ -39,12 +38,13 @@ function Achievements() {
   )
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
             className="ml-4 hidden md:flex"
             icon="tabler:plus"
+            namespace="apps.achievements"
             tProps={{
               item: t('items.achievement')
             }}
@@ -58,10 +58,8 @@ function Achievements() {
             new
           </Button>
         }
-        icon="tabler:award"
-        title="Achievements"
       />
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-3">
         <Tabs
           active={difficulty}
           enabled={Object.keys(DIFFICULTIES).map(
@@ -84,11 +82,11 @@ function Achievements() {
           {entries =>
             entries.length > 0 ? (
               <>
-                <div className="space-y-3">
+                <ul className="space-y-3">
                   {entries.map(entry => (
                     <EntryItem key={entry.id} entry={entry} />
                   ))}
-                </div>
+                </ul>
                 <FAB
                   visibilityBreakpoint="md"
                   onClick={() => {
@@ -120,7 +118,7 @@ function Achievements() {
           }
         </WithQueryData>
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

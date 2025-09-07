@@ -53,7 +53,9 @@
     "sendToKindle": "Send to Kindle",
     "markAsRead": "Mark as Read",
     "markAsUnread": "Mark as Unread",
-    "markAsReading": "Mark as Reading"
+    "markAsReading": "Mark as Reading",
+    "addToFavourites": "Add to Favourites",
+    "removeFromFavourites": "Remove from Favourites"
   },
   "inputs": {
     "isbn": "ISBN",

@@ -1,20 +1,30 @@
 import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { registerRoutes } from '@functions/routes/functions/forgeRouter'
-import traceRouteStack from '@functions/utils/traceRouteStack'
-import express from 'express'
-import request from 'request'
-import { z } from 'zod/v4'
+import { request } from 'http'
+import moment from 'moment'
+import z from 'zod/v4'
 
-const router = express.Router()
+const welcome = forgeController.query
+  .noAuth()
+  .description('Welcome message')
+  .input({})
+  .callback(async () => 'Welcome to LifeForge API!' as const)
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to LifeForge API!'
+const ping = forgeController.mutation
+  .noAuth()
+  .description('Ping the server')
+  .input({
+    body: z.object({
+      timestamp: z.number().min(0)
+    })
   })
-})
+  .callback(
+    async ({ body: { timestamp } }) =>
+      `Pong at ${moment(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
+  )
 
 const status = forgeController.query
+  .noAuth()
   .description('Get server status')
   .input({})
   .callback(async () => ({
@@ -27,6 +37,7 @@ const getRoot = forgeController.query
   .callback(async () => 'Welcome to LifeForge API!' as const)
 
 const getMedia = forgeController.query
+  .noAuth()
   .description('Get media file from PocketBase')
   .input({
     query: z.object({
@@ -93,51 +104,21 @@ const corsAnywhere = forgeController.query
     return response.text()
   })
 
-const listRoutes = forgeController.query
-  .description('Get all registered routes')
-  .input({})
-  .callback(async () => traceRouteStack(router.stack))
-
-const appRoutes = forgeRouter({
-  achievements: (await import('@apps/achievements')).default,
-  calendar: (await import('@apps/calendar')).default,
-  todoList: (await import('@apps/todoList')).default,
-  ideaBox: (await import('@apps/ideaBox')).default,
-  'code-time': (await import('@apps/codeTime')).default,
-  booksLibrary: (await import('@apps/booksLibrary')).default,
-  wallet: (await import('@apps/wallet')).default,
-  wishlist: (await import('@apps/wishlist')).default,
-  scoresLibrary: (await import('@apps/scoresLibrary')).default,
-  passwords: (await import('@apps/passwords')).default,
-  sudoku: (await import('@apps/sudoku')).default,
-  momentVault: (await import('@apps/momentVault')).default,
-  movies: (await import('@apps/movies')).default,
-  railwayMap: (await import('@apps/railwayMap')).default,
-  youtubeSummarizer: (await import('@apps/youtubeSummarizer')).default,
-  blog: (await import('@apps/blog')).default,
-  changiAirportFlightStatus: (await import('@apps/changiAirportFlightStatus'))
-    .default,
+const coreRoutes = forgeRouter({
+  '': welcome,
   locales: (await import('@lib/locales')).default,
   user: (await import('@lib/user')).default,
   apiKeys: (await import('@lib/apiKeys')).default,
   pixabay: (await import('@lib/pixabay')).default,
   locations: (await import('@lib/locations')).default,
-  ai: (await import('@lib/ai')).default,
   modules: (await import('@lib/modules')).default,
   backups: (await import('@lib/backups')).default,
   database: (await import('@lib/database')).default,
-  music: (await import('@apps/music')).default,
-  sinChewDaily: (await import('@apps/sinChewDaily')).default,
-  journal: (await import('@apps/journal')).default,
-  _listRoutes: listRoutes,
+  ping,
   status,
   getRoot,
   media: getMedia,
   corsAnywhere
 })
 
-router.use('/', registerRoutes(appRoutes))
-
-export { appRoutes }
-
-export default router
+export default coreRoutes

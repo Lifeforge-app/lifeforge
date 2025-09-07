@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { GoBackButton, ModuleWrapper } from 'lifeforge-ui'
+import { GoBackButton, ItemWrapper } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
 
 import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
@@ -9,7 +9,7 @@ function CFOPF2L() {
   const navigate = useNavigate()
 
   return (
-    <ModuleWrapper>
+    <>
       <header className="space-y-1">
         <GoBackButton
           onClick={() => {
@@ -17,7 +17,7 @@ function CFOPF2L() {
           }}
         />
         <div className="flex-between flex">
-          <h1 className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
+          <h1 className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
             <img
               alt="OLL"
               className="size-16"
@@ -27,16 +27,13 @@ function CFOPF2L() {
           </h1>
         </div>
       </header>
-      <ul className="my-8 space-y-4">
+      <ul className="my-8 space-y-3">
         {algsetScrambles.map((algset, index) => {
           let cube = DEFAULT_CUBE
           cube = applyMoves(cube, algset[0])
 
           return (
-            <li
-              key={index}
-              className="shadow-custom component-bg flex w-full items-center justify-between gap-8 rounded-md p-4"
-            >
+            <ItemWrapper key={index} as="li" className="flex-between gap-8">
               <div className="flex items-center gap-8">
                 <div className="bg-bg-200/70 dark:bg-bg-800/50 rounded-md p-2">
                   <div className="flex flex-col gap-0.5">
@@ -114,11 +111,11 @@ function CFOPF2L() {
               <p className="text-bg-500 mr-8 text-xl">
                 {algsetAlgs[index].group}
               </p>
-            </li>
+            </ItemWrapper>
           )
         })}
       </ul>
-    </ModuleWrapper>
+    </>
   )
 }
 

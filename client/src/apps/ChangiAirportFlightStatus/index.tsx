@@ -6,7 +6,6 @@ import {
   Listbox,
   ListboxOption,
   ModuleHeader,
-  ModuleWrapper,
   Scrollbar,
   SearchInput,
   WithQuery
@@ -44,8 +43,8 @@ function ChangiAirportFlightStatus() {
   )
 
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:plane" title="Changi Airport Flight Status" />
+    <>
+      <ModuleHeader />
       <div className="mb-6 flex items-center gap-2">
         <Listbox
           buttonContent={
@@ -62,7 +61,7 @@ function ChangiAirportFlightStatus() {
               </span>
             </div>
           }
-          className="bg-bg-50 w-min min-w-56"
+          className="component-bg-with-hover! w-min min-w-56"
           setValue={value => {
             setType(value)
           }}
@@ -73,7 +72,6 @@ function ChangiAirportFlightStatus() {
           ))}
         </Listbox>
         <SearchInput
-          className="bg-bg-50"
           namespace="apps.changiAirportFlightStatus"
           searchTarget="flight"
           setValue={setSearchQuery}
@@ -195,7 +193,7 @@ function ChangiAirportFlightStatus() {
           )}
         </WithQuery>
       </Scrollbar>
-    </ModuleWrapper>
+    </>
   )
 }
 

@@ -31,7 +31,7 @@ function NamespaceSelector({
 
   return (
     <div className="mt-6 flex flex-col">
-      <div className="flex w-full items-center gap-4">
+      <div className="flex w-full items-center gap-3">
         <ListboxInput
           buttonContent={
             <div>

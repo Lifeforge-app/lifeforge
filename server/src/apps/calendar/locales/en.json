@@ -116,7 +116,8 @@
     "inputManually": "Input Manually",
     "scanFromImage": "Scan from Image",
     "today": "Today",
-    "exceptThisTime": "Except This Time"
+    "exceptThisTime": "Except This Time",
+    "viewReference": "View Reference"
   },
   "eventTypes": {
     "single": "Single Event",

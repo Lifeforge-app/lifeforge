@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import dayjs from 'dayjs'
-import { Button, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
+import { Button, ContextMenu, ContextMenuItem, ItemWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -117,10 +117,7 @@ function AudioEntry({
   }, [stack])
 
   return (
-    <div
-      className="shadow-custom component-bg relative w-full rounded-md p-6"
-      id={`audio-entry-${entry.id}`}
-    >
+    <ItemWrapper as="li" id={`audio-entry-${entry.id}`}>
       <div className="flex items-center gap-3">
         <Button
           className="mb-6 sm:mb-0"
@@ -184,7 +181,7 @@ function AudioEntry({
           onClick={onDelete}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

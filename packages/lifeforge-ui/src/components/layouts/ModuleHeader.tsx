@@ -5,10 +5,11 @@ import { useTranslation } from 'react-i18next'
 import { useSidebarState } from 'shared'
 
 import { Button, ContextMenu } from '../buttons'
+import { useModuleHeaderState } from './ModuleHeaderStateProvider'
 
 interface ModuleHeaderProps {
   icon?: string
-  title: string | React.ReactNode
+  title?: string
   totalItems?: number
   tips?: string
   contextMenuProps?: React.ComponentProps<typeof ContextMenu>
@@ -29,12 +30,19 @@ function ModuleHeader({
   namespace,
   tKey
 }: ModuleHeaderProps) {
+  const { title: innerTitle, icon: innerIcon } = useModuleHeaderState()
+
+  title = title ?? innerTitle
+  icon = icon ?? innerIcon
+
   const { t } = useTranslation([
     `apps.${_.camelCase(title?.toString() ?? '')}`,
     `core.${_.camelCase(title?.toString() ?? '')}`,
     'common.misc',
     namespace ?? ''
   ])
+
+  console.log(icon)
 
   const { toggleSidebar, sidebarExpanded } = useSidebarState()
 

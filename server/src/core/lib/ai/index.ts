@@ -1,9 +1,11 @@
 import { forgeRouter } from '@functions/routes'
 
-import forgeAgentRouter from './routes/forgeAgent'
+import { createForgeAgentRouter } from './routes/forgeAgent'
 import imageGenerationRouter from './routes/imageGeneration'
 
-export default forgeRouter({
-  imageGeneration: imageGenerationRouter,
-  forgeAgent: forgeAgentRouter
-})
+// Factory function to create AI router with routes dependency injection
+export const createAIRouter = (appRoutes: Record<string, unknown>) =>
+  forgeRouter({
+    imageGeneration: imageGenerationRouter,
+    forgeAgent: createForgeAgentRouter(appRoutes)
+  })

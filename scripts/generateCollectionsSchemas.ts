@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import chalk from 'chalk'
 import dotenv from 'dotenv'
 import fs from 'fs'
@@ -48,11 +49,14 @@ const allModules = [
 const modulesMap: Record<string, CollectionModel[]> = {}
 
 const allCollections = await pb.collections.getFullList()
+
 const collections = allCollections.filter(e => !e.system)
+
 for (const collection of collections) {
   const module = allModules.find(e =>
     collection.name.startsWith(_.snakeCase(e.name))
   )
+
   if (!module) {
     console.log(
       chalk.yellow('[WARNING]') +
@@ -99,6 +103,7 @@ for (const module of allModules) {
           collection.name
         )} in module ${chalk.bold(moduleName)}.`
     )
+
     const zodSchemaObject: Record<string, string> = {}
 
     for (const field of collection.fields) {
@@ -134,6 +139,7 @@ for (const module of allModules) {
           break
         case 'select':
           const value = [...field.values, ...(field.required ? [] : [''])]
+
           zodSchemaObject[field.name] =
             field.maxSelect > 1
               ? `z.array(z.enum(${JSON.stringify(value)}))`
@@ -169,6 +175,7 @@ for (const module of allModules) {
     const zodSchemaString = `z.object({\n${Object.entries(zodSchemaObject)
       .map(([key, value]) => `  ${key}: ${value},`)
       .join('\n')}\n}),`
+
     SCHEMA_STRING += `    ${collection.name.split('__').pop()}: ${zodSchemaString}\n`
 
     console.log(

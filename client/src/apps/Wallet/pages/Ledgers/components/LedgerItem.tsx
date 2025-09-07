@@ -5,6 +5,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -52,21 +53,14 @@ function LedgerItem({ ledger }: { ledger: WalletLedger }) {
     })
 
   return (
-    <div
-      aria-label={`View ${ledger.name} transactions`}
-      className="flex-between shadow-custom component-bg-with-hover relative flex w-full cursor-pointer gap-3 rounded-lg p-4 transition-all"
-      role="button"
-      tabIndex={0}
+    <ItemWrapper
+      isInteractive
+      className="flex-between gap-3"
       onClick={() => navigate(`/wallet/transactions?ledger=${ledger.id}`)}
-      onKeyDown={e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          navigate(`/wallet/transactions?ledger=${ledger.id}`)
-        }
-      }}
     >
       <div className="flex items-center gap-3">
         <span
-          className="w-min rounded-md p-2"
+          className="shadow-custom w-min rounded-md p-2"
           style={{ backgroundColor: ledger.color + '20' }}
         >
           <Icon
@@ -95,7 +89,7 @@ function LedgerItem({ ledger }: { ledger: WalletLedger }) {
           onClick={handleDeleteLedger}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

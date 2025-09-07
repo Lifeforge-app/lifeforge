@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import ContextMenuGroup from './components/ContextMenuGroup'
 import ContextMenuItem from './components/ContextMenuItem'
-import ContextMenuSeparator from './components/ContextMenuSeparator'
 import Index from './index'
 import ContextMenu from './index'
 
@@ -24,10 +23,10 @@ export const Default: Story = {
   args: {
     children: <></>
   },
-  render: props => (
+  render: () => (
     <div className="shadow-custom component-bg mx-64 h-full w-full rounded-lg p-4">
       <div className="flex-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <div className="bg-custom-500/30 rounded-md p-2">
             <Icon className="text-custom-500 size-6" icon="tabler:cube" />
           </div>
@@ -54,35 +53,6 @@ export const Default: Story = {
   )
 }
 
-export const WithSeparator: Story = {
-  args: {
-    children: (
-      <>
-        <ContextMenuItem icon="tabler:pin" label="Pin" onClick={() => {}} />
-        <ContextMenuItem icon="tabler:pencil" label="Edit" onClick={() => {}} />
-        <ContextMenuItem
-          icon="tabler:copy"
-          label="Duplicate"
-          onClick={() => {}}
-        />
-        <ContextMenuSeparator />
-        <ContextMenuItem
-          dangerous
-          icon="tabler:archive"
-          label="Archive"
-          onClick={() => {}}
-        />
-        <ContextMenuItem
-          dangerous
-          icon="tabler:trash"
-          label="Delete"
-          onClick={() => {}}
-        />
-      </>
-    )
-  }
-}
-
 export const WithGroup: Story = {
   args: {
     children: (
@@ -96,7 +66,6 @@ export const WithGroup: Story = {
             onClick={() => {}}
           />
         </ContextMenuGroup>
-        <ContextMenuSeparator />
         <ContextMenuItem
           dangerous
           icon="tabler:trash"

@@ -1,4 +1,4 @@
-import { LoadingScreen, ModalManager } from 'lifeforge-ui'
+import { LoadingScreen, ModalManager, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Suspense } from 'react'
 import type { RouteObject } from 'react-router'
@@ -11,6 +11,10 @@ interface RouteBuilderOptions {
   loadingMessage: string
   isNested?: boolean
   APIKeys?: string[]
+  config: {
+    title: string
+    icon: string
+  }
 }
 
 /**
@@ -20,7 +24,8 @@ export function buildChildRoutes({
   routes,
   isNested = false,
   APIKeys = [],
-  loadingMessage = 'loadingModule'
+  loadingMessage = 'loadingModule',
+  config
 }: RouteBuilderOptions): RouteObject[] {
   return Object.entries(routes).map(([path, component]) => {
     const Component = component
@@ -35,7 +40,9 @@ export function buildChildRoutes({
             key={`route-${path}`}
             fallback={<LoadingScreen customMessage={loadingMessage} />}
           >
-            <Component />
+            <ModuleWrapper config={config}>
+              <Component />
+            </ModuleWrapper>
           </Suspense>
           <ModalManager />
         </APIKeyStatusProvider>
@@ -54,6 +61,10 @@ export function createModuleRoute(
   const routeConfig = {
     routes: item.routes,
     APIKeys: item.requiredAPIKeys,
+    config: {
+      title: item.name,
+      icon: item.icon
+    },
     loadingMessage
   }
 

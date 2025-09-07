@@ -34,7 +34,7 @@ function ShowTicketModal({
             </div>
           </div>
           <h2 className="mt-6 text-xl font-medium">{entry.title}</h2>
-          <div className="text-bg-500 mt-6 space-y-4">
+          <div className="text-bg-500 mt-6 space-y-3">
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:map-pin" />
               {entry.theatre_location || 'N/A'}

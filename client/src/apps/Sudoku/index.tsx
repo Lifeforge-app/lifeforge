@@ -5,7 +5,6 @@ import {
   ListboxInput,
   ListboxOption,
   ModuleHeader,
-  ModuleWrapper,
   WithQuery
 } from 'lifeforge-ui'
 import { useRef, useState } from 'react'
@@ -50,8 +49,8 @@ function Sudoku() {
   const reactToPrintFn = useReactToPrint({ contentRef: boardRef })
 
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="uil:table" title="Sudoku" />
+    <>
+      <ModuleHeader />
       <ListboxInput
         buttonContent={
           <span className="flex items-center gap-2">
@@ -116,7 +115,7 @@ function Sudoku() {
           </div>
         )}
       </WithQuery>
-    </ModuleWrapper>
+    </>
   )
 }
 

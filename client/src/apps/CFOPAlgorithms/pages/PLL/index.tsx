@@ -1,4 +1,4 @@
-import { GoBackButton, ModuleWrapper } from 'lifeforge-ui'
+import { GoBackButton } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
 
 import { algsetScrambles } from '../../algorithms/PLL'
@@ -9,7 +9,7 @@ function CFOPPLL() {
   const navigate = useNavigate()
 
   return (
-    <ModuleWrapper>
+    <>
       <header className="space-y-1">
         <GoBackButton
           onClick={() => {
@@ -17,7 +17,7 @@ function CFOPPLL() {
           }}
         />
         <div className="flex-between flex">
-          <h1 className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
+          <h1 className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
             <img
               alt="PLL"
               className="size-16"
@@ -27,7 +27,7 @@ function CFOPPLL() {
           </h1>
         </div>
       </header>
-      <ul className="my-8 space-y-4">
+      <ul className="my-8 space-y-3">
         {algsetScrambles.map((algset, index) => {
           let cube = DEFAULT_CUBE
           cube = applyMoves(cube, algset[0])
@@ -35,7 +35,7 @@ function CFOPPLL() {
           return <AlgEntry key={index} cube={cube} index={index} />
         })}
       </ul>
-    </ModuleWrapper>
+    </>
   )
 }
 

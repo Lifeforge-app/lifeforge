@@ -1,19 +1,20 @@
-import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ItemWrapper, ModuleHeader } from 'lifeforge-ui'
 import { Link } from 'react-router'
 
 function CFOPAlgorithms() {
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:cube" title="CFOP Algorithms" />
+    <>
+      <ModuleHeader />
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries({
           F2L: 'First Two Layers',
           OLL: 'Orientation of the Last Layer',
           PLL: 'Permutation of the Last Layer'
         }).map(([key, value]) => (
-          <Link
+          <ItemWrapper
             key={key}
-            className="shadow-custom component-bg-with-hover flex flex-col items-center justify-center rounded-md p-4 transition-all"
+            as={Link}
+            className="flex-center flex-col"
             to={`/cfop-algorithms/${key.toLowerCase()}`}
           >
             <img
@@ -25,10 +26,10 @@ function CFOPAlgorithms() {
               {key}
             </h2>
             <p className="mt-2 text-center text-xl">{value}</p>
-          </Link>
+          </ItemWrapper>
         ))}
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 

@@ -116,7 +116,8 @@
     "inputManually": "手动输入",
     "scanFromImage": "从图像扫描",
     "today": "今天",
-    "exceptThisTime": "本次除外"
+    "exceptThisTime": "本次除外",
+    "viewReference": "查看参考"
   },
   "eventTypes": {
     "single": "单个事件",

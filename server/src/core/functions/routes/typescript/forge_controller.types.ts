@@ -14,8 +14,8 @@ export type ZodObjectOrIntersection =
   | ZodObject<any>
   | ZodIntersection<ZodTypeAny, ZodTypeAny>
 
-export type InputSchema = {
-  body?: ZodObjectOrIntersection
+export type InputSchema<TMethod extends 'get' | 'post'> = {
+  body?: TMethod extends 'post' ? ZodObjectOrIntersection : never
   query?: ZodObjectOrIntersection
 }
 
@@ -45,7 +45,8 @@ export type ConvertMedia<TMedia extends MediaConfig | null> =
       }
 
 export type Context<
-  TInput extends InputSchema,
+  TMethod extends 'get' | 'post',
+  TInput extends InputSchema<TMethod>,
   TOutput = unknown,
   TMedia extends MediaConfig | null = null
 > = {

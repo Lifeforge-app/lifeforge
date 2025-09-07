@@ -53,7 +53,9 @@
     "sendToKindle": "Hantar ke Kindle",
     "markAsRead": "Tandakan sebagai Dibaca",
     "markAsUnread": "Tandakan sebagai Belum Dibaca",
-    "markAsReading": "Tandakan sebagai Sedang Membaca"
+    "markAsReading": "Tandakan sebagai Sedang Membaca",
+    "addToFavourites": "Tambah kepada Kegemaran",
+    "removeFromFavourites": "Buang dari Kegemaran"
   },
   "inputs": {
     "isbn": "ISBN",

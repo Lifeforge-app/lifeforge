@@ -12,7 +12,7 @@ export const components: MDXComponents = {
     )
   },
   h1(properties) {
-    return <h1 {...properties} className="mt-2 mb-6 text-4xl font-bold" />
+    return <h1 {...properties} className="my-2 text-4xl font-bold" />
   },
   h2(properties) {
     return (
@@ -54,7 +54,7 @@ export const components: MDXComponents = {
     )
   },
   ul(properties) {
-    return <ul {...properties} className="mt-4 list-disc space-y-4 pl-6" />
+    return <ul {...properties} className="mt-4 list-disc space-y-3 pl-6" />
   },
   li(properties) {
     return (
@@ -113,7 +113,7 @@ export const components: MDXComponents = {
     return (
       <blockquote
         {...properties}
-        className="border-bg-200 dark:border-bg-800 border-l-4 pl-4 italic"
+        className="border-bg-200 dark:border-bg-800 my-4 border-l-4 pl-4 italic"
       />
     )
   }

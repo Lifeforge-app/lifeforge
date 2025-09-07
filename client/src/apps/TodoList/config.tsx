@@ -1,11 +1,10 @@
-import { IconListCheck } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 import type { ModuleConfig } from '../../core/routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Todo List',
-  icon: <IconListCheck />,
+  icon: 'tabler:list-check',
   routes: {
     'todo-list': lazy(() => import('@apps/TodoList'))
   },

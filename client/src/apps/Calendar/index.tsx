@@ -7,7 +7,6 @@ import {
   FAB,
   LayoutWithSidebar,
   ModuleHeader,
-  ModuleWrapper,
   Scrollbar
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -56,49 +55,45 @@ function CalendarModule() {
 
   return (
     <>
-      <ModuleWrapper>
-        <ModuleHeader icon="tabler:calendar" title="Calendar" />
-        <LayoutWithSidebar>
-          <Sidebar
-            selectedCalendar={selectedCalendar}
-            selectedCategory={selectedCategory}
-            setSelectedCalendar={setSelectedCalendar}
-            setSelectedCategory={setSelectedCategory}
-          />
-          <ContentWrapperWithSidebar>
-            <Scrollbar>
-              <div className="size-full pr-4 pb-8">
-                <CalendarComponent
-                  events={rawEventsQuery.data ?? []}
-                  selectedCalendar={selectedCalendar}
-                  selectedCategory={selectedCategory}
-                />
-              </div>
-            </Scrollbar>
-          </ContentWrapperWithSidebar>
-        </LayoutWithSidebar>
-        <ContextMenu
-          buttonComponent={
-            <FAB className="static!" visibilityBreakpoint="md" />
-          }
-          classNames={{
-            wrapper: 'fixed right-6 bottom-6'
-          }}
-        >
-          <ContextMenuItem
-            icon="tabler:photo"
-            label="Scan from Image"
-            namespace="apps.calendar"
-            onClick={handleScanImageModalOpen}
-          />
-          <ContextMenuItem
-            icon="tabler:plus"
-            label="Input Manually"
-            namespace="apps.calendar"
-            onClick={handleCreateEvent}
-          />
-        </ContextMenu>
-      </ModuleWrapper>
+      <ModuleHeader />
+      <LayoutWithSidebar>
+        <Sidebar
+          selectedCalendar={selectedCalendar}
+          selectedCategory={selectedCategory}
+          setSelectedCalendar={setSelectedCalendar}
+          setSelectedCategory={setSelectedCategory}
+        />
+        <ContentWrapperWithSidebar>
+          <Scrollbar>
+            <div className="size-full pr-4 pb-8">
+              <CalendarComponent
+                events={rawEventsQuery.data ?? []}
+                selectedCalendar={selectedCalendar}
+                selectedCategory={selectedCategory}
+              />
+            </div>
+          </Scrollbar>
+        </ContentWrapperWithSidebar>
+      </LayoutWithSidebar>
+      <ContextMenu
+        buttonComponent={<FAB className="static!" visibilityBreakpoint="md" />}
+        classNames={{
+          wrapper: 'fixed right-6 bottom-6'
+        }}
+      >
+        <ContextMenuItem
+          icon="tabler:photo"
+          label="Scan from Image"
+          namespace="apps.calendar"
+          onClick={handleScanImageModalOpen}
+        />
+        <ContextMenuItem
+          icon="tabler:plus"
+          label="Input Manually"
+          namespace="apps.calendar"
+          onClick={handleCreateEvent}
+        />
+      </ContextMenu>
     </>
   )
 }

@@ -8,11 +8,11 @@ function BgTemp() {
   return (
     <div className="mt-6 flex w-full min-w-0">
       <div className="bg-bg-800/50 w-full rounded-md p-4">
-        <div className="flex w-full flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="flex w-full flex-col items-center justify-between gap-3 md:flex-row">
           <h3 className="w-full text-left text-xl font-semibold">
             Background Temperature Preview
           </h3>
-          <div className="flex items-center gap-4 p-2">
+          <div className="flex items-center gap-3 p-2">
             {COLORS.map((color, index) => (
               <button
                 key={index}

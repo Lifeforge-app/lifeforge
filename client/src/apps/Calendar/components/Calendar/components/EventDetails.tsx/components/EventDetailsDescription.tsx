@@ -81,6 +81,7 @@ function EventDetailsDescription({ event }: { event: CalendarEvent }) {
           as={Link}
           className="mt-6 w-full"
           icon="tabler:link"
+          namespace="apps.calendar"
           rel="noopener noreferrer"
           target={
             event.reference_link.startsWith('http') ? '_blank' : undefined

@@ -5,6 +5,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -54,8 +55,10 @@ function WishlistListItem({ list }: { list: WishlistList }) {
   }, [list])
 
   return (
-    <Link
-      className="group component-bg-with-hover shadow-custom relative flex w-full flex-col gap-6 rounded-md p-4"
+    <ItemWrapper
+      isInteractive
+      as={Link}
+      className="group flex flex-col gap-6"
       to={`/wishlist/${list.id}`}
     >
       <div
@@ -119,7 +122,7 @@ function WishlistListItem({ list }: { list: WishlistList }) {
           onClick={handleDeleteList}
         />
       </ContextMenu>
-    </Link>
+    </ItemWrapper>
   )
 }
 
