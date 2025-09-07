@@ -11,6 +11,7 @@
   goals. 🤯
 - Difficulty in integrating different tools and resources into one cohesive
   platform. 🛠️
+- Most existing services are closed-source, which means you're far away from taking full control of your data. 📊
 
 ## ✅ The Solution
 
