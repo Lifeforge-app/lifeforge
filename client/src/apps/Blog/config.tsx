@@ -1,9 +1,8 @@
-import { IconPencilHeart } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 export default {
   name: 'Blog',
-  icon: <IconPencilHeart />,
+  icon: 'tabler:pencil-heart',
   routes: {
     blog: lazy(() => import('.')),
     'blog/compose': lazy(() => import('./pages/Compose'))
