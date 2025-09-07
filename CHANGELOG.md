@@ -1,24 +1,6 @@
 # Change Log
 
-## 📌 **dev 25w32 (8/10/2025 - 8/16/2025)**
-
-- **Music**: Fixed a bug where the music is not able to be downloaded.
-- **Calendar**: `ModifyEventModal` is now fully functioning.
-- **Sin Chew Daily**: Created and finished this module. Much easier than expected :)
-- **Books Library**: Migrated filter logic from search params to state management.
-- **Books Library**: Added back header filter.
-- **UI**: Created `RRuleInput` for recurring event rules.
-- **UI**: Fixed a bug where the listbox options will not be displayed correctly.
-- **UI**: Renamed `HamburgerMenu` to `ContextMenu` for better clarity.
-- **UI**: Migrated the context menu to use the dropdown component from Radix UI instead of Headless UI.
-- **UI**: Replaced `HamburgerMenu` and `MenuItem` components with `ContextMenu` and `ContextMenuItem` implementations.
-- **UI**: Added `ContextMenuSelectorWrapper` and `ContextMenuSeparator` components for better context menu organization.
-- **UI**: Adjusted styles and storybook entries for the new context menu components.
-- **Code**: Replaced `z.infer` with `z.input` in `forgeAPIBuilder` for more accurate type inference.
-- **Code**: Changelog will now be written in commit message, and branches will be utilized to group weekly changes.
-- **Code**: This changelog file will not be updated any more.
-
-## 📌 **dev 25w31 (8/3/2025 - 8/9/2025)**
+## 📌 **dev 25w32 (8/3/2025 - 8/9/2025)**
 
 - **Music**: Added this module back.
 - **Music**: Added FAB in mobile view.
