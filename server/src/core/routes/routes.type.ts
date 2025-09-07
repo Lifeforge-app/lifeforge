@@ -1,3 +1,3 @@
-import { allRoutes } from './routes'
+import { allRoutes } from '.'
 
 export type AppRoutes = typeof allRoutes
