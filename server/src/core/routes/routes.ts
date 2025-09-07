@@ -24,7 +24,7 @@ const mainRoutes = forgeRouter({
 const aiRoutes = createAIRouter(mainRoutes)
 
 const allRoutes = forgeRouter({
-  ...coreRoutes,
+  ...mainRoutes,
   ai: aiRoutes
 })
 
