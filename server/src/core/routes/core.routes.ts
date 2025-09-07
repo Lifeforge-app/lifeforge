@@ -1,6 +1,5 @@
 import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { request } from 'http'
 import moment from 'moment'
 import z from 'zod/v4'
 
@@ -64,9 +63,77 @@ const getMedia = forgeController.query
         searchParams.append('token', token)
       }
 
-      request(
+      const response = await fetch(
         `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${searchParams.toString()}`
-      ).pipe(res)
+      )
+
+      if (!response.ok) {
+        LoggingService.error(
+          `Failed to fetch media file: ${response.status} ${response.statusText} for ${collectionId}/${recordId}/${fieldId}`
+        )
+
+        return res.status(response.status).end()
+      }
+
+      // Forward important headers
+      const contentType = response.headers.get('content-type')
+
+      const contentLength = response.headers.get('content-length')
+
+      const lastModified = response.headers.get('last-modified')
+
+      const etag = response.headers.get('etag')
+
+      const cacheControl = response.headers.get('cache-control')
+
+      if (contentType) {
+        res.setHeader('Content-Type', contentType)
+      }
+
+      if (contentLength) {
+        res.setHeader('Content-Length', contentLength)
+      }
+
+      if (lastModified) {
+        res.setHeader('Last-Modified', lastModified)
+      }
+
+      if (etag) {
+        res.setHeader('ETag', etag)
+      }
+
+      if (cacheControl) {
+        res.setHeader('Cache-Control', cacheControl)
+      }
+
+      // Stream the response instead of buffering
+      if (response.body) {
+        const reader = response.body.getReader()
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read()
+
+            if (done) break
+
+            res.write(Buffer.from(value))
+          }
+          res.end()
+        } catch (error) {
+          LoggingService.error(`Error streaming media file: ${error}`)
+
+          if (!res.headersSent) {
+            res.status(500).end()
+          }
+        } finally {
+          reader.releaseLock()
+        }
+      } else {
+        // Fallback for environments without streaming support
+        const buffer = await response.arrayBuffer()
+
+        res.end(Buffer.from(buffer))
+      }
     }
   )
 
