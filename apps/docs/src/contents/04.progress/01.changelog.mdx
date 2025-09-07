@@ -27,8 +27,125 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 
 ---
 
-<Version week={35}>
+<Version week={36}>
+### 🏢 Module-Specific & Feature Updates
 
+- <Commit hash="35567ec4f80b26f4fbe72eaecc6518d1f55f44e6" />: Moved create button to the top right corner in Idea Box listing page.
+- <Commit hash="c43a8cf1e122dd9a824232a5a1923db8c0b29197" />: Removed login quota logic (will be reimplemented in a better way in the future).
+- <Commit hash="cacac51aea3fca62e5902af06b32c3f76e8297a0" />: Added functionality in Movies Library to update movie metadata from TMDB (button is available in the context menu of each movie item).
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="62c132a283cfc6bb3e9d7d37ca48b48570f56439" />: Removed <code>ContextMenuSeparator</code> component.
+- <Commit hash="fee0fe11ab27114e35ebdb73fffcf2a769b32ca9" />: Made the action button default to plain variant in ModalHeader
+- <Commit hash="2e8957677628d2abc40ee366373dc7240e678e27" />: Added <code>ItemWrapper</code> component for more unified styling of list items.
+
+  <Code language="tsx">
+  {`<ul>
+      {data.map(item => (
+        <ItemWrapper key={item.id}>
+          {item.name}
+        </ItemWrapper>
+      ))}
+  </ul>`}
+  </Code>
+
+- <Commit hash="2beb68165a220d42f01bd1bf28a4792c1296e8d7" />: Improved background color consistency for various inputs.
+- <Commit hash="8944abf3407fc2b5889f9aea225fc2409aef4225" />: Added context provider for module title and icon so that the header can be controlled programmatically instead of manually passing props around.
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="912cc2080e081baae853187339b9a0452e77e96a" />: Filename of uploaded files are now unified to use only UUIDs to prevent issues with overflowing filenames.
+- <Commit hash="86ba8b04031b88c11524a81ce00e699315ffa9bc" />: More progress on getting the system ready for AI agent.
+- <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Replaced constant file containing routes that requires no authentication with chained method definition in <code>forgeController</code>.
+
+  <Code language="typescript">
+  {`const myController = forgeController.query
+      .noAuth()
+      .description('...')
+      // ...`}
+  </Code>
+
+- <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Added a ping handler in the server to allow external services (e.g. CRON) to ping the server to keep it awake.
+- <Commit hash="0ac266883b04095a96db634ea47fde4b275e4035" />: Updated type inference so that query handler of server-side <code>forgeController</code> cannot accept body as input.
+
+  <Code language="typescript">
+    {`// This will cause a typescript error
+    const myController = forgeController.query
+      .input({
+        body: z.object({
+          // ...
+        }) // Type 'ZodObject<{}, $strip>' is not assignable to type 'undefined'.
+      })`}
+  </Code>
+
+- <Commit hash="5952f4ca1170b45d2827755013c167d69fea6b9c" />: Removed <code>.method()</code> chain method in <code>forgeController</code> as it's redundant. (It's already implied by using <code>.query</code> or <code>.mutation</code> when creating the controller instance.)
+- <Commit hash="1c73e2383c186e39a07c126b878244a4c2f55425" />: Splitted app and core routes into separate route files.
+
+  <Code language="plaintext">
+  {`/server/src/routes/
+    ├── app.routes.ts
+    ├── core.routes.ts
+    ├── routes.types.ts
+    └── index.ts`}
+  </Code>
+
+- <Commit hash="340a713993368ccb394eec73f372f1428b7e3daa" />: Moved <code>ModuleWrapper</code> to route construction layer so that it doesn't need to be manually wrapped around each module page. Also, module title and icon are now passed via context provider in this level instead of manually defining them in each module page. However, explicit definition is still supported for special use cases.
+
+  <Code language="tsx">
+    {`// Before
+    return (
+      <ModuleWrapper>
+        <ModuleHeader icon="tabler:calendar" title="Calendar" />
+        ...
+      </ModuleWrapper>
+    )
+
+    // After
+    return (
+      <>
+        <ModuleHeader />
+        ...
+      </>
+    )
+
+    // Or, for explicit definition
+    return (
+      <>
+        <ModuleHeader icon="tabler:cube" title="Subpage" />
+        ...
+      </>
+    )
+  `}
+  </Code>
+
+### 🐛 Bug Fixes
+
+- <Commit hash="e03eda0e13b952d542d559070d52338b0e816218" />: Fixed a bug where the location is not updated correctly when the <code>GoBackButton</code> component is clicked.
+- <Commit hash="552b1c35b098e543242b4aeafd199c425ad50916" />: Fixed a bug in the <code>RRuleInput</code> component where the update made to duration fields are not reflected correctly, as well as responsive layout issues.
+- <Commit hash="98136e8e0e6ebc7f96da8c77915db028b6a0619c" />: Fixed a bug in the form validation mechanism where the file input field is deemed empty even when a file is selected.
+- <Commit hash="0169938f6efad12260eca869facf5dbf82dd2eaa" />: Fixed localization in moment vault entry adding modal.
+- <Commit hash="0f18985f873b2121057ec636e2389d1922c1d9d9" />: Updated calendar event modal initial data to set type as 'single' and fixed the start date format.
+- <Commit hash="09713b660f9e7d12530e55428d25c6cfeaa94ca1" />: Fixed padding in the drag and drop container of <code>FileInput</code> component.
+- <Commit hash="a01450b99d9c217ca0bc1ae1792d48b663501e08" />: Fixed translation issues in file picker modal.
+- <Commit hash="6a56ad5629a0cd61ac92ed81366134a69f205a87" />: Fixed a bug in Todo List where the width of the task due date text is shrunk.
+- <Commit hash="315e344c6120a093e97a3cfb1bfaf2a7542c1817" />: Fixed a bug in CodeTime readme generator where the background color is not applied correctly.
+- <Commit hash="a00a879eb7c19d7b654ca550fb9bc556268765ac" />: Added missing locales for Book Library module.
+- <Commit hash="8a50762b1a5177f5057d4b2d6262edaba07b76e6" />: Fixed a bug in the wallet transaction sidebar where the date range picker inputs are not showing the correct values.
+- <Commit hash="b42a1f770810ff19ae98177d5a4c5095f663bc6a" />: Fixed localization for reference link button in calendar event modal in Calendar module.
+- <Commit hash="1aa928dbf4f33d85682f040cf557d5de2db74226" />: Fixed mobile responsive layout issue in Score Library module.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="b4c6afb4e14b20ee85b26e2becd8957904c5ce56" />: Added changelog (the page you're reading right now) and roadmap pages to the documentation. Roadmap page is left empty for now.
+- <Commit hash="85815f85ab5a4dbf98635fa0838a195b2ad37d33" />: Replaced all "Lifeforge" with "LifeForge" in the documentation.
+- <Commit hash="a1c72f4a3d73e3b16a568ed862cb321ab916ab25" />: Simplified code styling for non-pre code elements.
+- <Commit hash="c74c40de4d12793fbf1941a8c3d942b573b76b1b"/>: Added documentation for constructing backend API with <code>forgeController</code>. See [Building API](/developer-guide/building-api).
+- Purchase domain "lifeforge.dev" and set it up for the documentation site. Original domain "docs.lifeforge.melvinchia.dev" will still be kept as an alias but has been setup to redirect to the new domain.
+
+</Version>
+
+<Version week={35}>
 ### 🏢 Module-Specific & Feature Updates
 
 - <Commit hash="04c09ad0a4aabcd49f7e3bf98c3f6fcfdf338060" />, <Commit hash="612bfe163e02ec106191ab700f50ca8bd7320269" />, <Commit hash="f326226c9e2d9d678f4930b0391fbecd53eee1a2" />: Added Journal module back into the system, partial progress. (Removed client side WIP code in <Commit hash="e185a15f5f59f630a36cd250479c97f9ee18dbd7" />.)
@@ -75,7 +192,6 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 - <Commit hash="374f515b3d40f07cd47f068fba9318b763c01942" />: Added guide for database CRUD operations with custom PocketBase SDK wrapper. See [Database Operations](/developer-guide/database-operations).
 - <Commit hash="4ea2f1cdd61a244ecd8ddefd49303296d520c113" />: Added <code>react-medium-image-zoom</code> package for image zoom functionality in documentation.
 - <Commit hash="63c698ab2d82bffeab73fec3c941c361b1f9595d" />: Improved styling for <code>Note</code> and <code>Warning</code> components in documentation.
-
 </Version>
 
 <Version week={34}>
