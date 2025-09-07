@@ -5,7 +5,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   WithQuery,
   useModalStore
 } from 'lifeforge-ui'
@@ -22,7 +21,7 @@ function Backups() {
   const backupsQuery = useQuery(forgeAPI.backups.list.queryOptions())
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
@@ -38,8 +37,6 @@ function Backups() {
             new
           </Button>
         }
-        icon="tabler:history"
-        title="Backups"
         totalItems={backupsQuery.data?.length ?? 0}
       />
       <div className="flex-1">
@@ -66,7 +63,7 @@ function Backups() {
           open(CreateBackupModal, {})
         }}
       />
-    </ModuleWrapper>
+    </>
   )
 }
 

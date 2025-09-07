@@ -16,8 +16,7 @@ import {
   ContextMenu,
   ContextMenuItem,
   FAB,
-  ModuleHeader,
-  ModuleWrapper
+  ModuleHeader
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -52,7 +51,7 @@ function WalletDashboard() {
   const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <ContextMenu
@@ -101,8 +100,6 @@ function WalletDashboard() {
             />
           )
         }}
-        icon="tabler:wallet"
-        title="Wallet"
       />
       <div className="flex size-full grid-cols-3 grid-rows-6 flex-col gap-3 pb-8 xl:grid">
         <IncomeExpenseCard icon="tabler:login-2" title="Income" />
@@ -136,7 +133,7 @@ function WalletDashboard() {
           }}
         />
       </ContextMenu>
-    </ModuleWrapper>
+    </>
   )
 }
 

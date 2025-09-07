@@ -1,12 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import {
-  Button,
-  EmptyStateScreen,
-  ModuleHeader,
-  ModuleWrapper,
-  WithQuery
-} from 'lifeforge-ui'
+import { Button, EmptyStateScreen, ModuleHeader, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -16,7 +10,7 @@ function Blog() {
   const entriesQuery = useQuery(forgeAPI.blog.entries.list.queryOptions())
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
@@ -31,8 +25,6 @@ function Blog() {
             New
           </Button>
         }
-        icon="tabler:pencil-heart"
-        title="Blog"
       />
       <WithQuery query={entriesQuery}>
         {entries =>
@@ -47,7 +39,7 @@ function Blog() {
           )
         }
       </WithQuery>
-    </ModuleWrapper>
+    </>
   )
 }
 

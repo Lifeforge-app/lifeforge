@@ -1,10 +1,9 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
-import { IconInfoCircle } from '@tabler/icons-react'
 import { Navigate } from 'react-router'
 
 export default {
   name: 'Documentation',
-  icon: <IconInfoCircle />,
+  icon: 'tabler:info-circle',
   routes: {
     documentation: () => {
       window.location.href =

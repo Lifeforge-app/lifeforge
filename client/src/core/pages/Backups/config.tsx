@@ -1,10 +1,9 @@
 import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
-import { IconHistory } from '@tabler/icons-react'
 import { lazy } from 'react'
 
 export default {
   name: 'Backups',
-  icon: <IconHistory />,
+  icon: 'tabler:history',
   routes: {
     backups: lazy(() => import('.'))
   },

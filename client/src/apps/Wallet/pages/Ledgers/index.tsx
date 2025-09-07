@@ -3,7 +3,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -40,7 +39,7 @@ function Ledgers() {
   }, [hash])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           (ledgersQuery.data ?? []).length > 0 && (
@@ -89,7 +88,7 @@ function Ledgers() {
           </>
         )}
       </WithQuery>
-    </ModuleWrapper>
+    </>
   )
 }
 

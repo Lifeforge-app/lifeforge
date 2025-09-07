@@ -6,7 +6,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   SearchInput,
   WithQuery
 } from 'lifeforge-ui'
@@ -46,7 +45,7 @@ function Wishlist() {
   }, [])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Button
@@ -58,8 +57,6 @@ function Wishlist() {
             New
           </Button>
         }
-        icon="tabler:heart"
-        title="Wishlist"
       />
       <SearchInput
         namespace="apps.wishlist"
@@ -105,7 +102,7 @@ function Wishlist() {
         visibilityBreakpoint="md"
         onClick={handleCreateWishlistList}
       />
-    </ModuleWrapper>
+    </>
   )
 }
 

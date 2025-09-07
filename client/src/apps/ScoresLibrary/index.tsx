@@ -5,7 +5,6 @@ import {
   ContentWrapperWithSidebar,
   HeaderFilter,
   LayoutWithSidebar,
-  ModuleWrapper,
   Pagination,
   Scrollbar,
   WithQuery
@@ -87,7 +86,7 @@ function ScoresLibrary() {
   }, [debouncedSearchQuery, category, collection, starred, author, sort])
 
   return (
-    <ModuleWrapper>
+    <>
       <Header
         setGuitarWorldModalOpen={() => open(GuitarWorldModal, null)}
         totalItems={entriesQuery.data?.totalItems}
@@ -151,7 +150,7 @@ function ScoresLibrary() {
           </WithQuery>
         </ContentWrapperWithSidebar>
       </LayoutWithSidebar>
-    </ModuleWrapper>
+    </>
   )
 }
 

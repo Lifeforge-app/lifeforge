@@ -1,4 +1,4 @@
-import { ModuleHeader, ModuleWrapper } from 'lifeforge-ui'
+import { ModuleHeader } from 'lifeforge-ui'
 import { useRef, useState } from 'react'
 
 import PrintAndViewButton from './components/PrintAndViewButton'
@@ -15,7 +15,7 @@ function Statements() {
   const contentRef = useRef<HTMLDivElement>(null)
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         icon="tabler:file-text"
         namespace="apps.wallet"
@@ -43,7 +43,7 @@ function Statements() {
           />
         </>
       )}
-    </ModuleWrapper>
+    </>
   )
 }
 
