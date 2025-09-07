@@ -1,12 +1,9 @@
 import forgeAPI from '@utils/forgeAPI'
 import { Button, TextAreaInput } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 function TextType({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation('apps.momentVault')
-
   const [text, setText] = useState('')
 
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -37,7 +34,7 @@ function TextType({ onSuccess }: { onSuccess: () => void }) {
         icon="tabler:file-text"
         label="Text Content"
         namespace="apps.momentVault"
-        placeholder={t('apps.momentVault:placeholders.textEntry')}
+        placeholder="What a beautiful day..."
         setValue={setText}
         value={text}
       />

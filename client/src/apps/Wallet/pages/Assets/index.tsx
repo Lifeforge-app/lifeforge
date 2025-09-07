@@ -5,7 +5,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -45,7 +44,7 @@ function Assets() {
   }, [hash])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <>
@@ -120,7 +119,7 @@ function Assets() {
           </>
         )}
       </WithQuery>
-    </ModuleWrapper>
+    </>
   )
 }
 

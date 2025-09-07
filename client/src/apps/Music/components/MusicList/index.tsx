@@ -10,7 +10,7 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
   return (
     <WithQuery query={musicsQuery}>
       {musics => (
-        <div className="space-y-3 pb-12">
+        <ul className="space-y-3 pb-12">
           {musics
             .filter(music =>
               music.name
@@ -20,7 +20,7 @@ function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
             .map(music => (
               <MusicListItem key={music.id} music={music} />
             ))}
-        </div>
+        </ul>
       )}
     </WithQuery>
   )

@@ -1,4 +1,3 @@
-import type { UseQueryResult } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
@@ -11,7 +10,6 @@ import {
 } from 'lifeforge-ui'
 import { useMemo } from 'react'
 
-import type { ScoreLibrarySidebarData } from '@apps/ScoresLibrary'
 import useFilter from '@apps/ScoresLibrary/hooks/useFilter'
 
 import ModifyCollectionModal from '../modals/ModifyCollectionModal'
@@ -20,12 +18,12 @@ import SidebarAuthorItem from './components/SidebarAuthorItem'
 import SidebarTypeItem from './components/SidebarCategoryItem'
 import SidebarCollectionItem from './components/SidebarCollectionItem'
 
-function Sidebar({
-  sidebarDataQuery
-}: {
-  sidebarDataQuery: UseQueryResult<ScoreLibrarySidebarData>
-}) {
+function Sidebar() {
   const open = useModalStore(state => state.open)
+
+  const dataQuery = useQuery(
+    forgeAPI.scoresLibrary.entries.sidebarData.queryOptions()
+  )
 
   const {
     author,
@@ -41,17 +39,17 @@ function Sidebar({
 
   const sortedAuthors = useMemo(
     () =>
-      Object.entries(sidebarDataQuery.data?.authors ?? {}).sort((a, b) => {
+      Object.entries(dataQuery.data?.authors ?? {}).sort((a, b) => {
         if (a[1] === b[1]) return a[0].localeCompare(b[0])
 
         return b[1] - a[1]
       }),
-    [sidebarDataQuery]
+    [dataQuery]
   )
 
   return (
     <SidebarWrapper>
-      <WithQuery query={sidebarDataQuery}>
+      <WithQuery query={dataQuery}>
         {sidebarData => (
           <>
             <SidebarItem

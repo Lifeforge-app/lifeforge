@@ -7,6 +7,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import prettyBytes from 'pretty-bytes'
@@ -86,7 +87,7 @@ function BackupItem({
   }, [backup.key])
 
   return (
-    <div className="shadow-custom component-bg flex items-center justify-between gap-6 rounded-lg p-4">
+    <ItemWrapper as="li" className="flex-between gap-6">
       <div className="flex w-full min-w-0 items-center gap-3">
         <Icon
           className="text-bg-500 ml-2 size-7 shrink-0"
@@ -136,7 +137,7 @@ function BackupItem({
           onClick={handleDeleteBackup}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

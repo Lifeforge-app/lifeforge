@@ -1,2 +1,347 @@
+import Code from "../../components/Code"
+import Note from "../../components/Note"
+import Warning from "../../components/Warning"
+
 ###### Building API
 
+# Type-safe Heaven Inspired by tRPC
+
+LifeForge's API is built using a custom-built type-safe framework inspired by [tRPC](https://trpc.io/). All the types are inferred from one step to another with barely any explicit declarations, ensuring that the data structures remain consistent throughout the controllers, services, and database layers.
+
+--- 
+
+<section id="motivation">
+## Motivation
+
+At the very beginning of LifeForge's development, I was using RESTful APIs with Express.js like many other small-scale projects. However, as the project grew, I found myself constantly battling with type mismatches and data inconsistencies between the frontend and backend. This led to a lot of runtime errors that could have been avoided with better type safety.
+
+At quite some points in time, I asked ChatGPT to come up with solutions to these problems, and it once suggested using tRPC, if I remember correctly, but I didn't pay much attention to it. Later on, I stumbled upon tRPC yet again in a video made by [Theo - t3.gg](https://www.youtube.com/@t3dotgg) stating that tRPC is the only right way to build an API. Intrigued, I decided to give it a try. However, I found that tRPC, while powerful, isn't quite flexible enough for seamless integration with the current architecture of LifeForge.
+
+With a click of a button, everything was rolled back to the previous commit, and so was the idea of using tRPC. With that said, I was still stunned by the idea of type-safe APIs and decided to build my own framework on top of the existing architecture of LifeForge. This way, I could ensure that the API layer is tightly integrated with the rest of the application while still benefiting from type safety.
+
+So yeah, after dozens of hours of developer rage and a tremendous conversation thread with ChatGPT, I finally came up with a solution that works for LifeForge. A lot of the codes are written by AI, not gonna lie, and I was absolutely perplexed by the fancy TypeScript inference magic. But don't worry, **I have a pretty good understanding of how everything works now**. =)
+
+So yeah, lots of improvements can be made and have been made since then, and it will only get better. Nonetheless, I am pretty satisfied with the current state of the API layer in LifeForge. It is a type-safe, flexible, and easy-to-use masterpiece that has significantly improved the development experience and reduced runtime errors.
+
+Shown below is a comparison between the old and new ways of building APIs in LifeForge.
+
+![](/assets/developer-building-api/comparison.png)
+</section>
+
+<section id="gist">
+## Gist
+
+> Method chaining is elegant, prove me wrong.
+
+Just like a lot of other things in LifeForge, the API layer is built using method chaining. All the required properties and data structures are defined in methods that "chainingly" build up the final API handler.
+
+Here is a gist of how to build an API handler in LifeForge:
+
+<Code language="typescript">
+{`import { forgeController, forgeRouter } from '@functions/routes'
+import { z } from 'zod/v4'
+
+const myHandler = forgeController.query
+    .description("This is a sample query handler")
+    .input({
+        query: z.object({
+            name: z.string()
+        })
+    })
+    .callback(async ({ query: { name } }) => {
+        // Your logic here
+        return { message: \`Hello, \${name}!\` };
+    });
+
+export forgeRouter({
+    myHandler
+})
+`}
+</Code>
+
+Paired with the <code>forgeAPI</code> system in the frontend, you can call the API like this:
+
+<Code language="typescript">
+{`
+import { useQuery } from '@tanstack/react-query'
+import forgeAPI from '@utils/forgeAPI'
+
+const dataQuery = useQuery(forgeAPI.myHandler.input({ name: "LifeForge" }).queryOptions());`}
+</Code>
+
+For more information on client-side integration of the API, please refer to [Using API](/developer-guide/using-api).
+</section>
+
+<section id="structure">
+## Structure
+
+Unlike ordinary RESTful APIs where there are multiple HTTP methods (GET, POST, PUT, DELETE, etc.), LifeForge's API is built around two core concepts: **queries** and **mutations**, which corresponds to read and write operations, respectively. This is similar to the approach taken by GraphQL and tRPC. Therefore, only two HTTP methods are used: <code>GET</code> for queries and <code>POST</code> for mutations.
+
+For queries, the business logic should be idempotent and should not modify any data. They are meant for retrieving data from the server. On the other hand, mutations are meant for creating, updating, or deleting data on the server. They can have side effects and are not idempotent.
+</section>
+
+<section id="routing">
+## Routing
+
+Routing in LifeForge's API is handled using a custom-built router system that is inspired by tRPC. After defining the API handlers using the <code>forgeController</code> method, they are then grouped together using the <code>forgeRouter</code> method and exported as a single module. This module is then imported in the main server file and registered into the Express.js application.
+
+When there are multiple routers, they can be simply nested within each other to create a hierarchical structure like how you would do in a JSON object. This allows for better organization and modularity of the API handlers.
+
+For example, we have a module for managing personal finances, which includes handlers for managing accounts and transactions. Inside the <code>src/Finances</code> directory, we have the following structure:
+
+<Code language="plaintext">
+{`src/finances
+├── locales
+├── routes
+│   ├── accounts.ts
+│   └── transactions.ts
+└── index.ts`}
+</Code>
+
+In <code>accounts.ts</code>, we define the API handlers for managing accounts:
+
+<Code language="typescript">
+{`import { forgeController, forgeRouter } from '@functions/routes'
+import { z } from 'zod/v4'
+
+const list = forgeRouter.query.
+    description("List all accounts")
+    .callback(async () => {
+        // Your logic here
+        return [];
+    });
+
+const create = forgeRouter.mutation
+    .description("Create a new account")
+    .input({
+        body: z.object({
+            name: z.string(),
+            balance: z.number().min(0)
+        })
+    })
+    .callback(async ({ body: { name, balance } }) => {
+        // Your logic here
+        return { id: "new_account_id", name, balance };
+    });
+    
+const update = ...
+
+const remove = ...
+
+export default forgeRouter({
+    list,
+    create,
+    update,
+    remove
+});
+`}
+</Code>
+
+Similarly, in <code>transactions.ts</code>, we define the respective API handlers for managing transactions.
+
+Then, in <code>index.ts</code>, we import the routers from <code>accounts.ts</code> and <code>transactions.ts</code> and group them together:
+
+<Code language="typescript">
+{`import { forgeRouter } from '@functions/routes'
+import accountsRouter from './routes/accounts'
+import transactionsRouter from './routes/transactions'
+
+export default forgeRouter({
+    accounts: accountsRouter,
+    transactions: transactionsRouter
+});
+`}
+</Code>
+
+Finally, in the routing file located at <code>src/core/routes/app.routes.ts</code>, we import the router from <code>src/Finances/index.ts</code> and register it into the Express.js application:
+
+<Code language="typescript">
+{`const appRoutes = forgeRouter({
+    // Other routers...
+    finances: (await import('@app/finances')).default,
+});
+`}
+</Code>
+
+</section>
+
+<section id="data-input">
+## Data Input
+
+LifeForge's approach to taking data input is slightly different from tRPC, where there is only one channel for all the parameters. In LifeForge, the input is divided into two parts: <code>query</code>, <code>body</code>. Queries are basically the URL search parameters, the part after the <code>?</code> in the URL, while body is the request body, which is usually in JSON format or form data. For those who are familiar with RESTful APIs, these should be familiar concepts.
+
+The division of input into query and body is based on the HTTP method used. For <code>GET</code> requests, only query parameters are accepted, while for <code>POST</code> requests, both query and body parameters are accepted. This design choice is made to adhere to the semantics of HTTP methods, where <code>GET</code> requests are meant for retrieving data and should not have a request body, while <code>POST</code> requests are meant for creating or updating data and can have a request body.
+
+<Note>
+LifeForge's API system does not utilize the URL params feature provided by Express.js. This is because URL params are not type-safe and can lead to a lot of issues. Instead, all the parameters are passed as query or body, depending on the HTTP method.
+</Note>
+
+The input schema is defined in the <code>.input()</code> method using [Zod](https://zod.dev/) schemas that follows the handler type definition, as shown below:
+
+<Code language="typescript">
+{`const myQueryHandler = forgeController.query
+    .input({
+        query: z.object({
+            name: z.string()
+        })
+    })
+
+const myMutationHandler = forgeController.mutation
+    .input({
+        query: z.object({
+            id: z.string().uuid()
+        }),
+        body: z.object({
+            name: z.string(),
+            age: z.number().min(0)
+        })
+    })
+`}
+</Code>
+
+<Warning>
+The value of the <code>query</code> and <code>body</code> properties in the <code>.input()</code> method must be Zod schemas, not plain objects.
+</Warning>
+
+These input schemas are then used to validate the incoming requests. If the request does not conform to the schema, a <code>400 Bad Request</code> error is returned with a detailed error message. Therefore, you may chain the schema properties with whatever Zod methods you want, such as <code>.optional()</code>, <code>.default()</code>, <code>.min()</code>, <code>.max()</code>, etc.
+</section>
+
+<section id="media-uploads">
+## Media Uploads
+
+More often than not, you would want to upload files to the server, such as images, videos, documents, etc. LifeForge's API system has built-in support for handling file uploads using [Multer](https://github.com/expressjs/multer).
+
+To enable file uploads, you need to use the <code>.media()</code> method in the API handler definition. This method takes an object that defines the file fields and their respective configurations. The structure of this object is as follows:
+
+<Code language="typescript">
+{`type MediaConfig = Record<
+    string,
+    {
+        optional: boolean
+        multiple?: boolean
+    }
+>
+`}
+</Code>
+
+where the key is the name of the file field, and the value is an object that defines whether the field is optional and whether it accepts multiple files. The media can then be accessed in the <code>.callback()</code> method via the <code>media</code> property.
+
+LifeForge's API system accepts either valid files or URL strings that point to a valid media resource. If a URL string is provided, the server will automatically download the file and store it in the appropriate location. This is particularly useful when you want to allow users to upload files from external sources without having to download and re-upload them manually, or when being used in conjunction with the <code>FileInput</code> component in the frontend, which supports multiple sources such as local files, URLs, Pixabay, AI-generated images, etc.
+
+Most of the time, you would want to store the uploaded files in the database. However, in the scenario where the data record is being updated, the existing files might either be kept, removed, or replaced with new files. To handle this, you can simply sent the string literal "keep" to indicate that the existing file should be kept, or "remove" to indicate that the existing file should be removed. LifeForge's API system provides a utility function called <code>getMedia()</code> that helps to process the media fields and return the appropriate data structure for storing in the database:
+
+<Code language="typescript">
+{`import { getMedia } from '@functions/external/media'
+
+const update = forgeController.mutation
+    .description("Upload a file")
+    .input({
+        query: z.object({
+            id: z.string().uuid()
+        }),
+        body: z.object({
+            ...
+        })
+    })
+    .media({
+        file: { optional: false }
+    })
+    .callback(async ({ media: { file }, query: { id }, body, pb }) => {
+        const updatedRecord = await pb.update
+            .collection('your_collection')
+            .id(id)
+            .data({
+                ...body,
+                ...(await getMedia('file', file))
+            })
+            .execute();
+    });
+`}
+</Code>
+</section>
+
+<section id="validate-record-existence">
+## Validate Record Existence
+
+In scenarios where you need to ensure that a record exists in the database before proceeding with the business logic, you can use the <code>.existenceCheck()</code> method. This method takes two arguments: the data input source to be checked (either <code>"query"</code> or <code>"body"</code>), and an object with key being the field name and value being the collection name. If the field is optional, you can wrap the field name in square brackets, e.g. <code>"[userId]"</code>.
+
+<Code language="typescript">
+{`const getUserProfile = forgeController.query
+    .description("Get user profile")
+    .input({
+        query: z.object({
+            userId: z.string().uuid()
+        })
+    })
+    .existenceCheck("query", { userId: "users" })
+    .callback(async ({ query: { userId }, pb }) => {
+        const user = await pb.collection('users').getOne(userId);
+        return user;
+    });
+`}
+</Code>
+
+When the <code>.existenceCheck()</code> method is used, the API handler will automatically check if the record exists in the database based on the provided field and collection. If the record does not exist, a <code>404 Not Found</code> error is returned with a detailed error message. Otherwise, the business logic in the <code>.callback()</code> method will be executed as normal.
+</section>
+
+<section id="callback">
+## Callback
+
+The core logic of the API handler is defined in the <code>.callback()</code> method. This method takes a single argument, which is an async function that contains the business logic of the handler. The argument of this function is an object that contains the validated input data, as well as some additional context information. The structure of this object is as follows:
+
+- <code>query</code>: An object containing the validated query parameters.
+- <code>body</code>: An object containing the validated body parameters (for mutations).
+- <code>media</code>: An object containing the uploaded files (if any).
+- <code>pb</code>: The PocketBase service instance, which can be used to interact with the database. See [Database Operations](/developer-guide/database-operations) for more information.
+- <code>io</code>: The Socket.IO server instance, which can be used to emit events to connected clients. See [Real-time Features](/developer-guide/real-time-features) for more information.
+- <code>req, res</code>: The original Express.js request and response objects, which can be used for advanced use cases.
+
+If you have defined the input schema using the <code>.input()</code> method, the <code>query</code> and <code>body</code> properties will be automatically typed based on the schema. This ensures that you have type safety throughout the entire request handling process. Same can be said for the <code>media</code> property if you have defined the media fields using the <code>.media()</code> method.
+
+Here is an example of a complete API handler that demonstrates the usage of the <code>.callback()</code> method:
+
+<Code language="typescript">
+{`const createUser = forgeController.mutation
+    .description("Create a new user")
+    .input({
+        body: z.object({
+            name: z.string(),
+            email: z.string().email()
+        })
+    })
+    .media({
+        avatar: { optional: true }
+    })
+    .callback(async ({ body: { name, email }, media: { avatar }, pb }) => {
+        const newUser = await pb.create
+            .collection('users')
+            .data({
+                name,
+                email,
+                ...(await getMedia('avatar', avatar))
+            })
+            .execute();
+
+        return newUser;
+    });
+`}
+</Code>
+</section>
+
+<section id="miscellaneous-methods">
+## Miscellaneous Methods
+
+In addition to the core methods mentioned above, there are some other useful methods that can be chained to enhance the functionality of the API handler:
+
+- <code>.description()</code>: This method is used to provide a brief description of the API handler. This description is used in the auto-generated API documentation and can be helpful for understanding the purpose of the handler.
+
+- <code>.noAuth()</code>: By default, all API handlers require authentication. This method can be used to disable authentication for public endpoints, such as login and registration.
+
+- <code>.statusCode()</code>: This method is used to set the HTTP status code for the response. By default, all handlers return a <code>200 OK</code> status code. However, you can use this method to set a different status code, such as <code>201 Created</code> for successful creation of resources or <code>204 No Content</code> for successful deletion of resources.
+
+- <code>.middleware()</code>: This method is used to add custom Express.js middleware functions to the API handler. This can be useful for adding additional validation, logging, or other functionality that is not covered by the built-in methods.
+
+- <code>.noDefaultResponse()</code>: By default, all API handlers return a JSON response with a <code>status</code> and <code>data</code> property. This method can be used to disable the default response format and return a custom response instead. This is useful for scenarios where you want to return a different content type, such as HTML or plain text.
+
+- <code>.isDownloadable()</code>: This method is used to indicate that the response is a downloadable file. When this method is used, the corresponding headers will be set automatically, and the response will be treated as a file that can be downloaded by the client.
+</section>

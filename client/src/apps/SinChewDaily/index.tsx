@@ -5,7 +5,6 @@ import {
   ListboxOption,
   LoadingScreen,
   ModuleHeader,
-  ModuleWrapper,
   Pagination
 } from 'lifeforge-ui'
 import { useEffect, useMemo, useState } from 'react'
@@ -240,9 +239,9 @@ function SinChewDaily() {
   }, [subCategory])
 
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:news" title="Sin Chew Daily" />
-      <div className="flex w-full flex-wrap items-center gap-4">
+    <>
+      <ModuleHeader />
+      <div className="flex w-full flex-wrap items-center gap-3">
         <ListboxInput
           buttonContent={<span>{t(`categories.${mainCategory}`)}</span>}
           className="flex-1"
@@ -354,7 +353,7 @@ function SinChewDaily() {
           />
         </>
       )}
-    </ModuleWrapper>
+    </>
   )
 }
 

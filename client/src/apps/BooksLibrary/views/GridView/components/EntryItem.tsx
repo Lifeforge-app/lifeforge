@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { ContextMenu } from 'lifeforge-ui'
+import { ContextMenu, ItemWrapper } from 'lifeforge-ui'
 
 import { type BooksLibraryEntry } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
@@ -14,10 +14,7 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
   )
 
   return (
-    <li
-      key={item.id}
-      className="bg-bg-50 hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50 relative flex w-full min-w-0 flex-col items-start rounded-lg p-4 transition-all"
-    >
+    <ItemWrapper key={item.id} as="li">
       <a
         className="absolute inset-0 z-10 size-full rounded-lg"
         href={
@@ -54,7 +51,7 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
           icon="tabler:book"
         />
       </div>
-      <div className="mt-4">
+      <div className="mt-6 w-full min-w-0">
         <ReadStatusChip item={item} />
         {collectionsQuery.data &&
           (() => {
@@ -84,7 +81,7 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
           <BookMeta isGridView item={item} />
         </div>
       </div>
-    </li>
+    </ItemWrapper>
   )
 }
 

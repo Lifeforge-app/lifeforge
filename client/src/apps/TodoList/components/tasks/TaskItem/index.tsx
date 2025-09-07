@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { Checkbox } from 'lifeforge-ui'
+import { Checkbox, ItemWrapper } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
 import {
@@ -15,11 +15,11 @@ import TaskTags from './components/TaskTags'
 
 function TaskItem({
   entry,
-  lighter,
+  className,
   isInDashboardWidget
 }: {
   entry: TodoListEntry
-  lighter?: boolean
+  className?: string
   isInDashboardWidget?: boolean
 }) {
   const queryClient = useQueryClient()
@@ -51,12 +51,11 @@ function TaskItem({
   }
 
   return (
-    <li
+    <ItemWrapper
       key={entry.id}
-      className={clsx(
-        'flex-between shadow-custom relative isolate flex gap-6 rounded-lg p-4 transition-all',
-        lighter ? 'component-bg-lighter' : 'component-bg-with-hover'
-      )}
+      isInteractive
+      as="li"
+      className={clsx('flex-between relative isolate flex gap-6', className)}
     >
       <div className="flex w-full min-w-0 items-center gap-3">
         {typeof lists !== 'string' && entry.list !== '' && (
@@ -92,7 +91,7 @@ function TaskItem({
           }
         }}
       />
-    </li>
+    </ItemWrapper>
   )
 }
 

@@ -40,7 +40,7 @@ function SidebarHeader({
       {sidebarExpanded && (
         <div className="px-4">
           <SearchInput
-            className="mb-4"
+            className="component-bg-lighter-with-hover mb-4"
             namespace="common.sidebar"
             searchTarget="module"
             setValue={setSearchQuery}

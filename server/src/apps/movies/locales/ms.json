@@ -38,7 +38,8 @@
     "watched": "Telah Ditonton",
     "showTicket": "Tunjukkan Tiket",
     "addToCalendar": "Tambah ke Kalendar",
-    "addedToCalendar": "Ditambahkan ke Kalendar"
+    "addedToCalendar": "Ditambahkan ke Kalendar",
+    "updateMovieData": "Kemas Kini Data Filem"
   },
   "inputs": {
     "ticketNumber": "Nombor Tiket",

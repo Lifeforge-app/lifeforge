@@ -30,7 +30,7 @@ function TodoListContent() {
               <TaskItem
                 key={entry.id}
                 isInDashboardWidget
-                lighter
+                className="component-bg-lighter-with-hover"
                 entry={entry}
               />
             ))

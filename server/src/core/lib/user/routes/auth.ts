@@ -32,6 +32,7 @@ const generateOTP = forgeController.query
   )
 
 const login = forgeController.mutation
+  .noAuth()
   .description('User login')
   .input({
     body: z.object({
@@ -66,7 +67,7 @@ const login = forgeController.mutation
         currentSession.tokenId = v4()
 
         return {
-          state: '2fa_required',
+          state: '2fa_required' as const,
           tid: currentSession.tokenId
         }
       }
@@ -74,7 +75,7 @@ const login = forgeController.mutation
       await updateNullData(sanitizedUserData, pb)
 
       return {
-        state: 'success',
+        state: 'success' as const,
         session: pb.authStore.token,
         userData: sanitizedUserData
       }

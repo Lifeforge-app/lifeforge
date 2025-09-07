@@ -1,9 +1,9 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
+  Button,
   EmptyStateScreen,
   ModuleHeader,
-  ModuleWrapper,
   SearchInput,
   WithQueryData
 } from 'lifeforge-ui'
@@ -30,8 +30,22 @@ function IdeaBox() {
   }, [])
 
   return (
-    <ModuleWrapper>
-      <ModuleHeader icon="tabler:bulb" title="Idea Box" />
+    <>
+      <ModuleHeader
+        actionButton={
+          <Button
+            className="ml-4 hidden md:flex"
+            icon="tabler:plus"
+            namespace="apps.ideaBox"
+            tProps={{
+              item: t('items.container')
+            }}
+            onClick={handleCreateContainer}
+          >
+            new
+          </Button>
+        }
+      />
       <SearchInput
         namespace="apps.ideaBox"
         searchTarget="container"
@@ -73,7 +87,7 @@ function IdeaBox() {
           return <ContainerList filteredList={filteredList} />
         }}
       </WithQueryData>
-    </ModuleWrapper>
+    </>
   )
 }
 

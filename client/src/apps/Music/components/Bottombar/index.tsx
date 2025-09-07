@@ -15,7 +15,7 @@ function BottomBar() {
   const { currentMusic } = useMusicContext()
 
   return (
-    <div className="absolute bottom-8 left-0 w-full space-y-4">
+    <div className="absolute bottom-8 left-0 w-full space-y-3">
       <Menu as="div" className="static z-50 float-right block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}}></Button>
         <MenuItems

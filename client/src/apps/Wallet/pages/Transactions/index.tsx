@@ -7,7 +7,6 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper,
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -118,7 +117,7 @@ function Transactions() {
   }, [searchParams])
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           (transactionsQuery.data?.length || 0) > 0 && (
@@ -173,7 +172,7 @@ function Transactions() {
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <InnerHeader />
           <SearchBar />
-          <div className="mt-6 mb-8 flex size-full flex-col gap-4">
+          <div className="mt-6 mb-8 flex size-full flex-col gap-3">
             <WithQuery query={transactionsQuery}>
               {transactions =>
                 transactions.length > 0 ? (
@@ -229,7 +228,7 @@ function Transactions() {
           </div>
         </div>
       </div>
-    </ModuleWrapper>
+    </>
   )
 }
 
