@@ -74,6 +74,7 @@ function IconSet({
         {iconData.title}
       </h1>
       <SearchInput
+        className="component-bg-lighter-with-hover"
         namespace="common.modals"
         searchTarget="iconPicker.icon"
         setValue={setSearchTerm}

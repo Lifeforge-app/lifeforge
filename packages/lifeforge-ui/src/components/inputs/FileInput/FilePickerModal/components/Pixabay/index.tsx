@@ -112,8 +112,9 @@ function Pixabay({
               filters.isEditorsChoice
             ].filter(e => e).length
           }}
+          className="component-bg-lighter-with-hover"
           namespace="common.modals"
-          searchTarget="pixabay.items.pixabay"
+          searchTarget="imagePicker.items.pixabay"
           setValue={setQuery}
           value={query}
           onKeyUp={e => {

@@ -30,7 +30,7 @@ function SearchFilterModal({
         title="Search Filters"
         onClose={onClose}
       />
-      <div className="space-y-4">
+      <div className="space-y-3">
         <ImageTypeFilter
           imageType={filters.imageType}
           updateFilters={updateFilters}

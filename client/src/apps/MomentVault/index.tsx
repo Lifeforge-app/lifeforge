@@ -6,8 +6,7 @@ import {
   ContextMenu,
   ContextMenuItem,
   FAB,
-  ModuleHeader,
-  ModuleWrapper
+  ModuleHeader
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -46,7 +45,7 @@ function MomentVault() {
   )
 
   return (
-    <ModuleWrapper>
+    <>
       <ModuleHeader
         actionButton={
           <Menu as="div" className="relative z-50 hidden md:block">
@@ -81,8 +80,6 @@ function MomentVault() {
             </MenuItems>
           </Menu>
         }
-        icon="tabler:history"
-        title="Moment Vault"
       />
       <EntryList dataQuery={dataQuery} page={page} setPage={setPage} />
       <ContextMenu
@@ -106,7 +103,7 @@ function MomentVault() {
           />
         ))}
       </ContextMenu>
-    </ModuleWrapper>
+    </>
   )
 }
 

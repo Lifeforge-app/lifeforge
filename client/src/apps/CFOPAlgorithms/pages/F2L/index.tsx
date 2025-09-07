@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { GoBackButton, ModuleWrapper } from 'lifeforge-ui'
+import { GoBackButton, ItemWrapper } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
 
 import Cube from './Cube'
@@ -162,7 +162,7 @@ function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()
 
   return (
-    <ModuleWrapper>
+    <>
       <header className="space-y-1">
         <GoBackButton
           onClick={() => {
@@ -170,7 +170,7 @@ function CFOPF2L(): React.ReactElement {
           }}
         />
         <div className="flex-between flex">
-          <h1 className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
+          <h1 className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
             <img
               alt="F2L"
               className="size-16"
@@ -181,7 +181,7 @@ function CFOPF2L(): React.ReactElement {
         </div>
       </header>
       {sections.map((section, i) => (
-        <section key={`section-${i + 1}`} className="my-8 space-y-4">
+        <section key={`section-${i + 1}`} className="my-8 space-y-3">
           <p className="text-custom-500 w-full text-center text-lg font-semibold tracking-wider">
             SECTION {i + 1}
           </p>
@@ -201,11 +201,12 @@ function CFOPF2L(): React.ReactElement {
                   <p className="text-bg-500 mt-2 text-lg">
                     {subsubsection.desc}
                   </p>
-                  <div className="mt-4 grid grid-cols-2 gap-2">
+                  <ul className="mt-4 grid grid-cols-2 gap-3">
                     {subsubsection.algs.map(({ alg, pattern, warn }, i) => (
-                      <div
+                      <ItemWrapper
                         key={i}
-                        className="shadow-custom component-bg flex w-full items-center gap-6 rounded-md p-4"
+                        as="li"
+                        className="flex items-center gap-6"
                       >
                         <div className="bg-bg-100 shadow-custom dark:bg-bg-800/50 rounded-md p-1 pb-2">
                           <Cube pattern={pattern} />
@@ -222,16 +223,16 @@ function CFOPF2L(): React.ReactElement {
                             </p>
                           ))}
                         </div>
-                      </div>
+                      </ItemWrapper>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               ))}
             </div>
           ))}
         </section>
       ))}
-    </ModuleWrapper>
+    </>
   )
 }
 

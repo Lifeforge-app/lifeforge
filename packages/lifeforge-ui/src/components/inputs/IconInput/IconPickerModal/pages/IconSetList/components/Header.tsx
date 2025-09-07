@@ -46,6 +46,7 @@ function Header({
     <>
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         <SearchInput
+          className="component-bg-lighter-with-hover"
           namespace="common.modals"
           searchTarget="iconPicker.items.icon"
           setValue={setSearchQuery}
@@ -83,6 +84,7 @@ function Header({
         </div>
         <div className="w-full lg:w-3/5 xl:w-1/3">
           <SearchInput
+            className="component-bg-lighter-with-hover"
             icon="tabler:filter"
             namespace="common.modals"
             searchTarget="iconPicker.items.iconSet"

@@ -1,0 +1,342 @@
+import Note from "../../components/Note"
+import Code from "../../components/Code"
+import Warning from "../../components/Warning"
+import Commit from "./components/Commit"
+import Version from "./components/Version"
+
+###### Changelog
+
+# Stuff are Rapidly Evolving
+
+LifeForge is not backed by any major corporations or strong team of developers (for now), and it's been worked by a single developer in their spare time. As such, there is no formal SDLC in place, and things may change rapidly and unexpectedly as new ideas are implemented and tested. However, I'll do my best to try and outline the notable changes and updates in this changelog.
+
+<Note>
+### Version Naming Conventions
+
+Unlike traditional software development projects which adapt Semantic versioning, LifeForge in its current development phase, opts for a simpler versioning scheme inspired by Minecraft. Each version of LifeForge is identified by the year and week of development, with the following format:
+
+<Code language="plaintext">
+{'dev \<year\>w\<week\>'}
+</Code>
+
+</Note>
+
+<Warning>
+This page only covers changes made from version 25w33 onwards. For earlier versions, please refer to the legacy [CHANGELOG.md](https://github.com/lifeforge-app/lifeforge/blob/main/CHANGELOG.md). Also, minor changes may not be documented here.
+</Warning>
+
+---
+
+<Version week={36}>
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="35567ec4f80b26f4fbe72eaecc6518d1f55f44e6" />: Moved create button to the top right corner in Idea Box listing page.
+- <Commit hash="c43a8cf1e122dd9a824232a5a1923db8c0b29197" />: Removed login quota logic (will be reimplemented in a better way in the future).
+- <Commit hash="cacac51aea3fca62e5902af06b32c3f76e8297a0" />: Added functionality in Movies Library to update movie metadata from TMDB (button is available in the context menu of each movie item).
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="62c132a283cfc6bb3e9d7d37ca48b48570f56439" />: Removed <code>ContextMenuSeparator</code> component.
+- <Commit hash="fee0fe11ab27114e35ebdb73fffcf2a769b32ca9" />: Made the action button default to plain variant in ModalHeader
+- <Commit hash="2e8957677628d2abc40ee366373dc7240e678e27" />: Added <code>ItemWrapper</code> component for more unified styling of list items.
+
+  <Code language="tsx">
+  {`<ul>
+      {data.map(item => (
+        <ItemWrapper key={item.id}>
+          {item.name}
+        </ItemWrapper>
+      ))}
+  </ul>`}
+  </Code>
+
+- <Commit hash="2beb68165a220d42f01bd1bf28a4792c1296e8d7" />: Improved background color consistency for various inputs.
+- <Commit hash="8944abf3407fc2b5889f9aea225fc2409aef4225" />: Added context provider for module title and icon so that the header can be controlled programmatically instead of manually passing props around.
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="912cc2080e081baae853187339b9a0452e77e96a" />: Filename of uploaded files are now unified to use only UUIDs to prevent issues with overflowing filenames.
+- <Commit hash="86ba8b04031b88c11524a81ce00e699315ffa9bc" />: More progress on getting the system ready for AI agent.
+- <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Replaced constant file containing routes that requires no authentication with chained method definition in <code>forgeController</code>.
+
+  <Code language="typescript">
+  {`const myController = forgeController.query
+      .noAuth()
+      .description('...')
+      // ...`}
+  </Code>
+
+- <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Added a ping handler in the server to allow external services (e.g. CRON) to ping the server to keep it awake.
+- <Commit hash="0ac266883b04095a96db634ea47fde4b275e4035" />: Updated type inference so that query handler of server-side <code>forgeController</code> cannot accept body as input.
+
+  <Code language="typescript">
+    {`// This will cause a typescript error
+    const myController = forgeController.query
+      .input({
+        body: z.object({
+          // ...
+        }) // Type 'ZodObject<{}, $strip>' is not assignable to type 'undefined'.
+      })`}
+  </Code>
+
+- <Commit hash="5952f4ca1170b45d2827755013c167d69fea6b9c" />: Removed <code>.method()</code> chain method in <code>forgeController</code> as it's redundant. (It's already implied by using <code>.query</code> or <code>.mutation</code> when creating the controller instance.)
+- <Commit hash="1c73e2383c186e39a07c126b878244a4c2f55425" />: Splitted app and core routes into separate route files.
+
+  <Code language="plaintext">
+  {`/server/src/routes/
+    ├── app.routes.ts
+    ├── core.routes.ts
+    ├── routes.types.ts
+    └── index.ts`}
+  </Code>
+
+- <Commit hash="340a713993368ccb394eec73f372f1428b7e3daa" />: Moved <code>ModuleWrapper</code> to route construction layer so that it doesn't need to be manually wrapped around each module page. Also, module title and icon are now passed via context provider in this level instead of manually defining them in each module page. However, explicit definition is still supported for special use cases.
+
+  <Code language="tsx">
+    {`// Before
+    return (
+      <ModuleWrapper>
+        <ModuleHeader icon="tabler:calendar" title="Calendar" />
+        ...
+      </ModuleWrapper>
+    )
+
+    // After
+    return (
+      <>
+        <ModuleHeader />
+        ...
+      </>
+    )
+
+    // Or, for explicit definition
+    return (
+      <>
+        <ModuleHeader icon="tabler:cube" title="Subpage" />
+        ...
+      </>
+    )
+  `}
+  </Code>
+
+### 🐛 Bug Fixes
+
+- <Commit hash="e03eda0e13b952d542d559070d52338b0e816218" />: Fixed a bug where the location is not updated correctly when the <code>GoBackButton</code> component is clicked.
+- <Commit hash="552b1c35b098e543242b4aeafd199c425ad50916" />: Fixed a bug in the <code>RRuleInput</code> component where the update made to duration fields are not reflected correctly, as well as responsive layout issues.
+- <Commit hash="98136e8e0e6ebc7f96da8c77915db028b6a0619c" />: Fixed a bug in the form validation mechanism where the file input field is deemed empty even when a file is selected.
+- <Commit hash="0169938f6efad12260eca869facf5dbf82dd2eaa" />: Fixed localization in moment vault entry adding modal.
+- <Commit hash="0f18985f873b2121057ec636e2389d1922c1d9d9" />: Updated calendar event modal initial data to set type as 'single' and fixed the start date format.
+- <Commit hash="09713b660f9e7d12530e55428d25c6cfeaa94ca1" />: Fixed padding in the drag and drop container of <code>FileInput</code> component.
+- <Commit hash="a01450b99d9c217ca0bc1ae1792d48b663501e08" />: Fixed translation issues in file picker modal.
+- <Commit hash="6a56ad5629a0cd61ac92ed81366134a69f205a87" />: Fixed a bug in Todo List where the width of the task due date text is shrunk.
+- <Commit hash="315e344c6120a093e97a3cfb1bfaf2a7542c1817" />: Fixed a bug in CodeTime readme generator where the background color is not applied correctly.
+- <Commit hash="a00a879eb7c19d7b654ca550fb9bc556268765ac" />: Added missing locales for Book Library module.
+- <Commit hash="8a50762b1a5177f5057d4b2d6262edaba07b76e6" />: Fixed a bug in the wallet transaction sidebar where the date range picker inputs are not showing the correct values.
+- <Commit hash="b42a1f770810ff19ae98177d5a4c5095f663bc6a" />: Fixed localization for reference link button in calendar event modal in Calendar module.
+- <Commit hash="1aa928dbf4f33d85682f040cf557d5de2db74226" />: Fixed mobile responsive layout issue in Score Library module.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="b4c6afb4e14b20ee85b26e2becd8957904c5ce56" />: Added changelog (the page you're reading right now) and roadmap pages to the documentation. Roadmap page is left empty for now.
+- <Commit hash="85815f85ab5a4dbf98635fa0838a195b2ad37d33" />: Replaced all "Lifeforge" with "LifeForge" in the documentation.
+- <Commit hash="a1c72f4a3d73e3b16a568ed862cb321ab916ab25" />: Simplified code styling for non-pre code elements.
+- <Commit hash="c74c40de4d12793fbf1941a8c3d942b573b76b1b"/>: Added documentation for constructing backend API with <code>forgeController</code>. See [Building API](/developer-guide/building-api).
+- Purchase domain "lifeforge.dev" and set it up for the documentation site. Original domain "docs.lifeforge.melvinchia.dev" will still be kept as an alias but has been setup to redirect to the new domain.
+
+</Version>
+
+<Version week={35}>
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="04c09ad0a4aabcd49f7e3bf98c3f6fcfdf338060" />, <Commit hash="612bfe163e02ec106191ab700f50ca8bd7320269" />, <Commit hash="f326226c9e2d9d678f4930b0391fbecd53eee1a2" />: Added Journal module back into the system, partial progress. (Removed client side WIP code in <Commit hash="e185a15f5f59f630a36cd250479c97f9ee18dbd7" />.)
+- <Commit hash="6a4359c63e03e7cb60e7a42b6560d2c5d86c700e" />, <Commit hash="8d21264674341d8517bd2c90583714282d5f0215" />: Moved filter logic of Books Library from client to server.
+- <Commit hash="73dc1a7884848dd8293fbc01d1dbf61db0af2ea8" />, <Commit hash="d4298d954ee799fd7cc32a0e4bb492d8cfe65863" />, <Commit hash="26e2f33e85e992bc2e78339bb02210fcff32d98e" />, <Commit hash="d175e8358f1d7cf47173c7cd47fdded24954712f"/>, <Commit hash="f0c211c460f99c918ed95605f7006d56b56ed820" />, <Commit hash="f0c211c460f99c918ed95605f7006d56b56ed820" />, <Commit hash="2d537221b629f23f58b2c248a6ab85688287a80a" />, <Commit hash="f6ec5680aa02d76b52a6fe15289939f76b5b9a45" />: Added read status filter in Books Library, where user can mark book as either unread, reading, or read. Time started and time finished are kept track of as well.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w34-4.png?raw=true)
+- <Commit hash="95c6b3546435a7f82958d3df69357ec8e427375a" />: Books are now sorted as follows:
+
+  > First sort by read status (reading -> unread -> read).
+  >
+  > If the read status is the same, sort by time started (newest first).
+  >
+  > Otherwise, sort by favourite status (favourite -> normal), then by title
+- <Commit hash="c6b4951631502087da68418dd779422e8d31ef9f" />, <Commit hash="8041a1e3782122ef0b8c93667a629c1074a2ddb4" />, etc.: Implemented upload mechanism in Books Library that supports pdf and epub files. Metadata will be automatically parsed from the EPUB files upon upload.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="996fd8d8bcf38edfed90f888d90f5ce0b301a720" />, <Commit hash="1340233c0b3eef8f57a414f2cbe0c10e4f852c65" />: Moved sidebar open state management into its own provider, allowing for control of the sidebar behavior without manually defining sidebar state and passing around components.
+- <Commit hash="ee6c6c98c6e5f76f068f9ea3273986481e3f7d19" />: Preloader screen is now default to dark mode.
+- <Commit hash="5b34ec6fd90cd1c17be61c4a9884e7a89c5f58a2" />: Enhanced <code>FileInput</code> with mime type validation and user feedback.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w34-5.png?raw=true)
+- <Commit hash="30d20030d2cf622dba174f9ea28b951f16d2f27a" />: Improved drag and drop user feedback styling for <code>FileInput</code>.
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="aa96f3133eb48f73242a4010bdcd3a5a990c5f8e" />: Implemented mechanism to log missing locales.
+- <Commit hash="87c3d8053017bf4decd3100df94b7052603ad3d7" />: Integrated <code>WithOTP</code> component into routing mechanism, allowing OTP to be easily implemented in any modules. (Ended up being rolled back in <Commit hash="f9b0e4bbecebd65cd8f1c90290f015591f0d903b" /> due to issues with compilation.)
+- <Commit hash="354f198e11958d36fe0995c7013df7f7398866ff" />: Allowed <code>undefined</code> as a valid value for filter array in <code>PBService</code>.
+- <Commit hash="1bd8cf95527019a4ec985599fbe828b55d933512" />: Added missing <code>scripts</code> directory to ESLint configuration.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="5dfa8d0c4ba4ebf26aa35d24cfc6351e0f01d012" />: Fixed responsive layout in Currency Converter module.
+- <Commit hash="585acdc825257ec466f86cef84e77f9ddd504e5f" />: Fixed responsive layout in Code Time dashboard and performed code structure refactoring.
+- <Commit hash="d46f7fa1a978dee8cf19328b0a94972ef43da908" />: Added default <code>type</code> field in initialData object of <code>CreateEntryModal</code> in Localization Manager.
+- <Commit hash="d1ebdf9a3af498b55ad83c86a6e6d4c52c8cc705" />: Added quite a lot of missing localization strings.
+- <Commit hash="e4b85663cbd1c98d7bf9e594635cf22d557782d1" />: Fixed a fatal error by adding optional chaining to namespace check in i18n missingKeyHandler.
+- <Commit hash="3165aa06a85e023649578f21c4a0b779f0cf103d" />: Removed suspense wrapper from localization manager that causes fatal error.
+- <Commit hash="ec5b5bee4543cb90b3e24c40488563e2252ab911" />: Added optional chaining for status color retrieval in API logging middleware that causes fatal error.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="ffb0a03789109fe81c8f28e34d82d9ebad78114c" />, <Commit hash="36ac70e0dbaabed17fa9964eb4ab6155525cadaf" />, <Commit hash="e86c51fdc80d577d95be767f89062636564dd7f8" />, <Commit hash="e45c2b56f5b0ec929598766dfa65cb0a863f4a42" />, <Commit hash="60c0eb98f006cdac4cc3feb981401c5c4ba90bda" />: In the documentation codebase, routing are now dynamically generated based on folder structure and file names of content files.
+- <Commit hash="374f515b3d40f07cd47f068fba9318b763c01942" />: Added guide for database CRUD operations with custom PocketBase SDK wrapper. See [Database Operations](/developer-guide/database-operations).
+- <Commit hash="4ea2f1cdd61a244ecd8ddefd49303296d520c113" />: Added <code>react-medium-image-zoom</code> package for image zoom functionality in documentation.
+- <Commit hash="63c698ab2d82bffeab73fec3c941c361b1f9595d" />: Improved styling for <code>Note</code> and <code>Warning</code> components in documentation.
+</Version>
+
+<Version week={34}>
+### 🏢 Module-Specific & Feature Updates
+
+- Implemented a prove-of-concept for <code>ForgeAgent</code>, an AI assistant that can help users with various tasks. Temporarily disabled due to dependencies issue.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="499622720c976449b8bcff7d336e5fb9c202f6bf" />: Set default visibilityBreakpoint to 'md' in FAB component.
+- <Commit hash="eca053a8fff369a4d27d531cc9d4b762ac3bca32" />: Updated <code>description</code> prop type to allow custom component in <code>EmptyStateScreen</code>.
+- <Commit hash="1a2de069bebda4b10da7594cb309a75fccc3a025" />: Added error message handling to form inputs.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w34-1.png?raw=true)
+- <Commit hash="3145b5cb57aafa23ce29cad47ad23f677df05004" />: Renamed <code>QueryWrapper</code> component to <code>WithQuery</code>.
+- <Commit hash="faced6775b755916067c9de7a463fdd17e26d6c8" />: Migrate <code>Listbox</code> components to utilize Radix UI Select primitive (ended up being rolled back in <Commit hash='d70c07795436ca4c5531efb6edd8a40939ac24a5' />).
+- <Commit hash="80325c027e5e43241e3fa793f247383262a1246d" />: Added <code>autofocus</code> props to various input components.
+- <Commit hash="63c944d3d7df5e40526b04ebf7ce001f7fdcadb6" />: Added <code>WithQueryData</code> component as an alternative to <code>WithQuery</code> that accepts <code>forgeController</code> instance directly. Good for use cases when query data doesn't need to be manipulated.
+
+  <Code language="tsx">
+  {`<WithQueryData controller={forgeAPI.myApp.coolStuff.list}>
+        {data => <>{JSON.stringify(data)}</>}
+    </WithQueryData>`}
+  </Code>
+
+- <Commit hash="7e0f6d401316cc589f8774188e465d568a8c41db" />: Updated form definition syntax in form modals to pass in UI config during object construction instead of chaining <code>.ui()</code> method calls.
+
+  <Code language="typescript">
+  {`const formProps = defineForm({
+        title: "My Form",
+        icon: "tabler:form",
+        ...
+    })`}
+  </Code>
+
+- <Commit hash="82c87a69c11016ea1cc479a74e72057d1913b125" />: Set the default variant of action button in <code>SearchInput</code> to be 'plain'.
+
+- <Commit hash="f47ae62122df380a8ec24c29956eb48813ae248d" />: Updated <code>FAB</code> component to allow 'false' as a <code>visibilityBreakpoint</code> option that shows the button in all viewports.
+
+- <Commit hash="a6074d897fc84d60f433717a784020116c280c86" />: Implemented <code>.conditionalFields()</code> chain methods and migrate to zustand for form state management, allowing form state to be exposed to the parent component. See [Forms](/developer-guide/forms).
+
+- <Commit hash="fd45f35fcc702be2993d8bbf19da100b66667e18" />: Moved master password and OTP management components into <code>lifeforge-ui</code>.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w34-3.png?raw=true)
+
+- <Commit hash="cf7e3d68c0148096ce5a92f2e5ee238c839d3f7e" />: Replaced loader span with Icon component in <code>LoadingScreen</code>.
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="7b71dcd927f4908cff910da0e94b6d5654aa9ee7" />: Added error boundary to App component for improved error handling.
+- <Commit hash="43379157c99ebefdc2896865e3cf2327980db5f1" />: Migrated route handling logics from using declarative component approach to using data definition approach. See [React Router Docs](https://reactrouter.com/start/data/routing).
+- <Commit hash="fdcd236ab9e432ac4ddc55965950b520ef166024" />: Memoize <code>ModalHeader</code> component for performance optimization.
+- <Commit hash="10389bb456fc91391fba061eed4fab9029e7eb91" />: Integrated <code>nuqs</code> into various modules, allowing states to be synced with search params in the URL.
+- <Commit hash="064e88022613cb82ed24d8f683d15ab16d315bfa" />: Created <code>usePromiseLoading</code> hooks to manage asynchronous loading state.
+
+  <Code language="typescript">
+  {`const [loading, handler] = usePromiseLoading(async () => {...})`}
+  </Code>
+
+- <Commit hash="9e180d33dfdbedf95a192cb1367da2b89a016e96" />: Reworked API logging mechanism with improved visualization and log preservation (log files are now kept in /server/logs/ directory).
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w34-2.png?raw=true)
+
+- <Commit hash="b2b8d853e063cf79d0c750208a554f729fcd4767" />: Refactored typescript interfaces for the form system.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="8e4ae98e4d6c1bfa786a11f62a7fc25a4707cf6c" />: Fixed localization for confirmation prompt input box.
+- <Commit hash="72372e2fa7f8fb7f0d0f1b12981bcf84248a32c9" />: Fixed button label internationalization for clipboard paste action in <code>FileInput</code> DnDContainer.
+- <Commit hash="59f27a84bbda9570472add566b66198da36b4de4" />: Fixed section titles in bottom navbar in documentation, replacing hyphens with spaces.
+- <Commit hash="d08d40f63cfac9e2008bf1720046e68fec31315f" />: Fixed localization for status text of two-factor authentication settings in Account Settings page.
+- <Commit hash="4030867ec0076c0487963daa873b6ad5a48ff444" />: Fixed responsive design issues for <code>DashboardItem</code> component.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="1433b52951a8c7fc11756ca4dc24db58d4e7c02e" />: Added documentation for form system to Developer Guide section. See [Forms](/developer-guide/forms).
+- <Commit hash="367901eed2ebd7b021150fa9f23530c434981f22" />: Added story for <code>ConfirmationModal</code> component that demonstrates confirmation prompt input.
+- <Commit hash="f51b0d9f1bd450840dd8bfec90047bcc9e4a8b91" />: Implemented copy to clipboard mechanism for <code>Code</code> components in documentation.
+- <Commit hash="c4d4896d4e2c6ba7859740462229d24a754e462c" />: Enhanced styling for sidebar and rightbar in documentation.
+
+</Version>
+
+<Version week={33}>
+### 🏢 Module-Specific & Feature Updates
+- <Commit hash="3d4c5d6e723503cf090b596a048c59b5519c2aaa"/>:  Added more levels of intensity to the activity calendar in CodeTime dashboard.
+- Refactored API Builder to adapt to new SSO app SDK (Notably, all the authentication flows are now packed in an integrated component called <code>SSOAppMainView</code>).
+- Added scrollbar to movie list, making the header and the search bar sticky.
+- <Commit hash="89593da985c19f5e57f3e3c879bb6835c989d54b" />: Added poster images of movies in calendar event details.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-4.png?raw=true)
+- Created a new module called "Sin Chew Daily", basically a news aggregator for 星洲日报, a Chinese-language newspaper in Malaysia.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-3.png?raw=true)
+- Added the new <code>RRuleInput</code> component from <code>lifeforge-ui</code> into the Calendar module, now the modify modal is finally working properly again.
+- Implemented RRule string parser to parse RRule string back into <code>RRuleInput</code>, and now recurring events can now be updated (Originally, they could not be modified at all after creation).
+
+### 🎨 UI Components & Design System
+- Migrated from manually implementing <code>Listbox</code> component from <code>@headlessui/react</code> to using <code>Listbox</code> component from <code>lifeforge-ui</code>. See [commit](https://github.com/lifeforge-app/lifeforge/commit/5e6ea6076669e2d41ef3ec409022dc560f32ee5e) (Commits are still not properly staged at this point in time, apologies).
+- Removed all confusing <code>lighter</code> props from various input components and unified their background colors.
+- Introduced a new props into <code>ListboxOption</code> component: <code>renderColorAndIcon</code>, which allows for custom rendering of the option's color and icon.
+- <Commit hash="c5c5d55b35fd28327d8ecf0f67330e5dae760022" />: Migrated the context menu to use the dropdown component from Radix UI instead of Headless UI. Renamed HamburgerMenu to <code>ContextMenu</code>.
+- <Commit hash="e8ad843fcdae677d8fa6c39ae44eb8d9ec2afe50" />: Added a new props to <code>ContextMenu</code> that allows for custom rendering of the trigger element.
+- <Commit hash="6d2af07e5a56d9c0d6e80b22890c082bd0f35227" />: Consolidated action button props into a single props in <code>ModalHeader</code>, consolidated context menu props into a single props in <code>ModuleHeader</code>.
+- <Commit hash="3e17ba33c6c9a05a5656b1067edea9f349c9c67a" />: Fixes the <code>Scrollbar</code> component to ensure the width is not overflowing nor underflowing.
+- <Commit hash="5700235cb3bd7eb2e64008861d5177ad9e9239fe" />: Replaced <code>iconAtEnd</code> prop with <code>iconPosition</code> and removed tProps for Button component.
+- <Commit hash="8ce5b62fd6960eb6dae5511aa4b9a191f429e80d" />: Enhanced various button components with improved props and functionality, added docstring to props.
+- <Commit hash="27cea6d71214f8c2b15123a24c6adb5bd19e662e" />: Updated <code>ConfirmationModal</code> component to accept custom button component for confirmation button.
+- <Commit hash="61e8f3f412b9a89ae5624a304993b0cc38a6cd51" />: Added docstring for props and improved props naming for various UI components.
+- Various improvements in UI spacing.
+- Renamed the <code>Previous</code> button to <code>Prev</code>.
+- Added back icon in module header in mobile view.
+- Value will now be default to 0 when the <code>NumberInput</code> is empty.
+- <Commit hash="78575fdefafb4e644b9b6b58499fdd114bb20678" />: Added <code>RRuleInput</code> component to <code>lifeforge-ui</code>, allowing users to create and edit recurrence rules for events.
+- <code>SliderInput</code> component now handles decimal values correctly.
+- Created a custom modal for selecting font families.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-1.png?raw=true)
+- Implemented mechanism for user to adjust global font size in the personalization page.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-2.png?raw=true)
+- Migrated from using virtual list to using paginated list in various modules for now since virtual list is a pain to work with.
+
+### 🏗️ Infrastructure & Technical Improvements
+- Stopped updating CHANGELOG.md, and changes made to the codebase will be documented in the commit messages.
+- <Commit hash="057bb8250fec6c4696b6b726039f7344b01c635c" />: Moved task pool middleware to socket.io functions folder.
+
+  <Code language="typescript">
+  {`import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'`}
+  </Code>
+- Rolled back the changes made to the localization manager (the codebase is too complex and difficult to migrate to using React Query, and since it works just fine, it's not worth the effort).
+- <Commit hash="66988c3424a7003579cd87a06032b1bbd43d5488" />: Updated repository links in documentation and components to reflect new GitHub organization.
+- <Commit hash="58e546a3e4a75548c0546fe7d7e609040db75814" />: Optimized FormInputs component by memoizing individual form fields and improved change handler management to prevent unnecessary rerender of fields.
+- Replaced <code>z.infer</code> with <code>z.input</code> in the forgeAPI type inference system for more accurate type safety.
+- Added typescript definition for font families data returned from Google Fonts API.
+
+### 🐛 Bug Fixes
+- Fixed the TMDB logo color issue. It somehow accidentally lost its color somewhere in the development process, probably affected by bulk text replacement of other files.
+- Fixed a bug in the LibGen scraping logic where the file size isn't being interpreted correctly.
+- Fixed a bug in the Libgen explorer modal where the download progress indicator has double percentage labels.
+- Fixed the favicon of the client.
+- Fixed a bug in Music Library where the music cannot be downloaded due to misconfiguration of parameters passed into the media query of forgeAPI.
+- <Commit hash="7bbd2af153835c79b28d67da72c9ebdcf38abd63" />: Fixed a bug related to dynamic favicon where the theme color will not be applied properly.
+- Various minor bug fixes in the codebase.
+
+### 📖 Documentation & Tooling
+- <Commit hash="45168157fcca480c7112e30a8e4449f22fb79fc8" />: Bumped the version of storybook in <code>lifeforge-ui</code> from version 8 to version 9, added <code>autodocs</code> feature for automatic documentation generation.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-6.png?raw=true)
+- <Commit hash="e36df05b56b08b4436ccddeef07942bc4f84fca8" />: Added guideline for AI generation of docstring.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-5.png?raw=true)
+- <Commit hash="2c4802c2d1709979bb948b855b6365dfb2445214" />: Added docstring to <code>FormBuilder</code> class.
+- Added i18n support for the storybook of <code>lifeforge-ui</code>.
+- <Commit hash="0b46c83dbf43673be043e0b75ef6dd62774f63ff" />: Implemented dark mode switch mechanism in documentation.
+  ![](https://github.com/melvinchia3636/lifeforge-changelog-media/blob/main/25w33-7.jpg?raw=true)
+- <Commit hash="2fddf5cff97577b222f75a24ed106fbb820012bb" />: Added Introduction and Project Structure documentation page to developer guide section.
+</Version>

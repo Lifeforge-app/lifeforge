@@ -116,7 +116,8 @@
     "inputManually": "Masukkan Secara Manual",
     "scanFromImage": "Imbas dari Imej",
     "today": "Hari Ini",
-    "exceptThisTime": "Kecuali Kali Ini"
+    "exceptThisTime": "Kecuali Kali Ini",
+    "viewReference": "Lihat Rujukan"
   },
   "eventTypes": {
     "single": "Acara Tunggal",

@@ -103,8 +103,6 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
             </Button>
           )
         }
-        icon="tabler:key"
-        title="Passwords"
       />
       <SearchInput
         namespace="apps.passwords"

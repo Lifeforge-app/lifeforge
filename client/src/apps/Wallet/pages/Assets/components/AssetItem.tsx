@@ -7,6 +7,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import { useNavigate } from 'react-router'
@@ -65,7 +66,7 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
     })
 
   return (
-    <div className="bg-bg-100 shadow-custom dark:bg-bg-900 relative space-y-4 rounded-lg p-4">
+    <ItemWrapper className="space-y-3">
       <div className="flex items-center gap-3">
         <span className="bg-bg-200 text-bg-500 dark:bg-bg-800 w-min rounded-md p-2">
           <Icon className="size-5" icon={asset.icon} />
@@ -127,7 +128,7 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
           onClick={handleDeleteAsset}
         />
       </ContextMenu>
-    </div>
+    </ItemWrapper>
   )
 }
 

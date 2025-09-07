@@ -53,7 +53,7 @@ function ContentContainer({
     <WithQuery query={enabledQuery}>
       {enabled =>
         enabled ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <TextInput
               required
               icon="tabler:mail"

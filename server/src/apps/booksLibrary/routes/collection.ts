@@ -4,7 +4,9 @@ import { z } from 'zod/v4'
 import { SCHEMAS } from '../../../core/schema'
 
 const list = forgeController.query
-  .description('Get all collections for the books library')
+  .description(
+    'Get all collections for the books library. If the user ask to list a book in specific collection, call this tool first to get the collection ID.'
+  )
   .input({})
   .callback(({ pb }) =>
     pb.getFullList
@@ -12,6 +14,7 @@ const list = forgeController.query
       .sort(['name'])
       .execute()
   )
+  .enableAIToolCall()
 
 const create = forgeController.mutation
   .description('Create a new collection for the books library')

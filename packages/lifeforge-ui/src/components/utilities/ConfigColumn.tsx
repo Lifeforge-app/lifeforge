@@ -1,3 +1,4 @@
+import { ItemWrapper } from '@components/layouts'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
@@ -36,10 +37,10 @@ function ConfigColumn({
 
   return (
     <>
-      <div
+      <ItemWrapper
         ref={ref}
         className={clsx(
-          'shadow-custom component-bg flex w-full min-w-0 flex-col justify-between gap-8 rounded-lg p-4',
+          'flex flex-col justify-between gap-8',
           !vertical &&
             !noDefaultBreakpoints &&
             {
@@ -69,7 +70,7 @@ function ConfigColumn({
         <div className="flex w-full min-w-0 shrink-0 items-center gap-3 md:w-auto">
           {children}
         </div>
-      </div>
+      </ItemWrapper>
     </>
   )
 }

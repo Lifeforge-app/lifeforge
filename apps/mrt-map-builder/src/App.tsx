@@ -188,7 +188,7 @@ const D3MRTMap = () => {
     >
       <LayoutWithSidebar>
         <SidebarWrapper isOpen={true} setOpen={() => {}}>
-          <div className="mb-4 flex items-center gap-4 px-4">
+          <div className="mb-4 flex items-center gap-3 px-4">
             <Icon className="text-2xl" icon="tabler:mouse" />
             <h2 className="text-xl font-medium">Currently Working On</h2>
           </div>

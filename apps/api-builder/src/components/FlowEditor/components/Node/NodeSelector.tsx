@@ -40,7 +40,7 @@ function NodeSelector({
           <h3 className="mb-2 text-lg font-semibold">
             {t([`nodeCategories.${_.camelCase(category.name)}`, category.name])}
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             {category.nodes
               .filter(key => {
                 const config = NODE_CONFIG[key]

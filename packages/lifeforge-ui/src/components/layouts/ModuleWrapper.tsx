@@ -1,35 +1,28 @@
 import { Scrollbar } from '@components/utilities'
-import clsx from 'clsx'
 
+import { ModuleHeaderStateContext } from './ModuleHeaderStateProvider'
 import ModuleSidebarStateProvider from './ModuleSidebarStateProvider'
 
 function ModuleWrapper({
   children,
-  className = '',
-  innerContainerClassName = ''
+  config
 }: {
   children: React.ReactNode
-  className?: string
-  innerContainerClassName?: string
+  config: {
+    title: string
+    icon: string
+  }
 }) {
   return (
-    <ModuleSidebarStateProvider>
-      <Scrollbar
-        className={clsx(
-          'no-overflow-x flex min-h-0 flex-col transition-all',
-          className
-        )}
-      >
-        <div
-          className={clsx(
-            'flex w-full flex-1 flex-col px-4 pt-8 sm:px-12',
-            innerContainerClassName
-          )}
-        >
-          {children}
-        </div>
-      </Scrollbar>
-    </ModuleSidebarStateProvider>
+    <ModuleHeaderStateContext value={config}>
+      <ModuleSidebarStateProvider>
+        <Scrollbar className="no-overflow-x flex min-h-0 flex-col transition-all">
+          <div className="flex w-full flex-1 flex-col px-4 pt-8 sm:px-12">
+            {children}
+          </div>
+        </Scrollbar>
+      </ModuleSidebarStateProvider>
+    </ModuleHeaderStateContext>
   )
 }
 

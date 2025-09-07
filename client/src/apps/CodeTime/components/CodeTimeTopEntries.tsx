@@ -1,6 +1,6 @@
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
-import { DashboardItem, WithQueryData } from 'lifeforge-ui'
+import { DashboardItem, ItemWrapper, WithQueryData } from 'lifeforge-ui'
 import { useState } from 'react'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
@@ -79,15 +79,15 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                     ></div>
                   ))}
             </div>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {topEntries !== null &&
                 Object.keys(topEntries).length > 0 &&
                 Object.entries(topEntries)
                   .slice(0, 5)
                   .map(([key, value], index) => (
-                    <li
+                    <ItemWrapper
                       key={key}
-                      className="flex-between shadow-custom component-bg-lighter relative flex w-full min-w-0 flex-col gap-8 rounded-lg p-6 sm:flex-row"
+                      className="flex-between component-bg-lighter flex-col gap-8 sm:flex-row"
                     >
                       <div className="flex w-full min-w-0 items-center gap-3 text-lg font-medium">
                         <div
@@ -107,7 +107,7 @@ function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
                       <div className="shrink-0 text-3xl font-semibold">
                         <HoursAndMinutesFromSeconds seconds={value} />
                       </div>
-                    </li>
+                    </ItemWrapper>
                   ))}
             </ul>
           </>

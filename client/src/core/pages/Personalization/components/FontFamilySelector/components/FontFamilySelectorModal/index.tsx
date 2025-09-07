@@ -106,6 +106,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
           )}
         </Listbox>
         <SearchInput
+          className="component-bg-lighter-with-hover"
           namespace="core.personalization"
           searchTarget="fontFamily.items.fontFamily"
           setValue={setSearchQuery}
