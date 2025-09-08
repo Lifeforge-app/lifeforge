@@ -1,3 +1,4 @@
+import type WidgetConfig from '@core/pages/Dashboard/typescript/widgetConfig.types'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import type { ChartOptions, ScriptableContext } from 'chart.js'
@@ -184,3 +185,10 @@ const CodeTime = () => {
 }
 
 export default CodeTime
+
+export const config: WidgetConfig = {
+  namespace: 'apps.codeTime',
+  id: 'codeTime',
+  icon: 'tabler:code',
+  minH: 3
+}

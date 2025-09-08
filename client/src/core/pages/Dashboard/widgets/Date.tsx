@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
+import type WidgetConfig from '../typescript/widgetConfig.types'
 import { arabicToChinese } from '../utils/arabicToChineseNumber'
 
 export default function DateWidget() {
@@ -63,4 +64,10 @@ export default function DateWidget() {
       </div>
     </div>
   )
+}
+
+export const config: WidgetConfig = {
+  id: 'date',
+  icon: 'tabler:calendar-clock',
+  minW: 2
 }
