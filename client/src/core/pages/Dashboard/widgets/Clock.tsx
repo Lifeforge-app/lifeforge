@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 
+import type WidgetConfig from '../typescript/widgetConfig.types'
+
 function Clock() {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
 
@@ -63,3 +65,10 @@ function Clock() {
 }
 
 export default Clock
+
+export const config: WidgetConfig = {
+  id: 'clock',
+  icon: 'tabler:clock',
+  minW: 2,
+  minH: 1
+}

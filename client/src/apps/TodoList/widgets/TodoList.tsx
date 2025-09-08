@@ -1,3 +1,4 @@
+import type WidgetConfig from '@core/pages/Dashboard/typescript/widgetConfig.types'
 import {
   Button,
   DashboardItem,
@@ -80,4 +81,10 @@ export default function TodoList() {
       </TodoListProvider>
     </DashboardItem>
   )
+}
+
+export const config: WidgetConfig = {
+  namespace: 'apps.todoList',
+  id: 'todoList',
+  icon: 'tabler:checklist'
 }

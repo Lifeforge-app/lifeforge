@@ -8,51 +8,16 @@ import { useTranslation } from 'react-i18next'
 import { useSidebarState } from 'shared'
 import { usePersonalization } from 'shared'
 
-import Achievements from '../widgets/Achievements'
-import AssetsBalance from '../widgets/AssetsBalance'
-import Bookshelf from '../widgets/Bookshelf'
-import Clock from '../widgets/Clock'
-import CodeTime from '../widgets/CodeTime'
-import DateWidget from '../widgets/Date'
-import ExpensesBreakdown from '../widgets/ExpensesBreakdown'
-import FlashCards from '../widgets/FlashCards'
-import IdeaBox from '../widgets/IdeaBox'
-import IncomeAndExpenses from '../widgets/IncomeAndExpenses'
-import Journal from '../widgets/Journal'
-import MiniCalendar from '../widgets/MiniCalendar'
-import MusicPlayer from '../widgets/MusicPlayer'
-import PomodoroTimer from '../widgets/PomodoroTimer'
-import QuickActions from '../widgets/QuickActions'
-import Quotes from '../widgets/Quotes'
-import RecentTransactions from '../widgets/RecentTransactions'
-import Spotify from '../widgets/Spotify'
-import TodaysEvent from '../widgets/TodaysEvent'
-import TodoList from '../widgets/TodoList'
+import DASHBOARD_WIDGETS from '../widgets'
 
 const RGL: any = ResponsiveGridLayout as any
 
-const COMPONENTS = {
-  date: DateWidget,
-  clock: Clock,
-  quotes: Quotes,
-  ideaBox: IdeaBox,
-  todaysEvent: TodaysEvent,
-  expensesBreakdown: ExpensesBreakdown,
-  incomeExpenses: IncomeAndExpenses,
-  recentTransactions: RecentTransactions,
-  assetsBalance: AssetsBalance,
-  todoList: TodoList,
-  spotify: Spotify,
-  miniCalendar: MiniCalendar,
-  codeTime: CodeTime,
-  pomodoroTimer: PomodoroTimer,
-  flashCards: FlashCards,
-  bookshelf: Bookshelf,
-  journal: Journal,
-  achievements: Achievements,
-  musicPlayer: MusicPlayer,
-  quickActions: QuickActions
-}
+const COMPONENTS = Object.fromEntries(
+  Object.entries(DASHBOARD_WIDGETS).map(([key, value]) => [
+    key,
+    value.component
+  ])
+)
 
 function DashboardGrid({
   wrapperRef,
