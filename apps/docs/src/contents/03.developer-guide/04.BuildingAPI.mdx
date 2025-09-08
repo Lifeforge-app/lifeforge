@@ -168,7 +168,7 @@ Finally, in the routing file located at <code>src/core/routes/app.routes.ts</cod
 <section id="data-input">
 ## Data Input
 
-LifeForge's approach to taking data input is slightly different from tRPC, where there is only one channel for all the parameters. In LifeForge, the input is divided into two parts: <code>query</code>, <code>body</code>. Queries are basically the URL search parameters, the part after the <code>?</code> in the URL, while body is the request body, which is usually in JSON format or form data. For those who are familiar with RESTful APIs, these should be familiar concepts.
+LifeForge's approach to taking data input is slightly different from tRPC, where there is only one channel for all the parameters. In LifeForge, the input is divided into two parts: <code>query</code> and <code>body</code>. Queries are basically the URL search parameters, the part after the <code>?</code> in the URL, while body is the request body, which is usually in JSON format or form data. For those who are familiar with RESTful APIs, these should be familiar concepts.
 
 The division of input into query and body is based on the HTTP method used. For <code>GET</code> requests, only query parameters are accepted, while for <code>POST</code> requests, both query and body parameters are accepted. This design choice is made to adhere to the semantics of HTTP methods, where <code>GET</code> requests are meant for retrieving data and should not have a request body, while <code>POST</code> requests are meant for creating or updating data and can have a request body.
 
