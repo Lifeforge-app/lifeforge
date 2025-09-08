@@ -6,6 +6,7 @@ import fs from 'fs'
 import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
+import { allApps } from './locales'
 
 const listSubnamespaces = forgeController.query
   .description('List subnamespaces for a namespace')
@@ -16,21 +17,16 @@ const listSubnamespaces = forgeController.query
   })
   .callback(async ({ query: { namespace } }) => {
     if (namespace === 'apps') {
-      const data = fs
-        .readdirSync(`${process.cwd()}/src/apps`)
-        .filter(module =>
-          fs.existsSync(`${process.cwd()}/src/apps/${module}/locales/en.json`)
-        )
-        .map(module => module.replace('.json', ''))
+      const data = allApps.map(module => module.split('/').pop())
 
-      return data
+      return data.sort()
     }
 
     const data = fs
-      .readdirSync(`${process.cwd()}/src/core/locales/en/${namespace}`)
+      .readdirSync(`${process.cwd()}/src/core/locales/en`)
       .map(file => file.replace('.json', ''))
 
-    return data
+    return data.sort()
   })
 
 const listLocales = forgeController.query
@@ -50,7 +46,9 @@ const listLocales = forgeController.query
     }
 
     if (namespace === 'apps') {
-      if (!fs.existsSync(`${process.cwd()}/src/apps/${subnamespace}/locales`)) {
+      const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+      if (!target) {
         throw new ClientError(
           `Subnamespace ${subnamespace} does not exist in apps`,
           404
@@ -59,17 +57,14 @@ const listLocales = forgeController.query
 
       for (const lang of ALLOWED_LANG.filter(lng => lng !== 'zh')) {
         final[lang] = JSON.parse(
-          fs.readFileSync(
-            `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`,
-            'utf-8'
-          )
+          fs.readFileSync(`${target}/locales/${lang}.json`, 'utf-8')
         )
       }
     } else {
       for (const lng of ALLOWED_LANG.filter(lng => lng !== 'zh')) {
         if (
           !fs.existsSync(
-            `${process.cwd()}/src/core/locales/${lng}/${namespace}/${subnamespace}.json`
+            `${process.cwd()}/src/core/locales/${lng}/${subnamespace}.json`
           )
         ) {
           throw new ClientError(
@@ -80,7 +75,7 @@ const listLocales = forgeController.query
 
         final[lng] = JSON.parse(
           fs.readFileSync(
-            `${process.cwd()}/src/core/locales/${lng}/${namespace}/${subnamespace}.json`,
+            `${process.cwd()}/src/core/locales/${lng}/${subnamespace}.json`,
             'utf-8'
           )
         )
@@ -100,7 +95,7 @@ const sync = forgeController.mutation
       )
     }),
     query: z.object({
-      namespace: z.enum(['apps', 'common', 'utils', 'core']),
+      namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     })
   })
@@ -108,9 +103,18 @@ const sync = forgeController.mutation
     let fileContent
 
     if (namespace === 'apps') {
+      const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+      if (!target) {
+        throw new ClientError(
+          `Subnamespace ${subnamespace} does not exist in apps`,
+          404
+        )
+      }
+
       fileContent = ['en', 'ms', 'zh-CN', 'zh-TW'].reduce<Record<string, any>>(
         (acc, lang) => {
-          const path = `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
+          const path = `${target}/locales/${lang}.json`
 
           if (fs.existsSync(path)) {
             acc[lang] = JSON.parse(fs.readFileSync(path, 'utf-8'))
@@ -125,7 +129,7 @@ const sync = forgeController.mutation
     } else {
       fileContent = ['en', 'ms', 'zh-CN', 'zh-TW'].reduce<Record<string, any>>(
         (acc, lang) => {
-          const path = `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`
+          const path = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
 
           if (fs.existsSync(path)) {
             acc[lang] = JSON.parse(fs.readFileSync(path, 'utf-8'))
@@ -158,16 +162,18 @@ const sync = forgeController.mutation
     }
 
     if (namespace === 'apps') {
+      const target = allApps.find(e => e.split('/').pop() === subnamespace)!
+
       for (const lang in fileContent) {
         fs.writeFileSync(
-          `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`,
+          `${target}/locales/${lang}.json`,
           JSON.stringify(fileContent[lang], null, 2)
         )
       }
     } else {
       for (const lang in fileContent) {
         fs.writeFileSync(
-          `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`,
+          `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`,
           JSON.stringify(fileContent[lang], null, 2)
         )
       }
@@ -189,10 +195,29 @@ const create = forgeController.mutation
   .statusCode(201)
   .callback(async ({ body: { path, type, namespace, subnamespace } }) => {
     for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
-      const filePath =
-        namespace === 'apps'
-          ? `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
-          : `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`
+      let filePath: string = ''
+
+      if (namespace === 'apps') {
+        const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+        if (!target) {
+          throw new ClientError(
+            `Subnamespace ${subnamespace} does not exist in apps`,
+            404
+          )
+        }
+
+        filePath = `${target}/locales/${lang}.json`
+      } else {
+        filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+      }
+
+      if (!fs.existsSync(filePath)) {
+        throw new ClientError(
+          `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+          404
+        )
+      }
 
       const data: Record<string, any> = JSON.parse(
         fs.readFileSync(filePath, 'utf-8')
@@ -237,10 +262,29 @@ const rename = forgeController.mutation
   .callback(
     async ({ query: { namespace, subnamespace }, body: { path, newName } }) => {
       for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
-        const filePath =
-          namespace === 'apps'
-            ? `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
-            : `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`
+        let filePath: string = ''
+
+        if (namespace === 'apps') {
+          const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+          if (!target) {
+            throw new ClientError(
+              `Subnamespace ${subnamespace} does not exist in apps`,
+              404
+            )
+          }
+
+          filePath = `${target}/locales/${lang}.json`
+        } else {
+          filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+        }
+
+        if (!fs.existsSync(filePath)) {
+          throw new ClientError(
+            `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+            404
+          )
+        }
 
         const data: Record<string, any> = JSON.parse(
           fs.readFileSync(filePath, 'utf-8')
@@ -293,10 +337,29 @@ const remove = forgeController.mutation
   .statusCode(204)
   .callback(async ({ query: { namespace, subnamespace }, body: { path } }) => {
     ;['en', 'ms', 'zh-CN', 'zh-TW'].forEach(lang => {
-      const filePath =
-        namespace === 'apps'
-          ? `${process.cwd()}/src/apps/${subnamespace}/locales/${lang}.json`
-          : `${process.cwd()}/src/core/locales/${lang}/${namespace}/${subnamespace}.json`
+      let filePath: string = ''
+
+      if (namespace === 'apps') {
+        const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+        if (!target) {
+          throw new ClientError(
+            `Subnamespace ${subnamespace} does not exist in apps`,
+            404
+          )
+        }
+
+        filePath = `${target}/locales/${lang}.json`
+      } else {
+        filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+      }
+
+      if (!fs.existsSync(filePath)) {
+        throw new ClientError(
+          `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+          404
+        )
+      }
 
       const data: Record<string, any> = JSON.parse(
         fs.readFileSync(filePath, 'utf-8')

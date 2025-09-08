@@ -73,7 +73,7 @@ function StatisticChardCard() {
     <DashboardItem
       className="col-span-2 row-span-2"
       componentBesideTitle={
-        <div className="hidden items-center gap-8 sm:flex">
+        <div className="hidden shrink-0 items-center gap-8 sm:flex">
           {['income', 'expenses'].map(type => (
             <div key={type} className="flex items-center gap-2">
               <span
