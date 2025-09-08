@@ -6,7 +6,7 @@ export default {
   name: 'Todo List',
   icon: 'tabler:list-check',
   routes: {
-    'todo-list': lazy(() => import('@apps/01.Productivity/TodoList'))
+    'todo-list': lazy(() => import('@apps/01.Productivity/todoList'))
   },
   togglable: true,
   hasAI: true,

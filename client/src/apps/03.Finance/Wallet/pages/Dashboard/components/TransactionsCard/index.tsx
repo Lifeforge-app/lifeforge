@@ -7,7 +7,7 @@ import {
 } from 'lifeforge-ui'
 import { Link } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ListView from './views/ListView'
 import TableView from './views/TableView'

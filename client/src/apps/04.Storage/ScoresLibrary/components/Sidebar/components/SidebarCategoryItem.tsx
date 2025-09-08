@@ -9,8 +9,8 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import type { ScoreLibraryType } from '@apps/04.Storage/ScoresLibrary'
-import useFilter from '@apps/04.Storage/ScoresLibrary/hooks/useFilter'
+import type { ScoreLibraryType } from '@apps/04.Storage/scoresLibrary'
+import useFilter from '@apps/04.Storage/scoresLibrary/hooks/useFilter'
 
 import ModifyTypeModal from '../../modals/ModifyTypeModal'
 

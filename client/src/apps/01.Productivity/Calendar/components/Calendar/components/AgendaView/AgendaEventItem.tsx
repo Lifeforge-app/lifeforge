@@ -3,8 +3,8 @@ import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 
-import EventDetails from '@apps/01.Productivity/Calendar/components/Calendar/components/EventDetails.tsx'
-import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/Calendar/constants/internalCategories'
+import EventDetails from '@apps/01.Productivity/calendar/components/Calendar/components/EventDetails.tsx'
+import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/calendar/constants/internalCategories'
 
 import type { CalendarCategory, CalendarEvent } from '../..'
 

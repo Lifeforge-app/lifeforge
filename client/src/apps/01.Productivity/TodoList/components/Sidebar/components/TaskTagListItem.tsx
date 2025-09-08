@@ -9,11 +9,11 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyTagModal from '@apps/01.Productivity/TodoList/modals/ModifyTagModal'
+import ModifyTagModal from '@apps/01.Productivity/todoList/modals/ModifyTagModal'
 import {
   type TodoListTag,
   useTodoListContext
-} from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+} from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function TaskTagListItem({ item }: { item: TodoListTag }) {
   const queryClient = useQueryClient()

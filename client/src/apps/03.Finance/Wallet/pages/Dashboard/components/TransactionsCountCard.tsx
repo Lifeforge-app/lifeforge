@@ -4,9 +4,9 @@ import { DashboardItem, Scrollbar, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function TransactionsCountCard() {
   const { transactionsQuery, typesCountQuery } = useWalletData()

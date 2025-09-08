@@ -22,7 +22,7 @@ export type APIKeysEntry = InferOutput<
 function ContentContainer({ masterPassword }: { masterPassword: string }) {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('core.apiKeys')
+  const { t } = useTranslation('apps.apiKeys')
 
   const challengeQuery = useQuery(
     forgeAPI.apiKeys.auth.getChallenge.queryOptions()
@@ -53,7 +53,7 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
             className="hidden lg:flex"
             icon="tabler:plus"
             tProps={{
-              item: t('core.apiKeys:items.apiKey')
+              item: t('apps.apiKeys:items.apiKey')
             }}
             onClick={handleCreateAPIKey}
           >
@@ -76,7 +76,7 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
               <EmptyStateScreen
                 icon="tabler:key-off"
                 name="apiKeys"
-                namespace="core.apiKeys"
+                namespace="apps.apiKeys"
               />
             )}
           </div>

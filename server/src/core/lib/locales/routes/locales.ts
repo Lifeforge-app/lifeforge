@@ -7,6 +7,13 @@ import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
+const allApps = fs
+  .globSync(`../client/src/apps/*/*`, {
+    withFileTypes: true
+  })
+  .filter(e => fs.existsSync(`${e.parentPath}/${e.name}/locales`))
+  .map(e => `${e.parentPath}/${e.name}`)
+
 const getLocale = forgeController.query
   .noAuth()
   .description(
@@ -25,7 +32,7 @@ const getLocale = forgeController.query
     let data
 
     if (namespace === 'apps') {
-      if (!fs.existsSync(`${process.cwd()}/src/apps/${subnamespace}/locales`)) {
+      if (!allApps.includes(subnamespace)) {
         throw new ClientError(
           `Subnamespace ${subnamespace} does not exist in apps`,
           404
@@ -34,14 +41,14 @@ const getLocale = forgeController.query
 
       data = JSON.parse(
         fs.readFileSync(
-          `${process.cwd()}/src/apps/${subnamespace}/locales/${finalLang}.json`,
+          `../client/src/apps/${subnamespace}/locales/${finalLang}.json`,
           'utf-8'
         )
       )
     } else {
       if (
         !fs.existsSync(
-          `${process.cwd()}/src/core/locales/${finalLang}/${namespace}/${subnamespace}.json`
+          `${process.cwd()}/src/core/locales/${finalLang}/${subnamespace}.json`
         )
       ) {
         throw new ClientError(
@@ -52,64 +59,28 @@ const getLocale = forgeController.query
 
       data = JSON.parse(
         fs.readFileSync(
-          `${process.cwd()}/src/core/locales/${finalLang}/${namespace}/${subnamespace}.json`,
+          `${process.cwd()}/src/core/locales/${finalLang}/${subnamespace}.json`,
           'utf-8'
         )
       )
     }
 
     if (namespace === 'common' && subnamespace === 'sidebar') {
-      const moduleLocales = Object.fromEntries(
-        fs
-          .readdirSync(`${process.cwd()}/src/apps`)
-          .filter(module =>
-            fs.existsSync(
-              `${process.cwd()}/src/apps/${module}/locales/${finalLang}.json`
-            )
+      data.apps = Object.fromEntries(
+        allApps.map(module => {
+          const data = JSON.parse(
+            fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
           )
-          .map(module => {
-            const data = JSON.parse(
-              fs.readFileSync(
-                `${process.cwd()}/src/apps/${module}/locales/${finalLang}.json`,
-                'utf-8'
-              )
-            )
 
-            return [
-              module.replace('.json', ''),
-              {
-                title: data.title ?? '',
-                subsections: data.subsections ?? {}
-              }
-            ]
-          })
+          return [
+            module.replace('.json', '').split('/').pop(),
+            {
+              title: data.title ?? '',
+              subsections: data.subsections ?? {}
+            }
+          ]
+        })
       )
-
-      const coreLocales = Object.fromEntries(
-        fs
-          .readdirSync(`${process.cwd()}/src/core/locales/${finalLang}/core`)
-          .map(file => {
-            const data = JSON.parse(
-              fs.readFileSync(
-                `${process.cwd()}/src/core/locales/${finalLang}/core/${file}`,
-                'utf-8'
-              )
-            )
-
-            return [
-              file.replace('.json', ''),
-              {
-                title: data.title ?? '',
-                subsections: data.subsections ?? {}
-              }
-            ]
-          })
-      )
-
-      data.apps = {
-        ...moduleLocales,
-        ...coreLocales
-      }
     }
 
     return data

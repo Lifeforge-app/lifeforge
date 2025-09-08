@@ -6,7 +6,7 @@ import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import type { IdeaBoxFolder } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxFolder } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import FolderContextMenu from './FolderContextMenu'
 

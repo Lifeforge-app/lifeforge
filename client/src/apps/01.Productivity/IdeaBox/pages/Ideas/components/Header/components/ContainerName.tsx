@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 
-import { useIdeaBoxContext } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import { useIdeaBoxContext } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 function ContainerName({
   id,

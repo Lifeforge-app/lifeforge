@@ -6,9 +6,9 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyBookModal from '@apps/04.Storage/BooksLibrary/components/modals/ModifyBookModal'
-import SendToKindleModal from '@apps/04.Storage/BooksLibrary/components/modals/SendToKindleModal'
-import type { BooksLibraryEntry } from '@apps/04.Storage/BooksLibrary/providers/BooksLibraryProvider'
+import ModifyBookModal from '@apps/04.Storage/booksLibrary/components/modals/ModifyBookModal'
+import SendToKindleModal from '@apps/04.Storage/booksLibrary/components/modals/SendToKindleModal'
+import type { BooksLibraryEntry } from '@apps/04.Storage/booksLibrary/providers/BooksLibraryProvider'
 
 export default function EntryContextMenu({
   item

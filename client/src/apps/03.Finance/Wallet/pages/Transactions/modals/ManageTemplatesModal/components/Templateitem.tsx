@@ -11,7 +11,7 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import type { WalletTemplate } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import type { WalletTemplate } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ModifyTemplatesModal from '../../ModifyTemplatesModal'
 import ModifyTransactionsModal from '../../ModifyTransactionsModal'

@@ -9,7 +9,7 @@ import ResultShowcase from './components/ResultShowcase'
 import { BG_BLURS } from './constants/bg_blurs'
 
 function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('core.personalization')
+  const { t } = useTranslation('apps.personalization')
 
   const { backdropFilters } = usePersonalization()
 

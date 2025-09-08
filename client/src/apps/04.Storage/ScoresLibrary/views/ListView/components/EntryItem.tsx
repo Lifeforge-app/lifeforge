@@ -11,8 +11,8 @@ import {
 import { useCallback, useMemo } from 'react'
 import { toast } from 'react-toastify'
 
-import type { ScoreLibraryEntry } from '@apps/04.Storage/ScoresLibrary'
-import ModifyEntryModal from '@apps/04.Storage/ScoresLibrary/components/modals/ModifyEntryModal'
+import type { ScoreLibraryEntry } from '@apps/04.Storage/scoresLibrary'
+import ModifyEntryModal from '@apps/04.Storage/scoresLibrary/components/modals/ModifyEntryModal'
 
 import AudioPlayer from '../../../components/AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'

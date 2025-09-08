@@ -9,7 +9,7 @@ import colors from 'tailwindcss/colors'
 import {
   type WalletTemplate,
   useWalletData
-} from '@apps/03.Finance/Wallet/hooks/useWalletData'
+} from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 function ModifyTemplatesModal({
   onClose,

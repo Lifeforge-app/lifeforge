@@ -9,8 +9,8 @@ import { memo, useCallback } from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
-import ModifyEventModal from '@apps/01.Productivity/Calendar/components/modals/ModifyEventModal'
-import ScanImageModal from '@apps/01.Productivity/Calendar/components/modals/ScanImageModal'
+import ModifyEventModal from '@apps/01.Productivity/calendar/components/modals/ModifyEventModal'
+import ScanImageModal from '@apps/01.Productivity/calendar/components/modals/ScanImageModal'
 
 import NavigationControl from './components/NavigationControl'
 import ViewSelector from './components/ViewSelector'

@@ -10,7 +10,7 @@ import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 import tinycolor from 'tinycolor2'
 
-import type { IdeaBoxFolder } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxFolder } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import ModifyFolderModal from '../../../../modals/ModifyFolderModal'
 

@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import type { InferInput } from 'shared'
 
-import type { ScoreLibraryEntry } from '@apps/04.Storage/ScoresLibrary'
+import type { ScoreLibraryEntry } from '@apps/04.Storage/scoresLibrary'
 
 function ModifyEntryModal({
   onClose,

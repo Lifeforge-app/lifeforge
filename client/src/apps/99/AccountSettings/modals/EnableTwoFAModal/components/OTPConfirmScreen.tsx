@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation('core.accountSettings')
+  const { t } = useTranslation('apps.accountSettings')
 
   const [otp, setOtp] = useState('')
 

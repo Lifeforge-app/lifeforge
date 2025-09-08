@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 
-import type { IdeaBoxTag } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxTag } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 function ModifyTagModal({
   data: { type, initialData },

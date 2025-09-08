@@ -1,7 +1,7 @@
 import forgeAPI from '@utils/forgeAPI'
 import Zoom from 'react-medium-image-zoom'
 
-import type { IdeaBoxIdea } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxIdea } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import CustomZoomContent from './components/CustomZoomContent'
 import IdeaWrapper from './components/IdeaWrapper'

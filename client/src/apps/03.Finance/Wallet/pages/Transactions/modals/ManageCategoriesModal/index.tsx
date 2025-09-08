@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AutoSizer } from 'react-virtualized'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ModifyCategoryModal from '../ModifyCategoryModal'
 import CategoryItem from './components/CategoryItem'

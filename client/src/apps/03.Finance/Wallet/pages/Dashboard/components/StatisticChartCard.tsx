@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 const options = {
   maintainAspectRatio: false,

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
 
-import useFilter from '@apps/04.Storage/BooksLibrary/hooks/useFilter'
+import useFilter from '@apps/04.Storage/booksLibrary/hooks/useFilter'
 
 import SidebarSection from './components/SidebarSection'
 

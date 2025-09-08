@@ -2,7 +2,7 @@ import { SidebarItem } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 function AllTransactionsButton() {
   const { t } = useTranslation('apps.wallet')

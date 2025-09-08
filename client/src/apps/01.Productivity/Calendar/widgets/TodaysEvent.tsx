@@ -16,13 +16,13 @@ import { Tooltip } from 'react-tooltip'
 import type { InferOutput } from 'shared'
 import { useSidebarState } from 'shared'
 
-import type WidgetConfig from '@apps/00/Dashboard/typescript/widgetConfig.types'
+import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
 import type {
   CalendarCategory,
   CalendarEvent
-} from '@apps/01.Productivity/Calendar/components/Calendar'
-import EventDetails from '@apps/01.Productivity/Calendar/components/Calendar/components/EventDetails.tsx'
-import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/Calendar/constants/internalCategories'
+} from '@apps/01.Productivity/calendar/components/Calendar'
+import EventDetails from '@apps/01.Productivity/calendar/components/Calendar/components/EventDetails.tsx'
+import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/calendar/constants/internalCategories'
 
 function EventItem({
   categories,
@@ -150,6 +150,7 @@ export default function TodaysEvent() {
         />
       }
       icon="tabler:calendar"
+      namespace="apps.calendar"
       title="Todays Event"
     >
       <Scrollbar>
@@ -173,7 +174,7 @@ export default function TodaysEvent() {
                       smaller
                       icon="tabler:calendar-off"
                       name="event"
-                      namespace="core.dashboard"
+                      namespace="apps.dashboard"
                       tKey="widgets.todaysEvent"
                     />
                   </div>

@@ -40,7 +40,7 @@ export function useWalletData() {
   const templatesQuery = useQuery(forgeAPI.wallet.templates.list.queryOptions())
 
   const typesCountQuery = useQuery(
-    forgeAPI.wallet.utils.getTypesCount.queryOptions()
+    forgeAPI.wallet.apps.getTypesCount.queryOptions()
   )
 
   const filteredTransactions = useFilteredTransactions(

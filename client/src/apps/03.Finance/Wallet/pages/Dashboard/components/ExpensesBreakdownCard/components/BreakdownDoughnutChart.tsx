@@ -4,8 +4,8 @@ import { useContext } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 import { ExpensesBreakdownContext } from '..'
 

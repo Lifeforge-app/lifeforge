@@ -5,8 +5,8 @@ import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 import { ExpensesBreakdownContext } from '..'
 

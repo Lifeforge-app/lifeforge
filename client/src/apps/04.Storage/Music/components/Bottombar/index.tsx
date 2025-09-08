@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Button, ContextMenuItem, useModalStore } from 'lifeforge-ui'
 
-import { useMusicContext } from '@apps/04.Storage/Music/providers/MusicProvider'
+import { useMusicContext } from '@apps/04.Storage/music/providers/MusicProvider'
 
 import YoutubeDownloaderModal from '../modals/YoutubeDownloaderModal'
 import ControlButtons from './components/ControlButtons'

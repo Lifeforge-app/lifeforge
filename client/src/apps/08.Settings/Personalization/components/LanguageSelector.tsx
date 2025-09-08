@@ -36,7 +36,7 @@ function LanguageSelector() {
 
   const { changeLanguage } = useUserPersonalization()
 
-  const { t } = useTranslation('core.personalization')
+  const { t } = useTranslation('apps.personalization')
 
   return (
     <ConfigColumn

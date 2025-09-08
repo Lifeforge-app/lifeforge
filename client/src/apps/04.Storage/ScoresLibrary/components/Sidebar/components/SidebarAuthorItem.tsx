@@ -1,7 +1,7 @@
 import { SidebarItem } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import useFilter from '@apps/04.Storage/ScoresLibrary/hooks/useFilter'
+import useFilter from '@apps/04.Storage/scoresLibrary/hooks/useFilter'
 
 function SidebarAuthorItem({
   author,

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { ItemWrapper } from 'lifeforge-ui'
 
-import type { MusicEntry } from '@apps/04.Storage/Music/providers/MusicProvider'
+import type { MusicEntry } from '@apps/04.Storage/music/providers/MusicProvider'
 
 import PlayStateIndicator from './components/PlayStateIndicator'
 import SideButtons from './components/SideButtons'

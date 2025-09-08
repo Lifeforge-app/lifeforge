@@ -17,7 +17,7 @@ import { useAuth } from '../../../../core/providers/AuthProvider'
 function AvatarColumn() {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('core.accountSettings')
+  const { t } = useTranslation('apps.accountSettings')
 
   const { getAvatarURL, userData, setUserData } = useAuth()
 

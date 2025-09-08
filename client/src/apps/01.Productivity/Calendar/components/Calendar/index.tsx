@@ -9,7 +9,7 @@ import withDragAndDrop, {
 } from 'react-big-calendar/lib/addons/dragAndDrop'
 import type { InferOutput } from 'shared'
 
-import { useCalendarStore } from '@apps/01.Productivity/Calendar/stores/useCalendarStore'
+import { useCalendarStore } from '@apps/01.Productivity/calendar/stores/useCalendarStore'
 
 import ModifyEventModal from '../modals/ModifyEventModal'
 import AgendaDate from './components/AgendaView/AgendaDate'

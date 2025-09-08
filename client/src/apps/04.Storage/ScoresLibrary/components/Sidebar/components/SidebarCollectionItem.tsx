@@ -9,7 +9,7 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import type { ScoreLibraryCollection } from '@apps/04.Storage/ScoresLibrary'
+import type { ScoreLibraryCollection } from '@apps/04.Storage/scoresLibrary'
 
 import ModifyCollectionModal from '../../modals/ModifyCollectionModal'
 

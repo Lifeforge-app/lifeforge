@@ -43,7 +43,7 @@ function ModifyAPIKeyModal({
     key: string
   }>({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-    namespace: 'core.apiKeys',
+    namespace: 'apps.apiKeys',
     title: `apiKey.${type}`,
     onClose,
     submitButton: type

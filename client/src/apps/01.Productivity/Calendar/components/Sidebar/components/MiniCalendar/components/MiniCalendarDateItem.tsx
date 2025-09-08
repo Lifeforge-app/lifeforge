@@ -7,8 +7,8 @@ import { useCallback, useMemo } from 'react'
 import type {
   CalendarCategory,
   CalendarEvent
-} from '@apps/01.Productivity/Calendar/components/Calendar'
-import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/Calendar/constants/internalCategories'
+} from '@apps/01.Productivity/calendar/components/Calendar'
+import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/calendar/constants/internalCategories'
 
 import MiniCalendarEventDetails from './MiniCalendarEventDetails'
 import MiniCalendarEventIndicator from './MiniCalendarEventIndicator'

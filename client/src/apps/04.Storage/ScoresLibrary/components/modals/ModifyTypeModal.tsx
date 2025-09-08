@@ -3,7 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import type { InferInput } from 'shared'
 
-import type { ScoreLibraryType } from '@apps/04.Storage/ScoresLibrary'
+import type { ScoreLibraryType } from '@apps/04.Storage/scoresLibrary'
 
 function ModifyTypeModal({
   onClose,

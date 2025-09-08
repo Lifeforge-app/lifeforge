@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useIdeaBoxContext } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import { useIdeaBoxContext } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import FolderItem from './components/FolderItem'
 

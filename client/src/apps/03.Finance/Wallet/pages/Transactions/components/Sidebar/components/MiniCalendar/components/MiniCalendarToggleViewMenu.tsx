@@ -1,7 +1,7 @@
 import { ContextMenu, ContextMenuGroup, ContextMenuItem } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import type { WalletTransaction } from '@apps/03.Finance/Wallet/pages/Transactions'
+import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
 
 const VIEWS = [
   ['tabler:login-2', 'income'],

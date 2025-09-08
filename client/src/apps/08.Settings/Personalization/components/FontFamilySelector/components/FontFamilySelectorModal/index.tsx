@@ -81,7 +81,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
     <div className="flex h-full min-h-[80vh] min-w-[60vw] flex-col">
       <ModalHeader
         icon="tabler:text-size"
-        namespace="core.personalization"
+        namespace="apps.personalization"
         title="fontFamily.modals.fontFamilySelector"
         onClose={onClose}
       />
@@ -107,7 +107,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
         </Listbox>
         <SearchInput
           className="component-bg-lighter-with-hover"
-          namespace="core.personalization"
+          namespace="apps.personalization"
           searchTarget="fontFamily.items.fontFamily"
           setValue={setSearchQuery}
           value={searchQuery}
@@ -119,7 +119,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
             <EmptyStateScreen
               icon="tabler:key-off"
               name="apiKey"
-              namespace="core.personalization"
+              namespace="apps.personalization"
               tKey="fontFamily"
             />
           ) : filteredFonts!.length > 0 ? (
@@ -170,7 +170,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
               <EmptyStateScreen
                 icon="tabler:search-off"
                 name="search"
-                namespace="core.personalization"
+                namespace="apps.personalization"
                 tKey="fontFamily"
               />
             </div>

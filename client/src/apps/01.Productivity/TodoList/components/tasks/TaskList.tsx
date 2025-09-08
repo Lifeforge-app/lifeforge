@@ -1,6 +1,6 @@
 import { Scrollbar } from 'lifeforge-ui'
 
-import type { TodoListEntry } from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+import type { TodoListEntry } from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 import TaskItem from './TaskItem'
 

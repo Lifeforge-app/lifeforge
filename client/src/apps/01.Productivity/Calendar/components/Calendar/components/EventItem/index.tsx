@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI.js'
 import { memo, useMemo } from 'react'
 
-import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/Calendar/constants/internalCategories.js'
+import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/calendar/constants/internalCategories.js'
 
 import type { CalendarCategory, CalendarEvent } from '../../index.js'
 import EventItemButton from './components/EventItemButton.js'

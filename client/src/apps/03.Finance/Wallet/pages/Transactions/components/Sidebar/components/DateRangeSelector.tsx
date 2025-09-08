@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { DateInput, SidebarTitle } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 function DateRangeSelector() {
   const { t } = useTranslation('apps.wallet')

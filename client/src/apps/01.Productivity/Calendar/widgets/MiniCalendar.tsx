@@ -5,9 +5,9 @@ import { Button, DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import type WidgetConfig from '@apps/00/Dashboard/typescript/widgetConfig.types'
-import MiniCalendarContent from '@apps/01.Productivity/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
-import MiniCalendarHeader from '@apps/01.Productivity/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
+import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
+import MiniCalendarContent from '@apps/01.Productivity/calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
+import MiniCalendarHeader from '@apps/01.Productivity/calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
 
 export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())
@@ -48,7 +48,8 @@ export default function MiniCalendar() {
         />
       }
       icon="tabler:calendar"
-      title="mini Calendar"
+      namespace="apps.calendar"
+      title="Mini Calendar"
     >
       <div className="relative z-[9999] size-full">
         <div className="px-2">

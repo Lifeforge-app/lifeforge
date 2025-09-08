@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import type { ScoreLibraryCollection } from '@apps/04.Storage/ScoresLibrary'
+import type { ScoreLibraryCollection } from '@apps/04.Storage/scoresLibrary'
 
 function ModifyCollectionModal({
   onClose,

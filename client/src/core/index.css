@@ -25,7 +25,7 @@ layer(base);
 @source '../../../node_modules/lifeforge-ui/dist';
 
 /* App styles */
-@import '@apps/00/Dashboard/index.css';
+@import '@apps/00/dashboard/index.css';
 @import '@apps/01.Productivity/Calendar/index.css';
 @import '@apps/06.Information/RailwayMap/index.css';
 @import '@apps/04.Storage/Music/index.css';

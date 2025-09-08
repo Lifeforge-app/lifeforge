@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import AssetsSectionItem from './AssetsSectionItem'
 

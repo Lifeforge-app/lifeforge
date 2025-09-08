@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 import type {
   RailwayMapLine,
   RailwayMapStation
-} from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+} from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 import { roundedPolygon } from './geometryUtils'
 import { getLinesRequired } from './routeUtils'

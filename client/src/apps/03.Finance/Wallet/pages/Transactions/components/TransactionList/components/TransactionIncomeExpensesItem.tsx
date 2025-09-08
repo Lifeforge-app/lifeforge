@@ -5,8 +5,8 @@ import dayjs from 'dayjs'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 import type { WalletTransaction } from '../../..'
 import ViewReceiptModal from '../../../modals/ViewReceiptModal'

@@ -1,8 +1,8 @@
 import { EmptyStateScreen, Pagination, Scrollbar } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-import { useFilteredTransactions } from '@apps/03.Finance/Wallet/hooks/useFilteredTransactions'
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useFilteredTransactions } from '@apps/03.Finance/wallet/hooks/useFilteredTransactions'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import TransactionItem from './components/TransactionItem'
 

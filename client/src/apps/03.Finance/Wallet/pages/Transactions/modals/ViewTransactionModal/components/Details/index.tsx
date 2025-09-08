@@ -5,8 +5,8 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { Button, useModalStore } from 'lifeforge-ui'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import type { WalletTransaction } from '@apps/03.Finance/Wallet/pages/Transactions'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
 
 import ViewReceiptModal from '../../../ViewReceiptModal'
 import DetailItem from './components/DetailItem'

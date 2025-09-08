@@ -1,6 +1,6 @@
 import { WithQuery } from 'lifeforge-ui'
 
-import { useMusicContext } from '@apps/04.Storage/Music/providers/MusicProvider'
+import { useMusicContext } from '@apps/04.Storage/music/providers/MusicProvider'
 
 import MusicListItem from './components/MusicListItem'
 

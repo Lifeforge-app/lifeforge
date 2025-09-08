@@ -21,7 +21,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 import AssetsBalanceCard from './components/AssetsBalanceCard'
 import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'

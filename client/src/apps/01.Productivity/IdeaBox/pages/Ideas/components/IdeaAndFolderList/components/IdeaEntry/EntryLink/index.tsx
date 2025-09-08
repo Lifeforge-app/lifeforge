@@ -1,4 +1,4 @@
-import type { IdeaBoxIdea } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxIdea } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import IdeaWrapper from '../components/IdeaWrapper'
 import EntryContent from './components/EntryContent'

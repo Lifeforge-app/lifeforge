@@ -4,8 +4,8 @@ import { ContextMenu, ContextMenuItem, ItemWrapper } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import type { MomentVaultEntry } from '@apps/02.Lifestyle/MomentVault'
-import ModifyTextEntryModal from '@apps/02.Lifestyle/MomentVault/modals/ModifyTextEntryModal'
+import type { MomentVaultEntry } from '@apps/02.Lifestyle/momentVault'
+import ModifyTextEntryModal from '@apps/02.Lifestyle/momentVault/modals/ModifyTextEntryModal'
 
 function TextEntry({
   entry,

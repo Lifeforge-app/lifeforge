@@ -10,7 +10,7 @@ import {
 } from 'lifeforge-ui'
 import { useMemo } from 'react'
 
-import useFilter from '@apps/04.Storage/ScoresLibrary/hooks/useFilter'
+import useFilter from '@apps/04.Storage/scoresLibrary/hooks/useFilter'
 
 import ModifyCollectionModal from '../modals/ModifyCollectionModal'
 import ModifyTypeModal from '../modals/ModifyTypeModal'

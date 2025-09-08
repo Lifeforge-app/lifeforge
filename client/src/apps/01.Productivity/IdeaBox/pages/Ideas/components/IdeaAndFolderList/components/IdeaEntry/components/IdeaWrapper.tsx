@@ -5,7 +5,7 @@ import { ItemWrapper } from 'lifeforge-ui'
 import { useDrag } from 'react-dnd'
 import { useTranslation } from 'react-i18next'
 
-import type { IdeaBoxIdea } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxIdea } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import EntryContextMenu from './EntryContextMenu'
 import InFolderChip from './InFolderChip'

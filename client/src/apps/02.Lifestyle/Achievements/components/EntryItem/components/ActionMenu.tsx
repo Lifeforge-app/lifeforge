@@ -8,7 +8,7 @@ import {
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import type { Achievement } from '@apps/02.Lifestyle/Achievements'
+import type { Achievement } from '@apps/02.Lifestyle/achievements'
 
 import ModifyAchievementModal from '../../ModifyAchievementModal'
 

@@ -3,7 +3,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useIdeaBoxContext } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import { useIdeaBoxContext } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import ModifyIdeaModal from '../modals/ModifyIdeaModal'
 import FolderList from './components/FolderList'

@@ -1,9 +1,9 @@
 import { Button, HeaderFilter, useModuleSidebarState } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useFilteredTransactions } from '@apps/03.Finance/Wallet/hooks/useFilteredTransactions'
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useFilteredTransactions } from '@apps/03.Finance/wallet/hooks/useFilteredTransactions'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 function InnerHeader() {
   const { transactionsQuery, assetsQuery, categoriesQuery, ledgersQuery } =

@@ -5,7 +5,7 @@ import { Button } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import RoutePlannerModal from '@apps/06.Information/RailwayMap/modals/RoutePlannerModal'
+import RoutePlannerModal from '@apps/06.Information/railwayMap/modals/RoutePlannerModal'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'

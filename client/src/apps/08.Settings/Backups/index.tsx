@@ -14,7 +14,7 @@ import BackupItem from './components/BackupItem'
 import CreateBackupModal from './components/CreateBackupModal'
 
 function Backups() {
-  const { t } = useTranslation('core.backups')
+  const { t } = useTranslation('apps.backups')
 
   const open = useModalStore(state => state.open)
 
@@ -52,7 +52,7 @@ function Backups() {
               <EmptyStateScreen
                 icon="tabler:history-off"
                 name="noBackups"
-                namespace="core.backups"
+                namespace="apps.backups"
               />
             )
           }
