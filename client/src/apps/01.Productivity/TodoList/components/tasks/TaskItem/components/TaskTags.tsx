@@ -1,7 +1,7 @@
 import {
   type TodoListEntry,
   useTodoListContext
-} from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+} from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function TaskTags({ entry }: { entry: TodoListEntry }) {
   const { tagsListQuery } = useTodoListContext()

@@ -3,8 +3,8 @@ import { Button, DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import type WidgetConfig from '@apps/00/Dashboard/typescript/widgetConfig.types'
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 export default function AssetsBalance() {
   const { assetsQuery } = useWalletData()
@@ -24,6 +24,7 @@ export default function AssetsBalance() {
         />
       }
       icon="tabler:wallet"
+      namespace="apps.wallet"
       title="Assets Balance"
     >
       <WithQuery query={assetsQuery}>

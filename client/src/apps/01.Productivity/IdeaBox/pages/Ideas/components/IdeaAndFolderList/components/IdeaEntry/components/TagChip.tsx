@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { useIdeaBoxContext } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import { useIdeaBoxContext } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 function TagChip({ text }: { text: string }) {
   const { selectedTags, tagsQuery } = useIdeaBoxContext()

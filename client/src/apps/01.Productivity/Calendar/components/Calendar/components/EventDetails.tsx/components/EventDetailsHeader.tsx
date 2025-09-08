@@ -9,8 +9,8 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import ModifyEventModal from '@apps/01.Productivity/Calendar/components/modals/ModifyEventModal'
-import { useCalendarStore } from '@apps/01.Productivity/Calendar/stores/useCalendarStore'
+import ModifyEventModal from '@apps/01.Productivity/calendar/components/modals/ModifyEventModal'
+import { useCalendarStore } from '@apps/01.Productivity/calendar/stores/useCalendarStore'
 
 import type { CalendarCategory, CalendarEvent } from '../../..'
 

@@ -8,7 +8,7 @@ import { useAuth } from '../../../../../core/providers/AuthProvider'
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 
 function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('core.accountSettings')
+  const { t } = useTranslation('apps.accountSettings')
 
   const { setUserData } = useAuth()
 
@@ -24,7 +24,7 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
     <div>
       <ModalHeader
         icon="tabler:lock-access"
-        namespace="core.accountSettings"
+        namespace="apps.accountSettings"
         title="enable2FA"
         onClose={onClose}
       />

@@ -32,7 +32,7 @@ function DefaultThemeColorSelector({
   themeColor: string
   customThemeColor: string
 }) {
-  const { t } = useTranslation('core.personalization')
+  const { t } = useTranslation('apps.personalization')
 
   const { changeThemeColor } = useUserPersonalization()
 

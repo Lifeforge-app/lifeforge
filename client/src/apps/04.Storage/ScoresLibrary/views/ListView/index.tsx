@@ -1,4 +1,4 @@
-import type { ScoreLibraryEntry } from '@apps/04.Storage/ScoresLibrary'
+import type { ScoreLibraryEntry } from '@apps/04.Storage/scoresLibrary'
 
 import EntryItem from './components/EntryItem'
 

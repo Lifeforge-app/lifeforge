@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { WithQuery } from 'lifeforge-ui'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import TransactionAmount from '../../components/TransactionAmount'
 import TransactionParticular from '../../components/TransactionParticular'

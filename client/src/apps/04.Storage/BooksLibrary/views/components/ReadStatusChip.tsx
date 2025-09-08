@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import type { BooksLibraryEntry } from '@apps/04.Storage/BooksLibrary/providers/BooksLibraryProvider'
+import type { BooksLibraryEntry } from '@apps/04.Storage/booksLibrary/providers/BooksLibraryProvider'
 
 function ReadStatusChip({ item }: { item: BooksLibraryEntry }) {
   const { t } = useTranslation('apps.booksLibrary')

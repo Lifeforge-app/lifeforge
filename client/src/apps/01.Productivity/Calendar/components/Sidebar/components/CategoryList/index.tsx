@@ -4,9 +4,9 @@ import forgeAPI from '@utils/forgeAPI'
 import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 
-import type { CalendarCategory } from '@apps/01.Productivity/Calendar/components/Calendar'
-import ModifyCategoryModal from '@apps/01.Productivity/Calendar/components/modals/ModifyCategoryModal'
-import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/Calendar/constants/internalCategories'
+import type { CalendarCategory } from '@apps/01.Productivity/calendar/components/Calendar'
+import ModifyCategoryModal from '@apps/01.Productivity/calendar/components/modals/ModifyCategoryModal'
+import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/calendar/constants/internalCategories'
 
 import CategoryListItem from './components/CategoryListItem'
 

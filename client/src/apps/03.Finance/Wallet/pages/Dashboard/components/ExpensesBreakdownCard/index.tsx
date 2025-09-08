@@ -7,8 +7,8 @@ import { createContext, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import type { InferOutput } from 'shared'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import type { WalletCategory } from '@apps/03.Finance/Wallet/pages/Transactions'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import type { WalletCategory } from '@apps/03.Finance/wallet/pages/Transactions'
 
 import BreakdownChartLegend from './components/BreakdownChartLegend'
 import BreakdownDetails from './components/BreakdownDetails'
@@ -16,7 +16,7 @@ import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'
 
 export const ExpensesBreakdownContext = createContext<{
   spentOnEachCategory: InferOutput<
-    typeof forgeAPI.wallet.utils.getExpensesBreakdown
+    typeof forgeAPI.wallet.apps.getExpensesBreakdown
   >
   expensesCategories: WalletCategory[]
 }>({
@@ -33,7 +33,7 @@ function ExpensesBreakdownCard() {
   const [month] = useState(dayjs().month() + 1)
 
   const expensesBreakdownQuery = useQuery(
-    forgeAPI.wallet.utils.getExpensesBreakdown
+    forgeAPI.wallet.apps.getExpensesBreakdown
       .input({ year: year.toString(), month: month.toString() })
       .queryOptions()
   )

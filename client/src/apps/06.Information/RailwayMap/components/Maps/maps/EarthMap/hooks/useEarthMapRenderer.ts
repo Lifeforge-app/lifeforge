@@ -4,7 +4,7 @@ import { type RefObject, useEffect, useRef } from 'react'
 import type {
   RailwayMapLine,
   RailwayMapStation
-} from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+} from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 import { initializeMap, renderLines, renderStations } from '../utils/mapUtils'
 

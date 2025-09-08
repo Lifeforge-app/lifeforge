@@ -3,7 +3,7 @@ import { Listbox, ListboxOption } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import type { RailwayMapViewType } from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+import type { RailwayMapViewType } from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 export const VIEW_TYPES = [
   ['tabler:route-alt-left', 'Route Map', 'route'],

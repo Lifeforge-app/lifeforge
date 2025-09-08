@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 import colors from 'tailwindcss/colors'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import type { WalletTransaction } from '..'
 

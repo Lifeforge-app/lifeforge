@@ -16,7 +16,7 @@ function ManageWidgetsModal({
     <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:apps"
-        namespace="core.dashboard"
+        namespace="apps.dashboard"
         title="Manage Widgets"
         onClose={onClose}
       />

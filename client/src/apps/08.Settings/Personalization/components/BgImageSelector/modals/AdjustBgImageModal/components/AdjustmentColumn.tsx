@@ -17,7 +17,7 @@ function AdjustmentColumn({
   labels: string[]
   max: number
 }) {
-  const { t } = useTranslation('core.personalization')
+  const { t } = useTranslation('apps.personalization')
 
   return (
     <ConfigColumn

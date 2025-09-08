@@ -1,6 +1,6 @@
 import { ComboboxInput, ComboboxOption } from 'lifeforge-ui'
 
-import type { RailwayMapStation } from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+import type { RailwayMapStation } from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 import StationCodes from '../../../components/StationCode'
 import { formatStationDisplay } from '../utils/stations'

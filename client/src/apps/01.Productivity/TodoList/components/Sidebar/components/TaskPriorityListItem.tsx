@@ -9,11 +9,11 @@ import {
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
-import ModifyPriorityModal from '@apps/01.Productivity/TodoList/modals/ModifyPriorityModal'
+import ModifyPriorityModal from '@apps/01.Productivity/todoList/modals/ModifyPriorityModal'
 import {
   type TodoListPriority,
   useTodoListContext
-} from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+} from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function TaskPriorityListItem({ item }: { item: TodoListPriority }) {
   const queryClient = useQueryClient()

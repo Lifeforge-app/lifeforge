@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
-import type { TodoListEntry } from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+import type { TodoListEntry } from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function TaskDueDate({ entry }: { entry: TodoListEntry }) {
   return (

@@ -4,8 +4,8 @@ import { ConfirmationModal, SidebarItem } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 
-import type { CalendarCategory } from '@apps/01.Productivity/Calendar/components/Calendar'
-import ModifyCategoryModal from '@apps/01.Productivity/Calendar/components/modals/ModifyCategoryModal'
+import type { CalendarCategory } from '@apps/01.Productivity/calendar/components/Calendar'
+import ModifyCategoryModal from '@apps/01.Productivity/calendar/components/modals/ModifyCategoryModal'
 
 import ActionMenu from './ActionMenu'
 

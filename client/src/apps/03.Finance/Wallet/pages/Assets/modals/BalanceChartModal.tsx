@@ -17,8 +17,8 @@ import { Line } from 'react-chartjs-2'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import type { WalletAsset } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import type { WalletAsset } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 // Register Chart.js components
 ChartJS.register(

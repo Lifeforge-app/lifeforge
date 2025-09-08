@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 
-import type { IdeaBoxContainer } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxContainer } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 function ModifyContainerModal({
   data: { type, initialData },

@@ -1,7 +1,7 @@
 // PriorityListbox.tsx
 import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 
-import { useTodoListContext } from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+import { useTodoListContext } from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function PrioritySelector({
   priority,

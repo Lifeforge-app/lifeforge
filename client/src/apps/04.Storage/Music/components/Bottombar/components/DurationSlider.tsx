@@ -1,7 +1,7 @@
 /* eslint-disable react-compiler/react-compiler */
 import dayjs from 'dayjs'
 
-import { useMusicContext } from '@apps/04.Storage/Music/providers/MusicProvider'
+import { useMusicContext } from '@apps/04.Storage/music/providers/MusicProvider'
 
 function DurationSlider() {
   const { audio, currentDuration, setCurrentDuration, currentMusic } =

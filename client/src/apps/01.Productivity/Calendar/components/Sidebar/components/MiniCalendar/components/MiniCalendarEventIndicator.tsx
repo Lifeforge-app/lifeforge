@@ -1,7 +1,7 @@
 import type {
   CalendarCategory,
   CalendarEvent
-} from '@apps/01.Productivity/Calendar/components/Calendar'
+} from '@apps/01.Productivity/calendar/components/Calendar'
 
 function MiniCalendarEventIndicator({
   eventsOnTheDay,

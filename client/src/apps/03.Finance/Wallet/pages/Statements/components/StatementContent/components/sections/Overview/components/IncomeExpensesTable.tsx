@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function IncomeExpensesTable({
   month,

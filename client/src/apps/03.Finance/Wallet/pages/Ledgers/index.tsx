@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import LedgerItem from './components/LedgerItem'
 import ModifyLedgerModal from './modals/ModifyLedgerModal'

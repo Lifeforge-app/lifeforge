@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import Zoom from 'react-medium-image-zoom'
 import PhotoAlbum from 'react-photo-album'
 
-import type { MomentVaultEntry } from '@apps/02.Lifestyle/MomentVault'
+import type { MomentVaultEntry } from '@apps/02.Lifestyle/momentVault'
 
 async function getNaturalHeightWidth(file: string) {
   return new Promise<{ height: number; width: number }>((resolve, reject) => {

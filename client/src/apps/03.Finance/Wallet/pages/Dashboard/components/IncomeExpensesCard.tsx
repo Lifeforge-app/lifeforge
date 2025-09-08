@@ -4,8 +4,8 @@ import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { DashboardItem, WithQuery } from 'lifeforge-ui'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const isIncome = title.toLowerCase() === 'income'
@@ -13,7 +13,7 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const { isAmountHidden } = useWalletStore()
 
   const incomeExpensesQuery = useQuery(
-    forgeAPI.wallet.utils.getIncomeExpensesSummary
+    forgeAPI.wallet.apps.getIncomeExpensesSummary
       .input({
         year: new Date().getFullYear().toString(),
         month: (new Date().getMonth() + 1).toString()

@@ -1,6 +1,6 @@
 import { SidebarDivider, SidebarWrapper } from 'lifeforge-ui'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 import AllTransactionsButton from './components/AllTransactionsButton'
 import AssetsSection from './components/AssetsSection'
