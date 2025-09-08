@@ -1,3 +1,4 @@
+import type WidgetConfig from '@core/pages/Dashboard/typescript/widgetConfig.types'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Button, DashboardItem, EmptyStateScreen } from 'lifeforge-ui'
@@ -77,4 +78,12 @@ export default function MusicPlayer() {
       </div>
     </DashboardItem>
   )
+}
+
+export const config: WidgetConfig = {
+  namespace: 'apps.music',
+  id: 'musicPlayer',
+  icon: 'tabler:music',
+  minW: 2,
+  minH: 4
 }

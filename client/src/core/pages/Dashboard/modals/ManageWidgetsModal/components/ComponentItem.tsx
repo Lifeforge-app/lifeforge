@@ -11,15 +11,17 @@ function ComponentListItem({
   icon,
   minW,
   minH,
+  namespace,
   setReady
 }: {
   id: string
   icon: string
   minW?: number
   minH?: number
+  namespace?: string
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const { t } = useTranslation('core.dashboard')
+  const { t } = useTranslation(namespace ?? 'core.dashboard')
 
   const {
     dashboardLayout: enabledWidgets,
@@ -123,7 +125,9 @@ function ComponentListItem({
           <Icon className="size-6" icon={icon} />
         </div>
         <div className="flex flex-col">
-          <div className="font-semibold">{t(`widgets.${id}.title`)}</div>
+          <div className="font-semibold">
+            {t([`widgets.${id}.title`, `widgets.${id}`, id])}
+          </div>
           <div className="text-bg-500 text-sm">
             {t(`widgets.${id}.description`)}
           </div>

@@ -1,3 +1,4 @@
+import type WidgetConfig from '@core/pages/Dashboard/typescript/widgetConfig.types'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
@@ -184,4 +185,10 @@ export default function TodaysEvent() {
       </Scrollbar>
     </DashboardItem>
   )
+}
+
+export const config: WidgetConfig = {
+  namespace: 'apps.calendar',
+  id: 'todaysEvent',
+  icon: 'tabler:calendar-event'
 }
