@@ -3,7 +3,7 @@
 @import './global.css';
 @import './prose.css';
 @import './daisyui.css';
-@import './apps.css';
+@import './utils.css';
 
 @import 'react-grid-layout/css/styles.css';
 @import 'react-medium-image-zoom/dist/styles.css';

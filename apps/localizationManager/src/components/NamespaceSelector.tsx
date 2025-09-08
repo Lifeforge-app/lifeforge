@@ -11,8 +11,8 @@ function NamespaceSelector({
   setSubNamespace,
   showWarning
 }: {
-  namespace: 'common' | 'core' | 'apps' | 'utils' | null
-  setNamespace: (value: 'common' | 'core' | 'apps' | 'utils' | null) => void
+  namespace: 'common' | 'apps' | null
+  setNamespace: (value: 'common' | 'apps' | null) => void
   subNamespace: string | null
   setSubNamespace: (value: string | null) => void
   showWarning: boolean
@@ -55,7 +55,7 @@ function NamespaceSelector({
           }}
           value={namespace}
         >
-          {['common', 'core', 'apps', 'utils'].map(ns => (
+          {['common', 'apps'].map(ns => (
             <ListboxOption
               key={ns}
               icon="tabler:category-2"

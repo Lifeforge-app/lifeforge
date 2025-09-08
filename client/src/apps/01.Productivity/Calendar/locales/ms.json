@@ -163,5 +163,9 @@
       "month": "Bulan",
       "year": "Tahun"
     }
+  },
+  "widgets": {
+    "todaysEvent": "Acara Hari Ini",
+    "miniCalendar": "Kalendar Mini"
   }
 }

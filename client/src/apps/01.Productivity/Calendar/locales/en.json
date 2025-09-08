@@ -163,5 +163,9 @@
       "month": "Months",
       "year": "Years"
     }
+  },
+  "widgets": {
+    "todaysEvent": "Today's Events",
+    "miniCalendar": "Mini Calendar"
   }
 }

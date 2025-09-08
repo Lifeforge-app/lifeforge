@@ -16,7 +16,7 @@ import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'
 
 export const ExpensesBreakdownContext = createContext<{
   spentOnEachCategory: InferOutput<
-    typeof forgeAPI.wallet.apps.getExpensesBreakdown
+    typeof forgeAPI.wallet.utils.getExpensesBreakdown
   >
   expensesCategories: WalletCategory[]
 }>({
@@ -33,7 +33,7 @@ function ExpensesBreakdownCard() {
   const [month] = useState(dayjs().month() + 1)
 
   const expensesBreakdownQuery = useQuery(
-    forgeAPI.wallet.apps.getExpensesBreakdown
+    forgeAPI.wallet.utils.getExpensesBreakdown
       .input({ year: year.toString(), month: month.toString() })
       .queryOptions()
   )

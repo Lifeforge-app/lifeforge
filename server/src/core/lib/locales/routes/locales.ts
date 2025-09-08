@@ -7,8 +7,8 @@ import { z } from 'zod/v4'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
-const allApps = fs
-  .globSync(`../client/src/apps/*/*`, {
+export const allApps = fs
+  .globSync(['../client/src/apps/*/*', '../apps/*'], {
     withFileTypes: true
   })
   .filter(e => fs.existsSync(`${e.parentPath}/${e.name}/locales`))
@@ -32,7 +32,9 @@ const getLocale = forgeController.query
     let data
 
     if (namespace === 'apps') {
-      if (!allApps.includes(subnamespace)) {
+      const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+      if (!target) {
         throw new ClientError(
           `Subnamespace ${subnamespace} does not exist in apps`,
           404
@@ -40,10 +42,7 @@ const getLocale = forgeController.query
       }
 
       data = JSON.parse(
-        fs.readFileSync(
-          `../client/src/apps/${subnamespace}/locales/${finalLang}.json`,
-          'utf-8'
-        )
+        fs.readFileSync(`${target}/locales/${finalLang}.json`, 'utf-8')
       )
     } else {
       if (
