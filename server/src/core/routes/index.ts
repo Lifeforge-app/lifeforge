@@ -1,8 +1,9 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import traceRouteStack from '@functions/utils/traceRouteStack'
-import { createAIRouter } from '@lib/ai'
 import express from 'express'
+
+import { createAIRouter } from '@apps/ai'
 
 import appRoutes from './app.routes'
 import coreRoutes from './core.routes'

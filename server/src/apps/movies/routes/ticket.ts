@@ -1,7 +1,8 @@
 import { forgeController, forgeRouter } from '@functions/routes'
-import { Location } from '@lib/locations/typescript/location.types'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
+
+import { Location } from '@apps/locations/typescript/location.types'
 
 const update = forgeController.mutation
   .description('Update ticket information for a movie entry')
