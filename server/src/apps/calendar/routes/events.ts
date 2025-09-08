@@ -3,11 +3,11 @@ import { fetchAI } from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { Location } from '@lib/locations/typescript/location.types'
-import { singleUploadMiddleware } from '@middlewares/uploadMiddleware'
 import fs from 'fs'
 import moment from 'moment'
 import { z } from 'zod/v4'
+
+import { Location } from '@apps/locations/typescript/location.types'
 
 import { SCHEMAS } from '../../../core/schema'
 import getEvents from '../functions/getEvents'
@@ -163,11 +163,14 @@ const create = forgeController.mutation
 const scanImage = forgeController.mutation
   .description('Scan an image to extract event data')
   .input({})
-  .middlewares(singleUploadMiddleware)
-  .callback(async ({ pb, req }) => {
-    const { file } = req
-
-    if (!file) {
+  .media({
+    file: {
+      optional: false,
+      multiple: false
+    }
+  })
+  .callback(async ({ pb, media: { file } }) => {
+    if (!file || typeof file === 'string') {
       throw new ClientError('No file uploaded')
     }
 

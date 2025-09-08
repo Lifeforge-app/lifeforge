@@ -1,8 +1,9 @@
 import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { Location } from '@lib/locations/typescript/location.types'
 import COLLECTION_SCHEMAS from '@schema'
 import { z } from 'zod/v4'
+
+import { Location } from '@apps/locations/typescript/location.types'
 
 const list = forgeController.query
   .description('Get all transaction templates')
