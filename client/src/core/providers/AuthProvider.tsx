@@ -1,4 +1,4 @@
-import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
+import TwoFAModal from '@core/Auth/modals/TwoFAModal'
 import forgeAPI from '@utils/forgeAPI'
 import { useModalStore } from 'lifeforge-ui'
 import { cookieParse } from 'pocketbase'

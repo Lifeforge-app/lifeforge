@@ -42,8 +42,6 @@ function ModuleHeader({
     namespace ?? ''
   ])
 
-  console.log(icon)
-
   const { toggleSidebar, sidebarExpanded } = useSidebarState()
 
   return (

@@ -2,10 +2,17 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable",
+      "ES2024.Object"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     /* Bundler mode */
     "outDir": "./tsbuild",
     "moduleResolution": "bundler",
@@ -20,16 +27,33 @@
     "verbatimModuleSyntax": true,
     "composite": true,
     "paths": {
-      "@providers/*": ["./src/core/providers/*"],
-      "@utils/*": ["./src/core/utils/*"],
-      "@apps/*": ["./src/apps/*"],
-      "@security/*": ["./src/core/security/*"],
-      "@core/*": ["./src/core/*"],
-      "@server/*": ["../server/src/*"]
+      "@providers/*": [
+        "./src/core/providers/*"
+      ],
+      "@utils/*": [
+        "./src/core/utils/*"
+      ],
+      "@apps/*": [
+        "./src/apps/*"
+      ],
+      "@security/*": [
+        "./src/core/security/*"
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@server/*": [
+        "../server/src/*"
+      ]
     }
   },
-  "typeRoots": ["../server/src"],
-  "include": ["./src/**/*", "./src/**/*.json"],
+  "typeRoots": [
+    "../server/src"
+  ],
+  "include": [
+    "./src/**/*",
+    "./src/**/*.json"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
