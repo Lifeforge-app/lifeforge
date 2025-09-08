@@ -2,6 +2,7 @@ import { type SSOAppConfig, SSOAppMainView } from 'lifeforge-ui'
 import ReactDOM from 'react-dom/client'
 
 import FlowEditorWrapper from './components/FlowEditor/index.tsx'
+import './i18n'
 import './index.css'
 import forgeAPI from './utils/forgeAPI.tsx'
 
