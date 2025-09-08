@@ -95,7 +95,11 @@ function LocaleEditor({
   }
 
   if (oldLocales === 'error' || locales === 'error') {
-    return <ErrorScreen message="Failed to fetch locales" />
+    return (
+      <div className="flex-center h-full flex-1">
+        <ErrorScreen message="Failed to fetch locales" />
+      </div>
+    )
   }
 
   return (

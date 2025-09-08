@@ -163,5 +163,9 @@
       "month": "月份",
       "year": "年"
     }
+  },
+  "widgets": {
+    "todaysEvent": "今天的事件",
+    "miniCalendar": "迷你日曆"
   }
 }
