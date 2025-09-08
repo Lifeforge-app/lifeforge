@@ -1,4 +1,4 @@
-import type { IdeaBoxContainer } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxContainer } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import ContainerItem from './components/ContainerItem'
 

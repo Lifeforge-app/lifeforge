@@ -3,8 +3,8 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import ModifyListModal from '@apps/01.Productivity/TodoList/modals/ModifyListModal'
-import { useTodoListContext } from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+import ModifyListModal from '@apps/01.Productivity/todoList/modals/ModifyListModal'
+import { useTodoListContext } from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 import TaskListListItem from './TaskListListItem'
 

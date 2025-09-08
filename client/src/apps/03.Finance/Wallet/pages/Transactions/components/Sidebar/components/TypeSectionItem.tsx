@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import colors from 'tailwindcss/colors'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 function TypeSectionItem({
   icon,

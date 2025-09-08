@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router'
 import {
   type IdeaBoxIdea,
   useIdeaBoxContext
-} from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+} from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 function InFolderChip({ entry }: { entry: IdeaBoxIdea }) {
   const { setSearchQuery, setSelectedTags } = useIdeaBoxContext()

@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 
-import type { RailwayMapStation } from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+import type { RailwayMapStation } from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 let zoomBehavior: d3.ZoomBehavior<Element, unknown>
 

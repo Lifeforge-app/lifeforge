@@ -1,7 +1,7 @@
 import { Button, HeaderFilter, useModuleSidebarState } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useTodoListContext } from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+import { useTodoListContext } from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function Header() {
   const { t } = useTranslation('apps.todoList')

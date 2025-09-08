@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import type { WalletLedger } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import type { WalletLedger } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 function ModifyLedgerModal({
   data: { type, initialData },

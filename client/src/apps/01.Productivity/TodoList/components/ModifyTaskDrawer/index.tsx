@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
-import { useTodoListContext } from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+import { useTodoListContext } from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 import ListSelector from './components/ListSelector'
 import PrioritySelector from './components/PrioritySelector'

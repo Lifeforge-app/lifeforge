@@ -1,4 +1,4 @@
-import type { RailwayMapStation } from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+import type { RailwayMapStation } from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 export const filterStations = (stations: RailwayMapStation[], query: string) =>
   stations.filter(

@@ -4,7 +4,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import ModifyModal from '@apps/04.Storage/BooksLibrary/components/modals/ModifyModal'
+import ModifyModal from '@apps/04.Storage/booksLibrary/components/modals/ModifyModal'
 
 import SidebarItem from './SidebarItem'
 

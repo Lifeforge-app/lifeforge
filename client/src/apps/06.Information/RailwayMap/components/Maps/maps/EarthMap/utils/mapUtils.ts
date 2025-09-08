@@ -3,7 +3,7 @@ import L from 'leaflet'
 import type {
   RailwayMapLine,
   RailwayMapStation
-} from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+} from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 export const initializeMap = (element: HTMLDivElement): L.Map => {
   const map = L.map(element).setView([1.3521, 103.8198], 12)

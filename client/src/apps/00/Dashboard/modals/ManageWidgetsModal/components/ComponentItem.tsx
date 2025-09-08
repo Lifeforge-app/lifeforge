@@ -21,7 +21,7 @@ function ComponentListItem({
   namespace?: string
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const { t } = useTranslation(namespace ?? 'core.dashboard')
+  const { t } = useTranslation(namespace ?? 'apps.dashboard')
 
   const {
     dashboardLayout: enabledWidgets,

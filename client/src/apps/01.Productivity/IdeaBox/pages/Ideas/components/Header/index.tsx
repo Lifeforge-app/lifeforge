@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import forgeAPI from '@utils/forgeAPI'
 import { Link, useParams } from 'react-router'
 
-import { useIdeaBoxContext } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import { useIdeaBoxContext } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import ContainerName from './components/ContainerName'
 import GoBackButtonAndMenu from './components/GoBackButtonAndMenu'

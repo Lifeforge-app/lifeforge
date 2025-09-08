@@ -17,7 +17,7 @@ function BgTempSelector() {
     bgTemp.startsWith('#') ? bgTemp : '#000000'
   )
 
-  const { t } = useTranslation(['core.personalization', 'common.buttons'])
+  const { t } = useTranslation(['apps.personalization', 'common.buttons'])
 
   return (
     <ConfigColumn
@@ -50,7 +50,7 @@ function BgTempSelector() {
             <ColorInput
               className="w-full lg:w-min"
               label="Color Hex"
-              namespace="core.personalization"
+              namespace="apps.personalization"
               setValue={setCustomBgTemp}
               value={customBgTemp}
             />

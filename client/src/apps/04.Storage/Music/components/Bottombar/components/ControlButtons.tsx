@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { Button } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
-import { useMusicContext } from '@apps/04.Storage/Music/providers/MusicProvider'
+import { useMusicContext } from '@apps/04.Storage/music/providers/MusicProvider'
 
 export default function ControlButtons({
   isWidget = false,

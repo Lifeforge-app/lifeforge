@@ -12,7 +12,7 @@ import { useCallback } from 'react'
 import { Link } from 'react-router'
 import { toast } from 'react-toastify'
 
-import type { IdeaBoxContainer } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxContainer } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import ModifyContainerModal from '../../ModifyContainerModal'
 

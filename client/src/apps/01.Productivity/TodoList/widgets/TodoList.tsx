@@ -8,12 +8,12 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
-import type WidgetConfig from '@apps/00/Dashboard/typescript/widgetConfig.types'
-import TaskItem from '@apps/01.Productivity/TodoList/components/tasks/TaskItem'
+import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
+import TaskItem from '@apps/01.Productivity/todoList/components/tasks/TaskItem'
 import {
   TodoListProvider,
   useTodoListContext
-} from '@apps/01.Productivity/TodoList/providers/TodoListProvider'
+} from '@apps/01.Productivity/todoList/providers/TodoListProvider'
 
 function TodoListContent() {
   const { t } = useTranslation('apps.todoList')
@@ -48,7 +48,7 @@ function TodoListContent() {
               }}
               icon="tabler:calendar-smile"
               name="today"
-              namespace="core.dashboard"
+              namespace="apps.dashboard"
               tKey="widgets.todoList"
             />
           )}

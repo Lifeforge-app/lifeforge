@@ -10,7 +10,7 @@ import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import RoutePlannerModal from '@apps/06.Information/RailwayMap/modals/RoutePlannerModal'
+import RoutePlannerModal from '@apps/06.Information/railwayMap/modals/RoutePlannerModal'
 
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import DetailBox from './components/DetailBox'

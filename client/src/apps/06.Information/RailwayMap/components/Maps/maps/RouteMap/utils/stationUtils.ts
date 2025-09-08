@@ -1,7 +1,7 @@
 import type {
   RailwayMapLine,
   RailwayMapStation
-} from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+} from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 export type RouteData = RailwayMapStation[] | 'loading' | 'error'
 

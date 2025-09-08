@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import {
   type MusicEntry,
   useMusicContext
-} from '@apps/04.Storage/Music/providers/MusicProvider'
+} from '@apps/04.Storage/music/providers/MusicProvider'
 
 import UpdateMusicModal from '../../../../modals/UpdateMusicModal'
 

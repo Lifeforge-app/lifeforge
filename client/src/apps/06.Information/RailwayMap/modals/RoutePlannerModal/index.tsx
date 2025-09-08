@@ -1,7 +1,7 @@
 import { ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-import { useRailwayMapContext } from '@apps/06.Information/RailwayMap/providers/RailwayMapProvider'
+import { useRailwayMapContext } from '@apps/06.Information/railwayMap/providers/RailwayMapProvider'
 
 import PlannerContent from './components/PlannerContent'
 

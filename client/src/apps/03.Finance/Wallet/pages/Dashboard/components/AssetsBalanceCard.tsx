@@ -9,9 +9,9 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/Wallet/utils/numberToCurrency'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
+import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function AssetsBalanceCard() {
   const navigate = useNavigate()

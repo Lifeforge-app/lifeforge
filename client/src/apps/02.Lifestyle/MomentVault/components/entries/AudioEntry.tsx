@@ -11,7 +11,7 @@ import type { InferOutput } from 'shared'
 import { usePersonalization } from 'shared'
 import WaveSurfer from 'wavesurfer.js'
 
-import type { MomentVaultEntry } from '@apps/02.Lifestyle/MomentVault'
+import type { MomentVaultEntry } from '@apps/02.Lifestyle/momentVault'
 
 function AudioEntry({
   currentPage,

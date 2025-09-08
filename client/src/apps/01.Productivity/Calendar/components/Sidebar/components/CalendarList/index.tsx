@@ -4,8 +4,8 @@ import forgeAPI from '@utils/forgeAPI'
 import { SidebarTitle, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 
-import type { CalendarCalendar } from '@apps/01.Productivity/Calendar/components/Calendar'
-import ModifyCalendarModal from '@apps/01.Productivity/Calendar/components/modals/ModifyCalendarModal'
+import type { CalendarCalendar } from '@apps/01.Productivity/calendar/components/Calendar'
+import ModifyCalendarModal from '@apps/01.Productivity/calendar/components/modals/ModifyCalendarModal'
 
 import CalendarListItem from './components/CalendarListItem'
 

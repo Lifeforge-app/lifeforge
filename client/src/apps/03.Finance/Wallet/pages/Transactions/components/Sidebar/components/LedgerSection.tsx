@@ -3,8 +3,8 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 import LedgerSectionItem from './LedgerSectionItem'
 

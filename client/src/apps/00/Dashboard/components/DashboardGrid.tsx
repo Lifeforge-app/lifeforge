@@ -26,7 +26,7 @@ function DashboardGrid({
   wrapperRef: React.RefObject<HTMLDivElement | null>
   canLayoutChange: boolean
 }) {
-  const { t } = useTranslation('core.dashboard')
+  const { t } = useTranslation('apps.dashboard')
 
   const { sidebarExpanded } = useSidebarState()
 
@@ -69,7 +69,7 @@ function DashboardGrid({
       <EmptyStateScreen
         icon="tabler:apps-off"
         name="widget"
-        namespace="core.dashboard"
+        namespace="apps.dashboard"
       />
     </div>
   ) : (

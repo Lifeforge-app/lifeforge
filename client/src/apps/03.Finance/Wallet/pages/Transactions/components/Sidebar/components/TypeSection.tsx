@@ -1,7 +1,7 @@
 import { SidebarTitle } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import { useWalletData } from '@apps/03.Finance/Wallet/hooks/useWalletData'
+import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import TypeSectionItem from './TypeSectionItem'
 

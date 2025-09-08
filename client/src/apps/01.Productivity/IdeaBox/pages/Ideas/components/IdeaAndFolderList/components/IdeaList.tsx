@@ -4,7 +4,7 @@ import Column from 'react-columns'
 import {
   type IdeaBoxIdea,
   useIdeaBoxContext
-} from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+} from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import EntryImage from './IdeaEntry/EntryImage'
 import EntryLink from './IdeaEntry/EntryLink'

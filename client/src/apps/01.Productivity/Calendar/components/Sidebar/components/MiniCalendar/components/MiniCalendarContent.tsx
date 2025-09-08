@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { usePersonalization } from 'shared'
 
-import type { CalendarEvent } from '@apps/01.Productivity/Calendar/components/Calendar'
+import type { CalendarEvent } from '@apps/01.Productivity/calendar/components/Calendar'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 

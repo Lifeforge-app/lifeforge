@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 import type { InferOutput } from 'shared'
 
-import { useWalletStore } from '@apps/03.Finance/Wallet/stores/useWalletStore'
+import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 import HeaderMenu from './components/HeaderMenu'
 import InnerHeader from './components/InnerHeader'

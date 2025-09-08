@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { memo } from 'react'
 
-import type { IdeaBoxIdea } from '@apps/01.Productivity/IdeaBox/providers/IdeaBoxProvider'
+import type { IdeaBoxIdea } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 function EntryContent({ entry }: { entry: IdeaBoxIdea }) {
   const OGQuery = useQuery(
