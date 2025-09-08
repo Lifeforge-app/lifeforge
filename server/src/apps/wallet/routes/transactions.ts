@@ -1,9 +1,10 @@
 import parseOCR from '@functions/external/ocr'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { Location } from '@lib/locations/typescript/location.types'
 import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import z from 'zod/v4'
+
+import { Location } from '@apps/locations/typescript/location.types'
 
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'
 

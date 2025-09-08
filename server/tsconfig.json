@@ -22,9 +22,6 @@
       "@functions/*": [
         "./src/core/functions/*"
       ],
-      "@typescript/*": [
-        "./src/core/typescript/*"
-      ],
       "@middlewares/*": [
         "./src/core/middlewares/*"
       ],
@@ -34,9 +31,6 @@
       "@apps/*": [
         "./src/apps/*"
       ],
-      "@lib/*": [
-        "./src/core/lib/*"
-      ]
     }
   }
 }
