@@ -37,7 +37,7 @@
         "typescript-eslint": "^8.31.1",
       },
     },
-    "apps/api-builder": {
+    "apps/apiBuilder": {
       "name": "lifeforge-api-builder",
       "version": "0.0.0",
       "dependencies": {
@@ -78,7 +78,7 @@
         "vite": "^7.0.5",
       },
     },
-    "apps/api-explorer": {
+    "apps/apiExplorer": {
       "name": "lifeforge-api-explorer",
       "version": "0.0.0",
       "dependencies": {
@@ -157,7 +157,7 @@
         "vite": "^7.0.5",
       },
     },
-    "apps/localization-manager": {
+    "apps/localizationManager": {
       "name": "lifeforge-localization-manager",
       "version": "0.0.0",
       "dependencies": {
@@ -2999,15 +2999,15 @@
 
     "lie": ["lie@3.3.0", "", { "dependencies": { "immediate": "~3.0.5" } }, "sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ=="],
 
-    "lifeforge-api-builder": ["lifeforge-api-builder@workspace:apps/api-builder"],
+    "lifeforge-api-builder": ["lifeforge-api-builder@workspace:apps/apiBuilder"],
 
-    "lifeforge-api-explorer": ["lifeforge-api-explorer@workspace:apps/api-explorer"],
+    "lifeforge-api-explorer": ["lifeforge-api-explorer@workspace:apps/apiExplorer"],
 
     "lifeforge-client": ["lifeforge-client@workspace:client"],
 
     "lifeforge-docs": ["lifeforge-docs@workspace:apps/docs"],
 
-    "lifeforge-localization-manager": ["lifeforge-localization-manager@workspace:apps/localization-manager"],
+    "lifeforge-localization-manager": ["lifeforge-localization-manager@workspace:apps/localizationManager"],
 
     "lifeforge-server": ["lifeforge-server@workspace:server"],
 
