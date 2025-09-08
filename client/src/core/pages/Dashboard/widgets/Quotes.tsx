@@ -6,6 +6,8 @@ import { WithQuery } from 'lifeforge-ui'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
+import type WidgetConfig from '../typescript/widgetConfig.types'
+
 export default function Quotes() {
   const quoteQuery = useQuery(
     forgeAPI.corsAnywhere
@@ -43,4 +45,9 @@ export default function Quotes() {
       </WithQuery>
     </div>
   )
+}
+
+export const config: WidgetConfig = {
+  id: 'quotes',
+  icon: 'tabler:quote'
 }
