@@ -1,3 +1,4 @@
+import type WidgetConfig from '@core/pages/Dashboard/typescript/widgetConfig.types'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
@@ -70,4 +71,12 @@ export default function MiniCalendar() {
       </div>
     </DashboardItem>
   )
+}
+
+export const config: WidgetConfig = {
+  namespace: 'apps.calendar',
+  id: 'miniCalendar',
+  icon: 'tabler:calendar',
+  minW: 2,
+  minH: 4
 }

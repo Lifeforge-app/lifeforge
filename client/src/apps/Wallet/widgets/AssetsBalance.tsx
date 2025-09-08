@@ -1,3 +1,4 @@
+import type WidgetConfig from '@core/pages/Dashboard/typescript/widgetConfig.types'
 import { Icon } from '@iconify/react'
 import { Button, DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
@@ -75,4 +76,10 @@ export default function AssetsBalance() {
       </WithQuery>
     </DashboardItem>
   )
+}
+
+export const config: WidgetConfig = {
+  namespace: 'apps.wallet',
+  id: 'assetsBalance',
+  icon: 'tabler:coin'
 }

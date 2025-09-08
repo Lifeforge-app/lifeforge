@@ -1,6 +1,6 @@
 import { ModalHeader } from 'lifeforge-ui'
 
-import DASHBOARD_WIDGETS from '../../constants/dashboard_widgets'
+import DASHBOARD_WIDGETS from '../../widgets'
 import ComponentListItem from './components/ComponentItem'
 
 function ManageWidgetsModal({

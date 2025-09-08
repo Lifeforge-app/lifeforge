@@ -184,3 +184,10 @@ const CodeTime = () => {
 }
 
 export default CodeTime
+
+export const config: WidgetConfig = {
+  namespace: 'apps.codeTime',
+  id: 'codeTime',
+  icon: 'tabler:code',
+  minH: 3
+}
