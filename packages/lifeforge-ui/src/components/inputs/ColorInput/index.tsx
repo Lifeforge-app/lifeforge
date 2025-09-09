@@ -70,7 +70,7 @@ function ColorInput({
           <div
             className={`group-focus-within:border-bg-400 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
             style={{
-              backgroundColor: value.match(/^#[0-9A-F]{6}$/i)
+              backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)
                 ? value
                 : undefined
             }}

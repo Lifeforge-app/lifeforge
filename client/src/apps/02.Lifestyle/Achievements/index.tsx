@@ -37,6 +37,13 @@ function Achievements() {
     parseAsStringEnum(Object.keys(DIFFICULTIES)).withDefault('easy')
   )
 
+  const handleCreateAchievement = () => {
+    open(ModifyAchievementModal, {
+      modifyType: 'create',
+      currentDifficulty: difficulty
+    })
+  }
+
   return (
     <>
       <ModuleHeader
@@ -48,76 +55,54 @@ function Achievements() {
             tProps={{
               item: t('items.achievement')
             }}
-            onClick={() => {
-              open(ModifyAchievementModal, {
-                modifyType: 'create',
-                currentDifficulty: difficulty
-              })
-            }}
+            onClick={handleCreateAchievement}
           >
             new
           </Button>
         }
       />
-      <div className="flex flex-1 flex-col gap-3">
-        <Tabs
-          active={difficulty}
-          enabled={Object.keys(DIFFICULTIES).map(
-            difficulty => difficulty as keyof typeof DIFFICULTIES
-          )}
-          items={Object.keys(DIFFICULTIES).map(difficulty => ({
-            id: difficulty,
-            name: t(`difficulties.${difficulty}`),
-            color: DIFFICULTIES[difficulty as keyof typeof DIFFICULTIES]
-          }))}
-          onNavClick={id => {
-            setDifficulty(id as Achievement['difficulty'])
-          }}
-        />
-        <WithQueryData
-          controller={forgeAPI.achievements.entries.list.input({
-            difficulty: difficulty as Achievement['difficulty']
-          })}
-        >
-          {entries =>
-            entries.length > 0 ? (
-              <>
-                <ul className="space-y-3">
-                  {entries.map(entry => (
-                    <EntryItem key={entry.id} entry={entry} />
-                  ))}
-                </ul>
-                <FAB
-                  visibilityBreakpoint="md"
-                  onClick={() => {
-                    open(ModifyAchievementModal, {
-                      modifyType: 'create',
-                      currentDifficulty: difficulty
-                    })
-                  }}
-                />
-              </>
-            ) : (
-              <EmptyStateScreen
-                CTAButtonProps={{
-                  children: 'new',
-                  icon: 'tabler:plus',
-                  tProps: { item: t('items.achievement') },
-                  onClick: () => {
-                    open(ModifyAchievementModal, {
-                      modifyType: 'create',
-                      currentDifficulty: difficulty
-                    })
-                  }
-                }}
-                icon="tabler:award-off"
-                name="achievement"
-                namespace="apps.achievements"
+      <Tabs
+        active={difficulty}
+        className="mb-6"
+        enabled={Object.keys(DIFFICULTIES).map(
+          difficulty => difficulty as keyof typeof DIFFICULTIES
+        )}
+        items={Object.keys(DIFFICULTIES).map(difficulty => ({
+          id: difficulty,
+          name: t(`difficulties.${difficulty}`),
+          color: DIFFICULTIES[difficulty as keyof typeof DIFFICULTIES]
+        }))}
+        onNavClick={id => {
+          setDifficulty(id as Achievement['difficulty'])
+        }}
+      />
+      <WithQueryData
+        controller={forgeAPI.achievements.entries.list.input({
+          difficulty: difficulty as Achievement['difficulty']
+        })}
+      >
+        {entries =>
+          entries.length ? (
+            <>
+              <ul className="space-y-3">
+                {entries.map(entry => (
+                  <EntryItem key={entry.id} entry={entry} />
+                ))}
+              </ul>
+              <FAB
+                visibilityBreakpoint="md"
+                onClick={handleCreateAchievement}
               />
-            )
-          }
-        </WithQueryData>
-      </div>
+            </>
+          ) : (
+            <EmptyStateScreen
+              icon="tabler:award-off"
+              name="achievement"
+              namespace="apps.achievements"
+            />
+          )
+        }
+      </WithQueryData>
     </>
   )
 }
