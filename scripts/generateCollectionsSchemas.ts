@@ -20,13 +20,6 @@ if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
 
 const pb = new Pocketbase(process.env.PB_HOST)
 
-let MAIN_SCHEMA_EXPORTS = `import flattenSchemas from '@functions/utils/flattenSchema'
-
-export const SCHEMAS = {
-`
-
-const moduleSchemas: Record<string, string> = {}
-
 try {
   await pb
     .collection('_superusers')
@@ -40,6 +33,13 @@ try {
   console.error('Server is not reachable or credentials are invalid.')
   process.exit(1)
 }
+
+let MAIN_SCHEMA_EXPORTS = `import flattenSchemas from '@functions/utils/flattenSchema'
+
+export const SCHEMAS = {
+`
+
+const moduleSchemas: Record<string, string> = {}
 
 const allModules = fs.readdirSync('./server/src/lib', { withFileTypes: true })
 
