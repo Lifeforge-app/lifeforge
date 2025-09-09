@@ -3,7 +3,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import COLLECTION_SCHEMAS from '@schema'
 import { z } from 'zod/v4'
 
-import { Location } from '@apps/locations/typescript/location.types'
+import { Location } from '../../locations/typescript/location.types'
 
 const list = forgeController.query
   .description('Get all transaction templates')
