@@ -4,8 +4,7 @@ import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import z from 'zod/v4'
 
-import { Location } from '@apps/locations/typescript/location.types'
-
+import { Location } from '../../locations/typescript/location.types'
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'
 
 const list = forgeController.query

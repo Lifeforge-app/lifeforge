@@ -10,9 +10,8 @@ import moment from 'moment'
 import mailer from 'nodemailer'
 import { z } from 'zod/v4'
 
-import { convertPDFToImage } from '@apps/wallet/utils/transactions'
-
 import { SCHEMAS } from '../../../core/schema'
+import { convertPDFToImage } from '../../wallet/utils/transactions'
 
 const list = forgeController.query
   .description(

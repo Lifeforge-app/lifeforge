@@ -3,8 +3,7 @@ import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import express from 'express'
 
-import { createAIRouter } from '@apps/ai'
-
+import { createAIRouter } from '../../lib/ai'
 import appRoutes from './app.routes'
 import coreRoutes from './core.routes'
 
