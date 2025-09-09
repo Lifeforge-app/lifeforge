@@ -20,12 +20,12 @@ if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
 
 const pb = new Pocketbase(process.env.PB_HOST)
 
-let SCHEMA_STRING = `
-import flattenSchemas from '@functions/utils/flattenSchema'
-import { z } from 'zod/v4'
+let MAIN_SCHEMA_EXPORTS = `import flattenSchemas from '@functions/utils/flattenSchema'
 
 export const SCHEMAS = {
 `
+
+const moduleSchemas: Record<string, string> = {}
 
 try {
   await pb
@@ -41,10 +41,7 @@ try {
   process.exit(1)
 }
 
-const allModules = [
-  ...fs.readdirSync('./server/src/apps', { withFileTypes: true }),
-  ...fs.readdirSync('./server/src/core/lib', { withFileTypes: true })
-]
+const allModules = fs.readdirSync('./server/src/lib', { withFileTypes: true })
 
 const modulesMap: Record<string, CollectionModel[]> = {}
 
@@ -94,7 +91,11 @@ for (const module of allModules) {
 
   const moduleName = collections[0].name.split('__')[0]
 
-  SCHEMA_STRING += `  ${moduleName}: {\n`
+  // Initialize module schema content
+  let moduleSchemaContent = `import { z } from 'zod/v4'
+
+const ${_.camelCase(moduleName)}Schemas = {
+`
 
   for (const collection of collections ?? []) {
     console.log(
@@ -176,7 +177,7 @@ for (const module of allModules) {
       .map(([key, value]) => `  ${key}: ${value},`)
       .join('\n')}\n}),`
 
-    SCHEMA_STRING += `    ${collection.name.split('__').pop()}: ${zodSchemaString}\n`
+    moduleSchemaContent += `  ${collection.name.split('__').pop()}: ${zodSchemaString}`
 
     console.log(
       chalk.green('[INFO]') +
@@ -186,21 +187,58 @@ for (const module of allModules) {
     )
   }
 
-  SCHEMA_STRING += `  },\n`
+  moduleSchemaContent += `}
+
+export default ${_.camelCase(moduleName)}Schemas
+`
+
+  // Store the module schema content
+  moduleSchemas[module.name] = moduleSchemaContent
+
+  // Add import and export to main schema
+  MAIN_SCHEMA_EXPORTS += `  ${moduleName}: (await import('@lib/${module.name}/schema')).default,\n`
+
+  // Write individual module schema file
+  const moduleSchemaPath = path.resolve(
+    __dirname,
+    `../server/src/lib/${module.name}/schema.ts`
+  )
+
+  const formattedModuleSchema = await prettier.format(moduleSchemaContent, {
+    parser: 'typescript'
+  })
+
+  fs.writeFileSync(moduleSchemaPath, formattedModuleSchema)
+
+  console.log(
+    chalk.green('[SUCCESS]') +
+      ` Created schema file for module ${chalk.bold(module.name)} at ${chalk.bold(`lib/${module.name}/schema.ts`)}.`
+  )
 }
 
-SCHEMA_STRING += `}
+// Complete the main schema file
+MAIN_SCHEMA_EXPORTS += `}
 
 const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
 
 export default COLLECTION_SCHEMAS
 `
 
-const formattedSchemaString = await prettier.format(SCHEMA_STRING, {
+const formattedMainSchemaString = await prettier.format(MAIN_SCHEMA_EXPORTS, {
   parser: 'typescript'
 })
 
 fs.writeFileSync(
   path.resolve(__dirname, '../server/src/core/schema.ts'),
-  formattedSchemaString
+  formattedMainSchemaString
+)
+
+console.log(
+  chalk.green('[SUCCESS]') +
+    ` Updated main schema file at ${chalk.bold('core/schema.ts')} with imports from all modules.`
+)
+
+console.log(
+  chalk.green('[COMPLETED]') +
+    ` Schema generation completed successfully! Individual schema files created for ${Object.keys(moduleSchemas).length} modules.`
 )
