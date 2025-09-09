@@ -1,4 +1,4 @@
-import ROUTES from '@core/routes/Routes'
+import ROUTES from '@core/routes'
 import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
 import { LoadingScreen, ModuleHeader } from 'lifeforge-ui'
