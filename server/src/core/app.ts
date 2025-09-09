@@ -1,5 +1,4 @@
 import cors from 'cors'
-import dotenv from 'dotenv'
 import express from 'express'
 import helmet from 'helmet'
 
@@ -7,10 +6,6 @@ import morganMiddleware from './middlewares/morganMiddleware'
 import rateLimitingMiddleware from './middlewares/rateLimitingMiddleware'
 import router from './routes'
 import { CORS_ALLOWED_ORIGINS } from './routes/constants/corsAllowedOrigins'
-
-dotenv.config({
-  path: './env/.env.local'
-})
 
 const app = express()
 
