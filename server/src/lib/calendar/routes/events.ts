@@ -7,9 +7,8 @@ import fs from 'fs'
 import moment from 'moment'
 import { z } from 'zod/v4'
 
-import { Location } from '@apps/locations/typescript/location.types'
-
 import { SCHEMAS } from '../../../core/schema'
+import { Location } from '../../locations/typescript/location.types'
 import getEvents from '../functions/getEvents'
 
 const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
