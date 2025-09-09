@@ -23,11 +23,7 @@ const createOrUpdate = forgeController.mutation
 
     const APIKeysMasterPasswordHash = await bcrypt.hash(password, salt)
 
-    const id = pb.instance.authStore.record?.id
-
-    if (!id) {
-      throw new Error('No user found')
-    }
+    const id = pb.instance.authStore.record!.id
 
     await pb.update
       .collection('users__users')
@@ -46,11 +42,7 @@ const verify = forgeController.mutation
     })
   })
   .callback(async ({ pb, body: { password } }) => {
-    const id = pb.instance.authStore.record?.id
-
-    if (!id) {
-      return false
-    }
+    const id = pb.instance.authStore.record!.id
 
     const decryptedMaster = decrypt2(password, challenge)
 
