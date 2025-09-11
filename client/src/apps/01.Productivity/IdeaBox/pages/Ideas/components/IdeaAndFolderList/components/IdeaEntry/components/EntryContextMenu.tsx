@@ -12,6 +12,7 @@ import {
 } from '@apps/01.Productivity/ideaBox/providers/IdeaBoxProvider'
 
 import ModifyIdeaModal from '../../../../modals/ModifyIdeaModal'
+import MoveToFolderModal from '../../../../modals/MoveToFolderModal'
 
 function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
   const open = useModalStore(state => state.open)
@@ -112,6 +113,12 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
     })
   }, [entry])
 
+  const handleMoveToFolder = useCallback(() => {
+    open(MoveToFolderModal, {
+      idea: entry
+    })
+  }, [entry])
+
   const handleDeleteIdea = useCallback(() => {
     open(ConfirmationModal, {
       title: 'Delete Idea',
@@ -145,6 +152,12 @@ function EntryContextMenu({ entry }: { entry: IdeaBoxIdea }) {
         icon="tabler:pencil"
         label="Edit"
         onClick={handleUpdateIdea}
+      />
+      <ContextMenuItem
+        icon="tabler:folder-symlink"
+        label="Move to Folder"
+        namespace="apps.ideaBox"
+        onClick={handleMoveToFolder}
       />
       {!debouncedSearchQuery && selectedTags.length === 0 && path !== '' && (
         <ContextMenuItem

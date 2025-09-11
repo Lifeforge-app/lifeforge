@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { Link, useParams } from 'react-router'
 
@@ -8,9 +9,22 @@ import ContainerName from './components/ContainerName'
 import GoBackButtonAndMenu from './components/GoBackButtonAndMenu'
 
 function Header() {
-  const { pathDetails, setSearchQuery, setSelectedTags } = useIdeaBoxContext()
+  const { setSearchQuery, setSelectedTags, pathValid } = useIdeaBoxContext()
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
+  const pathDetailsQuery = useQuery(
+    forgeAPI.ideaBox.misc.getPath
+      .input({
+        container: id || '',
+        folder: path?.split('/').pop() ?? undefined
+      })
+      .queryOptions({
+        enabled: id !== undefined && pathValid
+      })
+  )
+
+  const pathDetails = pathDetailsQuery.data
 
   return (
     <header className="space-y-3">
@@ -52,13 +66,13 @@ function Header() {
                       id={pathDetails.container.id}
                       name={pathDetails.container.name}
                     />
-                    {pathDetails.path.length > 0 && (
+                    {pathDetails.route.length > 0 && (
                       <Icon
                         className="size-5 text-gray-500"
                         icon="tabler:chevron-right"
                       />
                     )}
-                    {pathDetails.path.map((folder, index) => (
+                    {pathDetails.route.map((folder, index) => (
                       <>
                         <Link
                           key={folder.id}
@@ -83,7 +97,7 @@ function Header() {
                           />
                           <span className="hidden md:block">{folder.name}</span>
                         </Link>
-                        {index !== pathDetails.path.length - 1 && (
+                        {index !== pathDetails.route.length - 1 && (
                           <Icon
                             className="size-5 text-gray-500"
                             icon="tabler:chevron-right"

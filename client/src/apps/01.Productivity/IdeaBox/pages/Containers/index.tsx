@@ -36,7 +36,6 @@ function IdeaBox() {
           <Button
             className="ml-4 hidden md:flex"
             icon="tabler:plus"
-            namespace="apps.ideaBox"
             tProps={{
               item: t('items.container')
             }}

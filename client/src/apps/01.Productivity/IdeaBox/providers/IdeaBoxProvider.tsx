@@ -25,7 +25,6 @@ export type IdeaBoxIdea =
 
 interface IIdeaBoxData {
   pathValid: boolean
-  pathDetails: InferOutput<typeof forgeAPI.ideaBox.misc.getPath> | undefined
   entriesQuery: UseQueryResult<IdeaBoxIdea[]>
   foldersQuery: UseQueryResult<IdeaBoxFolder[]>
   tagsQuery: UseQueryResult<IdeaBoxTag[]>
@@ -74,17 +73,6 @@ export default function IdeaBoxProvider({
       })
       .queryOptions({
         enabled: id !== undefined && path !== undefined
-      })
-  )
-
-  const pathDetailsQuery = useQuery(
-    forgeAPI.ideaBox.misc.getPath
-      .input({
-        container: id || '',
-        path: path || ''
-      })
-      .queryOptions({
-        enabled: id !== undefined && pathValidQuery.data
       })
   )
 
@@ -214,7 +202,6 @@ export default function IdeaBoxProvider({
   const value = useMemo(
     () => ({
       pathValid: pathValidQuery.data ?? false,
-      pathDetails: pathDetailsQuery.data,
       entriesQuery,
       foldersQuery,
       tagsQuery,
@@ -229,7 +216,6 @@ export default function IdeaBoxProvider({
     }),
     [
       pathValidQuery.data,
-      pathDetailsQuery.data,
       foldersQuery.data,
       tagsQuery.data,
       entriesQuery.data,
