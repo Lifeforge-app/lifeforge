@@ -41,7 +41,7 @@ Here is a gist of how to build an API handler in LifeForge:
 {`import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const myHandler = forgeController.query
+const myHandler = forgeController.query()
     .description("This is a sample query handler")
     .input({
         query: z.object({
@@ -179,14 +179,14 @@ LifeForge's API system does not utilize the URL params feature provided by Expre
 The input schema is defined in the <code>.input()</code> method using [Zod](https://zod.dev/) schemas that follows the handler type definition, as shown below:
 
 <Code language="typescript">
-{`const myQueryHandler = forgeController.query
+{`const myQueryHandler = forgeController.query()
     .input({
         query: z.object({
             name: z.string()
         })
     })
 
-const myMutationHandler = forgeController.mutation
+const myMutationHandler = forgeController.mutation()
     .input({
         query: z.object({
             id: z.string().uuid()
@@ -233,7 +233,7 @@ Most of the time, you would want to store the uploaded files in the database. Ho
 <Code language="typescript">
 {`import { getMedia } from '@functions/external/media'
 
-const update = forgeController.mutation
+const update = forgeController.mutation()
     .description("Upload a file")
     .input({
         query: z.object({
@@ -266,7 +266,7 @@ const update = forgeController.mutation
 In scenarios where you need to ensure that a record exists in the database before proceeding with the business logic, you can use the <code>.existenceCheck()</code> method. This method takes two arguments: the data input source to be checked (either <code>"query"</code> or <code>"body"</code>), and an object with key being the field name and value being the collection name. If the field is optional, you can wrap the field name in square brackets, e.g. <code>"[userId]"</code>.
 
 <Code language="typescript">
-{`const getUserProfile = forgeController.query
+{`const getUserProfile = forgeController.query()
     .description("Get user profile")
     .input({
         query: z.object({
@@ -301,7 +301,7 @@ If you have defined the input schema using the <code>.input()</code> method, the
 Here is an example of a complete API handler that demonstrates the usage of the <code>.callback()</code> method:
 
 <Code language="typescript">
-{`const createUser = forgeController.mutation
+{`const createUser = forgeController.mutation()
     .description("Create a new user")
     .input({
         body: z.object({

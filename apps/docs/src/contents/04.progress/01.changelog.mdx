@@ -60,7 +60,7 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 - <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Replaced constant file containing routes that requires no authentication with chained method definition in <code>forgeController</code>.
 
   <Code language="typescript">
-  {`const myController = forgeController.query
+  {`const myController = forgeController.query()
       .noAuth()
       .description('...')
       // ...`}
@@ -71,7 +71,7 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 
   <Code language="typescript">
     {`// This will cause a typescript error
-    const myController = forgeController.query
+    const myController = forgeController.query()
       .input({
         body: z.object({
           // ...
