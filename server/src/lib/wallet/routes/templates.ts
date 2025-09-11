@@ -5,7 +5,8 @@ import { z } from 'zod/v4'
 
 import { Location } from '../../locations/typescript/location.types'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all transaction templates')
   .input({})
   .callback(async ({ pb }) =>
@@ -37,7 +38,8 @@ const list = forgeController.query
     )
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new transaction template')
   .input({
     body: COLLECTION_SCHEMAS.wallet__transaction_templates
@@ -69,7 +71,8 @@ const create = forgeController.mutation
       .execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing transaction template')
   .input({
     query: z.object({
@@ -107,7 +110,8 @@ const update = forgeController.mutation
       .execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a transaction template')
   .input({
     query: z.object({

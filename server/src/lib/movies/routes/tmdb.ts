@@ -20,7 +20,8 @@ export interface TMDBSearchResult {
   vote_count: number
 }
 
-const search = forgeController.query
+const search = forgeController
+  .query()
   .description('Search movies using TMDB API')
   .input({
     query: z.object({

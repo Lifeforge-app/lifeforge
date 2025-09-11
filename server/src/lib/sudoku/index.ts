@@ -1,7 +1,8 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const generateBoard = forgeController.query
+const generateBoard = forgeController
+  .query()
   .description('Generate 6 Sudoku boards by difficulty level')
   .input({
     query: z.object({

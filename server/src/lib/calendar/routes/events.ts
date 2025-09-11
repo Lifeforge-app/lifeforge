@@ -42,7 +42,8 @@ const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
     ])
   )
 
-const getByDateRange = forgeController.query
+const getByDateRange = forgeController
+  .query()
   .description('Get events by date range')
   .input({
     query: z.object({
@@ -52,7 +53,8 @@ const getByDateRange = forgeController.query
   })
   .callback(({ pb, query: { start, end } }) => getEvents({ pb, start, end }))
 
-const getToday = forgeController.query
+const getToday = forgeController
+  .query()
   .description("Get today's events")
   .input({})
   .callback(async ({ pb }) => {
@@ -65,7 +67,8 @@ const getToday = forgeController.query
     return await getEvents({ pb, start: startMoment, end: endMoment })
   })
 
-const getById = forgeController.query
+const getById = forgeController
+  .query()
   .description('Get an event by ID')
   .input({
     query: z.object({
@@ -79,7 +82,8 @@ const getById = forgeController.query
     pb.getOne.collection('calendar__events').id(id).execute()
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new event')
   .input({
     body: CreateAndUpdateEventSchema
@@ -159,7 +163,8 @@ const create = forgeController.mutation
     }
   })
 
-const scanImage = forgeController.mutation
+const scanImage = forgeController
+  .mutation()
   .description('Scan an image to extract event data')
   .input({})
   .media({
@@ -270,7 +275,8 @@ const scanImage = forgeController.mutation
     return finalResponse
   })
 
-const addException = forgeController.mutation
+const addException = forgeController
+  .mutation()
   .description('Add an exception to a recurring event')
   .input({
     query: z.object({
@@ -306,7 +312,8 @@ const addException = forgeController.mutation
     return true
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing event')
   .input({
     query: z.object({
@@ -412,7 +419,8 @@ const update = forgeController.mutation
     }
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an existing event')
   .input({
     query: z.object({

@@ -17,7 +17,8 @@ export interface YoutubeInfo {
   auto_captions?: Record<string, any>
 }
 
-const getYoutubeVideoInfo = forgeController.query
+const getYoutubeVideoInfo = forgeController
+  .query()
   .description('Get YouTube video information by video ID')
   .input({
     query: z.object({
@@ -67,7 +68,8 @@ const getYoutubeVideoInfo = forgeController.query
       })
   )
 
-const summarizeVideo = forgeController.mutation
+const summarizeVideo = forgeController
+  .mutation()
   .description('Summarize a YouTube video from URL')
   .input({
     body: z.object({

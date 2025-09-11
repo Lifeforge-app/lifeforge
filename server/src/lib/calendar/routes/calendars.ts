@@ -3,14 +3,16 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all calendars')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('calendar__calendars').sort(['name']).execute()
   )
 
-const getById = forgeController.query
+const getById = forgeController
+  .query()
   .description('Get a calendar by ID')
   .input({
     query: z.object({
@@ -24,7 +26,8 @@ const getById = forgeController.query
     pb.getOne.collection('calendar__calendars').id(id).execute()
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new calendar')
   .input({
     body: SCHEMAS.calendar.calendars
@@ -34,7 +37,8 @@ const create = forgeController.mutation
     pb.create.collection('calendar__calendars').data(body).execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing calendar')
   .input({
     query: z.object({
@@ -49,7 +53,8 @@ const update = forgeController.mutation
     pb.update.collection('calendar__calendars').id(id).data(body).execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an existing calendar')
   .input({
     query: z.object({

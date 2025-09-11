@@ -76,7 +76,8 @@ const FILTERS: Record<string, FilterType<'todo_list__entries'>> = {
   ]
 }
 
-const getStatusCounter = forgeController.query
+const getStatusCounter = forgeController
+  .query()
   .description('Get status counter for todo entries')
   .input({})
   .callback(async ({ pb }) => {
@@ -102,7 +103,8 @@ const getStatusCounter = forgeController.query
     return counters
   })
 
-const getById = forgeController.query
+const getById = forgeController
+  .query()
   .description('Get todo entry by ID')
   .input({
     query: z.object({
@@ -116,7 +118,8 @@ const getById = forgeController.query
     pb.getOne.collection('todo_list__entries').id(id).execute()
   )
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all todo entries with optional filters')
   .input({
     query: z.object({
@@ -151,7 +154,8 @@ const list = forgeController.query
       .execute()
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new todo entry')
   .input({
     body: SCHEMAS.todo_list.entries.omit({
@@ -180,7 +184,8 @@ const create = forgeController.mutation
       .execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing todo entry')
   .input({
     query: z.object({
@@ -215,7 +220,8 @@ const update = forgeController.mutation
       .execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a todo entry')
   .input({
     query: z.object({
@@ -230,7 +236,8 @@ const remove = forgeController.mutation
     pb.delete.collection('todo_list__entries').id(id).execute()
   )
 
-const toggleEntry = forgeController.mutation
+const toggleEntry = forgeController
+  .mutation()
   .description('Toggle completion status of a todo entry')
   .input({
     query: z.object({

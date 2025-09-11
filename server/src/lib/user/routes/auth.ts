@@ -9,7 +9,8 @@ import { z } from 'zod/v4'
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 
-const validateOTP = forgeController.mutation
+const validateOTP = forgeController
+  .mutation()
   .description('Validate OTP')
   .input({
     body: z.object({
@@ -19,7 +20,8 @@ const validateOTP = forgeController.mutation
   })
   .callback(({ pb, body }) => _validateOTP(pb, body))
 
-const generateOTP = forgeController.query
+const generateOTP = forgeController
+  .query()
   .description('Generate OTP')
   .input({})
   .callback(
@@ -31,7 +33,8 @@ const generateOTP = forgeController.query
       ).otpId
   )
 
-const login = forgeController.mutation
+const login = forgeController
+  .mutation()
   .noAuth()
   .description('User login')
   .input({
@@ -84,7 +87,8 @@ const login = forgeController.mutation
     }
   })
 
-const verifySessionToken = forgeController.mutation
+const verifySessionToken = forgeController
+  .mutation()
   .description('Verify session token')
   .input({})
   .callback(async ({ req }) => {

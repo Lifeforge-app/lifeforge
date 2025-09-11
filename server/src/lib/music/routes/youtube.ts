@@ -5,7 +5,8 @@ import { exec, spawn } from 'child_process'
 import fs from 'fs'
 import z from 'zod/v4'
 
-const getVideoInfo = forgeController.query
+const getVideoInfo = forgeController
+  .query()
   .description('Get YouTube video information')
   .input({
     query: z.object({
@@ -55,7 +56,8 @@ const getVideoInfo = forgeController.query
     })
   })
 
-const downloadVideo = forgeController.mutation
+const downloadVideo = forgeController
+  .mutation()
   .description('Download YouTube video asynchronously')
   .input({
     query: z.object({
@@ -163,7 +165,8 @@ const downloadVideo = forgeController.mutation
 const PROMPT =
   'Given a video title and uploader, extract the music title (from the video title if possible, otherwise use the whole title) and author (use composer/lyricist or original artist if mentioned, otherwise use your knowledge to identify the most likely original author; if the title is generic, choose the most widely recognized author). Do not list the uploader as author unless it is clearly original. If author is unknown, write “Unknown”. '
 
-const parseMusicNameAndAuthor = forgeController.mutation
+const parseMusicNameAndAuthor = forgeController
+  .mutation()
   .description('Parse music name and author from YouTube video using AI')
   .input({
     body: z.object({

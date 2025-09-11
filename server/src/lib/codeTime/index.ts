@@ -7,7 +7,8 @@ import { z } from 'zod/v4'
 import getReadmeHTML from './utils/readme'
 import { default as _getStatistics } from './utils/statistics'
 
-const getActivities = forgeController.query
+const getActivities = forgeController
+  .query()
   .description('Get activities by year')
   .input({
     query: z.object({
@@ -91,12 +92,14 @@ const getActivities = forgeController.query
     }
   })
 
-const getStatistics = forgeController.query
+const getStatistics = forgeController
+  .query()
   .description('Get code time statistics')
   .input({})
   .callback(({ pb }) => _getStatistics(pb))
 
-const getLastXDays = forgeController.query
+const getLastXDays = forgeController
+  .query()
   .description('Get last X days of code time data')
   .input({
     query: z.object({
@@ -124,7 +127,8 @@ const getLastXDays = forgeController.query
     return data
   })
 
-const getTopProjects = forgeController.query
+const getTopProjects = forgeController
+  .query()
   .description('Get projects statistics')
   .input({
     query: z.object({
@@ -173,7 +177,8 @@ const getTopProjects = forgeController.query
     return groupByProject
   })
 
-const getTopLanguages = forgeController.query
+const getTopLanguages = forgeController
+  .query()
   .description('Get languages statistics')
   .input({
     query: z.object({
@@ -222,7 +227,8 @@ const getTopLanguages = forgeController.query
     return groupByLanguage
   })
 
-const getEachDay = forgeController.query
+const getEachDay = forgeController
+  .query()
   .description('Get each day code time data')
   .input({})
   .callback(async ({ pb }) => {
@@ -260,7 +266,8 @@ const getEachDay = forgeController.query
     }))
   })
 
-const getUserMinutes = forgeController.query
+const getUserMinutes = forgeController
+  .query()
   .noAuth()
   .description('Get user minutes')
   .input({
@@ -287,7 +294,8 @@ const getUserMinutes = forgeController.query
     }
   })
 
-const eventLog = forgeController.mutation
+const eventLog = forgeController
+  .mutation()
   .noAuth()
   .description('Log a code time event')
   .input({
@@ -376,7 +384,8 @@ const eventLog = forgeController.mutation
     return { status: 'ok', message: 'success' }
   })
 
-const readme = forgeController.query
+const readme = forgeController
+  .query()
   .noAuth()
   .description('Get readme image')
   .input({})

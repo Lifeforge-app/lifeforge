@@ -1,6 +1,7 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all file types for the books library')
   .input({})
   .callback(({ pb }) =>

@@ -7,7 +7,8 @@ import { z } from 'zod/v4'
 
 // Factory function to create the controller with routes dependency injection
 export const createForgeAgentRouter = (appRoutes: Record<string, unknown>) => {
-  const callTool = forgeController.mutation
+  const callTool = forgeController
+    .mutation()
     .input({
       body: z.object({
         messages: z.any()
@@ -34,7 +35,7 @@ export const createForgeAgentRouter = (appRoutes: Record<string, unknown>) => {
               ])
           )
         },
-        stopWhen: stepCountIs(5),
+        stopWhen: stepCountIs(5)
       })
 
       result.pipeUIMessageStreamToResponse(res)
