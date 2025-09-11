@@ -1,4 +1,3 @@
-import { parse as parseCookie } from 'cookie'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -10,7 +9,7 @@ function APIExplorer() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const session = parseCookie(document.cookie).session
+    const session = localStorage.getItem('session')
 
     if (!session) {
       window.location.href = '/'

@@ -1,5 +1,3 @@
-export { default as getAuthorizationToken } from './utils/getAuthorizationToken'
-
 export { useAPIEndpoint } from './providers/APIEndpointProvider'
 
 export { useAPIOnlineStatus } from './providers/APIOnlineStatusProvider'
