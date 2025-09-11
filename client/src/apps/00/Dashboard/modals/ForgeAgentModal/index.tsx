@@ -10,7 +10,7 @@ import { useState } from 'react'
 import Markdown from 'react-markdown'
 import { AutoSizer } from 'react-virtualized'
 import remarkGfm from 'remark-gfm'
-import { getAuthorizationToken, usePersonalization } from 'shared'
+import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
 function ForgeAgentModal({ onClose }: { onClose: () => void }) {
@@ -20,7 +20,7 @@ function ForgeAgentModal({ onClose }: { onClose: () => void }) {
     transport: new DefaultChatTransport({
       api: forgeAPI.ai.forgeAgent.callTool.endpoint,
       headers: {
-        Authorization: `Bearer ${getAuthorizationToken()}`
+        Authorization: `Bearer ${localStorage.getItem('session')}`
       }
     }),
 

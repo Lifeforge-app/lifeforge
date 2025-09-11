@@ -15,7 +15,7 @@ function SSOAuthProvider({
     usePersonalization()
 
   const failAuth = () => {
-    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    localStorage.removeItem('session')
     setIsAuthed(false)
   }
 
@@ -51,16 +51,15 @@ function SSOAuthProvider({
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has('session')) {
-      document.cookie = `session=${new URLSearchParams(
-        window.location.search
-      ).get('session')}; path=/; expires=${new Date(
-        Date.now() + 1000 * 60 * 60 * 24
-      ).toUTCString()}`
+      localStorage.setItem(
+        'session',
+        new URLSearchParams(window.location.search).get('session') || ''
+      )
 
       window.location.replace(window.location.origin)
     }
 
-    if (document.cookie.includes('session')) {
+    if (localStorage.getItem('session')) {
       verifyToken()
     } else {
       failAuth()

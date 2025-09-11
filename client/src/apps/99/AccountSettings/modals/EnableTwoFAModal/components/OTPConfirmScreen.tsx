@@ -1,6 +1,5 @@
 import { encrypt } from '@utils/encryption'
 import forgeAPI from '@utils/forgeAPI'
-import { parse as parseCookie } from 'cookie'
 import { OTPInputBox } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,10 +25,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
       const challenge = await forgeAPI.user['2fa'].getChallenge.query()
 
       await forgeAPI.user['2fa'].verifyAndEnable.mutate({
-        otp: encrypt(
-          encrypt(otp, challenge),
-          parseCookie(document.cookie).session ?? ''
-        )
+        otp: encrypt(encrypt(otp, challenge), localStorage.getItem('session'))
       })
 
       onSuccess()

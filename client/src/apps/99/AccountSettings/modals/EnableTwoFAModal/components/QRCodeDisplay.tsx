@@ -1,6 +1,5 @@
 import { decrypt } from '@utils/encryption'
 import forgeAPI from '@utils/forgeAPI'
-import { parse as parseCookie } from 'cookie'
 import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
@@ -18,10 +17,7 @@ function QRCodeDisplay() {
 
       const link = await forgeAPI.user['2fa'].generateAuthenticatorLink.query()
 
-      const decrypted1 = decrypt(
-        link,
-        parseCookie(document.cookie).session ?? ''
-      )
+      const decrypted1 = decrypt(link, loclalStorage.getItem('session'))
 
       const decrypted2 = decrypt(decrypted1, challenge)
 
