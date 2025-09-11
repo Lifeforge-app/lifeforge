@@ -3,13 +3,15 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import z from 'zod/v4'
 
-const welcome = forgeController.query
+const welcome = forgeController
+  .query()
   .noAuth()
   .description('Welcome message')
   .input({})
   .callback(async () => 'Welcome to LifeForge API!' as const)
 
-const ping = forgeController.mutation
+const ping = forgeController
+  .mutation()
   .noAuth()
   .description('Ping the server')
   .input({
@@ -22,7 +24,8 @@ const ping = forgeController.mutation
       `Pong at ${moment(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
   )
 
-const status = forgeController.query
+const status = forgeController
+  .query()
   .noAuth()
   .description('Get server status')
   .input({})
@@ -30,12 +33,14 @@ const status = forgeController.query
     environment: process.env.NODE_ENV || 'development'
   }))
 
-const getRoot = forgeController.query
+const getRoot = forgeController
+  .query()
   .description('Get root endpoint')
   .input({})
   .callback(async () => 'Welcome to LifeForge API!' as const)
 
-const getMedia = forgeController.query
+const getMedia = forgeController
+  .query()
   .noAuth()
   .description('Get media file from PocketBase')
   .input({
@@ -137,7 +142,8 @@ const getMedia = forgeController.query
     }
   )
 
-const corsAnywhere = forgeController.query
+const corsAnywhere = forgeController
+  .query()
   .description('Proxy request to bypass CORS')
   .input({
     query: z.object({

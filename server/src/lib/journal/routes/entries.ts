@@ -30,7 +30,8 @@ async function getDecryptedMaster(pb: PocketBase, master: string) {
   return decryptedMaster as string
 }
 
-const getById = forgeController.query
+const getById = forgeController
+  .query()
   .description('Get journal entry by ID')
   .input({
     query: z.object({
@@ -59,7 +60,8 @@ const getById = forgeController.query
     return { ...entries, token: await pb.instance.files.getToken() }
   })
 
-const validate = forgeController.query
+const validate = forgeController
+  .query()
   .input({
     query: z.object({
       id: z.string()
@@ -74,7 +76,8 @@ const validate = forgeController.query
         .catch(() => null))
   )
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .input({
     query: z.object({
       master: z.string()
@@ -108,7 +111,8 @@ const list = forgeController.query
     })
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .input({
     body: z.object({
       data: z.string()

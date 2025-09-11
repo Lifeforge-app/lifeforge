@@ -17,12 +17,14 @@ setTimeout(() => {
   challenge = v4()
 }, 1000 * 60)
 
-const getChallenge = forgeController.query
+const getChallenge = forgeController
+  .query()
   .description('Get current challenge for password operations')
   .input({})
   .callback(async () => challenge)
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all password entries')
   .input({})
   .callback(({ pb }) =>
@@ -42,7 +44,8 @@ const list = forgeController.query
       .execute()
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new password entry')
   .input({
     body: SCHEMAS.passwords.entries
@@ -77,7 +80,8 @@ const create = forgeController.mutation
       .execute()
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update a password entry')
   .input({
     query: z.object({
@@ -118,7 +122,8 @@ const update = forgeController.mutation
       .execute()
   })
 
-const decrypt = forgeController.mutation
+const decrypt = forgeController
+  .mutation()
   .description('Decrypt a password entry')
   .input({
     query: z.object({
@@ -145,7 +150,8 @@ const decrypt = forgeController.mutation
     return encrypt2(decryptedPassword.toString(), challenge)
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a password entry')
   .input({
     query: z.object({
@@ -160,7 +166,8 @@ const remove = forgeController.mutation
     pb.delete.collection('passwords__entries').id(id).execute()
   )
 
-const togglePin = forgeController.mutation
+const togglePin = forgeController
+  .mutation()
   .description('Toggle pin status of a password entry')
   .input({
     query: z.object({

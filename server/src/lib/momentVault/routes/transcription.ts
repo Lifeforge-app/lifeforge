@@ -8,7 +8,8 @@ import { z } from 'zod/v4'
 import { convertToMp3 } from '../utils/convertToMP3'
 import { getTranscription } from '../utils/transcription'
 
-const transcribeExisted = forgeController.mutation
+const transcribeExisted = forgeController
+  .mutation()
   .description('Transcribe an existing audio entry')
   .input({
     query: z.object({
@@ -76,7 +77,8 @@ const transcribeExisted = forgeController.mutation
     }
   })
 
-const transcribeNew = forgeController.mutation
+const transcribeNew = forgeController
+  .mutation()
   .description('Transcribe a new audio file')
   .input({})
   .media({

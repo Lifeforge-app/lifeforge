@@ -87,7 +87,8 @@ const ENDPOINT = {
   'xuehai:hou-lang-fang': getCategoryPostsEndpoint(310070)
 }
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get latest news from Sin Chew')
   .input({
     query: z.object({
@@ -148,7 +149,8 @@ const list = forgeController.query
     ).filter(e => !['会员文', 'VIP文'].includes(e.category))
   })
 
-const getContent = forgeController.query
+const getContent = forgeController
+  .query()
   .description('Get content of a news article')
   .input({
     query: z.object({

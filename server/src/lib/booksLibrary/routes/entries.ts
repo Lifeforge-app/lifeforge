@@ -13,7 +13,8 @@ import { z } from 'zod/v4'
 import { SCHEMAS } from '../../../core/schema'
 import { convertPDFToImage } from '../../wallet/utils/transactions'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description(
     `Get all entries in the books library. 
     
@@ -165,7 +166,8 @@ const getEpubThumbnail = (epubInstance: EPub): Promise<File | undefined> => {
   })
 }
 
-const upload = forgeController.mutation
+const upload = forgeController
+  .mutation()
   .description('Upload a new entry to the books library')
   .input({
     body: SCHEMAS.books_library.entries
@@ -221,7 +223,8 @@ const upload = forgeController.mutation
     return 'ok'
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .input({
     query: z.object({
       id: z.string()
@@ -252,7 +255,8 @@ const update = forgeController.mutation
     pb.update.collection('books_library__entries').id(id).data(body).execute()
   )
 
-const toggleFavouriteStatus = forgeController.mutation
+const toggleFavouriteStatus = forgeController
+  .mutation()
   .description('Toggle the favourite status of an entry in the books library')
   .input({
     query: z.object({
@@ -277,7 +281,8 @@ const toggleFavouriteStatus = forgeController.mutation
       .execute()
   })
 
-const toggleReadStatus = forgeController.mutation
+const toggleReadStatus = forgeController
+  .mutation()
   .description('Toggle the read status of an entry in the books library')
   .input({
     query: z.object({
@@ -316,7 +321,8 @@ const toggleReadStatus = forgeController.mutation
       .execute()
   })
 
-const sendToKindle = forgeController.mutation
+const sendToKindle = forgeController
+  .mutation()
   .description('Send an entry to a Kindle email address')
   .input({
     query: z.object({
@@ -409,7 +415,8 @@ const sendToKindle = forgeController.mutation
     return taskid
   })
 
-const getEpubMetadata = forgeController.mutation
+const getEpubMetadata = forgeController
+  .mutation()
   .description('Get metadata for an EPUB file')
   .input({})
   .media({
@@ -442,7 +449,8 @@ const getEpubMetadata = forgeController.mutation
     }
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an existing entry in the books library')
   .input({
     query: z.object({

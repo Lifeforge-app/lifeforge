@@ -4,12 +4,14 @@ import { ClientError } from '@functions/routes/utils/response'
 import OpenAI from 'openai'
 import { z } from 'zod/v4'
 
-const verifyAPIKey = forgeController.query
+const verifyAPIKey = forgeController
+  .query()
   .description('Check if OpenAI API key exists')
   .input({})
   .callback(async ({ pb }) => !!(await getAPIKey('openai', pb)))
 
-const generateImage = forgeController.mutation
+const generateImage = forgeController
+  .mutation()
   .description('Generate an image from a text prompt')
   .input({
     body: z.object({

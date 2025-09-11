@@ -4,7 +4,8 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all calendar categories')
   .input({})
   .callback(({ pb }) =>
@@ -14,7 +15,8 @@ const list = forgeController.query
       .execute()
   )
 
-const getById = forgeController.query
+const getById = forgeController
+  .query()
   .description('Get a calendar category by ID')
   .input({
     query: z.object({
@@ -28,7 +30,8 @@ const getById = forgeController.query
     pb.getOne.collection('calendar__categories_aggregated').id(id).execute()
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new calendar category')
   .input({
     body: SCHEMAS.calendar.categories
@@ -45,7 +48,8 @@ const create = forgeController.mutation
       .execute()
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing calendar category')
   .input({
     query: z.object({
@@ -68,7 +72,8 @@ const update = forgeController.mutation
       .execute()
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an existing calendar category')
   .input({
     query: z.object({

@@ -2,7 +2,8 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all movie entries')
   .input({
     query: z.object({
@@ -59,7 +60,8 @@ const list = forgeController.query
     }
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a movie entry from TMDB')
   .input({
     query: z.object({
@@ -119,7 +121,8 @@ const create = forgeController.mutation
       .execute()
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update entries with the latest movie data from TMDB')
   .input({
     query: z.object({
@@ -174,7 +177,8 @@ const update = forgeController.mutation
       .execute()
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a movie entry')
   .input({
     query: z.object({
@@ -189,7 +193,8 @@ const remove = forgeController.mutation
     pb.delete.collection('movies__entries').id(id).execute()
   )
 
-const toggleWatchStatus = forgeController.mutation
+const toggleWatchStatus = forgeController
+  .mutation()
   .description('Toggle watch status of a movie entry')
   .input({
     query: z.object({

@@ -20,7 +20,8 @@ interface IBooksLibraryLibgenSearchResult {
   page: number
 }
 
-const getStatus = forgeController.query
+const getStatus = forgeController
+  .query()
   .description('Get libgen service status')
   .input({})
   .callback(async () => {
@@ -40,7 +41,8 @@ const getStatus = forgeController.query
     return status.ok
   })
 
-const searchBooks = forgeController.query
+const searchBooks = forgeController
+  .query()
   .description('Search books in libgen')
   .input({
     query: z.object({
@@ -93,7 +95,8 @@ const searchBooks = forgeController.query
     }
   })
 
-const getBookDetails = forgeController.query
+const getBookDetails = forgeController
+  .query()
   .description('Get book details from libgen')
   .input({
     query: z.object({
@@ -124,7 +127,8 @@ const getBookDetails = forgeController.query
     }
   })
 
-const getLocalLibraryData = forgeController.query
+const getLocalLibraryData = forgeController
+  .query()
   .description('Get local library data for a book')
   .input({
     query: z.object({
@@ -156,7 +160,8 @@ const getLocalLibraryData = forgeController.query
     }
   })
 
-const addToLibrary = forgeController.mutation
+const addToLibrary = forgeController
+  .mutation()
   .description('Add a book to the library from libgen')
   .input({
     query: z.object({

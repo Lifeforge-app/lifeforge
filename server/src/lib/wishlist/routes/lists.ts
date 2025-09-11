@@ -2,7 +2,8 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const getById = forgeController.query
+const getById = forgeController
+  .query()
   .description('Get wishlist by ID')
   .input({
     query: z.object({
@@ -16,7 +17,8 @@ const getById = forgeController.query
     pb.getOne.collection('wishlist__lists_aggregated').id(id).execute()
   )
 
-const validate = forgeController.query
+const validate = forgeController
+  .query()
   .description('Check if wishlist exists')
   .input({
     query: z.object({
@@ -32,14 +34,16 @@ const validate = forgeController.query
         .catch(() => null))
   )
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all wishlists with statistics')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('wishlist__lists_aggregated').execute()
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new wishlist')
   .input({
     body: SCHEMAS.wishlist.lists
@@ -49,7 +53,8 @@ const create = forgeController.mutation
     pb.create.collection('wishlist__lists').data(body).execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing wishlist')
   .input({
     query: z.object({
@@ -64,7 +69,8 @@ const update = forgeController.mutation
     pb.update.collection('wishlist__lists').id(id).data(body).execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a wishlist')
   .input({
     query: z.object({

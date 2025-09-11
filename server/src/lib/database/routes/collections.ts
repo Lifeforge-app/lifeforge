@@ -1,7 +1,8 @@
 import { getPBSuperUserInstance } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('List all collections')
   .input({})
   .callback(async () => {

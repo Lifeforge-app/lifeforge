@@ -3,7 +3,8 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all achievements entries by difficulty')
   .input({
     query: SCHEMAS.achievements.entries.pick({
@@ -24,7 +25,8 @@ const list = forgeController.query
   )
   .enableAIToolCall()
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new achievements entry')
   .input({
     body: SCHEMAS.achievements.entries.omit({
@@ -37,7 +39,8 @@ const create = forgeController.mutation
     pb.create.collection('achievements__entries').data(body).execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing achievements entry')
   .input({
     query: z.object({
@@ -55,7 +58,8 @@ const update = forgeController.mutation
     pb.update.collection('achievements__entries').id(id).data(body).execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an existing achievements entry')
   .input({
     query: z.object({

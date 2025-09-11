@@ -6,7 +6,8 @@ import { z } from 'zod/v4'
 
 import { convertToMp3 } from '../utils/convertToMP3'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all moment vault entries')
   .input({
     query: z.object({
@@ -85,7 +86,8 @@ export const createPhotosEntry = async (
   return entry
 }
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new moment vault entry')
   .input({
     body: z.object({
@@ -145,7 +147,8 @@ const create = forgeController.mutation
     }
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update a moment vault entry')
   .input({
     query: z.object({
@@ -166,7 +169,8 @@ const update = forgeController.mutation
       .execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a moment vault entry')
   .input({
     query: z.object({

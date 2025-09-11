@@ -91,7 +91,8 @@ export interface StatusMapping {
   status_text_color: string
 }
 
-const getFlight = forgeController.query
+const getFlight = forgeController
+  .query()
   .description('Get flight status from Changi Airport')
   .input({
     query: z.object({

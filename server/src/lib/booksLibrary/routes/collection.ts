@@ -3,7 +3,8 @@ import { z } from 'zod/v4'
 
 import { SCHEMAS } from '../../../core/schema'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description(
     'Get all collections for the books library. If the user ask to list a book in specific collection, call this tool first to get the collection ID.'
   )
@@ -16,7 +17,8 @@ const list = forgeController.query
   )
   .enableAIToolCall()
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new collection for the books library')
   .input({
     body: SCHEMAS.books_library.collections
@@ -26,7 +28,8 @@ const create = forgeController.mutation
     pb.create.collection('books_library__collections').data(body).execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing collection for the books library')
   .input({
     query: z.object({
@@ -45,7 +48,8 @@ const update = forgeController.mutation
       .execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an existing collection for the books library')
   .input({
     query: z.object({
