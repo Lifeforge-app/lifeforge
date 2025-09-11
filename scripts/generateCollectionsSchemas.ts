@@ -240,7 +240,7 @@ function generateMainSchemaContent(moduleNames: string[]): string {
   const imports = moduleNames
     .map(
       moduleName =>
-        `  ${moduleName}: (await import('@lib/${moduleName}/schema')).default,`
+        `  ${moduleName}: (await import('@lib/${moduleName === 'users' ? 'user' : _.camelCase(moduleName)}/schema')).default,`
     )
     .join('\n')
 
@@ -291,9 +291,9 @@ async function generateSchemas(
       continue
     }
 
-    const moduleName = _.camelCase(collections[0].name.split('__')[0])
+    const moduleName = collections[0].name.split('__')[0]
 
-    moduleNames.push(moduleName === 'users' ? 'user' : moduleName)
+    moduleNames.push(moduleName)
 
     const moduleSchemaContent = generateModuleSchemaContent(
       moduleName,
