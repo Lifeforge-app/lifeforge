@@ -1,4 +1,5 @@
 import { checkExistence } from '@functions/database'
+import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import ogs from 'open-graph-scraper'
@@ -8,57 +9,62 @@ import { recursivelySearchFolder } from '../utils/folders'
 
 const OGCache = new Map<string, any>()
 
-const getPath = forgeController.query
-  .description('Get path information for a container')
+const getPath = forgeController
+  .query()
+  .description('Get path information for a container or folder')
   .input({
     query: z.object({
       container: z.string(),
-      path: z.string()
+      folder: z.string().optional()
     })
   })
   .existenceCheck('query', {
-    container: 'idea_box__containers'
+    container: 'idea_box__containers',
+    folder: '[idea_box__folders]'
   })
-  .callback(async ({ pb, query: { container, path } }) => {
+  .callback(async ({ pb, query: { container, folder } }) => {
     const containerEntry = await pb.getOne
       .collection('idea_box__containers')
       .id(container)
       .execute()
 
-    let lastFolder = ''
+    if (!folder) {
+      return {
+        container: containerEntry,
+        route: []
+      }
+    }
+
+    let lastFolder = folder
 
     const fullPath = []
 
-    for (const folder of path.split('/').filter(e => e)) {
-      if (!(await checkExistence(pb, 'idea_box__folders', folder))) {
-        throw new ClientError(
-          `Folder with ID "${folder}" does not exist in container "${container}"`
-        )
+    while (lastFolder) {
+      if (!(await checkExistence(pb, 'idea_box__folders', lastFolder))) {
+        throw new ClientError(`Folder with ID "${lastFolder}" does not exist`)
       }
 
       const folderEntry = await pb.getOne
         .collection('idea_box__folders')
-        .id(folder)
+        .id(lastFolder)
         .execute()
 
-      if (
-        folderEntry.parent !== lastFolder ||
-        folderEntry.container !== container
-      ) {
+      if (folderEntry.container !== container) {
         throw new ClientError('Invalid path')
       }
 
-      lastFolder = folder
-      fullPath.push(folderEntry)
+      lastFolder = folderEntry.parent
+      fullPath.unshift(folderEntry)
     }
 
     return {
       container: containerEntry,
-      path: fullPath
+      route: fullPath
     }
   })
 
-const checkValid = forgeController.query
+const checkValid = forgeController
+  .query()
   .description('Check if a path is valid')
   .input({
     query: z.object({
@@ -105,7 +111,8 @@ const checkValid = forgeController.query
     return containerExists && folderExists
   })
 
-const getOgData = forgeController.query
+const getOgData = forgeController
+  .query()
   .description('Get Open Graph data for an entry')
   .input({
     query: z.object({
@@ -140,7 +147,10 @@ const getOgData = forgeController.query
         }
       }
     }).catch(() => {
-      console.error('Error fetching Open Graph data:', data.link)
+      LoggingService.error(
+        `Error fetching Open Graph data: ${data.link}`,
+        'OG SCraper'
+      )
 
       return { result: null }
     })
@@ -150,7 +160,8 @@ const getOgData = forgeController.query
     return result
   })
 
-const search = forgeController.query
+const search = forgeController
+  .query()
   .description('Search entries')
   .input({
     query: z.object({
