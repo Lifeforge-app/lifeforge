@@ -49,14 +49,16 @@
     "idea": {
       "create": "Create Idea",
       "update": "Edit"
-    }
+    },
+    "moveToFolder": "Move to Folder"
   },
   "buttons": {
     "unpin": "Unpin",
     "pin": "Pin",
     "viewArchived": "View Archived",
     "archive": "Archive",
-    "removeFromFolder": "Remove from Folder"
+    "removeFromFolder": "Remove from Folder",
+    "moveToFolder": "Move to Folder"
   },
   "inputs": {
     "containerName": "Idea Box Name",

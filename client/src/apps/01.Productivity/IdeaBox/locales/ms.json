@@ -49,14 +49,16 @@
     "idea": {
       "create": "Cipta Idea",
       "update": "Edit"
-    }
+    },
+    "moveToFolder": "Pindahkan ke Folder"
   },
   "buttons": {
     "unpin": "Nyahpin",
     "pin": "Pin",
     "viewArchived": "Lihat Diarkibkan",
     "archive": "Arkibkan",
-    "removeFromFolder": "Keluarkan dari Folder"
+    "removeFromFolder": "Keluarkan dari Folder",
+    "moveToFolder": "Pindahkan ke Folder"
   },
   "inputs": {
     "containerName": "Nama Kotak Idea",
