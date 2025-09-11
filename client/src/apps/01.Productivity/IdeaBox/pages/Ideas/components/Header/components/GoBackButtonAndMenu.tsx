@@ -19,7 +19,7 @@ function GoBackButtonAndMenu() {
     setSearchQuery('')
     setSelectedTags([])
     navigate(location.pathname.split('/').slice(0, -1).join('/'))
-  }, [viewArchived, location])
+  }, [viewArchived, location.pathname, navigate])
 
   const handleViewArchive = useCallback(() => {
     setViewArchived(prev => !prev)

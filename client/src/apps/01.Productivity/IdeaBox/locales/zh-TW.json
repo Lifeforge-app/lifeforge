@@ -49,14 +49,16 @@
     "idea": {
       "create": "創建想法",
       "update": "編輯創意"
-    }
+    },
+    "moveToFolder": "移動到資料夾"
   },
   "buttons": {
     "unpin": "取消置頂",
     "pin": "置頂",
     "viewArchived": "查看已歸檔",
     "archive": "歸檔",
-    "removeFromFolder": "從資料夾中移除"
+    "removeFromFolder": "從資料夾中移除",
+    "moveToFolder": "移動到資料夾"
   },
   "inputs": {
     "containerName": "創意盒名稱",
