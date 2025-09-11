@@ -7,7 +7,8 @@ import z from 'zod/v4'
 import { Location } from '../../locations/typescript/location.types'
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all wallet transactions')
   .input({})
   .callback(async ({ pb }) => {
@@ -90,7 +91,8 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
     ])
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new wallet transaction')
   .input({
     body: CreateTransactionInputSchema
@@ -159,7 +161,8 @@ const create = forgeController.mutation
     }
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing wallet transaction')
   .input({
     query: z.object({
@@ -261,7 +264,8 @@ const update = forgeController.mutation
     }
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a wallet transaction')
   .input({
     query: z.object({
@@ -276,7 +280,8 @@ const remove = forgeController.mutation
     pb.delete.collection('wallet__transactions').id(id).execute()
   )
 
-const scanReceipt = forgeController.mutation
+const scanReceipt = forgeController
+  .mutation()
   .description('Scan receipt to extract transaction data')
   .input({})
   .media({

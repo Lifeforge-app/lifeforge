@@ -12,7 +12,8 @@ export function setLeft(value: number) {
   left = value
 }
 
-const sidebarData = forgeController.query
+const sidebarData = forgeController
+  .query()
   .description('Get sidebar data for scores library')
   .input({})
   .callback(async ({ pb }) => {
@@ -54,7 +55,8 @@ const sidebarData = forgeController.query
     }
   })
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get scores library entries')
   .input({
     query: z.object({
@@ -137,7 +139,8 @@ const list = forgeController.query
     }
   )
 
-const random = forgeController.query
+const random = forgeController
+  .query()
   .description('Get a random score entry')
   .input({})
   .callback(async ({ pb }) => {
@@ -148,7 +151,8 @@ const random = forgeController.query
     return allScores[Math.floor(Math.random() * allScores.length)]
   })
 
-const upload = forgeController.mutation
+const upload = forgeController
+  .mutation()
   .description('Upload score files')
   .input({})
   .statusCode(202)
@@ -239,7 +243,8 @@ const upload = forgeController.mutation
     return taskId
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update a score entry')
   .input({
     query: z.object({
@@ -265,7 +270,8 @@ const update = forgeController.mutation
     pb.update.collection('scores_library__entries').id(id).data(body).execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a score entry')
   .input({
     query: z.object({
@@ -280,7 +286,8 @@ const remove = forgeController.mutation
     pb.delete.collection('scores_library__entries').id(id).execute()
   )
 
-const toggleFavourite = forgeController.mutation
+const toggleFavourite = forgeController
+  .mutation()
   .description('Toggle favourite status of a score entry')
   .input({
     query: z.object({

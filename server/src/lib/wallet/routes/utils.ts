@@ -2,7 +2,8 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import { z } from 'zod/v4'
 
-const getTypesCount = forgeController.query
+const getTypesCount = forgeController
+  .query()
   .description('Get wallet transaction types count and accumulation')
   .input({})
   .callback(async ({ pb }) => {
@@ -27,7 +28,8 @@ const getTypesCount = forgeController.query
     return typesCount
   })
 
-const getIncomeExpensesSummary = forgeController.query
+const getIncomeExpensesSummary = forgeController
+  .query()
   .description('Get income and expenses summary for a specific month/year')
   .input({
     query: z.object({
@@ -110,7 +112,8 @@ const getIncomeExpensesSummary = forgeController.query
     }
   })
 
-const getExpensesBreakdown = forgeController.query
+const getExpensesBreakdown = forgeController
+  .query()
   .description('Get expenses breakdown by category for a specific month/year')
   .input({
     query: z.object({

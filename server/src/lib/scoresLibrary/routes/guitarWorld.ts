@@ -5,7 +5,8 @@ import PDFDocument from 'pdfkit'
 import sharp from 'sharp'
 import { z } from 'zod/v4'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get tabs list from Guitar World')
   .input({
     query: z.object({
@@ -90,7 +91,8 @@ const list = forgeController.query
     return finalData
   })
 
-const download = forgeController.mutation
+const download = forgeController
+  .mutation()
   .description('Download a guitar tab from Guitar World')
   .input({
     body: z.object({

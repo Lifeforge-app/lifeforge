@@ -8,7 +8,8 @@ import { z } from 'zod/v4'
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 import { allApps } from './locales'
 
-const listSubnamespaces = forgeController.query
+const listSubnamespaces = forgeController
+  .query()
   .description('List subnamespaces for a namespace')
   .input({
     query: z.object({
@@ -29,7 +30,8 @@ const listSubnamespaces = forgeController.query
     return data.sort()
   })
 
-const listLocales = forgeController.query
+const listLocales = forgeController
+  .query()
   .description('List locales for a namespace and subnamespace')
   .input({
     query: z.object({
@@ -85,7 +87,8 @@ const listLocales = forgeController.query
     return final
   })
 
-const sync = forgeController.mutation
+const sync = forgeController
+  .mutation()
   .description('Sync locales for a namespace and subnamespace')
   .input({
     body: z.object({
@@ -182,7 +185,8 @@ const sync = forgeController.mutation
     return true
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new locale entry or folder')
   .input({
     body: z.object({
@@ -247,7 +251,8 @@ const create = forgeController.mutation
     return true
   })
 
-const rename = forgeController.mutation
+const rename = forgeController
+  .mutation()
   .description('Rename a locale')
   .input({
     query: z.object({
@@ -323,7 +328,8 @@ const rename = forgeController.mutation
     }
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a locale')
   .input({
     query: z.object({
@@ -385,7 +391,8 @@ const remove = forgeController.mutation
     return true
   })
 
-const getTranslationSuggestions = forgeController.mutation
+const getTranslationSuggestions = forgeController
+  .mutation()
   .description('Get translation suggestions')
   .input({
     query: z.object({

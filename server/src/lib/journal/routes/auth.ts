@@ -6,12 +6,14 @@ import { z } from 'zod/v4'
 
 import { challenge } from '../index'
 
-const getChallenge = forgeController.query
+const getChallenge = forgeController
+  .query()
   .description('Get current challenge for master password operations')
   .input({})
   .callback(async () => challenge)
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new master password')
   .input({
     body: z.object({
@@ -32,7 +34,8 @@ const create = forgeController.mutation
       .execute()
   })
 
-const verify = forgeController.mutation
+const verify = forgeController
+  .mutation()
   .description('Verify master password')
   .input({
     body: z.object({
@@ -52,7 +55,8 @@ const verify = forgeController.mutation
     return await bcrypt.compare(decryptedMaster, masterPasswordHash)
   })
 
-const validateOTP = forgeController.mutation
+const validateOTP = forgeController
+  .mutation()
   .description('Validate OTP for master password operations')
   .input({
     body: z.object({

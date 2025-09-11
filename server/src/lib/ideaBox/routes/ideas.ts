@@ -7,7 +7,8 @@ import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get ideas from a folder')
   .input({
     query: z.object({
@@ -195,7 +196,8 @@ const createSchema = SCHEMAS.idea_box.entries
     ])
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new idea')
   .input({
     body: createSchema
@@ -293,7 +295,8 @@ const updateSchema = SCHEMAS.idea_box.entries
     ])
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an idea')
   .input({
     query: z.object({
@@ -389,7 +392,8 @@ const update = forgeController.mutation
     }
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an idea')
   .input({
     query: z.object({
@@ -404,7 +408,8 @@ const remove = forgeController.mutation
   )
   .statusCode(204)
 
-const pin = forgeController.mutation
+const pin = forgeController
+  .mutation()
   .description('Pin/unpin an idea')
   .input({
     query: z.object({
@@ -429,7 +434,8 @@ const pin = forgeController.mutation
       .execute()
   })
 
-const archive = forgeController.mutation
+const archive = forgeController
+  .mutation()
   .description('Archive/unarchive an idea')
   .input({
     query: z.object({
@@ -455,7 +461,8 @@ const archive = forgeController.mutation
       .execute()
   })
 
-const moveTo = forgeController.mutation
+const moveTo = forgeController
+  .mutation()
   .description('Move an idea to a different folder')
   .input({
     query: z.object({
@@ -481,7 +488,8 @@ const moveTo = forgeController.mutation
       .execute()
   )
 
-const removeFromParent = forgeController.mutation
+const removeFromParent = forgeController
+  .mutation()
   .description('Remove an idea from its current folder')
   .input({
     query: z.object({

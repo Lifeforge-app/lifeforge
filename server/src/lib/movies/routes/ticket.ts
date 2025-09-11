@@ -4,7 +4,8 @@ import { z } from 'zod/v4'
 
 import { Location } from '../../locations/typescript/location.types'
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update ticket information for a movie entry')
   .input({
     query: z.object({
@@ -41,7 +42,8 @@ const update = forgeController.mutation
       .execute()
   })
 
-const clear = forgeController.mutation
+const clear = forgeController
+  .mutation()
   .description('Clear ticket information for a movie entry')
   .input({
     query: z.object({

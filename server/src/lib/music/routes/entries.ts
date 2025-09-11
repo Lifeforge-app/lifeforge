@@ -1,7 +1,8 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { z } from 'zod/v4'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all music entries')
   .input({})
   .callback(({ pb }) =>
@@ -11,7 +12,8 @@ const list = forgeController.query
       .execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update a music entry')
   .input({
     query: z.object({
@@ -26,7 +28,8 @@ const update = forgeController.mutation
     pb.update.collection('music__entries').id(id).data(body).execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a music entry')
   .input({
     query: z.object({
@@ -41,7 +44,8 @@ const remove = forgeController.mutation
     pb.delete.collection('music__entries').id(id).execute()
   )
 
-const toggleFavourite = forgeController.mutation
+const toggleFavourite = forgeController
+  .mutation()
   .description('Toggle favourite status of a music entry')
   .input({
     query: z.object({

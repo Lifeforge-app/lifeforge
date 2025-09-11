@@ -3,7 +3,8 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import { z } from 'zod/v4'
 
-const updateAvatar = forgeController.mutation
+const updateAvatar = forgeController
+  .mutation()
   .description('Update user avatar')
   .input({})
   .media({
@@ -25,7 +26,8 @@ const updateAvatar = forgeController.mutation
     return newRecord.avatar
   })
 
-const deleteAvatar = forgeController.mutation
+const deleteAvatar = forgeController
+  .mutation()
   .description('Delete user avatar')
   .input({})
   .statusCode(204)
@@ -41,7 +43,8 @@ const deleteAvatar = forgeController.mutation
       .execute()
   })
 
-const updateProfile = forgeController.mutation
+const updateProfile = forgeController
+  .mutation()
   .description('Update user profile')
   .input({
     body: z.object({
@@ -88,7 +91,8 @@ const updateProfile = forgeController.mutation
     }
   })
 
-const requestPasswordReset = forgeController.mutation
+const requestPasswordReset = forgeController
+  .mutation()
   .description('Request password reset')
   .input({})
   .callback(({ pb }) =>

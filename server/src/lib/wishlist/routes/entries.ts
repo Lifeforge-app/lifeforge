@@ -4,7 +4,8 @@ import { z } from 'zod/v4'
 
 import scrapeProviders from '../helpers/scrapers'
 
-const listByListId = forgeController.query
+const listByListId = forgeController
+  .query()
   .description('Get wishlist entries by list ID')
   .input({
     query: z.object({
@@ -36,7 +37,8 @@ const listByListId = forgeController.query
       .execute()
   )
 
-const scrapeExternal = forgeController.mutation
+const scrapeExternal = forgeController
+  .mutation()
   .description('Scrape external website for wishlist entry data')
   .input({
     body: z.object({
@@ -56,7 +58,8 @@ const scrapeExternal = forgeController.mutation
     return result
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new wishlist entry')
   .input({
     body: z.object({
@@ -86,7 +89,8 @@ const create = forgeController.mutation
       .execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing wishlist entry')
   .input({
     query: z.object({
@@ -130,7 +134,8 @@ const update = forgeController.mutation
         .execute()
   )
 
-const updateBoughtStatus = forgeController.mutation
+const updateBoughtStatus = forgeController
+  .mutation()
   .description('Update wishlist entry bought status')
   .input({
     query: z.object({
@@ -156,7 +161,8 @@ const updateBoughtStatus = forgeController.mutation
       .execute()
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a wishlist entry')
   .input({
     query: z.object({

@@ -25,12 +25,14 @@ setTimeout(
 
 let tempCode = ''
 
-const getChallenge = forgeController.query
+const getChallenge = forgeController
+  .query()
   .description('Get 2FA challenge')
   .input({})
   .callback(async () => challenge)
 
-const requestOTP = forgeController.query
+const requestOTP = forgeController
+  .query()
   .noAuth()
   .description('Request OTP for 2FA')
   .input({
@@ -55,7 +57,8 @@ const requestOTP = forgeController.query
     return currentSession.tokenId
   })
 
-const validateOTP = forgeController.mutation
+const validateOTP = forgeController
+  .mutation()
   .noAuth()
   .description('Validate OTP for 2FA')
   .input({
@@ -80,7 +83,8 @@ const validateOTP = forgeController.mutation
     return false
   })
 
-const generateAuthenticatorLink = forgeController.query
+const generateAuthenticatorLink = forgeController
+  .query()
   .description('Generate authenticator link for 2FA')
   .input({})
   .callback(
@@ -108,7 +112,8 @@ const generateAuthenticatorLink = forgeController.query
     }
   )
 
-const verifyAndEnable = forgeController.mutation
+const verifyAndEnable = forgeController
+  .mutation()
   .description('Verify and enable 2FA')
   .input({
     body: z.object({
@@ -151,7 +156,8 @@ const verifyAndEnable = forgeController.mutation
     }
   )
 
-const disable = forgeController.mutation
+const disable = forgeController
+  .mutation()
   .description('Disable 2FA')
   .input({})
   .callback(async ({ pb }) => {
@@ -173,7 +179,8 @@ const disable = forgeController.mutation
     canDisable2FA = false
   })
 
-const verify = forgeController.mutation
+const verify = forgeController
+  .mutation()
   .noAuth()
   .description('Verify 2FA code')
   .input({

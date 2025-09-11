@@ -5,7 +5,8 @@ import { z } from 'zod/v4'
 
 import { validateFolderPath } from '../utils/folders'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('List folders from a container path')
   .input({
     query: z.object({
@@ -51,7 +52,8 @@ const list = forgeController.query
       .execute()
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new folder')
   .input({
     body: SCHEMAS.idea_box.folders
@@ -66,7 +68,8 @@ const create = forgeController.mutation
   )
   .statusCode(201)
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update a folder')
   .input({
     query: z.object({
@@ -89,7 +92,8 @@ const update = forgeController.mutation
         .execute()
   )
 
-const moveTo = forgeController.mutation
+const moveTo = forgeController
+  .mutation()
   .description('Move a folder to a different parent')
   .input({
     query: z.object({
@@ -116,7 +120,8 @@ const moveTo = forgeController.mutation
         .execute()
   )
 
-const removeFromParent = forgeController.mutation
+const removeFromParent = forgeController
+  .mutation()
   .description('Remove a folder from its parent')
   .input({
     query: z.object({
@@ -137,7 +142,8 @@ const removeFromParent = forgeController.mutation
         .execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a folder')
   .input({
     query: z.object({

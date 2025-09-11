@@ -2,7 +2,8 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { z } from 'zod/v4'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all music score collections')
   .input({})
   .callback(({ pb }) =>
@@ -12,7 +13,8 @@ const list = forgeController.query
       .execute()
   )
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new music score collection')
   .input({
     body: SCHEMAS.scores_library.collections
@@ -22,7 +24,8 @@ const create = forgeController.mutation
     pb.create.collection('scores_library__collections').data(body).execute()
   )
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an existing music score collection')
   .input({
     query: z.object({ id: z.string() }),
@@ -36,7 +39,8 @@ const update = forgeController.mutation
       .execute()
   )
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete a music score collection')
   .input({
     query: z.object({ id: z.string() })

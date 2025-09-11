@@ -56,7 +56,8 @@ export enum Kind {
   WebfontsWebfont = 'webfonts#webfont'
 }
 
-const listGoogleFonts = forgeController.query
+const listGoogleFonts = forgeController
+  .query()
   .description('List available Google Fonts')
   .input({})
   .callback(async ({ pb }) => {
@@ -81,7 +82,8 @@ const listGoogleFonts = forgeController.query
     }
   })
 
-const getGoogleFont = forgeController.query
+const getGoogleFont = forgeController
+  .query()
   .description('Get specific Google Font details')
   .input({
     query: z.object({
@@ -109,7 +111,8 @@ const getGoogleFont = forgeController.query
     }
   })
 
-const updateBgImage = forgeController.mutation
+const updateBgImage = forgeController
+  .mutation()
   .description('Update background image')
   .input({})
   .media({
@@ -140,7 +143,8 @@ const updateBgImage = forgeController.mutation
     }
   })
 
-const deleteBgImage = forgeController.mutation
+const deleteBgImage = forgeController
+  .mutation()
   .description('Delete background image')
   .input({})
   .statusCode(204)
@@ -154,7 +158,8 @@ const deleteBgImage = forgeController.mutation
       .execute()
   )
 
-const updatePersonalization = forgeController.mutation
+const updatePersonalization = forgeController
+  .mutation()
   .description('Update personalization settings')
   .input({
     body: z.object({

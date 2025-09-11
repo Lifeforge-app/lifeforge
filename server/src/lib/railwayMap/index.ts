@@ -4,21 +4,24 @@ import { z } from 'zod/v4'
 
 import dijkstraWithTransfers from './utils/pathFinding'
 
-const getLines = forgeController.query
+const getLines = forgeController
+  .query()
   .description('Get all railway lines')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('railway_map__lines').execute()
   )
 
-const getStations = forgeController.query
+const getStations = forgeController
+  .query()
   .description('Get all railway stations')
   .input({})
   .callback(({ pb }) =>
     pb.getFullList.collection('railway_map__stations').execute()
   )
 
-const getShortestPath = forgeController.query
+const getShortestPath = forgeController
+  .query()
   .description('Get shortest path between two stations')
   .input({
     query: z.object({

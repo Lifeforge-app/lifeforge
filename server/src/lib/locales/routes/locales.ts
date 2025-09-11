@@ -14,7 +14,8 @@ export const allApps = fs
   .filter(e => fs.existsSync(`${e.parentPath}/${e.name}/locales`))
   .map(e => `${e.parentPath}/${e.name}`)
 
-const getLocale = forgeController.query
+const getLocale = forgeController
+  .query()
   .noAuth()
   .description(
     'Get locales for a specific language, namespace, and subnamespace'
@@ -85,7 +86,8 @@ const getLocale = forgeController.query
     return data
   })
 
-const notifyMissing = forgeController.mutation
+const notifyMissing = forgeController
+  .mutation()
   .input({
     body: z.object({
       namespace: z.string(),

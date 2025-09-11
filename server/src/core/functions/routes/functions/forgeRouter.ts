@@ -27,10 +27,10 @@ function isRouter(value: unknown): value is Router {
  * @example
  * ```typescript
  * const routes = forgeRouter({
- *   users: forgeController.query...,
+ *   users: forgeController.query()...,
  *   posts: {
- *     list: forgeController.query...,
- *     create: forgeController.mutation...
+ *     list: forgeController.query()...,
+ *     create: forgeController.mutation()...
  *   },
  * });
  * ```
@@ -55,10 +55,10 @@ function forgeRouter<T extends RouterInput>(routes: T): T {
  * @example
  * ```typescript
  * const routes = {
- *   users: forgeController.query...,
+ *   users: forgeController.query()...,
  *   posts: {
- *     list: forgeController.query...,
- *     create: forgeController.mutation...
+ *     list: forgeController.query()...,
+ *     create: forgeController.mutation()...
  *   },
  * };
  * const router = registerRoutes(routes);

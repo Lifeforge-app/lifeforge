@@ -5,7 +5,8 @@ import { z } from 'zod/v4'
 import { challenge } from '..'
 import getDecryptedMaster from '../utils/getDecryptedMaster'
 
-const list = forgeController.query
+const list = forgeController
+  .query()
   .description('Get all API key entries')
   .input({
     query: z.object({
@@ -29,7 +30,8 @@ const list = forgeController.query
     return entries
   })
 
-const checkKeys = forgeController.query
+const checkKeys = forgeController
+  .query()
   .description('Check if API keys exist')
   .input({
     query: z.object({
@@ -46,7 +48,8 @@ const checkKeys = forgeController.query
       .every(key => allEntries.some(entry => entry.keyId === key))
   })
 
-const decrypt = forgeController.query
+const decrypt = forgeController
+  .query()
   .description('Get API key entry by ID')
   .input({
     query: z.object({
@@ -81,7 +84,8 @@ const decrypt = forgeController.query
     return encryptedSecondTime
   })
 
-const create = forgeController.mutation
+const create = forgeController
+  .mutation()
   .description('Create a new API key entry')
   .input({
     body: z.object({
@@ -116,7 +120,8 @@ const create = forgeController.mutation
     return entry
   })
 
-const update = forgeController.mutation
+const update = forgeController
+  .mutation()
   .description('Update an API key entry')
   .input({
     query: z.object({
@@ -157,7 +162,8 @@ const update = forgeController.mutation
     return updatedEntry
   })
 
-const remove = forgeController.mutation
+const remove = forgeController
+  .mutation()
   .description('Delete an API key entry')
   .input({
     query: z.object({
