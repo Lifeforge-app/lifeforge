@@ -11,6 +11,16 @@
       "description": "Start exploring Library Genesis. Try searching for a book to begin."
     }
   },
+  "annas": {
+    "results": {
+      "title": "No books found",
+      "description": "No matching books found in Anna's Archive."
+    },
+    "searchQuery": {
+      "title": "No search query",
+      "description": "Start exploring Anna's Archive. Try searching for a book to begin."
+    }
+  },
   "results": {
     "title": "No books found",
     "description": "No matches found. Try searching for something else."
@@ -30,6 +40,7 @@
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
+    "annasArchive": "Anna's Archive",
     "addToLibrary": "Add to Library",
     "modifyBookData": "Update Book Information",
     "language": {
@@ -49,6 +60,7 @@
     "viewDetails": "View Details",
     "uploadFromDevice": "Upload from Device",
     "downloadFromLibgen": "Download from Library Genesis",
+    "searchAnnas": "Search Anna's Archive",
     "downloading": "Downloading",
     "sendToKindle": "Send to Kindle",
     "markAsRead": "Mark as Read",
@@ -94,9 +106,13 @@
       "title": "No Results",
       "description": "No matching books found in Library Genesis. Please try another search query."
     },
-    "libgen": {
-      "title": "Powered by Library Genesis",
-      "description": "Browse books in Library Genesis and add them to your library."
+    "annasResult": {
+      "title": "No Results",
+      "description": "No matching books found in Anna's Archive. Please try another search query."
+    },
+    "annas": {
+      "title": "Powered by Anna's Archive",
+      "description": "Browse books in Anna's Archive and add them to your library."
     },
     "noSMTPKeys": {
       "title": "No SMTP API Keys Found",

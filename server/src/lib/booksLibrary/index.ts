@@ -1,5 +1,6 @@
 import { forgeRouter } from '@functions/routes'
 
+import * as annasRouter from './routes/annas'
 import collectionsRouter from './routes/collection'
 import entriesRouter from './routes/entries'
 import fileTypesRouter from './routes/fileTypes'
@@ -13,5 +14,6 @@ export default forgeRouter({
   languages: languagesRouter,
   fileTypes: fileTypesRouter,
   readStatus: readStatusRouter,
-  libgen: libgenRouter
+  libgen: libgenRouter,
+  annas: annasRouter
 })
