@@ -28,7 +28,7 @@ function Checkbox({
       <CheckboxPrimitive.Root
         checked={checked}
         className={clsx(
-          'flex-center group data-[state=checked]:border-custom-500 data-[state=checked]:bg-custom-500 data-[state=unchecked]:border-bg-300 data-[state=unchecked]:dark:border-bg-600 data-[state=unchecked]:hover:border-bg-500 relative z-50 size-6 shrink-0 cursor-pointer rounded-md border-2 transition-all disabled:cursor-not-allowed disabled:opacity-50',
+          'flex-center group data-[state=checked]:border-custom-500 data-[state=checked]:bg-custom-500 data-[state=unchecked]:border-bg-300 data-[state=unchecked]:dark:border-bg-600 data-[state=unchecked]:hover:border-bg-500 data-[state=unchecked]:dark:hover:border-bg-200 relative z-50 size-6 shrink-0 cursor-pointer rounded-md border-2 transition-all disabled:cursor-not-allowed disabled:opacity-50',
           className
         )}
         disabled={disabled}
