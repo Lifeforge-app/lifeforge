@@ -3,19 +3,29 @@
   "description": "Perpustakaan peribadi anda, tiada yuran lewat.",
   "libgen": {
     "results": {
-      "title": "Tiada buku ditemui",
-      "description": "Tiada buku yang sepadan ditemui dalam Library Genesis."
+      "title": "Tiada buku dijumpai",
+      "description": "Tiada buku yang sepadan dijumpai dalam Library Genesis."
     },
     "searchQuery": {
-      "title": "Tiada carian",
-      "description": "Mulakan meneroka Library Genesis. Cuba cari buku untuk bermula."
+      "title": "Tiada pertanyaan carian",
+      "description": "Mula meneroka Library Genesis. Cuba cari buku untuk bermula."
+    }
+  },
+  "annas": {
+    "results": {
+      "title": "Tiada buku dijumpai",
+      "description": "Tiada buku yang sepadan dijumpai dalam Anna's Archive."
+    },
+    "searchQuery": {
+      "title": "Tiada pertanyaan carian",
+      "description": "Mula meneroka Anna's Archive. Cuba cari buku untuk bermula."
     }
   },
   "results": {
-    "title": "Tiada buku ditemui",
-    "description": "Tiada padanan ditemui. Cuba cari sesuatu yang lain."
+    "title": "Tiada buku dijumpai",
+    "description": "Tiada padanan dijumpai. Cuba cari sesuatu yang lain."
   },
-  "languages": "Tiada bahasa ditemui",
+  "languages": "Tiada bahasa dijumpai",
   "sidebar": {
     "starred": "Berbintang",
     "allBooks": "Semua Buku",
@@ -23,38 +33,40 @@
     "languages": "Bahasa",
     "collections": "Koleksi",
     "fileTypes": "Jenis Fail",
-    "read": "Dibaca",
-    "reading": "Sedang Dibaca",
-    "unread": "Belum Dibaca",
+    "read": "Telah Baca",
+    "reading": "Sedang Membaca",
+    "unread": "Belum Baca",
     "readStatus": "Status Bacaan"
   },
   "modals": {
     "libraryGenesis": "Library Genesis",
+    "annasArchive": "Anna's Archive",
     "addToLibrary": "Tambah ke Perpustakaan",
-    "modifyBookData": "Kemas kini Maklumat Buku",
+    "modifyBookData": "Kemas Kini Maklumat Buku",
     "language": {
       "create": "Tambah Bahasa",
-      "update": "Kemas kini Bahasa"
+      "update": "Kemas Kini Bahasa"
     },
     "sendToKindle": "Hantar ke Kindle",
     "collection": {
       "create": "Cipta Koleksi",
-      "update": "Kemas kini Koleksi"
+      "update": "Kemas Kini Koleksi"
     },
-    "uploadFromDevice": "Muatturun dari Peranti"
+    "uploadFromDevice": "Muat Naik dari Peranti"
   },
   "buttons": {
     "addToLibrary": "Tambah ke Perpustakaan",
     "alreadyInLibrary": "Sudah dalam Perpustakaan",
     "viewDetails": "Lihat Butiran",
-    "uploadFromDevice": "Muat naik dari Peranti",
-    "downloadFromLibgen": "Muat turun dari Library Genesis",
-    "downloading": "Sedang dimuat turun",
+    "uploadFromDevice": "Muat Naik dari Peranti",
+    "downloadFromLibgen": "Muat Turun dari Library Genesis",
+    "searchAnnas": "Cari di Anna's Archive",
+    "downloading": "Memuat Turun",
     "sendToKindle": "Hantar ke Kindle",
-    "markAsRead": "Tandakan sebagai Dibaca",
-    "markAsUnread": "Tandakan sebagai Belum Dibaca",
+    "markAsRead": "Tandakan sebagai Telah Baca",
+    "markAsUnread": "Tandakan sebagai Belum Baca",
     "markAsReading": "Tandakan sebagai Sedang Membaca",
-    "addToFavourites": "Tambah kepada Kegemaran",
+    "addToFavourites": "Tambah ke Kegemaran",
     "removeFromFavourites": "Buang dari Kegemaran"
   },
   "inputs": {
@@ -64,14 +76,14 @@
     "bookTitle": "Tajuk Buku",
     "publicationYear": "Tahun Penerbitan",
     "fileSize": "Saiz Fail",
-    "md5": "MD5 Checksum",
+    "md5": "Checksum MD5",
     "languages": "Bahasa",
     "languageName": "Nama Bahasa",
     "languageIcon": "Ikon Bahasa",
     "authors": "Pengarang",
     "edition": "Edisi",
     "extension": "Jenis Fail",
-    "kindleEmail": "Alamat Emel Kindle",
+    "kindleEmail": "Alamat E-mel Kindle",
     "collection": "Koleksi Buku",
     "collectionName": "Nama Koleksi",
     "collectionIcon": "Ikon Koleksi",
@@ -88,28 +100,32 @@
     },
     "result": {
       "title": "Tiada Keputusan",
-      "description": "Tiada item ditemui, sila cuba kata kunci lain."
+      "description": "Tiada item dijumpai, sila cuba kata kunci lain."
     },
     "libgenResult": {
       "title": "Tiada Keputusan",
-      "description": "Tiada buku yang sepadan ditemui dalam Library Genesis. Sila cuba carian lain."
+      "description": "Tiada buku yang sepadan dijumpai dalam Library Genesis. Sila cuba pertanyaan carian lain."
     },
-    "libgen": {
-      "title": "Dikuasakan oleh Library Genesis",
-      "description": "Semak imbas buku dalam Library Genesis dan tambahkannya ke perpustakaan anda."
+    "annasResult": {
+      "title": "Tiada Keputusan",
+      "description": "Tiada buku yang sepadan dijumpai dalam Anna's Archive. Sila cuba pertanyaan carian lain."
+    },
+    "annas": {
+      "title": "Dikuasakan oleh Anna's Archive",
+      "description": "Layari buku dalam Anna's Archive dan tambahkan ke perpustakaan anda."
     },
     "noSMTPKeys": {
-      "title": "Tiada Kunci API SMTP Ditemui",
-      "description": "Konfigurasi SMTP API yang betul tidak ditemui dalam vault kunci API anda. Sila pergi ke modul dan konfigurasi \"smtp-user\" dan \"smtp-pass\"."
+      "title": "Tiada Kunci API SMTP Dijumpai",
+      "description": "Konfigurasi API SMTP yang betul tidak dijumpai dalam peti besi kunci API anda. Sila pergi ke modul dan konfigurasikan \"smtp-user\" dan \"smtp-pass\"."
     },
-    "collections": "Tiada koleksi ditemui",
+    "collections": "Tiada koleksi dijumpai",
     "languages": "Tiada bahasa tersedia",
-    "fileTypes": "Tiada jenis fail ditemui",
+    "fileTypes": "Tiada jenis fail dijumpai",
     "libgenOffline": {
-      "title": "Libgen Tidak Dalam Talian",
-      "description": "Tidak dapat menghubungi penyedia Libgen semasa. Sila cuba yang lain."
+      "title": "Libgen Sedang Luar Talian",
+      "description": "Tidak dapat mencapai penyedia semasa Libgen. Sila cuba yang lain."
     }
   },
   "checkingKeys": "Memeriksa kunci API SMTP...",
-  "kindleSent": "Proses dijalankan untuk menghantar dokumen yang dipilih ke alamat e-mel yang ditujukan."
+  "kindleSent": "Proses dijalankan untuk menghantar dokumen terpilih ke alamat e-mel yang disasarkan."
 }

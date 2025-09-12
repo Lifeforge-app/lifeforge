@@ -12,6 +12,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useFilter from '../hooks/useFilter'
+import AnnasModal from './modals/AnnasModal'
 import LibgenModal from './modals/LibgenModal'
 import UploadFromDeviceModal from './modals/UploadFromDeviceModal'
 
@@ -46,6 +47,10 @@ function Header({ itemCount }: { itemCount: number }) {
 
   const handleOpenLibgenModal = useCallback(() => {
     open(LibgenModal, {})
+  }, [])
+
+  const handleOpenAnnasModal = useCallback(() => {
+    open(AnnasModal, {})
   }, [])
 
   return (
@@ -92,6 +97,12 @@ function Header({ itemCount }: { itemCount: number }) {
               label="Download from Libgen"
               namespace="apps.booksLibrary"
               onClick={handleOpenLibgenModal}
+            />
+            <ContextMenuItem
+              icon="tabler:archive"
+              label="Search Annas"
+              namespace="apps.booksLibrary"
+              onClick={handleOpenAnnasModal}
             />
           </ContextMenu>
           <Button

@@ -17,6 +17,7 @@ import { useState } from 'react'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import AnnasModal from './components/modals/AnnasModal'
 import LibgenModal from './components/modals/LibgenModal'
 import UploadFromDeviceModal from './components/modals/UploadFromDeviceModal'
 import useFilter from './hooks/useFilter'
@@ -161,6 +162,14 @@ function BooksLibrary() {
           namespace="apps.booksLibrary"
           onClick={() => {
             open(LibgenModal, {})
+          }}
+        />
+        <ContextMenuItem
+          icon="tabler:archive"
+          label="Search Annas"
+          namespace="apps.booksLibrary"
+          onClick={() => {
+            open(AnnasModal, {})
           }}
         />
       </ContextMenu>
