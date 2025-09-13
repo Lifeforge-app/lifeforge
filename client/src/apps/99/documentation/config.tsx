@@ -6,8 +6,7 @@ export default {
   icon: 'tabler:info-circle',
   routes: {
     documentation: () => {
-      window.location.href =
-        'https://docs.lifeforge.melvinchia.dev/getting-started/introduction'
+      window.location.href = 'https://docs.lifeforge.melvinchia.dev'
 
       return <Navigate to="/" />
     }
