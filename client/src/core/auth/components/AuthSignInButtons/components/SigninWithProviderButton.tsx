@@ -5,7 +5,7 @@ import { memo, useCallback } from 'react'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '../../../../../core/providers/AuthProvider'
+import { useAuth } from '../../../../providers/AuthProvider'
 
 function SigninWithProviderButton({
   provider,

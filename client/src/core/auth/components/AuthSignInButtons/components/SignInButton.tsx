@@ -1,7 +1,7 @@
 import { Button } from 'lifeforge-ui'
 import { memo } from 'react'
 
-import { useAuth } from '../../../../../core/providers/AuthProvider'
+import { useAuth } from '../../../../providers/AuthProvider'
 
 function SignInButton({
   loading,
