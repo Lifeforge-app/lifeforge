@@ -1,11 +1,11 @@
 import { Button } from '@components/buttons'
-import { ModalHeader, useModalStore } from '@components/modals'
+import { ModalHeader } from '@components/modals'
 import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import tinycolor from 'tinycolor2'
 
-import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
-import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
+import PaletteButtons from './components/PaletteButtons'
+import { useColorPickerModalStore } from './stores/useColorPickerModalStore'
 
 function checkContrast(hexColor: string): string {
   const r = parseInt(hexColor.substr(1, 2), 16)
@@ -29,9 +29,7 @@ function ColorPickerModal({
   }
   onClose: () => void
 }) {
-  const open = useModalStore(state => state.open)
-
-  const [innerColor, setInnerColor] = useState(value.toLowerCase() || '#000000')
+  const { innerColor, setInnerColor } = useColorPickerModalStore()
 
   const confirmColor = () => {
     setValue(innerColor)
@@ -43,20 +41,8 @@ function ColorPickerModal({
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInnerColor(`#${e.target.value}`)
+    setInnerColor(e.target.value)
   }
-
-  const handleColorPaletteModalOpen = useCallback(
-    (type: 'morandi' | 'tailwind') => () =>
-      open(
-        type === 'morandi' ? MorandiColorPaletteModal : TailwindCSSColorsModal,
-        {
-          color: innerColor,
-          setColor: setInnerColor
-        }
-      ),
-    [innerColor]
-  )
 
   useEffect(() => {
     setInnerColor(value.toLowerCase() || '#000000')
@@ -163,27 +149,14 @@ function ColorPickerModal({
           />
         ))}
       </div>
-      <div className="mt-6 w-full space-y-2">
-        <Button
-          className="w-full"
-          icon="tabler:flower"
-          variant="secondary"
-          onClick={handleColorPaletteModalOpen('morandi')}
-        >
-          Morandi Color Palette
-        </Button>
-        <Button
-          className="w-full bg-teal-500! hover:bg-teal-600!"
-          icon="tabler:brand-tailwind"
-          variant="primary"
-          onClick={handleColorPaletteModalOpen('tailwind')}
-        >
-          Tailwind CSS Color Palette
-        </Button>
-        <Button className="w-full" icon="tabler:check" onClick={confirmColor}>
-          Select
-        </Button>
-      </div>
+      <PaletteButtons />
+      <Button
+        className="mt-6 w-full"
+        icon="tabler:check"
+        onClick={confirmColor}
+      >
+        Select
+      </Button>
     </div>
   )
 }

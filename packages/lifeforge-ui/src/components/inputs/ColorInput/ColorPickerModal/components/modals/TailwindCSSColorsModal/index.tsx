@@ -9,7 +9,7 @@ function TailwindCSSColorsModal({
 }: {
   data: {
     color: string
-    setColor: React.Dispatch<React.SetStateAction<string>>
+    setColor: (color: string) => void
   }
   onClose: () => void
 }) {
