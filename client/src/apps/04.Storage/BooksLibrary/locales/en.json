@@ -67,7 +67,8 @@
     "markAsUnread": "Mark as Unread",
     "markAsReading": "Mark as Reading",
     "addToFavourites": "Add to Favourites",
-    "removeFromFavourites": "Remove from Favourites"
+    "removeFromFavourites": "Remove from Favourites",
+    "openDownloadPage": "Open Download Page"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -91,7 +92,8 @@
   },
   "items": {
     "book": "Book",
-    "libgenBook": "Millions of Books"
+    "libgenBook": "Millions of Books",
+    "annasBook": ""
   },
   "empty": {
     "book": {

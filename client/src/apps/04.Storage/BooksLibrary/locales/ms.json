@@ -67,7 +67,8 @@
     "markAsUnread": "Tandakan sebagai Belum Baca",
     "markAsReading": "Tandakan sebagai Sedang Membaca",
     "addToFavourites": "Tambah ke Kegemaran",
-    "removeFromFavourites": "Buang dari Kegemaran"
+    "removeFromFavourites": "Buang dari Kegemaran",
+    "openDownloadPage": "Buka Halaman Muat Turun"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -91,7 +92,8 @@
   },
   "items": {
     "book": "Buku",
-    "libgenBook": "Jutaan Buku"
+    "libgenBook": "Jutaan Buku",
+    "annasBook": ""
   },
   "empty": {
     "book": {
