@@ -77,6 +77,8 @@ function ModifyContainerModal({
         required: false,
         icon: 'tabler:photo',
         label: 'Cover Image',
+        enablePixabay: true,
+        enableUrl: true,
         enableAIImageGeneration: imageGenAPIKeyExistsQuery.data ?? false,
         defaultImageGenerationPrompt: `I have an idea box named "${initialData?.name}", where I store all my ideas related to this title. Can you generate a thumbnail for the idea box? The image should focus on the title of this idea box instead of the fact that this is the idea box. It should clearly represent the project or whatever the idea box is used to contain the idea for. In other words, do not include any words related to "idea box" in the image unless the title of the box said so.`
       }
