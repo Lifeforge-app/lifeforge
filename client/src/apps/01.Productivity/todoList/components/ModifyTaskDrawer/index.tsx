@@ -94,7 +94,7 @@ function ModifyTaskDrawer() {
       setSelectedTask(null)
 
       await queryClient.invalidateQueries({
-        queryKey: ['todo-list']
+        queryKey: ['todoList']
       })
     } catch {
       toast.error('Error')
@@ -119,7 +119,7 @@ function ModifyTaskDrawer() {
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['todo-list']
+            queryKey: ['todoList']
           })
           setOpenType(null)
           setSelectedTask(null)

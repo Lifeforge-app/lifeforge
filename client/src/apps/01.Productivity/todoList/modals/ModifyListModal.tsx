@@ -26,7 +26,7 @@ function ModifyListModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
+        queryClient.invalidateQueries({ queryKey: ['todoList', 'lists'] })
       },
       onError: error => {
         toast.error(`Failed to ${type} list: ${error.message}`)
