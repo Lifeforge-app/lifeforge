@@ -15,7 +15,7 @@
  *
  * @example
  * ```typescript
- * const controller = forgeController.mutation
+ * const controller = forgeController.mutation()
  *   .input({
  *     body: z.object({ name: z.string(), email: z.string().email() })
  *   })
@@ -53,7 +53,7 @@ import {
 } from '../utils/response'
 import restoreFormDataType from '../utils/restoreDataType'
 import { splitMediaAndData } from '../utils/splitMediaAndData'
-import { validateAuthToken } from '../utils/updateAuth'
+import { validateAuthToken } from '../utils/validateAuthToken'
 
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
@@ -65,7 +65,7 @@ import { validateAuthToken } from '../utils/updateAuth'
  *
  * @example
  * ```typescript
- * const controller = forgeController.mutation
+ * const controller = forgeController.mutation()
  *   .input({
  *     body: z.object({ name: z.string(), age: z.number() }),
  *     query: z.object({ page: z.string().optional() })
@@ -387,7 +387,7 @@ export class ForgeControllerBuilder<
    *
    * @example
    * ```typescript
-   * const controller = forgeController.mutation
+   * const controller = forgeController.mutation()
    *   .input({
    *     body: z.object({ name: z.string() })
    *   })
@@ -413,98 +413,78 @@ export class ForgeControllerBuilder<
       isDownloadable: this._isDownloadable
     }
 
-    const _handler = (__media: TMedia, noAuth: boolean) => {
-      async function __handler(
-        req: Request<
-          never,
-          any,
-          InferZodType<TInput['body']>,
-          InferZodType<TInput['query']>
-        >,
-        res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
-      ): Promise<void> {
-        const isValid = await validateAuthToken(req, res, noAuth)
+    const _handler = async (
+      req: Request<
+        never,
+        any,
+        InferZodType<TInput['body']>,
+        InferZodType<TInput['query']>
+      >,
+      res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
+    ) => {
+      const isValid = await validateAuthToken(req, res, this._noAuth)
 
-        if (!isValid) return
+      if (!isValid) return
 
-        try {
-          let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
+      try {
+        let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
 
-          for (const type of ['body', 'query'] as const) {
-            const validator = schema[type] || z.object({})
+        for (const type of ['body', 'query'] as const) {
+          const validator = schema[type] || z.object({})
 
-            let result
+          let result
 
-            if (type === 'body') {
-              const { data, media } = splitMediaAndData(
-                __media,
-                req[type],
-                (req.files || {}) as Record<string, Express.Multer.File[]>
-              )
+          if (type === 'body') {
+            const { data, media } = splitMediaAndData(
+              this.__media,
+              req[type],
+              (req.files || {}) as Record<string, Express.Multer.File[]>
+            )
 
-              finalMedia = media as ConvertMedia<TMedia>
+            finalMedia = media as ConvertMedia<TMedia>
 
-              const finalData = req.is('multipart/form-data')
-                ? Object.fromEntries(
-                    Object.entries(data).map(([key, value]) => [
-                      key,
-                      restoreFormDataType(value)
-                    ])
-                  )
-                : data
+            const finalData = req.is('multipart/form-data')
+              ? Object.fromEntries(
+                  Object.entries(data).map(([key, value]) => [
+                    key,
+                    restoreFormDataType(value)
+                  ])
+                )
+              : data
 
-              result = validator.safeParse(finalData)
-            } else {
-              result = validator.safeParse(req[type])
-            }
+            result = validator.safeParse(finalData)
+          } else {
+            result = validator.safeParse(req[type])
+          }
 
-            if (!result.success) {
-              return clientError(res, {
-                location: type,
-                message: JSON.parse(result.error.message)
-              })
-            }
+          if (!result.success) {
+            return clientError(res, {
+              location: type,
+              message: JSON.parse(result.error.message)
+            })
+          }
 
-            if (type === 'body') {
-              req.body = result.data as InferZodType<TInput['body']>
-            } else if (type === 'query') {
-              req.query = result.data as InferZodType<TInput['query']>
-            }
+          if (type === 'body') {
+            req.body = result.data as InferZodType<TInput['body']>
+          } else if (type === 'query') {
+            req.query = result.data as InferZodType<TInput['query']>
+          }
 
-            if (options.existenceCheck?.[type]) {
-              for (const [key, collection] of Object.entries(
-                options.existenceCheck[type]
-              ) as Array<[string, string]>) {
-                const optional = collection.match(/\^?\[(.*)\]$/)
+          if (options.existenceCheck?.[type]) {
+            for (const [key, collection] of Object.entries(
+              options.existenceCheck[type]
+            ) as Array<[string, string]>) {
+              const optional = collection.match(/\^?\[(.*)\]$/)
 
-                const value = (req[type] as any)[key] as
-                  | string
-                  | string[]
-                  | undefined
+              const value = (req[type] as any)[key] as
+                | string
+                | string[]
+                | undefined
 
-                if (optional && !value) continue
+              if (optional && !value) continue
 
-                if (Array.isArray(value)) {
-                  for (const val of value) {
-                    if (
-                      !(await checkExistence(
-                        req.pb,
-                        collection.replace(
-                          /\^?\[(.*)\]$/,
-                          '$1'
-                        ) as unknown as keyof typeof COLLECTION_SCHEMAS,
-                        val
-                      ))
-                    ) {
-                      clientError(
-                        res,
-                        `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`
-                      )
-
-                      return
-                    }
-                  }
-                } else {
+              if (Array.isArray(value)) {
+                for (const val of value) {
                   if (
                     !(await checkExistence(
                       req.pb,
@@ -512,69 +492,79 @@ export class ForgeControllerBuilder<
                         /\^?\[(.*)\]$/,
                         '$1'
                       ) as unknown as keyof typeof COLLECTION_SCHEMAS,
-                      value!
+                      val
                     ))
                   ) {
                     clientError(
                       res,
-                      `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
+                      `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`
                     )
 
                     return
                   }
                 }
+              } else {
+                if (
+                  !(await checkExistence(
+                    req.pb,
+                    collection.replace(
+                      /\^?\[(.*)\]$/,
+                      '$1'
+                    ) as unknown as keyof typeof COLLECTION_SCHEMAS,
+                    value!
+                  ))
+                ) {
+                  clientError(
+                    res,
+                    `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
+                  )
+
+                  return
+                }
               }
             }
           }
-
-          for (const [key, value] of Object.entries(
-            __media || ({} as MediaConfig)
-          )) {
-            if (!value.optional && !finalMedia[key]) {
-              return clientError(res, `Missing required media field "${key}"`)
-            }
-          }
-
-          if (options.isDownloadable) {
-            res.setHeader('X-Lifeforge-Downloadable', 'true')
-            res.setHeader(
-              'Access-Control-Expose-Headers',
-              'X-Lifeforge-Downloadable'
-            )
-          }
-
-          const result = await cb({
-            req,
-            res,
-            io: req.io,
-            pb: req.pb,
-            body: req.body,
-            query: req.query,
-            media: finalMedia
-          })
-
-          if (!options.noDefaultResponse) {
-            res.status(options.statusCode || 200)
-            successWithBaseResponse(res, result)
-          }
-        } catch (err) {
-          if (ClientError.isClientError(err)) {
-            return clientError(res, err.message, err.code)
-          }
-          LoggingService.error(
-            err instanceof Error ? err.message : (err as string)
-          )
-          serverError(res, 'Internal server error')
         }
-      }
 
-      __handler.meta = {
-        description: this._description,
-        schema,
-        options
-      }
+        for (const [key, value] of Object.entries(
+          this.__media || ({} as MediaConfig)
+        )) {
+          if (!value.optional && !finalMedia[key]) {
+            return clientError(res, `Missing required media field "${key}"`)
+          }
+        }
 
-      return __handler
+        if (options.isDownloadable) {
+          res.setHeader('X-Lifeforge-Downloadable', 'true')
+          res.setHeader(
+            'Access-Control-Expose-Headers',
+            'X-Lifeforge-Downloadable'
+          )
+        }
+
+        const result = await cb({
+          req,
+          res,
+          io: req.io,
+          pb: req.pb,
+          body: req.body,
+          query: req.query,
+          media: finalMedia
+        })
+
+        if (!options.noDefaultResponse) {
+          res.status(options.statusCode || 200)
+          successWithBaseResponse(res, result)
+        }
+      } catch (err) {
+        if (ClientError.isClientError(err)) {
+          return clientError(res, err.message, err.code)
+        }
+        LoggingService.error(
+          err instanceof Error ? err.message : (err as string)
+        )
+        serverError(res, 'Internal server error')
+      }
     }
 
     const newBuilder = new ForgeControllerBuilder<
@@ -595,7 +585,7 @@ export class ForgeControllerBuilder<
     newBuilder._isDownloadable = this._isDownloadable
     newBuilder._isAIToolCallingEnabled = this._isAIToolCallingEnabled
     newBuilder._noAuth = this._noAuth
-    newBuilder._handler = _handler(this._media, this._noAuth)
+    newBuilder._handler = _handler
     newBuilder._callback = cb
 
     return newBuilder
@@ -722,7 +712,7 @@ class ForgeControllerBuilderWithoutSchema<
    *
    * @example
    * ```typescript
-   * forgeController.mutation
+   * forgeController.mutation()
    *   .input({
    *     body: z.object({ name: z.string() }),
    *     query: z.object({ id: z.string() })
@@ -747,29 +737,12 @@ class ForgeControllerBuilderWithoutSchema<
 }
 
 /**
- * Creates a proxy for initializing controller builders with specific HTTP methods.
- *
- * @template TMethod - HTTP method type ('get' | 'post')
- * @param method - The HTTP method to initialize the builder with
- * @returns A proxy object that creates a new builder instance
- */
-function createMethodProxy<TMethod extends 'get' | 'post'>(method: TMethod) {
-  const builder = new ForgeControllerBuilderWithoutSchema<TMethod>(method)
-
-  return new Proxy(builder, {
-    get(target, prop, receiver) {
-      return Reflect.get(target, prop, receiver)
-    }
-  })
-}
-
-/**
  * Factory object for creating controller builders for different HTTP methods.
  * Provides `query` for GET requests and `mutation` for POST requests.
  */
 const forgeController = {
-  query: createMethodProxy('get'),
-  mutation: createMethodProxy('post')
+  query: () => new ForgeControllerBuilderWithoutSchema('get'),
+  mutation: () => new ForgeControllerBuilderWithoutSchema('post')
 }
 
 export default forgeController

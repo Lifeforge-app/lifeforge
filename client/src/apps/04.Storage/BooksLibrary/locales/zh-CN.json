@@ -1,0 +1,133 @@
+{
+  "title": "图书馆",
+  "description": "您的个人图书馆，无逾期费用。",
+  "libgen": {
+    "results": {
+      "title": "未找到图书",
+      "description": "在 Library Genesis 中未找到匹配的图书。"
+    },
+    "searchQuery": {
+      "title": "无搜索查询",
+      "description": "开始探索 Library Genesis。尝试搜索一本书来开始。"
+    }
+  },
+  "annas": {
+    "results": {
+      "title": "未找到图书",
+      "description": "在 Anna's Archive 中未找到匹配的图书。"
+    },
+    "searchQuery": {
+      "title": "无搜索查询",
+      "description": "开始探索 Anna's Archive。尝试搜索一本书来开始。"
+    }
+  },
+  "results": {
+    "title": "未找到图书",
+    "description": "未找到匹配项。请尝试搜索其他内容。"
+  },
+  "languages": "未找到语言",
+  "sidebar": {
+    "starred": "收藏",
+    "allBooks": "所有图书",
+    "favourite": "喜爱的图书",
+    "languages": "语言",
+    "collections": "收藏集",
+    "fileTypes": "文件类型",
+    "read": "已读",
+    "reading": "阅读中",
+    "unread": "未读",
+    "readStatus": "阅读状态"
+  },
+  "modals": {
+    "libraryGenesis": "Library Genesis",
+    "annasArchive": "Anna's Archive",
+    "addToLibrary": "添加到图书馆",
+    "modifyBookData": "更新图书信息",
+    "language": {
+      "create": "添加语言",
+      "update": "更新语言"
+    },
+    "sendToKindle": "发送到 Kindle",
+    "collection": {
+      "create": "创建收藏集",
+      "update": "更新收藏集"
+    },
+    "uploadFromDevice": "从设备上传"
+  },
+  "buttons": {
+    "addToLibrary": "添加到图书馆",
+    "alreadyInLibrary": "已在图书馆中",
+    "viewDetails": "查看详情",
+    "uploadFromDevice": "从设备上传",
+    "downloadFromLibgen": "从 Library Genesis 下载",
+    "searchAnnas": "搜索 Anna's Archive",
+    "downloading": "下载中",
+    "sendToKindle": "发送到 Kindle",
+    "markAsRead": "标记为已读",
+    "markAsUnread": "标记为未读",
+    "markAsReading": "标记为阅读中",
+    "addToFavourites": "添加到喜爱",
+    "removeFromFavourites": "从喜爱中移除",
+    "openDownloadPage": "打开下载页面"
+  },
+  "inputs": {
+    "isbn": "ISBN",
+    "libgenId": "图书馆 ID",
+    "publisher": "出版社",
+    "bookTitle": "书名",
+    "publicationYear": "出版年份",
+    "fileSize": "文件大小",
+    "md5": "MD5 校验值",
+    "languages": "语言",
+    "languageName": "语言名称",
+    "languageIcon": "语言图标",
+    "authors": "作者",
+    "edition": "版本",
+    "extension": "文件类型",
+    "kindleEmail": "Kindle 邮箱地址",
+    "collection": "图书收藏集",
+    "collectionName": "收藏集名称",
+    "collectionIcon": "收藏集图标",
+    "uploadBookFile": "上传图书文件"
+  },
+  "items": {
+    "book": "图书",
+    "libgenBook": "数百万图书",
+    "annasBook": ""
+  },
+  "empty": {
+    "book": {
+      "title": "无图书",
+      "description": "您还未添加任何图书。点击下方按钮添加一本。"
+    },
+    "result": {
+      "title": "无结果",
+      "description": "未找到项目，请尝试其他关键词。"
+    },
+    "libgenResult": {
+      "title": "无结果",
+      "description": "在 Library Genesis 中未找到匹配的图书。请尝试其他搜索查询。"
+    },
+    "annasResult": {
+      "title": "无结果",
+      "description": "在 Anna's Archive 中未找到匹配的图书。请尝试其他搜索查询。"
+    },
+    "annas": {
+      "title": "由 Anna's Archive 提供支持",
+      "description": "浏览 Anna's Archive 中的图书并将它们添加到您的图书馆。"
+    },
+    "noSMTPKeys": {
+      "title": "未找到 SMTP API 密钥",
+      "description": "在您的 API 密钥库中未找到正确的 SMTP API 配置。请前往模块并配置\"smtp-user\"和\"smtp-pass\"。"
+    },
+    "collections": "未找到收藏集",
+    "languages": "无可用语言",
+    "fileTypes": "未找到文件类型",
+    "libgenOffline": {
+      "title": "Libgen 离线",
+      "description": "无法连接到当前的 Libgen 提供商。请尝试其他提供商。"
+    }
+  },
+  "checkingKeys": "正在检查 SMTP API 密钥...",
+  "kindleSent": "已启动进程将所选文档发送到目标邮箱地址。"
+}

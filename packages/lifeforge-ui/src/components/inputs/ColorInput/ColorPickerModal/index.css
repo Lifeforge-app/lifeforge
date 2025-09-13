@@ -3,12 +3,14 @@
 }
 
 .w-color-editable-input input {
-  box-shadow: none !important;
   font-size: 1rem !important;
-  color: rgb(244 244 245) !important;
   font-weight: 500 !important;
   letter-spacing: 0.1rem !important;
-  @apply rounded-lg! py-2! text-center focus:outline-hidden;
+  @apply bg-bg-50! dark:bg-bg-800! shadow-custom! text-bg-800! dark:text-bg-100! mb-2 rounded-md! py-2! text-center focus:outline-hidden;
+
+  &.hex {
+    color: rgb(244 244 245) !important;
+  }
 }
 
 .w-color-editable-input span {

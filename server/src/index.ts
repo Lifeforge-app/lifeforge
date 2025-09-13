@@ -1,10 +1,25 @@
 import { LoggingService } from '@functions/logging/loggingService'
 import { setupSocket } from '@functions/socketio/setupSocket'
+import checkDB from '@functions/utils/checkDB'
 import traceRouteStack from '@functions/utils/traceRouteStack'
+import dotenv from 'dotenv'
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
 import app from './core/app'
+
+dotenv.config({
+  path: './env/.env.local'
+})
+
+if (!process.env.MASTER_KEY) {
+  LoggingService.error(
+    'Please provide MASTER_KEY in your environment variables.'
+  )
+  process.exit(1)
+}
+
+await checkDB()
 
 const server = createServer(app)
 
@@ -19,6 +34,9 @@ app.request.io = io
 server.listen(process.env.PORT, () => {
   const routes = traceRouteStack(app._router.stack)
 
-  LoggingService.debug(`Registered routes: ${routes.length}`)
-  LoggingService.info(`REST API server running on port ${process.env.PORT}`)
+  LoggingService.debug(`Registered routes: ${routes.length}`, 'API')
+  LoggingService.info(
+    `REST API server running on port ${process.env.PORT}`,
+    'API'
+  )
 })

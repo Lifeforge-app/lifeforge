@@ -9,8 +9,8 @@ import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
 import { useSidebarState } from 'shared'
 
+import ROUTES from '../..'
 import { useAuth } from '../../../providers/AuthProvider'
-import ROUTES from '../../Routes'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()

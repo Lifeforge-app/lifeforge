@@ -57,7 +57,7 @@ i18n
 
         return forgeAPI.locales.getLocale.input({
           lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms',
-          namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
+          namespace: namespace as 'apps' | 'common',
           subnamespace: subnamespace
         }).endpoint
       },

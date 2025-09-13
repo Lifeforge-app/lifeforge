@@ -11,7 +11,7 @@ function APIKeyStatusProvider({
   APIKeys: string[]
   children: React.ReactNode
 }) {
-  const { t } = useTranslation('core.apiKeys')
+  const { t } = useTranslation('apps.apiKeys')
 
   const hasRequiredAPIKeysQuery = useQuery(
     forgeAPI.apiKeys.entries.checkKeys
@@ -38,7 +38,7 @@ function APIKeyStatusProvider({
                   iconPosition: 'end',
                   to: '/api-keys',
                   children: 'configAPIKeys',
-                  namespace: 'core.apiKeys'
+                  namespace: 'apps.apiKeys'
                 }}
                 description={
                   <>

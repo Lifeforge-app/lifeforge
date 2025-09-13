@@ -10,7 +10,7 @@ function DashboardItem({
   title,
   children,
   componentBesideTitle,
-  namespace = 'core.dashboard'
+  namespace = 'apps.dashboard'
 }: {
   ref?: React.Ref<HTMLDivElement>
   className?: string

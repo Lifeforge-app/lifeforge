@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
 
-import ROUTES from '../Routes'
+import ROUTES from '..'
 
 function useTitleEffect() {
   const location = useLocation()

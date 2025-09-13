@@ -1,206 +1,379 @@
-/* eslint-disable no-case-declarations */
+import { LoggingService } from '@server/core/functions/logging/loggingService'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
-import fs from 'fs'
+import fs from 'fs/promises'
 import _ from 'lodash'
 import path from 'path'
-import Pocketbase, { type CollectionModel } from 'pocketbase'
+import PocketBase, { type CollectionModel } from 'pocketbase'
 import prettier from 'prettier'
 
-dotenv.config({
-  path: path.resolve(__dirname, '../server/env/.env.local')
-})
-
-if (!process.env.PB_HOST || !process.env.PB_EMAIL || !process.env.PB_PASSWORD) {
-  console.error(
-    'Please provide PB_HOST, PB_EMAIL, and PB_PASSWORD in your environment variables.'
-  )
-  process.exit(1)
+// Types
+interface Environment {
+  PB_HOST: string
+  PB_EMAIL: string
+  PB_PASSWORD: string
 }
 
-const pb = new Pocketbase(process.env.PB_HOST)
+interface ModuleCollectionsMap {
+  [moduleName: string]: CollectionModel[]
+}
 
-let SCHEMA_STRING = `
-import flattenSchemas from '@functions/utils/flattenSchema'
-import { z } from 'zod/v4'
+interface SchemaGenerationResult {
+  moduleSchemas: Record<string, string>
+  mainSchemaContent: string
+}
 
-export const SCHEMAS = {
-`
+interface PocketBaseField {
+  name: string
+  type: string
+  required?: boolean
+  maxSelect?: number
+  values?: string[]
+  [key: string]: unknown
+}
 
-try {
-  await pb
-    .collection('_superusers')
-    .authWithPassword(process.env.PB_EMAIL, process.env.PB_PASSWORD)
+interface FieldTypeMapping {
+  [fieldType: string]: (field: PocketBaseField) => string
+}
 
-  if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
-    console.error('Invalid credentials.')
+// Constants
+const PATHS = {
+  ENV_FILE: path.resolve(__dirname, '../server/env/.env.local'),
+  MODULES_DIR: path.resolve(__dirname, '../server/src/lib'),
+  CORE_SCHEMA: path.resolve(__dirname, '../server/src/core/schema.ts')
+} as const
+
+const FIELD_TYPE_MAPPING: FieldTypeMapping = {
+  text: () => 'z.string()',
+  richtext: () => 'z.string()',
+  number: () => 'z.number()',
+  bool: () => 'z.boolean()',
+  email: () => 'z.email()',
+  url: () => 'z.url()',
+  date: () => 'z.string()',
+  autodate: () => 'z.string()',
+  password: () => 'z.string()',
+  json: () => 'z.any()',
+  geoPoint: () => 'z.object({ lat: z.number(), lon: z.number() })',
+  select: field => {
+    const values = [...(field.values ?? []), ...(field.required ? [] : [''])]
+
+    const enumSchema = `z.enum(${JSON.stringify(values)})`
+
+    return (field.maxSelect ?? 1) > 1 ? `z.array(${enumSchema})` : enumSchema
+  },
+  file: field => {
+    const baseSchema = 'z.string()'
+
+    return (field.maxSelect ?? 1) > 1 ? `z.array(${baseSchema})` : baseSchema
+  },
+  relation: field => {
+    const baseSchema = 'z.string()'
+
+    return (field.maxSelect ?? 1) > 1 ? `z.array(${baseSchema})` : baseSchema
+  }
+}
+
+// Environment validation
+function validateEnvironment(): Environment {
+  dotenv.config({ path: PATHS.ENV_FILE })
+
+  const { PB_HOST, PB_EMAIL, PB_PASSWORD } = process.env
+
+  if (!PB_HOST || !PB_EMAIL || !PB_PASSWORD) {
+    LoggingService.error(
+      'Missing required environment variables: PB_HOST, PB_EMAIL, and PB_PASSWORD'
+    )
     process.exit(1)
   }
-} catch {
-  console.error('Server is not reachable or credentials are invalid.')
-  process.exit(1)
+
+  return { PB_HOST, PB_EMAIL, PB_PASSWORD }
 }
 
-const allModules = [
-  ...fs.readdirSync('./server/src/apps', { withFileTypes: true }),
-  ...fs.readdirSync('./server/src/core/lib', { withFileTypes: true })
-]
+// PocketBase authentication
+async function authenticatePocketBase(env: Environment): Promise<PocketBase> {
+  const pb = new PocketBase(env.PB_HOST)
 
-const modulesMap: Record<string, CollectionModel[]> = {}
+  try {
+    await pb
+      .collection('_superusers')
+      .authWithPassword(env.PB_EMAIL, env.PB_PASSWORD)
 
-const allCollections = await pb.collections.getFullList()
-
-const collections = allCollections.filter(e => !e.system)
-
-for (const collection of collections) {
-  const module = allModules.find(e =>
-    collection.name.startsWith(_.snakeCase(e.name))
-  )
-
-  if (!module) {
-    console.log(
-      chalk.yellow('[WARNING]') +
-        ` Collection ${collection.name} does not have a corresponding module.`
-    )
-
-    continue
-  }
-
-  if (!modulesMap[module.name]) {
-    modulesMap[module.name] = []
-  }
-  modulesMap[module.name]?.push(collection)
-}
-
-console.log(
-  chalk.green('[INFO]') +
-    ` Found ${Object.values(modulesMap).flat().length} collections across ${Object.keys(modulesMap).length} modules.`
-)
-
-for (const module of allModules) {
-  if (!modulesMap[module.name]) {
-    continue
-  }
-
-  const collections = modulesMap[module.name]
-
-  if (!collections) {
-    console.warn(
-      chalk.yellow('[WARNING]') +
-        ` No collections found for module ${chalk.bold(module.name)}.`
-    )
-    continue
-  }
-
-  const moduleName = collections[0].name.split('__')[0]
-
-  SCHEMA_STRING += `  ${moduleName}: {\n`
-
-  for (const collection of collections ?? []) {
-    console.log(
-      chalk.blue('[INFO]') +
-        ` Found ${collection.fields.length} fields in collection ${chalk.bold(
-          collection.name
-        )} in module ${chalk.bold(moduleName)}.`
-    )
-
-    const zodSchemaObject: Record<string, string> = {}
-
-    for (const field of collection.fields) {
-      if (field.name === 'id') {
-        // Skip fields that are auto-generated by PocketBase
-        continue
-      }
-
-      switch (field.type) {
-        case 'text':
-          zodSchemaObject[field.name] = 'z.string()'
-          break
-        case 'richtext':
-          zodSchemaObject[field.name] = 'z.string()'
-          break
-        case 'number':
-          zodSchemaObject[field.name] = 'z.number()'
-          break
-        case 'bool':
-          zodSchemaObject[field.name] = 'z.boolean()'
-          break
-        case 'email':
-          zodSchemaObject[field.name] = 'z.email()'
-          break
-        case 'url':
-          zodSchemaObject[field.name] = 'z.url()'
-          break
-        case 'date':
-          zodSchemaObject[field.name] = 'z.string()'
-          break
-        case 'autodate':
-          zodSchemaObject[field.name] = 'z.string()'
-          break
-        case 'select':
-          const value = [...field.values, ...(field.required ? [] : [''])]
-
-          zodSchemaObject[field.name] =
-            field.maxSelect > 1
-              ? `z.array(z.enum(${JSON.stringify(value)}))`
-              : `z.enum(${JSON.stringify(value)})`
-          break
-        case 'file':
-          zodSchemaObject[field.name] =
-            field.maxSelect > 1 ? 'z.array(z.string())' : 'z.string()'
-          break
-        case 'relation':
-          zodSchemaObject[field.name] =
-            field.maxSelect > 1 ? `z.array(z.string())` : `z.string()`
-          break
-        case 'json':
-          zodSchemaObject[field.name] = 'z.any()'
-          break
-        case 'geoPoint':
-          zodSchemaObject[field.name] =
-            'z.object({ lat: z.number(), lon: z.number() })'
-          break
-        case 'password':
-          zodSchemaObject[field.name] = 'z.string()'
-          break
-        default:
-          console.warn(
-            chalk.yellow('[WARNING]') +
-              ` Unknown field type ${field.type} for field ${field.name} in collection ${collection.name}.`
-          )
-          continue
-      }
+    if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
+      throw new Error('Invalid credentials or insufficient permissions')
     }
 
-    const zodSchemaString = `z.object({\n${Object.entries(zodSchemaObject)
+    return pb
+  } catch (error) {
+    LoggingService.error(
+      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
+    process.exit(1)
+  }
+}
+
+// Convert field to Zod schema
+function convertFieldToZodSchema(field: PocketBaseField): string | null {
+  if (field.name === 'id') {
+    return null // Skip auto-generated fields
+  }
+
+  const converter = FIELD_TYPE_MAPPING[field.type]
+
+  if (!converter) {
+    LoggingService.warn(
+      `Unknown field type '${field.type}' for field '${field.name}'. Skipping.`
+    )
+
+    return null
+  }
+
+  return converter(field)
+}
+
+// Generate Zod schema for a collection
+function generateCollectionSchema(
+  collection: CollectionModel
+): Record<string, string> {
+  const zodSchemaObject: Record<string, string> = {}
+
+  for (const field of collection.fields) {
+    const zodSchema = convertFieldToZodSchema(field as PocketBaseField)
+
+    if (zodSchema) {
+      zodSchemaObject[field.name] = zodSchema
+    }
+  }
+
+  return zodSchemaObject
+}
+
+// Build module collections mapping
+async function buildModuleCollectionsMap(
+  collections: CollectionModel[]
+): Promise<ModuleCollectionsMap> {
+  const moduleCollectionsMap: ModuleCollectionsMap = {}
+
+  let allModules: Array<{ name: string; isDirectory(): boolean }>
+
+  try {
+    const moduleEntries = await fs.readdir(PATHS.MODULES_DIR, {
+      withFileTypes: true
+    })
+
+    allModules = moduleEntries.filter(entry => entry.isDirectory())
+  } catch (error) {
+    LoggingService.error(`Failed to read modules directory: ${error}`)
+    process.exit(1)
+  }
+
+  for (const collection of collections) {
+    const matchingModule = allModules.find(module =>
+      collection.name.startsWith(_.snakeCase(module.name))
+    )
+
+    if (!matchingModule) {
+      LoggingService.warn(
+        `Collection '${collection.name}' has no corresponding module`
+      )
+      continue
+    }
+
+    if (!moduleCollectionsMap[matchingModule.name]) {
+      moduleCollectionsMap[matchingModule.name] = []
+    }
+    moduleCollectionsMap[matchingModule.name].push(collection)
+  }
+
+  const totalCollections = Object.values(moduleCollectionsMap).flat().length
+
+  const moduleCount = Object.keys(moduleCollectionsMap).length
+
+  LoggingService.info(
+    `Found ${totalCollections} collections across ${moduleCount} modules`
+  )
+
+  return moduleCollectionsMap
+}
+
+// Generate module schema content
+function generateModuleSchemaContent(
+  moduleName: string,
+  collections: CollectionModel[]
+): string {
+  const schemaEntries: string[] = []
+
+  for (const collection of collections) {
+    LoggingService.debug(
+      `Processing collection ${chalk.bold(collection.name)} with ${collection.fields.length} fields`
+    )
+
+    const zodSchemaObject = generateCollectionSchema(collection)
+
+    const schemaObjectString = Object.entries(zodSchemaObject)
       .map(([key, value]) => `  ${key}: ${value},`)
-      .join('\n')}\n}),`
+      .join('\n')
 
-    SCHEMA_STRING += `    ${collection.name.split('__').pop()}: ${zodSchemaString}\n`
+    const collectionName = collection.name.split('__').pop()
 
-    console.log(
-      chalk.green('[INFO]') +
-        ` Generated Zod schema for collection ${chalk.bold(
-          collection.name
-        )} in module ${chalk.bold(moduleName)}.`
+    const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
+
+    schemaEntries.push(`  ${collectionName}: ${zodSchemaString},`)
+
+    LoggingService.info(
+      `Generated schema for collection ${chalk.bold(collection.name)}`
     )
   }
 
-  SCHEMA_STRING += `  },\n`
+  return `import { z } from 'zod/v4'
+
+const ${_.camelCase(moduleName)}Schemas = {
+${schemaEntries.join('\n')}
 }
 
-SCHEMA_STRING += `}
+export default ${_.camelCase(moduleName)}Schemas
+`
+}
+
+// Generate main schema content
+function generateMainSchemaContent(moduleNames: string[]): string {
+  const imports = moduleNames
+    .map(
+      moduleName =>
+        `  ${moduleName}: (await import('@lib/${moduleName === 'users' ? 'user' : _.camelCase(moduleName)}/schema')).default,`
+    )
+    .join('\n')
+
+  return `import flattenSchemas from '@functions/utils/flattenSchema'
+
+export const SCHEMAS = {
+${imports}
+}
 
 const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
 
 export default COLLECTION_SCHEMAS
 `
+}
 
-const formattedSchemaString = await prettier.format(SCHEMA_STRING, {
-  parser: 'typescript'
-})
+// Write formatted file
+async function writeFormattedFile(
+  filePath: string,
+  content: string
+): Promise<void> {
+  try {
+    const formattedContent = await prettier.format(content, {
+      parser: 'typescript'
+    })
 
-fs.writeFileSync(
-  path.resolve(__dirname, '../server/src/core/schema.ts'),
-  formattedSchemaString
-)
+    await fs.writeFile(filePath, formattedContent)
+  } catch (error) {
+    LoggingService.error(`Failed to write file ${filePath}: ${error}`)
+    throw error
+  }
+}
+
+// Generate schemas for all modules
+async function generateSchemas(
+  moduleCollectionsMap: ModuleCollectionsMap
+): Promise<SchemaGenerationResult> {
+  const moduleSchemas: Record<string, string> = {}
+
+  const moduleNames: string[] = []
+
+  for (const [moduleDirName, collections] of Object.entries(
+    moduleCollectionsMap
+  )) {
+    if (!collections.length) {
+      LoggingService.warn(
+        `No collections found for module ${chalk.bold(moduleDirName)}`
+      )
+      continue
+    }
+
+    const moduleName = collections[0].name.split('__')[0]
+
+    moduleNames.push(moduleName)
+
+    const moduleSchemaContent = generateModuleSchemaContent(
+      moduleName,
+      collections
+    )
+
+    moduleSchemas[moduleDirName] = moduleSchemaContent
+
+    // Write individual module schema file
+    const moduleSchemaPath = path.join(
+      PATHS.MODULES_DIR,
+      moduleDirName,
+      'schema.ts'
+    )
+
+    await writeFormattedFile(moduleSchemaPath, moduleSchemaContent)
+
+    LoggingService.debug(
+      `Created schema file for module ${chalk.bold(moduleDirName)} at ${chalk.bold(`lib/${moduleDirName}/schema.ts`)}`
+    )
+  }
+
+  const mainSchemaContent = generateMainSchemaContent(moduleNames)
+
+  return { moduleSchemas, mainSchemaContent }
+}
+
+// Main execution function
+async function main(): Promise<void> {
+  try {
+    LoggingService.info('Starting schema generation process...')
+
+    // Setup
+    const env = validateEnvironment()
+
+    const pb = await authenticatePocketBase(env)
+
+    // Fetch collections
+    LoggingService.debug('Fetching collections from PocketBase...')
+
+    const allCollections = await pb.collections.getFullList()
+
+    const userCollections = allCollections.filter(
+      collection => !collection.system
+    )
+
+    LoggingService.info(
+      `Found ${userCollections.length} user-defined collections`
+    )
+
+    // Build module mapping
+    const moduleCollectionsMap =
+      await buildModuleCollectionsMap(userCollections)
+
+    // Generate schemas
+    const { moduleSchemas, mainSchemaContent } =
+      await generateSchemas(moduleCollectionsMap)
+
+    // Write main schema file
+    await writeFormattedFile(PATHS.CORE_SCHEMA, mainSchemaContent)
+    LoggingService.debug(
+      `Updated main schema file at ${chalk.bold('core/schema.ts')}`
+    )
+
+    // Summary
+    const moduleCount = Object.keys(moduleSchemas).length
+
+    LoggingService.info(
+      `Schema generation completed! Created ${moduleCount} module schema files.`
+    )
+  } catch (error) {
+    LoggingService.error(`Schema generation failed: ${error}`)
+    process.exit(1)
+  }
+}
+
+// Execute if this file is run directly
+if (require.main === module) {
+  main().catch(error => {
+    LoggingService.error(`Unhandled error: ${error}`)
+    process.exit(1)
+  })
+}

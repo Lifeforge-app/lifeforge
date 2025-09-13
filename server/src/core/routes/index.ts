@@ -1,15 +1,17 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
+import { clientError } from '@functions/routes/utils/response'
 import traceRouteStack from '@functions/utils/traceRouteStack'
-import { createAIRouter } from '@lib/ai'
 import express from 'express'
 
+import { createAIRouter } from '../../lib/ai'
 import appRoutes from './app.routes'
 import coreRoutes from './core.routes'
 
 const router = express.Router()
 
-const listRoutes = forgeController.query
+const listRoutes = forgeController
+  .query()
   .description('Get all registered routes')
   .input({})
   .callback(async () => traceRouteStack(router.stack))
@@ -29,6 +31,10 @@ const allRoutes = forgeRouter({
 })
 
 router.use('/', registerRoutes(allRoutes))
+
+router.get('*', (_, res) => {
+  return clientError(res, 'The requested endpoint does not exist', 404)
+})
 
 export { allRoutes }
 

@@ -1,3 +1,7 @@
+/**
+ * Utility functions to create OpenAI response formats using Zod schemas.
+ * This is a workaround until OpenAI provides Zod v4 support natively.
+ */
 import {
   makeParseableResponseFormat,
   makeParseableTextFormat
