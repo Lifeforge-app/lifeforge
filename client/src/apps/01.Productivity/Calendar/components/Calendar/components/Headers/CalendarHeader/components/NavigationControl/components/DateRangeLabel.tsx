@@ -3,10 +3,10 @@ import dayjs from 'dayjs'
 function DateRangeLabel({ label }: { label: string }) {
   if (label.match(/^(\w+)\s(\w+)$/)) {
     return (
-      <>
+      <div className="flex items-end gap-2">
         <span>{label.split(' ')[0]}</span>
         <span className="text-bg-500">{label.split(' ')[1]}</span>
-      </>
+      </div>
     )
   }
 

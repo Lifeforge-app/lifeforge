@@ -4,8 +4,10 @@ import { create } from 'zustand'
 interface CalendarState {
   start: string
   end: string
+  isEventLoading: boolean
   setStart: (start: string) => void
   setEnd: (end: string) => void
+  setIsEventLoading: (isEventLoading: boolean) => void
 }
 
 export const useCalendarStore = create<CalendarState>()(set => {
@@ -16,7 +18,9 @@ export const useCalendarStore = create<CalendarState>()(set => {
   return {
     start,
     end,
+    isEventLoading: false,
     setStart: (start: string) => set({ start }),
-    setEnd: (end: string) => set({ end })
+    setEnd: (end: string) => set({ end }),
+    setIsEventLoading: (isEventLoading: boolean) => set({ isEventLoading })
   }
 })

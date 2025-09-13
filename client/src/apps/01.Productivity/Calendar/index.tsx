@@ -11,7 +11,7 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { parseAsString, useQueryState } from 'nuqs'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
@@ -52,6 +52,12 @@ function CalendarModule() {
       type: 'create'
     })
   }, [])
+
+  useEffect(() => {
+    useCalendarStore
+      .getState()
+      .setIsEventLoading(rawEventsQuery.isFetching || rawEventsQuery.isLoading)
+  }, [rawEventsQuery.isFetching, rawEventsQuery.isLoading])
 
   return (
     <>
