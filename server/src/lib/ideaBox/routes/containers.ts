@@ -52,7 +52,9 @@ const create = forgeController
   .description('Create a new container')
   .input({
     body: SCHEMAS.idea_box.containers.omit({
-      cover: true
+      cover: true,
+      hidden: true,
+      pinned: true
     })
   })
   .media({
@@ -79,7 +81,9 @@ const update = forgeController
       id: z.string()
     }),
     body: SCHEMAS.idea_box.containers.omit({
-      cover: true
+      cover: true,
+      hidden: true,
+      pinned: true
     })
   })
   .media({
