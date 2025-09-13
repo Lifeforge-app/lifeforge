@@ -436,7 +436,7 @@ export class ForgeControllerBuilder<
 
           if (type === 'body') {
             const { data, media } = splitMediaAndData(
-              this.__media,
+              this._media,
               req[type],
               (req.files || {}) as Record<string, Express.Multer.File[]>
             )
