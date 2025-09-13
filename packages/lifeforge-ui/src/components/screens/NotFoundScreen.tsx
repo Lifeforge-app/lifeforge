@@ -13,7 +13,7 @@ function NotFoundScreen({
   const { t } = useTranslation('common.misc')
 
   return (
-    <div className="flex-center w-full flex-col gap-6">
+    <div className="flex-center w-full flex-1 flex-col gap-6">
       <span className="text-custom-500 text-[10rem]">;-;</span>
       <h1 className="text-4xl font-semibold">{title ?? t('notFound.title')}</h1>
       <p className="text-bg-500 text-xl">

@@ -1,4 +1,3 @@
-import { cookieParse } from 'pocketbase'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Socket, io } from 'socket.io-client'
 
@@ -27,7 +26,7 @@ export default function SocketProvider({
   useEffect(() => {
     const newSocket = io(import.meta.env.VITE_API_HOST, {
       auth: {
-        token: cookieParse(document.cookie).session
+        token: localStorage.getItem('session')
       }
     })
 

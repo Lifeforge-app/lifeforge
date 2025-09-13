@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createBrowserRouter } from 'react-router'
 
-import ROUTES from '../Routes'
+import ROUTES from '..'
 import {
   createAuthLoadingConfig,
   createAuthRouterConfig,
@@ -20,8 +20,8 @@ export function useAppRouter() {
   const { userData, auth, authLoading } = useAuth()
 
   const router = useMemo(() => {
+    // If authentication is still loading, return a placeholder router
     if (authLoading) {
-      // If authentication is still loading, return a placeholder router
       return createBrowserRouter(createAuthLoadingConfig())
     }
 
@@ -30,8 +30,7 @@ export function useAppRouter() {
       return createBrowserRouter(createAuthRouterConfig())
     }
 
-    // If user is authenticated, create full application routes
-    // based on enabled modules
+    // If user is authenticated, create full application routes based on enabled modules
     const routerConfig = createRouterConfig({
       routes: ROUTES,
       enabledModules: userData?.enabledModules ?? [],
@@ -39,7 +38,7 @@ export function useAppRouter() {
     })
 
     return createBrowserRouter(routerConfig)
-  }, [userData?.enabledModules, auth, t])
+  }, [userData?.enabledModules, auth, t, authLoading])
 
   return { router, isAuthenticated: !!auth }
 }

@@ -1,7 +1,6 @@
-import TwoFAModal from '@core/pages/Auth/modals/TwoFAModal'
+import TwoFAModal from '@core/auth/modals/TwoFAModal'
 import forgeAPI from '@utils/forgeAPI'
 import { useModalStore } from 'lifeforge-ui'
-import { cookieParse } from 'pocketbase'
 import {
   type RefObject,
   createContext,
@@ -122,9 +121,7 @@ export default function AuthProvider({
         })
 
         if (data.state === 'success') {
-          document.cookie = `session=${data.session}; path=/; expires=${new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000
-          ).toUTCString()}`
+          localStorage.setItem('session', data.session)
 
           setUserData(data.userData)
           setAuth(true)
@@ -171,9 +168,7 @@ export default function AuthProvider({
         const data = await res.json()
 
         if (res.ok && data.state === 'success') {
-          document.cookie = `session=${data.data.session}; path=/; expires=${new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000
-          ).toUTCString()}`
+          localStorage.setItem('session', data.data.session)
 
           setUserData(data.data.userData)
           setAuth(true)
@@ -228,9 +223,7 @@ export default function AuthProvider({
           setUserData(userData)
           setAuth(true)
 
-          document.cookie = `session=${session}; path=/; expires=${new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000
-          ).toUTCString()}`
+          localStorage.setItem('session', session)
 
           toast.success(t('auth.welcome') + userData?.username)
 
@@ -254,7 +247,7 @@ export default function AuthProvider({
 
   const logout = useCallback(() => {
     setAuth(false)
-    document.cookie = `session=; path=/; expires=${new Date(0).toUTCString()}`
+    localStorage.removeItem('session')
     setUserData(null)
   }, [])
 
@@ -274,8 +267,8 @@ export default function AuthProvider({
   const doUseEffect = useCallback(() => {
     setAuthLoading(true)
 
-    if (document.cookie.includes('session')) {
-      verifySession(cookieParse(document.cookie).session)
+    if (localStorage.getItem('session')) {
+      verifySession(localStorage.getItem('session')!)
         .then(async ({ success, userData }) => {
           if (success) {
             setUserData(userData)

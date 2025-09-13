@@ -1,4 +1,4 @@
-import Auth from '@core/pages/Auth'
+import Auth from '@core/auth'
 import RootLayout from '@core/routes/components/RootLayout'
 import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
 import type { RouteObject } from 'react-router'

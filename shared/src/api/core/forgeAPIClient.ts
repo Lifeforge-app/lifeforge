@@ -28,12 +28,8 @@ export class ForgeAPIClientController<
   /** Internal type, for type inference only */
   public __type!: T
 
-  /** Internal cache key for React Query and other usages */
-  private _key: unknown[] = []
-  /** The full API endpoint path, including query string */
-  private _endpoint: string = ''
   /** Internal storage for query parameters */
-  private _input: Record<string, any> | undefined
+  protected _input: Record<string, any> | undefined
 
   /**
    * Creates a new API client controller for a specific route.
@@ -43,28 +39,28 @@ export class ForgeAPIClientController<
   constructor(
     private _apiHost: string = '',
     private _route: string
-  ) {
-    this.refreshEndpoint()
-  }
+  ) {}
 
   /**
    * Returns the current cache key, which includes the route and query params.
    * Useful for React Query's `queryKey`.
    */
   get key() {
-    return this._key
+    return [
+      ...this._route.split('/').filter(Boolean),
+      this._input ?? null
+    ].filter(Boolean)
   }
 
   /**
    * Returns the full endpoint URL (absolute), including query string if present.
    */
   get endpoint() {
-    return new URL(this._endpoint, this._apiHost).toString()
+    return new URL(this._getPath(), this._apiHost).toString()
   }
 
   setHost(apiHost: string) {
     this._apiHost = apiHost
-    this.refreshEndpoint()
 
     return this
   }
@@ -72,14 +68,13 @@ export class ForgeAPIClientController<
   /**
    * Set query parameters for the endpoint.
    * @param data Object of query parameters matching the input type
-   * @returns The controller instance for chaining
+   * @returns A new controller instance for chaining
    */
   input(data: InferInput<T>['query']) {
     this._input = joinObjectsRecursively(
       this._input || {},
       data as Record<string, any>
     )
-    this.refreshEndpoint()
 
     return this
   }
@@ -90,15 +85,17 @@ export class ForgeAPIClientController<
    * @returns Options for use in React Query's `useQuery`
    */
   queryOptions(
-    options: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'> = {}
+    options: Omit<UseQueryOptions<any>, 'queryFn' | 'queryKey'> & {
+      queryKey?: unknown[]
+    } = {}
   ): UseQueryOptions<InferOutput<T>> {
     return {
       ...options,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
-      queryKey: this._key,
+      queryKey: options.queryKey ? options.queryKey : this.key,
       queryFn: () =>
-        fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+        fetchAPI<InferOutput<T>>(this._apiHost, this._getPath(), {
           method: 'get'
         })
     }
@@ -117,9 +114,9 @@ export class ForgeAPIClientController<
   ): UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']> {
     return {
       ...options,
-      mutationKey: this._key,
+      mutationKey: this.key,
       mutationFn: (data: Partial<T>) => {
-        return fetchAPI(this._apiHost, this._endpoint, {
+        return fetchAPI(this._apiHost, this._getPath(), {
           method: 'POST',
           body: hasFile(data) ? getFormData(data) : data
         })
@@ -137,7 +134,7 @@ export class ForgeAPIClientController<
     raiseError?: boolean
     isExternal?: boolean
   }) {
-    return fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+    return fetchAPI<InferOutput<T>>(this._apiHost, this._getPath(), {
       method: 'GET',
       ...options
     })
@@ -149,7 +146,7 @@ export class ForgeAPIClientController<
    * @returns Promise resolving to the API response
    */
   mutate(data: InferInput<T>['body'] | FormData) {
-    return fetchAPI<InferOutput<T>>(this._apiHost, this._endpoint, {
+    return fetchAPI<InferOutput<T>>(this._apiHost, this._getPath(), {
       method: 'POST',
       body:
         data instanceof FormData
@@ -161,12 +158,10 @@ export class ForgeAPIClientController<
   }
 
   /**
-   * Refreshes the endpoint string and cache key based on current route and input.
-   * Called internally during class construction and when input changes.
-   * @private
+   * Constructs the endpoint path with query parameters if present.
    */
-  private refreshEndpoint() {
-    this._endpoint = `${this._route}`
+  protected _getPath() {
+    let endpoint = `${this._route}`
 
     if (this._input) {
       const queryParams = new URLSearchParams(
@@ -175,13 +170,10 @@ export class ForgeAPIClientController<
         )
       )
 
-      this._endpoint += `?${queryParams.toString()}`
+      endpoint += `?${queryParams.toString()}`
     }
 
-    this._key = [
-      ...this._route.split('/').filter(Boolean),
-      this._input ? JSON.stringify(this._input) : null
-    ].filter(Boolean)
+    return endpoint
   }
 }
 

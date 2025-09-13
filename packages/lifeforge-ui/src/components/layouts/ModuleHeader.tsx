@@ -37,12 +37,9 @@ function ModuleHeader({
 
   const { t } = useTranslation([
     `apps.${_.camelCase(title?.toString() ?? '')}`,
-    `core.${_.camelCase(title?.toString() ?? '')}`,
     'common.misc',
     namespace ?? ''
   ])
-
-  console.log(icon)
 
   const { toggleSidebar, sidebarExpanded } = useSidebarState()
 
@@ -68,8 +65,7 @@ function ModuleHeader({
               {t([
                 `${namespace}:${tKey}.${_.camelCase(title?.toString() ?? '')}.title`,
                 `${namespace}:${_.camelCase(title?.toString() ?? '')}.title`,
-                `apps..camelCase(title?.toString() ?? '')}:title`,
-                `core.${_.camelCase(title?.toString() ?? '')}:title`,
+                `apps.${_.camelCase(title?.toString() ?? '')}:title`,
                 'common.misc:title',
                 'title',
                 title?.toString() ?? ''
@@ -85,8 +81,7 @@ function ModuleHeader({
             {t([
               `${namespace}:${tKey}.${_.camelCase(title?.toString() ?? '')}.description`,
               `${namespace}:${_.camelCase(title?.toString() ?? '')}.description`,
-              `apps..camelCase(title?.toString() ?? '')}:description`,
-              `core.${_.camelCase(title?.toString() ?? '')}:description`,
+              `apps.${_.camelCase(title?.toString() ?? '')}:description`,
               'common.misc:description',
               'description',
               `Description for ${title?.toString() ?? ''}`

@@ -35,32 +35,40 @@ export class LoggingService {
   public static error(message: string, service?: string): void {
     const instance = new LoggingService()
 
-    console.error(`${instance.getPrefix('ERROR', service)} ${message}`)
+    const prefix = instance.getPrefix('ERROR', service)
 
-    instance.logToFile(`${instance.getPrefix('ERROR')} ${message}`)
+    console.error(`${prefix} ${message}`)
+
+    instance.logToFile(`${prefix} ${message}`)
   }
 
   public static warn(message: string, service?: string): void {
     const instance = new LoggingService()
 
-    console.warn(`${instance.getPrefix('WARN', service)} ${message}`)
+    const prefix = instance.getPrefix('WARN', service)
 
-    instance.logToFile(`${instance.getPrefix('WARN')} ${message}`)
+    console.warn(`${prefix} ${message}`)
+
+    instance.logToFile(`${prefix} ${message}`)
   }
 
   public static info(message: string, service?: string): void {
     const instance = new LoggingService()
 
-    console.info(`${instance.getPrefix('INFO', service)} ${message}`)
+    const prefix = instance.getPrefix('INFO', service)
 
-    instance.logToFile(`${instance.getPrefix('INFO')} ${message}`)
+    console.info(`${prefix} ${message}`)
+
+    instance.logToFile(`${prefix} ${message}`)
   }
 
   public static debug(message: string, service?: string): void {
     const instance = new LoggingService()
 
-    console.debug(`${instance.getPrefix('DEBUG', service)} ${message}`)
+    const prefix = instance.getPrefix('DEBUG', service)
 
-    instance.logToFile(`${instance.getPrefix('DEBUG')} ${message}`)
+    console.debug(`${prefix} ${message}`)
+
+    instance.logToFile(`${prefix} ${message}`)
   }
 }

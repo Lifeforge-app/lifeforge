@@ -21,7 +21,10 @@ function SSOHeader({
 
   return (
     <header
-      className={clsx('flex w-full items-center justify-between', className)}
+      className={clsx(
+        'flex w-full items-center justify-between p-12',
+        className
+      )}
     >
       <h1 className="flex items-center gap-2">
         <Icon className="text-custom-400 text-4xl" icon={icon} />
