@@ -87,7 +87,7 @@ function AnnasModal({ onClose }: { onClose: () => void }) {
         <SearchInput
           className="component-bg-lighter-with-hover"
           namespace="apps.booksLibrary"
-          searchTarget="Anna's Archive Book"
+          searchTarget="libgenBook"
           setValue={setSearchQuery}
           value={searchQuery}
           onKeyUp={e => {
