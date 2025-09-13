@@ -55,7 +55,7 @@ export default async function fetchAPI<T>(
   {
     method = 'GET',
     body,
-    timeout = 30000,
+    timeout = 300000,
     raiseError = true,
     isExternal = false
   }: {
