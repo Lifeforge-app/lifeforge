@@ -4,10 +4,7 @@ import { useEffect } from 'react'
 import fetchAPI from '../../../utils/fetchAPI'
 import { useAPIEndpoint } from '../../APIEndpointProvider'
 
-function useFontFamily(
-  fontFamily: string,
-  fontScale: number
-) {
+function useFontFamily(fontFamily: string, fontScale: number) {
   const apiEndpoint = useAPIEndpoint()
 
   useEffect(() => {
@@ -33,7 +30,7 @@ function useFontFamily(
         )
 
         if (!data.enabled) {
-          document.body.style.fontFamily = 'Onest, sans-serif'
+          document.body.style.fontFamily = 'Onest, sans-serif !important'
 
           return
         }
@@ -57,13 +54,13 @@ function useFontFamily(
 
               css += fontFace + '\n'
             })
-            document.body.style.fontFamily = `"${font.family}", sans-serif`
+            document.body.style.fontFamily = `"${font.family}", sans-serif !important`
           })
         }
 
         styleTag!.textContent = css
       } catch {
-        document.body.style.fontFamily = 'Onest, sans-serif'
+        document.body.style.fontFamily = 'Onest, sans-serif !important'
         console.error('Failed to update font family')
       }
     }
