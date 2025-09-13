@@ -25,7 +25,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
       const challenge = await forgeAPI.user['2fa'].getChallenge.query()
 
       await forgeAPI.user['2fa'].verifyAndEnable.mutate({
-        otp: encrypt(encrypt(otp, challenge), localStorage.getItem('session'))
+        otp: encrypt(encrypt(otp, challenge), localStorage.getItem('session')!)
       })
 
       onSuccess()

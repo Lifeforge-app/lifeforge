@@ -268,7 +268,7 @@ export default function AuthProvider({
     setAuthLoading(true)
 
     if (localStorage.getItem('session')) {
-      verifySession(localStorage.getItem('session'))
+      verifySession(localStorage.getItem('session')!)
         .then(async ({ success, userData }) => {
           if (success) {
             setUserData(userData)
