@@ -95,7 +95,8 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
     <ItemWrapper
       isInteractive
       as="li"
-      className="group flex flex-col items-center justify-start gap-6 p-0!"
+      className="group flex cursor-default! flex-col items-center justify-start p-0!"
+      tabIndex={-1}
     >
       {container.pinned && (
         <Icon
@@ -124,7 +125,7 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
           />
         )}
       </div>
-      <div className="flex flex-col items-center justify-start gap-6 p-8 pt-0">
+      <div className="relative flex w-full flex-col items-center justify-start gap-6 p-6">
         <div className="bg-bg-950 -mt-12 overflow-hidden rounded-lg">
           <div
             className="rounded-lg p-4"
@@ -161,14 +162,17 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
             <span className="text-bg-500">{container.image_count}</span>
           </div>
         </div>
+        <Link
+          className="absolute inset-0 cursor-pointer"
+          to={`/idea-box/${container.id}`}
+        />
       </div>
-      <Link
-        className="absolute top-0 left-0 size-full"
-        to={`/idea-box/${container.id}`}
-      />
       <ContextMenu
         classNames={{
-          wrapper: 'absolute z-[100] right-4 top-4'
+          wrapper:
+            'absolute z-[100] right-2 top-2 group-focus:opacity-100 group-hover:opacity-100 data-[state=open]:opacity-100 opacity-0 transition-opacity',
+          button:
+            'bg-bg-100 hover:bg-bg-200 text-bg-500 dark:bg-bg-800 dark:hover:bg-bg-700! dark:text-bg-600'
         }}
       >
         <ContextMenuItem
