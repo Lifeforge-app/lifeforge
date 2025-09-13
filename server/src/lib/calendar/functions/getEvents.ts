@@ -11,12 +11,9 @@ export default async function getEvents({
   start: string
   end: string
 }) {
-  const startMoment = moment(start)
-    .startOf('day')
-    .utc()
-    .format('YYYY-MM-DD HH:mm:ss')
+  const startMoment = moment(start).startOf('day').format('YYYY-MM-DD HH:mm:ss')
 
-  const endMoment = moment(end).endOf('day').utc().format('YYYY-MM-DD HH:mm:ss')
+  const endMoment = moment(end).endOf('day').format('YYYY-MM-DD HH:mm:ss')
 
   const allEvents: Array<{
     id: string
@@ -87,11 +84,9 @@ export default async function getEvents({
 
     const eventsInRange = parsed.between(
       moment(startMoment)
-        .subtract(event.duration_amount + 1, event.duration_unit)
+        .subtract(event.duration_amount, event.duration_unit)
         .toDate(),
-      moment(endMoment)
-        .add(event.duration_amount + 1, event.duration_unit)
-        .toDate(),
+      moment(endMoment).toDate(),
       true
     )
 
