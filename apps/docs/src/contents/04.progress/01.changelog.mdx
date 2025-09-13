@@ -27,6 +27,89 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 
 ---
 
+<Version week={37}>
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="d83c6b55b1198348cd673ea516738c2b49aae5a2" />: Added "Move to Folder" action in the context menu of Idea Box entries.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w37-1.png)
+
+- <Commit hash="de761730c083afb14beb3dac0bb2d7c9c5b86249" />: Added Anna's Archive integration in Books Library module. Users can now search for books in Anna's Archive and access the download links directly from the app.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w37-2.png)
+
+- <Commit hash="7b17b051a474b7ef11cac1537479b5acd3ddd76d" />: Added toggle pin and hide functionality for Idea Box containers.
+- <Commit hash="a715bd2ab3477b7db47813b04599de051c79e03d" />: Added a loading indicator besides the calendar header title when events are being fetched.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="7d88a6728d04978bcf2ab67d60ad43e1a369c5ae" />: feat(ui): Added RGB and HSV input support in <code>ColorInput</code> component.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w37-3.png)
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="9fc6f494eee353a1ab56f45c631ea5747251c455" />: Implemented mechanism for dynamically importing dashboard widget components and configs from each modules. Dashboard widgets are now located in each module's directory instead of being hardcoded in the dashboard module. They will be automatically discovered and imported during runtime.
+
+  <Code language="plaintext">
+  {`/src/apps/01.Productivity/calendar/
+    ├── widgets/
+    │   ├── MiniCalendar.tsx
+    │   ├── TodaysEvents.tsx
+    │   └── ...
+    └── ...`}
+  </Code>
+
+- <Commit hash="7dfd3974ddc6ce49418f445134606afdd50d023b" />: Implemented mechanism for dynamically scan for modules and construct routes based on the modules available. Modules are now categorized into different categories under the <code>src/apps</code> directory, and the order of the categories in the sidebar are controlled by the number prefix of the category folder name.
+
+  <Code language="plaintext">
+  {`/apps/
+    ├── 00
+    ├── 01.Productivity
+    ├── 02.Lifestyle
+    ├── 03. ...
+    └── 99`}
+  </Code>
+
+- <Commit hash="c5a78ae2aee61937fc3adb86c88065ee8d43ad68" />: All localization files are now moved to client side.
+
+  <Code language="plaintext">
+  {`/src/apps/01.Productivity/myApp/locales/
+    ├── en.json
+    ├── zh.json
+    └── ...`}
+  </Code>
+
+- <Commit hash="c3f5386c5992f51e0f03d1cd6400111455f3b271" />, <Commit hash="7c3547c5227592170ae4b2106f2b8f1ed6f4c6fb" />: Moved all module-related business logics to <code>server/src/lib</code> folder.
+- <Commit hash="d8d52607aed12c2b406cebc2945da5c8635c11fb" />: Module-related database schemas are now located in their respective module folders instead of everything being in <code>server/src/schemas.ts</code>.
+- <Commit hash="e58894090389c1a613c7a1f78a1d7102213a34a0" />: Implemented database connection and collection validation during server starting process.
+
+  <Code language="log">
+  {`INFO  2025-09-13 09:46:00 | [DB] Successfully connected to PocketBase
+  INFO  2025-09-13 09:46:00 | [DB] Database validation complete. All 65 collections are present
+  DEBUG 2025-09-13 09:46:00 | [API] Registered routes: 268
+  INFO  2025-09-13 09:46:00 | [API] REST API server running on port 3636`}
+  </Code>
+
+- <Commit hash="b47e0faee5b20de5b3e033dc0f33816c3fa9053d" />: Replaced cookie-based session management with local storage-based session management for improved security.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="0169ec1e2fecb067af69bed4271f46a9bccbe2c6" />: Improve media file fetching and streaming logics.
+- <Commit hash="de0fe27f500608eaab744d96c35e1c7ccf4d7054" />: Fixed a bug where the <code>X-Powered-By</code> header is not removed from the server responses.
+- <Commit hash="d23b331341d5cf858fcc83e78ad74492124189da" />: Fixed a bug where the service names are not recorded in the log files.
+- <Commit hash="bf960d7de343df1bf3fe2453c6c547c724a0100e" />: Fixed height issues in <code>NotFoundScreen</code> component.
+- <Commit hash="3b3288a7c02d5b81409abf4824695c67051c09bb" />: Added fallback response for requests on non-existing API routes (somehow being omitted for months, my bad).
+- <Commit hash="253e36f31949b45e1f704664bf917e2a865420ed" />: Fixed instance pollution issue for forgeController (noAuth method doesn't work properly before because of this, critical bug, but fortunately there are multiple layers of security).
+- <Commit hash="781885b6a5faab24adbd6842d7b8b0b8c94f347e" />: Improved context menu button interaction for idea box containers.
+- <Commit hash="620fa03712addc4a52ca9ee811f859cd0f1f8012" />: Fixed a bug where the events are not fetched correctly in the Today's Event dashboard widget.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="5e25232f67c8b4ee391e2a1ec6559298727a3f5d" />: Improved styling for <code>Note</code> and <code>Warning</code> components in documentation.
+
+</Version>
+
 <Version week={36}>
 ### 🏢 Module-Specific & Feature Updates
 
