@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
-import { useAuth } from '../../../core/providers/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm({ providers }: { providers: string[] }) {
