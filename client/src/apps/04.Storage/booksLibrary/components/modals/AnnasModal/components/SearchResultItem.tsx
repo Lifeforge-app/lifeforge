@@ -33,7 +33,7 @@ function SearchResultItem({
         )}
       </div>
       <div className="-mt-1 flex w-full flex-col">
-        <p className="text-bg-500 mb-1 text-sm font-medium tracking-wide">
+        <p className="text-bg-500 mb-1 text-sm font-medium tracking-wide break-all">
           {book.filePath}
         </p>
         <h2 className="text-2xl font-semibold">{book.title}</h2>
