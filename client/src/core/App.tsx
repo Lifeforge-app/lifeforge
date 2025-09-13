@@ -18,7 +18,7 @@ import {
   ToastProvider
 } from 'shared'
 
-import { MusicProvider } from '@apps/Music/providers/MusicProvider'
+import { MusicProvider } from '@apps/04.Storage/music/providers/MusicProvider'
 
 import './i18n'
 import './index.css'

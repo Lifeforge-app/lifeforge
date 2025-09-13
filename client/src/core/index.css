@@ -25,9 +25,9 @@ layer(base);
 @source '../../../node_modules/lifeforge-ui/dist';
 
 /* App styles */
-@import '@core/pages/Dashboard/index.css';
-@import '@apps/Calendar/index.css';
-@import '@apps/RailwayMap/index.css';
-@import '@apps/Music/index.css';
-@import '@apps/Blog/index.css';
-@import '@apps/SinChewDaily/index.css';
+@import '@apps/00/dashboard/index.css';
+@import '@apps/01.Productivity/Calendar/index.css';
+@import '@apps/06.Information/RailwayMap/index.css';
+@import '@apps/04.Storage/Music/index.css';
+@import '@apps/02.Lifestyle/Blog/index.css';
+@import '@apps/06.Information/SinChewDaily/index.css';

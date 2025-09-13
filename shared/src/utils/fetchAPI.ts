@@ -1,5 +1,3 @@
-import getAuthorizationToken from './getAuthorizationToken'
-
 interface ApiResponse<T> {
   state: 'success' | 'error'
   data?: T
@@ -80,7 +78,7 @@ export default async function fetchAPI<T>(
       body instanceof Blob
     )
 
-  const session = getAuthorizationToken()
+  const session = localStorage.getItem('session')
 
   const url = isExternal ? new URL(endpoint) : new URL(endpoint, apiHost)
 
