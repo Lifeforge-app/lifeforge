@@ -114,7 +114,7 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
                 collectionId: container.collectionId,
                 recordId: container.id,
                 fieldId: container.cover,
-                thumb: '0x500'
+                thumb: '0x300'
               }).endpoint
             }
           />
