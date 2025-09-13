@@ -58,7 +58,11 @@
     "viewArchived": "Lihat Diarkibkan",
     "archive": "Arkibkan",
     "removeFromFolder": "Keluarkan dari Folder",
-    "moveToFolder": "Pindahkan ke Folder"
+    "moveToFolder": "Pindahkan ke Folder",
+    "hide": "Sembunyikan",
+    "unhide": "Tunjukkan Kembali",
+    "showHidden": "Tunjukkan Tersembunyi",
+    "hideHidden": "Sembunyikan Tersembunyi"
   },
   "inputs": {
     "containerName": "Nama Kotak Idea",

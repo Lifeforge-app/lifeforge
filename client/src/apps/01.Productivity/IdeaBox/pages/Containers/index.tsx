@@ -2,6 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
+  ContextMenuItem,
   EmptyStateScreen,
   ModuleHeader,
   SearchInput,
@@ -20,6 +21,8 @@ function IdeaBox() {
   const { t } = useTranslation('apps.ideaBox')
 
   const [searchQuery, setSearchQuery] = useState('')
+
+  const [showhidden, setShowhidden] = useState(false)
 
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
@@ -44,6 +47,18 @@ function IdeaBox() {
             new
           </Button>
         }
+        contextMenuProps={{
+          children: (
+            <>
+              <ContextMenuItem
+                icon="tabler:eye-off"
+                label={showhidden ? 'Hide Hidden' : 'Show Hidden'}
+                namespace="apps.ideaBox"
+                onClick={() => setShowhidden(prev => !prev)}
+              />
+            </>
+          )
+        }}
       />
       <SearchInput
         namespace="apps.ideaBox"
@@ -51,7 +66,11 @@ function IdeaBox() {
         setValue={setSearchQuery}
         value={searchQuery}
       />
-      <WithQueryData controller={forgeAPI.ideaBox.containers.list}>
+      <WithQueryData
+        controller={forgeAPI.ideaBox.containers.list.input({
+          hidden: showhidden.toString()
+        })}
+      >
         {data => {
           if (data.length === 0) {
             return (

@@ -38,6 +38,40 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
       })
   )
 
+  const togglePinMutation = useMutation(
+    forgeAPI.ideaBox.containers.togglePin
+      .input({
+        id: container.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'containers']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to toggle pin')
+        }
+      })
+  )
+
+  const toggleHideMutation = useMutation(
+    forgeAPI.ideaBox.containers.toggleHide
+      .input({
+        id: container.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['ideaBox', 'containers']
+          })
+        },
+        onError: () => {
+          toast.error('Failed to toggle hide')
+        }
+      })
+  )
+
   const handleUpdateContainer = useCallback(() => {
     open(ModifyContainerModal, {
       type: 'update',
@@ -61,9 +95,15 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
     <ItemWrapper
       isInteractive
       as="li"
-      className="group flex flex-col items-center justify-start gap-6 overflow-hidden p-0!"
+      className="group flex flex-col items-center justify-start gap-6 p-0!"
     >
-      <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-video w-full">
+      {container.pinned && (
+        <Icon
+          className="absolute -top-2 -left-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
+          icon="tabler:pin"
+        />
+      )}
+      <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-video w-full overflow-hidden rounded-t-lg">
         {container.cover !== '' ? (
           <img
             alt=""
@@ -101,7 +141,12 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
             />
           </div>
         </div>
-        <div className="text-center text-2xl font-medium">{container.name}</div>
+        <div className="flex items-center gap-2 text-center text-2xl font-medium">
+          {container.name}
+          {container.hidden && (
+            <Icon className="text-bg-500 size-5" icon="tabler:eye-off" />
+          )}
+        </div>
         <div className="mt-auto flex items-center gap-3">
           <div className="flex items-center gap-2">
             <Icon className="text-bg-500 size-5" icon="tabler:article" />
@@ -126,6 +171,17 @@ function ContainerItem({ container }: { container: IdeaBoxContainer }) {
           wrapper: 'absolute z-[100] right-4 top-4'
         }}
       >
+        <ContextMenuItem
+          icon={container.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
+          label={container.pinned ? 'Unpin' : 'Pin'}
+          onClick={() => togglePinMutation.mutate({})}
+        />
+        <ContextMenuItem
+          icon={container.hidden ? 'tabler:eye' : 'tabler:eye-off'}
+          label={container.hidden ? 'Unhide' : 'Hide'}
+          namespace="apps.ideaBox"
+          onClick={() => toggleHideMutation.mutate({})}
+        />
         <ContextMenuItem
           icon="tabler:pencil"
           label="Edit"

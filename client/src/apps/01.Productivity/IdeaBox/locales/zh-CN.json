@@ -58,7 +58,11 @@
     "viewArchived": "查看已归档",
     "archive": "归档",
     "removeFromFolder": "从资料夹中移除",
-    "moveToFolder": "移动到文件夹"
+    "moveToFolder": "移动到文件夹",
+    "hide": "隐藏",
+    "unhide": "显示",
+    "showHidden": "显示已隐藏",
+    "hideHidden": "隐藏已隐藏"
   },
   "inputs": {
     "containerName": "创意盒名称",

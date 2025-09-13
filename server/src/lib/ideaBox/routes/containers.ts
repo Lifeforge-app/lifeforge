@@ -23,11 +23,27 @@ const validate = forgeController
 const list = forgeController
   .query()
   .description('Get all containers')
-  .input({})
-  .callback(({ pb }) =>
+  .input({
+    query: z.object({
+      hidden: z
+        .string()
+        .optional()
+        .transform(val => val === 'true')
+    })
+  })
+  .callback(({ pb, query: { hidden } }) =>
     pb.getFullList
       .collection('idea_box__containers_aggregated')
-      .sort(['name'])
+      .filter([
+        !hidden
+          ? {
+              field: 'hidden',
+              operator: '=',
+              value: false
+            }
+          : undefined
+      ])
+      .sort(['hidden', '-pinned', 'name'])
       .execute()
   )
 
@@ -101,10 +117,65 @@ const remove = forgeController
     pb.delete.collection('idea_box__containers').id(id).execute()
   )
 
+const togglePin = forgeController
+  .mutation()
+  .description('Toggle pin status of a container')
+  .input({
+    query: z.object({
+      id: z.string()
+    })
+  })
+  .existenceCheck('query', {
+    id: 'idea_box__containers'
+  })
+  .callback(async ({ pb, query: { id } }) => {
+    const container = await pb.getOne
+      .collection('idea_box__containers')
+      .id(id)
+      .execute()
+
+    return pb.update
+      .collection('idea_box__containers')
+      .id(id)
+      .data({
+        pinned: !container.pinned
+      })
+      .execute()
+  })
+
+const toggleHide = forgeController
+  .mutation()
+  .description('Toggle hide status of a container')
+  .input({
+    query: z.object({
+      id: z.string()
+    })
+  })
+  .existenceCheck('query', {
+    id: 'idea_box__containers'
+  })
+  .callback(async ({ pb, query: { id } }) => {
+    const container = await pb.getOne
+      .collection('idea_box__containers')
+      .id(id)
+      .execute()
+
+    return pb.update
+      .collection('idea_box__containers')
+      .id(id)
+      .data({
+        hidden: !container.hidden,
+        pinned: false
+      })
+      .execute()
+  })
+
 export default forgeRouter({
   validate,
   list,
   create,
   update,
-  remove
+  remove,
+  togglePin,
+  toggleHide
 })
