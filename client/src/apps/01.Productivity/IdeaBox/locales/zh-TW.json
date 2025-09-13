@@ -58,7 +58,11 @@
     "viewArchived": "查看已歸檔",
     "archive": "歸檔",
     "removeFromFolder": "從資料夾中移除",
-    "moveToFolder": "移動到資料夾"
+    "moveToFolder": "移動到資料夾",
+    "hide": "隱藏",
+    "unhide": "顯示",
+    "showHidden": "顯示已隱藏",
+    "hideHidden": "隱藏已隱藏"
   },
   "inputs": {
     "containerName": "創意盒名稱",
