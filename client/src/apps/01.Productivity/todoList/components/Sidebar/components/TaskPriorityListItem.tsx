@@ -36,7 +36,7 @@ function TaskPriorityListItem({ item }: { item: TodoListPriority }) {
       })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['todo-list'] })
+          queryClient.invalidateQueries({ queryKey: ['todoList'] })
 
           if (item.id === filter.priority) {
             setFilter('priority', null)
