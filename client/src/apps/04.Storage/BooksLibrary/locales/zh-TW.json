@@ -67,7 +67,8 @@
     "markAsUnread": "標記為未讀",
     "markAsReading": "標記為閱讀中",
     "addToFavourites": "新增至我的最愛",
-    "removeFromFavourites": "從我的最愛移除"
+    "removeFromFavourites": "從我的最愛移除",
+    "openDownloadPage": "打開下載頁面"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -91,7 +92,8 @@
   },
   "items": {
     "book": "圖書",
-    "libgenBook": "數百萬圖書"
+    "libgenBook": "數百萬圖書",
+    "annasBook": ""
   },
   "empty": {
     "book": {
