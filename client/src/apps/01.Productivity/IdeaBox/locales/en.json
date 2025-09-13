@@ -58,7 +58,11 @@
     "viewArchived": "View Archived",
     "archive": "Archive",
     "removeFromFolder": "Remove from Folder",
-    "moveToFolder": "Move to Folder"
+    "moveToFolder": "Move to Folder",
+    "hide": "Hide",
+    "unhide": "Unhide",
+    "showHidden": "Show Hidden",
+    "hideHidden": "Hide Hidden"
   },
   "inputs": {
     "containerName": "Idea Box Name",

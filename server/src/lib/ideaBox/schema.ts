@@ -6,6 +6,8 @@ const ideaBoxSchemas = {
     color: z.string(),
     name: z.string(),
     cover: z.string(),
+    pinned: z.boolean(),
+    hidden: z.boolean(),
   }),
   entries: z.object({
     type: z.enum(["text", "image", "link"]),
@@ -42,6 +44,8 @@ const ideaBoxSchemas = {
     color: z.string(),
     icon: z.string(),
     cover: z.string(),
+    pinned: z.boolean(),
+    hidden: z.boolean(),
     text_count: z.number(),
     link_count: z.number(),
     image_count: z.number(),
