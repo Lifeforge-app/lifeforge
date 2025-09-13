@@ -30,7 +30,7 @@ function useFontFamily(fontFamily: string, fontScale: number) {
         )
 
         if (!data.enabled) {
-          document.body.style.fontFamily = 'Onest, sans-serif !important'
+          document.body.style.fontFamily = 'Onest, sans-serif'
 
           return
         }
@@ -54,13 +54,13 @@ function useFontFamily(fontFamily: string, fontScale: number) {
 
               css += fontFace + '\n'
             })
-            document.body.style.fontFamily = `"${font.family}", sans-serif !important`
+            document.body.style.fontFamily = `"${font.family}", sans-serif`
           })
         }
 
         styleTag!.textContent = css
       } catch {
-        document.body.style.fontFamily = 'Onest, sans-serif !important'
+        document.body.style.fontFamily = 'Onest, sans-serif'
         console.error('Failed to update font family')
       }
     }
