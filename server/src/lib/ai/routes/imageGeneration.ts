@@ -32,15 +32,16 @@ const generateImage = forgeController
     const response = await openai.images.generate({
       model: 'gpt-image-1',
       prompt,
-      n: 1,
       size: '1536x1024'
     })
 
-    if (!response.data?.[0].url) {
+    const image_base64 = response.data?.[0].b64_json
+
+    if (!image_base64) {
       throw new Error('No image generated')
     }
 
-    return response.data[0].url
+    return `data:image/png;base64,${image_base64}`
   })
 
 export default forgeRouter({ verifyAPIKey, generateImage })
