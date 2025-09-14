@@ -2,7 +2,7 @@ import { decrypt2 } from '@functions/auth/encryption'
 import { PBService } from '@functions/database'
 import { ClientError } from '@functions/routes/utils/response'
 import { SCHEMAS } from '@schema'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { z } from 'zod/v4'
 
 export const getDecryptedMaster = async (
