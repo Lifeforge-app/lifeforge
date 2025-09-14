@@ -17,7 +17,7 @@ export default function HoursAndMinutesFromSeconds({
         <>
           {Math.floor(seconds / 60) > 0 ? (
             <>
-              {Math.floor(seconds / 60)}
+              {Math.floor(seconds / 60).toLocaleString()}
               <span className="text-bg-500 pl-1 text-3xl font-normal">
                 {t('units.h')}
               </span>
