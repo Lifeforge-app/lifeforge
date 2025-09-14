@@ -3,7 +3,7 @@ import { decrypt, decrypt2, encrypt } from '@functions/auth/encryption'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import COLLECTION_SCHEMAS from '@schema'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import PocketBase from 'pocketbase'
 import { z } from 'zod/v4'
 
