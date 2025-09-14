@@ -1,4 +1,4 @@
-name: Build Frontend and Backend
+name: Build
 
 on:
   pull_request:
