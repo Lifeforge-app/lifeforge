@@ -1,6 +1,6 @@
 import { PBService } from '@functions/database'
 import moment from 'moment'
-import rrule from 'rrule'
+import { RRule } from 'rrule'
 
 export default async function getEvents({
   pb,
@@ -80,7 +80,7 @@ export default async function getEvents({
   for (const event of recurringCalendarEvents) {
     const baseEvent = event.expand!.base_event!
 
-    const parsed = rrule.RRule.fromString(event.recurring_rule)
+    const parsed = RRule.fromString(event.recurring_rule)
 
     const eventsInRange = parsed.between(
       moment(startMoment)
