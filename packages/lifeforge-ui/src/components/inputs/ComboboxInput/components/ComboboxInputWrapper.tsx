@@ -11,7 +11,7 @@ function ComboboxInputWrapper<T>({
     onClick
 }: {
     value: T
-    onChange: (value: T) => void
+    onChange: (value: T | null) => void
     setQuery: (query: string) => void
     children: React.ReactNode
     className?: string
