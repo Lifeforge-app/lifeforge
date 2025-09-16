@@ -26,14 +26,14 @@ function DashboardItem({
     <div
       ref={ref}
       className={clsx(
-        'shadow-custom component-bg flex size-full flex-col gap-3 rounded-lg p-6',
+        'shadow-custom component-bg flex size-full flex-col gap-6 rounded-lg p-6',
         className
       )}
     >
-      <div className="mb-2 flex items-center justify-between gap-12">
-        <h2 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
+      <div className="flex items-center justify-between gap-12">
+        <h2 className="flex w-full min-w-0 items-center gap-3 text-xl font-semibold">
           <Icon className="size-6 shrink-0" icon={icon} />
-          <span className="ml-2 w-full min-w-0 truncate">
+          <span className="w-full min-w-0 truncate">
             {t([
               `widgets.${_.camelCase(title)}.title`,
               `widgets.${_.camelCase(title)}`,
