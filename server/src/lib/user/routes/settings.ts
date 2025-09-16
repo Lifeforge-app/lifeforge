@@ -79,7 +79,7 @@ const updateProfile = forgeController
     if (data.name) updateData.name = data.name
 
     if (data.dateOfBirth) {
-      updateData.dateOfBirth = `${moment(data.dateOfBirth).add(1, 'day').format('YYYY-MM-DD')}T00:00:00.000Z`
+      updateData.dateOfBirth = moment(data.dateOfBirth).format('YYYY-MM-DD')
     }
 
     if (Object.keys(updateData).length > 0) {
