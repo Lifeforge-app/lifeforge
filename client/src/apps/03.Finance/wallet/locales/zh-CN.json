@@ -35,7 +35,8 @@
     },
     "transactionsCount": {
       "title": "交易笔数"
-    }
+    },
+    "totalAssets": "总资产"
   },
   "transactionCount": "笔交易",
   "receiptUploadInfo": "仅接受 PDF 和图片文件",

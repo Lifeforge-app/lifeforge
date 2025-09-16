@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import clsx from 'clsx'
 import {
   Button,
   ConfirmationModal,
@@ -14,18 +13,15 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import type { WalletAsset } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 import BalanceChartModal from '../modals/BalanceChartModal'
 import ModifyAssetModal from '../modals/ModifyAssetModal'
+import Amount from './Amount'
 
 function AssetItem({ asset }: { asset: WalletAsset }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
-
-  const { isAmountHidden } = useWalletStore()
 
   const navigate = useNavigate()
 
@@ -73,27 +69,7 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
         </span>
         <h2 className="text-xl font-medium">{asset.name}</h2>
       </div>
-      <p
-        className={clsx(
-          'flex text-5xl font-medium',
-          isAmountHidden ? 'items-center' : 'items-end'
-        )}
-      >
-        <span className="text-bg-500 mr-2 text-3xl">RM</span>
-        {isAmountHidden ? (
-          <span className="flex items-center">
-            {Array(4)
-              .fill(0)
-              .map((_, i) => (
-                <Icon key={i} className="size-8" icon="uil:asterisk" />
-              ))}
-          </span>
-        ) : (
-          <span className="truncate">
-            {numberToCurrency(asset.current_balance)}
-          </span>
-        )}
-      </p>
+      <Amount amount={asset.current_balance} />
       <Button
         className="mt-4 w-full"
         icon="tabler:eye"
