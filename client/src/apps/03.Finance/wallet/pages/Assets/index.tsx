@@ -2,19 +2,21 @@ import { useQueryClient } from '@tanstack/react-query'
 import {
   Button,
   ContextMenuItem,
+  DashboardItem,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
   WithQuery
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
 import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
+import TotalBalance from './components/Amount'
 import AssetItem from './components/AssetItem'
 import ModifyAssetModal from './modals/ModifyAssetModal'
 
@@ -30,6 +32,13 @@ function Assets() {
   const { isAmountHidden, toggleAmountVisibility } = useWalletStore()
 
   const { hash } = useLocation()
+
+  const totalBalance = useMemo(() => {
+    return (assetsQuery.data ?? []).reduce(
+      (sum, asset) => sum + asset.current_balance,
+      0
+    )
+  }, [assetsQuery.data])
 
   const handleCreateCategory = useCallback(() => {
     open(ModifyAssetModal, {
@@ -95,6 +104,23 @@ function Assets() {
       <WithQuery query={assetsQuery}>
         {assets => (
           <>
+            <DashboardItem
+              className="mb-6 h-min"
+              componentBesideTitle={
+                <TotalBalance
+                  amount={totalBalance}
+                  className="hidden sm:flex"
+                />
+              }
+              icon="tabler:currency-dollar"
+              namespace="apps.wallet"
+              title="Total Assets"
+            >
+              <TotalBalance
+                amount={totalBalance}
+                className="flex-center w-full sm:hidden"
+              />
+            </DashboardItem>
             {assets.length > 0 ? (
               <div className="mb-24 grid grid-cols-1 gap-3 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
                 {assets.map(asset => (

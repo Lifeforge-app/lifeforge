@@ -35,7 +35,8 @@
     },
     "transactionsCount": {
       "title": "Bilangan Transaksi"
-    }
+    },
+    "totalAssets": "Jumlah Aset"
   },
   "transactionCount": "Transaksi",
   "receiptUploadInfo": "Hanya fail PDF dan imej diterima",
