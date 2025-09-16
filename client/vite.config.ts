@@ -23,7 +23,7 @@ export const alias = {
 }
 
 export default defineConfig({
-  envDir: path.resolve(__dirname, './env'),
+  envDir: path.resolve(__dirname, '../env'),
   plugins: [
     // MillionLint.vite({}),
     react({
