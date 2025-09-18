@@ -75,6 +75,7 @@
     "react-toastify": "^11.0.5",
     "react-tooltip": "^5.28.1",
     "react-virtualized": "^9.22.6",
+    "remark-gfm": "^4.0.0",
     "rrule": "^2.8.1",
     "shared": "workspace:*",
     "socket.io-client": "^4.8.1",
