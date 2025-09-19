@@ -8,11 +8,8 @@ import { z } from 'zod/v4'
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 export const allApps = fs
-  .globSync(['../client/src/apps/*/*', '../apps/*'], {
-    withFileTypes: true
-  })
-  .filter(e => fs.existsSync(`${e.parentPath}/${e.name}/locales`))
-  .map(e => `${e.parentPath}/${e.name}`)
+  .globSync(['../client/src/apps/*/*', '../apps/*'])
+  .filter(e => fs.existsSync(`${e}/locales`))
 
 const getLocale = forgeController
   .query()
