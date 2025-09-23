@@ -29,7 +29,11 @@ function NodeListbox<T>({
   const { t } = useTranslation('apps.apiBuilder')
 
   return (
-    <Listbox multiple={multiple} value={value} onChange={setValue}>
+    <Listbox
+      multiple={multiple}
+      value={value as T}
+      onChange={setValue as (value: T) => void}
+    >
       <ListboxButton className="border-bg-200 dark:border-bg-800 component-bg-lighter flex-between h-10 w-full gap-3 rounded-md border pr-2 pl-3">
         <div className="text-bg-600 dark:text-bg-400 w-full min-w-0 truncate text-left">
           {!value ||

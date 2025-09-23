@@ -165,7 +165,7 @@ export function useFlowState(): FlowState & FlowStateActions {
   )
 
   const onConnect = useCallback((query: Connection) => {
-    setEdges(eds => addEdge(params, eds))
+    setEdges(eds => addEdge(query, eds))
   }, [])
 
   const onAddNode = useCallback(

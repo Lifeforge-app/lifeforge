@@ -93,7 +93,7 @@ function NamespaceSelector({
                   <ListboxOption
                     key={sns}
                     icon="tabler:cube"
-                    label={sns}
+                    label={sns || 'N/A'}
                     value={sns}
                   />
                 ))}
