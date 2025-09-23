@@ -132,13 +132,13 @@ function BooksLibrary() {
 
                     return (
                       <>
-                        <FinalComponent books={entries.items} />
                         <Pagination
-                          className="mt-6"
+                          className="mb-6"
                           currentPage={page}
                           totalPages={entries.totalPages}
                           onPageChange={setPage}
                         />
+                        <FinalComponent books={entries.items} />
                       </>
                     )
                   }
