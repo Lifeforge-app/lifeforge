@@ -1,17 +1,25 @@
 import { execSync } from 'child_process'
+import fs from 'fs'
+import path from 'path'
+
+const APP_DIR = path.join(__dirname, '../apps')
 
 const PROCESS_ALLOWED = ['build', 'dev', 'types', 'lint']
 
-const PROJECTS_ALLOWED = {
-  shared: 'shared',
-  ui: 'packages/lifeforge-ui',
-  client: 'client',
-  server: 'server',
-  'apps:localization-manager': 'apps/localizationManager',
-  'apps:docs': 'apps/docs',
-  'apps:api-builder': 'apps/apiBuilder',
-  'apps:api-explorer': 'apps/apiExplorer'
-}
+const PROJECTS_ALLOWED = Object.assign(
+  {
+    shared: 'shared',
+    ui: 'packages/lifeforge-ui',
+    client: 'client',
+    server: 'server'
+  },
+  Object.fromEntries(
+    fs
+      .readdirSync(APP_DIR)
+      .filter(f => fs.statSync(path.join(APP_DIR, f)).isDirectory())
+      .map(f => [f, `apps/${f}`])
+  )
+)
 
 const processType = process.argv[2]
 
@@ -20,6 +28,15 @@ const projectTypes = process.argv.slice(3)
 if (!PROCESS_ALLOWED.includes(processType)) {
   console.error(
     `Invalid process type: ${processType}. Allowed types are: ${PROCESS_ALLOWED.join(', ')}`
+  )
+  process.exit(1)
+}
+
+if (projectTypes.length === 0) {
+  console.error(
+    `No project type specified. Allowed projects are: all, ${Object.keys(
+      PROJECTS_ALLOWED
+    ).join(', ')}`
   )
   process.exit(1)
 }
