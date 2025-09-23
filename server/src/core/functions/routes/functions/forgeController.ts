@@ -560,9 +560,7 @@ export class ForgeControllerBuilder<
         if (ClientError.isClientError(err)) {
           return clientError(res, err.message, err.code)
         }
-        LoggingService.error(
-          err instanceof Error ? err.message : (err as string)
-        )
+
         serverError(res, 'Internal server error')
       }
     }

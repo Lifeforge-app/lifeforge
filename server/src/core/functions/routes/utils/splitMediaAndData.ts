@@ -1,3 +1,6 @@
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
+
 import { MediaConfig } from '../typescript/forge_controller.types'
 
 type MediaResponse = Record<
@@ -43,6 +46,13 @@ export const splitMediaAndData = (
     if (!media[key]) {
       media[key] = _media[key].multiple ? [] : undefined
     }
+  }
+
+  if (Object.keys(media).length !== 0) {
+    LoggingService.debug(
+      'Received media: ' + chalk.blue(Object.keys(media).join(', ')),
+      'API'
+    )
   }
 
   return { data: result, media }
