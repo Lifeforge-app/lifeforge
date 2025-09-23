@@ -133,7 +133,7 @@ function CreateEntryModal({
       }
 
       await mutation.mutateAsync({
-        namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
+        namespace: namespace as 'apps' | 'common',
         subnamespace: subNamespace,
         path: [parent === '<root>' ? undefined : parent, name]
           .filter(Boolean)

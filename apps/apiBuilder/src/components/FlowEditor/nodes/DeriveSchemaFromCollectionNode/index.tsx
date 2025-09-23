@@ -66,7 +66,7 @@ function transformFields(fields: ICollectionField[]): ISchemaField[] {
             return 'unknown'
         }
       })(),
-      options: field.type === 'select' ? field.values : undefined,
+      options: field.type === 'select' ? field.options : undefined,
       isOptional: field.optional || false
     }))
 }
