@@ -66,7 +66,7 @@ export default function EditSchemaNodeModal({
       <div>
         <TextInput
           icon="tabler:braces"
-          name="Schema Name"
+          label="Schema Name"
           namespace="apps.apiBuilder"
           placeholder="UserSchema"
           setValue={val => setDraft(prev => ({ ...prev, name: val }))}
@@ -84,7 +84,7 @@ export default function EditSchemaNodeModal({
                 <TextInput
                   className="flex-1"
                   icon="tabler:id"
-                  name="Field Name"
+                  label="Field Name"
                   namespace="apps.apiBuilder"
                   placeholder="fieldName"
                   setValue={val => changeField(i, 'name', val)}
@@ -108,7 +108,7 @@ export default function EditSchemaNodeModal({
                     </>
                   }
                   icon="tabler:category"
-                  name="Field Type"
+                  label="Field Type"
                   namespace="apps.apiBuilder"
                   setValue={val => changeField(i, 'type', val)}
                   value={f.type}

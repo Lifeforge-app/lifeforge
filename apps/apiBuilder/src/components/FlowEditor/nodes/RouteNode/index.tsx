@@ -37,7 +37,7 @@ function RouteNode({ id }: { id: string }) {
 
     return (
       parentData.parentPath +
-      (parentData.path.startsWith ? '' : '/') +
+      (parentData.path.startsWith('/') ? '' : '/') +
       parentData.path
     )
   }, [getNodeData, parentRouterNode])

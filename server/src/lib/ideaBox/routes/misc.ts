@@ -155,7 +155,7 @@ const getOgData = forgeController
       return { result: null }
     })
 
-    OGCache.set(id, result)
+    OGCache.set(id, { ...result, requestUrl: data.link })
 
     return result
   })

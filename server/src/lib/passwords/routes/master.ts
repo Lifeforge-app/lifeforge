@@ -1,7 +1,7 @@
 import { decrypt2 } from '@functions/auth/encryption'
 import { default as _validateOTP } from '@functions/auth/validateOTP'
 import { forgeController, forgeRouter } from '@functions/routes'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { v4 } from 'uuid'
 import { z } from 'zod/v4'
 

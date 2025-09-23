@@ -436,7 +436,7 @@ export class ForgeControllerBuilder<
 
           if (type === 'body') {
             const { data, media } = splitMediaAndData(
-              this.__media,
+              this._media,
               req[type],
               (req.files || {}) as Record<string, Express.Multer.File[]>
             )
@@ -560,9 +560,7 @@ export class ForgeControllerBuilder<
         if (ClientError.isClientError(err)) {
           return clientError(res, err.message, err.code)
         }
-        LoggingService.error(
-          err instanceof Error ? err.message : (err as string)
-        )
+
         serverError(res, 'Internal server error')
       }
     }

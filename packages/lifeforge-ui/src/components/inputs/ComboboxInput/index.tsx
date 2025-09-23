@@ -84,13 +84,19 @@ function ComboboxInput<T>({
     }
   }, [])
 
+  const handleChange = useCallback((value: T | null) => {
+    if (value !== null) {
+      setValue(value)
+    }
+  }, [setValue])
+
   return (
     <ComboboxInputWrapper
       className={className}
       disabled={disabled}
       setQuery={setQuery}
       value={value}
-      onChange={setValue}
+      onChange={handleChange}
       onClick={focusInput}
     >
       <div className="group relative flex w-full items-center">

@@ -20,7 +20,7 @@ function ListView({ books }: { books: BooksLibraryEntry[] }) {
   } = useBooksLibraryContext()
 
   return (
-    <Scrollbar className="mt-6">
+    <Scrollbar>
       <ul className="space-y-3 px-4 pb-8">
         {Object.entries(processes).map(
           ([key, value]) =>
