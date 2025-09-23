@@ -491,6 +491,9 @@
     "shared": {
       "name": "shared",
       "version": "0.0.1",
+      "dependencies": {
+        "axios": "^1.12.2",
+      },
       "devDependencies": {
         "typescript": "^5.8.3",
       },

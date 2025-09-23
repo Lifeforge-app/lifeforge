@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "axios": "^1.12.2"
   }
 }
