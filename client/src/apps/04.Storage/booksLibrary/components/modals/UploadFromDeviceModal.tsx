@@ -15,32 +15,38 @@ function UploadFromDeviceModal({ onClose }: { onClose: () => void }) {
   const [loading, uploadFile] = usePromiseLoading(async () => {
     if (!(file instanceof File)) return
 
-    if (file.type !== 'application/epub+zip') {
+    if (
+      file.type === 'application/epub+zip' ||
+      (file.type === 'application/zip' && file.name.endsWith('.epub'))
+    ) {
+      const metadata =
+        await forgeAPI.booksLibrary.entries.getEpubMetadata.mutate({
+          document: file
+        })
+
       onClose()
+
       open(AddToLibraryModal, {
-        provider: 'local',
         book: {
-          Title: file.name,
-          Size: file.size,
-          Extension: file.name.split('.').pop(),
+          ...metadata,
           File: file
-        }
+        },
+        provider: 'local'
       })
+
+      return
     }
 
-    const metadata = await forgeAPI.booksLibrary.entries.getEpubMetadata.mutate(
-      {
-        document: file
-      }
-    )
-
     onClose()
+
     open(AddToLibraryModal, {
+      provider: 'local',
       book: {
-        ...metadata,
+        Title: file.name,
+        Size: file.size,
+        Extension: file.name.split('.').pop(),
         File: file
-      },
-      provider: 'local'
+      }
     })
   })
 
