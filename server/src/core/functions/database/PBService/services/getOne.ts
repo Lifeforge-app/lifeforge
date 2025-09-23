@@ -98,7 +98,7 @@ export class GetOne<
    * @throws Error if collection key is not set
    * @throws Error if item ID is not provided
    */
-  execute(): Promise<
+  async execute(): Promise<
     SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
   > {
     if (!this.collectionKey) {
@@ -113,24 +113,23 @@ export class GetOne<
       )
     }
 
-    return this._pb
+    const result = this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getOne(this._itemId, {
         expand: this._expand,
         fields: this._fields
       })
-      .then(result => {
-        LoggingService.debug(
-          `${chalk.hex('#34ace0').bold('getOne')} Fetched record with ID ${chalk
-            .hex('#34ace0')
-            .bold(
-              this._itemId
-            )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-          'DB'
-        )
 
-        return result
-      }) as unknown as Promise<
+    LoggingService.debug(
+      `${chalk.hex('#34ace0').bold('getOne')} Fetched record with ID ${chalk
+        .hex('#34ace0')
+        .bold(
+          this._itemId
+        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+      'DB'
+    )
+
+    return result as unknown as Promise<
       SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
     >
   }
