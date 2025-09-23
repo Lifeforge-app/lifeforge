@@ -31,6 +31,10 @@ const list = forgeController
   )
   .input({
     query: z.object({
+      page: z
+        .string()
+        .transform(val => parseInt(val, 10))
+        .default(1),
       collection: z
         .string()
         .optional()
@@ -50,8 +54,18 @@ const list = forgeController
   .callback(
     async ({
       pb,
-      query: { collection, language, favourite, fileType, readStatus, query }
+      query: {
+        collection,
+        language,
+        favourite,
+        fileType,
+        readStatus,
+        query,
+        page
+      }
     }) => {
+      const PER_PAGE = 20
+
       const fileTypeRecord = fileType
         ? await pb.getOne
             .collection('books_library__file_types')
@@ -59,82 +73,94 @@ const list = forgeController
             .execute()
         : undefined
 
-      return (
-        await pb.getFullList
-          .collection('books_library__entries')
-          .filter([
-            collection
-              ? {
-                  field: 'collection',
-                  operator: '=',
-                  value: collection
-                }
-              : undefined,
-            language
-              ? {
-                  field: 'languages',
-                  operator: '~',
-                  value: language
-                }
-              : undefined,
-            favourite === 'true'
-              ? {
-                  field: 'is_favourite',
-                  operator: '=',
-                  value: true
-                }
-              : undefined,
-            readStatus
-              ? {
-                  field: 'read_status',
-                  operator: '=',
-                  value: {
-                    '1': 'read',
-                    '2': 'reading',
-                    '3': 'unread'
-                  }[readStatus]
-                }
-              : undefined,
-            fileTypeRecord && {
-              field: 'extension',
-              operator: '=',
-              value: fileTypeRecord.name
-            },
-            query
-              ? {
-                  field: 'title',
-                  operator: '~',
-                  value: query
-                }
-              : undefined
-          ])
-          .execute()
-      ).sort((a, b) => {
-        // First sort by read status (reading -> unread -> read).
-        // If the read status is the same, sort by time started (newest first).
-        // Otherwise, sort by favourite status (favourite -> normal), then by title
+      const results = await pb.getFullList
+        .collection('books_library__entries')
+        .filter([
+          collection
+            ? {
+                field: 'collection',
+                operator: '=',
+                value: collection
+              }
+            : undefined,
+          language
+            ? {
+                field: 'languages',
+                operator: '~',
+                value: language
+              }
+            : undefined,
+          favourite === 'true'
+            ? {
+                field: 'is_favourite',
+                operator: '=',
+                value: true
+              }
+            : undefined,
+          readStatus
+            ? {
+                field: 'read_status',
+                operator: '=',
+                value: {
+                  '1': 'read',
+                  '2': 'reading',
+                  '3': 'unread'
+                }[readStatus]
+              }
+            : undefined,
+          fileTypeRecord && {
+            field: 'extension',
+            operator: '=',
+            value: fileTypeRecord.name
+          },
+          query
+            ? {
+                field: 'title',
+                operator: '~',
+                value: query
+              }
+            : undefined
+        ])
+        .execute()
 
-        const readStatusOrder = {
-          reading: 1,
-          unread: 2,
-          read: 3
-        }
+      // Since we are doing custom sorting, we cannot use pagination from PocketBase due to its limitations.
+      // So we will fetch the entire list and do pagination manually.
+      return {
+        page: page,
+        totalPages: Math.ceil(results.length / PER_PAGE),
+        totalItems: results.length,
+        items: results
+          .sort((a, b) => {
+            // First sort by read status (reading -> unread -> read).
+            // If the read status is the same, sort by time started (newest first).
+            // Otherwise, sort by favourite status (favourite -> normal), then by title
 
-        if (a.read_status !== b.read_status) {
-          return readStatusOrder[a.read_status] - readStatusOrder[b.read_status]
-        }
+            const readStatusOrder = {
+              reading: 1,
+              unread: 2,
+              read: 3
+            }
 
-        if (a.read_status === 'reading') {
-          return (
-            new Date(b.time_started).getTime() -
-            new Date(a.time_started).getTime()
-          )
-        }
+            if (a.read_status !== b.read_status) {
+              return (
+                readStatusOrder[a.read_status] - readStatusOrder[b.read_status]
+              )
+            }
 
-        return (
-          +b.is_favourite - +a.is_favourite || a.title.localeCompare(b.title)
-        )
-      })
+            if (a.read_status === 'reading') {
+              return (
+                new Date(b.time_started).getTime() -
+                new Date(a.time_started).getTime()
+              )
+            }
+
+            return (
+              +b.is_favourite - +a.is_favourite ||
+              a.title.localeCompare(b.title)
+            )
+          })
+          .slice((page - 1) * PER_PAGE, page * PER_PAGE)
+      }
     }
   )
   .enableAIToolCall()
