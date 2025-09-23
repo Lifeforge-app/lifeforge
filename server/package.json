@@ -14,10 +14,10 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
-    "dev": "tsx watch --env-file=./env/.env.local ./src/index.ts",
+    "dev": "tsx watch --env-file=../env/.env.local ./src/index.ts",
     "types": "bun run tsc -b --noEmit",
     "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
-    "start": "NODE_ENV=production bun --env-file ./env/.env.local ./dist/server.js",
+    "start": "NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "jest",
     "schema:generate": "bun ./scripts/generateSchema.ts"
@@ -29,7 +29,7 @@
     "aewx-metar-parser": "^1.0.0",
     "ai": "^5.0.0-beta.34",
     "base64": "^2.1.0",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "chalk": "^5.4.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",

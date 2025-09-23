@@ -25,7 +25,7 @@ function RequestSchemaNode({ id }: { id: string }) {
 
     const schemaFields = {
       query: [],
-      query: [],
+      params: [],
       body: []
     }
 
@@ -47,7 +47,11 @@ function RequestSchemaNode({ id }: { id: string }) {
   return (
     <NodeColumnWrapper>
       {(['params', 'query', 'body'] as const).map(type => (
-        <NodeColumn handle={`${type}-schema-input`} nodeType="requestSchema">
+        <NodeColumn
+          key={type}
+          handle={`${type}-schema-input`}
+          nodeType="requestSchema"
+        >
           <FieldsColumn
             fields={schemaInputData?.[type] || []}
             withEmptyMessage={false}

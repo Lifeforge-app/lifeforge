@@ -8,6 +8,7 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleHeader,
+  Pagination,
   SearchInput,
   ViewModeSelector,
   WithQuery
@@ -28,6 +29,8 @@ function BooksLibrary() {
   const open = useModalStore(state => state.open)
 
   const {
+    page,
+    setPage,
     collection,
     language,
     favourite,
@@ -44,6 +47,7 @@ function BooksLibrary() {
   const dataQuery = useQuery(
     forgeAPI.booksLibrary.entries.list
       .input({
+        page: page.toString(),
         collection: collection || undefined,
         language: language || undefined,
         favourite: (favourite.toString() as 'true' | 'false') || undefined,
@@ -81,8 +85,8 @@ function BooksLibrary() {
       <div className="flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
-          <Header itemCount={dataQuery.data?.length || 0} />
-          <div className="mt-4 flex items-center gap-2">
+          <Header itemCount={dataQuery.data?.totalItems || 0} />
+          <div className="mt-4 mb-6 flex items-center gap-2">
             <SearchInput
               namespace="apps.booksLibrary"
               searchTarget="book"
@@ -104,11 +108,8 @@ function BooksLibrary() {
               <>
                 {(() => {
                   {
-                    if (entries.length === 0) {
-                      if (
-                        debouncedSearchQuery.trim() ||
-                        [collection, language, favourite, fileType].some(v => v)
-                      ) {
+                    if (entries.items.length === 0) {
+                      if (entries.totalItems > 0) {
                         return (
                           <EmptyStateScreen
                             icon="tabler:search-off"
@@ -131,7 +132,13 @@ function BooksLibrary() {
 
                     return (
                       <>
-                        <FinalComponent books={entries} />
+                        <FinalComponent books={entries.items} />
+                        <Pagination
+                          className="mt-6"
+                          currentPage={page}
+                          totalPages={entries.totalPages}
+                          onPageChange={setPage}
+                        />
                       </>
                     )
                   }

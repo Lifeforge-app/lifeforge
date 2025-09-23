@@ -11,7 +11,7 @@ import type { InferOutput } from 'shared'
 
 export type BooksLibraryEntry = InferOutput<
   typeof forgeAPI.booksLibrary.entries.list
->[number]
+>['items'][number]
 
 export type BooksLibraryCollection = InferOutput<
   typeof forgeAPI.booksLibrary.collections.list

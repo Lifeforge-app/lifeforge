@@ -1,3 +1,5 @@
+import { LoggingService } from '@functions/logging/loggingService'
+import chalk from 'chalk'
 import { Response } from 'express'
 import fs from 'fs'
 
@@ -46,6 +48,13 @@ export function clientError(
   })
 
   try {
+    LoggingService.error(
+      chalk.red(
+        typeof message === 'string' ? message : JSON.stringify(message)
+      ),
+      'API'
+    )
+
     res.status(code).json({
       state: 'error',
       message
@@ -65,6 +74,13 @@ export function serverError(res: Response, message = 'Internal Server Error') {
   })
 
   try {
+    LoggingService.error(
+      chalk.red(
+        typeof message === 'string' ? message : JSON.stringify(message)
+      ),
+      'API'
+    )
+
     res.status(500).json({
       state: 'error',
       message

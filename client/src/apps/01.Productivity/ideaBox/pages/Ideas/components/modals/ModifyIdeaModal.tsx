@@ -44,7 +44,7 @@ function ModifyIdeaModal({
           queryKey: ['ideaBox', 'ideas']
         })
         queryClient.invalidateQueries({
-          queryKey: ['ideaBox', 'search']
+          queryKey: ['ideaBox', 'misc', 'search']
         })
       },
       onError: error => {

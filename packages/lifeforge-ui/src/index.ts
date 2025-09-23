@@ -1,4 +1,7 @@
-import './styles/index.css'
+if (Math.random() < 0) {
+  // @ts-ignore
+  import('./styles/index.css')
+}
 
 export * from './components/buttons'
 

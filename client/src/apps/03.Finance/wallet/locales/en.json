@@ -35,7 +35,8 @@
     },
     "transactionsCount": {
       "title": "Transactions Count"
-    }
+    },
+    "totalAssets": "Total Assets"
   },
   "transactionCount": "Transactions",
   "receiptUploadInfo": "Only PDF and image files are accepted",
