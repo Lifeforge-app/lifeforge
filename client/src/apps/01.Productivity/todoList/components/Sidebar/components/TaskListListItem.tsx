@@ -36,7 +36,7 @@ function TaskListListItem({ item }: { item: TodoListList }) {
       })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['todo-list'] })
+          queryClient.invalidateQueries({ queryKey: ['todoList'] })
 
           if (filter.list === item.id) {
             setFilter('list', null)

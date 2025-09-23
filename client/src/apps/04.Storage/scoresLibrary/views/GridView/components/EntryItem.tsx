@@ -184,9 +184,13 @@ function EntryItem({ entry }: { entry: ScoreLibraryEntry }) {
           <DownloadMenu entry={entry} />
           {entry.audio && (
             <AudioPlayer
-              url={`${import.meta.env.VITE_API_HOST}/media/${
-                entry.collectionId
-              }/${entry.id}/${entry.audio}`}
+              url={
+                forgeAPI.media.input({
+                  collectionId: entry.collectionId,
+                  recordId: entry.id,
+                  fieldId: entry.audio
+                }).endpoint
+              }
             />
           )}
         </div>

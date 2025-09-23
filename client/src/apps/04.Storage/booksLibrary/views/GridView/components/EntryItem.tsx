@@ -38,11 +38,13 @@ function EntryItem({ item }: { item: BooksLibraryEntry }) {
         <img
           alt=""
           className="h-full"
+          loading="lazy"
           src={
             forgeAPI.media.input({
               collectionId: item.collectionId,
               recordId: item.id,
-              fieldId: item.thumbnail
+              fieldId: item.thumbnail,
+              thumb: '200x0'
             }).endpoint
           }
         />

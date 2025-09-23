@@ -9,7 +9,7 @@ import { Server } from 'socket.io'
 import app from './core/app'
 
 dotenv.config({
-  path: './env/.env.local'
+  path: '../env/.env.local'
 })
 
 if (!process.env.MASTER_KEY) {

@@ -31,17 +31,17 @@ function GroupNodeConfigModal({
       <TextInput
         className="mb-4"
         icon="tabler:article"
-        name="Group Name"
+        label="Group Name"
         namespace="apps.apiBuilder"
         placeholder="Untitled Group"
         setValue={_setName}
         value={_name}
       />
       <IconInput
-        icon={_icon}
-        name="Group Icon"
+        label="Group Icon"
         namespace="apps.apiBuilder"
-        setIcon={_setIcon}
+        setValue={_setIcon}
+        value={_icon}
       />
       <Button
         className="mt-6 w-full"

@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
+import dayjs from 'dayjs'
 import {
   Button,
   DashboardItem,
@@ -157,10 +158,20 @@ export default function TodaysEvent() {
         <WithQuery query={categoriesQuery}>
           {categories => (
             <WithQuery query={rawEventsQuery}>
-              {() =>
-                (rawEventsQuery.data ?? []).length > 0 ? (
+              {() => {
+                const targetEvents = (rawEventsQuery.data ?? []).filter(
+                  event =>
+                    dayjs(event.start)
+                      .add(1, 'second')
+                      .isSame(dayjs(), 'day') ||
+                    dayjs(event.end)
+                      .subtract(1, 'second')
+                      .isSame(dayjs(), 'day')
+                )
+
+                return targetEvents.length > 0 ? (
                   <ul className="flex flex-1 flex-col gap-2 pr-3">
-                    {rawEventsQuery.data?.map(event => (
+                    {targetEvents.map(event => (
                       <EventItem
                         key={event.id}
                         categories={categories}
@@ -179,7 +190,7 @@ export default function TodaysEvent() {
                     />
                   </div>
                 )
-              }
+              }}
             </WithQuery>
           )}
         </WithQuery>

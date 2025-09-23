@@ -59,7 +59,7 @@ function FilePickerModal({
         title="imagePicker.title"
         onClose={onClose}
       />
-      {(enablePixabay || enableUrl) && (
+      {(enablePixabay || enableUrl || enableAI) && (
         <Tabs
           active={mode}
           enabled={(['local', 'url', 'pixabay', 'ai'] as const).filter(
