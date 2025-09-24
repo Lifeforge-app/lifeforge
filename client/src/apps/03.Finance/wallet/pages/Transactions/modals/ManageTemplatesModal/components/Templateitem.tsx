@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import {
@@ -26,6 +26,12 @@ function TemplateItem({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
+
+  const categoriesQuery = useQuery(
+    forgeAPI.wallet.categories.list.queryOptions()
+  )
+
+  const categories = categoriesQuery.data ?? []
 
   const open = useModalStore(state => state.open)
 
@@ -82,7 +88,26 @@ function TemplateItem({
       }
     >
       <div className="flex w-full min-w-0 items-center gap-3">
-        <Icon className="text-bg-500 size-7 shrink-0" icon="tabler:template" />
+        {(() => {
+          const targetCategory = categories.find(
+            cat => cat.id === template.category
+          )
+
+          return (
+            <div
+              className="bg-bg-500/10 rounded-md p-2"
+              style={{
+                backgroundColor: targetCategory.color + '10'
+              }}
+            >
+              <Icon
+                className="text-bg-500 size-6 shrink-0"
+                icon={targetCategory?.icon || 'tabler:template'}
+                style={{ color: targetCategory?.color }}
+              />
+            </div>
+          )
+        })()}
         <p className="w-full min-w-0 truncate text-lg font-medium">
           {template.name}
         </p>
