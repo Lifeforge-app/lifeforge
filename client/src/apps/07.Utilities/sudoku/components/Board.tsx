@@ -2,7 +2,13 @@ import clsx from 'clsx'
 
 import type { SudokuBoard } from '..'
 
-function Board({ data }: { data: SudokuBoard }) {
+function Board({
+  data,
+  showSolution
+}: {
+  data: SudokuBoard
+  showSolution?: boolean
+}) {
   return (
     <div className="aspect-square size-full p-4">
       <div className="border-bg-800 dark:border-bg-100 relative grid size-full grid-cols-9 border-[3px] print:border-black">
@@ -28,11 +34,25 @@ function Board({ data }: { data: SudokuBoard }) {
                         'border-bg-500 print:border-bg-400! border-b'
                     )}
                   >
-                    {data.mission[k * 9 + j] !== '0' && (
-                      <div className="flex size-full items-center justify-center text-lg">
-                        {data.mission[k * 9 + j]}
-                      </div>
-                    )}
+                    <div className="flex size-full items-center justify-center text-lg">
+                      {(() => {
+                        const target = showSolution
+                          ? data.solution
+                          : data.mission
+
+                        return (
+                          <span
+                            className={clsx(
+                              showSolution &&
+                                data.mission[k * 9 + j] === '0' &&
+                                'text-custom-500 print:hidden!'
+                            )}
+                          >
+                            {target[k * 9 + j] !== '0' && target[k * 9 + j]}
+                          </span>
+                        )
+                      })()}
+                    </div>
                   </div>
                 ))}
             </div>

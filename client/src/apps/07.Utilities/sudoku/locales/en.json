@@ -10,6 +10,7 @@
     "extreme": "Extreme"
   },
   "inputs": {
-    "difficulty": "Difficulty"
+    "difficulty": "Difficulty",
+    "showSolution": "Show Solution"
   }
 }
