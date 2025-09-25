@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import dijkstraWithTransfers from './utils/pathFinding'
 

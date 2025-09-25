@@ -2,7 +2,7 @@ import parseOCR from '@functions/external/ocr'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import fs from 'fs'
-import z from 'zod/v4'
+import z from 'zod'
 
 import { Location } from '../../locations/typescript/location.types'
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'

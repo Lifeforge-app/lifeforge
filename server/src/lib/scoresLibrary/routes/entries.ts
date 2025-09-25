@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import { SCHEMAS } from '@schema'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { processFiles } from '../utils/uploadFiles'
 

@@ -1,5 +1,5 @@
 import COLLECTION_SCHEMAS from '@schema'
-import { ZodArray, ZodObject, ZodType, z } from 'zod/v4'
+import { ZodArray, ZodObject, ZodType, z } from 'zod'
 
 export type SchemaWithPB<T> = T & {
   id: string

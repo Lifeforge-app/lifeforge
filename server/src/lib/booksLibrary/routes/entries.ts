@@ -8,7 +8,7 @@ import { EPub } from 'epub2'
 import fs from 'fs'
 import moment from 'moment'
 import mailer from 'nodemailer'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
 import { convertPDFToImage } from '../../wallet/utils/transactions'

@@ -60,6 +60,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "music-metadata": "^7.14.0",
+    "node-ical": "^0.21.0",
     "nodemailer": "^7.0.3",
     "open-graph-scraper": "^6.8.2",
     "openai": "^5.11.0",
@@ -85,7 +86,7 @@
     "ts-node": "^10.9.2",
     "uuid": "^9.0.1",
     "words-count": "^2.0.2",
-    "zod": "^3.25.51",
+    "zod": "^4.0.17",
     "zod-to-json-schema": "^3.24.5",
     "zod-to-ts": "^1.2.0"
   },

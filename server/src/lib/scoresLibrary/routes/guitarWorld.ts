@@ -3,7 +3,7 @@ import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import fs from 'fs'
 import PDFDocument from 'pdfkit'
 import sharp from 'sharp'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const list = forgeController
   .query()

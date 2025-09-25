@@ -1,4 +1,4 @@
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const PasswordsEntrySchema = z.object({
   color: z.string(),

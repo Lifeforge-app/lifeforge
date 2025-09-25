@@ -35,7 +35,7 @@ import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import { Tool } from 'ai'
 import type { Request, Response, Router } from 'express'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import {
   BaseResponse,
