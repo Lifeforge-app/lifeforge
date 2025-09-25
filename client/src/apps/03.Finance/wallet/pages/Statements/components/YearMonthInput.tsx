@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import { ListboxInput, ListboxOption } from 'lifeforge-ui'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import useYearMonthOptions from '@apps/03.Finance/wallet/hooks/useYearMonthOptions'
 
 function YearMonthInput({
   month,
@@ -15,29 +15,7 @@ function YearMonthInput({
   year: number | null
   setYear: (value: number | null) => void
 }) {
-  const { transactionsQuery } = useWalletData()
-
-  const transactions = transactionsQuery.data ?? []
-
-  const yearsOptions = useMemo(() => {
-    if (typeof transactions === 'string') return []
-
-    return Array.from(
-      new Set(transactions.map(transaction => dayjs(transaction.date).year()))
-    )
-  }, [transactions])
-
-  const monthsOptions = useMemo(() => {
-    if (typeof transactions === 'string' || year === null) return []
-
-    return Array.from(
-      new Set(
-        transactions
-          .filter(transaction => dayjs(transaction.date).year() === year)
-          .map(transaction => dayjs(transaction.date).month())
-      )
-    )
-  }, [transactions, year])
+  const { yearsOptions, monthsOptions } = useYearMonthOptions(year)
 
   useEffect(() => {
     if (yearsOptions.length > 0) {
