@@ -3,7 +3,7 @@ import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import type { InferInput } from 'shared'
 
-import type { CalendarCalendar } from '../Calendar'
+import type { CalendarCategory } from '../Calendar'
 
 function ModifyCategoryModal({
   data: { type, initialData },
@@ -11,7 +11,7 @@ function ModifyCategoryModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData?: CalendarCalendar
+    initialData?: CalendarCategory
   }
   onClose: () => void
 }) {

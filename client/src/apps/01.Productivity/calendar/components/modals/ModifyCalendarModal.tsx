@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
-import { FormModal, defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm, useModalStore } from 'lifeforge-ui'
 import type { InferInput } from 'shared'
 
 import type { CalendarCalendar } from '../Calendar'
+import SubscribeICSModal from './SubscribeICSModal'
 
 function ModifyCalendarModal({
   data: { type, initialData },
@@ -15,6 +16,8 @@ function ModifyCalendarModal({
   }
   onClose: () => void
 }) {
+  const open = useModalStore(state => state.open)
+
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
@@ -25,6 +28,9 @@ function ModifyCalendarModal({
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: forgeAPI.calendar.calendars.list.key
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['calendar', 'events']
         })
         onClose()
       }
@@ -38,11 +44,28 @@ function ModifyCalendarModal({
     title: `calendar.${type}`,
     onClose,
     namespace: 'apps.calendar',
-    submitButton: type
+    submitButton: type,
+    actionButton:
+      type !== 'update'
+        ? {
+            type: 'plain',
+            icon: 'tabler:calendar-code',
+            onClick: (_, setData) =>
+              open(SubscribeICSModal, {
+                onSubmit: icsUrl => {
+                  setData(state => ({
+                    ...state,
+                    icsUrl
+                  }))
+                }
+              })
+          }
+        : undefined
   })
     .typesMap({
       name: 'text',
-      color: 'color'
+      color: 'color',
+      icsUrl: 'text'
     })
     .setupFields({
       name: {
@@ -54,7 +77,17 @@ function ModifyCalendarModal({
       color: {
         required: true,
         label: 'Calendar color'
+      },
+      icsUrl: {
+        required: false,
+        label: 'ICS URL',
+        icon: 'tabler:link',
+        placeholder: 'https://example.com/calendar.ics',
+        disabled: true
       }
+    })
+    .conditionalFields({
+      icsUrl: formState => !!formState.icsUrl
     })
     .initialData(initialData)
     .onSubmit(async data => {
