@@ -1,7 +1,11 @@
+import type { ChartOptions } from 'chart.js'
 import { useMemo } from 'react'
+import { usePersonalization } from 'shared'
 
-export function useChartOptions(range: 'week' | 'month' | 'ytd') {
-  return useMemo(
+export function useChartOptions(range: 'week' | 'month' | 'ytd'): ChartOptions {
+  const { bgTempPalette, derivedTheme } = usePersonalization()
+
+  return useMemo<ChartOptions>(
     () => ({
       maintainAspectRatio: false,
       responsive: true,
@@ -14,10 +18,16 @@ export function useChartOptions(range: 'week' | 'month' | 'ytd') {
         y: {
           display: true,
           type: range !== 'ytd' ? ('logarithmic' as const) : undefined,
-          min: 0.1
+          min: 0.1,
+          grid: {
+            color: bgTempPalette[derivedTheme === 'dark' ? '800' : '200']
+          }
         },
         x: {
-          display: true
+          display: true,
+          grid: {
+            color: bgTempPalette[derivedTheme === 'dark' ? '800' : '200']
+          }
         }
       },
       hover: {
