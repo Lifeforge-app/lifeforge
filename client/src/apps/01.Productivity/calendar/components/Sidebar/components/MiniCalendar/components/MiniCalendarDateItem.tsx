@@ -34,6 +34,10 @@ function MiniCalendarDateItem({
     forgeAPI.calendar.categories.list.queryOptions()
   )
 
+  const calendarsQuery = useQuery(
+    forgeAPI.calendar.calendars.list.queryOptions()
+  )
+
   const isInThisMonth = useMemo(
     () => !(firstDay > index || index - firstDay + 1 > lastDate),
     [firstDay, index, lastDate]
@@ -78,6 +82,15 @@ function MiniCalendarDateItem({
     [categoriesQuery.data]
   )
 
+  const getCalendar = useCallback(
+    (event: CalendarEvent) => {
+      return calendarsQuery.data?.find(
+        calendar => calendar.id === event.calendar
+      )
+    },
+    [calendarsQuery.data]
+  )
+
   return (
     <>
       <div
@@ -94,6 +107,7 @@ function MiniCalendarDateItem({
         {isInThisMonth && eventsOnTheDay.length > 0 && (
           <MiniCalendarEventIndicator
             eventsOnTheDay={eventsOnTheDay}
+            getCalendar={getCalendar}
             getCategory={getCategory}
           />
         )}
@@ -103,6 +117,7 @@ function MiniCalendarDateItem({
           actualIndex={actualIndex}
           date={date}
           eventsOnTheDay={eventsOnTheDay}
+          getCalendar={getCalendar}
           getCategory={getCategory}
           index={index}
         />

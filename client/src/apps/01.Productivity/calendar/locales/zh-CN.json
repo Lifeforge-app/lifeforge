@@ -30,7 +30,8 @@
     "confirmAddException": {
       "title": "确认添加例外",
       "description": "您确定要为此事件添加例外吗？"
-    }
+    },
+    "subscribeToIcsCalendar": "订阅 ICS 日历"
   },
   "inputs": {
     "startTime": "开始时间",
@@ -106,7 +107,8 @@
     "useGoogleMap": "使用谷歌地图",
     "calendar": "日历",
     "calendarName": "日历名称",
-    "calendarColor": "日历颜色"
+    "calendarColor": "日历颜色",
+    "icsUrl": "ICS链接"
   },
   "items": {
     "event": "事件",
