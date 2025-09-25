@@ -38,7 +38,7 @@ interface FieldTypeMapping {
 
 // Constants
 const PATHS = {
-  ENV_FILE: path.resolve(__dirname, '../server/env/.env.local'),
+  ENV_FILE: path.resolve(__dirname, '../env/.env.local'),
   MODULES_DIR: path.resolve(__dirname, '../server/src/lib'),
   CORE_SCHEMA: path.resolve(__dirname, '../server/src/core/schema.ts')
 } as const
@@ -225,7 +225,7 @@ function generateModuleSchemaContent(
     )
   }
 
-  return `import { z } from 'zod/v4'
+  return `import { z } from 'zod'
 
 const ${_.camelCase(moduleName)}Schemas = {
 ${schemaEntries.join('\n')}
