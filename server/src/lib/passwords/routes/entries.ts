@@ -7,7 +7,7 @@ import {
 import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import { v4 } from 'uuid'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { getDecryptedMaster } from '../utils/getDecryptedMaster'
 

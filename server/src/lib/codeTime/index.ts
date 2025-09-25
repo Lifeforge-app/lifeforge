@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import moment from 'moment'
 import puppeteer from 'puppeteer-core'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import getReadmeHTML from './utils/readme'
 import { default as _getStatistics } from './utils/statistics'

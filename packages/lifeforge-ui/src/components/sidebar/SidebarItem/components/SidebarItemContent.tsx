@@ -17,7 +17,7 @@ function SidebarItemContent({
   namespace,
   needTranslate
 }: {
-  label: string
+  label: string | React.ReactElement
   sidebarExpanded: boolean
   isMainSidebarItem: boolean
   hasAI: boolean
@@ -39,7 +39,7 @@ function SidebarItemContent({
           if (!isMainSidebarItem) {
             return (
               <div className="block w-full min-w-0 truncate">
-                {needTranslate
+                {typeof label === 'string' && needTranslate
                   ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
                   : label}{' '}
               </div>
@@ -50,7 +50,9 @@ function SidebarItemContent({
             sidebarExpanded && (
               <span className="flex-between flex w-full gap-3 truncate">
                 <span className="w-full min-w-0 truncate">
-                  {t(`common.sidebar:apps.${_.camelCase(label)}.title`)}
+                  {typeof label === 'string'
+                    ? t(`common.sidebar:apps.${_.camelCase(label)}.title`)
+                    : label}
                 </span>
                 {hasAI && (
                   <Icon

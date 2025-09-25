@@ -13,7 +13,7 @@ function SidebarItemSubsection({
     icon: string | React.ReactElement
     path: string
   }[]
-  label: string
+  label: string | React.ReactElement
   subsectionExpanded: boolean
 }) {
   const { sidebarExpanded } = useSidebarState()

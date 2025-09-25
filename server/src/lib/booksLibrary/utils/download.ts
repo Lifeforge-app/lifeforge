@@ -3,7 +3,7 @@ import { updateTaskInPool } from '@functions/socketio/taskPool'
 import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import { Server } from 'socket.io'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export const processDownloadedFiles = async (
   pb: PBService,
