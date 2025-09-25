@@ -207,5 +207,10 @@
       "title": "Peta Panas Perbelanjaan",
       "description": "Representasi visual tentang tabiat perbelanjaan anda dari semasa ke semasa."
     }
+  },
+  "timeRanges": {
+    "week": "Minggu Ini",
+    "month": "Bulan Ini",
+    "ytd": "Tahun Hingga Kini"
   }
 }
