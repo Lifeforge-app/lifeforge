@@ -3,7 +3,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import { exec, spawn } from 'child_process'
 import fs from 'fs'
-import z from 'zod/v4'
+import z from 'zod'
 
 const getVideoInfo = forgeController
   .query()

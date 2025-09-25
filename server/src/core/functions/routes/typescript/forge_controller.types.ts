@@ -1,8 +1,8 @@
 import type { PBService } from '@functions/database'
 import type { Request, Response } from 'express'
 import type { Server } from 'socket.io'
-import { z } from 'zod/v4'
-import type { ZodIntersection, ZodObject, ZodTypeAny } from 'zod/v4'
+import { z } from 'zod'
+import type { ZodIntersection, ZodObject, ZodTypeAny } from 'zod'
 
 export interface BaseResponse<T = ''> {
   data?: T

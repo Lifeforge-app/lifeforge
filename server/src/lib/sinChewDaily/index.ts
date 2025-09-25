@@ -1,7 +1,7 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { JSDOM } from 'jsdom'
 import sanitizeHtml from 'sanitize-html'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 function getCategoryPostsEndpoint(catNumber: number) {
   return {

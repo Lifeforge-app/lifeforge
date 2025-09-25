@@ -14,7 +14,7 @@ function SidebarSubsectionItem({
 }: {
   subsectionLabel: string
   icon: string | React.ReactElement
-  label: string
+  label: string | React.ReactElement
   path: string
 }) {
   const location = useLocation()
@@ -25,10 +25,11 @@ function SidebarSubsectionItem({
 
   const locationDependentStyles = useMemo(
     () =>
-      location.pathname.split('/').slice(1)[0] === _.kebabCase(label) &&
+      location.pathname.split('/').slice(1)[0] ===
+        _.kebabCase(label.toString()) &&
       (location.pathname.split('/').slice(1)[1] === path ||
         (location.pathname
-          .replace(_.kebabCase(label), '')
+          .replace(_.kebabCase(label.toString()), '')
           .replace(/\//g, '') === '' &&
           subsectionLabel === 'Dashboard'))
         ? 'bg-bg-200/50 hover:bg-bg-200/50! shadow-custom dark:bg-bg-800 dark:hover:bg-bg-800!'
@@ -51,7 +52,7 @@ function SidebarSubsectionItem({
         sidebarExpanded ? 'pl-[3rem]' : 'px-2',
         locationDependentStyles
       )}
-      to={`./${_.kebabCase(label)}/${path}`}
+      to={`./${_.kebabCase(label.toString())}/${path}`}
       onClick={handleClick}
     >
       <div className="flex size-7 items-center justify-center">
@@ -65,7 +66,7 @@ function SidebarSubsectionItem({
       {sidebarExpanded && (
         <span className="w-full truncate pr-4">
           {t(
-            `apps.${_.camelCase(label)}.subsections.${_.camelCase(
+            `apps.${_.camelCase(label.toString())}.subsections.${_.camelCase(
               subsectionLabel
             )}`
           )}

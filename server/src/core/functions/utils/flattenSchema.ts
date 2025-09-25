@@ -1,4 +1,4 @@
-import { ZodObject, ZodRawShape } from 'zod/v4'
+import { ZodObject, ZodRawShape } from 'zod'
 
 // Simple intersection type approach
 type FlattenSchemas<T extends Record<string, Record<string, unknown>>> =

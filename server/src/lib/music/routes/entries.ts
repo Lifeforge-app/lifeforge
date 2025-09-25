@@ -1,5 +1,5 @@
 import { forgeController, forgeRouter } from '@functions/routes'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const list = forgeController
   .query()

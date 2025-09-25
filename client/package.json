@@ -83,7 +83,7 @@
     "three": "^0.167.1",
     "tinycolor2": "^1.6.0",
     "typescript": "^5.9.2",
-    "zod": "^3.25.51",
+    "zod": "^4.0.17",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

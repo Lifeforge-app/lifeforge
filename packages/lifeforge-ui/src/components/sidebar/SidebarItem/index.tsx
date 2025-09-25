@@ -72,7 +72,7 @@ interface SubSidebarItemProps {
 }
 
 interface SidebarItemBaseProps {
-  label: string
+  label: string | React.ReactElement
   icon?: string | React.ReactElement
 }
 
@@ -111,14 +111,16 @@ function SidebarItem({
     isMainSidebarItem
       ? false
       : subsection !== undefined &&
-          location.pathname.slice(1).startsWith(_.kebabCase(label))
+          location.pathname.slice(1).startsWith(_.kebabCase(label.toString()))
   )
 
   const isLocationMatched = useMemo(
     () =>
       location.pathname
         .slice(1)
-        .startsWith((prefix !== '' ? `${prefix}/` : '') + _.kebabCase(label)),
+        .startsWith(
+          (prefix !== '' ? `${prefix}/` : '') + _.kebabCase(label.toString())
+        ),
     [location.pathname, prefix, label]
   )
 
@@ -137,7 +139,9 @@ function SidebarItem({
         return
       }
 
-      navigate(`/${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label)}`)
+      navigate(
+        `/${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label.toString())}`
+      )
     }
 
     if (window.innerWidth < 1024) {

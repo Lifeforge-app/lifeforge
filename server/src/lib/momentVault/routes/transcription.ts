@@ -3,7 +3,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import fs from 'fs'
 import request from 'request'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { convertToMp3 } from '../utils/convertToMP3'
 import { getTranscription } from '../utils/transcription'
