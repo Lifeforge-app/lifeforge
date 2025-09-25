@@ -5,7 +5,7 @@ import { Tooltip } from 'react-tooltip'
 import { useSidebarState } from 'shared'
 
 import { type CalendarCategory, type CalendarEvent } from '../../../index.js'
-import EventDetails from '../../EventDetails.tsx/index.js'
+import EventDetails from '../../EventDetails/index.js'
 
 function EventItemTooltip({
   event,
