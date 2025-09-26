@@ -63,11 +63,13 @@
     "title": "选择颜色",
     "modals": {
       "morandiColorPalette": "莫兰迪色调",
-      "tailwindCssColorPalette": "Tailwind CSS色调"
+      "tailwindCssColorPalette": "Tailwind CSS色调",
+      "flatUiColors": "Flat UI Colors"
     },
     "buttons": {
       "morandiColorPalette": "莫兰迪色调",
-      "tailwindCssColorPalette": "Tailwind CSS色调"
+      "tailwindCssColorPalette": "Tailwind CSS色调",
+      "flatUiColors": "Flat UI Colors"
     }
   },
   "imagePreview": "图片预览",
