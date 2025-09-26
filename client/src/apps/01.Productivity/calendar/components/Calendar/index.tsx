@@ -190,6 +190,7 @@ function CalendarComponent({
       draggableAccessor={draggableAccessor as (event: object) => boolean}
       events={filteredEvents}
       localizer={localizer}
+      
       onEventDrop={handleEventChange}
       onEventResize={handleEventChange}
       onRangeChange={handleDateRangeChange}
