@@ -96,9 +96,11 @@ function TemplateItem({
           return (
             <div
               className="bg-bg-500/10 rounded-md p-2"
-              style={{
-                backgroundColor: targetCategory.color + '10'
-              }}
+              style={
+                targetCategory && {
+                  backgroundColor: targetCategory.color + '10'
+                }
+              }
             >
               <Icon
                 className="text-bg-500 size-6 shrink-0"

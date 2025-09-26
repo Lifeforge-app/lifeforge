@@ -5,7 +5,7 @@ import { usePersonalization } from 'shared'
 export function useChartOptions(range: 'week' | 'month' | 'ytd'): ChartOptions {
   const { bgTempPalette, derivedTheme } = usePersonalization()
 
-  return useMemo<ChartOptions>(
+  return useMemo<ChartOptions<'bar'>>(
     () => ({
       maintainAspectRatio: false,
       responsive: true,
