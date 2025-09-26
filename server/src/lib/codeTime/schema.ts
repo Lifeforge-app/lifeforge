@@ -18,8 +18,6 @@ const codeTimeSchemas = {
     total_minutes: z.number(),
     last_timestamp: z.number(),
     languages: z.any(),
-    created: z.string(),
-    updated: z.string(),
   }),
 };
 
