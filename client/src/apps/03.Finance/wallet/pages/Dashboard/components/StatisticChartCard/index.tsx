@@ -1,3 +1,4 @@
+import type { ChartOptions } from 'chart.js'
 import { DashboardItem, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Bar } from 'react-chartjs-2'
@@ -63,7 +64,7 @@ function StatisticChardCard() {
                     }
                   ]
                 }}
-                options={options}
+                options={options as ChartOptions<'bar'>}
               />
             )
           }
