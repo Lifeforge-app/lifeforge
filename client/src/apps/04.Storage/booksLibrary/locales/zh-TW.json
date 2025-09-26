@@ -68,7 +68,9 @@
     "markAsReading": "標記為閱讀中",
     "addToFavourites": "新增至我的最愛",
     "removeFromFavourites": "從我的最愛移除",
-    "openDownloadPage": "打開下載頁面"
+    "openDownloadPage": "打開下載頁面",
+    "bookmark": "添加書籤",
+    "removeBookmark": "移除書籤"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -129,5 +131,7 @@
     }
   },
   "checkingKeys": "正在檢查 SMTP API 金鑰...",
-  "kindleSent": "已啟動程序將所選文件傳送到目標電子郵件地址。"
+  "kindleSent": "已啟動程序將所選文件傳送到目標電子郵件地址。",
+  "bookmarkedBooks": "已書籤的書籍",
+  "bookmarkedBooksDesc": "您有 {{number}} 本書已加書籤"
 }
