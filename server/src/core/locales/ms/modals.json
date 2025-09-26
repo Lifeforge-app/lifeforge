@@ -63,11 +63,13 @@
     "title": "Pilih Warna",
     "modals": {
       "morandiColorPalette": "Palet Warna Morandi",
-      "tailwindCssColorPalette": "Palet Warna Tailwind CSS"
+      "tailwindCssColorPalette": "Palet Warna Tailwind CSS",
+      "flatUiColors": "Flat UI Colors"
     },
     "buttons": {
       "morandiColorPalette": "Palet Warna Morandi",
-      "tailwindCssColorPalette": "Palet Warna Tailwind CSS"
+      "tailwindCssColorPalette": "Palet Warna Tailwind CSS",
+      "flatUiColors": "Flat UI Colors"
     }
   },
   "imagePreview": "Pratonton Imej",
