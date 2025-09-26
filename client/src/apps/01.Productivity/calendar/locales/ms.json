@@ -31,7 +31,8 @@
       "title": "Sahkan Tambah Pengecualian",
       "description": "Adakah anda pasti ingin menambah pengecualian untuk acara ini?"
     },
-    "subscribeToIcsCalendar": "Langgan Kalendar ICS"
+    "subscribeToIcsCalendar": "Langgan Kalendar ICS",
+    "selectYearAndMonth": "Pilih Tahun dan Bulan"
   },
   "inputs": {
     "startTime": "Masa Mula",

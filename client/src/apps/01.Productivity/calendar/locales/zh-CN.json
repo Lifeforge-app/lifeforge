@@ -31,7 +31,8 @@
       "title": "确认添加例外",
       "description": "您确定要为此事件添加例外吗？"
     },
-    "subscribeToIcsCalendar": "订阅 ICS 日历"
+    "subscribeToIcsCalendar": "订阅 ICS 日历",
+    "selectYearAndMonth": "选择年份和月份"
   },
   "inputs": {
     "startTime": "开始时间",
