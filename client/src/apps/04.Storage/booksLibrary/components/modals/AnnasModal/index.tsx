@@ -1,3 +1,5 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { useLocalStorage } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
   Button,
@@ -9,6 +11,7 @@ import {
   SearchInput
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferOutput, usePromiseLoading } from 'shared'
 
@@ -19,6 +22,8 @@ export type AnnasSearchResult = InferOutput<
 >
 
 function AnnasModal({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation('apps.booksLibrary')
+
   const [searchQuery, setSearchQuery] = useState('')
 
   const [hasSearched, setHasSearched] = useState(false)
@@ -26,6 +31,10 @@ function AnnasModal({ onClose }: { onClose: () => void }) {
   const [currentPage, setCurrentPage] = useState(1)
 
   const [data, setData] = useState<AnnasSearchResult | null>(null)
+
+  const [bookmarkedBooks] = useLocalStorage<
+    AnnasSearchResult['results'][number][] | null
+  >('books-library__bookmarks')
 
   async function fetchBookResults(page: number = 1) {
     if (searchQuery.trim() === '') {
@@ -110,6 +119,36 @@ function AnnasModal({ onClose }: { onClose: () => void }) {
         {(() => {
           if (loading) {
             return <LoadingScreen />
+          }
+
+          if (bookmarkedBooks && bookmarkedBooks.length > 0 && !hasSearched) {
+            return (
+              <div>
+                <div className="mt-4 mb-6 flex items-center gap-4">
+                  <div className="shadow-custom bg-custom-500/10 rounded-lg p-3">
+                    <Icon
+                      className="text-custom-500 size-8"
+                      icon="tabler:bookmark"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xl font-medium">
+                      {t('bookmarkedBooks')}
+                    </p>
+                    <p className="text-bg-500 text-sm font-light">
+                      {t('bookmarkedBooksDesc', {
+                        number: bookmarkedBooks.length
+                      })}
+                    </p>
+                  </div>
+                </div>
+                <ul className="space-y-3">
+                  {bookmarkedBooks.map(book => (
+                    <SearchResultItem key={book.md5} book={book} />
+                  ))}
+                </ul>
+              </div>
+            )
           }
 
           if (hasSearched) {
