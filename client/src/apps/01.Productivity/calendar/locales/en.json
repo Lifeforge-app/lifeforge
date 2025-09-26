@@ -31,7 +31,8 @@
       "title": "Confirm Add Exception",
       "description": "Are you sure you want to add this exception for the event?"
     },
-    "subscribeToIcsCalendar": "Subscribe to ICS Calendar"
+    "subscribeToIcsCalendar": "Subscribe to ICS Calendar",
+    "selectYearAndMonth": "Select Year and Month"
   },
   "inputs": {
     "startTime": "Start Time",

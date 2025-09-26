@@ -17,7 +17,7 @@ function NavigationControl({
   const { isEventLoading } = useCalendarStore()
 
   return (
-    <div className="flex w-full items-center gap-3">
+    <div className="flex w-full min-w-0 items-center">
       <div className="flex-between flex justify-start gap-0">
         <Button
           icon="tabler:chevron-left"
@@ -34,8 +34,8 @@ function NavigationControl({
           }}
         />
       </div>
-      <div className="flex shrink-0 items-center gap-2 text-center text-2xl font-medium">
-        <DateRangeLabel label={label} />
+      <div className="flex min-w-0 items-center gap-2 text-center text-2xl font-medium">
+        <DateRangeLabel label={label} onNavigate={onNavigate} />
         {isEventLoading && (
           <Icon className="text-bg-500 h-5 w-5" icon="svg-spinners:180-ring" />
         )}
