@@ -29,9 +29,7 @@ i18n
     defaultNS: false,
     saveMissing: true,
     missingKeyHandler: async (_, namespace, key) => {
-      if (
-        !['utils', 'apps', 'common', 'core'].includes(namespace?.split('.')[0])
-      ) {
+      if (!['apps', 'common'].includes(namespace?.split('.')[0])) {
         return
       }
 
@@ -51,7 +49,7 @@ i18n
 
         const [namespace, subnamespace] = namespaces[0].split('.')
 
-        if (!['utils', 'apps', 'common', 'core'].includes(namespace)) {
+        if (!['apps', 'common'].includes(namespace)) {
           return
         }
 
