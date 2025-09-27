@@ -14,11 +14,17 @@ export function useChartData(
   const getTransactions = (date: string, type: 'income' | 'expenses') => {
     if (range === 'ytd') {
       return transactions
+        .filter(
+          transaction => dayjs(transaction.date).year() === dayjs().year()
+        )
         .filter(transaction => transaction.type === type)
         .filter(transaction => dayjs(transaction.date).format('MMM') === date)
         .reduce((acc, curr) => acc + curr.amount, 0)
     } else {
       return transactions
+        .filter(
+          transaction => dayjs(transaction.date).year() === dayjs().year()
+        )
         .filter(transaction => transaction.type === type)
         .filter(
           transaction => dayjs(transaction.date).format('MMM DD') === date
