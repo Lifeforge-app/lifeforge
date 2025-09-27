@@ -56,7 +56,7 @@ const list = forgeController
 
     return allTransactions.sort((a, b) => {
       if (new Date(a.date).getTime() === new Date(b.date).getTime()) {
-        return new Date(a.created).getTime() - new Date(b.created).getTime()
+        return new Date(b.created).getTime() - new Date(a.created).getTime()
       }
 
       return new Date(b.date).getTime() - new Date(a.date).getTime()
