@@ -5,9 +5,12 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import { EPub } from 'epub2'
+import { countWords } from 'epub-wordcount'
 import fs from 'fs'
 import moment from 'moment'
 import mailer from 'nodemailer'
+// @ts-expect-error - No types available
+import pdfPageCounter from 'pdf-page-counter'
 import { z } from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
@@ -224,12 +227,17 @@ const upload = forgeController
     }
 
     let thumbnail: File | undefined = undefined
+    let word_count: number | undefined = undefined
+    let page_count: number | undefined = undefined
 
     if (file.mimetype === 'application/epub+zip') {
       const epubInstance = await EPub.createAsync(file.path)
       thumbnail = await getEpubThumbnail(epubInstance)
+      word_count = await countWords(file.path)
     } else if (file.mimetype === 'application/pdf') {
       thumbnail = await convertPDFToImage(file.path)
+      const buffer = fs.readFileSync(file.path)
+      page_count = (await pdfPageCounter(buffer)).numpages
     }
 
     await pb.create
@@ -238,6 +246,8 @@ const upload = forgeController
         ...body,
         ...(await getMedia('file', file)),
         thumbnail,
+        word_count,
+        page_count,
         read_status: 'unread'
       })
       .execute()

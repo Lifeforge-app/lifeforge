@@ -20,6 +20,8 @@ const booksLibrarySchemas = {
     extension: z.string(),
     edition: z.string(),
     size: z.number(),
+    word_count: z.number(),
+    page_count: z.number(),
     isbn: z.string(),
     file: z.string(),
     thumbnail: z.string(),
