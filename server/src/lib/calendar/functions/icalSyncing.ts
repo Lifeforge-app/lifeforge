@@ -17,20 +17,17 @@ export class ICalSyncService {
     const events = ical.sync.parseICS(icalData)
 
     // Clear existing events for this calendar
-    await this.pb.getFullList
+    const existed = await this.pb.getFullList
       .collection('calendar__events_ical')
       .filter([{ field: 'calendar', operator: '=', value: calendarId }])
       .execute()
-      .then(existingEvents =>
-        Promise.all(
-          existingEvents.map(event =>
-            this.pb.delete
-              .collection('calendar__events_ical')
-              .id(event.id)
-              .execute()
-          )
-        )
-      )
+
+    for (const event of existed) {
+      await this.pb.delete
+        .collection('calendar__events_ical')
+        .id(event.id)
+        .execute()
+    }
 
     // Process and save new events
     const processedEvents = []
