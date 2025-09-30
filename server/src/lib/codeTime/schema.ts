@@ -15,9 +15,10 @@ const codeTimeSchemas = {
     date: z.string(),
     relative_files: z.any(),
     projects: z.any(),
+    languages: z.any(),
+    hourly: z.any(),
     total_minutes: z.number(),
     last_timestamp: z.number(),
-    languages: z.any(),
   }),
 };
 
