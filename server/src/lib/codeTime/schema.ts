@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 const codeTimeSchemas = {
   projects: z.object({
@@ -15,11 +15,10 @@ const codeTimeSchemas = {
     date: z.string(),
     relative_files: z.any(),
     projects: z.any(),
+    languages: z.any(),
+    hourly: z.any(),
     total_minutes: z.number(),
     last_timestamp: z.number(),
-    languages: z.any(),
-    created: z.string(),
-    updated: z.string(),
   }),
 };
 

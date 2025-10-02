@@ -41,7 +41,7 @@ export class Delete<TCollectionKey extends CollectionKey>
    * @throws Error if collection key is not set
    * @throws Error if record ID is not provided
    */
-  execute(): Promise<boolean> {
+  async execute(): Promise<boolean> {
     if (!this.collectionKey) {
       throw new Error(
         'Collection key is required. Use .collection() method to set the collection key.'
@@ -54,21 +54,20 @@ export class Delete<TCollectionKey extends CollectionKey>
       )
     }
 
-    return this._pb
+    const result = await this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .delete(this._recordId)
-      .then(result => {
-        LoggingService.debug(
-          `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
-            .hex('#34ace0')
-            .bold(
-              this._recordId
-            )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-          'DB'
-        )
 
-        return result
-      })
+    LoggingService.debug(
+      `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
+        .hex('#34ace0')
+        .bold(
+          this._recordId
+        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+      'DB'
+    )
+
+    return result
   }
 }
 

@@ -1,7 +1,7 @@
 import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
 import COLLECTION_SCHEMAS from '@schema'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { Location } from '../../locations/typescript/location.types'
 

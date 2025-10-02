@@ -79,6 +79,15 @@ function SearchInput({
         onKeyUp={onKeyUp}
       />
       <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-2">
+        <Button
+          className={clsx(
+            'size-8 p-0',
+            value ? 'visible opacity-100' : 'invisible opacity-0'
+          )}
+          icon="tabler:x"
+          variant="plain"
+          onClick={() => setValue('')}
+        />
         {actionButtonProps && (
           <Button
             {...actionButtonProps}

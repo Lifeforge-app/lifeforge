@@ -30,7 +30,9 @@
     "confirmAddException": {
       "title": "Confirm Add Exception",
       "description": "Are you sure you want to add this exception for the event?"
-    }
+    },
+    "subscribeToIcsCalendar": "Subscribe to ICS Calendar",
+    "selectYearAndMonth": "Select Year and Month"
   },
   "inputs": {
     "startTime": "Start Time",
@@ -106,7 +108,8 @@
     "useGoogleMap": "Use Google Maps",
     "calendar": "Calendar",
     "calendarName": "Calendar Name",
-    "calendarColor": "Calendar Color"
+    "calendarColor": "Calendar Color",
+    "icsUrl": "ICS Link"
   },
   "items": {
     "event": "Event",

@@ -2,7 +2,7 @@
 import { fetchAI } from '@functions/external/ai'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { exec } from 'child_process'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export interface YoutubeInfo {
   title: string

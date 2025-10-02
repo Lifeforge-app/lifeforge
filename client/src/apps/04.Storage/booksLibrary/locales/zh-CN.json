@@ -68,7 +68,9 @@
     "markAsReading": "标记为阅读中",
     "addToFavourites": "添加到喜爱",
     "removeFromFavourites": "从喜爱中移除",
-    "openDownloadPage": "打开下载页面"
+    "openDownloadPage": "打开下载页面",
+    "bookmark": "添加书签",
+    "removeBookmark": "移除书签"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -129,5 +131,7 @@
     }
   },
   "checkingKeys": "正在检查 SMTP API 密钥...",
-  "kindleSent": "已启动进程将所选文档发送到目标邮箱地址。"
+  "kindleSent": "已启动进程将所选文档发送到目标邮箱地址。",
+  "bookmarkedBooks": "已收藏的书籍",
+  "bookmarkedBooksDesc": "您有 {{number}} 本书已添加书签"
 }

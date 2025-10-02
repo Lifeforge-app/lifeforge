@@ -1,7 +1,7 @@
 import { getPBSuperUserInstance } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const list = forgeController
   .query()

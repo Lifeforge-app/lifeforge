@@ -1,14 +1,17 @@
 import type {
+  CalendarCalendar,
   CalendarCategory,
   CalendarEvent
 } from '@apps/01.Productivity/calendar/components/Calendar'
 
 function MiniCalendarEventIndicator({
   eventsOnTheDay,
-  getCategory
+  getCategory,
+  getCalendar
 }: {
   eventsOnTheDay: CalendarEvent[]
   getCategory: (event: CalendarEvent) => CalendarCategory | undefined
+  getCalendar: (event: CalendarEvent) => CalendarCalendar | undefined
 }) {
   const groupedByThree = []
 
@@ -23,12 +26,15 @@ function MiniCalendarEventIndicator({
           {group.map(event => {
             const category = getCategory(event)
 
+            const calendar = getCalendar(event)
+
             return (
               <div
                 key={event.id}
                 className="size-1 rounded-full"
                 style={{
-                  backgroundColor: category?.color ?? ''
+                  backgroundColor:
+                    category?.color || calendar?.color || '#000000'
                 }}
               />
             )

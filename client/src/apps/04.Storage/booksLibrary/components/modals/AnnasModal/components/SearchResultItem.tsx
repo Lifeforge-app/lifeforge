@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react'
-import { Button } from 'lifeforge-ui'
+import { useLocalStorage } from '@uidotdev/usehooks'
+import { Button, ConfirmationModal, useModalStore } from 'lifeforge-ui'
+import { useMemo } from 'react'
 
 import type { AnnasSearchResult } from '..'
 
@@ -8,12 +10,50 @@ function SearchResultItem({
 }: {
   book: AnnasSearchResult['results'][number]
 }) {
+  const open = useModalStore(state => state.open)
+
+  const [bookmarkedBooks, setBookmarkedBooks] = useLocalStorage<
+    AnnasSearchResult['results'][number][]
+  >('books-library__bookmarks', [])
+
+  const isBookmarked = useMemo(
+    () => bookmarkedBooks?.some(b => b.md5 === book.md5),
+    [bookmarkedBooks, book.md5]
+  )
+
   const handleOpenDownloadPage = () => {
     window.open(
       `https://annas-archive.org/md5/${book.md5}`,
       '_blank',
       'noopener,noreferrer'
     )
+  }
+
+  const handleToggleBookmark = () => {
+    const isBookmarked = bookmarkedBooks?.some(b => b.md5 === book.md5)
+
+    if (isBookmarked) {
+      open(ConfirmationModal, {
+        title: 'Remove Bookmark',
+        description: 'Are you sure you want to remove this bookmark?',
+        confirmationButton: {
+          children: 'Remove',
+          dangerous: true,
+          icon: 'tabler:bookmark-off'
+        },
+        onConfirm: async () => {
+          const updatedBookmarks = bookmarkedBooks?.filter(
+            b => b.md5 !== book.md5
+          )
+
+          setBookmarkedBooks(updatedBookmarks)
+        }
+      })
+    } else {
+      const updatedBookmarks = [...(bookmarkedBooks || []), book]
+
+      setBookmarkedBooks(updatedBookmarks)
+    }
   }
 
   return (
@@ -87,6 +127,15 @@ function SearchResultItem({
         </div>
         <div className="flex flex-1 items-end justify-end">
           <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-3">
+            <Button
+              className="w-full"
+              icon={isBookmarked ? 'tabler:bookmark-off' : 'tabler:bookmark'}
+              namespace="apps.booksLibrary"
+              variant="secondary"
+              onClick={handleToggleBookmark}
+            >
+              {isBookmarked ? 'Remove Bookmark' : 'Bookmark'}
+            </Button>
             <Button
               className="w-full"
               icon="tabler:download"

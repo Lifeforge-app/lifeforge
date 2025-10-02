@@ -23,8 +23,7 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "tsup src/index.ts --watch",
-    "storybook": "storybook dev -p 6006",
+    "dev": "storybook dev -p 6006",
     "types": "tsc -b",
     "build": "rm -rf dist && tsup src/index.ts && tsc -b",
     "build-storybook": "storybook build"

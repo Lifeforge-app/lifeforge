@@ -30,7 +30,9 @@
     "confirmAddException": {
       "title": "Sahkan Tambah Pengecualian",
       "description": "Adakah anda pasti ingin menambah pengecualian untuk acara ini?"
-    }
+    },
+    "subscribeToIcsCalendar": "Langgan Kalendar ICS",
+    "selectYearAndMonth": "Pilih Tahun dan Bulan"
   },
   "inputs": {
     "startTime": "Masa Mula",
@@ -106,7 +108,8 @@
     "useGoogleMap": "Gunakan Peta Google",
     "calendar": "Kalendar",
     "calendarName": "Nama Kalendar",
-    "calendarColor": "Warna Kalendar"
+    "calendarColor": "Warna Kalendar",
+    "icsUrl": "Pautan ICS"
   },
   "items": {
     "event": "Acara",

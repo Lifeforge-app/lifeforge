@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
 
@@ -9,10 +9,7 @@ const list = forgeController
   .description('Get all calendar categories')
   .input({})
   .callback(({ pb }) =>
-    pb.getFullList
-      .collection('calendar__categories_aggregated')
-      .sort(['name'])
-      .execute()
+    pb.getFullList.collection('calendar__categories').sort(['name']).execute()
   )
 
 const getById = forgeController
@@ -27,7 +24,7 @@ const getById = forgeController
     id: 'calendar__categories'
   })
   .callback(({ pb, query: { id } }) =>
-    pb.getOne.collection('calendar__categories_aggregated').id(id).execute()
+    pb.getOne.collection('calendar__categories').id(id).execute()
   )
 
 const create = forgeController

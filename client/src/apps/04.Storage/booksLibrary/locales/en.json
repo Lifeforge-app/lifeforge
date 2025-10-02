@@ -68,7 +68,9 @@
     "markAsReading": "Mark as Reading",
     "addToFavourites": "Add to Favourites",
     "removeFromFavourites": "Remove from Favourites",
-    "openDownloadPage": "Open Download Page"
+    "openDownloadPage": "Open Download Page",
+    "bookmark": "Bookmark",
+    "removeBookmark": "Remove Bookmark"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -129,5 +131,7 @@
     }
   },
   "checkingKeys": "Checking SMTP API keys...",
-  "kindleSent": "Fired process to send the selected document to the targeted email address."
+  "kindleSent": "Fired process to send the selected document to the targeted email address.",
+  "bookmarkedBooks": "Bookmarked Books",
+  "bookmarkedBooksDesc": "You have {{number}} bookmarked book(s)"
 }

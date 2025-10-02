@@ -1,6 +1,6 @@
 import { forgeController } from '@functions/routes'
 import { JSDOM } from 'jsdom'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 interface BookResult {
   md5: string

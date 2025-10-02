@@ -2,7 +2,7 @@ import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import request from 'request'
-import z from 'zod/v4'
+import z from 'zod'
 
 const welcome = forgeController
   .query()

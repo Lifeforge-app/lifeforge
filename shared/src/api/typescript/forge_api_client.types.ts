@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type z from 'zod/v4'
-import type {
-  ZodIntersection,
-  ZodObject,
-  ZodRawShape,
-  ZodTypeAny
-} from 'zod/v4'
+import type z from 'zod'
+import type { ZodIntersection, ZodObject, ZodRawShape, ZodTypeAny } from 'zod'
 
 import type { ForgeAPIClientController } from '../core/forgeAPIClient'
 

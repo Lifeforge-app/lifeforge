@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import moment from 'moment'
 import puppeteer from 'puppeteer-core'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import getReadmeHTML from './utils/readme'
 import { default as _getStatistics } from './utils/statistics'
@@ -333,6 +333,9 @@ const eventLog = forgeController
           languages: {
             [data.language as string]: 1
           },
+          hourly: {
+            [moment(data.eventTime as string).format('H')]: 1
+          },
           total_minutes: 1,
           last_timestamp: data.eventTime
         })
@@ -368,6 +371,16 @@ const eventLog = forgeController
         languages[data.language as string] = 1
       }
 
+      const hourly = lastRecord.hourly || {}
+
+      const hourKey = moment(data.eventTime as string).format('H')
+
+      if (hourly[hourKey]) {
+        hourly[hourKey] += 1
+      } else {
+        hourly[hourKey] = 1
+      }
+
       await pb.update
         .collection('code_time__daily_entries')
         .id(lastRecord.id)
@@ -375,6 +388,7 @@ const eventLog = forgeController
           projects,
           relative_files: relativeFiles,
           languages,
+          hourly,
           total_minutes: lastRecord.total_minutes + 1,
           last_timestamp: data.eventTime
         })

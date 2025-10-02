@@ -18,7 +18,7 @@ import ViewSelector from './components/ViewSelector'
 interface CalendarHeaderProps {
   label: string
   view: View
-  onNavigate: (direction: NavigateAction) => void
+  onNavigate: (direction: NavigateAction, date?: Date) => void
   onView: (view: View) => void
 }
 
@@ -50,7 +50,7 @@ function CalendarHeader({
 
   return (
     <>
-      <div className="mb-4 flex w-full items-end justify-between gap-3">
+      <div className="mb-4 flex w-full min-w-0 items-end justify-between gap-3">
         <NavigationControl label={label} onNavigate={onNavigate} />
         <div className="flex hidden gap-2 md:flex">
           <Button

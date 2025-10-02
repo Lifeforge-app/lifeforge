@@ -35,7 +35,7 @@ import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import { Tool } from 'ai'
 import type { Request, Response, Router } from 'express'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import {
   BaseResponse,
@@ -561,7 +561,11 @@ export class ForgeControllerBuilder<
           return clientError(res, err.message, err.code)
         }
 
-        serverError(res, 'Internal server error')
+        serverError(
+          res,
+          'Internal server error',
+          err instanceof Error ? err.message : String(err)
+        )
       }
     }
 

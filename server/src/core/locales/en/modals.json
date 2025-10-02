@@ -63,11 +63,13 @@
     "title": "Choose Color",
     "modals": {
       "morandiColorPalette": "Morandi Color Palette",
-      "tailwindCssColorPalette": "Tailwind CSS Color Palette"
+      "tailwindCssColorPalette": "Tailwind CSS Color Palette",
+      "flatUiColors": "Flat UI Colors"
     },
     "buttons": {
       "morandiColorPalette": "Morandi Color Palette",
-      "tailwindCssColorPalette": "Tailwind CSS Color Palette"
+      "tailwindCssColorPalette": "Tailwind CSS Color Palette",
+      "flatUiColors": "Flat UI Colors"
     }
   },
   "imagePreview": "Image Preview",

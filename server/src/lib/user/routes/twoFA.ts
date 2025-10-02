@@ -6,7 +6,7 @@ import moment from 'moment'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'

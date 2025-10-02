@@ -1,7 +1,7 @@
 import { PBService } from '@functions/database'
 import { fetchAI } from '@functions/external/ai'
 import { fromPath } from 'pdf2pic'
-import z from 'zod/v4'
+import z from 'zod'
 
 export async function getTransactionDetails(OCRResult: string, pb: PBService) {
   const TransactionDetails = z.object({

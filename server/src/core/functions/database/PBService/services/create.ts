@@ -107,7 +107,7 @@ export class Create<
    * @throws Error if collection key is not set
    * @throws Error if data is not provided
    */
-  execute(): Promise<
+  async execute(): Promise<
     SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
   > {
     if (!this.collectionKey) {
@@ -120,26 +120,25 @@ export class Create<
       throw new Error('Data is required. Use .data() method to set the data.')
     }
 
-    return this._pb
+    const result = await this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .create(this._data, {
         expand: this._expand,
         fields: this._fields,
         requestKey: null
       })
-      .then(result => {
-        LoggingService.debug(
-          `${chalk.hex('#2ed573').bold('create')} Created record with ID ${chalk
-            .hex('#34ace0')
-            .bold(
-              result.id
-            )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-          'DB'
-        )
 
-        return result
-      }) as unknown as Promise<
-      SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
+    LoggingService.debug(
+      `${chalk.hex('#2ed573').bold('create')} Created record with ID ${chalk
+        .hex('#34ace0')
+        .bold(result.id)} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+      'DB'
+    )
+
+    return result as unknown as SingleItemReturnType<
+      TCollectionKey,
+      TExpandConfig,
+      TFields
     >
   }
 }

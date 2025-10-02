@@ -1,7 +1,7 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { SCHEMAS } from '@schema'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { validateFolderPath } from '../utils/folders'
 

@@ -2,7 +2,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import Moment from 'moment'
 import MomentRange from 'moment-range'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 // @ts-expect-error - MomentRange types are not fully compatible with Moment
 const moment = MomentRange.extendMoment(Moment)

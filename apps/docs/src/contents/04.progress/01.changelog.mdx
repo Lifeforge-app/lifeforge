@@ -3,6 +3,7 @@ import Code from "../../components/Code"
 import Warning from "../../components/Warning"
 import Commit from "./components/Commit"
 import Version from "./components/Version"
+import GithubUser from "./components/GithubUser"
 
 ###### Changelog
 
@@ -26,6 +27,132 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 </Warning>
 
 ---
+
+<Version week={39}>
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="fd6a453be74bbf5c55d416c11f2a52cfbdb1198a" />: Moved pagination component to the top of the listing in Books Library to prevent overlapping with FAB button.
+- <Commit hash="7d7d0f1ba8933e2a1873bbc4f400bae36f294c8b" />: Addeed category display with color and icono in template selection modal in Wallet.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-1.png)
+
+- <Commit hash="72348e677441a42108a7874d27342d4f85b6ae9a" />: Implemented show solution toggle in Sudoku module.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-2.png)SearchTMDBModal
+
+- <Commit hash="6e1a438790ab14a97e37c794ae7817d9b4c35635" />: Added time range selector and updated chart appearance in chart widget in Wallet Dashboard.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-3.png)
+
+- <Commit hash="4095777e92e1d2a085e5154f95e9aea54a208648" />: Implemented year and month selection for expenses breakdown in Wallet Dashboard.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-4.png)
+
+- <Commit hash="f3e100ade6c9f3f427021776723db50bdb0261e8" />: Implemented ICS calendar subscription and synchronization mechanism.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-5.png)
+
+- <Commit hash="d99b50ccd08debcba4563207f194cf44591c8622" />: Added year and month selector modal in Calendar module that can be accessed by clicking the month and year text in the calendar header (only applicable for month view).
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-6.png)
+
+- <Commit hash="f2f5bd5e3ae964c3ec34c51060a528feaed9b56e" />: Implemented bookmarking functionality in Annas Archive modal in Books Library where users can bookmark their favorite books for later downloading.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-7.png)
+
+- <Commit hash="e3b2e66985ab43630fe972ab6cb6c882206e4c0a" />: Enhanced prompt for parsing music name and author with additional context in Music Library module.
+
+- <Commit hash="bbfde164625478089d0704e9ada7e051c826c561" />: Moved add book button to the top right corner in Books Library listing page for consistency.
+
+- <Commit hash="04c9700f7c3fab0dcc5e2c32f58b0cd5c3c87fda" />: Added word and page count display in Books Library listing page.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-10.png)
+
+- <Commit hash="2818e336f98354b35c9ffc2d62f7ead1ae8490b4" />: Added hourly tracking in Code Time module. Dashboard widget is to be added in the future.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="8c36a42152ba2987efc5e51127048fccfff765c3" />: Added clear button to <code>SearchInput</code> component.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-8.png)
+
+- <Commit hash="7e749a1caf40aa03a5af9cc60edecdee5301b00a" />: ADded Flat UI colors palette to the color picker modal.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-9.png)
+
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="f0bcdf603c695775574a2780dc3670877a2d0d71" />: Enhance <code>serverError</code> function to log error messages for better debugging.
+- <Commit hash="ef0b8dbf174beb08987477b02a5ddb961ac3adab" />: Bumped the version of <code>zod</code> to version 4 across the codebase.
+- <Commit hash="f6945be38390310ba17215e1a29222ed24f9c5f0" />: Changed <code>dev</code> script in <code>lifeforge-ui</code> to start storybook server.
+- <Commit hash="fea26d23b2a1e3fe793403b2dfd17a1469aeb4f4" />: Remove unused <code>created</code> and <code>updated</code> fields from <code>code_time__daily_entries</code> collection in database schema.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="4687e10118bbeed06d875f5ac4012e1b16576905" />: Fixed error logging mechanism in <code>PBService</code>.
+- <Commit hash="83aaf81fc23dade597169c0385be92a66d066aaf" />: Fixed queryKey for invalidatiing movie entries in <code>SearchTMDBModal</code> in Movies Library.
+- <Commit hash="f56707f6b5fec3116f4300d3fe154eba89394eac" />: Corrected environment file path in <code>generateCollectionsSchema.ts</code> script.
+- <Commit hash="e7a247dbfdf25dc5766f9338c8f886bed1ddebba" />: Fixed a bug in Password Manager where the existing data is not loaded correctly in the edit modal.
+- <Commit hash="9d99c45b31de9df58ca8ce93f8f1fcb9d7f492fe" />: Disabled entry type selection in idea modification modal in Idea Box to prevent changing the type of an existing entry.
+- <Commit hash="f3018c8bde9eb567ce08ab80a0a0dd1281a106b6" />: Fixed a bug in statistic chart widget in Wallet module where the year of the transactio is not taken into account when filtering transactions.
+- <Commit hash="483a314b68259661e4602404fc643f26cd85ab0b" />: Fixed a but in Wallet module where the transaction date is not recorded correctly.
+- <Commit hash="b2c67a8e3afc3930db3085fa278d502511daa0f8" />: Fixed a bug in Wallet module where the transaction is not ordered corectly.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="582901e7c636df3f1bda796a9544765bdbfb69be" />: Added GitHub user component in docs changelog to display GitHub user avatar and link to their profile.
+
+</Version>
+
+<Version week={38}>
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="099e36d85ef3dda80b0461a1aee7ff6b4cfa9919" />: Updated thumbnail size in Idea Box container list for better loading speed.
+- <Commit hash="465bd6971e23dddc47fff75e1a22690916e871bb" />: Enabled Pixabay and URL options for Idea Box container thumbnail.
+- <Commit hash="d5f8ac935c1194e5da46da3c382b3664e46f78a5" />: Hours and minutes display in Code Time dashboard is now shown with thousand separators for better readability.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w38-4.png)
+
+- <Commit hash="bdf5b5b9ccd7634229ce0746808e5cec079ccc6f" />: Added total amount display in Assets section of Wallet module.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w38-1.png)
+
+- <Commit hash="6f364bb49622a3ccb7816b2185b3e08ea129beb4" />: Implemented pagination in Books Library.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w38-2.png)
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="125fcf5ec8d873b6653cd9c7998b86af5d67395b" />: Updated image generation model from <code>dall-e-3</code> to <code>gpt-image-1</code> for better image quality and diversity.
+- <Commit hash="47172eaa4cdc255b032ad13047da3d5bb334b328" />, <Commit hash="094168af6c0c9c6e421c904174b3171f1e8053a7" />: Progress and fixes on Ci/CD pipeline for automated deployment by <GithubUser username="ahmed2m" />.
+- <Commit hash="7e49af76e5bafd7f454f350ef369ce533311015b" />: Consolidated all environment variables for server and client into a single <code>.env</code> file.
+- <Commit hash="1fe3e1066f9c9a17f07c0b203675b1054801dcee" />: Added logging for media parsing in <code>forgeController</code> and improved error logging in general.
+- <Commit hash="3823cde3ed4692f7ad7b5d7790dc2415d3e0013d" />: Migrated to <code>axios</code> from native <code>fetch</code> for HTTP requests in client side.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="f43081061d1752d6efd97d1b56bb963725b1c775" />: Fixed a bug in Score Library where the audio cannot be played due to incorrect URL.
+- <Commit hash="30bd3e740f422453fb4d7496f6eab6644a690d72" />: Fixed a bug in Todo List where the task is not updated due to incorrect query key.
+- <Commit hash="9dfca8eca09e9b00fcc63f46e7d82247c7a074c3" />: Fixed a bug in <code>FilePickerModal</code> where the AI image generation option in tabbar is hidden when both Pixabay and URL options are disabled.
+- <Commit hash="5688d57c7e5b0b2e8603e85d90748dac94751ad6" />: Fixed a bug in <code>forgeController</code> where the media is not parsed properly due to incorrect variable referencing.
+- <Commit hash="388805ecaeab626b86ceccf3f7d3e7f4e3c65ce8" />: Corrected build script in <code>package.json</code> of localization manager.
+- <Commit hash="c1bf177d2dc2cef5bef2c73242111cd35a50ff25" />: Fixed a bug where the date of birth is not correctly parsed.
+- <Commit hash="a1c59473ab878f7e9e91f7da82458a67e9963e77" />: Fixed a bug in Today's Event dashboard widget where the events that are not happening today are shown.
+- <Commit hash="14058d4b6209e9ef9855dcf85e34d7de46616486" />: Fixed an issue where building the server in production mode fails due to wierd export syntax in <code>rrule</code> package.
+- <Commit hash="2876be477cce54b7834283d2e442e644b7b83eb6" />: Fixed a crucial issue where the OGCache mechanism is never utilized in Idea Box.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="c4ab2e34cb4dffadce6bf48b19a75548ac41b5bc" />: In <code>forge</code> script, replaced concurrent execution mechanism with sequential one to prevent overlapping, added "all" option to run script across all projects.
+
+  <Code language="bash">
+  {`bun forge build all`}
+  </Code>
+
+- <Commit hash="c8dc9a854c53205c067a9ecadade8b54d9fabf96" />: In <code>forge</code> script, implemented mechanism to automatically detect projects in the <code>apps/</code> directory, removing the need to manually specify project names.
+
+</Version>
 
 <Version week={37}>
 ### 🏢 Module-Specific & Feature Updates

@@ -64,7 +64,11 @@ export function clientError(
   }
 }
 
-export function serverError(res: Response, message = 'Internal Server Error') {
+export function serverError(
+  res: Response,
+  message = 'Internal Server Error',
+  err?: string
+) {
   fs.readdirSync('medium').forEach(file => {
     if (fs.statSync('medium/' + file).isFile()) {
       fs.unlinkSync('medium/' + file)
@@ -72,6 +76,10 @@ export function serverError(res: Response, message = 'Internal Server Error') {
       fs.rmdirSync('medium/' + file, { recursive: true })
     }
   })
+
+  if (err) {
+    console.error(err)
+  }
 
   try {
     LoggingService.error(

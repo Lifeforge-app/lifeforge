@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
+import humanNumber from 'human-number'
 import prettyBytes from 'pretty-bytes'
 
 import { type BooksLibraryEntry } from '../../providers/BooksLibraryProvider'
@@ -26,6 +27,30 @@ function BookMeta({
           : 'flex-row items-center'
       )}
     >
+      {item.page_count !== 0 && (
+        <>
+          <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
+            <Icon className="mr-1 size-4" icon="tabler:file-text" />
+            {humanNumber(item.page_count)} pages
+          </p>
+          <Icon
+            className={clsx('size-1', isGridView && 'hidden sm:block')}
+            icon="tabler:circle-filled"
+          />
+        </>
+      )}
+      {item.word_count !== 0 && (
+        <>
+          <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
+            <Icon className="mr-1 size-4" icon="tabler:text-size" />
+            {humanNumber(item.word_count)} words
+          </p>
+          <Icon
+            className={clsx('size-1', isGridView && 'hidden sm:block')}
+            icon="tabler:circle-filled"
+          />
+        </>
+      )}
       {languagesQuery.data &&
         (() => {
           const langs = languagesQuery.data.filter(language =>

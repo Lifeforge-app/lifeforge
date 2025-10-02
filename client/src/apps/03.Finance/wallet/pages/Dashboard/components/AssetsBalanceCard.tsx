@@ -56,7 +56,7 @@ function AssetsBalanceCard() {
                     </div>
                     <div
                       className={clsx(
-                        'flex gap-2 text-right text-3xl font-medium whitespace-nowrap',
+                        'mt-4 flex gap-2 text-right text-3xl font-medium whitespace-nowrap [@media(min-width:400px)]:mt-0',
                         isAmountHidden ? 'items-center' : 'items-end'
                       )}
                     >

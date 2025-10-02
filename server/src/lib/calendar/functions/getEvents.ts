@@ -1,6 +1,8 @@
 import { PBService } from '@functions/database'
 import moment from 'moment'
 
+import { ICalSyncService } from './icalSyncing'
+
 const { RRule } = await import('rrule')
 
 export default async function getEvents({
@@ -12,6 +14,20 @@ export default async function getEvents({
   start: string
   end: string
 }) {
+  const calendarsWithIcs = await pb.getFullList
+    .collection('calendar__calendars')
+    .filter([{ field: 'link', operator: '!=', value: '' }])
+    .execute()
+
+  const syncService = new ICalSyncService(pb)
+
+  for (const calendar of calendarsWithIcs) {
+    if (await syncService.shouldSync(calendar.id)) {
+      // Sync in background (don't await to avoid blocking)
+      syncService.syncCalendar(calendar.id, calendar.link).catch(console.error)
+    }
+  }
+
   const startMoment = moment(start).startOf('day').format('YYYY-MM-DD HH:mm:ss')
 
   const endMoment = moment(end).endOf('day').format('YYYY-MM-DD HH:mm:ss')
@@ -124,6 +140,44 @@ export default async function getEvents({
       })
     }
   }
+
+  const icalEvents = await pb.getFullList
+    .collection('calendar__events_ical')
+    .filter([
+      {
+        combination: '||',
+        filters: [
+          { field: 'start', operator: '>=', value: startMoment },
+          { field: 'end', operator: '>=', value: startMoment }
+        ]
+      },
+      {
+        combination: '||',
+        filters: [
+          { field: 'start', operator: '<=', value: endMoment },
+          { field: 'end', operator: '<=', value: endMoment }
+        ]
+      }
+    ])
+    .expand({ calendar: 'calendar__calendars' })
+    .execute()
+
+  // Convert iCal events to your format
+  const formattedIcalEvents = icalEvents.map(event => ({
+    id: `ical-${event.id}`,
+    type: 'single' as const,
+    start: event.start,
+    end: event.end,
+    title: event.title,
+    calendar: event.expand!.calendar!.id,
+    category: '_external',
+    description: event.description,
+    location: event.location,
+    location_coords: { lat: 0, lon: 0 },
+    reference_link: ''
+  }))
+
+  allEvents.push(...formattedIcalEvents)
 
   // Get todo entries
   const todoEntries = (

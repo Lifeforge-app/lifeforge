@@ -246,7 +246,7 @@ function ModifyTransactionsModal({
       if (data.type === 'transfer') {
         await mutation.mutateAsync({
           type: 'transfer',
-          date: data.date,
+          date: dayjs(data.date).format('YYYY-MM-DD'),
           from: data.from,
           to: data.to,
           receipt: data.receipt,
@@ -255,7 +255,7 @@ function ModifyTransactionsModal({
       } else {
         await mutation.mutateAsync({
           type: data.type,
-          date: data.date,
+          date: dayjs(data.date).format('YYYY-MM-DD'),
           asset: data.asset,
           category: data.category,
           ledgers: data.ledgers,
