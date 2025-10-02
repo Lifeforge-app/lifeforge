@@ -48,7 +48,7 @@ const create = forgeController
   .mutation()
   .description('Create a new password entry')
   .input({
-    body: SCHEMAS.passwords.entries
+    body: SCHEMAS.passwords.entries.schema
       .omit({
         pinned: true,
         created: true,
@@ -87,7 +87,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.passwords.entries
+    body: SCHEMAS.passwords.entries.schema
       .omit({
         pinned: true,
         created: true,

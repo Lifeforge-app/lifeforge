@@ -46,7 +46,7 @@ const create = forgeController
   .mutation()
   .description('Create a new wishlist')
   .input({
-    body: SCHEMAS.wishlist.lists
+    body: SCHEMAS.wishlist.lists.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -60,7 +60,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.wishlist.lists
+    body: SCHEMAS.wishlist.lists.schema
   })
   .existenceCheck('query', {
     id: 'wishlist__lists'

@@ -14,7 +14,7 @@ const create = forgeController
   .mutation()
   .description('Create a new todo priority')
   .input({
-    body: SCHEMAS.todo_list.priorities
+    body: SCHEMAS.todo_list.priorities.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -28,7 +28,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.todo_list.priorities
+    body: SCHEMAS.todo_list.priorities.schema
   })
   .existenceCheck('query', {
     id: 'todo_list__priorities'

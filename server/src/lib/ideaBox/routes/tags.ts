@@ -32,7 +32,7 @@ const create = forgeController
   .mutation()
   .description('Create a new tag')
   .input({
-    body: SCHEMAS.idea_box.tags
+    body: SCHEMAS.idea_box.tags.schema
   })
   .existenceCheck('query', {
     container: 'idea_box__containers'
@@ -50,7 +50,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.idea_box.tags.omit({
+    body: SCHEMAS.idea_box.tags.schema.omit({
       container: true
     })
   })

@@ -11,7 +11,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.movies.entries
+    body: SCHEMAS.movies.entries.schema
       .pick({
         ticket_number: true,
         theatre_number: true,

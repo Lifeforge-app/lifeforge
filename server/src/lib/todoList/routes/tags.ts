@@ -14,7 +14,7 @@ const create = forgeController
   .mutation()
   .description('Create a new todo tag')
   .input({
-    body: SCHEMAS.todo_list.tags
+    body: SCHEMAS.todo_list.tags.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -28,7 +28,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.todo_list.tags
+    body: SCHEMAS.todo_list.tags.schema
   })
   .existenceCheck('query', {
     id: 'todo_list__tags'

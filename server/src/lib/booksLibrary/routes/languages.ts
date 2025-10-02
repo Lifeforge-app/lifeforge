@@ -15,7 +15,7 @@ const create = forgeController
   .mutation()
   .description('Create a new language for the books library')
   .input({
-    body: SCHEMAS.books_library.languages
+    body: SCHEMAS.books_library.languages.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -29,7 +29,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.books_library.languages
+    body: SCHEMAS.books_library.languages.schema
   })
   .existenceCheck('query', {
     id: 'books_library__languages'

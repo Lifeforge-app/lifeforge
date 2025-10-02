@@ -158,7 +158,7 @@ const create = forgeController
   .mutation()
   .description('Create a new todo entry')
   .input({
-    body: SCHEMAS.todo_list.entries.omit({
+    body: SCHEMAS.todo_list.entries.schema.omit({
       completed_at: true,
       done: true,
       created: true,
@@ -191,7 +191,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.todo_list.entries.omit({
+    body: SCHEMAS.todo_list.entries.schema.omit({
       completed_at: true,
       done: true,
       created: true,
