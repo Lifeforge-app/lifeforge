@@ -218,7 +218,10 @@ function generateModuleSchemaContent(
 
     const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
 
-    schemaEntries.push(`  ${collectionName}: ${zodSchemaString},`)
+    schemaEntries.push(`  ${collectionName}: {
+        schema: ${zodSchemaString},
+        raw: ${JSON.stringify(collection, null, 2)}
+      },`)
 
     LoggingService.info(
       `Generated schema for collection ${chalk.bold(collection.name)}`

@@ -20,7 +20,8 @@
   "scripts": {
     "forge": "bun run scripts/forge.ts",
     "start:server": "cd server && bun run start",
-    "schema:generate:collections": "bun run ./scripts/generateCollectionsSchemas.ts"
+    "db:generate-schemas": "bun run ./scripts/generateCollectionsSchemas.ts",
+    "db:generate-migrations": "bun run ./scripts/migrateCollections.ts"
   },
   "keywords": [
     "bun",
