@@ -3,7 +3,7 @@ import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import ogs from 'open-graph-scraper'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { recursivelySearchFolder } from '../utils/folders'
 

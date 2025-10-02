@@ -124,6 +124,15 @@ function ModifyPasswordModal({
         }
       }
     })
+    .initialData({
+      name: initialData?.name || '',
+      icon: initialData?.icon || 'tabler:lock',
+      color: initialData?.color || '#000000',
+      website: initialData?.website || '',
+      username: initialData?.username || '',
+      password: initialData?.decrypted || '',
+      master: ''
+    })
     .onSubmit(async data => {
       const challenge = await forgeAPI.passwords.entries.getChallenge.query()
 

@@ -38,8 +38,9 @@ function SearchTMDBModal({ onClose }: { onClose: () => void }) {
 
   const onAddToLibrary = async () => {
     await queryClient.invalidateQueries({
-      queryKey: forgeAPI.movies.entries.list.input({ watched: 'false' }).key
+      queryKey: ['movies', 'entries']
     })
+
     await queryClient.invalidateQueries({
       queryKey: forgeAPI.movies.tmdb.search.input({
         q: queryToSearch,

@@ -1,7 +1,7 @@
 import { Button } from '@components/buttons'
 import { useModalStore } from '@components/modals/core/useModalStore'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import defineForm from './formBuilder'
 import Index from './index'

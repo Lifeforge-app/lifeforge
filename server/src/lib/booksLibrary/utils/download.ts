@@ -1,9 +1,12 @@
 import { PBService } from '@functions/database'
 import { updateTaskInPool } from '@functions/socketio/taskPool'
 import { SCHEMAS } from '@schema'
+import { countWords } from 'epub-wordcount'
 import fs from 'fs'
+// @ts-expect-error - No types available
+import pdfPageCounter from 'pdf-page-counter'
 import { Server } from 'socket.io'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export const processDownloadedFiles = async (
   pb: PBService,
@@ -22,10 +25,14 @@ export const processDownloadedFiles = async (
     | 'updated'
     | 'collection'
     | 'md5'
+    | 'page_count'
+    | 'word_count'
   > & {
     thumbnail: string | File
     file?: File | string
     collection?: string
+    page_count?: number
+    word_count?: number
   }
 ): Promise<void> => {
   if (!fs.existsSync(`./medium/${md5}.${metadata.extension}`)) {
@@ -53,6 +60,14 @@ export const processDownloadedFiles = async (
     if (!file) throw new Error('Failed to read file')
     metadata.file = new File([file], `${md5}.${metadata.extension}`)
     metadata.size = file.byteLength
+
+    if (metadata.extension === 'epub') {
+      metadata.word_count = await countWords(
+        './medium/' + md5 + '.' + metadata.extension
+      )
+    } else if (metadata.extension === 'pdf') {
+      metadata.page_count = (await pdfPageCounter(file)).numpages
+    }
 
     await pb.create
       .collection('books_library__entries')

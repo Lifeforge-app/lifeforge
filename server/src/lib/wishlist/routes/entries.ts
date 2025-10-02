@@ -1,6 +1,6 @@
 import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import scrapeProviders from '../helpers/scrapers'
 

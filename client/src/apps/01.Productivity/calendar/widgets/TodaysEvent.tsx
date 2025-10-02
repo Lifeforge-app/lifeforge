@@ -22,7 +22,7 @@ import type {
   CalendarCategory,
   CalendarEvent
 } from '@apps/01.Productivity/calendar/components/Calendar'
-import EventDetails from '@apps/01.Productivity/calendar/components/Calendar/components/EventDetails.tsx'
+import EventDetails from '@apps/01.Productivity/calendar/components/Calendar/components/EventDetails'
 import { INTERNAL_CATEGORIES } from '@apps/01.Productivity/calendar/constants/internalCategories'
 
 function EventItem({

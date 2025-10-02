@@ -68,7 +68,9 @@
     "markAsReading": "Tandakan sebagai Sedang Membaca",
     "addToFavourites": "Tambah ke Kegemaran",
     "removeFromFavourites": "Buang dari Kegemaran",
-    "openDownloadPage": "Buka Halaman Muat Turun"
+    "openDownloadPage": "Buka Halaman Muat Turun",
+    "bookmark": "Tandakan",
+    "removeBookmark": "Buang Penanda Buku"
   },
   "inputs": {
     "isbn": "ISBN",
@@ -129,5 +131,7 @@
     }
   },
   "checkingKeys": "Memeriksa kunci API SMTP...",
-  "kindleSent": "Proses dijalankan untuk menghantar dokumen terpilih ke alamat e-mel yang disasarkan."
+  "kindleSent": "Proses dijalankan untuk menghantar dokumen terpilih ke alamat e-mel yang disasarkan.",
+  "bookmarkedBooks": "Buku Yang Ditempah",
+  "bookmarkedBooksDesc": "Anda mempunyai {{number}} buku yang ditandai"
 }

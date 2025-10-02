@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { ConfirmationModal, SidebarItem, useModalStore } from 'lifeforge-ui'
@@ -30,6 +31,9 @@ function CalendarListItem({
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: forgeAPI.calendar.calendars.list.key
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['calendar', 'events']
         })
         onCancelSelect()
       }
@@ -70,7 +74,17 @@ function CalendarListItem({
     <SidebarItem
       active={isSelected}
       contextMenuItems={contextMenuItems}
-      label={item.name}
+      label={
+        <div className="flex items-center gap-2">
+          {item.name}
+          {item.link && (
+            <Icon
+              className="text-bg-400 dark:text-bg-600 size-4"
+              icon="tabler:bell"
+            />
+          )}
+        </div>
+      }
       sideStripColor={item.color}
       onCancelButtonClick={onCancelSelect}
       onClick={handleClick}

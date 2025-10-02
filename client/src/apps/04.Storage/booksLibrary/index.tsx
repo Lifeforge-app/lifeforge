@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import {
+  Button,
   ContextMenu,
   ContextMenuGroup,
   ContextMenuItem,
@@ -15,6 +16,7 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -26,6 +28,8 @@ import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 function BooksLibrary() {
+  const { t } = useTranslation('apps.booksLibrary')
+
   const open = useModalStore(state => state.open)
 
   const {
@@ -61,6 +65,48 @@ function BooksLibrary() {
   return (
     <>
       <ModuleHeader
+        actionButton={
+          <ContextMenu
+            buttonComponent={
+              <Button
+                className="hidden sm:flex"
+                icon="tabler:plus"
+                tProps={{
+                  item: t('items.book')
+                }}
+                onClick={() => {}}
+              >
+                new
+              </Button>
+            }
+            classNames={{ wrapper: 'hidden md:block', menu: 'w-64' }}
+          >
+            <ContextMenuItem
+              icon="tabler:upload"
+              label="Upload from device"
+              namespace="apps.booksLibrary"
+              onClick={() => {
+                open(UploadFromDeviceModal, {})
+              }}
+            />
+            <ContextMenuItem
+              icon="tabler:books"
+              label="Download from Libgen"
+              namespace="apps.booksLibrary"
+              onClick={() => {
+                open(LibgenModal, {})
+              }}
+            />
+            <ContextMenuItem
+              icon="tabler:archive"
+              label="Search Annas"
+              namespace="apps.booksLibrary"
+              onClick={() => {
+                open(AnnasModal, {})
+              }}
+            />
+          </ContextMenu>
+        }
         contextMenuProps={{
           classNames: {
             wrapper: 'block md:hidden'
@@ -109,7 +155,7 @@ function BooksLibrary() {
                 {(() => {
                   {
                     if (entries.items.length === 0) {
-                      if (entries.totalItems > 0) {
+                      if (searchQuery.trim()) {
                         return (
                           <EmptyStateScreen
                             icon="tabler:search-off"
@@ -132,13 +178,13 @@ function BooksLibrary() {
 
                     return (
                       <>
-                        <FinalComponent books={entries.items} />
                         <Pagination
-                          className="mt-6"
+                          className="mb-6"
                           currentPage={page}
                           totalPages={entries.totalPages}
                           onPageChange={setPage}
                         />
+                        <FinalComponent books={entries.items} />
                       </>
                     )
                   }

@@ -2,7 +2,7 @@ import parseOCR from '@functions/external/ocr'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import fs from 'fs'
-import z from 'zod/v4'
+import z from 'zod'
 
 import { Location } from '../../locations/typescript/location.types'
 import { convertPDFToImage, getTransactionDetails } from '../utils/transactions'
@@ -56,7 +56,7 @@ const list = forgeController
 
     return allTransactions.sort((a, b) => {
       if (new Date(a.date).getTime() === new Date(b.date).getTime()) {
-        return new Date(a.created).getTime() - new Date(b.created).getTime()
+        return new Date(b.created).getTime() - new Date(a.created).getTime()
       }
 
       return new Date(b.date).getTime() - new Date(a.date).getTime()

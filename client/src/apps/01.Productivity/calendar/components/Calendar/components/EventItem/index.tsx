@@ -13,6 +13,10 @@ function EventItem({ event }: { event: CalendarEvent }) {
     forgeAPI.calendar.categories.list.queryOptions()
   )
 
+  const calendarsQuery = useQuery(
+    forgeAPI.calendar.calendars.list.queryOptions()
+  )
+
   const category = useMemo(() => {
     if (event.category.startsWith('_')) {
       return {
@@ -27,10 +31,14 @@ function EventItem({ event }: { event: CalendarEvent }) {
     )
   }, [categoriesQuery, event.category])
 
+  const calendar = useMemo(() => {
+    return calendarsQuery.data?.find(calendar => calendar.id === event.calendar)
+  }, [calendarsQuery, event.calendar])
+
   return (
     <>
       <EventItemButton
-        color={category?.color ?? ''}
+        color={category?.color || calendar?.color || ''}
         icon={category?.icon ?? ''}
         id={event.id}
         isStrikethrough={event.is_strikethrough}

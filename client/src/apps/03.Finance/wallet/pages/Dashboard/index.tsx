@@ -101,7 +101,7 @@ function WalletDashboard() {
           )
         }}
       />
-      <div className="flex size-full grid-cols-3 grid-rows-6 flex-col gap-3 pb-8 xl:grid">
+      <div className="flex size-full grid-cols-3 grid-rows-7 flex-col gap-3 pb-8 xl:grid">
         <IncomeExpenseCard icon="tabler:login-2" title="Income" />
         <IncomeExpenseCard icon="tabler:logout-2" title="Expenses" />
         <AssetsBalanceCard />

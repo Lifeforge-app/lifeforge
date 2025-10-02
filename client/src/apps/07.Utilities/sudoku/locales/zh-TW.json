@@ -10,6 +10,7 @@
     "extreme": "極限"
   },
   "inputs": {
-    "difficulty": "難度"
+    "difficulty": "難度",
+    "showSolution": "顯示解答"
   }
 }

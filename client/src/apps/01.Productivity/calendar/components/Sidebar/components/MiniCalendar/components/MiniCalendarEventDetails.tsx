@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { Tooltip } from 'react-tooltip'
 
 import type {
+  CalendarCalendar,
   CalendarCategory,
   CalendarEvent
 } from '@apps/01.Productivity/calendar/components/Calendar'
@@ -14,13 +15,15 @@ function MiniCalendarEventDetails({
   actualIndex,
   date,
   eventsOnTheDay,
-  getCategory
+  getCategory,
+  getCalendar
 }: {
   index: number
   actualIndex: number
   date: Date
   eventsOnTheDay: CalendarEvent[]
   getCategory: (event: CalendarEvent) => CalendarCategory | undefined
+  getCalendar: (event: CalendarEvent) => CalendarCalendar | undefined
 }) {
   return createPortal(
     <Tooltip
@@ -46,16 +49,20 @@ function MiniCalendarEventDetails({
           {eventsOnTheDay.map(event => {
             const category = getCategory(event)
 
+            const calendar = getCalendar(event)
+
             return (
               <p
                 key={event.id}
                 className="text-bg-500 relative flex items-center gap-2 pl-4 before:absolute before:top-1/2 before:left-0 before:h-full before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-[var(--bg-color)]"
                 style={{
                   // @ts-expect-error - CSS variable
-                  '--bg-color': category?.color ?? ''
+                  '--bg-color': category?.color || calendar?.color || '#000000'
                 }}
               >
-                <Icon className="size-4" icon={category?.icon ?? ''} />
+                {category && (
+                  <Icon className="size-4" icon={category.icon ?? ''} />
+                )}
                 <span
                   className={clsx(
                     event.is_strikethrough && 'line-through decoration-[1.5px]'
