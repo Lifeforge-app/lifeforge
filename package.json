@@ -21,7 +21,7 @@
     "forge": "bun run scripts/forge.ts",
     "start:server": "cd server && bun run start",
     "db:generate-schemas": "bun run ./scripts/generateCollectionsSchemas.ts",
-    "db:generate-migrations": "bun run ./scripts/migrateCollections.ts"
+    "db:generate-migrations": "bun run ./scripts/generateCollectionsMigrations.ts"
   },
   "keywords": [
     "bun",
