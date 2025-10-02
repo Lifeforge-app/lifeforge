@@ -5,7 +5,10 @@ type FlattenSchemas<T extends Record<string, Record<string, unknown>>> =
   UnionToIntersection<
     {
       [K1 in keyof T]: {
-        [K2 in keyof T[K1]]: Record<`${string & K1}__${string & K2}`, T[K1][K2]>
+        [K2 in keyof T[K1]]: Record<
+          `${string & K1}__${string & K2}`,
+          T[K1][K2] extends { schema: infer S } ? S : never
+        >
       }[keyof T[K1]]
     }[keyof T]
   >
@@ -19,7 +22,16 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   : never
 
 export default function flattenSchemas<
-  T extends Record<string, Record<string, ZodObject<ZodRawShape>>>
+  T extends Record<
+    string,
+    Record<
+      string,
+      {
+        schema: ZodObject<ZodRawShape>
+        raw: unknown
+      }
+    >
+  >
 >(schemas: T): FlattenSchemas<T> {
   const flattened = {} as FlattenSchemas<T>
 
@@ -27,8 +39,9 @@ export default function flattenSchemas<
     for (const [level2, schema] of Object.entries(level2Obj)) {
       const key = `${level1}__${level2}`
 
-      flattened[key as keyof FlattenSchemas<T>] =
-        schema as FlattenSchemas<T>[keyof FlattenSchemas<T>]
+      flattened[key as keyof FlattenSchemas<T>] = schema[
+        'schema'
+      ] as FlattenSchemas<T>[keyof FlattenSchemas<T>]
     }
   }
 

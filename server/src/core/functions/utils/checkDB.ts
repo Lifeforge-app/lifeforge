@@ -1,5 +1,6 @@
 import { LoggingService } from '@functions/logging/loggingService'
-import COLLECTION_SCHEMAS from '@schema'
+import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
+import chalk from 'chalk'
 import Pocketbase from 'pocketbase'
 
 interface DBConnectionConfig {
@@ -12,6 +13,7 @@ interface CollectionValidationResult {
   isValid: boolean
   missingCollections: string[]
   totalCollections: number
+  collectionsWithDiscrepancies: string[]
 }
 
 class DatabaseConnectionError extends Error {
@@ -25,10 +27,7 @@ class DatabaseConnectionError extends Error {
 }
 
 class DatabaseValidationError extends Error {
-  constructor(
-    message: string,
-    public readonly missingCollections: string[]
-  ) {
+  constructor(message: string) {
     super(message)
     this.name = 'DatabaseValidationError'
   }
@@ -56,15 +55,21 @@ function validateEnvironmentVariables(): DBConnectionConfig {
  * @returns Authenticated PocketBase instance
  * @throws {DatabaseConnectionError} When connection or authentication fails
  */
-async function connectToPocketBase(
+export async function connectToPocketBase(
   config: DBConnectionConfig
 ): Promise<Pocketbase> {
-  const pb = new Pocketbase(config.host)
-
   try {
+    const pb = new Pocketbase(config.host)
+
     await pb
       .collection('_superusers')
       .authWithPassword(config.email, config.password)
+      .catch(err => {
+        throw new DatabaseConnectionError(
+          'Authentication failed: ' + err.message,
+          err
+        )
+      })
 
     if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
       throw new DatabaseConnectionError(
@@ -110,17 +115,35 @@ async function validateCollections(
 
   const missingCollections: string[] = []
 
+  const collectionsWithDiscrepancies: string[] = []
+
   for (const collection of requiredCollections) {
     const targetCollection = mapCollectionName(collection)
 
     if (!existingCollectionNames.has(targetCollection)) {
       missingCollections.push(collection)
     }
+
+    const existingCollection = JSON.stringify(
+      allCollections.find(c => c.name === targetCollection)
+    )
+
+    const requiredSchema = JSON.stringify(
+      // @ts-expect-error: Lazy to fix :)
+      SCHEMAS[collection.split('__')[0]][collection.split('__')[1]].raw
+    )
+
+    if (existingCollection !== requiredSchema) {
+      collectionsWithDiscrepancies.push(collection)
+    }
   }
 
   return {
-    isValid: missingCollections.length === 0,
+    isValid:
+      missingCollections.length === 0 &&
+      collectionsWithDiscrepancies.length === 0,
     missingCollections,
+    collectionsWithDiscrepancies,
     totalCollections: requiredCollections.length
   }
 }
@@ -144,9 +167,21 @@ export default async function checkDB(): Promise<void> {
     const validationResult = await validateCollections(pb)
 
     if (!validationResult.isValid) {
+      if (validationResult.missingCollections.length > 0) {
+        throw new DatabaseValidationError(
+          `Missing collections in PocketBase: ${validationResult.missingCollections.join(', ')}`
+        )
+      }
+
+      if (validationResult.collectionsWithDiscrepancies.length > 0) {
+        throw new DatabaseValidationError(
+          `Collections with schema discrepancies: ${validationResult.collectionsWithDiscrepancies.join(', ')}. If the collection has been updated in the database, please run "${chalk.cyan('npm run db:generate-schemas')}" to synchronize the schema. If the collection has been modified outside of Lifeforge, please revert the changes to ensure compatibility.`
+        )
+      }
+
       throw new DatabaseValidationError(
-        `Missing collections in PocketBase: ${validationResult.missingCollections.join(', ')}`,
-        validationResult.missingCollections
+        'Database validation failed due to unknown reasons',
+        []
       )
     }
 
