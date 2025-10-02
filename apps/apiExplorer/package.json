@@ -36,7 +36,7 @@
     "shared": "workspace:*",
     "tailwindcss": "^4.1.8",
     "tinycolor2": "^1.6.0",
-    "zod": "^3.25.67"
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@types/javascript-color-gradient": "^2.4.2",

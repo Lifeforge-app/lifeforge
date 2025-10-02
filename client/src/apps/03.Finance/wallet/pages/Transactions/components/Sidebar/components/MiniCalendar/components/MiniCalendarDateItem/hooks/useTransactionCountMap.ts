@@ -57,17 +57,10 @@ function useTransactionCountMap({
         return
       }
 
-      if (transaction.type === 'income') {
-        countMap[dateKey].income += transaction.amount
-      } else if (transaction.type === 'expenses') {
-        countMap[dateKey].expenses += transaction.amount
-      } else if (transaction.type === 'transfer') {
-        countMap[dateKey].transfer += transaction.amount / 2
-      }
+      countMap[dateKey][transaction.type] += transaction.amount
 
-      countMap[dateKey].total +=
-        transaction.amount / (transaction.type === 'transfer' ? 2 : 1)
-      countMap[dateKey].count += 1 / (transaction.type === 'transfer' ? 2 : 1)
+      countMap[dateKey].total += transaction.amount
+      countMap[dateKey].count += 1
     })
 
     return countMap

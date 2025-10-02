@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
@@ -5,6 +6,7 @@ import {
   ListboxInput,
   ListboxOption,
   ModuleHeader,
+  Switch,
   WithQuery
 } from 'lifeforge-ui'
 import { useRef, useState } from 'react'
@@ -33,6 +35,8 @@ function Sudoku() {
     'easy' | 'medium' | 'hard' | 'expert' | 'evil' | 'extreme'
   >('evil')
 
+  const [showSolution, setShowSolution] = useState(false)
+
   const { t } = useTranslation('apps.sudoku')
 
   const dataQuery = useQuery(
@@ -51,35 +55,49 @@ function Sudoku() {
   return (
     <>
       <ModuleHeader />
-      <ListboxInput
-        buttonContent={
-          <span className="flex items-center gap-2">
-            <span
-              className="block size-2 rounded-full"
-              style={{
-                backgroundColor: DIFFICULTIES.find(
-                  diff => diff.value === difficulty
-                )?.color
-              }}
+      <div>
+        <ListboxInput
+          buttonContent={
+            <span className="flex items-center gap-2">
+              <span
+                className="block size-2 rounded-full"
+                style={{
+                  backgroundColor: DIFFICULTIES.find(
+                    diff => diff.value === difficulty
+                  )?.color
+                }}
+              />
+              {t(`difficulties.${difficulty}`)}
+            </span>
+          }
+          icon="tabler:category"
+          label="difficulty"
+          namespace="apps.sudoku"
+          setValue={setDifficulty}
+          value={difficulty}
+        >
+          {DIFFICULTIES.map((diff, index) => (
+            <ListboxOption
+              key={index}
+              color={diff.color}
+              label={t(`difficulties.${diff.value}`)}
+              value={diff.value}
             />
-            {t(`difficulties.${difficulty}`)}
-          </span>
-        }
-        icon="tabler:category"
-        label="difficulty"
-        namespace="apps.sudoku"
-        setValue={setDifficulty}
-        value={difficulty}
-      >
-        {DIFFICULTIES.map((diff, index) => (
-          <ListboxOption
-            key={index}
-            color={diff.color}
-            label={t(`difficulties.${diff.value}`)}
-            value={diff.value}
+          ))}
+        </ListboxInput>
+        <div className="mt-4 flex items-center justify-between py-2">
+          <div className="text-bg-500 flex items-center gap-2">
+            <Icon className="size-6" icon="tabler:eye" />
+            <span className="text-lg">{t('inputs.showSolution')}</span>
+          </div>
+          <Switch
+            checked={showSolution}
+            onChange={() => {
+              setShowSolution(!showSolution)
+            }}
           />
-        ))}
-      </ListboxInput>
+        </div>
+      </div>
       <WithQuery query={dataQuery}>
         {data => (
           <div className="mt-4 space-y-2">
@@ -95,6 +113,7 @@ function Sudoku() {
             <Button
               className="w-full"
               icon="uil:sync"
+              loading={dataQuery.isRefetching}
               variant="secondary"
               onClick={() => {
                 dataQuery.refetch()
@@ -108,7 +127,7 @@ function Sudoku() {
                 className="mt-2 grid h-[297mm] w-[210mm] grid-cols-2 place-content-center place-items-center font-['Rubik']"
               >
                 {data.map((board, index) => (
-                  <Board key={index} data={board} />
+                  <Board key={index} data={board} showSolution={showSolution} />
                 ))}
               </div>
             </div>

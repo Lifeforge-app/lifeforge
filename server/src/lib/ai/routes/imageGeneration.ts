@@ -2,7 +2,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import OpenAI from 'openai'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const verifyAPIKey = forgeController
   .query()

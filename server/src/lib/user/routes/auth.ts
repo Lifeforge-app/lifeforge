@@ -4,7 +4,7 @@ import { ClientError } from '@functions/routes/utils/response'
 import moment from 'moment'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'

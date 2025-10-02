@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 const calendarSchemas = {
   events: z.object({
@@ -18,15 +18,11 @@ const calendarSchemas = {
     color: z.string(),
     icon: z.string(),
   }),
-  categories_aggregated: z.object({
-    name: z.string(),
-    icon: z.string(),
-    color: z.string(),
-    amount: z.number(),
-  }),
   calendars: z.object({
     name: z.string(),
     color: z.string(),
+    link: z.url(),
+    last_synced: z.string(),
   }),
   events_single: z.object({
     base_event: z.string(),
@@ -39,6 +35,16 @@ const calendarSchemas = {
     duration_unit: z.enum(["hour", "year", "month", "day", "week"]),
     exceptions: z.any(),
     base_event: z.string(),
+  }),
+  events_ical: z.object({
+    calendar: z.string(),
+    external_id: z.string(),
+    title: z.string(),
+    description: z.string(),
+    start: z.string(),
+    end: z.string(),
+    location: z.string(),
+    recurrence_rule: z.string(),
   }),
 };
 

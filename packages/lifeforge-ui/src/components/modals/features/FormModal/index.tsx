@@ -1,5 +1,4 @@
 /* eslint-disable no-case-declarations */
-import { Button } from '@components/buttons'
 import { LoadingScreen } from '@components/screens'
 import { loadIcon } from '@iconify/react/dist/iconify.js'
 import { stringToIcon, validateIconName } from '@iconify/utils'
@@ -8,9 +7,10 @@ import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePromiseLoading } from 'shared'
-import type { ZodType } from 'zod/v4'
+import type { ZodType } from 'zod'
 import type { StoreApi, UseBoundStore } from 'zustand'
 
+import { Button } from '../../../../components/buttons'
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
@@ -78,7 +78,14 @@ function FormModal({
     namespace?: string
     loading?: boolean
     submitButton: 'create' | 'update' | React.ComponentProps<typeof Button>
-    actionButton?: React.ComponentProps<typeof Button>
+    actionButton?: Omit<React.ComponentProps<typeof Button>, 'onClick'> & {
+      onClick?: (
+        data: InferFormState<typeof fieldTypes, typeof fields>,
+        setData: React.Dispatch<
+          React.SetStateAction<InferFormState<typeof fieldTypes, typeof fields>>
+        >
+      ) => void
+    }
   }
   dataStore: UseBoundStore<
     StoreApi<InferFormState<typeof fieldTypes, typeof fields>>
@@ -274,7 +281,10 @@ function FormModal({
   return (
     <div className="flex min-w-[50vw] flex-col">
       <ModalHeader
-        actionButtonProps={actionButton}
+        actionButtonProps={{
+          ...actionButton,
+          onClick: () => actionButton?.onClick?.(data, setData)
+        }}
         icon={icon}
         namespace={namespace ? namespace : undefined}
         title={title}

@@ -88,7 +88,7 @@ export class GetFirstListItem<
     return newInstance
   }
 
-  execute(): Promise<
+  async execute(): Promise<
     SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
   > {
     if (!this.collectionKey) {
@@ -101,26 +101,27 @@ export class GetFirstListItem<
       ? this._pb.filter(this._filterExpression, this._filterParams)
       : 'id != ""' // Default filter to ensure we get a valid response
 
-    return this._pb
+    const result = await this._pb
       .collection((this.collectionKey as string).replace(/^users__/, ''))
       .getFirstListItem(filterString, {
         sort: this._sort,
         expand: this._expand,
         fields: this._fields
       })
-      .then(result => {
-        LoggingService.debug(
-          `${chalk
-            .hex('#34ace0')
-            .bold('getFirstListItem')} Fetched first item from ${chalk
-            .hex('#34ace0')
-            .bold(this.collectionKey)}`,
-          'DB'
-        )
 
-        return result
-      }) as unknown as Promise<
-      SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
+    LoggingService.debug(
+      `${chalk
+        .hex('#34ace0')
+        .bold('getFirstListItem')} Fetched first item from ${chalk
+        .hex('#34ace0')
+        .bold(this.collectionKey)}`,
+      'DB'
+    )
+
+    return result as unknown as SingleItemReturnType<
+      TCollectionKey,
+      TExpandConfig,
+      TFields
     >
   }
 }

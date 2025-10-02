@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 
 import { Button, useModalStore } from '../../../../..'
 import { useColorPickerModalStore } from '../stores/useColorPickerModalStore'
+import FlatUIColorsModal from './modals/FlatUIColorsModal'
 import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
 
@@ -11,9 +12,13 @@ function PaletteButtons() {
   const { innerColor, setInnerColor } = useColorPickerModalStore()
 
   const handleColorPaletteModalOpen = useCallback(
-    (type: 'morandi' | 'tailwind') => () =>
+    (type: 'morandi' | 'tailwind' | 'flatUiColors') => () =>
       open(
-        type === 'morandi' ? MorandiColorPaletteModal : TailwindCSSColorsModal,
+        {
+          morandi: MorandiColorPaletteModal,
+          tailwind: TailwindCSSColorsModal,
+          flatUiColors: FlatUIColorsModal
+        }[type],
         {
           color: innerColor,
           setColor: setInnerColor
@@ -24,6 +29,15 @@ function PaletteButtons() {
 
   return (
     <div className="mt-6 w-full space-y-2">
+      <Button
+        className="w-full"
+        icon="tabler:palette"
+        namespace="common.modals"
+        variant="secondary"
+        onClick={handleColorPaletteModalOpen('flatUiColors')}
+      >
+        colorPicker.buttons.flatUiColors
+      </Button>
       <Button
         className="w-full"
         icon="tabler:flower"
