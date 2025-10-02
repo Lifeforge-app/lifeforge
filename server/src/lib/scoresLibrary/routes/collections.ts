@@ -17,7 +17,7 @@ const create = forgeController
   .mutation()
   .description('Create a new music score collection')
   .input({
-    body: SCHEMAS.scores_library.collections
+    body: SCHEMAS.scores_library.collections.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -29,7 +29,7 @@ const update = forgeController
   .description('Update an existing music score collection')
   .input({
     query: z.object({ id: z.string() }),
-    body: SCHEMAS.scores_library.collections
+    body: SCHEMAS.scores_library.collections.schema
   })
   .callback(({ pb, query: { id }, body }) =>
     pb.update

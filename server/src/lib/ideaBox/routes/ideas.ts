@@ -161,7 +161,7 @@ const list = forgeController
     }) as Array<SchemaWithPB<z.infer<typeof _returnSchema>>>
   })
 
-const createSchema = SCHEMAS.idea_box.entries
+const createSchema = SCHEMAS.idea_box.entries.schema
   .omit({
     created: true,
     updated: true,
@@ -171,14 +171,14 @@ const createSchema = SCHEMAS.idea_box.entries
   })
   .and(
     z.union([
-      SCHEMAS.idea_box.entries_text
+      SCHEMAS.idea_box.entries_text.schema
         .omit({
           base_entry: true
         })
         .extend({
           type: z.literal('text')
         }),
-      SCHEMAS.idea_box.entries_image
+      SCHEMAS.idea_box.entries_image.schema
         .omit({
           base_entry: true,
           image: true
@@ -186,7 +186,7 @@ const createSchema = SCHEMAS.idea_box.entries
         .extend({
           type: z.literal('image')
         }),
-      SCHEMAS.idea_box.entries_link
+      SCHEMAS.idea_box.entries_link.schema
         .omit({
           base_entry: true
         })
@@ -258,7 +258,7 @@ const create = forgeController
     }
   })
 
-const updateSchema = SCHEMAS.idea_box.entries
+const updateSchema = SCHEMAS.idea_box.entries.schema
   .omit({
     created: true,
     updated: true,
@@ -270,14 +270,14 @@ const updateSchema = SCHEMAS.idea_box.entries
   })
   .and(
     z.union([
-      SCHEMAS.idea_box.entries_text
+      SCHEMAS.idea_box.entries_text.schema
         .omit({
           base_entry: true
         })
         .extend({
           type: z.literal('text')
         }),
-      SCHEMAS.idea_box.entries_image
+      SCHEMAS.idea_box.entries_image.schema
         .omit({
           base_entry: true,
           image: true
@@ -285,7 +285,7 @@ const updateSchema = SCHEMAS.idea_box.entries
         .extend({
           type: z.literal('image')
         }),
-      SCHEMAS.idea_box.entries_link
+      SCHEMAS.idea_box.entries_link.schema
         .omit({
           base_entry: true
         })
