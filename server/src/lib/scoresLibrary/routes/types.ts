@@ -17,7 +17,7 @@ const create = forgeController
   .mutation()
   .description('Create a new music score type')
   .input({
-    body: SCHEMAS.scores_library.types
+    body: SCHEMAS.scores_library.types.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -31,7 +31,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.scores_library.types
+    body: SCHEMAS.scores_library.types.schema
   })
   .callback(({ pb, query: { id }, body }) =>
     pb.update.collection('scores_library__types').id(id).data(body).execute()

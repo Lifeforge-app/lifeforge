@@ -7,7 +7,7 @@ const list = forgeController
   .query()
   .description('Get all achievements entries by difficulty')
   .input({
-    query: SCHEMAS.achievements.entries.pick({
+    query: SCHEMAS.achievements.entries.schema.pick({
       difficulty: true
     })
   })
@@ -29,7 +29,7 @@ const create = forgeController
   .mutation()
   .description('Create a new achievements entry')
   .input({
-    body: SCHEMAS.achievements.entries.omit({
+    body: SCHEMAS.achievements.entries.schema.omit({
       created: true,
       updated: true
     })
@@ -46,7 +46,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.achievements.entries.omit({
+    body: SCHEMAS.achievements.entries.schema.omit({
       created: true,
       updated: true
     })

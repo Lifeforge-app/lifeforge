@@ -56,7 +56,7 @@ const create = forgeController
   .mutation()
   .description('Create a new folder')
   .input({
-    body: SCHEMAS.idea_box.folders
+    body: SCHEMAS.idea_box.folders.schema
   })
   .existenceCheck('body', {
     container: 'idea_box__containers',
@@ -75,7 +75,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.idea_box.folders.omit({
+    body: SCHEMAS.idea_box.folders.schema.omit({
       container: true,
       parent: true
     })

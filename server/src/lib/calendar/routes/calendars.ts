@@ -35,7 +35,7 @@ const create = forgeController
   .mutation()
   .description('Create a new calendar')
   .input({
-    body: SCHEMAS.calendar.calendars
+    body: SCHEMAS.calendar.calendars.schema
       .pick({
         name: true,
         color: true
@@ -73,7 +73,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.calendar.calendars.pick({
+    body: SCHEMAS.calendar.calendars.schema.pick({
       name: true,
       color: true
     })

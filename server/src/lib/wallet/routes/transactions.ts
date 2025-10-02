@@ -63,7 +63,7 @@ const list = forgeController
     })
   })
 
-const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
+const CreateTransactionInputSchema = SCHEMAS.wallet.transactions.schema
   .omit({
     type: true,
     receipt: true,
@@ -72,7 +72,7 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
   })
   .and(
     z.union([
-      SCHEMAS.wallet.transactions_income_expenses
+      SCHEMAS.wallet.transactions_income_expenses.schema
         .omit({
           base_transaction: true,
           location_name: true,
@@ -81,7 +81,7 @@ const CreateTransactionInputSchema = SCHEMAS.wallet.transactions
         .extend({
           location: Location.optional().nullable()
         }),
-      SCHEMAS.wallet.transactions_transfer
+      SCHEMAS.wallet.transactions_transfer.schema
         .omit({
           base_transaction: true
         })

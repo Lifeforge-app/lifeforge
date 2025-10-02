@@ -199,7 +199,7 @@ const upload = forgeController
   .mutation()
   .description('Upload a new entry to the books library')
   .input({
-    body: SCHEMAS.books_library.entries
+    body: SCHEMAS.books_library.entries.schema
       .pick({
         title: true,
         authors: true,
@@ -265,7 +265,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.books_library.entries
+    body: SCHEMAS.books_library.entries.schema
       .pick({
         title: true,
         authors: true,

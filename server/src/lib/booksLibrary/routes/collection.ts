@@ -21,7 +21,7 @@ const create = forgeController
   .mutation()
   .description('Create a new collection for the books library')
   .input({
-    body: SCHEMAS.books_library.collections
+    body: SCHEMAS.books_library.collections.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -35,7 +35,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.books_library.collections
+    body: SCHEMAS.books_library.collections.schema
   })
   .existenceCheck('query', {
     id: 'books_library__collections'

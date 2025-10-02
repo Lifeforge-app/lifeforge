@@ -133,7 +133,7 @@ const create = forgeController
   .mutation()
   .description('Create a new wallet asset')
   .input({
-    body: SCHEMAS.wallet.assets
+    body: SCHEMAS.wallet.assets.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -147,7 +147,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.wallet.assets
+    body: SCHEMAS.wallet.assets.schema
   })
   .existenceCheck('query', {
     id: 'wallet__assets'

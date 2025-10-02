@@ -17,7 +17,7 @@ const create = forgeController
   .mutation()
   .description('Create a new wallet category')
   .input({
-    body: SCHEMAS.wallet.categories
+    body: SCHEMAS.wallet.categories.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -31,7 +31,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.wallet.categories
+    body: SCHEMAS.wallet.categories.schema
   })
   .existenceCheck('query', {
     id: 'wallet__categories'

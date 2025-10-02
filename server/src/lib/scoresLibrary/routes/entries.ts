@@ -250,7 +250,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.scores_library.entries
+    body: SCHEMAS.scores_library.entries.schema
       .pick({
         name: true,
         author: true,

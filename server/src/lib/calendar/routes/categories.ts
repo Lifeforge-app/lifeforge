@@ -31,7 +31,7 @@ const create = forgeController
   .mutation()
   .description('Create a new calendar category')
   .input({
-    body: SCHEMAS.calendar.categories
+    body: SCHEMAS.calendar.categories.schema
   })
   .statusCode(201)
   .callback(async ({ pb, body }) => {
@@ -52,7 +52,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.calendar.categories
+    body: SCHEMAS.calendar.categories.schema
   })
   .existenceCheck('query', {
     id: 'calendar__categories'

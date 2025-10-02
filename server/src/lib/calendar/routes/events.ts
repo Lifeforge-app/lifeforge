@@ -11,7 +11,7 @@ import { SCHEMAS } from '../../../core/schema'
 import { Location } from '../../locations/typescript/location.types'
 import getEvents from '../functions/getEvents'
 
-const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
+const CreateAndUpdateEventSchema = SCHEMAS.calendar.events.schema
   .omit({
     type: true,
     location: true,
@@ -31,7 +31,7 @@ const CreateAndUpdateEventSchema = SCHEMAS.calendar.events
           type: z.literal('single')
         })
         .and(
-          SCHEMAS.calendar.events_single.omit({
+          SCHEMAS.calendar.events_single.schema.omit({
             base_event: true
           })
         ),

@@ -51,7 +51,7 @@ const create = forgeController
   .mutation()
   .description('Create a new container')
   .input({
-    body: SCHEMAS.idea_box.containers.omit({
+    body: SCHEMAS.idea_box.containers.schema.omit({
       cover: true,
       hidden: true,
       pinned: true
@@ -80,7 +80,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.idea_box.containers.omit({
+    body: SCHEMAS.idea_box.containers.schema.omit({
       cover: true,
       hidden: true,
       pinned: true
