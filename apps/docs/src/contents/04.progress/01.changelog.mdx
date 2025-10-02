@@ -31,13 +31,77 @@ This page only covers changes made from version 25w33 onwards. For earlier versi
 <Version week={39}>
 ### 🏢 Module-Specific & Feature Updates
 
+- <Commit hash="fd6a453be74bbf5c55d416c11f2a52cfbdb1198a" />: Moved pagination component to the top of the listing in Books Library to prevent overlapping with FAB button.
+- <Commit hash="7d7d0f1ba8933e2a1873bbc4f400bae36f294c8b" />: Addeed category display with color and icono in template selection modal in Wallet.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-1.png)
+
+- <Commit hash="72348e677441a42108a7874d27342d4f85b6ae9a" />: Implemented show solution toggle in Sudoku module.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-2.png)SearchTMDBModal
+
+- <Commit hash="6e1a438790ab14a97e37c794ae7817d9b4c35635" />: Added time range selector and updated chart appearance in chart widget in Wallet Dashboard.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-3.png)
+
+- <Commit hash="4095777e92e1d2a085e5154f95e9aea54a208648" />: Implemented year and month selection for expenses breakdown in Wallet Dashboard.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-4.png)
+
+- <Commit hash="f3e100ade6c9f3f427021776723db50bdb0261e8" />: Implemented ICS calendar subscription and synchronization mechanism.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-5.png)
+
+- <Commit hash="d99b50ccd08debcba4563207f194cf44591c8622" />: Added year and month selector modal in Calendar module that can be accessed by clicking the month and year text in the calendar header (only applicable for month view).
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-6.png)
+
+- <Commit hash="f2f5bd5e3ae964c3ec34c51060a528feaed9b56e" />: Implemented bookmarking functionality in Annas Archive modal in Books Library where users can bookmark their favorite books for later downloading.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-7.png)
+
+- <Commit hash="e3b2e66985ab43630fe972ab6cb6c882206e4c0a" />: Enhanced prompt for parsing music name and author with additional context in Music Library module.
+
+- <Commit hash="bbfde164625478089d0704e9ada7e051c826c561" />: Moved add book button to the top right corner in Books Library listing page for consistency.
+
+- <Commit hash="04c9700f7c3fab0dcc5e2c32f58b0cd5c3c87fda" />: Added word and page count display in Books Library listing page.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-10.png)
+
+- <Commit hash="2818e336f98354b35c9ffc2d62f7ead1ae8490b4" />: Added hourly tracking in Code Time module. Dashboard widget is to be added in the future.
+
 ### 🎨 UI Components & Design System
+
+- <Commit hash="8c36a42152ba2987efc5e51127048fccfff765c3" />: Added clear button to <code>SearchInput</code> component.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-8.png)
+
+- <Commit hash="7e749a1caf40aa03a5af9cc60edecdee5301b00a" />: ADded Flat UI colors palette to the color picker modal.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w39-9.png)
+
 
 ### 🏗️ Infrastructure & Technical Improvements
 
+- <Commit hash="f0bcdf603c695775574a2780dc3670877a2d0d71" />: Enhance <code>serverError</code> function to log error messages for better debugging.
+- <Commit hash="ef0b8dbf174beb08987477b02a5ddb961ac3adab" />: Bumped the version of <code>zod</code> to version 4 across the codebase.
+- <Commit hash="f6945be38390310ba17215e1a29222ed24f9c5f0" />: Changed <code>dev</code> script in <code>lifeforge-ui</code> to start storybook server.
+- <Commit hash="fea26d23b2a1e3fe793403b2dfd17a1469aeb4f4" />: Remove unused <code>created</code> and <code>updated</code> fields from <code>code_time__daily_entries</code> collection in database schema.
+
 ### 🐛 Bug Fixes
 
+- <Commit hash="4687e10118bbeed06d875f5ac4012e1b16576905" />: Fixed error logging mechanism in <code>PBService</code>.
+- <Commit hash="83aaf81fc23dade597169c0385be92a66d066aaf" />: Fixed queryKey for invalidatiing movie entries in <code>SearchTMDBModal</code> in Movies Library.
+- <Commit hash="f56707f6b5fec3116f4300d3fe154eba89394eac" />: Corrected environment file path in <code>generateCollectionsSchema.ts</code> script.
+- <Commit hash="e7a247dbfdf25dc5766f9338c8f886bed1ddebba" />: Fixed a bug in Password Manager where the existing data is not loaded correctly in the edit modal.
+- <Commit hash="9d99c45b31de9df58ca8ce93f8f1fcb9d7f492fe" />: Disabled entry type selection in idea modification modal in Idea Box to prevent changing the type of an existing entry.
+- <Commit hash="f3018c8bde9eb567ce08ab80a0a0dd1281a106b6" />: Fixed a bug in statistic chart widget in Wallet module where the year of the transactio is not taken into account when filtering transactions.
+- <Commit hash="483a314b68259661e4602404fc643f26cd85ab0b" />: Fixed a but in Wallet module where the transaction date is not recorded correctly.
+- <Commit hash="b2c67a8e3afc3930db3085fa278d502511daa0f8" />: Fixed a bug in Wallet module where the transaction is not ordered corectly.
+
 ### 📖 Documentation & Tooling
+
+- <Commit hash="582901e7c636df3f1bda796a9544765bdbfb69be" />: Added GitHub user component in docs changelog to display GitHub user avatar and link to their profile.
 
 </Version>
 
