@@ -269,8 +269,6 @@ const moviesSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-03-07 01:08:47.820Z",
-      updated: "2025-10-02 08:46:58.662Z",
       system: false,
     },
   },

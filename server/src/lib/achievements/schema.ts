@@ -94,8 +94,6 @@ const achievementsSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-05-22 06:22:53.466Z",
-      updated: "2025-10-02 08:46:58.205Z",
       system: false,
     },
   },

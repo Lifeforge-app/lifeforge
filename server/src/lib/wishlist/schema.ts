@@ -92,8 +92,6 @@ const wishlistSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_mZ8H0bkHRW` ON `wishlist__lists` (`name`)",
       ],
-      created: "2024-11-30 05:49:37.117Z",
-      updated: "2025-10-02 08:46:58.158Z",
       system: false,
     },
   },
@@ -248,8 +246,6 @@ const wishlistSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-12-22 18:28:33.028Z",
-      updated: "2025-10-02 08:46:58.173Z",
       system: false,
     },
   },
@@ -291,7 +287,7 @@ const wishlistSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_0Rwd",
+          id: "_clone_F6BS",
           max: 0,
           min: 0,
           name: "name",
@@ -305,7 +301,7 @@ const wishlistSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_ju1K",
+          id: "_clone_u98q",
           max: 0,
           min: 0,
           name: "description",
@@ -319,7 +315,7 @@ const wishlistSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_CQDd",
+          id: "_clone_jlIX",
           max: 0,
           min: 0,
           name: "color",
@@ -333,7 +329,7 @@ const wishlistSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_bn0C",
+          id: "_clone_8Clo",
           max: 0,
           min: 0,
           name: "icon",
@@ -390,8 +386,6 @@ const wishlistSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-06-04 06:08:29.045Z",
-      updated: "2025-10-02 08:46:58.186Z",
       system: false,
       viewQuery:
         "SELECT\n  wishlist__lists.id,\n  wishlist__lists.name,\n  wishlist__lists.description,\n  wishlist__lists.color,\n  wishlist__lists.icon, \n  COUNT(wishlist__entries.id) AS total_count,\n  SUM(wishlist__entries.price) AS total_amount,\n  COUNT(CASE WHEN wishlist__entries.bought = TRUE THEN 1 END) as bought_count,\n  SUM(CASE WHEN wishlist__entries.bought = TRUE THEN wishlist__entries.price ELSE 0 END) AS bought_amount\nFROM wishlist__lists\nLEFT JOIN wishlist__entries\n  ON wishlist__entries.list = wishlist__lists.id\nGROUP BY\n  wishlist__lists.id\n",

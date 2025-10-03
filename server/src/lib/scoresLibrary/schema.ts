@@ -208,8 +208,6 @@ const scoresLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2024-06-15 08:25:40.449Z",
-      updated: "2025-10-02 08:46:58.066Z",
       system: false,
     },
   },
@@ -245,7 +243,7 @@ const scoresLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_FURY",
+          id: "_clone_lxIs",
           max: 0,
           min: 0,
           name: "name",
@@ -270,8 +268,6 @@ const scoresLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-05 01:57:19.159Z",
-      updated: "2025-10-02 08:46:58.108Z",
       system: false,
       viewQuery:
         "SELECT\n  (ROW_NUMBER() OVER()) as id,\n  scores_library__entries.author as name,\n  COUNT(scores_library__entries.id) as amount\nFROM scores_library__entries\nGROUP BY scores_library__entries.author",
@@ -338,8 +334,6 @@ const scoresLibrarySchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_WoBZ3EWAB2` ON `scores_library__types` (`name`)",
       ],
-      created: "2025-07-19 04:20:51.086Z",
-      updated: "2025-10-02 08:46:58.080Z",
       system: false,
     },
   },
@@ -376,7 +370,7 @@ const scoresLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_FM9P",
+          id: "_clone_woFF",
           max: 0,
           min: 0,
           name: "name",
@@ -390,7 +384,7 @@ const scoresLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_c0TM",
+          id: "_clone_9KW7",
           max: 0,
           min: 0,
           name: "icon",
@@ -415,8 +409,6 @@ const scoresLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-07-19 04:23:56.015Z",
-      updated: "2025-10-02 08:46:58.122Z",
       system: false,
       viewQuery:
         "SELECT\n  scores_library__types.id,\n  scores_library__types.name,\n  scores_library__types.icon,\n  COUNT(scores_library__entries.id) as amount\nFROM scores_library__types\nLEFT JOIN scores_library__entries\n  ON scores_library__entries.type = scores_library__types.id\nGROUP BY scores_library__types.id",
@@ -466,8 +458,6 @@ const scoresLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-08-08 21:53:53.910Z",
-      updated: "2025-10-02 08:46:58.095Z",
       system: false,
     },
   },
@@ -503,7 +493,7 @@ const scoresLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_p4qe",
+          id: "_clone_wEP0",
           max: 0,
           min: 0,
           name: "name",
@@ -528,8 +518,6 @@ const scoresLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-08-08 22:47:07.223Z",
-      updated: "2025-10-02 08:46:58.137Z",
       system: false,
       viewQuery:
         "SELECT scores_library__collections.id,\n       scores_library__collections.name,\n       COUNT(scores_library__entries.id) as amount\nFROM scores_library__collections\nLEFT JOIN scores_library__entries\nON scores_library__entries.collection = scores_library__collections.id\nGROUP BY scores_library__collections.id",

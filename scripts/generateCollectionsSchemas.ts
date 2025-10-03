@@ -218,6 +218,9 @@ function generateModuleSchemaContent(
 
     const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
 
+    delete collection.created
+    delete collection.updated
+
     schemaEntries.push(`  ${collectionName}: {
         schema: ${zodSchemaString},
         raw: ${JSON.stringify(collection, null, 2)}

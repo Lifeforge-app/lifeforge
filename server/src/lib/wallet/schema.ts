@@ -75,8 +75,6 @@ const walletSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_OU71dSp4TR` ON `wallet__assets` (`name`)",
       ],
-      created: "2024-05-31 08:29:11.077Z",
-      updated: "2025-10-02 08:46:58.881Z",
       system: false,
     },
   },
@@ -156,8 +154,6 @@ const walletSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_sIL4a4Sdsi` ON `wallet__ledgers` (`name`)",
       ],
-      created: "2024-05-31 11:29:31.467Z",
-      updated: "2025-10-02 08:46:58.895Z",
       system: false,
     },
   },
@@ -249,8 +245,6 @@ const walletSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_XO2dnVmg7Z` ON `wallet__categories` (\n  `name`,\n  `type`\n)",
       ],
-      created: "2024-05-31 13:12:41.387Z",
-      updated: "2025-10-02 08:46:58.909Z",
       system: false,
     },
   },
@@ -357,8 +351,6 @@ const walletSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-05-31 13:15:18.045Z",
-      updated: "2025-10-02 08:46:58.923Z",
       system: false,
     },
   },
@@ -396,7 +388,7 @@ const walletSchemas = {
         },
         {
           hidden: false,
-          id: "_clone_APYj",
+          id: "_clone_Dqhy",
           maxSelect: 1,
           name: "type",
           presentable: false,
@@ -408,7 +400,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_w6wW",
+          id: "_clone_x5L6",
           max: 0,
           min: 0,
           name: "name",
@@ -422,7 +414,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_l6jm",
+          id: "_clone_YP5b",
           max: 0,
           min: 0,
           name: "icon",
@@ -436,7 +428,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_PUcE",
+          id: "_clone_ZaLa",
           max: 0,
           min: 0,
           name: "color",
@@ -461,8 +453,6 @@ const walletSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-23 23:59:49.762Z",
-      updated: "2025-10-02 08:46:58.982Z",
       system: false,
       viewQuery:
         "SELECT\n  wallet__categories.id,\n  wallet__categories.type,\n  wallet__categories.name,\n  wallet__categories.icon,\n  wallet__categories.color,\n  COUNT(wallet__transactions_income_expenses.id) AS amount\nFROM wallet__categories\nLEFT JOIN wallet__transactions_income_expenses ON wallet__transactions_income_expenses.category = wallet__categories.id\nGROUP BY wallet__categories.id",
@@ -503,7 +493,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_I89y",
+          id: "_clone_NdxN",
           max: 0,
           min: 0,
           name: "name",
@@ -517,7 +507,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_HEol",
+          id: "_clone_Nppq",
           max: 0,
           min: 0,
           name: "icon",
@@ -530,7 +520,7 @@ const walletSchemas = {
         },
         {
           hidden: false,
-          id: "_clone_4m5P",
+          id: "_clone_gZEK",
           max: null,
           min: null,
           name: "starting_balance",
@@ -564,8 +554,6 @@ const walletSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-24 00:07:22.397Z",
-      updated: "2025-10-02 08:46:58.996Z",
       system: false,
       viewQuery:
         "WITH unified_transactions AS (\n  SELECT \n    id, \n    amount, \n    asset, \n    source \n  FROM \n    (\n      SELECT \n        CONCAT(\n          wallet__transactions.id, \"_\", wallet__transactions_income_expenses.type\n        ) as id, \n        wallet__transactions.amount,  \n        wallet__transactions_income_expenses.asset, \n        wallet__transactions_income_expenses.type as source \n      FROM \n        wallet__transactions_income_expenses\n        JOIN wallet__transactions ON wallet__transactions_income_expenses.base_transaction = wallet__transactions.id \n      UNION \n      SELECT  \n        concat(wallet__transactions.id, \"_out\") as id, \n        wallet__transactions.amount as amount, \n        wallet__transactions_transfer.\"from\" as asset, \n        'transfer_out' as source\n      FROM \n        wallet__transactions_transfer \n        JOIN wallet__transactions ON wallet__transactions_transfer.base_transaction = wallet__transactions.id \n      UNION \n      SELECT \n        concat(wallet__transactions.id, \"_in\") as id, \n        wallet__transactions.amount, \n        wallet__transactions_transfer.\"to\" as asset, \n        'transfer_in' as source \n      FROM \n        wallet__transactions_transfer \n        JOIN wallet__transactions ON wallet__transactions_transfer.base_transaction = wallet__transactions.id\n    )\n) \nSELECT \n  wallet__assets.id, \n  wallet__assets.name,\n  wallet__assets.icon,\n  wallet__assets.starting_balance,\n  COUNT(unified_transactions.id) AS transaction_count, \n  ROUND(\n    wallet__assets.starting_balance + SUM(\n      CASE \n        WHEN source = 'transfer_out' THEN - amount \n        WHEN source = 'transfer_in' THEN amount \n        WHEN source = 'income' THEN amount \n        WHEN source = 'expenses' THEN - amount \n        ELSE 0 \n      END\n    ), \n    2\n  ) AS current_balance \nFROM \n  unified_transactions \n  RIGHT JOIN wallet__assets ON wallet__assets.id = unified_transactions.asset \nGROUP BY \n  wallet__assets.id\n",
@@ -605,7 +593,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_kKKO",
+          id: "_clone_gmFS",
           max: 0,
           min: 0,
           name: "name",
@@ -619,7 +607,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_MwLE",
+          id: "_clone_u1kh",
           max: 0,
           min: 0,
           name: "color",
@@ -633,7 +621,7 @@ const walletSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_39rz",
+          id: "_clone_pYlU",
           max: 0,
           min: 0,
           name: "icon",
@@ -658,8 +646,6 @@ const walletSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-24 00:14:05.149Z",
-      updated: "2025-10-02 08:46:59.011Z",
       system: false,
       viewQuery:
         "WITH transaction_ledger_map AS (\n  SELECT\n    wallet__transactions_income_expenses.id AS transaction_id,\n    json_each.value AS ledger_id\n  FROM\n    wallet__transactions_income_expenses,\n    json_each(wallet__transactions_income_expenses.ledgers)\n)\nSELECT\n  wallet__ledgers.id,\n  wallet__ledgers.name,\n  wallet__ledgers.color,\n  wallet__ledgers.icon,\n  COUNT(transaction_ledger_map.transaction_id) AS amount\nFROM\n  wallet__ledgers\nLEFT JOIN transaction_ledger_map\n  ON transaction_ledger_map.ledger_id = wallet__ledgers.id\nGROUP BY\n  wallet__ledgers.id;",
@@ -729,8 +715,6 @@ const walletSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-24 00:21:24.995Z",
-      updated: "2025-10-02 08:46:59.026Z",
       system: false,
       viewQuery:
         "SELECT\n  (ROW_NUMBER() OVER()) as id,\n  (\n  CASE WHEN wallet__transactions.type = 'transfer' THEN \"transfer\"\n  ELSE wallet__transactions_income_expenses.type\n  END\n  ) as name,\n  COUNT(wallet__transactions.id) as transaction_count,\n  SUM(wallet__transactions.amount) as accumulated_amount\nFROM wallet__transactions\nLEFT JOIN wallet__transactions_income_expenses\n  ON wallet__transactions.id = wallet__transactions_income_expenses.base_transaction\nLEFT JOIN wallet__transactions_transfer\n  ON wallet__transactions.id = wallet__transactions_transfer.base_transaction\nGROUP BY name\n",
@@ -875,8 +859,6 @@ const walletSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_1SR25MNndH` ON `wallet__transactions_income_expenses` (`base_transaction`)",
       ],
-      created: "2025-07-20 03:36:06.174Z",
-      updated: "2025-10-02 08:46:58.937Z",
       system: false,
     },
   },
@@ -953,8 +935,6 @@ const walletSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_GwG14gsDmZ` ON `wallet__transactions_transfer` (`base_transaction`)",
       ],
-      created: "2025-07-20 03:37:55.540Z",
-      updated: "2025-10-02 08:46:58.951Z",
       system: false,
     },
   },
@@ -1109,8 +1089,6 @@ const walletSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-08-05 02:17:49.261Z",
-      updated: "2025-10-02 08:46:58.966Z",
       system: false,
     },
   },

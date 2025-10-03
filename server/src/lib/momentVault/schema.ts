@@ -109,8 +109,6 @@ const momentVaultSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-02-20 12:08:45.463Z",
-      updated: "2025-10-02 08:46:58.644Z",
       system: false,
     },
   },

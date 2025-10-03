@@ -162,8 +162,6 @@ const calendarSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-05-15 12:35:23.739Z",
-      updated: "2025-10-02 08:46:58.398Z",
       system: false,
     },
   },
@@ -243,8 +241,6 @@ const calendarSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_isCrOV2gEh` ON `calendar__categories` (`name`)",
       ],
-      created: "2024-05-16 11:33:11.147Z",
-      updated: "2025-10-02 08:46:58.411Z",
       system: false,
     },
   },
@@ -333,8 +329,6 @@ const calendarSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_qUL2o05YBe` ON `calendar__calendars` (`name`)",
       ],
-      created: "2025-06-02 00:55:48.248Z",
-      updated: "2025-10-02 08:46:58.426Z",
       system: false,
     },
   },
@@ -407,8 +401,6 @@ const calendarSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_Z0MvNxCsxl` ON `calendar__events_single` (`base_event`)",
       ],
-      created: "2025-07-19 13:52:54.015Z",
-      updated: "2025-10-02 08:46:58.440Z",
       system: false,
     },
   },
@@ -508,8 +500,6 @@ const calendarSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_dyxH0lk7ka` ON `calendar__events_recurring` (`base_event`)",
       ],
-      created: "2025-07-19 13:55:41.322Z",
-      updated: "2025-10-02 08:46:58.454Z",
       system: false,
     },
   },
@@ -655,8 +645,6 @@ const calendarSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-09-25 22:34:47.165Z",
-      updated: "2025-10-02 08:46:58.468Z",
       system: false,
     },
   },
