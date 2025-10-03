@@ -3,7 +3,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '../../../../core/providers/AuthProvider'
+import { useAuth } from 'shared'
 import DisableTwoFAModal from '../modals/DisableTwoFAModal'
 import EnableTwoFAModal from '../modals/EnableTwoFAModal'
 

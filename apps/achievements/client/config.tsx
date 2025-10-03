@@ -1,11 +1,11 @@
-import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { lazy } from 'react'
+import type { ModuleConfig } from 'shared'
 
 export default {
   name: 'Achievements',
   icon: 'tabler:award',
   routes: {
-    achievements: lazy(() => import('.'))
+    achievements: lazy(() => import('./src'))
   },
   togglable: true,
   category: '02.Lifestyle'

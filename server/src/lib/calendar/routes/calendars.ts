@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import ical from 'node-ical'
-import { z } from 'zod'
+import z from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
 import { ICalSyncService } from '../functions/icalSyncing'

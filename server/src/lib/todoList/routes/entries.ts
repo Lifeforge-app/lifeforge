@@ -2,7 +2,7 @@ import { FilterType } from '@functions/database/PBService/typescript/pb_service'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
 import moment from 'moment'
-import { z } from 'zod'
+import z from 'zod'
 
 const FILTERS: Record<string, FilterType<'todo_list__entries'>> = {
   all: [

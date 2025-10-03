@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
-import { useAuth } from '../../../../core/providers/AuthProvider'
+import { useAuth } from 'shared'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('apps.accountSettings')

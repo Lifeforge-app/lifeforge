@@ -1,12 +1,10 @@
-import type WidgetConfig from './typescript/widgetConfig.types'
+import type { WidgetConfig } from 'shared'
 
 const widgets = import.meta.glob([
   '../../**/widgets/*.tsx',
   './widgets/*.tsx',
-  '../../../../../apps/**/client/widgets/*.tsx'
+  '../../../../../apps/**/client/src/widgets/*.tsx'
 ])
-
-console.log(widgets)
 
 const widgetsPromises = Object.entries(widgets).map(async ([, importer]) => {
   const mod = (await importer()) as { default: any; config: WidgetConfig }

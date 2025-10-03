@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import { Button, DashboardItem, EmptyStateScreen } from 'lifeforge-ui'
 import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router'
+import type { WidgetConfig } from 'shared'
 
-import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
 import ControlButtons from '@apps/04.Storage/music/components/Bottombar/components/ControlButtons'
 import { useMusicContext } from '@apps/04.Storage/music/providers/MusicProvider'
 

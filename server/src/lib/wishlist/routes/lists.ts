@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { SCHEMAS } from '@schema'
-import { z } from 'zod'
+import z from 'zod'
 
 const getById = forgeController
   .query()

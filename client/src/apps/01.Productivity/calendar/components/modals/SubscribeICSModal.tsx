@@ -1,7 +1,7 @@
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
-import { z } from 'zod'
+import z from 'zod'
 
 function SubscribeICSModal({
   onClose,

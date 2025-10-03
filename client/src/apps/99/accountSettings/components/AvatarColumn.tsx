@@ -12,7 +12,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '../../../../core/providers/AuthProvider'
+import { useAuth } from 'shared'
 
 function AvatarColumn() {
   const open = useModalStore(state => state.open)

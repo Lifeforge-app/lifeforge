@@ -3,7 +3,7 @@ import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
-import { z } from 'zod'
+import z from 'zod'
 
 import { validateFolderPath } from '../utils/folders'
 

@@ -1,9 +1,9 @@
-import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FAB, ModuleHeader } from 'lifeforge-ui'
 import { useCallback, useRef } from 'react'
 import { type Id, toast } from 'react-toastify'
+import { type SocketEvent, useSocketContext } from 'shared'
 
 import ActionMenu from './components/ActionMenu'
 import UploadTabButton from './components/UploadTabButton'

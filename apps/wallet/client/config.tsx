@@ -1,5 +1,5 @@
-import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { lazy } from 'react'
+import type { ModuleConfig } from 'shared'
 
 export default {
   name: 'Wallet',
@@ -26,12 +26,14 @@ export default {
     }
   ],
   routes: {
-    wallet: lazy(() => import('./pages/Dashboard')),
-    'wallet/transactions': lazy(() => import('./pages/Transactions')),
-    'wallet/assets': lazy(() => import('./pages/Assets')),
-    'wallet/ledgers': lazy(() => import('./pages/Ledgers')),
-    'wallet/spending-heatmap': lazy(() => import('./pages/SpendingHeatmap')),
-    'wallet/statements': lazy(() => import('./pages/Statements'))
+    wallet: lazy(() => import('./src/pages/Dashboard')),
+    'wallet/transactions': lazy(() => import('./src/pages/Transactions')),
+    'wallet/assets': lazy(() => import('./src/pages/Assets')),
+    'wallet/ledgers': lazy(() => import('./src/pages/Ledgers')),
+    'wallet/spending-heatmap': lazy(
+      () => import('./src/pages/SpendingHeatmap')
+    ),
+    'wallet/statements': lazy(() => import('./src/pages/Statements'))
   },
   togglable: true,
   category: '03.Finance'

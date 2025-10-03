@@ -1,10 +1,10 @@
 import ROUTES from '@core/routes'
-import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
 import { LoadingScreen, ModuleHeader } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { useAuth } from 'shared'
 
 import ModuleItem from './components/ModuleItem'
 

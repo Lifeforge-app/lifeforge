@@ -1,9 +1,9 @@
-import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
 import { Icon } from '@iconify/react'
 import { ItemWrapper, Switch } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { ModuleConfig } from 'shared'
 
 function ModuleItem({
   module,

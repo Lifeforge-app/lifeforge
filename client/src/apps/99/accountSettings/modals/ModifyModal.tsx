@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import _ from 'lodash'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '../../../../core/providers/AuthProvider'
+import { useAuth } from 'shared'
 
 function ModifyModal<TType extends 'datetime' | 'text'>({
   data: { type, title, id, icon },
