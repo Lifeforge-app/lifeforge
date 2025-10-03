@@ -152,8 +152,6 @@ const passwordsSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-04-12 01:46:38.306Z",
-      updated: "2025-10-02 08:46:58.697Z",
       system: false,
     },
   },

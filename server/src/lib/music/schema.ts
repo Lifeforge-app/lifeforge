@@ -114,8 +114,6 @@ const musicSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-05-18 07:41:17.527Z",
-      updated: "2025-10-02 08:46:58.680Z",
       system: false,
     },
   },

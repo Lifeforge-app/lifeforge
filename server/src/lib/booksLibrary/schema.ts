@@ -62,8 +62,6 @@ const booksLibrarySchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_CJdyjxINIA` ON `books_library__collections` (`name`)",
       ],
-      created: "2024-11-14 05:37:28.363Z",
-      updated: "2025-10-02 08:46:58.274Z",
       system: false,
     },
   },
@@ -128,8 +126,6 @@ const booksLibrarySchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_KB4mJFMlCd` ON `books_library__languages` (`name`)",
       ],
-      created: "2024-11-14 05:56:08.062Z",
-      updated: "2025-10-02 08:46:58.288Z",
       system: false,
     },
   },
@@ -445,8 +441,6 @@ const booksLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2024-11-14 08:33:17.121Z",
-      updated: "2025-10-02 08:46:58.302Z",
       system: false,
     },
   },
@@ -496,8 +490,6 @@ const booksLibrarySchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_MKfAEJXdDv` ON `books_library__file_types` (`name`)",
       ],
-      created: "2024-12-23 18:58:58.873Z",
-      updated: "2025-10-02 08:46:58.316Z",
       system: false,
     },
   },
@@ -533,7 +525,7 @@ const booksLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_kvM5",
+          id: "_clone_3Ofd",
           max: 0,
           min: 0,
           name: "name",
@@ -558,8 +550,6 @@ const booksLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-05 01:21:46.975Z",
-      updated: "2025-10-02 08:46:58.330Z",
       system: false,
       viewQuery:
         "SELECT\n  books_library__file_types.id,\n  books_library__file_types.name,\n  count(books_library__entries.id) as amount\nFROM books_library__file_types\n  LEFT JOIN books_library__entries ON books_library__entries.extension = books_library__file_types.name\nGROUP BY books_library__file_types.id",
@@ -598,7 +588,7 @@ const booksLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_uiK2",
+          id: "_clone_cleS",
           max: 0,
           min: 0,
           name: "name",
@@ -612,7 +602,7 @@ const booksLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_aJ0m",
+          id: "_clone_ir6h",
           max: 0,
           min: 0,
           name: "icon",
@@ -637,8 +627,6 @@ const booksLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-05 01:30:21.778Z",
-      updated: "2025-10-02 08:46:58.344Z",
       system: false,
       viewQuery:
         "WITH languages_map AS (\n  SELECT \n    books_library__entries.id AS entry_id,\n    json_each.value AS lang_id\n  FROM \n    books_library__entries,\n    JSON_EACH(books_library__entries.languages)\n) SELECT\n  books_library__languages.id,\n  books_library__languages.name,\n  books_library__languages.icon,\n  count(languages_map.entry_id) as amount\nFROM books_library__languages\n  LEFT JOIN languages_map ON languages_map.lang_id = books_library__languages.id\nGROUP BY books_library__languages.id",
@@ -677,7 +665,7 @@ const booksLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_QXFD",
+          id: "_clone_w8YG",
           max: 0,
           min: 0,
           name: "name",
@@ -691,7 +679,7 @@ const booksLibrarySchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_69zn",
+          id: "_clone_JDPY",
           max: 0,
           min: 0,
           name: "icon",
@@ -716,8 +704,6 @@ const booksLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-05 01:33:08.885Z",
-      updated: "2025-10-02 08:46:58.358Z",
       system: false,
       viewQuery:
         "SELECT \n  books_library__collections.id,\n  books_library__collections.name,\n  books_library__collections.icon,\n  COUNT(books_library__entries.id) as amount\nFROM books_library__collections\n  LEFT JOIN books_library__entries ON books_library__entries.collection = books_library__collections.id\nGROUP BY books_library__collections.id",
@@ -798,8 +784,6 @@ const booksLibrarySchemas = {
         },
       ],
       indexes: [],
-      created: "2025-08-25 09:45:14.771Z",
-      updated: "2025-10-02 08:46:58.373Z",
       system: false,
       viewQuery:
         'SELECT \n    (ROW_NUMBER() OVER()) AS id,\n    json_extract(json_each.value, \'$.name\')  AS name,\n    json_extract(json_each.value, \'$.icon\')  AS icon,\n    json_extract(json_each.value, \'$.color\') AS color,\n    COUNT(books_library__entries.id)         AS amount\nFROM JSON_EACH(\'[\n  { "name": "read",    "icon": "tabler:progress-check",    "color": "#22c55e" },\n  { "name": "reading", "icon": "tabler:progress-bolt",  "color": "#3b82f6" },\n  { "name": "unread",  "icon": "tabler:progress", "color": "#ef4444" }\n]\')\nLEFT JOIN books_library__entries\n    ON books_library__entries.read_status = json_extract(json_each.value, \'$.name\')\nGROUP BY json_each.value;',

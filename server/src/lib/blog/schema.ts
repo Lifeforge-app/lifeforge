@@ -170,8 +170,6 @@ const blogSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-10-02 09:00:10.173Z",
-      updated: "2025-10-02 09:00:10.173Z",
       system: false,
     },
   },
@@ -251,8 +249,6 @@ const blogSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_GuuYBxu9OR` ON `blog__categories` (`name`)",
       ],
-      created: "2025-10-02 09:00:10.189Z",
-      updated: "2025-10-02 09:00:10.189Z",
       system: false,
     },
   },
