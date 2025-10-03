@@ -1,6 +1,5 @@
+import type { ModuleConfig } from '@client/core/routes/interfaces/routes_interfaces'
 import { lazy } from 'react'
-
-import type { ModuleConfig } from '../../../core/routes/interfaces/routes_interfaces'
 
 export default {
   name: 'Wallet',
@@ -34,5 +33,6 @@ export default {
     'wallet/spending-heatmap': lazy(() => import('./pages/SpendingHeatmap')),
     'wallet/statements': lazy(() => import('./pages/Statements'))
   },
-  togglable: true
+  togglable: true,
+  category: '03.Finance'
 } satisfies ModuleConfig

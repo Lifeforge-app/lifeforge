@@ -21,14 +21,13 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
-
 import AssetsBalanceCard from './components/AssetsBalanceCard'
 import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'
 import IncomeExpenseCard from './components/IncomeExpensesCard'
 import StatisticChardCard from './components/StatisticChartCard'
 import TransactionsCard from './components/TransactionsCard'
 import TransactionsCountCard from './components/TransactionsCountCard'
+import { useWalletStore } from '../../stores/useWalletStore'
 
 ChartJS.register(
   CategoryScale,

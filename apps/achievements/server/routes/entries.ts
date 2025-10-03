@@ -1,7 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
+import { SCHEMAS } from '@schema'
 import { z } from 'zod'
-
-import { SCHEMAS } from '../../../core/schema'
 
 const list = forgeController
   .query()

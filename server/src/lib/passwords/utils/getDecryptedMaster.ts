@@ -11,7 +11,7 @@ export const getDecryptedMaster = async (
   challenge: string
 ): Promise<string> => {
   const { masterPasswordHash } = pb.instance.authStore
-    .record as unknown as z.infer<typeof SCHEMAS.users.users>
+    .record as unknown as z.infer<typeof SCHEMAS.users.users.schema>
 
   const decryptedMaster = decrypt2(master, challenge)
 

@@ -1,12 +1,13 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "apps/*/src",
+    "apps/**/*",
     "packages/*/src",
     "packages/*/.storybook",
     "client/src",
     "server/src",
     "shared/src",
-    "scripts/*"
+    "scripts/*",
+    "tools/*/src"
   ]
 }
