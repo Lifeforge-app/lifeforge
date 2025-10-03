@@ -4,9 +4,8 @@ import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { WithQuery } from 'lifeforge-ui'
 import { usePersonalization } from 'shared'
+import type { WidgetConfig } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import type WidgetConfig from '../typescript/widgetConfig.types'
 
 export default function Quotes() {
   const quoteQuery = useQuery(

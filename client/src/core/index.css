@@ -23,6 +23,7 @@ layer(base);
 /* Core styles */
 @import 'lifeforge-ui/dist/index.css';
 @source '../../../node_modules/lifeforge-ui/dist';
+@source '../../../apps';
 
 /* App styles */
 @import '@apps/00/dashboard/index.css';

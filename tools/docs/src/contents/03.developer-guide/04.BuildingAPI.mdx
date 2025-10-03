@@ -39,7 +39,7 @@ Here is a gist of how to build an API handler in LifeForge:
 
 <Code language="typescript">
 {`import { forgeController, forgeRouter } from '@functions/routes'
-import { z } from 'zod'
+import z from 'zod'
 
 const myHandler = forgeController.query()
     .description("This is a sample query handler")
@@ -102,7 +102,7 @@ In <code>accounts.ts</code>, we define the API handlers for managing accounts:
 
 <Code language="typescript">
 {`import { forgeController, forgeRouter } from '@functions/routes'
-import { z } from 'zod'
+import z from 'zod'
 
 const list = forgeRouter.query.
     description("List all accounts")

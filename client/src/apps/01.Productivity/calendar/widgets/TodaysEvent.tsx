@@ -16,8 +16,8 @@ import { Link } from 'react-router'
 import { Tooltip } from 'react-tooltip'
 import type { InferOutput } from 'shared'
 import { useSidebarState } from 'shared'
+import type { WidgetConfig } from 'shared'
 
-import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
 import type {
   CalendarCategory,
   CalendarEvent

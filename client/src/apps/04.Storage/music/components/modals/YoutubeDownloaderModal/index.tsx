@@ -1,10 +1,10 @@
-import { type SocketEvent, useSocketContext } from '@providers/SocketProvider'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import forgeAPI from '@utils/forgeAPI'
 import { Button, ModalHeader, TextInput, WithQuery } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { type SocketEvent, useSocketContext } from 'shared'
 
 import VideoInfo from './components/VideoInfo'
 

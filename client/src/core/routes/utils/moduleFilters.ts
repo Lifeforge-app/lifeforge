@@ -1,6 +1,5 @@
 import _ from 'lodash'
-
-import type { ModuleConfig } from '../interfaces/routes_interfaces'
+import type { ModuleConfig } from 'shared'
 
 /**
  * Determines if a module should be enabled based on user preferences and configuration

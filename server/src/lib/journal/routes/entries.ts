@@ -5,7 +5,7 @@ import { ClientError } from '@functions/routes/utils/response'
 import COLLECTION_SCHEMAS from '@schema'
 import bcrypt from 'bcryptjs'
 import PocketBase from 'pocketbase'
-import { z } from 'zod'
+import z from 'zod'
 
 import { challenge } from '..'
 

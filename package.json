@@ -58,7 +58,7 @@
     "eslint-plugin-sonarjs": "^3.0.2",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "typescript": "^5.9.0-dev.20250727",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.31.1"
   },
   "dependencies": {

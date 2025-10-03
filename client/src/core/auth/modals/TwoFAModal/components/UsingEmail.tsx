@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '../../../../providers/AuthProvider'
+import { useAuth } from 'shared'
 
 function UsingEmail({
   callback

@@ -7,8 +7,8 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
+import type { WidgetConfig } from 'shared'
 
-import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
 import TaskItem from '@apps/01.Productivity/todoList/components/tasks/TaskItem'
 import {
   TodoListProvider,

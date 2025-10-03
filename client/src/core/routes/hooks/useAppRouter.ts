@@ -1,7 +1,7 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createBrowserRouter } from 'react-router'
+import { useAuth } from 'shared'
 
 import ROUTES from '..'
 import {
