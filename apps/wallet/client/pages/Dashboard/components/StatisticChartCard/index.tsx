@@ -1,10 +1,9 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import type { ChartOptions } from 'chart.js'
 import { DashboardItem, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import RangeSelector from './components/RangeSelector'
 import { useChartData, useChartLabels, useChartOptions } from './hooks'

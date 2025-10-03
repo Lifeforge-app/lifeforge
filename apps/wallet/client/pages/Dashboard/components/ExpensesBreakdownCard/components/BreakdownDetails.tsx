@@ -1,14 +1,13 @@
 import { Icon } from '@iconify/react'
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import clsx from 'clsx'
 import { Scrollbar } from 'lifeforge-ui'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
-
 import { ExpensesBreakdownContext } from '..'
+import numberToCurrency from '../../../../../utils/numberToCurrency'
 
 function BreakdownDetails() {
   const { t } = useTranslation('apps.wallet')

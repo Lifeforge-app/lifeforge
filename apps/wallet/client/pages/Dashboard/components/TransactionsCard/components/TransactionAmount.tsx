@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
-import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
+import numberToCurrency from '../../../../../utils/numberToCurrency'
+import type { WalletTransaction } from '../../../../Transactions'
 
 function TransactionAmount({
   type,

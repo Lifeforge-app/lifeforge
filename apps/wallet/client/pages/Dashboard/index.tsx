@@ -1,3 +1,4 @@
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import {
   ArcElement,
   BarElement,
@@ -27,7 +28,6 @@ import IncomeExpenseCard from './components/IncomeExpensesCard'
 import StatisticChardCard from './components/StatisticChartCard'
 import TransactionsCard from './components/TransactionsCard'
 import TransactionsCountCard from './components/TransactionsCountCard'
-import { useWalletStore } from '../../stores/useWalletStore'
 
 ChartJS.register(
   CategoryScale,

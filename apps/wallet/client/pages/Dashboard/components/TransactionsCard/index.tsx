@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import {
   DashboardItem,
   EmptyStateScreen,
@@ -6,8 +7,6 @@ import {
   WithQuery
 } from 'lifeforge-ui'
 import { Link } from 'react-router'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ListView from './views/ListView'
 import TableView from './views/TableView'

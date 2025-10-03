@@ -1,3 +1,4 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import {
   EmptyStateScreen,
   ModalHeader,
@@ -9,8 +10,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AutoSizer } from 'react-virtualized'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ModifyCategoryModal from '../ModifyCategoryModal'
 import CategoryItem from './components/CategoryItem'

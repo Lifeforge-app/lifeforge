@@ -1,11 +1,10 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import numberToCurrency from '@modules/wallet/client/utils/numberToCurrency'
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps'
 import { EmptyStateScreen, ModuleHeader, WithQuery } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import colors from 'tailwindcss/colors'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 interface SpendingLocationData {
   lat: number

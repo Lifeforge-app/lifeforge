@@ -1,14 +1,13 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import dayjs from 'dayjs'
-import { WithQuery } from 'lifeforge-ui'
-
 import {
   type WalletAsset,
   useWalletData
-} from '@apps/03.Finance/wallet/hooks/useWalletData'
-import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
+} from '@modules/wallet/client/hooks/useWalletData'
+import type { WalletTransaction } from '@modules/wallet/client/pages/Transactions'
+import numberToCurrency from '@modules/wallet/client/utils/numberToCurrency'
+import clsx from 'clsx'
+import dayjs from 'dayjs'
+import { WithQuery } from 'lifeforge-ui'
 
 function getAmounts({
   asset,

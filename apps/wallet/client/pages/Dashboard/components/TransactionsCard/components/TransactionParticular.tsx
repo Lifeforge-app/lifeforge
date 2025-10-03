@@ -1,5 +1,6 @@
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+
+import type { WalletTransaction } from '../../../../Transactions'
 
 function TransactionParticular({
   transaction

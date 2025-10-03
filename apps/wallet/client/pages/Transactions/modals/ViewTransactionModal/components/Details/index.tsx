@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import type { WalletTransaction } from '@modules/wallet/client/pages/Transactions'
 import forgeAPI from '@utils/forgeAPI'
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { Button, useModalStore } from 'lifeforge-ui'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
 
 import ViewReceiptModal from '../../../ViewReceiptModal'
 import DetailItem from './components/DetailItem'

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 
-import type { Achievement } from '@apps/02.Lifestyle/achievements'
+import type { Achievement } from '../../..'
 
 function AwardIcon({ difficulty }: { difficulty: Achievement['difficulty'] }) {
   return (

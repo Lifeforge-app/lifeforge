@@ -1,7 +1,6 @@
+import type { WalletTransaction } from '@modules/wallet/client/pages/Transactions'
+import numberToCurrency from '@modules/wallet/client/utils/numberToCurrency'
 import clsx from 'clsx'
-
-import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function OverviewSummary({
   filteredTransactions

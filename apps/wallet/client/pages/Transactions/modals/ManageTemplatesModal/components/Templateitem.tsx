@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import type { WalletTemplate } from '@modules/wallet/client/hooks/useWalletData'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
@@ -10,8 +11,6 @@ import {
 } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
-
-import type { WalletTemplate } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ModifyTemplatesModal from '../../ModifyTemplatesModal'
 import ModifyTransactionsModal from '../../ModifyTransactionsModal'

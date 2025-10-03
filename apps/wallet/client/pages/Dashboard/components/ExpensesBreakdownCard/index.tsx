@@ -1,4 +1,6 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import useYearMonthOptions from '@modules/wallet/client/hooks/useYearMonthOptions'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
@@ -8,10 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import type { InferOutput } from 'shared'
 
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import useYearMonthOptions from '@apps/03.Finance/wallet/hooks/useYearMonthOptions'
-import type { WalletCategory } from '@apps/03.Finance/wallet/pages/Transactions'
-
+import type { WalletCategory } from '../../../Transactions'
 import BreakdownChartLegend from './components/BreakdownChartLegend'
 import BreakdownDetails from './components/BreakdownDetails'
 import BreakdownDoughnutChart from './components/BreakdownDoughnutChart'

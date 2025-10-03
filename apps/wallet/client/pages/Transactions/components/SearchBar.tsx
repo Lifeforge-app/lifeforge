@@ -1,6 +1,5 @@
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import { SearchInput } from 'lifeforge-ui'
-
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 function SearchBar() {
   const { searchQuery, setSearchQuery } = useWalletStore()

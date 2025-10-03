@@ -1,3 +1,5 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   Button,
@@ -16,8 +18,6 @@ import { useLocation } from 'react-router'
 import TotalBalance from './components/Amount'
 import AssetItem from './components/AssetItem'
 import ModifyAssetModal from './modals/ModifyAssetModal'
-import { useWalletData } from '../../hooks/useWalletData'
-import { useWalletStore } from '../../stores/useWalletStore'
 
 function Assets() {
   const queryClient = useQueryClient()

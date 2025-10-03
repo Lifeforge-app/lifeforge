@@ -1,7 +1,6 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import { SidebarTitle } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import TypeSectionItem from './TypeSectionItem'
 

@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import numberToCurrency from '@modules/wallet/client/utils/numberToCurrency'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 import type { WalletTransaction } from '../../..'
 import ViewReceiptModal from '../../../modals/ViewReceiptModal'

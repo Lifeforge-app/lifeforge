@@ -1,3 +1,4 @@
+import type { WalletAsset } from '@modules/wallet/client/hooks/useWalletData'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
@@ -17,7 +18,6 @@ import { Line } from 'react-chartjs-2'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import type { WalletAsset } from '../../../hooks/useWalletData'
 import numberToCurrency from '../../../utils/numberToCurrency'
 
 // Register Chart.js components

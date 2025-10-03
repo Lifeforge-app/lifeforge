@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import type { WalletLedger } from '@modules/wallet/client/hooks/useWalletData'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import {
@@ -11,8 +12,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-
-import type { WalletLedger } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import ModifyLedgerModal from '../modals/ModifyLedgerModal'
 

@@ -1,8 +1,7 @@
+import useYearMonthOptions from '@modules/wallet/client/hooks/useYearMonthOptions'
 import dayjs from 'dayjs'
 import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 import { useEffect } from 'react'
-
-import useYearMonthOptions from '@apps/03.Finance/wallet/hooks/useYearMonthOptions'
 
 function YearMonthInput({
   month,

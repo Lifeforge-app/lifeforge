@@ -14,7 +14,7 @@
       "node"
     ],
     /* Bundler mode */
-    "outDir": "./tsbuild",
+    "outDir": "${configDir}/tsbuild",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -45,7 +45,10 @@
       ],
       "@server/*": [
         "../server/src/*"
-      ]
+      ],
+      "@modules/*": [
+        "../apps/*"
+      ],
     }
   },
   "typeRoots": [
@@ -57,9 +60,6 @@
     "../apps/**/client/**/*"
   ],
   "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
     {
       "path": "../server/tsconfig.json"
     }

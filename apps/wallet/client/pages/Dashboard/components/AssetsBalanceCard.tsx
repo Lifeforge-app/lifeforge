@@ -1,4 +1,6 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import clsx from 'clsx'
 import {
   DashboardItem,
@@ -9,9 +11,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
+import numberToCurrency from '../../../utils/numberToCurrency'
 
 function AssetsBalanceCard() {
   const navigate = useNavigate()

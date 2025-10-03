@@ -1,3 +1,7 @@
+import {
+  type WalletTemplate,
+  useWalletData
+} from '@modules/wallet/client/hooks/useWalletData'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
@@ -5,11 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 import colors from 'tailwindcss/colors'
-
-import {
-  type WalletTemplate,
-  useWalletData
-} from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 function ModifyTemplatesModal({
   onClose,

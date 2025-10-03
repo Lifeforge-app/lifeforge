@@ -1,7 +1,6 @@
+import type { WalletTransaction } from '@modules/wallet/client/pages/Transactions'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-
-import type { WalletTransaction } from '@apps/03.Finance/wallet/pages/Transactions'
 
 interface TransactionCount {
   income: number

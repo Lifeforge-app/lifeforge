@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { WithQuery } from 'lifeforge-ui'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import TransactionAmount from '../../components/TransactionAmount'
 import TransactionParticular from '../../components/TransactionParticular'

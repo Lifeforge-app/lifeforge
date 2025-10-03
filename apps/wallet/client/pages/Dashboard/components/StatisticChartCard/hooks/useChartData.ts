@@ -1,7 +1,6 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 export function useChartData(
   labels: string[],
