@@ -1,10 +1,9 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import { SidebarTitle, WithQuery } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 import ModifyCategoryModal from '../../../modals/ModifyCategoryModal'
 import CategoriesSectionItem from './CategoriesSectionItem'

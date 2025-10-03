@@ -1,8 +1,7 @@
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 import getDayClassName from './utils/getDayClassName'
 import getTransactionClassName from './utils/getTransactionClassName'

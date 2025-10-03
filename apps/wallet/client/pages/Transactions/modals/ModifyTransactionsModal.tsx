@@ -1,3 +1,4 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import dayjs from 'dayjs'
@@ -6,8 +7,6 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 import colors from 'tailwindcss/colors'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import type { WalletTransaction } from '..'
 

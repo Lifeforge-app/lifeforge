@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import clsx from 'clsx'
 import { DashboardItem, WithQuery } from 'lifeforge-ui'
 
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
+import numberToCurrency from '../../../utils/numberToCurrency'
 
 function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
   const isIncome = title.toLowerCase() === 'income'

@@ -1,8 +1,7 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { usePersonalization } from 'shared'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 import useTransactionCountMap from './MiniCalendarDateItem/hooks/useTransactionCountMap'

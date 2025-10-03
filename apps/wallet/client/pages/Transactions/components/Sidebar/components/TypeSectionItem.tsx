@@ -1,11 +1,10 @@
+import { useWalletStore } from '@modules/wallet/client/stores/useWalletStore'
 import { SidebarItem } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import colors from 'tailwindcss/colors'
-
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
 
 function TypeSectionItem({
   icon,
