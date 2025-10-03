@@ -1,10 +1,9 @@
+import type { WalletAsset } from '@modules/wallet/client/hooks/useWalletData'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
-
-import type { WalletAsset } from '../../../hooks/useWalletData'
 
 function ModifyAssetModal({
   data: { type, initialData },

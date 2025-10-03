@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
+import numberToCurrency from '@modules/wallet/client/utils/numberToCurrency'
 import dayjs from 'dayjs'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function TransactionList({
   type,

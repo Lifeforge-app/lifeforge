@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 function TransactionsSummary({ month, year }: { month: number; year: number }) {
   const { transactionsQuery } = useWalletData()

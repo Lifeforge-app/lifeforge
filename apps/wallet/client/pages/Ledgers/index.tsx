@@ -1,3 +1,4 @@
+import { useWalletData } from '@modules/wallet/client/hooks/useWalletData'
 import {
   Button,
   EmptyStateScreen,
@@ -9,8 +10,6 @@ import { useModalStore } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
 
 import LedgerItem from './components/LedgerItem'
 import ModifyLedgerModal from './modals/ModifyLedgerModal'
