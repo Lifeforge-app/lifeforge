@@ -13,9 +13,8 @@ import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Link } from 'react-router'
 import { usePersonalization } from 'shared'
+import type { WidgetConfig } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
 
 const getDatesBetween = (start: Dayjs, end: Dayjs): Dayjs[] => {
   if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {

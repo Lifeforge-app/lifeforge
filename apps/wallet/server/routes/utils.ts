@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
-import { z } from 'zod'
+import z from 'zod'
 
 const getTypesCount = forgeController
   .query()

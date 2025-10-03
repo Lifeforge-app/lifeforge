@@ -4,8 +4,8 @@ import dayjs from 'dayjs'
 import { Button, DashboardItem, WithQuery } from 'lifeforge-ui'
 import { useState } from 'react'
 import { Link } from 'react-router'
+import type { WidgetConfig } from 'shared'
 
-import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
 import MiniCalendarContent from '@apps/01.Productivity/calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@apps/01.Productivity/calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
 

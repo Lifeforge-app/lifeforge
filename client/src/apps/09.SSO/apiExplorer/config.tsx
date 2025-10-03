@@ -1,6 +1,5 @@
 import { lazy } from 'react'
-
-import type { ModuleConfig } from '../../../core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from 'shared'
 
 export default {
   name: 'API Explorer',

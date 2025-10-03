@@ -1,7 +1,7 @@
 import type {
   ModuleCategory,
   ModuleConfig
-} from './interfaces/routes_interfaces'
+} from 'shared'
 
 const ROUTES: ModuleCategory[] = await Promise.all(
   Object.entries(

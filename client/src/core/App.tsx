@@ -1,8 +1,7 @@
-import AuthProvider from '@providers/AuthProvider'
-import SocketProvider from '@providers/SocketProvider'
 import UserPersonalizationProvider from '@providers/UserPersonalizationProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ErrorScreen } from 'lifeforge-ui'
+import forgeAPI from '@utils/forgeAPI'
+import { ErrorScreen, useModalStore } from 'lifeforge-ui'
 import { APIOnlineStatusWrapper } from 'lifeforge-ui'
 import { NuqsAdapter } from 'nuqs/adapters/react'
 import { useEffect } from 'react'
@@ -12,14 +11,18 @@ import { ErrorBoundary } from 'react-error-boundary'
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
+  AuthProvider,
   BackgroundProvider,
+  type InferOutput,
   PersonalizationProvider,
   SidebarStateProvider,
+  SocketProvider,
   ToastProvider
 } from 'shared'
 
 import { MusicProvider } from '@apps/04.Storage/music/providers/MusicProvider'
 
+import TwoFAModal from './auth/modals/TwoFAModal'
 import './i18n'
 import './index.css'
 import AppRoutesProvider from './routes/providers/AppRoutesProvider'
@@ -27,7 +30,13 @@ import './utils/extendDayJs'
 
 const queryClient = new QueryClient()
 
+export type UserData = InferOutput<
+  typeof forgeAPI.user.auth.verifySessionToken
+>['userData']
+
 function App() {
+  const open = useModalStore(state => state.open)
+
   useEffect(() => {
     const preloader = document.querySelector('.preloader')
 
@@ -51,12 +60,17 @@ function App() {
                 <PersonalizationProvider>
                   <APIOnlineStatusProvider>
                     <APIOnlineStatusWrapper>
-                      <AuthProvider>
+                      <AuthProvider
+                        forgeAPI={forgeAPI}
+                        onTwoFAModalOpen={() => open(TwoFAModal, {})}
+                      >
                         <SidebarStateProvider>
                           <UserPersonalizationProvider>
                             <ToastProvider>
                               <BackgroundProvider>
-                                <SocketProvider>
+                                <SocketProvider
+                                  apiHost={import.meta.env.VITE_API_HOST}
+                                >
                                   <MusicProvider>
                                     <AppRoutesProvider />
                                   </MusicProvider>

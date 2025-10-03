@@ -1,6 +1,6 @@
 import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
-import { z } from 'zod'
+import z from 'zod'
 
 export interface TMDBSearchResult {
   adult: boolean

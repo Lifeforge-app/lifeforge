@@ -1,6 +1,6 @@
-import { useAuth } from '@providers/AuthProvider'
 import forgeAPI from '@utils/forgeAPI'
 import { WithMasterPassword, WithOTP } from 'lifeforge-ui'
+import { useAuth } from 'shared'
 
 import ContentContainer from './components/ContentContainer'
 

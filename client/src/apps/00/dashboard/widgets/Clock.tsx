@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
-
-import type WidgetConfig from '../typescript/widgetConfig.types'
+import type { WidgetConfig } from 'shared'
 
 function Clock() {
   const [time, setTime] = useState(dayjs().format('HH:mm'))

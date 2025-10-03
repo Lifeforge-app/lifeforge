@@ -3,8 +3,8 @@ import RootLayout from '@core/routes/components/RootLayout'
 import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
 import type { RouteObject } from 'react-router'
 import { Navigate } from 'react-router'
+import type { ModuleCategory } from 'shared'
 
-import type { ModuleCategory } from '../interfaces/routes_interfaces'
 import { shouldModuleBeEnabled } from './moduleFilters'
 import { createModuleRoute } from './routeBuilder'
 

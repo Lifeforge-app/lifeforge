@@ -5,7 +5,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import fs from 'fs'
 import moment from 'moment'
-import { z } from 'zod'
+import z from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
 import { Location } from '../../locations/typescript/location.types'

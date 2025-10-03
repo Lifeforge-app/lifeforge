@@ -231,7 +231,7 @@ function generateModuleSchemaContent(
     )
   }
 
-  return `import { z } from 'zod'
+  return `import z from 'zod'
 
 const ${_.camelCase(moduleName)}Schemas = {
 ${schemaEntries.join('\n')}

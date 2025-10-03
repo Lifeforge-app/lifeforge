@@ -37,9 +37,6 @@
       "@apps/*": [
         "./src/apps/*"
       ],
-      "@security/*": [
-        "./src/core/security/*"
-      ],
       "@core/*": [
         "./src/core/*"
       ],
@@ -57,7 +54,7 @@
   "include": [
     "./src/**/*",
     "./src/**/*.json",
-    "../apps/**/client/**/*"
+    "../shared/src/interfaces/widget_config.types.ts",
   ],
   "references": [
     {

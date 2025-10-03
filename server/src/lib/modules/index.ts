@@ -1,6 +1,6 @@
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import { z } from 'zod'
+import z from 'zod'
 
 const toggle = forgeController
   .mutation()

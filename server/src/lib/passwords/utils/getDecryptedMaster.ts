@@ -3,7 +3,7 @@ import { PBService } from '@functions/database'
 import { ClientError } from '@functions/routes/utils/response'
 import { SCHEMAS } from '@schema'
 import bcrypt from 'bcryptjs'
-import { z } from 'zod'
+import z from 'zod'
 
 export const getDecryptedMaster = async (
   pb: PBService,

@@ -5,8 +5,7 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { useSidebarState } from 'shared'
-
-import { useAuth } from '../../../providers/AuthProvider'
+import { useAuth } from 'shared'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()

@@ -4,9 +4,8 @@ import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { useSidebarState } from 'shared'
 import { usePersonalization } from 'shared'
+import { useAuth } from 'shared'
 import tinycolor from 'tinycolor2'
-
-import { useAuth } from '../../../providers/AuthProvider'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']

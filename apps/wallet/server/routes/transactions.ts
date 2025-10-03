@@ -1,12 +1,12 @@
 import parseOCR from '@functions/external/ocr'
 import { forgeController, forgeRouter } from '@functions/routes'
 import convertPDFToImage from '@functions/utils/convertPDFToImage'
+import { Location } from '@lib/locations/typescript/location.types'
 import { SCHEMAS } from '@schema'
 import fs from 'fs'
 import z from 'zod'
 
 import { getTransactionDetails } from '../utils/transactions'
-import { Location } from '@lib/locations/typescript/location.types'
 
 const list = forgeController
   .query()

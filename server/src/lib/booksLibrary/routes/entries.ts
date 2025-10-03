@@ -12,7 +12,7 @@ import moment from 'moment'
 import mailer from 'nodemailer'
 // @ts-expect-error - No types available
 import pdfPageCounter from 'pdf-page-counter'
-import { z } from 'zod'
+import z from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
 

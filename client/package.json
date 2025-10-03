@@ -82,7 +82,7 @@
     "tailwindcss": "^4.1.5",
     "three": "^0.167.1",
     "tinycolor2": "^1.6.0",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "zod": "^4.0.17",
     "zustand": "^5.0.8"
   },

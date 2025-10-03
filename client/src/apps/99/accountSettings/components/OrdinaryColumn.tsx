@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '../../../../core/providers/AuthProvider'
+import { useAuth } from 'shared'
 import ModifyModal from '../modals/ModifyModal'
 
 function OrdinaryColumn({

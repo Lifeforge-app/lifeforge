@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@utils/forgeAPI'
 import { ModalManager, WithQuery } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
+import { useAuth } from 'shared'
 
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
