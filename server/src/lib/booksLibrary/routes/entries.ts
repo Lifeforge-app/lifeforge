@@ -4,6 +4,7 @@ import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
+import convertPDFToImage from '@functions/utils/convertPDFToImage'
 import { EPub } from 'epub2'
 import { countWords } from 'epub-wordcount'
 import fs from 'fs'
@@ -14,7 +15,6 @@ import pdfPageCounter from 'pdf-page-counter'
 import { z } from 'zod'
 
 import { SCHEMAS } from '../../../core/schema'
-import { convertPDFToImage } from '../../wallet/utils/transactions'
 
 const list = forgeController
   .query()

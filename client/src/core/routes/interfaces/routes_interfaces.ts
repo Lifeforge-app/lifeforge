@@ -19,6 +19,7 @@ export interface ModuleConfig {
   }[]
   hidden?: boolean
   forceDisable?: boolean
+  category?: string
 }
 
 export interface ModuleCategory {

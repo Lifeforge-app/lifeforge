@@ -184,8 +184,7 @@ export default async function checkDB(): Promise<void> {
       }
 
       throw new DatabaseValidationError(
-        'Database validation failed due to unknown reasons',
-        []
+        'Database validation failed due to unknown reasons'
       )
     }
 

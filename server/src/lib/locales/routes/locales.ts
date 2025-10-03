@@ -3,12 +3,17 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import chalk from 'chalk'
 import fs from 'fs'
+import path from 'path'
 import { z } from 'zod'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 export const allApps = fs
-  .globSync(['../client/src/apps/*/*', '../apps/*'])
+  .globSync([
+    '../client/src/apps/*/*',
+    '../tools/*',
+    path.resolve(process.cwd(), '../apps/**/client')
+  ])
   .filter(e => fs.existsSync(`${e}/locales`))
 
 const getLocale = forgeController
@@ -30,7 +35,18 @@ const getLocale = forgeController
     let data
 
     if (namespace === 'apps') {
-      const target = allApps.find(e => e.split('/').pop() === subnamespace)
+      const target = allApps.find(e => {
+        const splitted = e.split('/')
+
+        if (
+          splitted[splitted.length - 1] === 'client' &&
+          splitted[splitted.length - 3] === 'apps'
+        ) {
+          return splitted[splitted.length - 2] === subnamespace
+        }
+
+        return e.split('/').pop() === subnamespace
+      })
 
       if (!target) {
         throw new ClientError(
@@ -69,8 +85,21 @@ const getLocale = forgeController
             fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
           )
 
+          const splitted = module.split('/')
+
+          let moduleName = ''
+
+          if (
+            splitted[splitted.length - 1] === 'client' &&
+            splitted[splitted.length - 3] === 'apps'
+          ) {
+            moduleName = splitted[splitted.length - 2]
+          } else {
+            moduleName = module.split('/').pop() || ''
+          }
+
           return [
-            module.replace('.json', '').split('/').pop(),
+            moduleName,
             {
               title: data.title ?? '',
               subsections: data.subsections ?? {}

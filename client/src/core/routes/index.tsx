@@ -1,4 +1,7 @@
-import type { ModuleCategory } from './interfaces/routes_interfaces'
+import type {
+  ModuleCategory,
+  ModuleConfig
+} from './interfaces/routes_interfaces'
 
 const ROUTES: ModuleCategory[] = await Promise.all(
   Object.entries(
@@ -23,6 +26,31 @@ const ROUTES: ModuleCategory[] = await Promise.all(
           )
         : []
     }))
+)
+
+const externalModules = import.meta.glob('../../../../apps/**/config.tsx')
+
+await Promise.all(
+  Object.entries(externalModules).map(async ([_, resolver]) => {
+    const mod = (await resolver()) as {
+      default: ModuleConfig & { category?: string }
+    }
+
+    const category = mod.default.category || '98.Miscellaneous'
+
+    const categoryIndex = ROUTES.findIndex(
+      cat => cat.title === category.split('.').slice(1).join('.')
+    )
+
+    if (categoryIndex > -1) {
+      ROUTES[categoryIndex].items.push(mod.default)
+    } else {
+      ROUTES.push({
+        title: category.split('.').slice(1).join('.'),
+        items: [mod.default]
+      })
+    }
+  })
 )
 
 export default ROUTES

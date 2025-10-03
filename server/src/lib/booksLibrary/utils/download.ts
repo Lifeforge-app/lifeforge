@@ -6,7 +6,7 @@ import fs from 'fs'
 // @ts-expect-error - No types available
 import pdfPageCounter from 'pdf-page-counter'
 import { Server } from 'socket.io'
-import { z } from 'zod'
+import z from 'zod'
 
 export const processDownloadedFiles = async (
   pb: PBService,
@@ -14,7 +14,7 @@ export const processDownloadedFiles = async (
   taskId: string,
   md5: string,
   metadata: Omit<
-    z.infer<typeof SCHEMAS.books_library.entries>,
+    z.infer<typeof SCHEMAS.books_library.entries.schema>,
     | 'thumbnail'
     | 'file'
     | 'is_favourite'

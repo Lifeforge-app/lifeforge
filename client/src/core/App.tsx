@@ -27,8 +27,6 @@ import './utils/extendDayJs'
 
 const queryClient = new QueryClient()
 
-console.log(import.meta.env)
-
 function App() {
   useEffect(() => {
     const preloader = document.querySelector('.preloader')
