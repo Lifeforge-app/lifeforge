@@ -1,13 +1,13 @@
 import { forgeRouter } from '@functions/routes'
 
 const appRoutes = forgeRouter({
-  achievements: (await import('@lib/achievements')).default,
+  achievements: (await import('@lib/achievements/server')).default,
   calendar: (await import('@lib/calendar')).default,
   todoList: (await import('@lib/todoList')).default,
   ideaBox: (await import('@lib/ideaBox')).default,
   'code-time': (await import('@lib/codeTime')).default,
   booksLibrary: (await import('@lib/booksLibrary')).default,
-  wallet: (await import('@lib/wallet')).default,
+  wallet: (await import('@lib/wallet/server')).default,
   wishlist: (await import('@lib/wishlist')).default,
   scoresLibrary: (await import('@lib/scoresLibrary')).default,
   passwords: (await import('@lib/passwords')).default,

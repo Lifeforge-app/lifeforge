@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
+import { useWalletStore } from '../../../stores/useWalletStore'
+import numberToCurrency from '../../../utils/numberToCurrency'
 
-import { useWalletStore } from '@apps/03.Finance/wallet/stores/useWalletStore'
-import numberToCurrency from '@apps/03.Finance/wallet/utils/numberToCurrency'
 
 function Amount({
   amount,

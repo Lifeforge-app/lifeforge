@@ -1,6 +1,5 @@
 import { PBService } from '@functions/database'
 import { fetchAI } from '@functions/external/ai'
-import { fromPath } from 'pdf2pic'
 import z from 'zod'
 
 export async function getTransactionDetails(OCRResult: string, pb: PBService) {
@@ -34,47 +33,4 @@ export async function getTransactionDetails(OCRResult: string, pb: PBService) {
   }
 
   return completion
-}
-
-export function convertPDFToImage(path: string): Promise<File | undefined> {
-  return new Promise((resolve, reject) => {
-    try {
-      const options = {
-        density: 200,
-        quality: 100,
-        saveFilename: 'receipt',
-        savePath: 'medium',
-        format: 'png',
-        width: 2000,
-        preserveAspectRatio: true
-      }
-
-      const convert = fromPath(path, options)
-
-      const pageToConvertAsImage = 1
-
-      convert(pageToConvertAsImage, { responseType: 'buffer' }).then(
-        responseBuffer => {
-          if (!responseBuffer.buffer) {
-            resolve(undefined)
-
-            return
-          }
-
-          const arrayBuffer = responseBuffer.buffer.slice(
-            responseBuffer.buffer.byteOffset,
-            responseBuffer.buffer.byteOffset + responseBuffer.buffer.byteLength
-          )
-
-          const thumbnailFile = new File([arrayBuffer], `receipt.png`, {
-            type: 'image/png'
-          })
-
-          resolve(thumbnailFile)
-        }
-      )
-    } catch (error) {
-      reject(error)
-    }
-  })
 }

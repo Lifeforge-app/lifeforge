@@ -1,4 +1,4 @@
-import type { ModuleConfig } from '@core/routes/interfaces/routes_interfaces'
+import type { ModuleConfig } from '@client/core/routes/interfaces/routes_interfaces'
 import { lazy } from 'react'
 
 export default {
@@ -7,5 +7,6 @@ export default {
   routes: {
     achievements: lazy(() => import('.'))
   },
-  togglable: true
+  togglable: true,
+  category: '02.Lifestyle'
 } satisfies ModuleConfig

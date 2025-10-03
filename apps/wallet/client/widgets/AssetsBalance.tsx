@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 
 import type WidgetConfig from '@apps/00/dashboard/typescript/widgetConfig.types'
-import { useWalletData } from '@apps/03.Finance/wallet/hooks/useWalletData'
+
+import { useWalletData } from '../hooks/useWalletData'
 import numberToCurrency from '../utils/numberToCurrency'
 
 export default function AssetsBalance() {

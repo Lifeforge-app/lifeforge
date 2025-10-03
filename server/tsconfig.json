@@ -18,6 +18,7 @@
     "declaration": true,
     "composite": true,
     "emitDeclarationOnly": true,
+    "rootDir": "../",
     "paths": {
       "@functions/*": [
         "./src/core/functions/*"
@@ -29,8 +30,13 @@
         "./src/core/schema"
       ],
       "@lib/*": [
-        "./src/lib/*"
+        "./src/lib/*",
+        "../apps/*"
       ],
-    }
-  }
+    },
+  },
+  "include": [
+    "./src/**/*",
+    "../apps/**/server/**/*"
+  ],
 }

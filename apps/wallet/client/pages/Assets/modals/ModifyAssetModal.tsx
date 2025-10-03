@@ -4,7 +4,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput } from 'shared'
 
-import type { WalletAsset } from '@apps/03.Finance/wallet/hooks/useWalletData'
+import type { WalletAsset } from '../../../hooks/useWalletData'
 
 function ModifyAssetModal({
   data: { type, initialData },

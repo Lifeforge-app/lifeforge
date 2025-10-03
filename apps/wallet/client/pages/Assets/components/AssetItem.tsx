@@ -12,8 +12,7 @@ import {
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
-import type { WalletAsset } from '@apps/03.Finance/wallet/hooks/useWalletData'
-
+import type { WalletAsset } from '../../../hooks/useWalletData'
 import BalanceChartModal from '../modals/BalanceChartModal'
 import ModifyAssetModal from '../modals/ModifyAssetModal'
 import Amount from './Amount'
