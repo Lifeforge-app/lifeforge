@@ -77,8 +77,6 @@ const todoListSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_T3w3dLGNcW` ON `todo_list__lists` (`name`)",
       ],
-      created: "2023-11-24 11:32:03.543Z",
-      updated: "2025-10-02 08:46:58.751Z",
       system: false,
     },
   },
@@ -128,8 +126,6 @@ const todoListSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_scwXEaym2g` ON `todo_list__tags` (`name`)",
       ],
-      created: "2024-02-02 02:07:28.054Z",
-      updated: "2025-10-02 08:46:58.767Z",
       system: false,
     },
   },
@@ -300,8 +296,6 @@ const todoListSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-02-02 03:39:29.183Z",
-      updated: "2025-10-02 08:46:58.780Z",
       system: false,
     },
   },
@@ -366,8 +360,6 @@ const todoListSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_IbjNIIyb5l` ON `todo_list__priorities` (`name`)",
       ],
-      created: "2024-09-21 23:07:57.508Z",
-      updated: "2025-10-02 08:46:58.796Z",
       system: false,
     },
   },
@@ -405,7 +397,7 @@ const todoListSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_E0ue",
+          id: "_clone_Wqd9",
           max: 0,
           min: 0,
           name: "name",
@@ -419,7 +411,7 @@ const todoListSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_8vDa",
+          id: "_clone_cSgJ",
           max: 0,
           min: 0,
           name: "color",
@@ -433,7 +425,7 @@ const todoListSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_IbVW",
+          id: "_clone_bFnP",
           max: 0,
           min: 0,
           name: "icon",
@@ -458,8 +450,6 @@ const todoListSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-04 22:07:36.060Z",
-      updated: "2025-10-02 08:46:58.809Z",
       system: false,
       viewQuery:
         'SELECT \n  todo_list__lists.id, \n  todo_list__lists.name,\n  todo_list__lists.color, \n  todo_list__lists.icon, \n  count(todo_list__lists.id) as amount \nFROM "todo_list__lists" \n  LEFT JOIN todo_list__entries ON todo_list__entries.list = todo_list__lists.id\nGROUP BY todo_list__lists.id',
@@ -497,7 +487,7 @@ const todoListSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_KkQ9",
+          id: "_clone_gjOr",
           max: 0,
           min: 0,
           name: "name",
@@ -522,8 +512,6 @@ const todoListSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-04 22:14:05.722Z",
-      updated: "2025-10-02 08:46:58.823Z",
       system: false,
       viewQuery:
         "WITH entry_tag_map AS (\n  SELECT\n    todo_list__entries.id AS entry_id,\n    json_each.value AS tag_id\n  FROM\n    todo_list__entries,\n    json_each(todo_list__entries.tags)\n)\nSELECT\n  todo_list__tags.id,\n  todo_list__tags.name,\n  COUNT(entry_tag_map.entry_id) AS amount\nFROM\n  todo_list__tags\nLEFT JOIN entry_tag_map\n  ON entry_tag_map.tag_id = todo_list__tags.id\nGROUP BY\n  todo_list__tags.id;",
@@ -562,7 +550,7 @@ const todoListSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_glbF",
+          id: "_clone_QObX",
           max: 0,
           min: 0,
           name: "name",
@@ -576,7 +564,7 @@ const todoListSchemas = {
         {
           autogeneratePattern: "",
           hidden: false,
-          id: "_clone_2NLR",
+          id: "_clone_5N6s",
           max: 0,
           min: 0,
           name: "color",
@@ -601,8 +589,6 @@ const todoListSchemas = {
         },
       ],
       indexes: [],
-      created: "2025-04-04 22:23:21.184Z",
-      updated: "2025-10-02 08:46:58.837Z",
       system: false,
       viewQuery:
         "SELECT \n  todo_list__priorities.id, \n  todo_list__priorities.name,\n  todo_list__priorities.color,\n  COUNT(todo_list__entries.id) as amount\nFROM todo_list__priorities\n  LEFT JOIN todo_list__entries ON todo_list__entries.priority = todo_list__priorities.id\nGROUP BY todo_list__priorities.id",

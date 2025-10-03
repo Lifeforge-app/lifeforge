@@ -423,8 +423,6 @@ const usersSchemas = {
         "CREATE UNIQUE INDEX `__pb_users_auth__email_idx` ON `users` (`email`) WHERE `email` != ''",
         "CREATE UNIQUE INDEX `__pb_users_auth__tokenKey_idx` ON `users` (`tokenKey`)",
       ],
-      created: "2023-11-24 04:44:33.243Z",
-      updated: "2025-10-02 08:46:58.859Z",
       system: false,
       authRule: "verified=true",
       manageRule: null,

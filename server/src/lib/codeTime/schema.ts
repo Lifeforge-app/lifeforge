@@ -60,8 +60,6 @@ const codeTimeSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_kcio2htIml` ON `code_time__projects` (`name`)",
       ],
-      created: "2023-11-26 08:40:32.005Z",
-      updated: "2025-10-02 08:46:58.016Z",
       system: false,
     },
   },
@@ -154,8 +152,6 @@ const codeTimeSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_saW8u2ur3M` ON `code_time__languages` (`name`)",
       ],
-      created: "2023-11-26 08:41:01.589Z",
-      updated: "2025-10-02 08:46:58.030Z",
       system: false,
     },
   },
@@ -272,8 +268,6 @@ const codeTimeSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_B0mAWvxXcb` ON `code_time__daily_entries` (`date`)",
       ],
-      created: "2024-06-19 08:56:35.343Z",
-      updated: "2025-10-02 08:46:58.046Z",
       system: false,
     },
   },

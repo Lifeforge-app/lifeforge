@@ -156,8 +156,6 @@ const journalSchemas = {
         },
       ],
       indexes: [],
-      created: "2024-05-13 09:22:21.275Z",
-      updated: "2025-10-02 08:46:58.625Z",
       system: false,
     },
   },

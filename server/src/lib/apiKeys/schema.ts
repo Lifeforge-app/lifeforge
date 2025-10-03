@@ -129,8 +129,6 @@ const apiKeysSchemas = {
       indexes: [
         "CREATE UNIQUE INDEX `idx_V6OVTl5FtN` ON `api_keys__entries` (`keyId`)",
       ],
-      created: "2024-09-18 01:52:14.812Z",
-      updated: "2025-10-02 08:46:58.223Z",
       system: false,
     },
   },

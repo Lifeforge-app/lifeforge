@@ -124,16 +124,20 @@ async function validateCollections(
       missingCollections.push(collection)
     }
 
-    const existingCollection = JSON.stringify(
-      allCollections.find(c => c.name === targetCollection)
+    const existingCollection = allCollections.find(
+      c => c.name === targetCollection
     )
 
-    const requiredSchema = JSON.stringify(
+    const requiredSchema =
       // @ts-expect-error: Lazy to fix :)
       SCHEMAS[collection.split('__')[0]][collection.split('__')[1]].raw
-    )
 
-    if (existingCollection !== requiredSchema) {
+    delete existingCollection?.updated
+    delete existingCollection?.created
+    delete requiredSchema?.updated
+    delete requiredSchema?.created
+
+    if (JSON.stringify(existingCollection) !== JSON.stringify(requiredSchema)) {
       collectionsWithDiscrepancies.push(collection)
     }
   }
