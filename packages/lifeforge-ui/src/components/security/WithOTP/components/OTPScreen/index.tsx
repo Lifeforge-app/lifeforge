@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { ForgeAPIClientController } from 'shared'
+import { encrypt } from 'shared'
 
-import { encrypt } from '../../../../../utils/encryption'
 import OTPInputBox from './components/OTPInputBox'
 import ResendOTPButton from './components/ResendOTPButton'
 

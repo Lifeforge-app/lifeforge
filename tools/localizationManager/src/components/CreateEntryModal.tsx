@@ -1,9 +1,8 @@
+import forgeAPI from '@/utils/forgeAPI'
 import { useMutation } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import React from 'react'
 import { toast } from 'react-toastify'
-
-import forgeAPI from '../utils/forgeAPI'
 
 function CreateEntryModal({
   onClose,
