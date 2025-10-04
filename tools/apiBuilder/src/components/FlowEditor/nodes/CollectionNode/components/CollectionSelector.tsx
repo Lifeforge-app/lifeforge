@@ -1,8 +1,8 @@
+import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useQuery } from '@tanstack/react-query'
 import { ModalHeader, WithQuery } from 'lifeforge-ui'
 
-import forgeAPI from '../../../../../utils/forgeAPI'
 import type { ICollectionNodeData } from '../types'
 
 function CollectionSelector({

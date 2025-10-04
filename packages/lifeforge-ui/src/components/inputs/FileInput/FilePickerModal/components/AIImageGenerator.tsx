@@ -1,9 +1,9 @@
+import forgeAPI from '@/utils/forgeAPI'
 import { Button } from '@components/buttons'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAPIEndpoint, usePromiseLoading } from 'shared'
 
-import forgeAPI from '../../../../../utils/forgeAPI'
 import TextAreaInput from '../../../TextAreaInput'
 
 function AIImageGenerator({

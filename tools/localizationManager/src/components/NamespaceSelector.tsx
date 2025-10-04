@@ -1,8 +1,7 @@
+import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import { ListboxInput, ListboxOption, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import forgeAPI from '../utils/forgeAPI'
 
 function NamespaceSelector({
   namespace,

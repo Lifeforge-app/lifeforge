@@ -1,3 +1,4 @@
+import forgeAPI from '@/utils/forgeAPI'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import {
@@ -9,7 +10,6 @@ import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAPIEndpoint, usePromiseLoading } from 'shared'
 
-import forgeAPI from '../../../../../../utils/forgeAPI'
 import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'
 import {
