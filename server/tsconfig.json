@@ -37,6 +37,22 @@
   },
   "include": [
     "./src/**/*",
-    "../apps/**/server/**/*"
+    "../apps/**/server/**/*",
+    "../apps/music/music",
+    "../apps/sinChewDaily/sinChewDaily",
+    "../apps/blog/blog",
+    "../apps/ideaBox/ideaBox",
+    "../apps/codeTime/codeTime",
+    "../apps/todoList/todoList",
+    "../apps/calendar/calendar",
+    "../apps/momentVault/momentVault",
+    "../apps/sudoku/sudoku",
+    "../apps/railwayMap/railwayMap",
+    "../apps/youtubeSummarizer/youtubeSummarizer",
+    "../apps/changiAirportFlightStatus/changiAirportFlightStatus",
+    "../apps/passwords/passwords",
+    "../apps/scoresLibrary/scoresLibrary",
+    "../apps/wishlist/wishlist",
+    "../journal"
   ],
 }
