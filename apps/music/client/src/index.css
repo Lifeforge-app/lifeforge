@@ -1,0 +1,42 @@
+@import 'tailwindcss' source ('.');
+
+@reference '../../../../node_modules/lifeforge-ui/dist';
+
+.music input[type='range'].main {
+  @apply accent-custom-500 from-custom-500 to-custom-500 appearance-none bg-linear-to-r bg-no-repeat;
+}
+
+.music input[type='range'].secondary {
+  @apply accent-bg-500 dark:accent-bg-100;
+}
+
+.music input[type='range']::-webkit-slider-thumb {
+  @apply h-0 w-0 appearance-none border-none;
+}
+
+.music input[type='range']::-moz-range-thumb {
+  @apply h-0 w-0 appearance-none border-none;
+}
+
+.music input[type='range']::-webkit-progress-value,
+.music input[type='range']::-moz-range-progress {
+  @apply h-full rounded-full;
+}
+
+.music input[type='range'].main::-webkit-progress-value,
+.music input[type='range'].main::-moz-range-progress {
+  @apply bg-custom-500! h-full appearance-none rounded-full;
+}
+
+.music input[type='range'].secondary::-webkit-progress-value,
+.music input[type='range'].secondary::-moz-range-progress {
+  @apply bg-bg-500 dark:bg-bg-100 h-full appearance-none rounded-full;
+}
+
+progress::-webkit-progress-value {
+  @apply bg-custom-500!;
+}
+
+progress::-moz-progress-bar {
+  @apply bg-custom-500!;
+}

@@ -28,17 +28,8 @@
     "composite": true,
     "rootDir": "../",
     "paths": {
-      "@providers/*": [
-        "./src/core/providers/*"
-      ],
-      "@utils/*": [
-        "./src/core/utils/*"
-      ],
-      "@apps/*": [
-        "./src/apps/*"
-      ],
-      "@core/*": [
-        "./src/core/*"
+      "@/*": [
+        "./src/*"
       ],
       "@server/*": [
         "../server/src/*"
@@ -53,8 +44,7 @@
   ],
   "include": [
     "./src/**/*",
-    "./src/**/*.json",
-    "../shared/src/interfaces/widget_config.types.ts",
+    "../shared/src/utils/encryption.ts",
   ],
   "references": [
     {

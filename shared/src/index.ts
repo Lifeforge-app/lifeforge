@@ -30,6 +30,10 @@ export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
 
 export { useAuth } from './providers/AuthProvider'
 
+export { default as forceDown } from './utils/forceDown'
+
+export { encrypt, decrypt } from './utils/encryption'
+
 export {
   createForgeAPIClient,
   ForgeAPIClientController

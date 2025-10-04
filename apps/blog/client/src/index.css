@@ -1,0 +1,77 @@
+@import 'tailwindcss' source ('.');
+
+@reference '../../../../node_modules/lifeforge-ui/dist';
+
+.ql-editor {
+  @apply max-h-[calc(100vh-16rem)]! min-h-0! overflow-auto!;
+}
+
+.ql-container.ql-snow {
+  @apply border-none;
+}
+
+.ql-container {
+  font-family: inherit !important;
+  @apply text-base!;
+}
+
+.ql-toolbar.ql-snow {
+  @apply component-bg-lighter shadow-custom rounded-md border-none p-4;
+}
+
+.ql-editor.ql-blank::before {
+  @apply text-bg-500;
+}
+
+.ql-editor * {
+  @apply select-text!;
+}
+
+.ql-toolbar {
+  & .ql-active,
+  & .ql-active * {
+    @apply text-custom-500!;
+
+    & .ql-fill {
+      @apply fill-custom-500!;
+    }
+
+    & .ql-stroke {
+      @apply stroke-custom-500!;
+    }
+  }
+
+  & button *,
+  & .ql-picker * {
+    @apply text-bg-500!;
+
+    & .ql-fill {
+      @apply fill-bg-500;
+    }
+
+    & .ql-stroke {
+      @apply stroke-bg-500;
+    }
+  }
+
+  & button:not(.ql-active):hover,
+  & .ql-picker:hover {
+    @apply text-bg-700! dark:text-bg-300!;
+
+    & .ql-fill {
+      @apply fill-bg-700 dark:fill-bg-300;
+    }
+
+    & .ql-stroke {
+      @apply stroke-bg-700 dark:stroke-bg-300;
+    }
+  }
+
+  & .ql-picker-options {
+    @apply bg-bg-50! dark:bg-bg-800! shadow-custom mt-2! rounded-md border-none! px-4!;
+  }
+
+  & .ql-picker-label {
+    @apply rounded-sm;
+  }
+}
