@@ -15,7 +15,8 @@ app.use(
     crossOriginResourcePolicy: {
       policy: 'cross-origin'
     },
-    xPoweredBy: false
+    xPoweredBy: false,
+    xXssProtection: false
   })
 )
 
@@ -35,13 +36,6 @@ app.use(morganMiddleware)
 
 // Rate limiting
 app.use(rateLimitingMiddleware)
-
-// Custom headers
-app.use((req, res, next) => {
-  app.disable('x-powered-by')
-  res.setHeader('X-Powered-By', 'LifeForge')
-  next()
-})
 
 app.use('/', router)
 
