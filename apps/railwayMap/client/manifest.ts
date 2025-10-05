@@ -8,6 +8,5 @@ export default {
   routes: {
     '': lazy(() => import('@'))
   },
-
   category: '06.Information'
 } satisfies ModuleConfig

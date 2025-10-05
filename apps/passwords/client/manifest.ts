@@ -7,6 +7,5 @@ export default {
   routes: {
     passwords: lazy(() => import('@'))
   },
-
   category: '05.Confidential'
 } satisfies ModuleConfig

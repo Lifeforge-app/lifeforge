@@ -7,7 +7,6 @@ export default {
   routes: {
     'youtube-summarizer': lazy(() => import('@'))
   },
-
   requiredAPIKeys: ['groq'],
   hasAI: true,
   category: '07.Utilities'

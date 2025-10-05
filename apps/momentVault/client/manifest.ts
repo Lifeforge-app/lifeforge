@@ -8,7 +8,6 @@ export default {
   routes: {
     'moment-vault': lazy(() => import('@'))
   },
-
   requiredAPIKeys: ['openai'],
   category: '02.Lifestyle'
 } satisfies ModuleConfig

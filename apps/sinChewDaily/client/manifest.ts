@@ -7,6 +7,5 @@ export default {
   routes: {
     'sin-chew-daily': lazy(() => import('@'))
   },
-
   category: '06.Information'
 } satisfies ModuleConfig
