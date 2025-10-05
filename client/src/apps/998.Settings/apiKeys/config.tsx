@@ -6,6 +6,5 @@ export default {
   icon: 'tabler:password',
   routes: {
     'api-keys': lazy(() => import('.'))
-  },
-  togglable: false
+  }
 } satisfies ModuleConfig
