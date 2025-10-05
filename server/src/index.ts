@@ -3,6 +3,7 @@ import { setupSocket } from '@functions/socketio/setupSocket'
 import checkDB from '@functions/utils/checkDB'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import dotenv from 'dotenv'
+import fs from 'fs'
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
@@ -17,6 +18,10 @@ if (!process.env.MASTER_KEY) {
     'Please provide MASTER_KEY in your environment variables.'
   )
   process.exit(1)
+}
+
+if (!fs.existsSync('./medium')) {
+  fs.mkdirSync('./medium')
 }
 
 await checkDB()

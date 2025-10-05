@@ -3,7 +3,7 @@ import { fetchAI } from '@functions/external/ai'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import fs from 'fs'
-import { z } from 'zod'
+import z from 'zod'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 import { allApps } from './locales'

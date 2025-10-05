@@ -6,7 +6,7 @@ import moment from 'moment'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
-import { z } from 'zod'
+import z from 'zod'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
@@ -144,7 +144,7 @@ const verifyAndEnable = forgeController
       }
 
       await pb.update
-        .collection('users__users')
+        .collection('user__users')
         .id(pb.instance.authStore.record!.id)
         .data({
           twoFASecret: encrypt(
@@ -169,7 +169,7 @@ const disable = forgeController
     }
 
     await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .data({
         twoFASecret: ''

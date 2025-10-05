@@ -5,8 +5,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { ForgeAPIClientController, usePromiseLoading } from 'shared'
-
-import { encrypt } from '../../../../utils/encryption'
+import { encrypt } from 'shared'
 
 function LockedScreen({
   challengeController,

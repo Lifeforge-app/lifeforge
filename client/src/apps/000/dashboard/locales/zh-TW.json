@@ -1,0 +1,127 @@
+{
+  "title": "儀表板",
+  "description": "您的任務控制中心，讓一切更精彩。",
+  "widgets": {
+    "quickActions": {
+      "title": "快捷操作",
+      "description": "快速存取您最常使用的功能。"
+    },
+    "miniCalendar": {
+      "title": "迷你行事曆",
+      "description": "在小型行事曆中查看即將到來的事件。"
+    },
+    "todaysEvent": {
+      "title": "今日事件",
+      "description": "提醒您今天的活動。",
+      "empty": {
+        "event": {
+          "title": "沒有事件",
+          "description": "您今天沒有任何活動。"
+        }
+      }
+    },
+    "todoList": {
+      "title": "待辦清單",
+      "description": "組織並追蹤您的任務。",
+      "empty": {
+        "today": {
+          "title": "今日沒有待辦事項",
+          "description": "您今天沒有任何待辦事項。"
+        }
+      }
+    },
+    "pomodoroTimer": {
+      "title": "番茄鐘計時器",
+      "description": "使用番茄工作法專注工作。"
+    },
+    "codeTime": {
+      "title": "編碼時間",
+      "description": "追蹤並視覺化您的編碼活動。",
+      "empty": {
+        "data": {
+          "title": "沒有數據",
+          "description": "沒有找到任何編碼活動。"
+        }
+      }
+    },
+    "ideaBox": {
+      "title": "靈感盒",
+      "description": "捕捉並整理您的隨機想法。"
+    },
+    "journal": {
+      "title": "日誌",
+      "description": "記錄您的想法和經歷。"
+    },
+    "flashCards": {
+      "title": "抽認卡",
+      "description": "可自訂的抽認卡組合。"
+    },
+    "bookshelf": {
+      "title": "書架",
+      "description": "管理並存取您的書籍。"
+    },
+    "achievements": {
+      "title": "成就",
+      "description": "追蹤並慶祝您的里程碑。"
+    },
+    "spotify": {
+      "title": "Spotify",
+      "description": "控制 Spotify 播放清單。"
+    },
+    "musicPlayer": {
+      "title": "音樂播放器",
+      "description": "播放您的個人音樂。",
+      "empty": {
+        "music": {
+          "title": "沒有音樂",
+          "description": "點擊下面的按鈕選擇想要播放的音樂。"
+        }
+      }
+    },
+    "incomeExpenses": {
+      "title": "收入與支出",
+      "description": "監控收入與支出。"
+    },
+    "assetsBalance": {
+      "title": "資產餘額",
+      "description": "追蹤資產餘額。"
+    },
+    "serverStatus": {
+      "title": "伺服器狀態",
+      "description": "監控伺服器效能。"
+    },
+    "storageStatus": {
+      "title": "儲存狀態",
+      "description": "檢查儲存空間使用情況。"
+    },
+    "date": {
+      "title": "日期",
+      "description": "一個簡單的裝飾性小工具，顯示今天的日期。"
+    },
+    "clock": {
+      "title": "時鐘",
+      "description": "一個小時鐘，幫助您不忘時間流逝。"
+    },
+    "quotes": {
+      "description": "一則隨機語錄，希望能激勵您度過一天。",
+      "title": "語錄"
+    }
+  },
+  "modals": {
+    "manageWidgets": "管理小部件"
+  },
+  "buttons": {
+    "manageCategories": "管理分類",
+    "unlockLayout": "解鎖佈局",
+    "manageWidgets": "管理小工具",
+    "lockLayout": "鎖定佈局"
+  },
+  "empty": {
+    "welcome": {
+      "title": "歡迎來到 LifeForge！",
+      "description": "在 ForgeStore 安裝一些模組並開始使用吧。"
+    }
+  },
+  "loading": "正在加載儀表板...",
+  "test": ""
+}

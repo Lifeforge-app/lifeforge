@@ -3,12 +3,17 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import chalk from 'chalk'
 import fs from 'fs'
-import { z } from 'zod'
+import path from 'path'
+import z from 'zod'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 export const allApps = fs
-  .globSync(['../client/src/apps/*/*', '../apps/*'])
+  .globSync([
+    '../client/src/apps/*/*',
+    '../tools/*',
+    path.resolve(process.cwd(), '../apps/**')
+  ])
   .filter(e => fs.existsSync(`${e}/locales`))
 
 const getLocale = forgeController
@@ -70,7 +75,7 @@ const getLocale = forgeController
           )
 
           return [
-            module.replace('.json', '').split('/').pop(),
+            module.split('/').pop() || '',
             {
               title: data.title ?? '',
               subsections: data.subsections ?? {}

@@ -1,8 +1,9 @@
 Generate TypeScript prop interface docstrings following this exact convention:
 
-**FORMAT**: Use single-line JSDoc `/** Description. */` 
+**FORMAT**: Use single-line JSDoc `/** Description. */`
 
 **PHRASING RULES**:
+
 - Boolean props: "Whether the [component] is [state/condition]."
 - Callback functions: "Callback function called when [event/condition]."
 - String/value props: "The [description] [additional context]."
@@ -15,6 +16,7 @@ Generate TypeScript prop interface docstrings following this exact convention:
 - Callbacks with changes: "Callback function called when the [property] changes."
 
 **SPECIAL PATTERNS**:
+
 - For defaults: "The [description]. Defaults to '[value]'."
 - For Tailwind CSS: "Additional CSS class names to apply to the [element]. Use `!` suffix for Tailwind CSS class overrides."
 - For i18n namespace: "The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details."
@@ -22,6 +24,7 @@ Generate TypeScript prop interface docstrings following this exact convention:
 - For tProps props: "Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details."
 
 **REQUIREMENTS**:
+
 - Start with capital letter, end with period
 - Be concise but descriptive
 - Use consistent terminology across similar props

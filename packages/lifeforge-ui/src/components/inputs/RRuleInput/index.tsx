@@ -139,7 +139,11 @@ function RRuleInput<HasDuration extends boolean = boolean>({
       <YearlyForm
         data={rruleParams.data as FreqSpecificParams['yearly']}
         setData={data =>
-          setRRuleParams({ freq: 'yearly', data, end: rruleParams.end })
+          setRRuleParams({
+            freq: 'yearly',
+            data,
+            end: rruleParams.end
+          })
         }
       />
     ),
@@ -147,7 +151,11 @@ function RRuleInput<HasDuration extends boolean = boolean>({
       <MonthlyForm
         data={rruleParams.data as FreqSpecificParams['monthly']}
         setData={data =>
-          setRRuleParams({ freq: 'monthly', data, end: rruleParams.end })
+          setRRuleParams({
+            freq: 'monthly',
+            data,
+            end: rruleParams.end
+          })
         }
       />
     ),
@@ -155,7 +163,11 @@ function RRuleInput<HasDuration extends boolean = boolean>({
       <WeeklyForm
         data={rruleParams.data as FreqSpecificParams['weekly']}
         setData={data =>
-          setRRuleParams({ freq: 'weekly', data, end: rruleParams.end })
+          setRRuleParams({
+            freq: 'weekly',
+            data,
+            end: rruleParams.end
+          })
         }
       />
     ),
@@ -163,7 +175,11 @@ function RRuleInput<HasDuration extends boolean = boolean>({
       <DailyForm
         data={rruleParams.data as FreqSpecificParams['daily']}
         setData={data =>
-          setRRuleParams({ freq: 'daily', data, end: rruleParams.end })
+          setRRuleParams({
+            freq: 'daily',
+            data,
+            end: rruleParams.end
+          })
         }
       />
     ),
@@ -171,7 +187,11 @@ function RRuleInput<HasDuration extends boolean = boolean>({
       <HourlyForm
         data={rruleParams.data as FreqSpecificParams['hourly']}
         setData={data =>
-          setRRuleParams({ freq: 'hourly', data, end: rruleParams.end })
+          setRRuleParams({
+            freq: 'hourly',
+            data,
+            end: rruleParams.end
+          })
         }
       />
     )

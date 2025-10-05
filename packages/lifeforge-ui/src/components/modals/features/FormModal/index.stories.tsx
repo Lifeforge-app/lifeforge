@@ -1,7 +1,7 @@
 import { Button } from '@components/buttons'
 import { useModalStore } from '@components/modals/core/useModalStore'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { z } from 'zod'
+import z from 'zod'
 
 import defineForm from './formBuilder'
 import Index from './index'
@@ -158,7 +158,11 @@ const MyFormModal = ({ onClose }: { onClose: () => void }) => {
               ]
             : []),
           { text: 'Star', value: 'tabler:star', icon: 'tabler:star' },
-          { text: 'Check', value: 'tabler:check', icon: 'tabler:check' },
+          {
+            text: 'Check',
+            value: 'tabler:check',
+            icon: 'tabler:check'
+          },
           { text: 'X', value: 'tabler:x', icon: 'tabler:x' }
         ]
       },

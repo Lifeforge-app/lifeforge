@@ -84,11 +84,14 @@ function ComboboxInput<T>({
     }
   }, [])
 
-  const handleChange = useCallback((value: T | null) => {
-    if (value !== null) {
-      setValue(value)
-    }
-  }, [setValue])
+  const handleChange = useCallback(
+    (value: T | null) => {
+      if (value !== null) {
+        setValue(value)
+      }
+    },
+    [setValue]
+  )
 
   return (
     <ComboboxInputWrapper
