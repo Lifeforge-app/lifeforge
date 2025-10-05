@@ -7,6 +7,5 @@ export default {
   routes: {
     sudoku: lazy(() => import('@'))
   },
-
   category: '07.Utilities'
 } satisfies ModuleConfig
