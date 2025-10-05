@@ -117,9 +117,9 @@
     "lockLayout": "Kunci Susun Atur"
   },
   "empty": {
-    "widget": {
-      "title": "Tiada Widget Diaktifkan",
-      "description": "Anda boleh menambah widget dari menu 'Urus Widget'."
+    "welcome": {
+      "title": "Selamat Datang ke LifeForge!",
+      "description": "Mulakan dengan memasang beberapa modul dari ForgeStore."
     }
   },
   "loading": "Memuatkan papan pemuka...",
