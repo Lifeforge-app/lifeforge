@@ -86,7 +86,9 @@ function Header({
             if (data.status === 'completed') {
               toast.done(toastId.current!)
               toastId.current = null
-              queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+              queryClient.invalidateQueries({
+                queryKey: ['scoresLibrary']
+              })
             }
           }
         )

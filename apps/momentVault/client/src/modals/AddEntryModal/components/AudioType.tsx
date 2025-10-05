@@ -56,11 +56,15 @@ function AudioType({
     setCurrentTime(0)
     setTotalTime(0)
 
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    })
 
     streamRef.current = stream
 
-    const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' })
+    const mediaRecorder = new MediaRecorder(stream, {
+      mimeType: 'audio/webm'
+    })
 
     mediaRecorderRef.current = mediaRecorder
     audioChunksRef.current = []

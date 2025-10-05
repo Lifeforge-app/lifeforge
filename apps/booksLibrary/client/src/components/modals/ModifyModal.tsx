@@ -26,7 +26,9 @@ function ModifyModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['booksLibrary', stuff] })
+        queryClient.invalidateQueries({
+          queryKey: ['booksLibrary', stuff]
+        })
       },
       onError: () => {
         toast.error(`Failed to ${type} ${_.camelCase(stuff)}`)

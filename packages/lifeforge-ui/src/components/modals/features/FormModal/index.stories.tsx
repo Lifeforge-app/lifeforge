@@ -158,7 +158,11 @@ const MyFormModal = ({ onClose }: { onClose: () => void }) => {
               ]
             : []),
           { text: 'Star', value: 'tabler:star', icon: 'tabler:star' },
-          { text: 'Check', value: 'tabler:check', icon: 'tabler:check' },
+          {
+            text: 'Check',
+            value: 'tabler:check',
+            icon: 'tabler:check'
+          },
           { text: 'X', value: 'tabler:x', icon: 'tabler:x' }
         ]
       },

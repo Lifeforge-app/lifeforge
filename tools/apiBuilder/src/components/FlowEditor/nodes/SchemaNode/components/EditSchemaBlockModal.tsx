@@ -48,7 +48,10 @@ export default function EditSchemaNodeModal({
     }))
 
   const removeField = (i: number) =>
-    setDraft(p => ({ ...p, fields: p.fields.filter((_, idx) => idx !== i) }))
+    setDraft(p => ({
+      ...p,
+      fields: p.fields.filter((_, idx) => idx !== i)
+    }))
 
   const save = () => {
     onSave(draft)

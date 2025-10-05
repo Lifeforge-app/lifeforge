@@ -106,7 +106,9 @@ function ManageTemplatesModal({
                                 type: 'create'
                               })
                             },
-                            tProps: { item: t('items.template') }
+                            tProps: {
+                              item: t('items.template')
+                            }
                           }}
                           icon="tabler:template-off"
                           name="templates"

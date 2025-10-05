@@ -50,7 +50,9 @@ function DnDContainer({
       if (imageItem) {
         const blob = await imageItem.getType('image/png')
 
-        const file = new File([blob], 'pasted-image.png', { type: 'image/png' })
+        const file = new File([blob], 'pasted-image.png', {
+          type: 'image/png'
+        })
 
         setFile(file)
         setPreview(URL.createObjectURL(file))

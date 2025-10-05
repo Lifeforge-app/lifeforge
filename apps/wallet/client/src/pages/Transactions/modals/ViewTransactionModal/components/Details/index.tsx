@@ -127,7 +127,9 @@ function Details({ transaction }: { transaction: WalletTransaction }) {
                       <Icon
                         className="size-5"
                         icon={ledgerItem.icon}
-                        style={{ color: ledgerItem.color }}
+                        style={{
+                          color: ledgerItem.color
+                        }}
                       />
                       {ledgerItem.name}
                     </li>

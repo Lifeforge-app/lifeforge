@@ -37,7 +37,9 @@ function ModifyTemplatesModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'templates'] })
+        queryClient.invalidateQueries({
+          queryKey: ['wallet', 'templates']
+        })
       },
       onError: error => {
         toast.error(`Failed to ${type} template: ${error.message}`)

@@ -5,6 +5,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
 import convertPDFToImage from '@functions/utils/convertPDFToImage'
+import { SCHEMAS } from '@schema'
 import { EPub } from 'epub2'
 import { countWords } from 'epub-wordcount'
 import fs from 'fs'
@@ -13,8 +14,6 @@ import mailer from 'nodemailer'
 // @ts-expect-error - No types available
 import pdfPageCounter from 'pdf-page-counter'
 import z from 'zod'
-
-import { SCHEMAS } from '@schema'
 
 const list = forgeController
   .query()

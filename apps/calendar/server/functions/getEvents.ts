@@ -211,7 +211,11 @@ export default async function getEvents({
     await pb.getFullList
       .collection('movies__entries')
       .filter([
-        { field: 'theatre_showtime', operator: '>=', value: startMoment },
+        {
+          field: 'theatre_showtime',
+          operator: '>=',
+          value: startMoment
+        },
         { field: 'theatre_showtime', operator: '<=', value: endMoment }
       ])
       .execute()

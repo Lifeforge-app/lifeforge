@@ -36,7 +36,10 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
       .mutationOptions({
         onSuccess: () => {
           setTimeout(
-            () => queryClient.invalidateQueries({ queryKey: ['wishlist'] }),
+            () =>
+              queryClient.invalidateQueries({
+                queryKey: ['wishlist']
+              }),
             500
           )
         },
