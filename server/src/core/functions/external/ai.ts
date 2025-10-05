@@ -5,7 +5,7 @@ import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
 import OpenAI from 'openai'
 import { ChatCompletionMessageParam as OpenAIChatCompletionMessageParam } from 'openai/resources/index.mjs'
-import { z } from 'zod'
+import z from 'zod'
 
 export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
   pb: PBService

@@ -1,0 +1,25 @@
+{
+  "title": "備份",
+  "description": "管理您的資料庫備份。",
+  "items": {
+    "backup": "備份"
+  },
+  "empty": {
+    "noBackups": {
+      "title": "未找到備份",
+      "description": "沒有可用的備份。請使用上方的按鈕創建新的備份。"
+    }
+  },
+  "modals": {
+    "createBackup": "初始化新備份"
+  },
+  "inputs": {
+    "backupName": {
+      "label": "備份名稱（必須以 .zip 結尾）",
+      "placeholder": "輸入備份名稱（留空以自動生成）"
+    }
+  },
+  "buttons": {
+    "startBackup": "開始備份"
+  }
+}

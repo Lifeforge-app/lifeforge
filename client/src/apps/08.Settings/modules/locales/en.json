@@ -1,7 +1,0 @@
-{
-  "title": "Modules",
-  "description": "Customize your system by enabling or disabling modules.",
-  "buttons": {
-    "install": "Install Module"
-  }
-}

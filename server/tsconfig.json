@@ -18,19 +18,32 @@
     "declaration": true,
     "composite": true,
     "emitDeclarationOnly": true,
+    "rootDir": "../",
     "paths": {
-      "@functions/*": [
-        "./src/core/functions/*"
-      ],
-      "@middlewares/*": [
-        "./src/core/middlewares/*"
-      ],
-      "@schema": [
-        "./src/core/schema"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
+      "@functions/*": ["./src/core/functions/*"],
+      "@middlewares/*": ["./src/core/middlewares/*"],
+      "@schema": ["./src/core/schema"],
+      "@lib/*": ["./src/lib/*", "../apps/*"]
     }
-  }
+  },
+  "include": [
+    "./src/**/*",
+    "../apps/**/server/**/*",
+    "../apps/music/music",
+    "../apps/sinChewDaily/sinChewDaily",
+    "../apps/blog/blog",
+    "../apps/ideaBox/ideaBox",
+    "../apps/codeTime/codeTime",
+    "../apps/todoList/todoList",
+    "../apps/calendar/calendar",
+    "../apps/momentVault/momentVault",
+    "../apps/sudoku/sudoku",
+    "../apps/railwayMap/railwayMap",
+    "../apps/youtubeSummarizer/youtubeSummarizer",
+    "../apps/changiAirportFlightStatus/changiAirportFlightStatus",
+    "../apps/passwords/passwords",
+    "../apps/scoresLibrary/scoresLibrary",
+    "../apps/wishlist/wishlist",
+    "../journal"
+  ]
 }

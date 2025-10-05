@@ -31,7 +31,10 @@ function YearlyForm({
           formId={`yearly.${form.id}`}
           selected={data.type === form.id}
           onSelect={() => {
-            setData({ ...data, type: form.id as 'exactDate' | 'relativeDay' })
+            setData({
+              ...data,
+              type: form.id as 'exactDate' | 'relativeDay'
+            })
           }}
         >
           {form.component}

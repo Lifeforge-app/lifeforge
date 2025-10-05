@@ -55,7 +55,7 @@ export class Delete<TCollectionKey extends CollectionKey>
     }
 
     const result = await this._pb
-      .collection((this.collectionKey as string).replace(/^users__/, ''))
+      .collection((this.collectionKey as string).replace(/^user__/, ''))
       .delete(this._recordId)
 
     LoggingService.debug(

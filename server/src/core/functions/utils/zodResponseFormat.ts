@@ -12,7 +12,7 @@ import type {
 } from 'openai/lib/parser'
 import type { ResponseFormatJSONSchema } from 'openai/resources'
 import type { ResponseFormatTextJSONSchemaConfig } from 'openai/resources/responses/responses'
-import { z } from 'zod'
+import z from 'zod'
 
 export function zodResponseFormat<ZodInput extends z.ZodType>(
   zodObject: ZodInput,

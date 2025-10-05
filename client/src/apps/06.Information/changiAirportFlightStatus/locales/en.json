@@ -1,7 +1,0 @@
-{
-  "title": "Changi Airport Flight Status",
-  "description": "Get to know the latest flight information at Changi Airport",
-  "items": {
-    "flight": "Flight"
-  }
-}

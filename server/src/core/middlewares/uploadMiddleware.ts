@@ -45,7 +45,10 @@ const fieldsUploadMiddleware =
   (fields: Record<string, number>) =>
   (req: Request, res: Response, next: NextFunction) => {
     upload.fields(
-      Object.entries(fields).map(([name, maxCount]) => ({ name, maxCount }))
+      Object.entries(fields).map(([name, maxCount]) => ({
+        name,
+        maxCount
+      }))
     )(req, res, () => {
       next()
     })

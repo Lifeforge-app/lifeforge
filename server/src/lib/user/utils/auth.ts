@@ -2,7 +2,7 @@ import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_servic
 import COLLECTION_SCHEMAS from '@schema'
 import _ from 'lodash'
 import Pocketbase from 'pocketbase'
-import { z } from 'zod'
+import z from 'zod'
 
 export function removeSensitiveData(userData: Record<string, any>) {
   const newUserData = _.cloneDeep(userData)
@@ -22,7 +22,7 @@ export function removeSensitiveData(userData: Record<string, any>) {
 
   return newUserData as SchemaWithPB<
     Omit<
-      z.infer<(typeof COLLECTION_SCHEMAS)['users__users']>,
+      z.infer<(typeof COLLECTION_SCHEMAS)['user__users']>,
       | 'masterPasswordHash'
       | 'journalMasterPasswordHash'
       | 'APIKeysMasterPasswordHash'

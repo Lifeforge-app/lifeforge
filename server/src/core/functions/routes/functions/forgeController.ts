@@ -35,7 +35,7 @@ import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import { Tool } from 'ai'
 import type { Request, Response, Router } from 'express'
-import { z } from 'zod'
+import z from 'zod'
 
 import {
   BaseResponse,
@@ -169,7 +169,10 @@ export class ForgeControllerBuilder<
 
     builder._method = this._method as NewMethod
     builder._middlewares = [...this._middlewares]
-    builder._schema = { ...this._schema, ...overrides } as unknown as NewInput
+    builder._schema = {
+      ...this._schema,
+      ...overrides
+    } as unknown as NewInput
     builder._media = media as NewMedia
     builder._statusCode = this._statusCode
     builder._existenceCheck = this._existenceCheck

@@ -3,7 +3,7 @@ import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import flattenRoutes from '@functions/routes/utils/flattenRoutes'
 import { convertToModelMessages, stepCountIs, streamText } from 'ai'
-import { z } from 'zod'
+import z from 'zod'
 
 // Factory function to create the controller with routes dependency injection
 export const createForgeAgentRouter = (appRoutes: Record<string, unknown>) => {

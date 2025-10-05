@@ -121,7 +121,7 @@ export class Create<
     }
 
     const result = await this._pb
-      .collection((this.collectionKey as string).replace(/^users__/, ''))
+      .collection((this.collectionKey as string).replace(/^user__/, ''))
       .create(this._data, {
         expand: this._expand,
         fields: this._fields,

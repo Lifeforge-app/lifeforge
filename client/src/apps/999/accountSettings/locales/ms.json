@@ -1,0 +1,67 @@
+{
+  "title": "Tetapan Akaun",
+  "description": "Tempat untuk mengurus semua butiran akaun anda",
+  "settings": {
+    "title": {
+      "profilePicture": "Gambar Profil",
+      "username": "Nama Pengguna",
+      "displayName": "Nama Paparan",
+      "email": "Alamat Emel",
+      "password": "Kata Laluan",
+      "dateOfBirth": "Tarikh Lahir",
+      "twoFA": "Pengesahan Dua Faktor"
+    },
+    "desc": {
+      "profilePicture": "Muat naik gambar profil untuk memperibadikan akaun anda.",
+      "username": "Nama yang mengenal pasti anda di platform.",
+      "displayName": "Nama yang dipaparkan kepada pengguna lain.",
+      "email": "Alamat emel yang anda gunakan untuk log masuk ke akaun anda.",
+      "password": "Tetapkan kata laluan yang kuat untuk melindungi akaun anda.",
+      "dateOfBirth": "Tetapkan tarikh lahir anda, dan kami akan memberi anda kejutan!",
+      "twoFA": "Aktifkan pengesahan dua faktor semasa masuk ke dalam sistem."
+    },
+    "empty": "Tidak Ditentukan"
+  },
+  "modals": {
+    "username": {
+      "update": "Kemas Kini Nama Pengguna"
+    },
+    "email": {
+      "update": "Kemas Kini Emel"
+    },
+    "displayName": {
+      "update": "Kemas Kini Nama Paparan"
+    },
+    "dateOfBirth": {
+      "update": "Kemas Kini Tarikh Lahir"
+    },
+    "enable2FA": {
+      "title": "Laa Pengesahan Dua Faktor",
+      "description": "Sila imbas kod QR di bawah dengan aplikasi pengesahan yang anda pilih, seperti Google Authenticator, dan tekan lanjut.",
+      "confirmationDescription": "Sila masukkan OTP yang ditunjukkan dalam aplikasi pengesah anda untuk mengesahkan pengaktifan 2FA."
+    },
+    "disable2FA": {
+      "title": "Nyahaktifkan Pengesahan Dua Faktor",
+      "description": "Adakah anda pasti mahu menyahaktifkan pengesahan dua faktor?"
+    }
+  },
+  "buttons": {
+    "changePassword": "Tukar Kata Laluan"
+  },
+  "inputs": {
+    "dateOfBirth": "Tarikh Lahir",
+    "username": "Nama Pengguna",
+    "email": "Alamat Emel",
+    "displayName": "Nama Paparan"
+  },
+  "messages": {
+    "twoFA": {
+      "enableSuccess": "Pengesahan dua faktor berjaya diaktifkan.",
+      "disableSuccess": "Pengesahan dua faktor berjaya dilumpuhkan."
+    }
+  },
+  "misc": {
+    "enabled": "Diaktifkan",
+    "disabled": "Dinonaktifkan"
+  }
+}

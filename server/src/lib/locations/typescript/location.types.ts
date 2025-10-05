@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import z from 'zod'
 
 const Location = z.object({
   name: z.string(),

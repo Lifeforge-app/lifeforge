@@ -1,3 +1,4 @@
+import forgeAPI from '@/utils/forgeAPI'
 import { ComboboxInput, ComboboxOption } from '@components/inputs'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
@@ -6,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAPIEndpoint } from 'shared'
 
-import forgeAPI from '../../utils/forgeAPI'
 import { Tooltip } from '../utilities'
 import useInputLabel from './shared/hooks/useInputLabel'
 
