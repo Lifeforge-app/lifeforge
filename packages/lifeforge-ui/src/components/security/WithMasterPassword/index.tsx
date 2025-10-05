@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import type { ForgeAPIClientController } from 'shared'
 
 import CreatePasswordScreen from './components/CreatePasswordScreen'
 import LockedScreen from './components/LockedScreen'
-import type { ForgeAPIClientController } from 'shared'
 
 function WithMasterPassword({
   controllers,

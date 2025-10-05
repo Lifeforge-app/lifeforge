@@ -52,9 +52,9 @@ const m =
             chalk.hex(color).bold(method),
             `${url.pathname.split('/').slice(0, -1).join('/')}/${chalk
               .hex('#afed3c')
-              .bold(url.pathname.split('/').pop() || '')}${chalk.hex('#828282')(
-              url.search
-            )}`,
+              .bold(
+                url.pathname.split('/').pop() || ''
+              )}${chalk.hex('#828282')(url.search)}`,
             chalk.hex(statusColor).bold(tokens.status(req, res)),
             chalk
               .hex(responseTimeColor)

@@ -9,7 +9,7 @@ function EventItemButton({
   title,
   color,
   icon,
-  isStrikethrough,
+  isStrikethrough
 }: {
   id: string
   title: string

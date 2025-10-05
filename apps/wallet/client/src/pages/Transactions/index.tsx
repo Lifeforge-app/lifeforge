@@ -125,7 +125,9 @@ function Transactions() {
                 <Button
                   className="hidden md:flex"
                   icon="tabler:plus"
-                  tProps={{ item: t('apps.wallet:items.transaction') }}
+                  tProps={{
+                    item: t('apps.wallet:items.transaction')
+                  }}
                   onClick={() => {}}
                 >
                   new
@@ -182,7 +184,9 @@ function Transactions() {
                       children: 'new',
                       icon: 'tabler:plus',
                       onClick: handleCreateTransaction,
-                      tProps: { item: t('items.transaction') }
+                      tProps: {
+                        item: t('items.transaction')
+                      }
                     }}
                     icon="tabler:wallet-off"
                     name="transactions"

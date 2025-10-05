@@ -172,8 +172,9 @@ function AnnasModal({ onClose }: { onClose: () => void }) {
                     </span>
                   </p>
                   <p className="text-bg-500 text-sm font-light">
-                    {data.total} result{data.total !== 1 ? 's' : ''} found on
-                    page {currentPage} of {data.totalPages}
+                    {data.total} result
+                    {data.total !== 1 ? 's' : ''} found on page {currentPage} of{' '}
+                    {data.totalPages}
                   </p>
                 </div>
                 <Pagination

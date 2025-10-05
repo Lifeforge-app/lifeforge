@@ -25,7 +25,9 @@ function ModifyAssetModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
+        queryClient.invalidateQueries({
+          queryKey: ['wallet', 'assets']
+        })
       },
       onError: error => {
         toast.error(

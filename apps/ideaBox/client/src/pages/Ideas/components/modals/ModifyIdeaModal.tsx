@@ -84,8 +84,16 @@ function ModifyIdeaModal({
             text: t('entryType.text'),
             icon: 'tabler:text-size'
           },
-          { value: 'link', text: t('entryType.link'), icon: 'tabler:link' },
-          { value: 'image', text: t('entryType.image'), icon: 'tabler:photo' }
+          {
+            value: 'link',
+            text: t('entryType.link'),
+            icon: 'tabler:link'
+          },
+          {
+            value: 'image',
+            text: t('entryType.image'),
+            icon: 'tabler:photo'
+          }
         ],
         disabled: type === 'update'
       },

@@ -33,7 +33,9 @@ function CategoryItem({ category }: { category: WalletCategory }) {
       .input({ id: category.id })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
+          queryClient.invalidateQueries({
+            queryKey: ['wallet', 'categories']
+          })
         },
         onError: () => {
           toast.error('Failed to delete category')

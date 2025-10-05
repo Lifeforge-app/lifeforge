@@ -39,7 +39,10 @@ function EventDetailsHeader({
       .mutationOptions({
         onSuccess: () => {
           queryClient.setQueryData(
-            forgeAPI.calendar.events.getByDateRange.input({ start, end }).key,
+            forgeAPI.calendar.events.getByDateRange.input({
+              start,
+              end
+            }).key,
             (oldData: CalendarEvent[]) => {
               return oldData.filter(item => item.id !== event.id)
             }

@@ -1,5 +1,5 @@
-import Code from "../../components/Code";
-import Note from "../../components/Note";
+import Code from '../../components/Code'
+import Note from '../../components/Note'
 
 ###### Forms
 
@@ -7,8 +7,12 @@ import Note from "../../components/Note";
 
 Rather than relying on third-party form libraries like <code>Formik</code>, <code>React Hook Form</code>, or <code>TanStack Form</code>, LifeForge implements a custom solution tailored to its specific needs. While this approach trades some flexibility for consistency, it delivers a unified and streamlined form handling experience throughout the ecosystem.
 
-<div className="flex-center w-full mt-12">
-    <img src="/assets/developer-forms/form.png" alt="" className="w-full rounded-lg" />
+<div className="flex-center mt-12 w-full">
+  <img
+    src="/assets/developer-forms/form.png"
+    alt=""
+    className="w-full rounded-lg"
+  />
 </div>
 
 ---
@@ -16,15 +20,16 @@ Rather than relying on third-party form libraries like <code>Formik</code>, <cod
 <section id="motivation">
   ## Motivation
 
-  > Why don't you just use a form library?
+> Why don't you just use a form library?
 
-  Third-party form libraries undeniably offer extensive out-of-the-box functionality that meets industry standards. For most applications requiring form handling, these libraries are the recommended choice. However, they often introduce overhead and complexity that doesn't align with LifeForge's specific requirements, and their opinionated design philosophies sometimes conflict with the project's vision.
+Third-party form libraries undeniably offer extensive out-of-the-box functionality that meets industry standards. For most applications requiring form handling, these libraries are the recommended choice. However, they often introduce overhead and complexity that doesn't align with LifeForge's specific requirements, and their opinionated design philosophies sometimes conflict with the project's vision.
 
-  This realization came after building LifeForge's form system and subsequently exploring popular React form solutions. While the custom system was already serving its purpose well, I investigated other approaches to gather insights and identify beneficial patterns for potential improvements.
+This realization came after building LifeForge's form system and subsequently exploring popular React form solutions. While the custom system was already serving its purpose well, I investigated other approaches to gather insights and identify beneficial patterns for potential improvements.
 
-  There was a moment when switching to an established form library seemed appealing, but ultimately, the existing implementation proved both effective and well-suited to the project's needs. Introducing additional complexity felt unnecessary.
+There was a moment when switching to an established form library seemed appealing, but ultimately, the existing implementation proved both effective and well-suited to the project's needs. Introducing additional complexity felt unnecessary.
 
-  **Since LifeForge requires forms specifically for its own ecosystem rather than a general-purpose solution, a tailored approach delivers greater value than adopting a generic library.**
+**Since LifeForge requires forms specifically for its own ecosystem rather than a general-purpose solution, a tailored approach delivers greater value than adopting a generic library.**
+
 </section>
 
 <section id="gist">
@@ -105,6 +110,7 @@ Rather than relying on third-party form libraries like <code>Formik</code>, <cod
     Similarly, subsequent method options are constrained by values from previous methods or the form's generic type definition, ensuring type safety throughout the configuration process.
 
     In the <code>onSubmit</code> method, the <code>formData</code> parameter is guaranteed to be type-safe and aligned with the data structure defined in <code>defineForm</code>. This ensures confidence that submitted data is always valid and correctly formatted.
+
 </section>
 
 <section id="design-philosophy">
@@ -116,11 +122,11 @@ Rather than relying on third-party form libraries like <code>Formik</code>, <cod
   
   Here's the design philosophy behind LifeForge's form system:
 
-  ### Abstraction over Repetition
+### Abstraction over Repetition
 
-  Consider the verbose approach required by libraries like <code>@tanstack/form</code>, where each field demands repetitive boilerplate:
+Consider the verbose approach required by libraries like <code>@tanstack/form</code>, where each field demands repetitive boilerplate:
 
-  <Code language="tsx">
+<Code language="tsx">
   {`<form.Field
     {...otherProps}
     children={(field) => {
@@ -140,53 +146,51 @@ Rather than relying on third-party form libraries like <code>Formik</code>, <cod
         )
     }}
 />`}
-  </Code>
+</Code>
 
-  The documentation includes this telling comment:
-  
-  > "Avoid hasty abstractions. Render props are great!"
-  
-  While this approach works for applications with minimal form requirements, **projects like LifeForge—which are fundamentally built around forms—find this pattern verbose, repetitive, and difficult to maintain at scale.**
+The documentation includes this telling comment:
 
-  The solution: create a declarative system that eliminates repetition while enabling form field reusability across different contexts.
+> "Avoid hasty abstractions. Render props are great!"
 
-  ### Absolute Type Safety
+While this approach works for applications with minimal form requirements, **projects like LifeForge—which are fundamentally built around forms—find this pattern verbose, repetitive, and difficult to maintain at scale.**
 
-  Anyone who has worked with data submission understands the frustration of type mismatches between form data and backend expectations. Since LifeForge already maintains a robust API type system (see [here](/backend/api)), the form system leverages this foundation to ensure perfect synchronization between form data and expected structures.
+The solution: create a declarative system that eliminates repetition while enabling form field reusability across different contexts.
 
-  This enables powerful type inference:
+### Absolute Type Safety
 
-  <Code language="tsx">
+Anyone who has worked with data submission understands the frustration of type mismatches between form data and backend expectations. Since LifeForge already maintains a robust API type system (see [here](/backend/api)), the form system leverages this foundation to ensure perfect synchronization between form data and expected structures.
+
+This enables powerful type inference:
+
+<Code language="tsx">
   {`defineForm<InferOutput<typeof forgeAPI.myApp.coolStuff.create>['body']>()`}
-  </Code>
+</Code>
 
-  Subsequent form configuration becomes fully type-safe, as does the final data output. This guarantees that form data always aligns with expected structures, providing confidence in data validity and format.
+Subsequent form configuration becomes fully type-safe, as does the final data output. This guarantees that form data always aligns with expected structures, providing confidence in data validity and format.
 
-  ### Declarative Form Field Definitions
+### Declarative Form Field Definitions
 
-  Rather than imperatively defining field behavior step-by-step, LifeForge embraces a declarative approach where you describe **what** the form should accomplish and **how** it should behave, not **how** to construct it.
+Rather than imperatively defining field behavior step-by-step, LifeForge embraces a declarative approach where you describe **what** the form should accomplish and **how** it should behave, not **how** to construct it.
 
-  Compare the traditional imperative approach:
+Compare the traditional imperative approach:
 
   <Code language="tsx">
 {`const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState('')
 
-  const handleTitleChange = (value: string) => {
-    setTitle(value)
-    if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
-      setTitleError('Invalid title. Only alphanumeric characters and spaces are allowed.')
-    } else {
-      setTitleError('')
-    }
-  }
+const handleTitleChange = (value: string) => {
+setTitle(value)
+if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
+setTitleError('Invalid title. Only alphanumeric characters and spaces are allowed.')
+} else {
+setTitleError('')
+}
+}
 
-  return (
-    <form onSubmit={handleSubmit}>
-      ...
-    </form>
-  )
-`}
+return (
+
+<form onSubmit={handleSubmit}>...</form>) `}
+
   </Code>
 
 With LifeForge's declarative approach:
@@ -201,46 +205,47 @@ With LifeForge's declarative approach:
   .onSubmit({...})
   .build()
 
-  return <Form {...formProps} />
+return <Form {...formProps} />
 `}
+
   </Code>
 
-  This declarative pattern offers significant advantages:
+This declarative pattern offers significant advantages:
 
-  - **Clarity**: Form configuration becomes self-documenting and immediately comprehensible
-  - **Consistency**: All forms follow identical patterns, enhancing codebase maintainability
-  - **Reusability**: Field configurations can be extracted and shared across different forms
-  - **Type Safety**: Complete typing based on your form data structure
-  - **Reduced Boilerplate**: Eliminates manual state management, validation, and error handling per field
-</section>
+- **Clarity**: Form configuration becomes self-documenting and immediately comprehensible
+- **Consistency**: All forms follow identical patterns, enhancing codebase maintainability
+- **Reusability**: Field configurations can be extracted and shared across different forms
+- **Type Safety**: Complete typing based on your form data structure
+- **Reduced Boilerplate**: Eliminates manual state management, validation, and error handling per field
+  </section>
 
 <section id="building-a-form">
   ## Building A Form
 
-  The form system is designed to be intuitive and straightforward. Here's a step-by-step guide to building a form.
+The form system is designed to be intuitive and straightforward. Here's a step-by-step guide to building a form.
 
-  ### 1. Define Your Form Schema
+### 1. Define Your Form Schema
 
-  Start by defining the structure of your form data. It can be a custom typescript interface:
+Start by defining the structure of your form data. It can be a custom typescript interface:
 
-  <Code language="typescript">
+<Code language="typescript">
   {`interface FormData {
     firstName: string;
     lastName: string;
     email: string;
   }
   `}
-  </Code>
+</Code>
 
-  Or a type inferred from ForgeAPI:
+Or a type inferred from ForgeAPI:
 
-  <Code language="typescript">
+<Code language="typescript">
   {`type FormData = InferOutput<typeof forgeAPI.myApp.coolStuff.create>['body']}`}
-  </Code>
+</Code>
 
-  Thanks to the powerful capabilities of TypeScript, even if the type interface is in the form of a complex union like this:
+Thanks to the powerful capabilities of TypeScript, even if the type interface is in the form of a complex union like this:
 
-  <Code language="typescript">
+<Code language="typescript">
   {`type FormData = {
     username: string;
     email: string;
@@ -252,11 +257,11 @@ With LifeForge's declarative approach:
     type: 'teacher';
     subject: string;
   })`}
-  </Code>
+</Code>
 
-  When being parsed by the form system, this complex union type will be flattened into a flat structure that is easier to work with:
+When being parsed by the form system, this complex union type will be flattened into a flat structure that is easier to work with:
 
-  <Code language="typescript">
+<Code language="typescript">
   {`type FormData = {
     username: string;
     email: string;
@@ -265,82 +270,86 @@ With LifeForge's declarative approach:
     course: string;
     subject: string;
   }`}
-  </Code>
+</Code>
 
-  That way, the form system can easily map the flattened structure to the appropriate form fields.
+That way, the form system can easily map the flattened structure to the appropriate form fields.
 
-  Finally, call the <code>defineForm</code> function with the form data type as a generic parameter:
+Finally, call the <code>defineForm</code> function with the form data type as a generic parameter:
 
-  <Code language="tsx">
-  {`const { formProps } = defineForm<FormData>()`}
-  </Code>
+<Code language="tsx">{`const { formProps } = defineForm<FormData>()`}</Code>
 
-  ### 2. Create the Form Component
+### 2. Create the Form Component
 
-  In the LifeForge ecosystem, all forms are presented in the UI as modals, and are handled by a global modal manager (See [here](/frontend/modal-manager) for more details).
+In the LifeForge ecosystem, all forms are presented in the UI as modals, and are handled by a global modal manager (See [here](/frontend/modal-manager) for more details).
 
-  Import the <code>defineForm</code> function and the <code>FormModal</code> component from the LifeForge UI library. Then, create a component and call the <code>defineForm</code> function while passing the form data type as a generic parameter. chain it with a <code>.build()</code> call to get the final form props, then pass those props to the <code>FormModal</code> component being returned.
+Import the <code>defineForm</code> function and the <code>FormModal</code> component from the LifeForge UI library. Then, create a component and call the <code>defineForm</code> function while passing the form data type as a generic parameter. chain it with a <code>.build()</code> call to get the final form props, then pass those props to the <code>FormModal</code> component being returned.
 
   <Code language="tsx">
   {`import { defineForm, FormModal } from 'lifeforge-ui'
 
-  function MyForm({
-    onClose
-  }: {
-    onClose: () => void;
-  }) {
-    const { formProps } = defineForm<FormData>({}).build()
+function MyForm({
+onClose
+}: {
+onClose: () => void;
+}) {
+const { formProps } = defineForm<FormData>({}).build()
 
     return <FormModal {...formProps} />
-  }
-  `}
+
+}
+`}
+
   </Code>
 
-  <Note>
-  The <code>FormModal</code> component should be the only thing being returned by the modal component.
-  </Note>
+<Note>
+  The <code>FormModal</code> component should be the only thing being returned
+  by the modal component.
+</Note>
 
-  ### 3. Configuring the Form
+### 3. Configuring the Form
 
-  In the argument object being passed into the <code>defineForm</code> function, you can specify various properties such as the form's title, icon, namespace, loading state, and submit button configuration. This allows you to customize the form's appearance and behavior right from the start. Detailed explanation of each property is listed below:
+In the argument object being passed into the <code>defineForm</code> function, you can specify various properties such as the form's title, icon, namespace, loading state, and submit button configuration. This allows you to customize the form's appearance and behavior right from the start. Detailed explanation of each property is listed below:
 
-  - <div className="text-lg!"><code className="text-lg!">icon</code> & <code className="text-lg!">title</code></div> 
-  
-    These properties define the form's title and the icon displayed in the modal header, as shown in the figure below. The icon must be a valid icon identifier from Iconify in the form of <code>&lt;icon-set&gt;:&lt;icon-name&gt;</code>.
+- <div className="text-lg!">
+    <code className="text-lg!">icon</code> &{' '}
+    <code className="text-lg!">title</code>
+  </div>
 
-    ![form-header](/assets/developer-forms/formHeader.png)
+  These properties define the form's title and the icon displayed in the modal header, as shown in the figure below. The icon must be a valid icon identifier from Iconify in the form of <code>&lt;icon-set&gt;:&lt;icon-name&gt;</code>.
 
-  - <code className="text-lg!">onClose</code>
-  
-    This callback function is triggered when the close button is clicked. This should be the same <code>onClose</code> function being passed to the modal component, allowing the form to close itself when the user clicks the close button.
+  ![form-header](/assets/developer-forms/formHeader.png)
 
-  - <code className="text-lg!">submitButton</code>
+- <code className="text-lg!">onClose</code>
 
-    Can be either <code>"create"</code>, <code>"update"</code>, or an object containing the button's props if a custom button is needed. If either <code>"create"</code> or <code>"update"</code> is used, a predefined button will be rendered with the appropriate label and icon, as shown below:
+  This callback function is triggered when the close button is clicked. This should be the same <code>onClose</code> function being passed to the modal component, allowing the form to close itself when the user clicks the close button.
 
-    ![form-btn-create](/assets/developer-forms/btnCreate.png)
+- <code className="text-lg!">submitButton</code>
 
-    ![form-btn-update](/assets/developer-forms/btnUpdate.png)
+  Can be either <code>"create"</code>, <code>"update"</code>, or an object containing the button's props if a custom button is needed. If either <code>"create"</code> or <code>"update"</code> is used, a predefined button will be rendered with the appropriate label and icon, as shown below:
 
-  - <code className="text-lg!">actionButton</code>
+  ![form-btn-create](/assets/developer-forms/btnCreate.png)
 
-    This button is displayed at the top right corner of the modal, next to the close button. It can be used to trigger additional actions related to the form.
+  ![form-btn-update](/assets/developer-forms/btnUpdate.png)
 
-    ![form-btn-action](/assets/developer-forms/actionBtn.png)
+- <code className="text-lg!">actionButton</code>
 
-  - <code className="text-lg!">loading</code>
+  This button is displayed at the top right corner of the modal, next to the close button. It can be used to trigger additional actions related to the form.
 
-    This boolean property controls the loading state of the form. When set to true, the form will display a loading indicator instead of the form fields. This is useful when the data required by the form (e.g. listbox options) is being fetched asynchronously.
+  ![form-btn-action](/assets/developer-forms/actionBtn.png)
 
-    ![form-loading](/assets/developer-forms/formLoading.png)
+- <code className="text-lg!">loading</code>
 
-  - <code className="text-lg!">namespace</code>
+  This boolean property controls the loading state of the form. When set to true, the form will display a loading indicator instead of the form fields. This is useful when the data required by the form (e.g. listbox options) is being fetched asynchronously.
 
-    This property defines the i18n namespace for the text and labels used in the form. For more information on i18n namespaces, see the [i18n documentation](/frontend/i18n).
+  ![form-loading](/assets/developer-forms/formLoading.png)
 
-  The defineForm function call should now look something like this:
+- <code className="text-lg!">namespace</code>
 
-  <Code language="tsx">
+  This property defines the i18n namespace for the text and labels used in the form. For more information on i18n namespaces, see the [i18n documentation](/frontend/i18n).
+
+The defineForm function call should now look something like this:
+
+<Code language="tsx">
   {`const { formProps } = defineForm<FormData>({
     title: 'My Form',
     icon: 'mdi:form-textbox',
@@ -353,23 +362,24 @@ With LifeForge's declarative approach:
     },
     namespace: 'apps.myApp'
   }).build()`}
-  </Code>
+</Code>
 
-  ### 4. Mapping Field Types
+### 4. Mapping Field Types
 
-  Now, it's time to map the form fields to their corresponding input components. Since there can be multiple options for input component available for each Typescript value type (e.g. <code>NumberInput</code> and <code>CurrencyInput</code>) for a field with type <code>number</code>), you must specify the appropriate input component for each field in the form with the <code>.typesMap()</code> chain method.
+Now, it's time to map the form fields to their corresponding input components. Since there can be multiple options for input component available for each Typescript value type (e.g. <code>NumberInput</code> and <code>CurrencyInput</code>) for a field with type <code>number</code>), you must specify the appropriate input component for each field in the form with the <code>.typesMap()</code> chain method.
 
-  Using this method is pretty straightforward, it accepts a mapping object where the keys are the field keys and the values are the corresponding input component types. 
-  
+Using this method is pretty straightforward, it accepts a mapping object where the keys are the field keys and the values are the corresponding input component types.
+
   <Note>
   Available input component types can be found in the IntelliSense suggestions.
 
-  ![types-map-intellisense](/assets/developer-forms/typesMapIntellisense.png)
+![types-map-intellisense](/assets/developer-forms/typesMapIntellisense.png)
+
   </Note>
 
-  ### 5. Configuring Fields
+### 5. Configuring Fields
 
-  Using the <code>.setupFields()</code> chain method, you can configure each field's properties such as label, icon, placeholder, validation rules, and more. This allows you to customize the form fields to suit your application's needs.
+Using the <code>.setupFields()</code> chain method, you can configure each field's properties such as label, icon, placeholder, validation rules, and more. This allows you to customize the form fields to suit your application's needs.
 
   <Code language="tsx">
   {`const { formProps } = defineForm<FormData>().setupFields({
@@ -386,56 +396,60 @@ With LifeForge's declarative approach:
         return true
       }
     },
-  }).build()`}
+
+}).build()`}
+
   </Code>
 
   <Note>
   Available field configurations can be found in the IntelliSense suggestions.
 
-  ![setup-fields-intellisense](/assets/developer-forms/setupFields.png)
+![setup-fields-intellisense](/assets/developer-forms/setupFields.png)
+
   </Note>
 
-  ### 6. Conditional Fields (optional)
+### 6. Conditional Fields (optional)
 
-  Sometimes you may want to show or hide certain fields in the form based on the values of other fields. This can be achieved using the <code>.conditionalFields()</code> chain method. This method accepts a mapping of field names to a function that returns a boolean indicating whether the field should be shown. The function has one parameter, which is the current form values.
+Sometimes you may want to show or hide certain fields in the form based on the values of other fields. This can be achieved using the <code>.conditionalFields()</code> chain method. This method accepts a mapping of field names to a function that returns a boolean indicating whether the field should be shown. The function has one parameter, which is the current form values.
 
-  For example, to show the "age" field only if the "isAdult" checkbox is checked, you can do the following:
+For example, to show the "age" field only if the "isAdult" checkbox is checked, you can do the following:
 
-  <Code language="tsx">
+<Code language="tsx">
   {`const { formProps } = defineForm<FormData>().conditionalFields({
     // Ask for parent's name if not an adult
     parentName: (formState) => !formState.isAdult
   }).build()`}
-  </Code>
+</Code>
 
-  ### 7. Define Field to be Autofocused (optional)
+### 7. Define Field to be Autofocused (optional)
 
-  Sometimes you will want to automatically focus a specific field when the form is opened. This can be achieved using the <code>.autoFocusField()</code> chain method.
+Sometimes you will want to automatically focus a specific field when the form is opened. This can be achieved using the <code>.autoFocusField()</code> chain method.
 
-  For example, to autofocus the "name" field, you can do the following:
+For example, to autofocus the "name" field, you can do the following:
 
-  <Code language="tsx">
+<Code language="tsx">
   {`const { formProps } = defineForm<FormData>().autoFocusField('name').build()`}
-  </Code>
+</Code>
 
   <Note>
   The options for this method is determined by your definition in the <code>.typesMap()</code> chain method, and only fields that are auto-focusable will be available. IntelliSense will help you identify these fields.
 
-  ![auto-focus-field-intellisense](/assets/developer-forms/autofocus.png)
+![auto-focus-field-intellisense](/assets/developer-forms/autofocus.png)
+
   </Note>
 
-  ### 8. Populate the Form
+### 8. Populate the Form
 
-  Often times you will want to populate the form with existing data, such as when editing an existing record. This can be achieved using the <code>.initialData</code> chain method, which accepts an object that matches the form data type.
+Often times you will want to populate the form with existing data, such as when editing an existing record. This can be achieved using the <code>.initialData</code> chain method, which accepts an object that matches the form data type.
 
-  <Code language="tsx">
+<Code language="tsx">
   {`const { formProps } = defineForm<FormData>().initialData({
     name: 'John Doe',
     age: 30,
     color: 'blue',
     icon: 'mdi:account'
   }).build()`}
-  </Code>
+</Code>
 
   <Note>
   The data type of the argument of this method is the same as the form data type generic parameter, with all fields being optional. IntelliSense is available to help you construct the initial data object. Feel free to pass in the entire data record being passed into the parent component if it has the fields that the form requires, or you can make some slight modifications to it to match the form data type.
@@ -466,22 +480,24 @@ With LifeForge's declarative approach:
     }).build()
 
     return <FormModal {...formProps} />
-  }
-  `}
+
+}
+`}
+
   </Code>
   </Note>
 
-  ### 9. Submitting the Form
-  
-  Finally, you can define the form submission logic using the <code>.onSubmit()</code> chain method. This method accepts an asynchronous function that receives the form data as its argument. You can perform any necessary actions with the data, such as sending it to ForgeAPI or processing it locally.
+### 9. Submitting the Form
 
-  <Code language="tsx">
+Finally, you can define the form submission logic using the <code>.onSubmit()</code> chain method. This method accepts an asynchronous function that receives the form data as its argument. You can perform any necessary actions with the data, such as sending it to ForgeAPI or processing it locally.
+
+<Code language="tsx">
   {`const { formProps } = defineForm<FormData>().onSubmit(async (data) => {
     await forgeAPI.myApp.coolStuff.create.mutate(data)
   }).build()`}
-  </Code>
+</Code>
 
-  It's highly recommended to handle form submission using mutation hook from React Query.
+It's highly recommended to handle form submission using mutation hook from React Query.
 
   <Code language="tsx">
   {`const mutation = useMutation(
@@ -498,9 +514,10 @@ With LifeForge's declarative approach:
     })
   )
 
-  const { formProps } = defineForm<FormData>().onSubmit(async (data) => {
-    await mutation.mutateAsync(data)
-  }).build()`}
+const { formProps } = defineForm<FormData>().onSubmit(async (data) => {
+await mutation.mutateAsync(data)
+}).build()`}
+
   </Code>
 
 </section>
@@ -508,11 +525,11 @@ With LifeForge's declarative approach:
 <section id="field-validation">
   ## Field Validation
 
-  In LifeForge, validation is done only before the form is submitted.
+In LifeForge, validation is done only before the form is submitted.
 
-  When defining configurations for each field, you can specify validation rules using the <code>validator</code> property. This property can be a function that returns either <code>true</code> if the value is valid or a string containing an error message if the value is invalid, like so:
+When defining configurations for each field, you can specify validation rules using the <code>validator</code> property. This property can be a function that returns either <code>true</code> if the value is valid or a string containing an error message if the value is invalid, like so:
 
-  <Code language="tsx">
+<Code language="tsx">
   {`const { formProps } = defineForm<FormData>().setupFields({
     age: {
       ...,
@@ -530,9 +547,9 @@ With LifeForge's declarative approach:
       }
     }
   })`}
-  </Code>
+</Code>
 
-  Alternatively, you can use a Zod schema to define the validation rules for the field. This allows you to leverage Zod's powerful validation capabilities, such as chaining multiple validation methods together.
+Alternatively, you can use a Zod schema to define the validation rules for the field. This allows you to leverage Zod's powerful validation capabilities, such as chaining multiple validation methods together.
 
   <Code language="tsx">
   {`const { formProps } = defineForm<FormData>().setupFields({
@@ -547,13 +564,12 @@ With LifeForge's declarative approach:
   </Code>
 </section>
 
-
 <section id="controlling-form-state-explicitly">
   ## Controlling Form State Explicitly
 
-  In some cases, you may find yourself needing to explicitly manage the form state. This can be useful if you need fine-grained control over the form values or if you're working with complex form logic, for example populating a field with AI generated content.
+In some cases, you may find yourself needing to explicitly manage the form state. This can be useful if you need fine-grained control over the form values or if you're working with complex form logic, for example populating a field with AI generated content.
 
-  LifeForge uses <code>zustand</code> for form state management. The <code>defineForm</code> function exposes a <code>formStateStore</code> object which is a Zustand store that you can use to get and set the form values.
+LifeForge uses <code>zustand</code> for form state management. The <code>defineForm</code> function exposes a <code>formStateStore</code> object which is a Zustand store that you can use to get and set the form values.
 
   <Code language="tsx">
   {`
@@ -579,17 +595,19 @@ With LifeForge's declarative approach:
     }).build()
 
     return <FormModal {...formProps} />
-  }
-  `}
+
+}
+`}
+
   </Code>
 </section>
 
 <section id="linked-fields">
   ## Linked Fields
 
-  Sometimes you may want to link two or more fields together, such as when one field's value depends on another field's value. This can be achieved easily using the <code>formStateStore</code>.
+Sometimes you may want to link two or more fields together, such as when one field's value depends on another field's value. This can be achieved easily using the <code>formStateStore</code>.
 
-  For example, the validation of the <code>confirmPassword</code> field could depend on the value of the <code>password</code> field.
+For example, the validation of the <code>confirmPassword</code> field could depend on the value of the <code>password</code> field.
 
   <Code language="tsx">
   {`export default function LinkedFieldsExampleModal() {
@@ -611,17 +629,19 @@ With LifeForge's declarative approach:
       .build()
 
     return <FormModal {...formProps} />
-  }
-  `}
+
+}
+`}
+
   </Code>
 </section>
 
 <section id="derived-listbox-options">
   ## Derived Listbox Options
 
-  You can derive the options for a listbox field based on the values of other fields in the form. This is useful for creating dynamic forms where the available options depend on user input.
+You can derive the options for a listbox field based on the values of other fields in the form. This is useful for creating dynamic forms where the available options depend on user input.
 
-  When configuring the options for a listbox field, you can use a function that accesses the current form state to determine the available options. This function will grant you access to the current form state and allow you to compute the options dynamically.
+When configuring the options for a listbox field, you can use a function that accesses the current form state to determine the available options. This function will grant you access to the current form state and allow you to compute the options dynamically.
 
   <Code language="tsx">
   {`export default function DerivedListboxExampleModal() {
@@ -657,7 +677,9 @@ With LifeForge's declarative approach:
       .build()
 
     return <FormModal {...formProps} />
-  }
-  `}
+
+}
+`}
+
   </Code>
 </section>

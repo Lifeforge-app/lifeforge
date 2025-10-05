@@ -66,7 +66,12 @@ function ModifyLineModal({
 
         return [
           ...prev,
-          { name: data.name, color: data.color, code: data.code, path: [] }
+          {
+            name: data.name,
+            color: data.color,
+            code: data.code,
+            path: []
+          }
         ]
       })
     })

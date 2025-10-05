@@ -3,8 +3,8 @@ import { ModalHeader, WithOTP } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
 import { useAuth } from 'shared'
+
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 
 function EnableTwoFAModal({ onClose }: { onClose: () => void }) {

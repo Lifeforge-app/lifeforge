@@ -77,7 +77,9 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
       )
     } catch {
       toast.error(t('error.pin'))
-      queryClient.invalidateQueries({ queryKey: ['passwords', 'entries'] })
+      queryClient.invalidateQueries({
+        queryKey: ['passwords', 'entries']
+      })
     }
   }
 

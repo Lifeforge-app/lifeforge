@@ -8,11 +8,9 @@
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
   ],
-  "importOrder": [
-    "^shared/(.*)$",
-    "@apps/(.*)$",
-    "^[./]"
-  ],
+  "importOrder": ["^shared/(.*)$", "@apps/(.*)$", "^[./]"],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "tabWidth": 2,
+  "bracketSameLine": false
 }

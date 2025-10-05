@@ -26,7 +26,9 @@ function ModifyPriorityModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['todoList', 'priorities'] })
+        queryClient.invalidateQueries({
+          queryKey: ['todoList', 'priorities']
+        })
       },
       onError: error => {
         toast.error(`Failed to ${type} priority: ${error.message}`)

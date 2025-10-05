@@ -91,8 +91,16 @@ const list = forgeController
           {
             combination: '||',
             filters: [
-              { field: 'name', operator: '~', value: query || '' },
-              { field: 'author', operator: '~', value: query || '' }
+              {
+                field: 'name',
+                operator: '~',
+                value: query || ''
+              },
+              {
+                field: 'author',
+                operator: '~',
+                value: query || ''
+              }
             ]
           },
           ...(category
@@ -115,12 +123,20 @@ const list = forgeController
             : []),
           ...(collection
             ? ([
-                { field: 'collection', operator: '=', value: collection }
+                {
+                  field: 'collection',
+                  operator: '=',
+                  value: collection
+                }
               ] as const)
             : []),
           ...(starred
             ? ([
-                { field: 'isFavourite', operator: '=', value: starred }
+                {
+                  field: 'isFavourite',
+                  operator: '=',
+                  value: starred
+                }
               ] as const)
             : [])
         ])
