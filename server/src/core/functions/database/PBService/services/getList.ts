@@ -135,7 +135,7 @@ export class GetList<
       : undefined
 
     const result = (await this._pb
-      .collection((this.collectionKey as string).replace(/^users__/, ''))
+      .collection((this.collectionKey as string).replace(/^user__/, ''))
       .getList(this._page, this._perPage, {
         filter: filterString,
         sort: this._sort,

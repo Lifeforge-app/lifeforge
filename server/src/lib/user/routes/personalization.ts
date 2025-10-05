@@ -122,7 +122,7 @@ const updateBgImage = forgeController
   })
   .callback(async ({ pb, media: { file } }) => {
     const newRecord = await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .data({
         ...(await getMedia('bgImage', file)),
@@ -150,7 +150,7 @@ const deleteBgImage = forgeController
   .statusCode(204)
   .callback(({ pb }) =>
     pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .data({
         bgImage: null
@@ -199,7 +199,7 @@ const updatePersonalization = forgeController
     }
 
     await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .data(toBeUpdated)
       .execute()
