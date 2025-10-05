@@ -117,9 +117,9 @@
     "lockLayout": "Lock Layout"
   },
   "empty": {
-    "widget": {
-      "title": "No Widgets Enabled",
-      "description": "You can add widgets from the 'Manage Widgets' menu."
+    "welcome": {
+      "title": "Welcome to LifeForge!",
+      "description": "Get started by installing some modules from the ForgeStore."
     }
   },
   "loading": "Loading dashboard...",

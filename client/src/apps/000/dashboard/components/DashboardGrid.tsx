@@ -67,8 +67,8 @@ function DashboardGrid({
   return Object.values(enabledWidgets).every(e => e.length === 0) ? (
     <div className="flex h-full flex-1 items-center justify-center">
       <EmptyStateScreen
-        icon="tabler:apps-off"
-        name="widget"
+        icon="tabler:hammer"
+        name="welcome"
         namespace="apps.dashboard"
       />
     </div>
