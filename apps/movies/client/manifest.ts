@@ -7,7 +7,7 @@ export default {
   routes: {
     movies: lazy(() => import('@'))
   },
-  togglable: true,
+
   requiredAPIKeys: ['tmdb'],
   category: '02.Lifestyle'
 } satisfies ModuleConfig

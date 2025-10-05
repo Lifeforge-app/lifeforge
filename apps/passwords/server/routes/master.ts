@@ -30,7 +30,7 @@ const create = forgeController
     const masterPasswordHash = await bcrypt.hash(password, salt)
 
     await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .data({
         masterPasswordHash
@@ -50,7 +50,7 @@ const verify = forgeController
     const decryptedMaster = decrypt2(password, challenge)
 
     const user = await pb.getOne
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .execute()
 

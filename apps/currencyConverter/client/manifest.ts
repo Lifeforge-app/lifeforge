@@ -7,6 +7,6 @@ export default {
   routes: {
     'currency-converter': lazy(() => import('@'))
   },
-  togglable: true,
+
   category: '07.Utilities'
 } satisfies ModuleConfig

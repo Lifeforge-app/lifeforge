@@ -5,12 +5,10 @@ import type { ModuleCategory } from 'shared'
 
 import Auth from '../../auth'
 import RootLayout from '../components/RootLayout'
-import { shouldModuleBeEnabled } from './moduleFilters'
 import { createModuleRoute } from './routeBuilder'
 
 interface CreateRouterConfigOptions {
   routes: ModuleCategory[]
-  enabledModules?: string[]
   loadingMessage: string
 }
 
@@ -44,12 +42,11 @@ export function AuthRedirectHandler() {
  */
 export function createRouterConfig({
   routes,
-  enabledModules = [],
   loadingMessage
 }: CreateRouterConfigOptions): RouteObject[] {
   const enabledItems = routes
     .flatMap(category => category.items)
-    .filter(item => shouldModuleBeEnabled(item, enabledModules))
+    .filter(item => !item.disabled)
 
   const moduleRoutes = enabledItems.flatMap(item =>
     createModuleRoute(item, loadingMessage)

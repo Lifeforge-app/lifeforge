@@ -9,7 +9,6 @@ export interface ModuleConfig {
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
   >
-  togglable: boolean
   hasAI?: boolean
   requiredAPIKeys?: string[]
   subsection?: {
@@ -18,7 +17,7 @@ export interface ModuleConfig {
     path: string
   }[]
   hidden?: boolean
-  forceDisable?: boolean
+  disabled?: boolean
   category?: string
 }
 

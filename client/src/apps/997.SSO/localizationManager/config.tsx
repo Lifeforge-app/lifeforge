@@ -7,6 +7,5 @@ export default {
   routes: {
     'localization-manager': lazy(() => import('.'))
   },
-  togglable: false,
-  forceDisable: !import.meta.env.VITE_LOCALIZATION_MANAGER_URL
+  disabled: !import.meta.env.VITE_LOCALIZATION_MANAGER_URL
 } satisfies ModuleConfig

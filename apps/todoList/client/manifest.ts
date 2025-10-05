@@ -7,7 +7,7 @@ export default {
   routes: {
     'todo-list': lazy(() => import('@'))
   },
-  togglable: true,
+
   hasAI: true,
   requiredAPIKeys: ['groq'],
   category: '01.Productivity'
