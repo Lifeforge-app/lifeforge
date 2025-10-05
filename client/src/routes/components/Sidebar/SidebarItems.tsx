@@ -8,9 +8,9 @@ import {
 import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
 import { useSidebarState } from 'shared'
+import { useAuth } from 'shared'
 
 import ROUTES from '../..'
-import { useAuth } from 'shared'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
@@ -25,10 +25,7 @@ function SidebarItems({ query }: { query: string }) {
           e.items.some(
             subItem =>
               subItem.name.toLowerCase().includes(query.toLowerCase()) &&
-              !subItem.forceDisable &&
-              !subItem.hidden &&
-              (!subItem.togglable ||
-                userData?.enabledModules.includes(_.kebabCase(subItem.name)))
+              !subItem.disabled
           )
       ),
     [query, userData]
@@ -40,15 +37,7 @@ function SidebarItems({ query }: { query: string }) {
         {filteredRoutes.length > 0 ? (
           filteredRoutes.map((item, index) => {
             const filteredModules = item.items.filter(
-              subItem =>
-                (!subItem.togglable ||
-                  userData?.enabledModules.includes(
-                    _.kebabCase(subItem.name)
-                  ) === true) &&
-                !subItem.forceDisable &&
-                !subItem.hidden &&
-                (item.title.toLowerCase().includes(query.toLowerCase()) ||
-                  subItem.name.toLowerCase().includes(query.toLowerCase()))
+              subItem => !subItem.disabled
             )
 
             return (

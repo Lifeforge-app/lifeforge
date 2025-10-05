@@ -7,6 +7,5 @@ export default {
   routes: {
     'api-explorer': lazy(() => import('.'))
   },
-  togglable: false,
-  forceDisable: !import.meta.env.VITE_API_EXPLORER_URL
+  disabled: !import.meta.env.VITE_API_EXPLORER_URL
 } satisfies ModuleConfig

@@ -7,6 +7,6 @@ export default {
   routes: {
     'scores-library': lazy(() => import('./src'))
   },
-  togglable: true,
+
   category: '04.Storage'
 } satisfies ModuleConfig

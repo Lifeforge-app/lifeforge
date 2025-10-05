@@ -33,6 +33,6 @@ export default {
     'wallet/spending-heatmap': lazy(() => import('@/pages/SpendingHeatmap')),
     'wallet/statements': lazy(() => import('@/pages/Statements'))
   },
-  togglable: true,
+
   category: '03.Finance'
 } satisfies ModuleConfig

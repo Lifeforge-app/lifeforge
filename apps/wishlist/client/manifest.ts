@@ -8,7 +8,7 @@ export default {
     wishlist: lazy(() => import('@/pages/WishlistList')),
     'wishlist/:id': lazy(() => import('@/pages/WishlistEntries'))
   },
-  togglable: true,
+
   hasAI: true,
   category: '03.Finance'
 } satisfies ModuleConfig

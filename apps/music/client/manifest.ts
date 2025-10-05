@@ -7,6 +7,6 @@ export default {
   routes: {
     music: lazy(() => import('@'))
   },
-  togglable: true,
+
   category: '04.Storage'
 } satisfies ModuleConfig
