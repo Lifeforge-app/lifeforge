@@ -27,6 +27,7 @@ function NotFoundScreen({
           as="a"
           href="https://github.com/Lifeforge-app/lifeforge/issues"
           icon="tabler:bug"
+          namespace="common.misc"
           rel="noopener noreferrer"
           target="_blank"
           variant="secondary"
