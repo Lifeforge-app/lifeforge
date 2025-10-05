@@ -37,3 +37,4 @@ pnpm-debug.log*
 /database
 medium
 logs
+apps/*
