@@ -114,7 +114,7 @@ export class GetOne<
     }
 
     const result = this._pb
-      .collection((this.collectionKey as string).replace(/^users__/, ''))
+      .collection((this.collectionKey as string).replace(/^user__/, ''))
       .getOne(this._itemId, {
         expand: this._expand,
         fields: this._fields

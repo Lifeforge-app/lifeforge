@@ -22,7 +22,7 @@ export function removeSensitiveData(userData: Record<string, any>) {
 
   return newUserData as SchemaWithPB<
     Omit<
-      z.infer<(typeof COLLECTION_SCHEMAS)['users__users']>,
+      z.infer<(typeof COLLECTION_SCHEMAS)['user__users']>,
       | 'masterPasswordHash'
       | 'journalMasterPasswordHash'
       | 'APIKeysMasterPasswordHash'

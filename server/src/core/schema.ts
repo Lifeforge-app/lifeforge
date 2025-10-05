@@ -1,7 +1,7 @@
 import flattenSchemas from '@functions/utils/flattenSchema'
 
 export const SCHEMAS = {
-  users: (await import('@lib/user/schema')).default,
+  user: (await import('@lib/user/schema')).default,
   todo_list: (await import('@lib/todoList/server/schema')).default,
   code_time: (await import('@lib/codeTime/server/schema')).default,
   idea_box: (await import('@lib/ideaBox/server/schema')).default,

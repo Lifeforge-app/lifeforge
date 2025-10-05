@@ -144,7 +144,7 @@ const verifyAndEnable = forgeController
       }
 
       await pb.update
-        .collection('users__users')
+        .collection('user__users')
         .id(pb.instance.authStore.record!.id)
         .data({
           twoFASecret: encrypt(
@@ -169,7 +169,7 @@ const disable = forgeController
     }
 
     await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(pb.instance.authStore.record!.id)
       .data({
         twoFASecret: ''

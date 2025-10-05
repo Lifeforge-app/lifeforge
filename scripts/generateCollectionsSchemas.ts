@@ -1,7 +1,7 @@
 import { LoggingService } from '@server/core/functions/logging/loggingService'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
-import fs from 'fs/promises'
+import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 import PocketBase, { type CollectionModel } from 'pocketbase'
@@ -39,7 +39,10 @@ interface FieldTypeMapping {
 // Constants
 const PATHS = {
   ENV_FILE: path.resolve(__dirname, '../env/.env.local'),
-  MODULES_DIR: path.resolve(__dirname, '../server/src/lib'),
+  MODULES_DIRS: [
+    path.resolve(__dirname, '../server/src/lib/**/schema.ts'),
+    path.resolve(__dirname, '../apps/**/server/schema.ts')
+  ],
   CORE_SCHEMA: path.resolve(__dirname, '../server/src/core/schema.ts')
 } as const
 
@@ -154,22 +157,29 @@ async function buildModuleCollectionsMap(
 ): Promise<ModuleCollectionsMap> {
   const moduleCollectionsMap: ModuleCollectionsMap = {}
 
-  let allModules: Array<{ name: string; isDirectory(): boolean }>
+  let allModules: string[] = []
 
   try {
-    const moduleEntries = await fs.readdir(PATHS.MODULES_DIR, {
-      withFileTypes: true
-    })
-
-    allModules = moduleEntries.filter(entry => entry.isDirectory())
+    allModules = PATHS.MODULES_DIRS.map(dir => fs.globSync(dir))
+      .flat()
+      .map(entry => entry.split('/').slice(0, -1).join('/'))
   } catch (error) {
     LoggingService.error(`Failed to read modules directory: ${error}`)
     process.exit(1)
   }
 
+  console.log(allModules)
+
   for (const collection of collections) {
     const matchingModule = allModules.find(module =>
-      collection.name.startsWith(_.snakeCase(module.name))
+      collection.name.startsWith(
+        _.snakeCase(
+          module
+            .replace(/\/server$/, '')
+            .split('/')
+            .pop() || ''
+        )
+      )
     )
 
     if (!matchingModule) {
@@ -179,10 +189,18 @@ async function buildModuleCollectionsMap(
       continue
     }
 
-    if (!moduleCollectionsMap[matchingModule.name]) {
-      moduleCollectionsMap[matchingModule.name] = []
+    const moduleName = matchingModule
+      .replace(/\/server$/, '')
+      .split('/')
+      .pop()
+
+    const key = `${matchingModule}|${moduleName}`
+
+    if (!moduleCollectionsMap[key]) {
+      moduleCollectionsMap[key] = []
     }
-    moduleCollectionsMap[matchingModule.name].push(collection)
+
+    moduleCollectionsMap[key].push(collection)
   }
 
   const totalCollections = Object.values(moduleCollectionsMap).flat().length
@@ -242,12 +260,20 @@ export default ${_.camelCase(moduleName)}Schemas
 }
 
 // Generate main schema content
-function generateMainSchemaContent(moduleNames: string[]): string {
-  const imports = moduleNames
-    .map(
-      moduleName =>
-        `  ${moduleName}: (await import('@lib/${moduleName === 'users' ? 'user' : _.camelCase(moduleName)}/schema')).default,`
-    )
+function generateMainSchemaContent(moduleDirs: string[]): string {
+  const imports = moduleDirs
+    .map(moduleDir => {
+      const [moduleDirPath, moduleDirName] = moduleDir.split('|')
+
+      const targetPath = path.join(
+        '@lib/',
+        moduleDirName,
+        moduleDirPath.split(moduleDirName).pop() || '',
+        'schema'
+      )
+
+      return `  ${_.snakeCase(moduleDirName)}: (await import('${targetPath}')).default,`
+    })
     .join('\n')
 
   return `import flattenSchemas from '@functions/utils/flattenSchema'
@@ -269,10 +295,15 @@ async function writeFormattedFile(
 ): Promise<void> {
   try {
     const formattedContent = await prettier.format(content, {
-      parser: 'typescript'
+      parser: 'typescript',
+      semi: false,
+      singleQuote: true,
+      trailingComma: 'none',
+      arrowParens: 'avoid',
+      endOfLine: 'auto'
     })
 
-    await fs.writeFile(filePath, formattedContent)
+    fs.writeFileSync(filePath, formattedContent)
   } catch (error) {
     LoggingService.error(`Failed to write file ${filePath}: ${error}`)
     throw error
@@ -285,11 +316,11 @@ async function generateSchemas(
 ): Promise<SchemaGenerationResult> {
   const moduleSchemas: Record<string, string> = {}
 
-  const moduleNames: string[] = []
+  const moduleDirs: string[] = []
 
-  for (const [moduleDirName, collections] of Object.entries(
-    moduleCollectionsMap
-  )) {
+  for (const [moduleDir, collections] of Object.entries(moduleCollectionsMap)) {
+    const [moduleDirPath, moduleDirName] = moduleDir.split('|')
+
     if (!collections.length) {
       LoggingService.warn(
         `No collections found for module ${chalk.bold(moduleDirName)}`
@@ -299,7 +330,7 @@ async function generateSchemas(
 
     const moduleName = collections[0].name.split('__')[0]
 
-    moduleNames.push(moduleName)
+    moduleDirs.push(moduleDir)
 
     const moduleSchemaContent = generateModuleSchemaContent(
       moduleName,
@@ -309,11 +340,7 @@ async function generateSchemas(
     moduleSchemas[moduleDirName] = moduleSchemaContent
 
     // Write individual module schema file
-    const moduleSchemaPath = path.join(
-      PATHS.MODULES_DIR,
-      moduleDirName,
-      'schema.ts'
-    )
+    const moduleSchemaPath = path.join(moduleDirPath, 'schema.ts')
 
     await writeFormattedFile(moduleSchemaPath, moduleSchemaContent)
 
@@ -322,7 +349,7 @@ async function generateSchemas(
     )
   }
 
-  const mainSchemaContent = generateMainSchemaContent(moduleNames)
+  const mainSchemaContent = generateMainSchemaContent(moduleDirs)
 
   return { moduleSchemas, mainSchemaContent }
 }
