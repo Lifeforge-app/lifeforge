@@ -137,6 +137,11 @@ async function validateCollections(
     delete requiredSchema?.updated
     delete requiredSchema?.created
 
+    if ('oauth2' in requiredCollections) {
+      delete requiredCollections?.oauth2
+    }
+    delete existingCollection?.oauth2
+
     if (JSON.stringify(existingCollection) !== JSON.stringify(requiredSchema)) {
       collectionsWithDiscrepancies.push(collection)
     }
