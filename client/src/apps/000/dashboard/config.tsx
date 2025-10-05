@@ -6,6 +6,5 @@ export default {
   icon: 'tabler:dashboard',
   routes: {
     dashboard: lazy(() => import('.'))
-  },
-  togglable: false
+  }
 } satisfies ModuleConfig

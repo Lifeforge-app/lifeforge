@@ -6,6 +6,5 @@ export default {
   icon: 'tabler:history',
   routes: {
     backups: lazy(() => import('.'))
-  },
-  togglable: false
+  }
 } satisfies ModuleConfig
