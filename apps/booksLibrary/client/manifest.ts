@@ -8,6 +8,6 @@ export default {
   routes: {
     '': lazy(() => import('@'))
   },
-  togglable: true,
+
   category: '04.Storage'
 } satisfies ModuleConfig

@@ -7,6 +7,5 @@ export default {
   routes: {
     account: lazy(() => import('.'))
   },
-  togglable: false,
   hidden: true
 } satisfies ModuleConfig

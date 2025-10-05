@@ -17,7 +17,7 @@ import {
 export function useAppRouter() {
   const { t } = useTranslation('common.misc')
 
-  const { userData, auth, authLoading } = useAuth()
+  const { auth, authLoading } = useAuth()
 
   const router = useMemo(() => {
     // If authentication is still loading, return a placeholder router
@@ -33,12 +33,11 @@ export function useAppRouter() {
     // If user is authenticated, create full application routes based on enabled modules
     const routerConfig = createRouterConfig({
       routes: ROUTES,
-      enabledModules: userData?.enabledModules ?? [],
       loadingMessage: t('loadingModule')
     })
 
     return createBrowserRouter(routerConfig)
-  }, [userData?.enabledModules, auth, t, authLoading])
+  }, [auth, t, authLoading])
 
   return { router, isAuthenticated: !!auth }
 }
