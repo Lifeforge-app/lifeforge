@@ -2,7 +2,7 @@ import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
-const APP_DIR = path.join(__dirname, '../apps')
+const TOOLS_DIR = path.join(__dirname, '../tools')
 
 const PROCESS_ALLOWED = ['build', 'dev', 'types', 'lint']
 
@@ -15,9 +15,9 @@ const PROJECTS_ALLOWED = Object.assign(
   },
   Object.fromEntries(
     fs
-      .readdirSync(APP_DIR)
-      .filter(f => fs.statSync(path.join(APP_DIR, f)).isDirectory())
-      .map(f => [f, `apps/${f}`])
+      .readdirSync(TOOLS_DIR)
+      .filter(f => fs.statSync(path.join(TOOLS_DIR, f)).isDirectory())
+      .map(f => [f, `tools/${f}`])
   )
 )
 

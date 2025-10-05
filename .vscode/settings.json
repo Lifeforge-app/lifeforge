@@ -1,9 +1,5 @@
 {
-  "cSpell.words": [
-    "ITMDB",
-    "nuqs",
-    "Sizer",
-    "subnamespace"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "cSpell.words": ["ITMDB", "nuqs", "Sizer", "subnamespace"],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.experimental.useTsgo": false
 }
