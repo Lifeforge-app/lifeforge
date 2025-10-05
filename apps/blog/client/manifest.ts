@@ -7,6 +7,5 @@ export default {
     blog: lazy(() => import('@')),
     'blog/compose': lazy(() => import('@/pages/Compose'))
   },
-
   category: '02.Lifestyle'
 }

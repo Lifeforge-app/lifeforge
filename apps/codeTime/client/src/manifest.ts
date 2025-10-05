@@ -7,6 +7,5 @@ export default {
   routes: {
     'code-time': lazy(() => import('.'))
   },
-
   category: '01.Productivity'
 } satisfies ModuleConfig
