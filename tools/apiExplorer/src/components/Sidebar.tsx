@@ -41,9 +41,9 @@ function Sidebar({
         <SearchInput
           className="mb-4"
           namespace="apps.apiExplorer"
-          value={searchQuery}
-          setValue={setSearchQuery}
           searchTarget="endpoints"
+          setValue={setSearchQuery}
+          value={searchQuery}
         />
       </div>
       <div className="mt-2 flex-1 space-y-3 overflow-y-auto">

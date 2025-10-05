@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
-import { useUserPersonalization } from '../../../../../providers/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
+import { useUserPersonalization } from '../../../../../providers/UserPersonalizationProvider'
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 
 function BgTempSelector() {

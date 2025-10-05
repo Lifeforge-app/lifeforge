@@ -25,7 +25,9 @@ function ModifyWishlistListModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['wishlist', 'lists'] })
+        queryClient.invalidateQueries({
+          queryKey: ['wishlist', 'lists']
+        })
       }
     })
   )

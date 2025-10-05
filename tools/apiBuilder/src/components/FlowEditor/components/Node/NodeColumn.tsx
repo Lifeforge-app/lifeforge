@@ -150,7 +150,9 @@ function NodeColumn<T extends NODE_TYPES>({
           id={(handle as string) + (dynamicId ? `||${dynamicId}` : '')}
           isConnectable={isConnectable}
           position={isInput ? Position.Left : Position.Right}
-          style={{ backgroundColor: NODE_CONFIG[handler.nodeType]?.color }}
+          style={{
+            backgroundColor: NODE_CONFIG[handler.nodeType]?.color
+          }}
           type={isInput ? 'target' : 'source'}
         />
       )}

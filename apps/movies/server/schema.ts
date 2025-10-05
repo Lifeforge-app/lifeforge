@@ -18,7 +18,10 @@ const moviesSchemas = {
       theatre_seat: z.string(),
       theatre_showtime: z.string(),
       theatre_location: z.string(),
-      theatre_location_coords: z.object({ lat: z.number(), lon: z.number() }),
+      theatre_location_coords: z.object({
+        lat: z.number(),
+        lon: z.number()
+      }),
       theatre_number: z.string(),
       is_watched: z.boolean()
     }),

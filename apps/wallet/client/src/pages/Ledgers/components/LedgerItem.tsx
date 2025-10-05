@@ -27,7 +27,9 @@ function LedgerItem({ ledger }: { ledger: WalletLedger }) {
   const deleteMutation = useMutation(
     forgeAPI.wallet.ledgers.remove.input({ id: ledger.id }).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
+        queryClient.invalidateQueries({
+          queryKey: ['wallet', 'ledgers']
+        })
       },
       onError: (error: Error) => {
         toast.error('Failed to delete ledger: ' + error.message)

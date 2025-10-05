@@ -174,7 +174,10 @@ function CaptionSelector({
                     key={language}
                     icon="tabler:language"
                     label={meta[0].name ?? ''}
-                    value={JSON.stringify({ language, meta })}
+                    value={JSON.stringify({
+                      language,
+                      meta
+                    })}
                   />
                 ))}
             </ListboxInput>

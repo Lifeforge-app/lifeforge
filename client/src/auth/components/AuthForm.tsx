@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
-
 import { useAuth } from 'shared'
+
 import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm({ providers }: { providers: string[] }) {

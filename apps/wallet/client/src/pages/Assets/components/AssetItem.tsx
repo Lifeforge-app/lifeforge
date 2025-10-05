@@ -31,7 +31,9 @@ function AssetItem({ asset }: { asset: WalletAsset }) {
       })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'assets'] })
+          queryClient.invalidateQueries({
+            queryKey: ['wallet', 'assets']
+          })
         },
         onError: (error: Error) => {
           toast.error('Failed to delete asset: ' + error.message)

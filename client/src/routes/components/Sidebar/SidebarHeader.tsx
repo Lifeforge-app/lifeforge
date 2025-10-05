@@ -24,7 +24,8 @@ function SidebarHeader({
           <Icon className="text-custom-500 size-6" icon="tabler:hammer" />
           {sidebarExpanded && (
             <div>
-              LifeForge<span className="text-custom-500 text-2xl">.</span>
+              LifeForge
+              <span className="text-custom-500 text-2xl">.</span>
             </div>
           )}
         </h1>

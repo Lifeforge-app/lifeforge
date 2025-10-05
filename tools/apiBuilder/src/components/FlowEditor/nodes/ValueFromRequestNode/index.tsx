@@ -122,7 +122,10 @@ function ValueFromRequest({ id }: { id: string }) {
                   field?.name === option.field.name &&
                   requestType === option.from
                 }
-                value={{ requestType: option.from, field: option.field }}
+                value={{
+                  requestType: option.from,
+                  field: option.field
+                }}
               >
                 <span className="flex-between w-full gap-3">
                   <span className="flex items-center gap-2">

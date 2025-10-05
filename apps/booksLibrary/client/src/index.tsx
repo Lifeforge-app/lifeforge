@@ -79,7 +79,10 @@ function BooksLibrary() {
                 new
               </Button>
             }
-            classNames={{ wrapper: 'hidden md:block', menu: 'w-64' }}
+            classNames={{
+              wrapper: 'hidden md:block',
+              menu: 'w-64'
+            }}
           >
             <ContextMenuItem
               icon="tabler:upload"

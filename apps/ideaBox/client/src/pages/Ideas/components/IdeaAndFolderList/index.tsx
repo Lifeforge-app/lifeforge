@@ -47,7 +47,9 @@ function IdeaAndFolderList() {
                             children: 'new',
                             onClick: handleIdeaCreation,
                             icon: 'tabler:plus',
-                            tProps: { item: t('items.idea') }
+                            tProps: {
+                              item: t('items.idea')
+                            }
                           }}
                           icon="tabler:bulb-off"
                           name="idea"

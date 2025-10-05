@@ -19,7 +19,9 @@ function ModifyTypeModal({
   const mutation = useMutation(
     (openType === 'create'
       ? forgeAPI.scoresLibrary.types.create
-      : forgeAPI.scoresLibrary.types.update.input({ id: initialData?.id || '' })
+      : forgeAPI.scoresLibrary.types.update.input({
+          id: initialData?.id || ''
+        })
     ).mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })

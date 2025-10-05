@@ -58,9 +58,13 @@ const configureYearlyOptions = (
     options.bymonth = data.month
     options.bymonthday = data.date
   } else if (data.type === 'relativeDay') {
-    options.bysetpos = { first: 1, second: 2, third: 3, fourth: 4, last: -1 }[
-      data.onThe
-    ]
+    options.bysetpos = {
+      first: 1,
+      second: 2,
+      third: 3,
+      fourth: 4,
+      last: -1
+    }[data.onThe]
     options.byweekday = getWeekdayOptions(data.onTheDay)
     options.bymonth = data.onTheDayOfMonth
   }
@@ -76,9 +80,13 @@ const configureMonthlyOptions = (
   if (data.type === 'exactDate') {
     options.bymonthday = data.onDate
   } else if (data.type === 'relativeDay') {
-    options.bysetpos = { first: 1, second: 2, third: 3, fourth: 4, last: -1 }[
-      data.onThe
-    ]
+    options.bysetpos = {
+      first: 1,
+      second: 2,
+      third: 3,
+      fourth: 4,
+      last: -1
+    }[data.onThe]
     options.byweekday = getWeekdayOptions(data.onTheDay)
   }
 }

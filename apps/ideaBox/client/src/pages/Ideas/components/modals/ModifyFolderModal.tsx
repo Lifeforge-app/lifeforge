@@ -28,7 +28,9 @@ function ModifyFolderModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['ideaBox', 'folders'] })
+        queryClient.invalidateQueries({
+          queryKey: ['ideaBox', 'folders']
+        })
       },
       onError: error => {
         toast.error(`Failed to ${type} folder: ${error.message}`)

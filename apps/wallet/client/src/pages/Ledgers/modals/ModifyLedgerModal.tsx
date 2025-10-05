@@ -25,7 +25,9 @@ function ModifyLedgerModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['wallet', 'ledgers'] })
+        queryClient.invalidateQueries({
+          queryKey: ['wallet', 'ledgers']
+        })
       },
       onError: error => {
         toast.error(

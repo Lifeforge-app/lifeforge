@@ -26,7 +26,9 @@ function ModifyTagModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['todoList', 'tags'] })
+        queryClient.invalidateQueries({
+          queryKey: ['todoList', 'tags']
+        })
       },
       onError: error => {
         toast.error(`Failed to ${type} tag: ${error.message}`)

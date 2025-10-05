@@ -31,7 +31,9 @@ function ModifyPasswordModal({
         })
     ).mutationOptions({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['passwords', 'entries'] })
+        queryClient.invalidateQueries({
+          queryKey: ['passwords', 'entries']
+        })
       },
       onError: () => {
         toast.error('Failed to modify password entry')

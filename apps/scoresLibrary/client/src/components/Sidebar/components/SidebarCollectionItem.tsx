@@ -30,7 +30,9 @@ function SidebarCollectionItem({
       .input({ id: data.id })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+          queryClient.invalidateQueries({
+            queryKey: ['scoresLibrary']
+          })
         },
         onError: () => {
           toast.error('Failed to delete collection')

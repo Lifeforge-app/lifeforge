@@ -46,7 +46,9 @@ function TemplateItem({
       .input({ id: template.id })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['wallet', 'templates'] })
+          queryClient.invalidateQueries({
+            queryKey: ['wallet', 'templates']
+          })
         },
         onError: () => {
           toast.error('Failed to delete template')

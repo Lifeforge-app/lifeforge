@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useUserPersonalization } from '../../../../providers/UserPersonalizationProvider'
 import { ConfigColumn, Listbox, ListboxOption } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
+
+import { useUserPersonalization } from '../../../../providers/UserPersonalizationProvider'
 
 const LANGUAGES: Array<{
   name: string

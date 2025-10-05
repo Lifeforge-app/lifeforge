@@ -23,7 +23,9 @@ function ModifyCalendarModal({
   const mutation = useMutation(
     (type === 'create'
       ? forgeAPI.calendar.calendars.create
-      : forgeAPI.calendar.calendars.update.input({ id: initialData?.id || '' })
+      : forgeAPI.calendar.calendars.update.input({
+          id: initialData?.id || ''
+        })
     ).mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({

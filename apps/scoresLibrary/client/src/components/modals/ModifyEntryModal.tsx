@@ -21,7 +21,9 @@ function ModifyEntryModal({
       .input({ id: initialData.id })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['scoresLibrary'] })
+          queryClient.invalidateQueries({
+            queryKey: ['scoresLibrary']
+          })
           onClose()
         }
       })

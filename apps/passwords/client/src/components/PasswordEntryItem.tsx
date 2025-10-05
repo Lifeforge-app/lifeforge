@@ -55,7 +55,9 @@ function PasswordEntryItem({
       })
       .mutationOptions({
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['passwords', 'entries'] })
+          queryClient.invalidateQueries({
+            queryKey: ['passwords', 'entries']
+          })
         },
         onError: () => {
           toast.error('Failed to delete password. Please try again.')

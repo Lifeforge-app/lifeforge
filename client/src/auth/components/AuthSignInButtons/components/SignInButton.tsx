@@ -1,6 +1,5 @@
 import { Button } from 'lifeforge-ui'
 import { memo } from 'react'
-
 import { useAuth } from 'shared'
 
 function SignInButton({

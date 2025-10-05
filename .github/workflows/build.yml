@@ -2,7 +2,7 @@ name: Build
 
 on:
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -12,56 +12,56 @@ jobs:
   build-backend:
     name: Build Backend
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-          
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-        
+
       - name: Type check server
         run: bun run forge types server
-        
+
       - name: Build server
         run: bun run forge build server
 
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-          
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-        
+
       - name: Type check shared package
         run: bun run forge types shared
-        
+
       - name: Build shared package
         run: bun run forge build shared
-        
+
       - name: Type check UI package
         run: bun run forge types ui
-        
-      - name: Build UI package  
+
+      - name: Build UI package
         run: bun run forge build ui
-        
+
       - name: Type check client
         run: bun run forge types client
-        
+
       - name: Build client
         run: bun run forge build client
 
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-backend, build-frontend]
     if: always() && github.event_name == 'pull_request'
-    
+
     steps:
       - name: Comment PR
         uses: actions/github-script@v7
@@ -80,10 +80,10 @@ jobs:
             const runId = context.runId;
             const backendResult = '${{ needs.build-backend.result }}';
             const frontendResult = '${{ needs.build-frontend.result }}';
-            
+
             let summary = '## 🔨 Build Results\n\n';
             let allSuccess = true;
-            
+
             // Backend status
             if (backendResult === 'success') {
               summary += '✅ **Backend Build**: Passed\n';
@@ -91,7 +91,7 @@ jobs:
               summary += `❌ **Backend Build**: Failed (${backendResult})\n`;
               allSuccess = false;
             }
-            
+
             // Frontend status  
             if (frontendResult === 'success') {
               summary += '✅ **Frontend Build**: Passed\n';
@@ -99,29 +99,29 @@ jobs:
               summary += `❌ **Frontend Build**: Failed (${frontendResult})\n`;
               allSuccess = false;
             }
-            
+
             summary += '\n';
-            
+
             if (allSuccess) {
               summary += '🎉 All builds completed successfully!';
             } else {
               summary += '⚠️ One or more builds failed. Please check the logs for details.';
             }
-            
+
             summary += `\n\n🔗 [View full workflow run](https://github.com/${owner}/${repo}/actions/runs/${runId})`;
-            
+
             // Find existing comment to update
             const comments = await github.rest.issues.listComments({
               owner,
               repo,
               issue_number: number,
             });
-            
+
             const botComment = comments.data.find(
               comment => comment.user.type === 'Bot' && 
               comment.body.includes('## 🔨 Build Results')
             );
-            
+
             if (botComment) {
               // Update existing comment
               await github.rest.issues.updateComment({
