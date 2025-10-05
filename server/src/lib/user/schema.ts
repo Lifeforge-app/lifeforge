@@ -128,8 +128,8 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'users_name',
-          max: 0,
+          id: 'text1579384326',
+          max: 255,
           min: 0,
           name: 'name',
           pattern: '',
@@ -141,9 +141,9 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'users_avatar',
+          id: 'file376926767',
           maxSelect: 1,
-          maxSize: 5242880,
+          maxSize: 0,
           mimeTypes: [
             'image/jpeg',
             'image/png',
@@ -156,7 +156,7 @@ const usersSchemas = {
           protected: false,
           required: false,
           system: false,
-          thumbs: ['256x0'],
+          thumbs: null,
           type: 'file'
         },
         {
@@ -410,38 +410,6 @@ const usersSchemas = {
           subject: 'Login from a new location',
           body: "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location.</p>\n<p>If this was you, you may disregard this email.</p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
         }
-      },
-      oauth2: {
-        providers: [
-          {
-            pkce: null,
-            name: 'github',
-            clientId: '3ffe0179e120fd734d1c',
-            authURL: '',
-            tokenURL: '',
-            userInfoURL: '',
-            displayName: '',
-            extra: null
-          },
-          {
-            pkce: null,
-            name: 'google',
-            clientId:
-              '667707161573-3t64t2s6g5qr6rve19qibkmr6fbiq9f7.apps.googleusercontent.com',
-            authURL: '',
-            tokenURL: '',
-            userInfoURL: '',
-            displayName: '',
-            extra: null
-          }
-        ],
-        mappedFields: {
-          id: 'username',
-          name: 'name',
-          username: 'name',
-          avatarURL: 'avatar'
-        },
-        enabled: true
       },
       passwordAuth: {
         enabled: true,

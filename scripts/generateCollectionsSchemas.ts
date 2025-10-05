@@ -168,8 +168,6 @@ async function buildModuleCollectionsMap(
     process.exit(1)
   }
 
-  console.log(allModules)
-
   for (const collection of collections) {
     const matchingModule = allModules.find(module =>
       collection.name.startsWith(
@@ -238,6 +236,10 @@ function generateModuleSchemaContent(
 
     delete collection.created
     delete collection.updated
+
+    if ('oauth2' in collection) {
+      delete collection.oauth2
+    }
 
     schemaEntries.push(`  ${collectionName}: {
         schema: ${zodSchemaString},
