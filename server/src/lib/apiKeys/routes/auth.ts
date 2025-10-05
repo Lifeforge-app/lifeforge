@@ -28,7 +28,7 @@ const createOrUpdate = forgeController
     const id = pb.instance.authStore.record!.id
 
     await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(id)
       .data({
         APIKeysMasterPasswordHash
@@ -49,7 +49,7 @@ const verify = forgeController
 
     const decryptedMaster = decrypt2(password, challenge)
 
-    const user = await pb.getOne.collection('users__users').id(id).execute()
+    const user = await pb.getOne.collection('user__users').id(id).execute()
 
     const { APIKeysMasterPasswordHash } = user
 

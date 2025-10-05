@@ -96,7 +96,7 @@ export async function connectToPocketBase(
  * Handles special cases like users__users -> users
  */
 function mapCollectionName(collectionName: string): string {
-  return collectionName === 'users__users' ? 'users' : collectionName
+  return collectionName === 'user__users' ? 'users' : collectionName
 }
 
 /**

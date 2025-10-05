@@ -18,7 +18,7 @@ const updateAvatar = forgeController
     const { id } = pb.instance.authStore.record!
 
     const newRecord = await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(id)
       .data(fileResult)
       .execute()
@@ -35,7 +35,7 @@ const deleteAvatar = forgeController
     const { id } = pb.instance.authStore.record!
 
     await pb.update
-      .collection('users__users')
+      .collection('user__users')
       .id(id)
       .data({
         avatar: ''
@@ -84,7 +84,7 @@ const updateProfile = forgeController
 
     if (Object.keys(updateData).length > 0) {
       await pb.update
-        .collection('users__users')
+        .collection('user__users')
         .id(id)
         .data(updateData)
         .execute()

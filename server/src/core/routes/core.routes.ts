@@ -117,7 +117,6 @@ const coreRoutes = forgeRouter({
   apiKeys: (await import('../../lib/apiKeys')).default,
   pixabay: (await import('../../lib/pixabay')).default,
   locations: (await import('../../lib/locations')).default,
-  modules: (await import('../../lib/modules')).default,
   backups: (await import('../../lib/backups')).default,
   database: (await import('../../lib/database')).default,
   ping,
