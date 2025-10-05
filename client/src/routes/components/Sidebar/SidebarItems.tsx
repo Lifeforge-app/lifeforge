@@ -25,7 +25,8 @@ function SidebarItems({ query }: { query: string }) {
           e.items.some(
             subItem =>
               subItem.name.toLowerCase().includes(query.toLowerCase()) &&
-              !subItem.disabled
+              !subItem.disabled &&
+              !subItem.hidden
           )
       ),
     [query, userData]
@@ -37,7 +38,7 @@ function SidebarItems({ query }: { query: string }) {
         {filteredRoutes.length > 0 ? (
           filteredRoutes.map((item, index) => {
             const filteredModules = item.items.filter(
-              subItem => !subItem.disabled
+              subItem => !subItem.disabled && !subItem.hidden
             )
 
             return (
