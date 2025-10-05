@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
+import { MusicProvider } from '@modules/music/client/src/providers/MusicProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ErrorScreen, useModalStore } from 'lifeforge-ui'
 import { APIOnlineStatusWrapper } from 'lifeforge-ui'
@@ -69,7 +72,9 @@ function App() {
                                 <SocketProvider
                                   apiHost={import.meta.env.VITE_API_HOST}
                                 >
-                                  <AppRoutesProvider />
+                                  <MusicProvider>
+                                    <AppRoutesProvider />
+                                  </MusicProvider>
                                 </SocketProvider>
                               </BackgroundProvider>
                             </ToastProvider>
