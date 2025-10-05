@@ -22,15 +22,9 @@ interface MigrationResult {
   error?: string
 }
 
-// Constants
-const PATHS = {
-  ENV_FILE: path.resolve(__dirname, '../env/.env.local'),
-  MODULES_DIR: path.resolve(__dirname, '../server/src/lib')
-} as const
-
 // Environment validation
 function validateEnvironment(): Environment {
-  dotenv.config({ path: PATHS.ENV_FILE })
+  dotenv.config({ path: path.resolve(__dirname, '../env/.env.local') })
 
   const { PB_DIR } = process.env
 
@@ -114,7 +108,10 @@ async function cleanupOldMigrations(
 async function getSchemaFiles(targetModule?: string): Promise<string[]> {
   const { globSync } = await import('glob')
 
-  const allSchemas = globSync('./server/src/lib/**/schema.ts')
+  const allSchemas = globSync([
+    './server/src/lib/**/schema.ts',
+    './apps/**/server/schema.ts'
+  ])
 
   const filteredSchemas = targetModule
     ? allSchemas.filter(schemaPath => {
@@ -147,7 +144,13 @@ async function importSchemaModules(
       const module = await import(path.resolve(schemaPath))
 
       return {
-        moduleName: schemaPath.split('/').slice(-2, -1)[0],
+        moduleName: schemaPath
+          .split('/')
+          .slice(0, -1)
+          .join('/')
+          .replace(/\/server$/, '')
+          .split('/')
+          .pop(),
         schema: module.default
       }
     })
