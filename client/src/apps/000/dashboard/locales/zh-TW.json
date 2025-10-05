@@ -117,9 +117,9 @@
     "lockLayout": "鎖定佈局"
   },
   "empty": {
-    "widget": {
-      "title": "未啟用任何小工具",
-      "description": "您可以從「管理小工具」選單中新增小工具"
+    "welcome": {
+      "title": "歡迎來到 LifeForge！",
+      "description": "在 ForgeStore 安裝一些模組並開始使用吧。"
     }
   },
   "loading": "正在加載儀表板...",
