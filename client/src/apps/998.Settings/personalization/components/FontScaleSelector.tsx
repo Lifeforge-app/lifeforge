@@ -1,9 +1,8 @@
+import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Button, ConfigColumn, SliderInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
-
-import { useUserPersonalization } from '../../../../providers/UserPersonalizationProvider'
 
 function FontScaleSelector() {
   const { fontScale } = usePersonalization()

@@ -9,16 +9,8 @@ layer(base);
 @plugin 'daisyui';
 @plugin '@tailwindcss/typography';
 
-/* NPM package styles */
-@import 'leaflet/dist/leaflet.css';
+/* 3rd party styles */
 @import 'react-grid-layout/css/styles.css';
-@import 'react-medium-image-zoom/dist/styles.css';
-@import 'react-toastify/dist/ReactToastify.css';
-@import 'react-tooltip/dist/react-tooltip.css';
-@import 'react-virtualized/styles.css';
-@import 'react-datepicker/dist/react-datepicker.css';
-@import 'lifeforge-ui/dist/index.css';
-@import 'quill/dist/quill.snow.css';
 
 /* Core styles */
 @import 'lifeforge-ui/dist/index.css';
