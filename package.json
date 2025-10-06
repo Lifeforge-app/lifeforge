@@ -48,6 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "bun-types": "latest",
+    "commander": "^14.0.1",
     "concurrently": "^9.1.2",
     "eslint": "^9.26.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
