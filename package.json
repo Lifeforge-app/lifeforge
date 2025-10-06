@@ -15,7 +15,8 @@
     "./client",
     "./shared",
     "./packages/*",
-    "./apps/*"
+    "./apps/*",
+    "./tools/*"
   ],
   "scripts": {
     "forge": "bun run scripts/forge.ts",

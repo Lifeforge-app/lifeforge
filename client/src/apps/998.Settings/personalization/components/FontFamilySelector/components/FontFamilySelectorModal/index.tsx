@@ -1,3 +1,4 @@
+import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
@@ -19,7 +20,6 @@ import { toast } from 'react-toastify'
 import { AutoSizer } from 'react-virtualized'
 import { type InferOutput, usePersonalization } from 'shared'
 
-import { useUserPersonalization } from '../../../../../../../providers/UserPersonalizationProvider'
 import FontListItem from './components/FontListItem'
 
 export type FontFamily = InferOutput<
