@@ -42,9 +42,9 @@ function SettingsSection({
       <div className="space-y-3 px-4">
         <ColorInput
           className="w-full"
-          color={settings.colorOfCurrentLine}
-          name="Color of Selected Line"
-          setColor={color => {
+          value={settings.colorOfCurrentLine}
+          label="Color of Selected Line"
+          setValue={color => {
             setSettings({
               colorOfCurrentLine: color
             })
@@ -58,7 +58,7 @@ function SettingsSection({
           }}
           file={settings.bgImage}
           icon="tabler:photo"
-          name="Background Image"
+          label="Background Image"
           preview={settings.bgImagePreview}
           setData={({ file, preview }) => {
             setSettings({
@@ -68,10 +68,11 @@ function SettingsSection({
           }}
         />
         <SliderInput
+          wrapperClassName="mb-8"
           icon="tabler:zoom-in-area"
           max={200}
           min={10}
-          name="Background Image Scale"
+          label="Background Image Scale"
           setValue={value => {
             setSettings({
               bgImageScale: value

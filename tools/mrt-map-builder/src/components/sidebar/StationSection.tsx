@@ -31,8 +31,7 @@ function StationSection({
 
       <div className="flex flex-col space-y-3 px-4">
         <SearchInput
-          lighter
-          className="mb-4"
+          className="component-bg-lighter mb-4"
           value={searchStationQuery}
           setValue={setSearchStationQuery}
           searchTarget="stations"
