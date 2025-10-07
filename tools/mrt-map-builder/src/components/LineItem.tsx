@@ -124,7 +124,7 @@ function LineItem({
                 <NumberInput
                   className="w-full"
                   icon="tabler:square-letter-x"
-                  name="X Coordinate"
+                  label="X Coordinate"
                   placeholder="X Coordinate"
                   setValue={value => {
                     setMrtLines(prevLines =>
@@ -144,7 +144,7 @@ function LineItem({
                 <NumberInput
                   className="w-full"
                   icon="tabler:square-letter-y"
-                  name="Y Coordinate"
+                  label="Y Coordinate"
                   placeholder="Y Coordinate"
                   setValue={value => {
                     setMrtLines(prevLines =>
