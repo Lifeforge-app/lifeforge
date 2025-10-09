@@ -1,4 +1,5 @@
 import { program } from 'commander'
+import fs from 'fs'
 
 import { devHandler, getAvailableServices } from '../commands/dev-commands'
 import {
@@ -7,6 +8,10 @@ import {
 } from '../commands/project-commands'
 import { PROJECTS_ALLOWED } from '../constants/constants'
 
+const VERSION_NUMBER = JSON.parse(
+  fs.readFileSync('package.json', 'utf-8')
+).version
+
 /**
  * Sets up the CLI program with all commands
  */
@@ -14,7 +19,7 @@ export function setupCLI(): void {
   program
     .name('Lifeforge Forge')
     .description('Build and manage Lifeforge projects')
-    .version('25w41')
+    .version(VERSION_NUMBER)
 
   setupProjectCommands()
   setupDevCommand()

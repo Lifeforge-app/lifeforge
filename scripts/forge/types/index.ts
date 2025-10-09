@@ -12,11 +12,14 @@ export interface CommandExecutionOptions {
   stdio?: 'inherit' | 'pipe'
   cwd?: string
   env?: Record<string, string>
+  exitOnError?: boolean
 }
 
-export interface ConcurrentServiceConfig {
+export interface ConcurrentServiceConfig<
+  T extends string | (() => string) = string
+> {
   name: string
-  command: string
+  command: T
   cwd?: string
   color?: string
 }

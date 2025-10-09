@@ -6,13 +6,17 @@ import {
   VALID_SERVICES
 } from '../constants/constants'
 import type { ConcurrentServiceConfig, ServiceType } from '../types'
-import { executeCommand, validateEnvironment } from '../utils/helpers'
+import {
+  executeCommand,
+  killExistingProcess,
+  validateEnvironment
+} from '../utils/helpers'
 
 /**
  * Service command configurations
  */
 interface ServiceConfig {
-  command: string
+  command: string | (() => string)
   cwd?: () => string | undefined
   requiresEnv?: string[]
 }
@@ -24,20 +28,31 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
     requiresEnv: ['PB_DIR']
   },
   server: {
-    command: 'cd server && bun run dev'
+    command: () => {
+      killExistingProcess('lifeforge/node_modules/.bin/tsx')
+      return 'cd server && bun run dev'
+    }
   },
   client: {
-    command: 'cd client && bun run dev'
+    command: () => {
+      killExistingProcess('lifeforge/node_modules/.bin/vite')
+      return 'cd client && bun run dev'
+    }
   },
   ui: {
-    command: 'cd packages/lifeforge-ui && bun run dev'
+    command: () => {
+      killExistingProcess('lifeforge/node_modules/.bin/storybook')
+      return 'cd packages/lifeforge-ui && bun run dev'
+    }
   }
 }
 
 /**
  * Creates service configurations for concurrent execution
  */
-const createConcurrentServices = (): ConcurrentServiceConfig[] => [
+const createConcurrentServices = (): ConcurrentServiceConfig<
+  string | (() => string)
+>[] => [
   {
     name: 'db',
     command: SERVICE_COMMANDS.db.command,
@@ -92,7 +107,13 @@ function startAllServices(): void {
   try {
     const services = createConcurrentServices()
 
-    concurrently(services, {
+    services.forEach(service => {
+      if (typeof service.command === 'function') {
+        service.command = service.command()
+      }
+    })
+
+    concurrently(services as ConcurrentServiceConfig[], {
       killOthers: ['failure', 'success'],
       restartTries: 3,
       prefix: 'name',

@@ -144,13 +144,14 @@ async function importSchemaModules(
       const module = await import(path.resolve(schemaPath))
 
       return {
-        moduleName: schemaPath
-          .split('/')
-          .slice(0, -1)
-          .join('/')
-          .replace(/\/server$/, '')
-          .split('/')
-          .pop(),
+        moduleName:
+          schemaPath
+            .split('/')
+            .slice(0, -1)
+            .join('/')
+            .replace(/\/server$/, '')
+            .split('/')
+            .pop() || 'unknown',
         schema: module.default
       }
     })
