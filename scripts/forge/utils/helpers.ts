@@ -34,18 +34,27 @@ export function resolveProjects<T extends string>(
  * Executes a shell command with proper error handling
  */
 export function executeCommand(
-  command: string,
+  command: string | (() => string),
   options: CommandExecutionOptions = {}
-): void {
+): string {
+  const cmd = typeof command === 'function' ? command() : command
+
   try {
-    console.log(`📋 Executing: ${command}`)
-    execSync(command, {
+    console.log(`📋 Executing: ${cmd}`)
+    const result = execSync(cmd, {
       stdio: 'inherit',
       ...options
     })
-    console.log(`✅ Completed: ${command}`)
+
+    console.log(`✅ Completed: ${cmd}`)
+
+    return result?.toString().trim()
   } catch (error) {
-    console.error(`❌ Failed: ${command}`)
+    if (!options.exitOnError) {
+      throw error
+    }
+
+    console.error(`❌ Failed: ${cmd}`)
     console.error(error)
     process.exit(1)
   }
@@ -87,4 +96,22 @@ export function logProcessStart(processType: string, projects: string[]): void {
  */
 export function logProcessComplete(processType: string): void {
   console.log(`🎉 All projects ${processType} completed successfully.`)
+}
+
+/**
+ * Kills existing processes matching the given keyword
+ */
+export function killExistingProcess(processKeyword: string): void {
+  try {
+    const serverInstance = executeCommand(`pgrep -f "${processKeyword}"`, {
+      exitOnError: false,
+      stdio: 'pipe'
+    })
+
+    if (serverInstance) {
+      executeCommand(`pkill -f "${processKeyword}"`)
+    }
+  } catch {
+    // No existing server instance found
+  }
 }
