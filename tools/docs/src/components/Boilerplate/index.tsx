@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { useLocation } from 'react-router'

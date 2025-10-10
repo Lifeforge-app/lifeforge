@@ -8,8 +8,8 @@ import {
   ToastProvider
 } from 'shared'
 
-import App from './App.js'
-import i18n from './i18n.js'
+import App from './App'
+import i18n from './i18n'
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(

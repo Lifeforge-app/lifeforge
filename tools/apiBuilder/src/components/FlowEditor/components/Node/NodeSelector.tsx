@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { ModalHeader, SearchInput } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useState } from 'react'
