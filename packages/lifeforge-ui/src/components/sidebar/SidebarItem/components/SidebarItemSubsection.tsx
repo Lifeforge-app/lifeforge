@@ -28,7 +28,7 @@ function SidebarItemSubsection({
       <ul
         className={clsx(
           'shadow-custom flex w-full flex-col items-center rounded-md',
-          !sidebarExpanded && 'bg-bg-200/50 dark:bg-bg-800'
+          !sidebarExpanded && 'bg-bg-100 dark:bg-bg-800'
         )}
       >
         {subsection.map(({ label: subsectionLabel, icon, path }) => (

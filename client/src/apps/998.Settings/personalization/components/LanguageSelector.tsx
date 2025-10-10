@@ -1,5 +1,5 @@
 import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { ConfigColumn, Listbox, ListboxOption } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
