@@ -7,6 +7,7 @@ import {
   resolveProjects,
   validateProjects
 } from '../utils/helpers'
+import { CLILoggingService } from '../utils/logging'
 
 /**
  * Executes a command for multiple projects
@@ -38,10 +39,10 @@ export function validateProjectArguments(projects: string[]): void {
   const validation = validateProjects(projects, validProjects)
 
   if (!validation.isValid) {
-    console.error(
-      `❌ Invalid project(s): ${validation.invalidProjects.join(', ')}`
+    CLILoggingService.error(
+      `Invalid project(s): ${validation.invalidProjects.join(', ')}`
     )
-    console.error(
+    CLILoggingService.error(
       `Available projects: all, ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
     )
     process.exit(1)
