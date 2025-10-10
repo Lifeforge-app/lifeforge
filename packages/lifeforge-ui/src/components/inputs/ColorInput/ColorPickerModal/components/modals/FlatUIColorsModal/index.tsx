@@ -1,6 +1,6 @@
 import { ItemWrapper } from '@components/layouts'
 import { ModalHeader } from '@components/modals'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { clsx } from 'clsx'
 import tinycolor from 'tinycolor2'
 

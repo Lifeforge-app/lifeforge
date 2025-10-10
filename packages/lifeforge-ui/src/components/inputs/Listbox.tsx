@@ -1,5 +1,5 @@
 import { Listbox as HeadlessListbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { clsx } from 'clsx'
 
 import ListboxOptions from './ListboxInput/components/ListboxOptions'
