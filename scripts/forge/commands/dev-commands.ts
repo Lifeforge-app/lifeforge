@@ -11,6 +11,7 @@ import {
   killExistingProcess,
   validateEnvironment
 } from '../utils/helpers'
+import { CLILoggingService } from '../utils/logging'
 
 /**
  * Service command configurations
@@ -102,7 +103,7 @@ function startSingleService(service: string): void {
  */
 function startAllServices(): void {
   validateEnvironment(['PB_DIR'])
-  console.log('🚀 Starting all services: db, server, client...')
+  CLILoggingService.info('Starting all services: db, server, client...')
 
   try {
     const services = createConcurrentServices()
@@ -120,8 +121,8 @@ function startAllServices(): void {
       prefixColors: ['cyan', 'green', 'magenta']
     })
   } catch (error) {
-    console.error('❌ Failed to start all services.')
-    console.error(error)
+    CLILoggingService.error('Failed to start all services.')
+    CLILoggingService.error(`${error}`)
     process.exit(1)
   }
 }
@@ -131,8 +132,8 @@ function startAllServices(): void {
  */
 function validateService(service: string): void {
   if (!VALID_SERVICES.includes(service as any)) {
-    console.error(`❌ Invalid service: ${service}`)
-    console.error(`Available services: ${VALID_SERVICES.join(', ')}`)
+    CLILoggingService.error(`Invalid service: ${service}`)
+    CLILoggingService.error(`Available services: ${VALID_SERVICES.join(', ')}`)
     process.exit(1)
   }
 }
@@ -148,13 +149,13 @@ export function devHandler(service: string): void {
     return
   }
 
-  console.log(`🚀 Starting service: ${service}...`)
+  CLILoggingService.info(`Starting service: ${service}...`)
 
   try {
     startSingleService(service)
   } catch (error) {
-    console.error(`❌ Failed to start service: ${service}`)
-    console.error(error)
+    CLILoggingService.error(`Failed to start service: ${service}`)
+    CLILoggingService.error(`${error}`)
     process.exit(1)
   }
 }

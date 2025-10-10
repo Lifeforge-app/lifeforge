@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
+import { CLILoggingService } from './utils/logging'
 
 /**
  * Lifeforge Forge - Build and development tool for Lifeforge projects
@@ -23,6 +24,6 @@ try {
   setupCLI()
   runCLI()
 } catch (error) {
-  console.error('❌ Fatal error:', error)
+  CLILoggingService.error(`Fatal error: ${error}`)
   process.exit(1)
 }
