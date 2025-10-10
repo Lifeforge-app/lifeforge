@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { EmptyStateScreen, SearchInput } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 

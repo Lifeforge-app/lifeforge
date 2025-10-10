@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 
 function GithubUser({ username }: { username: string }) {
