@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { Button, useModalStore } from 'lifeforge-ui'
 import { useMemo } from 'react'
 

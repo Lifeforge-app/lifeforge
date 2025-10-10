@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 

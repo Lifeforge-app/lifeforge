@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router'

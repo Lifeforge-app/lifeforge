@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { NodeResizer } from '@xyflow/react'
 import clsx from 'clsx'
 import { Button, useModalStore } from 'lifeforge-ui'

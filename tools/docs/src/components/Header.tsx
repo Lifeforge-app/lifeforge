@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { Link } from 'react-router'
 import { usePersonalization } from 'shared'
 
