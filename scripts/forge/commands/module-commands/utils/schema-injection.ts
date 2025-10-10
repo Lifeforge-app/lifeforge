@@ -42,36 +42,53 @@ export function injectModuleSchema(moduleName: string): void {
       plugins: ['typescript']
     })
 
-    let arrayExpressionPath: any = null
+    let schemasObjectPath: any = null
 
-    // Find the array expression in the exported default
+    // Find the SCHEMAS object
     traverse(ast, {
-      ExportDefaultDeclaration(path) {
-        if (t.isArrayExpression(path.node.declaration)) {
-          arrayExpressionPath = path.get('declaration')
+      VariableDeclarator(path) {
+        if (
+          t.isIdentifier(path.node.id, { name: 'SCHEMAS' }) &&
+          t.isObjectExpression(path.node.init)
+        ) {
+          schemasObjectPath = path.get('init')
         }
       }
     })
 
-    if (arrayExpressionPath && t.isArrayExpression(arrayExpressionPath.node)) {
+    if (schemasObjectPath && t.isObjectExpression(schemasObjectPath.node)) {
+      // Convert module name to snake_case for the key
+      const snakeCaseModuleName = moduleName
+        .replace(/([A-Z])/g, '_$1')
+        .toLowerCase()
+        .replace(/^_/, '')
+
       // Check if module is already imported
-      const hasExistingImport = arrayExpressionPath.node.elements.some(
-        (element: any) =>
-          t.isAwaitExpression(element) &&
-          t.isCallExpression(element.argument) &&
-          t.isImport(element.argument.callee) &&
-          element.argument.arguments.length > 0 &&
-          t.isStringLiteral(element.argument.arguments[0]) &&
-          element.argument.arguments[0].value.includes(moduleName)
+      const hasExistingProperty = schemasObjectPath.node.properties.some(
+        (prop: any) =>
+          t.isObjectProperty(prop) &&
+          t.isIdentifier(prop.key) &&
+          prop.key.name === snakeCaseModuleName
       )
 
-      if (!hasExistingImport) {
+      if (!hasExistingProperty) {
         const moduleImport = t.awaitExpression(
           t.callExpression(t.import(), [
             t.stringLiteral(`@lib/${moduleName}/server/schema`)
           ])
         )
-        arrayExpressionPath.node.elements.push(moduleImport)
+
+        const memberExpression = t.memberExpression(
+          moduleImport,
+          t.identifier('default')
+        )
+
+        const newProperty = t.objectProperty(
+          t.identifier(snakeCaseModuleName),
+          memberExpression
+        )
+
+        schemasObjectPath.node.properties.push(newProperty)
       }
     }
 
@@ -111,30 +128,44 @@ export function removeModuleSchema(moduleName: string): void {
 
     let modified = false
 
-    // Find and remove the module import from the array
+    // Find and remove the module property from the SCHEMAS object
     traverse(ast, {
-      ExportDefaultDeclaration(path) {
-        if (t.isArrayExpression(path.node.declaration)) {
-          const arrayExpression = path.node.declaration
-          const originalLength = arrayExpression.elements.length
+      VariableDeclarator(path) {
+        if (
+          t.isIdentifier(path.node.id, { name: 'SCHEMAS' }) &&
+          t.isObjectExpression(path.node.init)
+        ) {
+          const objectExpression = path.node.init
+          const originalLength = objectExpression.properties.length
 
-          arrayExpression.elements = arrayExpression.elements.filter(
-            (element: any) => {
+          // Convert module name to snake_case for the key
+          const snakeCaseModuleName = moduleName
+            .replace(/([A-Z])/g, '_$1')
+            .toLowerCase()
+            .replace(/^_/, '')
+
+          objectExpression.properties = objectExpression.properties.filter(
+            (prop: any) => {
               if (
-                t.isAwaitExpression(element) &&
-                t.isCallExpression(element.argument) &&
-                t.isImport(element.argument.callee) &&
-                element.argument.arguments.length > 0 &&
-                t.isStringLiteral(element.argument.arguments[0]) &&
-                element.argument.arguments[0].value.includes(moduleName)
+                t.isObjectProperty(prop) &&
+                t.isIdentifier(prop.key) &&
+                (prop.key.name === snakeCaseModuleName ||
+                  (t.isAwaitExpression(prop.value) &&
+                    t.isCallExpression(prop.value.argument) &&
+                    t.isImport(prop.value.argument.callee) &&
+                    prop.value.argument.arguments.length > 0 &&
+                    t.isStringLiteral(prop.value.argument.arguments[0]) &&
+                    prop.value.argument.arguments[0].value.includes(
+                      moduleName
+                    )))
               ) {
-                return false // Remove this import
+                return false // Remove this property
               }
-              return true // Keep other imports
+              return true // Keep other properties
             }
           )
 
-          if (arrayExpression.elements.length < originalLength) {
+          if (objectExpression.properties.length < originalLength) {
             modified = true
           }
         }
