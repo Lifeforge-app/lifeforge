@@ -2,6 +2,7 @@ import { program } from 'commander'
 import fs from 'fs'
 
 import { devHandler, getAvailableServices } from '../commands/dev-commands'
+import * as moduleHandlers from '../commands/module-commands'
 import {
   createCommandHandler,
   getAvailableCommands
@@ -23,6 +24,7 @@ export function setupCLI(): void {
 
   setupProjectCommands()
   setupDevCommand()
+  setupModulesCommand()
 }
 
 /**
@@ -44,7 +46,7 @@ function setupProjectCommands(): void {
 }
 
 /**
- * Sets up the dev command
+ * Sets up the dev command for starting services in development mode
  */
 function setupDevCommand(): void {
   const availableServices = getAvailableServices()
@@ -57,6 +59,32 @@ function setupDevCommand(): void {
       `Service to start. Use all for starting db, server, and client. Available: ${availableServices.join(', ')}`
     )
     .action(devHandler)
+}
+
+/**
+ * Sets up commands for managing modules
+ */
+function setupModulesCommand(): void {
+  const command = program
+    .command('modules')
+    .description('Manage Lifeforge modules')
+    .argument(
+      '[action]',
+      'Action to perform on modules. Available: list, add, remove'
+    )
+
+  command.command('list').action(moduleHandlers.listModulesHandler)
+  command
+    .command('add')
+    .argument('<module>', 'Module to add, e.g., lifeforge-app/wallet')
+    .action(moduleHandlers.addModuleHandler)
+  command
+    .command('remove')
+    .argument(
+      '[module]',
+      'Module to remove, e.g., wallet (optional, will show list if not provided)'
+    )
+    .action(moduleHandlers.removeModuleHandler)
 }
 
 /**

@@ -1,6 +1,9 @@
 import { execSync } from 'child_process'
+import fs from 'fs'
+import path from 'path'
 
 import type { CommandExecutionOptions } from '../types'
+import { CLILoggingService } from './logging'
 
 /**
  * Validates if the provided projects are valid
@@ -40,13 +43,13 @@ export function executeCommand(
   const cmd = typeof command === 'function' ? command() : command
 
   try {
-    console.log(`📋 Executing: ${cmd}`)
+    CLILoggingService.info(`Executing: ${cmd}`)
     const result = execSync(cmd, {
       stdio: 'inherit',
       ...options
     })
 
-    console.log(`✅ Completed: ${cmd}`)
+    CLILoggingService.info(`Completed: ${cmd}`)
 
     return result?.toString().trim()
   } catch (error) {
@@ -54,8 +57,8 @@ export function executeCommand(
       throw error
     }
 
-    console.error(`❌ Failed: ${cmd}`)
-    console.error(error)
+    CLILoggingService.error(`Failed: ${cmd}`)
+    CLILoggingService.error(`${error}`)
     process.exit(1)
   }
 }
@@ -67,10 +70,10 @@ export function validateEnvironment(requiredVars: string[]): void {
   const missingVars = requiredVars.filter(varName => !process.env[varName])
 
   if (missingVars.length > 0) {
-    console.error(
-      `❌ Error: Missing required environment variables: ${missingVars.join(', ')}`
+    CLILoggingService.error(
+      `Missing required environment variables: ${missingVars.join(', ')}`
     )
-    console.error('Please set them in your .env file.')
+    CLILoggingService.error('Please set them in your .env file.')
     process.exit(1)
   }
 }
@@ -86,8 +89,8 @@ export function formatProjectList(projects: string[]): string {
  * Logs a process start message
  */
 export function logProcessStart(processType: string, projects: string[]): void {
-  console.log(
-    `🚀 Running ${processType} for ${projects.length} project(s): ${formatProjectList(projects)}`
+  CLILoggingService.info(
+    `Running ${processType} for ${projects.length} project(s): ${formatProjectList(projects)}`
   )
 }
 
@@ -95,7 +98,7 @@ export function logProcessStart(processType: string, projects: string[]): void {
  * Logs a process completion message
  */
 export function logProcessComplete(processType: string): void {
-  console.log(`🎉 All projects ${processType} completed successfully.`)
+  CLILoggingService.info(`All projects ${processType} completed successfully.`)
 }
 
 /**
@@ -114,4 +117,34 @@ export function killExistingProcess(processKeyword: string): void {
   } catch {
     // No existing server instance found
   }
+}
+
+type PathConfig = {
+  path: string
+  type: 'file' | 'directory'
+}
+
+export function validateFilePaths(
+  paths: PathConfig[],
+  basedir: string
+): boolean {
+  for (const p of paths) {
+    const { path: pth, type } = p
+
+    const fullPath = path.resolve(basedir, pth)
+    if (!fs.existsSync(fullPath)) {
+      return false
+    }
+
+    const stats = fs.lstatSync(fullPath)
+
+    if (type === 'file' && !stats.isFile()) {
+      return false
+    }
+
+    if (type === 'directory' && !stats.isDirectory()) {
+      return false
+    }
+  }
+  return true
 }
