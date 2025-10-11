@@ -8,6 +8,7 @@ import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
 import app from './core/app'
+import { CORS_ALLOWED_ORIGINS } from './core/routes/constants/corsAllowedOrigins'
 
 dotenv.config({
   path: '../env/.env.local'
@@ -28,7 +29,17 @@ await checkDB()
 
 const server = createServer(app)
 
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin(requestOrigin, callback) {
+      if (CORS_ALLOWED_ORIGINS.includes(requestOrigin || '')) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
+  }
+})
 
 setupSocket(io)
 
