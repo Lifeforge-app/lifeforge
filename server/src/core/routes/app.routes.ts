@@ -1,5 +1,3 @@
-import { forgeRouter } from '@functions/routes'
-
-const appRoutes = forgeRouter({})
-
-export default appRoutes
+import { forgeRouter } from '@functions/routes';
+const appRoutes = forgeRouter({});
+export default appRoutes;
