@@ -116,7 +116,7 @@ function startAllServices(): void {
 
     concurrently(services as ConcurrentServiceConfig[], {
       killOthers: ['failure', 'success'],
-      restartTries: 3,
+      restartTries: 0,
       prefix: 'name',
       prefixColors: ['cyan', 'green', 'magenta']
     })
