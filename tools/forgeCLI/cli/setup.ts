@@ -1,6 +1,7 @@
 import { program } from 'commander'
 import fs from 'fs'
 
+import * as dbHandlers from '../commands/db-commands'
 import { devHandler, getAvailableServices } from '../commands/dev-commands'
 import * as moduleHandlers from '../commands/module-commands'
 import {
@@ -25,6 +26,7 @@ export function setupCLI(): void {
   setupProjectCommands()
   setupDevCommand()
   setupModulesCommand()
+  setupDatabaseCommands()
 }
 
 /**
@@ -85,6 +87,27 @@ function setupModulesCommand(): void {
       'Module to remove, e.g., wallet (optional, will show list if not provided)'
     )
     .action(moduleHandlers.removeModuleHandler)
+}
+
+/**
+ * Sets up commands for database operations
+ */
+function setupDatabaseCommands(): void {
+  const command = program
+    .command('db')
+    .description('Manage database schemas and migrations')
+
+  command
+    .command('generate-schema')
+    .description('Generate Zod schemas from PocketBase collections')
+    .argument('[module]', 'Optional module name to generate schema for')
+    .action(dbHandlers.generateSchemaHandler)
+
+  command
+    .command('generate-migrations')
+    .description('Generate PocketBase migrations from schema files')
+    .argument('[module]', 'Optional module name to generate migrations for')
+    .action(dbHandlers.generateMigrationsHandler)
 }
 
 /**
