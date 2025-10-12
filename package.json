@@ -19,7 +19,7 @@
     "./tools/*"
   ],
   "scripts": {
-    "forge": "bun run scripts/forge/index.ts",
+    "forge": "bun run tools/forgeCLI/index.ts",
     "start:server": "cd server && bun run start",
     "db:generate-schemas": "bun run ./scripts/generateCollectionsSchemas.ts",
     "db:generate-migrations": "bun run ./scripts/generateCollectionsMigrations.ts"
@@ -58,5 +58,9 @@
     "prompts": "^2.4.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.31.1"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "dotenv": "^17.2.3"
   }
 }
