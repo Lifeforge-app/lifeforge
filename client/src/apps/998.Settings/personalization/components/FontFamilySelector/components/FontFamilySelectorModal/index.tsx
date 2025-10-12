@@ -15,7 +15,6 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type Scrollbars from 'react-custom-scrollbars'
 import { toast } from 'react-toastify'
 import { AutoSizer } from 'react-virtualized'
 import { type InferOutput, usePersonalization } from 'shared'
@@ -45,7 +44,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
 
   const [selectedFont, setSelectedFont] = useState<string | null>(fontFamily)
 
-  const scrollableRef = useRef<Scrollbars>(null)
+  const scrollableRef = useRef<any>(null)
 
   const filteredFonts = useMemo(
     () =>
