@@ -18,12 +18,11 @@ async function checkAPIStatus(
   }, 5000)
 
   return await fetch(`${apiEndpoint}/status`, {
-    signal: controller.signal,
-    cache: 'no-store'
+    signal: controller.signal
   })
     .then(async res => {
       if (res.ok) {
-        const data = await res.json()
+        const data: any = await res.json()
 
         return data.data.environment
       }
