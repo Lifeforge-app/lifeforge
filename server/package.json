@@ -15,7 +15,7 @@
   "main": "./dist/server.js",
   "scripts": {
     "dev": "tsx watch --env-file=../env/.env.local ./src/index.ts",
-    "types": "bun run tsc -b --noEmit",
+    "types": "bun run tsc -b",
     "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
@@ -54,6 +54,7 @@
     "@types/cors": "^2.8.17",
     "@types/crypto-js": "^4.2.2",
     "@types/express": "^4.17.23",
+    "@types/express-serve-static-core": "4.19.6",
     "@types/jsdom": "^21.1.7",
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.12",
