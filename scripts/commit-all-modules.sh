@@ -1,9 +1,18 @@
 #!/bin/bash
 
 # Script to loop through all modules in apps directory and commit changes
-# Usage: ./scripts/commit-all-modules.sh
+# Usage: ./scripts/commit-all-modules.sh "Your commit message here"
 
 set -e  # Exit on any error
+
+# Check if commit message is provided
+if [ $# -eq 0 ]; then
+    echo "Error: Commit message is required"
+    echo "Usage: $0 \"Your commit message here\""
+    exit 1
+fi
+
+COMMIT_MESSAGE="$1"
 
 # Colors for output
 RED='\033[0;31m'
@@ -12,6 +21,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 echo -e "${YELLOW}Starting git operations for all modules in apps directory...${NC}"
+echo -e "${YELLOW}Commit message: \"$COMMIT_MESSAGE\"${NC}"
 
 # Get the script directory and navigate to project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -54,7 +64,7 @@ for module_dir in apps/*/; do
         else
             # Execute git commands
             if git add . && \
-               git commit -m "chore: add package.json and update dependencies" && \
+               git commit -m "$COMMIT_MESSAGE" && \
                git push origin main; then
                 echo -e "  ${GREEN}✓${NC} Successfully committed and pushed changes for $module_name"
                 ((successful_modules++))
