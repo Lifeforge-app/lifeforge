@@ -14,7 +14,7 @@ layer(base);
 
 /* Core styles */
 @import 'lifeforge-ui/dist/index.css';
-@source '../../node_modules/lifeforge-ui/dist';
+@source '../../packages/lifeforge-ui/dist';
 
 /* App styles */
 @source '../../apps';
