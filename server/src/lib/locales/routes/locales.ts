@@ -10,11 +10,14 @@ import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 
 export const allApps = fs
   .globSync([
-    '../client/src/apps/*/*',
-    '../tools/*',
-    path.resolve(process.cwd(), '../apps/**')
+    '../client/src/apps/**/locales',
+    '../tools/**/locales',
+    path.resolve(process.cwd(), '../apps/**/locales')
   ])
-  .filter(e => fs.existsSync(`${e}/locales`))
+  .filter(dir => {
+    return fs.existsSync(path.join(dir, 'en.json'))
+  })
+  .map(dir => path.dirname(dir))
 
 const getLocale = forgeController
   .query()
