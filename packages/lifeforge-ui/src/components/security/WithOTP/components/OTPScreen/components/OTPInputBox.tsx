@@ -25,9 +25,9 @@ function OTPInputBox({
         numInputs={6}
         renderInput={props => (
           <input
-            {...props}
+            {...(props as any)}
             className={clsx(
-              'border-bg-200 text-bg-800 shadow-custom dark:border-bg-700 dark:text-bg-200 mx-2 size-12! rounded-md !border-[1.5px] border-solid! text-lg md:size-16! md:text-2xl',
+              'border-bg-200 text-bg-800 shadow-custom dark:border-bg-700 dark:text-bg-200 size-12! border-solid! md:size-16! mx-2 rounded-md !border-[1.5px] text-lg md:text-2xl',
               lighter ? 'component-bg-lighter' : 'component-bg'
             )}
             inputMode="numeric"

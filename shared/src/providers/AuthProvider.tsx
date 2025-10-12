@@ -87,8 +87,8 @@ export default function AuthProvider({
         .then(async res => {
           const data = await res.json()
 
-          if (res.ok && data.state === 'success') {
-            return { success: true, userData: data.data.userData }
+          if (res.ok && (data as any).state === 'success') {
+            return { success: true, userData: (data as any).data.userData }
           } else {
             return { success: false, userData: null }
           }
@@ -159,7 +159,7 @@ export default function AuthProvider({
           body: JSON.stringify({ otp, tid: tid.current, type })
         })
 
-        const data = await res.json()
+        const data: any = await res.json()
 
         if (res.ok && data.state === 'success') {
           localStorage.setItem('session', data.data.session)
