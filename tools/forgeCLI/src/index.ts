@@ -16,7 +16,7 @@ import { CLILoggingService } from './utils/logging'
 
 // Load environment variables
 dotenv.config({
-  path: path.resolve(__dirname, '../../env/.env.local')
+  path: path.resolve(__dirname, '../../../env/.env.local')
 })
 
 // Setup and run CLI
