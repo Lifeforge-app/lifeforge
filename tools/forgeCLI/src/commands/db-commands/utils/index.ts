@@ -7,7 +7,7 @@ export {
 } from './file-utils'
 export {
   validatePocketBaseSetup,
-  checkRunningInstances,
+  checkRunningPBInstances as checkRunningInstances,
   cleanupOldMigrations
 } from './pocketbase-utils'
 export {

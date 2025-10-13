@@ -1,7 +1,6 @@
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import fs from 'fs'
-import path from 'path'
 import prettier from 'prettier'
 
 import { CLILoggingService } from '../../../utils/logging'
@@ -60,6 +59,7 @@ export async function createMigrationFile(
     )
 
     const resString = response.toString()
+
     const match = resString.match(/Successfully created file "(.*)"/)
 
     if (!match || match.length < 2) {
@@ -93,15 +93,17 @@ export async function createMigrationFile(
     fs.writeFileSync(migrationFilePath, formattedContent, 'utf-8')
 
     CLILoggingService.info(
-      `Migration for module ${chalk.bold.blue(moduleName)} created successfully.`
+      `Migration for module ${chalk.bold.blue(moduleName)} created successfully with ${chalk.bold.blue(Object.keys(schema).length)} collections.`
     )
 
     return { success: true, migrationPath: migrationFilePath }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
+
     CLILoggingService.error(
       `Failed to create migration for module ${chalk.bold.blue(moduleName)}: ${errorMessage}`
     )
+
     return { success: false, error: errorMessage }
   }
 }
