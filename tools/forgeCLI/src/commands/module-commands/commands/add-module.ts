@@ -2,6 +2,7 @@ import fs from 'fs'
 
 import { executeCommand, validateFilePaths } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
+import { generateMigrationsHandler } from '../../db-commands'
 import {
   MODULE_STRUCTURE_REQUIREMENTS,
   type ModuleInstallConfig
@@ -90,12 +91,9 @@ function generateSchemaMigrations(): void {
   CLILoggingService.info(`Generating schema migrations...`)
 
   try {
-    executeCommand('bun run db:generate-migrations', {
-      stdio: ['ignore', 'ignore', 'ignore'],
-      exitOnError: false
-    })
+    generateMigrationsHandler()
     CLILoggingService.info(`Schema migrations generated successfully.`)
-  } catch (error) {
+  } catch {
     CLILoggingService.warn(
       `Failed to generate schema migrations. This is normal if the module doesn't have database schemas.`
     )
@@ -114,6 +112,7 @@ function processServerInjection(moduleName: string): void {
     CLILoggingService.info(
       `No server directory found for module "${moduleName}", skipping server injection`
     )
+
     return
   }
 
@@ -121,6 +120,7 @@ function processServerInjection(moduleName: string): void {
     CLILoggingService.info(
       `No server index.ts found for module "${moduleName}", skipping server injection`
     )
+
     return
   }
 
@@ -154,6 +154,7 @@ export function addModuleHandler(repoPath: string): void {
   }
 
   const config = createModuleConfig(repoPath)
+
   CLILoggingService.info(`Adding module ${repoPath} from ${config.author}`)
 
   // Setup temporary directory
@@ -184,10 +185,10 @@ export function addModuleHandler(repoPath: string): void {
     CLILoggingService.info(
       `Module ${repoPath} setup completed. You may now start the system by using "bun forge dev all"`
     )
+    cleanup(config.tempDir)
   } catch (error) {
     CLILoggingService.error(`Module installation failed: ${error}`)
-    process.exit(1)
-  } finally {
     cleanup(config.tempDir)
+    process.exit(1)
   }
 }
