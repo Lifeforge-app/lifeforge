@@ -22,15 +22,18 @@ export function injectModuleSchema(moduleName: string): void {
     CLILoggingService.warn(
       `Schema config file not found at ${schemaConfigPath}`
     )
+
     return
   }
 
   // Check if module has a schema file first
   const moduleSchemaPath = path.resolve(`apps/${moduleName}/server/schema.ts`)
+
   if (!fs.existsSync(moduleSchemaPath)) {
     CLILoggingService.info(
       `No schema file found for module "${moduleName}", skipping schema injection`
     )
+
     return
   }
 
@@ -93,6 +96,7 @@ export function injectModuleSchema(moduleName: string): void {
     }
 
     const { code } = generate(ast, AST_GENERATION_OPTIONS)
+
     fs.writeFileSync(schemaConfigPath, code)
 
     CLILoggingService.info(
@@ -115,6 +119,7 @@ export function removeModuleSchema(moduleName: string): void {
     CLILoggingService.warn(
       `Schema config file not found at ${schemaConfigPath}`
     )
+
     return
   }
 
@@ -136,6 +141,7 @@ export function removeModuleSchema(moduleName: string): void {
           t.isObjectExpression(path.node.init)
         ) {
           const objectExpression = path.node.init
+
           const originalLength = objectExpression.properties.length
 
           // Convert module name to snake_case for the key
@@ -161,6 +167,7 @@ export function removeModuleSchema(moduleName: string): void {
               ) {
                 return false // Remove this property
               }
+
               return true // Keep other properties
             }
           )
@@ -174,6 +181,7 @@ export function removeModuleSchema(moduleName: string): void {
 
     if (modified) {
       const { code } = generate(ast, AST_GENERATION_OPTIONS)
+
       fs.writeFileSync(schemaConfigPath, code)
 
       CLILoggingService.info(

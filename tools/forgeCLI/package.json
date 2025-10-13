@@ -1,0 +1,12 @@
+{
+    "name": "lifeforge-cli",
+    "version": "0.0.0",
+    "description": "Command line interface for managing LifeForge projects",
+    "main": "src/index.ts",
+    "dependencies": {
+        "@babel/generator": "^7.28.3",
+        "@babel/traverse": "^7.28.4",
+        "@types/babel__generator": "^7.27.0",
+        "@types/babel__traverse": "^7.28.0"
+    }
+}
