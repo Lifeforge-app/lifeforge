@@ -3,7 +3,7 @@ import fs from 'fs'
 import moment from 'moment'
 import { stripVTControlCharacters } from 'util'
 
-const logPath = process.cwd() + '/logs'
+const logPath = process.cwd().replace(/\/server$/, '') + '/logs'
 
 if (!fs.existsSync(logPath)) {
   fs.mkdirSync(logPath)
