@@ -1,26 +1,9 @@
-import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
 import prettier from 'prettier'
 
 import { CLILoggingService } from '../../../utils/logging'
 import { PRETTIER_OPTIONS } from './constants'
-import type { Environment } from './types'
-
-/**
- * Validation and utility functions for database commands
- */
-
-/**
- * Validates and loads environment configuration
- */
-export function validateEnvironment(): Environment {
-  dotenv.config({
-    path: path.resolve(__dirname, '../../../../../env/.env.local')
-  })
-
-  return process.env as Environment
-}
 
 /**
  * Writes a formatted file with prettier

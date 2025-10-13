@@ -2,13 +2,14 @@ import chalk from 'chalk'
 import path from 'path'
 import PocketBase from 'pocketbase'
 
+import { validateEnvironment } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import {
   buildModuleCollectionsMap,
   generateMainSchemaContent,
   processSchemaGeneration
 } from '../functions/schema-generation'
-import { validateEnvironment, writeFormattedFile } from '../utils/file-utils'
+import { writeFormattedFile } from '../utils/file-utils'
 
 /**
  * Command handler for generating database schemas
@@ -19,22 +20,15 @@ export async function generateSchemaHandler(
   try {
     CLILoggingService.info('Starting schema generation process...')
 
-    const env = validateEnvironment()
-
-    if (!env.PB_HOST || !env.PB_EMAIL || !env.PB_PASSWORD) {
-      CLILoggingService.error(
-        'Missing required environment variables: PB_HOST, PB_EMAIL, and PB_PASSWORD'
-      )
-      process.exit(1)
-    }
+    validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
 
     // Authenticate with PocketBase
-    const pb = new PocketBase(env.PB_HOST)
+    const pb = new PocketBase(process.env.PB_HOST)
 
     try {
       await pb
         .collection('_superusers')
-        .authWithPassword(env.PB_EMAIL, env.PB_PASSWORD)
+        .authWithPassword(process.env.PB_EMAIL, process.env.PB_PASSWORD)
 
       if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
         throw new Error('Invalid credentials or insufficient permissions')
