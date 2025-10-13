@@ -3,12 +3,11 @@ import { ComboboxInput, ComboboxOption } from '@components/inputs'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAPIEndpoint } from 'shared'
 
 import { Tooltip } from '../utilities'
-import useInputLabel from './shared/hooks/useInputLabel'
 
 export type Location = {
   name: string
@@ -44,15 +43,22 @@ function LocationInput({
 }: LocationInputProps) {
   const { t } = useTranslation('common.misc')
 
-  const inputLabel = useInputLabel({ namespace, label: label || 'Location' })
-
   const apiHost = useAPIEndpoint()
 
   const [query, setQuery] = useState('')
 
   const debouncedQuery = useDebounce(query, 500)
 
-  const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
+  const enabledQuery = useQuery(
+    forgeAPI.locations.verifyAPIKey.setHost(apiHost).queryOptions()
+  )
+
+  const enabled =
+    typeof enabledQuery.data === 'boolean'
+      ? enabledQuery.data
+      : enabledQuery.isLoading
+        ? 'loading'
+        : false
 
   const dataQuery = useQuery(
     forgeAPI.locations.search
@@ -61,22 +67,9 @@ function LocationInput({
         q: debouncedQuery
       })
       .queryOptions({
-        enabled: debouncedQuery.trim() !== '' && enabled === true
+        enabled: debouncedQuery.trim() !== '' && enabledQuery.data === true
       })
   )
-
-  useEffect(() => {
-    if (query.trim() === '') {
-      dataQuery.refetch()
-    }
-  }, [query])
-
-  useEffect(() => {
-    forgeAPI.locations.verifyAPIKey
-      .setHost(apiHost)
-      .query()
-      .then(enabled => setEnabled(enabled))
-  }, [])
 
   return (
     <div className="relative flex w-full items-center gap-3">
@@ -87,7 +80,7 @@ function LocationInput({
         disabled={!enabled || disabled || enabled === 'loading'}
         displayValue={value => value?.name ?? ''}
         icon="tabler:map-pin"
-        label={inputLabel}
+        label={label || 'Location'}
         namespace={namespace}
         required={required}
         setQuery={setQuery}

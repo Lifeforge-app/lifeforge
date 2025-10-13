@@ -27,9 +27,13 @@ const verifyAPIKey = forgeController
   .description('Check if Google Cloud API key exists')
   .input({})
   .callback(async ({ pb }) => {
-    const key = await getAPIKey('gcloud', pb)
+    try {
+      await getAPIKey('gcloud', pb)
 
-    return !!key
+      return true
+    } catch {
+      return false
+    }
   })
 
 export default forgeRouter({ search, verifyAPIKey })
