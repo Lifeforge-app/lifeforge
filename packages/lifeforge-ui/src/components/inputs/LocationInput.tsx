@@ -50,7 +50,9 @@ function LocationInput({
   const debouncedQuery = useDebounce(query, 500)
 
   const enabledQuery = useQuery(
-    forgeAPI.locations.verifyAPIKey.setHost(apiHost).queryOptions()
+    forgeAPI.apiKeys.entries.checkKeys.setHost(apiHost).input({
+      keys: 'gcloud'
+    }).queryOptions()
   )
 
   const enabled =

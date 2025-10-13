@@ -3,12 +3,6 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 import z from 'zod'
 
-const verifyAPIKey = forgeController
-  .query()
-  .description('Check if Pixabay API key exists')
-  .input({})
-  .callback(async ({ pb }) => !!(await getAPIKey('pixabay', pb)))
-
 const searchImages = forgeController
   .query()
   .description('Search images on Pixabay')
@@ -122,4 +116,4 @@ const searchImages = forgeController
     }
   )
 
-export default forgeRouter({ verifyAPIKey, searchImages })
+export default forgeRouter({ searchImages })

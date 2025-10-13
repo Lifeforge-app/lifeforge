@@ -22,18 +22,4 @@ const search = forgeController
     return await searchLocations(key, q)
   })
 
-const verifyAPIKey = forgeController
-  .query()
-  .description('Check if Google Cloud API key exists')
-  .input({})
-  .callback(async ({ pb }) => {
-    try {
-      await getAPIKey('gcloud', pb)
-
-      return true
-    } catch {
-      return false
-    }
-  })
-
-export default forgeRouter({ search, verifyAPIKey })
+export default forgeRouter({ search })
