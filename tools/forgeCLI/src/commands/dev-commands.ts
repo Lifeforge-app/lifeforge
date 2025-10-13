@@ -31,18 +31,21 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   server: {
     command: () => {
       killExistingProcess('lifeforge/node_modules/.bin/tsx')
+
       return 'cd server && bun run dev'
     }
   },
   client: {
     command: () => {
       killExistingProcess('lifeforge/node_modules/.bin/vite')
+
       return 'cd client && bun run dev'
     }
   },
   ui: {
     command: () => {
       killExistingProcess('lifeforge/node_modules/.bin/storybook')
+
       return 'cd packages/lifeforge-ui && bun run dev'
     }
   }
@@ -84,6 +87,7 @@ function startSingleService(service: string): void {
     executeCommand(config.command, {
       cwd: config.cwd?.()
     })
+
     return
   }
 
@@ -91,7 +95,9 @@ function startSingleService(service: string): void {
   if (service in TOOLS_ALLOWED) {
     const projectPath =
       PROJECTS_ALLOWED[service as keyof typeof PROJECTS_ALLOWED]
+
     executeCommand(`cd ${projectPath} && bun run dev`)
+
     return
   }
 
@@ -146,6 +152,7 @@ export function devHandler(service: string): void {
 
   if (service === 'all') {
     startAllServices()
+
     return
   }
 

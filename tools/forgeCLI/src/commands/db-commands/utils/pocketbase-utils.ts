@@ -1,13 +1,9 @@
+import chalk from 'chalk'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
 import { CLILoggingService } from '../../../utils/logging'
-import type { Environment } from './types'
-
-/**
- * PocketBase migration utilities
- */
 
 /**
  * Validates PocketBase setup and returns paths
@@ -17,6 +13,7 @@ export async function validatePocketBaseSetup(pbDir: string): Promise<{
   pbDir: string
 }> {
   const resolvedPbDir = path.resolve(pbDir)
+
   const pbInstancePath = path.resolve(resolvedPbDir, 'pocketbase')
 
   try {
@@ -39,41 +36,44 @@ export async function validatePocketBaseSetup(pbDir: string): Promise<{
 }
 
 /**
- * Checks for running PocketBase instances
- */
-export function checkRunningInstances(): void {
-  try {
-    const pbInstanceNumber = execSync("pgrep -f 'pocketbase serve'")
-      .toString()
-      .trim()
-
-    if (pbInstanceNumber) {
-      CLILoggingService.error(
-        `PocketBase is already running (PID: ${pbInstanceNumber}). Please stop the existing instance before running the migration script.`
-      )
-      process.exit(1)
-    }
-  } catch {
-    // No existing instance found, continue with the script
-  }
-}
-
-/**
  * Cleans up old migrations
  */
 export async function cleanupOldMigrations(
   pbDir: string,
-  pbInstancePath: string
+  pbInstancePath: string,
+  targetModule?: string
 ): Promise<void> {
   const migrationsPath = path.resolve(pbDir, 'pb_migrations')
 
   try {
     fs.accessSync(migrationsPath)
     CLILoggingService.warn('Cleaning up old migrations directory...')
-    fs.rmSync(migrationsPath, { recursive: true, force: true })
-    execSync(`${pbInstancePath} migrate history-sync`, {
-      stdio: ['pipe', 'pipe', 'pipe']
-    })
+
+    if (!targetModule) {
+      fs.rmSync(migrationsPath, { recursive: true, force: true })
+      execSync(`${pbInstancePath} migrate history-sync`, {
+        stdio: ['pipe', 'pipe', 'pipe']
+      })
+    } else {
+      const migrationFiles = fs.readdirSync(migrationsPath)
+
+      migrationFiles.forEach(file => {
+        if (file.endsWith(`_${targetModule}.js`)) {
+          fs.rmSync(path.join(migrationsPath, file))
+        }
+      })
+
+      execSync(`${pbInstancePath} migrate history-sync`, {
+        stdio: ['pipe', 'pipe', 'pipe']
+      })
+
+      CLILoggingService.info(
+        `Removed ${chalk.bold.blue(
+          migrationFiles.filter(file => file.endsWith(`_${targetModule}.js`))
+            .length
+        )} old migrations for module ${chalk.bold.blue(targetModule)}.`
+      )
+    }
   } catch {
     // Migrations directory doesn't exist, no cleanup needed
   }

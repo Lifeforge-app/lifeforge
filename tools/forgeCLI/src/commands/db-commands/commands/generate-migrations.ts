@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 
+import { checkRunningPBInstances } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { createMigrationFile } from '../functions/migration-generation'
 import {
@@ -8,7 +9,6 @@ import {
   validateEnvironment
 } from '../utils/file-utils'
 import {
-  checkRunningInstances,
   cleanupOldMigrations,
   validatePocketBaseSetup
 } from '../utils/pocketbase-utils'
@@ -23,6 +23,7 @@ export async function generateMigrationsHandler(
     CLILoggingService.info('Starting migration script...')
 
     const env = validateEnvironment()
+
     if (!env.PB_DIR) {
       CLILoggingService.error('Missing required environment variable: PB_DIR')
       process.exit(1)
@@ -31,10 +32,10 @@ export async function generateMigrationsHandler(
     const { pbInstancePath, pbDir } = await validatePocketBaseSetup(env.PB_DIR)
 
     // Check for running instances
-    checkRunningInstances()
+    checkRunningPBInstances()
 
     // Clean up old migrations
-    await cleanupOldMigrations(pbDir, pbInstancePath)
+    await cleanupOldMigrations(pbDir, pbInstancePath, targetModule)
 
     // Get and process schema files
     const schemaFiles = getSchemaFiles(targetModule)

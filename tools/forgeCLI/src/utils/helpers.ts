@@ -30,6 +30,7 @@ export function resolveProjects<T extends string>(
   allProjects: T[]
 ): T[] {
   const isAll = projects.includes('all')
+
   return isAll ? allProjects : (projects as T[])
 }
 
@@ -44,6 +45,7 @@ export function executeCommand(
 
   try {
     CLILoggingService.info(`Executing: ${cmd}`)
+
     const result = execSync(cmd, {
       stdio: 'inherit',
       ...options
@@ -132,6 +134,7 @@ export function validateFilePaths(
     const { path: pth, type } = p
 
     const fullPath = path.resolve(basedir, pth)
+
     if (!fs.existsSync(fullPath)) {
       return false
     }
@@ -146,5 +149,26 @@ export function validateFilePaths(
       return false
     }
   }
+
   return true
+}
+
+/**
+ * Checks for running PocketBase instances
+ */
+export function checkRunningPBInstances(): void {
+  try {
+    const pbInstanceNumber = execSync("pgrep -f 'pocketbase serve'")
+      .toString()
+      .trim()
+
+    if (pbInstanceNumber) {
+      CLILoggingService.error(
+        `PocketBase is already running (PID: ${pbInstanceNumber}). Please stop the existing instance before proceeding.`
+      )
+      process.exit(1)
+    }
+  } catch {
+    // No existing instance found, continue with the script
+  }
 }

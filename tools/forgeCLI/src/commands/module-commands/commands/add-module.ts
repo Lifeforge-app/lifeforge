@@ -1,6 +1,10 @@
 import fs from 'fs'
 
-import { executeCommand, validateFilePaths } from '../../../utils/helpers'
+import {
+  checkRunningPBInstances,
+  executeCommand,
+  validateFilePaths
+} from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { generateMigrationsHandler } from '../../db-commands'
 import {
@@ -87,11 +91,11 @@ function installDependencies(): void {
 /**
  * Generates database schema migrations
  */
-function generateSchemaMigrations(): void {
-  CLILoggingService.info(`Generating schema migrations...`)
+function generateSchemaMigrations(moduleName: string): void {
+  CLILoggingService.info(`Generating schema migrations for ${moduleName}...`)
 
   try {
-    generateMigrationsHandler()
+    generateMigrationsHandler(moduleName)
     CLILoggingService.info(`Schema migrations generated successfully.`)
   } catch {
     CLILoggingService.warn(
@@ -145,7 +149,8 @@ function processServerInjection(moduleName: string): void {
  * Handles adding a new module to the Lifeforge system
  */
 export function addModuleHandler(repoPath: string): void {
-  // Validate repository path format
+  checkRunningPBInstances()
+
   if (!validateRepositoryPath(repoPath)) {
     CLILoggingService.error(
       'Invalid module name. Use the format <author>/<module-name>, e.g., lifeforge-app/wallet'
@@ -157,12 +162,10 @@ export function addModuleHandler(repoPath: string): void {
 
   CLILoggingService.info(`Adding module ${repoPath} from ${config.author}`)
 
-  // Setup temporary directory
   cleanup(config.tempDir)
   fs.mkdirSync(config.tempDir)
 
   try {
-    // Check if module already exists
     if (moduleExists(config.moduleName)) {
       CLILoggingService.error(
         `A module with the name "${config.moduleName}" already exists in apps/. Please remove it first if you want to re-add.`
@@ -170,17 +173,15 @@ export function addModuleHandler(repoPath: string): void {
       throw new Error('Module already exists')
     }
 
-    // Clone and validate module
     cloneModuleRepository(config)
     validateModuleStructure(config)
-
-    // Install module
     moveModuleToApps(config)
     processServerInjection(config.moduleName)
-
-    // Install dependencies and generate migrations
     installDependencies()
-    generateSchemaMigrations()
+
+    if (fs.existsSync(`${config.moduleDir}/server/schema.ts`)) {
+      generateSchemaMigrations(config.moduleName)
+    }
 
     CLILoggingService.info(
       `Module ${repoPath} setup completed. You may now start the system by using "bun forge dev all"`
