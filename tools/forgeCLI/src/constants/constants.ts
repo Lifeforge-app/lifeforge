@@ -4,7 +4,7 @@ import path from 'path'
 /**
  * Directory containing all tools
  */
-export const TOOLS_DIR = path.join(__dirname, '../../../tools')
+export const TOOLS_DIR = path.join(__dirname, '../../../../tools')
 
 /**
  * Dynamically discovered tools from the tools directory
@@ -45,5 +45,7 @@ export const VALID_SERVICES = [
 export const VALID_COMMANDS = ['build', 'types', 'lint'] as const
 
 export type ProjectType = keyof typeof PROJECTS_ALLOWED
+
 export type ServiceType = (typeof VALID_SERVICES)[number]
+
 export type CommandType = (typeof VALID_COMMANDS)[number]
