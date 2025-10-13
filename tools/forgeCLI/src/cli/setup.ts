@@ -19,7 +19,7 @@ const VERSION_NUMBER = JSON.parse(
  */
 export function setupCLI(): void {
   program
-    .name('Lifeforge Forge')
+    .name('forge')
     .description('Build and manage Lifeforge projects')
     .version(VERSION_NUMBER)
 
