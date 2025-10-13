@@ -26,6 +26,7 @@
     "crypto-js": "^4.2.0",
     "javascript-color-gradient": "^2.5.0",
     "lodash": "^4.17.21",
+    "nuqs": "^2.7.1",
     "react": "^19.2.0",
     "react-i18next": "^16.0.0",
     "react-toastify": "^11.0.5",

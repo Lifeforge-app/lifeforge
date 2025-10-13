@@ -24,6 +24,8 @@ export { default as SSOAuthProvider } from './providers/SSOAuthProvider'
 
 export { default as SocketProvider } from './providers/SocketProvider'
 
+export { default as NuqsProvider } from './providers/NuqsProvider'
+
 export { default as usePromiseLoading } from './hooks/usePromiseLoading'
 
 export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
