@@ -1,6 +1,5 @@
 // Re-export utilities for backward compatibility
 export {
-  validateEnvironment,
   writeFormattedFile,
   getSchemaFiles,
   importSchemaModules
