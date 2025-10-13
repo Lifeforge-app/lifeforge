@@ -1,4 +1,4 @@
-import type { FieldTypeMapping, PocketBaseField } from './types'
+import type { FieldTypeMapping } from './types'
 
 /**
  * Constants for database command operations
@@ -18,15 +18,19 @@ export const FIELD_TYPE_MAPPING: FieldTypeMapping = {
   geoPoint: () => 'z.object({ lat: z.number(), lon: z.number() })',
   select: field => {
     const values = [...(field.values ?? []), ...(field.required ? [] : [''])]
+
     const enumSchema = `z.enum(${JSON.stringify(values)})`
+
     return (field.maxSelect ?? 1) > 1 ? `z.array(${enumSchema})` : enumSchema
   },
   file: field => {
     const baseSchema = 'z.string()'
+
     return (field.maxSelect ?? 1) > 1 ? `z.array(${baseSchema})` : baseSchema
   },
   relation: field => {
     const baseSchema = 'z.string()'
+
     return (field.maxSelect ?? 1) > 1 ? `z.array(${baseSchema})` : baseSchema
   }
 }

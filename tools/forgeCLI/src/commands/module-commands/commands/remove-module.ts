@@ -19,16 +19,18 @@ import {
  * Removes server component references for a module
  */
 function removeServerReferences(moduleName: string): void {
-  CLILoggingService.info(`Removing server references...`)
+  CLILoggingService.progress('Removing server references')
 
   try {
     removeModuleRoute(moduleName)
+    CLILoggingService.success('Server routes removed')
   } catch (error) {
     CLILoggingService.warn(`Failed to remove route for ${moduleName}: ${error}`)
   }
 
   try {
     removeModuleSchema(moduleName)
+    CLILoggingService.success('Server schema references removed')
   } catch (error) {
     CLILoggingService.warn(
       `Failed to remove schema for ${moduleName}: ${error}`
@@ -44,14 +46,20 @@ function removeModuleDirectory(moduleName: string): void {
 
   if (!fs.existsSync(moduleDir)) {
     CLILoggingService.warn(`Module directory ${moduleDir} does not exist`)
+
     return
   }
 
+  CLILoggingService.progress(`Removing module directory: ${moduleDir}`)
+
   try {
     executeCommand(`rm -rf ${moduleDir}`)
-    CLILoggingService.info(`Removed module directory: ${moduleDir}`)
+    CLILoggingService.success(`Module directory removed: ${moduleDir}`)
   } catch (error) {
-    CLILoggingService.error(`Failed to remove module directory: ${error}`)
+    CLILoggingService.actionableError(
+      `Failed to remove module directory: ${moduleDir}`,
+      'Check file permissions and ensure no processes are using the module files'
+    )
     throw error
   }
 }
@@ -63,34 +71,39 @@ async function selectModuleToRemove(): Promise<string> {
   const installedModules = getInstalledModules()
 
   if (installedModules.length === 0) {
-    CLILoggingService.info('No modules found to remove.')
+    CLILoggingService.info('No modules found to remove')
     process.exit(0)
   }
 
   // Create choices with detailed information
   const choices = installedModules.map(module => {
     const modulePath = `apps/${module}`
+
     const packageJsonPath = path.join(modulePath, 'package.json')
+
     let description = 'No description'
 
     // Try to get additional info from package.json
     if (fs.existsSync(packageJsonPath)) {
       try {
         const packageData = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
+
         description = packageData.description || 'No description'
-      } catch (error) {
+      } catch {
         // If we can't read package.json, use defaults
       }
     }
 
     // Check if module has server components
     const { hasServerDir, hasServerIndex } = hasServerComponents(module)
+
     const serverStatus =
       hasServerDir && hasServerIndex
         ? chalk.green('[Server]')
         : chalk.blue('[Client only]')
 
     const moduleName = chalk.cyan.bold(module)
+
     const moduleDescription = chalk.gray(description)
 
     return {
@@ -115,15 +128,15 @@ async function selectModuleToRemove(): Promise<string> {
       return Promise.resolve(
         choices.filter(
           choice =>
-            choice.value.toLowerCase().includes(input.toLowerCase()) ||
-            choice.title.toLowerCase().includes(input.toLowerCase())
+            choice.value?.toLowerCase().includes(input.toLowerCase()) ||
+            choice.title?.toLowerCase().includes(input.toLowerCase())
         )
       )
     }
   })
 
   if (!response.selectedModule || response.selectedModule === '__cancel__') {
-    CLILoggingService.info('Module removal cancelled.')
+    CLILoggingService.info('Module removal cancelled')
     process.exit(0)
   }
 
@@ -136,7 +149,7 @@ async function selectModuleToRemove(): Promise<string> {
   })
 
   if (!confirmResponse.confirmRemoval) {
-    CLILoggingService.info('Module removal cancelled.')
+    CLILoggingService.info('Module removal cancelled')
     process.exit(0)
   }
 
@@ -147,7 +160,7 @@ async function selectModuleToRemove(): Promise<string> {
  * Handles removing a module from the Lifeforge system
  */
 export async function removeModuleHandler(moduleName?: string): Promise<void> {
-  CLILoggingService.info('Starting module removal process...')
+  CLILoggingService.step('Starting module removal process')
 
   // If no module name provided, show interactive selection
   if (!moduleName) {
@@ -156,13 +169,14 @@ export async function removeModuleHandler(moduleName?: string): Promise<void> {
 
   // Validate module exists
   if (!moduleExists(moduleName)) {
-    CLILoggingService.error(
-      `Module "${moduleName}" does not exist in apps/ directory`
+    CLILoggingService.actionableError(
+      `Module "${moduleName}" does not exist in workspace`,
+      'Use "bun forge module list" to see available modules'
     )
     process.exit(1)
   }
 
-  CLILoggingService.info(`Removing module: ${moduleName}`)
+  CLILoggingService.step(`Removing module: ${moduleName}`)
 
   try {
     // Remove server references first
@@ -171,15 +185,19 @@ export async function removeModuleHandler(moduleName?: string): Promise<void> {
     // Remove the module directory
     removeModuleDirectory(moduleName)
 
-    CLILoggingService.info(`Module "${moduleName}" removed successfully.`)
+    CLILoggingService.success(`Module "${moduleName}" removed successfully`)
     CLILoggingService.info(
-      'You may need to restart the system to see the changes.'
+      'Restart the system with "bun forge dev all" to see the changes'
     )
     CLILoggingService.warn(
-      'Note: Database migrations are not rolled back to prevent any data loss. If you want to remove any database schemas associated with this module, please do so manually.'
+      'Database migrations are not rolled back to prevent data loss. Remove database schemas manually if needed.'
     )
   } catch (error) {
-    CLILoggingService.error(`Module removal failed: ${error}`)
+    CLILoggingService.actionableError(
+      'Module removal failed',
+      'Check the error details above and ensure you have proper file permissions'
+    )
+    CLILoggingService.debug(`Removal error: ${error}`)
     process.exit(1)
   }
 }

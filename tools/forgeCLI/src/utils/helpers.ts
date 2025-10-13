@@ -44,14 +44,18 @@ export function executeCommand(
   const cmd = typeof command === 'function' ? command() : command
 
   try {
-    CLILoggingService.info(`Executing: ${cmd}`)
+    if (!options.stdio || options.stdio === 'inherit') {
+      CLILoggingService.debug(`Executing: ${cmd}`)
+    }
 
     const result = execSync(cmd, {
       stdio: 'inherit',
       ...options
     })
 
-    CLILoggingService.info(`Completed: ${cmd}`)
+    if (!options.stdio || options.stdio === 'inherit') {
+      CLILoggingService.debug(`Completed: ${cmd}`)
+    }
 
     return result?.toString().trim()
   } catch (error) {
@@ -59,8 +63,11 @@ export function executeCommand(
       throw error
     }
 
-    CLILoggingService.error(`Failed: ${cmd}`)
-    CLILoggingService.error(`${error}`)
+    CLILoggingService.actionableError(
+      `Command execution failed: ${cmd}`,
+      'Check if the command exists and you have the necessary permissions'
+    )
+    CLILoggingService.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
@@ -72,10 +79,10 @@ export function validateEnvironment(requiredVars: string[]): void {
   const missingVars = requiredVars.filter(varName => !process.env[varName])
 
   if (missingVars.length > 0) {
-    CLILoggingService.error(
-      `Missing required environment variables: ${missingVars.join(', ')}`
+    CLILoggingService.actionableError(
+      `Missing required environment variables: ${missingVars.join(', ')}`,
+      'Set these variables in your env/.env.local file in the project root'
     )
-    CLILoggingService.error('Please set them in your .env file.')
     process.exit(1)
   }
 }
@@ -91,7 +98,7 @@ export function formatProjectList(projects: string[]): string {
  * Logs a process start message
  */
 export function logProcessStart(processType: string, projects: string[]): void {
-  CLILoggingService.info(
+  CLILoggingService.step(
     `Running ${processType} for ${projects.length} project(s): ${formatProjectList(projects)}`
   )
 }
@@ -100,7 +107,9 @@ export function logProcessStart(processType: string, projects: string[]): void {
  * Logs a process completion message
  */
 export function logProcessComplete(processType: string): void {
-  CLILoggingService.info(`All projects ${processType} completed successfully.`)
+  CLILoggingService.success(
+    `All projects ${processType} completed successfully`
+  )
 }
 
 /**
@@ -163,8 +172,9 @@ export function checkRunningPBInstances(): void {
       .trim()
 
     if (pbInstanceNumber) {
-      CLILoggingService.error(
-        `PocketBase is already running (PID: ${pbInstanceNumber}). Please stop the existing instance before proceeding.`
+      CLILoggingService.actionableError(
+        `PocketBase is already running (PID: ${pbInstanceNumber})`,
+        'Stop the existing instance with "pkill -f pocketbase" before proceeding'
       )
       process.exit(1)
     }

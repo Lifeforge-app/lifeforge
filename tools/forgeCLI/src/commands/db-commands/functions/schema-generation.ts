@@ -21,10 +21,12 @@ function convertFieldToZodSchema(field: PocketBaseField): string | null {
   }
 
   const converter = FIELD_TYPE_MAPPING[field.type]
+
   if (!converter) {
     CLILoggingService.warn(
       `Unknown field type '${field.type}' for field '${field.name}'. Skipping.`
     )
+
     return null
   }
 
@@ -39,6 +41,7 @@ function generateCollectionSchema(collection: any): Record<string, string> {
 
   for (const field of collection.fields) {
     const zodSchema = convertFieldToZodSchema(field as PocketBaseField)
+
     if (zodSchema) {
       zodSchemaObject[field.name] = zodSchema
     }
@@ -61,6 +64,7 @@ export async function buildModuleCollectionsMap(
   ]
 
   let allModules: string[] = []
+
   try {
     allModules = modulesDirs
       .map(dir => fs.globSync(dir))
@@ -105,6 +109,7 @@ export async function buildModuleCollectionsMap(
   }
 
   const totalCollections = Object.values(moduleCollectionsMap).flat().length
+
   const moduleCount = Object.keys(moduleCollectionsMap).length
 
   CLILoggingService.info(
@@ -129,15 +134,18 @@ export function generateModuleSchemaContent(
     )
 
     const zodSchemaObject = generateCollectionSchema(collection)
+
     const schemaObjectString = Object.entries(zodSchemaObject)
       .map(([key, value]) => `  ${key}: ${value},`)
       .join('\n')
 
     const collectionName = collection.name.split('__').pop()
+
     const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
 
     delete collection.created
     delete collection.updated
+
     if ('oauth2' in collection) {
       delete collection.oauth2
     }
@@ -169,12 +177,14 @@ export function generateMainSchemaContent(moduleDirs: string[]): string {
   const imports = moduleDirs
     .map(moduleDir => {
       const [moduleDirPath, moduleDirName] = moduleDir.split('|')
+
       const targetPath = path.join(
         '@lib/',
         moduleDirName,
         moduleDirPath.split(moduleDirName).pop() || '',
         'schema'
       )
+
       return `  ${_.snakeCase(moduleDirName)}: (await import('${targetPath}')).default,`
     })
     .join('\n')
@@ -214,6 +224,7 @@ export async function processSchemaGeneration(
   }
 
   const moduleSchemas: Record<string, string> = {}
+
   const moduleDirs: string[] = []
 
   for (const [moduleDir, collections] of Object.entries(
@@ -229,6 +240,7 @@ export async function processSchemaGeneration(
     }
 
     const moduleName = collections[0].name.split('__')[0]
+
     moduleDirs.push(moduleDir)
 
     const moduleSchemaContent = generateModuleSchemaContent(
@@ -240,6 +252,7 @@ export async function processSchemaGeneration(
 
     // Write individual module schema file
     const moduleSchemaPath = path.join(moduleDirPath, 'schema.ts')
+
     await writeFormattedFile(moduleSchemaPath, moduleSchemaContent)
 
     CLILoggingService.debug(

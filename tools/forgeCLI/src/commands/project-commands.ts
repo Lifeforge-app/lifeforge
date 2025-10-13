@@ -17,6 +17,7 @@ export function executeProjectCommand(
   projects: ProjectType[]
 ): void {
   const allProjectKeys = Object.keys(PROJECTS_ALLOWED) as ProjectType[]
+
   const finalProjects = resolveProjects(projects, allProjectKeys)
 
   logProcessStart(commandType, finalProjects)
@@ -24,7 +25,9 @@ export function executeProjectCommand(
   for (const projectType of finalProjects) {
     const projectPath =
       PROJECTS_ALLOWED[projectType as keyof typeof PROJECTS_ALLOWED]
+
     const command = `cd ${projectPath} && bun run ${commandType}`
+
     executeCommand(command)
   }
 
@@ -36,14 +39,13 @@ export function executeProjectCommand(
  */
 export function validateProjectArguments(projects: string[]): void {
   const validProjects = [...Object.keys(PROJECTS_ALLOWED), 'all']
+
   const validation = validateProjects(projects, validProjects)
 
   if (!validation.isValid) {
-    CLILoggingService.error(
-      `Invalid project(s): ${validation.invalidProjects.join(', ')}`
-    )
-    CLILoggingService.error(
-      `Available projects: all, ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
+    CLILoggingService.options(
+      `Invalid project(s): ${validation.invalidProjects.join(', ')}`,
+      validProjects
     )
     process.exit(1)
   }
