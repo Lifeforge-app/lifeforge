@@ -20,6 +20,7 @@ export async function generateSchemaHandler(
     CLILoggingService.info('Starting schema generation process...')
 
     const env = validateEnvironment()
+
     if (!env.PB_HOST || !env.PB_EMAIL || !env.PB_PASSWORD) {
       CLILoggingService.error(
         'Missing required environment variables: PB_HOST, PB_EMAIL, and PB_PASSWORD'
@@ -29,6 +30,7 @@ export async function generateSchemaHandler(
 
     // Authenticate with PocketBase
     const pb = new PocketBase(env.PB_HOST)
+
     try {
       await pb
         .collection('_superusers')
@@ -46,7 +48,9 @@ export async function generateSchemaHandler(
 
     // Fetch collections
     CLILoggingService.debug('Fetching collections from PocketBase...')
+
     const allCollections = await pb.collections.getFullList()
+
     const userCollections = allCollections.filter(
       (collection: any) => !collection.system
     )
@@ -68,10 +72,12 @@ export async function generateSchemaHandler(
     // Generate and write main schema file if not targeting a specific module
     if (!targetModule) {
       const mainSchemaContent = generateMainSchemaContent(moduleDirs)
+
       const coreSchemaPath = path.resolve(
         __dirname,
         '../../../../../server/src/core/schema.ts'
       )
+
       await writeFormattedFile(coreSchemaPath, mainSchemaContent)
       CLILoggingService.debug(
         `Updated main schema file at ${chalk.bold('core/schema.ts')}`
@@ -80,6 +86,7 @@ export async function generateSchemaHandler(
 
     // Summary
     const moduleCount = Object.keys(moduleSchemas).length
+
     CLILoggingService.info(
       targetModule
         ? `Schema generation completed for module ${chalk.bold.blue(targetModule)}!`

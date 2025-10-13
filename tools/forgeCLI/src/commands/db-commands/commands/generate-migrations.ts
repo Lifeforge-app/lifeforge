@@ -20,12 +20,15 @@ export async function generateMigrationsHandler(
   targetModule?: string
 ): Promise<void> {
   try {
-    CLILoggingService.info('Starting migration script...')
+    CLILoggingService.step('Starting database migration generation')
 
     const env = validateEnvironment()
 
     if (!env.PB_DIR) {
-      CLILoggingService.error('Missing required environment variable: PB_DIR')
+      CLILoggingService.actionableError(
+        'Missing required environment variable: PB_DIR',
+        'Set PB_DIR in your env/.env.local file'
+      )
       process.exit(1)
     }
 
@@ -57,24 +60,30 @@ export async function generateMigrationsHandler(
       )
 
       if (!result.success) {
-        CLILoggingService.error(
-          `Migration process failed for module ${moduleName}`
+        CLILoggingService.actionableError(
+          `Migration process failed for module ${moduleName}`,
+          'Check the module schema definition for syntax errors'
         )
         process.exit(1)
       }
     }
 
     // Summary
+    const message = targetModule
+      ? `Migration script completed for module ${chalk.bold.blue(targetModule)}`
+      : 'Migration script completed for all modules'
+
+    CLILoggingService.success(message)
     CLILoggingService.info(
-      targetModule
-        ? `Migration script completed for module ${chalk.bold.blue(
-            targetModule
-          )}. Start the PocketBase server or run the command "pocketbase migrate up" to apply migrations.`
-        : 'Migration script completed. Start the PocketBase server or run the command "pocketbase migrate up" to apply migrations.'
+      'Next: Start PocketBase server or run "pocketbase migrate up" to apply migrations'
     )
   } catch (error) {
-    CLILoggingService.error(
-      `Migration script failed: ${error instanceof Error ? error.message : String(error)}`
+    CLILoggingService.actionableError(
+      'Migration script failed',
+      'Check the schema definitions and PocketBase configuration'
+    )
+    CLILoggingService.debug(
+      `Error details: ${error instanceof Error ? error.message : String(error)}`
     )
     process.exit(1)
   }

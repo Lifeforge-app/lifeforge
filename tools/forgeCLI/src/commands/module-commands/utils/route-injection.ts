@@ -23,6 +23,7 @@ export function injectModuleRoute(moduleName: string): void {
     CLILoggingService.warn(
       `Routes config file not found at ${routesConfigPath}`
     )
+
     return
   }
 
@@ -60,15 +61,18 @@ export function injectModuleRoute(moduleName: string): void {
 
       if (!hasExistingProperty) {
         const moduleImport = createDynamicImport(`@lib/${moduleName}/server`)
+
         const newProperty = t.objectProperty(
           t.identifier(moduleName),
           moduleImport
         )
+
         routerObjectPath.node.properties.push(newProperty)
       }
     }
 
     const { code } = generate(ast, AST_GENERATION_OPTIONS)
+
     fs.writeFileSync(routesConfigPath, code)
 
     CLILoggingService.info(
@@ -91,6 +95,7 @@ export function removeModuleRoute(moduleName: string): void {
     CLILoggingService.warn(
       `Routes config file not found at ${routesConfigPath}`
     )
+
     return
   }
 
@@ -113,6 +118,7 @@ export function removeModuleRoute(moduleName: string): void {
           t.isObjectExpression(path.node.arguments[0])
         ) {
           const routerObject = path.node.arguments[0]
+
           const originalLength = routerObject.properties.length
 
           routerObject.properties = routerObject.properties.filter(
@@ -124,6 +130,7 @@ export function removeModuleRoute(moduleName: string): void {
               ) {
                 return false // Remove this property
               }
+
               return true // Keep other properties
             }
           )
@@ -137,6 +144,7 @@ export function removeModuleRoute(moduleName: string): void {
 
     if (modified) {
       const { code } = generate(ast, AST_GENERATION_OPTIONS)
+
       fs.writeFileSync(routesConfigPath, code)
 
       CLILoggingService.info(

@@ -20,6 +20,7 @@ export function hasServerComponents(moduleName: string): {
   hasServerIndex: boolean
 } {
   const serverPath = path.resolve(`apps/${moduleName}/server`)
+
   const serverIndexPath = path.resolve(`apps/${moduleName}/server/index.ts`)
 
   return {

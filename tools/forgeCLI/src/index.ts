@@ -24,6 +24,5 @@ try {
   setupCLI()
   runCLI()
 } catch (error) {
-  CLILoggingService.error(`Fatal error: ${error}`)
-  process.exit(1)
+  CLILoggingService.fatal(`Unexpected error occurred: ${error}`)
 }

@@ -109,7 +109,9 @@ function startSingleService(service: string): void {
  */
 function startAllServices(): void {
   validateEnvironment(['PB_DIR'])
-  CLILoggingService.info('Starting all services: db, server, client...')
+  CLILoggingService.progress(
+    'Starting all services: database, server, and client'
+  )
 
   try {
     const services = createConcurrentServices()
@@ -127,8 +129,11 @@ function startAllServices(): void {
       prefixColors: ['cyan', 'green', 'magenta']
     })
   } catch (error) {
-    CLILoggingService.error('Failed to start all services.')
-    CLILoggingService.error(`${error}`)
+    CLILoggingService.actionableError(
+      'Failed to start all services',
+      'Ensure PocketBase is properly configured and all dependencies are installed'
+    )
+    CLILoggingService.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
@@ -137,9 +142,10 @@ function startAllServices(): void {
  * Validates if a service is valid
  */
 function validateService(service: string): void {
-  if (!VALID_SERVICES.includes(service as any)) {
-    CLILoggingService.error(`Invalid service: ${service}`)
-    CLILoggingService.error(`Available services: ${VALID_SERVICES.join(', ')}`)
+  if (!VALID_SERVICES.includes(service as ServiceType)) {
+    CLILoggingService.options(`Invalid service: "${service}"`, [
+      ...VALID_SERVICES
+    ])
     process.exit(1)
   }
 }
@@ -156,13 +162,16 @@ export function devHandler(service: string): void {
     return
   }
 
-  CLILoggingService.info(`Starting service: ${service}...`)
+  CLILoggingService.progress(`Starting ${service} service`)
 
   try {
     startSingleService(service)
   } catch (error) {
-    CLILoggingService.error(`Failed to start service: ${service}`)
-    CLILoggingService.error(`${error}`)
+    CLILoggingService.actionableError(
+      `Failed to start ${service} service`,
+      'Check if all required dependencies are installed and environment variables are set'
+    )
+    CLILoggingService.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
