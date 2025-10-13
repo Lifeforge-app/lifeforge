@@ -61,7 +61,7 @@ function LocationInput({
         q: debouncedQuery
       })
       .queryOptions({
-        enabled: debouncedQuery.trim() !== ''
+        enabled: debouncedQuery.trim() !== '' && enabled === true
       })
   )
 
@@ -125,12 +125,12 @@ function LocationInput({
       </ComboboxInput>
       {enabled === 'loading' ? (
         <Icon
-          className="text-bg-500 absolute top-1/2 right-6 h-6 w-6 -translate-y-1/2"
+          className="text-bg-500 absolute right-6 top-1/2 h-6 w-6 -translate-y-1/2"
           icon="svg-spinners:180-ring"
         />
       ) : (
         !enabled && (
-          <div className="flex-center text-bg-500 absolute top-1/2 right-6 -translate-y-1/2 gap-2">
+          <div className="flex-center text-bg-500 absolute right-6 top-1/2 -translate-y-1/2 gap-2">
             {t('locationDisabled.title')}
             <Tooltip
               icon="tabler:info-circle"
