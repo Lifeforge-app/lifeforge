@@ -38,7 +38,6 @@
     "i18next-http-backend": "^2.7.3",
     "lifeforge-ui": "workspace:*",
     "lodash": "^4.17.21",
-    "nuqs": "^2.7.0",
     "postcss": "^8.5.3",
     "pretty-bytes": "^7.1.0",
     "qrcode.react": "^4.2.0",
