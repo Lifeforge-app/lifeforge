@@ -15,6 +15,10 @@
       "newPassword": "Kata Laluan Baru",
       "confirmPassword": "Sahkan Kata Laluan",
       "masterPassword": "Kata Laluan Utama"
+    },
+    "confirmSetNewPassword": {
+      "title": "Pastikan anda ingat kata laluan utama anda!",
+      "desc": "Kata laluan utama ini tidak boleh diubah (buat masa ini)! Jika anda terlupa kata laluan secara tidak sengaja, anda akan kehilangan segala-galanya. Kata laluan ini dihash dan disimpan dalam profil pengguna anda, dan ia tidak boleh disahsulit. Ia akan digunakan untuk menyulit dan menyahsulit data yang anda simpan dalam petak simpanan anda."
     }
   },
   "otp": {

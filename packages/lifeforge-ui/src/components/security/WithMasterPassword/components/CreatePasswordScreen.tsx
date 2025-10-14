@@ -46,9 +46,8 @@ function CreatePasswordScreen({
     }
 
     open(ConfirmationModal, {
-      title: 'Make sure you remember your master password!',
-      description:
-        'This master password is unchangable for now! If you accidentally forget the password, you lose everything. This password is hashed and stored in your user profile, and it is not decryptable. It will be used to encrypt and decrypt the data you store in your vault.',
+      title: t('vault.confirmSetNewPassword.title'),
+      description: t('vault.confirmSetNewPassword.desc'),
       onConfirm: async () => {
         await createPasswordMutation.mutateAsync({
           password: newPassword
