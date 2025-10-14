@@ -19,7 +19,7 @@ const VERSION_NUMBER = JSON.parse(
  */
 export function setupCLI(): void {
   program
-    .name('forge')
+    .name('bun forge')
     .description('Build and manage Lifeforge projects')
     .version(VERSION_NUMBER)
 
@@ -70,10 +70,6 @@ function setupModulesCommand(): void {
   const command = program
     .command('modules')
     .description('Manage Lifeforge modules')
-    .argument(
-      '[action]',
-      'Action to perform on modules. Available: list, add, remove'
-    )
 
   command.command('list').action(moduleHandlers.listModulesHandler)
   command
