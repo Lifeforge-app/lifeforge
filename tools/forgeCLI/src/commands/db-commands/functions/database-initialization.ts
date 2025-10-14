@@ -102,8 +102,9 @@ export function ensureEnvironmentFile(): string {
  */
 export function validatePocketBaseNotInitialized(pbDir: string): void {
   if (fs.existsSync(path.resolve(pbDir, 'pb_data'))) {
-    CLILoggingService.error(
-      'PocketBase is already initialized in the specified directory, aborting.'
+    CLILoggingService.actionableError(
+      'PocketBase is already initialized in the specified directory, aborting.',
+      'If you want to re-initialize, please remove the existing pb_data folder in the database directory.'
     )
     process.exit(1)
   }
