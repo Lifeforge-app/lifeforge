@@ -94,6 +94,13 @@ function setupDatabaseCommands(): void {
     .description('Manage database schemas and migrations')
 
   command
+    .command('init')
+    .description('Initialize the PocketBase database')
+    .argument('email', 'Admin email for PocketBase')
+    .argument('password', 'Admin password for PocketBase')
+    .action(dbHandlers.initializeDatabaseHandler)
+
+  command
     .command('generate-schema')
     .description('Generate Zod schemas from PocketBase collections')
     .argument('[module]', 'Optional module name to generate schema for')

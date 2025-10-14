@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
+import PocketBase from 'pocketbase'
 
 import { CLILoggingService } from '../../../utils/logging'
 
@@ -19,20 +20,45 @@ export async function validatePocketBaseSetup(pbDir: string): Promise<{
   try {
     fs.accessSync(resolvedPbDir)
   } catch {
-    CLILoggingService.error('PocketBase directory does not exist')
+    CLILoggingService.actionableError(
+      'PocketBase directory does not exist.',
+      'Have you accidentally removed or renamed the folder in your project named "database"? This is the default location specified by PB_DIR. If you plan to use a different location, please update the PB_DIR environment variable accordingly.'
+    )
     process.exit(1)
   }
 
   try {
     fs.accessSync(pbInstancePath)
   } catch {
-    CLILoggingService.error(
-      'PocketBase binary not found in the specified directory'
+    CLILoggingService.actionableError(
+      'PocketBase binary not found in the specified directory.',
+      'The database folder is found, but the PocketBase binary is missing. Please ensure that PocketBase is correctly set up in the specified directory.'
     )
     process.exit(1)
   }
 
   return { pbInstancePath, pbDir: resolvedPbDir }
+}
+
+export default async function getPocketbaseInstance(): Promise<PocketBase> {
+  const pb = new PocketBase(process.env.PB_HOST)
+
+  try {
+    await pb
+      .collection('_superusers')
+      .authWithPassword(process.env.PB_EMAIL!, process.env.PB_PASSWORD!)
+
+    if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
+      throw new Error('Invalid credentials or insufficient permissions')
+    }
+
+    return pb
+  } catch (error) {
+    CLILoggingService.error(
+      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
+    process.exit(1)
+  }
 }
 
 /**

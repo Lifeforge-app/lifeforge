@@ -1,4 +1,4 @@
-import { execSync } from 'child_process'
+import { spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
@@ -39,26 +39,39 @@ export function resolveProjects<T extends string>(
  */
 export function executeCommand(
   command: string | (() => string),
-  options: CommandExecutionOptions = {}
+  options: CommandExecutionOptions = {},
+  _arguments: string[] = []
 ): string {
   const cmd = typeof command === 'function' ? command() : command
 
-  try {
-    if (!options.stdio || options.stdio === 'inherit') {
-      CLILoggingService.debug(`Executing: ${cmd}`)
+  if (!options.stdio || options.stdio === 'inherit') {
+    CLILoggingService.debug(`Executing: ${cmd}`)
+  }
+
+  const [toBeExecuted, ...args] = cmd.split(' ')
+
+  const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
+    stdio: 'inherit',
+    encoding: 'utf8',
+    ...options
+  })
+
+  if (result.error) {
+    if (!options.exitOnError) {
+      throw result.error
     }
 
-    const result = execSync(cmd, {
-      stdio: 'inherit',
-      ...options
-    })
+    CLILoggingService.actionableError(
+      `Command execution failed: ${cmd}`,
+      'Check if the command exists and you have the necessary permissions'
+    )
+    CLILoggingService.debug(`Error details: ${result.error}`)
+    process.exit(1)
+  }
 
-    if (!options.stdio || options.stdio === 'inherit') {
-      CLILoggingService.debug(`Completed: ${cmd}`)
-    }
+  if (result.status !== 0) {
+    const error = new Error(`Command failed with exit code ${result.status}`)
 
-    return result?.toString().trim()
-  } catch (error) {
     if (!options.exitOnError) {
       throw error
     }
@@ -67,9 +80,15 @@ export function executeCommand(
       `Command execution failed: ${cmd}`,
       'Check if the command exists and you have the necessary permissions'
     )
-    CLILoggingService.debug(`Error details: ${error}`)
+    CLILoggingService.debug(`Exit code: ${result.status}`)
     process.exit(1)
   }
+
+  if (!options.stdio || options.stdio === 'inherit') {
+    CLILoggingService.debug(`Completed: ${cmd}`)
+  }
+
+  return result.stdout?.toString().trim() || ''
 }
 
 /**
@@ -115,15 +134,23 @@ export function logProcessComplete(processType: string): void {
 /**
  * Kills existing processes matching the given keyword
  */
-export function killExistingProcess(processKeyword: string): void {
+export function killExistingProcess(
+  processKeywordOrPID: string | number
+): void {
   try {
-    const serverInstance = executeCommand(`pgrep -f "${processKeyword}"`, {
+    if (typeof processKeywordOrPID === 'number') {
+      process.kill(processKeywordOrPID)
+
+      return
+    }
+
+    const serverInstance = executeCommand(`pgrep -f "${processKeywordOrPID}"`, {
       exitOnError: false,
       stdio: 'pipe'
     })
 
     if (serverInstance) {
-      executeCommand(`pkill -f "${processKeyword}"`)
+      executeCommand(`pkill -f "${processKeywordOrPID}"`)
     }
   } catch {
     // No existing server instance found
@@ -167,9 +194,12 @@ export function validateFilePaths(
  */
 export function checkRunningPBInstances(): void {
   try {
-    const pbInstanceNumber = execSync("pgrep -f 'pocketbase serve'")
-      .toString()
-      .trim()
+    const result = spawnSync('sh', ['-c', "pgrep -f 'pocketbase serve'"], {
+      stdio: 'pipe',
+      encoding: 'utf8'
+    })
+
+    const pbInstanceNumber = result.stdout?.toString().trim()
 
     if (pbInstanceNumber) {
       CLILoggingService.actionableError(
