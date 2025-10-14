@@ -3,8 +3,6 @@ import z from 'zod'
 const usersSchemas = {
   users: {
     schema: z.object({
-      password: z.string(),
-      tokenKey: z.string(),
       email: z.email(),
       emailVisibility: z.boolean(),
       verified: z.boolean(),
