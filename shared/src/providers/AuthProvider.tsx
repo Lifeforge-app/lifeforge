@@ -299,7 +299,7 @@ export default function AuthProvider({
       getAvatarURL,
       tid
     }),
-    [auth, authLoading, userData, tid]
+    [auth, authLoading, userData, setUserData, tid]
   )
 
   return <AuthContext value={value}>{children}</AuthContext>
