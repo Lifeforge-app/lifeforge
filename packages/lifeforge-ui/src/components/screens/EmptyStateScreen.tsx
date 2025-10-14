@@ -50,7 +50,7 @@ function EmptyStateScreen({
       <h2
         className={clsx(
           'text-bg-400 dark:text-bg-600 px-6 text-center font-semibold',
-          smaller ? 'text-2xl' : 'text-4xl'
+          smaller ? 'text-2xl' : 'text-3xl'
         )}
       >
         {name
@@ -61,7 +61,7 @@ function EmptyStateScreen({
         <p
           className={clsx(
             'text-bg-400 dark:text-bg-600 -mt-2 whitespace-pre-wrap px-6 text-center',
-            smaller ? 'text-base' : 'text-xl'
+            smaller ? 'text-base' : 'text-lg'
           )}
         >
           {name
