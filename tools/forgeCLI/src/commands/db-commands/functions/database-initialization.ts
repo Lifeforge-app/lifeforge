@@ -206,6 +206,10 @@ export async function updateEnvironmentFile(
 
   fs.writeFileSync(envPath, updatedEnvContent)
 
+  dotenv.populate(process.env as Record<string, string>, parsedEnv, {
+    override: true
+  })
+
   CLILoggingService.success(
     `Environment file updated with PocketBase credentials at ${chalk.bold.blue(
       'env/.env.local'

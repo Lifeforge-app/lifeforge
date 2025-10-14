@@ -1,5 +1,3 @@
-import dotenv from 'dotenv'
-
 import {
   checkRunningPBInstances,
   validateEnvironment
@@ -33,7 +31,6 @@ export async function initializeDatabaseHandler(
   createPocketBaseSuperuser(pbInstancePath, email, password)
   runDatabaseMigrations(pbInstancePath)
   await updateEnvironmentFile(envPath, email, password)
-  dotenv.config({ path: envPath, quiet: true })
   validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
 
   const pbPid = await startPocketBaseAndGetPid(pbInstancePath)
