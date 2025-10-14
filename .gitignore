@@ -34,6 +34,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-/database
+pocketbase
+pb_*
 medium
 logs
