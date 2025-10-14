@@ -53,6 +53,7 @@ export function executeCommand(
   const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
     stdio: 'inherit',
     encoding: 'utf8',
+    shell: true,
     ...options
   })
 
