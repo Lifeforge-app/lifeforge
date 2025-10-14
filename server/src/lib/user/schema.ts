@@ -18,7 +18,7 @@ const usersSchemas = {
       bgImage: z.string(),
       backdropFilters: z.any(),
       fontFamily: z.string(),
-      language: z.enum(['zh-CN', 'en', 'ms', 'zh-TW', '']),
+      language: z.enum(['zh-CN', 'en', 'ms', 'zh-TW']),
       dashboardLayout: z.any(),
       masterPasswordHash: z.string(),
       APIKeysMasterPasswordHash: z.string(),
@@ -248,7 +248,7 @@ const usersSchemas = {
           maxSelect: 1,
           name: 'language',
           presentable: false,
-          required: false,
+          required: true,
           system: false,
           type: 'select',
           values: ['zh-CN', 'en', 'ms', 'zh-TW']
