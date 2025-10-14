@@ -15,6 +15,10 @@
       "newPassword": "新密码",
       "confirmPassword": "确认密码",
       "masterPassword": "主密码"
+    },
+    "confirmSetNewPassword": {
+      "title": "确保您记住您的主密码！",
+      "desc": "此主密码是不可更改的（目前）！如果您不小心忘记了密码，您将失去一切。此密码会被哈希并存储在您的用户资料中，且无法解密。它将用于加密和解密您存储在保险库中的数据。"
     }
   },
   "otp": {
