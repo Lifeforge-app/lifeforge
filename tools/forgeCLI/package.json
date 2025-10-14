@@ -7,6 +7,7 @@
         "@babel/generator": "^7.28.3",
         "@babel/traverse": "^7.28.4",
         "@types/babel__generator": "^7.27.0",
-        "@types/babel__traverse": "^7.28.0"
+        "@types/babel__traverse": "^7.28.0",
+        "dotenv": "^17.2.3"
     }
 }
