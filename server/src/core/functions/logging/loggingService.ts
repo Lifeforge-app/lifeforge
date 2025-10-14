@@ -37,7 +37,7 @@ export class LoggingService {
 
     const prefix = instance.getPrefix('ERROR', service)
 
-    console.error(`${prefix} ${message}`)
+    console.error(`${prefix} ${chalk.red(message)}`)
 
     instance.logToFile(`${prefix} ${message}`)
   }
@@ -47,7 +47,7 @@ export class LoggingService {
 
     const prefix = instance.getPrefix('WARN', service)
 
-    console.warn(`${prefix} ${message}`)
+    console.warn(`${prefix} ${chalk.yellow(message)}`)
 
     instance.logToFile(`${prefix} ${message}`)
   }
