@@ -1,6 +1,5 @@
 import chalk from 'chalk'
 import path from 'path'
-import PocketBase from 'pocketbase'
 
 import { validateEnvironment } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
@@ -10,6 +9,7 @@ import {
   processSchemaGeneration
 } from '../functions/schema-generation'
 import { writeFormattedFile } from '../utils/file-utils'
+import getPocketbaseInstance from '../utils/pocketbase-utils'
 
 /**
  * Command handler for generating database schemas
@@ -23,22 +23,7 @@ export async function generateSchemaHandler(
     validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
 
     // Authenticate with PocketBase
-    const pb = new PocketBase(process.env.PB_HOST)
-
-    try {
-      await pb
-        .collection('_superusers')
-        .authWithPassword(process.env.PB_EMAIL, process.env.PB_PASSWORD)
-
-      if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
-        throw new Error('Invalid credentials or insufficient permissions')
-      }
-    } catch (error) {
-      CLILoggingService.error(
-        `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-      )
-      process.exit(1)
-    }
+    const pb = await getPocketbaseInstance()
 
     // Fetch collections
     CLILoggingService.debug('Fetching collections from PocketBase...')
@@ -69,7 +54,7 @@ export async function generateSchemaHandler(
 
       const coreSchemaPath = path.resolve(
         __dirname,
-        '../../../../../server/src/core/schema.ts'
+        '../../../../../../server/src/core/schema.ts'
       )
 
       await writeFormattedFile(coreSchemaPath, mainSchemaContent)

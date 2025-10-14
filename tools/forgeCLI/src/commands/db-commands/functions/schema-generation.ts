@@ -39,7 +39,7 @@ function convertFieldToZodSchema(field: PocketBaseField): string | null {
 function generateCollectionSchema(collection: any): Record<string, string> {
   const zodSchemaObject: Record<string, string> = {}
 
-  for (const field of collection.fields) {
+  for (const field of collection.fields.filter((e: any) => !e.hidden)) {
     const zodSchema = convertFieldToZodSchema(field as PocketBaseField)
 
     if (zodSchema) {
