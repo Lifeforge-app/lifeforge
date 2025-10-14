@@ -1,4 +1,5 @@
 import concurrently from 'concurrently'
+import fs from 'fs'
 
 import {
   PROJECTS_ALLOWED,
@@ -38,6 +39,14 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   client: {
     command: () => {
       killExistingProcess('lifeforge/node_modules/.bin/vite')
+
+      if (!fs.existsSync('shared/dist')) {
+        executeCommand('bun forge build shared')
+      }
+
+      if (!fs.existsSync('packages/lifeforge-ui/dist')) {
+        executeCommand('bun forge build ui')
+      }
 
       return 'cd client && bun run dev'
     }
