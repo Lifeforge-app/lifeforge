@@ -20,6 +20,7 @@ const usersSchemas = {
       dashboardLayout: z.any(),
       masterPasswordHash: z.string(),
       APIKeysMasterPasswordHash: z.string(),
+      twoFASecret: z.string(),
       fontScale: z.number(),
       created: z.string(),
       updated: z.string()
@@ -282,6 +283,20 @@ const usersSchemas = {
           max: 0,
           min: 0,
           name: 'APIKeysMasterPasswordHash',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: false,
+          system: false,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          id: 'text1433516510',
+          max: 0,
+          min: 0,
+          name: 'twoFASecret',
           pattern: '',
           presentable: false,
           primaryKey: false,
