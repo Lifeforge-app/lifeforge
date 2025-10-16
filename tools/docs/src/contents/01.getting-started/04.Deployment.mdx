@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 
 import CustomLink from '../../components/CustomLink'
+import Code from '../../components/Code'
+import Note from '../../components/Note'
 
 ###### Deployment
 
@@ -13,35 +15,36 @@ Now that you have successfully set up your LifeForge system, it's time to deploy
 <section id="deploying-frontend">
 ## Deploying Frontend
 
-Login to your Vercel account and create a new project. Connect your GitHub repository to Vercel and deploy the frontend repository. Make sure to copy and paste the environment variables from your <code>.env</code> file to the Vercel dashboard.
-
-Wait for the deployment to finish, and you should see a link to your LifeForge frontend. Click on it, and you should be able to access your LifeForge system. If you want to use a custom domain, you can set it up in the Vercel settings.
+Since the frontend is basically just a **Single Page Application (SPA)**, we can easily deploy it to Vercel, Netlify, or maybe even GitHub Pages (never done it before, not sure if it works). Simply import your GitHub repository, select the root directory to point to the <code>client</code> folder, and set the build command to <code>bun run build</code> and the output directory to <code>client/dist</code>.
 
 </section>
 
 <section id="deploying-backend">
 ## Deploying Backend
 
-Since serverless functions are expensive as hell, we'll create a proxy server that redirects requests to the backend API that you are running on your local server. This way, you can save a lot of money and still have a fast and reliable backend.
+You will eventually need to make your server accessible from the public internet. Therefore, a securely hosted backend server with SSL/TLS encryption is essential to protect your data and ensure secure communication between the client and server. Your client application hosted with https prefix will not be able to communicate with a backend server that is not secured with SSL/TLS encryption after all.
+
+The backend server is a **vanilla Express.JS application**, which means you can deploy it to any cloud server that supports Node.js applications. You can use some sort of Virtual Private Server (VPS) like DigitalOcean, Linode, or even AWS EC2. 
+
+<Note>
+### Using a Proxy Server
+
+If you want to save some money and avoid the hassle of setting up a VPS, and you just so happen to have an old computer or a Raspberry Pi lying around, you can also host the backend server on your own local server and use a **proxy server** to redirect the requests to your local server through a secure connection.
 
 Before we start, make sure you have setup the port forwarding on your router to forward the port that your backend API is running on to the public internet. This is necessary for the proxy server to work.
 
 Next, clone the proxy server repository that I have created for you:
 
-```bash
-git clone https://github.com/LifeForge-app/lifeforge-api-proxy.git
-```
+<Code language="bash">
+{`git clone https://github.com/LifeForge-app/lifeforge-api-proxy.git`}
+</Code>
 
-Then, navigate to the <code>lifeforge-proxy</code> directory and create a <code>.env</code> file. Fill in the following fields:
-
-| Field          | Description                                                                                                             |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **TARGET_URL** | The public URL of your backend API server (Make sure to put the full URL, including the <code>http(s)://</code> prefix) |
+Then, navigate to the <code>lifeforge-proxy</code> directory and create a <code>.env</code> file. There is only one field that you need to fill in, which is the <code>TARGET_URL</code> field. This field is the public URL of your backend API server. Make sure to put the full URL, including the <code>http(s)://</code> prefix.
 
 Finally, deploy the proxy server to Render or any other cloud server that supports Node.js applications. Make sure to copy and paste the environment variables from your <code>.env</code> file to the server dashboard.
 
-Once the deployment is complete, you should see a link to your proxy server. Click on the link and make sure that the server is running correctly. If everything is working fine, make sure to update the <code>VITE_API_HOST</code> field in your frontend <code>.env</code> file to the URL of your proxy server.
-
+Once the deployment is complete, you should see a link to your proxy server. Try to access your API using the link and see if it works. Make sure to update the <code>VITE_API_HOST</code> field in your <code>.env.local</code> file to the URL of your proxy server.
+</Note>
 </section>
 
 <section id="deploying-database">
@@ -59,6 +62,9 @@ As for the file storage, Pocketbase provides option for you to store you files i
 
 And wallah! You have successfully deployed your LifeForge system to a cloud server. Now you can access your LifeForge system from anywhere in the world. Time to start managing your life like a pro!
 
+<CustomLink to="/user-guide/modules" text="Learn more about Modules" />
+
+
 If you're finding the system not to your liking and you just so happen to be a web developer, you can also create your own modules and contribute to the project.
 
-<CustomLink to="/contribution" text="Learn more about contributing" />
+<CustomLink to="/contribution" text="Learn more about Contribution" />

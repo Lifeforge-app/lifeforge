@@ -1,12 +1,14 @@
 import { Icon } from '@iconify/react'
 
 import Note from '../../components/Note'
+import Warning from '../../components/Warning'
+import Code from '../../components/Code'
 
 ###### Installation
 
 # Getting Started with LifeForge.
 
-To be frank, LifeForge is quite a complicated system, integrating many external binaries and APIs. A docker config file is hopefully on the way, maybe created by me or someone else who is more experienced in Docker and is willing to help. But for now, you'll have to install everything manually. This guide will walk you through the installation process step by step, to hopefully allow you to set up LifeForge without any issues.
+Back in the day, LifeForge used to be a collection of multiple repositories, where the frontend and backend are separated into different repositories. This made it hard for new users and developers to get started with the project, as they had to clone multiple repositories and set up the environment for each of them. To solve this problem, I decided to merge all the repositories into a single monorepo. This way, people only need to clone a single repository and set up the environment once.
 
 ---
 
@@ -15,72 +17,45 @@ To be frank, LifeForge is quite a complicated system, integrating many external 
 
 Before you start, make sure you have the following items on hand:
 
-- **A Raspberry Pi 4 or any other computer in Unix-like systems:** This is the hardware that will be used to host the LifeForge API and database.
-- **Node.js and bun:** You will need to have Node.js and bun installed on your server to run the LifeForge API and frontend. Any recent version of these should work fine.
+- **A Raspberry Pi  or any other computer in Unix-based systems:** This is the hardware that will be used to host the LifeForge API and database.
+- **Node.js (at least LTS) and bun (v1.3 or higher):** LifeForge is a pure TypeScript project, and bun is used as the runtime environment. You can download and install bun from [here](https://bun.sh/).
 - **A functional brain:** You will need to have a basic understanding of how to use a terminal and how to run a Node.js application.
-- **A cup of coffee:** This is optional, but it's always nice to have a cup of coffee by your side when you're coding.
+- **A cup of coffee or tea:** This is optional, but it's always nice to have a cup of coffee by your side when you're coding.
 
-<Note>
-If you're using Windows to host the LifeForge system, you might run into some issues. I recommend using a Unix-like system such as Linux or macOS to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
-</Note>
+<Warning>
+If you're using Windows to host the LifeForge system, you might run into some issues. A Unix-like system such as Linux or macOS is strongly recommended to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
+</Warning>
 </section>
 
-<section id="frontend-installation">
-## Frontend Installation
+<section id="system-installation">
+## System Installation
 
-First, clone the LifeForge frontend repository to your local machine or your server. You can do this by running the following command in your terminal:
+First, clone the LifeForge monorepo to your local machine or your server. You can do this by running the following command in your terminal:
 
-```bash
-git clone https://github.com/lifeforge-app/lifeforge.git
-```
+<Code language="bash">
+{'git clone https://github.com/lifeforge-app/lifeforge.git'}
+</Code>
 
 Then, install the dependencies by running the following command:
 
-```bash
-cd lifeforge && bun install
-```
+<Code language="bash">
+{'cd lifeforge && bun install'}
+</Code>
 
-</section>
-
-<section id="backend-installation">
-## Backend Installation
-
-Next, get access to your server terminal (if you haven't already) and clone the LifeForge api repository into it.
-
-```bash
-git clone https://github.com/lifeforge-app/lifeforge-api.git
-```
-
-Then, install the dependencies as well:
-
-```bash
-cd lifeforge-api && bun install
-```
-
-After that, you'll need to create a folder named **medium** in the root directory of your server. This folder will be used to temporarily store the media files uploaded by users.
+That's pretty much it for the installation of the system itself. Now, let's move on to the installation of the database.
 
 </section>
 
 <section id="database-installation">
 ## Database Installation
 
-Finally, you'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. Head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in your server using <code>sftp</code> or any other file transfer method you prefer.
+You'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. Head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in the root of the LifeForge project.
 
-</section>
+![PocketBase Setup](/assets/installation/db.png)
 
-<section id="make-sure">
-## Make Sure...
-
-Before you proceed, make sure your server directory structure looks like this:
-
-```plaintext
-lifeforge-server (or just put everything in the home directory)
-├── lifeforge (if you decided to host the frontend and backend in the same server)
-├── lifeforge-api
-├── database
-└── medium
-```
-
+<Note>
+If you want to host the database in a different location, feel free to do so, but make sure to update the database path accordingly in the configuration file later.
+</Note>
 </section>
 
 ---

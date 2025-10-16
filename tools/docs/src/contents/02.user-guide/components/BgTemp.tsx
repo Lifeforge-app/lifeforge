@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { usePersonalization } from 'shared'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 
 function BgTemp() {
-  const [bgTemp, setBgTemp] = useState<string>('bg-slate')
+  const { bgTemp, setBgTemp } = usePersonalization()
 
   return (
     <div className="mt-6 flex w-full min-w-0">
