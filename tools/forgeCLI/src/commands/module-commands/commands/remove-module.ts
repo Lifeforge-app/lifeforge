@@ -157,7 +157,7 @@ async function selectModuleToRemove(): Promise<string> {
 }
 
 /**
- * Handles removing a module from the Lifeforge system
+ * Handles removing a module from the LifeForge system
  */
 export async function removeModuleHandler(moduleName?: string): Promise<void> {
   CLILoggingService.step('Starting module removal process')

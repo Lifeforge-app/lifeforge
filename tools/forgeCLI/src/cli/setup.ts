@@ -20,7 +20,7 @@ const VERSION_NUMBER = JSON.parse(
 export function setupCLI(): void {
   program
     .name('bun forge')
-    .description('Build and manage Lifeforge projects')
+    .description('Build and manage the LifeForge ecosystem')
     .version(VERSION_NUMBER)
 
   setupProjectCommands()
@@ -55,7 +55,7 @@ function setupDevCommand(): void {
 
   program
     .command('dev')
-    .description('Start Lifeforge services for development')
+    .description('Start LifeForge services for development')
     .argument(
       '<service>',
       `Service to start. Use all for starting db, server, and client. Available: ${availableServices.join(', ')}`
@@ -69,7 +69,7 @@ function setupDevCommand(): void {
 function setupModulesCommand(): void {
   const command = program
     .command('modules')
-    .description('Manage Lifeforge modules')
+    .description('Manage LifeForge modules')
 
   command.command('list').action(moduleHandlers.listModulesHandler)
   command
