@@ -3,7 +3,7 @@
 
 @import 'tailwindcss';
 @import 'lifeforge-ui/dist/index.css';
-@source "../../../node_modules/lifeforge-ui/dist";
+@source "../../../packages/lifeforge-ui/dist";
 
 @import 'react-medium-image-zoom/dist/styles.css';
 
@@ -64,9 +64,4 @@ hr + section > h2 {
   & + p {
     @apply mt-4;
   }
-}
-
-.notes code,
-.notes .code {
-  @apply bg-bg-100! dark:bg-bg-800!;
 }

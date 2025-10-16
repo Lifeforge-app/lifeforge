@@ -1,6 +1,8 @@
 import Note from '../../components/Note'
 import BgTemp from './components/BgTemp'
 import LightAndDarkMode from './components/LightAndDarkMode'
+import ThemeColors from './components/ThemeColors'
+import CustomColorInput from './components/CustomColorInput'
 
 ###### Personalization
 
@@ -47,27 +49,36 @@ There are currently 18 predefined colors inspired by Material UI that you can ch
 
 If you think the predefined colors are not to your liking, you can also enter a custom color code to use as the accent color by choosing the **Custom Color** option at the bottom of the color list.
 
-<div className="grid grid-cols-6 gap-6 mt-8">
-{[
-  'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan',
-  'teal', 'green', 'light-green', 'lime', 'yellow', 'amber', 'orange', 'deep-orange', 'brown', 'grey'
-].map((color, index) => (
-  <div key={index} className="flex flex-col items-center">
-    <div className={`w-16 h-16 rounded-full theme-${color} bg-custom-500`}></div>
-    <span className="text-sm text-gray-500 mt-2">{color}</span>
-  </div>
-))}
-</div>
+<ThemeColors />
+
+<Note>
+  Feel free to click on the colors above to experience the power of LifeForge's theming capabilities.
+</Note>
+
+If you are not satisfied with the predefined colors however, you can always enter a custom color code to use as the accent color by choosing the **Custom Color** option at the bottom of the color list.
+
+<CustomColorInput />
+
+<Note>
+  Feel free to toggle the "Use custom color" switch to enable the custom color input. Enter any valid hex color code (e.g., #ff5733) and click the "Apply" button to see the changes in real-time.
+</Note>
 </section>
 
 <section id="background-temperature">
 ## Background Temperature
 
+![Background Temperature](/assets/bgTemp/6.png)
+
 The background temperature allows you to set the color temperature of the system background. You can choose from 5 predefined color temperatures, ranging from cold to warm, to set the background temperature of your system. If you feel like using a custom color temperature, you can click on the color palette icon at the right side of the temperature list to enter a custom color code.
+
 
 Try out the different color temperatures below and if any of them catches your eye.
 
 <BgTemp />
+
+<Note>
+  Feel free to click on the color temperatures above to experience the power of LifeForge's theming capabilities.
+</Note>
 </section>
 
 <section id="background-image">
@@ -95,12 +106,20 @@ Click on **Adjust** to adjust the background image settings, such as the opacity
 </div>
 </section>
 
-<section id="font-family">
-## Font Family
+<section id="font-family-&-scale">
+## Font Family & Scale
 
-The font family used in the system is default to [Onest](https://fonts.google.com/specimen/Onest) from Google Fonts. If you prefer to use a different font family, feel free to choose from the dropdown list in the **Font Family** section, as long as the font family is available in Google Fonts.
+The font family used in the system is default to [Onest](https://fonts.google.com/specimen/Onest) from Google Fonts. If you prefer to use a different font family, feel free to browse and choose one from the font selector.
+
+![Font Selector](/assets/user-personalization/font-family-picker.png)
 
 <Note>
-If the Google Cloud API key is not set up in the system, the font family dropdown list will be disabled, and you won't be able to change the font family. Learn more about how to set up the Google Cloud API key in the [API Keys Guide](/user-guide/api-keys).
+If the Google Cloud API key is not set up in the system, the font family selector will be disabled, and you won't be able to change the font family. Learn more about how to set up the Google Cloud API key in the [API Keys Guide](/user-guide/api-keys).
 </Note>
+
+Sometimes the font that you have chosen might look too big or too small for your liking. You can adjust the font scale to make the font look bigger or smaller. The default font scale is 1, but you can adjust it from 0.5 to 2.
+
+<center>
+<img src="/assets/user-personalization/font-scale.png" alt="Font Scale" className="w-1/3 mt-8 rounded-lg" />
+</center>
 </section>

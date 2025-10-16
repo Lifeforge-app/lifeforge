@@ -101,13 +101,13 @@ The resulting data will include an additional <code>expand</code> field for each
   you with autocompletion suggestions based on that.
 </Note>
 
-  <Warning>
-  - This will only work when you have defined the appropriate relations for the fields in your PocketBase admin panel with appropriate access permissions.
+<Warning>
+- This will only work when you have defined the appropriate relations for the fields in your PocketBase admin panel with appropriate access permissions.
 
 - Please call this method **before** filtering, sorting, and field selection, as it will affect the IntelliSense inference of these operations.
 
 - Back relations using the <code>via</code> keyword is **NOT** supported. If it must be used, fetch the data using the native PocketBase SDK directly.
-    </Warning>
+</Warning>
 </section>
 
 <section id="filtering-results">
@@ -157,11 +157,11 @@ If you have expanded relations in your query, you may filter based on the expand
 ]).execute();`}
 </Code>
 
-  <Note>
-  - IntelliSense in your code editor should provide you with autocompletion suggestions for the <code>field</code> field based on the available fields, including those from expanded relations.
+<Note>
+- IntelliSense in your code editor should provide you with autocompletion suggestions for the <code>field</code> field based on the available fields, including those from expanded relations.
 
 - Available comparison operations are the same as the native SDK. Please refer to the [PocketBase documentation](https://pocketbase.io/docs/api-records/#listsearch-records) for more information.
-    </Note>
+</Note>
 </section>
 
 <section id="sorting-records">
