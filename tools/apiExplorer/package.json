@@ -20,7 +20,7 @@
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
-    "i18next": "24.2.3",
+    "i18next": "^25.6.0",
     "i18next-http-backend": "2.7.3",
     "javascript-color-gradient": "^2.5.0",
     "lifeforge-ui": "workspace:*",
