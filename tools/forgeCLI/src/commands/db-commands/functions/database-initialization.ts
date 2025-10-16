@@ -122,13 +122,19 @@ export function createPocketBaseSuperuser(
     CLILoggingService.step(
       `Initializing PocketBase database for ${chalk.bold.blue(email)}`
     )
-    executeCommand(
+
+    const result = executeCommand(
       `${pbInstancePath} superuser create`,
       {
         stdio: ['pipe', 'pipe', 'pipe']
       },
       [email, password]
     )
+
+    if (result.startsWith('Error:')) {
+      throw new Error(result.replace(/^Error:\s*/, ''))
+    }
+
     CLILoggingService.success(
       'PocketBase initialized and superuser created successfully.'
     )
