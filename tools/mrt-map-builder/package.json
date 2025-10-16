@@ -15,7 +15,7 @@
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
     "daisyui": "^5.0.50",
-    "i18next": "24.2.3",
+    "i18next": "^25.6.0",
     "i18next-http-backend": "2.7.3",
     "lifeforge-ui": "workspace:*",
     "react": "^19.1.0",
