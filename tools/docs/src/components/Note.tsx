@@ -10,11 +10,11 @@ function Note({
 }) {
   return (
     <div
-      className={`notes quote before:bg-custom-500 relative mt-6 w-full rounded-md p-2 pl-6 before:absolute before:top-0 before:left-0 before:h-full before:w-[4px] before:rounded-full ${className}`}
+      className={`notes quote relative mt-6 w-full rounded-md p-2 pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[4px] before:rounded-full before:bg-blue-500 ${className}`}
     >
-      <div className="text-custom-500 flex items-center gap-2">
+      <div className="flex items-center gap-2 text-blue-500">
         <Icon className="h-6 w-6" icon="tabler:info-circle" />
-        <h4 className="text-xl font-medium">Note</h4>
+        <h4 className="text-lg font-medium">Note</h4>
       </div>
       <p className="-mt-2 text-base">{children}</p>
     </div>

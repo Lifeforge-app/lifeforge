@@ -39,7 +39,7 @@ export const components: MDXComponents = {
     return (
       <hr
         {...properties}
-        className="border-bg-200 dark:border-bg-800 mt-8 mb-4 border-t-[1.5px] sm:mt-12 sm:mb-8"
+        className="border-bg-200 dark:border-bg-800 mb-4 mt-8 border-t-[1.5px] sm:mb-8 sm:mt-12"
       />
     )
   },
@@ -57,9 +57,7 @@ export const components: MDXComponents = {
     return <ul {...properties} className="mt-4 list-disc space-y-3 pl-6" />
   },
   li(properties) {
-    return (
-      <li {...properties} className="dark:text-bg-400 text-bg-600 sm:text-lg" />
-    )
+    return <li {...properties} className="dark:text-bg-400 text-bg-600" />
   },
   strong(properties) {
     return (
@@ -103,7 +101,7 @@ export const components: MDXComponents = {
   img(properties) {
     return (
       <Zoom zoomImg={properties.src}>
-        <div className="flex-center w-full pt-2 pb-4">
+        <div className="flex-center w-full pb-4 pt-2">
           <img {...properties} alt="" className="w-[80%] rounded-lg" />
         </div>
       </Zoom>

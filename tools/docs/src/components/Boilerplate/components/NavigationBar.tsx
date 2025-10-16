@@ -101,7 +101,7 @@ function NavigationBar() {
     <div className="mt-12 flex items-center justify-between">
       {lastSection ? (
         <Link
-          className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
+          className="text-bg-800 dark:text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
           to={`/${lastSection.group}/${lastSection.section}`}
         >
           <Icon className="-mb-1 h-5 w-5 shrink-0" icon="tabler:arrow-left" />
@@ -112,7 +112,7 @@ function NavigationBar() {
       )}
       {nextSection && (
         <Link
-          className="text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
+          className="text-bg-800 dark:text-bg-100 flex items-center gap-2 text-lg font-medium hover:underline"
           to={`/${nextSection.group}/${nextSection.section}`}
         >
           {_.startCase(nextSection.section.replace(/-/g, ' '))}
