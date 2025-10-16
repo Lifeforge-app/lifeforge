@@ -9,7 +9,7 @@ const welcome = forgeController
   .noAuth()
   .description('Welcome message')
   .input({})
-  .callback(async () => 'Welcome to LifeForge API!' as const)
+  .callback(async () => 'Get ready to forge your life!' as const)
 
 const ping = forgeController
   .mutation()
@@ -33,12 +33,6 @@ const status = forgeController
   .callback(async () => ({
     environment: process.env.NODE_ENV || 'development'
   }))
-
-const getRoot = forgeController
-  .query()
-  .description('Get root endpoint')
-  .input({})
-  .callback(async () => 'Welcome to LifeForge API!' as const)
 
 const getMedia = forgeController
   .query()
