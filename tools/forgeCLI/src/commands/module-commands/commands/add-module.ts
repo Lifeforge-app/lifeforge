@@ -158,7 +158,7 @@ function processServerInjection(moduleName: string): void {
 }
 
 /**
- * Handles adding a new module to the Lifeforge system
+ * Handles adding a new module to the LifeForge system
  */
 export function addModuleHandler(repoPath: string): void {
   checkRunningPBInstances()

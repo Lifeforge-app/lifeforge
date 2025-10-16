@@ -6,12 +6,12 @@ import { runCLI, setupCLI } from './cli/setup'
 import { CLILoggingService } from './utils/logging'
 
 /**
- * Lifeforge Forge - Build and development tool for Lifeforge projects
+ * LifeForge Forge - Build and development tool for LifeForge projects
  *
  * This tool provides commands for:
  * - Building, type-checking, and linting projects
  * - Starting development services (database, server, client, tools)
- * - Managing the entire Lifeforge monorepo ecosystem
+ * - Managing the entire LifeForge monorepo ecosystem
  */
 
 // Load environment variables
