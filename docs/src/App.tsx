@@ -1,4 +1,5 @@
 import { NotFoundScreen } from 'lifeforge-ui'
+import { useEffect } from 'react'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router'
 
 import ROUTES from './Router'
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  useEffect(() => {
+    const preloader = document.querySelector('.preloader')
+
+    if (preloader) {
+      preloader.remove()
+    }
+  }, [])
+
   return <RouterProvider router={router} />
 }
 
