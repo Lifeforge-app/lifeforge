@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useEdges, useNodes } from '@xyflow/react'
 import _ from 'lodash'
 import { useEffect, useMemo } from 'react'

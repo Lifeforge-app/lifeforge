@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+@import 'tailwindcss';
+@import 'lifeforge-ui/dist/index.css';
+@source "../../../packages/lifeforge-ui/dist";
+
+@import 'react-medium-image-zoom/dist/styles.css';
+
+*:not(code *) {
+  font-family: 'Albert Sans', sans-serif;
+}
+
+.hljs * {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.hljs {
+  @apply bg-transparent;
+}
+
+code {
+  font-family: 'JetBrains Mono', monospace !important;
+  @apply text-sm! whitespace-pre-wrap! sm:text-base!;
+}
+
+pre code {
+  @apply text-bg-800! dark:text-bg-100! break-all!;
+}
+
+code:not(pre code, h3 code, .commit code) {
+  @apply text-bg-700 dark:text-bg-300;
+}
+
+pre,
+pre * {
+  @apply bg-transparent!;
+  text-shadow: none !important;
+}
+
+article section {
+  @apply scroll-mt-24;
+}
+
+::marker {
+  @apply text-bg-300;
+}
+
+.dark ::marker {
+  @apply text-bg-700!;
+}
+
+li p:first-of-type {
+  @apply mt-2!;
+}
+
+hr + section > h2 {
+  @apply mt-4!;
+}
+
+.notes h3 {
+  @apply mt-8! text-xl;
+
+  & + p {
+    @apply mt-4;
+  }
+}

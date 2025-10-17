@@ -1,5 +1,5 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { ModalHeader, WithQuery } from 'lifeforge-ui'
 

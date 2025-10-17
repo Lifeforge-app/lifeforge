@@ -91,7 +91,7 @@ const getGoogleFont = forgeController
     })
   })
   .callback(async ({ pb, query: { family } }) => {
-    const key = await getAPIKey('gcloud', pb)
+    const key = await getAPIKey('gcloud', pb).catch(() => null)
 
     if (!key) {
       return {

@@ -1,3 +1,4 @@
+import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
@@ -7,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 import { useSidebarState } from 'shared'
 import { usePersonalization } from 'shared'
 
-import { useUserPersonalization } from '../../../../providers/UserPersonalizationProvider'
 import DASHBOARD_WIDGETS from '../widgets'
 
 const RGL: any = ResponsiveGridLayout as any

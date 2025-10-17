@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { LoadingScreen } from '@components/screens'
-import { loadIcon } from '@iconify/react/dist/iconify.js'
+import { loadIcon } from '@iconify/react'
 import { stringToIcon, validateIconName } from '@iconify/utils'
 import dayjs from 'dayjs'
 import _ from 'lodash'

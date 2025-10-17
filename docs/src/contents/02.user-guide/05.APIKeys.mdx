@@ -1,0 +1,95 @@
+import Note from '../../components/Note'
+
+###### API Keys
+
+# Bridges to the Outside World
+
+**API (Application Programming Interface) keys** are a way for you to connect your LifeForge system to external services. With API keys, you can integrate external services like AI models, Google Fonts, Google Maps, Pixabay, etc. directly into your LifeForge system.
+
+---
+
+<section id="api-key-vault">
+## API Key Vault
+
+To manage your API keys, head to the **API Keys** page, which is accessible from the sidebar under the **Settings** section. Here, you can add, edit, and delete API keys for different services. All the API keys you add will be encrypted and stored securely in the database.
+
+<Note>
+  For an additional layer of security, accessing the vault requires an OTP
+  (One-Time Password) that will be sent to your email. Therefore, **make sure
+  you have the email settings properly configured in the database settings.**
+</Note>
+
+Once the OTP is verified, you'll be prompted to create a master password for the API key vault. This master password will be used to encrypt and decrypt the sensitive information stored in the vault.
+
+![Set New Password](/assets/user-api-keys/set-new-password.png)
+
+<Note>
+  If you forget the master password, there is NO WAY to recover it, even if you
+  access the database directly, since the password itself is stored in the
+  database as a hash that can only be used for the purpose of verification.
+  You'll need to reset the vault, which will delete all the API keys stored in
+  the vault. Therefore, **make sure to remember the master password**.
+</Note>
+
+### Adding API Keys
+
+To add a new API key, click on the **Add API Key** button at the top right corner of the page (for first time users, at the center of the page). Fill in the required fields, including the key ID, service name, description, icon, and the key itself. Once done, click on the Save button to add the API key to the vault.
+
+![Create Key](/assets/user-api-keys/create-key.png)
+
+</section>
+
+<section id="module-specific-keys">
+## Module-Specific Keys
+
+Some modules might require you to add API keys to the vault to function properly. If you have installed and enabled a module that requires API keys, you'll see a screen like the one below when you access the module.
+
+![Missing Keys](/assets/user-api-keys/missing-keys.png)
+
+There, it will list the keys required by the module. Click on the **Config API Keys** button and it will redirect you to the API Keys page for you to add the required keys. Once you've added the keys, you can go back to the module and it should work properly.
+
+</section>
+
+<section id="system-specific-keys">
+## System-Specific Keys
+
+There are some API keys that are required in a system-wide context, meaning they are used by the system itself and sometimes shared across different modules. All of them are optional, but if you want to use the features that require these keys, you'll need to add them to the vault.
+
+### Google Cloud API Keys <code>(gcloud)</code>
+
+LifeForge integrates with several Google Cloud services that enhance the system's functionality:
+
+**Google Fonts API**: There is an option in the **Personalization** page to customize the fonts used in the system, but it requires a Google Cloud API key to work. Once you've added the key, the font selector should show up.
+
+**Places API**: LifeForge provides a location autocomplete input field that can be used in forms across various modules. This feature requires the Google Location AutoComplete API key to work. To enable the location autocomplete, you'll need to add the Google Cloud API key to the vault. Otherwise, the location autocomplete input field will be disabled.
+
+To set up these services, head to the [Google Cloud Console](https://console.cloud.google.com/), initialize a project, enable the Google Fonts API and Places API, and create an API key. Then, add the API key to the vault with the key ID as <code>gcloud</code>.
+
+<Note>
+  You can enable the Places API in the same project where you have enabled the
+  Google Fonts API, and use the same API key for both services.
+
+  ![Google Cloud](/assets/user-api-keys/gcloud.png)
+</Note>
+
+### Pixabay API Key <code>(pixabay)</code>
+
+LifeForge provides an image picker modal that can be used in forms across various modules to select images from different sources. One of the sources is Pixabay, which requires an API key to work. To enable the Pixabay image picker, you'll need to add the Pixabay API key to the vault.
+
+Head to the [Pixabay API website](https://pixabay.com/service/about/api/), create an account, and generate an API key. Then, add the API key to the vault with the key ID as <code>pixabay</code>.
+
+<Note>
+The API key is located in the documentation page of the Pixabay API website once you've created an account and logged in, in the green box shown below:
+
+![Pixabay](/assets/user-api-keys/pixabay.png)
+</Note>
+
+Once you've added the key, if the module you're using supports the Pixabay image picker, you should see the option to select images from Pixabay. One example is the background image selector in the **Personalization** page.
+
+## OpenAI API Key <code>(openai)</code>
+
+LifeForge has some features that leverage the power of AI to enhance your experience, for example you can use AI to generate thumbnail images for your idea boxes in the [Idea Box](https://store.lifeforge.dev/melvinchia3636/ideaBox) module, which is powered by the <code>FilePickerModal</code> component. To enable these AI-powered features, you'll need to add the OpenAI API key to the vault.
+
+Head to the [OpenAI website](https://platform.openai.com/account/api-keys), create an account, top up some credits ($5 will last you for a loooooong time), and generate an API key. Then, add the API key to the vault with the key ID as <code>openai</code>.
+
+</section>

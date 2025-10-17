@@ -2,7 +2,7 @@ export function autoFocusableRef<T>(
   autoFocus: boolean,
   ref?: React.RefObject<T>,
   onFocus?: (e: NonNullable<T>) => void
-): React.RefCallback<T> {
+): any {
   return (e: T) => {
     if (ref) {
       ref.current = e

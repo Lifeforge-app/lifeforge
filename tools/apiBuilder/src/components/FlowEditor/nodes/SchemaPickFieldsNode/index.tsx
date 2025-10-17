@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useNodeConnections } from '@xyflow/react'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

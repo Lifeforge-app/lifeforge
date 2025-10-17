@@ -3,7 +3,7 @@ import fs from 'fs'
 import moment from 'moment'
 import { stripVTControlCharacters } from 'util'
 
-const logPath = process.cwd() + '/logs'
+const logPath = process.cwd().replace(/\/server$/, '') + '/logs'
 
 if (!fs.existsSync(logPath)) {
   fs.mkdirSync(logPath)
@@ -37,7 +37,7 @@ export class LoggingService {
 
     const prefix = instance.getPrefix('ERROR', service)
 
-    console.error(`${prefix} ${message}`)
+    console.error(`${prefix} ${chalk.red(message)}`)
 
     instance.logToFile(`${prefix} ${message}`)
   }
@@ -47,7 +47,7 @@ export class LoggingService {
 
     const prefix = instance.getPrefix('WARN', service)
 
-    console.warn(`${prefix} ${message}`)
+    console.warn(`${prefix} ${chalk.yellow(message)}`)
 
     instance.logToFile(`${prefix} ${message}`)
   }

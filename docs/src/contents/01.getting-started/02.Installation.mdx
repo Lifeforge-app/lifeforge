@@ -1,0 +1,63 @@
+import { Icon } from '@iconify/react'
+
+import Note from '../../components/Note'
+import Warning from '../../components/Warning'
+import Code from '../../components/Code'
+
+###### Installation
+
+# Getting Started with LifeForge.
+
+Back in the day, LifeForge used to be a collection of multiple repositories, where the frontend and backend are separated into different repositories. This made it hard for new users and developers to get started with the project, as they had to clone multiple repositories and set up the environment for each of them. To solve this problem, I decided to merge all the repositories into a single monorepo. This way, people only need to clone a single repository and set up the environment once.
+
+---
+
+<section id="prerequisites">
+## Prerequisites
+
+Before you start, make sure you have the following items on hand:
+
+- **A Raspberry Pi  or any other computer in Unix-based systems:** This is the hardware that will be used to host the LifeForge API and database.
+- **Node.js (at least LTS) and bun (v1.3 or higher):** LifeForge is a pure TypeScript project, and bun is used as the runtime environment. You can download and install bun from [here](https://bun.sh/).
+- **A functional brain:** You will need to have a basic understanding of how to use a terminal and how to run a Node.js application.
+- **A cup of coffee or tea:** This is optional, but it's always nice to have a cup of coffee by your side when you're coding.
+
+<Warning>
+If you're using Windows to host the LifeForge system, you might run into some issues. A Unix-like system such as Linux or macOS is strongly recommended to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
+</Warning>
+</section>
+
+<section id="system-installation">
+## System Installation
+
+First, clone the LifeForge monorepo to your local machine or your server. You can do this by running the following command in your terminal:
+
+<Code language="bash">
+{'git clone https://github.com/lifeforge-app/lifeforge.git'}
+</Code>
+
+Then, install the dependencies by running the following command:
+
+<Code language="bash">
+{'cd lifeforge && bun install'}
+</Code>
+
+That's pretty much it for the installation of the system itself. Now, let's move on to the installation of the database.
+
+</section>
+
+<section id="database-installation">
+## Database Installation
+
+You'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. Head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in the root of the LifeForge project.
+
+![PocketBase Setup](/assets/installation/db.png)
+
+<Note>
+If you want to host the database in a different location, feel free to do so, but make sure to update the database path accordingly in the configuration file later.
+</Note>
+</section>
+
+---
+
+And that's it! You're all set for the installation process. But before you can fire up the LifeForge system, you'll need to configure it. Let's move on to the next section to learn how to do that.

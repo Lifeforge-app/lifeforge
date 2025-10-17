@@ -8,6 +8,9 @@ import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
 import app from './core/app'
+import { CORS_ALLOWED_ORIGINS } from './core/routes/constants/corsAllowedOrigins'
+
+const PORT = process.env.PORT || 3636
 
 dotenv.config({
   path: '../env/.env.local'
@@ -28,7 +31,17 @@ await checkDB()
 
 const server = createServer(app)
 
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin(requestOrigin, callback) {
+      if (CORS_ALLOWED_ORIGINS.includes(requestOrigin || '')) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
+  }
+})
 
 setupSocket(io)
 
@@ -36,12 +49,9 @@ setupSocket(io)
 app.request.io = io
 
 // Start REST API server
-server.listen(process.env.PORT, () => {
+server.listen(PORT, () => {
   const routes = traceRouteStack(app._router.stack)
 
   LoggingService.debug(`Registered routes: ${routes.length}`, 'API')
-  LoggingService.info(
-    `REST API server running on port ${process.env.PORT}`,
-    'API'
-  )
+  LoggingService.info(`REST API server running on port ${PORT}`, 'API')
 })

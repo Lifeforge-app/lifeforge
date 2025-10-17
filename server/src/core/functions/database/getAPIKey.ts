@@ -14,9 +14,18 @@ export default async function getAPIKey(id: string, pb: PBService) {
         }
       ])
       .execute()
+      .catch(err => {
+        throw new Error(err.message)
+      })
 
-    return decrypt2(key, process.env.MASTER_KEY!)
-  } catch {
-    throw new Error(`API key with ID ${id} not found`)
+    try {
+      return decrypt2(key, process.env.MASTER_KEY!)
+    } catch (err) {
+      throw new Error(`Failed to decrypt API key for ${id}.`)
+    }
+  } catch (err) {
+    throw new Error(
+      `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`
+    )
   }
 }
