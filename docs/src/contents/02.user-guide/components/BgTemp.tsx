@@ -32,7 +32,7 @@ function BgTemp() {
           key={bgTemp}
           alt=""
           className="mt-4 w-full rounded-md"
-          src={`/assets/bgTemp/${COLORS.indexOf(bgTemp) + 1}.png`}
+          src={`https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/bgTemp/${COLORS.indexOf(bgTemp) + 1}.webp`}
         />
       </div>
     </div>
