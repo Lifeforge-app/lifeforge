@@ -3,7 +3,7 @@
 
 @import 'tailwindcss';
 @import 'lifeforge-ui/dist/index.css';
-@source "../../../packages/lifeforge-ui/dist";
+@source "../../packages/lifeforge-ui/dist";
 
 @import 'react-medium-image-zoom/dist/styles.css';
 
