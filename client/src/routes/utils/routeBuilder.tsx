@@ -1,10 +1,9 @@
+import APIKeyStatusProvider from '@/providers/APIKeyStatusProvider'
 import { LoadingScreen, ModalManager, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Suspense } from 'react'
 import type { RouteObject } from 'react-router'
 import type { ModuleConfig } from 'shared'
-
-import APIKeyStatusProvider from '../../providers/APIKeyStatusProvider'
 
 interface RouteBuilderOptions {
   routes: ModuleConfig['routes']

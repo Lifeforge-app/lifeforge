@@ -1,3 +1,4 @@
+import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
@@ -14,12 +15,10 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type Scrollbars from 'react-custom-scrollbars'
 import { toast } from 'react-toastify'
 import { AutoSizer } from 'react-virtualized'
 import { type InferOutput, usePersonalization } from 'shared'
 
-import { useUserPersonalization } from '../../../../../../../providers/UserPersonalizationProvider'
 import FontListItem from './components/FontListItem'
 
 export type FontFamily = InferOutput<
@@ -45,7 +44,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
 
   const [selectedFont, setSelectedFont] = useState<string | null>(fontFamily)
 
-  const scrollableRef = useRef<Scrollbars>(null)
+  const scrollableRef = useRef<any>(null)
 
   const filteredFonts = useMemo(
     () =>

@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { EmptyStateScreen, SearchInput } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 
@@ -31,8 +31,7 @@ function StationSection({
 
       <div className="flex flex-col space-y-3 px-4">
         <SearchInput
-          lighter
-          className="mb-4"
+          className="component-bg-lighter mb-4"
           value={searchStationQuery}
           setValue={setSearchStationQuery}
           searchTarget="stations"

@@ -35,7 +35,7 @@ function WithMasterPassword({
     )
   }
 
-  return <div>{children(masterPassword)}</div>
+  return children(masterPassword)
 }
 
 export default WithMasterPassword
