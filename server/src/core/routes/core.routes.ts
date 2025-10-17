@@ -116,7 +116,6 @@ const coreRoutes = forgeRouter({
   ai: (await import('@lib/ai')).default,
   ping,
   status,
-  getRoot,
   media: getMedia,
   corsAnywhere
 })
