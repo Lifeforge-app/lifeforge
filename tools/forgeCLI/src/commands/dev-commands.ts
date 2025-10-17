@@ -36,6 +36,13 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       return 'cd server && bun run dev'
     }
   },
+  docs: {
+    command: () => {
+      killExistingProcess('lifeforge/node_modules/.bin/vite')
+
+      return 'cd docs && bun run dev'
+    }
+  },
   client: {
     command: () => {
       killExistingProcess('lifeforge/node_modules/.bin/vite')
@@ -78,6 +85,10 @@ const createConcurrentServices = (): ConcurrentServiceConfig<
   {
     name: 'client',
     command: SERVICE_COMMANDS.client.command
+  },
+  {
+    name: 'docs',
+    command: SERVICE_COMMANDS.docs.command
   }
 ]
 
