@@ -21,11 +21,11 @@
 
 code {
   font-family: 'JetBrains Mono', monospace !important;
-  @apply text-sm! whitespace-pre-wrap! sm:text-base!;
+  @apply text-sm! whitespace-pre-wrap! sm:text-base! break-all!;
 }
 
 pre code {
-  @apply text-bg-800! dark:text-bg-100! break-all!;
+  @apply text-bg-800! dark:text-bg-100!;
 }
 
 code:not(pre code, h3 code, .commit code) {
