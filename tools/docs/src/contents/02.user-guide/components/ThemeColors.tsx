@@ -5,7 +5,7 @@ function ThemeColors() {
   const { setRawThemeColor, rawThemeColor } = usePersonalization()
 
   return (
-    <div className="mt-8 grid grid-cols-6 gap-6">
+    <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6">
       {[
         'red',
         'pink',
