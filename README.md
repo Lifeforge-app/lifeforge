@@ -2,7 +2,7 @@
 
 <p align="center">A self-hosted solution to streamline and organize all aspects of your life.</p>
 
-![Untitled design](https://github.com/user-attachments/assets/832bad41-9876-4883-818f-30bcee9176d4)
+![Untitled design](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/mockup.webp)
 
 ## 🤔 The Problem
 
