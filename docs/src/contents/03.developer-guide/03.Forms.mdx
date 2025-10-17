@@ -9,7 +9,7 @@ Rather than relying on third-party form libraries like <code>Formik</code>, <cod
 
 <div className="flex-center mt-12 w-full">
   <img
-    src="/assets/developer-forms/form.png"
+    src="https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/form.webp"
     alt=""
     className="w-full rounded-lg"
   />
@@ -317,7 +317,7 @@ In the argument object being passed into the <code>defineForm</code> function, y
 
   These properties define the form's title and the icon displayed in the modal header, as shown in the figure below. The icon must be a valid icon identifier from Iconify in the form of <code>&lt;icon-set&gt;:&lt;icon-name&gt;</code>.
 
-  ![form-header](/assets/developer-forms/formHeader.png)
+  ![form-header](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/formHeader.webp)
 
 - <code className="text-lg!">onClose</code>
 
@@ -327,21 +327,21 @@ In the argument object being passed into the <code>defineForm</code> function, y
 
   Can be either <code>"create"</code>, <code>"update"</code>, or an object containing the button's props if a custom button is needed. If either <code>"create"</code> or <code>"update"</code> is used, a predefined button will be rendered with the appropriate label and icon, as shown below:
 
-  ![form-btn-create](/assets/developer-forms/btnCreate.png)
+  ![form-btn-create](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/btnCreate.webp)
 
-  ![form-btn-update](/assets/developer-forms/btnUpdate.png)
+  ![form-btn-update](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/btnUpdate.webp)
 
 - <code className="text-lg!">actionButton</code>
 
   This button is displayed at the top right corner of the modal, next to the close button. It can be used to trigger additional actions related to the form.
 
-  ![form-btn-action](/assets/developer-forms/actionBtn.png)
+  ![form-btn-action](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/actionBtn.webp)
 
 - <code className="text-lg!">loading</code>
 
   This boolean property controls the loading state of the form. When set to true, the form will display a loading indicator instead of the form fields. This is useful when the data required by the form (e.g. listbox options) is being fetched asynchronously.
 
-  ![form-loading](/assets/developer-forms/formLoading.png)
+  ![form-loading](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/formLoading.webp)
 
 - <code className="text-lg!">namespace</code>
 
@@ -373,7 +373,7 @@ Using this method is pretty straightforward, it accepts a mapping object where t
   <Note>
   Available input component types can be found in the IntelliSense suggestions.
 
-![types-map-intellisense](/assets/developer-forms/typesMapIntellisense.png)
+![types-map-intellisense](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/typesMapIntellisense.webp)
 
   </Note>
 
@@ -404,7 +404,7 @@ Using the <code>.setupFields()</code> chain method, you can configure each field
   <Note>
   Available field configurations can be found in the IntelliSense suggestions.
 
-![setup-fields-intellisense](/assets/developer-forms/setupFields.png)
+![setup-fields-intellisense](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/setupFields.webp)
 
   </Note>
 
@@ -434,7 +434,7 @@ For example, to autofocus the "name" field, you can do the following:
   <Note>
   The options for this method is determined by your definition in the <code>.typesMap()</code> chain method, and only fields that are auto-focusable will be available. IntelliSense will help you identify these fields.
 
-![auto-focus-field-intellisense](/assets/developer-forms/autofocus.png)
+![auto-focus-field-intellisense](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/autofocus.webp)
 
   </Note>
 
