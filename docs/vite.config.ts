@@ -25,7 +25,8 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             return id
               .toString()
-              .split('node_modules/')[1]
+              .split('node_modules/')
+              .pop()!
               .split('/')[0]
               .toString()
           } else if (id.endsWith('.mdx')) {
