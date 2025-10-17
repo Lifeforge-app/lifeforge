@@ -24,6 +24,7 @@ export const PROJECTS_ALLOWED = {
   ui: 'packages/lifeforge-ui',
   client: 'client',
   server: 'server',
+  docs: 'docs',
   ...TOOLS_ALLOWED
 } as const
 
@@ -36,6 +37,7 @@ export const VALID_SERVICES = [
   'server',
   'client',
   'ui',
+  'docs',
   ...Object.keys(TOOLS_ALLOWED)
 ] as const
 

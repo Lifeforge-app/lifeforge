@@ -29,6 +29,128 @@ Unlike traditional software development projects which adapt Semantic versioning
 
 ---
 
+
+<Version week={42}>
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="9b77fe7e5010066ed2d5ea71b05486c19e570f8c" />, <Commit hash="92964ca634a0fb0b1aae2b736c0e9dd61ca1aeb0" />, <Commit hash="bd212ecc0875631441882c362b33f3e3ada2a9ae" />, <Commit hash="291e1698dc89372a3df400aed97d415c4f2d44d4" />, <Commit hash="f772b19a73b2083477cbfb0e645037dcc5f68f7e" />: Server schema files now includes the raw schema data from PocketBase, allowing easier schema management and migration. New script <code>generateCollectionsMigrations.ts</code> is added to generate migration scripts based on the schema files.
+- <Commit hash="862203a7e95b97edfd8bb367ad0d8e3cbf93391c" />: Original <code>apps/</code> directory is now renamed to <code>tools/</code> to better reflect its purpose as a collection of development tools for LifeForge ecosystem, as well as to prepare for the upcoming restructuring of the monorepo to accommodate multiple installable applications (modules).
+- <Commit hash="6f7807b6e1101169a11307331504a15793c92593" />, <Commit hash="63165bee78823221d8939d53ea41f49c9c9c8283" />, <Commit hash="d3fb8a6c3c58bdd17de944646e10644d17da0f2b" />, <Commit hash="500d8e09a430674d7b707d0f18545f2c69ad3bc5" />, <Commit hash="6e52d0496950ff6da501cb52b0d835a2ae673f49" />, <Commit hash="a14643db38ce66acf93c5b8e092819d33abffbd0" />: All installable applications (modules) are now independent from the <code>client/</code> and <code>server/</code> codebase, and are now located in the <code>apps/</code> directory. Each module contains its own client and server code, as well as localization files and database schema. The main client applications will dynamically discover and load the modules during runtime, but the modules have to be manually imported in the server side due to the need for TypeScript API type inference. Each module follows a standardized directory structure as follows:
+
+        <Code language="plaintext">
+            {`/src/apps/<moduleName>/
+  ├── .git/
+  ├── client/
+  │ ├── src/
+  │ │ ├── components/
+  │ │ ├── utils/
+  │ │ ├── .../
+  │ │ ├── index.tsx
+  │ │ └── vite-env.d.ts
+  │ ├── tsconfig.json
+  │ └── manifest.ts
+  ├── server/
+  │ ├── routes/
+  │ ├── schema.ts
+  │ ├── index.ts
+  │ ├── package.json
+  │ └── tsconfig.json
+  ├── locales/
+  │ ├── en.json
+  │ ├── my.json
+  │ ├── zh-CN.json
+  │ └── zh-TW.json
+  ├── package.json
+  └── .gitignore`}
+    </Code>
+
+- <Commit hash="93dc4f671ce3858524a803adee16bc8db161e8b1" />, <Commit hash="ff010d5c5df350e0aef6c07bc0842d1576470f42" />: Module toggling functionality and pages are now removed from the main LifeForge application, since there is no need to toggle modules anymore (if you decide not to use a module, simply don't install it).
+- <Commit hash="e91c9ef8ccf96f3905a291d12fbb93a57371fe02" />: Modules are now removed from the main LifeForge codebase and are moved to their respective repositories under the LifeForge GitHub organization.
+- <Commit hash="33b50c16de27d918061524e57d86fe601c88be3f" />: Removed <code>corsAllowedOrigins.example.ts</code> file, leaving only <code>corsAllowedOrigins.ts</code> with a default value of <code>['http://localhost:5173']</code> for local development. Users can now directly modify this file to add their own allowed origins without the need to copy from an example file.
+- <Commit hash="84140b58785832f326cf2a2b3ff949ace5da4a27" />: AI agent integration is now removed from the system, as it requires significant rework to adapt to the new module system. This feature will be reintroduced in the future once the necessary changes are made.
+- <Commit hash="cfbfc3f98ea0286033f33bf975827b3dccc762f3" />: Improved error handling in API key fetching and decryption process.
+- <Commit hash="59d7ae51726b13da780c0c981086691ee033db72" />: Log files are now stored in the <code>logs/</code> directory at the root of the project instead of inside the <code>server/</code> directory.
+- <Commit hash="bbb285f2bde6b7cba918beca1ab0c07e1fb40f2b" />: The <code>database/</code> directory is now kept in the git repository of the project (with empty .gitkeep file) that serves as a placeholder for database executable and data files. By default (if they ), users are required to manually place the PocketBase executable in this directory for the server to function properly.
+- <Commit hash="8549c68a7f2b7920df6174a6d957f43af7531347" />: Updated welcome message returned by the root API endpoint.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="7ad63b93d796bd7a8902c5785fb8b23ef8ad942c" />: Updated the empty state screen of the dashboard with a welcome message.
+
+  ![](https://raw.githubusercontent.com/melvinchia3636/lifeforge-changelog-media/main/25w42-1.png)
+
+- <Commit hash="cb824e027c50f6b4daedcd3a13c35f9521a41cf8" />: Added <code>wrapperClassName</code> prop to <code>SliderInput</code> component for easier customization of the wrapper element.
+- <Commit hash="00dd6d435ba854c8185d279371a8b59ffa0dbf5f" />: Removed unnecessary div wrapper in <code>WithMasterPassword</code> component.
+- <Commit hash='6fe5171c9f2c6ccaeea211c74616a64e268814df' />, <Commit hash="e51d77c6bd515cbca206c4019122b6f2b27137a3" />: Improved styling for the <code>EmptyStateScreen</code> component.
+- <Commit hash="a03154bb354be005755c6a88131ed9b63f8363cc" />: Replaced independent API key existence checking API endpoints with the unified <code>forgeAPI.apiKeys.entries.checkKeys</code> endpoint.
+- <Commit hash="5b774c91d7184938801246657611aa5318b71dff" />: Updated <code>VITE_API_HOST</code> and <code>PORT</code> environment variables with default values in the example environment files.
+- <Commit hash="228a3ecdcd54991c785b400cac69b708b9160e06" />: Removed unused <code>VITE_GOOGLE_MAPS_API_KEY</code> environment variable from the example environment files.
+
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="83c818f4a5dc0a6a8967c11bd8d1eeedf3e9714f" />: Fixed a bug in the sidebar where the modules that are marked as hidden are still shown.
+- <Commit hash="88e8c9ddc69cde6d3817850a155c85994ad6ad55" />: Added logic to ensure medium directory exists during server startup to prevent errors when saving media files.
+- <Commit hash="af82f09536f051218ab63c6e447645775d0f4faf" />: Fixed localization issue for the "Report Bug" button in the not found screen.
+- <Commit hash="53323d73a2d7fbb0bd73c02857c6e8ca39df3c55" />: Changed the method properties of the <code>PBService</code> class to getters to ensure proper scoping.
+- <Commit hash="474707b3f00dcd4827be08b10209dec79115e61c" />, <Commit hash="2d038222f94f0ee07752a247770b6e06735e6a9c" />: Updated Iconify imports to use the main module.
+- <Commit hash="3b04086e05e4d308fae38010e785fc07772ba71e" />: Added CORS handling for Socket.IO connections.
+- <Commit hash="b8a09212f337cc8633c5638a928cdabbab086573" />: Bumped <code>@tanstack/react-query</code> to its latest version, as well as <code>react</code> and <code>react-dom</code> to version 19.2.0 across the codebase.
+- <Commit hash="5357c196905976a2e51a000eea06cecd8ba9e2a8" />: Fixed the dynamic locales import mechanism to ensure proper loading of localization files for each module.
+- <Commit hash="56a56ed0cb379e3a9152ca91b33ee1e4dd5627ee" />, <Commit hash="99c865d5dbafc66bee1bac8acd512d0d973ffb93" />: Fixed a bug in the <code>LocationInput</code> component where the location query is called even when the API key is not present in the vault.
+- <Commit hash="ce94335e3a75c397e3be1013a6360d3e6fcd3583" />, <Commit hash="a5a5a5bb02b8da0ea5567be946763619f6c21c63" />: Added <code>NuqsProvider</code> wrapper in the <code>shared</code> library to ensure proper functioning of the Nuqs library.
+- <Commit hash="f5f07232db47519790df92d8ee7ba023bdedcbe9" />: Fixed the localization for new password confirmation modal in <code>CreatePasswordScreen</code> component.
+- <Commit hash="2f49dd5893649977970597a338b3e4d52994b8a3" />, <Commit hash="fbaaa5dcfe8b4eac367c574579256dd2a9f5833b" />, <Commit hash="bbfc55d30813744a5459c7639513f24b679ee9ae" />: Cleaned up user schema by removing unused fields (Spotify and journal master password), removing empty string option from language enum and making it required, and removing hidden fields from zod schemas.
+- <Commit hash="fcc758ceb401b116f510a8aaa0ab4ccd68733d90" />: Added default port value of 3636 in the server index file startup script to prevent errors when no port is specified in the environment variables.
+- <Commit hash="6e0543401bfed9b203977ef2cd85cbf08167f9c3" />: Added server build command before building the shared and UI packages for the sake of TypeScript type checking.
+- <Commit hash="b9a39066feba87411e36a2ba9c5cb4142aed6f50" />: Removed base config file extension from <code>tsconfig.json</code> of UI packages.
+- <Commit hash="58ce44dfba4db8f29154f047e51a4e7cd0d73a25" />: Fixed a bug where the <code>userData</code> state is not updated when user perform a change in the personalization settings.
+- <Commit hash="94e898e18e5d2a9960e21d91709bb2388d24a6c0" />: Bumped the version of <code>i18next</code> package to the latest version across the codebase.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="46ae57eaff18261dcb6252910738964d6451a965" />, <Commit hash="aa27baab69145ea99c44ac0a43cbded35da070c1" />: Updated changelog, fixing the letter case inconsistency of the project name "LifeForge".
+- <Commit hash="40f3de4ef86681389f6f786d2049157d86f0abc4" />: Utilized the <code>commander</code> library in the <code>forge</code> script for better command-line argument parsing and handling.
+- <Commit hash="0a677d67b4fae3e362ca46153826ff408c47b960" />, <Commit hash="6aa4a966ab9295e30ae2a3a3c60ecac8fd2d904f" />: Added a bash script <code>commit-all-modules.sh</code> to facilitate bulk committing changes across all module repositories.
+- <Commit hash="2266ae23e374ac45d231a05111266016741ff371" />: Implemented <code>dev</code> script in forgeCLI to facilitate local development of modules. Refactored the entire <code>forge</code> script, separating the script from one fat file into multiple command files for better maintainability.
+- <Commit hash="58b2dd00ce8891fd8d1e9bff3d29d204981d4f60" />: Running <code>dev</code> script will now kill any existing instances before starting a new one to prevent port conflicts.
+- <Commit hash="081a02b272bba8f93a9cd865b6a40cbde2a3955a" />, <Commit hash="a92322fbe8f9ea8abbf373fdfd3d21b9cc9f7a11" />, <Commit hash='4e2c31a3bb6dafc2f08ba4139caff42aee171cf6' />, <Commit hash="1b0327b6f91d78ec10bd9264f6995dc1ae4825f2" />: Mechanism to add, remove, and list modules via CLI is now implemented in ForgeCLI. Integrated database schema and migration script into forgeCLI. Logging is also improved for better readability.
+
+        <Code language="bash">
+            {`bun forge module add <author>/<moduleName>
+  bun forge module remove <moduleName>
+  bun forge module list
+  
+  gun forge db generate-schema
+  bun forge db generate-migrations`}
+    </Code>
+
+- <Commit hash="b98631f5a5b3b4ec268890908386f5ecb0127ff2" />, <Commit hash="ba3800f382a9efd96d35a09e5616384a1867a4d6" />: ForgeCLI is moved from <code>scripts/</code> directory to <code>tools/forgeCLI/</code> directory to better reflect its purpose as a development tool for LifeForge ecosystem.
+- <Commit hash="35069716aeb13d4429e521feb956e069b90af5b5" />: Moved all code to <code>src/</code> directory in the forgeCLI codebase and added <code>tsconfig.json</code> for better project structure and TypeScript support.
+- <Commit hash="eb38fc836d19a568b1f82da8998264b30b06ee75" />: Added colors to console logging in ForgeCLI for better readability.
+- <Commit hash="f3d16f05247e1867093195a1b91877c4f5e6a5fe" />, <Commit hash="a97697cc22d8afb98f66466412ad31172786d94e" />, <Commit hash="9c44e06bcd34e5318807b1d72c9bff7dc46cff78" />, <Commit hash="be756c8f57e13babcd9038733c25e1c6f06b6316" />: Added database initialization command in ForgeCLI to facilitate setting up the database for new installations. It can be run using:
+
+  <Code language="bash">
+    {`bun run forge db init`}
+  </Code>
+
+  For more information, refer to the [Configuration Guide](/getting-started/configuration).
+- <Commit hash="6b5dfa8bbfec77325c0d2a55c672482eee91f110" />: Added build commands for shared and UI packages if the <code>dist/</code> directories are missing when starting client application.
+- <Commit hash="c90164cdf4e97bbaef59c127efc20b7e48e5f126" />, <Commit hash="702c701bcc5fe5548e7ca313820c1f95840fd311" />: (finally) Updated the documentation to reflect the new module system and the changes in the project structure. Added instructions on how to create and manage modules using ForgeCLI. Updated the Installation Guide and Configuration Guide to include detailed and up-to-date instructions for setting up LifeForge with the new codebase architecture.
+
+</Version>
+
+<Version week={41}>
+
+Changes are aggregated into 25w42 due to major refactoring.
+
+</Version>
+
+<Version week={40}>
+
+Changes are aggregated into 25w42 due to major refactoring.  
+
+</Version>
+
 <Version week={39}>
 ### 🏢 Module-Specific & Feature Updates
 
