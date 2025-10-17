@@ -15,6 +15,10 @@ LifeForge used to be a combination of multiple repositories, where everything is
 
 After cloning into the repository, you'll find the following folders lying in the root directory:
 
+### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
+
+This is where all the installable applications (or modules) live. Each folder represents a distinct application with its own set of features and functionality. When you install a module using the <code>ForgeCLI</code>, its code will be placed inside this directory.
+
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
 
 This is where the client-side application magic resides. The frontend code of all your installed modules lives here. It is the part of the repo where user interfaces are built and styled. When deploying to cloud service provider, this is where you assign your domain name to.
@@ -22,6 +26,10 @@ This is where the client-side application magic resides. The frontend code of al
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
 
 This is where all the business logics of your application live. It is responsible for handling requests, processing data, interacting with databases, and performing any other server-side operations.
+
+### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-database" /><code className="text-xl!">database/</code></div>
+
+Contains Pocketbase database files, including the binary executable and data storage. This is where all your data is stored and managed.
 
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-shared" /><code className="text-xl!">shared/</code></div>
 
@@ -33,24 +41,27 @@ Houses reusable packages that can be consumed by other parts of the monorepo. Cu
 
 - **<code>lifeforge-ui/</code>** - The official LifeForge UI component library built with React and Tailwind CSS, providing consistent design components across all applications. <CustomLink text="Explore UI Library" to="/developer-guide/ui-library" />
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
+### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-tools" /><code className="text-xl!">tools/</code></div>
 
-Contains standalone applications and development tools that are part of the LifeForge ecosystem, some of them are publicly available, while some of them requires SSO authentication through the main LifeForge application:
+Contains standalone development tools that are part of the LifeForge ecosystem, some of them are publicly available, while some of them requires SSO authentication through the main LifeForge application:
 
+- **<code>forgeCLI/</code>** - Command-line interface tool for managing LifeForge instances, including module management, database migrations, and other administrative tasks. <CustomLink text="Explore ForgeCLI" to="/user-guide/cli/forgecli" />
 - **<code>docs/</code>** - Documentation website for the project
-- **<code>api-builder/</code>** - Interactive tool for building and testing API endpoints
-- **<code>api-explorer/</code>** - Visual explorer for browsing available API routes
-- **<code>localization-manager/</code>** - Management interface for handling translations and localization
-
-Wanna build your own SSO applications? Check out the [SSO Documentation](/developer-guide/sso).
+- **<code>apiBuilder/</code>** - Interactive tool for building and testing API endpoints
+- **<code>apiExplorer/</code>** - Visual explorer for browsing available API routes
+- **<code>localizationManager/</code>** - Management interface for handling translations and localization
 
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-scripts" /><code className="text-xl!">scripts/</code></div>
 
-Contains build scripts, development utilities, and automation tools:
+Contains various miscellaneous scripts for automating tasks such as deployment, database seeding, and other utilities.
 
-- **<code>forge.ts</code>** - Main orchestration script for running multiple packages concurrently
-- **<code>generateCollectionsSchemas.ts</code>** - Generates TypeScript schemas from PocketBase collections
-- **<code>checkUnusedLocales.ts</code>** - Utility to identify unused localization keys
+### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-environment" /><code className="text-xl!">env/</code></div>
+
+Contains environment configuration files for both server and client applications. Inside will contain an example file for you to copy and create your own <code>.env</code> files.
+
+### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-log" /><code className="text-xl!">logs/</code></div>
+
+This directory is used to store log files generated by the server application. It helps in monitoring and debugging the application by keeping track of various events and errors.
 
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:settings" /><code className="text-xl!">Configuration Files</code></div>
 
@@ -62,91 +73,4 @@ The root directory also contains several important configuration files:
 - **<code>.prettierrc</code>** - Prettier configuration for code formatting
 - **<code>bun.lock</code>** - Lock file for consistent dependency versions
 - **<code>.github/</code>** - GitHub workflows and repository settings
-</section>
-
-<section id="frontend-structure">
-## Frontend Structure
-
-In the frontend <code>client/src</code> directory, you'll find the following structure:
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-core" /><code className="text-xl!">core/</code></div>
-
-This is the place where all the core functionality of the application resides, including routing, authentication, API communications, state providers, and everything besides the apps/modules you install.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
-
-Contains applications that are installable and togglable in the main LifeForge application. Each folder represents a distinct application with its own set of features and functionality.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:react-ts" /><code className="text-xl!">index.tsx</code></div>
-
-Entrypoint of the app containing literally just three lines of code:
-
-<Code language="tsx">
-{`import ReactDOM from 'react-dom/client'
-
-import App from './core/App'
-
-ReactDOM.createRoot(document.getElementById('root')!).render(<App />)`}
-
-</Code>
-</section>
-
-<section id="backend-structure">
-## Backend Structure
-
-In the frontend <code>client/src</code> directory, you'll find the following structure:
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
-
-Contains business logics for applications that are installable and togglable. Each folder contains routes and controllers for handling requests.
-
-See how individual apps are structured in the [App Documentation](/developer-guide/backend/apps).
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-dist" /><code className="text-xl!">core/bin/</code></div>
-
-Contains binary executables required for certain tasks, such as <code>yt-dlp</code> for downloading videos.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-constant" /><code className="text-xl!">core/constants/</code></div>
-
-Contains constant values and configuration settings used across the server.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-functions" /><code className="text-xl!">core/functions/</code></div>
-
-Contains utility functions and classes that are crucial for the application's functionality, such as data fetching, controller and route building, AI integration, and more.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-lib" /><code className="text-xl!">core/lib/</code></div>
-
-Contains core endpoints that are mandatory for the application's functionality, such as authentication, localization, api keys management, external service integrations, etc.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-i18n" /><code className="text-xl!">core/locales/</code></div>
-
-Contains translation files for everything except those for the togglable apps. These files are used to provide multilingual support for the application.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-middleware" /><code className="text-xl!">core/middlewares/</code></div>
-
-Contains middleware functions that are used to process requests and responses in the application, such as logging, authentication, rate limiting, task pool management, etc.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-class" /><code className="text-xl!">core/models/</code></div>
-
-Contains training data and model definitions used for AI-related tasks within the application, mainly for OCR (Optical Character Recognition) for now.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:routing" /><code className="text-xl!">core/routes/routes.ts</code></div>
-
-This is the file where all the root route definitions for the application are located.
-
-Learn more about routing in the [Server Routing Documentation](/developer-guide/backend/routing).
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">core/app.ts</code></div>
-
-Entrypoint of the server that creates the main application instance and sets up middleware and other configurations.
-
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-functions" /><code className="text-xl!">core/schema.ts</code></div>
-
-Defines the database schema and models used throughout the application. Can be automatically generated from the database using the following command in the root directory:
-
-<Code language="bash">{`bun schema:generate:collections`}</Code>
-
-<Warning>
-This file is automatically generated. Do not edit it directly.
-</Warning>
 </section>

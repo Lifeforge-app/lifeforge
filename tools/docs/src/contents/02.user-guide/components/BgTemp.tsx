@@ -7,7 +7,7 @@ function BgTemp() {
 
   return (
     <div className="mt-6 flex w-full min-w-0">
-      <div className="bg-bg-800/50 w-full rounded-md p-4">
+      <div className="component-bg dark:bg-bg-800/50 shadow-custom w-full rounded-md p-4">
         <div className="flex w-full flex-col items-center justify-between gap-3 md:flex-row">
           <h3 className="w-full text-left text-xl font-semibold">
             Background Temperature Preview

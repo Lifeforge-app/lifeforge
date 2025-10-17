@@ -1,47 +1,71 @@
 import Note from '../../components/Note'
+import Code from '../../components/Code'
+import Warning from '../../components/Warning'
 
 ###### Modules
 
 # The Heart of LifeForge
 
-Modules are the building blocks of LifeForge. They are the functionalities that you can add to the system to enhance its capabilities. Modules can be anything from a simple utility tool to a complex application. You can install and enable modules that you need and disable those you don't in the **Modules** page, which is accessible from the sidebar.
-
-<Note>
-  Since the system is still in development, there are a lot of information that
-  I can't provide at the moment. But I'll try my best to give you a general idea
-  of how the modules work and will work in the future.
-</Note>
+I have always been a big fan of being able to extend the functionality of a system through modules or plugins. With the passion for modularity, LifeForge is built with a module system at its core, allowing developers to create, share, and integrate custom modules seamlessly.
 
 ---
 
-<section id="module-list">
-## Module List
+<section id="what-are-modules">
+## What are Modules?
 
-The module list page is where you can see all the modules available in the system, which is located at the bottommost of the sidebar under the **Settings** section.
+Modules in LifeForge are self-contained packages that encapsulate specific functionalities, features, or integrations. They can range from simple utilities to complex systems, and they can be easily added or removed from a LifeForge instance without affecting the core system.
 
-The modules are categorized into different groups, such as **Productivity**, **Lifestyle**, **Utilities**, and more. You can browse through the modules, and, with a flip of a switch, enable or disable the modules as you wish.
+LifeForge provides a robust module API and a set of powerful UI components to facilitate the development and integration of modules. This allows developers to focus on building their modules functionalities without worrying about the underlying infrastructure as well as the UI consistency.
+</section>
 
-![Module List](/assets/user-modules/module-list.png)
+<section id="discovering-modules">
+## Discovering Modules
 
+Currently, all official LifeForge modules (those you have seen living inside the monorepo before) are hosted on GitHub under the [LifeForge App](https://github.com/lifeforge-app) organization. Each module will be in its own repository, with the name formatted as <code>lifeforge-module-\<moduleName\></code>. If you want to install the module, the name you will use is simply the <code>\<moduleName\></code> part.
+
+![LifeForge Modules GitHub Repositories](/assets/user-modules/modules-gh.png)
+
+<Note>
+In the very near future, there will be an official LifeForge module registry / marketplace website where you can browse and search for modules easily.
+</Note>
 </section>
 
 <section id="installing-modules">
 ## Installing Modules
 
-At the current stage of the system, all of the available modules are already listed in the module list page. But very soon, hopefully within the next few months or so, you'll be able to install modules from the LifeForge module store, where you can find modules created by other developers, and even publish your own modules for others to use.
+With the help of the built-in <code>ForgeCLI</code> tool, installing modules is a breeze. You can simply run a command to install a module from the official LifeForge module registry or from a custom source.
 
+<Code language="bash">
+{'bun run forge modules add <author>/<moduleName>'}
+</Code>
+
+For example, to install a module named <code>ideaBox</code> from the official LifeForge GitHub repository, you would run:
+<Code language="bash">
+{`bun run forge modules add lifeforge-app/ideaBox`}
+</Code>
+
+This command will download the module, install its dependencies and database schema, and register it with your LifeForge instance automatically. Once installed, you can start using the module right away.
+
+<Warning>
+Make sure your LifeForge instance is **NOT** running while installing or uninstalling modules to avoid any potential issues.
+</Warning>
 </section>
 
-<section id="configuring-modules">
-## Configuring Modules
+<section id="uninstalling-modules">
+## Uninstalling Modules
 
-Some modules might have configurations that you can adjust to suit your needs. Currently, there are no options to configure the modules, but in the future, you'll be able to configure the modules by clicking on the cog icon next to the module name in the module list page.
+Uninstalling a module is just as easy as installing one. You can use the <code>ForgeCLI</code> tool to remove a module from your LifeForge instance.
 
-</section>
+<Code language="bash">
+{`bun run forge modules remove <moduleName>`}
+</Code>
 
-<section id="for-fellow-developers">
-## For Fellow Developers
+For example, to uninstall the <code>ideaBox</code> module, you would run:
+<Code language="bash">
+{`bun run forge modules remove ideaBox`}
+</Code>
 
-If you're a developer and you want to create your own modules for LifeForge, it's pretty straightforward. Head to the [Module Development Guide](/developer-guide/module-development) for a comprehensive guide on how to create a module and add it to the system.
-
+<Note>
+Uninstalling a module **WILL NOT** delete any collections or data associated with that module to prevent any unwanted data loss. If you wish to remove the data as well, you will need to do so manually through the Pocketbase admin dashboard.
+</Note>
 </section>
