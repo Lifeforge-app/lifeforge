@@ -1,9 +1,9 @@
+import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Button, ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
-import { useUserPersonalization } from '../../../../../../../providers/UserPersonalizationProvider'
 import AdjustmentColumn from './components/AdjustmentColumn'
 import ResultShowcase from './components/ResultShowcase'
 import { BG_BLURS } from './constants/bg_blurs'

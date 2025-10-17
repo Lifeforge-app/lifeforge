@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { WithQuery } from 'lifeforge-ui'

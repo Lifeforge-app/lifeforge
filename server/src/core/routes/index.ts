@@ -4,7 +4,6 @@ import { clientError } from '@functions/routes/utils/response'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import express from 'express'
 
-import { createAIRouter } from '../../lib/ai'
 import appRoutes from './app.routes'
 import coreRoutes from './core.routes'
 
@@ -22,20 +21,12 @@ const mainRoutes = forgeRouter({
   listRoutes
 })
 
-// Split the router to prevent circular dependency issues
-const aiRoutes = createAIRouter(mainRoutes)
-
-const allRoutes = forgeRouter({
-  ...mainRoutes,
-  ai: aiRoutes
-})
-
-router.use('/', registerRoutes(allRoutes))
+router.use('/', registerRoutes(mainRoutes))
 
 router.get('*', (_, res) => {
   return clientError(res, 'The requested endpoint does not exist', 404)
 })
 
-export { allRoutes }
+export { mainRoutes }
 
 export default router

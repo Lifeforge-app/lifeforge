@@ -22,11 +22,19 @@ function BgImageSelector() {
   const { t } = useTranslation('apps.personalization')
 
   const pixabayEnabledQuery = useQuery(
-    forgeAPI.pixabay.verifyAPIKey.queryOptions()
+    forgeAPI.apiKeys.entries.checkKeys
+      .input({
+        keys: 'pixabay'
+      })
+      .queryOptions()
   )
 
   const imageGenAPIKeyExistsQuery = useQuery(
-    forgeAPI.ai.imageGeneration.verifyAPIKey.queryOptions()
+    forgeAPI.apiKeys.entries.checkKeys
+      .input({
+        keys: 'openai'
+      })
+      .queryOptions()
   )
 
   const { bgImage } = usePersonalization()

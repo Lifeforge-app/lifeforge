@@ -16,11 +16,22 @@ const UserPersonalizationContext = createContext<{
   changeDashboardLayout: (layout: IDashboardLayout) => Promise<void>
 }>({} as any)
 
-async function syncUserData(data: Record<string, unknown>) {
+async function syncUserData(
+  data: Record<string, unknown>,
+  setUserData: React.Dispatch<React.SetStateAction<any>>
+) {
   try {
     await forgeAPI.user.personalization.updatePersonalization.mutate({
       data
     })
+
+    if (setUserData) {
+      setUserData((oldData: any) => {
+        if (!oldData) return oldData
+
+        return { ...oldData, ...data }
+      })
+    }
   } catch {
     toast.error('Failed to update personalization settings')
   }
@@ -31,7 +42,7 @@ function UserPersonalizationProvider({
 }: {
   children: React.ReactNode
 }) {
-  const { userData } = useAuth()
+  const { userData, setUserData } = useAuth()
 
   const {
     setFontFamily,
@@ -46,43 +57,35 @@ function UserPersonalizationProvider({
   } = usePersonalization()
 
   async function changeFontFamily(font: string) {
-    setFontFamily(font)
-    await syncUserData({ fontFamily: font })
+    await syncUserData({ fontFamily: font }, setUserData)
   }
 
   async function changeFontScale(scale: number) {
-    setFontScale(scale)
-    await syncUserData({ fontScale: scale })
+    await syncUserData({ fontScale: scale }, setUserData)
   }
 
   async function changeTheme(theme: 'light' | 'dark' | 'system') {
-    setTheme(theme)
-    await syncUserData({ theme })
+    await syncUserData({ theme }, setUserData)
   }
 
   async function changeThemeColor(color: string) {
-    setRawThemeColor(color)
-    await syncUserData({ color: color.replace('theme-', '') })
+    await syncUserData({ color: color.replace('theme-', '') }, setUserData)
   }
 
   async function changeBgTemp(color: string) {
-    setBgTemp(color)
-    await syncUserData({ bgTemp: color.replace('bg-', '') })
+    await syncUserData({ bgTemp: color.replace('bg-', '') }, setUserData)
   }
 
   async function changeBackdropFilters(filters: IBackdropFilters) {
-    setBackdropFilters(filters)
-    await syncUserData({ backdropFilters: filters })
+    await syncUserData({ backdropFilters: filters }, setUserData)
   }
 
   async function changeLanguage(language: string) {
-    setLanguage(language)
-    await syncUserData({ language })
+    await syncUserData({ language }, setUserData)
   }
 
   async function changeDashboardLayout(layout: IDashboardLayout) {
-    setDashboardLayout(layout)
-    await syncUserData({ dashboardLayout: layout })
+    await syncUserData({ dashboardLayout: layout }, setUserData)
   }
 
   useEffect(() => {

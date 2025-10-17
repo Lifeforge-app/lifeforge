@@ -9,7 +9,7 @@ const welcome = forgeController
   .noAuth()
   .description('Welcome message')
   .input({})
-  .callback(async () => 'Welcome to LifeForge API!' as const)
+  .callback(async () => 'Get ready to forge your life!' as const)
 
 const ping = forgeController
   .mutation()
@@ -33,12 +33,6 @@ const status = forgeController
   .callback(async () => ({
     environment: process.env.NODE_ENV || 'development'
   }))
-
-const getRoot = forgeController
-  .query()
-  .description('Get root endpoint')
-  .input({})
-  .callback(async () => 'Welcome to LifeForge API!' as const)
 
 const getMedia = forgeController
   .query()
@@ -112,13 +106,14 @@ const corsAnywhere = forgeController
 
 const coreRoutes = forgeRouter({
   '': welcome,
-  locales: (await import('../../lib/locales')).default,
-  user: (await import('../../lib/user')).default,
-  apiKeys: (await import('../../lib/apiKeys')).default,
-  pixabay: (await import('../../lib/pixabay')).default,
-  locations: (await import('../../lib/locations')).default,
-  backups: (await import('../../lib/backups')).default,
-  database: (await import('../../lib/database')).default,
+  locales: (await import('@lib/locales')).default,
+  user: (await import('@lib/user')).default,
+  apiKeys: (await import('@lib/apiKeys')).default,
+  pixabay: (await import('@lib/pixabay')).default,
+  locations: (await import('@lib/locations')).default,
+  backups: (await import('@lib/backups')).default,
+  database: (await import('@lib/database')).default,
+  ai: (await import('@lib/ai')).default,
   ping,
   status,
   getRoot,

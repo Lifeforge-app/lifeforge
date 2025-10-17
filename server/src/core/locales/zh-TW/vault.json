@@ -15,6 +15,10 @@
       "newPassword": "新密碼",
       "confirmPassword": "確認密碼",
       "masterPassword": "主密碼"
+    },
+    "confirmSetNewPassword": {
+      "title": "確保您記住您的主密碼！",
+      "desc": "此主密碼是不可更改的（目前）！如果您不小心忘記了密碼，您將失去一切。此密碼會被哈希並存儲在您的用戶資料中，且無法解密。它將用於加密和解密您存儲在保險庫中的數據。"
     }
   },
   "otp": {

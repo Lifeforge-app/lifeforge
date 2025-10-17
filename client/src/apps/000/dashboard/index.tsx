@@ -1,35 +1,9 @@
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Filler,
-  Legend,
-  LineElement,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip
-} from 'chart.js'
 import { ContextMenuItem, ModuleHeader } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'
-
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Filler
-)
 
 function Dashboard() {
   const open = useModalStore(state => state.open)
@@ -78,15 +52,6 @@ function Dashboard() {
           />
         )}
       </div>
-      {/* <FAB
-        icon="mage:stars-c"
-        visibilityBreakpoint={false}
-        onClick={() => {
-          open(ForgeAgentModal, {})
-        }}
-      >
-        Forge Agent
-      </FAB> */}
     </>
   )
 }

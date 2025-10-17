@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import {
   Button,
   ContentWrapperWithSidebar,
@@ -187,7 +187,7 @@ const D3MRTMap = () => {
       id="app"
     >
       <LayoutWithSidebar>
-        <SidebarWrapper isOpen={true} setOpen={() => {}}>
+        <SidebarWrapper>
           <div className="mb-4 flex items-center gap-3 px-4">
             <Icon className="text-2xl" icon="tabler:mouse" />
             <h2 className="text-xl font-medium">Currently Working On</h2>

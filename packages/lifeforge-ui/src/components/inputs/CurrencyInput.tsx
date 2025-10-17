@@ -74,7 +74,7 @@ function CurrencyInputComponent({
         />
         <CurrencyInput
           ref={autoFocusableRef(autoFocus, inputRef)}
-          className="focus:placeholder:text-bg-500 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden"
+          className="focus:placeholder:text-bg-500 focus:outline-hidden mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent"
           decimalsLimit={2}
           name={label}
           placeholder={placeholder}

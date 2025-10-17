@@ -79,42 +79,56 @@ class PBService {
    * Provides access to getFullList operations for retrieving multiple records
    * with filtering, sorting, field selection, and relation expansion capabilities
    */
-  public getFullList = getFullList(this.instance)
+  get getFullList() {
+    return getFullList(this.instance)
+  }
 
   /**
    * Provides access to getList operations for retrieving paginated records
    * with filtering, sorting, field selection, relation expansion, and pagination capabilities
    */
-  public getList = getList(this.instance)
+  get getList() {
+    return getList(this.instance)
+  }
 
   /**
    * Provides access to getFirstListItem operations for retrieving the first matching record
    * with filtering, sorting, field selection, and relation expansion capabilities
    */
-  public getFirstListItem = getFirstListItem(this.instance)
+  get getFirstListItem() {
+    return getFirstListItem(this.instance)
+  }
 
   /**
    * Provides access to getOne operations for retrieving a single record
    * with field selection and relation expansion capabilities
    */
-  public getOne = getOne(this.instance)
+  get getOne() {
+    return getOne(this.instance)
+  }
 
   /**
    * Provides access to create operations for creating new records
    * with field selection and relation expansion capabilities for the response
    */
-  public create = create(this.instance)
+  get create() {
+    return create(this.instance)
+  }
 
   /**
    * Provides access to update operations for modifying existing records
    * with field selection and relation expansion capabilities for the response
    */
-  public update = update(this.instance)
+  get update() {
+    return update(this.instance)
+  }
 
   /**
    * Provides access to delete operations for removing records from collections
    */
-  public delete = deleteRecord(this.instance)
+  get delete() {
+    return deleteRecord(this.instance)
+  }
 }
 
 export default PBService

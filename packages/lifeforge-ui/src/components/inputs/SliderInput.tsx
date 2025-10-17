@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 import useInputLabel from './shared/hooks/useInputLabel'
@@ -24,6 +24,8 @@ interface SliderInputProps {
   step?: number
   /** Additional CSS class names to apply to the slider container. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
+  /** Additional CSS class names to apply to the outer wrapper of the component. Use `!` suffix for Tailwind CSS class overrides. */
+  wrapperClassName?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
 }
@@ -39,12 +41,13 @@ function SliderInput({
   max = 100,
   step = 1,
   className,
+  wrapperClassName,
   namespace
 }: SliderInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   return (
-    <div className="w-full">
+    <div className={clsx('w-full', wrapperClassName)}>
       {icon && label && (
         <div className="text-bg-400 dark:text-bg-600 mb-4 flex items-center gap-2 font-medium tracking-wide">
           <Icon className="size-6 shrink-0" icon={icon} />

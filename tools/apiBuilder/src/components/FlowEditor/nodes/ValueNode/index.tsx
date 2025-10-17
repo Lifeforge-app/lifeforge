@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useMemo } from 'react'
 
 import NodeColumn from '../../components/Node/NodeColumn'
