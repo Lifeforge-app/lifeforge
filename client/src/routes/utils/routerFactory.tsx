@@ -1,6 +1,6 @@
 import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
-import type { RouteObject } from 'react-router'
-import { Navigate } from 'react-router'
+import type { RouteObject } from 'shared'
+import { Navigate } from 'shared'
 import type { ModuleCategory } from 'shared'
 
 import Auth from '../../auth'

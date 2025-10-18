@@ -2,8 +2,8 @@
 import { TextInput } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { useSearchParams } from 'shared'
 import { usePromiseLoading } from 'shared'
 import { useAuth } from 'shared'
 

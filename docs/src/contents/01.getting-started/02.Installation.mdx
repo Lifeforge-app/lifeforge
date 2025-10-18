@@ -17,13 +17,63 @@ Back in the day, LifeForge used to be a collection of multiple repositories, whe
 
 Before you start, make sure you have the following items on hand:
 
-- **A Raspberry Pi  or any other computer in Unix-based systems:** This is the hardware that will be used to host the LifeForge API and database.
-- **Node.js (at least LTS) and bun (v1.3 or higher):** LifeForge is a pure TypeScript project, and bun is used as the runtime environment. You can download and install bun from [here](https://bun.sh/).
-- **A functional brain:** You will need to have a basic understanding of how to use a terminal and how to run a Node.js application.
-- **A cup of coffee or tea:** This is optional, but it's always nice to have a cup of coffee by your side when you're coding.
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 -translate-y-0.5 inline-flex items-center gap-2">
+    <Icon icon="simple-icons:raspberrypi" className='translate-y-1' />
+    **A Raspberry Pi or any other computer in Unix-based systems:**
+    </span> 
+    <span>This is the hardware that will be used to host the LifeForge API and database. You can use a Raspberry Pi, a virtual private server (VPS), or any other computer that uses Linux or MacOS.</span>
+  </div>
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 -translate-y-0.5 inline-flex items-center gap-2">
+    <Icon icon="simple-icons:nodedotjs" className='translate-y-1' />
+    **Node.js (at least LTS)**
+    </span> 
+    <span>**and**</span>
+    <span className="text-bg-800 dark:text-bg-100 mx-2 -translate-y-0.5 inline-flex items-center gap-2">
+    <Icon icon="simple-icons:bun" className='translate-y-1' />
+    </span>
+    <span className='mr-2'>**Bun:**</span>
+    <span>LifeForge is a pure TypeScript project, while the cute little bun, is used as the runtime environment. You can download and install bun from [here](https://bun.sh/).</span>
+  </div>
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 -translate-y-0.5 inline-flex items-center gap-2">
+    <Icon icon="simple-icons:pocketbase" className='translate-y-1' />
+    **PocketBase:** 
+    </span> 
+    <span>This is the database that will be used to store all your data. You can download the latest version of PocketBase from [here](https://pocketbase.io/).</span>
+  </div>
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 -translate-y-0.5 inline-flex items-center gap-2">
+    <Icon icon="tabler:brain" className='translate-y-1' />
+    **A functional brain:**
+    </span> 
+    <span>You will need to have a basic understanding of how to use a terminal and how to run a Node.js application.</span>
+  </div>
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 -translate-y-0.5 inline-flex items-center gap-2">
+    <Icon icon="tabler:coffee" className='translate-y-1' />
+    **A cup of coffee or tea:**
+    </span> 
+    <span>This is optional, but it's always nice to have a cup of coffee by your side when you're coding.</span>
+  </div>
 
 <Warning>
-If you're using Windows to host the LifeForge system, you might run into some issues. A Unix-like system such as Linux or macOS is strongly recommended to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
+### Please Don't Use Windows
+
+According to [this site](https://www.enterpriseappstoday.com/stats/linux-statistics.html#Linux_Usage_Statistics), as of 2024, 
+
+> A staggering 96.3% of the top one million web servers run on Linux, indicating its dominance in the internet infrastructure.
+
+LifeForge is not an exception. It's been developed and tested primarily on Unix-like systems. Using the system on Windows will be alright, since it's just a web application after all, but when it comes to hosting the backend server and database, things might get tricky.
+
+Therefore, if you're using Windows to host the LifeForge system, you might run into some issues. A Unix-like system such as Linux or macOS is strongly recommended to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
+
+If you ever submit an issue regarding installation or deployment on Windows, please understand that I might simply mark it as "won't fix" since I don't have a Windows machine to test and debug the issues.
 </Warning>
 </section>
 
