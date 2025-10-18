@@ -101,7 +101,7 @@ export function validateEnvironment(requiredVars: string[]): void {
   if (missingVars.length > 0) {
     CLILoggingService.actionableError(
       `Missing required environment variables: ${missingVars.join(', ')}`,
-      'Set these variables in your env/.env.local file in the project root'
+      'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
     )
     process.exit(1)
   }
