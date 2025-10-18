@@ -1,3 +1,4 @@
+import { oklchToHex } from '@components/inputs/ColorInput/ColorPickerModal/components/modals/TailwindCSSColorsModal/utils/colors'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
@@ -20,7 +21,9 @@ function FilterChip({
           `text-bg-500 dark:text-bg-400 component-bg-lighter bg-bg-50`
       )}
       style={
-        color !== undefined ? { backgroundColor: color + '20', color } : {}
+        color !== undefined
+          ? { backgroundColor: oklchToHex(color) + '20', color }
+          : {}
       }
     >
       <Icon className="size-4" icon={icon} />
