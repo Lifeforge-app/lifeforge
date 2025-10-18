@@ -62,6 +62,35 @@ function removeModuleDirectory(moduleName: string): void {
     )
     throw error
   }
+
+  const gitModulesPath = path.join('.gitmodules')
+
+  if (fs.existsSync(gitModulesPath)) {
+    CLILoggingService.progress('Updating .gitmodules file')
+
+    try {
+      let gitModulesContent = fs.readFileSync(gitModulesPath, 'utf8')
+
+      const modulePath = `apps/${moduleName}`
+
+      // Remove the module entry from .gitmodules
+      const moduleEntryRegex = new RegExp(
+        `\\[submodule "${modulePath.replace(
+          /[-\/\\^$*+?.()|[\]{}]/g,
+          '\\$&'
+        )}"\\][^\\[]*`,
+        'g'
+      )
+
+      gitModulesContent = gitModulesContent.replace(moduleEntryRegex, '')
+
+      fs.writeFileSync(gitModulesPath, gitModulesContent, 'utf8')
+
+      CLILoggingService.success('.gitmodules file updated')
+    } catch (error) {
+      CLILoggingService.warn(`Failed to update .gitmodules file: ${error}`)
+    }
+  }
 }
 
 /**
