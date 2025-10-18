@@ -1,4 +1,4 @@
-import { RouterProvider } from 'react-router'
+import { RouterProvider } from 'shared'
 
 import { useAppRouter } from '../hooks/useAppRouter'
 

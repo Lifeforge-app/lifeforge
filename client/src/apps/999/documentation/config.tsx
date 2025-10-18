@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router'
+import { Navigate } from 'shared'
 import type { ModuleConfig } from 'shared'
 
 export default {

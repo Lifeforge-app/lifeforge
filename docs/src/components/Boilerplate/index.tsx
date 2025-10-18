@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { useLocation } from 'react-router'
+import { useLocation } from 'shared'
 
 import NavigationBar from './components/NavigationBar'
 

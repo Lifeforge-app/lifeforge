@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router'
+import { Outlet } from 'shared'
 
 import Boilerplate from './Boilerplate'
 import Header from './Header'
