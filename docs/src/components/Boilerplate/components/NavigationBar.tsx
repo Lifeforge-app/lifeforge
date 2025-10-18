@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useMemo } from 'react'
-import { Link, useLocation } from 'react-router'
+import { Link, useLocation } from 'shared'
 
 import ROUTES from '../../../Router'
 
