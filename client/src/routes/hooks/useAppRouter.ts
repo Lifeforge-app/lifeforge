@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter } from 'shared'
 import { useAuth } from 'shared'
 
 import ROUTES from '..'

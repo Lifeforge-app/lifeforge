@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'shared'
 import { useSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
@@ -31,7 +31,7 @@ function SidebarBottomBar() {
   return (
     <div
       className={clsx(
-        'flex-center w-full min-w-0 pt-0 pb-4',
+        'flex-center w-full min-w-0 pb-4 pt-0',
         sidebarExpanded && 'px-4'
       )}
     >

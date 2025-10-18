@@ -2,7 +2,7 @@ import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import { EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { Link } from 'shared'
 
 function APIKeyStatusProvider({
   APIKeys,
@@ -45,7 +45,7 @@ function APIKeyStatusProvider({
                     <p className="text-bg-500 text-center text-lg">
                       {t('missing.description')}
                     </p>
-                    <p className="text-bg-500 mt-4 mb-8 text-center text-lg">
+                    <p className="text-bg-500 mb-8 mt-4 text-center text-lg">
                       {t('missing.requiredKeysAre')}{' '}
                       <code>{APIKeys.join(', ')}</code>
                     </p>
