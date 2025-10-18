@@ -25,7 +25,11 @@ interface ServiceConfig {
 
 const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   db: {
-    command: './pocketbase serve',
+    command: () => {
+      killExistingProcess('./pocketbase serve')
+
+      return './pocketbase serve'
+    },
     cwd: () => process.env.PB_DIR,
     requiresEnv: ['PB_DIR']
   },
