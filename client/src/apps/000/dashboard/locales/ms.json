@@ -120,6 +120,10 @@
     "welcome": {
       "title": "Selamat Datang ke LifeForge!",
       "description": "Mulakan dengan memasang beberapa modul dari ForgeStore."
+    },
+    "notFound": {
+      "title": "Widget Tidak Ditemui",
+      "description": "Widget yang anda cari tidak wujud. Sila semak modul yang dipasang."
     }
   },
   "loading": "Memuatkan papan pemuka...",

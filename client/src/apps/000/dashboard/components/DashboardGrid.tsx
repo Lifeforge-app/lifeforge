@@ -9,6 +9,7 @@ import { useSidebarState } from 'shared'
 import { usePersonalization } from 'shared'
 
 import DASHBOARD_WIDGETS from '../widgets'
+import NotFoundWidget from './NotFoundWidget'
 
 const RGL: any = ResponsiveGridLayout as any
 
@@ -101,13 +102,17 @@ function DashboardGrid({
       ].map(widgetId => (
         <div key={widgetId} className={clsx(canLayoutChange && 'cursor-move')}>
           {(() => {
-            const Component = COMPONENTS[widgetId as keyof typeof COMPONENTS]
+            const Component = (COMPONENTS[
+              widgetId as keyof typeof COMPONENTS
+            ] ?? NotFoundWidget) as React.FC<{
+              widgetId?: string
+            }>
 
-            return <Component />
+            return <Component widgetId={widgetId} />
           })()}
           {canLayoutChange && (
             <Icon
-              className="absolute right-0 bottom-0 text-2xl"
+              className="absolute bottom-0 right-0 text-2xl"
               icon="clarity:drag-handle-corner-line"
             />
           )}
