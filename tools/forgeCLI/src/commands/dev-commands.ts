@@ -85,10 +85,6 @@ const createConcurrentServices = (): ConcurrentServiceConfig<
   {
     name: 'client',
     command: SERVICE_COMMANDS.client.command
-  },
-  {
-    name: 'docs',
-    command: SERVICE_COMMANDS.docs.command
   }
 ]
 
