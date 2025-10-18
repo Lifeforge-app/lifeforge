@@ -76,28 +76,23 @@ function moveModuleToApps(config: ModuleInstallConfig): void {
   CLILoggingService.step('Installing module to workspace')
 
   executeCommand(
-    `mv ${config.tempDir}/${config.moduleName} ${config.moduleDir}`
+    `git mv ${config.tempDir}/${config.moduleName} ${config.moduleDir}`
   )
   CLILoggingService.success(
     `Module ${config.author}/${config.moduleName} installed successfully`
   )
 
-  const gitmodulesPath = '.gitmodules'
-  if (fs.existsSync(gitmodulesPath)) {
-    CLILoggingService.progress('Updating .gitmodules file')
+  let gitmodulesContent = fs.readFileSync('.gitmodules', 'utf-8')
+  const modulePath = `${config.tempDir}/${config.moduleName}`
 
-    let gitmodulesContent = fs.readFileSync(gitmodulesPath, 'utf-8')
-    // Replace .temp/<module-name> with apps/<module-name>
-    const tempPath = `${config.tempDir}/${config.moduleName}`
-    const appPath = `apps/${config.moduleName}`
-    gitmodulesContent = gitmodulesContent.replace(
-      new RegExp(tempPath, 'g'),
-      appPath
-    )
-    fs.writeFileSync(gitmodulesPath, gitmodulesContent, 'utf-8')
+  gitmodulesContent = gitmodulesContent.replace(
+    `[submodule "${modulePath}"]`,
+    `[submodule "apps/${config.moduleName}"]`
+  )
 
-    CLILoggingService.success('.gitmodules file updated')
-  }
+  fs.writeFileSync('.gitmodules', gitmodulesContent.trim() + '\n')
+
+  executeCommand('git add .gitmodules')
 }
 
 /**

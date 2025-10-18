@@ -1,0 +1,3 @@
+[submodule "apps/achievements"]
+	path = apps/achievements
+	url = https://github.com/lifeforge-app/lifeforge-module-achievements.git

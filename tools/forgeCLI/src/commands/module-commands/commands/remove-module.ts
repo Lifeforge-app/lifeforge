@@ -81,7 +81,6 @@ function removeModuleDirectory(moduleName: string): void {
         )}"\\][^\\[]*`,
         'g'
       )
-
       gitModulesContent = gitModulesContent.replace(moduleEntryRegex, '')
 
       fs.writeFileSync(gitModulesPath, gitModulesContent, 'utf8')
