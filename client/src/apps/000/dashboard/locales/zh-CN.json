@@ -120,6 +120,10 @@
     "welcome": {
       "title": "欢迎来到 LifeForge！",
       "description": "在 ForgeStore 安装一些模块并开始使用吧。"
+    },
+    "notFound": {
+      "title": "未找到小工具",
+      "description": "您正在寻找的小工具不存在。请检查您已安装的模块。"
     }
   },
   "loading": "仪表盘加载中...",
