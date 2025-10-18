@@ -23,11 +23,15 @@ import { createModuleConfig, validateRepositoryPath } from '../utils/validation'
  * Clones module repository from GitHub
  */
 function cloneModuleRepository(config: ModuleInstallConfig): void {
+  if (!fs.existsSync('.gitmodules')) {
+    fs.writeFileSync('.gitmodules', '')
+  }
+
   CLILoggingService.progress('Cloning module repository from GitHub')
 
   try {
     executeCommand(
-      `git clone ${config.repoUrl} ${config.tempDir}/${config.moduleName}`,
+      `git submodule add --force ${config.repoUrl} ${config.tempDir}/${config.moduleName}`,
       {
         exitOnError: false,
         stdio: ['ignore', 'ignore', 'ignore']
@@ -77,6 +81,23 @@ function moveModuleToApps(config: ModuleInstallConfig): void {
   CLILoggingService.success(
     `Module ${config.author}/${config.moduleName} installed successfully`
   )
+
+  const gitmodulesPath = '.gitmodules'
+  if (fs.existsSync(gitmodulesPath)) {
+    CLILoggingService.progress('Updating .gitmodules file')
+
+    let gitmodulesContent = fs.readFileSync(gitmodulesPath, 'utf-8')
+    // Replace .temp/<module-name> with apps/<module-name>
+    const tempPath = `${config.tempDir}/${config.moduleName}`
+    const appPath = `apps/${config.moduleName}`
+    gitmodulesContent = gitmodulesContent.replace(
+      new RegExp(tempPath, 'g'),
+      appPath
+    )
+    fs.writeFileSync(gitmodulesPath, gitmodulesContent, 'utf-8')
+
+    CLILoggingService.success('.gitmodules file updated')
+  }
 }
 
 /**
