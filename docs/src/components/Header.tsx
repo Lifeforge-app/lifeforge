@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { Link } from 'react-router'
+import { Link } from 'shared'
 import { usePersonalization } from 'shared'
 
 function Header({
