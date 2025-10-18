@@ -120,6 +120,10 @@
     "welcome": {
       "title": "Welcome to LifeForge!",
       "description": "Get started by installing some modules from the ForgeStore."
+    },
+    "notFound": {
+      "title": "Widget Not Found",
+      "description": "The widget you are looking for does not exist. Please check your installed modules."
     }
   },
   "loading": "Loading dashboard...",
