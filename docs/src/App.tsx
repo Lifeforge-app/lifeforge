@@ -1,6 +1,6 @@
 import { NotFoundScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router'
+import { Navigate, RouterProvider, createBrowserRouter } from 'shared'
 
 import ROUTES from './Router'
 import Layout from './components/Layout'

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { RouteObject } from 'react-router'
+import { RouteObject } from 'shared'
 
 import { components as COMPONENTS } from './components/MdxComponents'
 
