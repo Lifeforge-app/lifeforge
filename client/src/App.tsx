@@ -4,7 +4,6 @@ import { MusicProvider } from '@modules/music/client/src/providers/MusicProvider
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ErrorScreen, useModalStore } from 'lifeforge-ui'
 import { APIOnlineStatusWrapper } from 'lifeforge-ui'
-import { NuqsAdapter } from 'nuqs/adapters/react'
 import { useEffect } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -15,6 +14,7 @@ import {
   AuthProvider,
   BackgroundProvider,
   type InferOutput,
+  NuqsProvider,
   PersonalizationProvider,
   SidebarStateProvider,
   SocketProvider,
@@ -50,11 +50,11 @@ function App() {
     <ErrorBoundary
       fallback={<ErrorScreen message="An unexpected error occurred." />}
     >
-      <NuqsAdapter>
-        <main
-          className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
-          id="app"
-        >
+      <main
+        className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
+        id="app"
+      >
+        <NuqsProvider>
           <APIEndpointProvider endpoint={import.meta.env.VITE_API_HOST}>
             <QueryClientProvider client={queryClient}>
               <DndProvider backend={HTML5Backend}>
@@ -87,8 +87,8 @@ function App() {
               </DndProvider>
             </QueryClientProvider>
           </APIEndpointProvider>
-        </main>
-      </NuqsAdapter>
+        </NuqsProvider>
+      </main>
     </ErrorBoundary>
   )
 }

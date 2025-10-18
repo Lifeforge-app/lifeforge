@@ -1,10 +1,10 @@
 import { type SSOAppConfig, SSOAppMainView } from 'lifeforge-ui'
 import ReactDOM from 'react-dom/client'
 
-import FlowEditorWrapper from './components/FlowEditor/index.js'
-import './i18n.js'
+import FlowEditorWrapper from './components/FlowEditor'
+import './i18n'
 import './index.css'
-import forgeAPI from './utils/forgeAPI.js'
+import forgeAPI from './utils/forgeAPI'
 
 const config = {
   apiEndpoint: import.meta.env.VITE_API_HOST,

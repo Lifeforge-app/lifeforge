@@ -12,7 +12,8 @@ function EmptyStateScreen({
   icon,
   smaller = false,
   namespace,
-  tKey = ''
+  tKey = '',
+  className
 }: {
   CTAButtonProps?: React.ComponentProps<typeof Button>
   name: string | false
@@ -22,6 +23,7 @@ function EmptyStateScreen({
   smaller?: boolean
   namespace?: string
   tKey?: string
+  className?: string
 }) {
   const { t } = useTranslation(namespace)
 
@@ -29,7 +31,8 @@ function EmptyStateScreen({
     <div
       className={clsx(
         'flex-center size-full flex-col',
-        smaller ? 'gap-3' : 'gap-6'
+        smaller ? 'gap-3' : 'gap-6',
+        className
       )}
     >
       {icon !== undefined &&
@@ -37,7 +40,7 @@ function EmptyStateScreen({
           <Icon
             className={clsx(
               'text-bg-400 dark:text-bg-600 shrink-0',
-              smaller ? 'size-24' : 'size-32'
+              smaller ? 'size-18' : 'size-32'
             )}
             icon={icon}
           />
@@ -47,7 +50,7 @@ function EmptyStateScreen({
       <h2
         className={clsx(
           'text-bg-400 dark:text-bg-600 px-6 text-center font-semibold',
-          smaller ? 'text-3xl' : 'text-4xl'
+          smaller ? 'text-2xl' : 'text-3xl'
         )}
       >
         {name
@@ -57,8 +60,8 @@ function EmptyStateScreen({
       {typeof description === 'string' || !description ? (
         <p
           className={clsx(
-            'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
-            smaller ? 'text-lg' : 'text-xl'
+            'text-bg-400 dark:text-bg-600 -mt-2 whitespace-pre-wrap px-6 text-center',
+            smaller ? 'text-base' : 'text-lg'
           )}
         >
           {name

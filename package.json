@@ -13,15 +13,14 @@
   "workspaces": [
     "./server",
     "./client",
+    "./docs",
     "./shared",
     "./packages/*",
-    "./apps/*"
+    "./apps/*",
+    "./tools/*"
   ],
   "scripts": {
-    "forge": "bun run scripts/forge.ts",
-    "start:server": "cd server && bun run start",
-    "db:generate-schemas": "bun run ./scripts/generateCollectionsSchemas.ts",
-    "db:generate-migrations": "bun run ./scripts/generateCollectionsMigrations.ts"
+    "forge": "bun run tools/forgeCLI/src/index.ts"
   },
   "keywords": [
     "bun",
@@ -38,16 +37,13 @@
     "@babel/types": "^7.28.1",
     "@eslint/js": "^9.26.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/crypto-js": "^4.2.2",
-    "@types/lodash": "^4.17.16",
-    "@types/node": "^22.7.4",
-    "@types/pdf-thumbnail": "^1.0.4",
-    "@types/pdfkit": "^0.17.0",
-    "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.6",
+    "@types/lodash": "^4.17.20",
+    "@types/prettier": "^3.0.0",
+    "@types/prompts": "^2.4.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "bun-types": "latest",
+    "commander": "^14.0.1",
     "concurrently": "^9.1.2",
     "eslint": "^9.26.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
@@ -55,13 +51,21 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "eslint-plugin-sonarjs": "^3.0.2",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "inquirer-autocomplete-prompt": "^3.0.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "prompts": "^2.4.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.31.1"
   },
   "dependencies": {
-    "babel-plugin-react-compiler": "^19.1.0-rc.2"
+    "chalk": "^5.6.2",
+    "dotenv": "^17.2.3",
+    "globals": "^16.4.0",
+    "lodash": "^4.17.21",
+    "pocketbase": "^0.26.2"
   }
 }

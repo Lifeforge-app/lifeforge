@@ -8,7 +8,7 @@ function Scrollbar({
 } & ScrollbarProps) {
   return (
     <Scrollbars
-      {...props}
+      {...(props as any)}
       autoHide
       autoHideDuration={200}
       renderThumbVertical={props => (

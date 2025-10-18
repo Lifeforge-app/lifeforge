@@ -1,3 +1,3 @@
-import { allRoutes } from '.'
+import { mainRoutes } from '.'
 
-export type AppRoutes = typeof allRoutes
+export type AppRoutes = typeof mainRoutes

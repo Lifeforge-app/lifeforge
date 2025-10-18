@@ -1,5 +1,5 @@
 import { ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useCallback, useMemo } from 'react'
 
 import InputIcon from '../shared/components/InputIcon'

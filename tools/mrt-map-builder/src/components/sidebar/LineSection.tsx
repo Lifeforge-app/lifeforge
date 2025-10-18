@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { Button, EmptyStateScreen, useModalStore } from 'lifeforge-ui'
 
 import type { Line } from '../../typescript/mrt.interfaces'

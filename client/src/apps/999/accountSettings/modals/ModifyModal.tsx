@@ -22,7 +22,7 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
         if (id === 'email') {
           toast.info('A verification email has been sent to your new email.')
         } else {
-          setUserData({ ...userData, ...newData.data })
+          setUserData(oldData => ({ ...oldData, ...newData.data }))
         }
         toast.success('Profile updated successfully')
       },

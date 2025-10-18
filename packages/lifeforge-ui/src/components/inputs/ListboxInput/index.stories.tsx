@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import colors from 'tailwindcss/colors'

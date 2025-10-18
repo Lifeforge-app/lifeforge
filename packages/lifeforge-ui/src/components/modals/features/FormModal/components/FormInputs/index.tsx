@@ -177,7 +177,7 @@ function FormInputs<T extends FormState>({
               namespace={namespace}
               options={options}
               value={value}
-              onFieldChange={changeHandlers[id]}
+              onFieldChange={changeHandlers[id] || (() => {})}
             />
           )
         }
