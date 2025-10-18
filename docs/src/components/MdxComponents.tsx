@@ -1,6 +1,6 @@
 import { MDXComponents } from 'mdx/types'
 import Zoom from 'react-medium-image-zoom'
-import { Link } from 'react-router'
+import { Link } from 'shared'
 
 export const components: MDXComponents = {
   em(properties) {

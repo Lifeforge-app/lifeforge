@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { Link } from 'shared'
 
 import Button from '../buttons/Button'
 
@@ -20,7 +20,7 @@ function NotFoundScreen({
         {description ?? t('notFound.description')}
       </p>
       <div className="flex-center mt-6 gap-3">
-        <Button as={Link} icon="tabler:arrow-left" to="/">
+        <Button as="a" icon="tabler:arrow-left" href="/">
           Go Back
         </Button>
         <Button

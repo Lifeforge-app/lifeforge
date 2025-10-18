@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from 'react-router'
+import { Link, useLocation } from 'shared'
 import { useSidebarState } from 'shared'
 
 function SidebarSubsectionItem({
