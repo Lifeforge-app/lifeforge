@@ -148,6 +148,10 @@ const oklch2rgb = (lch: number[]) =>
   srgbLinear2rgb(xyz2rgbLinear(oklab2xyz(oklch2oklab(lch))))
 
 export function oklchToHex(oklch: string): string {
+  if (!oklch.startsWith('oklch')) {
+    return oklch
+  }
+
   const numbersInParentheses = oklch.match(/\(([^)]+)\)/)![1]
 
   let [l, c, h] = numbersInParentheses.split(' ').map(x => parseFloat(x))
