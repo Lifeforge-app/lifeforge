@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import CustomLink from '../../components/CustomLink'
 import Code from '../../components/Code'
 import Note from '../../components/Note'
+import Warning from '../../components/Warning'
 
 ###### Deployment
 
@@ -17,6 +18,26 @@ Now that you have successfully set up your LifeForge system, it's time to deploy
 
 Since the frontend is basically just a **Single Page Application (SPA)**, we can easily deploy it to Vercel, Netlify, or maybe even GitHub Pages (never done it before, not sure if it works). Simply import your GitHub repository, select the root directory to point to the <code>client</code> folder, and set the build command to <code>bun run build</code> and the output directory to <code>client/dist</code>.
 
+
+<Warning>
+### Bun Version Requirement
+
+When deploying the client application to PaaS providers like Vercel or Netlify, make sure that the Bun version used in the build environment is at least **v1.3.0**, since the dependency resolution mechanism used in Bun v1.3.0 and later is required to properly build the client application. If the Bun version is lower than v1.3.0, your app should still build, but you might run into lots of issues when running the app.
+
+However, as of October 2025, Vercel and Netlify do not yet support Bun v1.3.0 in their build environments. Therefore, you will need to manually configure the installation script to upgrade Bun using the command <code>bun upgrade</code> before installing the dependencies.
+
+In Vercel, head to the project settings, and under the **Build & Development Settings** section, override the **Install Command** to the following:
+
+<Code language="bash">
+{`bun upgrade && bun install`}
+</Code>
+
+As shown in the image below:
+
+![vercel-bun-upgrade](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/deployment/install-command.webp)
+
+However, in Netlify, I can't seem to find a way to override the install command. If you know how to do it, please let me know!
+</Warning>
 </section>
 
 <section id="deploying-backend">
