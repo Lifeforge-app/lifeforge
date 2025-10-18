@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { useEffect } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation } from 'shared'
 
 import ROUTES from '..'
 

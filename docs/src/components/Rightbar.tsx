@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation } from 'shared'
 
 function Rightbar() {
   const [allSections, setAllSections] = useState<string[]>([])
@@ -138,7 +138,7 @@ function Rightbar() {
   }
 
   return (
-    <aside className="fixed top-20 right-0 hidden h-full min-h-0 w-80 overflow-y-auto p-12 lg:block">
+    <aside className="fixed right-0 top-20 hidden h-full min-h-0 w-80 overflow-y-auto p-12 lg:block">
       <h2 className="text-lg font-semibold">On This Page</h2>
       <ul className="border-bg-200 dark:border-bg-800 relative isolate mt-4 border-l-[1.5px]">
         {allSections.map((item, index) => {
@@ -148,7 +148,7 @@ function Rightbar() {
             <a
               key={index}
               aria-current={activeSection === itemId ? 'page' : undefined}
-              className="aria-[current=page]:text-custom-500! before:border-custom-500 text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:top-1/2 before:-left-[2px] before:h-0 before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all hover:font-medium aria-[current=page]:font-semibold aria-[current=page]:before:h-full"
+              className="aria-[current=page]:text-custom-500! before:border-custom-500 text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:-left-[2px] before:top-1/2 before:h-0 before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all hover:font-medium aria-[current=page]:font-semibold aria-[current=page]:before:h-full"
               href={`#${itemId}`}
               id={itemId}
               onClick={e => {
