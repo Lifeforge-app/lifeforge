@@ -189,7 +189,7 @@ async function startAllServices(): Promise<void> {
     const concurrentServices = await getConcurrentServices()
 
     concurrently(concurrentServices, {
-      killOthers: ['failure', 'success'],
+      killOthersOn: ['failure', 'success'],
       restartTries: 0,
       prefix: 'name',
       prefixColors: ['cyan', 'green', 'magenta']
