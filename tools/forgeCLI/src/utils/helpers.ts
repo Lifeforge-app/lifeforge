@@ -213,3 +213,16 @@ export function checkRunningPBInstances(): void {
     // No existing instance found, continue with the script
   }
 }
+
+export function checkPortInUse(port: number): boolean {
+  try {
+    const result = spawnSync('nc', ['-zv', 'localhost', port.toString()], {
+      stdio: 'pipe',
+      encoding: 'utf8'
+    })
+
+    return result.status === 0
+  } catch {
+    return false
+  }
+}
