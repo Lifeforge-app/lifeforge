@@ -137,7 +137,7 @@ export function logProcessComplete(processType: string): void {
  */
 export function killExistingProcess(
   processKeywordOrPID: string | number
-): void {
+): number | undefined {
   try {
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
@@ -152,6 +152,8 @@ export function killExistingProcess(
 
     if (serverInstance) {
       executeCommand(`pkill -f "${processKeywordOrPID}"`)
+
+      return parseInt(serverInstance, 10)
     }
   } catch {
     // No existing server instance found
@@ -225,4 +227,8 @@ export function checkPortInUse(port: number): boolean {
   } catch {
     return false
   }
+}
+
+export async function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
