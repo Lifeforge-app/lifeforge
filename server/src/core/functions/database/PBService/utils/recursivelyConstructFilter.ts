@@ -35,7 +35,7 @@ export function recursivelyBuildFilter<
                 params
               )
 
-              return `(${result.expression})`
+              return result.expression
             }
 
             const paramName = `param${paramCounter.count++}`
@@ -46,9 +46,11 @@ export function recursivelyBuildFilter<
           })
           .filter(Boolean)
 
-        return subFilters.length
-          ? `(${subFilters.join(` ${f.combination} `)})`
-          : ''
+        if (subFilters.length > 1) {
+          return `(${subFilters.join(` ${f.combination} `)})`
+        }
+
+        return subFilters.length === 1 ? subFilters[0] : ''
       }
 
       const paramName = `param${paramCounter.count++}`
