@@ -2,6 +2,7 @@ import { Button } from '@components/buttons'
 import dayjs from 'dayjs'
 import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
@@ -95,7 +96,7 @@ function DateInput({
               ? 'theme-light'
               : 'theme-dark'
           }
-          className="focus:placeholder:text-bg-500 mt-6 h-13 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-hidden placeholder:text-transparent focus:outline-hidden"
+          className="focus:placeholder:text-bg-500 h-13 outline-hidden focus:outline-hidden mt-6 w-full rounded-lg border-none bg-transparent px-4 tracking-wider placeholder:text-transparent"
           dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}
           formatWeekDay={(date: string) => {
             return date.slice(0, 3)
@@ -124,7 +125,7 @@ function DateInput({
         />
         {!!value && (
           <Button
-            className="hover:bg-bg-300 dark:hover:bg-bg-700/30! mr-4 p-2!"
+            className="hover:bg-bg-300 dark:hover:bg-bg-700/30! p-2! mr-4"
             icon="tabler:x"
             variant="plain"
             onClick={() => {
