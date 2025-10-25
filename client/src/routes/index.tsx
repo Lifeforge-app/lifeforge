@@ -1,34 +1,11 @@
 import type { ModuleCategory, ModuleConfig } from 'shared'
 
-let ROUTES: ModuleCategory[] = await Promise.all(
-  Object.entries(
-    Object.groupBy(
-      Object.entries(import.meta.glob('../apps/**/config.tsx')),
-      ([key]) => key.split('/')[2]
-    )
-  )
-    .sort(([a], [b]) => parseInt(a) - parseInt(b))
-    .map(async ([category, items]) => ({
-      title: category.split('.').slice(1).join('.'),
-      items: items
-        ? await Promise.all(
-            items
-              .sort((a, b) =>
-                a[0].split('/')[3].localeCompare(b[0].split('/')[3])
-              )
-              .map(
-                async ([, resolver]) =>
-                  ((await resolver()) as { default: any }).default
-              )
-          )
-        : []
-    }))
-)
-
-const externalModules = import.meta.glob('../../../apps/**/manifest.ts')
+let ROUTES: ModuleCategory[] = []
 
 await Promise.all(
-  Object.entries(externalModules).map(async ([_, resolver]) => {
+  Object.entries(
+    import.meta.glob(['../apps/**/manifest.ts', '../../../apps/**/manifest.ts'])
+  ).map(async ([_, resolver]) => {
     const mod = (await resolver()) as {
       default: ModuleConfig & { category?: string }
     }
@@ -48,8 +25,34 @@ await Promise.all(
   })
 )
 
-ROUTES = ROUTES.sort((a, b) => a.title.localeCompare(b.title)).map(cat => ({
-  title: cat.title,
+ROUTES = ROUTES.sort((a, b) => {
+  const order = ['<START>', 'Miscellaneous', 'Settings', 'SSO', '<END>']
+
+  const aIndex = order.indexOf(a.title)
+
+  const bIndex = order.indexOf(b.title)
+
+  // Both are special categories
+  if (aIndex !== -1 && bIndex !== -1) {
+    return aIndex - bIndex
+  }
+
+  // Only a is special - handle positioning
+  if (aIndex !== -1) {
+    if (aIndex === 0) return -1 // <START> goes first
+    if (aIndex >= 1) return 1 // Settings, SSO, <END> go last
+  }
+
+  // Only b is special - handle positioning
+  if (bIndex !== -1) {
+    if (bIndex === 0) return 1 // <START> goes first
+    if (bIndex >= 1) return -1 // Settings, SSO, <END> go last
+  }
+
+  // Both are regular categories - alphabetical
+  return a.title.localeCompare(b.title)
+}).map(cat => ({
+  title: ['<START>', '<END>'].includes(cat.title) ? '' : cat.title,
   items: cat.items.sort((a, b) => a.name.localeCompare(b.name))
 }))
 
