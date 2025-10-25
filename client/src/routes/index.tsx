@@ -9,7 +9,7 @@ let ROUTES: ModuleCategory[] = await Promise.all(
   )
     .sort(([a], [b]) => parseInt(a) - parseInt(b))
     .map(async ([category, items]) => ({
-      title: category,
+      title: category.split('.').slice(1).join('.'),
       items: items
         ? await Promise.all(
             items
@@ -33,7 +33,7 @@ await Promise.all(
       default: ModuleConfig & { category?: string }
     }
 
-    const category = mod.default.category || '98.Miscellaneous'
+    const category = mod.default.category || 'Miscellaneous'
 
     const categoryIndex = ROUTES.findIndex(cat => cat.title === category)
 
@@ -48,14 +48,8 @@ await Promise.all(
   })
 )
 
-ROUTES = ROUTES.sort((a, b) => {
-  const aIndex = parseInt(a.title.split('.')[0])
-
-  const bIndex = parseInt(b.title.split('.')[0])
-
-  return aIndex - bIndex
-}).map(cat => ({
-  title: cat.title.split('.').slice(1).join('.'),
+ROUTES = ROUTES.sort((a, b) => a.title.localeCompare(b.title)).map(cat => ({
+  title: cat.title,
   items: cat.items.sort((a, b) => a.name.localeCompare(b.name))
 }))
 
