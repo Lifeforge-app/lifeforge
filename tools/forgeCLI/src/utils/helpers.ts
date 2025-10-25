@@ -1,6 +1,7 @@
 import { spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
+import prompts from 'prompts'
 
 import type { CommandExecutionOptions } from '../types'
 import { CLILoggingService } from './logging'
@@ -231,4 +232,47 @@ export function checkPortInUse(port: number): boolean {
 
 export async function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+/**
+ * Executes a command and returns the output as a string
+ */
+export function executeCommandWithOutput(
+  command: string,
+  options: CommandExecutionOptions = {}
+): string {
+  const [toBeExecuted, ...args] = command.split(' ')
+
+  const result = spawnSync(toBeExecuted, args, {
+    stdio: 'pipe',
+    encoding: 'utf8',
+    shell: true,
+    ...options
+  })
+
+  if (result.error) {
+    throw result.error
+  }
+
+  if (result.status !== 0) {
+    throw new Error(
+      `Command failed with exit code ${result.status}: ${result.stderr}`
+    )
+  }
+
+  return result.stdout?.toString().trim() || ''
+}
+
+/**
+ * Prompts the user for confirmation
+ */
+export async function confirmAction(message: string): Promise<boolean> {
+  const response = await prompts({
+    type: 'confirm',
+    name: 'confirmed',
+    message,
+    initial: false
+  })
+
+  return response.confirmed
 }
