@@ -2,9 +2,10 @@ import { lazy } from 'react'
 import type { ModuleConfig } from 'shared'
 
 export default {
-  name: 'Backups',
-  icon: 'tabler:history',
+  name: 'Dashboard',
+  icon: 'tabler:dashboard',
   routes: {
-    backups: lazy(() => import('.'))
-  }
+    dashboard: lazy(() => import('.'))
+  },
+  category: '<START>'
 } satisfies ModuleConfig

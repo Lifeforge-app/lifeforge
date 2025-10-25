@@ -2,9 +2,10 @@ import { lazy } from 'react'
 import type { ModuleConfig } from 'shared'
 
 export default {
-  name: 'API Keys',
-  icon: 'tabler:password',
+  name: 'Backups',
+  icon: 'tabler:history',
   routes: {
-    'api-keys': lazy(() => import('.'))
-  }
+    backups: lazy(() => import('.'))
+  },
+  category: 'Settings'
 } satisfies ModuleConfig
