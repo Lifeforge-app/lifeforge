@@ -2,9 +2,10 @@ import { lazy } from 'react'
 import type { ModuleConfig } from 'shared'
 
 export default {
-  name: 'Dashboard',
-  icon: 'tabler:dashboard',
+  name: 'Personalization',
+  icon: 'tabler:palette',
   routes: {
-    dashboard: lazy(() => import('.'))
-  }
+    personalization: lazy(() => import('.'))
+  },
+  category: 'Settings'
 } satisfies ModuleConfig

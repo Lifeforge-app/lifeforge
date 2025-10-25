@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'shared'
 
 function LocalizationManager() {
-  const { t } = useTranslation('apps.localizationManager')
+  const { t } = useTranslation('common.fetch')
 
   const navigate = useNavigate()
 
@@ -21,16 +21,14 @@ function LocalizationManager() {
       a.click()
 
       navigate(-1)
-      toast.success(t('fetch.redirected'))
+      toast.success(t('redirected'))
     }
   }, [])
 
   return (
     <>
       <div className="flex size-full items-center justify-center">
-        <p className="text-bg-500 text-2xl font-medium">
-          {t('fetch.redirecting')}
-        </p>
+        <p className="text-bg-500 text-2xl font-medium">{t('redirecting')}</p>
       </div>
     </>
   )
