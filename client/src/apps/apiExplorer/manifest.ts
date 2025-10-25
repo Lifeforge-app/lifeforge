@@ -7,5 +7,6 @@ export default {
   routes: {
     'api-explorer': lazy(() => import('.'))
   },
-  disabled: !import.meta.env.VITE_API_EXPLORER_URL
+  disabled: !import.meta.env.VITE_API_EXPLORER_URL,
+  category: 'SSO'
 } satisfies ModuleConfig

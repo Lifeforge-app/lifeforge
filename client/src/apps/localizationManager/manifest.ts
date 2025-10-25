@@ -7,5 +7,6 @@ export default {
   routes: {
     'localization-manager': lazy(() => import('.'))
   },
-  disabled: !import.meta.env.VITE_LOCALIZATION_MANAGER_URL
+  disabled: !import.meta.env.VITE_LOCALIZATION_MANAGER_URL,
+  category: 'SSO'
 } satisfies ModuleConfig
