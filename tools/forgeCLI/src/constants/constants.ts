@@ -46,6 +46,12 @@ export const VALID_SERVICES = [
  */
 export const VALID_COMMANDS = ['build', 'types', 'lint'] as const
 
+export const AVAILABLE_TEMPLATE_MODULE_TYPES = [
+  'bare',
+  'client-only',
+  'crud'
+] as const
+
 export type ProjectType = keyof typeof PROJECTS_ALLOWED
 
 export type ServiceType = (typeof VALID_SERVICES)[number]

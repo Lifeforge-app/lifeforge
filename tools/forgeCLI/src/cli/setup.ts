@@ -71,18 +71,39 @@ function setupModulesCommand(): void {
     .command('modules')
     .description('Manage LifeForge modules')
 
-  command.command('list').action(moduleHandlers.listModulesHandler)
+  command
+    .command('list')
+    .description('List all installed modules')
+    .action(moduleHandlers.listModulesHandler)
   command
     .command('add')
+    .description('Download and install a module')
     .argument('<module>', 'Module to add, e.g., lifeforge-app/wallet')
     .action(moduleHandlers.addModuleHandler)
   command
+    .command('update')
+    .description('Update an installed module')
+    .argument(
+      '<module>',
+      'Module to update, e.g., wallet or "all" to update all modules'
+    )
+    .action(moduleHandlers.updateModuleHandler)
+  command
     .command('remove')
+    .description('Remove an installed module')
     .argument(
       '[module]',
       'Module to remove, e.g., wallet (optional, will show list if not provided)'
     )
     .action(moduleHandlers.removeModuleHandler)
+  command
+    .command('create')
+    .description('Create a new LifeForge module scaffold')
+    .argument(
+      '[moduleName]',
+      'Name of the module to create. Leave empty to prompt.'
+    )
+    .action(moduleHandlers.createModuleHandler)
 }
 
 /**
