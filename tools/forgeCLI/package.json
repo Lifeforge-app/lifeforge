@@ -8,7 +8,15 @@
         "@babel/traverse": "^7.28.4",
         "@types/babel__generator": "^7.27.0",
         "@types/babel__traverse": "^7.28.0",
+        "axios": "^1.12.2",
+        "crypto-js": "^4.2.0",
         "dotenv": "^17.2.3",
-        "handlebars": "^4.7.8"
+        "handlebars": "^4.7.8",
+        "openai": "^6.7.0",
+        "ora": "^9.0.0",
+        "zod": "^4.1.12"
+    },
+    "devDependencies": {
+        "@types/crypto-js": "^4.2.2"
     }
 }
