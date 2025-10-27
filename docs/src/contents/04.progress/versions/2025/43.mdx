@@ -1,0 +1,56 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="84ec5a3a71cece2f29a90fa52d99af208fd1d12b" />: Implemented Git submodule mechanism to manage modules as separate repositories, allowing for better modularity and easier maintenance.
+- <Commit hash="6160be75909b6d5922b748171b5bb24faab296a6" />: Added testing framework setup using Vitest, and implemented initial test cases for <code>recursivelyBuildFilter</code> function.
+- <Commit hash="8c11778ab343c67b4c9c55917f4d375bc47a34ec" />, <Commit hash="7b49ac34062c8dcfe1f9abbada7787ce99fb10d0" />: Removed module category numbering mechanism in client side routing, allowing for more flexible route management.
+- <Commit hash="57099127e4de38a6cdbb2b28636238db9b2b6a6a" />: Flattened core route structure in client side, and renamed <code>config.tsx</code> to <code>manifest.ts</code> for better consistency with module structure.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="525e03245a2ee83c2e059ebd8013dfd359962943" />: Added support for okLCH color conversion in <code>FilterChip</code> component.
+- <Commit hash="40417ba8fa78f2faf75f3a94d6058469eca93a48" />: Added retry button in <code>ErrorScreen</code> component for better user experience during error states.
+
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="f904a842ab6a94285b3813744afea68ff0ac12d6" />: Fixed the build script path in package.json of documentation.
+- <Commit hash="ddc40b0b7fb7b66d9780b65d123059ee7da7d2f9" />: Updated node_modules path handling for manual chunking in Vite configuration to adapt to new dependencies handling mechanism in Vite version 1.3.
+- <Commit hash="e21ace93cdb2f8695f9b74ad6602a3bfbcf8efa6" />: Fixed path for lifeforge UI import in CSS file of documentation codebase.
+- <Commit hash="50fb4a76de2ce2c89e884d3ab5b0d88c0a1d2f32" />: Adjust image width responsiveness and code break handling in documentation.
+- <Commit hash="f7036882d3549fc42fa14a65d1618da606fc48c3" />: Added fallback widget for dashboard widgets that fail to load.
+- <Commit hash="05240187015cf6474f488d00528fbecb7ffa3fb8" />: Readded ESLint configuration file that was accidentally deleted in previous commit.
+- <Commit hash="5ddbcd461def6ba82defbcc65571c9d80e8570b5" />: Updated error message in server DB checking script to use correct command name.
+- <Commit hash="196c8aff2cfd83b540b1a3bc9647f94cdbc757dc" />: Moved CSS import for <code>react-datepicker</code> to <code>DateInput</code> component since it is somehow not being loaded properly when imported in global CSS file.
+- <Commit hash="03a93a0fcf1f18ceb0482d450f5dc31890e71bc1" />: Simplified combination filter generation in <code>recursivelyBuildFilter</code> function, removing unnecessary brackets.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="78cf77fe02833d85c3b0985025943fa6011f2c9d" />: Update warning section in introduction page of documentation to reflect the latest status of Lifeforge development.
+- <Commit hash="c44bf10965dd0ee392e38fa1a7c6156aed395c0c" />: Added preloader to documentation site for better user experience during initial load.
+- <Commit hash="17196a88bfdf5a80daad1cd59f1c97c857e1a878" />: Updated introduction and back story sections in documentation to reflect the latest vision and goals of Lifeforge project.
+- <Commit hash="4182c41d838f461bcd48ccdb3020fafb17e76fe9" />: Add "Coming Soon" content to roadmap page in documentation.
+- <Commit hash="3800ed0c739bf87e40b4a7dd560c186891158fda" />, <Commit hash="d473c136cebd85eedb8913acba2fda5d0f14d8d5" />, <Commit hash="907d3f9911d95857ce71e02094b0bba4da244e80" />: Update all assets in documentation to use WebP format for better compression and faster load times.
+- <Commit hash="2b9e2fc61c670f854df99cdeb7b53672c8cfc17b" />: Update installation and deployment guides in documentation to reflect the latest setup process and requirements.
+- <Commit hash="8e2ebc53de7e5a35659be065f6bbf16d8db93e22" />: Pocketbase setup is now validated before adding a module in forgeCLI.
+- <Commit hash="890d51a8651a0a14ca3a797e6b3c3630dcceb3c0" />: All running PB instance are now killed when starting new PB instance in forgeCLI to prevent port conflicts.
+- <Commit hash="a1fb3fe0c8213f0bb40fa33824c82f3e3e70bd48" />: Added port checking mechanism before starting services in forgeCLI to further prevent port conflicts (sometimes they are other unknown processes that occupy the port).
+- <Commit hash="f7f117903076801597003a679b9e164b9aa64cd8" />: Improve env file handling in forgeCLI setup process.
+- <Commit hash="36deeebaf434bbcd8f642397b0a0e857075858db" />: Added module update command in forgeCLI to allow users to easily update modules to the latest version.
+
+  <Code language="bash">
+    {`bun forge modules update <module-name>`}
+  </Code>
+  
+- <Commit hash="0733934c8b4ca45ab3e69d4fdf95f3e9f40fd5c8" />: Implemented module creation command in forgeCLI to allow users to easily create new modules with boilerplate code.
+
+  <Code language="bash">
+    {`bun forge modules create [module-name]`}
+  </Code>
+
+- <Commit hash="50340228144c2a0507a078fde369fac0b21ae68c" />: Added module publish command in forgeCLI to allow users to easily publish their modules to GitHub repositories.
+
+  <Code language="bash">
+    {`bun forge modules publish <module-name>`}
+  </Code>
