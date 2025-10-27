@@ -8,6 +8,8 @@ import {
 } from '../constants/constants'
 import type { ConcurrentServiceConfig, ServiceType } from '../types'
 import {
+  checkPortInUse,
+  delay,
   executeCommand,
   killExistingProcess,
   validateEnvironment
@@ -18,34 +20,68 @@ import { CLILoggingService } from '../utils/logging'
  * Service command configurations
  */
 interface ServiceConfig {
-  command: string | (() => string)
-  cwd?: () => string | undefined
+  command: string | (() => Promise<string>) | (() => string)
+  cwd?: string | (() => string)
   requiresEnv?: string[]
 }
 
 const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   db: {
-    command: './pocketbase serve',
-    cwd: () => process.env.PB_DIR,
+    command: async () => {
+      const killedProcess = killExistingProcess('./pocketbase serve')
+
+      if (killedProcess) {
+        await delay(2000)
+      }
+
+      if (checkPortInUse(8090)) {
+        CLILoggingService.actionableError(
+          'No Pocketbase instance found running, but port 8090 is already in use.',
+          'Please free up the port. Are you using the port for another application? (e.g., port forwarding, etc.)'
+        )
+        process.exit(1)
+      }
+
+      return './pocketbase serve'
+    },
+    cwd: () => process.env.PB_DIR!,
     requiresEnv: ['PB_DIR']
   },
   server: {
-    command: () => {
-      killExistingProcess('lifeforge/node_modules/.bin/tsx')
+    command: async () => {
+      const killedProcess = killExistingProcess(
+        'lifeforge/server/node_modules/.bin/tsx'
+      )
 
-      return 'cd server && bun run dev'
-    }
+      if (killedProcess) {
+        await delay(2000)
+      }
+
+      const PORT = process.env.PORT || '3636'
+
+      if (checkPortInUse(Number(PORT))) {
+        CLILoggingService.actionableError(
+          `Port ${PORT} is already in use.`,
+          'Please free up the port or set a different PORT environment variable.'
+        )
+        process.exit(1)
+      }
+
+      return 'bun run dev'
+    },
+    cwd: 'server'
   },
   docs: {
     command: () => {
-      killExistingProcess('lifeforge/node_modules/.bin/vite')
+      killExistingProcess('lifeforge/docs/node_modules/.bin/vite')
 
-      return 'cd docs && bun run dev'
-    }
+      return 'bun run dev'
+    },
+    cwd: 'docs'
   },
   client: {
     command: () => {
-      killExistingProcess('lifeforge/node_modules/.bin/vite')
+      killExistingProcess('lifeforge/client/node_modules/.bin/vite')
 
       if (!fs.existsSync('shared/dist')) {
         executeCommand('bun forge build shared')
@@ -60,38 +96,52 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   },
   ui: {
     command: () => {
-      killExistingProcess('lifeforge/node_modules/.bin/storybook')
+      killExistingProcess(
+        'lifeforge/packages/lifeforge-ui/node_modules/.bin/storybook'
+      )
 
-      return 'cd packages/lifeforge-ui && bun run dev'
-    }
+      return 'bun run dev'
+    },
+    cwd: 'packages/lifeforge-ui'
   }
 }
 
 /**
  * Creates service configurations for concurrent execution
  */
-const createConcurrentServices = (): ConcurrentServiceConfig<
-  string | (() => string)
->[] => [
-  {
-    name: 'db',
-    command: SERVICE_COMMANDS.db.command,
-    cwd: SERVICE_COMMANDS.db.cwd?.()
-  },
-  {
-    name: 'server',
-    command: SERVICE_COMMANDS.server.command
-  },
-  {
-    name: 'client',
-    command: SERVICE_COMMANDS.client.command
+async function getConcurrentServices(): Promise<ConcurrentServiceConfig[]> {
+  const SERVICES_TO_START = ['db', 'server', 'client']
+
+  const concurrentServices: ConcurrentServiceConfig[] = []
+
+  for (const service of SERVICES_TO_START) {
+    const config = SERVICE_COMMANDS[service]
+
+    const command =
+      config.command instanceof Function
+        ? await config.command()
+        : config.command
+
+    const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
+
+    if (config.requiresEnv) {
+      validateEnvironment(config.requiresEnv)
+    }
+
+    concurrentServices.push({
+      name: service,
+      command,
+      cwd
+    })
   }
-]
+
+  return concurrentServices
+}
 
 /**
  * Starts a single service based on its configuration
  */
-function startSingleService(service: string): void {
+async function startSingleService(service: string): Promise<void> {
   // Handle core services
   if (service in SERVICE_COMMANDS) {
     const config = SERVICE_COMMANDS[service]
@@ -100,8 +150,15 @@ function startSingleService(service: string): void {
       validateEnvironment(config.requiresEnv)
     }
 
-    executeCommand(config.command, {
-      cwd: config.cwd?.()
+    const command =
+      config.command instanceof Function
+        ? await config.command()
+        : config.command
+
+    const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
+
+    executeCommand(command, {
+      cwd
     })
 
     return
@@ -123,23 +180,16 @@ function startSingleService(service: string): void {
 /**
  * Starts all development services concurrently
  */
-function startAllServices(): void {
-  validateEnvironment(['PB_DIR'])
+async function startAllServices(): Promise<void> {
   CLILoggingService.progress(
     'Starting all services: database, server, and client'
   )
 
   try {
-    const services = createConcurrentServices()
+    const concurrentServices = await getConcurrentServices()
 
-    services.forEach(service => {
-      if (typeof service.command === 'function') {
-        service.command = service.command()
-      }
-    })
-
-    concurrently(services as ConcurrentServiceConfig[], {
-      killOthers: ['failure', 'success'],
+    concurrently(concurrentServices, {
+      killOthersOn: ['failure', 'success'],
       restartTries: 0,
       prefix: 'name',
       prefixColors: ['cyan', 'green', 'magenta']

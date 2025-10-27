@@ -3,10 +3,12 @@ import fs from 'fs'
 import {
   checkRunningPBInstances,
   executeCommand,
+  validateEnvironment,
   validateFilePaths
 } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { generateMigrationsHandler } from '../../db-commands'
+import { validatePocketBaseSetup } from '../../db-commands/utils'
 import {
   MODULE_STRUCTURE_REQUIREMENTS,
   type ModuleInstallConfig
@@ -83,6 +85,7 @@ function moveModuleToApps(config: ModuleInstallConfig): void {
   )
 
   let gitmodulesContent = fs.readFileSync('.gitmodules', 'utf-8')
+
   const modulePath = `${config.tempDir}/${config.moduleName}`
 
   gitmodulesContent = gitmodulesContent.replace(
@@ -176,7 +179,9 @@ function processServerInjection(moduleName: string): void {
 /**
  * Handles adding a new module to the LifeForge system
  */
-export function addModuleHandler(repoPath: string): void {
+export async function addModuleHandler(repoPath: string): Promise<void> {
+  validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
+  await validatePocketBaseSetup(process.env.PB_DIR!)
   checkRunningPBInstances()
 
   if (!validateRepositoryPath(repoPath)) {

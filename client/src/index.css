@@ -18,4 +18,4 @@ layer(base);
 
 /* App styles */
 @source '../../apps';
-@import '@apps/000/dashboard/index.css';
+@import '@apps/dashboard/index.css';

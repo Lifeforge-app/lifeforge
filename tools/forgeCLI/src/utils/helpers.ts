@@ -1,6 +1,7 @@
 import { spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
+import prompts from 'prompts'
 
 import type { CommandExecutionOptions } from '../types'
 import { CLILoggingService } from './logging'
@@ -42,37 +43,44 @@ export function executeCommand(
   options: CommandExecutionOptions = {},
   _arguments: string[] = []
 ): string {
-  const cmd = typeof command === 'function' ? command() : command
+  let cmd: string
 
-  if (!options.stdio || options.stdio === 'inherit') {
-    CLILoggingService.debug(`Executing: ${cmd}`)
-  }
-
-  const [toBeExecuted, ...args] = cmd.split(' ')
-
-  const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
-    stdio: 'inherit',
-    encoding: 'utf8',
-    shell: true,
-    ...options
-  })
-
-  if (result.error) {
-    if (!options.exitOnError) {
-      throw result.error
-    }
-
+  try {
+    cmd = typeof command === 'function' ? command() : command
+  } catch (error) {
     CLILoggingService.actionableError(
-      `Command execution failed: ${cmd}`,
-      'Check if the command exists and you have the necessary permissions'
+      `Failed to generate command: ${error}`,
+      'Check the command generation logic for errors'
     )
-    CLILoggingService.debug(`Error details: ${result.error}`)
     process.exit(1)
   }
 
-  if (result.status !== 0) {
-    const error = new Error(`Command failed with exit code ${result.status}`)
+  try {
+    CLILoggingService.debug(`Executing: ${cmd}`)
 
+    const [toBeExecuted, ...args] = cmd.split(' ')
+
+    const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
+      stdio: 'inherit',
+      encoding: 'utf8',
+      shell: true,
+      ...options
+    })
+
+    if (result.error) {
+      throw result.error
+    }
+
+    if (result.status !== 0) {
+      throw result.status
+    }
+
+    if (!options.stdio || options.stdio === 'inherit') {
+      CLILoggingService.debug(`Completed: ${cmd}`)
+    }
+
+    return result.stdout?.toString().trim() || ''
+  } catch (error) {
     if (!options.exitOnError) {
       throw error
     }
@@ -81,15 +89,9 @@ export function executeCommand(
       `Command execution failed: ${cmd}`,
       'Check if the command exists and you have the necessary permissions'
     )
-    CLILoggingService.debug(`Exit code: ${result.status}`)
+    CLILoggingService.debug(`Error details: ${error}`)
     process.exit(1)
   }
-
-  if (!options.stdio || options.stdio === 'inherit') {
-    CLILoggingService.debug(`Completed: ${cmd}`)
-  }
-
-  return result.stdout?.toString().trim() || ''
 }
 
 /**
@@ -101,7 +103,7 @@ export function validateEnvironment(requiredVars: string[]): void {
   if (missingVars.length > 0) {
     CLILoggingService.actionableError(
       `Missing required environment variables: ${missingVars.join(', ')}`,
-      'Set these variables in your env/.env.local file in the project root'
+      'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
     )
     process.exit(1)
   }
@@ -137,7 +139,7 @@ export function logProcessComplete(processType: string): void {
  */
 export function killExistingProcess(
   processKeywordOrPID: string | number
-): void {
+): number | undefined {
   try {
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
@@ -152,6 +154,8 @@ export function killExistingProcess(
 
     if (serverInstance) {
       executeCommand(`pkill -f "${processKeywordOrPID}"`)
+
+      return parseInt(serverInstance, 10)
     }
   } catch {
     // No existing server instance found
@@ -193,7 +197,7 @@ export function validateFilePaths(
 /**
  * Checks for running PocketBase instances
  */
-export function checkRunningPBInstances(): void {
+export function checkRunningPBInstances(exitOnError = true): boolean {
   try {
     const result = spawnSync('sh', ['-c', "pgrep -f 'pocketbase serve'"], {
       stdio: 'pipe',
@@ -203,13 +207,79 @@ export function checkRunningPBInstances(): void {
     const pbInstanceNumber = result.stdout?.toString().trim()
 
     if (pbInstanceNumber) {
-      CLILoggingService.actionableError(
-        `PocketBase is already running (PID: ${pbInstanceNumber})`,
-        'Stop the existing instance with "pkill -f pocketbase" before proceeding'
-      )
-      process.exit(1)
+      if (exitOnError) {
+        CLILoggingService.actionableError(
+          `PocketBase is already running (PID: ${pbInstanceNumber})`,
+          'Stop the existing instance with "pkill -f pocketbase" before proceeding'
+        )
+        process.exit(1)
+      }
+
+      return true
     }
   } catch {
     // No existing instance found, continue with the script
   }
+
+  return false
+}
+
+export function checkPortInUse(port: number): boolean {
+  try {
+    const result = spawnSync('nc', ['-zv', 'localhost', port.toString()], {
+      stdio: 'pipe',
+      encoding: 'utf8'
+    })
+
+    return result.status === 0
+  } catch {
+    return false
+  }
+}
+
+export async function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+/**
+ * Executes a command and returns the output as a string
+ */
+export function executeCommandWithOutput(
+  command: string,
+  options: CommandExecutionOptions = {}
+): string {
+  const [toBeExecuted, ...args] = command.split(' ')
+
+  const result = spawnSync(toBeExecuted, args, {
+    stdio: 'pipe',
+    encoding: 'utf8',
+    shell: true,
+    ...options
+  })
+
+  if (result.error) {
+    throw result.error
+  }
+
+  if (result.status !== 0) {
+    throw new Error(
+      `Command failed with exit code ${result.status}: ${result.stderr}`
+    )
+  }
+
+  return result.stdout?.toString().trim() || ''
+}
+
+/**
+ * Prompts the user for confirmation
+ */
+export async function confirmAction(message: string): Promise<boolean> {
+  const response = await prompts({
+    type: 'confirm',
+    name: 'confirmed',
+    message,
+    initial: false
+  })
+
+  return response.confirmed
 }
