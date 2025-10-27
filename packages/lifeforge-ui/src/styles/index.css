@@ -4,7 +4,6 @@
 @import 'react-toastify/dist/ReactToastify.css';
 @import 'react-tooltip/dist/react-tooltip.css';
 @import 'react-virtualized/styles.css';
-@import 'react-datepicker/dist/react-datepicker.css';
 
 @import './themes/index.css';
 @import './abbreviations.css';
