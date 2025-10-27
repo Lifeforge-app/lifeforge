@@ -1,6 +1,7 @@
 import { program } from 'commander'
 import fs from 'fs'
 
+import { createChangelogHandler } from '../commands/changelog-commands'
 import * as dbHandlers from '../commands/db-commands'
 import { devHandler, getAvailableServices } from '../commands/dev-commands'
 import * as moduleHandlers from '../commands/module-commands'
@@ -27,6 +28,7 @@ export function setupCLI(): void {
   setupDevCommand()
   setupModulesCommand()
   setupDatabaseCommands()
+  setupChangelogCommand()
 }
 
 /**
@@ -137,6 +139,19 @@ function setupDatabaseCommands(): void {
     .description('Generate PocketBase migrations from schema files')
     .argument('[module]', 'Optional module name to generate migrations for')
     .action(dbHandlers.generateMigrationsHandler)
+}
+
+function setupChangelogCommand(): void {
+  const command = program
+    .command('changelog')
+    .description('Generate changelog for LifeForge releases')
+
+  command
+    .command('create')
+    .description('Create a changelog file in the docs directory')
+    .argument('[year]', 'Year for the changelog, e.g., 2025')
+    .argument('[week]', 'Week number for the changelog, e.g., 42')
+    .action(createChangelogHandler)
 }
 
 /**
