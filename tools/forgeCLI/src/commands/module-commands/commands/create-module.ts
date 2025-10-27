@@ -306,6 +306,22 @@ function copyFileAndTemplateRenderRecursive(
   })
 }
 
+function renameTsConfigFile(moduleDir: string): void {
+  if (fs.existsSync(`${moduleDir}/client/_tsconfig.json`)) {
+    fs.renameSync(
+      `${moduleDir}/client/_tsconfig.json`,
+      `${moduleDir}/client/tsconfig.json`
+    )
+  }
+
+  if (fs.existsSync(`${moduleDir}/server/_tsconfig.json`)) {
+    fs.renameSync(
+      `${moduleDir}/server/_tsconfig.json`,
+      `${moduleDir}/server/tsconfig.json`
+    )
+  }
+}
+
 function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
   CLILoggingService.step(`Creating module "${moduleMetadata.moduleName.en}"...`)
 
@@ -320,6 +336,8 @@ function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
     destinationDir,
     moduleMetadata
   )
+
+  renameTsConfigFile(destinationDir)
 
   CLILoggingService.success(
     `Module "${moduleMetadata.moduleName.en}" created successfully at ${destinationDir}`
