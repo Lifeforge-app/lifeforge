@@ -1,0 +1,127 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+### 🏢 Module-Specific & Feature Updates
+
+- Implemented a prove-of-concept for <code>ForgeAgent</code>, an AI assistant that can help users with various tasks. Temporarily disabled due to dependencies issue.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="499622720c976449b8bcff7d336e5fb9c202f6bf" />: Set default
+  visibilityBreakpoint to 'md' in FAB component.
+- <Commit hash="eca053a8fff369a4d27d531cc9d4b762ac3bca32" />: Updated
+  <code>description</code> prop type to allow custom component in
+  <code>EmptyStateScreen</code>.
+- <Commit hash="1a2de069bebda4b10da7594cb309a75fccc3a025" />: Added error
+  message handling to form inputs.
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w34-1.webp)
+- <Commit hash="3145b5cb57aafa23ce29cad47ad23f677df05004" />: Renamed
+  <code>QueryWrapper</code> component to <code>WithQuery</code>.
+- <Commit hash="faced6775b755916067c9de7a463fdd17e26d6c8" />: Migrate
+  <code>Listbox</code> components to utilize Radix UI Select primitive (ended up
+  being rolled back in
+  <Commit hash="d70c07795436ca4c5531efb6edd8a40939ac24a5" />
+  ).
+- <Commit hash="80325c027e5e43241e3fa793f247383262a1246d" />: Added
+  <code>autofocus</code> props to various input components.
+- <Commit hash="63c944d3d7df5e40526b04ebf7ce001f7fdcadb6" />: Added
+  <code>WithQueryData</code> component as an alternative to
+  <code>WithQuery</code> that accepts <code>forgeController</code> instance
+  directly. Good for use cases when query data doesn't need to be manipulated.
+
+        <Code language="tsx">
+            {`<WithQueryData controller={forgeAPI.myApp.coolStuff.list}>
+        {data => <>{JSON.stringify(data)}</>}
+
+    </WithQueryData>`}
+  </Code>
+
+- <Commit hash="7e0f6d401316cc589f8774188e465d568a8c41db" />: Updated form
+  definition syntax in form modals to pass in UI config during object
+  construction instead of chaining <code>.ui()</code> method calls.
+
+        <Code language="typescript">
+            {`const formProps = defineForm({
+        title: "My Form",
+        icon: "tabler:form",
+        ...
+
+  })`}
+
+    </Code>
+
+- <Commit hash="82c87a69c11016ea1cc479a74e72057d1913b125" />: Set the default
+  variant of action button in <code>SearchInput</code> to be 'plain'.
+
+- <Commit hash="f47ae62122df380a8ec24c29956eb48813ae248d" />: Updated
+  <code>FAB</code> component to allow 'false' as a
+  <code>visibilityBreakpoint</code> option that shows the button in all
+  viewports.
+
+- <Commit hash="a6074d897fc84d60f433717a784020116c280c86" />: Implemented
+  <code>.conditionalFields()</code> chain methods and migrate to zustand for
+  form state management, allowing form state to be exposed to the parent
+  component. See [Forms](/developer-guide/forms).
+
+- <Commit hash="fd45f35fcc702be2993d8bbf19da100b66667e18" />: Moved master
+  password and OTP management components into <code>lifeforge-ui</code>.
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w34-3.webp)
+
+- <Commit hash="cf7e3d68c0148096ce5a92f2e5ee238c839d3f7e" />: Replaced loader
+  span with Icon component in <code>LoadingScreen</code>.
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="7b71dcd927f4908cff910da0e94b6d5654aa9ee7" />: Added error
+  boundary to App component for improved error handling.
+- <Commit hash="43379157c99ebefdc2896865e3cf2327980db5f1" />: Migrated route
+  handling logics from using declarative component approach to using data
+  definition approach. See [React Router
+  Docs](https://reactrouter.com/start/data/routing).
+- <Commit hash="fdcd236ab9e432ac4ddc55965950b520ef166024" />: Memoize
+  <code>ModalHeader</code> component for performance optimization.
+- <Commit hash="10389bb456fc91391fba061eed4fab9029e7eb91" />: Integrated
+  <code>nuqs</code> into various modules, allowing states to be synced with
+  search params in the URL.
+- <Commit hash="064e88022613cb82ed24d8f683d15ab16d315bfa" />: Created
+  <code>usePromiseLoading</code> hooks to manage asynchronous loading state.
+
+  <Code language="typescript">
+    {`const [loading, handler] = usePromiseLoading(async () => {...})`}
+  </Code>
+
+- <Commit hash="9e180d33dfdbedf95a192cb1367da2b89a016e96" />: Reworked API
+  logging mechanism with improved visualization and log preservation (log files
+  are now kept in /server/logs/ directory).
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w34-2.webp)
+
+- <Commit hash="b2b8d853e063cf79d0c750208a554f729fcd4767" />: Refactored
+  typescript interfaces for the form system.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="8e4ae98e4d6c1bfa786a11f62a7fc25a4707cf6c" />: Fixed localization
+  for confirmation prompt input box.
+- <Commit hash="72372e2fa7f8fb7f0d0f1b12981bcf84248a32c9" />: Fixed button label
+  internationalization for clipboard paste action in <code>FileInput</code>
+  DnDContainer.
+- <Commit hash="59f27a84bbda9570472add566b66198da36b4de4" />: Fixed section
+  titles in bottom navbar in documentation, replacing hyphens with spaces.
+- <Commit hash="d08d40f63cfac9e2008bf1720046e68fec31315f" />: Fixed localization
+  for status text of two-factor authentication settings in Account Settings
+  page.
+- <Commit hash="4030867ec0076c0487963daa873b6ad5a48ff444" />: Fixed responsive
+  design issues for <code>DashboardItem</code> component.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="1433b52951a8c7fc11756ca4dc24db58d4e7c02e" />: Added
+  documentation for form system to Developer Guide section. See
+  [Forms](/developer-guide/forms).
+- <Commit hash="367901eed2ebd7b021150fa9f23530c434981f22" />: Added story for
+  <code>ConfirmationModal</code> component that demonstrates confirmation prompt
+  input.
+- <Commit hash="f51b0d9f1bd450840dd8bfec90047bcc9e4a8b91" />: Implemented copy
+  to clipboard mechanism for <code>Code</code> components in documentation.
+- <Commit hash="c4d4896d4e2c6ba7859740462229d24a754e462c" />: Enhanced styling
+  for sidebar and rightbar in documentation.
