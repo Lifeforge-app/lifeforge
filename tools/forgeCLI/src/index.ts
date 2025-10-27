@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import dotenv from 'dotenv'
+import fs from 'fs'
 import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
@@ -15,10 +16,15 @@ import { CLILoggingService } from './utils/logging'
  */
 
 // Load environment variables
-dotenv.config({
-  path: path.resolve(__dirname, '../../../env/.env.local'),
-  quiet: true
-})
+const envPath = path.resolve(process.cwd(), 'env/.env.local')
+
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath, quiet: true })
+} else {
+  CLILoggingService.warn(
+    `Environment file not found at ${envPath}. Continuing without loading environment variables from file. Consider creating the file manually or using the command "forge db init".`
+  )
+}
 
 // Setup and run CLI
 try {

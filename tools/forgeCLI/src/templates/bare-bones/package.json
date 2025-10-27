@@ -1,0 +1,24 @@
+{
+    "name": "{{kabab moduleName.en}}",
+    "version": "0.0.0",
+    "description": "{{moduleDesc.en}}",
+    "dependencies": {
+        "@iconify/react": "^6.0.2",
+        "@tanstack/react-query": "^5.90.2",
+        "@uidotdev/usehooks": "^2.4.1",
+        "clsx": "^2.1.1",
+        "dayjs": "^1.11.18",
+        "lifeforge-ui": "workspace:*",
+        "react": "^19.2.0",
+        "react-i18next": "^15.1.1",
+        "react-toastify": "^11.0.5",
+        "shared": "workspace:*",
+        "vite": "^7.1.9",
+        "zod": "^4.1.12"
+    },
+    "devDependencies": {
+        "@types/react": "19.2.0",
+        "@types/react-dom": "19.2.0",
+        "vite": "^7.1.9"
+    }
+}

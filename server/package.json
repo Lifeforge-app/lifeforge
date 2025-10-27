@@ -19,7 +19,9 @@
     "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
-    "test": "jest",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "schema:generate": "bun ./scripts/generateSchema.ts"
   },
   "dependencies": {
@@ -61,8 +63,10 @@
     "@types/request": "^2.48.12",
     "@types/speakeasy": "^2.0.10",
     "@types/uuid": "^10.0.0",
+    "@vitest/ui": "^4.0.2",
     "eslint": "^9.31.0",
     "forever": "^4.0.3",
-    "tsx": "^4.19.1"
+    "tsx": "^4.19.1",
+    "vitest": "^4.0.2"
   }
 }

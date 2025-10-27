@@ -11,6 +11,7 @@ dist
 build
 tsbuild
 *.js
+!eslint.config.js
 *.tsbuildinfo
 
 # misc
