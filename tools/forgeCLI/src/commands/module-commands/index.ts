@@ -7,3 +7,5 @@ export { listModulesHandler } from './commands/list-modules'
 export { createModuleHandler } from './commands/create-module'
 
 export { updateModuleHandler } from './commands/update-module'
+
+export { publishModuleHandler } from './commands/publish-module'

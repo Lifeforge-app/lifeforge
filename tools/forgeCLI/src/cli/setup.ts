@@ -104,6 +104,11 @@ function setupModulesCommand(): void {
       'Name of the module to create. Leave empty to prompt.'
     )
     .action(moduleHandlers.createModuleHandler)
+  command
+    .command('publish')
+    .description('Publish a LifeForge module to your GitHub account')
+    .argument('<module>', 'Unpublished installed module to publish')
+    .action(moduleHandlers.publishModuleHandler)
 }
 
 /**
