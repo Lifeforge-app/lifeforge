@@ -1,9 +1,9 @@
 import type { WidgetConfig } from 'shared'
 
 const widgets = import.meta.glob([
-  '../../**/widgets/*.tsx',
+  '../**/widgets/*.tsx',
   './widgets/*.tsx',
-  '../../../../../apps/**/client/src/widgets/*.tsx'
+  '../../../../apps/**/client/src/widgets/*.tsx'
 ])
 
 const widgetsPromises = Object.entries(widgets).map(async ([, importer]) => {
