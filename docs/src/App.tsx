@@ -1,5 +1,6 @@
-import { NotFoundScreen } from 'lifeforge-ui'
+import { ErrorScreen, NotFoundScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { Navigate, RouterProvider, createBrowserRouter } from 'shared'
 
 import ROUTES from './Router'
@@ -38,7 +39,13 @@ function App() {
     }
   }, [])
 
-  return <RouterProvider router={router} />
+  return (
+    <ErrorBoundary
+      fallback={<ErrorScreen message="An unexpected error occurred." />}
+    >
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  )
 }
 
 export default App
