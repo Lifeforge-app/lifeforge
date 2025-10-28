@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import Index from './index'
+import Button from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: Button
+} satisfies Meta<typeof Button>
 
 export default meta
 
@@ -23,7 +23,7 @@ export const PrimaryVariant: Story = {
     iconPosition: 'start',
     variant: 'primary'
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -37,7 +37,7 @@ export const SecondaryVariant: Story = {
     tProps: {},
     variant: 'secondary'
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -52,7 +52,7 @@ export const TertiaryVariant: Story = {
     variant: 'tertiary'
   },
 
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -66,7 +66,7 @@ export const PlaintVariant: Story = {
     tProps: {},
     variant: 'plain'
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -81,7 +81,7 @@ export const IconAtEnd: Story = {
     iconPosition: 'end',
     loading: false
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -96,7 +96,7 @@ export const Disabled: Story = {
     loading: false,
     disabled: true
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -112,7 +112,7 @@ export const Loading: Story = {
     loading: true,
     disabled: false
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -125,7 +125,7 @@ export const IconsOnly: Story = {
     children: '',
     tProps: {}
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -139,7 +139,7 @@ export const IconsOnlyWithNoBg: Story = {
     tProps: {},
     variant: 'plain'
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }
 
 /**
@@ -154,5 +154,5 @@ export const RedButton: Story = {
     variant: 'primary',
     dangerous: true
   },
-  render: props => <Index {...props} />
+  render: props => <Button {...props} />
 }

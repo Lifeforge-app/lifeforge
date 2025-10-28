@@ -14,7 +14,6 @@ const ReactCompilerConfig = {
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-docs'),
     getAbsolutePath('storybook-addon-deep-controls')
@@ -31,13 +30,10 @@ const config: StorybookConfig = {
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
       tsconfigPath: '../tsconfig.json',
-      include: ['src/**/*.tsx']
+      include: ['./src/**/*.tsx']
     },
     check: false,
     skipCompiler: true
-  },
-  async babel(config) {
-    config.plugins.push(['babel-plugin-react-compiler', ReactCompilerConfig])
   },
   viteFinal: async config => {
     config.plugins = [...(config.plugins ?? []), tsconfigPaths()]

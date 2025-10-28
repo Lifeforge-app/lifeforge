@@ -46,8 +46,6 @@ function MainElement({
 }
 
 const withBodyClass = (Story: any, context: any) => {
-  const [rootElement, setRootElement] = useState<HTMLElement | null>(null)
-
   useEffect(() => {
     const body = document.body
     document.querySelectorAll('.sbdocs-preview').forEach(preview => {
@@ -102,29 +100,23 @@ const withBodyClass = (Story: any, context: any) => {
     })
   }, [context.globals.theme])
 
-  useEffect(() => {
-    setRootElement(document.body)
-  }, [])
-
   return (
     <APIEndpointProvider endpoint={'https://lifeforge-api-proxy.onrender.com'}>
       <QueryClientProvider client={queryClient}>
         <div id="body" className="flex-center h-full flex-col transition-all">
-          {rootElement && (
-            <PersonalizationProvider
-              defaultValueOverride={{
-                rawThemeColor: '#a9d066',
-                theme: context.globals.theme,
-                rootElement: rootElement
-              }}
-            >
-              <ToastProvider>
-                <MainElement theme={context.globals.theme}>
-                  <Story />
-                </MainElement>
-              </ToastProvider>
-            </PersonalizationProvider>
-          )}
+          <PersonalizationProvider
+            defaultValueOverride={{
+              rawThemeColor: '#a9d066',
+              theme: context.globals.theme,
+              rootElement: document.body
+            }}
+          >
+            <ToastProvider>
+              <MainElement theme={context.globals.theme}>
+                <Story />
+              </MainElement>
+            </ToastProvider>
+          </PersonalizationProvider>
         </div>
       </QueryClientProvider>
     </APIEndpointProvider>
