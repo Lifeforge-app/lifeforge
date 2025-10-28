@@ -1,4 +1,4 @@
-import { MDXComponents } from 'mdx/types'
+import type { MDXComponents } from 'mdx/types'
 import Zoom from 'react-medium-image-zoom'
 import { Link } from 'shared'
 

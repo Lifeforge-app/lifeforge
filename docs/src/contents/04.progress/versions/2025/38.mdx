@@ -1,0 +1,83 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+import GithubUser from "../../components/GithubUser";
+
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="099e36d85ef3dda80b0461a1aee7ff6b4cfa9919" />: Updated thumbnail
+  size in Idea Box container list for better loading speed.
+- <Commit hash="465bd6971e23dddc47fff75e1a22690916e871bb" />: Enabled Pixabay
+  and URL options for Idea Box container thumbnail.
+- <Commit hash="d5f8ac935c1194e5da46da3c382b3664e46f78a5" />: Hours and minutes
+  display in Code Time dashboard is now shown with thousand separators for
+  better readability.
+
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w38-4.webp)
+
+- <Commit hash="bdf5b5b9ccd7634229ce0746808e5cec079ccc6f" />: Added total amount
+  display in Assets section of Wallet module.
+
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w38-1.webp)
+
+- <Commit hash="6f364bb49622a3ccb7816b2185b3e08ea129beb4" />: Implemented
+  pagination in Books Library.
+
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w38-2.webp)
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="125fcf5ec8d873b6653cd9c7998b86af5d67395b" />: Updated image
+  generation model from <code>dall-e-3</code> to <code>gpt-image-1</code> for
+  better image quality and diversity.
+- <Commit hash="47172eaa4cdc255b032ad13047da3d5bb334b328" />,
+  <Commit hash="094168af6c0c9c6e421c904174b3171f1e8053a7" />: Progress and fixes
+  on Ci/CD pipeline for automated deployment by
+  <GithubUser username="ahmed2m" />.
+- <Commit hash="7e49af76e5bafd7f454f350ef369ce533311015b" />: Consolidated all
+  environment variables for server and client into a single <code>.env</code>
+  file.
+- <Commit hash="1fe3e1066f9c9a17f07c0b203675b1054801dcee" />: Added logging for
+  media parsing in <code>forgeController</code> and improved error logging in
+  general.
+- <Commit hash="3823cde3ed4692f7ad7b5d7790dc2415d3e0013d" />: Migrated to
+  <code>axios</code> from native <code>fetch</code> for HTTP requests in client
+  side.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="f43081061d1752d6efd97d1b56bb963725b1c775" />: Fixed a bug in
+  Score Library where the audio cannot be played due to incorrect URL.
+- <Commit hash="30bd3e740f422453fb4d7496f6eab6644a690d72" />: Fixed a bug in
+  Todo List where the task is not updated due to incorrect query key.
+- <Commit hash="9dfca8eca09e9b00fcc63f46e7d82247c7a074c3" />: Fixed a bug in
+  <code>FilePickerModal</code> where the AI image generation option in tabbar is
+  hidden when both Pixabay and URL options are disabled.
+- <Commit hash="5688d57c7e5b0b2e8603e85d90748dac94751ad6" />: Fixed a bug in
+  <code>forgeController</code> where the media is not parsed properly due to
+  incorrect variable referencing.
+- <Commit hash="388805ecaeab626b86ceccf3f7d3e7f4e3c65ce8" />: Corrected build
+  script in <code>package.json</code> of localization manager.
+- <Commit hash="c1bf177d2dc2cef5bef2c73242111cd35a50ff25" />: Fixed a bug where
+  the date of birth is not correctly parsed.
+- <Commit hash="a1c59473ab878f7e9e91f7da82458a67e9963e77" />: Fixed a bug in
+  Today's Event dashboard widget where the events that are not happening today
+  are shown.
+- <Commit hash="14058d4b6209e9ef9855dcf85e34d7de46616486" />: Fixed an issue
+  where building the server in production mode fails due to wierd export syntax
+  in <code>rrule</code> package.
+- <Commit hash="2876be477cce54b7834283d2e442e644b7b83eb6" />: Fixed a crucial
+  issue where the OGCache mechanism is never utilized in Idea Box.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="c4ab2e34cb4dffadce6bf48b19a75548ac41b5bc" />: In
+  <code>forge</code> script, replaced concurrent execution mechanism with
+  sequential one to prevent overlapping, added "all" option to run script across
+  all projects.
+
+  <Code language="bash">{`bun forge build all`}</Code>
+
+- <Commit hash="c8dc9a854c53205c067a9ecadade8b54d9fabf96" />: In
+  <code>forge</code> script, implemented mechanism to automatically detect
+  projects in the <code>apps/</code> directory, removing the need to manually
+  specify project names.
