@@ -1,0 +1,105 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+### 🏢 Module-Specific & Feature Updates
+
+- <Commit hash="04c09ad0a4aabcd49f7e3bf98c3f6fcfdf338060" />,
+  <Commit hash="612bfe163e02ec106191ab700f50ca8bd7320269" />,
+  <Commit hash="f326226c9e2d9d678f4930b0391fbecd53eee1a2" />: Added Journal
+  module back into the system, partial progress. (Removed client side WIP code
+  in <Commit hash="e185a15f5f59f630a36cd250479c97f9ee18dbd7" />
+  .)
+- <Commit hash="6a4359c63e03e7cb60e7a42b6560d2c5d86c700e" />,
+  <Commit hash="8d21264674341d8517bd2c90583714282d5f0215" />: Moved filter logic
+  of Books Library from client to server.
+- <Commit hash="73dc1a7884848dd8293fbc01d1dbf61db0af2ea8" />,
+  <Commit hash="d4298d954ee799fd7cc32a0e4bb492d8cfe65863" />,
+  <Commit hash="26e2f33e85e992bc2e78339bb02210fcff32d98e" />,
+  <Commit hash="d175e8358f1d7cf47173c7cd47fdded24954712f" />,
+  <Commit hash="f0c211c460f99c918ed95605f7006d56b56ed820" />,
+  <Commit hash="f0c211c460f99c918ed95605f7006d56b56ed820" />,
+  <Commit hash="2d537221b629f23f58b2c248a6ab85688287a80a" />,
+  <Commit hash="f6ec5680aa02d76b52a6fe15289939f76b5b9a45" />: Added read status
+  filter in Books Library, where user can mark book as either unread, reading,
+  or read. Time started and time finished are kept track of as well.
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w34-4.webp)
+- <Commit hash="95c6b3546435a7f82958d3df69357ec8e427375a" />: Books are now
+  sorted as follows:
+
+  > First sort by read status (reading -> unread -> read).
+  >
+  > If the read status is the same, sort by time started (newest first).
+  >
+  > Otherwise, sort by favourite status (favourite -> normal), then by title
+
+- <Commit hash="c6b4951631502087da68418dd779422e8d31ef9f" />,
+  <Commit hash="8041a1e3782122ef0b8c93667a629c1074a2ddb4" />, etc.: Implemented
+  upload mechanism in Books Library that supports pdf and epub files. Metadata
+  will be automatically parsed from the EPUB files upon upload.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="996fd8d8bcf38edfed90f888d90f5ce0b301a720" />,
+  <Commit hash="1340233c0b3eef8f57a414f2cbe0c10e4f852c65" />: Moved sidebar open
+  state management into its own provider, allowing for control of the sidebar
+  behavior without manually defining sidebar state and passing around
+  components.
+- <Commit hash="ee6c6c98c6e5f76f068f9ea3273986481e3f7d19" />: Preloader screen
+  is now default to dark mode.
+- <Commit hash="5b34ec6fd90cd1c17be61c4a9884e7a89c5f58a2" />: Enhanced
+  <code>FileInput</code> with mime type validation and user feedback.
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w34-5.webp)
+- <Commit hash="30d20030d2cf622dba174f9ea28b951f16d2f27a" />: Improved drag and
+  drop user feedback styling for <code>FileInput</code>.
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="aa96f3133eb48f73242a4010bdcd3a5a990c5f8e" />: Implemented
+  mechanism to log missing locales.
+- <Commit hash="87c3d8053017bf4decd3100df94b7052603ad3d7" />: Integrated
+  <code>WithOTP</code> component into routing mechanism, allowing OTP to be
+  easily implemented in any modules. (Ended up being rolled back in
+  <Commit hash="f9b0e4bbecebd65cd8f1c90290f015591f0d903b" /> due to issues with
+  compilation.)
+- <Commit hash="354f198e11958d36fe0995c7013df7f7398866ff" />: Allowed
+  <code>undefined</code> as a valid value for filter array in
+  <code>PBService</code>.
+- <Commit hash="1bd8cf95527019a4ec985599fbe828b55d933512" />: Added missing
+  <code>scripts</code> directory to ESLint configuration.
+
+### 🐛 Bug Fixes
+
+- <Commit hash="5dfa8d0c4ba4ebf26aa35d24cfc6351e0f01d012" />: Fixed responsive
+  layout in Currency Converter module.
+- <Commit hash="585acdc825257ec466f86cef84e77f9ddd504e5f" />: Fixed responsive
+  layout in Code Time dashboard and performed code structure refactoring.
+- <Commit hash="d46f7fa1a978dee8cf19328b0a94972ef43da908" />: Added default
+  <code>type</code> field in initialData object of <code>CreateEntryModal</code>
+  in Localization Manager.
+- <Commit hash="d1ebdf9a3af498b55ad83c86a6e6d4c52c8cc705" />: Added quite a lot
+  of missing localization strings.
+- <Commit hash="e4b85663cbd1c98d7bf9e594635cf22d557782d1" />: Fixed a fatal
+  error by adding optional chaining to namespace check in i18n
+  missingKeyHandler.
+- <Commit hash="3165aa06a85e023649578f21c4a0b779f0cf103d" />: Removed suspense
+  wrapper from localization manager that causes fatal error.
+- <Commit hash="ec5b5bee4543cb90b3e24c40488563e2252ab911" />: Added optional
+  chaining for status color retrieval in API logging middleware that causes
+  fatal error.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="ffb0a03789109fe81c8f28e34d82d9ebad78114c" />,
+  <Commit hash="36ac70e0dbaabed17fa9964eb4ab6155525cadaf" />,
+  <Commit hash="e86c51fdc80d577d95be767f89062636564dd7f8" />,
+  <Commit hash="e45c2b56f5b0ec929598766dfa65cb0a863f4a42" />,
+  <Commit hash="60c0eb98f006cdac4cc3feb981401c5c4ba90bda" />: In the
+  documentation codebase, routing are now dynamically generated based on folder
+  structure and file names of content files.
+- <Commit hash="374f515b3d40f07cd47f068fba9318b763c01942" />: Added guide for
+  database CRUD operations with custom PocketBase SDK wrapper. See [Database
+  Operations](/developer-guide/database-operations).
+- <Commit hash="4ea2f1cdd61a244ecd8ddefd49303296d520c113" />: Added
+  <code>react-medium-image-zoom</code> package for image zoom functionality in
+  documentation.
+- <Commit hash="63c698ab2d82bffeab73fec3c941c361b1f9595d" />: Improved styling for <code>Note</code> and <code>Warning</code> components in documentation.
