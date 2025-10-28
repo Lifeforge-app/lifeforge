@@ -10,6 +10,7 @@
         "@types/babel__traverse": "^7.28.0",
         "axios": "^1.12.2",
         "crypto-js": "^4.2.0",
+        "dayjs": "^1.11.18",
         "dotenv": "^17.2.3",
         "handlebars": "^4.7.8",
         "openai": "^6.7.0",
