@@ -8,13 +8,15 @@ export function useKeyboardShortcuts({
   onNewOutline,
   onNewOutlineCircle,
   onNewAmenity,
-  onFinishDrawing
+  onFinishDrawing,
+  onToggleEntranceSetting
 }: {
   onNewUnit: () => void
   onNewOutline: () => void
   onNewOutlineCircle: () => void
   onNewAmenity: (amenityTypeId: string) => void
   onFinishDrawing: () => void
+  onToggleEntranceSetting?: () => void
 }) {
   const { selectedAmenityTypeId } = useAmenities()
 
@@ -22,6 +24,7 @@ export function useKeyboardShortcuts({
     drawingMode,
     isDrawing,
     setDrawingMode,
+    selectedElementId,
     removeLastPoint: onUndoPoint
   } = useDrawing()
 
@@ -88,6 +91,19 @@ export function useKeyboardShortcuts({
           onUndoPoint()
         }
       }
+
+      // E key: Toggle entrance setting mode (only when a unit is selected and not in drawing mode)
+      if (e.key === 'e' || e.key === 'E') {
+        if (
+          !isDrawing &&
+          drawingMode === 'units' &&
+          selectedElementId &&
+          onToggleEntranceSetting
+        ) {
+          e.preventDefault()
+          onToggleEntranceSetting()
+        }
+      }
     }
 
     window.addEventListener('keydown', handleKeyDown)
@@ -98,12 +114,15 @@ export function useKeyboardShortcuts({
   }, [
     drawingMode,
     isDrawing,
+    selectedElementId,
+    selectedAmenityTypeId,
     setDrawingMode,
     onNewUnit,
     onNewOutline,
     onNewOutlineCircle,
     onNewAmenity,
     onUndoPoint,
-    onFinishDrawing
+    onFinishDrawing,
+    onToggleEntranceSetting
   ])
 }

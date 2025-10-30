@@ -86,6 +86,32 @@ export function useUnit() {
     })
   }
 
+  const handleEntranceLocationChange = (axis: 0 | 1, value: number) => {
+    if (!selectedFloor || !selectedUnit) return
+
+    const currentEntrance = selectedUnit.entranceLocation || [0, 0]
+
+    const newEntrance: [number, number] = [...currentEntrance]
+
+    newEntrance[axis] = value
+
+    updateFloor(selectedFloor.id, {
+      units: selectedFloor.units.map(u =>
+        u.id === selectedUnit.id ? { ...u, entranceLocation: newEntrance } : u
+      )
+    })
+  }
+
+  const handleClearEntranceLocation = () => {
+    if (!selectedFloor || !selectedUnit) return
+
+    updateFloor(selectedFloor.id, {
+      units: selectedFloor.units.map(u =>
+        u.id === selectedUnit.id ? { ...u, entranceLocation: undefined } : u
+      )
+    })
+  }
+
   const handleNewUnit = () => {
     if (!selectedFloor) return
 
@@ -116,6 +142,8 @@ export function useUnit() {
     handleClearCoordinates,
     handleLabelOffsetXChange,
     handleLabelOffsetYChange,
+    handleEntranceLocationChange,
+    handleClearEntranceLocation,
     handleNewUnit,
     handleDeleteUnit
   }
