@@ -23,7 +23,8 @@
     "react-i18next": "^15.5.1",
     "shared": "workspace:*",
     "tailwindcss": "^4.1.11",
-    "tinycolor2": "^1.6.0"
+    "tinycolor2": "^1.6.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.0",
