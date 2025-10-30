@@ -17,11 +17,19 @@ export function validateRepositoryPath(repoPath: string): boolean {
 export function createModuleConfig(repoPath: string): ModuleInstallConfig {
   const [author, moduleName] = repoPath.split('/')
 
+  if (!moduleName.startsWith('lifeforge-module-')) {
+    throw new Error(
+      `Module name must start with 'lifeforge-module-'. Received: ${moduleName}`
+    )
+  }
+
+  const finalModuleName = moduleName.replace(/^lifeforge-module-/, '')
+
   return {
     tempDir: '.temp',
-    moduleDir: `apps/${moduleName}`,
+    moduleDir: `apps/${finalModuleName}`,
     author,
-    moduleName,
-    repoUrl: `https://github.com/${author}/lifeforge-module-${moduleName}.git`
+    moduleName: finalModuleName,
+    repoUrl: `https://github.com/${author}/${moduleName}.git`
   }
 }
