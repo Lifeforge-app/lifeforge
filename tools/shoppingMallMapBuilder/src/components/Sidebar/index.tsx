@@ -7,6 +7,8 @@ import OutlineMode from '../../modes/outline/OutlineMode'
 import type { useOutline } from '../../modes/outline/useOutline'
 import OutlineCircleMode from '../../modes/outlineCircle/OutlineCircleMode'
 import type { useOutlineCircle } from '../../modes/outlineCircle/useOutlineCircle'
+import { PathMode } from '../../modes/path/PathMode'
+import type { usePath } from '../../modes/path/usePath'
 import UnitMode from '../../modes/unit/UnitMode'
 import type { useUnit } from '../../modes/unit/useUnit'
 import UnitDataMode from '../../modes/unitData/UnitDataMode'
@@ -20,6 +22,7 @@ interface SidebarProps {
   outlineState: ReturnType<typeof useOutline>
   circleState: ReturnType<typeof useOutlineCircle>
   amenityState: ReturnType<typeof useAmenity>
+  pathState: ReturnType<typeof usePath>
   onAlignCoordinates: () => void
   onStartDrawing: () => void
   onFinishDrawing: () => void
@@ -32,6 +35,7 @@ export function Sidebar({
   outlineState,
   circleState,
   amenityState,
+  pathState,
   onAlignCoordinates,
   onStartDrawing,
   onFinishDrawing,
@@ -79,6 +83,7 @@ export function Sidebar({
             onStartDrawing={onStartDrawing}
           />
         )}
+        {drawingMode === 'path' && <PathMode pathState={pathState} />}
       </div>
     </SidebarWrapper>
   )

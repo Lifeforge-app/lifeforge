@@ -20,7 +20,13 @@ const COLORS = {
   clickable: '#10b981',
   white: '#ffffff',
   textDark: '#1f2937',
-  textLight: '#fff'
+  textLight: '#fff',
+  pathNode: '#8b5cf6',
+  pathNodeConnected: '#f97316',
+  pathLine: '#6366f1',
+  pathStart: '#10b981',
+  pathEnd: '#ef4444',
+  pathIntermediate: '#3b82f6'
 } as const
 
 const STYLES = {
@@ -34,12 +40,14 @@ interface RenderCanvasContentProps {
   imageLoaded: boolean
   highlightedCoord: HighlightedCoord | null
   newCoordinates: CoordinateWithSnapInfo[]
+  onPathNodeClick?: (nodeId: string) => void
 }
 
 export default function useRenderCanvasContent({
   imageLoaded,
   highlightedCoord,
-  newCoordinates
+  newCoordinates,
+  onPathNodeClick
 }: RenderCanvasContentProps) {
   const { gRef, svgRef } = useSVGRefContext()
 
@@ -50,10 +58,21 @@ export default function useRenderCanvasContent({
     isDrawing,
     isSettingEntrance,
     setIsSettingEntrance,
+    isConnectingNodes,
+    displayedPath,
     addPoint
   } = useDrawing()
 
-  const { showFloorPlanImage, unitLabelFontSize, pointRadius } = useSettings()
+  const {
+    showFloorPlanImage,
+    unitLabelFontSize,
+    pointRadius,
+    showUnit,
+    showUnitOutline,
+    showPaths,
+    showAmenities,
+    showEntrances
+  } = useSettings()
 
   const { amenityTypes } = useAmenities()
 
@@ -63,7 +82,8 @@ export default function useRenderCanvasContent({
       units,
       buildingOutlines,
       buildingOutlineCircles,
-      amenities
+      amenities,
+      pathNodes
     },
     selectedFloor,
     updateFloor
@@ -149,24 +169,23 @@ export default function useRenderCanvasContent({
   )
 
   const renderOutlines = useCallback(
-    (layer: D3Selection) => {
+    (layer: D3Selection, clickable: boolean = true) => {
       buildingOutlines.forEach(outline => {
         if (outline.segments.length < 2) return
 
         const isSelected = outline.id === selectedElementId
 
         const shouldRender =
-          !isDrawing || (isDrawing && drawingMode === 'outline')
+          !isDrawing ||
+          (isDrawing && drawingMode === 'outline'
+            ? !isSelected
+            : showUnitOutline)
 
-        if (
-          !shouldRender ||
-          (isDrawing && drawingMode === 'outline' && isSelected)
-        )
-          return
+        if (!shouldRender) return
 
         // Draw line segments
         for (let i = 0; i < outline.segments.length - 1; i++) {
-          layer
+          const lineElement = layer
             .append('line')
             .attr('x1', outline.segments[i][0])
             .attr('y1', outline.segments[i][1])
@@ -179,14 +198,18 @@ export default function useRenderCanvasContent({
             .attr('stroke-width', isSelected ? 3 : outline.strokeWidth || 2)
             .attr('stroke-linecap', 'round')
             .attr('stroke-linejoin', 'round')
-            .style('cursor', 'pointer')
-            .on('click', (event: PointerEvent) => {
-              event.stopPropagation()
 
-              if (!isDrawing && drawingMode === 'outline') {
-                setSelectedElementId(outline.id)
-              }
-            })
+          if (clickable) {
+            lineElement
+              .style('cursor', 'pointer')
+              .on('click', (event: PointerEvent) => {
+                event.stopPropagation()
+
+                if (!isDrawing && drawingMode === 'outline') {
+                  setSelectedElementId(outline.id)
+                }
+              })
+          }
         }
 
         // Draw points for selected outline when not in drawing mode
@@ -203,26 +226,26 @@ export default function useRenderCanvasContent({
       isDrawing,
       drawingMode,
       setSelectedElementId,
-      renderPoint
+      renderPoint,
+      showUnitOutline
     ]
   )
 
   const renderOutlineCircles = useCallback(
-    (layer: D3Selection) => {
+    (layer: D3Selection, clickable: boolean = true) => {
       buildingOutlineCircles.forEach(circle => {
         const isSelected = circle.id === selectedElementId
 
         const shouldRender =
-          !isDrawing || (isDrawing && drawingMode === 'outline-circle')
+          !isDrawing ||
+          (isDrawing && drawingMode === 'outline-circle'
+            ? !isSelected
+            : showUnitOutline)
 
-        if (
-          !shouldRender ||
-          (isDrawing && drawingMode === 'outline-circle' && isSelected)
-        )
-          return
+        if (!shouldRender) return
 
         // Draw the circle
-        layer
+        const circleElement = layer
           .append('circle')
           .attr('cx', circle.center[0])
           .attr('cy', circle.center[1])
@@ -233,15 +256,19 @@ export default function useRenderCanvasContent({
             isSelected ? COLORS.selected : circle.color || COLORS.default
           )
           .attr('stroke-width', isSelected ? 3 : circle.strokeWidth || 2)
-          .style('cursor', 'pointer')
           .attr('class', 'outline-circle')
-          .on('click', (event: PointerEvent) => {
-            event.stopPropagation()
 
-            if (!isDrawing && drawingMode === 'outline-circle') {
-              setSelectedElementId(circle.id)
-            }
-          })
+        if (clickable) {
+          circleElement
+            .style('cursor', 'pointer')
+            .on('click', (event: PointerEvent) => {
+              event.stopPropagation()
+
+              if (!isDrawing && drawingMode === 'outline-circle') {
+                setSelectedElementId(circle.id)
+              }
+            })
+        }
 
         // Draw center point and radius indicator for selected circle when not in drawing mode
         if (isSelected && !isDrawing) {
@@ -264,12 +291,13 @@ export default function useRenderCanvasContent({
       drawingMode,
       setSelectedElementId,
       renderPoint,
-      renderLine
+      renderLine,
+      showUnitOutline
     ]
   )
 
   const renderAmenities = useCallback(
-    (layer: D3Selection) => {
+    (layer: D3Selection, clickable: boolean = true) => {
       amenities.forEach(amenity => {
         const amenityType = amenityTypes.find(
           t => t.id === amenity.amenityTypeId
@@ -280,7 +308,8 @@ export default function useRenderCanvasContent({
         const isSelected = amenity.id === selectedElementId
 
         const shouldRender =
-          !isDrawing || (isDrawing && drawingMode === 'amenity' && !isSelected)
+          !isDrawing ||
+          (isDrawing && drawingMode === 'amenity' ? !isSelected : showAmenities)
 
         if (!shouldRender) return
 
@@ -311,14 +340,18 @@ export default function useRenderCanvasContent({
             'transform',
             `translate(${amenity.coordinate[0] - iconSize / 2}, ${amenity.coordinate[1] - iconSize / 2})`
           )
-          .style('cursor', 'pointer')
-          .on('click', (event: PointerEvent) => {
-            event.stopPropagation()
 
-            if (!isDrawing && drawingMode === 'amenity') {
-              setSelectedElementId(amenity.id)
-            }
-          })
+        if (clickable) {
+          amenityGroup
+            .style('cursor', 'pointer')
+            .on('click', (event: PointerEvent) => {
+              event.stopPropagation()
+
+              if (!isDrawing && drawingMode === 'amenity') {
+                setSelectedElementId(amenity.id)
+              }
+            })
+        }
 
         // Add background circle for better visibility
         amenityGroup
@@ -356,8 +389,187 @@ export default function useRenderCanvasContent({
       showFloorPlanImage,
       mapImage,
       setSelectedElementId,
-      renderPoint
+      renderPoint,
+      showAmenities
     ]
+  )
+
+  const renderPathNodes = useCallback(
+    (layer: D3Selection, clickable: boolean) => {
+      // Don't render path nodes/connections when a path is being displayed
+      if (displayedPath) return
+
+      // Render connections first (so they appear behind nodes)
+      pathNodes.forEach(node => {
+        node.connectedNodeIds.forEach(connectedId => {
+          const shouldRender =
+            !isDrawing ||
+            (isDrawing && drawingMode === 'path'
+              ? node.id === selectedElementId
+              : showPaths)
+
+          if (!shouldRender) return
+
+          const connectedNode = pathNodes.find(n => n.id === connectedId)
+
+          if (!connectedNode) return
+
+          // Only render each connection once (when current node id < connected node id)
+          if (node.id >= connectedId) return
+
+          layer
+            .append('line')
+            .attr('x1', node.coordinate[0])
+            .attr('y1', node.coordinate[1])
+            .attr('x2', connectedNode.coordinate[0])
+            .attr('y2', connectedNode.coordinate[1])
+            .attr('stroke', COLORS.pathLine)
+            .attr('stroke-width', 3)
+            .attr('opacity', 0.6)
+        })
+      })
+
+      // Render nodes
+      pathNodes.forEach(node => {
+        const isSelected = node.id === selectedElementId
+
+        const shouldRender =
+          !isDrawing ||
+          (isDrawing && drawingMode === 'path' ? !isSelected : showPaths)
+
+        if (!shouldRender) return
+
+        const nodeRadius = pointRadius * 1.5
+
+        // In connecting mode, highlight connected/connectable nodes
+        const selectedPathNode = pathNodes.find(n => n.id === selectedElementId)
+
+        const isConnectedToSelected =
+          isConnectingNodes &&
+          selectedPathNode &&
+          selectedPathNode.connectedNodeIds.includes(node.id)
+
+        const nodeColor = isSelected
+          ? COLORS.selected
+          : isConnectedToSelected
+            ? COLORS.pathNodeConnected
+            : COLORS.pathNode
+
+        const circle = layer
+          .append('circle')
+          .attr('cx', node.coordinate[0])
+          .attr('cy', node.coordinate[1])
+          .attr('r', nodeRadius)
+          .attr('fill', nodeColor)
+          .attr('stroke', COLORS.white)
+          .attr('stroke-width', Math.max(2, nodeRadius * 0.25))
+
+        // Add visual feedback in connecting mode
+        if (
+          isConnectingNodes &&
+          selectedElementId &&
+          node.id !== selectedElementId
+        ) {
+          if (isConnectedToSelected) {
+            // Already connected - make it semi-transparent and non-clickable
+            circle.attr('opacity', 0.4).style('cursor', 'not-allowed')
+          } else {
+            // Not connected - make it slightly transparent and clickable
+            circle.attr('opacity', 0.7)
+          }
+        }
+
+        // Make node clickable only if it's not already connected (when in connecting mode)
+        const isClickableNode =
+          clickable &&
+          (!isConnectingNodes || !selectedElementId || !isConnectedToSelected)
+
+        if (isClickableNode) {
+          circle
+            .style('cursor', 'pointer')
+            .on('click', (event: PointerEvent) => {
+              event.stopPropagation()
+
+              if (isConnectingNodes && onPathNodeClick) {
+                // In connecting mode, call the callback to toggle connection
+                onPathNodeClick(node.id)
+              } else if (!isDrawing && drawingMode === 'path') {
+                // Normal mode - select the node
+                setSelectedElementId(node.id)
+              }
+            })
+        } else if (isConnectedToSelected) {
+          // For non-clickable nodes, prevent click from propagating
+          circle.on('click', (event: PointerEvent) => {
+            event.stopPropagation()
+            // Do nothing - node is already connected
+          })
+        }
+
+        // Draw point when selected and not drawing
+        if (isSelected && !isDrawing) {
+          renderPoint(layer, node.coordinate, COLORS.selected)
+        }
+      })
+    },
+    [
+      pathNodes,
+      selectedElementId,
+      isDrawing,
+      drawingMode,
+      pointRadius,
+      isConnectingNodes,
+      onPathNodeClick,
+      setSelectedElementId,
+      renderPoint,
+      showPaths
+    ]
+  )
+
+  const renderDisplayedPath = useCallback(
+    (layer: D3Selection) => {
+      if (!displayedPath || displayedPath.length < 2) return
+
+      // Draw the path as a thick line
+      for (let i = 0; i < displayedPath.length - 1; i++) {
+        layer
+          .append('line')
+          .attr('x1', displayedPath[i][0])
+          .attr('y1', displayedPath[i][1])
+          .attr('x2', displayedPath[i + 1][0])
+          .attr('y2', displayedPath[i + 1][1])
+          .attr('stroke', COLORS.pathLine)
+          .attr('stroke-width', 5)
+          .attr('stroke-linecap', 'round')
+          .attr('opacity', 0.9)
+      }
+
+      // Draw markers at each point
+      displayedPath.forEach((point, index) => {
+        const isStart = index === 0
+
+        const isEnd = index === displayedPath.length - 1
+
+        const radius = isStart || isEnd ? pointRadius * 2.5 : pointRadius * 1.5
+
+        layer
+          .append('circle')
+          .attr('cx', point[0])
+          .attr('cy', point[1])
+          .attr('r', radius)
+          .attr(
+            'fill',
+            isStart
+              ? COLORS.pathStart
+              : isEnd
+                ? COLORS.pathEnd
+                : COLORS.pathIntermediate
+          )
+          .attr('stroke', COLORS.white)
+          .attr('stroke-width', Math.max(3, radius * 0.3))
+      })
+    },
+    [displayedPath, pointRadius]
   )
 
   const renderUnits = useCallback(
@@ -367,7 +579,11 @@ export default function useRenderCanvasContent({
 
         const isSelected = unit.id === selectedElementId
 
-        if (isDrawing && isSelected) return
+        const shouldRender =
+          !isDrawing ||
+          (isDrawing && drawingMode === 'units' ? !isSelected : showUnit)
+
+        if (!shouldRender) return
 
         const isEntranceSettingMode =
           isSettingEntrance && isSelected && drawingMode === 'units'
@@ -459,7 +675,7 @@ export default function useRenderCanvasContent({
         }
 
         // Add entrance location marker
-        if (unit.entranceLocation) {
+        if (unit.entranceLocation && (showEntrances || isSelected)) {
           const [entranceX, entranceY] = unit.entranceLocation
 
           // Draw a circle for the entrance
@@ -501,12 +717,14 @@ export default function useRenderCanvasContent({
       showFloorPlanImage,
       mapImage,
       unitLabelFontSize,
+      showEntrances,
       setSelectedElementId,
       setIsSettingEntrance,
       selectedFloor,
       updateFloor,
       gRef,
-      svgRef
+      svgRef,
+      showUnit
     ]
   )
 
@@ -690,39 +908,74 @@ export default function useRenderCanvasContent({
 
     polygonLayer.selectAll('*').remove()
 
+    // When a path is displayed, make everything non-clickable
+    const isPathDisplayed = !!displayedPath
+
     // Render in correct order for proper layering
-    if (drawingMode === 'outline') {
-      renderOutlines(polygonLayer)
-    } else if (drawingMode === 'outline-circle') {
-      renderOutlineCircles(polygonLayer)
-    } else if (drawingMode === 'amenity') {
-      if (!isDrawing) {
-        renderUnits(polygonLayer, false)
-      }
-      renderOutlines(polygonLayer)
-      renderOutlineCircles(polygonLayer)
-      renderAmenities(polygonLayer)
+    // In drawing mode: render everything for context
+    // In non-drawing mode: respect user toggles
+
+    // Render units (always show in units mode or when drawing, toggle otherwise)
+    if (drawingMode === 'units') {
+      renderUnits(polygonLayer, !isPathDisplayed)
+    } else if (isDrawing || showUnit) {
+      renderUnits(polygonLayer, false)
     }
 
-    if (drawingMode === 'units') {
-      renderUnits(polygonLayer, true)
-      renderOutlines(polygonLayer)
-      renderOutlineCircles(polygonLayer)
-      renderAmenities(polygonLayer)
+    // Render outlines (always show in outline mode or when drawing, toggle otherwise)
+    if (drawingMode === 'outline') {
+      renderOutlines(polygonLayer, !isPathDisplayed)
+    } else if (isDrawing || showUnitOutline) {
+      renderOutlines(polygonLayer, false)
+    }
+
+    // Render outline circles (always show in outline-circle mode or when drawing, toggle otherwise)
+    if (drawingMode === 'outline-circle') {
+      renderOutlineCircles(polygonLayer, !isPathDisplayed)
+    } else if (isDrawing || showUnitOutline) {
+      renderOutlineCircles(polygonLayer, false)
+    }
+
+    // Render amenities (always show in amenity mode or when drawing, toggle otherwise)
+    if (drawingMode === 'amenity') {
+      renderAmenities(polygonLayer, !isPathDisplayed)
+    } else if (isDrawing || showAmenities) {
+      renderAmenities(polygonLayer, false)
+    }
+
+    // Render path nodes (always show in path mode or when drawing, toggle otherwise)
+    if (drawingMode === 'path') {
+      renderPathNodes(polygonLayer, !isPathDisplayed)
+    } else if (isDrawing || showPaths) {
+      renderPathNodes(polygonLayer, false)
     }
 
     renderTemporaryDrawing(polygonLayer)
     renderClickablePoints(polygonLayer)
     renderTemporaryCircle(polygonLayer)
     renderHighlightedCoord(polygonLayer)
+
+    // Render the displayed path on top of everything else
+    if (displayedPath) {
+      renderDisplayedPath(polygonLayer)
+    }
   }, [
     gRef,
     imageLoaded,
     drawingMode,
+    isDrawing,
+    displayedPath,
+    showUnit,
+    showUnitOutline,
+    showPaths,
+    showAmenities,
+    showEntrances,
     renderOutlines,
     renderOutlineCircles,
     renderUnits,
     renderAmenities,
+    renderPathNodes,
+    renderDisplayedPath,
     renderTemporaryDrawing,
     renderClickablePoints,
     renderTemporaryCircle,

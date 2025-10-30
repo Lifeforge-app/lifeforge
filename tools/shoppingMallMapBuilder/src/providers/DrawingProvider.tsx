@@ -1,18 +1,23 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import type { CoordinateWithSnapInfo, DrawingMode } from '../types'
+import { useFloors } from './FloorsProvider'
 
 interface FloorsContextType {
   selectedElementId: string | null
   drawingMode: DrawingMode
   isDrawing: boolean
   isSettingEntrance: boolean
+  isConnectingNodes: boolean
+  displayedPath: [number, number][] | null
   newCoordinates: CoordinateWithSnapInfo[]
   alignAfterDrawing: boolean
   setSelectedElementId: (id: string | null) => void
   setDrawingMode: (mode: DrawingMode) => void
   setAlignAfterDrawing: (align: boolean) => void
   setIsSettingEntrance: (isSetting: boolean) => void
+  setIsConnectingNodes: (isConnecting: boolean) => void
+  setDisplayedPath: (path: [number, number][] | null) => void
   startDrawing: (
     existingCoordinates?: [number, number][],
     isControlPressed?: boolean
@@ -29,11 +34,19 @@ interface FloorsContextType {
 const DrawingContext = createContext<FloorsContextType | null>(null)
 
 function DrawingProvider({ children }: { children: React.ReactNode }) {
+  const { selectedFloorId } = useFloors()
+
   const [drawingMode, setDrawingMode] = useState<DrawingMode>('units')
 
   const [isDrawing, setIsDrawing] = useState(false)
 
   const [isSettingEntrance, setIsSettingEntrance] = useState(false)
+
+  const [isConnectingNodes, setIsConnectingNodes] = useState(false)
+
+  const [displayedPath, setDisplayedPath] = useState<[number, number][] | null>(
+    null
+  )
 
   const [selectedElementId, setSelectedElementId] = useState<string | null>(
     null
@@ -77,6 +90,7 @@ function DrawingProvider({ children }: { children: React.ReactNode }) {
     setSelectedElementId(null)
     setIsDrawing(false)
     setNewCoordinates([])
+    setIsConnectingNodes(false)
   }
 
   const finishDrawing = () => {
@@ -89,7 +103,14 @@ function DrawingProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     clearDrawingAndDeselect()
+    setDisplayedPath(null)
   }, [drawingMode])
+
+  // Clear selection when floor changes
+  useEffect(() => {
+    clearDrawingAndDeselect()
+    setDisplayedPath(null)
+  }, [selectedFloorId])
 
   return (
     <DrawingContext
@@ -98,12 +119,16 @@ function DrawingProvider({ children }: { children: React.ReactNode }) {
         drawingMode,
         isDrawing,
         isSettingEntrance,
+        isConnectingNodes,
+        displayedPath,
         newCoordinates,
         alignAfterDrawing,
         setSelectedElementId,
         setDrawingMode,
         setAlignAfterDrawing,
         setIsSettingEntrance,
+        setIsConnectingNodes,
+        setDisplayedPath,
         startDrawing,
         addPoint,
         removeLastPoint,

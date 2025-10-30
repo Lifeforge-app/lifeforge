@@ -38,6 +38,12 @@ export interface Amenity {
   coordinate: Coordinate
 }
 
+export interface PathNode {
+  id: string
+  coordinate: Coordinate
+  connectedNodeIds: string[] // IDs of nodes this node connects to
+}
+
 export interface Floor {
   id: string // Floor abbreviation (e.g., 'G', 'L1', 'B')
   name: string // Full floor name (e.g., 'Ground Floor')
@@ -46,6 +52,7 @@ export interface Floor {
   buildingOutlines: Outline[]
   buildingOutlineCircles: OutlineCircle[]
   amenities: Amenity[]
+  pathNodes: PathNode[]
 }
 
 export interface MallData {
@@ -77,4 +84,9 @@ export interface ImageDimensions {
   height: number
 }
 
-export type DrawingMode = 'units' | 'outline' | 'outline-circle' | 'amenity'
+export type DrawingMode =
+  | 'units'
+  | 'outline'
+  | 'outline-circle'
+  | 'amenity'
+  | 'path'

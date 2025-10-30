@@ -3,6 +3,7 @@ import {
   Button,
   ConfirmationModal,
   FileInput,
+  ModalHeader,
   SliderInput,
   Switch,
   TextInput,
@@ -10,10 +11,10 @@ import {
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-import { useFloors } from '../../../providers/FloorsProvider'
-import { useSettings } from '../../../providers/SettingsProvider'
+import { useFloors } from '../../providers/FloorsProvider'
+import { useSettings } from '../../providers/SettingsProvider'
 
-function SidebarSettings() {
+function SettingsModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
 
   const settings = useSettings()
@@ -40,7 +41,8 @@ function SidebarSettings() {
   }, [floorPlanImage])
 
   return (
-    <div className="border-bg-800 rounded-xl border-2 p-4">
+    <div className="min-w-[40vw]">
+      <ModalHeader icon="tabler:settings" title="Settings" onClose={onClose} />
       <TextInput
         className="mt-4"
         icon="tabler:number-123"
@@ -57,7 +59,6 @@ function SidebarSettings() {
         setValue={settings.handleFloorNameChange}
         value={floors.find(floor => floor.id === selectedFloorId)?.name || ''}
       />
-      {/* FloorPlan Image Upload */}
       <div className="mt-6 flex items-center justify-between">
         <div className="text-bg-500 flex items-center gap-2">
           <Icon className="size-6" icon="tabler:photo" />
@@ -104,7 +105,58 @@ function SidebarSettings() {
         setValue={settings.handlePointRadiusChange}
         step={1}
         value={settings.pointRadius}
+        wrapperClassName="mt-10"
       />
+      <div className="mt-12 flex items-center justify-between">
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-6" icon="tabler:building-store" />
+          <span className="text-lg">Show unit</span>
+        </div>
+        <Switch
+          checked={settings.showUnit}
+          onChange={settings.handleToggleShowUnit}
+        />
+      </div>
+      <div className="mt-6 flex items-center justify-between">
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-6" icon="tabler:line" />
+          <span className="text-lg">Show outline</span>
+        </div>
+        <Switch
+          checked={settings.showUnitOutline}
+          onChange={settings.handleToggleShowOutline}
+        />
+      </div>
+      <div className="mt-6 flex items-center justify-between">
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-6" icon="tabler:route" />
+          <span className="text-lg">Show paths</span>
+        </div>
+        <Switch
+          checked={settings.showPaths}
+          onChange={settings.handleToggleShowPaths}
+        />
+      </div>
+      <div className="mt-6 flex items-center justify-between">
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-6" icon="tabler:map-pin" />
+          <span className="text-lg">Show amenities</span>
+        </div>
+        <Switch
+          checked={settings.showAmenities}
+          onChange={settings.handleToggleShowAmenities}
+        />
+      </div>
+      <div className="mt-6 flex items-center justify-between">
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-6" icon="tabler:door-enter" />
+          <span className="text-lg">Show entrances</span>
+        </div>
+        <Switch
+          checked={settings.showEntrances}
+          onChange={settings.handleToggleShowEntrances}
+        />
+      </div>
 
       <div className="mb-2 mt-12 flex items-center gap-2">
         <Button
@@ -148,4 +200,4 @@ function SidebarSettings() {
   )
 }
 
-export default SidebarSettings
+export default SettingsModal

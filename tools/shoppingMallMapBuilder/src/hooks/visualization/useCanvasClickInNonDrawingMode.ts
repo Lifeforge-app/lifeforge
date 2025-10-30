@@ -6,8 +6,13 @@ import { useSVGRefContext } from '../../providers/SVGRefProvider'
 export default function useCanvasClickInNonDrawingMode() {
   const { svgRef } = useSVGRefContext()
 
-  const { isDrawing, drawingMode, setSelectedElementId, isSettingEntrance } =
-    useDrawing()
+  const {
+    isDrawing,
+    drawingMode,
+    setSelectedElementId,
+    isSettingEntrance,
+    isConnectingNodes
+  } = useDrawing()
 
   useEffect(() => {
     if (!svgRef.current || isDrawing) return
@@ -16,6 +21,12 @@ export default function useCanvasClickInNonDrawingMode() {
       // If we're setting entrance location, don't handle background clicks
       // The unit polygon will handle the click instead
       if (isSettingEntrance && drawingMode === 'units') {
+        return
+      }
+
+      // If we're in connecting mode, don't deselect on background click
+      // User must exit through the sidebar
+      if (isConnectingNodes) {
         return
       }
 
@@ -30,5 +41,12 @@ export default function useCanvasClickInNonDrawingMode() {
         svgRef.current.removeEventListener('click', handleClick)
       }
     }
-  }, [drawingMode, isDrawing, setSelectedElementId, isSettingEntrance, svgRef])
+  }, [
+    drawingMode,
+    isDrawing,
+    setSelectedElementId,
+    isSettingEntrance,
+    isConnectingNodes,
+    svgRef
+  ])
 }
