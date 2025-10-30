@@ -33,6 +33,8 @@ function validateField(
 
   const result = validator.safeParse(value)
 
+  console.log('Zod validation result:', result)
+
   return result.success ? true : result.error.issues[0].message
 }
 
