@@ -10,12 +10,15 @@ import { useAmenity } from './modes/amenities/useAmenity'
 import { useOutline } from './modes/outline/useOutline'
 import { useOutlineCircle } from './modes/outlineCircle/useOutlineCircle'
 import { useUnit } from './modes/unit/useUnit'
+import { useDrawing } from './providers/DrawingProvider'
 import SVGRefProvider from './providers/SVGRefProvider'
 import { type HighlightedCoord } from './types'
 
 const App = () => {
   const [highlightedCoord, setHighlightedCoord] =
     useState<HighlightedCoord | null>(null)
+
+  const { isSettingEntrance, setIsSettingEntrance } = useDrawing()
 
   const unitState = useUnit()
 
@@ -35,12 +38,17 @@ const App = () => {
     amenityState
   })
 
+  const handleToggleEntranceSetting = () => {
+    setIsSettingEntrance(!isSettingEntrance)
+  }
+
   useKeyboardShortcuts({
     onNewUnit: unitState.handleNewUnit,
     onNewOutline: outlineState.handleNewOutline,
     onNewOutlineCircle: circleState.handleNewCircle,
     onNewAmenity: amenityState.handleNewAmenity,
     onFinishDrawing: handleFinishDrawing,
+    onToggleEntranceSetting: handleToggleEntranceSetting
   })
 
   return (
