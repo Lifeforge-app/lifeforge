@@ -28,19 +28,19 @@ createRoot(document.getElementById('root')!).render(
       >
         <ToastProvider>
           <ControlKeyEventProvider>
-            <DrawingProvider>
-              <FloorProvider>
+            <FloorProvider>
+              <DrawingProvider>
                 <AmenitiesProvider>
                   <UnitDataProvider>
                     <SettingsProvider>
                       <App />
+                      <ModalManager />
                     </SettingsProvider>
                   </UnitDataProvider>
                 </AmenitiesProvider>
-              </FloorProvider>
-            </DrawingProvider>
+              </DrawingProvider>
+            </FloorProvider>
           </ControlKeyEventProvider>
-          <ModalManager />
         </ToastProvider>
       </PersonalizationProvider>
     </APIEndpointProvider>

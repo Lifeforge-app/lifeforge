@@ -9,6 +9,7 @@ import useUtilsFuncs from './hooks/useUtilsFuncs'
 import { useAmenity } from './modes/amenities/useAmenity'
 import { useOutline } from './modes/outline/useOutline'
 import { useOutlineCircle } from './modes/outlineCircle/useOutlineCircle'
+import { usePath } from './modes/path/usePath'
 import { useUnit } from './modes/unit/useUnit'
 import { useDrawing } from './providers/DrawingProvider'
 import SVGRefProvider from './providers/SVGRefProvider'
@@ -18,7 +19,7 @@ const App = () => {
   const [highlightedCoord, setHighlightedCoord] =
     useState<HighlightedCoord | null>(null)
 
-  const { isSettingEntrance, setIsSettingEntrance } = useDrawing()
+  const { isConnectingNodes } = useDrawing()
 
   const unitState = useUnit()
 
@@ -28,6 +29,8 @@ const App = () => {
 
   const amenityState = useAmenity()
 
+  const pathState = usePath()
+
   const { handlePerformUnitOCR, handleAlignCoordinates } = useUtilsFuncs({
     unitState
   })
@@ -35,11 +38,14 @@ const App = () => {
   const { handleFinishDrawing, handleStartDrawing } = useDrawingFuncs({
     unitState,
     outlineState,
-    amenityState
+    amenityState,
+    pathState
   })
 
-  const handleToggleEntranceSetting = () => {
-    setIsSettingEntrance(!isSettingEntrance)
+  const handlePathNodeClick = (nodeId: string) => {
+    if (isConnectingNodes) {
+      pathState.handleToggleConnection(nodeId)
+    }
   }
 
   useKeyboardShortcuts({
@@ -47,8 +53,8 @@ const App = () => {
     onNewOutline: outlineState.handleNewOutline,
     onNewOutlineCircle: circleState.handleNewCircle,
     onNewAmenity: amenityState.handleNewAmenity,
-    onFinishDrawing: handleFinishDrawing,
-    onToggleEntranceSetting: handleToggleEntranceSetting
+    onNewPathNode: pathState.handleNewNode,
+    onFinishDrawing: handleFinishDrawing
   })
 
   return (
@@ -61,6 +67,7 @@ const App = () => {
           amenityState={amenityState}
           circleState={circleState}
           outlineState={outlineState}
+          pathState={pathState}
           unitState={unitState}
           onAlignCoordinates={handleAlignCoordinates}
           onFinishDrawing={handleFinishDrawing}
@@ -70,7 +77,10 @@ const App = () => {
         />
         <ContentWrapperWithSidebar>
           <SVGRefProvider>
-            <MapCanvas highlightedCoord={highlightedCoord} />
+            <MapCanvas
+              highlightedCoord={highlightedCoord}
+              onPathNodeClick={handlePathNodeClick}
+            />
           </SVGRefProvider>
         </ContentWrapperWithSidebar>
       </LayoutWithSidebar>

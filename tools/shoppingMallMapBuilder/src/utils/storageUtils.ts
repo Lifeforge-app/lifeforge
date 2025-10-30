@@ -21,7 +21,8 @@ export const DEFAULT_APP_DATA: AppData = {
       units: [],
       buildingOutlines: [],
       buildingOutlineCircles: [],
-      amenities: []
+      amenities: [],
+      pathNodes: []
     }
   ],
   selectedFloorId: 'G',

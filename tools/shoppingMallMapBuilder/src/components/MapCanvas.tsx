@@ -6,9 +6,13 @@ import { type HighlightedCoord } from '../types'
 
 interface MapCanvasProps {
   highlightedCoord: HighlightedCoord | null
+  onPathNodeClick?: (nodeId: string) => void
 }
 
-export function MapCanvas({ highlightedCoord }: MapCanvasProps) {
+export function MapCanvas({
+  highlightedCoord,
+  onPathNodeClick
+}: MapCanvasProps) {
   const isControlPressed = useControlKeyState()
 
   const { isDrawing, isSettingEntrance, newCoordinates } = useDrawing()
@@ -17,7 +21,8 @@ export function MapCanvas({ highlightedCoord }: MapCanvasProps) {
 
   useD3Visualization({
     newCoordinates,
-    highlightedCoord
+    highlightedCoord,
+    onPathNodeClick
   })
 
   return (

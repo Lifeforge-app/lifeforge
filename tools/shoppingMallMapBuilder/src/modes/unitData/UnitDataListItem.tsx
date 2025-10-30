@@ -4,7 +4,7 @@ import { useDrawing } from '../../providers/DrawingProvider'
 import { useFloors } from '../../providers/FloorsProvider'
 import type { UnitDataEntry } from '../../types'
 
-function UnitListItem({
+function UnitDataListItem({
   entry,
   displayOnly
 }: {
@@ -73,4 +73,4 @@ function UnitListItem({
   )
 }
 
-export default UnitListItem
+export default UnitDataListItem

@@ -14,11 +14,13 @@ import useZooming from './visualization/useZooming'
 interface UseD3VisualizationProps {
   newCoordinates: CoordinateWithSnapInfo[]
   highlightedCoord: HighlightedCoord | null
+  onPathNodeClick?: (nodeId: string) => void
 }
 
 export function useD3Visualization({
   newCoordinates,
-  highlightedCoord
+  highlightedCoord,
+  onPathNodeClick
 }: UseD3VisualizationProps) {
   const isControlPressed = useControlKeyState()
 
@@ -39,7 +41,8 @@ export function useD3Visualization({
   useRenderCanvasContent({
     newCoordinates,
     highlightedCoord,
-    imageLoaded
+    imageLoaded,
+    onPathNodeClick
   })
 
   useCanvasClickInDrawingMode()

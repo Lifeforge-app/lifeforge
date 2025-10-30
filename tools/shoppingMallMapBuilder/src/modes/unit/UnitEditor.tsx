@@ -13,7 +13,7 @@ import { useDrawing } from '../../providers/DrawingProvider'
 import { useUnitData } from '../../providers/UnitDataProvider'
 import type { HighlightedCoord, Unit } from '../../types'
 import { cropPolygonImage } from '../../utils/cropPolygonImage'
-import UnitListItem from '../unitData/UnitListItem'
+import UnitDataListItem from '../unitData/UnitDataListItem'
 import type { useUnit } from './useUnit'
 
 interface UnitEditorProps {
@@ -131,8 +131,9 @@ export function UnitEditor({
             onClick={unitState.handleDeleteUnit}
           />
         </div>
-        {targetUnitData && <UnitListItem displayOnly entry={targetUnitData} />}
-
+        {targetUnitData && (
+          <UnitDataListItem displayOnly entry={targetUnitData} />
+        )}
         {croppedImage && (
           <div className="border-bg-800 flex-center mt-4 w-full rounded-md border-2 p-2">
             <img
@@ -200,15 +201,7 @@ export function UnitEditor({
         </div>
         <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
           <div className="text-bg-500 mb-2 flex items-center justify-between text-sm font-medium">
-            <span>Entrance Location</span>
-            {unit.entranceLocation && (
-              <Button
-                dangerous
-                icon="tabler:trash"
-                variant="plain"
-                onClick={unitState.handleClearEntranceLocation}
-              />
-            )}
+            Entrance Location
           </div>
           {unit.entranceLocation ? (
             <div className="space-y-2">
@@ -244,7 +237,7 @@ export function UnitEditor({
                   }
                 />
               </div>
-              <div className="text-bg-500 flex items-center gap-2 text-sm">
+              <div className="text-bg-500 flex items-center gap-2 py-2 text-sm">
                 <Icon icon="tabler:keyboard" />
                 <span>Press E to toggle entrance setting mode</span>
               </div>
@@ -258,14 +251,25 @@ export function UnitEditor({
                   ? 'Click on unit outline to snap entrance'
                   : 'Set by clicking on map'}
               </Button>
+              {unit.entranceLocation && (
+                <Button
+                  dangerous
+                  className="w-full"
+                  icon="tabler:trash"
+                  variant="secondary"
+                  onClick={unitState.handleClearEntranceLocation}
+                >
+                  Clear Entrance Location
+                </Button>
+              )}
             </div>
           ) : (
             <>
-              <div className="text-bg-500 mb-2 text-sm">
+              <div className="text-bg-500 my-2 text-sm">
                 Click the button below, then click on the unit outline to set
                 the entrance location
               </div>
-              <div className="text-bg-500 mb-2 flex items-center gap-2 text-sm">
+              <div className="text-bg-500 mb-2 flex items-center gap-2 py-2 text-sm">
                 <Icon icon="tabler:keyboard" />
                 <span>Press E to toggle entrance setting mode</span>
               </div>

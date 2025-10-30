@@ -1,18 +1,16 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import {
   Button,
   ListboxInput,
   ListboxOption,
   useModalStore
 } from 'lifeforge-ui'
-import { useState } from 'react'
 
 import { useFloors } from '../../../providers/FloorsProvider'
 import { useSettings } from '../../../providers/SettingsProvider'
 import AddFloorModal from '../../modals/AddFloorModal'
 import EditMallNameModal from '../../modals/EditMallNameModal'
-import SidebarSettings from './SidebarSettings'
+import SettingsModal from '../../modals/SettingsModal'
 
 function SidebarHeader() {
   const { open } = useModalStore(state => state)
@@ -20,8 +18,6 @@ function SidebarHeader() {
   const { mallName, setMallName, handleCreateFloor } = useSettings()
 
   const { floors, selectedFloorId, setSelectedFloorId } = useFloors()
-
-  const [settingsExpanded, setSettingsExpanded] = useState(false)
 
   return (
     <div>
@@ -88,21 +84,15 @@ function SidebarHeader() {
       <div
         className="flex-between hover:text-bg-100 text-bg-500 mb-2 w-full cursor-pointer rounded-lg p-2 transition-all"
         onClick={() => {
-          setSettingsExpanded(!settingsExpanded)
+          open(SettingsModal, {})
         }}
       >
         <div className="flex items-center gap-2 text-lg font-medium">
           <Icon className="size-6" icon="tabler:settings" />
           Settings
         </div>
-        <Icon
-          className={clsx('size-5 transition-all', {
-            'rotate-90': settingsExpanded
-          })}
-          icon="tabler:chevron-right"
-        />
+        <Icon icon="tabler:chevron-right" />
       </div>
-      {settingsExpanded && <SidebarSettings />}
     </div>
   )
 }
