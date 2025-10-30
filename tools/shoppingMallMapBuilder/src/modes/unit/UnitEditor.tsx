@@ -1,11 +1,19 @@
 import { Icon } from '@iconify/react'
-import { Button, GoBackButton, Switch, TextInput } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
+import {
+  Button,
+  GoBackButton,
+  SliderInput,
+  Switch,
+  TextInput
+} from 'lifeforge-ui'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useControlKeyState } from '../../providers/ControlKeyStateProvider'
 import { useDrawing } from '../../providers/DrawingProvider'
+import { useUnitData } from '../../providers/UnitDataProvider'
 import type { HighlightedCoord, Unit } from '../../types'
 import { cropPolygonImage } from '../../utils/cropPolygonImage'
+import UnitListItem from '../unitData/UnitListItem'
 import type { useUnit } from './useUnit'
 
 interface UnitEditorProps {
@@ -41,7 +49,17 @@ export function UnitEditor({
     clearDrawingAndDeselect
   } = useDrawing()
 
+  const { unitData } = useUnitData()
+
   const unit = unitState.selectedUnit!
+
+  const targetUnitData = useMemo(() => {
+    return unitData.find(
+      ud =>
+        ud.unit.toLowerCase().replace(/\s+/g, '') ===
+        unit.name.toLowerCase().replace(/\s+/g, '')
+    )
+  }, [unitData, unit.name])
 
   const [isOCRProcessing, setIsOCRProcessing] = useState(false)
 
@@ -98,9 +116,9 @@ export function UnitEditor({
       <GoBackButton onClick={clearDrawingAndDeselect} />
       <div className="border-bg-800 mt-4 rounded-md border-2 p-4">
         <div className="flex-between">
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 items-center gap-2">
             <Icon className="size-6" icon="tabler:building-store" />
-            <span className="text-lg font-medium">
+            <span className="w-full min-w-0 truncate text-lg font-medium">
               {unit.name || 'Unnamed Unit'}
             </span>
           </div>
@@ -111,6 +129,8 @@ export function UnitEditor({
             onClick={unitState.handleDeleteUnit}
           />
         </div>
+        {targetUnitData && <UnitListItem displayOnly entry={targetUnitData} />}
+
         {croppedImage && (
           <div className="border-bg-800 flex-center mt-4 w-full rounded-md border-2 p-2">
             <img
@@ -154,8 +174,33 @@ export function UnitEditor({
             Next
           </Button>
         </div>
+        <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
+          <div className="space-y-12">
+            <SliderInput
+              icon="tabler:arrows-horizontal"
+              label="Label Offset X"
+              max={200}
+              min={-200}
+              setValue={unitState.handleLabelOffsetXChange}
+              step={1}
+              value={unit.labelOffsetX || 0}
+            />
+            <SliderInput
+              icon="tabler:arrows-vertical"
+              label="Label Offset Y"
+              max={200}
+              min={-200}
+              setValue={unitState.handleLabelOffsetYChange}
+              step={1}
+              value={unit.labelOffsetY || 0}
+            />
+          </div>
+        </div>
         {unit.coordinates.length > 0 && (
           <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
+            <div className="text-bg-500 mb-2 text-sm font-medium">
+              Unit Coordinates ({unit.coordinates.length} points)
+            </div>
             {unit.coordinates.map((coord, index) => (
               <div
                 key={index}

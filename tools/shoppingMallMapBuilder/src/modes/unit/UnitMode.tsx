@@ -2,6 +2,7 @@ import { Button } from 'lifeforge-ui'
 
 import { useDrawing } from '../../providers/DrawingProvider'
 import { useFloors } from '../../providers/FloorsProvider'
+import type { HighlightedCoord } from '../../types'
 import { UnitEditor } from './UnitEditor'
 import { UnitList } from './UnitList'
 import type { useUnit } from './useUnit'
@@ -17,25 +18,25 @@ function UnitMode({
   unitState: ReturnType<typeof useUnit>
   onAlignCoordinates: () => void
   onFinishDrawing: () => void
-  onHighlightCoord: () => void
+  onHighlightCoord: (coord: HighlightedCoord | null) => void
   onPerformUnitOCR: () => Promise<void>
   onStartDrawing: () => void
 }) {
-  const { isDrawing } = useDrawing()
+  const { isDrawing, selectedElementId } = useDrawing()
 
   const { selectedFloor } = useFloors()
 
   return (
-    <>
-      <div className="mb-6 space-y-2">
+    <div className="overflow-y-auto">
+      {!selectedElementId && (
         <Button
-          className="w-full"
+          className="mb-6 w-full"
           icon="tabler:plus"
           onClick={unitState.handleNewUnit}
         >
           New Unit
         </Button>
-      </div>
+      )}
       {!unitState.selectedUnit ? (
         <UnitList units={selectedFloor.units} />
       ) : (
@@ -51,7 +52,7 @@ function UnitMode({
           onStartDrawing={onStartDrawing}
         />
       )}
-    </>
+    </div>
   )
 }
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import type { useAmenity } from '../modes/amenities/useAmenity'
 import type { useOutline } from '../modes/outline/useOutline'
 import type { useUnit } from '../modes/unit/useUnit'
 import { useControlKeyState } from '../providers/ControlKeyStateProvider'
@@ -9,10 +10,12 @@ import { alignCoordinates } from '../utils/unitUtils'
 
 function useDrawingFuncs({
   unitState,
-  outlineState
+  outlineState,
+  amenityState
 }: {
   unitState: ReturnType<typeof useUnit>
   outlineState: ReturnType<typeof useOutline>
+  amenityState: ReturnType<typeof useAmenity>
 }) {
   const isControlPressed = useControlKeyState()
 
@@ -32,8 +35,15 @@ function useDrawingFuncs({
   const handleStartDrawing = () => {
     if (drawingMode === 'units') {
       startDrawing(unitState.selectedUnit?.coordinates, isControlPressed)
-    } else {
+    } else if (drawingMode === 'outline') {
       startDrawing(outlineState.selectedOutline?.segments, isControlPressed)
+    } else if (drawingMode === 'amenity') {
+      startDrawing(
+        amenityState.selectedAmenity
+          ? [amenityState.selectedAmenity.coordinate]
+          : undefined,
+        isControlPressed
+      )
     }
   }
 
@@ -95,14 +105,28 @@ function useDrawingFuncs({
           c.id === selectedElementId ? { ...c, center, radius } : c
         )
       })
+    } else if (drawingMode === 'amenity') {
+      if (!selectedElementId || newCoordinates.length < 1) {
+        clearDrawing()
+
+        return
+      }
+
+      const { coords } = finishDrawing()
+
+      updateFloor(selectedFloor.id, {
+        amenities: selectedFloor.amenities.map(a =>
+          a.id === selectedElementId ? { ...a, coordinate: coords[0] } : a
+        )
+      })
     }
   }
 
   useEffect(() => {
     if (
-      drawingMode === 'outline-circle' &&
+      (drawingMode === 'outline-circle' || drawingMode === 'amenity') &&
       isDrawing &&
-      newCoordinates.length === 2
+      newCoordinates.length === (drawingMode === 'outline-circle' ? 2 : 1)
     ) {
       handleFinishDrawing()
     }

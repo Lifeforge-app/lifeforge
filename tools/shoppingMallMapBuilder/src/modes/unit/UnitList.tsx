@@ -22,8 +22,10 @@ export function UnitList({ units }: UnitListProps) {
             setSelectedElementId(unit.id)
           }}
         >
-          <div className="flex w-full items-center justify-between">
-            <span>{unit.name || 'Unnamed Unit'}</span>
+          <div className="flex w-full min-w-0 items-center justify-between gap-8">
+            <span className="w-full min-w-0 truncate text-left">
+              {unit.name || 'Unnamed Unit'}
+            </span>
             <span className="text-bg-500 text-sm">
               {unit.coordinates.length} pts
             </span>
