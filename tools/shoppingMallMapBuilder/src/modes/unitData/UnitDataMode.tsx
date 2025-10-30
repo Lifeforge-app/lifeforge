@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { useUnitData } from '../../providers/UnitDataProvider'
 import UnitDataImportModal from './UnitDataImportModal'
-import UnitListItem from './UnitListItem'
+import UnitDataListItem from './UnitDataListItem'
 
 function UnitDataMode() {
   const open = useModalStore(state => state.open)
@@ -59,7 +59,7 @@ function UnitDataMode() {
             })
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((entry, index) => (
-              <UnitListItem key={index} entry={entry} />
+              <UnitDataListItem key={index} entry={entry} />
             ))}
         </div>
       ) : (

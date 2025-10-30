@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react'
 import { Button, GoBackButton, ListboxInput, ListboxOption } from 'lifeforge-ui'
 
 import { useAmenities } from '../../providers/AmenitiesProvider'
-import { useControlKeyState } from '../../providers/ControlKeyStateProvider'
 import { useDrawing } from '../../providers/DrawingProvider'
 import type { useAmenity } from './useAmenity'
 
@@ -14,12 +13,9 @@ interface AmenityEditorProps {
 
 export function AmenityEditor({
   amenityState,
-  isDrawing,
   onStartDrawing
 }: AmenityEditorProps) {
-  const isControlPressed = useControlKeyState()
-
-  const { clearDrawingAndDeselect } = useDrawing()
+  const { clearDrawingAndDeselect, isDrawing, finishDrawing } = useDrawing()
 
   const { amenityTypes } = useAmenities()
 
@@ -35,19 +31,11 @@ export function AmenityEditor({
     <>
       <GoBackButton onClick={clearDrawingAndDeselect} />
       <div className="border-bg-800 mt-4 rounded-md border-2 p-4">
-        <div className="flex-between">
-          <div className="flex w-full min-w-0 items-center gap-2">
-            {amenityType && <Icon className="size-6" icon={amenityType.icon} />}
-            <span className="w-full min-w-0 truncate text-lg font-medium">
-              {amenityType?.name || 'Unknown Amenity'}
-            </span>
-          </div>
-          <Button
-            dangerous
-            icon="tabler:trash"
-            variant="plain"
-            onClick={amenityState.handleDeleteAmenity}
-          />
+        <div className="flex w-full min-w-0 items-center gap-2">
+          {amenityType && <Icon className="size-6" icon={amenityType.icon} />}
+          <span className="w-full min-w-0 truncate text-lg font-medium">
+            {amenityType?.name || 'Unknown Amenity'}
+          </span>
         </div>
         <ListboxInput
           buttonContent={
@@ -104,25 +92,50 @@ export function AmenityEditor({
             />
           </div>
         </div>
-
-        {!isDrawing && (
-          <Button
-            className="mt-4 w-full"
-            icon="tabler:pencil"
-            variant="secondary"
-            onClick={() => {
-              onStartDrawing()
-            }}
-          >
-            {isControlPressed ? 'Move Point' : 'Set Point'}
-          </Button>
-        )}
-
         {isDrawing && (
-          <div className="border-bg-700 bg-bg-800 mt-4 space-y-2 rounded-md border p-4">
-            <p className="text-bg-300 text-sm">
-              Click on the map to place the amenity
-            </p>
+          <>
+            <div className="my-4 space-y-2">
+              <div className="text-bg-500 flex items-center gap-2 text-sm">
+                <Icon icon="tabler:info-circle" />
+                <span>Click on the map to place the amenity</span>
+              </div>
+            </div>
+            <Button
+              dangerous
+              className="w-full"
+              icon="tabler:x"
+              variant="secondary"
+              onClick={() => {
+                finishDrawing()
+              }}
+            >
+              Cancel Placement
+            </Button>
+          </>
+        )}
+        {!isDrawing && (
+          <div className="mt-4 space-y-2">
+            <Button
+              className="w-full"
+              icon="tabler:pencil"
+              variant="secondary"
+              onClick={() => {
+                onStartDrawing()
+              }}
+            >
+              Set Point
+            </Button>
+            <Button
+              dangerous
+              className="w-full"
+              icon="tabler:trash"
+              variant="secondary"
+              onClick={() => {
+                amenityState.handleDeleteAmenity()
+              }}
+            >
+              Delete Point
+            </Button>
           </div>
         )}
       </div>

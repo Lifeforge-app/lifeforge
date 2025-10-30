@@ -16,6 +16,11 @@ interface SettingsContextType {
   showFloorPlanImage: boolean
   unitLabelFontSize: number
   pointRadius: number
+  showUnit: boolean
+  showUnitOutline: boolean
+  showPaths: boolean
+  showAmenities: boolean
+  showEntrances: boolean
   setMallName: (name: string) => void
   handleFloorPlanImageChange: (file: File | string | null) => void
   handleCreateFloor: (floorId: string, floorName: string) => void
@@ -27,6 +32,11 @@ interface SettingsContextType {
   handleToggleShowFloorPlanImage: () => void
   handleUnitLabelFontSizeChange: (size: number) => void
   handlePointRadiusChange: (radius: number) => void
+  handleToggleShowUnit: () => void
+  handleToggleShowOutline: () => void
+  handleToggleShowPaths: () => void
+  handleToggleShowAmenities: () => void
+  handleToggleShowEntrances: () => void
 }
 
 const SettingsContext = createContext<SettingsContextType | null>(null)
@@ -59,8 +69,38 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
     DEFAULT_APP_DATA.pointRadius
   )
 
+  const [showUnit, setShowUnit] = useState<boolean>(true)
+
+  const [showUnitOutline, setShowUnitOutline] = useState<boolean>(true)
+
+  const [showPaths, setShowPaths] = useState<boolean>(true)
+
+  const [showAmenities, setShowAmenities] = useState<boolean>(true)
+
+  const [showEntrances, setShowEntrances] = useState<boolean>(true)
+
   const handleToggleShowFloorPlanImage = () => {
     setShowFloorPlanImage(prev => !prev)
+  }
+
+  const handleToggleShowUnit = () => {
+    setShowUnit(prev => !prev)
+  }
+
+  const handleToggleShowOutline = () => {
+    setShowUnitOutline(prev => !prev)
+  }
+
+  const handleToggleShowPaths = () => {
+    setShowPaths(prev => !prev)
+  }
+
+  const handleToggleShowAmenities = () => {
+    setShowAmenities(prev => !prev)
+  }
+
+  const handleToggleShowEntrances = () => {
+    setShowEntrances(prev => !prev)
   }
 
   const handleUnitLabelFontSizeChange = (size: number) => {
@@ -113,7 +153,8 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
       units: [],
       buildingOutlines: [],
       buildingOutlineCircles: [],
-      amenities: []
+      amenities: [],
+      pathNodes: []
     })
     setSelectedFloorId(floorId)
   }
@@ -260,6 +301,11 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
         showFloorPlanImage,
         unitLabelFontSize,
         pointRadius,
+        showUnit,
+        showUnitOutline,
+        showPaths,
+        showAmenities,
+        showEntrances,
         setMallName,
         handleFloorPlanImageChange,
         handleCreateFloor,
@@ -270,7 +316,12 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
         handleFloorIdChange,
         handleToggleShowFloorPlanImage,
         handleUnitLabelFontSizeChange,
-        handlePointRadiusChange
+        handlePointRadiusChange,
+        handleToggleShowUnit,
+        handleToggleShowOutline,
+        handleToggleShowPaths,
+        handleToggleShowAmenities,
+        handleToggleShowEntrances
       }}
     >
       {children}

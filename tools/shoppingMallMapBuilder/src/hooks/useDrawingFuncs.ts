@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import type { useAmenity } from '../modes/amenities/useAmenity'
 import type { useOutline } from '../modes/outline/useOutline'
+import type { usePath } from '../modes/path/usePath'
 import type { useUnit } from '../modes/unit/useUnit'
 import { useControlKeyState } from '../providers/ControlKeyStateProvider'
 import { useDrawing } from '../providers/DrawingProvider'
@@ -11,11 +12,13 @@ import { alignCoordinates } from '../utils/unitUtils'
 function useDrawingFuncs({
   unitState,
   outlineState,
-  amenityState
+  amenityState,
+  pathState
 }: {
   unitState: ReturnType<typeof useUnit>
   outlineState: ReturnType<typeof useOutline>
   amenityState: ReturnType<typeof useAmenity>
+  pathState: ReturnType<typeof usePath>
 }) {
   const isControlPressed = useControlKeyState()
 
@@ -41,6 +44,13 @@ function useDrawingFuncs({
       startDrawing(
         amenityState.selectedAmenity
           ? [amenityState.selectedAmenity.coordinate]
+          : undefined,
+        isControlPressed
+      )
+    } else if (drawingMode === 'path') {
+      startDrawing(
+        pathState.selectedNode
+          ? [pathState.selectedNode.coordinate]
           : undefined,
         isControlPressed
       )
@@ -119,18 +129,30 @@ function useDrawingFuncs({
           a.id === selectedElementId ? { ...a, coordinate: coords[0] } : a
         )
       })
+    } else if (drawingMode === 'path') {
+      if (!selectedElementId || newCoordinates.length < 1) {
+        clearDrawing()
+
+        return
+      }
+
+      const { coords } = finishDrawing()
+
+      pathState.handleFinishDrawing(coords, false)
     }
   }
 
   useEffect(() => {
     if (
-      (drawingMode === 'outline-circle' || drawingMode === 'amenity') &&
+      (drawingMode === 'outline-circle' ||
+        drawingMode === 'amenity' ||
+        drawingMode === 'path') &&
       isDrawing &&
       newCoordinates.length === (drawingMode === 'outline-circle' ? 2 : 1)
     ) {
       handleFinishDrawing()
     }
-  }, [newCoordinates.length, drawingMode, isDrawing])
+  }, [newCoordinates, isDrawing, drawingMode])
 
   return {
     handleStartDrawing,

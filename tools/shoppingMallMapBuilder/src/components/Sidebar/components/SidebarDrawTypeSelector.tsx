@@ -1,8 +1,22 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { ListboxInput, ListboxOption } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
 import { useDrawing } from '../../../providers/DrawingProvider'
+import type { DrawingMode } from '../../../types'
+
+const DRAWING_MODES: {
+  value: DrawingMode
+  label: string
+  icon: string
+}[] = [
+  { value: 'units', label: 'Units', icon: 'tabler:building-store' },
+  { value: 'outline', label: 'Lines', icon: 'tabler:line' },
+  { value: 'outline-circle', label: 'Circles', icon: 'tabler:circle' },
+  { value: 'amenity', label: 'Amenities', icon: 'tabler:star' },
+  { value: 'path', label: 'Paths', icon: 'tabler:route' }
+]
 
 function SidebarDrawTypeSelector({
   unitTab,
@@ -13,17 +27,7 @@ function SidebarDrawTypeSelector({
 }) {
   const { drawingMode, setDrawingMode, selectedElementId } = useDrawing()
 
-  const [showShapesTabs, setShowShapesTabs] = useState(false)
-
   const [showUnitTabs, setShowUnitTabs] = useState(false)
-
-  useEffect(() => {
-    if (drawingMode === 'outline' || drawingMode === 'outline-circle') {
-      setShowShapesTabs(true)
-    } else {
-      setShowShapesTabs(false)
-    }
-  }, [drawingMode])
 
   useEffect(() => {
     if (drawingMode === 'units') {
@@ -36,47 +40,42 @@ function SidebarDrawTypeSelector({
 
   return (
     <div>
-      <div className="shadow-custom bg-bg-800 mb-2 mt-4 grid grid-cols-3 gap-2 rounded-lg p-2">
-        <button
-          className={clsx(
-            'flex-center rounded-lg py-4 transition-all',
-            drawingMode === 'units' ? 'bg-bg-700' : 'text-bg-500'
-          )}
-          onClick={() => {
-            setDrawingMode('units')
+      <ListboxInput
+        buttonContent={
+          <>
+            <Icon
+              className="size-5"
+              icon={
+                DRAWING_MODES.find(m => m.value === drawingMode)?.icon || ''
+              }
+            />
+            {DRAWING_MODES.find(m => m.value === drawingMode)?.label ||
+              'Select mode'}
+          </>
+        }
+        className="my-4"
+        icon="tabler:category"
+        label="Drawing Mode"
+        setValue={(value: unknown) => {
+          const mode = value as DrawingMode
+
+          setDrawingMode(mode)
+
+          if (mode === 'units') {
             setShowUnitTabs(true)
-          }}
-        >
-          <Icon className="mr-2 size-5" icon="tabler:building-store" />
-          Units
-        </button>
-        <button
-          className={clsx(
-            'flex-center rounded-lg py-4 transition-all',
-            ['outline', 'outline-circle'].includes(drawingMode)
-              ? 'bg-bg-700'
-              : 'text-bg-500'
-          )}
-          onClick={() => {
-            setDrawingMode('outline')
-          }}
-        >
-          <Icon className="mr-2 size-5" icon="tabler:shape" />
-          Shapes
-        </button>
-        <button
-          className={clsx(
-            'flex-center rounded-lg py-4 transition-all',
-            drawingMode === 'amenity' ? 'bg-bg-700' : 'text-bg-500'
-          )}
-          onClick={() => {
-            setDrawingMode('amenity')
-          }}
-        >
-          <Icon className="mr-2 size-5" icon="tabler:star" />
-          Amenities
-        </button>
-      </div>
+          }
+        }}
+        value={drawingMode}
+      >
+        {DRAWING_MODES.map(mode => (
+          <ListboxOption
+            key={mode.value}
+            icon={mode.icon}
+            label={mode.label}
+            value={mode.value}
+          />
+        ))}
+      </ListboxInput>
       {showUnitTabs && !selectedElementId && (
         <div className="shadow-custom bg-bg-800 mb-6 grid grid-cols-2 gap-2 rounded-lg p-2">
           <button
@@ -102,34 +101,6 @@ function SidebarDrawTypeSelector({
           >
             <Icon className="mr-2 size-5" icon="tabler:info-circle" />
             Data
-          </button>
-        </div>
-      )}
-      {showShapesTabs && !selectedElementId && (
-        <div className="shadow-custom bg-bg-800 mb-6 grid grid-cols-2 gap-2 rounded-lg p-2">
-          <button
-            className={clsx(
-              'flex-center rounded-lg py-4 transition-all',
-              drawingMode === 'outline' ? 'bg-bg-700' : 'text-bg-500'
-            )}
-            onClick={() => {
-              setDrawingMode('outline')
-            }}
-          >
-            <Icon className="mr-2 size-5" icon="tabler:line" />
-            Lines
-          </button>
-          <button
-            className={clsx(
-              'flex-center rounded-lg py-4 transition-all',
-              drawingMode === 'outline-circle' ? 'bg-bg-700' : 'text-bg-500'
-            )}
-            onClick={() => {
-              setDrawingMode('outline-circle')
-            }}
-          >
-            <Icon className="mr-2 size-5" icon="tabler:circle" />
-            Circles
           </button>
         </div>
       )}
