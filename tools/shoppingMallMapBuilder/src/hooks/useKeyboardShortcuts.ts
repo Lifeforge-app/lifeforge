@@ -1,18 +1,23 @@
 import { useEffect } from 'react'
 
+import { useAmenities } from '../providers/AmenitiesProvider'
 import { useDrawing } from '../providers/DrawingProvider'
 
 export function useKeyboardShortcuts({
   onNewUnit,
   onNewOutline,
   onNewOutlineCircle,
+  onNewAmenity,
   onFinishDrawing
 }: {
   onNewUnit: () => void
   onNewOutline: () => void
   onNewOutlineCircle: () => void
+  onNewAmenity: (amenityTypeId: string) => void
   onFinishDrawing: () => void
 }) {
+  const { selectedAmenityTypeId } = useAmenities()
+
   const {
     drawingMode,
     isDrawing,
@@ -54,12 +59,16 @@ export function useKeyboardShortcuts({
         if (!isDrawing) {
           e.preventDefault()
 
-          if (drawingMode === 'units' && onNewUnit) {
+          if (drawingMode === 'units') {
             onNewUnit()
-          } else if (drawingMode === 'outline' && onNewOutline) {
+          } else if (drawingMode === 'outline') {
             onNewOutline()
-          } else if (drawingMode === 'outline-circle' && onNewOutlineCircle) {
+          } else if (drawingMode === 'outline-circle') {
             onNewOutlineCircle()
+          } else if (drawingMode === 'amenity') {
+            if (selectedAmenityTypeId) {
+              onNewAmenity(selectedAmenityTypeId)
+            }
           }
         }
       }
@@ -93,6 +102,7 @@ export function useKeyboardShortcuts({
     onNewUnit,
     onNewOutline,
     onNewOutlineCircle,
+    onNewAmenity,
     onUndoPoint,
     onFinishDrawing
   ])

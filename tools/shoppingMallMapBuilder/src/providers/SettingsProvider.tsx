@@ -6,8 +6,10 @@ import {
   loadAppData,
   updateAppData
 } from '../utils/storageUtils'
+import { useAmenities } from './AmenitiesProvider'
 import { useDrawing } from './DrawingProvider'
 import { useFloors } from './FloorsProvider'
+import { useUnitData } from './UnitDataProvider'
 
 interface SettingsContextType {
   mallName: string
@@ -40,6 +42,10 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
     setFloors,
     setSelectedFloorId
   } = useFloors()
+
+  const { setAmenityTypes } = useAmenities()
+
+  const { setUnitData } = useUnitData()
 
   const [mallName, setMallName] = useState<string>(() => loadAppData().mallName)
 
@@ -106,7 +112,8 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
       floorPlanImage: null,
       units: [],
       buildingOutlines: [],
-      buildingOutlineCircles: []
+      buildingOutlineCircles: [],
+      amenities: []
     })
     setSelectedFloorId(floorId)
   }
@@ -141,6 +148,14 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
             setPointRadius(data.pointRadius)
           }
 
+          if (data.amenityTypes) {
+            setAmenityTypes(data.amenityTypes)
+          }
+
+          if (data.unitData) {
+            setUnitData(data.unitData)
+          }
+
           // Select first floor if available
           if (data.floors.length > 0) {
             setSelectedFloorId(data.floors[0].id)
@@ -172,6 +187,12 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
 
     // Reset point radius
     setPointRadius(DEFAULT_APP_DATA.pointRadius)
+
+    // Reset amenity types
+    setAmenityTypes(DEFAULT_APP_DATA.amenityTypes)
+
+    // Reset unit data
+    setUnitData(DEFAULT_APP_DATA.unitData)
 
     clearDrawing()
   }

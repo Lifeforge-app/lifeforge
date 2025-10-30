@@ -29,10 +29,11 @@ function FloorProvider({ children }: { children: React.ReactNode }) {
       return DEFAULT_APP_DATA.floors
     }
 
-    // Ensure all floors have buildingOutlineCircles (migration for old data)
+    // Ensure all floors have buildingOutlineCircles and amenities (migration for old data)
     return data.floors.map(floor => ({
       ...floor,
-      buildingOutlineCircles: floor.buildingOutlineCircles || []
+      buildingOutlineCircles: floor.buildingOutlineCircles || [],
+      amenities: floor.amenities || []
     }))
   })
 

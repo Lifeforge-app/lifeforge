@@ -35,9 +35,9 @@ export function OutlineEditor({
       <GoBackButton onClick={clearDrawing} />
       <div className="border-bg-800 mt-4 rounded-md border-2 p-4">
         <div className="flex-between">
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 items-center gap-2">
             <Icon className="size-6" icon="tabler:building" />
-            <span className="text-lg font-medium">
+            <span className="w-full min-w-0 truncate text-lg font-medium">
               {outline.name || 'Unnamed Outline'}
             </span>
           </div>
@@ -71,10 +71,8 @@ export function OutlineEditor({
         />
         {outline.segments.length > 0 && (
           <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
-            <div className="flex-between mb-2">
-              <span className="text-bg-500 text-sm font-medium">
-                Line Segments ({outline.segments.length} points)
-              </span>
+            <div className="text-bg-500 mb-2 text-sm font-medium">
+              Line Segments ({outline.segments.length} points)
             </div>
             {outline.segments.map((segment, index) => (
               <div

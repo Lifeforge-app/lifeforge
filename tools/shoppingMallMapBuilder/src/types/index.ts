@@ -4,6 +4,8 @@ export interface Unit {
   id: string
   name: string
   coordinates: Coordinate[]
+  labelOffsetX?: number
+  labelOffsetY?: number
 }
 
 export interface Outline {
@@ -23,6 +25,18 @@ export interface OutlineCircle {
   strokeWidth?: number
 }
 
+export interface AmenityType {
+  id: string
+  name: string
+  icon: string // Iconify icon name
+}
+
+export interface Amenity {
+  id: string
+  amenityTypeId: string
+  coordinate: Coordinate
+}
+
 export interface Floor {
   id: string // Floor abbreviation (e.g., 'G', 'L1', 'B')
   name: string // Full floor name (e.g., 'Ground Floor')
@@ -30,11 +44,21 @@ export interface Floor {
   units: Unit[]
   buildingOutlines: Outline[]
   buildingOutlineCircles: OutlineCircle[]
+  amenities: Amenity[]
 }
 
 export interface MallData {
   mallName: string
   floors: Floor[]
+  amenityTypes: AmenityType[]
+  unitData: UnitDataEntry[]
+}
+
+export interface UnitDataEntry {
+  name: string
+  unit: string
+  desc: string
+  logoUrl: string
 }
 
 export interface CoordinateWithSnapInfo {
@@ -52,4 +76,4 @@ export interface ImageDimensions {
   height: number
 }
 
-export type DrawingMode = 'units' | 'outline' | 'outline-circle'
+export type DrawingMode = 'units' | 'outline' | 'outline-circle' | 'amenity'

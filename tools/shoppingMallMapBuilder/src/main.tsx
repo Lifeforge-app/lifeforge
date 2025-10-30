@@ -10,10 +10,12 @@ import {
 import App from './App'
 import i18n from './i18n'
 import './index.css'
+import AmenitiesProvider from './providers/AmenitiesProvider'
 import ControlKeyEventProvider from './providers/ControlKeyStateProvider'
 import DrawingProvider from './providers/DrawingProvider'
 import FloorProvider from './providers/FloorsProvider'
 import SettingsProvider from './providers/SettingsProvider'
+import UnitDataProvider from './providers/UnitDataProvider'
 
 createRoot(document.getElementById('root')!).render(
   <I18nextProvider i18n={i18n}>
@@ -28,9 +30,13 @@ createRoot(document.getElementById('root')!).render(
           <ControlKeyEventProvider>
             <DrawingProvider>
               <FloorProvider>
-                <SettingsProvider>
-                  <App />
-                </SettingsProvider>
+                <AmenitiesProvider>
+                  <UnitDataProvider>
+                    <SettingsProvider>
+                      <App />
+                    </SettingsProvider>
+                  </UnitDataProvider>
+                </AmenitiesProvider>
               </FloorProvider>
             </DrawingProvider>
           </ControlKeyEventProvider>

@@ -30,7 +30,7 @@ export function createNewUnit(floorAbbr: string): Unit {
 export function createNewOutline(): Outline {
   return {
     id: crypto.randomUUID(),
-    name: 'Building Outline',
+    name: 'Outline',
     segments: [],
     color: '#374151',
     strokeWidth: 2

@@ -30,8 +30,10 @@ export function OutlineCircleList({ circles }: OutlineCircleListProps) {
             setSelectedElementId(circle.id)
           }}
         >
-          <div className="flex w-full items-center justify-between">
-            <span>{circle.name || 'Unnamed Circle'}</span>
+          <div className="flex w-full min-w-0 items-center justify-between gap-8">
+            <span className="w-full min-w-0 truncate text-left">
+              {circle.name || 'Unnamed Circle'}
+            </span>
             <span className="text-bg-500 text-sm">r: {circle.radius}</span>
           </div>
         </Button>

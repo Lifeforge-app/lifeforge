@@ -30,9 +30,9 @@ export function OutlineCircleEditor({
       <GoBackButton onClick={clearDrawingAndDeselect} />
       <div className="border-bg-800 mt-4 rounded-md border-2 p-4">
         <div className="flex-between">
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 items-center gap-2">
             <Icon className="size-6" icon="tabler:circle" />
-            <span className="text-lg font-medium">
+            <span className="w-full min-w-0 truncate text-lg font-medium">
               {circle.name || 'Unnamed Circle'}
             </span>
           </div>
@@ -66,10 +66,8 @@ export function OutlineCircleEditor({
         />
 
         <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
-          <div className="flex-between mb-2">
-            <span className="text-bg-500 text-sm font-medium">
-              Circle Properties
-            </span>
+          <div className="text-bg-500 mb-2 text-sm font-medium">
+            Circle Properties
           </div>
 
           <div className="space-y-2">

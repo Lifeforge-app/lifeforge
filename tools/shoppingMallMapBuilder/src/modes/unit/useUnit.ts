@@ -66,6 +66,26 @@ export function useUnit() {
     })
   }
 
+  const handleLabelOffsetXChange = (value: number) => {
+    if (!selectedFloor || !selectedUnit) return
+
+    updateFloor(selectedFloor.id, {
+      units: selectedFloor.units.map(u =>
+        u.id === selectedUnit.id ? { ...u, labelOffsetX: value } : u
+      )
+    })
+  }
+
+  const handleLabelOffsetYChange = (value: number) => {
+    if (!selectedFloor || !selectedUnit) return
+
+    updateFloor(selectedFloor.id, {
+      units: selectedFloor.units.map(u =>
+        u.id === selectedUnit.id ? { ...u, labelOffsetY: value } : u
+      )
+    })
+  }
+
   const handleNewUnit = () => {
     if (!selectedFloor) return
 
@@ -94,6 +114,8 @@ export function useUnit() {
     handleCoordinateChange,
     handleCoordinateDelete,
     handleClearCoordinates,
+    handleLabelOffsetXChange,
+    handleLabelOffsetYChange,
     handleNewUnit,
     handleDeleteUnit
   }
