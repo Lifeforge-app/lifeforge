@@ -6,6 +6,7 @@ import { Sidebar } from './components/Sidebar'
 import useDrawingFuncs from './hooks/useDrawingFuncs'
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts'
 import useUtilsFuncs from './hooks/useUtilsFuncs'
+import { useAmenity } from './modes/amenities/useAmenity'
 import { useOutline } from './modes/outline/useOutline'
 import { useOutlineCircle } from './modes/outlineCircle/useOutlineCircle'
 import { useUnit } from './modes/unit/useUnit'
@@ -22,20 +23,24 @@ const App = () => {
 
   const circleState = useOutlineCircle()
 
+  const amenityState = useAmenity()
+
   const { handlePerformUnitOCR, handleAlignCoordinates } = useUtilsFuncs({
     unitState
   })
 
   const { handleFinishDrawing, handleStartDrawing } = useDrawingFuncs({
     unitState,
-    outlineState
+    outlineState,
+    amenityState
   })
 
   useKeyboardShortcuts({
     onNewUnit: unitState.handleNewUnit,
     onNewOutline: outlineState.handleNewOutline,
     onNewOutlineCircle: circleState.handleNewCircle,
-    onFinishDrawing: handleFinishDrawing
+    onNewAmenity: amenityState.handleNewAmenity,
+    onFinishDrawing: handleFinishDrawing,
   })
 
   return (
@@ -45,6 +50,7 @@ const App = () => {
     >
       <LayoutWithSidebar>
         <Sidebar
+          amenityState={amenityState}
           circleState={circleState}
           outlineState={outlineState}
           unitState={unitState}

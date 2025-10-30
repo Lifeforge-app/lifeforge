@@ -13,25 +13,23 @@ function OutlineCircleMode({
   circleState: ReturnType<typeof useOutlineCircle>
   onStartDrawing: () => void
 }) {
-  const { isDrawing } = useDrawing()
+  const { isDrawing, selectedElementId } = useDrawing()
 
   const { selectedFloor } = useFloors()
 
   return (
-    <>
-      <div className="mb-6">
+    <div className="overflow-y-auto">
+      {!selectedElementId && (
         <Button
-          className="w-full"
+          className="mb-6 w-full"
           icon="tabler:plus"
           onClick={circleState.handleNewCircle}
         >
           New Circle
         </Button>
-      </div>
+      )}
       {!circleState.selectedCircle ? (
-        <OutlineCircleList
-          circles={selectedFloor.buildingOutlineCircles}
-        />
+        <OutlineCircleList circles={selectedFloor.buildingOutlineCircles} />
       ) : (
         <OutlineCircleEditor
           circleState={circleState}
@@ -39,7 +37,7 @@ function OutlineCircleMode({
           onStartDrawing={onStartDrawing}
         />
       )}
-    </>
+    </div>
   )
 }
 

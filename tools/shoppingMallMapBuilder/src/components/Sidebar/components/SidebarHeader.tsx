@@ -24,13 +24,16 @@ function SidebarHeader() {
   const [settingsExpanded, setSettingsExpanded] = useState(false)
 
   return (
-    <>
+    <div>
       <div className="flex-between mb-6">
-        <div className="flex items-center gap-2">
-          <Icon className="size-6" icon="tabler:building-skyscraper" />
-          <span className="text-xl font-medium">{mallName}</span>
+        <div className="flex w-full min-w-0 items-center gap-2">
+          <Icon className="size-6 shrink-0" icon="tabler:building-skyscraper" />
+          <span className="w-full min-w-0 truncate text-xl font-medium">
+            {mallName}
+          </span>
         </div>
         <Button
+          className="shrink-0"
           icon="tabler:pencil"
           variant="plain"
           onClick={() => {
@@ -100,7 +103,7 @@ function SidebarHeader() {
         />
       </div>
       {settingsExpanded && <SidebarSettings />}
-    </>
+    </div>
   )
 }
 

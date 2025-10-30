@@ -15,21 +15,21 @@ function OutlineMode({
   onStartDrawing: () => void
   onFinishDrawing: () => void
 }) {
-  const { isDrawing } = useDrawing()
+  const { isDrawing, selectedElementId } = useDrawing()
 
   const { selectedFloor } = useFloors()
 
   return (
-    <>
-      <div className="mb-6">
+    <div className="overflow-y-auto">
+      {!selectedElementId && (
         <Button
-          className="w-full"
+          className="mb-6 w-full"
           icon="tabler:plus"
           onClick={outlineState.handleNewOutline}
         >
           New Line
         </Button>
-      </div>
+      )}
       {!outlineState.selectedOutline ? (
         <OutlineList outlines={selectedFloor.buildingOutlines} />
       ) : (
@@ -40,7 +40,7 @@ function OutlineMode({
           onStartDrawing={onStartDrawing}
         />
       )}
-    </>
+    </div>
   )
 }
 

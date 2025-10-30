@@ -24,14 +24,16 @@ export function OutlineList({ outlines }: OutlineListProps) {
         <Button
           key={outline.id}
           className="w-full justify-start"
-          icon="tabler:building"
+          icon="tabler:line"
           variant="plain"
           onClick={() => {
             setSelectedElementId(outline.id)
           }}
         >
-          <div className="flex w-full items-center justify-between">
-            <span>{outline.name || 'Unnamed Outline'}</span>
+          <div className="flex w-full min-w-0 items-center justify-between gap-8">
+            <span className="w-full min-w-0 truncate text-left">
+              {outline.name || 'Unnamed Outline'}
+            </span>
             <span className="text-bg-500 text-sm">
               {outline.segments.length} pts
             </span>

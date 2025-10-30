@@ -1,4 +1,4 @@
-import { type Floor } from '../types'
+import { type AmenityType, type Floor, type UnitDataEntry } from '../types'
 import { loadAppData } from './storageUtils'
 
 export interface MallExportData {
@@ -7,6 +7,8 @@ export interface MallExportData {
   floors: Floor[]
   unitLabelFontSize: number
   pointRadius: number
+  amenityTypes: AmenityType[]
+  unitData: UnitDataEntry[]
   exportedAt: string
 }
 
@@ -22,6 +24,8 @@ export function exportMallData(): void {
     floors: appData.floors,
     unitLabelFontSize: appData.unitLabelFontSize,
     pointRadius: appData.pointRadius,
+    amenityTypes: appData.amenityTypes,
+    unitData: appData.unitData,
     exportedAt: new Date().toISOString()
   }
 
@@ -64,6 +68,15 @@ export function importMallData(
         throw new Error('Invalid mall data format')
       }
 
+      // Ensure backward compatibility
+      if (!data.amenityTypes) {
+        data.amenityTypes = []
+      }
+
+      if (!data.unitData) {
+        data.unitData = []
+      }
+
       // Validate floors structure
       for (const floor of data.floors) {
         if (
@@ -78,6 +91,11 @@ export function importMallData(
         // Ensure buildingOutlineCircles exists (for backwards compatibility)
         if (!floor.buildingOutlineCircles) {
           floor.buildingOutlineCircles = []
+        }
+
+        // Ensure amenities exists (for backwards compatibility)
+        if (!floor.amenities) {
+          floor.amenities = []
         }
       }
 

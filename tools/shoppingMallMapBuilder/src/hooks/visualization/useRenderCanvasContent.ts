@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
 import { useCallback, useEffect, useMemo } from 'react'
 
+import { useAmenities } from '../../providers/AmenitiesProvider'
 import { useDrawing } from '../../providers/DrawingProvider'
 import { useFloors } from '../../providers/FloorsProvider'
 import { useSVGRefContext } from '../../providers/SVGRefProvider'
@@ -52,12 +53,15 @@ export default function useRenderCanvasContent({
 
   const { showFloorPlanImage, unitLabelFontSize, pointRadius } = useSettings()
 
+  const { amenityTypes } = useAmenities()
+
   const {
     selectedFloor: {
       floorPlanImage: mapImage,
       units,
       buildingOutlines,
-      buildingOutlineCircles
+      buildingOutlineCircles,
+      amenities
     }
   } = useFloors()
 
@@ -73,9 +77,7 @@ export default function useRenderCanvasContent({
     const filtered =
       isDrawing && selectedElementId && drawingMode === 'units'
         ? units.filter(u => u.id === selectedElementId)
-        : drawingMode === 'units'
-          ? units
-          : []
+        : units
 
     return !isDrawing && selectedElementId && drawingMode === 'units'
       ? [
@@ -262,8 +264,100 @@ export default function useRenderCanvasContent({
     ]
   )
 
-  const renderUnits = useCallback(
+  const renderAmenities = useCallback(
     (layer: D3Selection) => {
+      amenities.forEach(amenity => {
+        const amenityType = amenityTypes.find(
+          t => t.id === amenity.amenityTypeId
+        )
+
+        if (!amenityType) return
+
+        const isSelected = amenity.id === selectedElementId
+
+        const shouldRender =
+          !isDrawing || (isDrawing && drawingMode === 'amenity' && !isSelected)
+
+        if (!shouldRender) return
+
+        const iconSize = 32
+
+        const iconColor = isSelected
+          ? COLORS.selected
+          : showFloorPlanImage && mapImage
+            ? COLORS.default
+            : COLORS.white
+
+        // Parse icon name (format: "prefix:name" or "prefix/name")
+        const iconParts = amenityType.icon.replace(':', '/').split('/')
+
+        const iconPrefix = iconParts[0]
+
+        const iconName = iconParts[1]
+
+        // Generate Iconify API URL
+        const colorHex = iconColor.replace('#', '%23')
+
+        const iconUrl = `https://api.iconify.design/${iconPrefix}/${iconName}.svg?height=${iconSize}&color=${colorHex}`
+
+        // Create a group for the amenity
+        const amenityGroup = layer
+          .append('g')
+          .attr(
+            'transform',
+            `translate(${amenity.coordinate[0] - iconSize / 2}, ${amenity.coordinate[1] - iconSize / 2})`
+          )
+          .style('cursor', 'pointer')
+          .on('click', (event: PointerEvent) => {
+            event.stopPropagation()
+
+            if (!isDrawing && drawingMode === 'amenity') {
+              setSelectedElementId(amenity.id)
+            }
+          })
+
+        // Add background circle for better visibility
+        amenityGroup
+          .append('circle')
+          .attr('cx', iconSize / 2)
+          .attr('cy', iconSize / 2)
+          .attr('r', iconSize / 2 + 4)
+          .attr(
+            'fill',
+            mapImage && showFloorPlanImage ? COLORS.white : COLORS.default
+          )
+          .attr('stroke', iconColor)
+          .attr('stroke-width', isSelected ? 3 : 2)
+
+        // Add icon using SVG image from Iconify API
+        amenityGroup
+          .append('image')
+          .attr('href', iconUrl)
+          .attr('width', iconSize)
+          .attr('height', iconSize)
+          .attr('pointer-events', 'none')
+
+        // Draw point when selected and not drawing
+        if (isSelected && !isDrawing) {
+          renderPoint(layer, amenity.coordinate, COLORS.selected)
+        }
+      })
+    },
+    [
+      amenities,
+      amenityTypes,
+      selectedElementId,
+      isDrawing,
+      drawingMode,
+      showFloorPlanImage,
+      mapImage,
+      setSelectedElementId,
+      renderPoint
+    ]
+  )
+
+  const renderUnits = useCallback(
+    (layer: D3Selection, clickable: boolean) => {
       sortedUnits.forEach(unit => {
         if (unit.coordinates.length < 3) return
 
@@ -280,23 +374,32 @@ export default function useRenderCanvasContent({
           )
           .attr('stroke', isSelected ? COLORS.selected : COLORS.defaultUnit)
           .attr('stroke-width', isSelected ? 3 : 2)
-          .style('cursor', 'pointer')
-          .on('click', (event: PointerEvent) => {
-            event.stopPropagation()
+          .style('cursor', clickable ? 'pointer' : (null as unknown as string))
+          .on(
+            'click',
+            clickable
+              ? (event: PointerEvent) => {
+                  event.stopPropagation()
 
-            if (!isDrawing && drawingMode === 'units') {
-              setSelectedElementId(unit.id)
-            }
-          })
+                  if (!isDrawing && drawingMode === 'units') {
+                    setSelectedElementId(unit.id)
+                  }
+                }
+              : () => {}
+          )
 
         // Add label
         if (unit.coordinates.length > 0) {
           const [centerX, centerY] = calculateCenter(unit.coordinates)
 
+          const offsetX = unit.labelOffsetX || 0
+
+          const offsetY = unit.labelOffsetY || 0
+
           layer
             .append('text')
-            .attr('x', centerX)
-            .attr('y', centerY)
+            .attr('x', centerX + offsetX)
+            .attr('y', centerY + offsetY)
             .attr('text-anchor', 'middle')
             .attr('dominant-baseline', 'middle')
             .attr(
@@ -509,13 +612,20 @@ export default function useRenderCanvasContent({
       renderOutlines(polygonLayer)
     } else if (drawingMode === 'outline-circle') {
       renderOutlineCircles(polygonLayer)
-    }
-
-    renderUnits(polygonLayer)
-
-    if (drawingMode === 'units') {
+    } else if (drawingMode === 'amenity') {
+      if (!isDrawing) {
+        renderUnits(polygonLayer, false)
+      }
       renderOutlines(polygonLayer)
       renderOutlineCircles(polygonLayer)
+      renderAmenities(polygonLayer)
+    }
+
+    if (drawingMode === 'units') {
+      renderUnits(polygonLayer, true)
+      renderOutlines(polygonLayer)
+      renderOutlineCircles(polygonLayer)
+      renderAmenities(polygonLayer)
     }
 
     renderTemporaryDrawing(polygonLayer)
@@ -529,9 +639,11 @@ export default function useRenderCanvasContent({
     renderOutlines,
     renderOutlineCircles,
     renderUnits,
+    renderAmenities,
     renderTemporaryDrawing,
     renderClickablePoints,
     renderTemporaryCircle,
-    renderHighlightedCoord
+    renderHighlightedCoord,
+    highlightedCoord
   ])
 }
