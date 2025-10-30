@@ -47,7 +47,12 @@ export default async function selectIcon(): Promise<string> {
           } (${iconCollections[iconCollection]?.total.toLocaleString()} icons)`,
           value: iconCollection
         })),
-        initial: false
+        validate: value =>
+          value.length === 0
+            ? 'You must select an icon set.'
+            : !iconCollectionsList.includes(value)
+              ? 'Invalid icon set selected.'
+              : true
       },
       {
         onCancel: () => {
@@ -56,6 +61,11 @@ export default async function selectIcon(): Promise<string> {
       }
     )
 
+    if (!moduleIconCollection.iconCollection) {
+      CLILoggingService.error('Please select a valid icon set.')
+      continue
+    }
+
     if (cancelled) {
       CLILoggingService.error('Icon selection cancelled by user.')
       process.exit(1)
@@ -63,11 +73,21 @@ export default async function selectIcon(): Promise<string> {
 
     const spinner2 = ora('Fetching icons from Iconify...').start()
 
-    const icons = (
-      await axios(
-        `https://api.iconify.design/collection?prefix=${moduleIconCollection.iconCollection}`
+    let icons: any[] = []
+
+    try {
+      icons = (
+        await axios(
+          `https://api.iconify.design/collection?prefix=${moduleIconCollection.iconCollection}`
+        )
+      ).data
+    } catch (error) {
+      spinner2.fail('Failed to fetch icons from Iconify.')
+      CLILoggingService.error(
+        `Error fetching icons for collection ${moduleIconCollection.iconCollection}: ${error}`
       )
-    ).data
+      continue
+    }
 
     spinner2.stop()
 
