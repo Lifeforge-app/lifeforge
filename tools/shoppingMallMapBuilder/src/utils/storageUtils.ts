@@ -66,7 +66,35 @@ export function loadAppData(): AppData {
  * Save all app data to localStorage
  */
 export function saveAppData(data: AppData): void {
-  localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(data))
+  try {
+    localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(data))
+  } catch (error) {
+    console.error('Failed to save to localStorage:', error)
+
+    // If quota exceeded, try to save without floor plan images
+    if (
+      error instanceof DOMException &&
+      (error.name === 'QuotaExceededError' ||
+        error.name === 'NS_ERROR_DOM_QUOTA_REACHED')
+    ) {
+      console.warn('LocalStorage quota exceeded. Removing floor plan images...')
+
+      const dataWithoutImages = {
+        ...data,
+        floors: data.floors.map(floor => ({
+          ...floor,
+          floorPlanImage: null
+        }))
+      }
+
+      try {
+        localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(dataWithoutImages))
+        console.warn('Saved without floor plan images due to quota limit')
+      } catch {
+        console.error('Failed to save even without images')
+      }
+    }
+  }
 }
 
 /**
