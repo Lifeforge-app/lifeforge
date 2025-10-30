@@ -161,3 +161,71 @@ export function calculateCenter(
 
   return [centerX, centerY]
 }
+
+/**
+ * Find the closest point on a line segment to a given point
+ */
+function closestPointOnSegment(
+  px: number,
+  py: number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number
+): [number, number] {
+  const dx = x2 - x1
+
+  const dy = y2 - y1
+
+  if (dx === 0 && dy === 0) {
+    return [x1, y1]
+  }
+
+  const t = Math.max(
+    0,
+    Math.min(1, ((px - x1) * dx + (py - y1) * dy) / (dx * dx + dy * dy))
+  )
+
+  return [x1 + t * dx, y1 + t * dy]
+}
+
+/**
+ * Find the closest point on a polygon outline to a given point
+ */
+export function closestPointOnPolygon(
+  point: [number, number],
+  polygon: [number, number][]
+): [number, number] {
+  if (polygon.length < 2) return polygon[0] || [0, 0]
+
+  let closestPoint: [number, number] = polygon[0]
+
+  let minDistance = Infinity
+
+  for (let i = 0; i < polygon.length; i++) {
+    const p1 = polygon[i]
+
+    const p2 = polygon[(i + 1) % polygon.length]
+
+    const candidate = closestPointOnSegment(
+      point[0],
+      point[1],
+      p1[0],
+      p1[1],
+      p2[0],
+      p2[1]
+    )
+
+    const distance = Math.sqrt(
+      Math.pow(candidate[0] - point[0], 2) +
+        Math.pow(candidate[1] - point[1], 2)
+    )
+
+    if (distance < minDistance) {
+      minDistance = distance
+      closestPoint = candidate
+    }
+  }
+
+  return [Math.round(closestPoint[0]), Math.round(closestPoint[1])]
+}

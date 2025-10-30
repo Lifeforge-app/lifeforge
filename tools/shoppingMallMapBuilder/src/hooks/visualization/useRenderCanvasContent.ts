@@ -7,7 +7,7 @@ import { useFloors } from '../../providers/FloorsProvider'
 import { useSVGRefContext } from '../../providers/SVGRefProvider'
 import { useSettings } from '../../providers/SettingsProvider'
 import type { CoordinateWithSnapInfo, HighlightedCoord } from '../../types'
-import { calculateCenter } from '../../utils/unitUtils'
+import { calculateCenter, closestPointOnPolygon } from '../../utils/unitUtils'
 
 type Point = [number, number]
 type D3Selection = d3.Selection<SVGGElement, unknown, null, undefined>
@@ -41,13 +41,15 @@ export default function useRenderCanvasContent({
   highlightedCoord,
   newCoordinates
 }: RenderCanvasContentProps) {
-  const { gRef } = useSVGRefContext()
+  const { gRef, svgRef } = useSVGRefContext()
 
   const {
     selectedElementId,
     setSelectedElementId,
     drawingMode,
     isDrawing,
+    isSettingEntrance,
+    setIsSettingEntrance,
     addPoint
   } = useDrawing()
 
@@ -62,7 +64,9 @@ export default function useRenderCanvasContent({
       buildingOutlines,
       buildingOutlineCircles,
       amenities
-    }
+    },
+    selectedFloor,
+    updateFloor
   } = useFloors()
 
   const handlePointClick = useCallback(
@@ -365,6 +369,9 @@ export default function useRenderCanvasContent({
 
         if (isDrawing && isSelected) return
 
+        const isEntranceSettingMode =
+          isSettingEntrance && isSelected && drawingMode === 'units'
+
         layer
           .append('polygon')
           .attr('points', unit.coordinates.map(d => d.join(',')).join(' '))
@@ -373,15 +380,52 @@ export default function useRenderCanvasContent({
             isSelected ? STYLES.selectedFill : STYLES.defaultUnitFill
           )
           .attr('stroke', isSelected ? COLORS.selected : COLORS.defaultUnit)
-          .attr('stroke-width', isSelected ? 3 : 2)
-          .style('cursor', clickable ? 'pointer' : (null as unknown as string))
+          .attr('stroke-width', isEntranceSettingMode ? 5 : isSelected ? 3 : 2)
+          .style(
+            'cursor',
+            clickable || isEntranceSettingMode
+              ? 'pointer'
+              : (null as unknown as string)
+          )
           .on(
             'click',
-            clickable
+            clickable || isEntranceSettingMode
               ? (event: PointerEvent) => {
                   event.stopPropagation()
 
-                  if (!isDrawing && drawingMode === 'units') {
+                  if (isEntranceSettingMode && gRef.current && svgRef.current) {
+                    // Get the click coordinates
+                    const transform = d3.zoomTransform(gRef.current)
+
+                    const rect = svgRef.current.getBoundingClientRect()
+
+                    const x =
+                      (event.clientX - rect.left - transform.x) / transform.k
+
+                    const y =
+                      (event.clientY - rect.top - transform.y) / transform.k
+
+                    const clickPoint: [number, number] = [x, y]
+
+                    // Find the closest point on the polygon outline
+                    const snappedPoint = closestPointOnPolygon(
+                      clickPoint,
+                      unit.coordinates
+                    )
+
+                    // Update the entrance location
+                    if (selectedFloor) {
+                      updateFloor(selectedFloor.id, {
+                        units: selectedFloor.units.map(u =>
+                          u.id === unit.id
+                            ? { ...u, entranceLocation: snappedPoint }
+                            : u
+                        )
+                      })
+                    }
+
+                    setIsSettingEntrance(false)
+                  } else if (!isDrawing && drawingMode === 'units') {
                     setSelectedElementId(unit.id)
                   }
                 }
@@ -413,17 +457,56 @@ export default function useRenderCanvasContent({
             .attr('pointer-events', 'none')
             .text(unit.name)
         }
+
+        // Add entrance location marker
+        if (unit.entranceLocation) {
+          const [entranceX, entranceY] = unit.entranceLocation
+
+          // Draw a circle for the entrance
+          layer
+            .append('circle')
+            .attr('cx', entranceX)
+            .attr('cy', entranceY)
+            .attr('r', 8)
+            .attr('fill', '#22c55e')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 2)
+            .style(
+              'cursor',
+              clickable ? 'pointer' : (null as unknown as string)
+            )
+
+          // Draw an arrow/door icon
+          layer
+            .append('path')
+            .attr(
+              'd',
+              `M ${entranceX - 4} ${entranceY - 2} L ${entranceX} ${entranceY + 4} L ${entranceX + 4} ${entranceY - 2}`
+            )
+            .attr('fill', 'none')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 2)
+            .attr('stroke-linecap', 'round')
+            .attr('stroke-linejoin', 'round')
+            .attr('pointer-events', 'none')
+        }
       })
     },
     [
       sortedUnits,
       selectedElementId,
       isDrawing,
+      isSettingEntrance,
       drawingMode,
       showFloorPlanImage,
       mapImage,
       unitLabelFontSize,
-      setSelectedElementId
+      setSelectedElementId,
+      setIsSettingEntrance,
+      selectedFloor,
+      updateFloor,
+      gRef,
+      svgRef
     ]
   )
 

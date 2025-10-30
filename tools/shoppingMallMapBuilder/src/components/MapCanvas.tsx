@@ -11,7 +11,7 @@ interface MapCanvasProps {
 export function MapCanvas({ highlightedCoord }: MapCanvasProps) {
   const isControlPressed = useControlKeyState()
 
-  const { isDrawing, newCoordinates } = useDrawing()
+  const { isDrawing, isSettingEntrance, newCoordinates } = useDrawing()
 
   const { svgRef, gRef } = useSVGRefContext()
 
@@ -29,9 +29,11 @@ export function MapCanvas({ highlightedCoord }: MapCanvasProps) {
           touchAction: 'none',
           cursor: isControlPressed
             ? 'grab'
-            : isDrawing
+            : isSettingEntrance
               ? 'crosshair'
-              : 'default'
+              : isDrawing
+                ? 'crosshair'
+                : 'default'
         }}
         width="100%"
       >

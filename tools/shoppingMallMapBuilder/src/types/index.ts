@@ -6,6 +6,7 @@ export interface Unit {
   coordinates: Coordinate[]
   labelOffsetX?: number
   labelOffsetY?: number
+  entranceLocation?: Coordinate
 }
 
 export interface Outline {

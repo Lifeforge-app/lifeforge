@@ -6,11 +6,13 @@ interface FloorsContextType {
   selectedElementId: string | null
   drawingMode: DrawingMode
   isDrawing: boolean
+  isSettingEntrance: boolean
   newCoordinates: CoordinateWithSnapInfo[]
   alignAfterDrawing: boolean
   setSelectedElementId: (id: string | null) => void
   setDrawingMode: (mode: DrawingMode) => void
   setAlignAfterDrawing: (align: boolean) => void
+  setIsSettingEntrance: (isSetting: boolean) => void
   startDrawing: (
     existingCoordinates?: [number, number][],
     isControlPressed?: boolean
@@ -30,6 +32,8 @@ function DrawingProvider({ children }: { children: React.ReactNode }) {
   const [drawingMode, setDrawingMode] = useState<DrawingMode>('units')
 
   const [isDrawing, setIsDrawing] = useState(false)
+
+  const [isSettingEntrance, setIsSettingEntrance] = useState(false)
 
   const [selectedElementId, setSelectedElementId] = useState<string | null>(
     null
@@ -93,11 +97,13 @@ function DrawingProvider({ children }: { children: React.ReactNode }) {
         selectedElementId,
         drawingMode,
         isDrawing,
+        isSettingEntrance,
         newCoordinates,
         alignAfterDrawing,
         setSelectedElementId,
         setDrawingMode,
         setAlignAfterDrawing,
+        setIsSettingEntrance,
         startDrawing,
         addPoint,
         removeLastPoint,

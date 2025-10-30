@@ -46,7 +46,9 @@ export function UnitEditor({
     newCoordinates,
     setAlignAfterDrawing,
     setSelectedElementId,
-    clearDrawingAndDeselect
+    clearDrawingAndDeselect,
+    setIsSettingEntrance,
+    isSettingEntrance
   } = useDrawing()
 
   const { unitData } = useUnitData()
@@ -195,6 +197,90 @@ export function UnitEditor({
               value={unit.labelOffsetY || 0}
             />
           </div>
+        </div>
+        <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
+          <div className="text-bg-500 mb-2 flex items-center justify-between text-sm font-medium">
+            <span>Entrance Location</span>
+            {unit.entranceLocation && (
+              <Button
+                dangerous
+                icon="tabler:trash"
+                variant="plain"
+                onClick={unitState.handleClearEntranceLocation}
+              />
+            )}
+          </div>
+          {unit.entranceLocation ? (
+            <div className="space-y-2">
+              <div className="component-bg-lighter w-full space-y-2 rounded-md p-3">
+                <span className="text-bg-500 text-sm font-medium">
+                  X Coordinate
+                </span>
+                <input
+                  className="w-full"
+                  type="number"
+                  value={unit.entranceLocation[0]}
+                  onChange={e =>
+                    unitState.handleEntranceLocationChange(
+                      0,
+                      parseFloat(e.target.value) || 0
+                    )
+                  }
+                />
+              </div>
+              <div className="component-bg-lighter w-full space-y-2 rounded-md p-3">
+                <span className="text-bg-500 text-sm font-medium">
+                  Y Coordinate
+                </span>
+                <input
+                  className="w-full"
+                  type="number"
+                  value={unit.entranceLocation[1]}
+                  onChange={e =>
+                    unitState.handleEntranceLocationChange(
+                      1,
+                      parseFloat(e.target.value) || 0
+                    )
+                  }
+                />
+              </div>
+              <div className="text-bg-500 flex items-center gap-2 text-sm">
+                <Icon icon="tabler:keyboard" />
+                <span>Press E to toggle entrance setting mode</span>
+              </div>
+              <Button
+                className="w-full"
+                icon={isSettingEntrance ? 'tabler:check' : 'tabler:map-pin'}
+                variant={isSettingEntrance ? 'primary' : 'secondary'}
+                onClick={() => setIsSettingEntrance(!isSettingEntrance)}
+              >
+                {isSettingEntrance
+                  ? 'Click on unit outline to snap entrance'
+                  : 'Set by clicking on map'}
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="text-bg-500 mb-2 text-sm">
+                Click the button below, then click on the unit outline to set
+                the entrance location
+              </div>
+              <div className="text-bg-500 mb-2 flex items-center gap-2 text-sm">
+                <Icon icon="tabler:keyboard" />
+                <span>Press E to toggle entrance setting mode</span>
+              </div>
+              <Button
+                className="w-full"
+                icon={isSettingEntrance ? 'tabler:check' : 'tabler:map-pin'}
+                variant={isSettingEntrance ? 'primary' : 'secondary'}
+                onClick={() => setIsSettingEntrance(!isSettingEntrance)}
+              >
+                {isSettingEntrance
+                  ? 'Click on unit outline to snap entrance'
+                  : 'Set entrance location'}
+              </Button>
+            </>
+          )}
         </div>
         {unit.coordinates.length > 0 && (
           <div className="border-bg-800 mt-4 space-y-2 rounded-md border-2 p-4">
