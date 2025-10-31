@@ -339,7 +339,8 @@ export function UnitEditor({
                     variant="plain"
                     onMouseDown={() =>
                       onHighlightCoord({
-                        unitId: unit.id,
+                        type: 'unit',
+                        elementId: unit.id,
                         index
                       })
                     }

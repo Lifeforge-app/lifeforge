@@ -68,6 +68,7 @@ export function Sidebar({
           <OutlineMode
             outlineState={outlineState}
             onFinishDrawing={onFinishDrawing}
+            onHighlightCoord={onHighlightCoord}
             onStartDrawing={onStartDrawing}
           />
         )}

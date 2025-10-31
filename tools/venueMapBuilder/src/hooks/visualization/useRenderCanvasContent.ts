@@ -6,7 +6,11 @@ import { useDrawing } from '../../providers/DrawingProvider'
 import { useFloors } from '../../providers/FloorsProvider'
 import { useSVGRefContext } from '../../providers/SVGRefProvider'
 import { useSettings } from '../../providers/SettingsProvider'
-import type { CoordinateWithSnapInfo, HighlightedCoord } from '../../types'
+import type {
+  Coordinate,
+  CoordinateWithSnapInfo,
+  HighlightedCoord
+} from '../../types'
 import { calculateCenter, closestPointOnPolygon } from '../../utils/unitUtils'
 
 type Point = [number, number]
@@ -67,6 +71,7 @@ export default function useRenderCanvasContent({
     showFloorPlanImage,
     unitLabelFontSize,
     pointRadius,
+    amenityChipSize,
     showUnit,
     showUnitOutline,
     showPaths,
@@ -313,7 +318,7 @@ export default function useRenderCanvasContent({
 
         if (!shouldRender) return
 
-        const iconSize = 32
+        const iconSize = amenityChipSize
 
         const iconColor = isSelected
           ? COLORS.selected
@@ -390,7 +395,8 @@ export default function useRenderCanvasContent({
       mapImage,
       setSelectedElementId,
       renderPoint,
-      showAmenities
+      showAmenities,
+      amenityChipSize
     ]
   )
 
@@ -876,11 +882,25 @@ export default function useRenderCanvasContent({
     (layer: D3Selection) => {
       if (!highlightedCoord || isDrawing) return
 
-      const unit = units.find(u => u.id === highlightedCoord.unitId)
+      let coord: Coordinate | undefined
 
-      if (!unit || !unit.coordinates[highlightedCoord.index]) return
+      if (highlightedCoord.type === 'unit') {
+        const unit = units.find(u => u.id === highlightedCoord.elementId)
 
-      const coord = unit.coordinates[highlightedCoord.index]
+        if (!unit || !unit.coordinates[highlightedCoord.index]) return
+
+        coord = unit.coordinates[highlightedCoord.index]
+      } else if (highlightedCoord.type === 'outline') {
+        const outline = buildingOutlines.find(
+          o => o.id === highlightedCoord.elementId
+        )
+
+        if (!outline || !outline.segments[highlightedCoord.index]) return
+
+        coord = outline.segments[highlightedCoord.index]
+      }
+
+      if (!coord) return
 
       layer
         .append('circle')
@@ -892,7 +912,7 @@ export default function useRenderCanvasContent({
         .attr('stroke-width', Math.max(2, pointRadius * 0.25))
         .attr('class', 'highlighted-coordinate-point')
     },
-    [highlightedCoord, isDrawing, units, pointRadius]
+    [highlightedCoord, isDrawing, units, buildingOutlines, pointRadius]
   )
 
   useEffect(() => {
@@ -922,6 +942,13 @@ export default function useRenderCanvasContent({
       renderUnits(polygonLayer, false)
     }
 
+    // Render amenities (always show in amenity mode or when drawing, toggle otherwise)
+    if (drawingMode === 'amenity') {
+      renderAmenities(polygonLayer, !isPathDisplayed)
+    } else if (isDrawing || showAmenities) {
+      renderAmenities(polygonLayer, false)
+    }
+
     // Render outlines (always show in outline mode or when drawing, toggle otherwise)
     if (drawingMode === 'outline') {
       renderOutlines(polygonLayer, !isPathDisplayed)
@@ -934,13 +961,6 @@ export default function useRenderCanvasContent({
       renderOutlineCircles(polygonLayer, !isPathDisplayed)
     } else if (isDrawing || showUnitOutline) {
       renderOutlineCircles(polygonLayer, false)
-    }
-
-    // Render amenities (always show in amenity mode or when drawing, toggle otherwise)
-    if (drawingMode === 'amenity') {
-      renderAmenities(polygonLayer, !isPathDisplayed)
-    } else if (isDrawing || showAmenities) {
-      renderAmenities(polygonLayer, false)
     }
 
     // Render path nodes (always show in path mode or when drawing, toggle otherwise)
