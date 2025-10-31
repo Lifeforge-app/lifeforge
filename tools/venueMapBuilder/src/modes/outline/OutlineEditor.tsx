@@ -9,6 +9,7 @@ import {
 
 import { useControlKeyState } from '../../providers/ControlKeyStateProvider'
 import { useDrawing } from '../../providers/DrawingProvider'
+import type { HighlightedCoord } from '../../types'
 import type { useOutline } from './useOutline'
 
 interface OutlineEditorProps {
@@ -16,13 +17,15 @@ interface OutlineEditorProps {
   isDrawing: boolean
   onStartDrawing: () => void
   onFinishDrawing: () => void
+  onHighlightCoord: (coord: HighlightedCoord | null) => void
 }
 
 export function OutlineEditor({
   isDrawing,
   outlineState,
   onStartDrawing,
-  onFinishDrawing
+  onFinishDrawing,
+  onHighlightCoord
 }: OutlineEditorProps) {
   const isControlPressed = useControlKeyState()
 
@@ -117,6 +120,24 @@ export function OutlineEditor({
                 </div>
                 <div className="space-y-2">
                   <Button
+                    className="w-full"
+                    icon="tabler:eye"
+                    variant="plain"
+                    onMouseDown={() =>
+                      onHighlightCoord({
+                        type: 'outline',
+                        elementId: outline.id,
+                        index
+                      })
+                    }
+                    onMouseLeave={() => {
+                      onHighlightCoord(null)
+                    }}
+                    onMouseUp={() => {
+                      onHighlightCoord(null)
+                    }}
+                  />
+                  <Button
                     dangerous
                     className="w-full"
                     icon="tabler:trash"
@@ -128,6 +149,14 @@ export function OutlineEditor({
                 </div>
               </div>
             ))}
+            <Button
+              className="mt-2 w-full"
+              icon="tabler:layout-align-center"
+              variant="secondary"
+              onClick={outlineState.handleAlignCoordinates}
+            >
+              Align Segments
+            </Button>
             <Button
               dangerous
               className="mt-2 w-full"

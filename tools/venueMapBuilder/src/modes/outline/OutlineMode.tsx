@@ -2,6 +2,7 @@ import { Button } from 'lifeforge-ui'
 
 import { useDrawing } from '../../providers/DrawingProvider'
 import { useFloors } from '../../providers/FloorsProvider'
+import type { HighlightedCoord } from '../../types'
 import { OutlineEditor } from './OutlineEditor'
 import { OutlineList } from './OutlineList'
 import type { useOutline } from './useOutline'
@@ -9,11 +10,13 @@ import type { useOutline } from './useOutline'
 function OutlineMode({
   outlineState,
   onStartDrawing,
-  onFinishDrawing
+  onFinishDrawing,
+  onHighlightCoord
 }: {
   outlineState: ReturnType<typeof useOutline>
   onStartDrawing: () => void
   onFinishDrawing: () => void
+  onHighlightCoord: (coord: HighlightedCoord | null) => void
 }) {
   const { isDrawing, selectedElementId } = useDrawing()
 
@@ -37,6 +40,7 @@ function OutlineMode({
           isDrawing={isDrawing}
           outlineState={outlineState}
           onFinishDrawing={onFinishDrawing}
+          onHighlightCoord={onHighlightCoord}
           onStartDrawing={onStartDrawing}
         />
       )}

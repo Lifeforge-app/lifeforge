@@ -79,7 +79,10 @@ function DrawingProvider({ children }: { children: React.ReactNode }) {
   }
 
   const addPoint = (point: [number, number], isSnapped = false) => {
-    setNewCoordinates(prev => [...prev, { coords: point, isSnapped }])
+    setNewCoordinates(prev => [
+      ...prev,
+      { coords: JSON.parse(JSON.stringify(point)), isSnapped }
+    ])
   }
 
   const removeLastPoint = () => {

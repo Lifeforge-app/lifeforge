@@ -16,6 +16,7 @@ interface SettingsContextType {
   showFloorPlanImage: boolean
   unitLabelFontSize: number
   pointRadius: number
+  amenityChipSize: number
   showUnit: boolean
   showUnitOutline: boolean
   showPaths: boolean
@@ -32,6 +33,7 @@ interface SettingsContextType {
   handleToggleShowFloorPlanImage: () => void
   handleUnitLabelFontSizeChange: (size: number) => void
   handlePointRadiusChange: (radius: number) => void
+  handleAmenityChipSizeChange: (size: number) => void
   handleToggleShowUnit: () => void
   handleToggleShowOutline: () => void
   handleToggleShowPaths: () => void
@@ -68,6 +70,8 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [pointRadius, setPointRadius] = useState<number>(
     DEFAULT_APP_DATA.pointRadius
   )
+
+  const [amenityChipSize, setAmenityChipSize] = useState<number>(32)
 
   const [showUnit, setShowUnit] = useState<boolean>(true)
 
@@ -109,6 +113,10 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
 
   const handlePointRadiusChange = (radius: number) => {
     setPointRadius(radius)
+  }
+
+  const handleAmenityChipSizeChange = (size: number) => {
+    setAmenityChipSize(size)
   }
 
   const handleFloorPlanImageChange = async (file: File | string | null) => {
@@ -280,6 +288,12 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
     if (savedPointRadius) {
       setPointRadius(Number(savedPointRadius))
     }
+
+    const savedAmenityChipSize = localStorage.getItem('amenityChipSize')
+
+    if (savedAmenityChipSize) {
+      setAmenityChipSize(Number(savedAmenityChipSize))
+    }
   }, [])
 
   useEffect(() => {
@@ -289,6 +303,10 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     localStorage.setItem('pointRadius', String(pointRadius))
   }, [pointRadius])
+
+  useEffect(() => {
+    localStorage.setItem('amenityChipSize', String(amenityChipSize))
+  }, [amenityChipSize])
 
   useEffect(() => {
     updateAppData({ mallName })
@@ -301,6 +319,7 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
         showFloorPlanImage,
         unitLabelFontSize,
         pointRadius,
+        amenityChipSize,
         showUnit,
         showUnitOutline,
         showPaths,
@@ -317,6 +336,7 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
         handleToggleShowFloorPlanImage,
         handleUnitLabelFontSizeChange,
         handlePointRadiusChange,
+        handleAmenityChipSizeChange,
         handleToggleShowUnit,
         handleToggleShowOutline,
         handleToggleShowPaths,

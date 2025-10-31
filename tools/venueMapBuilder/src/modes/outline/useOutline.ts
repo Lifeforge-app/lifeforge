@@ -1,6 +1,6 @@
 import { useDrawing } from '../../providers/DrawingProvider'
 import { useFloors } from '../../providers/FloorsProvider'
-import { createNewOutline } from '../../utils/unitUtils'
+import { alignCoordinates, createNewOutline } from '../../utils/unitUtils'
 
 export function useOutline() {
   const {
@@ -60,6 +60,18 @@ export function useOutline() {
     })
   }
 
+  const handleAlignCoordinates = () => {
+    if (!selectedFloor || !selectedOutline) return
+
+    const aligned = alignCoordinates(selectedOutline.segments)
+
+    updateFloor(selectedFloor.id, {
+      buildingOutlines: selectedFloor.buildingOutlines.map(o =>
+        o.id === selectedOutline.id ? { ...o, segments: aligned } : o
+      )
+    })
+  }
+
   const handleSegmentDelete = (index: number) => {
     if (!selectedFloor || !selectedOutline) return
 
@@ -112,6 +124,7 @@ export function useOutline() {
     handleOutlineNameChange,
     handleOutlineColorChange,
     handleOutlineStrokeWidthChange,
+    handleAlignCoordinates,
     handleSegmentChange,
     handleSegmentDelete,
     handleClearSegments,

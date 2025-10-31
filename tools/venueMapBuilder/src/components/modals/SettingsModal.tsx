@@ -72,7 +72,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
       <div className="mb-6 mt-4">
         <FileInput
           acceptedMimeTypes={{
-            image: ['png', 'jpeg', 'jpg', 'webp', 'svg']
+            image: ['png', 'jpeg', 'jpg', 'webp', 'svg+xml']
           }}
           file={fileData.file}
           icon="tabler:photo"
@@ -105,6 +105,16 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
         setValue={settings.handlePointRadiusChange}
         step={1}
         value={settings.pointRadius}
+        wrapperClassName="mt-10"
+      />
+      <SliderInput
+        icon="tabler:map-pin"
+        label="Amenity Chip Size"
+        max={64}
+        min={8}
+        setValue={settings.handleAmenityChipSizeChange}
+        step={2}
+        value={settings.amenityChipSize}
         wrapperClassName="mt-10"
       />
       <div className="mt-12 flex items-center justify-between">

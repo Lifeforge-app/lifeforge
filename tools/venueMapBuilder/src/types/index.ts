@@ -74,10 +74,17 @@ export interface CoordinateWithSnapInfo {
   isSnapped: boolean
 }
 
-export interface HighlightedCoord {
-  unitId: string
-  index: number
-}
+export type HighlightedCoord =
+  | {
+      type: 'unit'
+      elementId: string
+      index: number
+    }
+  | {
+      type: 'outline'
+      elementId: string
+      index: number
+    }
 
 export interface ImageDimensions {
   width: number
