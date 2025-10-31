@@ -283,10 +283,12 @@ function FormModal({
   return (
     <div className="flex min-w-[50vw] flex-col">
       <ModalHeader
-        actionButtonProps={{
-          ...actionButton,
-          onClick: () => actionButton?.onClick?.(data, setData)
-        }}
+        actionButtonProps={
+          actionButton && {
+            ...actionButton,
+            onClick: () => actionButton?.onClick?.(data, setData)
+          }
+        }
         icon={icon}
         namespace={namespace ? namespace : undefined}
         title={title}
