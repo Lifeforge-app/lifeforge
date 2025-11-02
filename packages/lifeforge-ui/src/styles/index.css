@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 
-@import 'react-medium-image-zoom/dist/styles.css';
-@import 'react-toastify/dist/ReactToastify.css';
-@import 'react-tooltip/dist/react-tooltip.css';
-@import 'react-virtualized/styles.css';
+@import '../../node_modules/react-medium-image-zoom/dist/styles.css';
+@import '../../node_modules/react-toastify/dist/ReactToastify.css';
+@import '../../node_modules/react-tooltip/dist/react-tooltip.css';
+@import '../../node_modules/react-virtualized/styles.css';
 
 @import './themes/index.css';
 @import './abbreviations.css';

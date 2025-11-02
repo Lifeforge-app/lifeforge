@@ -1,19 +1,19 @@
 import { PBService, getAPIKey } from '@functions/database'
+import { LoggingService } from '@functions/logging/loggingService'
 import { ClientError } from '@functions/routes/utils/response'
-import { zodResponseFormat } from '@functions/utils/zodResponseFormat'
+import { zodTextFormat } from '@functions/utils/zodResponseFormat'
+import chalk from 'chalk'
 import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
 import OpenAI from 'openai'
-import { ChatCompletionMessageParam as OpenAIChatCompletionMessageParam } from 'openai/resources/index.mjs'
+import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
 import z from 'zod'
 
 export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
   pb: PBService
   provider: 'groq' | 'openai'
   model: string
-  messages:
-    | GroqChatCompletionMessageParam[]
-    | OpenAIChatCompletionMessageParam[]
+  messages: ResponseInputItem[]
   structure?: T
 }
 
@@ -38,40 +38,67 @@ export async function fetchAI<
     throw new ClientError(`API key for ${provider} not found.`)
   }
 
-  const client = new {
-    groq: Groq,
-    openai: OpenAI
-  }[provider]({
+  if (provider === 'groq') {
+    const client = new Groq({
+      apiKey
+    })
+
+    const response = await client.chat.completions.create({
+      messages: messages as GroqChatCompletionMessageParam[],
+      model
+    })
+
+    const res = response.choices[0]?.message?.content
+
+    if (!res) {
+      return null
+    }
+
+    return res as any
+  }
+
+  const client = new OpenAI({
     apiKey
   })
 
   if (structure) {
-    const completion = await (client as OpenAI).chat.completions.parse({
+    const completion = await client.responses.parse({
       model,
-      messages: messages as OpenAIChatCompletionMessageParam[],
-      response_format: zodResponseFormat(structure, 'response')
+      input: messages as ResponseInputItem[],
+      text: {
+        format: zodTextFormat(structure, 'response')
+      }
     })
 
-    const parsedResponse = completion.choices[0]?.message?.parsed
+    const parsedResponse = completion.output_parsed
 
     if (!parsedResponse) {
       return null
     }
 
+    LoggingService.debug(
+      `Received structured response (${chalk.blue(Object.keys(parsedResponse).length)} fields) from OpenAI model: ${chalk.green(model)}`,
+      'AI'
+    )
+
     return parsedResponse
   }
 
-  // @ts-expect-error - hmmm
-  const response = await client.chat.completions.create({
-    messages,
+  const response = await client.responses.create({
+    input: messages as ResponseInputItem[],
     model
   })
 
-  const res = response.choices[0]?.message?.content
+  const res = response.output_text
 
   if (!res) {
     return null
   }
 
-  return res
+  LoggingService.debug(
+    `Received text response (${chalk.blue(res.length)} characters) from OpenAI model: ${chalk.green(model)}`,
+    'AI'
+  )
+
+  return res as any
 }

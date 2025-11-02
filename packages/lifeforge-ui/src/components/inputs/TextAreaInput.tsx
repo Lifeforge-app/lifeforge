@@ -76,7 +76,7 @@ function TextAreaInput({
         />
         <textarea
           ref={autoFocusableRef(autoFocus, ref)}
-          className="focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 mt-3 -mb-3 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
+          className="focus:placeholder:text-bg-400 max-h-128 dark:focus:placeholder:text-bg-600 outline-hidden focus:outline-hidden mt-9 min-h-8 w-full resize-none rounded-lg bg-transparent px-6 pb-3 pl-4 tracking-wide placeholder:text-transparent"
           placeholder={placeholder}
           value={value}
           onInput={e => {

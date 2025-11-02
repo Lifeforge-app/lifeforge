@@ -6,7 +6,7 @@ layer(base);
 @plugin 'daisyui';
 
 @import 'lifeforge-ui/dist/index.css';
-@source "../../../node_modules/lifeforge-ui/dist";
+@source "../../../packages/lifeforge-ui/dist";
 
 @font-face {
   font-family: 'LTAIdentityMedium';
