@@ -5,6 +5,42 @@ import z from 'zod'
 import { challenge } from '..'
 import getDecryptedMaster from '../utils/getDecryptedMaster'
 
+const get = forgeController
+  .query()
+  .description('Get API key entry by keyId')
+  .input({
+    query: z.object({
+      keyId: z.string()
+    })
+  })
+  .callback(async ({ pb, query: { keyId } }) => {
+    const entry = await pb.getFirstListItem
+      .collection('api_keys__entries')
+      .filter([
+        {
+          field: 'keyId',
+          operator: '=',
+          value: keyId
+        }
+      ])
+      .execute()
+
+    if (!entry || !entry.exposable) {
+      throw new Error('Entry is not exposible')
+    }
+
+    try {
+      const decryptedKey = decrypt2(
+        entry.key,
+        process.env.MASTER_KEY!
+      ).toString()
+
+      return decryptedKey
+    } catch {
+      throw new Error('Failed to decrypt the API key')
+    }
+  })
+
 const list = forgeController
   .query()
   .description('Get all API key entries')
@@ -179,6 +215,7 @@ const remove = forgeController
   )
 
 export default forgeRouter({
+  get,
   list,
   checkKeys,
   decrypt,
