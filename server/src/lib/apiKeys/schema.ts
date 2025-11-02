@@ -8,6 +8,7 @@ const apiKeysSchemas = {
       description: z.string(),
       icon: z.string(),
       key: z.string(),
+      exposable: z.boolean(),
       created: z.string(),
       updated: z.string()
     }),
@@ -104,6 +105,15 @@ const apiKeysSchemas = {
           required: false,
           system: false,
           type: 'text'
+        },
+        {
+          hidden: false,
+          id: 'bool3709713248',
+          name: 'exposable',
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'bool'
         },
         {
           hidden: false,
