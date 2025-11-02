@@ -33,8 +33,8 @@
     "lodash": "^4.17.21",
     "path": "^0.12.7",
     "postcss": "^8.5.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-i18next": "^15.5.1",
     "react-toastify": "^11.0.5",
     "shared": "workspace:*",
@@ -43,6 +43,8 @@
   },
   "devDependencies": {
     "@types/javascript-color-gradient": "^2.4.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-react": "^5.1.0",
     "vite": "^7.0.5"

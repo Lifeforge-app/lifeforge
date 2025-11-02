@@ -113,7 +113,18 @@ function CreateEntryModal({
         label: 'Name',
         placeholder: 'Enter name',
         required: true,
-        icon: 'tabler:file-text'
+        icon: 'tabler:file-text',
+        validator: value => {
+          if (value.includes('<') || value.includes('>')) {
+            return 'Name cannot contain < or > characters'
+          }
+
+          if (!value.match(/^[a-z][a-zA-Z0-9]*$/)) {
+            return 'Name must be in camelCase format'
+          }
+
+          return true
+        }
       }
     })
     .initialData({

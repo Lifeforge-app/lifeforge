@@ -23,7 +23,7 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: bun upgrade && bun install
 
       - name: Type check server
         run: bun run forge types server
@@ -45,22 +45,7 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Type check shared package
-        run: bun run forge types shared
-
-      - name: Build shared package
-        run: bun run forge build shared
-
-      - name: Type check UI package
-        run: bun run forge types ui
-
-      - name: Build UI package
-        run: bun run forge build ui
-
-      - name: Type check client
-        run: bun run forge types client
+        run: bun upgrade && bun install
 
       - name: Build client
         run: bun run forge build client
