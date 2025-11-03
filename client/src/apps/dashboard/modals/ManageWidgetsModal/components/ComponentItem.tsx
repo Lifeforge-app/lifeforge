@@ -21,7 +21,7 @@ function ComponentListItem({
   namespace?: string
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const { t } = useTranslation(namespace ?? 'apps.dashboard')
+  const { t } = useTranslation('apps.dashboard')
 
   const {
     dashboardLayout: enabledWidgets,
@@ -126,10 +126,19 @@ function ComponentListItem({
         </div>
         <div className="flex flex-col">
           <div className="font-semibold">
-            {t([`widgets.${id}.title`, `widgets.${id}`, id])}
+            {t([
+              `widgets.${namespace}.${id}.title`,
+              `widgets.${id}.title`,
+              `widgets.${namespace}.${id}`,
+              `widgets.${id}`,
+              id
+            ])}
           </div>
           <div className="text-bg-500 text-sm">
-            {t(`widgets.${id}.description`)}
+            {t([
+              `widgets.${namespace}.${id}.description`,
+              `widgets.${id}.description`
+            ])}
           </div>
         </div>
       </div>
