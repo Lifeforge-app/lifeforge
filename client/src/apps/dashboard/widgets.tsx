@@ -18,6 +18,7 @@ const widgetsPromises = Object.entries(widgets).map(async ([, importer]) => {
 const DASHBOARD_WIDGETS: {
   [key: string]: {
     component: React.FC
+    namespace: string | null
     icon: string
     minW?: number
     minH?: number
@@ -32,6 +33,7 @@ await Promise.all(widgetsPromises).then(resolvedWidgets => {
 
     DASHBOARD_WIDGETS[config.id] = {
       component,
+      namespace: config.namespace || null,
       icon: config.icon,
       minW: config.minW,
       minH: config.minH

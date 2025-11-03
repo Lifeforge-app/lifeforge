@@ -1,0 +1,6 @@
+[submodule "apps/venueDirectories"]
+	path = apps/venueDirectories
+	url = https://github.com/melvinchia3636/lifeforge-module-venueDirectories.git
+[submodule "apps/codeTime"]
+	path = apps/codeTime
+	url = https://github.com/lifeforge-app/lifeforge-module-codeTime.git
