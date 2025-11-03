@@ -27,6 +27,16 @@ export function injectModuleRoute(moduleName: string): void {
     return
   }
 
+  const moduleServerPath = path.resolve(`apps/${moduleName}/server/index.ts`)
+
+  if (!fs.existsSync(moduleServerPath)) {
+    CLILoggingService.info(
+      `No server entry file found for module "${moduleName}", skipping route injection`
+    )
+
+    return
+  }
+
   const routesContent = fs.readFileSync(routesConfigPath, 'utf8')
 
   try {

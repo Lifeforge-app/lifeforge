@@ -18,6 +18,7 @@ Handlebars.registerHelper('kabab', _.kebabCase)
 Handlebars.registerHelper('pascal', (str: string) =>
   _.startCase(str).replace(/ /g, '')
 )
+Handlebars.registerHelper('camel', _.camelCase)
 
 type ModuleMetadata = {
   moduleName: {

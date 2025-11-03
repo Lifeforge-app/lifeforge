@@ -1,0 +1,8 @@
+{
+  "widgets": {
+    "{{camel moduleName.en}}": {
+      "title": "{{moduleName.zhTW}}",
+      "description": "為{{moduleDesc.zhTW}}量身定制的小工具"
+    }
+  }
+}
