@@ -22,13 +22,14 @@ function ManageWidgetsModal({
       />
       <ul className="space-y-2 overflow-y-auto">
         {Object.entries(DASHBOARD_WIDGETS).map(
-          ([key, { icon, minW, minH }]) => (
+          ([key, { icon, minW, minH, namespace }]) => (
             <ComponentListItem
               key={key}
               icon={icon}
               id={key}
               minH={minH}
               minW={minW}
+              namespace={namespace ?? undefined}
               setReady={setReady}
             />
           )
