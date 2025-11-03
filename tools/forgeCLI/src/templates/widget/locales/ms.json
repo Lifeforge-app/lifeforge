@@ -1,0 +1,8 @@
+{
+  "widgets": {
+    "{{camel moduleName.en}}": {
+      "title": "{{moduleName.ms}}",
+      "description": "Widget untuk {{moduleDesc.ms}}"
+    }
+  }
+}

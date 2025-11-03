@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // JSX and Language Settings
+    "jsx": "react-jsx",
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable", "ES2024.Object"],
+    // Module Resolution
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    // Build and Output
+    "composite": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    // Type Checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "useDefineForClassFields": true,
+    "noFallthroughCasesInSwitch": true,
+    // Path Mapping
+    "paths": {
+      "@": ["./src/index"],
+      "@/*": ["./src/*"],
+      "@server/*": ["../../../server/src/*"]
+    }
+  },
+  "include": ["./src/**/*", "./manifest.ts"],
+  "references": [
+    {
+      "path": "../../../server/tsconfig.json"
+    }
+  ]
+}

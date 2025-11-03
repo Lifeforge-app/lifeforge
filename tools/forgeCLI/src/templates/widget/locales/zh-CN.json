@@ -1,0 +1,8 @@
+{
+  "widgets": {
+    "{{camel moduleName.en}}": {
+      "title": "{{moduleName.zhCN}}",
+      "description": "为{{moduleDesc.zhCN}}而量身定制的小部件"
+    }
+  }
+}
