@@ -8,8 +8,6 @@ const categoryFile = import.meta.glob('../../../apps/cat.config.json', {
 
 let categoriesSeq: string[] = []
 
-console.log(categoryFile)
-
 if (categoryFile['../../../apps/cat.config.json']) {
   categoriesSeq = (
     categoryFile['../../../apps/cat.config.json'] as { default: string[] }
