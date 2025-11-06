@@ -17,6 +17,7 @@ tsbuild
 # misc
 .DS_Store
 *.local
+!env/.env.example
 
 # logs
 npm-debug.log*
