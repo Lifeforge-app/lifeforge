@@ -26,7 +26,7 @@ function FilePickerModal({
     enableUrl?: boolean
     enableAI?: boolean
     defaultAIPrompt?: string
-    acceptedMimeTypes: Record<string, string[]>
+    acceptedMimeTypes?: Record<string, string[]>
     onSelect: (file: string | File, preview: string | null) => Promise<void>
   }
   onClose: () => void
