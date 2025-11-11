@@ -5,7 +5,7 @@ function ExampleWidget() {
   return (
     <DashboardItem
       icon="{{moduleIcon}}"
-      namespace="apps.{{kabab moduleName.en}}"
+      namespace="apps.{{camel moduleName.en}}"
       title="{{moduleName.en}}"
     >
       Hello World!
@@ -16,8 +16,8 @@ function ExampleWidget() {
 export default ExampleWidget
 
 export const config: WidgetConfig = {
-  namespace: 'apps.{{kabab moduleName.en}}',
-  id: '{{kabab moduleName.en}}',
+  namespace: 'apps.{{camel moduleName.en}}',
+  id: '{{kebab moduleName.en}}',
   icon: '{{moduleIcon}}',
   minH: 1,
   minW: 1

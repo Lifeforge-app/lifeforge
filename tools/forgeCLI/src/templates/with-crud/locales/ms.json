@@ -1,0 +1,24 @@
+{
+  "title": "{{moduleName.ms}}",
+  "description": "{{moduleDesc.ms}}",
+  "items": {
+    "entry": "Entri"
+  },
+  "modals": {
+    "entry": {
+      "create": "Buat Entri",
+      "update": "Kemaskini Entri"
+    }
+  },
+  "inputs": {
+    "name": "Nama Entri",
+    "icon": "Ikon Entri",
+    "color": "Warna Entri"
+  },
+  "empty": {
+    "entry": {
+      "title": "Tiada entri lagi",
+      "description": "Mulakan dengan mencipta entri pertama anda."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "title": "{{moduleName.zhTW}}",
+  "description": "{{moduleDesc.zhTW}}",
+  "items": {
+    "entry": "條目"
+  },
+  "modals": {
+    "entry": {
+      "create": "創建條目",
+      "update": "更新條目"
+    }
+  },
+  "inputs": {
+    "name": "條目名稱",
+    "icon": "條目圖標",
+    "color": "條目顏色"
+  },
+  "empty": {
+    "entry": {
+      "title": "還沒有條目",
+      "description": "通過創建您的第一個條目開始吧。"
+    }
+  }
+}

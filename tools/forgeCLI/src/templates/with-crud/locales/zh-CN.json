@@ -1,0 +1,24 @@
+{
+  "title": "{{moduleName.zhCN}}",
+  "description": "{{moduleDesc.zhCN}}",
+  "items": {
+    "entry": "条目"
+  },
+  "modals": {
+    "entry": {
+      "create": "创建条目",
+      "update": "更新条目"
+    }
+  },
+  "inputs": {
+    "name": "条目名称",
+    "icon": "条目图标",
+    "color": "条目颜色"
+  },
+  "empty": {
+    "entry": {
+      "title": "还没有条目",
+      "description": "通过创建您的第一个条目开始吧。"
+    }
+  }
+}

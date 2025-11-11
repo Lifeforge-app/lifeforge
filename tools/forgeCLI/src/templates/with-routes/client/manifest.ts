@@ -5,8 +5,8 @@ export default {
   name: '{{moduleName.en}}',
   icon: '{{moduleIcon}}',
   routes: {
-    '{{kabab moduleName.en}}': lazy(() => import('@/pages/EntryList')),
-    '{{kabab moduleName.en}}/:id': lazy(() => import('@/pages/EntryDetails'))
+    '{{kebab moduleName.en}}': lazy(() => import('@/pages/EntryList')),
+    '{{kebab moduleName.en}}/:id': lazy(() => import('@/pages/EntryDetails'))
   },
   category: '{{moduleCategory}}'
 } satisfies ModuleConfig
