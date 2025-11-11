@@ -25,7 +25,7 @@ function ItemWrapper<C extends React.ElementType = 'div'>({
     <Component
       {...props}
       className={clsx(
-        'shadow-custom relative rounded-lg p-4',
+        'shadow-custom relative block rounded-lg p-4',
         isInteractive
           ? 'component-bg-with-hover cursor-pointer transition-all'
           : 'component-bg',
