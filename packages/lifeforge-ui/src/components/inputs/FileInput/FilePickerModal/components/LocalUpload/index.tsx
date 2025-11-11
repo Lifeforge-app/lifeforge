@@ -13,7 +13,7 @@ function LocalUpload({
   setPreview,
   preview
 }: {
-  acceptedMimeTypes: Record<string, string[]>
+  acceptedMimeTypes?: Record<string, string[]>
   setFile: (file: File | string | null) => void
   file: File | string | null
   setPreview: (preview: string | null) => void
@@ -23,16 +23,18 @@ function LocalUpload({
     acceptedFiles[0]
       .arrayBuffer()
       .then(buffer => {
-        const acceptedMimeTypesFlattened = Object.entries(acceptedMimeTypes)
-          .flatMap(([type, exts]) => exts.map(ext => `${type}/${ext}`))
-          .join(', ')
-
         const mimeType = parse(buffer)
 
-        if (!acceptedMimeTypesFlattened.includes(mimeType?.mime ?? '')) {
-          toast.error(`Unsupported file type: ${mimeType?.mime ?? ''}`)
+        if (acceptedMimeTypes) {
+          const acceptedMimeTypesFlattened = Object.entries(acceptedMimeTypes)
+            .flatMap(([type, exts]) => exts.map(ext => `${type}/${ext}`))
+            .join(', ')
 
-          return
+          if (!acceptedMimeTypesFlattened.includes(mimeType?.mime ?? '')) {
+            toast.error(`Unsupported file type: ${mimeType?.mime ?? ''}`)
+
+            return
+          }
         }
 
         if (mimeType !== undefined && mimeType.mime.startsWith('image')) {
@@ -57,7 +59,7 @@ function LocalUpload({
 
   return file === null ? (
     <DnDContainer
-      acceptedMimeTypes={acceptedMimeTypes}
+      acceptedMimeTypes={acceptedMimeTypes || {}}
       getInputProps={getInputProps}
       getRootProps={getRootProps}
       isDragActive={isDragActive}

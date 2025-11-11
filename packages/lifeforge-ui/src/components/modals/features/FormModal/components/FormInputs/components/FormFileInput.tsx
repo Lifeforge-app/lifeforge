@@ -29,11 +29,7 @@ function FormFileInput({
 }: FormInputProps<FileFieldProps>) {
   return (
     <FileInput
-      acceptedMimeTypes={
-        field.acceptedMimeTypes || {
-          images: ['image/png', 'image/jpeg', 'image/webp']
-        }
-      }
+      acceptedMimeTypes={field.acceptedMimeTypes}
       defaultAIPrompt={field.defaultImageGenerationPrompt}
       disabled={field.disabled}
       enableAI={field.enableAIImageGeneration}

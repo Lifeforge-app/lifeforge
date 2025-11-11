@@ -49,7 +49,7 @@ function FileInput({
   enableUrl?: boolean
   enableAI?: boolean
   defaultAIPrompt?: string
-  acceptedMimeTypes: Record<string, string[]>
+  acceptedMimeTypes?: Record<string, string[]>
 }) {
   const open = useModalStore(state => state.open)
 
@@ -97,12 +97,13 @@ function FileInput({
           <p className="text-bg-500 text-center text-sm">
             {reminderText ||
               t('fileInputSupportedFormat', {
-                format:
-                  Object.entries(acceptedMimeTypes)
-                    .flatMap(([type, exts]) =>
-                      exts.map(ext => `${type}/${ext}`)
-                    )
-                    .join(', ') || 'N/A'
+                format: acceptedMimeTypes
+                  ? Object.entries(acceptedMimeTypes)
+                      .flatMap(([type, exts]) =>
+                        exts.map(ext => `${type}/${ext}`)
+                      )
+                      .join(', ') || 'N/A'
+                  : 'N/A'
               })}
           </p>
         </div>
@@ -110,9 +111,25 @@ function FileInput({
         <>
           {preview ? (
             <div className="mt-6">
-              <Zoom zoomMargin={100}>
-                <img alt="" className="max-h-96 rounded-md" src={preview} />
-              </Zoom>
+              {preview.startsWith('http') ||
+              preview.startsWith('blob:') ||
+              preview.startsWith('data:') ? (
+                <Zoom zoomMargin={100}>
+                  <img alt="" className="max-h-96 rounded-md" src={preview} />
+                </Zoom>
+              ) : (
+                <div className="flex w-full items-center gap-3">
+                  <Icon
+                    className="text-bg-500 size-6"
+                    icon={
+                      FILE_ICONS[
+                        preview.split('.').pop() as keyof typeof FILE_ICONS
+                      ] || 'tabler:file'
+                    }
+                  />
+                  <p className="w-full truncate">{preview}</p>
+                </div>
+              )}
               <Button
                 dangerous
                 className="mt-6 w-full"
