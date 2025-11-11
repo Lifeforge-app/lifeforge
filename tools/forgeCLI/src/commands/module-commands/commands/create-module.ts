@@ -7,18 +7,29 @@ import z from 'zod'
 
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../constants/constants'
 import { fetchAI } from '../../../utils/ai'
-import { executeCommand } from '../../../utils/helpers'
+import {
+  checkRunningPBInstances,
+  executeCommand,
+  killExistingProcess,
+  validateEnvironment
+} from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
+import {
+  runDatabaseMigrations,
+  startPocketBaseAndGetPid
+} from '../../db-commands/functions/database-initialization'
+import { validatePocketBaseSetup } from '../../db-commands/utils'
 import { getInstalledModules } from '../utils/file-system'
 import { injectModuleRoute } from '../utils/route-injection'
 import { injectModuleSchema } from '../utils/schema-injection'
 import selectIcon from '../utils/select-icon'
 
-Handlebars.registerHelper('kabab', _.kebabCase)
+Handlebars.registerHelper('kebab', _.kebabCase)
 Handlebars.registerHelper('pascal', (str: string) =>
   _.startCase(str).replace(/ /g, '')
 )
 Handlebars.registerHelper('camel', _.camelCase)
+Handlebars.registerHelper('snake', _.snakeCase)
 
 type ModuleMetadata = {
   moduleName: {
@@ -281,6 +292,8 @@ function copyFileAndTemplateRenderRecursive(
 ): void {
   const entries = fs.readdirSync(src, { withFileTypes: true })
 
+  const finalContext = { ...context, curlyOpen: '{', curlyClose: '}' }
+
   entries.forEach(entry => {
     const srcPath = `${src}/${entry.name}`
 
@@ -289,11 +302,11 @@ function copyFileAndTemplateRenderRecursive(
     // Render the destination path as a template
     const template = Handlebars.compile(destPath)
 
-    destPath = template(context)
+    destPath = template(finalContext)
 
     if (entry.isDirectory()) {
       fs.mkdirSync(destPath)
-      copyFileAndTemplateRenderRecursive(srcPath, destPath, context)
+      copyFileAndTemplateRenderRecursive(srcPath, destPath, finalContext)
     } else {
       const fileContent = fs.readFileSync(srcPath, 'utf-8')
 
@@ -367,10 +380,47 @@ function installDependencies(): void {
   CLILoggingService.success('Module dependencies installed successfully.')
 }
 
+async function generateDatabaseSchemas(): Promise<void> {
+  CLILoggingService.step('Generating database schemas for the new module...')
+
+  validateEnvironment([
+    'PB_DIR',
+    'PB_HOST',
+    'PB_EMAIL',
+    'PB_PASSWORD',
+    'MASTER_KEY'
+  ])
+
+  const pbRunning = checkRunningPBInstances(false)
+
+  let pbPid: number
+
+  if (!pbRunning) {
+    const { pbInstancePath } = await validatePocketBaseSetup(
+      process.env.PB_DIR!
+    )
+
+    pbPid = await startPocketBaseAndGetPid(pbInstancePath)
+  }
+
+  executeCommand('bun run forge db generate-schema', {
+    cwd: process.cwd(),
+    stdio: 'ignore'
+  })
+
+  CLILoggingService.success('Database schemas generated successfully.')
+
+  if (!pbRunning) {
+    killExistingProcess(pbPid!)
+  }
+}
+
 /**
  * Handles the create module command
  */
 export async function createModuleHandler(moduleName?: string): Promise<void> {
+  const { pbInstancePath } = await validatePocketBaseSetup(process.env.PB_DIR!)
+
   const moduleNameWithTranslation = await promptForModuleName(moduleName)
 
   const moduleType = await promptModuleType()
@@ -401,6 +451,9 @@ export async function createModuleHandler(moduleName?: string): Promise<void> {
 
   injectModuleRoute(camelizedModuleName)
   injectModuleSchema(camelizedModuleName)
+
+  runDatabaseMigrations(pbInstancePath)
+  await generateDatabaseSchemas()
 
   CLILoggingService.success(
     `Module "${moduleMetadata.moduleName.en}" setup is complete!`

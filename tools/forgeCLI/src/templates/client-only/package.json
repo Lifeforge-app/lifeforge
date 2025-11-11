@@ -1,5 +1,5 @@
 {
-    "name": "{{kabab moduleName.en}}",
+    "name": "{{kebab moduleName.en}}",
     "version": "0.0.0",
     "description": "{{moduleDesc.en}}",
     "dependencies": {
