@@ -51,7 +51,7 @@ import {
 } from '../utils/response'
 import restoreFormDataType from '../utils/restoreDataType'
 import { splitMediaAndData } from '../utils/splitMediaAndData'
-import { validateAuthToken } from '../utils/validateAuthToken'
+import { isAuthTokenValid } from '../utils/validateAuthToken'
 
 /**
  * A fluent builder class for creating type-safe Express.js route controllers with validation.
@@ -414,9 +414,7 @@ export class ForgeControllerBuilder<
       >,
       res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
     ) => {
-      const isValid = await validateAuthToken(req, res, this._noAuth)
-
-      if (!isValid) return
+      if (!(await isAuthTokenValid(req, res, this._noAuth))) return
 
       try {
         let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
