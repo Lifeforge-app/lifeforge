@@ -1,4 +1,5 @@
 export * from 'react-router'
+
 export {
   useQueryState,
   useQueryStates,
@@ -45,6 +46,8 @@ export { useAuth } from './providers/AuthProvider'
 export { default as forceDown } from './utils/forceDown'
 
 export { encrypt, decrypt } from './utils/encryption'
+
+export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
 
 export {
   createForgeAPIClient,
