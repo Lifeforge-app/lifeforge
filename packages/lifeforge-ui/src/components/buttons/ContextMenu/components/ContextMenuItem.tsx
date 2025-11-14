@@ -69,7 +69,7 @@ function ContextMenuItem({
       className={clsx(
         getBaseClassNames(disabled || loading, checked, dangerous),
         !disabled && !loading && 'hover:bg-bg-200 dark:hover:bg-bg-700/50',
-        'flex w-full cursor-default items-center gap-3 p-4 text-left outline-hidden transition-all select-none',
+        'outline-hidden flex w-full cursor-default select-none items-center gap-3 p-4 text-left transition-all',
         className
       )}
       disabled={disabled || loading}
@@ -86,7 +86,7 @@ function ContextMenuItem({
       {(() => {
         if (loading) {
           return (
-            <Icon className="size-5 shrink-0" icon="svg-spinners:180-ring" />
+            <Icon className="size-5 shrink-0" icon="svg-spinners:ring-resize" />
           )
         }
 
