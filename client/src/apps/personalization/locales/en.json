@@ -112,5 +112,6 @@
   },
   "inputs": {
     "colorHex": "Color Hex"
-  }
+  },
+  "notApplicable": "Not Applicable"
 }

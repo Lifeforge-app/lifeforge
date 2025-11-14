@@ -112,5 +112,6 @@
   },
   "inputs": {
     "colorHex": "颜色十六进制"
-  }
+  },
+  "notApplicable": "不适用"
 }

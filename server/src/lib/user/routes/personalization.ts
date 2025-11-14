@@ -111,6 +111,57 @@ const getGoogleFont = forgeController
     }
   })
 
+const listGoogleFontsPin = forgeController
+  .query()
+  .description('List pinned Google Fonts')
+  .input({})
+  .callback(async ({ pb }) => {
+    if (!pb.instance.authStore.record) {
+      throw new ClientError('Unauthorized', 401)
+    }
+
+    const record = await pb.getOne
+      .collection('user__users')
+      .id(pb.instance.authStore.record.id)
+      .execute()
+
+    return (record.pinnedFontFamilies || []) as string[]
+  })
+
+const toggleGoogleFontsPin = forgeController
+  .mutation()
+  .description('Toggle pin/unpin Google Font')
+  .input({
+    body: z.object({
+      family: z.string()
+    })
+  })
+  .statusCode(204)
+  .callback(async ({ pb, body: { family } }) => {
+    if (!pb.instance.authStore.record) {
+      throw new ClientError('Unauthorized', 401)
+    }
+
+    const record = await pb.getOne
+      .collection('user__users')
+      .id(pb.instance.authStore.record.id)
+      .execute()
+
+    const pinnedFontFamilies: string[] = record.pinnedFontFamilies || []
+
+    const updatedPinnedFontFamilies = pinnedFontFamilies.includes(family)
+      ? pinnedFontFamilies.filter(f => f !== family)
+      : [...pinnedFontFamilies, family]
+
+    await pb.update
+      .collection('user__users')
+      .id(pb.instance.authStore.record.id)
+      .data({
+        pinnedFontFamilies: updatedPinnedFontFamilies
+      })
+      .execute()
+  })
+
 const updateBgImage = forgeController
   .mutation()
   .description('Update background image')
@@ -208,6 +259,8 @@ const updatePersonalization = forgeController
 export default forgeRouter({
   listGoogleFonts,
   getGoogleFont,
+  listGoogleFontsPin,
+  toggleGoogleFontsPin,
   updateBgImage,
   deleteBgImage,
   updatePersonalization
