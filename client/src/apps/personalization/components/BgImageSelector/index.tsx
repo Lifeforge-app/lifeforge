@@ -127,7 +127,10 @@ function BgImageSelector() {
             </Button>
           </>
         ) : pixabayEnabledQuery.isLoading ? (
-          <Icon className="text-bg-500 size-6" icon="svg-spinners:180-ring" />
+          <Icon
+            className="text-bg-500 size-6"
+            icon="svg-spinners:ring-resize"
+          />
         ) : (
           <>
             <Button

@@ -50,9 +50,12 @@ function LocationInput({
   const debouncedQuery = useDebounce(query, 500)
 
   const enabledQuery = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys.setHost(apiHost).input({
-      keys: 'gcloud'
-    }).queryOptions()
+    forgeAPI.apiKeys.entries.checkKeys
+      .setHost(apiHost)
+      .input({
+        keys: 'gcloud'
+      })
+      .queryOptions()
   )
 
   const enabled =
@@ -113,7 +116,7 @@ function LocationInput({
             <div className="flex-center my-6">
               <Icon
                 className="text-bg-500 h-6 w-6"
-                icon="svg-spinners:180-ring"
+                icon="svg-spinners:ring-resize"
               />
             </div>
           ))}
@@ -121,7 +124,7 @@ function LocationInput({
       {enabled === 'loading' ? (
         <Icon
           className="text-bg-500 absolute right-6 top-1/2 h-6 w-6 -translate-y-1/2"
-          icon="svg-spinners:180-ring"
+          icon="svg-spinners:ring-resize"
         />
       ) : (
         !enabled && (

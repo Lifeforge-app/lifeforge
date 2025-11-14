@@ -15,7 +15,7 @@ function ButtonIcon({
 }) {
   const finalIcon = useMemo(() => {
     if (loading) {
-      return 'svg-spinners:180-ring'
+      return 'svg-spinners:ring-resize'
     }
 
     if (disabled) {
