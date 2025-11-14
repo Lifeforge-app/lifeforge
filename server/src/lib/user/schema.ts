@@ -22,6 +22,7 @@ const usersSchemas = {
       APIKeysMasterPasswordHash: z.string(),
       twoFASecret: z.string(),
       fontScale: z.number(),
+      pinnedFontFamilies: z.any(),
       created: z.string(),
       updated: z.string()
     }),
@@ -315,6 +316,16 @@ const usersSchemas = {
           required: true,
           system: false,
           type: 'number'
+        },
+        {
+          hidden: false,
+          id: 'json3078794215',
+          maxSize: 0,
+          name: 'pinnedFontFamilies',
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'json'
         },
         {
           hidden: false,
