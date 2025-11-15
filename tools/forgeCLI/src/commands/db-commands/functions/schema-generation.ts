@@ -88,6 +88,32 @@ export async function buildModuleCollectionsMap(
     )
 
     if (!matchingModule) {
+      const moduleName = _.camelCase(collection.name.split('__')[0])
+
+      const possibleModulePath = [
+        `./server/src/lib/${moduleName}/server`,
+        `./apps/${moduleName}/server`
+      ]
+
+      const foundModulePath = possibleModulePath.filter(modulePath =>
+        fs.existsSync(modulePath)
+      )
+
+      if (foundModulePath.length > 0) {
+        CLILoggingService.debug(
+          `Inferred module path for collection '${collection.name}': ${foundModulePath[0]}`
+        )
+
+        const key = `${foundModulePath[0]}|${moduleName}`
+
+        if (!moduleCollectionsMap[key]) {
+          moduleCollectionsMap[key] = []
+        }
+
+        moduleCollectionsMap[key].push(collection)
+        continue
+      }
+
       CLILoggingService.warn(
         `Collection '${collection.name}' has no corresponding module`
       )
