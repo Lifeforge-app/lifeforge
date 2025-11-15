@@ -5,7 +5,7 @@ export default {
   name: 'API Keys',
   icon: 'tabler:password',
   routes: {
-    'api-keys': lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   category: 'Settings'
 } satisfies ModuleConfig

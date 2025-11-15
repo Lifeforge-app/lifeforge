@@ -5,7 +5,7 @@ export default {
   name: 'Dashboard',
   icon: 'tabler:dashboard',
   routes: {
-    dashboard: lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   category: '<START>'
 } satisfies ModuleConfig

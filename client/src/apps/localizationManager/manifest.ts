@@ -5,7 +5,7 @@ export default {
   name: 'Localization Manager',
   icon: 'mingcute:translate-line',
   routes: {
-    'localization-manager': lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   disabled: !import.meta.env.VITE_LOCALIZATION_MANAGER_URL,
   category: 'SSO'

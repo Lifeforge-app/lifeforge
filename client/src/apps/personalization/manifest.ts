@@ -5,7 +5,7 @@ export default {
   name: 'Personalization',
   icon: 'tabler:palette',
   routes: {
-    personalization: lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   category: 'Settings'
 } satisfies ModuleConfig

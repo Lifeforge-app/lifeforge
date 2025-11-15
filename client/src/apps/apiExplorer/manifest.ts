@@ -5,7 +5,7 @@ export default {
   name: 'API Explorer',
   icon: 'mynaui:api',
   routes: {
-    'api-explorer': lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   disabled: !import.meta.env.VITE_API_EXPLORER_URL,
   category: 'SSO'

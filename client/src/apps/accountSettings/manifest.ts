@@ -5,7 +5,7 @@ export default {
   name: 'Account Settings',
   icon: 'tabler:user-cog',
   routes: {
-    account: lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   hidden: true,
   category: 'Settings'
