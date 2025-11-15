@@ -187,7 +187,7 @@ export default async function checkDB(): Promise<void> {
 
       if (validationResult.collectionsWithDiscrepancies.length > 0) {
         throw new DatabaseValidationError(
-          `Collections with schema discrepancies: ${validationResult.collectionsWithDiscrepancies.join(', ')}. If the collection has been updated in the database, please run "${chalk.cyan('bun forge db generate-schema')}" to synchronize the schema. If the collection has been modified outside of Lifeforge, please revert the changes to ensure compatibility.`
+          `Collections with schema discrepancies: ${validationResult.collectionsWithDiscrepancies.join(', ')}. If the collection has been updated in the database, please run "${chalk.cyan('bun forge db generate-schemas')}" to synchronize the schema. If the collection has been modified outside of Lifeforge, please revert the changes to ensure compatibility.`
         )
       }
 
