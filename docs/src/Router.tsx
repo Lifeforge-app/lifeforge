@@ -3,7 +3,7 @@ import type { RouteObject } from 'shared'
 
 import { components as COMPONENTS } from './components/MdxComponents'
 
-const modules = import.meta.glob(['./contents/**/*.mdx'])
+const modules = import.meta.glob(['./contents/*/*.mdx'])
 
 const sectionItems = Object.groupBy(Object.keys(modules), item =>
   _.kebabCase(item.split('/')[2].replace(/^\d{2}\./, ''))
