@@ -5,7 +5,7 @@ export default {
   name: '{{moduleName.en}}',
   icon: '{{moduleIcon}}',
   routes: {
-    '{{kebab moduleName.en}}': lazy(() => import('@'))
+    '/': lazy(() => import('@'))
   },
   category: '{{moduleCategory}}'
 } satisfies ModuleConfig
