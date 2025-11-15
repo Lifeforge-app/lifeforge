@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from 'shared'
 
 function LightAndDarkMode() {
-  const { theme, setTheme } = usePersonalization()
+  const { derivedTheme, setTheme } = usePersonalization()
 
   return (
     <div className="mt-6 flex w-full min-w-0">
@@ -14,8 +14,8 @@ function LightAndDarkMode() {
           </h3>
           <div className="bg-bg-100 dark:bg-bg-800 flex w-full gap-1 rounded-md p-2 md:w-auto">
             <button
-              className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-2 pl-3 pr-4 font-medium ${
-                theme === 'light'
+              className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-2 pr-4 pl-3 font-medium ${
+                derivedTheme === 'light'
                   ? 'bg-custom-500 text-bg-800'
                   : 'bg-bg-800 text-bg-400'
               }`}
@@ -25,8 +25,10 @@ function LightAndDarkMode() {
               Light
             </button>
             <button
-              className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-2 pl-3 pr-4 font-medium ${
-                theme === 'dark' ? 'bg-custom-500 text-bg-800' : 'text-bg-400'
+              className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-2 pr-4 pl-3 font-medium ${
+                derivedTheme === 'dark'
+                  ? 'bg-custom-500 text-bg-800'
+                  : 'text-bg-400'
               }`}
               onClick={() => setTheme('dark')}
             >
@@ -36,10 +38,10 @@ function LightAndDarkMode() {
           </div>
         </div>
         <img
-          key={theme}
+          key={derivedTheme}
           alt=""
           className="mt-4 w-full rounded-md"
-          src={`/assets/colors/${theme}.png`}
+          src={`https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/colors/${derivedTheme}.webp`}
         />
       </div>
     </div>
