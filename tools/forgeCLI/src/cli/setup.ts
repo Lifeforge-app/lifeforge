@@ -86,8 +86,8 @@ function setupModulesCommand(): void {
     .command('update')
     .description('Update an installed module')
     .argument(
-      '<module>',
-      'Module to update, e.g., wallet or "all" to update all modules'
+      '[module]',
+      'Module to update, e.g., wallet (optional, will update all if not provided)'
     )
     .action(moduleHandlers.updateModuleHandler)
   command
@@ -129,7 +129,7 @@ function setupDatabaseCommands(): void {
     .action(dbHandlers.initializeDatabaseHandler)
 
   command
-    .command('generate-schema')
+    .command('generate-schemas')
     .description('Generate Zod schemas from PocketBase collections')
     .argument('[module]', 'Optional module name to generate schema for')
     .action(dbHandlers.generateSchemaHandler)
