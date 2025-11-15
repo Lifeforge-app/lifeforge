@@ -39,6 +39,7 @@ import {
   BaseResponse,
   Context,
   ConvertMedia,
+  Description,
   InferZodType,
   InputSchema,
   MediaConfig
@@ -111,7 +112,7 @@ export class ForgeControllerBuilder<
   protected _existenceCheck: any = {}
 
   /** Human-readable description of what this endpoint does */
-  protected _description = ''
+  protected _description: Description = ''
 
   /** Whether this endpoint returns downloadable content */
   protected _isDownloadable = false
@@ -331,7 +332,7 @@ export class ForgeControllerBuilder<
    * controller.description('Creates a new user account with email verification')
    * ```
    */
-  description(desc: string) {
+  description(desc: Description) {
     this._description = desc
 
     return this
@@ -559,6 +560,29 @@ export class ForgeControllerBuilder<
       }
     }
 
+    function handlerWithMeta(
+      req: Request<
+        never,
+        any,
+        InferZodType<TInput['body']>,
+        InferZodType<TInput['query']>
+      >,
+      res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
+    ) {
+      return _handler(req, res)
+    }
+
+    handlerWithMeta.meta = {
+      schema: this._schema,
+      description: this._description,
+      options: {
+        statusCode: this._statusCode,
+        noDefaultResponse: this._noDefaultResponse,
+        existenceCheck: this._existenceCheck,
+        isDownloadable: this._isDownloadable
+      }
+    }
+
     const newBuilder = new ForgeControllerBuilder<
       TMethod,
       TInput,
@@ -576,7 +600,7 @@ export class ForgeControllerBuilder<
     newBuilder._description = this._description
     newBuilder._isDownloadable = this._isDownloadable
     newBuilder._noAuth = this._noAuth
-    newBuilder._handler = _handler
+    newBuilder._handler = handlerWithMeta
     newBuilder._callback = cb
 
     return newBuilder
@@ -631,7 +655,7 @@ class ForgeControllerBuilderWithoutSchema<
   TMethod extends 'get' | 'post' = 'get'
 > {
   /** Human-readable description of what this endpoint does */
-  protected _description = ''
+  protected _description: Description = ''
   protected _noAuth = false
 
   constructor(public _method: TMethod) {}
@@ -642,7 +666,7 @@ class ForgeControllerBuilderWithoutSchema<
    * @param desc - Descriptive text explaining what this endpoint does
    * @returns This builder instance for method chaining
    */
-  description(desc: string) {
+  description(desc: Description) {
     this._description = desc
 
     return this
