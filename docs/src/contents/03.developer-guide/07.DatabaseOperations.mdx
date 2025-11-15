@@ -157,6 +157,20 @@ If you have expanded relations in your query, you may filter based on the expand
 ]).execute();`}
 </Code>
 
+If you are constructing queries dynamically where some filter conditions may be optional, you can simply perform ternary checks when building the filter array. The wrapper will automatically ignore any <code>null</code> or <code>undefined</code> values in the array.
+
+<Code language="typescript">
+  {`const isActiveOnly = true; // Example condition
+const minAge = 18; // Example condition
+
+const data = await pb.getFullList.collection("my_collection").filter([
+    isActiveOnly ? { field: "status", operator: "=", value: "active" } : null,
+    minAge ? { field: "age", operator: ">", value: minAge } : undefined
+]).execute();`}
+</Code>
+
+This is especially useful for building filters based on search queries provided by the API consumers.
+
 <Note>
 - IntelliSense in your code editor should provide you with autocompletion suggestions for the <code>field</code> field based on the available fields, including those from expanded relations.
 
