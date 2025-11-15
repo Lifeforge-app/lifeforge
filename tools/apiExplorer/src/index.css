@@ -1,7 +1,0 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600&family=Outfit:wght@100..900&family=Urbanist:wght@100;200;300;400;500;600;700&display=swap')
-layer(base);
-
-@import 'tailwindcss';
-
-@import 'lifeforge-ui/dist/index.css';
-@source "../../../node_modules/lifeforge-ui/dist";
