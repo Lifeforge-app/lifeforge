@@ -7,14 +7,24 @@ import z from 'zod'
 const welcome = forgeController
   .query()
   .noAuth()
-  .description('Welcome message')
+  .description({
+    en: 'Welcome to LifeForge API',
+    ms: 'Selamat datang ke API LifeForge',
+    'zh-CN': '欢迎使用LifeForge API',
+    'zh-TW': '歡迎使用LifeForge API'
+  })
   .input({})
   .callback(async () => 'Get ready to forge your life!' as const)
 
 const ping = forgeController
   .mutation()
   .noAuth()
-  .description('Ping the server')
+  .description({
+    en: 'Ping the server',
+    ms: 'Ping pelayan',
+    'zh-CN': '向伺服器发送Ping',
+    'zh-TW': '向伺服器發送Ping'
+  })
   .input({
     body: z.object({
       timestamp: z.number().min(0)
@@ -28,7 +38,12 @@ const ping = forgeController
 const status = forgeController
   .query()
   .noAuth()
-  .description('Get server status')
+  .description({
+    en: 'Get server status',
+    ms: 'Dapatkan status pelayan',
+    'zh-CN': '获取服务器状态',
+    'zh-TW': '獲取伺服器狀態'
+  })
   .input({})
   .callback(async () => ({
     environment: process.env.NODE_ENV || 'development'
@@ -37,7 +52,12 @@ const status = forgeController
 const getMedia = forgeController
   .query()
   .noAuth()
-  .description('Get media file from PocketBase')
+  .description({
+    en: 'Retrieve media file from PocketBase',
+    ms: 'Dapatkan fail media dari PocketBase',
+    'zh-CN': '从PocketBase获取媒体文件',
+    'zh-TW': '從PocketBase獲取媒體文件'
+  })
   .input({
     query: z.object({
       collectionId: z.string(),
@@ -71,7 +91,12 @@ const getMedia = forgeController
 
 const corsAnywhere = forgeController
   .query()
-  .description('Proxy request to bypass CORS')
+  .description({
+    en: 'CORS Anywhere - Fetch external URL content',
+    ms: 'CORS Anywhere - Dapatkan kandungan URL luaran',
+    'zh-CN': 'CORS Anywhere - 获取外部URL内容',
+    'zh-TW': 'CORS Anywhere - 獲取外部URL內容'
+  })
   .input({
     query: z.object({
       url: z.url()

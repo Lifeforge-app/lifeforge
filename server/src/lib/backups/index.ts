@@ -5,7 +5,12 @@ import z from 'zod'
 
 const list = forgeController
   .query()
-  .description('List all backups')
+  .description({
+    en: 'Retrieve all database backups',
+    ms: 'Dapatkan semua sandaran pangkalan data',
+    'zh-CN': '获取所有数据库备份',
+    'zh-TW': '獲取所有資料庫備份'
+  })
   .input({})
   .callback(async () => {
     const pb = await getPBSuperUserInstance()
@@ -21,7 +26,12 @@ const list = forgeController
 
 const download = forgeController
   .query()
-  .description('Download a specific backup')
+  .description({
+    en: 'Download a database backup file',
+    ms: 'Muat turun fail sandaran pangkalan data',
+    'zh-CN': '下载数据库备份文件',
+    'zh-TW': '下載資料庫備份文件'
+  })
   .input({
     query: z.object({
       key: z.string()
@@ -53,7 +63,12 @@ const download = forgeController
 
 const create = forgeController
   .mutation()
-  .description('Create a new backup')
+  .description({
+    en: 'Create a new database backup',
+    ms: 'Cipta sandaran pangkalan data baharu',
+    'zh-CN': '创建新的数据库备份',
+    'zh-TW': '創建新的資料庫備份'
+  })
   .input({
     body: z.object({
       backupName: z.string().optional()
@@ -72,7 +87,12 @@ const create = forgeController
 
 const remove = forgeController
   .mutation()
-  .description('Delete a specific backup')
+  .description({
+    en: 'Delete a database backup',
+    ms: 'Padam sandaran pangkalan data',
+    'zh-CN': '删除数据库备份',
+    'zh-TW': '刪除資料庫備份'
+  })
   .input({
     query: z.object({
       key: z.string()

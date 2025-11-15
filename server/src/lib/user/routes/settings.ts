@@ -5,7 +5,12 @@ import z from 'zod'
 
 const updateAvatar = forgeController
   .mutation()
-  .description('Update user avatar')
+  .description({
+    en: 'Upload new user avatar',
+    ms: 'Muat naik avatar pengguna baharu',
+    'zh-CN': '上传新的用户头像',
+    'zh-TW': '上傳新的用戶頭像'
+  })
   .input({})
   .media({
     file: {
@@ -28,7 +33,12 @@ const updateAvatar = forgeController
 
 const deleteAvatar = forgeController
   .mutation()
-  .description('Delete user avatar')
+  .description({
+    en: 'Remove user avatar',
+    ms: 'Alih keluar avatar pengguna',
+    'zh-CN': '移除用户头像',
+    'zh-TW': '移除用戶頭像'
+  })
   .input({})
   .statusCode(204)
   .callback(async ({ pb }) => {
@@ -45,7 +55,12 @@ const deleteAvatar = forgeController
 
 const updateProfile = forgeController
   .mutation()
-  .description('Update user profile')
+  .description({
+    en: 'Update user profile information',
+    ms: 'Kemas kini maklumat profil pengguna',
+    'zh-CN': '更新用户资料信息',
+    'zh-TW': '更新用戶資料信息'
+  })
   .input({
     body: z.object({
       data: z.object({
@@ -93,7 +108,12 @@ const updateProfile = forgeController
 
 const requestPasswordReset = forgeController
   .mutation()
-  .description('Request password reset')
+  .description({
+    en: 'Request password reset email',
+    ms: 'Minta e-mel tetapan semula kata laluan',
+    'zh-CN': '请求密码重置邮件',
+    'zh-TW': '請求密碼重置郵件'
+  })
   .input({})
   .callback(({ pb }) =>
     pb.instance

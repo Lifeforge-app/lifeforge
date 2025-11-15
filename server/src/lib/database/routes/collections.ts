@@ -3,7 +3,12 @@ import { forgeController, forgeRouter } from '@functions/routes'
 
 const list = forgeController
   .query()
-  .description('List all collections')
+  .description({
+    en: 'Retrieve all database collections',
+    ms: 'Dapatkan semua koleksi pangkalan data',
+    'zh-CN': '获取所有数据库集合',
+    'zh-TW': '獲取所有資料庫集合'
+  })
   .input({})
   .callback(async () => {
     const pb = await getPBSuperUserInstance()

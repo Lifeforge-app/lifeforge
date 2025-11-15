@@ -11,7 +11,12 @@ let currentCodeVerifier: string | null = null
 const listProviders = forgeController
   .query()
   .noAuth()
-  .description('List available OAuth providers')
+  .description({
+    en: 'Retrieve available OAuth providers',
+    ms: 'Dapatkan penyedia OAuth yang tersedia',
+    'zh-CN': '获取可用的OAuth提供商',
+    'zh-TW': '獲取可用的OAuth提供商'
+  })
   .input({})
   .callback(async ({ pb }) => {
     return (
@@ -22,7 +27,12 @@ const listProviders = forgeController
 const getEndpoint = forgeController
   .query()
   .noAuth()
-  .description('Get OAuth endpoint for a provider')
+  .description({
+    en: 'Get OAuth authorization URL for provider',
+    ms: 'Dapatkan URL kebenaran OAuth untuk penyedia',
+    'zh-CN': '获取提供商的OAuth授权URL',
+    'zh-TW': '獲取提供商的OAuth授權URL'
+  })
   .input({
     query: z.object({
       provider: z.string()
@@ -49,7 +59,12 @@ const getEndpoint = forgeController
 const verify = forgeController
   .mutation()
   .noAuth()
-  .description('Verify OAuth callback')
+  .description({
+    en: 'Verify OAuth authorization callback',
+    ms: 'Sahkan panggilan balik kebenaran OAuth',
+    'zh-CN': '验证OAuth授权回调',
+    'zh-TW': '驗證OAuth授權回調'
+  })
   .input({
     body: z.object({
       provider: z.string(),

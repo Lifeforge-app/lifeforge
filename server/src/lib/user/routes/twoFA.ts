@@ -27,14 +27,24 @@ let tempCode = ''
 
 const getChallenge = forgeController
   .query()
-  .description('Get 2FA challenge')
+  .description({
+    en: 'Retrieve 2FA challenge token',
+    ms: 'Dapatkan token cabaran 2FA',
+    'zh-CN': '获取二次验证挑战令牌',
+    'zh-TW': '獲取二次驗證挑戰令牌'
+  })
   .input({})
   .callback(async () => challenge)
 
 const requestOTP = forgeController
   .query()
   .noAuth()
-  .description('Request OTP for 2FA')
+  .description({
+    en: 'Request OTP for two-factor authentication',
+    ms: 'Minta OTP untuk pengesahan dua faktor',
+    'zh-CN': '请求二次验证的OTP',
+    'zh-TW': '請求二次驗證的OTP'
+  })
   .input({
     query: z.object({
       email: z.string().email()
@@ -60,7 +70,12 @@ const requestOTP = forgeController
 const validateOTP = forgeController
   .mutation()
   .noAuth()
-  .description('Validate OTP for 2FA')
+  .description({
+    en: 'Verify OTP for two-factor authentication',
+    ms: 'Sahkan OTP untuk pengesahan dua faktor',
+    'zh-CN': '验证二次验证的OTP',
+    'zh-TW': '驗證二次驗證的OTP'
+  })
   .input({
     body: z.object({
       otp: z.string(),
@@ -85,7 +100,12 @@ const validateOTP = forgeController
 
 const generateAuthenticatorLink = forgeController
   .query()
-  .description('Generate authenticator link for 2FA')
+  .description({
+    en: 'Generate authenticator app setup link',
+    ms: 'Jana pautan persediaan aplikasi pengesah',
+    'zh-CN': '生成身份验证器设置链接',
+    'zh-TW': '生成身份驗證器設置連結'
+  })
   .input({})
   .callback(
     async ({
@@ -114,7 +134,12 @@ const generateAuthenticatorLink = forgeController
 
 const verifyAndEnable = forgeController
   .mutation()
-  .description('Verify and enable 2FA')
+  .description({
+    en: 'Verify and activate two-factor authentication',
+    ms: 'Sahkan dan aktifkan pengesahan dua faktor',
+    'zh-CN': '验证并启用二次验证',
+    'zh-TW': '驗證並啟用二次驗證'
+  })
   .input({
     body: z.object({
       otp: z.string()
@@ -158,7 +183,12 @@ const verifyAndEnable = forgeController
 
 const disable = forgeController
   .mutation()
-  .description('Disable 2FA')
+  .description({
+    en: 'Disable two-factor authentication',
+    ms: 'Lumpuhkan pengesahan dua faktor',
+    'zh-CN': '禁用二次验证',
+    'zh-TW': '禁用二次驗證'
+  })
   .input({})
   .callback(async ({ pb }) => {
     if (!canDisable2FA) {
@@ -182,7 +212,12 @@ const disable = forgeController
 const verify = forgeController
   .mutation()
   .noAuth()
-  .description('Verify 2FA code')
+  .description({
+    en: 'Verify two-factor authentication code',
+    ms: 'Sahkan kod pengesahan dua faktor',
+    'zh-CN': '验证二次验证代码',
+    'zh-TW': '驗證二次驗證代碼'
+  })
   .input({
     body: z.object({
       otp: z.string(),

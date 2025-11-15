@@ -5,7 +5,12 @@ import z from 'zod'
 
 const searchImages = forgeController
   .query()
-  .description('Search images on Pixabay')
+  .description({
+    en: 'Search for images on Pixabay',
+    ms: 'Cari imej di Pixabay',
+    'zh-CN': '在Pixabay上搜索图片',
+    'zh-TW': '在Pixabay上搜尋圖片'
+  })
   .input({
     query: z.object({
       q: z.string().min(1),

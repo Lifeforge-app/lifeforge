@@ -6,7 +6,12 @@ import z from 'zod'
 
 const search = forgeController
   .query()
-  .description('Search for locations')
+  .description({
+    en: 'Search for locations using Google Places API',
+    ms: 'Cari lokasi menggunakan API Tempat Google',
+    'zh-CN': '使用Google Places API搜索位置',
+    'zh-TW': '使用Google Places API搜尋位置'
+  })
   .input({
     query: z.object({
       q: z.string()
