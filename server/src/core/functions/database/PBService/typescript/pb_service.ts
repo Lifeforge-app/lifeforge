@@ -73,6 +73,7 @@ type FilterType<
       filters: FilterType<TCollectionKey, TExpandConfig>
     }
   | undefined
+  | null
 >
 
 // Helper type for field selection object

@@ -30,6 +30,7 @@ type MockFilter =
       filters: MockFilter[]
     }
   | undefined
+  | null
 
 // Helper function to create filter with proper typing
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -359,7 +360,7 @@ describe('recursivelyBuildFilter', () => {
       expect(result.params).toEqual({})
     })
 
-    it('should handle filter array with undefined elements', () => {
+    it('should handle filter array with undefined and null elements', () => {
       const filter = createFilter([
         undefined,
         {
@@ -367,7 +368,8 @@ describe('recursivelyBuildFilter', () => {
           operator: '=',
           value: 'John'
         },
-        undefined
+        undefined,
+        null
       ])
 
       const result = recursivelyBuildFilter(filter)
