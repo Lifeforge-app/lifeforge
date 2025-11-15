@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import { spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
@@ -144,6 +145,10 @@ export function killExistingProcess(
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
 
+      CLILoggingService.debug(
+        `Killed process with PID: ${chalk.bold.blue(processKeywordOrPID)}`
+      )
+
       return
     }
 
@@ -154,6 +159,12 @@ export function killExistingProcess(
 
     if (serverInstance) {
       executeCommand(`pkill -f "${processKeywordOrPID}"`)
+
+      CLILoggingService.debug(
+        `Killed process matching keyword: ${chalk.bold.blue(
+          processKeywordOrPID
+        )} (PID: ${chalk.bold.blue(serverInstance)})`
+      )
 
       return parseInt(serverInstance, 10)
     }
