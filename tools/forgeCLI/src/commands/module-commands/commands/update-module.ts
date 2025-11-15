@@ -91,14 +91,17 @@ async function updateSingleModule(moduleName: string): Promise<void> {
     executeCommand(
       `cd apps/${moduleName} && git pull origin main && bun install`
     )
+
+    executeCommand(`bun forge db generate-migrations ${moduleName}`)
+
     CLILoggingService.success(`Successfully updated module: ${moduleName}`)
   } catch (error) {
     CLILoggingService.error(`Failed to update module "${moduleName}": ${error}`)
   }
 }
 
-export async function updateModuleHandler(moduleName: string): Promise<void> {
-  if (moduleName === 'all') {
+export async function updateModuleHandler(moduleName?: string): Promise<void> {
+  if (!moduleName) {
     const modules = getInstalledModules()
 
     if (modules.length === 0) {
