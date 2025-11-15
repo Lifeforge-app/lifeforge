@@ -93,6 +93,7 @@ const getLocale = forgeController
 
 const notifyMissing = forgeController
   .mutation()
+  .description('Notify server about missing locale')
   .input({
     body: z.object({
       namespace: z.string(),
