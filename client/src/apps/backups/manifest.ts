@@ -5,7 +5,7 @@ export default {
   name: 'Backups',
   icon: 'tabler:history',
   routes: {
-    backups: lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   category: 'Settings'
 } satisfies ModuleConfig

@@ -5,7 +5,7 @@ export default {
   name: 'Documentation',
   icon: 'tabler:info-circle',
   routes: {
-    documentation: lazy(() => import('.'))
+    '/': lazy(() => import('.'))
   },
   togglable: false,
   category: '<END>'

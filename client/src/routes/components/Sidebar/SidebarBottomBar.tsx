@@ -18,7 +18,7 @@ function SidebarBottomBar() {
     if (window.innerWidth < 1024) {
       toggleSidebar()
     }
-    navigate('/account')
+    navigate('/account-settings')
   }, [navigate, toggleSidebar])
 
   const handleLoggingOut = useCallback(() => {
@@ -31,7 +31,7 @@ function SidebarBottomBar() {
   return (
     <div
       className={clsx(
-        'flex-center w-full min-w-0 pb-4 pt-0',
+        'flex-center w-full min-w-0 pt-0 pb-4',
         sidebarExpanded && 'px-4'
       )}
     >

@@ -21,18 +21,17 @@ interface RouteBuilderOptions {
  */
 export function buildChildRoutes({
   routes,
-  isNested = false,
   APIKeys = [],
   loadingMessage = 'loadingModule',
   config
 }: RouteBuilderOptions): RouteObject[] {
   return Object.entries(routes).map(([path, component]) => {
+    path = path.startsWith('/') ? path.slice(1) : path
+
     const Component = component
 
-    const routePath = isNested ? path : `/${path}`
-
     return {
-      path: routePath,
+      path,
       element: (
         <APIKeyStatusProvider APIKeys={APIKeys}>
           <Suspense
@@ -73,12 +72,12 @@ export function createModuleRoute(
     return {
       path: `/${_.kebabCase(item.name)}`,
       element: <Provider />,
-      children: buildChildRoutes({
-        ...routeConfig,
-        isNested: true
-      })
+      children: buildChildRoutes(routeConfig)
     }
   }
 
-  return buildChildRoutes(routeConfig)
+  return {
+    path: `/${_.kebabCase(item.name)}`,
+    children: buildChildRoutes(routeConfig)
+  }
 }
