@@ -1,9 +1,10 @@
+import { Description } from '@functions/routes/typescript/forge_controller.types'
 import z from 'zod'
 
 type Route = {
   method: string
   path: string
-  description: string
+  description: Description
   schema: {
     response: unknown
     params?: unknown
@@ -64,5 +65,5 @@ export default function traceRouteStack(
     }
   }
 
-  return routes
+  return routes.filter(route => route.path !== '*')
 }
