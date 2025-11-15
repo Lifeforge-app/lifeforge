@@ -419,6 +419,8 @@ async function generateDatabaseSchemas(): Promise<void> {
  * Handles the create module command
  */
 export async function createModuleHandler(moduleName?: string): Promise<void> {
+  checkRunningPBInstances()
+
   const { pbInstancePath } = await validatePocketBaseSetup(process.env.PB_DIR!)
 
   const moduleNameWithTranslation = await promptForModuleName(moduleName)
