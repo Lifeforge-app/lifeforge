@@ -7,7 +7,12 @@ import getDecryptedMaster from '../utils/getDecryptedMaster'
 
 const get = forgeController
   .query()
-  .description('Get API key entry by keyId')
+  .description({
+    en: 'Retrieve API key by key ID',
+    ms: 'Dapatkan kunci API mengikut ID kunci',
+    'zh-CN': '通过密钥ID获取API密钥',
+    'zh-TW': '透過密鑰ID獲取API密鑰'
+  })
   .input({
     query: z.object({
       keyId: z.string()
@@ -43,7 +48,12 @@ const get = forgeController
 
 const list = forgeController
   .query()
-  .description('Get all API key entries')
+  .description({
+    en: 'Retrieve all API key entries',
+    ms: 'Dapatkan semua entri kunci API',
+    'zh-CN': '获取所有API密钥条目',
+    'zh-TW': '獲取所有API密鑰條目'
+  })
   .input({
     query: z.object({
       master: z.string()
@@ -68,7 +78,12 @@ const list = forgeController
 
 const checkKeys = forgeController
   .query()
-  .description('Check if API keys exist')
+  .description({
+    en: 'Verify if API keys exist',
+    ms: 'Sahkan jika kunci API wujud',
+    'zh-CN': '验证API密钥是否存在',
+    'zh-TW': '驗證API密鑰是否存在'
+  })
   .input({
     query: z.object({
       keys: z.string()
@@ -86,7 +101,12 @@ const checkKeys = forgeController
 
 const decrypt = forgeController
   .query()
-  .description('Get API key entry by ID')
+  .description({
+    en: 'Decrypt and retrieve API key entry',
+    ms: 'Nyahsulitkan dan dapatkan entri kunci API',
+    'zh-CN': '解密并获取API密钥条目',
+    'zh-TW': '解密並獲取API密鑰條目'
+  })
   .input({
     query: z.object({
       id: z.string(),
@@ -122,7 +142,12 @@ const decrypt = forgeController
 
 const create = forgeController
   .mutation()
-  .description('Create a new API key entry')
+  .description({
+    en: 'Create a new API key entry',
+    ms: 'Cipta entri kunci API baharu',
+    'zh-CN': '创建新的API密钥条目',
+    'zh-TW': '創建新的API密鑰條目'
+  })
   .input({
     body: z.object({
       data: z.string()
@@ -158,7 +183,12 @@ const create = forgeController
 
 const update = forgeController
   .mutation()
-  .description('Update an API key entry')
+  .description({
+    en: 'Update an existing API key entry',
+    ms: 'Kemas kini entri kunci API sedia ada',
+    'zh-CN': '更新现有的API密钥条目',
+    'zh-TW': '更新現有的API密鑰條目'
+  })
   .input({
     query: z.object({
       id: z.string()
@@ -200,7 +230,12 @@ const update = forgeController
 
 const remove = forgeController
   .mutation()
-  .description('Delete an API key entry')
+  .description({
+    en: 'Delete an API key entry',
+    ms: 'Padam entri kunci API',
+    'zh-CN': '删除API密钥条目',
+    'zh-TW': '刪除API密鑰條目'
+  })
   .input({
     query: z.object({
       id: z.string()

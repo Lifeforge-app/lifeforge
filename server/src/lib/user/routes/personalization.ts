@@ -58,7 +58,12 @@ export enum Kind {
 
 const listGoogleFonts = forgeController
   .query()
-  .description('List available Google Fonts')
+  .description({
+    en: 'Retrieve available Google Fonts',
+    ms: 'Dapatkan fon Google yang tersedia',
+    'zh-CN': '获取可用的Google字体',
+    'zh-TW': '獲取可用的Google字體'
+  })
   .input({})
   .callback(async ({ pb }) => {
     const key = await getAPIKey('gcloud', pb)
@@ -84,7 +89,12 @@ const listGoogleFonts = forgeController
 
 const getGoogleFont = forgeController
   .query()
-  .description('Get specific Google Font details')
+  .description({
+    en: 'Get details of a specific Google Font',
+    ms: 'Dapatkan butiran fon Google tertentu',
+    'zh-CN': '获取特定Google字体详情',
+    'zh-TW': '獲取特定Google字體詳情'
+  })
   .input({
     query: z.object({
       family: z.string()
@@ -113,7 +123,12 @@ const getGoogleFont = forgeController
 
 const listGoogleFontsPin = forgeController
   .query()
-  .description('List pinned Google Fonts')
+  .description({
+    en: 'Retrieve pinned Google Fonts',
+    ms: 'Dapatkan fon Google yang disemat',
+    'zh-CN': '获取已固定的Google字体',
+    'zh-TW': '獲取已固定的Google字體'
+  })
   .input({})
   .callback(async ({ pb }) => {
     if (!pb.instance.authStore.record) {
@@ -130,7 +145,12 @@ const listGoogleFontsPin = forgeController
 
 const toggleGoogleFontsPin = forgeController
   .mutation()
-  .description('Toggle pin/unpin Google Font')
+  .description({
+    en: 'Pin or unpin a Google Font',
+    ms: 'Semat atau nyahsemat fon Google',
+    'zh-CN': '固定或取消固定Google字体',
+    'zh-TW': '固定或取消固定Google字體'
+  })
   .input({
     body: z.object({
       family: z.string()
@@ -164,7 +184,12 @@ const toggleGoogleFontsPin = forgeController
 
 const updateBgImage = forgeController
   .mutation()
-  .description('Update background image')
+  .description({
+    en: 'Upload new background image',
+    ms: 'Muat naik imej latar belakang baharu',
+    'zh-CN': '上传新的背景图片',
+    'zh-TW': '上傳新的背景圖片'
+  })
   .input({})
   .media({
     file: {
@@ -196,7 +221,12 @@ const updateBgImage = forgeController
 
 const deleteBgImage = forgeController
   .mutation()
-  .description('Delete background image')
+  .description({
+    en: 'Remove background image',
+    ms: 'Alih keluar imej latar belakang',
+    'zh-CN': '移除背景图片',
+    'zh-TW': '移除背景圖片'
+  })
   .input({})
   .statusCode(204)
   .callback(({ pb }) =>
@@ -211,7 +241,12 @@ const deleteBgImage = forgeController
 
 const updatePersonalization = forgeController
   .mutation()
-  .description('Update personalization settings')
+  .description({
+    en: 'Update user personalization preferences',
+    ms: 'Kemas kini keutamaan pemperibadian pengguna',
+    'zh-CN': '更新用户个性化偏好',
+    'zh-TW': '更新用戶個性化偏好'
+  })
   .input({
     body: z.object({
       data: z.object({

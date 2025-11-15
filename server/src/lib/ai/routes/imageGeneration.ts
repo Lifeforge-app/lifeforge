@@ -6,7 +6,12 @@ import z from 'zod'
 
 const generateImage = forgeController
   .mutation()
-  .description('Generate an image from a text prompt')
+  .description({
+    en: 'Generate image from text prompt using AI',
+    ms: 'Jana imej daripada gesaan teks menggunakan AI',
+    'zh-CN': '使用AI从文本提示生成图片',
+    'zh-TW': '使用AI從文本提示生成圖片'
+  })
   .input({
     body: z.object({
       prompt: z.string().min(1, 'Prompt cannot be empty')

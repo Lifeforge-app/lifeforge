@@ -8,13 +8,23 @@ import { challenge } from '..'
 
 const getChallenge = forgeController
   .query()
-  .description('Get authentication challenge')
+  .description({
+    en: 'Retrieve the authentication challenge for secure login.',
+    ms: 'Dapatkan cabaran pengesahan untuk log masuk selamat.',
+    'zh-CN': '获取安全登录的身份验证挑战。',
+    'zh-TW': '獲取安全登錄的身份驗證挑戰。'
+  })
   .input({})
   .callback(async () => challenge)
 
 const createOrUpdate = forgeController
   .mutation()
-  .description('Create or update master password')
+  .description({
+    en: 'Create or update the master password for API keys.',
+    ms: 'Cipta atau kemas kini kata laluan induk untuk kunci API.',
+    'zh-CN': '创建或更新API密钥的主密码。',
+    'zh-TW': '創建或更新API密鑰的主密碼。'
+  })
   .input({
     body: z.object({
       password: z.string()
@@ -38,7 +48,12 @@ const createOrUpdate = forgeController
 
 const verify = forgeController
   .mutation()
-  .description('Verify master password')
+  .description({
+    en: 'Verify the master password for API keys.',
+    ms: 'Sahkan kata laluan induk untuk kunci API.',
+    'zh-CN': '验证API密钥的主密码。',
+    'zh-TW': '驗證API密鑰的主密碼。'
+  })
   .input({
     body: z.object({
       password: z.string()
@@ -58,7 +73,12 @@ const verify = forgeController
 
 const verifyOTP = forgeController
   .mutation()
-  .description('Verify OTP')
+  .description({
+    en: 'Verify OTP for API key authentication',
+    ms: 'Sahkan OTP untuk pengesahan kunci API',
+    'zh-CN': '验证API密钥认证的OTP',
+    'zh-TW': '驗證API密鑰認證的OTP'
+  })
   .input({
     body: z.object({
       otp: z.string(),

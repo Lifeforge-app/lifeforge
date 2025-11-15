@@ -10,7 +10,12 @@ import { allApps } from './locales'
 
 const listSubnamespaces = forgeController
   .query()
-  .description('List subnamespaces for a namespace')
+  .description({
+    en: 'Retrieve subnamespaces in a namespace',
+    ms: 'Dapatkan subruang nama dalam ruang nama',
+    'zh-CN': '获取命名空间中的子空间',
+    'zh-TW': '獲取命名空間中的子空間'
+  })
   .input({
     query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE)
@@ -32,7 +37,12 @@ const listSubnamespaces = forgeController
 
 const listLocales = forgeController
   .query()
-  .description('List locales for a namespace and subnamespace')
+  .description({
+    en: 'Retrieve localization entries for subnamespace',
+    ms: 'Dapatkan entri penyetempatan untuk subruang nama',
+    'zh-CN': '获取子空间的本地化条目',
+    'zh-TW': '獲取子空間的本地化條目'
+  })
   .input({
     query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
@@ -89,7 +99,12 @@ const listLocales = forgeController
 
 const sync = forgeController
   .mutation()
-  .description('Sync locales for a namespace and subnamespace')
+  .description({
+    en: 'Synchronize localization changes to files',
+    ms: 'Segerakkan perubahan penyetempatan ke fail',
+    'zh-CN': '同步本地化更改到文件',
+    'zh-TW': '同步本地化更改到文件'
+  })
   .input({
     body: z.object({
       data: z.record(
@@ -187,7 +202,12 @@ const sync = forgeController
 
 const create = forgeController
   .mutation()
-  .description('Create a new locale entry or folder')
+  .description({
+    en: 'Create new localization entry or folder',
+    ms: 'Cipta entri atau folder penyetempatan baharu',
+    'zh-CN': '创建新的本地化条目或文件夹',
+    'zh-TW': '創建新的本地化條目或文件夾'
+  })
   .input({
     body: z.object({
       type: z.enum(['entry', 'folder']),
@@ -253,7 +273,12 @@ const create = forgeController
 
 const rename = forgeController
   .mutation()
-  .description('Rename a locale')
+  .description({
+    en: 'Rename a localization key',
+    ms: 'Namakan semula kunci penyetempatan',
+    'zh-CN': '重命名本地化键',
+    'zh-TW': '重新命名本地化鍵'
+  })
   .input({
     query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
@@ -330,7 +355,12 @@ const rename = forgeController
 
 const remove = forgeController
   .mutation()
-  .description('Delete a locale')
+  .description({
+    en: 'Delete a localization entry',
+    ms: 'Padam entri penyetempatan',
+    'zh-CN': '删除本地化条目',
+    'zh-TW': '刪除本地化條目'
+  })
   .input({
     query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),
@@ -393,7 +423,12 @@ const remove = forgeController
 
 const getTranslationSuggestions = forgeController
   .mutation()
-  .description('Get translation suggestions')
+  .description({
+    en: 'Generate AI-powered translation suggestions',
+    ms: 'Jana cadangan terjemahan berkuasa AI',
+    'zh-CN': '生成AI驱动的翻译建议',
+    'zh-TW': '生成AI驅動的翻譯建議'
+  })
   .input({
     query: z.object({
       namespace: z.enum(ALLOWED_NAMESPACE),

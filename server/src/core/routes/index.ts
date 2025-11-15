@@ -11,7 +11,12 @@ const router = express.Router()
 
 const listRoutes = forgeController
   .query()
-  .description('Get all registered routes')
+  .description({
+    en: 'List all available API routes',
+    ms: 'Senaraikan semua laluan API yang tersedia',
+    'zh-CN': '列出所有可用的API路由',
+    'zh-TW': '列出所有可用的API路由'
+  })
   .input({})
   .callback(async () => traceRouteStack(router.stack))
 

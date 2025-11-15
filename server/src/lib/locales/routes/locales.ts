@@ -22,9 +22,12 @@ export const allApps = fs
 const getLocale = forgeController
   .query()
   .noAuth()
-  .description(
-    'Get locales for a specific language, namespace, and subnamespace'
-  )
+  .description({
+    en: 'Retrieve localization strings for namespace',
+    ms: 'Dapatkan rentetan penyetempatan untuk ruang nama',
+    'zh-CN': '获取命名空间的本地化字符串',
+    'zh-TW': '獲取命名空間的本地化字串'
+  })
   .input({
     query: z.object({
       lang: z.enum(ALLOWED_LANG),
@@ -93,7 +96,12 @@ const getLocale = forgeController
 
 const notifyMissing = forgeController
   .mutation()
-  .description('Notify server about missing locale')
+  .description({
+    en: 'Report missing localization key',
+    ms: 'Laporkan kunci penyetempatan yang hilang',
+    'zh-CN': '报告缺失的本地化键',
+    'zh-TW': '報告缺失的本地化鍵'
+  })
   .input({
     body: z.object({
       namespace: z.string(),

@@ -11,7 +11,12 @@ import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 const validateOTP = forgeController
   .mutation()
-  .description('Validate OTP')
+  .description({
+    en: 'Verify one-time password',
+    ms: 'Sahkan kata laluan sekali guna',
+    'zh-CN': '验证一次性密码',
+    'zh-TW': '驗證一次性密碼'
+  })
   .input({
     body: z.object({
       otp: z.string(),
@@ -22,7 +27,12 @@ const validateOTP = forgeController
 
 const generateOTP = forgeController
   .query()
-  .description('Generate OTP')
+  .description({
+    en: 'Generate one-time password',
+    ms: 'Jana kata laluan sekali guna',
+    'zh-CN': '生成一次性密码',
+    'zh-TW': '生成一次性密碼'
+  })
   .input({})
   .callback(
     async ({ pb }) =>
@@ -36,7 +46,12 @@ const generateOTP = forgeController
 const login = forgeController
   .mutation()
   .noAuth()
-  .description('User login')
+  .description({
+    en: 'Authenticate user with credentials',
+    ms: 'Sahkan pengguna dengan kelayakan',
+    'zh-CN': '使用凭据认证用户',
+    'zh-TW': '使用憑證認證用戶'
+  })
   .input({
     body: z.object({
       email: z.string(),
@@ -89,7 +104,12 @@ const login = forgeController
 
 const verifySessionToken = forgeController
   .mutation()
-  .description('Verify session token')
+  .description({
+    en: 'Validate user session token',
+    ms: 'Sahkan token sesi pengguna',
+    'zh-CN': '验证用户会话令牌',
+    'zh-TW': '驗證用戶會話令牌'
+  })
   .input({})
   .callback(async ({ req }) => {
     const bearerToken = req.headers.authorization?.split(' ')[1].trim()
