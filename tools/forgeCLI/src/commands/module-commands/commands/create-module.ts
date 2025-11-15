@@ -403,7 +403,7 @@ async function generateDatabaseSchemas(): Promise<void> {
     pbPid = await startPocketBaseAndGetPid(pbInstancePath)
   }
 
-  executeCommand('bun run forge db generate-schema', {
+  executeCommand('bun run forge db generate-schemas', {
     cwd: process.cwd(),
     stdio: 'ignore'
   })
