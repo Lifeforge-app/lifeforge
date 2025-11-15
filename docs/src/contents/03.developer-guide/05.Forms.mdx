@@ -178,18 +178,21 @@ Compare the traditional imperative approach:
 {`const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState('')
 
-const handleTitleChange = (value: string) => {
-setTitle(value)
-if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
-setTitleError('Invalid title. Only alphanumeric characters and spaces are allowed.')
-} else {
-setTitleError('')
-}
+  const handleTitleChange = (value: string) => {
+    setTitle(value)
+
+    if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
+      setTitleError('Invalid title. Only alphanumeric characters and spaces are allowed.')
+    } else {
+      setTitleError('')
+    }
 }
 
 return (
-
-<form onSubmit={handleSubmit}>...</form>) `}
+    <form onSubmit={handleSubmit}>
+      ...
+    </form>
+) `}
 
   </Code>
 
@@ -199,11 +202,11 @@ With LifeForge's declarative approach:
 {`const { formProps } = defineForm<FormData>({
   ...uiConfig
 })
-  .typesMap({...})
-  .setupFields({...})
-  .initialData({...})
-  .onSubmit({...})
-  .build()
+    .typesMap({...})
+    .setupFields({...})
+    .initialData({...})
+    .onSubmit({...})
+    .build()
 
 return <Form {...formProps} />
 `}
@@ -287,12 +290,12 @@ Import the <code>defineForm</code> function and the <code>FormModal</code> compo
   <Code language="tsx">
   {`import { defineForm, FormModal } from 'lifeforge-ui'
 
-function MyForm({
-onClose
-}: {
-onClose: () => void;
-}) {
-const { formProps } = defineForm<FormData>({}).build()
+  function MyForm({
+    onClose
+  }: {
+    onClose: () => void;
+  }) {
+    const { formProps } = defineForm<FormData>({}).build()
 
     return <FormModal {...formProps} />
 
@@ -569,7 +572,7 @@ Alternatively, you can use a Zod schema to define the validation rules for the f
 
 In some cases, you may find yourself needing to explicitly manage the form state. This can be useful if you need fine-grained control over the form values or if you're working with complex form logic, for example populating a field with AI generated content.
 
-LifeForge uses <code>zustand</code> for form state management. The <code>defineForm</code> function exposes a <code>formStateStore</code> object which is a Zustand store that you can use to get and set the form values.
+LifeForge uses <code>zustand</code> for form state management. The <code>defineForm</code> function exposes a <code>formStateStore</code> object which is a Zustand store that you can use to get and set the form values. In addition, the <code>onClick</code> handler of the <code>actionButtonProps</code> also exposes the state getter and setter functions as its parameters.
 
   <Code language="tsx">
   {`
@@ -579,20 +582,29 @@ LifeForge uses <code>zustand</code> for form state management. The <code>defineF
         ...,
         actionButtonProps: {
           ...,
-          onClick: () => {
-            const { name } = formStateStore.getState()
+          onClick: (data, setData) => {
+            const { name } = data
 
             const newName = await forgeAPI.myApp.coolStuff.generateCoolerName.mutate({
               currentName: name
             })
 
-            formStateStore.setState(() => ({
+            setData((oldData) => ({
+              ...oldData,
               name: newName
             }))
           }
         }
       }
     }).build()
+
+    useEffect(() => {
+     const unsubscribe = formStateStore.subscribe((state) => {
+        console.log('Form state changed:', state)
+      })
+
+      return unsubscribe
+    }, [])
 
     return <FormModal {...formProps} />
 
