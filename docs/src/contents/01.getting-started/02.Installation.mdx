@@ -89,8 +89,16 @@ First, clone the LifeForge monorepo to your local machine or your server. You ca
 Then, install the dependencies by running the following command:
 
 <Code language="bash">
-{'cd lifeforge && bun install'}
+{'cd lifeforge && bun install --linker isolated'}
 </Code>
+
+<Warning>
+### Using `--linker isolated`
+
+By default, Bun uses a global cache for dependencies. However, in a monorepo setup like LifeForge, this can lead to issues with dependency resolution. To avoid these issues, we recommend using the `--linker isolated` flag when installing dependencies. This will ensure that each package in the monorepo has its own isolated set of dependencies to prevent phantom dependency issues.
+
+When doing deployment on a server, make sure to always use the `--linker isolated` flag when running `bun install`.
+</Warning>
 
 That's pretty much it for the installation of the system itself. Now, let's move on to the installation of the database.
 
