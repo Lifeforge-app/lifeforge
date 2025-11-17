@@ -42,19 +42,18 @@ function SettingsSection({
       <div className="space-y-3 px-4">
         <ColorInput
           className="w-full"
-          value={settings.colorOfCurrentLine}
           label="Color of Selected Line"
           setValue={color => {
             setSettings({
               colorOfCurrentLine: color
             })
           }}
+          value={settings.colorOfCurrentLine}
         />
         <FileInput
           enableUrl
           acceptedMimeTypes={{
-            'image/png': ['.png'],
-            'image/jpeg': ['.jpg', '.jpeg']
+            image: ['png', 'jpg', 'jpeg', 'gif', 'webp']
           }}
           file={settings.bgImage}
           icon="tabler:photo"
@@ -68,11 +67,10 @@ function SettingsSection({
           }}
         />
         <SliderInput
-          wrapperClassName="mb-8"
           icon="tabler:zoom-in-area"
+          label="Background Image Scale"
           max={200}
           min={10}
-          label="Background Image Scale"
           setValue={value => {
             setSettings({
               bgImageScale: value
@@ -80,6 +78,7 @@ function SettingsSection({
           }}
           step={10}
           value={settings.bgImageScale}
+          wrapperClassName="mb-8"
         />
         <div className="flex items-center justify-between">
           <div className="text-bg-500 flex items-center gap-2">
