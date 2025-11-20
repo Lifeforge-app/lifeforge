@@ -1,0 +1,66 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+import {Icon} from "@iconify/react";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="904e20dc8e160a79d9487add3ddc3c54443795fc" />: Updated widget localization and added namespace support, separating module widget translation from core widget translation into their respective module directories.
+- <Commit hash="6a3694ed60d0c3bcf6aa4b268275034e9b1c0b70" />: Added <code>getFormFileFieldInitialData</code> utility function in <code>shared</code> package to simplify initial data structuring for file field in forms.
+- <Commit hash="06f61053726d9e5fc23897b81682537025002a2a" />: Added font pinning functionality in font selector that allows users to pin their favourite fonts for easier access.
+- <Commit hash="aeea5472f5c3999c7892fd7dcf4d19427176bb3c" />, <Commit hash="9b49107df41eb23f1b9a8fac2fe1fc1af21c7e03" />: Improved routing mechanism in client side so that client manifest routes are now relative to module base route without needing to specify full path.
+- <Commit hash="f5a12410b85b41a97a40e0cd07a0fc550a47f9be" />, <Commit hash="094d400bbe2bff36b93b5034d92e5461acad1c41" />: Added support for multilingual API route descriptions.
+
+  <Code language="typescript">
+    {`const myController = forgeController
+      .query()
+      .description({
+        en: "Get user data",
+        my: "Dapatkan data pengguna",
+        "zh-CN": "获取用户数据",
+        "zh-TW": "獲取用戶數據",
+      });
+    `}
+  </Code>
+
+- <Commit hash="e93cbcd5fb1efa58c7531940de786a289b7ce7d0" />: Migrated API Explorer from standalone SSO module to installable module that can be added to any Lifeforge instance by:
+
+  <Code language="bash">
+    {`bun forge modules install lifeforge-app/lifeforge-module-apiEndpointExplorer`}
+  </Code>
+  
+- <Commit hash="07b1bfcafa2347686730d3a9d7e0a2eb601a86e6" />: Enhance PBService filter generation to support null fields.
+- <Commit hash="33d50d9651c26cb0a4d2d3b05c3e2d4322adf18c" />: Removed API Builder from the core codebase and officially marked it as deprecated. Users are encouraged to use the new API Endpoint Explorer module for API testing and exploration.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="a5816d2bf82d28a8a859ece2a170770156414fca" />: Made <code>acceptedMimeTypes</code> prop in <code>FileInput</code> component optional.
+- <Commit hash="5b60d26530c7fb10acc377e1662fd7efa65b4cb2" />: Replaced <div className="inline-flex gap-1 items-center translate-y-0.5">
+    <Icon icon="svg-spinners:180-ring" className="size-5 ml-1" /><code>svg-spinners:180-ring</code>
+  </div> loader with <div className="inline-flex gap-1 items-center translate-y-0.5">
+    <Icon icon="svg-spinners:ring-resize" className="size-5 ml-1" /><code>svg-spinners:ring-resize</code></div> across all components for better visual appeal.
+- <Commit hash="f536bf575a28c2dfc89dafc7a427ab8bb0a968c8" />: Changed default scrollbar color to transparent to prevent overlapping with custom scrollbars.
+
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="0966b29a7e8a2ff588aa1a8075e6faecd9ba49b4" />: Fixed styling for <code>MessageBox</code> component to ensure proper spacing and alignment.
+- <Commit hash="ed56757f417b7cb1a241b876a980a20041605858" />: Added <code>.env.example</code> file to locale manager codebase.
+- <Commit hash="6c8ca26dd5745519d979b0876b459d795e10a076" />: Fixed letter casing in template generation.
+- <Commit hash="758c403a44ae0bd299a3c024b575b0b9f4b0fd14" />: Fixed glob pattern matching issue in changelog loading mechanism in documentation site.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="31198e811857280251aea34f0af3069b444dcb67" />, <Commit hash="a969c6d50f9601d6f051c5bab4677c2b05b81a43" />: Added module creation templates for <code>widget</code>, <code>with-routes</code> module types.
+- <Commit hash="885c92a34573c9845bf7de5b0838a23c32c2ae4b" />: When generating schemas, modules without <code>schema.ts</code> file will have it generated instead of skipping it. Also, a PocketBase instance is now started during schema generation if not already running to ensure proper schema fetching.
+- <Commit hash="27cda9280a90c7cff3778376832e5030fa8ac69b" />: Corrected command name for schema generation in documentation.
+
+  <Code language="bash">
+    {`bun forge modules generate-schemas # previously was 'generate-schema'`}
+  </Code>
+
+- <Commit hash="8042433a3775f03847d56edeca58bfbbf6760642" />: Added automatic migration generation command after module update.
+- <Commit hash="61cf149acee9050984cb5ade0a62a137a7b2c191" />: Added documentation for modules and schema synchronization in documentation site.
+- <Commit hash="b09b058e5bbb0b5ec3cac7014553bf50119ca01a" />: Fixed dark and light mode preview in documentation site.
+- <Commit hash="f333e38031d5af1ca6d635d55ae40e2e86f55b38" />: Running PocketBase instance will be checked before creating module.
+- <Commit hash="abca742e5d3dbc72e9218c7562cdc6be2025490c" />: Added guidance for dynamic query construction with optional filters in DatabaseOperations
+- <Commit hash="96027747b77a694b8159cc368871dd65af2a69bd" />: Fixed code formatting issue in documentation site.
+- <Commit hash="daedfe35dc692ff3260ec804c60a31010c0ea554" />: Added guidance for using <code>--linker isolated</code> flag during Bun installation in monorepo setup.
