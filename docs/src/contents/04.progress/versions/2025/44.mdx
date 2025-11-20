@@ -1,0 +1,37 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="ebdcf504b5762e9108a8f64def3f99e6d2d0d721" />: Added dynamic module category sequence loading from configuration file to allow flexible management of module category sequences in sidebar.
+- <Commit hash="211d26522c395c2485b84b7c91a8a458b7f86b26" />: Updated AI fetching mechanism to use latest OpenAI API standards.
+- <Commit hash="051539aefa90c119020aea487cef84cd237d43fd" />: Added API endpoint to get API keys that are marked as public for modules to use.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="5513f5c9ded93190ab3ceae52ddaa1310d8c2834" />: Improved styling for <code>TextAreaInput</code> component.
+- <Commit hash="d75346ad7ba0baf3d547852f395836a3eb3b4a5e" />: Added "Retry" button to <code>ErrorScreen</code> component.
+- <Commit hash="de9fcfa80a704ac840924e85834af92e789b3c15" />: Added <code>MessageBox</code> component for displaying informational and warning messages to users.
+
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="c8aee869e1b97a05ec0024dc8f735b9ecc040b48" />: Corrected import paths for dashboard widget components.
+- <Commit hash="3e54dac4fe7d4f2c848b48d272352f1ef343f8bc" />: Added underscore prefix to tsconfig files in templates to prevent them from accidentally being detected.
+- <Commit hash="4b1cba6b6c7d0c9f44e65662cd42b571df8feed9" />: Fixed issue in <code>FormModal</code> component where the actionButton is still rendered even when not provided.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="32a65b50b4aa12cffecf53fe64784ab50195ba12" />: Added publish command in forgeCLI to allow users to easily publish their modules to GitHub repositories.
+
+  <Code language="bash">
+    {`bun forge modules publish <moduleName>`}
+  </Code>
+- <Commit hash="acddf81156dc93e2197eff8d04c5901c2d934028" />: Fixed CSS import path for lifeforge-ui in locale manager codebase.
+- <Commit hash="22a45b53788d56fe09f22771de03a8818514cd52" />: Split change log into different files based on version for better organization and maintainability, implemented dynamic loading of change log files in documentation site.
+- <Commit hash="f2df46d9c33eb532cbdfcd7304de298405f26d25" />: Added command in forgeCLI to generate changelog templates for new versions.
+
+  <Code language="bash">
+    {`bun forge changelog generate <year> <version>`}
+  </Code>
+  
+- <Commit hash="cfd1a64b590a57fbcc8ebf24ce74bf166f4ab600" />: Added validation to locale name key input in locale manager to prevent invalid characters and format.
