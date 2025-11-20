@@ -7,17 +7,9 @@ import z from 'zod'
 
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../constants/constants'
 import { fetchAI } from '../../../utils/ai'
-import {
-  checkRunningPBInstances,
-  executeCommand,
-  killExistingProcess,
-  validateEnvironment
-} from '../../../utils/helpers'
+import { checkRunningPBInstances, executeCommand } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
-import {
-  runDatabaseMigrations,
-  startPocketBaseAndGetPid
-} from '../../db-commands/functions/database-initialization'
+import { runDatabaseMigrations } from '../../db-commands/functions/database-initialization'
 import { validatePocketBaseSetup } from '../../db-commands/utils'
 import { getInstalledModules } from '../utils/file-system'
 import { injectModuleRoute } from '../utils/route-injection'
@@ -380,28 +372,8 @@ function installDependencies(): void {
   CLILoggingService.success('Module dependencies installed successfully.')
 }
 
-async function generateDatabaseSchemas(): Promise<void> {
+function generateDatabaseSchemas(): void {
   CLILoggingService.step('Generating database schemas for the new module...')
-
-  validateEnvironment([
-    'PB_DIR',
-    'PB_HOST',
-    'PB_EMAIL',
-    'PB_PASSWORD',
-    'MASTER_KEY'
-  ])
-
-  const pbRunning = checkRunningPBInstances(false)
-
-  let pbPid: number
-
-  if (!pbRunning) {
-    const { pbInstancePath } = await validatePocketBaseSetup(
-      process.env.PB_DIR!
-    )
-
-    pbPid = await startPocketBaseAndGetPid(pbInstancePath)
-  }
 
   executeCommand('bun run forge db generate-schemas', {
     cwd: process.cwd(),
@@ -409,10 +381,6 @@ async function generateDatabaseSchemas(): Promise<void> {
   })
 
   CLILoggingService.success('Database schemas generated successfully.')
-
-  if (!pbRunning) {
-    killExistingProcess(pbPid!)
-  }
 }
 
 /**
@@ -455,7 +423,7 @@ export async function createModuleHandler(moduleName?: string): Promise<void> {
   injectModuleSchema(camelizedModuleName)
 
   runDatabaseMigrations(pbInstancePath)
-  await generateDatabaseSchemas()
+  generateDatabaseSchemas()
 
   CLILoggingService.success(
     `Module "${moduleMetadata.moduleName.en}" setup is complete!`
