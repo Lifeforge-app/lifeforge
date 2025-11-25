@@ -56,7 +56,7 @@ function SearchInput({
       <input
         className={clsx(
           'caret-custom-500 placeholder:text-bg-500 w-full bg-transparent',
-          actionButtonProps ? 'pr-12' : ''
+          actionButtonProps ? 'pr-20' : 'pr-10'
         )}
         placeholder={t(`search`, {
           item: t([
@@ -78,7 +78,7 @@ function SearchInput({
         }}
         onKeyUp={onKeyUp}
       />
-      <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-2">
+      <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-2">
         <Button
           className={clsx(
             'size-8 p-0',
@@ -91,6 +91,7 @@ function SearchInput({
         {actionButtonProps && (
           <Button
             {...actionButtonProps}
+            className={clsx('size-8 p-0', actionButtonProps.className)}
             variant={actionButtonProps.variant || 'plain'}
           />
         )}
