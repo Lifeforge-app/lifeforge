@@ -3,10 +3,12 @@ import clsx from 'clsx'
 
 function SidebarItemIcon({
   icon,
-  active
+  active,
+  activeClassName
 }: {
   icon?: string | React.ReactElement
   active: boolean
+  activeClassName?: string
 }) {
   if (icon === undefined) {
     return null
@@ -21,7 +23,10 @@ function SidebarItemIcon({
 
     return (
       <span
-        className={clsx('size-6 shrink-0', active && 'text-custom-500')}
+        className={clsx(
+          'size-6 shrink-0',
+          active && clsx('text-custom-500', activeClassName)
+        )}
         dangerouslySetInnerHTML={{ __html: htmlString }}
       />
     )
@@ -32,7 +37,10 @@ function SidebarItemIcon({
 
     return (
       <img
-        className={clsx('size-6 shrink-0', active && 'ring-custom-500 ring-2')}
+        className={clsx(
+          'size-6 shrink-0',
+          active && clsx('ring-custom-500 ring-2', activeClassName)
+        )}
         src={urlString}
       />
     )
@@ -40,7 +48,10 @@ function SidebarItemIcon({
 
   return (
     <Icon
-      className={clsx('size-6 shrink-0', active && 'text-custom-500')}
+      className={clsx(
+        'size-6 shrink-0',
+        active && clsx('text-custom-500', activeClassName)
+      )}
       icon={icon}
     />
   )

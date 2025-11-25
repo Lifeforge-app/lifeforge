@@ -3,10 +3,12 @@ import clsx from 'clsx'
 function SidebarItemWrapper({
   active,
   children,
+  activeClassName,
   onClick
 }: {
   active: boolean
   children: React.ReactNode
+  activeClassName?: string
   onClick?: () => void
 }) {
   return (
@@ -14,7 +16,10 @@ function SidebarItemWrapper({
       className={clsx(
         'sidebar-item flex-center relative isolate px-4 transition-all',
         active
-          ? "text-bg-800 after:bg-custom-500 dark:text-bg-50 font-semibold after:absolute after:top-1/2 after:right-0 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:content-['']"
+          ? clsx(
+              "text-bg-800 after:bg-custom-500 dark:text-bg-50 font-semibold after:absolute after:top-1/2 after:right-0 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:content-['']",
+              activeClassName
+            )
           : 'text-bg-500 dark:text-bg-500'
       )}
     >
