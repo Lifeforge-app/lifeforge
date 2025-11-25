@@ -88,3 +88,15 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
 .Toastify__toast {
   @apply bg-bg-50 text-bg-800 dark:bg-bg-800 dark:text-bg-50;
 }
+
+.sidebar-opening {
+  transition:
+    left 0.3s ease,
+    z-index 0s linear 0s;
+}
+
+.sidebar-closing {
+  transition:
+    left 0.3s ease,
+    z-index 0s linear 0.3s;
+}
