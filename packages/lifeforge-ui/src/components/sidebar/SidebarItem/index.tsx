@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'shared'
 
+import SidebarActionButton from './components/SidebarActionButton'
 import SidebarCancelButton from './components/SidebarCancelButton'
 import SidebarCollapseButton from './components/SidebarCollapseButton'
 import SidebarItemContent from './components/SidebarItemContent'
@@ -24,6 +25,7 @@ type SidebarItemAutoActiveProps =
 interface MainSidebarItemProps {
   isMainSidebarItem: true
 
+  activeClassNames?: never
   showAIIcon: boolean
   subsection?: {
     label: string
@@ -40,6 +42,8 @@ interface MainSidebarItemProps {
   number?: never
   onCancelButtonClick?: never
   contextMenuItems?: never
+  actionButtonIcon?: never
+  onActionButtonClick?: never
 
   isCollapsed?: never
   onCollapseButtonClick?: never
@@ -51,6 +55,10 @@ interface MainSidebarItemProps {
 interface SubSidebarItemProps {
   isMainSidebarItem?: false
 
+  activeClassNames?: {
+    wrapper?: string
+    icon?: string
+  }
   showAIIcon?: never
   subsection?: never
   prefix?: never
@@ -63,6 +71,8 @@ interface SubSidebarItemProps {
   number?: number
   onCancelButtonClick?: () => void
   contextMenuItems?: React.ReactElement
+  actionButtonIcon?: string
+  onActionButtonClick?: () => void
 
   isCollapsed?: boolean
   onCollapseButtonClick?: () => void
@@ -90,6 +100,7 @@ type SidebarItemProps = SidebarItemAutoActiveProps &
 function SidebarItem({
   label,
   icon,
+  activeClassNames,
   sideStripColor,
   showAIIcon = false,
   subsection,
@@ -102,6 +113,8 @@ function SidebarItem({
   prefix = '',
   number,
   onCancelButtonClick,
+  actionButtonIcon,
+  onActionButtonClick,
   contextMenuItems,
 
   isCollapsed,
@@ -174,6 +187,7 @@ function SidebarItem({
     <>
       <SidebarItemWrapper
         active={autoActive ? isLocationMatched : active}
+        activeClassName={activeClassNames?.wrapper}
         onClick={handleNavigation}
       >
         {onCollapseButtonClick && (
@@ -198,6 +212,7 @@ function SidebarItem({
         )}
         <SidebarItemIcon
           active={autoActive ? isLocationMatched : active}
+          activeClassName={activeClassNames?.icon}
           icon={icon}
         />
         <SidebarItemContent
@@ -212,6 +227,12 @@ function SidebarItem({
           sidebarExpanded={!!sidebarExpanded}
           onCancelButtonClick={onCancelButtonClick}
         />
+        {actionButtonIcon && onActionButtonClick && (
+          <SidebarActionButton
+            icon={actionButtonIcon}
+            onClick={onActionButtonClick}
+          />
+        )}
         {sidebarExpanded && subsection !== undefined && (
           <SidebarItemSubsectionExpandIcon
             subsectionExpanded={subsectionExpanded}
