@@ -1,5 +1,6 @@
 import { Pagination, Scrollbar } from '@components/utilities'
 import clsx from 'clsx'
+import type { SetStateAction } from 'react'
 import PhotoAlbum from 'react-photo-album'
 
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
@@ -21,16 +22,24 @@ function SearchResults({
   setPreview: React.Dispatch<React.SetStateAction<string | null>>
   onSearch: (page: number) => Promise<void>
 }) {
+  function handlePageChange(newPage: SetStateAction<number>) {
+    setPage(prev => {
+      const updatedPage =
+        typeof newPage === 'function' ? newPage(prev) : newPage
+
+      onSearch(updatedPage).catch(console.error)
+
+      return updatedPage
+    })
+  }
+
   return (
     <Scrollbar className="size-full min-h-[50vh] flex-1">
       <Pagination
         className="mb-4"
         currentPage={page}
         totalPages={Math.ceil(results.total / 20)}
-        onPageChange={page => {
-          setPage(page)
-          onSearch(page).catch(console.error)
-        }}
+        onPageChange={handlePageChange}
       />
       <div className="px-2">
         <PhotoAlbum
@@ -66,10 +75,7 @@ function SearchResults({
         className="mt-4"
         currentPage={page}
         totalPages={Math.ceil(results.total / 20)}
-        onPageChange={page => {
-          setPage(page)
-          onSearch(page).catch(console.error)
-        }}
+        onPageChange={handlePageChange}
       />
     </Scrollbar>
   )

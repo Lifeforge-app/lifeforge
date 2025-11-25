@@ -9,7 +9,7 @@ function Pagination({
   className = ''
 }: {
   totalPages: number
-  onPageChange: (page: number) => void
+  onPageChange: React.Dispatch<React.SetStateAction<number>>
   currentPage: number
   className?: string
 }): React.ReactElement {
@@ -113,26 +113,34 @@ function Pagination({
       {currentPage !== 1 ? (
         <>
           <Button
-            className={clsx('hidden w-32 sm:flex')}
+            className="hidden w-32 sm:flex"
             disabled={currentPage === 1}
             icon="uil:angle-left"
             variant="plain"
             onClick={() => {
-              if (currentPage > 1) {
-                onPageChange(currentPage - 1)
-              }
+              onPageChange(page => {
+                if (page > 1) {
+                  return page - 1
+                }
+
+                return page
+              })
             }}
           >
             Previous
           </Button>
           <Button
-            className={clsx('w-12 sm:hidden')}
+            className="w-12 sm:hidden"
             icon="uil:angle-left"
             variant="plain"
             onClick={() => {
-              if (currentPage > 1) {
-                onPageChange(currentPage - 1)
-              }
+              onPageChange(page => {
+                if (page > 1) {
+                  return page - 1
+                }
+
+                return page
+              })
             }}
           />
         </>
@@ -143,26 +151,34 @@ function Pagination({
       {currentPage < totalPages ? (
         <>
           <Button
-            className={clsx('w-12 sm:hidden')}
+            className="w-12 sm:hidden"
             icon="uil:angle-right"
             iconPosition="end"
             variant="plain"
             onClick={() => {
-              if (currentPage < totalPages) {
-                onPageChange(currentPage + 1)
-              }
+              onPageChange(page => {
+                if (page < totalPages) {
+                  return page + 1
+                }
+
+                return page
+              })
             }}
           />
           <Button
-            className={clsx('hidden w-32 sm:flex')}
+            className="hidden w-32 sm:flex"
             disabled={currentPage === totalPages}
             icon="uil:angle-right"
             iconPosition="end"
             variant="plain"
             onClick={() => {
-              if (currentPage < totalPages) {
-                onPageChange(currentPage + 1)
-              }
+              onPageChange(page => {
+                if (page < totalPages) {
+                  return page + 1
+                }
+
+                return page
+              })
             }}
           >
             Next
