@@ -15,8 +15,10 @@ function SidebarWrapper({
   return (
     <aside
       className={clsx(
-        'bg-bg-50 shadow-custom xl:component-bg dark:bg-bg-900 absolute top-0 size-full shrink-0 rounded-lg py-4 backdrop-blur-xs transition-all duration-300 xl:static xl:w-1/4 xl:min-w-96 xl:backdrop-blur-xs',
-        isSidebarOpen ? 'left-0 z-[9990]' : 'left-full',
+        'bg-bg-50 shadow-custom xl:component-bg dark:bg-bg-900 absolute top-0 size-full shrink-0 rounded-lg py-4 backdrop-blur-xs xl:static xl:w-1/4 xl:min-w-96 xl:backdrop-blur-xs',
+        isSidebarOpen
+          ? 'sidebar-opening left-0 z-[9990]'
+          : 'sidebar-closing left-full z-0',
         customHeight ?? 'xl:h-[calc(100%-2rem)]'
       )}
     >
@@ -28,7 +30,7 @@ function SidebarWrapper({
             }}
           />
         </div>
-        <ul className="flex size-full min-w-0 flex-col">{children}</ul>
+        <ul className="flex size-full min-w-0 flex-col gap-1">{children}</ul>
       </Scrollbar>
     </aside>
   )
