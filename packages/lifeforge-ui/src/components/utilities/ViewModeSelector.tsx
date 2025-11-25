@@ -15,7 +15,7 @@ function ViewModeSelector<T extends string>({
   return (
     <div
       className={clsx(
-        'shadow-custom component-bg bg-bg-50 flex items-center gap-2 rounded-md p-3',
+        'shadow-custom component-bg bg-bg-50 flex items-center gap-2 rounded-md p-2',
         className
       )}
     >
@@ -23,9 +23,9 @@ function ViewModeSelector<T extends string>({
         <button
           key={value}
           className={clsx(
-            'flex items-center gap-2 rounded-md p-2 transition-all',
+            'flex items-center gap-2 rounded-md p-3 transition-all',
             value === viewMode
-              ? 'component-bg-lighter'
+              ? 'bg-bg-200/50 dark:bg-bg-800/70 shadow-custom'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           )}
           onClick={() => {
