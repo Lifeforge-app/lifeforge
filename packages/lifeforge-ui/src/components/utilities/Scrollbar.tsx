@@ -1,18 +1,30 @@
-import { type ScrollbarProps, Scrollbars } from 'react-custom-scrollbars'
+import Scrollbars, { type ScrollbarsProps } from './Scrollbars'
 
 function Scrollbar({
   children,
   ...props
 }: {
   children: React.ReactNode
-} & ScrollbarProps) {
+} & ScrollbarsProps) {
   return (
     <Scrollbars
       {...(props as any)}
       autoHide
-      autoHideDuration={200}
+      hideTracksWhenNotNeeded
+      autoHideTimeout={1000}
       renderThumbVertical={props => (
-        <div {...props} className="bg-bg-300 dark:bg-bg-800 rounded-lg" />
+        <div
+          {...props}
+          className="bg-bg-300 dark:bg-bg-800 rounded-lg"
+          style={{ ...props.style, minHeight: 30 }}
+        />
+      )}
+      renderTrackVertical={props => (
+        <div
+          {...props}
+          className="bg-bg-100 dark:bg-bg-900"
+          style={{ ...props.style, display: 'block' }}
+        />
       )}
       renderView={props => (
         <div
