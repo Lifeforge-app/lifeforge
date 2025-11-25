@@ -8,21 +8,41 @@ function SidebarItemIcon({
   icon?: string | React.ReactElement
   active: boolean
 }) {
+  if (icon === undefined) {
+    return null
+  }
+
+  if (typeof icon !== 'string') {
+    return icon
+  }
+
+  if (icon.startsWith('customHTML:')) {
+    const htmlString = icon.replace('customHTML:', '')
+
+    return (
+      <span
+        className={clsx('size-6 shrink-0', active && 'text-custom-500')}
+        dangerouslySetInnerHTML={{ __html: htmlString }}
+      />
+    )
+  }
+
+  if (icon.startsWith('url:')) {
+    const urlString = icon.replace('url:', '')
+
+    return (
+      <img
+        className={clsx('size-6 shrink-0', active && 'ring-custom-500 ring-2')}
+        src={urlString}
+      />
+    )
+  }
+
   return (
-    <>
-      {icon !== undefined && (
-        <>
-          {typeof icon === 'string' ? (
-            <Icon
-              className={clsx('size-6 shrink-0', active && 'text-custom-500')}
-              icon={icon}
-            />
-          ) : (
-            icon
-          )}
-        </>
-      )}
-    </>
+    <Icon
+      className={clsx('size-6 shrink-0', active && 'text-custom-500')}
+      icon={icon}
+    />
   )
 }
 
