@@ -1,7 +1,7 @@
 {
   "search": "Cari {{item}}...",
   "notFound": {
-    "title": "Oops! Tiada apa-apa di sini.",
+    "title": "Oops! Tiada apa-apa di sini",
     "description": "Halaman yang anda cari tidak dapat dijumpai. Sila semak URL dan cuba lagi."
   },
   "tipsAndTricks": "Petua dan Trik",

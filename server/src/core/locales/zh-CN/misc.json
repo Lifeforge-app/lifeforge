@@ -1,7 +1,7 @@
 {
   "search": "搜索{{item}}...",
   "notFound": {
-    "title": "糟糕！这里什么都没有。",
+    "title": "糟糕！这里什么都没有",
     "description": "找不到您正在寻找的页面。请检查网址并重试。"
   },
   "tipsAndTricks": "提示与技巧",
