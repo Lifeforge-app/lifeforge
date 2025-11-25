@@ -1,6 +1,7 @@
 import { oklchToHex } from '@components/inputs/ColorInput/ColorPickerModal/components/modals/TailwindCSSColorsModal/utils/colors'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import tinycolor from 'tinycolor2'
 
 function FilterChip({
   icon,
@@ -22,11 +23,29 @@ function FilterChip({
       )}
       style={
         color !== undefined
-          ? { backgroundColor: oklchToHex(color) + '20', color }
+          ? {
+              backgroundColor: tinycolor(oklchToHex(color))
+                .setAlpha(0.125)
+                .toString(),
+              color
+            }
           : {}
       }
     >
-      <Icon className="size-4" icon={icon} />
+      {(() => {
+        if (icon.startsWith('customHTML:')) {
+          return (
+            <span
+              className="size-4"
+              dangerouslySetInnerHTML={{
+                __html: icon.replace('customHTML:', '')
+              }}
+            />
+          )
+        } else {
+          return <Icon className="size-4" icon={icon} />
+        }
+      })()}
       {label}
       <button onClick={onRemove}>
         <Icon className="size-4" icon="tabler:x" />

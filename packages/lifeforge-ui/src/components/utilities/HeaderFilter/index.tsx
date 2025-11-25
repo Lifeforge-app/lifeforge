@@ -2,7 +2,7 @@ import { usePersonalization } from 'shared'
 
 import FilterChip from './components/HeaderFilterChip'
 
-function HeaderFilter<T extends Record<string, string | null>>({
+function HeaderFilter<T extends Record<string, string | string[] | null>>({
   items,
   values,
   setValues
@@ -20,7 +20,7 @@ function HeaderFilter<T extends Record<string, string | null>>({
     }
   >
   values: T
-  setValues: Record<keyof T, (value: string | null) => void>
+  setValues: Record<keyof T, (value: string | string[] | null) => void>
 }) {
   const { derivedThemeColor } = usePersonalization()
 
@@ -33,10 +33,37 @@ function HeaderFilter<T extends Record<string, string | null>>({
       {Object.entries(items).map(([query, { data, isColored }]) => {
         return values[query]
           ? (() => {
-              const target = data.find(item => item.id === values[query])
+              const target = Array.isArray(values[query])
+                ? data.filter(d => (values[query] as string[]).includes(d.id))
+                : data.find(d => d.id === values[query])
 
-              if (target === undefined) {
+              if (
+                target === undefined ||
+                (Array.isArray(target) && target.length === 0)
+              ) {
                 return null
+              }
+
+              if (Array.isArray(target)) {
+                return target.map(t => (
+                  <FilterChip
+                    key={t.id}
+                    color={
+                      isColored === true
+                        ? (t.color ?? derivedThemeColor)
+                        : undefined
+                    }
+                    icon={t.icon ?? ''}
+                    label={t.name ?? ''}
+                    onRemove={() => {
+                      const newValues = (values[query] as string[]).filter(
+                        v => v !== t.id
+                      )
+
+                      setValues[query](newValues.length > 0 ? newValues : null)
+                    }}
+                  />
+                ))
               }
 
               return (
