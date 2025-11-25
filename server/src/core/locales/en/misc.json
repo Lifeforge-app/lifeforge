@@ -1,7 +1,7 @@
 {
   "search": "Search {{item}}...",
   "notFound": {
-    "title": "Oops! There's nothing here.",
+    "title": "Oops! There's nothing here",
     "description": "The page you are looking for cannot be found. Please check the URL and try again."
   },
   "tipsAndTricks": "Tips and Tricks",
