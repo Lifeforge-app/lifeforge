@@ -73,6 +73,13 @@ interface SubSidebarItemProps {
 
 interface SidebarItemBaseProps {
   label: string | React.ReactElement
+  /**
+   * Icon string or React element to display alongside the label.
+   *
+   * - Default to icon identifier for Iconify icons (<icon-prefix>:<icon-name>).
+   * - Prefix "customHTML:" can be used to render custom SVG/HTML icons.
+   * - Prefix "url:" can be used to render image icons from a URL.
+   */
   icon?: string | React.ReactElement
 }
 
