@@ -29,7 +29,7 @@ function Scrollbar({
       renderView={props => (
         <div
           {...props}
-          className="flex min-h-0 w-full min-w-0 flex-1 flex-col"
+          className="flex min-h-0 w-full min-w-0 flex-1 flex-col pr-4"
         />
       )}
     >
