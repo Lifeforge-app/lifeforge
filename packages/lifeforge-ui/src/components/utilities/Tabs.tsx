@@ -21,20 +21,19 @@ function Tabs<T extends string>({
   className?: string
 }) {
   return (
-    <div className="flex items-center">
+    <div className={clsx('flex flex-wrap items-center gap-y-2', className)}>
       {items
         .filter(({ id }) => enabled.includes(id))
         .map(({ name, icon, id, color }) => (
           <button
             key={id}
             className={clsx(
-              'flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
+              'flex flex-1 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
               active === id
                 ? `${
                     !color ? 'border-custom-500 text-custom-500' : ''
                   } font-medium`
-                : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200',
-              className
+                : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
             )}
             style={
               color && active === id
@@ -49,7 +48,7 @@ function Tabs<T extends string>({
             }}
           >
             {icon && <Icon className="size-5 shrink-0" icon={icon} />}
-            <span className="truncate sm:block">{name}</span>
+            <span className="block">{name}</span>
             {items.find(item => item.name === name)?.amount !== undefined && (
               <span className="hidden text-sm sm:block">
                 ({items.find(item => item.name === name)?.amount})
