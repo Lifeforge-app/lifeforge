@@ -1,9 +1,13 @@
+import clsx from 'clsx'
+
 import Scrollbars, { type ScrollbarsProps } from './Scrollbars'
 
 function Scrollbar({
   children,
+  usePaddingRight = true,
   ...props
 }: {
+  usePaddingRight?: boolean
   children: React.ReactNode
 } & ScrollbarsProps) {
   return (
@@ -29,7 +33,10 @@ function Scrollbar({
       renderView={props => (
         <div
           {...props}
-          className="flex min-h-0 w-full min-w-0 flex-1 flex-col pr-4"
+          className={clsx(
+            'flex min-h-0 w-full min-w-0 flex-1 flex-col',
+            usePaddingRight && 'pr-4'
+          )}
         />
       )}
     >
