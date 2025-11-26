@@ -42,11 +42,13 @@ function TagChip({
         if (!icon) return null
 
         if (icon.startsWith('customHTML:')) {
+          if (icon.replace(/^customHTML:/, '') === '') return null
+
           return (
             <span
               className="size-4"
               dangerouslySetInnerHTML={{
-                __html: icon.replace('customHTML:', '')
+                __html: icon.replace(/^customHTML:/, '')
               }}
             />
           )
