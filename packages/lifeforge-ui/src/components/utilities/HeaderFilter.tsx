@@ -1,6 +1,6 @@
 import { usePersonalization } from 'shared'
 
-import FilterChip from './components/HeaderFilterChip'
+import TagChip from './TagChip'
 
 function HeaderFilter<T extends Record<string, string | string[] | null>>({
   items,
@@ -46,8 +46,20 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
 
               if (Array.isArray(target)) {
                 return target.map(t => (
-                  <FilterChip
+                  <TagChip
                     key={t.id}
+                    actionButtonProps={{
+                      icon: 'tabler:x',
+                      onClick: () => {
+                        const newValues = (values[query] as string[]).filter(
+                          v => v !== t.id
+                        )
+
+                        setValues[query](
+                          newValues.length > 0 ? newValues : null
+                        )
+                      }
+                    }}
                     color={
                       isColored === true
                         ? (t.color ?? derivedThemeColor)
@@ -55,20 +67,19 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                     }
                     icon={t.icon ?? ''}
                     label={t.name ?? ''}
-                    onRemove={() => {
-                      const newValues = (values[query] as string[]).filter(
-                        v => v !== t.id
-                      )
-
-                      setValues[query](newValues.length > 0 ? newValues : null)
-                    }}
                   />
                 ))
-              }
+            }
 
               return (
-                <FilterChip
+                <TagChip
                   key={query}
+                  actionButtonProps={{
+                    icon: 'tabler:x',
+                    onClick: () => {
+                      setValues[query](null)
+                    }
+                  }}
                   color={
                     isColored === true
                       ? (target.color ?? derivedThemeColor)
@@ -76,9 +87,6 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                   }
                   icon={target.icon ?? ''}
                   label={target.name ?? ''}
-                  onRemove={() => {
-                    setValues[query](null)
-                  }}
                 />
               )
             })()

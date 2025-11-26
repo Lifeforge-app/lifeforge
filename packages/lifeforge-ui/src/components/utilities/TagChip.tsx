@@ -3,27 +3,33 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import tinycolor from 'tinycolor2'
 
-function FilterChip({
-  icon,
+function TagChip({
   label,
+  icon,
   color,
-  onRemove
+  actionButtonProps
 }: {
-  icon: string
   label: string
+  icon?: string
   color?: string
-  onRemove: () => void
+  actionButtonProps?: {
+    icon: string
+    onClick: () => void
+  }
 }) {
   return (
     <span
       className={clsx(
-        'flex-center shadow-custom gap-1 rounded-full px-2 py-1 text-sm',
+        'flex-center shadow-custom gap-1 rounded-full border px-3 py-1 text-sm',
         color === undefined &&
-          `text-bg-500 dark:text-bg-400 component-bg-lighter bg-bg-50`
+          `text-bg-500 dark:text-bg-400 border-bg-200 dark:border-bg-700/50 component-bg-lighter bg-bg-50`
       )}
       style={
         color !== undefined
           ? {
+              borderColor: tinycolor(oklchToHex(color))
+                .setAlpha(0.25)
+                .toString(),
               backgroundColor: tinycolor(oklchToHex(color))
                 .setAlpha(0.125)
                 .toString(),
@@ -33,6 +39,8 @@ function FilterChip({
       }
     >
       {(() => {
+        if (!icon) return null
+
         if (icon.startsWith('customHTML:')) {
           return (
             <span
@@ -47,11 +55,13 @@ function FilterChip({
         }
       })()}
       {label}
-      <button onClick={onRemove}>
-        <Icon className="size-4" icon="tabler:x" />
-      </button>
+      {actionButtonProps && (
+        <button onClick={actionButtonProps.onClick}>
+          <Icon className="size-4" icon={actionButtonProps.icon} />
+        </button>
+      )}
     </span>
   )
 }
 
-export default FilterChip
+export default TagChip
