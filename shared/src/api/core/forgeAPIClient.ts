@@ -164,13 +164,21 @@ export class ForgeAPIClientController<
     let endpoint = `${this._route}`
 
     if (this._input) {
-      const queryParams = new URLSearchParams(
-        Object.fromEntries(
-          Object.entries(this._input).filter(([, value]) => value !== undefined)
-        )
-      )
+      const queryString = Object.entries(this._input)
+        .filter(([, value]) => value !== undefined)
+        .map(([key, value]) => {
+          // Manually encode to preserve + signs
+          const encodedKey = encodeURIComponent(key)
 
-      endpoint += `?${queryParams.toString()}`
+          const encodedValue = encodeURIComponent(String(value))
+
+          return `${encodedKey}=${encodedValue}`
+        })
+        .join('&')
+
+      if (queryString) {
+        endpoint += `?${queryString}`
+      }
     }
 
     return endpoint
