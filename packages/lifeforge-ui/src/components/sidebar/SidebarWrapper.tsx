@@ -22,7 +22,7 @@ function SidebarWrapper({
         customHeight ?? 'xl:h-[calc(100%-2rem)]'
       )}
     >
-      <Scrollbar>
+      <Scrollbar usePaddingRight={false}>
         <div className="flex-between flex px-8 py-4 xl:hidden">
           <GoBackButton
             onClick={() => {
