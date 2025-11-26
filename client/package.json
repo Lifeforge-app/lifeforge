@@ -22,7 +22,7 @@
     "@tailwindcss/postcss": "^4.1.5",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.5",
-    "@tanstack/react-query": "^5.90.2",
+    "@tanstack/react-query": "^5.90.11",
     "@types/node": "^24.7.2",
     "@types/react-virtualized": "^9.22.3",
     "@uidotdev/usehooks": "^2.4.1",
