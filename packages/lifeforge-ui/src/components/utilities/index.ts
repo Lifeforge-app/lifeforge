@@ -15,3 +15,5 @@ export { default as DashboardItem } from './DashboardItem'
 export { default as Tooltip } from './Tooltip'
 
 export { default as MessageBox } from './MessageBox'
+
+export { default as TagChip } from './TagChip'
