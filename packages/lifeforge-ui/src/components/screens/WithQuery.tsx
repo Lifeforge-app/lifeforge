@@ -6,18 +6,29 @@ import LoadingScreen from './LoadingScreen'
 function WithQuery<T>({
   query,
   children,
-  showLoading = true
+  showLoading = true,
+  showRetryButton = true
 }: {
   query: UseQueryResult<T, Error>
   children: (data: T) => React.ReactElement | false
   showLoading?: boolean
+  showRetryButton?: boolean
 }) {
-  if (query.isLoading || query.data === undefined) {
+  if (query.isLoading) {
     return showLoading ? <LoadingScreen /> : <></>
   }
 
   if (query.isError) {
-    return <ErrorScreen message="Failed to fetch data from server." />
+    return (
+      <ErrorScreen
+        message={
+          query.error instanceof Error
+            ? query.error.message
+            : query.error || 'Failed to fetch data from server.'
+        }
+        showRetryButton={showRetryButton}
+      />
+    )
   }
 
   return <>{children(query.data as T)}</>
