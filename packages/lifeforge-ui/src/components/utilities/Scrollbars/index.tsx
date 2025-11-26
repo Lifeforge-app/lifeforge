@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import css from 'dom-css'
+// @ts-ignore
 import PropTypes from 'prop-types'
 import raf, { cancel as caf } from 'raf'
 import {
