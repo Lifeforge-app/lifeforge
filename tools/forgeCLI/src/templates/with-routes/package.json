@@ -4,7 +4,7 @@
     "description": "{{moduleDesc.en}}",
     "dependencies": {
         "@iconify/react": "^6.0.2",
-        "@tanstack/react-query": "^5.90.2",
+        "@tanstack/react-query": "^5.90.11",
         "@uidotdev/usehooks": "^2.4.1",
         "clsx": "^2.1.1",
         "dayjs": "^1.11.18",
