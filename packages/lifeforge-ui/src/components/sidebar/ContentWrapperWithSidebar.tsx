@@ -4,7 +4,9 @@ function ContentWrapperWithSidebar({
   children: React.ReactNode
 }) {
   return (
-    <div className="relative z-0 flex h-full flex-1 flex-col">{children}</div>
+    <div className="relative z-0 flex h-full min-w-0 flex-1 flex-col">
+      {children}
+    </div>
   )
 }
 
