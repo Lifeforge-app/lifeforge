@@ -34,7 +34,7 @@ function SidebarItems({ query }: { query: string }) {
 
   return (
     <ul className="flex flex-1 flex-col gap-1 overscroll-none pb-6">
-      <Scrollbar>
+      <Scrollbar usePaddingRight={false}>
         {filteredRoutes.length > 0 ? (
           filteredRoutes.map((item, index) => {
             const filteredModules = item.items.filter(
