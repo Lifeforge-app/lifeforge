@@ -69,7 +69,16 @@ function ListboxOption({
                   }
                 >
                   {typeof icon === 'string' ? (
-                    <Icon className="size-5 shrink-0" icon={icon} />
+                    icon.startsWith('customHTML:') ? (
+                      <span
+                        className="block size-5 shrink-0"
+                        dangerouslySetInnerHTML={{
+                          __html: icon.replace('customHTML:', '')
+                        }}
+                      />
+                    ) : (
+                      <Icon className="size-5 shrink-0" icon={icon} />
+                    )
                   ) : (
                     icon
                   )}
