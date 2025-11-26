@@ -16,11 +16,13 @@ interface PropsWithoutActionButton {
 type SidebarItemProps = {
   label: string
   namespace?: string
+  className?: string
   customActionButton?: React.ReactElement
 } & (PropsWithActionButton | PropsWithoutActionButton)
 
 function SidebarTitle({
   label,
+  className,
   actionButtonIcon,
   actionButtonOnClick,
   customActionButton,
@@ -35,7 +37,12 @@ function SidebarTitle({
         actionButtonIcon !== undefined ? 'pb-2' : 'pb-4'
       )}
     >
-      <h3 className="text-bg-600 text-sm font-semibold tracking-widest whitespace-nowrap uppercase">
+      <h3
+        className={clsx(
+          'text-bg-400 dark:text-bg-600 text-sm font-semibold tracking-widest whitespace-nowrap uppercase',
+          className
+        )}
+      >
         {t([
           `sidebar.${_.camelCase(label)}`,
           `common.sidebar:categories.${_.camelCase(label)}`,
