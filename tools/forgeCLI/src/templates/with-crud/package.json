@@ -2,6 +2,9 @@
     "name": "{{kebab moduleName.en}}",
     "version": "0.0.0",
     "description": "Nice",
+    "scripts": {
+        "types": "cd client && bun tsc"
+    },
     "dependencies": {
         "@iconify/react": "^6.0.2",
         "@tanstack/react-query": "^5.90.11",
