@@ -20,7 +20,11 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
     }
   >
   values: T
-  setValues: Record<keyof T, (value: string | string[] | null) => void>
+  setValues: {
+    [K in keyof T]: (
+      value: T[K] extends Array<string> ? string[] | null : string | null
+    ) => void
+  }
 }) {
   const { derivedThemeColor } = usePersonalization()
 
@@ -56,7 +60,7 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                         )
 
                         setValues[query](
-                          newValues.length > 0 ? newValues : null
+                          (newValues.length > 0 ? newValues : null) as any
                         )
                       }
                     }}
@@ -69,7 +73,7 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                     label={t.name ?? ''}
                   />
                 ))
-            }
+              }
 
               return (
                 <TagChip
