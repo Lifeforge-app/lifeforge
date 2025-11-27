@@ -59,7 +59,7 @@ function SearchResults({
                   ? 'ring-custom-500'
                   : 'hover:ring-bg-400 dark:hover:ring-bg-600 ring-transparent'
               )}
-              style={style}
+              style={style as any}
               onClick={() => {
                 setFile(photo.fullResURL)
                 setPreview(photo.src)

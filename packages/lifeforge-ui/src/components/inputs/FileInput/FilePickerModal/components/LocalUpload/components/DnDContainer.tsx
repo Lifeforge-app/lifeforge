@@ -70,10 +70,10 @@ function DnDContainer({
           ? 'bg-custom-500/5 border-custom-500!'
           : 'border-bg-500 border-dashed'
       )}
-      {...getRootProps()}
+      {...(getRootProps() as any)}
     >
       <input
-        {...getInputProps()}
+        {...(getInputProps() as any)}
         accept={acceptedMimeTypesFlattened}
         multiple={false}
         type="file"
