@@ -5,7 +5,7 @@ export const generateBaseClass = (
   hasIcon: boolean,
   iconAtEnd: boolean
 ): string =>
-  `flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg p-4 ${
+  `group flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-lg p-4 ${
     hasChildren && hasIcon && (iconAtEnd ? 'pl-5' : 'pr-5')
   } font-medium tracking-wide transition-all disabled:cursor-not-allowed`
 
