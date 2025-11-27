@@ -6,8 +6,6 @@ export default function getFormFileFieldInitialData(
   initialData: any,
   file: File | string | null | undefined
 ) {
-  console.log(file)
-
   if (!file) {
     return {
       file: null,
