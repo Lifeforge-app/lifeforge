@@ -1,5 +1,4 @@
-import Note from '../../components/Note'
-import Warning from '../../components/Warning'
+import { Alert } from "lifeforge-ui"
 
 ###### Dashboard
 
@@ -16,12 +15,12 @@ Clicking on the three dots at the top right corner of the dashboard screen, ther
 
 ![Manage Widgets]("https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/user-dashboard/widget-management.webp")
 
-<Note>
+<Alert className="mt-6" type="note">
   The widgets available in the widget management modal are determined by the
-  widgets provided by the modules you have installed in the system.
-  If you don't see the widget you want, you might need to install or enable the
-  module that provides the widget.
-</Note>
+  widgets provided by the modules you have installed in the system. If you don't
+  see the widget you want, you might need to install or enable the module that
+  provides the widget.
+</Alert>
 
 In the widget management modal, there will be a list of available widgets that you can add to the dashboard. Click on the switch next to the widget name to add or remove the widget from the dashboard. Once done, close the modal, and you will see the widgets appear on the dashboard.
 
@@ -38,9 +37,9 @@ It should look quite messy as all the widgets are simply listed one after anothe
 
 Once done, click on **Lock Layout** to save the layout.
 
-<Note>
+<Alert className="mt-6" type="note">
 Since the system in designed to be used in various devices, the layout will be saved separately based on the a certain screen size threshold, which means you can have different layouts on your desktop and mobile devices.
-</Note>
+</Alert>
 </section>
 
 <section id="for-fellow-developers">
@@ -48,8 +47,6 @@ Since the system in designed to be used in various devices, the layout will be s
 
 If you're a developer and you want to create your own dashboard widgets for your modules, it's pretty straightforward. Head to the [Widget Development Guide](/developer-guide/widget-development) to learn how to create a widget module and add it to the system.
 
-<Warning>
-  Dashboard widget development guide coming soon!
-</Warning>
+<Alert className="mt-6" type="warning">Dashboard widget development guide coming soon!</Alert>
 
 </section>

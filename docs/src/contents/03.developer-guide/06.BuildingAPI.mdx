@@ -1,6 +1,5 @@
 import Code from '../../components/Code'
-import Note from '../../components/Note'
-import Warning from '../../components/Warning'
+import { Alert } from "lifeforge-ui"
 
 ###### Building API
 
@@ -42,23 +41,24 @@ Here is a gist of how to build an API handler in LifeForge:
 {`import { forgeController, forgeRouter } from '@functions/routes'
   import z from 'zod'
 
-  const myHandler = forgeController
-    .query()
-    .description("This is a sample query handler")
-    .input({
-      query: z.object({
-        name: z.string()
-      })
-    })
-    .callback(async ({ query: { name } }) => {
-      // Your logic here
-      return { message: \`Hello, \${name}!\` };
-    });
+const myHandler = forgeController
+.query()
+.description("This is a sample query handler")
+.input({
+query: z.object({
+name: z.string()
+})
+})
+.callback(async ({ query: { name } }) => {
+// Your logic here
+return { message: \`Hello, \${name}!\` };
+});
 
-  export forgeRouter({
-      myHandler
-  })
+export forgeRouter({
+myHandler
+})
 `}
+
 </Code>
 
 Paired with the <code>forgeAPI</code> system in the frontend, you can call the API like this:
@@ -109,39 +109,40 @@ In <code>accounts.ts</code>, we define the API handlers for managing accounts:
 {`import { forgeController, forgeRouter } from '@functions/routes'
   import z from 'zod'
 
-  const list = forgeRouter
-    .query()
-    .description("List all accounts")
-    .callback(async () => {
-      // Your logic here
-      return [];
-    });
+const list = forgeRouter
+.query()
+.description("List all accounts")
+.callback(async () => {
+// Your logic here
+return [];
+});
 
-  const create = forgeRouter
-    .mutation()
-    .description("Create a new account")
-    .input({
-      body: z.object({
-        name: z.string(),
-        balance: z.number().min(0)
-      })
-    })
-    .callback(async ({ body: { name, balance } }) => {
-      // Your logic here
-      return { id: "new_account_id", name, balance };
-    });
+const create = forgeRouter
+.mutation()
+.description("Create a new account")
+.input({
+body: z.object({
+name: z.string(),
+balance: z.number().min(0)
+})
+})
+.callback(async ({ body: { name, balance } }) => {
+// Your logic here
+return { id: "new_account_id", name, balance };
+});
 
-  const update = ...
+const update = ...
 
-  const remove = ...
+const remove = ...
 
-  export default forgeRouter({
-      list,
-      create,
-      update,
-      remove
-  });
+export default forgeRouter({
+list,
+create,
+update,
+remove
+});
 `}
+
 </Code>
 
 Similarly, in <code>transactions.ts</code>, we define the respective API handlers for managing transactions.
@@ -179,12 +180,12 @@ LifeForge's approach to taking data input is slightly different from tRPC, where
 
 The division of input into query and body is based on the HTTP method used. For <code>GET</code> requests, only query parameters are accepted, while for <code>POST</code> requests, both query and body parameters are accepted. This design choice is made to adhere to the semantics of HTTP methods, where <code>GET</code> requests are meant for retrieving data and should not have a request body, while <code>POST</code> requests are meant for creating or updating data and can have a request body.
 
-<Note>
+<Alert className="mt-6" type="note">
   LifeForge's API system does not utilize the URL params feature provided by
   Express.js. This is because URL params are not type-safe and can lead to a lot
   of issues. Instead, all the parameters are passed as query or body, depending
   on the HTTP method.
-</Note>
+</Alert>
 
 The input schema is defined in the <code>.input()</code> method using [Zod](https://zod.dev/) schemas that follows the handler type definition, as shown below:
 
@@ -197,25 +198,25 @@ The input schema is defined in the <code>.input()</code> method using [Zod](http
       })
     })
 
-  const myMutationHandler = forgeController
-    .mutation()
-    .input({
-      query: z.object({
-        id: z.string().uuid()
-      }),
-      body: z.object({
-        name: z.string(),
-        age: z.number().min(0)
-      })
-    })
+const myMutationHandler = forgeController
+.mutation()
+.input({
+query: z.object({
+id: z.string().uuid()
+}),
+body: z.object({
+name: z.string(),
+age: z.number().min(0)
+})
+})
 `}
 
 </Code>
 
-<Warning>
+<Alert className="mt-6" type="warning">
   The value of the <code>query</code> and <code>body</code> properties in the{' '}
   <code>.input()</code> method must be Zod schemas, not plain objects.
-</Warning>
+</Alert>
 
 These input schemas are then used to validate the incoming requests. If the request does not conform to the schema, a <code>400 Bad Request</code> error is returned with a detailed error message. Therefore, you may chain the schema properties with whatever Zod methods you want, such as <code>.optional()</code>, <code>.default()</code>, <code>.min()</code>, <code>.max()</code>, etc.
 
@@ -248,30 +249,30 @@ Most of the time, you would want to store the uploaded files in the database. Ho
 <Code language="typescript">
 {`import { getMedia } from '@functions/external/media'
 
-  const update = forgeController
-    .mutation()
-    .description("Upload a file")
-    .input({
-      query: z.object({
-        id: z.string().uuid()
-      }),
-      body: z.object({
-        ...
-      })
-    })
-    .media({
-      file: { optional: false }
-    })
-    .callback(async ({ media: { file }, query: { id }, body, pb }) => {
-      const updatedRecord = await pb.update
-        .collection('your_collection')
-        .id(id)
-        .data({
-          ...body,
-          ...(await getMedia('file', file))
-        })
-        .execute();
-    });
+const update = forgeController
+.mutation()
+.description("Upload a file")
+.input({
+query: z.object({
+id: z.string().uuid()
+}),
+body: z.object({
+...
+})
+})
+.media({
+file: { optional: false }
+})
+.callback(async ({ media: { file }, query: { id }, body, pb }) => {
+const updatedRecord = await pb.update
+.collection('your_collection')
+.id(id)
+.data({
+...body,
+...(await getMedia('file', file))
+})
+.execute();
+});
 `}
 
 </Code>
@@ -350,6 +351,7 @@ Here is an example of a complete API handler that demonstrates the usage of the 
 
       return newUser;
     });
+
 `}
 
 </Code>

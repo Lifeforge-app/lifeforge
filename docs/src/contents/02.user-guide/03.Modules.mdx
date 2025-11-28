@@ -1,6 +1,5 @@
-import Note from '../../components/Note'
 import Code from '../../components/Code'
-import Warning from '../../components/Warning'
+import { Alert } from "lifeforge-ui"
 
 ###### Modules
 
@@ -16,6 +15,7 @@ I have always been a big fan of being able to extend the functionality of a syst
 Modules in LifeForge are self-contained packages that encapsulate specific functionalities, features, or integrations. They can range from simple utilities to complex systems, and they can be easily added or removed from a LifeForge instance without affecting the core system.
 
 LifeForge provides a robust module API and a set of powerful UI components to facilitate the development and integration of modules. This allows developers to focus on building their modules functionalities without worrying about the underlying infrastructure as well as the UI consistency.
+
 </section>
 
 <section id="discovering-modules">
@@ -25,9 +25,9 @@ Currently, all official LifeForge modules (those you have seen living inside the
 
 ![LifeForge Modules GitHub Repositories](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/user-modules/modules-gh.webp)
 
-<Note>
+<Alert className="mt-6" type="note">
 In the very near future, there will be an official LifeForge module registry / marketplace website where you can browse and search for modules easily.
-</Note>
+</Alert>
 </section>
 
 <section id="installing-modules">
@@ -35,20 +35,17 @@ In the very near future, there will be an official LifeForge module registry / m
 
 With the help of the built-in <code>ForgeCLI</code> tool, installing modules is a breeze. You can simply run a command to install a module from the official LifeForge module registry or from a custom source.
 
-<Code language="bash">
-{'bun run forge modules add <author>/<moduleName>'}
-</Code>
+<Code language="bash">{'bun run forge modules add <author>/<moduleName>'}</Code>
 
 For example, to install a module named <code>ideaBox</code> from the official LifeForge GitHub repository, you would run:
-<Code language="bash">
-{`bun run forge modules add lifeforge-app/ideaBox`}
-</Code>
+
+<Code language="bash">{`bun run forge modules add lifeforge-app/ideaBox`}</Code>
 
 This command will download the module, install its dependencies and database schema, and register it with your LifeForge instance automatically. Once installed, you can start using the module right away.
 
-<Warning>
+<Alert className="mt-6" type="warning">
 Make sure your LifeForge instance is **NOT** running while installing or uninstalling modules to avoid any potential issues.
-</Warning>
+</Alert>
 </section>
 
 <section id="uninstalling-modules">
@@ -56,16 +53,13 @@ Make sure your LifeForge instance is **NOT** running while installing or uninsta
 
 Uninstalling a module is just as easy as installing one. You can use the <code>ForgeCLI</code> tool to remove a module from your LifeForge instance.
 
-<Code language="bash">
-{`bun run forge modules remove <moduleName>`}
-</Code>
+<Code language="bash">{`bun run forge modules remove <moduleName>`}</Code>
 
 For example, to uninstall the <code>ideaBox</code> module, you would run:
-<Code language="bash">
-{`bun run forge modules remove ideaBox`}
-</Code>
 
-<Note>
+<Code language="bash">{`bun run forge modules remove ideaBox`}</Code>
+
+<Alert className="mt-6" type="note">
 Uninstalling a module **WILL NOT** delete any collections or data associated with that module to prevent any unwanted data loss. If you wish to remove the data as well, you will need to do so manually through the Pocketbase admin dashboard.
-</Note>
+</Alert>
 </section>
