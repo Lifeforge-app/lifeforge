@@ -21,7 +21,7 @@ function WithQueryData<T extends ForgeAPIClientController>({
     })
   )
 
-  if (query.isLoading) {
+  if (query.isLoading || query.isEnabled === false) {
     return showLoading ? <LoadingScreen /> : <></>
   }
 

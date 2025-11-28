@@ -14,7 +14,7 @@ function WithQuery<T>({
   showLoading?: boolean
   showRetryButton?: boolean
 }) {
-  if (query.isLoading) {
+  if (query.isLoading || query.isEnabled === false) {
     return showLoading ? <LoadingScreen /> : <></>
   }
 
