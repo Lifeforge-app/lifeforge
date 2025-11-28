@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { usePersonalization } from 'shared'
 
 import TagChip from './TagChip'
@@ -79,7 +80,7 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                   actionButtonProps={{
                     icon: 'tabler:x',
                     onClick: () => {
-                      onChange[query](null)
+                      onChange[query](null as any)
                     }
                   }}
                   color={
