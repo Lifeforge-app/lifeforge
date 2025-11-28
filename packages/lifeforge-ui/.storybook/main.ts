@@ -7,6 +7,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 const require = createRequire(import.meta.url)
 
 const config: StorybookConfig = {
+  
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     getAbsolutePath('@chromatic-com/storybook'),
