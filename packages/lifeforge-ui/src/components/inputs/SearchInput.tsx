@@ -45,7 +45,7 @@ function SearchInput({
   return (
     <search
       className={clsx(
-        'shadow-custom component-bg-with-hover bg-bg-50 relative flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg p-5 transition-all hover:bg-white',
+        'shadow-custom component-bg-with-hover bg-bg-50 relative flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg p-4 transition-all hover:bg-white',
         className
       )}
       onClick={e => {
