@@ -44,7 +44,7 @@ i18n
 
         const [namespace, subnamespace] = namespaces[0].split('.')
 
-        if (!['utils', 'apps', 'common', 'core'].includes(namespace)) {
+        if (!['apps', 'common'].includes(namespace)) {
           return
         }
 
@@ -52,7 +52,7 @@ i18n
           .setHost(import.meta.env.VITE_API_HOST)
           .input({
             lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms',
-            namespace: namespace as 'utils' | 'apps' | 'common' | 'core',
+            namespace: namespace as 'apps' | 'common',
             subnamespace: subnamespace
           }).endpoint
       },
