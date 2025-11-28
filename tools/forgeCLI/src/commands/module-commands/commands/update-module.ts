@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 import {
   confirmAction,
   executeCommand,
@@ -92,7 +94,9 @@ async function updateSingleModule(moduleName: string): Promise<void> {
       `cd apps/${moduleName} && git pull origin main && bun install`
     )
 
-    executeCommand(`bun forge db generate-migrations ${moduleName}`)
+    if (fs.existsSync(`apps/${moduleName}/server/schema.ts`)) {
+      executeCommand(`bun forge db generate-migrations ${moduleName}`)
+    }
 
     CLILoggingService.success(`Successfully updated module: ${moduleName}`)
   } catch (error) {
