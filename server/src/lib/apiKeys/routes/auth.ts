@@ -33,7 +33,9 @@ const createOrUpdate = forgeController
   .callback(async ({ pb, body: { password } }) => {
     const salt = await bcrypt.genSalt(10)
 
-    const APIKeysMasterPasswordHash = await bcrypt.hash(password, salt)
+    const decryptedMaster = decrypt2(password, challenge)
+
+    const APIKeysMasterPasswordHash = await bcrypt.hash(decryptedMaster, salt)
 
     const id = pb.instance.authStore.record!.id
 
