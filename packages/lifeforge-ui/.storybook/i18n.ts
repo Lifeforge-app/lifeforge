@@ -15,7 +15,7 @@ i18n
     initImmediate: true,
     maxRetries: 1,
     react: {
-      useSuspense: true,
+      useSuspense: false,
       bindI18n: 'languageChanged loaded'
     },
     cleanCode: true,
@@ -28,6 +28,13 @@ i18n
     },
     backend: {
       loadPath: (langs: string[], namespaces: string[]) => {
+        if (!import.meta.env.VITE_API_HOST) {
+          console.error(
+            'VITE_API_HOST is not defined. Please check your .env file in packages/lifeforge-ui/.env'
+          )
+          return
+        }
+
         if (
           !['en', 'zh', 'zh-TW', 'zh-CN', 'ms'].includes(langs[0]) ||
           !namespaces.filter(e => e && e !== 'undefined').length

@@ -9,7 +9,7 @@ import {
 } from '@storybook/addon-docs/blocks'
 import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
   APIEndpointProvider,
   PersonalizationProvider,
