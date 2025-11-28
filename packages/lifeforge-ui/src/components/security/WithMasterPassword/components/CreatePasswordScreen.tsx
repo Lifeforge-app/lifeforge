@@ -6,12 +6,15 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { encrypt } from 'shared'
 import type { ForgeAPIClientController } from 'shared'
 
 function CreatePasswordScreen({
-  controller
+  controller,
+  challengeController
 }: {
   controller: ForgeAPIClientController
+  challengeController: ForgeAPIClientController
 }) {
   const open = useModalStore(state => state.open)
 
@@ -49,8 +52,10 @@ function CreatePasswordScreen({
       title: t('vault.confirmSetNewPassword.title'),
       description: t('vault.confirmSetNewPassword.desc'),
       onConfirm: async () => {
+        const challenge = (await challengeController.query()) as string
+
         await createPasswordMutation.mutateAsync({
-          password: newPassword
+          password: encrypt(newPassword, challenge)
         } as never)
       }
     })
