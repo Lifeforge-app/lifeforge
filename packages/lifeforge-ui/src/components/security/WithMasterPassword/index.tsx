@@ -21,7 +21,12 @@ function WithMasterPassword({
 
   if (!hasMasterPassword) {
     if (hasMasterPassword === false) {
-      return <CreatePasswordScreen controller={controllers.createPassword} />
+      return (
+        <CreatePasswordScreen
+          challengeController={controllers.getChallenge}
+          controller={controllers.createPassword}
+        />
+      )
     }
   }
 
