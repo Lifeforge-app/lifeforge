@@ -5,7 +5,7 @@ import TagChip from './TagChip'
 function HeaderFilter<T extends Record<string, string | string[] | null>>({
   items,
   values,
-  setValues
+  onChange
 }: {
   items: Record<
     keyof T,
@@ -20,10 +20,8 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
     }
   >
   values: T
-  setValues: {
-    [K in keyof T]: (
-      value: T[K] extends Array<string> ? string[] | null : string | null
-    ) => void
+  onChange: {
+    [K in keyof T]: (value: T[K]) => void
   }
 }) {
   const { derivedThemeColor } = usePersonalization()
@@ -59,7 +57,7 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                           v => v !== t.id
                         )
 
-                        setValues[query](
+                        onChange[query](
                           (newValues.length > 0 ? newValues : null) as any
                         )
                       }
@@ -81,7 +79,7 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
                   actionButtonProps={{
                     icon: 'tabler:x',
                     onClick: () => {
-                      setValues[query](null)
+                      onChange[query](null)
                     }
                   }}
                   color={
