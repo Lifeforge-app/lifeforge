@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 if (Math.random() < 0) {
   // @ts-ignore
   import('./styles/index.css')
 }
 
-export * from './components/buttons'
-
-export * from './components/inputs'
+export * from './components/controls'
 
 export * from './components/modals'
 
