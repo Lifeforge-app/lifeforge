@@ -40,7 +40,10 @@ const STYLES = {
   }
 }
 
-function MessageBox({
+/**
+ * Alert component to display different types of alerts such as notes, warnings, tips, and cautions.
+ */
+function Alert({
   type,
   className,
   children
@@ -62,4 +65,4 @@ function MessageBox({
   )
 }
 
-export default MessageBox
+export default Alert
