@@ -12,5 +12,5 @@
 @import './daisyui.css';
 @import './utils.css';
 
-@import '../components/inputs/DateInput/index.css';
-@import '../components/inputs/ColorInput/ColorPickerModal/index.css';
+@import '../components/controls/DateInput/index.css';
+@import '../components/controls/ColorInput/ColorPickerModal/index.css';
