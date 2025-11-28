@@ -16,7 +16,7 @@ function Sidebar({
   return (
     <>
       <div
-        className={`fixed left-0 top-0 h-screen w-full transition-all ${
+        className={`fixed top-0 left-0 h-screen w-full transition-all ${
           sidebarOpen
             ? 'z-40 bg-black/20 backdrop-blur-md'
             : 'z-[-1] bg-transparent filter-none'
@@ -51,7 +51,7 @@ function Sidebar({
                   {children!.map(({ path: subpath }) => (
                     <Link
                       key={`${path}-${subpath}`}
-                      className={`before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:-left-[2px] before:top-1/2 before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all ${
+                      className={`before:bg-custom-500 relative block cursor-pointer px-4 py-2 transition-all before:absolute before:top-1/2 before:-left-[2px] before:w-[3px] before:-translate-y-1/2 before:rounded-full before:transition-all ${
                         location.pathname === `${path}/${subpath}`
                           ? 'text-custom-500 font-semibold before:h-full'
                           : 'text-bg-600 dark:text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 before:h-0 hover:font-medium'

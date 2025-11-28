@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
 
-import Note from '../../components/Note'
 import Code from '../../components/Code'
-import Warning from '../../components/Warning'
+import { Alert } from "lifeforge-ui"
 import EnvExample from './components/EnvExample'
 
 ###### Configuration
@@ -18,15 +17,14 @@ Time to configure everything together. Don't worry, it's not as hard as it sound
 
 The Forge CLI is a command-line interface tool that helps you manage and configure your LifeForge system. It provides a simple way to manage your system and modules. This tool doesn't require any installation, as it's included in the monorepo inside the <code>tools/forgeCLI</code> directory. You can run it using bun.
 
-<Code language="bash">
-{'bun run forge'}
-</Code>
+<Code language="bash">{'bun run forge'}</Code>
 
 After that, you should see the Forge CLI help menu.
 
 ![Forge CLI Help Menu](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/forge-help.webp)
 
 With that out of the way, let's move on to the configuration.
+
 </section>
 
 <section id="database-configuration">
@@ -34,15 +32,16 @@ With that out of the way, let's move on to the configuration.
 
 Pocketbase is just an empty shell out of the box. You need to set up the database schema and create an admin user. Fortunately, the Forge CLI can help you with that. To set up the database, run the following command:
 
-<Code language="bash">
-{'bun run forge db init <email> <password>'}
-</Code>
+<Code language="bash">{'bun run forge db init <email> <password>'}</Code>
 
 where the <code>&lt;email&gt;</code> and <code>&lt;password&gt;</code> are the email and password for the admin user you want to create.
 
-<Note>
-When initializing the database, the dotenv file will be created automatically in the <code>env</code> directory if it doesn't exist. If it already exists, the existing file will be used. Learn more about environment variables in the next section.
-</Note>
+<Alert className="mt-6" type="note">
+  When initializing the database, the dotenv file will be created automatically
+  in the <code>env</code> directory if it doesn't exist. If it already exists,
+  the existing file will be used. Learn more about environment variables in the
+  next section.
+</Alert>
 
 This initialization process will do quite a few things:
 
@@ -52,17 +51,16 @@ This initialization process will do quite a few things:
 - Update the <code>.env</code> file with the admin email and password (a new one will be created based on the <code>.env.example</code> file if it doesn't exist).
 - Create a default user record in the database based on the provided email and password.
 
-<Warning>
-Make sure the database instance is not running when you run this command. The command will start the database instance automatically.
-</Warning>
+<Alert className="mt-6" type="warning">
+  Make sure the database instance is not running when you run this command. The
+  command will start the database instance automatically.
+</Alert>
 
 Now, you can start the Pocketbase instance using the following command:
 
-<Code language="bash">
-{'bun run forge start db'}
-</Code>
+<Code language="bash">{'bun run forge start db'}</Code>
 
-This will start the Pocketbase instance. You can access the admin dashboard at <a href="http://localhost:8090/_" target="_blank" rel="noopener noreferrer">http://localhost:8090/_</a>. Enter the email and password you provided earlier to log in.
+This will start the Pocketbase instance. You can access the admin dashboard at <a href="http://localhost:8090/_" target="_blank" rel="noopener noreferrer">http://localhost:8090/\_</a>. Enter the email and password you provided earlier to log in.
 
 After logging in, you should see the admin dashboard with the collections and fields set up, and a default user record created.
 
@@ -70,9 +68,11 @@ After logging in, you should see the admin dashboard with the collections and fi
 
 Next, head to the settings page. Under the "Mail Settings" tab, configure the SMTP settings to enable email functionalities like password recovery and OTP for two-factor authentication. This will be crucial, especially for modules that require an additional layer of security.
 
-<Note>
-For the SMTP settings, you can use services like Gmail, SendGrid, or any other SMTP provider. Tutorials for setting up SMTP will not be covered in this documentation, but you can find plenty of resources online.
-</Note>
+<Alert className="mt-6" type="note">
+  For the SMTP settings, you can use services like Gmail, SendGrid, or any other
+  SMTP provider. Tutorials for setting up SMTP will not be covered in this
+  documentation, but you can find plenty of resources online.
+</Alert>
 
 As for other settings, feel free to explore and configure them as per your requirements. You can even setup S3 buckets for file storage (which is a cool feature provided by Pocketbase so that you can store files in the cloud). However, the default settings should work fine for most use cases.
 
@@ -83,6 +83,7 @@ That is it for the database configuration. Now, let's move on to the next step: 
 LifeForge currently supports OAuth2 authentication via Google and GitHub. To enable these providers, you need to set them up in the Pocketbase admin dashboard under the settings tab in "Users" collection. After they have been set up, LifeForge will automatically detect them and enable the corresponding login options in the client application.
 
 ![OAuth2 Providers](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/with-2fa.webp)
+
 </section>
 
 <section id="environment-variables">
@@ -97,63 +98,76 @@ There are only several environment variables that need to be set up for the syst
 For the client side, the one and only environment variable that needs to be set up is the <code>VITE_API_HOST</code>. This variable specifies the base URL for the API server. If you are running the system locally, you can set it to <code>http:\/\/localhost:3636</code> (or any other port that you are using). If you are deploying the system to a remote server, you can set it to the URL of your server.
 
 For the server side, there are several environment variables that need to be set up:
-- <code>PORT</code>: The port number for the API server. Default to <code>3636</code>.
-- <code>PB_DIR</code>: The path relative to the root of the project that points to the directory that contains your Pocketbase instance. Default to <code>database/</code>.
-- <code>PB_HOST</code>: The base URL for the Pocketbase instance. It will be displayed when you start your db instance. Default to <code>http:\/\/localhost:8090</code>. 
-- <code>PB_EMAIL</code>: The email of the admin user. Will be set automatically when you initialize the database.
-- <code>PB_PASSWORD</code>: The password of the admin user. Will be set automatically when you initialize the database.
-- <code>MASTER_KEY</code>: The master key for encrypting and decrypting API keys and other secrets. You can set it to any random string. Make sure to:
-    - Use a strong and unique string that is hard to guess.
-    - Keep it secret and do not share it with anyone.
-    - Change it if you suspect that it has been compromised.
-    - **DO NOT LOSE IT!** If you lose it, all the encrypted data stored in the database will be voided and you will not be able to recover it.
 
-<Note>
-For the <code>MASTER_KEY</code>, you can set it yourself, or use the one that is generated automatically when you initialize the database. Just make sure to keep it safe.
-</Note>
+- <code>PORT</code>: The port number for the API server. Default to
+  <code>3636</code>.
+- <code>PB_DIR</code>: The path relative to the root of the project that points
+  to the directory that contains your Pocketbase instance. Default to
+  <code>database/</code>.
+- <code>PB_HOST</code>: The base URL for the Pocketbase instance. It will be
+  displayed when you start your db instance. Default to
+  <code>http:\/\/localhost:8090</code>.
+- <code>PB_EMAIL</code>: The email of the admin user. Will be set automatically
+  when you initialize the database.
+- <code>PB_PASSWORD</code>: The password of the admin user. Will be set
+  automatically when you initialize the database.
+- <code>MASTER_KEY</code>: The master key for encrypting and decrypting API keys
+  and other secrets. You can set it to any random string. Make sure to: - Use a
+  strong and unique string that is hard to guess. - Keep it secret and do not
+  share it with anyone. - Change it if you suspect that it has been compromised.
+  - **DO NOT LOSE IT!** If you lose it, all the encrypted data stored in the
+  database will be voided and you will not be able to recover it.
+
+<Alert className="mt-6" type="note">
+  For the <code>MASTER_KEY</code>, you can set it yourself, or use the one that
+  is generated automatically when you initialize the database. Just make sure to
+  keep it safe.
+</Alert>
 
 You will see a weird variable called <code>PUPPETEER_EXECUTABLE_PATH</code>. This variable is used to specify the path to the Chromium executable that Puppeteer will use. Puppeteer is a library that allows you to control a headless browser (Chromium) programmatically. It is used by some modules for dynamic generation of assets.
 
 After setting up the environment variables, it's time to start the API server.
+
 </section>
 
 <section id="starting-the-api-server">
 ## Starting the API Server
 
 To start the API server, run the following command:
-<Code language="bash">
-{'bun run forge dev server'}
-</Code>
+
+<Code language="bash">{'bun run forge dev server'}</Code>
 
 Once started, you should see an output similar to this:
 
 ![API Server Started](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/server-start.webp)
 
-<Note>
-Make sure the Pocketbase instance is running before starting the API server. The API server needs to connect to the Pocketbase instance to function properly.
-</Note>
+<Alert className="mt-6" type="note">
+  Make sure the Pocketbase instance is running before starting the API server.
+  The API server needs to connect to the Pocketbase instance to function
+  properly.
+</Alert>
 
 The server will first perform a health check to ensure that the Pocketbase instance is reachable and all the necessary collections and fields are set up correctly and are in sync with the codebase. If everything is fine, the server will start and listen for incoming requests.
 
 To verify that the server is running, you can open your browser and navigate to <a href="http://localhost:3636/api/health" target="_blank" rel="noopener noreferrer">http://localhost:3636</a> (or the port you specified in the <code>PORT</code> environment variable). You should see a JSON response greeting you:
 
 <Code language="json">
-{`{
+  {`{
     "state": "success",
     "message": "Get ready to forge your life!"
 }`}
 </Code>
 
 If you see this message, congratulations! The API server is up and running. You can now proceed to start the client application, which is the very last step before you can start installing some juicy modules.
+
 </section>
 
 <section id="starting-the-client">
 ## Starting the Client
 
 To start the client application, run the following command:
-<Code language="bash">
-{'bun run forge dev client'}
-</Code>
+
+<Code language="bash">{'bun run forge dev client'}</Code>
 
 It will first build the UI and the shared library using Vite, and then start the development server of the client codebase. You should see an output similar to this:
 
@@ -161,9 +175,9 @@ It will first build the UI and the shared library using Vite, and then start the
 
 If everything is set up correctly, you be able to see the login screen of your LifeForge system by navigating to <a href="http://localhost:5173" target="_blank" rel="noopener noreferrer">http://localhost:5173</a> (or whatever url Vite tells you to use).
 
-<Note>
+<Alert className="mt-6" type="note">
 If your server is up and running but the client application shows that the API is offline, make sure that your client url is added to the list of allowed origins in <code>server/src/core/routes/constants/corsAllowedOrigins.ts</code>. By default, only <code>http:\/\/localhost:5173</code> is allowed. You can add more origins as needed. If you are deploying the system to a remote server, make sure to add your custom domain to the list of allowed origins as well.
-</Note>
+</Alert>
 </section>
 
 ---

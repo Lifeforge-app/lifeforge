@@ -39,7 +39,7 @@ export const components: MDXComponents = {
     return (
       <hr
         {...properties}
-        className="border-bg-200 dark:border-bg-800 mb-4 mt-8 border-t-[1.5px] sm:mb-8 sm:mt-12"
+        className="border-bg-200 dark:border-bg-800 mt-8 mb-4 border-t-[1.5px] sm:mt-12 sm:mb-8"
       />
     )
   },
@@ -101,7 +101,7 @@ export const components: MDXComponents = {
   img(properties) {
     return (
       <Zoom zoomImg={properties.src}>
-        <div className="flex-center w-full pb-4 pt-2">
+        <div className="flex-center w-full pt-2 pb-4">
           <img {...properties} alt="" className="rounded-lg sm:w-[80%]" />
         </div>
       </Zoom>

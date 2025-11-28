@@ -1,8 +1,8 @@
-import Note from '../../components/Note'
+import { Alert } from 'lifeforge-ui'
 import BgTemp from './components/BgTemp'
+import CustomColorInput from './components/CustomColorInput'
 import LightAndDarkMode from './components/LightAndDarkMode'
 import ThemeColors from './components/ThemeColors'
-import CustomColorInput from './components/CustomColorInput'
 
 ###### Personalization
 
@@ -26,9 +26,9 @@ The personalization page is where you can adjust the appearance of the system to
 
 LifeForge currently supports 4 languages: English, Simplified Chinese, and Traditional Chinese, and Malay. You can choose the language you prefer to use in the system by selecting the language from the dropdown list in the **Languages** section.
 
-<Note>
+<Alert className="mt-6" type="note">
 For my fellow developers, you must provide the required locale files if you are creating custom modules. Head over to the [Localization Guide](/developer-guide/localization) to learn how to add localization support to your modules.
-</Note>
+</Alert>
 </section>
 
 <section id="light-and-dark-mode">
@@ -51,17 +51,18 @@ If you think the predefined colors are not to your liking, you can also enter a 
 
 <ThemeColors />
 
-<Note>
-  Feel free to click on the colors above to experience the power of LifeForge's theming capabilities.
-</Note>
+<Alert className="mt-6" type="note">
+  Feel free to click on the colors above to experience the power of LifeForge's
+  theming capabilities.
+</Alert>
 
 If you are not satisfied with the predefined colors however, you can always enter a custom color code to use as the accent color by choosing the **Custom Color** option at the bottom of the color list.
 
 <CustomColorInput />
 
-<Note>
+<Alert className="mt-6" type="note">
   Feel free to toggle the "Use custom color" switch to enable the custom color input. Enter any valid hex color code (e.g., #ff5733) and click the "Apply" button to see the changes in real-time.
-</Note>
+</Alert>
 </section>
 
 <section id="background-temperature">
@@ -71,14 +72,13 @@ If you are not satisfied with the predefined colors however, you can always ente
 
 The background temperature allows you to set the color temperature of the system background. You can choose from 5 predefined color temperatures, ranging from cold to warm, to set the background temperature of your system. If you feel like using a custom color temperature, you can click on the color palette icon at the right side of the temperature list to enter a custom color code.
 
-
 Try out the different color temperatures below and if any of them catches your eye.
 
 <BgTemp />
 
-<Note>
+<Alert className="mt-6" type="note">
   Feel free to click on the color temperatures above to experience the power of LifeForge's theming capabilities.
-</Note>
+</Alert>
 </section>
 
 <section id="background-image">
@@ -88,12 +88,12 @@ Yes, you heard it right, you can set a background image for your system. Click o
 
 ![Image Picker](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/user-personalization/image-picker.webp)
 
-<Note>
+<Alert className="mt-6" type="note">
   If you have Pixabay API key set up in the system, there will be an option for
   you to search for images from Pixabay directly in the image picker modal.
   Learn more about how to set up the Pixabay API key in the [API Keys
   Guide](/user-guide/api-keys).
-</Note>
+</Alert>
 
 Once the background image is set, there will be two buttons at the right hand side of the background image config column, **Adjust** and **Remove**.
 
@@ -102,6 +102,7 @@ Once the background image is set, there will be two buttons at the right hand si
 Click on **Adjust** to adjust the background image settings, such as the opacity, blur, etc., and there will be a preview of the background image at the top of the adjustment modal for you to see the changes in real-time.
 
 ![Background Adjustment](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/user-personalization/adjust-modal.webp)
+
 </section>
 
 <section id="font-family-&-scale">
@@ -111,9 +112,12 @@ The font family used in the system is default to [Onest](https://fonts.google.co
 
 ![Font Selector](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/user-personalization/font-family-picker.webp)
 
-<Note>
-If the Google Cloud API key is not set up in the system, the font family selector will be disabled, and you won't be able to change the font family. Learn more about how to set up the Google Cloud API key in the [API Keys Guide](/user-guide/api-keys).
-</Note>
+<Alert className="mt-6" type="note">
+  If the Google Cloud API key is not set up in the system, the font family
+  selector will be disabled, and you won't be able to change the font family.
+  Learn more about how to set up the Google Cloud API key in the [API Keys
+  Guide](/user-guide/api-keys).
+</Alert>
 
 Sometimes the font that you have chosen might look too big or too small for your liking. You can adjust the font scale to make the font look bigger or smaller. The default font scale is 1, but you can adjust it from 0.5 to 2.
 
