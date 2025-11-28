@@ -29,7 +29,7 @@ However, as of October 2025, Vercel and Netlify do not yet support Bun v1.3.0 in
 In Vercel, head to the project settings, and under the **Build & Development Settings** section, override the **Install Command** to the following:
 
 <Code language="bash">
-{`bun upgrade && bun install`}
+{`bun upgrade && bun install --linker isolated`}
 </Code>
 
 As shown in the image below:

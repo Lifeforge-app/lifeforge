@@ -91,7 +91,7 @@ async function updateSingleModule(moduleName: string): Promise<void> {
 
   try {
     executeCommand(
-      `cd apps/${moduleName} && git pull origin main && bun install`
+      `cd apps/${moduleName} && git pull origin main && bun install --linker isolated`
     )
 
     if (fs.existsSync(`apps/${moduleName}/server/schema.ts`)) {

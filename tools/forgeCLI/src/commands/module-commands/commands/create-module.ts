@@ -364,7 +364,7 @@ function initializeGitRepository(modulePath: string): void {
 function installDependencies(): void {
   CLILoggingService.step('Installing module dependencies...')
 
-  executeCommand('bun install', {
+  executeCommand('bun install --linker isolated', {
     cwd: `${process.cwd()}/apps`,
     stdio: 'ignore'
   })

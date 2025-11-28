@@ -105,7 +105,7 @@ function installDependencies(): void {
   CLILoggingService.progress('Installing dependencies')
 
   try {
-    executeCommand('bun install', {
+    executeCommand('bun install --linker isolated', {
       stdio: ['ignore', 'ignore', 'ignore'],
       exitOnError: false
     })

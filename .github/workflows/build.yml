@@ -23,7 +23,7 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun upgrade && bun install
+        run: bun upgrade && bun install --linker isolated
 
       - name: Type check server
         run: bun run forge types server
@@ -45,7 +45,7 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun upgrade && bun install
+        run: bun upgrade && bun install --linker isolated
 
       - name: Build client
         run: bun run forge build client
