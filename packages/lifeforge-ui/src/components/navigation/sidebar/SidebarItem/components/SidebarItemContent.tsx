@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 
 import { ContextMenu } from '@components/overlays'
 
+import SidebarActionButton from './SidebarActionButton'
+
 function SidebarItemContent({
   label,
   sidebarExpanded,
@@ -16,7 +18,7 @@ function SidebarItemContent({
   active,
   onCancelButtonClick,
   namespace,
-  needTranslate
+  actionButtonProps
 }: {
   label: string | React.ReactElement
   sidebarExpanded: boolean
@@ -26,10 +28,15 @@ function SidebarItemContent({
   contextMenuItems?: React.ReactElement
   active: boolean
   onCancelButtonClick?: () => void
-  namespace?: string
-  needTranslate?: boolean
+  namespace?: string | false
+  actionButtonProps?: {
+    icon: string
+    onClick: () => void
+  }
 }) {
-  const { t } = useTranslation([namespace, 'common.sidebar'])
+  const { t } = useTranslation(
+    namespace === false ? [] : [namespace, 'common.sidebar']
+  )
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -40,7 +47,7 @@ function SidebarItemContent({
           if (!isMainSidebarItem) {
             return (
               <div className="block w-full min-w-0 truncate">
-                {typeof label === 'string' && needTranslate
+                {typeof label === 'string' && namespace !== false
                   ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
                   : label}{' '}
               </div>
@@ -87,13 +94,16 @@ function SidebarItemContent({
           </span>
         )}
       </div>
+      {actionButtonProps && (
+        <SidebarActionButton
+          icon={actionButtonProps.icon}
+          onClick={actionButtonProps.onClick}
+        />
+      )}
       {!active && contextMenuItems !== undefined && (
         <ContextMenu
           classNames={{
-            wrapper: clsx(
-              'relative overscroll-contain',
-              !isMenuOpen && 'hidden group-hover:block'
-            ),
+            wrapper: 'relative overscroll-contain',
             button: 'p-2!'
           }}
           onOpenChange={setIsMenuOpen}
