@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-interface WidgetProps {
+export interface WidgetProps {
   /** Additional CSS class names to apply to the outer wrapper of the component. */
   className?: string
   /** The icon to display beside the title. Should be a valid icon name from Iconify. */
