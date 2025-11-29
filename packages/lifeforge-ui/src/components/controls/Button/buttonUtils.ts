@@ -45,7 +45,7 @@ export const generateColorClass = (
         tinycolor(themeColor).isLight()
           ? 'text-bg-800 dark:text-bg-800'
           : 'text-bg-50 dark:text-bg-50'
-      } disabled:bg-bg-200 disabled:text-bg-400 disabled:hover:bg-bg-200 dark:disabled:bg-bg-800 dark:disabled:text-bg-700 dark:disabled:hover:bg-bg-800`
+      } disabled:bg-bg-200 disabled:text-bg-400 disabled:hover:bg-bg-200 dark:disabled:bg-bg-800/50 dark:disabled:text-bg-600 dark:disabled:hover:bg-bg-800/50`
   }
 }
 
