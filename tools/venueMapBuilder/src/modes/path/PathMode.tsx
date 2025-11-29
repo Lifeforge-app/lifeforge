@@ -24,7 +24,7 @@ export function PathMode({ pathState }: PathModeProps) {
               <span className="text-lg">New node after plotting</span>
             </div>
             <Switch
-              checked={pathState.continuousPlotting}
+              value={pathState.continuousPlotting}
               onChange={() =>
                 pathState.setContinuousPlotting(!pathState.continuousPlotting)
               }

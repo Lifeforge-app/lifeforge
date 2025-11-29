@@ -57,7 +57,7 @@ function SidebarHeader() {
         className="mb-6"
         icon="uil:layer-group"
         label="Floor Number"
-        setValue={floor => {
+        onChange={floor => {
           const newFloorId = floor as string
 
           if (newFloorId === 'new-floor') {

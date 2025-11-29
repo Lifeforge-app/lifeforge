@@ -154,8 +154,8 @@ export function UnitEditor({
           icon="tabler:123"
           label="Unit Name"
           placeholder="FX.XX"
-          setValue={unitState.handleUnitNameChange}
           value={unit.name}
+          onChange={unitState.handleUnitNameChange}
         />
         <div className="mt-4 flex items-center gap-2">
           <Button
@@ -184,18 +184,18 @@ export function UnitEditor({
               label="Label Offset X"
               max={200}
               min={-200}
-              setValue={unitState.handleLabelOffsetXChange}
               step={1}
               value={unit.labelOffsetX || 0}
+              onChange={unitState.handleLabelOffsetXChange}
             />
             <SliderInput
               icon="tabler:arrows-vertical"
               label="Label Offset Y"
               max={200}
               min={-200}
-              setValue={unitState.handleLabelOffsetYChange}
               step={1}
               value={unit.labelOffsetY || 0}
+              onChange={unitState.handleLabelOffsetYChange}
             />
           </div>
         </div>
@@ -442,7 +442,7 @@ export function UnitEditor({
                 <span className="text-lg">Align after drawing</span>
               </div>
               <Switch
-                checked={alignAfterDrawing}
+                value={alignAfterDrawing}
                 onChange={() => setAlignAfterDrawing(!alignAfterDrawing)}
               />
             </div>

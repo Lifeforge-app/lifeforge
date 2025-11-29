@@ -44,7 +44,7 @@ export function AmenityEditor({
           className="mt-4"
           icon="tabler:category"
           label="Amenity Type"
-          setValue={value => {
+          onChange={value => {
             amenityState.handleAmenityTypeChange(value as string)
           }}
           value={amenity.amenityTypeId}

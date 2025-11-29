@@ -81,7 +81,7 @@ function AmenityMode({
             }
             icon="tabler:category"
             label="Amenity Type"
-            setValue={handleAmenityTypeSelect}
+            onChange={handleAmenityTypeSelect}
             value={selectedAmenityTypeId || ''}
           >
             {amenityTypes.map(type => (

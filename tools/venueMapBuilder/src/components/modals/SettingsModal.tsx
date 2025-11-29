@@ -48,16 +48,16 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
         icon="tabler:number-123"
         label="Floor Abbreviation"
         placeholder="e.g., G, L1, B"
-        setValue={settings.handleFloorIdChange}
         value={selectedFloorId}
+        onChange={settings.handleFloorIdChange}
       />
       <TextInput
         className="mt-4"
         icon="uil:layers"
         label="Floor Name"
         placeholder="e.g., Ground Floor"
-        setValue={settings.handleFloorNameChange}
         value={floors.find(floor => floor.id === selectedFloorId)?.name || ''}
+        onChange={settings.handleFloorNameChange}
       />
       <div className="mt-6 flex items-center justify-between">
         <div className="text-bg-500 flex items-center gap-2">
@@ -65,11 +65,11 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
           <span className="text-lg">Show floor plan image</span>
         </div>
         <Switch
-          checked={settings.showFloorPlanImage}
+          value={settings.showFloorPlanImage}
           onChange={settings.handleToggleShowFloorPlanImage}
         />
       </div>
-      <div className="mb-6 mt-4">
+      <div className="mt-4 mb-6">
         <FileInput
           acceptedMimeTypes={{
             image: ['png', 'jpeg', 'jpg', 'webp', 'svg+xml']
@@ -93,29 +93,29 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
         label="Unit Name Font Size"
         max={16}
         min={1}
-        setValue={settings.handleUnitLabelFontSizeChange}
         step={1}
         value={settings.unitLabelFontSize}
+        onChange={settings.handleUnitLabelFontSizeChange}
       />
       <SliderInput
         icon="tabler:circle-dashed"
         label="Point Radius"
         max={16}
         min={1}
-        setValue={settings.handlePointRadiusChange}
         step={1}
         value={settings.pointRadius}
         wrapperClassName="mt-10"
+        onChange={settings.handlePointRadiusChange}
       />
       <SliderInput
         icon="tabler:map-pin"
         label="Amenity Chip Size"
         max={64}
         min={8}
-        setValue={settings.handleAmenityChipSizeChange}
         step={2}
         value={settings.amenityChipSize}
         wrapperClassName="mt-10"
+        onChange={settings.handleAmenityChipSizeChange}
       />
       <div className="mt-12 flex items-center justify-between">
         <div className="text-bg-500 flex items-center gap-2">
@@ -123,7 +123,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
           <span className="text-lg">Show unit</span>
         </div>
         <Switch
-          checked={settings.showUnit}
+          value={settings.showUnit}
           onChange={settings.handleToggleShowUnit}
         />
       </div>
@@ -133,7 +133,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
           <span className="text-lg">Show outline</span>
         </div>
         <Switch
-          checked={settings.showUnitOutline}
+          value={settings.showUnitOutline}
           onChange={settings.handleToggleShowOutline}
         />
       </div>
@@ -143,7 +143,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
           <span className="text-lg">Show paths</span>
         </div>
         <Switch
-          checked={settings.showPaths}
+          value={settings.showPaths}
           onChange={settings.handleToggleShowPaths}
         />
       </div>
@@ -153,7 +153,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
           <span className="text-lg">Show amenities</span>
         </div>
         <Switch
-          checked={settings.showAmenities}
+          value={settings.showAmenities}
           onChange={settings.handleToggleShowAmenities}
         />
       </div>
@@ -163,12 +163,12 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
           <span className="text-lg">Show entrances</span>
         </div>
         <Switch
-          checked={settings.showEntrances}
+          value={settings.showEntrances}
           onChange={settings.handleToggleShowEntrances}
         />
       </div>
 
-      <div className="mb-2 mt-12 flex items-center gap-2">
+      <div className="mt-12 mb-2 flex items-center gap-2">
         <Button
           className="w-full"
           icon="uil:import"

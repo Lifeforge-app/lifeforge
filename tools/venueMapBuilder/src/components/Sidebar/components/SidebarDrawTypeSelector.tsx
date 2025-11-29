@@ -56,7 +56,7 @@ function SidebarDrawTypeSelector({
         className="my-4"
         icon="tabler:category"
         label="Drawing Mode"
-        setValue={(value: unknown) => {
+        onChange={(value: unknown) => {
           const mode = value as DrawingMode
 
           setDrawingMode(mode)

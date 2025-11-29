@@ -56,20 +56,20 @@ export function OutlineEditor({
           icon="tabler:tag"
           label="Outline Name"
           placeholder="Building Outline"
-          setValue={outlineState.handleOutlineNameChange}
+          onChange={outlineState.handleOutlineNameChange}
           value={outline.name}
         />
         <ColorInput
           className="mt-4"
           label="Line Color"
-          setValue={outlineState.handleOutlineColorChange}
+          onChange={outlineState.handleOutlineColorChange}
           value={outline.color || '#374151'}
         />
         <NumberInput
           className="mt-4"
           icon="tabler:line-height"
           label="Stroke Width"
-          setValue={outlineState.handleOutlineStrokeWidthChange}
+          onChange={outlineState.handleOutlineStrokeWidthChange}
           value={outline.strokeWidth || 2}
         />
         {outline.segments.length > 0 && (

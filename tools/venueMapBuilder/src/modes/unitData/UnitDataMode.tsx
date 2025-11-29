@@ -34,7 +34,7 @@ function UnitDataMode() {
       <SearchInput
         className="component-bg-lighter-with-hover"
         searchTarget="store"
-        setValue={setSearchQuery}
+        onChange={setSearchQuery}
         value={searchQuery}
       />
       {unitData.length > 0 ? (
