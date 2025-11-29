@@ -1,7 +1,7 @@
-import ListboxInput from '@components/inputs/ListboxInput'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
+
+import { ListboxInput, ListboxOption } from '@components/inputs'
 
 import {
   type IPixabaySearchFilter,
@@ -35,10 +35,10 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
       icon="tabler:list"
       label="imagePicker.inputs.imageType"
       namespace="common.modals"
-      setValue={value => {
+      value={imageType}
+      onChange={value => {
         updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })
       }}
-      value={imageType}
     >
       {IMAGE_TYPES.map(({ icon, id }, i) => (
         <ListboxOption

@@ -36,7 +36,7 @@ export function buildChildRoutes({
         <APIKeyStatusProvider APIKeys={APIKeys}>
           <Suspense
             key={`route-${path}`}
-            fallback={<LoadingScreen customMessage={loadingMessage} />}
+            fallback={<LoadingScreen message={loadingMessage} />}
           >
             <ModuleWrapper config={config}>
               <Component />

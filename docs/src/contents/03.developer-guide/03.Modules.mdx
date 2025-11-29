@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react';
-import CustomLink from '../../components/CustomLink';
-import Code from '../../components/Code';
-import Note from '../../components/Note';
-import Warning from '../../components/Warning';
+import { Icon } from '@iconify/react'
+
+import Code from '../../components/Code'
+import CustomLink from '../../components/CustomLink'
+import { Alert } from "lifeforge-ui"
 
 ###### Modules
 
@@ -21,36 +21,27 @@ All the modules in LifeForge's codebase is located in the <code>apps/</code> dir
 
 This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. Here, you can define the pages, components, and styles specific to your module. A UI library called <code>lifeforge-ui</code> is also provided in the <code>packages/</code> directory, which you can use to maintain a consistent design language across your module.
 
-<CustomLink
-  text="Explore UI Library"
-  to="/developer-guide/ui-library"
-/>
+<CustomLink text="Explore UI Library" to="/developer-guide/ui-library" />
 
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
 
 This directory contains the backend code for the module. It is built using ExpressJS, the same framework used in the main LifeForge server codebase as well. Here, you can define the API routes, business logic, and database interactions specific to your module. Everything from the main server codebase is also available for you to use, including the type-safe API constructor <code>forgeController</code> and <code>forgeRouter</code>, as well as the type-safe PocketBase wrapper <code>PBService</code>.
 
-<CustomLink
-  text="Learn More"
-  to="/developer-guide/building-api"
-/>
+<CustomLink text="Learn More" to="/developer-guide/building-api" />
 
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-i18n" /><code className="text-xl!">locales/</code></div>
 
 This directory contains the localization files for the module. It is structured to support multiple languages, allowing you to provide translations for your module's content. Each language has its own JSON file, where you can define the key-value pairs for the translated strings.
 
-<CustomLink
-  text="Learn More"
-  to="/developer-guide/localization"
-/>
+<CustomLink text="Learn More" to="/developer-guide/localization" />
 
 ### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:nodejs" /><code className="text-xl!">package.json</code></div>
 
 This file contains the module's metadata and dependencies. LifeForge's monorepo is managed using **bun**, which supports workspaces natively. The newest version of **bun** is mandatory since the dependencies management relies on features that are only available in the latest versions.
 
-<Note>
+<Alert className="mt-6" type="note">
 In bun version 1.2.x and below, workspace dependencies are shared across all workspaces, meaning that if two workspaces depend on different versions of the same package, bun will only install one version at the root level. However, starting from bun version 1.3.x, workspace dependencies are isolated, allowing each workspace to have its own set of dependencies without conflicts. This change is crucial for maintaining module independence and avoiding dependency mismanagement issues.
-</Note>
+</Alert>
  
 </section>
 
@@ -61,9 +52,7 @@ To create a new module, you can use the <code>ForgeCLI</code> tool, which provid
 
 Simply run the following command in your terminal:
 
-<Code language="bash">
-{`bun run forge modules create`}
-</Code>
+<Code language="bash">{`bun run forge modules create`}</Code>
 
 Several prompts will guide you through the setup process, allowing you to customize the module's name, description, and other settings, which should look something like this:
 
@@ -80,6 +69,7 @@ When prompted to select an icon for your module, you can choose from all the ava
 ### Selecting Boilerplate
 
 You can choose from several boilerplate templates to kickstart your module development. Each boilerplate comes with pre-configured settings and sample code tailored for different use cases. You can also choose a blank template if you prefer to start from scratch.
+
 </section>
 
 <section id="client-manifest">
@@ -94,18 +84,20 @@ When creating a module using the <code>ForgeCLI</code>, a default manifest file 
   import { lazy } from 'react'
   import type { ModuleConfig } from 'shared'
 
-  export default {
-    name: 'My Module',
-    icon: 'tabler:cube',
-    routes: {
-      'my-module': lazy(() => import('@'))
-    },
-    category: 'Utilities',
-  } satisfies ModuleConfig
+export default {
+name: 'My Module',
+icon: 'tabler:cube',
+routes: {
+'my-module': lazy(() => import('@'))
+},
+category: 'Utilities',
+} satisfies ModuleConfig
 `}
+
 </Code>
 
 Shown below are the type definition for the <code>ModuleConfig</code> interface:
+
 <Code language="typescript">
 {`export interface ModuleConfig {
     // Basic module information
@@ -155,18 +147,19 @@ Shown below are the type definition for the <code>ModuleConfig</code> interface:
     category?: string
   }
 
-  export interface ModuleCategory {
-    title: string
-    items: ModuleConfig[]
-  }
+export interface ModuleCategory {
+title: string
+items: ModuleConfig[]
+}
 `}
+
 </Code>
 </section>
 
 <section id="categorizing-modules">
 ## Categorizing Modules
 
-As mentioned above, each module can be assigned to a specific category using the <code>category</code> field in the manifest file. This categorization helps organize modules in the sidebar, making it easier for users to navigate and find the modules they need. 
+As mentioned above, each module can be assigned to a specific category using the <code>category</code> field in the manifest file. This categorization helps organize modules in the sidebar, making it easier for users to navigate and find the modules they need.
 
 All modules with the same category will be grouped together under a common heading in the sidebar and sorted alphabetically within that category. However, when it comes to the order of the categories themselves, there is a special file located at <code>apps/cat.config.json</code> that defines the order of the categories. This file exports an array of category names, which determines the order in which the categories are displayed in the sidebar. Categories that are not listed in this file will be placed at the end of the sidebar, sorted alphabetically.
 
@@ -204,13 +197,17 @@ When you install a module using the <code>ForgeCLI</code>, it will automatically
 
 These dependencies provide the foundational tools and libraries needed for building robust and feature-rich modules. However, module developers are free to add any additional dependencies they require for their specific module functionality.
 
-<Note>
-When adding new dependencies to your module, make sure to run <code>bun install</code> in the respective module directory to ensure that the dependencies are installed in the desired module's context, otherwise they might end up being installed at the root level, causing potential waste of disk space and dependency mismanagement issues.
-</Note>
+<Alert className="mt-6" type="note">
+  When adding new dependencies to your module, make sure to run{' '}
+  <code>bun install</code> in the respective module directory to ensure that the
+  dependencies are installed in the desired module's context, otherwise they
+  might end up being installed at the root level, causing potential waste of
+  disk space and dependency mismanagement issues.
+</Alert>
 
-<Warning>
+<Alert className="mt-6" type="warning">
 For dependencies that are shared across multiple modules, please be mindful of the version compatibility to avoid potential conflicts. It is recommended to use the same version of shared dependencies across all modules whenever possible. For example, if some sort of context provider from an external library is used in multiple modules, make sure that all modules are using the same version of that library to prevent issues related to multiple instances of the context provider being created.
-</Warning>
+</Alert>
 </section>
 
 <section id="version-control">
@@ -224,39 +221,39 @@ By default, the <code>ForgeCLI</code> will install the latest stable release of 
 
 You can verify that the module has been added as a git submodule by checking the <code>.gitmodules</code> file at the root of the main repository. This file contains information about all the submodules, including their paths and URLs. Or, you can run the following command to see the list of submodules:
 
-<Code language="bash">
-{`git submodule status`}
-</Code>
+<Code language="bash">{`git submodule status`}</Code>
 
 The result will look something like this:
 
 ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-creating-module/submodule-status.webp)
 
-<Warning>
-When deploying your LifeForge instance, make sure that all modules are in the form of git submodules, or else there might be unexpected issues during deployment.
-</Warning>
+<Alert className="mt-6" type="warning">
+  When deploying your LifeForge instance, make sure that all modules are in the
+  form of git submodules, or else there might be unexpected issues during
+  deployment.
+</Alert>
 
 </section>
 
 <section id="publishing-modules">
 ## Publishing Modules
 
-<Note>
+<Alert className="mt-6" type="note">
   Publishing modules to the public LifeForge module registry is not yet
   implemented. For now, you can share your module by pushing your code to a public
   Git repository with a certain structure, and other users can install it using the
   <code>ForgeCLI</code> by providing the Git URL.
 
-  But don't worry, module publishing will be available soon!
-</Note>
+But don't worry, module publishing will be available soon!
+
+</Alert>
 
 When you are ready to share your module with the world, you can use the <code>ForgeCLI</code> to publish your module to your own GitHub repository. This allows other users to easily install your module in their own LifeForge instances. However, this requires you to have your GitHub CLI configured with the necessary permissions to create repositories on your behalf.
 
 To publish your module, simply run the following command in your terminal:
 
-<Code language="bash">
-{`bun run forge modules publish [module]`}
-</Code>
+<Code language="bash">{`bun run forge modules publish [module]`}</Code>
 
 Initially, your module will be created locally with a Git repository separated from the main LifeForge codebase. Once published, the module will be deleted from your local <code>apps/</code> directory, and readded as a git submodule pointing to the newly created repository. This ensures that your module remains independent and can be updated separately from the main LifeForge codebase.
+
 </section>

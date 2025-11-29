@@ -5,10 +5,10 @@ import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
 import {
   Button,
-  ConfigColumn,
   ConfirmationModal,
   ContextMenu,
-  ContextMenuItem
+  ContextMenuItem,
+  OptionsColumn
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -89,9 +89,9 @@ function EntryItem({
     })
 
   return (
-    <ConfigColumn
+    <OptionsColumn
       key={entry.id}
-      desc={entry.description}
+      description={entry.description}
       icon={entry.icon}
       title={
         <>
@@ -137,7 +137,7 @@ function EntryItem({
           />
         </ContextMenu>
       </div>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

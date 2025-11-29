@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 
-import CustomLink from '../../components/CustomLink'
 import Code from '../../components/Code'
-import Note from '../../components/Note'
-import Warning from '../../components/Warning'
+import CustomLink from '../../components/CustomLink'
+import { Alert } from "lifeforge-ui"
 
 ###### Deployment
 
@@ -18,8 +17,7 @@ Now that you have successfully set up your LifeForge system, it's time to deploy
 
 Since the frontend is basically just a **Single Page Application (SPA)**, we can easily deploy it to Vercel, Netlify, or maybe even GitHub Pages (never done it before, not sure if it works). Simply import your GitHub repository, select the root directory to point to the <code>client</code> folder, and set the build command to <code>bun run build</code> and the output directory to <code>client/dist</code>.
 
-
-<Warning>
+<Alert className="mt-6" type="warning">
 ### Bun Version Requirement
 
 When deploying the client application to PaaS providers like Vercel or Netlify, make sure that the Bun version used in the build environment is at least **v1.3.0**, since the dependency resolution mechanism used in Bun v1.3.0 and later is required to properly build the client application. If the Bun version is lower than v1.3.0, your app should still build, but you might run into lots of issues when running the app.
@@ -28,16 +26,15 @@ However, as of October 2025, Vercel and Netlify do not yet support Bun v1.3.0 in
 
 In Vercel, head to the project settings, and under the **Build & Development Settings** section, override the **Install Command** to the following:
 
-<Code language="bash">
-{`bun upgrade && bun install --linker isolated`}
-</Code>
+<Code language="bash">{`bun upgrade && bun install --linker isolated`}</Code>
 
 As shown in the image below:
 
 ![vercel-bun-upgrade](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/deployment/install-command.webp)
 
 However, in Netlify, I can't seem to find a way to override the install command. If you know how to do it, please let me know!
-</Warning>
+
+</Alert>
 </section>
 
 <section id="deploying-backend">
@@ -45,9 +42,9 @@ However, in Netlify, I can't seem to find a way to override the install command.
 
 You will eventually need to make your server accessible from the public internet. Therefore, a securely hosted backend server with SSL/TLS encryption is essential to protect your data and ensure secure communication between the client and server. Your client application hosted with https prefix will not be able to communicate with a backend server that is not secured with SSL/TLS encryption after all.
 
-The backend server is a **vanilla Express.JS application**, which means you can deploy it to any cloud server that supports Node.js applications. You can use some sort of Virtual Private Server (VPS) like DigitalOcean, Linode, or even AWS EC2. 
+The backend server is a **vanilla Express.JS application**, which means you can deploy it to any cloud server that supports Node.js applications. You can use some sort of Virtual Private Server (VPS) like DigitalOcean, Linode, or even AWS EC2.
 
-<Note>
+<Alert className="mt-6" type="note">
 ### Using a Proxy Server
 
 If you want to save some money and avoid the hassle of setting up a VPS, and you just so happen to have an old computer or a Raspberry Pi lying around, you can also host the backend server on your own local server and use a **proxy server** to redirect the requests to your local server through a secure connection.
@@ -57,7 +54,7 @@ Before we start, make sure you have setup the port forwarding on your router to 
 Next, clone the proxy server repository that I have created for you:
 
 <Code language="bash">
-{`git clone https://github.com/LifeForge-app/lifeforge-api-proxy.git`}
+  {`git clone https://github.com/LifeForge-app/lifeforge-api-proxy.git`}
 </Code>
 
 Then, navigate to the <code>lifeforge-proxy</code> directory and create a <code>.env</code> file. There is only one field that you need to fill in, which is the <code>TARGET_URL</code> field. This field is the public URL of your backend API server. Make sure to put the full URL, including the <code>http(s)://</code> prefix.
@@ -65,7 +62,8 @@ Then, navigate to the <code>lifeforge-proxy</code> directory and create a <code>
 Finally, deploy the proxy server to Render or any other cloud server that supports Node.js applications. Make sure to copy and paste the environment variables from your <code>.env</code> file to the server dashboard.
 
 Once the deployment is complete, you should see a link to your proxy server. Try to access your API using the link and see if it works. Make sure to update the <code>VITE_API_HOST</code> field in your <code>.env.local</code> file to the URL of your proxy server.
-</Note>
+
+</Alert>
 </section>
 
 <section id="deploying-database">
@@ -84,7 +82,6 @@ As for the file storage, Pocketbase provides option for you to store you files i
 And wallah! You have successfully deployed your LifeForge system to a cloud server. Now you can access your LifeForge system from anywhere in the world. Time to start managing your life like a pro!
 
 <CustomLink to="/user-guide/modules" text="Learn more about Modules" />
-
 
 If you're finding the system not to your liking and you just so happen to be a web developer, you can also create your own modules and contribute to the project.
 

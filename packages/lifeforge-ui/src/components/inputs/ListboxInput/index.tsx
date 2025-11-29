@@ -16,7 +16,7 @@ interface ListboxInputProps<T> {
   /** The current selected value of the listbox. */
   value: T
   /** Callback function called when the selected value changes. */
-  setValue: (value: T) => void
+  onChange: (value: T) => void
   /** Whether the field is required for form validation. */
   required?: boolean
   /** Whether the listbox is disabled and non-interactive. */
@@ -41,7 +41,7 @@ function ListboxInput<T>({
   label,
   icon,
   value,
-  setValue,
+  onChange,
   required,
   disabled,
   multiple,
@@ -91,7 +91,7 @@ function ListboxInput<T>({
       errorMsg={errorMsg}
       multiple={multiple}
       value={value}
-      onChange={setValue}
+      onChange={onChange}
       onClick={focusInput}
     >
       <ListboxButton className="group flex w-full min-w-64 items-center pl-6">

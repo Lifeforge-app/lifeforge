@@ -1,7 +1,8 @@
-import { SearchInput } from '@components/inputs'
-import { EmptyStateScreen } from '@components/screens'
 import { useEffect, useMemo, useState } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
+
+import { EmptyStateScreen } from '@components/feedback'
+import { SearchInput } from '@components/inputs'
 
 import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
@@ -77,13 +78,13 @@ function IconSet({
         className="component-bg-lighter-with-hover"
         namespace="common.modals"
         searchTarget="iconPicker.icon"
-        setValue={setSearchTerm}
         value={searchTerm}
+        onChange={setSearchTerm}
       />
       <ChipSelector
         options={Object.keys(iconData.categories ?? {})}
-        setValue={setCurrentTag}
         value={currentTag}
+        onChange={setCurrentTag}
       />
       <div className="flex min-h-0 flex-1 flex-col">
         {filteredIconList.length ? (
@@ -138,9 +139,11 @@ function IconSet({
           <div className="flex-center flex-1">
             <EmptyStateScreen
               icon="tabler:icons-off"
-              name="icon"
-              namespace="common.modals"
-              tKey="iconPicker"
+              message={{
+                id: 'icon',
+                namespace: 'common.modals',
+                tKey: 'iconPicker'
+              }}
             />
           </div>
         )}

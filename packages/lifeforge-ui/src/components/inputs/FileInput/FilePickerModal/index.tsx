@@ -1,9 +1,10 @@
-import { Button } from '@components/buttons'
-import { ModalHeader } from '@components/modals'
-import { Tabs } from '@components/utilities'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePromiseLoading } from 'shared'
+
+import { Button } from '@components/inputs'
+import { Tabs } from '@components/navigation'
+import { ModalHeader } from '@components/overlays'
 
 import AIImageGenerator from './components/AIImageGenerator'
 import ImageURL from './components/ImageURL'
@@ -61,7 +62,7 @@ function FilePickerModal({
       />
       {(enablePixabay || enableUrl || enableAI) && (
         <Tabs
-          active={mode}
+          currentTab={mode}
           enabled={(['local', 'url', 'pixabay', 'ai'] as const).filter(
             name =>
               name === 'local' ||
@@ -91,7 +92,7 @@ function FilePickerModal({
               id: 'ai'
             }
           ]}
-          onNavClick={(id: 'local' | 'url' | 'pixabay' | 'ai') => {
+          onTabChange={(id: 'local' | 'url' | 'pixabay' | 'ai') => {
             setMode(id)
             setFile(null)
           }}

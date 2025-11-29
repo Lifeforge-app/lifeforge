@@ -15,13 +15,13 @@ export const Default: Story = {
   args: {
     label: 'Icon of Something',
     value: 'tabler:cube',
-    setValue: () => {},
+    onChange: () => {},
     namespace: 'namespace'
   },
   render: args => {
     const [icon, setIcon] = useState(args.value)
 
-    return <Index {...args} disabled={false} setValue={setIcon} value={icon} />
+    return <Index {...args} disabled={false} onChange={setIcon} value={icon} />
   }
 }
 
@@ -29,7 +29,7 @@ export const Required: Story = {
   args: {
     label: 'Icon of Something',
     value: 'tabler:cube',
-    setValue: () => {},
+    onChange: () => {},
     namespace: 'namespace',
     required: true
   },
@@ -37,6 +37,6 @@ export const Required: Story = {
   render: args => {
     const [icon, setIcon] = useState(args.value)
 
-    return <Index {...args} disabled={false} setValue={setIcon} value={icon} />
+    return <Index {...args} disabled={false} onChange={setIcon} value={icon} />
   }
 }

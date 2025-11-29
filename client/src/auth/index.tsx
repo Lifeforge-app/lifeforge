@@ -37,7 +37,7 @@ function Auth() {
     <WithQuery query={oauthProvidersQuery}>
       {providers => (
         <>
-          <section className="flex-center size-full flex-col overflow-y-auto px-8 pb-4 pt-12 sm:px-12 lg:w-1/2">
+          <section className="flex-center size-full flex-col overflow-y-auto px-8 pt-12 pb-4 sm:px-12 lg:w-1/2">
             <div className="flex-center size-full flex-col">
               <AuthHeader />
               <AuthForm providers={providers} />

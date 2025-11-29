@@ -1,11 +1,12 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { ComboboxInput, ComboboxOption } from '@components/inputs'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAPIEndpoint } from 'shared'
+
+import { ComboboxInput, ComboboxOption } from '@components/inputs'
 
 import { Tooltip } from '../utilities'
 
@@ -21,7 +22,7 @@ interface LocationInputProps {
   /** The current location value of the input. */
   value: Location | null
   /** Callback function called when the location value changes. */
-  setValue: (value: Location | null) => void
+  onChange: (value: Location | null) => void
   /** Whether the location field is required for form validation. */
   required?: boolean
   /** Whether the location input is disabled and non-interactive. */
@@ -35,7 +36,7 @@ interface LocationInputProps {
 function LocationInput({
   label,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -81,18 +82,18 @@ function LocationInput({
       <ComboboxInput<Location | null>
         autoFocus={autoFocus}
         className="w-full"
-        customActive={(value?.name?.length || 0) > 0}
         disabled={!enabled || disabled || enabled === 'loading'}
         displayValue={value => value?.name ?? ''}
+        forcedActiveWhen={(value?.name?.length || 0) > 0}
         icon="tabler:map-pin"
         label={label || 'Location'}
         namespace={namespace}
         required={required}
-        setQuery={setQuery}
-        setValue={location => {
-          setValue(location ?? null)
-        }}
         value={value}
+        onChange={location => {
+          onChange(location ?? null)
+        }}
+        onQueryChanged={setQuery}
       >
         {query.trim() !== '' &&
           (dataQuery.data ? (
@@ -123,21 +124,19 @@ function LocationInput({
       </ComboboxInput>
       {enabled === 'loading' ? (
         <Icon
-          className="text-bg-500 absolute right-6 top-1/2 h-6 w-6 -translate-y-1/2"
+          className="text-bg-500 absolute top-1/2 right-6 h-6 w-6 -translate-y-1/2"
           icon="svg-spinners:ring-resize"
         />
       ) : (
         !enabled && (
-          <div className="flex-center text-bg-500 absolute right-6 top-1/2 -translate-y-1/2 gap-2">
+          <div className="flex-center text-bg-500 absolute top-1/2 right-6 -translate-y-1/2 gap-2">
             {t('locationDisabled.title')}
             <Tooltip
+              clickable={true}
               icon="tabler:info-circle"
               id="location-disabled"
-              tooltipProps={{
-                positionStrategy: 'fixed',
-                clickable: true,
-                place: 'top-end'
-              }}
+              place="top-end"
+              positionStrategy="fixed"
             >
               <p className="text-bg-500 max-w-64">
                 {t('locationDisabled.description')}{' '}

@@ -1,6 +1,7 @@
-import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import { useRef } from 'react'
+
+import { useModalStore } from '@components/overlays'
 
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
@@ -15,7 +16,7 @@ interface ColorInputProps {
   /** The current color value in hex format (e.g., "#FF0000"). */
   value: string
   /** Callback function called when the color value changes. */
-  setValue: (value: string) => void
+  onChange: (value: string) => void
   /** Whether the color input field is required for form validation. */
   required?: boolean
   /** Whether the color input field is disabled and non-interactive. */
@@ -33,7 +34,7 @@ interface ColorInputProps {
 function ColorInput({
   label,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -81,10 +82,10 @@ function ColorInput({
             placeholder="#FFFFFF"
             value={value}
             onBlur={e => {
-              setValue(e.target.value.trim().toUpperCase())
+              onChange(e.target.value.trim().toUpperCase())
             }}
             onChange={e => {
-              setValue(e.target.value)
+              onChange(e.target.value)
             }}
           />
         </div>
@@ -94,7 +95,7 @@ function ColorInput({
           onClick={() => {
             open(ColorPickerModal, {
               value,
-              setValue
+              onChange
             })
           }}
         >

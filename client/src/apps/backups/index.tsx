@@ -51,8 +51,10 @@ function Backups() {
             ) : (
               <EmptyStateScreen
                 icon="tabler:history-off"
-                name="noBackups"
-                namespace="apps.backups"
+                message={{
+                  id: 'noBackups',
+                  namespace: 'apps.backups'
+                }}
               />
             )
           }

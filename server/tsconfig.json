@@ -20,19 +20,10 @@
     "emitDeclarationOnly": true,
     "rootDir": "../",
     "paths": {
-      "@functions/*": [
-        "./src/core/functions/*"
-      ],
-      "@middlewares/*": [
-        "./src/core/middlewares/*"
-      ],
-      "@schema": [
-        "./src/core/schema"
-      ],
-      "@lib/*": [
-        "./src/lib/*",
-        "../apps/*"
-      ]
+      "@functions/*": ["./src/core/functions/*"],
+      "@middlewares/*": ["./src/core/middlewares/*"],
+      "@schema": ["./src/core/schema"],
+      "@lib/*": ["./src/lib/*", "../apps/*"]
     }
   },
   "include": [

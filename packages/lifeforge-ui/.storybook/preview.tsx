@@ -1,5 +1,4 @@
 import {
-  Canvas,
   Controls,
   Description,
   Primary,
@@ -18,7 +17,8 @@ import {
 import { ToastProvider } from 'shared'
 import { themes } from 'storybook/theming'
 
-import ModalManager from '../src/components/modals/core/ModalManager'
+import { ModalManager } from '@components/overlays'
+
 import './i18n'
 import './index.css'
 
@@ -49,7 +49,12 @@ const withBodyClass = (Story: any, context: any) => {
   useEffect(() => {
     const body = document.body
     document.querySelectorAll('.sbdocs-preview').forEach(preview => {
-      preview.classList.add('bg-white!', 'border-bg-800!')
+      preview.classList.remove('bg-black!', 'bg-white!', 'border-bg-800!')
+
+      preview.classList.add(
+        context.globals.theme === 'dark' ? 'bg-black!' : 'bg-white!',
+        'border-bg-800!'
+      )
     })
 
     const sbDocsPreviews = document.querySelectorAll(
@@ -58,7 +63,7 @@ const withBodyClass = (Story: any, context: any) => {
     if (!body) return
 
     body.classList.remove(
-      'bg-bg-950!',
+      'bg-bg-900/50!',
       'text-bg-50',
       'bg-bg-200/50!',
       'text-bg-800'
@@ -66,7 +71,7 @@ const withBodyClass = (Story: any, context: any) => {
 
     sbDocsPreviews.forEach(preview => {
       preview.classList.remove(
-        'bg-bg-900!',
+        'bg-bg-900/50!',
         'text-bg-50',
         'bg-bg-200/50!',
         'text-bg-800'
@@ -74,7 +79,7 @@ const withBodyClass = (Story: any, context: any) => {
 
       preview.classList.add(
         ...(context.globals.theme === 'dark'
-          ? ['bg-bg-900!', 'text-bg-50']
+          ? ['bg-bg-900/50!', 'text-bg-50']
           : ['bg-bg-200/50!', 'text-bg-800'])
       )
     })
@@ -89,7 +94,7 @@ const withBodyClass = (Story: any, context: any) => {
       ...(!document.querySelector('#storybook-docs:not([hidden])')
         ? [
             ...(context.globals.theme === 'dark'
-              ? ['bg-bg-950!', 'text-bg-50']
+              ? ['bg-bg-900/50!', 'text-bg-50']
               : ['bg-bg-200/50!', 'text-bg-800'])
           ]
         : [])
@@ -98,6 +103,13 @@ const withBodyClass = (Story: any, context: any) => {
     document.querySelectorAll('html, body').forEach(html => {
       html.classList.add('h-full')
     })
+
+    const html = document.documentElement
+    if (!html) return
+    html.classList.remove('bg-white!', 'bg-black!')
+    html.classList.add(
+      context.globals.theme === 'dark' ? 'bg-black!' : 'bg-white!'
+    )
   }, [context.globals.theme])
 
   return (

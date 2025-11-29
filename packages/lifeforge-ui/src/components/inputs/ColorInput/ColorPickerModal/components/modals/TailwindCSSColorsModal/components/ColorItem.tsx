@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { converter, formatHex, parse } from 'culori'
 import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
-
-import { oklchToHex } from '../utils/colors'
 
 function ColorItem({
   name,
@@ -16,7 +15,10 @@ function ColorItem({
   selected: string
   onSelect: (color: string) => void
 }) {
-  const colorHex = useMemo(() => oklchToHex(value), [value])
+  const colorHex = useMemo(
+    () => formatHex(converter('rgb')(parse(value))) || '',
+    [value]
+  )
 
   return (
     <li key={value} className="w-full">

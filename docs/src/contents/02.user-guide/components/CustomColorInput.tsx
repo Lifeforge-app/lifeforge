@@ -20,7 +20,7 @@ function CustomColorInput() {
           <span className="text-lg">Use custom color</span>
         </div>
         <Switch
-          checked={rawThemeColor.startsWith('#')}
+          value={rawThemeColor.startsWith('#')}
           onChange={() => {
             if (rawThemeColor.startsWith('#')) {
               setRawThemeColor('theme-lime')
@@ -34,10 +34,10 @@ function CustomColorInput() {
         className="mt-4"
         disabled={!rawThemeColor.startsWith('#')}
         label="Custom Color"
-        setValue={c => {
+        value={color.startsWith('#') ? color : '#A9D066'}
+        onChange={c => {
           setColor(c)
         }}
-        value={color.startsWith('#') ? color : '#A9D066'}
       />
       <Button
         className="mt-4 w-full"

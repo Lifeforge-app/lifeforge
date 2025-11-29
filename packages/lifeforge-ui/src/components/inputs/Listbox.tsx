@@ -4,21 +4,24 @@ import { clsx } from 'clsx'
 
 import ListboxOptions from './ListboxInput/components/ListboxOptions'
 
+/**
+ * A listbox component for selecting from a list of options. Similar to ListboxInput but without the input box styling.
+ */
 function Listbox<T>({
   value,
-  setValue,
+  onChange,
   buttonContent,
   children,
   className
 }: {
   value: T
-  setValue: (value: T) => void
+  onChange: (value: T) => void
   buttonContent: React.ReactNode
   children: React.ReactNode
   className?: string
 }) {
   return (
-    <HeadlessListbox value={value} onChange={setValue}>
+    <HeadlessListbox value={value} onChange={onChange}>
       <ListboxButton
         className={clsx(
           'shadow-custom component-bg-lighter-with-hover flex-between w-full min-w-0 gap-6 rounded-lg p-5 text-left outline-hidden transition-all focus:outline-hidden',

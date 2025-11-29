@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     value: 0,
-    setValue: () => {},
+    onChange: () => {},
 
     label: 'Price',
     icon: 'tabler:currency-dollar'

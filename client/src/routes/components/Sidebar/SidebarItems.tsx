@@ -1,8 +1,8 @@
 import {
   EmptyStateScreen,
+  MainSidebarItem,
   Scrollbar,
   SidebarDivider,
-  SidebarItem,
   SidebarTitle
 } from 'lifeforge-ui'
 import _ from 'lodash'
@@ -47,10 +47,9 @@ function SidebarItems({ query }: { query: string }) {
                   filteredModules.length > 0 &&
                   sidebarExpanded && <SidebarTitle label={item.title} />}
                 {filteredModules.map(subItem => (
-                  <SidebarItem
+                  <MainSidebarItem
                     key={_.kebabCase(subItem.name)}
                     autoActive
-                    isMainSidebarItem
                     icon={subItem.icon ?? ''}
                     label={subItem.name.replace('-', ' ')}
                     showAIIcon={subItem.hasAI === true}
@@ -70,8 +69,10 @@ function SidebarItems({ query }: { query: string }) {
             <EmptyStateScreen
               smaller
               icon="tabler:search-off"
-              name="modules"
-              namespace="common.sidebar"
+              message={{
+                id: 'modules',
+                namespace: 'common.sidebar'
+              }}
             />
           </div>
         )}

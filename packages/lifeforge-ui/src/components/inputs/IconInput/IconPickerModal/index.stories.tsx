@@ -1,6 +1,7 @@
-import { Button } from '@components/buttons'
-import { useModalStore } from '@components/modals'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
+import { Button } from '@components/inputs'
+import { useModalStore } from '@components/overlays'
 
 import Index from './index'
 

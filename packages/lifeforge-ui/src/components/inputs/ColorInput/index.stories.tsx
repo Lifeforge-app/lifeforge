@@ -15,12 +15,12 @@ export const Default: Story = {
   args: {
     label: 'Cube Color',
     value: '',
-    setValue: () => {},
+    onChange: () => {},
     namespace: 'namespace'
   },
   render: args => {
     const [color, setColor] = useState<string>('')
 
-    return <Index {...args} setValue={setColor} value={color} />
+    return <Index {...args} onChange={setColor} value={color} />
   }
 }

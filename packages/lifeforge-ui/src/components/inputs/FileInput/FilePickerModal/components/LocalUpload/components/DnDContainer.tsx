@@ -1,9 +1,10 @@
-import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@components/inputs'
 
 function DnDContainer({
   getRootProps,

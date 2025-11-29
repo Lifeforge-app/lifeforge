@@ -11,7 +11,7 @@ interface SliderInputProps {
   /** The current numeric value of the slider. */
   value: number
   /** Callback function called when the slider value changes. */
-  setValue: (value: number) => void
+  onChange: (value: number) => void
   /** Whether the slider field is required for form validation. */
   required?: boolean
   /** Whether the slider is disabled and non-interactive. */
@@ -34,7 +34,7 @@ function SliderInput({
   label,
   icon,
   value,
-  setValue,
+  onChange,
   required,
   disabled,
   min = 0,
@@ -70,7 +70,7 @@ function SliderInput({
           type="range"
           value={value}
           onChange={e => {
-            setValue(parseFloat(e.target.value))
+            onChange(parseFloat(e.target.value))
           }}
         />
         <div className="mb-4 flex w-full justify-between px-2.5 text-xs">

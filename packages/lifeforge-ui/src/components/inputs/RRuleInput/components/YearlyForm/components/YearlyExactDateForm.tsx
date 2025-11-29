@@ -1,8 +1,7 @@
-import ListboxInput from '@components/inputs/ListboxInput'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
-import NumberInput from '@components/inputs/NumberInput'
-import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 import { useTranslation } from 'react-i18next'
+
+import { ListboxInput, ListboxOption, NumberInput } from '@components/inputs'
+import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 
 function YearlyExactDateForm({
   data,
@@ -21,8 +20,8 @@ function YearlyExactDateForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.exactDate.inputs.month')}
-        setValue={value => setData({ ...data, month: value })}
         value={data.month}
+        onChange={value => setData({ ...data, month: value })}
       >
         {Array(12)
           .fill(0)
@@ -39,8 +38,8 @@ function YearlyExactDateForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.exactDate.inputs.date')}
-        setValue={value => setData({ ...data, date: value })}
         value={data.date}
+        onChange={value => setData({ ...data, date: value })}
       />
     </>
   )

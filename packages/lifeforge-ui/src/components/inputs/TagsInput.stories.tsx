@@ -20,14 +20,14 @@ export const Default: Story = {
     icon: 'tabler:tags',
     placeholder: 'placeholder',
     value: [],
-    setValue: () => {}
+    onChange: () => {}
   },
   render: args => {
-    const [value, setValue] = useState<string[]>([])
+    const [value, onChange] = useState<string[]>([])
 
     return (
       <div className="w-full px-32">
-        <TagsInput {...args} setValue={setValue} value={value} />
+        <TagsInput {...args} onChange={onChange} value={value} />
       </div>
     )
   }
@@ -42,17 +42,17 @@ export const WithActionButton: Story = {
     icon: 'tabler:tags',
     placeholder: 'placeholder',
     value: [],
-    setValue: () => {},
+    onChange: () => {},
     actionButtonProps: {
       icon: 'mage:stars-c'
     }
   },
   render: args => {
-    const [value, setValue] = useState<string[]>([])
+    const [value, onChange] = useState<string[]>([])
 
     return (
       <div className="w-full px-32">
-        <TagsInput {...args} setValue={setValue} value={value} />
+        <TagsInput {...args} onChange={onChange} value={value} />
       </div>
     )
   }

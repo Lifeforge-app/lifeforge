@@ -16,6 +16,6 @@ export const Default: Story = {
     placeholder: '8.70',
     icon: 'tabler:currency-dollar',
     value: 0,
-    setValue: () => {}
+    onChange: () => {}
   }
 }

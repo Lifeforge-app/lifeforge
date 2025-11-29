@@ -1,5 +1,5 @@
 import Code from '../../components/Code'
-import Note from '../../components/Note'
+import { Alert } from 'lifeforge-ui'
 
 ###### Forms
 
@@ -178,20 +178,21 @@ Compare the traditional imperative approach:
 {`const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState('')
 
-  const handleTitleChange = (value: string) => {
-    setTitle(value)
+const handleTitleChange = (value: string) => {
+setTitle(value)
 
     if (!value.match(/^[a-zA-Z0-9 ]+$/)) {
       setTitleError('Invalid title. Only alphanumeric characters and spaces are allowed.')
     } else {
       setTitleError('')
     }
+
 }
 
 return (
-    <form onSubmit={handleSubmit}>
-      ...
-    </form>
+<form onSubmit={handleSubmit}>
+...
+</form>
 ) `}
 
   </Code>
@@ -290,12 +291,12 @@ Import the <code>defineForm</code> function and the <code>FormModal</code> compo
   <Code language="tsx">
   {`import { defineForm, FormModal } from 'lifeforge-ui'
 
-  function MyForm({
-    onClose
-  }: {
-    onClose: () => void;
-  }) {
-    const { formProps } = defineForm<FormData>({}).build()
+function MyForm({
+onClose
+}: {
+onClose: () => void;
+}) {
+const { formProps } = defineForm<FormData>({}).build()
 
     return <FormModal {...formProps} />
 
@@ -304,10 +305,10 @@ Import the <code>defineForm</code> function and the <code>FormModal</code> compo
 
   </Code>
 
-<Note>
+<Alert className="mt-6" type="note">
   The <code>FormModal</code> component should be the only thing being returned
   by the modal component.
-</Note>
+</Alert>
 
 ### 3. Configuring the Form
 
@@ -373,12 +374,12 @@ Now, it's time to map the form fields to their corresponding input components. S
 
 Using this method is pretty straightforward, it accepts a mapping object where the keys are the field keys and the values are the corresponding input component types.
 
-  <Note>
+  <Alert className="mt-6" type="note">
   Available input component types can be found in the IntelliSense suggestions.
 
 ![types-map-intellisense](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/typesMapIntellisense.webp)
 
-  </Note>
+  </Alert>
 
 ### 5. Configuring Fields
 
@@ -404,12 +405,12 @@ Using the <code>.setupFields()</code> chain method, you can configure each field
 
   </Code>
 
-  <Note>
+  <Alert className="mt-6" type="note">
   Available field configurations can be found in the IntelliSense suggestions.
 
 ![setup-fields-intellisense](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/setupFields.webp)
 
-  </Note>
+  </Alert>
 
 ### 6. Conditional Fields (optional)
 
@@ -434,12 +435,12 @@ For example, to autofocus the "name" field, you can do the following:
   {`const { formProps } = defineForm<FormData>().autoFocusField('name').build()`}
 </Code>
 
-  <Note>
+  <Alert className="mt-6" type="note">
   The options for this method is determined by your definition in the <code>.typesMap()</code> chain method, and only fields that are auto-focusable will be available. IntelliSense will help you identify these fields.
 
 ![auto-focus-field-intellisense](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/developer-forms/autofocus.webp)
 
-  </Note>
+  </Alert>
 
 ### 8. Populate the Form
 
@@ -454,7 +455,7 @@ Often times you will want to populate the form with existing data, such as when 
   }).build()`}
 </Code>
 
-  <Note>
+  <Alert className="mt-6" type="note">
   The data type of the argument of this method is the same as the form data type generic parameter, with all fields being optional. IntelliSense is available to help you construct the initial data object. Feel free to pass in the entire data record being passed into the parent component if it has the fields that the form requires, or you can make some slight modifications to it to match the form data type.
 
   <Code language="tsx">
@@ -488,7 +489,7 @@ Often times you will want to populate the form with existing data, such as when 
 `}
 
   </Code>
-  </Note>
+  </Alert>
 
 ### 9. Submitting the Form
 

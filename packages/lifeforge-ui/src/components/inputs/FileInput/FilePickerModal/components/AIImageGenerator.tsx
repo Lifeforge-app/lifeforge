@@ -1,8 +1,9 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Button } from '@components/buttons'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAPIEndpoint, usePromiseLoading } from 'shared'
+
+import { Button } from '@components/inputs'
 
 import TextAreaInput from '../../../TextAreaInput'
 
@@ -54,7 +55,7 @@ function AIImageGenerator({
         label="imagePicker.inputs.prompt"
         namespace="common.modals"
         placeholder="A description of the image you want to generate"
-        setValue={setPrompt}
+        onChange={setPrompt}
         value={prompt}
       />
       <Button

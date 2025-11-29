@@ -1,5 +1,6 @@
-import { ModalHeader } from '@components/modals'
 import { Scanner } from '@yudiel/react-qr-scanner'
+
+import { ModalHeader } from '@components/overlays'
 
 function QRCodeScanner({
   onClose,

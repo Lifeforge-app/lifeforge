@@ -1,7 +1,6 @@
-import ListboxInput from '@components/inputs/ListboxInput'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
-import NumberInput from '@components/inputs/NumberInput'
 import { useTranslation } from 'react-i18next'
+
+import { ListboxInput, ListboxOption, NumberInput } from '@components/inputs'
 
 import type { FreqSpecificParams } from '..'
 
@@ -22,8 +21,8 @@ function WeeklyForm({
           className="flex-1"
           icon="tabler:repeat"
           label={t('inputs.weekly.inputs.every')}
-          setValue={every => setData({ ...data, every })}
           value={data.every}
+          onChange={every => setData({ ...data, every })}
         />
         <p className="text-bg-500">{t('inputs.weekly.inputs.weeks')}</p>
       </div>
@@ -53,8 +52,8 @@ function WeeklyForm({
         customActive={data.onDays.length > 0}
         icon="tabler:calendar"
         label={t('inputs.weekly.inputs.onDays')}
-        setValue={onDays => setData({ ...data, onDays: onDays })}
         value={data.onDays}
+        onChange={onDays => setData({ ...data, onDays: onDays })}
       >
         {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map(day => (
           <ListboxOption

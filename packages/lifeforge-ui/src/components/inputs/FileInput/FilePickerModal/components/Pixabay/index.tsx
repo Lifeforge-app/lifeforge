@@ -1,14 +1,14 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
+import { useReducer, useState } from 'react'
+import { toast } from 'react-toastify'
+import { useAPIEndpoint, usePromiseLoading } from 'shared'
+
 import {
   EmptyStateScreen,
   ErrorScreen,
   LoadingScreen
-} from '@components/screens'
-import { useReducer, useState } from 'react'
-import { toast } from 'react-toastify'
-import { useAPIEndpoint, usePromiseLoading } from 'shared'
+} from '@components/feedback'
+import { Button, SearchInput } from '@components/inputs'
 
 import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'
@@ -115,8 +115,8 @@ function Pixabay({
           className="component-bg-lighter-with-hover"
           namespace="common.modals"
           searchTarget="imagePicker.items.pixabay"
-          setValue={setQuery}
           value={query}
+          onChange={setQuery}
           onKeyUp={e => {
             if (e.key === 'Enter') {
               setPage(1)
@@ -155,9 +155,11 @@ function Pixabay({
                 <div className="flex-center my-6 size-full flex-1">
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
-                    name="pixabay"
-                    namespace="common.modals"
-                    tKey="imagePicker"
+                    message={{
+                      id: 'pixabay',
+                      namespace: 'common.modals',
+                      tKey: 'imagePicker'
+                    }}
                   />
                 </div>
               )
@@ -165,9 +167,11 @@ function Pixabay({
               return results.total === 0 ? (
                 <EmptyStateScreen
                   icon="tabler:photo-off"
-                  name="result"
-                  namespace="common.modals"
-                  tKey="imagePicker"
+                  message={{
+                    id: 'results',
+                    namespace: 'common.modals',
+                    tKey: 'imagePicker'
+                  }}
                 />
               ) : (
                 <SearchResults

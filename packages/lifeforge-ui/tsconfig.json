@@ -29,7 +29,8 @@
     "verbatimModuleSyntax": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./.storybook/*"
   ],
   "references": [
     {

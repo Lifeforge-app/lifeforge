@@ -44,7 +44,7 @@ function SidebarHeader({
             className="component-bg-lighter-with-hover mb-4"
             namespace="common.sidebar"
             searchTarget="module"
-            setValue={setSearchQuery}
+            onChange={setSearchQuery}
             value={searchQuery}
           />
         </div>

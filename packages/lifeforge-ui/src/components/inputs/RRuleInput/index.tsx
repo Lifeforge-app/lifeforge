@@ -97,11 +97,11 @@ function createRRuleParams<K extends keyof FreqSpecificParams>(
 
 function RRuleInput<HasDuration extends boolean = boolean>({
   value,
-  setValue,
+  onChange,
   hasDuration
 }: {
   value: string
-  setValue: (value: string) => void
+  onChange: (value: string) => void
   hasDuration: HasDuration
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
@@ -207,7 +207,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
       rrule += `||duration_amt=${duration.amount};duration_unit=${duration.unit}`
     }
 
-    setValue(rrule)
+    onChange(rrule)
   }, [start, rruleParams, duration])
 
   return (
@@ -219,7 +219,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
         icon="tabler:clock"
         label="Start Time"
         namespace="apps.calendar"
-        setValue={setStart}
+        onChange={setStart}
         value={start}
       />
       <ListboxInput
@@ -229,7 +229,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
         icon="tabler:repeat"
         label="frequency"
         namespace="apps.calendar"
-        setValue={freq => {
+        onChange={freq => {
           setRRuleParams(createRRuleParams(freq, rruleParams.end))
 
           if (freq === 'hourly') {
@@ -258,7 +258,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
           icon="tabler:calendar"
           label="endType"
           namespace="apps.calendar"
-          setValue={type => {
+          onChange={type => {
             setRRuleParams({
               ...rruleParams,
               end: {
@@ -286,7 +286,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
                   className="flex-1"
                   icon="tabler:repeat"
                   label={t('recurring.inputs.after')}
-                  setValue={value => {
+                  onChange={value => {
                     setRRuleParams({
                       ...rruleParams,
                       end: {
@@ -308,7 +308,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
                 className="flex-1"
                 icon="tabler:calendar"
                 label={t('recurring.inputs.on')}
-                setValue={date => {
+                onChange={date => {
                   setRRuleParams({
                     ...rruleParams,
                     end: {
@@ -330,7 +330,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
             className="w-full min-w-48 flex-1"
             icon="tabler:clock"
             label={t('recurring.inputs.durationAmount')}
-            setValue={amt => {
+            onChange={amt => {
               setDuration({
                 ...duration,
                 amount: amt
@@ -344,7 +344,7 @@ function RRuleInput<HasDuration extends boolean = boolean>({
             className="w-full min-w-48 flex-1"
             icon="tabler:clock"
             label={t('recurring.inputs.durationUnit')}
-            setValue={unit => {
+            onChange={unit => {
               setDuration({
                 ...duration,
                 unit

@@ -1,7 +1,9 @@
-import { Pagination, Scrollbar } from '@components/utilities'
 import clsx from 'clsx'
 import type { SetStateAction } from 'react'
 import PhotoAlbum from 'react-photo-album'
+
+import { Pagination } from '@components/navigation'
+import { Scrollbar } from '@components/utilities'
 
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
 
@@ -37,7 +39,7 @@ function SearchResults({
     <Scrollbar className="size-full min-h-[50vh] flex-1">
       <Pagination
         className="mb-4"
-        currentPage={page}
+        page={page}
         totalPages={Math.ceil(results.total / 20)}
         onPageChange={handlePageChange}
       />
@@ -73,7 +75,7 @@ function SearchResults({
       </div>
       <Pagination
         className="mt-4"
-        currentPage={page}
+        page={page}
         totalPages={Math.ceil(results.total / 20)}
         onPageChange={handlePageChange}
       />

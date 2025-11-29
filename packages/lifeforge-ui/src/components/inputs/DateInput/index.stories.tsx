@@ -19,14 +19,14 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     value: new Date(),
-    setValue: () => {},
+    onChange: () => {},
     label: 'Date',
     icon: 'tabler:calendar'
   },
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} setValue={setDate} value={date} />
+    return <DateInput {...args} onChange={setDate} value={date} />
   }
 }
 
@@ -38,7 +38,7 @@ export const Default: Story = {
 export const WithTime: Story = {
   args: {
     value: new Date(),
-    setValue: () => {},
+    onChange: () => {},
     label: 'Date',
     icon: 'tabler:clock',
     hasTime: true
@@ -47,6 +47,6 @@ export const WithTime: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} setValue={setDate} value={date} />
+    return <DateInput {...args} onChange={setDate} value={date} />
   }
 }

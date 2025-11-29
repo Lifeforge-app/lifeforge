@@ -32,7 +32,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
       icon: 'tabler:user',
       value: emailOrUsername,
-      setValue: setEmail,
+      onChange: setEmail,
       inputMode: 'email'
     },
     {
@@ -40,7 +40,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       placeholder: '••••••••••••••••',
       icon: 'tabler:key',
       value: password,
-      setValue: setPassword
+      onChange: setPassword
     }
   ] as const
 

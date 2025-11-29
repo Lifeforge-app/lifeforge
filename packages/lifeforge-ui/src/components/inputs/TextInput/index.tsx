@@ -1,7 +1,7 @@
 import { memo, useRef, useState } from 'react'
 import { usePromiseLoading } from 'shared'
 
-import { Button } from '../../buttons'
+import Button from '../Button'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
@@ -18,7 +18,7 @@ export type TextInputProps = {
   /** The current text value of the input field. */
   value: string
   /** Callback function called when the input value changes. */
-  setValue: (value: string) => void
+  onChange: (value: string) => void
   /** Whether the input field is required for form validation. */
   required?: boolean
   /** Whether the input field is disabled and non-interactive. */
@@ -45,14 +45,14 @@ export type TextInputProps = {
   namespace?: string
   /** Error message to display when the input is invalid. */
   errorMsg?: string
-} & React.HTMLAttributes<HTMLInputElement>
+} & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>
 
 function TextInput({
   label,
   icon,
   placeholder,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   isPassword = false,
@@ -101,9 +101,9 @@ function TextInput({
           inputRef={inputRef}
           isPassword={isPassword}
           placeholder={placeholder}
-          setValue={setValue}
           showPassword={showPassword}
           value={value}
+          onChange={onChange}
           {...inputProps}
         />
         {isPassword && (

@@ -40,13 +40,13 @@ export const Default: Story = {
     label: 'Category',
     icon: 'tabler:category',
     value: '',
-    setValue: () => {},
+    onChange: () => {},
     namespace: 'namespace',
     buttonContent: <></>,
     children: <></>
   },
   render: args => {
-    const [value, setValue] = useState('Option 1')
+    const [value, onChange] = useState('Option 1')
 
     return (
       <Index
@@ -65,7 +65,7 @@ export const Default: Story = {
         }
         className="w-96"
         disabled={false}
-        setValue={setValue}
+        onChange={onChange}
         value={value}
       >
         {OPTIONS.map(({ color, icon, text, value }, index) => (
@@ -91,11 +91,11 @@ export const MultipleSelection: Story = {
     buttonContent: <></>,
     children: <></>,
     multiple: true,
-    setValue: () => {}
+    onChange: () => {}
   },
 
   render: args => {
-    const [value, setValue] = useState(['Option 1', 'Option 2'])
+    const [value, onChange] = useState(['Option 1', 'Option 2'])
 
     return (
       <Index
@@ -131,7 +131,7 @@ export const MultipleSelection: Story = {
           </span>
         }
         disabled={false}
-        setValue={setValue}
+        onChange={onChange}
         value={value}
       >
         {OPTIONS.map(({ color, icon, text, value }, index) => (

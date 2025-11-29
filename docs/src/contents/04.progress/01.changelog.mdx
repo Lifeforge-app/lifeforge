@@ -1,6 +1,5 @@
 import Code from '../../components/Code'
-import Note from '../../components/Note'
-import Warning from '../../components/Warning'
+import { Alert } from "lifeforge-ui"
 import ChangelogEntries from './components/ChangelogEntries'
 
 ###### Changelog
@@ -9,21 +8,21 @@ import ChangelogEntries from './components/ChangelogEntries'
 
 LifeForge is not backed by any major corporations or strong team of developers (for now), and it's primarily been worked by a single developer in his spare time. As such, there is no formal SDLC (well, technically speaking this project is adapting Agile methodologies) in place, and things may change rapidly and unexpectedly as new ideas are implemented and tested. However, I'll do my best to try and outline the notable changes and updates in this changelog.
 
-<Note>
+<Alert className="mt-6" type="note">
 ### Version Naming Conventions
 
 Unlike traditional software development projects which adapt Semantic versioning, LifeForge in its current development phase, opts for a simpler versioning scheme inspired by Minecraft. Each version of LifeForge is identified by the year and week of development, with the following format:
 
 <Code language="plaintext">{'dev \<year\>w\<week\>'}</Code>
 
-</Note>
+</Alert>
 
-<Warning>
+<Alert className="mt-6" type="warning">
   This page only covers changes made from version 25w33 onwards. For earlier
   versions, please refer to the legacy
   [CHANGELOG.md](https://github.com/lifeforge-app/lifeforge/blob/main/CHANGELOG.md).
   Also, minor changes may not be documented here.
-</Warning>
+</Alert>
 
 ---
 

@@ -16,9 +16,9 @@ interface ComboboxInputProps<T> {
   /** The current selected value of the combobox. */
   value: T
   /** Callback function called when the selected value changes. */
-  setValue: (value: T) => void
+  onChange: (value: T) => void
   /** Callback function called when the search query changes. */
-  setQuery: (query: string) => void
+  onQueryChanged: (query: string) => void
   /** Function that returns the display text for a given value. */
   displayValue: (value: T) => string
   /** Whether the combobox is required for form validation. */
@@ -30,7 +30,7 @@ interface ComboboxInputProps<T> {
   /** The dropdown options to display in the combobox. */
   children: React.ReactNode
   /** Whether the combobox should show as active regardless of focus state. */
-  customActive?: boolean
+  forcedActiveWhen?: boolean
   /** Additional CSS class names to apply to the combobox. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
@@ -41,14 +41,14 @@ function ComboboxInput<T>({
   label,
   icon,
   value,
-  setValue,
-  setQuery,
+  onChange,
+  onQueryChanged: setQuery,
   displayValue,
   required = false,
   disabled = false,
   autoFocus = false,
   children,
-  customActive,
+  forcedActiveWhen: customActive,
   className,
   namespace
 }: ComboboxInputProps<T>) {
@@ -87,10 +87,10 @@ function ComboboxInput<T>({
   const handleChange = useCallback(
     (value: T | null) => {
       if (value !== null) {
-        setValue(value)
+        onChange(value)
       }
     },
-    [setValue]
+    [onChange]
   )
 
   return (

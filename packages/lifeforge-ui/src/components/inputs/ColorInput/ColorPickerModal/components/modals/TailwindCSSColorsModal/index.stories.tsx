@@ -1,5 +1,6 @@
-import { ModalWrapper } from '@components/modals'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
+import { ModalWrapper } from '@components/overlays'
 
 import Index from './index'
 

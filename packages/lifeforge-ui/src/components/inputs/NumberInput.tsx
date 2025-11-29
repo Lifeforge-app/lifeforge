@@ -11,7 +11,7 @@ interface NumberInputProps {
   /** The current numeric value of the input. */
   value: number
   /** Callback function called when the input value changes. */
-  setValue: (value: number) => void
+  onChange: (value: number) => void
   /** Whether the number input field is required for form validation. */
   required?: boolean
   /** Whether the number input field is disabled and non-interactive. */
@@ -30,7 +30,7 @@ function NumberInput({
   label,
   icon,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -58,20 +58,20 @@ function NumberInput({
       namespace={namespace}
       placeholder="123"
       required={required}
-      setValue={(value: string) => {
+      onChange={(value: string) => {
         setCurrentStringValue(value)
       }}
       value={currentStringValue}
       onBlur={() => {
         if (currentStringValue.trim() === '') {
-          setValue(0)
+          onChange(0)
 
           return
         }
 
         //negative value as well
         if (!currentStringValue.match(/^(-?)\d*\.?\d*$/)) {
-          setValue(value)
+          onChange(value)
           setCurrentStringValue(
             value.toString() === '0' ? '' : value.toString()
           )
@@ -83,7 +83,7 @@ function NumberInput({
           ? parseFloat(currentStringValue)
           : parseInt(currentStringValue)
 
-        setValue(numericValue)
+        onChange(numericValue)
       }}
     />
   )

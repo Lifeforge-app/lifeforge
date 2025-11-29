@@ -1,5 +1,5 @@
-import { Button } from '@components/buttons'
-import { ModalHeader, ModalWrapper } from '@components/modals'
+import { Button } from '@components/inputs'
+import { ModalHeader, ModalWrapper } from '@components/overlays'
 
 import {
   type IPixabaySearchFilter,
