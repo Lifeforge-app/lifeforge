@@ -1,7 +1,8 @@
-import { GoBackButton } from '@components/buttons'
+import clsx from 'clsx'
+
+import { GoBackButton } from '@components/controls'
 import { useModuleSidebarState } from '@components/layouts'
 import { Scrollbar } from '@components/utilities'
-import clsx from 'clsx'
 
 function SidebarWrapper({
   customHeight,

@@ -1,7 +1,8 @@
-import { useModuleSidebarState } from '@components/layouts'
 import _ from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'shared'
+
+import { useModuleSidebarState } from '@components/layouts'
 
 import SidebarActionButton from './components/SidebarActionButton'
 import SidebarCancelButton from './components/SidebarCancelButton'
