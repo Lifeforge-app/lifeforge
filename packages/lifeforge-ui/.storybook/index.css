@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import 'tailwindcss';
 
-@plugin 'daisyui' {
-  themes: false;
-}
 @plugin 'tailwindcss-animate';
+
+@plugin 'daisyui';
 
 @import '../src/styles/index.css';
 
@@ -60,4 +60,8 @@
 
 body:has(#storybook-docs) {
   background-color: rgb(27, 28, 29) !important;
+}
+
+.prismjs .token {
+  font-family: 'JetBrains Mono', monospace !important;
 }
