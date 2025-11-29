@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
-import { ItemWrapper } from '@components/layouts'
+import { Card } from '@components/layouts'
 
 import Tooltip from './Tooltip'
 
@@ -39,7 +39,7 @@ function OptionsColumn({
 }: OptionsColumnProps) {
   return (
     <>
-      <ItemWrapper
+      <Card
         className={clsx(
           'flex justify-between gap-8',
           (() => {
@@ -91,7 +91,7 @@ function OptionsColumn({
         >
           {children}
         </div>
-      </ItemWrapper>
+      </Card>
     </>
   )
 }

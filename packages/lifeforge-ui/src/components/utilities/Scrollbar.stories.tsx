@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { ItemWrapper } from '@components/layouts'
+import { Card } from '@components/layouts'
 
 import Scrollbar from './Scrollbar'
 
@@ -29,7 +29,7 @@ export const Default: Story = {
       <Scrollbar {...args}>
         <div className="space-y-4">
           {Array.from({ length: 50 }, (_, i) => (
-            <ItemWrapper key={i}>Item {i + 1}</ItemWrapper>
+            <Card key={i}>Item {i + 1}</Card>
           ))}
         </div>
       </Scrollbar>
@@ -50,7 +50,7 @@ export const NoPaddingRight: Story = {
       <Scrollbar {...args}>
         <div className="space-y-4">
           {Array.from({ length: 30 }, (_, i) => (
-            <ItemWrapper key={i}>Item {i + 1}</ItemWrapper>
+            <Card key={i}>Item {i + 1}</Card>
           ))}
         </div>
       </Scrollbar>
@@ -70,7 +70,7 @@ export const MinimalContent: Story = {
       <Scrollbar {...args}>
         <div className="space-y-4">
           {Array.from({ length: 3 }, (_, i) => (
-            <ItemWrapper key={i}>Item {i + 1}</ItemWrapper>
+            <Card key={i}>Item {i + 1}</Card>
           ))}
         </div>
       </Scrollbar>
@@ -88,7 +88,7 @@ export const WithoutAutoHide: Story = {
       <Scrollbar {...args}>
         <div className="space-y-4">
           {Array.from({ length: 50 }, (_, i) => (
-            <ItemWrapper key={i}>Item {i + 1}</ItemWrapper>
+            <Card key={i}>Item {i + 1}</Card>
           ))}
         </div>
       </Scrollbar>
