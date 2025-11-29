@@ -1,6 +1,3 @@
-import { Button } from '@components/buttons'
-import { TextInput } from '@components/inputs'
-import { ConfirmationModal, useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -8,6 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { encrypt } from 'shared'
 import type { ForgeAPIClientController } from 'shared'
+
+import { Button, TextInput } from '@components/controls'
+import { ConfirmationModal, useModalStore } from '@components/modals'
 
 function CreatePasswordScreen({
   controller,
@@ -105,8 +105,8 @@ function CreatePasswordScreen({
           label="vault.inputs.newPassword"
           namespace="common.vault"
           placeholder="••••••••••••••••"
-          setValue={setNewPassword}
           value={newPassword}
+          onChange={setNewPassword}
         />
         <TextInput
           key="confirmPassword"
@@ -116,8 +116,8 @@ function CreatePasswordScreen({
           label="vault.inputs.confirmPassword"
           namespace="common.vault"
           placeholder="••••••••••••••••"
-          setValue={setConfirmPassword}
           value={confirmPassword}
+          onChange={setConfirmPassword}
           onKeyDown={e => {
             if (e.key === 'Enter') {
               confirmAction()

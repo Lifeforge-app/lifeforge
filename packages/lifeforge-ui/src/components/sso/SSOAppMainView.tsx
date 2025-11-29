@@ -1,4 +1,3 @@
-import { LoadingScreen } from '@components/screens'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import {
@@ -7,6 +6,8 @@ import {
   SSOAuthProvider,
   ToastProvider
 } from 'shared'
+
+import { LoadingScreen } from '@components/screens'
 
 import { ModalManager } from '../..'
 import SSOHeader from './SSOHeader'

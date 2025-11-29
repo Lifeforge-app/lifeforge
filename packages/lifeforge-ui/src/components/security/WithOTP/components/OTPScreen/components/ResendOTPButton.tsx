@@ -1,6 +1,7 @@
-import { Button } from '@components/buttons'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@components/controls'
 
 function ResendOTPButton({
   otpCooldown,

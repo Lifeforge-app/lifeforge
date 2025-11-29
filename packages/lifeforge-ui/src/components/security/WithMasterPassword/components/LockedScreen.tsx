@@ -1,11 +1,11 @@
-import { Button } from '@components/buttons'
-import { TextInput } from '@components/inputs'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { ForgeAPIClientController, usePromiseLoading } from 'shared'
 import { encrypt } from 'shared'
+
+import { Button, TextInput } from '@components/controls'
 
 function LockedScreen({
   challengeController,
@@ -75,8 +75,8 @@ function LockedScreen({
         label="vault.inputs.masterPassword"
         namespace="common.vault"
         placeholder={'••••••••••••••••'}
-        setValue={setMasterPassWordInputContent}
         value={masterPassWordInputContent}
+        onChange={setMasterPassWordInputContent}
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmit().catch(console.error)
