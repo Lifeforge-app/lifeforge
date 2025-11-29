@@ -1,24 +1,24 @@
 import clsx from 'clsx'
 import React from 'react'
 
-interface ItemWrapperBaseProps {
+interface CardBaseProps {
   children: React.ReactNode
   className?: string
   isInteractive?: boolean
 }
 
-type ItemWrapperProps<C extends React.ElementType = 'div'> = {
+type CardProps<C extends React.ElementType = 'div'> = {
   as?: C
-} & ItemWrapperBaseProps &
-  Omit<React.ComponentProps<C>, keyof ItemWrapperBaseProps>
+} & CardBaseProps &
+  Omit<React.ComponentProps<C>, keyof CardBaseProps>
 
-function ItemWrapper<C extends React.ElementType = 'div'>({
+function Card<C extends React.ElementType = 'div'>({
   children,
   as,
   className,
   isInteractive,
   ...props
-}: ItemWrapperProps<C>) {
+}: CardProps<C>) {
   const Component = as || 'div'
 
   return (
@@ -38,4 +38,4 @@ function ItemWrapper<C extends React.ElementType = 'div'>({
   )
 }
 
-export default ItemWrapper
+export default Card
