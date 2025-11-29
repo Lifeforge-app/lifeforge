@@ -1,6 +1,6 @@
-export { default as HeaderFilter } from './HeaderFilter'
+export { default as TagsFilter } from './TagsFilter'
 
-export { default as ConfigColumn } from './ConfigColumn'
+export { default as OptionsColumn } from './OptionsColumn'
 
 export { default as Pagination } from './Pagination'
 
