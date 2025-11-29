@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useSidebarState } from 'shared'
 
-import { Button, ContextMenu } from '../buttons'
+import { Button, ContextMenu } from '../controls'
 import { useModuleHeaderState } from './ModuleHeaderStateProvider'
 
 interface ModuleHeaderProps {
