@@ -26,7 +26,7 @@
     "dev": "storybook dev -p 6006",
     "types": "cd ../../server && bun run types && cd ../packages/lifeforge-ui && tsc -b",
     "build": "cd ../../server && bun run types && cd ../packages/lifeforge-ui && rm -rf dist && tsup src/index.ts && tsc",
-    "build-storybook": "storybook build"
+    "build-storybook": "cd ../../shared && bun run build && cd ../packages/lifeforge-ui && storybook build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
