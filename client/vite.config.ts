@@ -1,7 +1,7 @@
 // import MillionLint from '@million/lint'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import fs from 'node:fs'
+import { globSync } from 'glob'
 import path from 'node:path'
 import { type Alias, defineConfig } from 'vite'
 
@@ -31,7 +31,7 @@ export const alias: Alias[] = [
         rootDir = importer?.split('/src/')[0] || ''
       }
 
-      const matched = fs.globSync([
+      const matched = globSync([
         path.resolve(rootDir, 'src', id.slice(2) + '.{tsx,ts,json}'),
         path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}')
       ])

@@ -20,6 +20,7 @@
     "lodash": "^4.17.21",
     "openai": "^6.7.0",
     "ora": "^9.0.0",
+    "pocketbase": "^0.26.3",
     "zod": "^4.1.12"
   },
   "devDependencies": {
