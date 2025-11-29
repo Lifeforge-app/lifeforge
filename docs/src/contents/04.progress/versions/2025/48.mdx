@@ -3,13 +3,73 @@ import Code from "@/components/Code";
 
 ### 🏗️ Infrastructure & Technical Improvements
 
+- <Commit hash="8d4e830e67c4d96358b7f1e552e6440ad63f48af" />: Added <code>TempFileManager</code> utility in server codebase to handle temporary data storage.
+- <Commit hash="5dbddda391df6965f645465a8dc4287bb50fcf09" />, <Commit hash="8a756b0f86acf85d1eebc5d7f39229135532b99d" />: Master password is now encrypted during creation during API call to enhance security.
+
 ### 🎨 UI Components & Design System
+
+- <Commit hash="7b0639a2dc772886be15d16e439881d186e2c3fb" />, <Commit hash="8fc801dacbfc92df387a71a29523ed98273c3228" />, <Commit hash="946f1cc8bcb196c932cfbef63995c89120a8c70c" />, <Commit hash="6dd50f1a92a1847772069e3f2f0e6310a4111177" />: Added custom HTML and URL support for icon in <code>SidebarItem</code>, <code>FilterChip</code>, <code>ListboxOption</code> components to allow usage of SVG icons or images as icons.
+
+  <Code language="tsx">
+    {`<SidebarItem
+        icon={'customHTML:<svg>...</svg>' || 'url:https://example.com/icon.png'}
+        label="Favorites"
+    />`}
+  </Code>
+
+- <Commit hash="00fccd2832e45a82e43157a0c3b4143b02eae34d" />: Added action button to <code>SidebarItem</code> component for additional interactivity.
+
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w48-2.webp)
+
+- <Commit hash="8b784989b7f43c16833354c0999b97c892e3ea62" />: Forked and fixed <code>react-custom-scrollbars</code> package to resolve issues brought by the lack of maintenance in the original package.
+- <Commit hash="8fc801dacbfc92df387a71a29523ed98273c3228" />: Added support for handling string arrays of values.
+- <Commit hash="9daecd0644520cb4eb6ad18c704d0ccf42be1ced" />: Made retry button optional in <code>ErrorScreen</code>, <code>WithQuery</code>, and <code>WithQueryData</code> components.
+- <Commit hash="f3ff09536dba1c1f4a4c07aa2d5ef1adecd1d43c" />: Added <code>TagChip</code> component for displaying tags.
+
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w48-3.webp)
+
+- <Commit hash="b4cb89257aa3573b302c1ebce282f5a2d0cf813b" />, <Commit hash="6c93e23d93e6f1a3600f38af39591c4ce920e265" />: Implemented better type inference for props in <code>HeaderFilter</code> component.
+- <Commit hash="ed1b6473d2712fdd4114f2b36de5f46887fb179c" />: Extended <code>MessageBox</code> styles to include caution, tip, and important variants.
+
+  ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w48-4.webp)
+
+- <Commit hash="3c66856c574de73c1f0eca477f0ba0945105757c" />: Renamed <code>ItemWrapper</code> to <code>Card</code> component.
+- <Commit hash="5f47bde73010e87dd78ecdf48b106fb0cc397be1" />: Renamed <code>MessageBox</code> to <code>Alert</code> component.
+- <Commit hash="1b9b6579291a7574f279d0c3a236bbf302c8a4ef" />: Renamed <code>HeaderFilter</code> to <code>TagsFilter</code> component.
+- <Commit hash="eeb90729b5ce6befc60bd0c109f5d7cd3dc282c8" />: Renamed <code>ConfigColumn</code> to <code>OptionsColumn</code> component.
+- <Commit hash="b0b0eecadcc56c415f0abfabba1ffc018f74faa7" />, <Commit hash="11738dee5a73faafdd12eed935b4b2c1b5bc2c0b" /> Migrated to <code>culori</code> library for color manipulations to leverage its advanced color space support.
+- <Commit hash="b3dc72de0b8092b6af0fc60b9bf512597954121a" />, <Commit hash="3298a6af8674dbb4cd5ed4cc167d222ea722de69" />, <Commit hash="9398f47f34e940c72cbfbc190f484574bde57dfa" />, <Commit hash="54a3784f6a423669680f98d9953e2ed23ccb4dd9" />, <Commit hash="9a67f7faa3daa3ad26fbe805d99c1acb28ccc692" />, <Commit hash="9a67f7faa3daa3ad26fbe805d99c1acb28ccc692" />, <Commit hash="a10df9b12a79b7ffd8ee418c799e5eb085b2b9f9" />, <Commit hash="8e0670ab120071105bc3c9a4631f43af952071e8" />, <Commit hash="8578759da53f5eafb9ae04e36ff1b4050e6ba997" />: Added stories for a lot of components that were missing them.
+- <Commit hash="19f00f4c191430ffad60b15b6a3903efc6c70eda" />: Major restructuring of the folder structure in the UI library for better organization.
+
+  <Code language="plaintext">
+    {`src/components
+    ├── actions
+    ├── auth
+    ├── data-display
+    ├── feedback
+    ├── inputs
+    ├── layout
+    ├── navigation
+    ├── overlays
+    └── utilities`}
+  </Code>
+- <Commit hash="8efae826b5924b9e9b34e8dfc5e11db1b970b202" />: Split <code>SidebarItem</code> into <code>MainSidebarItem</code> and <code>SidebarItem</code> for separation of concerns between main sidebar and sidebars used in modules.
+- Minor styling and props management improvements across various components in the UI library.
 
 ### 🐛 Bug Fixes & Chores
 
+- <Commit hash="c3c96e599b4a06fd62d0a978ed7b5e50a7dc703b" />: Fixed <code>Pagination</code> component skipping pages when navigating using next/previous buttons by changing state update logic to use functional updates.
+- <Commit hash="ab9b3547b8c97f2523e7ddcda08dc102439411e4" />: Improved opening and closing animation for <code>SidebarWrapper</code> component.
+- <Commit hash="8ef657403505ef6598a4e29f2653f4793e9a01ac" />: Added <code>scripts</code> field in <code>package.json</code> of module templates in forgeCLI that includes type checking commands.
+- <Commit hash="4461ffd08c64dd008c17e838b96e4e270a98eaea" />: Updated the type checking script in <code>package.json</code> of the client codebase to perform type checking across all installed modules.
+- <Commit hash="120576dd5cba658a2262e2045760a337fca0afcb" />: Added schema file existence check in module update flow to prevent migration of modules without schema file.
+- <Commit hash="a7feafb57af0457fe109a63254ca6bbe194608ec" />: Changed stroke color in LifeForge logo to use color in new design system.
+- <Commit hash="c20a356add1b96fefffc8c84cf8aa89c777614e8" />: Updated TypeScript configuration in <code>lifeforge-ui</code> package to include type checking for <code>.storybook</code> directory.
+
 ### 📖 Documentation & Tooling
 
-
-- <Commit hash="baf4d08743134a9e3e41dd1249a66ae318ce30d1" />: Themed Storybook to match LifeForge design system.
+- <Commit hash="baf4d08743134a9e3e41dd1249a66ae318ce30d1" />, <Commit hash="e38f1044452a0c8c57da6f7fa876e12354896ccc" />: Themed Storybook to match LifeForge design system.
 
   ![](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/25w48-1.webp)
+
+- <Commit hash="438816bff8fde54e7d35d9d322b604766142e69e" />: Replace all legacy <code>Note</code> and <code>Warning</code> components in documentation with new <code>Alert</code> component from UI library.
