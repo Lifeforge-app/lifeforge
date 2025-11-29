@@ -2,16 +2,29 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Button } from '@components/controls'
 
-import ItemWrapper from './Card'
+import Card from './Card'
 
 const meta = {
-  component: ItemWrapper,
+  component: Card,
   argTypes: {
     children: {
-      control: false
+      control: false,
+      table: {
+        type: {
+          summary: 'React.ReactNode'
+        }
+      }
+    },
+    as: {
+      control: false,
+      table: {
+        type: {
+          summary: 'React.ElementType'
+        }
+      }
     }
   }
-} satisfies Meta<typeof ItemWrapper>
+} satisfies Meta<typeof Card>
 
 export default meta
 
@@ -22,11 +35,11 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    children: <div className="p-4">This is a wrapped item</div>
+    children: <div className="p-4">This is a card</div>
   },
   render: args => (
     <div className="w-96 p-8">
-      <ItemWrapper {...args} />
+      <Card {...args} />
     </div>
   )
 }
@@ -41,7 +54,7 @@ export const Interactive: Story = {
   },
   render: args => (
     <div className="w-96 p-8">
-      <ItemWrapper {...args} />
+      <Card {...args} />
     </div>
   )
 }
@@ -53,12 +66,12 @@ export const AsButton: Story = {
   args: {
     as: 'button',
     isInteractive: true,
-    children: <div className="p-4">I'm a button wrapper</div>,
+    children: <div className="p-4">I&apos;m a button card</div>,
     onClick: () => alert('Button clicked!')
   },
   render: args => (
     <div className="w-96 p-8">
-      <ItemWrapper {...args} />
+      <Card {...args} />
     </div>
   )
 }
@@ -73,11 +86,11 @@ export const AsLink: Story = {
     href: 'https://docs.lifeforge.dev',
     target: '_blank',
     rel: 'noopener noreferrer',
-    children: <div className="p-4">I&apos;m a link wrapper</div>
+    children: <div className="p-4">I&apos;m a link card</div>
   },
   render: args => (
     <div className="w-96 p-8">
-      <ItemWrapper {...args} />
+      <Card {...args} />
     </div>
   )
 }
@@ -91,18 +104,18 @@ export const MultipleItems: Story = {
   },
   render: () => (
     <div className="grid grid-cols-2 gap-4 p-8">
-      <ItemWrapper>
+      <Card>
         <div className="p-4">Item 1</div>
-      </ItemWrapper>
-      <ItemWrapper isInteractive>
+      </Card>
+      <Card isInteractive>
         <div className="p-4">Item 2 (Interactive)</div>
-      </ItemWrapper>
-      <ItemWrapper>
+      </Card>
+      <Card>
         <div className="p-4">Item 3</div>
-      </ItemWrapper>
-      <ItemWrapper isInteractive>
+      </Card>
+      <Card isInteractive>
         <div className="p-4">Item 4 (Interactive)</div>
-      </ItemWrapper>
+      </Card>
     </div>
   )
 }
@@ -116,14 +129,14 @@ export const WithTitle: Story = {
   },
   render: () => (
     <div className="w-80 p-8">
-      <ItemWrapper>
+      <Card>
         <div className="p-4">
           <h2 className="mb-2 text-xl font-semibold">Card Title</h2>
           <p className="text-bg-500">
             This is an example of an card styled as a card with shadow.
           </p>
         </div>
-      </ItemWrapper>
+      </Card>
     </div>
   )
 }
@@ -137,7 +150,7 @@ export const WithImage: Story = {
   },
   render: () => (
     <div className="flex-center w-[60vw] p-8">
-      <ItemWrapper className="w-96 p-0!">
+      <Card className="w-96 p-0!">
         <img
           alt="Card Image"
           className="aspect-video w-full rounded-t-lg object-cover"
@@ -149,7 +162,7 @@ export const WithImage: Story = {
             This card includes an image at the top to enhance visual appeal.
           </p>
         </div>
-      </ItemWrapper>
+      </Card>
     </div>
   )
 }
@@ -163,7 +176,7 @@ export const WithImageAndButton: Story = {
   },
   render: () => (
     <div className="flex-center w-[60vw] p-8">
-      <ItemWrapper className="w-96 p-0!">
+      <Card className="w-96 p-0!">
         <img
           alt="Card Image"
           className="aspect-video w-full rounded-t-lg object-cover"
@@ -185,7 +198,7 @@ export const WithImageAndButton: Story = {
             Learn More
           </Button>
         </div>
-      </ItemWrapper>
+      </Card>
     </div>
   )
 }
