@@ -11,7 +11,7 @@ function NestedItem({
   name,
   value,
   path,
-  setValue,
+  onChange,
   changedKeys,
   setChangedKeys,
   oldLocales,
@@ -24,7 +24,7 @@ function NestedItem({
   name: string
   value: Record<string, any>
   path: string[]
-  setValue: (lng: string, path: string[], value: string) => void
+  onChange: (lng: string, path: string[], value: string) => void
   changedKeys: string[]
   setChangedKeys: React.Dispatch<React.SetStateAction<string[]>>
   oldLocales: Record<string, any> | 'loading' | 'error'
@@ -165,7 +165,7 @@ function NestedItem({
                     oldLocales={oldLocales}
                     path={path}
                     setChangedKeys={setChangedKeys}
-                    setValue={setValue}
+                    onChange={onChange}
                     value={value}
                   />
                 </li>
@@ -179,7 +179,7 @@ function NestedItem({
                   path={path.concat(key)}
                   searchQuery={searchQuery}
                   setChangedKeys={setChangedKeys}
-                  setValue={setValue}
+                  onChange={onChange}
                   value={value}
                   onCreateEntry={onCreateEntry}
                   onDeleteEntry={onDeleteEntry}

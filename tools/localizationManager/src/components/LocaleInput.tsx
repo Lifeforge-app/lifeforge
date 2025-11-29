@@ -14,14 +14,14 @@ function LocaleInput({
   name,
   path,
   value,
-  setValue,
+  onChange,
   setChangedKeys,
   oldLocales
 }: {
   name: string
   path: string[]
   value: string
-  setValue: (key: string, path: string[], value: string) => void
+  onChange: (key: string, path: string[], value: string) => void
   setChangedKeys: React.Dispatch<React.SetStateAction<string[]>>
   oldLocales: Record<string, any> | 'loading' | 'error'
 }): React.ReactElement {
@@ -43,8 +43,8 @@ function LocaleInput({
       placeholder={t(`inputs.translationPlaceholder`, {
         key: path.join('.')
       })}
-      setValue={value => {
-        setValue(name, path, value)
+      onChange={value => {
+        onChange(name, path, value)
 
         const pathKey = path.join('.')
 

@@ -82,7 +82,7 @@ function App() {
     setSyncLoading(false)
   }
 
-  function setValue(lng: string, path: string[], value: string) {
+  function onChange(lng: string, path: string[], value: string) {
     if (typeof locales === 'string') {
       return
     }
@@ -352,8 +352,8 @@ function App() {
           <SearchInput
             namespace="apps.localizationManager"
             searchTarget="entry"
-            setValue={setSearchQuery}
             value={searchQuery}
+            onChange={setSearchQuery}
           />
           <LocaleEditor
             changedKeys={changedKeys}
@@ -362,7 +362,7 @@ function App() {
             oldLocales={oldLocales}
             searchQuery={debouncedSearchQuery}
             setChangedKeys={setChangedKeys}
-            setValue={setValue}
+            onChange={onChange}
             onCreateEntry={parent => {
               handleCreateEntryModalOpen(parent)
             }}
@@ -381,8 +381,10 @@ function App() {
         <div className="flex-center flex-1">
           <EmptyStateScreen
             icon={namespace ? 'tabler:cube-off' : 'tabler:apps-off'}
-            name={namespace ? 'subNamespace' : 'namespace'}
-            namespace="apps.localizationManager"
+            message={{
+              id: namespace ? 'subNamespace' : 'namespace',
+              namespace: 'apps.localizationManager'
+            }}
           />
         </div>
       )}

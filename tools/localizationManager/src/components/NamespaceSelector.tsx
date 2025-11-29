@@ -43,7 +43,7 @@ function NamespaceSelector({
           icon="tabler:category-2"
           label="namespace"
           namespace="apps.localizationManager"
-          setValue={value => {
+          onChange={value => {
             if (showWarning && namespace !== value) {
               if (!window.confirm(t('warnings.unsavedChanges'))) {
                 return
@@ -78,7 +78,7 @@ function NamespaceSelector({
                 icon="tabler:cube"
                 label="sub namespace"
                 namespace="apps.localizationManager"
-                setValue={value => {
+                onChange={value => {
                   if (showWarning && subNamespace !== value) {
                     if (!window.confirm(t('warnings.unsavedChanges'))) {
                       return

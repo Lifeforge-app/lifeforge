@@ -8,7 +8,7 @@ import NestedItem from './NestedItem'
 function LocaleEditor({
   oldLocales,
   locales,
-  setValue,
+  onChange,
   changedKeys,
   setChangedKeys,
   searchQuery,
@@ -19,7 +19,7 @@ function LocaleEditor({
 }: {
   oldLocales: Record<string, any> | 'loading' | 'error'
   locales: Record<string, any> | 'loading' | 'error'
-  setValue: (lng: string, path: string[], value: string) => void
+  onChange: (lng: string, path: string[], value: string) => void
   changedKeys: string[]
   setChangedKeys: React.Dispatch<React.SetStateAction<string[]>>
   searchQuery: string
@@ -127,7 +127,7 @@ function LocaleEditor({
             path={[key]}
             searchQuery={searchQuery}
             setChangedKeys={setChangedKeys}
-            setValue={setValue}
+            onChange={onChange}
             value={value}
             onCreateEntry={onCreateEntry}
             onDeleteEntry={onDeleteEntry}
