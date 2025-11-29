@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { clsx } from 'clsx'
 import tinycolor from 'tinycolor2'
 
-import { ItemWrapper } from '@components/layouts'
+import { Card } from '@components/layouts'
 import { ModalHeader } from '@components/modals'
 
 import PALETTES from './constants/palettes.json'
@@ -26,7 +26,7 @@ function FlatUIColorsModal({
       />
       <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
         {PALETTES.map(({ name, icon, colors }) => (
-          <ItemWrapper key={name} className="dark:bg-bg-800/70 space-y-2">
+          <Card key={name} className="dark:bg-bg-800/70 space-y-2">
             <div className="mb-4 flex items-center space-x-3">
               <Icon className="size-6" icon={icon || 'tabler:palette'} />
               <span className="text-lg font-medium">{name}</span>
@@ -59,7 +59,7 @@ function FlatUIColorsModal({
                 </button>
               ))}
             </div>
-          </ItemWrapper>
+          </Card>
         ))}
       </div>
     </div>

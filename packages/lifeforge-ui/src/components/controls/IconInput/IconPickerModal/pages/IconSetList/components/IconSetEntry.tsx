@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 
-import { ItemWrapper } from '@components/layouts'
+import { Card } from '@components/layouts'
 
 import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
 
@@ -12,7 +12,7 @@ function IconSetEntry({
   setCurrentIconSet: ({ iconSet }: { iconSet: string }) => void
 }) {
   return (
-    <ItemWrapper
+    <Card
       key={iconSet.prefix}
       isInteractive
       className="component-bg-lighter-with-hover flex w-full grow flex-col overflow-hidden"
@@ -50,7 +50,7 @@ function IconSetEntry({
           )}
         </div>
       </div>
-    </ItemWrapper>
+    </Card>
   )
 }
 
