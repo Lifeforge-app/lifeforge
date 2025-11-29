@@ -1,5 +1,8 @@
 import clsx from 'clsx'
 
+/**
+ * A divider component used to separate sections within the sidebar.
+ */
 function SidebarDivider({ noMargin = false }: { noMargin?: boolean }) {
   return (
     <li
