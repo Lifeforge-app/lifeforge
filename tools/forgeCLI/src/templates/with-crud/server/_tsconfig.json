@@ -1,5 +1,8 @@
 {
-  "include": ["./**/*.ts"],
+  "extends": "../../../server/tsconfig.json",
+  "include": [
+    "./**/*.ts"
+  ],
   "references": [
     {
       "path": "../../../server/tsconfig.json"
