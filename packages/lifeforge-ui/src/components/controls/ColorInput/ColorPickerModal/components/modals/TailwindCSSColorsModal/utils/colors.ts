@@ -1,5 +1,6 @@
 /* eslint-disable prefer-const */
-import { converter, formatHex, parseHex } from 'culori/fn'
+import { converter, formatHex, parseHex } from 'culori'
+import 'culori/css'
 import Gradient from 'javascript-color-gradient'
 
 export function getColorPalette(
