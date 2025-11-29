@@ -1,19 +1,10 @@
-export { default as TagsFilter } from './TagsFilter'
-
-export { default as OptionsColumn } from './OptionsColumn'
-
-export { default as Pagination } from './Pagination'
+// Utility components & HOCs
+export { default as APIOnlineStatusWrapper } from './APIOnlineStatusWrapper'
 
 export { default as Scrollbar } from './Scrollbar'
 
-export { default as Tabs } from './Tabs'
-
-export { default as ViewModeSelector } from './ViewModeSelector'
-
-export { default as DashboardItem } from './DashboardItem'
-
 export { default as Tooltip } from './Tooltip'
 
-export { default as Alert } from './Alert'
+export { default as WithQuery } from './WithQuery'
 
-export { default as TagChip } from './TagChip'
+export { default as WithQueryData } from './WithQueryData'
