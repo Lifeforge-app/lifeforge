@@ -1,88 +1,14 @@
-import _ from 'lodash'
-import { useCallback, useMemo, useState } from 'react'
-import { useNavigate } from 'shared'
+import { useCallback } from 'react'
 
 import { useModuleSidebarState } from '@components/layout'
 
-import SidebarActionButton from './components/SidebarActionButton'
 import SidebarCancelButton from './components/SidebarCancelButton'
-import SidebarCollapseButton from './components/SidebarCollapseButton'
 import SidebarItemContent from './components/SidebarItemContent'
 import SidebarItemIcon from './components/SidebarItemIcon'
-import SidebarItemSubsection from './components/SidebarItemSubsection'
-import SidebarItemSubsectionExpandIcon from './components/SidebarItemSubsectionExpandIcon'
 import SidebarItemWrapper from './components/SidebarItemWrapper'
 
-type SidebarItemAutoActiveProps =
-  | {
-      autoActive: true
-      active?: never
-    }
-  | {
-      autoActive?: false
-      active: boolean
-    }
-
-interface MainSidebarItemProps {
-  isMainSidebarItem: true
-
-  activeClassNames?: never
-  showAIIcon: boolean
-  subsection?: {
-    label: string
-    icon: string | React.ReactElement
-    path: string
-  }[]
-  prefix?: string
-  sidebarExpanded: boolean
-  toggleSidebar: () => void
-
-  sideStripColor?: never
-  onClick?: never
-
-  number?: never
-  onCancelButtonClick?: never
-  contextMenuItems?: never
-  actionButtonIcon?: never
-  onActionButtonClick?: never
-
-  isCollapsed?: never
-  onCollapseButtonClick?: never
-  showCollapseSpacer?: never
-  namespace?: never
-  needTranslate?: never
-}
-
-interface SubSidebarItemProps {
-  isMainSidebarItem?: false
-
-  activeClassNames?: {
-    wrapper?: string
-    icon?: string
-  }
-  showAIIcon?: never
-  subsection?: never
-  prefix?: never
-  sidebarExpanded?: never
-  toggleSidebar?: never
-
-  onClick: () => void
-  sideStripColor?: string
-
-  number?: number
-  onCancelButtonClick?: () => void
-  contextMenuItems?: React.ReactElement
-  actionButtonIcon?: string
-  onActionButtonClick?: () => void
-
-  isCollapsed?: boolean
-  onCollapseButtonClick?: () => void
-  showCollapseSpacer?: boolean
-  namespace?: string
-  needTranslate?: boolean
-}
-
-interface SidebarItemBaseProps {
+interface SidebarItemProps {
+  /** Label string or React element to display for the sidebar item. */
   label: string | React.ReactElement
   /**
    * Icon string or React element to display alongside the label.
@@ -92,166 +18,102 @@ interface SidebarItemBaseProps {
    * - Prefix "url:" can be used to render image icons from a URL.
    */
   icon?: string | React.ReactElement
+  /** Whether the sidebar is currently selected/active. */
+  active?: boolean
+  /** Callback function triggered when the sidebar item is clicked. */
+  onClick?: () => void
+  /** Callback function triggered when the cancel button is clicked.
+   * If provided, a cancel button is shown when the sidebar item is active.
+   */
+  onCancelButtonClick?: () => void
+  /** Color for the side strip indicator. If not provided, no side strip is shown. */
+  sideStripColor?: string
+  /** Optional number badge to display on the right side of the sidebar item. */
+  number?: number
+  /** Props for the action button displayed on the sidebar item. */
+  actionButtonProps?: {
+    icon: string
+    onClick: () => void
+  }
+  /** React element containing context menu items.
+   * If provided, a hamburger menu is shown when user hovers over the sidebar item.
+   */
+  contextMenuItems?: React.ReactElement
+  /** Styling for the sidebar item. */
+  classNames?: {
+    wrapper?: string
+    icon?: string
+  }
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string | false
 }
 
-type SidebarItemProps = SidebarItemAutoActiveProps &
-  (MainSidebarItemProps | SubSidebarItemProps) &
-  SidebarItemBaseProps
-
+/**
+ * A clickable navigation item for use in sidebar menus.
+ *
+ * Displays a label with an optional icon, supports active states, and can include
+ * visual indicators like colored side strips and number badges. Provides advanced
+ * features such as context menus, action buttons, and cancel buttons for enhanced
+ * user interaction.
+ * ```
+ */
 function SidebarItem({
   label,
   icon,
-  activeClassNames,
-  sideStripColor,
-  showAIIcon = false,
-  subsection,
-  isMainSidebarItem = false,
-  sidebarExpanded,
-  toggleSidebar,
-  onClick,
-  autoActive = false,
   active = false,
-  prefix = '',
-  number,
+  onClick,
   onCancelButtonClick,
-  actionButtonIcon,
-  onActionButtonClick,
+  sideStripColor,
+  number,
+  actionButtonProps,
   contextMenuItems,
-
-  isCollapsed,
-  onCollapseButtonClick,
-  showCollapseSpacer,
-  namespace,
-  needTranslate = true
+  classNames,
+  namespace
 }: SidebarItemProps) {
-  const navigate = useNavigate()
-
   const { setIsSidebarOpen } = useModuleSidebarState()
-
-  const [subsectionExpanded, setSubsectionExpanded] = useState(
-    isMainSidebarItem
-      ? false
-      : subsection !== undefined &&
-          location.pathname.slice(1).startsWith(_.kebabCase(label.toString()))
-  )
-
-  const isLocationMatched = useMemo(
-    () =>
-      location.pathname
-        .slice(1)
-        .startsWith(
-          (prefix !== '' ? `${prefix}/` : '') + _.kebabCase(label.toString())
-        ),
-    [location.pathname, prefix, label]
-  )
 
   const handleNavigation = useCallback(() => {
     if (onClick !== undefined) {
       setIsSidebarOpen(false)
       onClick()
-
-      return
     }
-
-    if (isMainSidebarItem) {
-      setSubsectionExpanded(!subsectionExpanded)
-
-      if (subsection?.length) {
-        return
-      }
-
-      navigate(
-        `/${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label.toString())}`
-      )
-    }
-
-    if (window.innerWidth < 1024) {
-      toggleSidebar?.()
-    }
-  }, [
-    isMainSidebarItem,
-    subsectionExpanded,
-    subsection,
-    prefix,
-    label,
-    navigate,
-    toggleSidebar
-  ])
-
-  const handleToggleSubsection = useCallback(() => {
-    if (subsection !== undefined) {
-      setSubsectionExpanded(!subsectionExpanded)
-    }
-  }, [subsection, subsectionExpanded])
+  }, [onClick, setIsSidebarOpen])
 
   return (
-    <>
-      <SidebarItemWrapper
-        active={autoActive ? isLocationMatched : active}
-        activeClassName={activeClassNames?.wrapper}
-        onClick={handleNavigation}
-      >
-        {onCollapseButtonClick && (
-          <>
-            <SidebarCollapseButton
-              isCollapsed={isCollapsed === true}
-              onClick={onCollapseButtonClick}
-            />
-          </>
-        )}
-        {showCollapseSpacer && !onCollapseButtonClick && (
-          <div className="w-8 shrink-0"></div>
-        )}
-
-        {sideStripColor !== undefined && (
-          <span
-            className="block h-8 w-1 shrink-0 rounded-full"
-            style={{
-              backgroundColor: sideStripColor
-            }}
-          />
-        )}
-        <SidebarItemIcon
-          active={autoActive ? isLocationMatched : active}
-          activeClassName={activeClassNames?.icon}
-          icon={icon}
-        />
-        <SidebarItemContent
-          active={autoActive ? isLocationMatched : active}
-          contextMenuItems={contextMenuItems}
-          hasAI={showAIIcon}
-          isMainSidebarItem={isMainSidebarItem}
-          label={label}
-          namespace={namespace}
-          needTranslate={needTranslate}
-          number={number}
-          sidebarExpanded={!!sidebarExpanded}
-          onCancelButtonClick={onCancelButtonClick}
-        />
-        {actionButtonIcon && onActionButtonClick && (
-          <SidebarActionButton
-            icon={actionButtonIcon}
-            onClick={onActionButtonClick}
-          />
-        )}
-        {sidebarExpanded && subsection !== undefined && (
-          <SidebarItemSubsectionExpandIcon
-            subsectionExpanded={subsectionExpanded}
-            toggleSubsection={handleToggleSubsection}
-          />
-        )}
-        {active && onCancelButtonClick !== undefined && (
-          <SidebarCancelButton onClick={onCancelButtonClick} />
-        )}
-      </SidebarItemWrapper>
-      {subsection !== undefined && (
-        <SidebarItemSubsection
-          label={label}
-          subsection={subsection}
-          subsectionExpanded={subsectionExpanded}
+    <SidebarItemWrapper
+      active={active}
+      className={classNames?.wrapper}
+      onClick={handleNavigation}
+    >
+      {sideStripColor !== undefined && (
+        <span
+          className="block h-8 w-1 shrink-0 rounded-full"
+          style={{
+            backgroundColor: sideStripColor
+          }}
         />
       )}
-    </>
+      <SidebarItemIcon
+        active={active}
+        className={classNames?.icon}
+        icon={icon}
+      />
+      <SidebarItemContent
+        actionButtonProps={actionButtonProps}
+        active={active}
+        contextMenuItems={contextMenuItems}
+        hasAI={false}
+        isMainSidebarItem={false}
+        label={label}
+        namespace={namespace}
+        number={number}
+        sidebarExpanded={false}
+        onCancelButtonClick={onCancelButtonClick}
+      />
+      {active && onCancelButtonClick !== undefined && (
+        <SidebarCancelButton onClick={onCancelButtonClick} />
+      )}
+    </SidebarItemWrapper>
   )
 }
 
