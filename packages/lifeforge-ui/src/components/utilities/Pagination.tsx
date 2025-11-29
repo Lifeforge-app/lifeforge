@@ -1,18 +1,25 @@
-import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+import { Button } from '@components/controls'
+
+interface PaginationProps {
+  /** Current active page */
+  page: number
+  /** Callback function when the page is changed */
+  onPageChange: (page: number | ((prevPage: number) => number)) => void
+  /** Total number of pages */
+  totalPages: number
+  /** Additional class names for the pagination container */
+  className?: string
+}
+
 function Pagination({
-  currentPage,
+  page,
   onPageChange,
   totalPages,
   className = ''
-}: {
-  totalPages: number
-  onPageChange: React.Dispatch<React.SetStateAction<number>>
-  currentPage: number
-  className?: string
-}): React.ReactElement {
+}: PaginationProps): React.ReactElement {
   const renderPageNumbers = () => {
     const pageNumbers: React.ReactElement[] = []
 
@@ -20,15 +27,15 @@ function Pagination({
 
     const startPage = Math.max(
       (() => {
-        if (currentPage > totalPages - pagesToShow) {
+        if (page > totalPages - pagesToShow) {
           return totalPages - pagesToShow + 1
         }
 
-        if (currentPage < pagesToShow) {
+        if (page < pagesToShow) {
           return 1
         }
 
-        return currentPage - Math.floor(pagesToShow / 2)
+        return page - Math.floor(pagesToShow / 2)
       })(),
       1
     )
@@ -42,7 +49,7 @@ function Pagination({
             key={1}
             className={clsx(
               'hidden rounded-md px-3 py-2 lg:block',
-              currentPage === 1
+              page === 1
                 ? 'text-custom-500 font-semibold'
                 : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
             )}
@@ -63,7 +70,7 @@ function Pagination({
           key={i}
           className={clsx(
             'rounded-md px-5 py-3',
-            currentPage === i
+            page === i
               ? 'lg:text-custom-500 font-semibold'
               : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 hidden lg:block'
           )}
@@ -91,7 +98,7 @@ function Pagination({
             key={totalPages}
             className={clsx(
               'hidden rounded-md px-5 py-3 lg:block',
-              currentPage === totalPages
+              page === totalPages
                 ? 'text-custom-500 font-semibold'
                 : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
             )}
@@ -110,11 +117,11 @@ function Pagination({
 
   return (
     <div className={clsx('flex-between flex gap-2', className)}>
-      {currentPage !== 1 ? (
+      {page !== 1 ? (
         <>
           <Button
             className="hidden w-32 sm:flex"
-            disabled={currentPage === 1}
+            disabled={page === 1}
             icon="uil:angle-left"
             variant="plain"
             onClick={() => {
@@ -148,7 +155,7 @@ function Pagination({
         <span className="w-12 sm:w-32"></span>
       )}
       <div className="flex items-center gap-2">{renderPageNumbers()}</div>
-      {currentPage < totalPages ? (
+      {page < totalPages ? (
         <>
           <Button
             className="w-12 sm:hidden"
@@ -167,7 +174,7 @@ function Pagination({
           />
           <Button
             className="hidden w-32 sm:flex"
-            disabled={currentPage === totalPages}
+            disabled={page === totalPages}
             icon="uil:angle-right"
             iconPosition="end"
             variant="plain"
