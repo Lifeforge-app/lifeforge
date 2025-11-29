@@ -125,8 +125,8 @@ function LineItem({
                   className="w-full"
                   icon="tabler:square-letter-x"
                   label="X Coordinate"
-                  placeholder="X Coordinate"
-                  setValue={value => {
+                  value={point[0]}
+                  onChange={value => {
                     setMrtLines(prevLines =>
                       prevLines.map((l, i) => {
                         if (i !== index) return l
@@ -139,14 +139,13 @@ function LineItem({
                       })
                     )
                   }}
-                  value={point[0]}
                 />
                 <NumberInput
                   className="w-full"
                   icon="tabler:square-letter-y"
                   label="Y Coordinate"
-                  placeholder="Y Coordinate"
-                  setValue={value => {
+                  value={point[1]}
+                  onChange={value => {
                     setMrtLines(prevLines =>
                       prevLines.map((l, i) => {
                         if (i !== index) return l
@@ -159,7 +158,6 @@ function LineItem({
                       })
                     )
                   }}
-                  value={point[1]}
                 />
               </li>
             ))
