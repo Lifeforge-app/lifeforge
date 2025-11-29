@@ -1,4 +1,4 @@
-import { NumberInput } from '@components/inputs'
+import { NumberInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -26,8 +26,8 @@ function FormNumberInput({
       label={field.label}
       namespace={namespace}
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }

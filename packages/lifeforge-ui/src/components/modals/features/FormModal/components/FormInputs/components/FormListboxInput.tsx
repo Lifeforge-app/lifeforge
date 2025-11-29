@@ -1,7 +1,11 @@
-import { ListboxInput, ListboxNullOption } from '@components/inputs'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 import { Icon } from '@iconify/react'
 import { Fragment } from 'react/jsx-runtime'
+
+import {
+  ListboxInput,
+  ListboxNullOption,
+  ListboxOption
+} from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -120,8 +124,8 @@ function FormListboxInput({
       multiple={!!field.multiple}
       namespace={namespace}
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     >
       {field.nullOption !== undefined && (
         <ListboxNullOption

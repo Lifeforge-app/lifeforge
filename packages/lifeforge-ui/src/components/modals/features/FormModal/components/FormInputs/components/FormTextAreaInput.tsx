@@ -1,4 +1,4 @@
-import { TextAreaInput } from '@components/inputs'
+import { TextAreaInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -28,8 +28,8 @@ function FormTextAreaInput({
       namespace={namespace}
       placeholder={field.placeholder}
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }

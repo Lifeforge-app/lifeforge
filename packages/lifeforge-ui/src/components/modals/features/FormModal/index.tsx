@@ -1,5 +1,4 @@
 /* eslint-disable no-case-declarations */
-import { LoadingScreen } from '@components/screens'
 import { loadIcon } from '@iconify/react'
 import { stringToIcon, validateIconName } from '@iconify/utils'
 import dayjs from 'dayjs'
@@ -10,7 +9,9 @@ import { usePromiseLoading } from 'shared'
 import type { ZodType } from 'zod'
 import type { StoreApi, UseBoundStore } from 'zustand'
 
-import { Button } from '../../../../components/buttons'
+import { LoadingScreen } from '@components/screens'
+
+import { Button } from '../../../controls'
 import ModalHeader from '../../core/components/ModalHeader'
 import FormInputs from './components/FormInputs'
 import SubmitButton from './components/SubmitButton'
@@ -56,7 +57,7 @@ function FormModal({
   },
   dataStore
 }: {
-  /** Form data and field configs. See the [main documentation](https://docs.lifeforge/melvinchia.dev/frontend/forms) for more details. */
+  /** Form data and field configs. See the [main documentation](https://docs.lifeforge.dev/developer-guide/forms) for more details. */
   form: {
     fields: Record<string, FormFieldPropsUnion>
     fieldTypes: Record<string, FormFieldPropsUnion['type']>

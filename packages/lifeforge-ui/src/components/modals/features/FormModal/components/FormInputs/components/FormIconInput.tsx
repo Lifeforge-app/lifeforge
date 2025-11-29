@@ -1,4 +1,4 @@
-import { IconInput } from '@components/inputs'
+import { IconInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -24,8 +24,8 @@ function FormIconInput({
       label={field.label}
       namespace={namespace}
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }

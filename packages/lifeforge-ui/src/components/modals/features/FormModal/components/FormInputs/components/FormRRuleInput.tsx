@@ -1,4 +1,4 @@
-import { RRuleInput } from '@components/inputs'
+import { RRuleInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -18,8 +18,8 @@ function FormRRuleInput({
   return (
     <RRuleInput
       hasDuration={!!field.hasDuration}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }

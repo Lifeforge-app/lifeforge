@@ -1,4 +1,4 @@
-import { CurrencyInput } from '@components/inputs'
+import { CurrencyInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -26,8 +26,8 @@ function FormCurrencyInput({
       namespace={namespace}
       placeholder="0.00"
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }

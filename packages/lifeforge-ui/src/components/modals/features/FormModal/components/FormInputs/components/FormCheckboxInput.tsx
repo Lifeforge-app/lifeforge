@@ -1,7 +1,8 @@
-import { Switch } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+
+import { Switch } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -36,7 +37,7 @@ function FormCheckboxInput({
           </span>
         </div>
         <Switch
-          checked={value}
+          value={value}
           onChange={() => {
             handleChange(!value)
           }}

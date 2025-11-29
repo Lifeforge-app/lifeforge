@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePromiseLoading } from 'shared'
 
-import Button from '../../buttons/Button'
-import { TextInput } from '../../inputs'
+import { Button, TextInput } from '@components/controls'
 
 function ConfirmationModal({
   onClose,
@@ -59,8 +58,8 @@ function ConfirmationModal({
               text: confirmationPrompt
             }
           )}
-          setValue={setConfirmationTextState}
           value={confirmationTextState}
+          onChange={setConfirmationTextState}
         />
       )}
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
