@@ -97,7 +97,9 @@ export default async function selectIcon(): Promise<string> {
     }
 
     const iconsList = [
+      // @ts-expect-error - lazy to add types
       ...(icons.uncategorized ?? []),
+      // @ts-expect-error - lazy to add types
       ...Object.values(icons.categories ?? {}).flat()
     ]
 

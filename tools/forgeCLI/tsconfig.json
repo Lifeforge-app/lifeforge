@@ -4,5 +4,10 @@
     "outDir": "../../dist/tools/forgeCLI",
     "rootDir": "."
   },
-  "include": ["./**/*.ts"]
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "./src/templates/**/*"
+  ]
 }
