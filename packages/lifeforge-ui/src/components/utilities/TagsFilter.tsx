@@ -3,12 +3,11 @@ import { usePersonalization } from 'shared'
 
 import TagChip from './TagChip'
 
-function HeaderFilter<T extends Record<string, string | string[] | null>>({
-  items,
-  values,
-  onChange
-}: {
-  items: Record<
+interface HeaderFilterProps<
+  T extends Record<string, string | string[] | null>
+> {
+  /** The filterable items available for selection. */
+  availableFilters: Record<
     keyof T,
     {
       data: Array<{
@@ -20,11 +19,39 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
       isColored?: boolean
     }
   >
+  /** The current selected filter values. */
   values: T
+  /** Callback functions to handle changes to filter values.
+   * The type of value passed to each function is inferred from the corresponding key in `values`.
+   *
+   * @example If `T` is:
+   * ```ts
+   * {
+   *   category: string | null
+   *   tags: string[] | null
+   * }
+   * ```
+   * then `onChange` should be:
+   * ```ts
+   * onChange: {
+   *   category: (value: string | null) => void
+   *   tags: (value: string[] | null) => void
+   * }
+   * ```
+   */
   onChange: {
     [K in keyof T]: (value: T[K]) => void
   }
-}) {
+}
+
+/**
+ * A filter component that displays selected filter tags based on provided items and values.
+ */
+function TagsFilter<T extends Record<string, string | string[] | null>>({
+  availableFilters: items,
+  values,
+  onChange
+}: HeaderFilterProps<T>) {
   const { derivedThemeColor } = usePersonalization()
 
   if (!Object.keys(items).some(query => Boolean(values[query]))) {
@@ -99,4 +126,4 @@ function HeaderFilter<T extends Record<string, string | string[] | null>>({
   )
 }
 
-export default HeaderFilter
+export default TagsFilter
