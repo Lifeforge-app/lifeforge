@@ -1,6 +1,20 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+export interface ViewModeSelectorProps<
+  T extends ReadonlyArray<{ value: string; icon: string }>,
+  TKey = T[number]['value']
+> {
+  /** The current selected mode */
+  currentMode: TKey
+  /** Callback when the mode is changed */
+  onModeChange: (value: TKey) => void
+  /** An array of objects representing the available view modes */
+  options: T
+  /** Additional class name for the container */
+  className?: string
+}
+
 /**
  * A view mode selector for switching between different view modes. Nothing too fancy.
  */
@@ -12,12 +26,7 @@ function ViewModeSelector<
   onModeChange,
   options,
   className
-}: {
-  currentMode: TKey
-  onModeChange: (value: TKey) => void
-  options: T
-  className?: string
-}) {
+}: ViewModeSelectorProps<T, TKey>) {
   return (
     <div
       className={clsx(
