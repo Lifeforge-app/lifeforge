@@ -59,10 +59,11 @@ function LineSection({
       ) : (
         <EmptyStateScreen
           smaller
-          description="Click the button above to add a new MRT line."
           icon="tabler:route-off"
-          name={false}
-          title="No MRT Lines"
+          message={{
+            title: 'No MRT Lines',
+            description: 'Click the button above to add a new MRT line.'
+          }}
         />
       )}
     </>

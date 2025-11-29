@@ -32,9 +32,9 @@ function StationSection({
       <div className="flex flex-col space-y-3 px-4">
         <SearchInput
           className="component-bg-lighter mb-4"
-          value={searchStationQuery}
-          setValue={setSearchStationQuery}
           searchTarget="stations"
+          value={searchStationQuery}
+          onChange={setSearchStationQuery}
         />
         {mrtStations.length > 0 ? (
           filteredStations.length > 0 ? (
@@ -51,19 +51,21 @@ function StationSection({
           ) : (
             <EmptyStateScreen
               smaller
-              description="No stations found matching your search query."
               icon="tabler:search-off"
-              name={false}
-              title="No Stations Found"
+              message={{
+                title: 'No Stations Found',
+                description: 'No stations found matching your search query.'
+              }}
             />
           )
         ) : (
           <EmptyStateScreen
             smaller
-            description="Click the button below to add a new MRT station."
             icon="tabler:map-pin-off"
-            name={false}
-            title="No MRT Stations"
+            message={{
+              title: 'No MRT Stations',
+              description: 'Click the button below to add a new MRT station.'
+            }}
           />
         )}
       </div>

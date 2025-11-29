@@ -143,7 +143,7 @@ function StationItem({
                 />
               </div>
             )}
-            setValue={codes => {
+            onChange={codes => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -175,7 +175,7 @@ function StationItem({
             className="w-full"
             icon="tabler:category"
             label="Station Type"
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -235,7 +235,7 @@ function StationItem({
             }
             icon="tabler:route"
             label="Lines"
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -263,7 +263,7 @@ function StationItem({
             icon="tabler:map-pin"
             label="Station Name"
             placeholder="Station Name"
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -280,7 +280,7 @@ function StationItem({
             className="flex-1"
             icon="tabler:square-letter-x"
             label="X Coordinate"
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -297,7 +297,7 @@ function StationItem({
             className="flex-1"
             icon="tabler:square-letter-y"
             label="Y Coordinate"
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -316,7 +316,7 @@ function StationItem({
                 className="flex-1"
                 icon="tabler:arrows-horizontal"
                 label="Width"
-                setValue={value => {
+                onChange={value => {
                   setMrtStations(prevStations =>
                     prevStations.map(s => {
                       if (s.id === station.id) {
@@ -333,7 +333,7 @@ function StationItem({
                 className="flex-1"
                 icon="tabler:arrows-vertical"
                 label="Height"
-                setValue={value => {
+                onChange={value => {
                   setMrtStations(prevStations =>
                     prevStations.map(s => {
                       if (s.id === station.id) {
@@ -350,7 +350,7 @@ function StationItem({
                 className="flex-1"
                 icon="tabler:rotate-2"
                 label="Rotation"
-                setValue={value => {
+                onChange={value => {
                   setMrtStations(prevStations =>
                     prevStations.map(s => {
                       if (s.id === station.id) {
@@ -371,7 +371,7 @@ function StationItem({
             label="Text Offset X"
             max={100}
             min={-100}
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {
@@ -390,7 +390,7 @@ function StationItem({
             label="Text Offset Y"
             max={100}
             min={-100}
-            setValue={value => {
+            onChange={value => {
               setMrtStations(prevStations =>
                 prevStations.map(s => {
                   if (s.id === station.id) {

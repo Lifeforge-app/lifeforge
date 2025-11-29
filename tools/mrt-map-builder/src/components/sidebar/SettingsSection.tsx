@@ -43,12 +43,12 @@ function SettingsSection({
         <ColorInput
           className="w-full"
           label="Color of Selected Line"
-          setValue={color => {
+          value={settings.colorOfCurrentLine}
+          onChange={color => {
             setSettings({
               colorOfCurrentLine: color
             })
           }}
-          value={settings.colorOfCurrentLine}
         />
         <FileInput
           enableUrl
@@ -71,14 +71,14 @@ function SettingsSection({
           label="Background Image Scale"
           max={200}
           min={10}
-          setValue={value => {
+          step={10}
+          value={settings.bgImageScale}
+          wrapperClassName="mb-8"
+          onChange={value => {
             setSettings({
               bgImageScale: value
             })
           }}
-          step={10}
-          value={settings.bgImageScale}
-          wrapperClassName="mb-8"
         />
         <div className="flex items-center justify-between">
           <div className="text-bg-500 flex items-center gap-2">
@@ -86,7 +86,7 @@ function SettingsSection({
             <span className="text-lg">Show background image</span>
           </div>
           <Switch
-            checked={settings.showImage}
+            value={settings.showImage}
             onChange={() => {
               setSettings({
                 showImage: !settings.showImage
@@ -100,7 +100,7 @@ function SettingsSection({
             <span className="text-lg">Dark mode</span>
           </div>
           <Switch
-            checked={settings.darkMode}
+            value={settings.darkMode}
             onChange={() => {
               setSettings({
                 darkMode: !settings.darkMode
