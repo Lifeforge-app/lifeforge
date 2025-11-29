@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '../buttons'
+import { Button } from '../controls'
 
 function SSOHeader({
   icon,

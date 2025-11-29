@@ -1,10 +1,11 @@
-import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import type { ForgeAPIClientController } from 'shared'
 import { encrypt } from 'shared'
+
+import { Button } from '@components/controls'
 
 import OTPInputBox from './components/OTPInputBox'
 import ResendOTPButton from './components/ResendOTPButton'
