@@ -75,7 +75,7 @@ export function PathFinder() {
             disabled={calculatedPath !== null}
             icon="tabler:map-pin"
             label="From Unit"
-            setValue={setFromUnitId}
+            onChange={setFromUnitId}
             value={fromUnitId}
           >
             {unitsWithEntrances.map(unit => (
@@ -98,7 +98,7 @@ export function PathFinder() {
             disabled={calculatedPath !== null}
             icon="tabler:flag"
             label="To Unit"
-            setValue={setToUnitId}
+            onChange={setToUnitId}
             value={toUnitId}
           >
             {unitsWithEntrances.map(unit => (

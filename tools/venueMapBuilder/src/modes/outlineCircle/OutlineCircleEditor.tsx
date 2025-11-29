@@ -48,20 +48,20 @@ export function OutlineCircleEditor({
           icon="tabler:tag"
           label="Circle Name"
           placeholder="Circle Outline"
-          setValue={circleState.handleCircleNameChange}
+          onChange={circleState.handleCircleNameChange}
           value={circle.name}
         />
         <ColorInput
           className="mt-4"
           label="Line Color"
-          setValue={circleState.handleCircleColorChange}
+          onChange={circleState.handleCircleColorChange}
           value={circle.color || '#374151'}
         />
         <NumberInput
           className="mt-4"
           icon="tabler:line-height"
           label="Stroke Width"
-          setValue={circleState.handleCircleStrokeWidthChange}
+          onChange={circleState.handleCircleStrokeWidthChange}
           value={circle.strokeWidth || 2}
         />
 
