@@ -1,6 +1,22 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+interface TabsProps<
+  T,
+  TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
+> {
+  /** List of tab items to display. */
+  items: T
+  /** List of enabled tab IDs. */
+  enabled: readonly TKey[]
+  /** Currently active tab ID. */
+  currentTab: TKey
+  /** Callback function to handle tab selection. */
+  onTabChange: (id: TKey) => void
+  /** Additional CSS classes to apply to the tabs container. */
+  className?: string
+}
+
 /**
  * A tab component that displays a list of tabs and allows switching between them.
  */
@@ -13,19 +29,7 @@ function Tabs<
     readonly amount?: number
   }>,
   TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
->({
-  items,
-  enabled,
-  currentTab,
-  onTabChange,
-  className
-}: {
-  items: T
-  enabled: readonly TKey[]
-  currentTab: TKey
-  onTabChange: (id: TKey) => void
-  className?: string
-}) {
+>({ items, enabled, currentTab, onTabChange, className }: TabsProps<T, TKey>) {
   return (
     <div className={clsx('flex flex-wrap items-center gap-y-2', className)}>
       {items
