@@ -1,42 +1,48 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
-function Tabs<T extends string>({
+/**
+ * A tab component that displays a list of tabs and allows switching between them.
+ */
+function Tabs<
+  T extends ReadonlyArray<{
+    readonly id: string
+    readonly name: string
+    readonly color?: string
+    readonly icon?: string
+    readonly amount?: number
+  }>,
+  TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
+>({
   items,
   enabled,
-  active,
-  onNavClick,
+  currentTab,
+  onTabChange,
   className
 }: {
-  items: Array<{
-    id: T
-    name: string
-    color?: string
-    icon?: string
-    amount?: number
-  }>
-  enabled: T[]
-  active: T
-  onNavClick: (id: T) => void
+  items: T
+  enabled: readonly TKey[]
+  currentTab: TKey
+  onTabChange: (id: TKey) => void
   className?: string
 }) {
   return (
     <div className={clsx('flex flex-wrap items-center gap-y-2', className)}>
       {items
-        .filter(({ id }) => enabled.includes(id))
+        .filter(({ id }) => enabled.includes(id as TKey))
         .map(({ name, icon, id, color }) => (
           <button
             key={id}
             className={clsx(
               'flex flex-1 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
-              active === id
+              currentTab === id
                 ? `${
                     !color ? 'border-custom-500 text-custom-500' : ''
                   } font-medium`
                 : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
             )}
             style={
-              color && active === id
+              color && currentTab === id
                 ? {
                     borderColor: color,
                     color: color
@@ -44,7 +50,7 @@ function Tabs<T extends string>({
                 : {}
             }
             onClick={() => {
-              onNavClick(id)
+              onTabChange(id as TKey)
             }}
           >
             {icon && <Icon className="size-5 shrink-0" icon={icon} />}
