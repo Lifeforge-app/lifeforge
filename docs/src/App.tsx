@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: (
           <div className="flex-center flex-1">
             <NotFoundScreen
-              description="Seems like the page you are looking for does not exist."
+              message="Seems like the page you are looking for does not exist."
               title="Oops! Page Not Found"
             />
           </div>
