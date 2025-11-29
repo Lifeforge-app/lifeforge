@@ -2,31 +2,38 @@ import clsx from 'clsx'
 
 import Scrollbars, { type ScrollbarsProps } from './Scrollbars'
 
+export interface ScrollbarProps extends ScrollbarsProps {
+  /* Whether to add padding to the right side of the content area. */
+  usePaddingRight?: boolean
+  children: React.ReactNode
+}
+
+/**
+ * A wrapper around the `react-custom-scrollbars` component that provides custom styling and optional right padding.
+ * The scrollbar library is unmaintained, so the library is cloned and fixed internally in our monorepo.
+ */
 function Scrollbar({
   children,
   usePaddingRight = true,
   ...props
-}: {
-  usePaddingRight?: boolean
-  children: React.ReactNode
-} & ScrollbarsProps) {
+}: ScrollbarProps) {
   return (
     <Scrollbars
       {...(props as any)}
-      autoHide
       hideTracksWhenNotNeeded
+      autoHide={props.autoHide !== undefined ? props.autoHide : true}
       autoHideTimeout={1000}
       renderThumbVertical={props => (
         <div
           {...props}
-          className="bg-bg-300 dark:bg-bg-800 rounded-lg"
+          className="bg-bg-400 dark:bg-bg-700 rounded-lg"
           style={{ ...props.style, minHeight: 30 }}
         />
       )}
       renderTrackVertical={props => (
         <div
           {...props}
-          className="bg-bg-100 dark:bg-bg-900"
+          className="bg-bg-200 dark:bg-bg-800/50"
           style={{ ...props.style, display: 'block' }}
         />
       )}
