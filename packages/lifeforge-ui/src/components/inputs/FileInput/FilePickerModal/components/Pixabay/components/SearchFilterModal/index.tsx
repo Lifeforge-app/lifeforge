@@ -1,0 +1,55 @@
+import { Button } from '@components/inputs'
+import { ModalHeader, ModalWrapper } from '@components/overlays'
+
+import {
+  type IPixabaySearchFilter,
+  type PixabaySearchFilterAction
+} from '../../typescript/pixabay_interfaces'
+import {
+  CategoryFilter,
+  ColorFilter,
+  EditorsChoiceSwitch,
+  ImageTypeFilter
+} from './components'
+
+function SearchFilterModal({
+  isOpen,
+  onClose,
+  filters,
+  updateFilters
+}: {
+  isOpen: boolean
+  onClose: () => void
+  filters: IPixabaySearchFilter
+  updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
+}) {
+  return (
+    <ModalWrapper isOpen={isOpen} minWidth="30vw" zIndex={1010}>
+      <ModalHeader
+        icon="tabler:filter"
+        title="Search Filters"
+        onClose={onClose}
+      />
+      <div className="space-y-3">
+        <ImageTypeFilter
+          imageType={filters.imageType}
+          updateFilters={updateFilters}
+        />
+        <CategoryFilter
+          category={filters.category}
+          updateFilters={updateFilters}
+        />
+        <ColorFilter colors={filters.colors} updateFilters={updateFilters} />
+        <EditorsChoiceSwitch
+          isEditorsChoice={filters.isEditorsChoice}
+          updateFilters={updateFilters}
+        />
+      </div>
+      <Button className="mt-6 w-full" icon="tabler:check" onClick={onClose}>
+        Apply Filters
+      </Button>
+    </ModalWrapper>
+  )
+}
+
+export default SearchFilterModal
