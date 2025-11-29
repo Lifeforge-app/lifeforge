@@ -1,4 +1,4 @@
-import { QRCodeScanner, TextInput } from '@components/inputs'
+import { QRCodeScanner, TextInput } from '@components/controls'
 import { useModalStore } from '@components/modals/core/useModalStore'
 
 import type {
@@ -56,8 +56,8 @@ function FormTextInput({
         namespace={namespace}
         placeholder={field.placeholder}
         required={field.required}
-        setValue={handleChange}
         value={value}
+        onChange={handleChange}
       />
     </>
   )

@@ -1,5 +1,6 @@
-import { Button } from '@components/buttons'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
+import { Button } from '@components/controls'
 
 import { useModalStore } from '../core/useModalStore'
 import ConfirmationModal from './ConfirmationModal'

@@ -1,5 +1,6 @@
-import { Button } from '@components/buttons'
 import _ from 'lodash'
+
+import { Button } from '@components/controls'
 
 function SubmitButton({
   submitButton,

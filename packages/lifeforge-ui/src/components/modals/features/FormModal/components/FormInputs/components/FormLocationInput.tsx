@@ -1,4 +1,4 @@
-import { type Location, LocationInput } from '@components/inputs'
+import { type Location, LocationInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -27,8 +27,8 @@ function FormLocationInput({
       label={field.label}
       namespace={namespace}
       required={field.required}
-      setValue={value => handleChange(value)}
       value={value}
+      onChange={value => handleChange(value)}
     />
   )
 }

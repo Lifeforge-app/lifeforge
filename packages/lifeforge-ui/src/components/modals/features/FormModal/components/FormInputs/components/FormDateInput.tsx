@@ -1,4 +1,4 @@
-import { DateInput } from '@components/inputs'
+import { DateInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -27,8 +27,8 @@ function FormDateInput({
       label={field.label}
       namespace={namespace}
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }

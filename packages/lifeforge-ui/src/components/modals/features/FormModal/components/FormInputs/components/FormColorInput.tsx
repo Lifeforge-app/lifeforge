@@ -1,4 +1,4 @@
-import { ColorInput } from '@components/inputs'
+import { ColorInput } from '@components/controls'
 
 import type {
   BaseFieldProps,
@@ -24,8 +24,8 @@ function FormColorInput({
       label={field.label}
       namespace={namespace}
       required={field.required}
-      setValue={handleChange}
       value={value}
+      onChange={handleChange}
     />
   )
 }
