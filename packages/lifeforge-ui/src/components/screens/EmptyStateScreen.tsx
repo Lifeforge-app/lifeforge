@@ -2,30 +2,52 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
-import Button from '../buttons/Button'
+import Button from '../controls/Button'
 
+export interface EmptyStateScreenProps {
+  /** Props for the call-to-action button. Refer to the Button component for available props. */
+  CTAButtonProps?: React.ComponentProps<typeof Button>
+  /** The message to display in the empty state.
+   * If an object with `id` and optional `namespace` is provided, it will use translations.
+   * The translation shall be looked up using the keys:
+   * - Title: `[{tKey}.]empty.{id}.title`
+   * - Description: `[{tKey}.]empty.{id}.description`
+   *
+   * Otherwise, a custom title and description can be provided.
+   */
+  message:
+    | {
+        id: string
+        namespace?: string
+        tKey?: string
+      }
+    | {
+        title: string
+        description?: string | React.ReactNode
+      }
+  /** The icon to display in the empty state. Can be a valid icon identifier from Iconify or a React element */
+  icon?: string | React.ReactElement
+  /** Whether to render a smaller version of the empty state screen.
+   * Typically used for displaying empty states in compact areas like sidebars or widgets. */
+  smaller?: boolean
+  /** Additional CSS class names to apply to the outer wrapper of the component.
+   * Use `!` suffix for Tailwind CSS class overrides. */
+  className?: string
+}
+
+/**
+ * A reusable empty state screen component for displaying when there is no data or content.
+ */
 function EmptyStateScreen({
   CTAButtonProps,
-  name,
-  title,
-  description,
+  message,
   icon,
   smaller = false,
-  namespace,
-  tKey = '',
   className
-}: {
-  CTAButtonProps?: React.ComponentProps<typeof Button>
-  name: string | false
-  title?: string
-  description?: string | React.ReactNode
-  icon?: string | React.ReactElement
-  smaller?: boolean
-  namespace?: string
-  tKey?: string
-  className?: string
-}) {
-  const { t } = useTranslation(namespace)
+}: EmptyStateScreenProps) {
+  const { t } = useTranslation(
+    'namespace' in message ? message.namespace : undefined
+  )
 
   return (
     <div
@@ -53,24 +75,45 @@ function EmptyStateScreen({
           smaller ? 'text-2xl' : 'text-3xl'
         )}
       >
-        {name
-          ? t([tKey, 'empty', name, 'title'].filter(e => e).join('.'))
-          : title}
+        {'id' in message
+          ? t(
+              [message.tKey, 'empty', message.id, 'title']
+                .filter(e => e)
+                .join('.')
+            )
+          : message.title}
       </h2>
-      {typeof description === 'string' || !description ? (
-        <p
-          className={clsx(
-            'text-bg-400 dark:text-bg-600 -mt-2 whitespace-pre-wrap px-6 text-center',
-            smaller ? 'text-base' : 'text-lg'
-          )}
-        >
-          {name
-            ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
-            : description}
-        </p>
-      ) : (
-        description
-      )}
+      {(() => {
+        if ('title' in message) {
+          return typeof message.description === 'string' ? (
+            <p
+              className={clsx(
+                'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
+                smaller ? 'text-base' : 'text-lg'
+              )}
+            >
+              {message.description}
+            </p>
+          ) : (
+            message.description
+          )
+        }
+
+        return (
+          <p
+            className={clsx(
+              'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
+              smaller ? 'text-base' : 'text-lg'
+            )}
+          >
+            {t(
+              [message.tKey, 'empty', message.id, 'description']
+                .filter(e => e)
+                .join('.')
+            )}
+          </p>
+        )
+      })()}
       {CTAButtonProps && (
         <Button
           {...CTAButtonProps}
