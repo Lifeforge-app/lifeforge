@@ -40,20 +40,21 @@ function APIKeyStatusProvider({
                   children: 'configAPIKeys',
                   namespace: 'apps.apiKeys'
                 }}
-                description={
-                  <>
-                    <p className="text-bg-500 text-center text-lg">
-                      {t('missing.description')}
-                    </p>
-                    <p className="text-bg-500 mb-8 mt-4 text-center text-lg">
-                      {t('missing.requiredKeysAre')}{' '}
-                      <code>{APIKeys.join(', ')}</code>
-                    </p>
-                  </>
-                }
                 icon="tabler:key-off"
-                name={false}
-                title={t('missing.title')}
+                message={{
+                  title: t('missing.title'),
+                  description: (
+                    <>
+                      <p className="text-bg-500 text-center text-lg">
+                        {t('missing.description')}
+                      </p>
+                      <p className="text-bg-500 mt-4 mb-8 text-center text-lg">
+                        {t('missing.requiredKeysAre')}{' '}
+                        <code>{APIKeys.join(', ')}</code>
+                      </p>
+                    </>
+                  )
+                }}
               />
             )
           }

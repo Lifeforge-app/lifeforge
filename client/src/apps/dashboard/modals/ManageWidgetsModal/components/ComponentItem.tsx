@@ -143,7 +143,7 @@ function ComponentListItem({
         </div>
       </div>
       <Switch
-        checked={isEnabled}
+        value={isEnabled}
         onChange={() => {
           toggleComponent()
         }}

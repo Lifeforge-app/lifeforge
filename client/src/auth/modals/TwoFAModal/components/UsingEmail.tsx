@@ -129,7 +129,7 @@ function UsingEmail({
               label="modals.twoFA.inputs.email"
               namespace="common.auth"
               placeholder="johndoe@gmail.com"
-              setValue={setEmail}
+              onChange={setEmail}
               value={email}
             />
             <Button

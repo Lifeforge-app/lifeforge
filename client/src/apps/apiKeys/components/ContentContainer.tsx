@@ -64,7 +64,7 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
       />
       <WithQuery query={entriesQuery}>
         {entries => (
-          <div className="mb-24 mt-6 h-full flex-1 space-y-3 lg:mb-12">
+          <div className="mt-6 mb-24 h-full flex-1 space-y-3 lg:mb-12">
             {entries.length > 0 ? (
               entries.map(entry => (
                 <EntryItem
@@ -76,8 +76,10 @@ function ContentContainer({ masterPassword }: { masterPassword: string }) {
             ) : (
               <EmptyStateScreen
                 icon="tabler:key-off"
-                name="apiKeys"
-                namespace="apps.apiKeys"
+                message={{
+                  id: 'apiKeys',
+                  namespace: 'apps.apiKeys'
+                }}
               />
             )}
           </div>

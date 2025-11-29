@@ -1,4 +1,4 @@
-import { ConfigColumn, Switch } from 'lifeforge-ui'
+import { OptionsColumn, Switch } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,8 +26,8 @@ function TwoFAColumn() {
 
   return (
     <>
-      <ConfigColumn
-        desc={t('settings.desc.twoFA')}
+      <OptionsColumn
+        description={t('settings.desc.twoFA')}
         icon="tabler:lock-access"
         title={t('settings.title.twoFA')}
       >
@@ -36,11 +36,11 @@ function TwoFAColumn() {
             {t(userData.twoFAEnabled ? 'misc.enabled' : 'misc.disabled')}
           </span>
           <Switch
-            checked={userData.twoFAEnabled}
+            value={userData.twoFAEnabled}
             onChange={handleToggle2FAModal}
           />
         </div>
-      </ConfigColumn>
+      </OptionsColumn>
     </>
   )
 }

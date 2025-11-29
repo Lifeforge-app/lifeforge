@@ -113,8 +113,8 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
             <span>{_.startCase(selectedCategory || '') || 'All category'}</span>
           }
           className="md:max-w-56"
-          setValue={setSelectedCategory}
           value={selectedCategory}
+          onChange={setSelectedCategory}
         >
           <ListboxOption key="all" label="All category" value={null} />
           {[...new Set(fontsQuery.data?.items.map(font => font.category))].map(
@@ -131,8 +131,8 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
           className="component-bg-lighter-with-hover"
           namespace="apps.personalization"
           searchTarget="fontFamily.items.fontFamily"
-          setValue={setSearchQuery}
           value={searchQuery}
+          onChange={setSearchQuery}
         />
       </div>
       <WithQuery query={pinnedFontsQuery}>
@@ -142,9 +142,11 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
               !data.enabled ? (
                 <EmptyStateScreen
                   icon="tabler:key-off"
-                  name="apiKey"
-                  namespace="apps.personalization"
-                  tKey="fontFamily"
+                  message={{
+                    id: 'apiKey',
+                    namespace: 'apps.personalization',
+                    tKey: 'fontFamily'
+                  }}
                 />
               ) : filteredFonts!.length > 0 ? (
                 <div className="h-full w-full flex-1">
@@ -159,7 +161,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
                       >
                         <div className="w-full space-y-3">
                           <Pagination
-                            currentPage={page}
+                            page={page}
                             totalPages={Math.ceil(filteredFonts!.length / 10)}
                             onPageChange={page => {
                               setPage(page)
@@ -180,7 +182,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
                               />
                             ))}
                           <Pagination
-                            currentPage={page}
+                            page={page}
                             totalPages={Math.ceil(filteredFonts!.length / 10)}
                             onPageChange={page => {
                               setPage(page)
@@ -196,9 +198,11 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
                 <div className="flex-center flex-1">
                   <EmptyStateScreen
                     icon="tabler:search-off"
-                    name="search"
-                    namespace="apps.personalization"
-                    tKey="fontFamily"
+                    message={{
+                      id: 'search',
+                      namespace: 'apps.personalization',
+                      tKey: 'fontFamily'
+                    }}
                   />
                 </div>
               )

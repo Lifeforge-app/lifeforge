@@ -1,6 +1,6 @@
 import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
-import { ConfigColumn, Listbox, ListboxOption } from 'lifeforge-ui'
+import { Listbox, ListboxOption, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
@@ -39,8 +39,8 @@ function LanguageSelector() {
   const { t } = useTranslation('apps.personalization')
 
   return (
-    <ConfigColumn
-      desc={t('languageSelector.desc')}
+    <OptionsColumn
+      description={t('languageSelector.desc')}
       icon="tabler:language"
       title={t('languageSelector.title')}
     >
@@ -57,16 +57,16 @@ function LanguageSelector() {
           </div>
         }
         className="min-w-64"
-        setValue={language => {
+        value={language}
+        onChange={language => {
           changeLanguage(language)
         }}
-        value={language}
       >
         {LANGUAGES.map(({ name, code, icon }) => (
           <ListboxOption key={code} icon={icon} label={name} value={code} />
         ))}
       </Listbox>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

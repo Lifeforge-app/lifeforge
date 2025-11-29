@@ -1,10 +1,9 @@
+import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { ConfigColumn } from 'lifeforge-ui'
+import { OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
-
-import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 
 function ThemeSelector() {
   const { theme } = usePersonalization()
@@ -14,10 +13,10 @@ function ThemeSelector() {
   const { changeTheme } = useUserPersonalization()
 
   return (
-    <ConfigColumn
-      vertical
-      desc={t('themeSelector.desc')}
+    <OptionsColumn
+      description={t('themeSelector.desc')}
       icon="tabler:palette"
+      orientation="vertical"
       title={t('themeSelector.title')}
     >
       <div className="flex w-full flex-col gap-8 px-2 md:flex-row">
@@ -75,7 +74,7 @@ function ThemeSelector() {
           </div>
         ))}
       </div>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 
