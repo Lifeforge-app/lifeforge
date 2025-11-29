@@ -1,4 +1,4 @@
-import { ItemWrapper, ModuleHeader } from 'lifeforge-ui'
+import { Card, ModuleHeader } from 'lifeforge-ui'
 import { Link } from 'shared'
 
 function EntryList() {
@@ -7,9 +7,9 @@ function EntryList() {
       <ModuleHeader />
       <div className="space-y-3">
         {[1, 2, 3, 4, 5].map(id => (
-          <ItemWrapper key={id} isInteractive as={Link} to={`${id}`}>
+          <Card key={id} isInteractive as={Link} to={`${id}`}>
             <h2>Entry Item {id}</h2>
-          </ItemWrapper>
+          </Card>
         ))}
       </div>
     </>
