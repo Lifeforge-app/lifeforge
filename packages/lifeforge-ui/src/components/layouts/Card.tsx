@@ -2,8 +2,11 @@ import clsx from 'clsx'
 import React from 'react'
 
 interface CardBaseProps {
+  /** The content to be displayed within the Card component. */
   children: React.ReactNode
+  /** Additional CSS class names to apply to the Card component. */
   className?: string
+  /** Whether the Card is interactive (e.g., clickable) and should have hover effects. */
   isInteractive?: boolean
 }
 
@@ -12,6 +15,9 @@ type CardProps<C extends React.ElementType = 'div'> = {
 } & CardBaseProps &
   Omit<React.ComponentProps<C>, keyof CardBaseProps>
 
+/**
+ * A versatile Card component that can be rendered as different HTML elements.
+ */
 function Card<C extends React.ElementType = 'div'>({
   children,
   as,
