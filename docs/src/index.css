@@ -3,7 +3,7 @@
 
 @import 'tailwindcss';
 @import 'lifeforge-ui/dist/index.css';
-@source "../../packages/lifeforge-ui/dist";
+@source '../../packages/lifeforge-ui/dist';
 
 @import 'react-medium-image-zoom/dist/styles.css';
 
@@ -21,7 +21,7 @@
 
 code {
   font-family: 'JetBrains Mono', monospace !important;
-  @apply text-sm! whitespace-pre-wrap! sm:text-base! break-all!;
+  @apply text-sm! break-all! whitespace-pre-wrap! sm:text-base!;
 }
 
 pre code {

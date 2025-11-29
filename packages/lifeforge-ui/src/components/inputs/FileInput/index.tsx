@@ -1,10 +1,11 @@
-import { Button } from '@components/buttons'
-import { useModalStore } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
+
+import { Button } from '@components/inputs'
+import { useModalStore } from '@components/overlays'
 
 import useInputLabel from '../shared/hooks/useInputLabel'
 import FilePickerModal from './FilePickerModal'

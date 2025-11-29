@@ -66,7 +66,7 @@ function DefaultThemeColorSelector({
         </div>
       }
       className="min-w-64 p-6"
-      setValue={color => {
+      onChange={color => {
         changeThemeColor(color === 'theme-custom' ? customThemeColor : color)
       }}
       value={themeColor.startsWith('#') ? 'theme-custom' : themeColor}

@@ -1,5 +1,4 @@
-import ListboxInput from '@components/inputs/ListboxInput'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
+import { ListboxInput, ListboxOption } from '@components/inputs'
 
 import {
   type IPixabaySearchFilter,
@@ -31,10 +30,10 @@ function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
       icon="tabler:color-swatch"
       label="imagePicker.inputs.imageColor"
       namespace="common.modals"
-      setValue={value => {
+      value={colors}
+      onChange={value => {
         updateFilters({ type: 'SET_COLORS', payload: value })
       }}
-      value={colors}
     >
       {COLORS.map(({ name, color, id }, i) => (
         <ListboxOption key={i} color={color} label={name} value={id} />

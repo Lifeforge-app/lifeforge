@@ -7,7 +7,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
-  ItemWrapper,
+  Card,
   useModalStore
 } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
@@ -53,7 +53,7 @@ function EntryItem({ entry }: { entry: Entry }) {
   }
 
   return (
-    <ItemWrapper className="flex-between! gap-8">
+    <Card className="flex-between! gap-8">
       <div className="flex items-center gap-3">
         <div
           className="flex-center size-12 rounded-lg"
@@ -84,7 +84,7 @@ function EntryItem({ entry }: { entry: Entry }) {
           onClick={handleDeleteEntry}
         />
       </ContextMenu>
-    </ItemWrapper>
+    </Card>
   )
 }
 

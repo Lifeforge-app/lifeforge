@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
 import {
   Button,
-  ConfigColumn,
   ConfirmationModal,
-  FilePickerModal
+  FilePickerModal,
+  OptionsColumn
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -67,8 +67,8 @@ function AvatarColumn() {
   if (!userData) return null
 
   return (
-    <ConfigColumn
-      desc={t('settings.desc.profilePicture')}
+    <OptionsColumn
+      description={t('settings.desc.profilePicture')}
       icon="tabler:camera"
       title={t('settings.title.profilePicture')}
     >
@@ -108,7 +108,7 @@ function AvatarColumn() {
           </Button>
         )}
       </div>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

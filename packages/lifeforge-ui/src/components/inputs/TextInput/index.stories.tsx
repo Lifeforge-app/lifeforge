@@ -25,15 +25,15 @@ export const Default: Story = {
     icon: 'tabler:user',
     label: 'Username',
     placeholder: 'John Doe',
-    setValue: () => {},
+    onChange: () => {},
     value: '',
     namespace: '',
     required: false
   },
   render: args => {
-    const [value, setValue] = useState('')
+    const [value, onChange] = useState('')
 
-    return <TextInput {...args} setValue={setValue} value={value} />
+    return <TextInput {...args} onChange={onChange} value={value} />
   }
 }
 
@@ -44,13 +44,13 @@ export const PasswordInput: Story = {
     placeholder: 'Type your password here',
     value: '',
     isPassword: true,
-    setValue: () => {}
+    onChange: () => {}
   },
 
   render: args => {
-    const [value, setValue] = useState('')
+    const [value, onChange] = useState('')
 
-    return <TextInput {...args} setValue={setValue} value={value} />
+    return <TextInput {...args} onChange={onChange} value={value} />
   }
 }
 
@@ -64,13 +64,13 @@ export const WithActionButton: Story = {
       icon: 'tabler:scan',
       onClick: () => {}
     },
-    setValue: () => {}
+    onChange: () => {}
   },
 
   render: args => {
-    const [value, setValue] = useState('')
+    const [value, onChange] = useState('')
 
-    return <TextInput {...args} setValue={setValue} value={value} />
+    return <TextInput {...args} onChange={onChange} value={value} />
   }
 }
 
@@ -80,14 +80,14 @@ export const Required: Story = {
     label: 'Username',
     placeholder: 'John Doe',
     value: '',
-    setValue: () => {},
+    onChange: () => {},
     namespace: '',
     required: true
   },
 
   render: args => {
-    const [value, setValue] = useState('')
+    const [value, onChange] = useState('')
 
-    return <TextInput {...args} setValue={setValue} value={value} />
+    return <TextInput {...args} onChange={onChange} value={value} />
   }
 }

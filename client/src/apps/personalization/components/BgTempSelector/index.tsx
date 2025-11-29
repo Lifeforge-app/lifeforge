@@ -1,7 +1,7 @@
 import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
+import { Button, ColorInput, OptionsColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
@@ -20,10 +20,10 @@ function BgTempSelector() {
   const { t } = useTranslation(['apps.personalization', 'common.buttons'])
 
   return (
-    <ConfigColumn
-      noDefaultBreakpoints
+    <OptionsColumn
+      breakpoint={false}
       className="[@media(min-width:1170px)]:flex-row"
-      desc={t('bgTempSelector.desc')}
+      description={t('bgTempSelector.desc')}
       icon="tabler:temperature"
       title={t('bgTempSelector.title')}
     >
@@ -51,8 +51,8 @@ function BgTempSelector() {
               className="w-full lg:w-min"
               label="Color Hex"
               namespace="apps.personalization"
-              setValue={setCustomBgTemp}
               value={customBgTemp}
+              onChange={setCustomBgTemp}
             />
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (
@@ -78,7 +78,7 @@ function BgTempSelector() {
           </>
         )}
       </div>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

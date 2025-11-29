@@ -1,6 +1,6 @@
-import ListboxInput from '@components/inputs/ListboxInput'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
 import { Icon } from '@iconify/react'
+
+import { ListboxInput, ListboxOption } from '@components/inputs'
 
 import {
   type IPixabaySearchFilter,
@@ -30,10 +30,10 @@ function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
       icon="tabler:category"
       label="imagePicker.inputs.imageCategory"
       namespace="common.modals"
-      setValue={value => {
+      value={category}
+      onChange={value => {
         updateFilters({ type: 'SET_CATEGORY', payload: value })
       }}
-      value={category}
     >
       {CATEGORIES.map(({ name, icon, id }, i) => (
         <ListboxOption key={i} icon={icon} label={name} value={id} />

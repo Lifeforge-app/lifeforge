@@ -1,8 +1,8 @@
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
-import { EmptyStateScreen } from '@components/screens'
 import { useEffect, useState } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
+
+import { EmptyStateScreen } from '@components/feedback'
+import { Button, SearchInput } from '@components/inputs'
 
 import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
@@ -123,8 +123,8 @@ function Search({
           className="component-bg-lighter-with-hover"
           namespace="common.modals"
           searchTarget="iconPicker.icon"
-          setValue={setSearchQuery}
           value={searchQuery}
+          onChange={setSearchQuery}
           onKeyUp={e => {
             if (e.key === 'Enter' && searchQuery !== '') {
               setCurrentIconSetProp({ search: searchQuery })
@@ -145,8 +145,8 @@ function Search({
       </div>
       <ChipSelector
         options={Object.keys(iconData.iconSets)}
-        setValue={setCurrentIconSet}
         value={currentIconSet}
+        onChange={setCurrentIconSet}
       />
       <div className="flex min-h-0 flex-1 flex-col">
         {filteredIconList.length > 0 ? (
@@ -201,9 +201,11 @@ function Search({
           <div className="flex-center h-full flex-1">
             <EmptyStateScreen
               icon="tabler:icons-off"
-              name="icon"
-              namespace="common.modals"
-              tKey="iconPicker"
+              message={{
+                id: 'icon',
+                namespace: 'common.modals',
+                tKey: 'iconPicker'
+              }}
             />
           </div>
         )}

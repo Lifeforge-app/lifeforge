@@ -1,19 +1,22 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useState } from 'react'
+import { usePersonalization } from 'shared'
 
-import Chip from './Chip'
+import { TagChip } from '@components/data-display'
 
 function ChipSelector({
   options,
   value,
-  setValue
+  onChange
 }: {
   options: string[]
   value: string | null
-  setValue: React.Dispatch<React.SetStateAction<string | null>>
+  onChange: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const [expanded, setExpanded] = useState(false)
+
+  const { derivedThemeColor } = usePersonalization()
 
   return options.length > 0 ? (
     <div className="mt-4 flex items-center gap-2">
@@ -30,12 +33,12 @@ function ChipSelector({
             return a.localeCompare(b)
           })
           .map(option => (
-            <Chip
+            <TagChip
               key={option}
+              color={value === option ? derivedThemeColor : undefined}
               label={option}
-              selected={value === option}
               onClick={() => {
-                setValue(value === option ? null : option)
+                onChange(value === option ? null : option)
                 setExpanded(false)
               }}
             />

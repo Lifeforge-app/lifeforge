@@ -4,10 +4,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import {
   Button,
+  Card,
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
-  ItemWrapper,
   useModalStore
 } from 'lifeforge-ui'
 import prettyBytes from 'pretty-bytes'
@@ -87,7 +87,7 @@ function BackupItem({
   }, [backup.key])
 
   return (
-    <ItemWrapper as="li" className="flex-between gap-6">
+    <Card as="li" className="flex-between gap-6">
       <div className="flex w-full min-w-0 items-center gap-3">
         <Icon
           className="text-bg-500 ml-2 size-7 shrink-0"
@@ -137,7 +137,7 @@ function BackupItem({
           onClick={handleDeleteBackup}
         />
       </ContextMenu>
-    </ItemWrapper>
+    </Card>
   )
 }
 

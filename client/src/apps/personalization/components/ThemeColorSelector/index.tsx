@@ -1,5 +1,5 @@
 import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
-import { Button, ColorInput, ConfigColumn } from 'lifeforge-ui'
+import { Button, ColorInput, OptionsColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
@@ -18,11 +18,11 @@ function ThemeColorSelector() {
   const { t } = useTranslation('apps.personalization')
 
   return (
-    <ConfigColumn
-      desc={t('themeColorSelector.desc')}
+    <OptionsColumn
+      breakpoint="lg"
+      description={t('themeColorSelector.desc')}
       icon="tabler:palette"
       title={t('themeColorSelector.title')}
-      wrapWhen="lg"
     >
       <div className="flex w-full flex-col items-center gap-3 md:flex-row">
         <DefaultThemeColorSelector
@@ -35,8 +35,8 @@ function ThemeColorSelector() {
               className="w-full md:w-min"
               label="Color Hex"
               namespace="apps.personalization"
-              setValue={setCustomThemeColor}
               value={customThemeColor}
+              onChange={setCustomThemeColor}
             />
             {themeColor !== customThemeColor &&
               customThemeColor.match(/^#[0-9A-F]{6}$/i) !== null && (
@@ -53,7 +53,7 @@ function ThemeColorSelector() {
           </>
         )}
       </div>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 
 import CustomLink from '../../components/CustomLink'
-import Warning from '../../components/Warning'
+import { Alert } from "lifeforge-ui"
 
-<Warning className="mb-6">
+<Alert className="my-6" type="warning">
   <p>
     Due to the rapid development of LifeForge, the architecture of this system
     is constantly undergoing breaking changes. Therefore, the user guide section
@@ -15,7 +15,7 @@ import Warning from '../../components/Warning'
   </p>
   <p className="mt-6">*Sincerely,*</p>
   <p>*Melvin Chia, Creator of LifeForge*</p>
-</Warning>
+</Alert>
 
 <section id="introduction">
 ###### Introduction
@@ -66,12 +66,14 @@ A good beginning is half done. Now that half is done, i.e. the basis of the syst
 ## Why LifeForge?
 
 Did I just mention notion? The absolute GOAT for personal management? Why should you choose LifeForge instead of Notion? Notion is good, but it has its downsides. Primarily:
-- **Open Source vs Closed Source**: First, unlike the completely open sourced LifeForge, it's a closed sourced program, which means you have absolutely no idea what it's doing with your data. 
+
+- **Open Source vs Closed Source**: First, unlike the completely open sourced LifeForge, it's a closed sourced program, which means you have absolutely no idea what it's doing with your data.
 - **Data Control**: With Notion, your data is stored on their servers. You have no control over your data. If they decide to shut down their service, you lose everything. With LifeForge, you can self-host it on your own server or even on your local machine. You have complete control over your data.
 - **Too Bloated**: Notion is a very powerful tool, but it is also very bloated. It has a lot of features that you may never use. This can make the user experience overwhelming and confusing. LifeForge, on the other hand, you can choose to install only the modules you need.
 - **Paywall**: Notion has a paywall for many of its features. If you want to use the full potential of Notion, you have to pay for it. With LifeForge, you get all the features for free.
 
 Speaking of closed sourced programs, a lot of the downsides mentioned above also apply to other software. With the trend of software becoming more and more subscription-based, people are starting to realize the importance of actually owning their software and data. LifeForge is here to provide an alternative for those who value freedom and control over their digital lives.
+
 </section>
 
 <section id="however">
@@ -82,4 +84,5 @@ LifeForge is still in its early stages of development. There are still many feat
 Also, despite my best efforts to make the system as intuitive as possible, LifeForge being an open sourced self-hosted system means that it may require some technical knowledge to set up and maintain, unlike those closed sourced SaaS solutions where you can simply sign up and start using it right away. But don't worry, the documentation is here to help you through the process. Feel free to take a look at the [Setup Guide](/getting-started/installation), and you will notice that it's not as hard as you think!
 
 If you encounter any issues, feel free to reach out for help by either opening an issue on GitHub or by emailing me personally at melvinchia623600@gmail.com. I'll respond as soon as I can (usually will be really quick since I'm currently a university student with not much workload and plenty of free time).
+
 </section>

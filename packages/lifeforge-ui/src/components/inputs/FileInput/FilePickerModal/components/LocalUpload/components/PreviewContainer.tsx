@@ -1,6 +1,7 @@
-import { Button } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import { useMemo } from 'react'
+
+import { Button } from '@components/inputs'
 
 import FILE_ICONS from '../../../constants/file_icons'
 

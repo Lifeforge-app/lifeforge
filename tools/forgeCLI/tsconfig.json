@@ -1,10 +1,8 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "outDir": "../../dist/tools/forgeCLI",
-        "rootDir": "."
-    },
-    "include": [
-        "./**/*.ts"
-    ]
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/tools/forgeCLI",
+    "rootDir": "."
+  },
+  "include": ["./**/*.ts"]
 }

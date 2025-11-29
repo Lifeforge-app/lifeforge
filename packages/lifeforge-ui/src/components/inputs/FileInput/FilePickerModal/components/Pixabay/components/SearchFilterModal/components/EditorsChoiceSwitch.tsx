@@ -1,6 +1,7 @@
-import { Switch } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
+
+import { Switch } from '@components/inputs'
 
 import { type PixabaySearchFilterAction } from '../../../typescript/pixabay_interfaces'
 
@@ -22,7 +23,7 @@ function EditorsChoiceSwitch({
         <span className="text-lg">{t('imagePicker.inputs.editorsChoice')}</span>
       </div>
       <Switch
-        checked={isEditorsChoice}
+        value={isEditorsChoice}
         onChange={() => {
           updateFilters({
             type: 'SET_IS_EDITORS_CHOICE',

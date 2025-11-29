@@ -1,5 +1,4 @@
-import { type IIconSet } from '@components/inputs/IconInput/IconPickerModal/typescript/icon_selector_interfaces'
-
+import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
 import IconSetEntry from './IconSetEntry'
 
 function CategoryEntry({

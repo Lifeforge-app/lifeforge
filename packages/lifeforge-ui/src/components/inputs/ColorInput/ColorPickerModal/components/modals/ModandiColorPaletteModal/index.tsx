@@ -1,8 +1,9 @@
-import { ModalHeader } from '@components/modals'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { sortFn } from 'color-sorter'
 import tinycolor from 'tinycolor2'
+
+import { ModalHeader } from '@components/overlays'
 
 import { MORANDI_COLORS } from './constants/morandi_colors'
 

@@ -1,9 +1,10 @@
-import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 import clsx from 'clsx'
+
+import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 
 function TextInputBox({
   value,
-  setValue,
+  onChange,
   isPassword = false,
   inputMode,
   showPassword,
@@ -15,7 +16,7 @@ function TextInputBox({
   ...inputProps
 }: {
   value: string
-  setValue: (value: string) => void
+  onChange: (value: string) => void
   isPassword?: boolean
   inputMode?:
     | 'none'
@@ -33,7 +34,7 @@ function TextInputBox({
   autoFocus?: boolean
   disabled?: boolean
   className?: string
-} & React.HTMLAttributes<HTMLInputElement>) {
+} & Omit<React.HTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
   return (
     <>
       {isPassword && (
@@ -56,7 +57,7 @@ function TextInputBox({
         type={isPassword && showPassword !== true ? 'password' : 'text'}
         value={value}
         onChange={e => {
-          setValue(e.target.value)
+          onChange(e.target.value)
         }}
         {...inputProps}
       />

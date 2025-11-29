@@ -1,7 +1,7 @@
-import ListboxInput from '@components/inputs/ListboxInput'
-import ListboxOption from '@components/inputs/ListboxInput/components/ListboxOption'
-import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 import { useTranslation } from 'react-i18next'
+
+import { ListboxInput, ListboxOption } from '@components/inputs'
+import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 
 function YearlyRelativeDayForm({
   data,
@@ -20,8 +20,8 @@ function YearlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.relativeDay.inputs.onThe')}
-        setValue={value => setData({ ...data, onThe: value })}
         value={data.onThe}
+        onChange={value => setData({ ...data, onThe: value })}
       >
         {['first', 'second', 'third', 'fourth', 'last'].map(day => (
           <ListboxOption
@@ -53,8 +53,8 @@ function YearlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.relativeDay.inputs.onTheDay')}
-        setValue={value => setData({ ...data, onTheDay: value })}
         value={data.onTheDay}
+        onChange={value => setData({ ...data, onTheDay: value })}
       >
         {[
           'mon',
@@ -95,8 +95,8 @@ function YearlyRelativeDayForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.yearly.relativeDay.inputs.ofTheMonth')}
-        setValue={value => setData({ ...data, onTheDayOfMonth: value })}
         value={data.onTheDayOfMonth}
+        onChange={value => setData({ ...data, onTheDayOfMonth: value })}
       >
         {Array(12)
           .fill(0)

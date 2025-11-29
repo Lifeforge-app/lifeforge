@@ -17,7 +17,7 @@ interface CurrencyInputProps {
   /** The current numeric value of the currency input. */
   value: number
   /** Callback function called when the input value changes. */
-  setValue: (number: number) => void
+  onChange: (number: number) => void
   /** Whether the currency input field is required for form validation. */
   required?: boolean
   /** Whether the currency input field is disabled and non-interactive. */
@@ -32,12 +32,13 @@ interface CurrencyInputProps {
   errorMsg?: string
 }
 
+/** CurrencyInputComponent for entering currency values with two decimal places and comma-separated thousands. */
 function CurrencyInputComponent({
   label,
   icon,
   placeholder,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -74,7 +75,7 @@ function CurrencyInputComponent({
         />
         <CurrencyInput
           ref={autoFocusableRef(autoFocus, inputRef)}
-          className="focus:placeholder:text-bg-500 focus:outline-hidden mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent"
+          className="focus:placeholder:text-bg-500 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden"
           decimalsLimit={2}
           name={label}
           placeholder={placeholder}
@@ -83,9 +84,9 @@ function CurrencyInputComponent({
             const numericValue = parseFloat(innerValue)
 
             if (!isNaN(numericValue)) {
-              setValue(numericValue)
+              onChange(numericValue)
             } else {
-              setValue(0)
+              onChange(0)
             }
           }}
           onValueChange={value => setInnerValue(value || '')}

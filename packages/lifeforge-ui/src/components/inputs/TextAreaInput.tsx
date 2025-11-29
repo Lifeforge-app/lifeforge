@@ -16,7 +16,7 @@ export interface TextAreaInputProps {
   /** The current text value of the textarea. */
   value: string
   /** Callback function called when the textarea value changes. */
-  setValue: (value: string) => void
+  onChange: (value: string) => void
   /** Whether the textarea field is required for form validation. */
   required?: boolean
   /** Whether the textarea is disabled and non-interactive. */
@@ -36,7 +36,7 @@ function TextAreaInput({
   icon,
   placeholder,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -76,11 +76,11 @@ function TextAreaInput({
         />
         <textarea
           ref={autoFocusableRef(autoFocus, ref)}
-          className="focus:placeholder:text-bg-400 max-h-128 dark:focus:placeholder:text-bg-600 outline-hidden focus:outline-hidden mt-9 min-h-8 w-full resize-none rounded-lg bg-transparent px-6 pb-3 pl-4 tracking-wide placeholder:text-transparent"
+          className="focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 mt-9 max-h-128 min-h-8 w-full resize-none rounded-lg bg-transparent px-6 pb-3 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
           placeholder={placeholder}
           value={value}
           onInput={e => {
-            setValue(e.currentTarget.value)
+            onChange(e.currentTarget.value)
           }}
           onKeyDown={e => {
             if (e.key === 'Enter') {
@@ -93,7 +93,7 @@ function TextAreaInput({
                 '\n' +
                 text.slice(cursorPosition)
 
-              setValue(newText)
+              onChange(newText)
               e.currentTarget.value = newText
               e.currentTarget.setSelectionRange(
                 cursorPosition + 1,

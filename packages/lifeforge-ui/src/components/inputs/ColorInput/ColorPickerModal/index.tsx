@@ -1,8 +1,9 @@
-import { Button } from '@components/buttons'
-import { ModalHeader } from '@components/modals'
 import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
 import { useEffect } from 'react'
 import tinycolor from 'tinycolor2'
+
+import { Button } from '@components/inputs'
+import { ModalHeader } from '@components/overlays'
 
 import PaletteButtons from './components/PaletteButtons'
 import { useColorPickerModalStore } from './stores/useColorPickerModalStore'
@@ -20,19 +21,19 @@ function checkContrast(hexColor: string): string {
 }
 
 function ColorPickerModal({
-  data: { value, setValue },
+  data: { value, onChange },
   onClose
 }: {
   data: {
     value: string
-    setValue: (color: string) => void
+    onChange: (color: string) => void
   }
   onClose: () => void
 }) {
   const { innerColor, setInnerColor } = useColorPickerModalStore()
 
   const confirmColor = () => {
-    setValue(innerColor)
+    onChange(innerColor)
     onClose()
   }
 

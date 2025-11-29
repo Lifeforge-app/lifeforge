@@ -1,11 +1,11 @@
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
 // @ts-expect-error: Iconify types are not fully compatible with the current setup
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useMemo } from 'react'
+import { usePersonalization } from 'shared'
 
-import Chip from '../../../components/Chip'
+import { TagChip } from '@components/data-display'
+import { Button, SearchInput } from '@components/inputs'
 
 const collections: Record<string, IconifyInfo> = importedCollections
 
@@ -31,6 +31,8 @@ function Header({
   iconFilterTerm: string
   setIconFilterTerm: React.Dispatch<React.SetStateAction<string>>
 }) {
+  const { derivedThemeColor } = usePersonalization()
+
   const categories = useMemo(
     () => [
       ...new Set(
@@ -49,8 +51,8 @@ function Header({
           className="component-bg-lighter-with-hover"
           namespace="common.modals"
           searchTarget="iconPicker.items.icon"
-          setValue={setSearchQuery}
           value={searchQuery}
+          onChange={setSearchQuery}
           onKeyUp={e => {
             if (e.key === 'Enter' && searchQuery !== '') {
               setCurrentIconSet({ search: searchQuery })
@@ -70,10 +72,12 @@ function Header({
       <div className="flex w-full flex-col items-center gap-8 lg:flex-row">
         <div className="mt-4 flex w-full flex-wrap gap-2">
           {categories.map(category => (
-            <Chip
+            <TagChip
               key={category}
+              color={
+                selectedCategory === category ? derivedThemeColor : undefined
+              }
               label={category}
-              selected={selectedCategory === category}
               onClick={() => {
                 setSelectedCategory(
                   selectedCategory === category ? null : category
@@ -88,8 +92,8 @@ function Header({
             icon="tabler:filter"
             namespace="common.modals"
             searchTarget="iconPicker.items.iconSet"
-            setValue={setIconFilterTerm}
             value={iconFilterTerm}
+            onChange={setIconFilterTerm}
           />
         </div>
       </div>

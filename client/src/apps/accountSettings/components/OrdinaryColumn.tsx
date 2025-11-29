@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { Button, ConfigColumn } from 'lifeforge-ui'
+import { Button, OptionsColumn } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useCallback } from 'react'
@@ -36,8 +36,8 @@ function OrdinaryColumn({
 
   return (
     <>
-      <ConfigColumn
-        desc={t(`settings.desc.${_.camelCase(title)}`)}
+      <OptionsColumn
+        description={t(`settings.desc.${_.camelCase(title)}`)}
         icon={icon}
         title={t(`settings.title.${_.camelCase(title)}`)}
       >
@@ -65,7 +65,7 @@ function OrdinaryColumn({
             onClick={handleOpenModifyModal}
           />
         </div>
-      </ConfigColumn>
+      </OptionsColumn>
     </>
   )
 }

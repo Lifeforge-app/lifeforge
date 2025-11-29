@@ -1,7 +1,6 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import { useRef, useState } from 'react'
 
-import Button from '../buttons/Button'
+import Button from './Button'
 import TextInputBox from './TextInput/components/TextInputBox'
 import InputIcon from './shared/components/InputIcon'
 import InputLabel from './shared/components/InputLabel'
@@ -21,7 +20,7 @@ interface TagsInputProps {
   /** The current array of tag values. */
   value: string[]
   /** Callback function called when the tags array changes. */
-  setValue: (tags: string[]) => void
+  onChange: (tags: string[]) => void
   /** Whether the field is required for form validation. */
   required?: boolean
   /** Whether the input is disabled and non-interactive. */
@@ -54,7 +53,7 @@ function TagsInput({
   icon,
   placeholder,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -73,7 +72,7 @@ function TagsInput({
 
   const addTag = (): void => {
     if (currentTag.trim() !== '' && value.length < maxTags) {
-      setValue([...value, currentTag.trim()])
+      onChange([...value, currentTag.trim()])
       setCurrentTag('')
     }
   }
@@ -81,7 +80,7 @@ function TagsInput({
   const removeTag = (index: number): void => {
     const newTags = value.filter((_, i) => i !== index)
 
-    setValue(newTags)
+    onChange(newTags)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -142,9 +141,9 @@ function TagsInput({
               className="my-0! h-auto w-min! py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}
-              setValue={setCurrentTag}
               value={currentTag}
               onBlur={addTag}
+              onChange={setCurrentTag}
               onKeyDown={handleKeyDown}
             />
           )}

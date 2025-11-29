@@ -34,7 +34,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       icon: 'tabler:blur',
       title: 'Blur',
       value: Object.keys(BG_BLURS).indexOf(bgBlur),
-      setValue: (value: number) => {
+      onChange: (value: number) => {
         setBgBlur(Object.keys(BG_BLURS)[value] as keyof typeof BG_BLURS)
       },
       labels: Object.keys(BG_BLURS),
@@ -44,7 +44,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       icon: 'tabler:sun',
       title: 'Brightness',
       value: bgBrightness,
-      setValue: setBgBrightness,
+      onChange: setBgBrightness,
       labels: ['0%', '100%', '200%'],
       max: 200
     },
@@ -52,7 +52,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       icon: 'tabler:contrast',
       title: 'Contrast',
       value: bgContrast,
-      setValue: setBgContrast,
+      onChange: setBgContrast,
       labels: ['0%', '150%', '200%'],
       max: 200
     },
@@ -60,7 +60,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       icon: 'tabler:color-filter',
       title: 'Saturation',
       value: bgSaturation,
-      setValue: setBgSaturation,
+      onChange: setBgSaturation,
       labels: ['0%', '100%', '200%'],
       max: 200
     },
@@ -68,7 +68,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       icon: 'tabler:layers-difference',
       title: 'Overlay Opacity',
       value: overlayOpacity,
-      setValue: setOverlayOpacity,
+      onChange: setOverlayOpacity,
       labels: ['0%', '50%', '100%'],
       max: 100
     }

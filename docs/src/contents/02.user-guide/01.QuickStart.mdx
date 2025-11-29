@@ -1,4 +1,4 @@
-import Note from '../../components/Note'
+import { Alert } from 'lifeforge-ui'
 
 ###### Quick Start
 
@@ -17,10 +17,10 @@ When you open LifeForge, the very first thing you'll see is the login screen. Un
 
 Once logged in successfully, you'll be redirected to the dashboard, where you journey with LifeForge begins.
 
-<Note>
+<Alert className="mt-6" type="note">
   If you have OAuth2 providers set up in the database, there will be a button
   for each provider below the login button for you to log in with.
-</Note>
+</Alert>
 
 </section>
 
@@ -65,7 +65,6 @@ For more information on how to personalize the system, refer to [The Personaliza
 To manage your API keys, head to the **API Keys** page, which is accessible from the sidebar under the **Settings** section. Here, you can add, edit, and delete API keys for different services. All the API keys you add will be encrypted and stored securely in the database.
 
 ![API Keys Page](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/user-quick-start/api-keys-example.webp)
-
 
 For more information on how to manage API keys, refer to [The API Keys Guide](/user-guide/api-keys).
 

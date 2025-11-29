@@ -17,17 +17,17 @@ export const Default: Story = {
     label: 'Description',
     placeholder: 'Something amazing about yourself...',
     value: '',
-    setValue: () => {}
+    onChange: () => {}
   },
   render: args => {
-    const [value, setValue] = useState(args.value)
+    const [value, onChange] = useState(args.value)
 
     return (
       <TextAreaInput
         {...args}
         className="w-128"
         disabled={false}
-        setValue={setValue}
+        onChange={onChange}
         value={value}
       />
     )

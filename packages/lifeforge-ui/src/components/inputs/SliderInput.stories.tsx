@@ -16,14 +16,14 @@ export const Default: Story = {
     icon: 'tabler:rotate',
     label: 'Slider Input',
     value: 0,
-    setValue: () => {}
+    onChange: () => {}
   },
   render: args => {
-    const [value, setValue] = useState(args.value)
+    const [value, onChange] = useState(args.value)
 
     return (
       <div className="w-96">
-        <SliderInput {...args} setValue={setValue} value={value} />
+        <SliderInput {...args} onChange={onChange} value={value} />
       </div>
     )
   }

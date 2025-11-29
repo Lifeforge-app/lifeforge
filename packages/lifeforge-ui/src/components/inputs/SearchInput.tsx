@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '../buttons'
+import Button from './Button'
 
 interface SearchInputProps {
   /** The icon to display in the search input. Should be a valid icon name from Iconify. */
@@ -11,7 +11,7 @@ interface SearchInputProps {
   /** The current search query value of the input field. */
   value: string
   /** Callback function called when the search query changes. */
-  setValue: (query: string) => void
+  onChange: (query: string) => void
   /** The target or context being searched for accessibility and labeling purposes. */
   searchTarget: string
   /** Properties to construct the action button component at the right hand side of the searchbar. */
@@ -30,7 +30,7 @@ interface SearchInputProps {
 function SearchInput({
   icon = 'tabler:search',
   value,
-  setValue,
+  onChange,
   searchTarget,
   actionButtonProps,
   onKeyUp,
@@ -74,7 +74,7 @@ function SearchInput({
         type="text"
         value={value}
         onChange={e => {
-          setValue(e.target.value)
+          onChange(e.target.value)
         }}
         onKeyUp={onKeyUp}
       />
@@ -86,7 +86,7 @@ function SearchInput({
           )}
           icon="tabler:x"
           variant="plain"
-          onClick={() => setValue('')}
+          onClick={() => onChange('')}
         />
         {actionButtonProps && (
           <Button

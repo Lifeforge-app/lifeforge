@@ -1,7 +1,8 @@
-import { useModalStore } from '@components/modals'
 import { Icon, loadIcon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { useModalStore } from '@components/overlays'
 
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
@@ -16,7 +17,7 @@ interface IconInputProps {
   /** The current icon value of the input. Should be a valid icon name from Iconify. */
   value: string
   /** Callback function called when the icon value changes. */
-  setValue: (value: string) => void
+  onChange: (value: string) => void
   /** Whether the field is required for form validation. */
   required?: boolean
   /** Whether the input is disabled and non-interactive. */
@@ -32,7 +33,7 @@ interface IconInputProps {
 function IconInput({
   label,
   value,
-  setValue,
+  onChange,
   required = false,
   disabled = false,
   autoFocus = false,
@@ -48,8 +49,8 @@ function IconInput({
   const ref = useRef<HTMLInputElement>(null)
 
   const handleIconSelectorOpen = useCallback(() => {
-    open(IconPickerModal, { setSelectedIcon: setValue })
-  }, [open, setValue])
+    open(IconPickerModal, { setSelectedIcon: onChange })
+  }, [open, onChange])
 
   useEffect(() => {
     let active = true
@@ -102,9 +103,9 @@ function IconInput({
             placeholder="tabler:cube"
             value={value}
             onBlur={e => {
-              setValue(e.target.value.trim())
+              onChange(e.target.value.trim())
             }}
-            onChange={e => setValue(e.target.value)}
+            onChange={e => onChange(e.target.value)}
           />
         </div>
         <button

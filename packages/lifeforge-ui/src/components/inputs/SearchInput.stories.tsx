@@ -14,15 +14,15 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     value: '',
-    setValue: () => {},
+    onChange: () => {},
     searchTarget: 'something'
   },
   render: args => {
-    const [value, setValue] = useState('')
+    const [value, onChange] = useState('')
 
     return (
       <div className="w-full px-32">
-        <SearchInput {...args} setValue={setValue} value={value} />
+        <SearchInput {...args} onChange={onChange} value={value} />
       </div>
     )
   }
@@ -34,7 +34,7 @@ export const Default: Story = {
 export const CustomIcon: Story = {
   args: {
     value: '',
-    setValue: () => {},
+    onChange: () => {},
     searchTarget: 'something',
     icon: 'tabler:cube'
   },
@@ -52,7 +52,7 @@ export const CustomIcon: Story = {
 export const WithActionButton: Story = {
   args: {
     value: '',
-    setValue: () => {},
+    onChange: () => {},
     searchTarget: 'something',
     actionButtonProps: {
       variant: 'plain',
@@ -61,11 +61,11 @@ export const WithActionButton: Story = {
     }
   },
   render: args => {
-    const [value, setValue] = useState('')
+    const [value, onChange] = useState('')
 
     return (
       <div className="w-full px-32">
-        <SearchInput {...args} setValue={setValue} value={value} />
+        <SearchInput {...args} onChange={onChange} value={value} />
       </div>
     )
   }

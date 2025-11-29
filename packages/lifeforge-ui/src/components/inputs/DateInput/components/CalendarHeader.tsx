@@ -1,9 +1,10 @@
-import { Button } from '@components/buttons'
 import { Select } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { range } from 'lodash'
 import React from 'react'
+
+import { Button } from '@components/inputs'
 
 function CalendarHeader({
   date,

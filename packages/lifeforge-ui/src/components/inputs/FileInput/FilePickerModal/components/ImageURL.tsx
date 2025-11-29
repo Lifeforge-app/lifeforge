@@ -1,5 +1,6 @@
-import { TextInput } from '@components/inputs'
 import { Icon } from '@iconify/react'
+
+import { TextInput } from '@components/inputs'
 
 function ImageURL({
   file,
@@ -17,11 +18,11 @@ function ImageURL({
         label="imagePicker.inputs.imageLink"
         namespace="common.modals"
         placeholder="https://example.com/image.jpg"
-        setValue={(value: string) => {
+        value={file === null ? '' : (file as string)}
+        onChange={(value: string) => {
           setFile(value)
           setPreview(value)
         }}
-        value={file === null ? '' : (file as string)}
       />
 
       <div className="bg-bg-200 dark:bg-bg-800/50 relative isolate mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-md">

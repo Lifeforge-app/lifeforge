@@ -1,5 +1,6 @@
-import NumberInput from '@components/inputs/NumberInput'
 import { useTranslation } from 'react-i18next'
+
+import { NumberInput } from '@components/inputs'
 
 import type { FreqSpecificParams } from '..'
 
@@ -20,8 +21,8 @@ function DailyForm({
           className="flex-1"
           icon="tabler:repeat"
           label={t('inputs.daily.inputs.every')}
-          setValue={every => setData({ ...data, every })}
           value={data.every}
+          onChange={every => setData({ ...data, every })}
         />
         <p className="text-bg-500">{t('inputs.daily.inputs.days')}</p>
       </div>

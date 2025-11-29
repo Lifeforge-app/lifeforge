@@ -1,6 +1,7 @@
-import NumberInput from '@components/inputs/NumberInput'
-import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 import { useTranslation } from 'react-i18next'
+
+import { NumberInput } from '@components/inputs'
+import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 
 function MonthlyExactDateForm({
   data,
@@ -18,8 +19,8 @@ function MonthlyExactDateForm({
         className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.monthly.exactDate.inputs.date')}
-        setValue={date => setData({ ...data, onDate: date })}
         value={data.onDate}
+        onChange={date => setData({ ...data, onDate: date })}
       />
     </>
   )
