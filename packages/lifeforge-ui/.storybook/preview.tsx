@@ -17,7 +17,8 @@ import {
 import { ToastProvider } from 'shared'
 import { themes } from 'storybook/theming'
 
-import ModalManager from '../src/components/modals/core/ModalManager'
+import { ModalManager } from '@components/overlays'
+
 import './i18n'
 import './index.css'
 
