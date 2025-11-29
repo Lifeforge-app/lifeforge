@@ -1,9 +1,10 @@
-import { ContextMenu } from '@components/buttons'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { ContextMenu } from '@components/controls'
 
 function SidebarItemContent({
   label,

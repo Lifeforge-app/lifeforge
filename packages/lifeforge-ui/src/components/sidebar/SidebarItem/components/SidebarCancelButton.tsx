@@ -1,5 +1,6 @@
-import { useModuleSidebarState } from '@components/layouts'
 import { Icon } from '@iconify/react'
+
+import { useModuleSidebarState } from '@components/layouts'
 
 function SidebarCancelButton({ onClick }: { onClick: () => void }) {
   const { setIsSidebarOpen } = useModuleSidebarState()
