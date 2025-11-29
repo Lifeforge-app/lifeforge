@@ -11,7 +11,7 @@ export default function APIOnlineStatusWrapper({
   const { isOnline, retry } = useAPIOnlineStatus()
 
   if (isOnline === 'loading') {
-    return <LoadingScreen customMessage="Checking API status..." />
+    return <LoadingScreen message="Checking API status..." />
   }
 
   if (isOnline === false) {
@@ -22,10 +22,12 @@ export default function APIOnlineStatusWrapper({
           onClick: retry,
           icon: 'tabler:refresh'
         }}
-        description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
         icon="tabler:wifi-off"
-        name={false}
-        title="API is Offline"
+        message={{
+          title: 'Cannot connect to API',
+          description:
+            'The API is currently offline. Please try again later. If you are the developer, please check the API status.'
+        }}
       />
     )
   }
