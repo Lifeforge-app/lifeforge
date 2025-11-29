@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { converter, formatHex, parse } from 'culori/fn'
+import { converter, formatHex, parse } from 'culori'
 import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
