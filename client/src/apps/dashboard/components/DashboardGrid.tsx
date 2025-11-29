@@ -62,15 +62,17 @@ function DashboardGrid({
   }
 
   if (width === 0) {
-    return <LoadingScreen customMessage={t('loading')} />
+    return <LoadingScreen message={t('loading')} />
   }
 
   return Object.values(enabledWidgets).every(e => e.length === 0) ? (
     <div className="flex h-full flex-1 items-center justify-center">
       <EmptyStateScreen
         icon="tabler:hammer"
-        name="welcome"
-        namespace="apps.dashboard"
+        message={{
+          id: 'welcome',
+          namespace: 'apps.dashboard'
+        }}
       />
     </div>
   ) : (
@@ -112,7 +114,7 @@ function DashboardGrid({
           })()}
           {canLayoutChange && (
             <Icon
-              className="absolute bottom-0 right-0 text-2xl"
+              className="absolute right-0 bottom-0 text-2xl"
               icon="clarity:drag-handle-corner-line"
             />
           )}

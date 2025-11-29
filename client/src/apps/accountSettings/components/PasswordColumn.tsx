@@ -1,5 +1,5 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Button, ConfigColumn } from 'lifeforge-ui'
+import { Button, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
@@ -20,8 +20,8 @@ function PasswordColumn() {
   const [loading, onSubmit] = usePromiseLoading(handlePasswordChange)
 
   return (
-    <ConfigColumn
-      desc={t('settings.desc.password')}
+    <OptionsColumn
+      description={t('settings.desc.password')}
       icon="tabler:key"
       title={t('settings.title.password')}
     >
@@ -35,7 +35,7 @@ function PasswordColumn() {
       >
         change password
       </Button>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

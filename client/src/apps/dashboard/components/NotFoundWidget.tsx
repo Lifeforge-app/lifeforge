@@ -1,15 +1,17 @@
-import { DashboardItem, EmptyStateScreen } from 'lifeforge-ui'
+import { EmptyStateScreen, Widget } from 'lifeforge-ui'
 
 function NotFoundWidget({ widgetId }: { widgetId: string }) {
   return (
-    <DashboardItem icon="tabler:apps-off" title={widgetId}>
+    <Widget icon="tabler:apps-off" title={widgetId}>
       <EmptyStateScreen
         smaller
         icon="tabler:apps-off"
-        name="notFound"
-        namespace="apps.dashboard"
+        message={{
+          id: 'notFound',
+          namespace: 'apps.dashboard'
+        }}
       />
-    </DashboardItem>
+    </Widget>
   )
 }
 

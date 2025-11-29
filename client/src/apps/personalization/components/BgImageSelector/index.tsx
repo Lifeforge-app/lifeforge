@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   Button,
-  ConfigColumn,
   ConfirmationModal,
   FilePickerModal,
+  OptionsColumn,
   Tooltip
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
@@ -101,8 +101,8 @@ function BgImageSelector() {
 
   return (
     <>
-      <ConfigColumn
-        desc={t('bgImageSelector.desc')}
+      <OptionsColumn
+        description={t('bgImageSelector.desc')}
         icon="tabler:photo"
         title={t('bgImageSelector.title')}
       >
@@ -142,11 +142,9 @@ function BgImageSelector() {
             </Button>
             {!pixabayEnabledQuery.data && (
               <Tooltip
+                clickable={true}
                 icon="tabler:info-circle"
                 id="pixabayDisabled"
-                tooltipProps={{
-                  clickable: true
-                }}
               >
                 <p className="text-bg-500 max-w-84">
                   {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
@@ -163,7 +161,7 @@ function BgImageSelector() {
             )}
           </>
         )}
-      </ConfigColumn>
+      </OptionsColumn>
     </>
   )
 }

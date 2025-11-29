@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import {
   Button,
-  ConfigColumn,
+  OptionsColumn,
   Tooltip,
   WithQuery,
   useModalStore
@@ -29,8 +29,8 @@ function FontFamilySelector() {
   const { fontFamily } = usePersonalization()
 
   return (
-    <ConfigColumn
-      desc={t('fontFamily.desc')}
+    <OptionsColumn
+      description={t('fontFamily.desc')}
       icon="uil:font"
       title={t('fontFamily.title')}
       tooltip={
@@ -83,7 +83,7 @@ function FontFamilySelector() {
           )
         }
       </WithQuery>
-    </ConfigColumn>
+    </OptionsColumn>
   )
 }
 

@@ -61,16 +61,16 @@ function FontListItem({
     >
       <div className="flex w-full min-w-0 flex-col pr-6 text-lg font-medium md:flex-row md:items-center md:gap-2">
         <span className="min-w-0 truncate">{font.family}</span>
-        <span className="text-bg-500 hidden whitespace-nowrap text-base md:block">
+        <span className="text-bg-500 hidden text-base whitespace-nowrap md:block">
           ({font.variants.length} variants)
         </span>
-        <span className="text-bg-500 block whitespace-nowrap text-base md:hidden">
+        <span className="text-bg-500 block text-base whitespace-nowrap md:hidden">
           {font.variants.length} variants
         </span>
       </div>
       <Button
         className={clsx(
-          'absolute right-2 top-2 p-1',
+          'absolute top-2 right-2 p-1',
           isPinned && 'text-custom-500'
         )}
         icon={isPinned ? 'tabler:heart-filled' : 'tabler:heart'}
@@ -83,12 +83,12 @@ function FontListItem({
       />
       {selectedFont === font.family && (
         <Icon
-          className="text-custom-500 absolute bottom-2 right-1.5 size-6"
+          className="text-custom-500 absolute right-1.5 bottom-2 size-6"
           icon="tabler:circle-check-filled"
         />
       )}
       <p
-        className="relative mt-4 overflow-hidden truncate py-4 text-4xl"
+        className="relative mt-4 truncate overflow-hidden py-4 text-4xl"
         style={{
           fontFamily: font.family
         }}

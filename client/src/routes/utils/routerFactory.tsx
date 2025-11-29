@@ -102,7 +102,7 @@ export function createAuthLoadingConfig(): RouteObject[] {
   return [
     {
       path: '*',
-      element: <LoadingScreen customMessage="Loading user data..." />
+      element: <LoadingScreen message="Loading user data..." />
     }
   ]
 }
