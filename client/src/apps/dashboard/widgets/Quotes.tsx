@@ -19,7 +19,7 @@ export default function Quotes() {
   const { derivedThemeColor: themeColor } = usePersonalization()
 
   return (
-    <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-6">
+    <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-4">
       <Icon
         className="text-bg-800/10 absolute top-2 right-2 text-8xl"
         icon="tabler:quote"
@@ -38,7 +38,9 @@ export default function Quotes() {
           >
             {quote[0].q}
             <br />
-            <span className="mt-4 block text-base">- {quote[0].a}</span>
+            <span className="text-bg-800/50 mt-4 block text-base font-medium">
+              - {quote[0].a}
+            </span>
           </div>
         )}
       </WithQuery>
@@ -48,5 +50,7 @@ export default function Quotes() {
 
 export const config: WidgetConfig = {
   id: 'quotes',
-  icon: 'tabler:quote'
+  icon: 'tabler:quote',
+  minH: 2,
+  minW: 2
 }
