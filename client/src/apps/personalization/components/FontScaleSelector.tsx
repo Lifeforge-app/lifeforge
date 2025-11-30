@@ -1,4 +1,4 @@
-import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Button, OptionsColumn, SliderInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

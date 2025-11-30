@@ -1,4 +1,4 @@
-import APIKeyStatusProvider from '@/providers/APIKeyStatusProvider'
+import APIKeyStatusProvider from '@/providers/features/APIKeyStatusProvider'
 import { LoadingScreen, ModalManager, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Suspense } from 'react'
