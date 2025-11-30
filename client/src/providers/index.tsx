@@ -14,9 +14,9 @@ import {
   APIOnlineStatusProvider,
   AuthProvider,
   BackgroundProvider,
+  MainSidebarStateProvider,
   NuqsProvider,
   PersonalizationProvider,
-  SidebarStateProvider,
   SocketProvider,
   ToastProvider
 } from 'shared'
@@ -31,17 +31,29 @@ function Providers() {
 
   const providers = useMemo(
     () =>
+      // IMPORTANT: The order of these providers matters!
+      // From top to bottom, they are nested inside one another in that order.
       defineProviders([
+        // Providers from external packages
         [NuqsProvider],
-        [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
         [QueryClientProvider, { client: queryClient }],
+        [ToastProvider],
         [
           DndProvider as React.FC<{ backend: BackendFactory }>,
           { backend: HTML5Backend }
         ],
+
+        // Provider that tells components the API endpoint to use
+        [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
+        // Provider that stores all the theming information
         [PersonalizationProvider],
+
+        // Provider that checks if the API is online or not
+        // A wrapper exported from lifeforge-ui is used to avoid circular dependencies
         [APIOnlineStatusProvider],
         [APIOnlineStatusWrapper],
+
+        // Provider that handles authentication, very obviously
         [
           AuthProvider,
           {
@@ -51,11 +63,15 @@ function Providers() {
             }
           }
         ],
-        [SidebarStateProvider],
+        // Provider that manages the main sidebar state (not the module sidebars, the main one)
+        [MainSidebarStateProvider],
+        // Provider that manages synchronization of user personalization data with the backend
         [UserPersonalizationProvider],
-        [ToastProvider],
+        // Provider that manages background images styling
         [BackgroundProvider],
-        [SocketProvider, { apiHost: import.meta.env.VITE_API_HOST }],
+        // Provider that exposes a socket.io client instance to the app
+        [SocketProvider],
+        // This is where all the routes are defined
         [AppRoutesProvider]
       ] as const),
     []
