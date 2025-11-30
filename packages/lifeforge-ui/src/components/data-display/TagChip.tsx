@@ -6,7 +6,7 @@ import tinycolor from 'tinycolor2'
 
 interface TagChipProps {
   /** The text label displayed on the tag chip. */
-  label: string
+  label: string | React.ReactNode
   /** The icon to display alongside the label. Can be an Iconify icon name or custom HTML string prefixed with 'customHTML:'. */
   icon?: string
   /** The color of the tag chip. If provided, it customizes the text, border and background colors. */
