@@ -16,7 +16,7 @@ function Version({
   week: number
   children: React.ReactNode
 }) {
-  const version = `${prefix} ${dayjs().year(year).format('YY')}w${week}`
+  const version = `${prefix} ${dayjs().year(year).format('YY')}w${week.toString().padStart(2, '0')}`
 
   const startOfWeek = dayjs()
     .year(year)
@@ -31,7 +31,9 @@ function Version({
     .format('DD MMM YYYY')
 
   return (
-    <section id={`${prefix}-${dayjs().year(year).format('YY')}-w-${week}`}>
+    <section
+      id={`${prefix}-${dayjs().year(year).format('YY')}-w-${week.toString().padStart(2, '0')}`}
+    >
       <header className="space-y-2">
         <div className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
           <div className="bg-custom-500/20 text-custom-500 rounded-lg p-3">
