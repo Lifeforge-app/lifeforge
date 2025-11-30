@@ -1,34 +1,29 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useRef } from 'react'
 import { usePersonalization } from 'shared'
 import type { WidgetConfig } from 'shared'
 import tinycolor from 'tinycolor2'
 
 import { arabicToChinese } from '../utils/arabicToChineseNumber'
 
-export default function DateWidget() {
+export default function DateWidget({
+  dimension: { h }
+}: {
+  dimension: { w: number; h: number }
+}) {
   const { language, derivedThemeColor: themeColor } = usePersonalization()
-
-  const ref = useRef<HTMLDivElement>(null)
 
   return (
     <div
-      ref={ref}
       className={clsx(
         'bg-custom-500 shadow-custom flex size-full gap-3 rounded-lg p-4',
         tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50',
-        (ref.current?.offsetHeight ?? 0) < 240
-          ? 'flex-row items-end'
-          : 'flex-col items-start justify-end'
+        h < 2 ? 'flex-row items-end' : 'flex-col items-start justify-end'
       )}
     >
       <span
         className={clsx(
-          'bg-bg-100 text-custom-500 dark:bg-bg-900 flex aspect-square items-center justify-center rounded-md font-semibold shadow-inner',
-          (ref.current?.offsetHeight ?? 0) < 160
-            ? 'h-full text-4xl'
-            : 'p-8 text-6xl'
+          'bg-bg-100 text-custom-500 dark:bg-bg-900 flex aspect-square h-full items-center justify-center rounded-md text-4xl font-semibold shadow-inner'
         )}
       >
         {dayjs().format('DD')}
@@ -69,5 +64,8 @@ export default function DateWidget() {
 export const config: WidgetConfig = {
   id: 'date',
   icon: 'tabler:calendar-clock',
-  minW: 2
+  minW: 2,
+  minH: 1,
+  maxW: 4,
+  maxH: 2
 }
