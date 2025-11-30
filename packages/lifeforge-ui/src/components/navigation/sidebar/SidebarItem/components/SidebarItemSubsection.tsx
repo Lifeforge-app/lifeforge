@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 
 import SidebarSubsectionItem from './SidebarSubsectionItem'
 import SidebarSubsectionItemWithOnClick from './SidebarSubsectionItemWithOnClick'
@@ -25,7 +25,7 @@ function SidebarItemSubsection({
   label: string | React.ReactElement
   subsectionExpanded: boolean
 }) {
-  const { sidebarExpanded } = useSidebarState()
+  const { sidebarExpanded } = useMainSidebarState()
 
   return (
     <li

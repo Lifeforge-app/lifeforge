@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'shared'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 
 function SidebarSubsectionItem({
   subsectionLabel,
@@ -19,7 +19,7 @@ function SidebarSubsectionItem({
 }) {
   const location = useLocation()
 
-  const { sidebarExpanded, toggleSidebar } = useSidebarState()
+  const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
   const { t } = useTranslation('common.sidebar')
 

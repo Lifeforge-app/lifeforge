@@ -14,7 +14,7 @@ interface ISidebarState {
 
 const SidebarStateContext = createContext<ISidebarState | undefined>(undefined)
 
-export default function SidebarStateProvider({
+export default function MainSidebarStateProvider({
   children
 }: {
   children: React.ReactNode
@@ -44,7 +44,7 @@ export default function SidebarStateProvider({
   )
 }
 
-export function useSidebarState(): ISidebarState {
+export function useMainSidebarState(): ISidebarState {
   const context = useContext(SidebarStateContext)
 
   return (

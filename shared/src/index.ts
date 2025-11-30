@@ -15,7 +15,7 @@ export { useAPIOnlineStatus } from './providers/APIOnlineStatusProvider'
 
 export { usePersonalization } from './providers/PersonalizationProvider'
 
-export { useSidebarState } from './providers/SidebarStateProvider'
+export { useMainSidebarState as useMainSidebarState } from './providers/SidebarStateProvider'
 
 export { default as AuthProvider } from './providers/AuthProvider'
 
@@ -27,7 +27,7 @@ export { default as BackgroundProvider } from './providers/BackgroundProvider'
 
 export { default as APIOnlineStatusProvider } from './providers/APIOnlineStatusProvider'
 
-export { default as SidebarStateProvider } from './providers/SidebarStateProvider'
+export { default as MainSidebarStateProvider } from './providers/SidebarStateProvider'
 
 export { default as ToastProvider } from './providers/ToastProvider'
 

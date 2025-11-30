@@ -7,7 +7,7 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
 import ROUTES from '../..'
@@ -15,7 +15,7 @@ import ROUTES from '../..'
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
 
-  const { sidebarExpanded, toggleSidebar } = useSidebarState()
+  const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
   const filteredRoutes = useMemo(
     () =>
