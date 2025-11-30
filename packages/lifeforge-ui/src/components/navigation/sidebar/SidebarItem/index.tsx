@@ -1,10 +1,12 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useModuleSidebarState } from '@components/layout'
 
 import SidebarCancelButton from './components/SidebarCancelButton'
 import SidebarItemContent from './components/SidebarItemContent'
 import SidebarItemIcon from './components/SidebarItemIcon'
+import SidebarItemSubsection from './components/SidebarItemSubsection'
+import SidebarItemSubsectionExpandIcon from './components/SidebarItemSubsectionExpandIcon'
 import SidebarItemWrapper from './components/SidebarItemWrapper'
 
 interface SidebarItemProps {
@@ -46,6 +48,15 @@ interface SidebarItemProps {
   }
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string | false
+  /** Optional subsection items to display when expanded. */
+  subsection?: {
+    label: string
+    icon: string | React.ReactElement
+    onClick: () => void
+    active: boolean
+    namespace?: string | false
+    amount?: number
+  }[]
 }
 
 /**
@@ -68,52 +79,90 @@ function SidebarItem({
   actionButtonProps,
   contextMenuItems,
   classNames,
-  namespace
+  namespace,
+  subsection
 }: SidebarItemProps) {
   const { setIsSidebarOpen } = useModuleSidebarState()
 
+  const [subsectionExpanded, setSubsectionExpanded] = useState(active ?? false)
+
   const handleNavigation = useCallback(() => {
+    if (subsection?.length) {
+      setSubsectionExpanded(!subsectionExpanded)
+    }
+
     if (onClick !== undefined) {
       setIsSidebarOpen(false)
       onClick()
     }
-  }, [onClick, setIsSidebarOpen])
+  }, [onClick, setIsSidebarOpen, subsection, subsectionExpanded])
+
+  const handleToggleSubsection = useCallback(() => {
+    if (subsection !== undefined) {
+      setSubsectionExpanded(!subsectionExpanded)
+    }
+  }, [subsection, subsectionExpanded])
 
   return (
-    <SidebarItemWrapper
-      active={active}
-      className={classNames?.wrapper}
-      onClick={handleNavigation}
-    >
-      {sideStripColor !== undefined && (
-        <span
-          className="block h-8 w-1 shrink-0 rounded-full"
-          style={{
-            backgroundColor: sideStripColor
-          }}
+    <>
+      <SidebarItemWrapper
+        active={active}
+        className={classNames?.wrapper}
+        onClick={handleNavigation}
+      >
+        {sideStripColor !== undefined && (
+          <span
+            className="block h-8 w-1 shrink-0 rounded-full"
+            style={{
+              backgroundColor: sideStripColor
+            }}
+          />
+        )}
+        <SidebarItemIcon
+          active={active}
+          className={classNames?.icon}
+          icon={icon}
+        />
+        <SidebarItemContent
+          actionButtonProps={actionButtonProps}
+          active={active}
+          contextMenuItems={contextMenuItems}
+          hasAI={false}
+          hasSubsection={subsection !== undefined}
+          isMainSidebarItem={false}
+          label={label}
+          namespace={namespace}
+          number={number}
+          sidebarExpanded={false}
+          onCancelButtonClick={onCancelButtonClick}
+        />
+        {active && onCancelButtonClick !== undefined && (
+          <SidebarCancelButton onClick={onCancelButtonClick} />
+        )}
+        {subsection !== undefined && (
+          <SidebarItemSubsectionExpandIcon
+            subsectionExpanded={subsectionExpanded}
+            toggleSubsection={handleToggleSubsection}
+          />
+        )}
+      </SidebarItemWrapper>
+      {subsection !== undefined && (
+        <SidebarItemSubsection
+          label={label}
+          namespace={namespace}
+          subsection={subsection.map(item => ({
+            ...item,
+            onClick: undefined,
+            callback: {
+              onClick: item.onClick,
+              active: item.active
+            },
+            amount: item.amount
+          }))}
+          subsectionExpanded={subsectionExpanded}
         />
       )}
-      <SidebarItemIcon
-        active={active}
-        className={classNames?.icon}
-        icon={icon}
-      />
-      <SidebarItemContent
-        actionButtonProps={actionButtonProps}
-        active={active}
-        contextMenuItems={contextMenuItems}
-        hasAI={false}
-        isMainSidebarItem={false}
-        label={label}
-        namespace={namespace}
-        number={number}
-        sidebarExpanded={false}
-        onCancelButtonClick={onCancelButtonClick}
-      />
-      {active && onCancelButtonClick !== undefined && (
-        <SidebarCancelButton onClick={onCancelButtonClick} />
-      )}
-    </SidebarItemWrapper>
+    </>
   )
 }
 

@@ -18,7 +18,8 @@ function SidebarItemContent({
   active,
   onCancelButtonClick,
   namespace,
-  actionButtonProps
+  actionButtonProps,
+  hasSubsection
 }: {
   label: string | React.ReactElement
   sidebarExpanded: boolean
@@ -33,6 +34,7 @@ function SidebarItemContent({
     icon: string
     onClick: () => void
   }
+  hasSubsection: boolean
 }) {
   const { t } = useTranslation(
     namespace === false ? [] : [namespace, 'common.sidebar']
@@ -50,6 +52,11 @@ function SidebarItemContent({
                 {typeof label === 'string' && namespace !== false
                   ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
                   : label}{' '}
+                {number !== undefined && hasSubsection && (
+                  <span className="text-bg-400 dark:text-bg-600 text-sm!">
+                    ({number})
+                  </span>
+                )}
               </div>
             )
           }
@@ -72,7 +79,7 @@ function SidebarItemContent({
             )
           )
         })()}
-        {number !== undefined && (
+        {number !== undefined && !hasSubsection && (
           <span
             className={clsx(
               'pr-2 text-sm',
