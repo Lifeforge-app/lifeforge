@@ -13,7 +13,12 @@ interface ModuleHeaderProps {
   icon?: string
   title?: string
   totalItems?: number
-  tips?: string
+  tips?:
+    | string
+    | {
+        title: string
+        content: React.ReactNode
+      }
   contextMenuProps?: React.ComponentProps<typeof ContextMenu>
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
@@ -25,7 +30,7 @@ function ModuleHeader({
   icon,
   title,
   totalItems,
-  tips = '',
+  tips,
   contextMenuProps,
   actionButton,
   customElement,
@@ -93,7 +98,7 @@ function ModuleHeader({
       </div>
       <div className="flex items-center gap-2">
         {actionButton}
-        {tips !== '' && (
+        {tips && (
           <div className="relative hidden md:block">
             <Menu as="div" className="relative z-50">
               <MenuButton className="text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50 rounded-lg p-4 transition-all">
@@ -107,10 +112,14 @@ function ModuleHeader({
                 <div className="text-bg-800 dark:border-bg-700 dark:text-bg-200 flex items-center gap-2 p-4">
                   <Icon className="size-6" icon="tabler:question-circle" />
                   <h2 className="text-lg font-semibold">
-                    {t('common.misc:tipsAndTricks')}
+                    {typeof tips === 'string'
+                      ? t('common.misc:tipsAndTricks')
+                      : tips.title}
                   </h2>
                 </div>
-                <div className="text-bg-500 p-4 pt-0">{tips}</div>
+                <div className="text-bg-500 p-4 pt-0">
+                  {typeof tips === 'string' ? tips : tips.content}
+                </div>
               </MenuItems>
             </Menu>
           </div>
