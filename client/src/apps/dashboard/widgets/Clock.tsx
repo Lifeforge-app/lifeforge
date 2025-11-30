@@ -1,14 +1,12 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { WidgetConfig } from 'shared'
 
-function Clock() {
+function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
 
   const [second, setSecond] = useState(dayjs().format('ss') as any)
-
-  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,12 +19,9 @@ function Clock() {
 
   return (
     <div
-      ref={ref}
       className={clsx(
         'shadow-custom component-bg flex size-full gap-3 rounded-lg p-4',
-        (ref.current?.offsetHeight ?? 0) < 160
-          ? 'flex-between flex-row'
-          : 'flex-col'
+        h < 2 ? 'flex-between flex-row' : 'flex-col'
       )}
     >
       <div className="flex flex-col">
@@ -44,16 +39,14 @@ function Clock() {
       <span
         className={clsx(
           'flex items-end font-semibold tracking-wider',
-          (ref.current?.offsetHeight ?? 0) < 160
-            ? 'text-4xl'
-            : 'my-auto justify-center text-center text-6xl'
+          h < 2 ? 'text-4xl' : 'my-auto justify-center text-center text-6xl'
         )}
       >
         {time}
         <span
           className={clsx(
             'text-bg-500 -mb-0.5 ml-1 inline-block w-9',
-            (ref.current?.offsetHeight ?? 0) < 160 ? 'text-2xl' : 'text-4xl'
+            h < 2 ? 'text-2xl' : 'text-4xl'
           )}
         >
           {second}
@@ -69,5 +62,7 @@ export const config: WidgetConfig = {
   id: 'clock',
   icon: 'tabler:clock',
   minW: 2,
-  minH: 1
+  minH: 1,
+  maxW: 4,
+  maxH: 2
 }
