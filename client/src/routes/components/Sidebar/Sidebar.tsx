@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { SidebarItem } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 
 import SidebarBottomBar from './SidebarBottomBar'
 import SidebarEventBanner from './SidebarEventBanner'
@@ -9,7 +9,7 @@ import SidebarHeader from './SidebarHeader'
 import SidebarItems from './SidebarItems'
 
 function Sidebar() {
-  const { sidebarExpanded, toggleSidebar } = useSidebarState()
+  const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
   const [searchQuery, setSearchQuery] = useState('')
 

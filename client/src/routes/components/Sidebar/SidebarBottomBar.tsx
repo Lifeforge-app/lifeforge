@@ -4,13 +4,13 @@ import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'shared'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()
 
-  const { sidebarExpanded, toggleSidebar } = useSidebarState()
+  const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
   const { userData, getAvatarURL, logout } = useAuth()
 

@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 
 import { Button } from '@components/inputs'
 import { ContextMenu } from '@components/overlays'
@@ -48,7 +48,7 @@ function ModuleHeader({
     namespace ?? ''
   ])
 
-  const { toggleSidebar, sidebarExpanded } = useSidebarState()
+  const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
 
   return (
     <header className="flex-between mb-6 flex w-full min-w-0 gap-8">

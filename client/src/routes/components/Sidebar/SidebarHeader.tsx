@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { SearchInput } from 'lifeforge-ui'
-import { useSidebarState } from 'shared'
+import { useMainSidebarState } from 'shared'
 
 function SidebarHeader({
   searchQuery,
@@ -10,7 +10,7 @@ function SidebarHeader({
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }) {
-  const { sidebarExpanded, toggleSidebar } = useSidebarState()
+  const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
   return (
     <>

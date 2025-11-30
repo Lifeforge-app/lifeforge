@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Socket, io } from 'socket.io-client'
 
+import { useAPIEndpoint } from './APIEndpointProvider'
+
 const SocketContext = createContext<Socket | null>(null)
 
 export interface SocketEvent<
@@ -17,12 +19,12 @@ export interface SocketEvent<
 }
 
 export default function SocketProvider({
-  apiHost,
   children
 }: {
-  apiHost: string
   children: React.ReactNode
 }) {
+  const apiHost = useAPIEndpoint()
+
   const [socket, setSocket] = useState<Socket | null>(null)
 
   useEffect(() => {
