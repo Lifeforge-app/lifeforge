@@ -526,10 +526,10 @@ export class ForgeControllerBuilder<
         }
 
         if (options.isDownloadable) {
-          res.setHeader('X-Lifeforge-Downloadable', 'true')
+          res.setHeader('X-LifeForge-Downloadable', 'true')
           res.setHeader(
             'Access-Control-Expose-Headers',
-            'X-Lifeforge-Downloadable'
+            'X-LifeForge-Downloadable'
           )
         }
 

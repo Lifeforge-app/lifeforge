@@ -10,7 +10,7 @@ addons.setConfig({
     appBorderColor: '#262626',
     appBorderRadius: 8,
     brandTitle:
-      '<img src="https://raw.githubusercontent.com/Lifeforge-app/lifeforge/refs/heads/main/client/public/icon.svg" style="margin-right:0.25rem" width="22px"/> <span style="font-size:18px; font-weight: 700">LifeForge<span style="color:#9cc05e; padding-right:0.3rem">.</span></span> UI',
+      '<img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge/refs/heads/main/client/public/icon.svg" style="margin-right:0.25rem" width="22px"/> <span style="font-size:18px; font-weight: 700">LifeForge<span style="color:#9cc05e; padding-right:0.3rem">.</span></span> UI',
     brandTarget: '_self',
     textColor: '#f5f5f5',
     fontBase: '"Onest", sans-serif',

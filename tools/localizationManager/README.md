@@ -1,6 +1,6 @@
-<center><h1 align="center">🛠️ Lifeforge. Localization Manager</h1></center>
+<center><h1 align="center">🛠️ LifeForge. Localization Manager</h1></center>
 
-<p align="center">A simple, yet powerful tool for managing translations in your Lifeforge personal management system</p>
+<p align="center">A simple, yet powerful tool for managing translations in your LifeForge personal management system</p>
 
 ## 🤔 The Problem
 
@@ -8,17 +8,17 @@ Managing translations across multiple languages in when developing the system ca
 
 - **Manual Tedium:** Constantly updating translations in different files is time-consuming and error-prone.
 - **Costly Solutions:** Existing localization tools often come with hefty price tags, making them inaccessible for many users (including me).
-- **Lack of Flexibility:** Some tools may not adapt well to the specific structure and needs of Lifeforge.
+- **Lack of Flexibility:** Some tools may not adapt well to the specific structure and needs of LifeForge.
 - **Translation Expertise Required:** Finding and managing professional translators can be expensive and time-consuming.
 
-## ✨ The Solution: Lifeforge Localization Manager
+## ✨ The Solution: LifeForge Localization Manager
 
-Lifeforge Localization Manager tackles these issues head-on with a streamlined, cost-effective, and customizable approach:
+LifeForge Localization Manager tackles these issues head-on with a streamlined, cost-effective, and customizable approach:
 
-- **Seamless Lifeforge Integration:** Access the Localization Manager directly within your Lifeforge system using single sign-on (SSO) for a smooth user experience.
+- **Seamless LifeForge Integration:** Access the Localization Manager directly within your LifeForge system using single sign-on (SSO) for a smooth user experience.
 - **Streamlined Translation Management:** Easily add, edit, and organize translations for different languages in a centralized interface.
 - **Intuitive Interface:** User-friendly design with clear categories and search functionality makes navigation a breeze.
-- **Customizable:** Tailor categories to perfectly match the modules and sections of your Lifeforge system.
+- **Customizable:** Tailor categories to perfectly match the modules and sections of your LifeForge system.
 - **Cost-Effective:** A free and open-source alternative to expensive localization solutions, saving you money.
 - **Gemini API Integration:** Leverage the power of the Gemini API to automatically translate text, saving you time and effort on manual translation tasks.
 - **Open Source:** Contribute and make it even better by adding features or fixing bugs.
@@ -26,7 +26,7 @@ Lifeforge Localization Manager tackles these issues head-on with a streamlined, 
 ## 📷 Screenshots
 
 <div align="center">
-<img width="1680" alt="" src="https://github.com/Lifeforge-app/lifeforgeLocalizationManager/assets/64565584/a56de0ca-b44b-48f7-8057-20d96ff51b49">
+<img width="1680" alt="" src="https://github.com/LifeForge-app/lifeforgeLocalizationManager/assets/64565584/a56de0ca-b44b-48f7-8057-20d96ff51b49">
 
 </div>
 
@@ -45,7 +45,7 @@ Lifeforge Localization Manager tackles these issues head-on with a streamlined, 
 
 To run this project on your local machine:
 
-1. Clone the repository: `git clone https://github.com/Lifeforge-app/lifeforge`.
+1. Clone the repository: `git clone https://github.com/LifeForge-app/lifeforge`.
 2. Navigate to the project directory: `cd lifeforge/apps/localization-manager`.
 3. Install dependencies: `npm install` in both client and server folder.
 4. Create a `.env` file and put in your `VITE_API_HOST` and `VITE_FRONTEND_URL`.
@@ -61,4 +61,4 @@ Contributions are welcome! Please fork this repository and open a pull request t
 
 ## 📄 License
 
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Lifeforge-app/lifeforge">Lifeforge</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://thecodeblog.net">Melvin Chia</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/LifeForge-app/lifeforge">LifeForge</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://thecodeblog.net">Melvin Chia</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>

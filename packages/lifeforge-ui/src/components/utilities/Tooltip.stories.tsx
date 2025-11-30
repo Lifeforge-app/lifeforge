@@ -51,7 +51,7 @@ export const ClickableTooltip: Story = {
           rel="noreferrer"
           target="_blank"
         >
-          Lifeforge Docs
+          LifeForge Docs
         </a>{' '}
         to learn more about this project.
       </>

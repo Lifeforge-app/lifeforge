@@ -13,7 +13,7 @@ function useTitleEffect() {
         location.pathname.slice(1).startsWith(_.kebabCase(item.name))
       )[0]?.name ?? ''
 
-    document.title = `Lifeforge. ${target !== '' ? '- ' + target : ''}`
+    document.title = `LifeForge. ${target !== '' ? '- ' + target : ''}`
   }, [location])
 }
 

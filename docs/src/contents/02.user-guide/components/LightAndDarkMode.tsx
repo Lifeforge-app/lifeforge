@@ -41,7 +41,7 @@ function LightAndDarkMode() {
           key={derivedTheme}
           alt=""
           className="mt-4 w-full rounded-md"
-          src={`https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/colors/${derivedTheme}.webp`}
+          src={`https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/colors/${derivedTheme}.webp`}
         />
       </div>
     </div>
