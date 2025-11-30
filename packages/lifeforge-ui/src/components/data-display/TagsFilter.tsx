@@ -13,7 +13,7 @@ interface HeaderFilterProps<
       data: Array<{
         id: string
         icon?: string
-        name: string
+        label: string | React.ReactNode
         color?: string
       }>
       isColored?: boolean
@@ -96,7 +96,7 @@ function TagsFilter<T extends Record<string, string | string[] | null>>({
                         : undefined
                     }
                     icon={t.icon ?? ''}
-                    label={t.name ?? ''}
+                    label={t.label ?? ''}
                   />
                 ))
               }
@@ -116,7 +116,7 @@ function TagsFilter<T extends Record<string, string | string[] | null>>({
                       : undefined
                   }
                   icon={target.icon ?? ''}
-                  label={target.name ?? ''}
+                  label={target.label ?? ''}
                 />
               )
             })()

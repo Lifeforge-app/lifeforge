@@ -38,19 +38,19 @@ type Story = StoryObj<typeof meta>
 const CATEGORIES = [
   {
     id: 'work',
-    name: 'Work',
+    label: 'Work',
     icon: 'tabler:briefcase',
     color: colors.blue[500]
   },
   {
     id: 'personal',
-    name: 'Personal',
+    label: 'Personal',
     icon: 'tabler:user',
     color: colors.green[500]
   },
   {
     id: 'urgent',
-    name: 'Urgent',
+    label: 'Urgent',
     icon: 'tabler:alert-circle',
     color: colors.red[500]
   }
@@ -59,19 +59,19 @@ const CATEGORIES = [
 const STATUSES = [
   {
     id: 'active',
-    name: 'Active',
+    label: 'Active',
     icon: 'tabler:check',
     color: colors.green[500]
   },
   {
     id: 'pending',
-    name: 'Pending',
+    label: 'Pending',
     icon: 'tabler:clock',
     color: colors.yellow[500]
   },
   {
     id: 'completed',
-    name: 'Completed',
+    label: 'Completed',
     icon: 'tabler:circle-check',
     color: colors.blue[500]
   }
