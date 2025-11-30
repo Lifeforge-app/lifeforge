@@ -1,15 +1,15 @@
-import { DashboardItem } from 'lifeforge-ui'
+import { Widget } from 'lifeforge-ui'
 import type { WidgetConfig } from 'shared'
 
 function ExampleWidget() {
   return (
-    <DashboardItem
+    <Widget
       icon="{{moduleIcon}}"
       namespace="apps.{{camel moduleName.en}}"
       title="{{moduleName.en}}"
     >
       Hello World!
-    </DashboardItem>
+    </Widget>
   )
 }
 
