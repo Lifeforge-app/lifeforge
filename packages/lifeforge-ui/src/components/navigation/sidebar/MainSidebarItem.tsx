@@ -102,6 +102,7 @@ function MainSidebarItem({
         <SidebarItemContent
           active={autoActive ? isLocationMatched : active}
           hasAI={showAIIcon}
+          hasSubsection={subsection !== undefined}
           isMainSidebarItem={true}
           label={label}
           sidebarExpanded={sidebarExpanded}
@@ -116,7 +117,10 @@ function MainSidebarItem({
       {subsection !== undefined && (
         <SidebarItemSubsection
           label={label}
-          subsection={subsection}
+          subsection={subsection.map(e => ({
+            ...e,
+            callback: e.path
+          }))}
           subsectionExpanded={subsectionExpanded}
         />
       )}

@@ -34,7 +34,7 @@ function SidebarSubsectionItem({
           subsectionLabel === 'Dashboard'))
         ? 'bg-bg-200/50 hover:bg-bg-200/50! shadow-custom dark:bg-bg-800 dark:hover:bg-bg-800!'
         : 'text-bg-500',
-    [name, path, subsectionLabel, location.pathname]
+    [path, subsectionLabel, location.pathname]
   )
 
   const handleClick = useCallback(() => {
@@ -47,7 +47,7 @@ function SidebarSubsectionItem({
     <Link
       key={subsectionLabel}
       className={clsx(
-        'hover:bg-bg-200/30 dark:hover:bg-bg-800/30 mx-4 flex w-full items-center gap-3 rounded-lg py-4 font-medium transition-all',
+        'hover:bg-bg-200/30 dark:hover:bg-bg-800/30 mx-4 flex h-14 w-full items-center gap-3 rounded-lg font-medium transition-all',
         !sidebarExpanded ? 'justify-center' : '',
         sidebarExpanded ? 'pl-[3rem]' : 'px-2',
         locationDependentStyles
