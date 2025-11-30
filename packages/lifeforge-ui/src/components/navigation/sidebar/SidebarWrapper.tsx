@@ -32,7 +32,7 @@ function SidebarWrapper({
             }}
           />
         </div>
-        <ul className="flex size-full min-w-0 flex-col gap-1">{children}</ul>
+        <ul className="flex size-full min-w-0 flex-col gap-0.5">{children}</ul>
       </Scrollbar>
     </aside>
   )
