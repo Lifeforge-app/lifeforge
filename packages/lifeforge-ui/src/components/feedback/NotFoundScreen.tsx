@@ -7,7 +7,7 @@ interface NotFoundScreenProps {
   title?: string
   /** The message to display on the Not Found screen. Defaults to a translated description message. */
   message?: string
-  /** A link to report a bug. Defaults to Lifeforge's GitHub issues page. */
+  /** A link to report a bug. Defaults to LifeForge's GitHub issues page. */
   reportIssueLink?: string
 }
 
@@ -19,7 +19,7 @@ interface NotFoundScreenProps {
 function NotFoundScreen({
   title,
   message,
-  reportIssueLink = 'https://github.com/Lifeforge-app/lifeforge/issues'
+  reportIssueLink = 'https://github.com/LifeForge-app/lifeforge/issues'
 }: NotFoundScreenProps) {
   const { t } = useTranslation('common.misc')
 

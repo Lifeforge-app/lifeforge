@@ -1,3 +1,3 @@
-# Lifeforge UI
+# LifeForge UI
 
-Lifeforge UI components library
+LifeForge UI components library

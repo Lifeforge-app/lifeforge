@@ -119,12 +119,12 @@ const generateAuthenticatorLink = forgeController
       tempCode = speakeasy.generateSecret({
         name: email,
         length: 32,
-        issuer: 'Lifeforge.'
+        issuer: 'LifeForge.'
       }).base32
 
       return encrypt2(
         encrypt2(
-          `otpauth://totp/${email}?secret=${tempCode}&issuer=Lifeforge.`,
+          `otpauth://totp/${email}?secret=${tempCode}&issuer=LifeForge.`,
           challenge
         ),
         authorization!.replace('Bearer ', '')

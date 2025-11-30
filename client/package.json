@@ -4,10 +4,10 @@
   "private": true,
   "description": "The client-side user interface for LifeForge.",
   "license": "MIT",
-  "author": "LifeForge (https://github.com/Lifeforge-app)",
+  "author": "LifeForge (https://github.com/LifeForge-app)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Lifeforge-app/lifeforge.git",
+    "url": "https://github.com/LifeForge-app/lifeforge.git",
     "directory": "client"
   },
   "type": "module",

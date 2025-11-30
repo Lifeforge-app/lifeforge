@@ -308,7 +308,7 @@ function App() {
           />
           <div>
             <div className="text-2xl font-semibold">
-              Lifeforge<span className="text-custom-400">.</span>
+              LifeForge<span className="text-custom-400">.</span>
             </div>
             <div className="text-bg-500 font-medium">{t('title')}</div>
           </div>

@@ -4,11 +4,11 @@
   "description": "Documentation for the LifeForge system",
   "version": "0.0.0",
   "license": "CC BY-NC-SA 4.0",
-  "author": "LifeForge (https://github.com/Lifeforge-app)",
+  "author": "LifeForge (https://github.com/LifeForge-app)",
   "homepage": "https://docs.lifeforge.melvinchia.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Lifeforge-app/lifeforge.git",
+    "url": "https://github.com/LifeForge-app/lifeforge.git",
     "directory": "apps/docs"
   },
   "type": "module",

@@ -8,7 +8,7 @@ function EnvExample() {
 
   useEffect(() => {
     fetch(
-      'https://raw.githubusercontent.com/Lifeforge-app/lifeforge/refs/heads/main/env/.env.example'
+      'https://raw.githubusercontent.com/LifeForge-app/lifeforge/refs/heads/main/env/.env.example'
     )
       .then(response => response.text())
       .then(text => setEnvContent(text))

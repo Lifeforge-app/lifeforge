@@ -21,7 +21,7 @@ The Forge CLI is a command-line interface tool that helps you manage and configu
 
 After that, you should see the Forge CLI help menu.
 
-![Forge CLI Help Menu](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/forge-help.webp)
+![Forge CLI Help Menu](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/forge-help.webp)
 
 With that out of the way, let's move on to the configuration.
 
@@ -64,7 +64,7 @@ This will start the Pocketbase instance. You can access the admin dashboard at <
 
 After logging in, you should see the admin dashboard with the collections and fields set up, and a default user record created.
 
-![Pocketbase Admin Dashboard](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/db-firstlook.webp)
+![Pocketbase Admin Dashboard](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/db-firstlook.webp)
 
 Next, head to the settings page. Under the "Mail Settings" tab, configure the SMTP settings to enable email functionalities like password recovery and OTP for two-factor authentication. This will be crucial, especially for modules that require an additional layer of security.
 
@@ -82,7 +82,7 @@ That is it for the database configuration. Now, let's move on to the next step: 
 
 LifeForge currently supports OAuth2 authentication via Google and GitHub. To enable these providers, you need to set them up in the Pocketbase admin dashboard under the settings tab in "Users" collection. After they have been set up, LifeForge will automatically detect them and enable the corresponding login options in the client application.
 
-![OAuth2 Providers](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/with-2fa.webp)
+![OAuth2 Providers](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/with-2fa.webp)
 
 </section>
 
@@ -139,7 +139,7 @@ To start the API server, run the following command:
 
 Once started, you should see an output similar to this:
 
-![API Server Started](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/server-start.webp)
+![API Server Started](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/server-start.webp)
 
 <Alert className="mt-6" type="note">
   Make sure the Pocketbase instance is running before starting the API server.
@@ -171,7 +171,7 @@ To start the client application, run the following command:
 
 It will first build the UI and the shared library using Vite, and then start the development server of the client codebase. You should see an output similar to this:
 
-![Client Started](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/configurations/client-start.webp)
+![Client Started](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/client-start.webp)
 
 If everything is set up correctly, you be able to see the login screen of your LifeForge system by navigating to <a href="http://localhost:5173" target="_blank" rel="noopener noreferrer">http://localhost:5173</a> (or whatever url Vite tells you to use).
 

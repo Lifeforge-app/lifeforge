@@ -1,8 +1,8 @@
-<center><h1 align="center">🛠️ Lifeforge</h1></center>
+<center><h1 align="center">🛠️ LifeForge</h1></center>
 
 <p align="center">A self-hosted solution to streamline and organize all aspects of your life.</p>
 
-![Untitled design](https://raw.githubusercontent.com/Lifeforge-app/lifeforge-docs-media/main/assets/mockup-new.webp)
+![Untitled design](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/mockup-new.webp)
 
 ## 🤔 The Problem
 
@@ -15,9 +15,9 @@
 
 ## ✅ The Solution
 
-Lifeforge is a personal management system designed to help you manage your life
+LifeForge is a personal management system designed to help you manage your life
 efficiently. Whether it's keeping track of tasks, organizing projects,
-setting personal goals, or managing financial statuses, Lifeforge has got you covered.
+setting personal goals, or managing financial statuses, LifeForge has got you covered.
 
 ## 🧱 Modules
 
@@ -60,7 +60,7 @@ The modular approach ensures flexibility and scalability, allowing users to togg
 
 ## 🖥 Screenshots
 
-The screenshots provided are just a glimpse of Lifeforge. There's a lot more to
+The screenshots provided are just a glimpse of LifeForge. There's a lot more to
 explore and discover within the project.
 
 <div align="center">
@@ -91,25 +91,25 @@ explore and discover within the project.
 
 ## ⌨️ Setup
 
-Setting up Lifeforge can be a bit challenging and may require some technical
+Setting up LifeForge can be a bit challenging and may require some technical
 expertise and your own hardware. A docker file is hopefully on the way, but for now, you have to install it manually.
 Visit the [Documentation](https://docs.lifeforge.melvinchia.dev)
 to see how to install and setup.
 
 ## 📈 Status
 
-Lifeforge is currently under active development, with the code structure rapidly changing.
+LifeForge is currently under active development, with the code structure rapidly changing.
 If you encounter any bugs or issues, please report them
-[here](https://github.com/Lifeforge-app/lifeforge/issues), and they will be
+[here](https://github.com/LifeForge-app/lifeforge/issues), and they will be
 addressed promptly.
 
 ## 💡 Inspirations
 
-Lifeforge was inspired by the need for a unified personal management system that
+LifeForge was inspired by the need for a unified personal management system that
 integrates various tools and resources to help streamline daily life, and also
 [this project](https://github.com/Volmarg/personal-management-system).
 For the full story, visit the [Documentation](https://docs.lifeforge.melvinchia.dev).
 
 ## 📄 License
 
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Lifeforge-app/lifeforge">Lifeforge</a> is a project initiated by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://melvinchia.dev">Melvin Chia</a>, and is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/LifeForge-app/lifeforge">LifeForge</a> is a project initiated by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://melvinchia.dev">Melvin Chia</a>, and is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>

@@ -161,7 +161,7 @@ function Rightbar() {
       </ul>
       <a
         className="text-bg-100 mt-6 flex items-center gap-2 font-medium hover:underline"
-        href={`https://github.com/Lifeforge-app/lifeforge/edit/main/apps/docs/src/contents/${
+        href={`https://github.com/LifeForge-app/lifeforge/edit/main/apps/docs/src/contents/${
           location.pathname.split('/')?.[1]
         }/${_.upperFirst(
           _.camelCase(
@@ -176,7 +176,7 @@ function Rightbar() {
       </a>
       <a
         className="text-bg-100 mt-4 flex items-center gap-2 font-medium hover:underline"
-        href="https://github.com/Lifeforge-app/lifeforge/issues/new"
+        href="https://github.com/LifeForge-app/lifeforge/issues/new"
         rel="noreferrer"
         target="_blank"
       >
@@ -185,7 +185,7 @@ function Rightbar() {
       </a>
       <a
         className="text-bg-100 mt-4 flex items-center gap-2 font-medium hover:underline"
-        href="https://github.com/Lifeforge-app/lifeforge"
+        href="https://github.com/LifeForge-app/lifeforge"
         rel="noreferrer"
         target="_blank"
       >

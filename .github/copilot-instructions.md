@@ -1,4 +1,4 @@
-## Lifeforge – AI contributor guide
+## LifeForge – AI contributor guide
 
 This monorepo uses Bun workspaces with a type-safe API pattern shared between server and client. Follow these rules to be productive and avoid breaking conventions.
 

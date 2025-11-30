@@ -11,7 +11,7 @@ const config = {
   forgeAPI,
   namespace: 'apps.localizationManager',
   icon: 'mingcute:translate-line',
-  link: 'https://github.com/Lifeforge-app/lifeforge/tree/main/apps/localization-manager',
+  link: 'https://github.com/LifeForge-app/lifeforge/tree/main/apps/localization-manager',
   frontendURL: import.meta.env.VITE_FRONTEND_URL
 } satisfies SSOAppConfig
 
