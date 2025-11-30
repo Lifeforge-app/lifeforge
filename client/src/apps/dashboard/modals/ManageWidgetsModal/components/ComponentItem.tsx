@@ -11,15 +11,17 @@ function ComponentListItem({
   icon,
   minW,
   minH,
-  namespace,
-  setReady
+  maxW,
+  maxH,
+  namespace
 }: {
   id: string
   icon: string
   minW?: number
   minH?: number
+  maxW?: number
+  maxH?: number
   namespace?: string
-  setReady: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const { t } = useTranslation([namespace ?? 'apps.dashboard'])
 
@@ -49,14 +51,13 @@ function ComponentListItem({
             h: minH ?? 4,
             minW: minW ?? 1,
             minH: minH ?? 1,
+            maxW: maxW ?? 8,
+            maxH: maxH ?? 8,
             i: id
           }
         ]
       }
       setDashboardLayout(newEnabledWidgets)
-      setTimeout(() => {
-        setReady(true)
-      }, 100)
 
       return
     }
@@ -66,19 +67,17 @@ function ComponentListItem({
       newEnabledWidgets[breakpoint].push({
         x: 0,
         y: Infinity,
-        w: 4,
-        h: 4,
+        w: minW || maxW || 4,
+        h: minH || maxH || 4,
         minW: minW ?? 1,
         minH: minH ?? 1,
+        maxW: maxW ?? 8,
+        maxH: maxH ?? 8,
         i: id
       })
     }
 
     setEnabledWidgets(newEnabledWidgets)
-
-    setTimeout(() => {
-      setReady(true)
-    }, 100)
   }
 
   function removeComponent() {
@@ -93,15 +92,9 @@ function ComponentListItem({
     } else {
       setDashboardLayout(newEnabledWidgets)
     }
-
-    setTimeout(() => {
-      setReady(true)
-    }, 100)
   }
 
   function toggleComponent() {
-    setReady(false)
-
     if (isEnabled) {
       removeComponent()
 
