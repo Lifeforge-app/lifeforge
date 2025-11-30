@@ -22,6 +22,8 @@ const DASHBOARD_WIDGETS: {
     icon: string
     minW?: number
     minH?: number
+    maxW?: number
+    maxH?: number
   }
 } = {}
 
@@ -36,7 +38,9 @@ await Promise.all(widgetsPromises).then(resolvedWidgets => {
       namespace: config.namespace || null,
       icon: config.icon,
       minW: config.minW,
-      minH: config.minH
+      minH: config.minH,
+      maxW: config.maxW,
+      maxH: config.maxH
     }
   })
 })

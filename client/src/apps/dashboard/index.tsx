@@ -12,12 +12,8 @@ function Dashboard() {
 
   const [canLayoutChange, setCanLayoutChange] = useState(false)
 
-  const [isReady, setReady] = useState(true)
-
   const handleManageWidget = useCallback(() => {
-    open(ManageWidgetsModal, {
-      setReady
-    })
+    open(ManageWidgetsModal, {})
   }, [])
 
   return (
@@ -45,12 +41,10 @@ function Dashboard() {
             )
           }}
         />
-        {isReady && (
-          <DashboardGrid
-            canLayoutChange={canLayoutChange}
-            wrapperRef={wrapperRef}
-          />
-        )}
+        <DashboardGrid
+          canLayoutChange={canLayoutChange}
+          wrapperRef={wrapperRef}
+        />
       </div>
     </>
   )

@@ -2,16 +2,13 @@ import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
-import { useSidebarState } from 'shared'
 import { usePersonalization } from 'shared'
 
+import useDivSize from '../hooks/useDivSize'
 import DASHBOARD_WIDGETS from '../widgets'
 import NotFoundWidget from './NotFoundWidget'
-
-const RGL: any = ResponsiveGridLayout as any
 
 const COMPONENTS = Object.fromEntries(
   Object.entries(DASHBOARD_WIDGETS).map(([key, value]) => [
@@ -19,6 +16,20 @@ const COMPONENTS = Object.fromEntries(
     value.component
   ])
 )
+
+function getBreakpointFromWidth(width: number) {
+  if (width >= 1200) {
+    return 'lg'
+  } else if (width >= 996) {
+    return 'md'
+  } else if (width >= 768) {
+    return 'sm'
+  } else if (width >= 480) {
+    return 'xs'
+  } else {
+    return 'xxs'
+  }
+}
 
 function DashboardGrid({
   wrapperRef,
@@ -29,55 +40,34 @@ function DashboardGrid({
 }) {
   const { t } = useTranslation('apps.dashboard')
 
-  const { sidebarExpanded } = useSidebarState()
-
-  const [width, setWidth] = useState(0)
+  const { width, height } = useDivSize(wrapperRef)
 
   const { dashboardLayout: enabledWidgets } = usePersonalization()
 
   const { changeDashboardLayout } = useUserPersonalization()
 
-  function handleResize() {
-    if (wrapperRef.current !== null) {
-      setWidth(wrapperRef.current.offsetWidth)
-    }
-  }
-
-  useEffect(() => {
-    setTimeout(() => {
-      handleResize()
-    }, 200)
-  }, [wrapperRef.current, sidebarExpanded])
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [wrapperRef.current])
-
-  const onLayoutChange = (_: any, layouts: any) => {
-    changeDashboardLayout(layouts)
-  }
-
   if (width === 0) {
     return <LoadingScreen message={t('loading')} />
   }
 
-  return Object.values(enabledWidgets).every(e => e.length === 0) ? (
-    <div className="flex h-full flex-1 items-center justify-center">
-      <EmptyStateScreen
-        icon="tabler:hammer"
-        message={{
-          id: 'welcome',
-          namespace: 'apps.dashboard'
-        }}
-      />
-    </div>
-  ) : (
-    <RGL
-      className={canLayoutChange && 'pb-64'}
+  if (Object.values(enabledWidgets).every(e => e.length === 0)) {
+    return (
+      <div className="flex h-full flex-1 items-center justify-center">
+        <EmptyStateScreen
+          icon="tabler:hammer"
+          message={{
+            id: 'welcome',
+            namespace: 'apps.dashboard'
+          }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <ResponsiveGridLayout
+      autoSize
+      className={canLayoutChange ? 'pb-64' : undefined}
       cols={
         {
           lg: 8,
@@ -87,13 +77,17 @@ function DashboardGrid({
           xxs: 4
         } as any
       }
+      containerPadding={[0, 0]}
       isDraggable={canLayoutChange}
       isDroppable={canLayoutChange}
       isResizable={canLayoutChange}
       layouts={enabledWidgets}
+      margin={[10, 10]}
       rowHeight={100}
       width={width}
-      onLayoutChange={onLayoutChange}
+      onLayoutChange={(_: any, layouts: any) => {
+        changeDashboardLayout(layouts)
+      }}
     >
       {[
         ...new Set(
@@ -104,13 +98,30 @@ function DashboardGrid({
       ].map(widgetId => (
         <div key={widgetId} className={clsx(canLayoutChange && 'cursor-move')}>
           {(() => {
+            if (!width || !height) {
+              return null
+            }
+
             const Component = (COMPONENTS[
               widgetId as keyof typeof COMPONENTS
             ] ?? NotFoundWidget) as React.FC<{
+              dimension: { w: number; h: number }
               widgetId?: string
             }>
 
-            return <Component widgetId={widgetId} />
+            const dimension = (
+              enabledWidgets[getBreakpointFromWidth(width)] || []
+            ).find(l => l.i === widgetId)
+
+            return (
+              <Component
+                dimension={{
+                  w: dimension?.w ?? 0,
+                  h: dimension?.h ?? 0
+                }}
+                widgetId={widgetId}
+              />
+            )
           })()}
           {canLayoutChange && (
             <Icon
@@ -120,7 +131,7 @@ function DashboardGrid({
           )}
         </div>
       ))}
-    </RGL>
+    </ResponsiveGridLayout>
   )
 }
 
