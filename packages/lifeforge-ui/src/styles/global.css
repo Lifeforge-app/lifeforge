@@ -7,6 +7,14 @@
   scrollbar-color: transparent transparent;
   scrollbar-width: thin;
   overscroll-behavior: none;
+}
+
+.virtual-grid {
+  scrollbar-color: auto !important;
+  scrollbar-width: auto !important;
+}
+
+* {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   interpolate-size: allow-keywords;
