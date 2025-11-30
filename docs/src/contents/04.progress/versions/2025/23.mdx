@@ -1,0 +1,21 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+- **Calendar**: User can now group events by different calendars like Work, Personal, etc. in the calendar sidebar.
+- **Calendar**: Sidebar is now a thing in mobile view.
+- **Calendar**: Made the borders of the calendar more subtle.
+- **Calendar**: Minor UI improvements.
+- **Idea Box**: Container entry counts are now calculated dynamically in database using PocketBase views.
+- **Codetime**: Fixed bug where the time isn't displayed correctly inside vscode bottom bar.
+- **Guitar Tabs**: Removed the "Download All" button since it doesn't work any more after the migration to S3.
+- **Music**: Removed the feature to import music from NAS and replacement will be added later.
+- **Movies**: Fixed the layout of the movie ticket modal.
+- **Todo List**: Removed subtask feature due to the messy implementation and will be replaced with a better solution later.
+- **Server Status**: Removed this module due to being too system specific and will be replaced with a better solution later (hopefully).
+- **Personalization**: Fixed a bug where the font family with numbers in the name will not be applied correctly.
+- **API**: Major refactoring of the codebase by introducing zod validation library to streamline API request validation.
+- **API**: Removed all the inconsistently written middlewares and replaced it with zod validation.
+- **API**: Removed <code>/quotes</code> endpoint.
+- **API**: Added <code>/cors-anywhere</code> endpoint to allow the system to make cross-origin requests.
+- **Dashboard**: The quote of the day widget is now using the <code>/cors-anywhere</code> endpoint to fetch quotes from external sources.
+- **Code**: Minor bug fixes here and there

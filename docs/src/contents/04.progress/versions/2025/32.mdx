@@ -1,0 +1,35 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+- **Music**: Added this module back.
+- **Music**: Added FAB in mobile view.
+- **Music**: User can now ask AI to parse the music name and author from the title and uploader.
+- **Music**: Fixed the behaviours of the shuffle and repeat buttons.
+- **Music**: Replaced custom <code>IconButton</code> with <code>Button</code> component from <code>lifeforge-ui</code>.
+- **Music**: Music will now be stopped if the current music is deleted.
+- **Music**: Music downloading is now handled by the task pool mechanism.
+- **Music**: Music download process is now shown to the user.
+- **Music**: Minor bug fixes and UI improvements.
+- **Calendar**: Fixed a bug where the <code>events/getToday</code> endpoint is not returning events from other modules.
+- **Books Library**: Fixed a bug where the <code>sendToKindle</code> endpoint is not returning anything, leading to infinite loading.
+- **Books Library**: Fixed a bug where the book size amount is not displayed correctly in the Libgen modal.
+- **Books Library**: Fixed a bug where the MD5 of the book downloaded from Libgen is not recorded in the database.
+- **Passwords**: User can now generate passwords in the <code>ModifyPasswordModal</code>.
+- **Passwords**: User can now rotate the password in the password list by clicking the rotate button in the context menu.
+- **CFOP Algorithms**: Added this module back.
+- **Changi Airport Flight Status**: Added this module back.
+- **Scores Library**: User can now create collections and add scores to them.
+- **Scores Library**: Scores downloaded from Guitar World will now be kept track of in the Guitar World modal, and the scores existed in the library will not be available for download to prevent duplication.
+- **Code Time**: Statistic dashboard now uses dashboard item component provided by <code>lifeforge-ui</code>.
+- **Personalization**: Created a modal for choosing font family.
+- **Personalization**: User can now adjust font scale.
+- **API Explorer**: Continue working on this application.
+- **UI**: Added option to use external data state in <code>FormModal</code> to allow the modal to be controlled externally.
+- **UI**: Introduced reusable components for external SSO applications that ended up becoming a single comprehensive app wrapper component called <code>SSOMainAppWrapper</code> that handles everything from layout to authentication.
+- **UI**: Fixed a bug where the modal content will overflow horizontally when they should not.
+- **UI**: Lots of minor UI improvements and bug fixes.
+- **API**: Implemented mechanism to handle multiple files uploads in <code>forgeController</code>.
+- **Code**: Migrated all legacy <code>fetchAPI</code> logic into the new <code>forgeAPI</code> client.
+- **Code**: The <code>theme-color</code> meta tag is now dynamically updated based on the selected theme.
+- **Code**: Introduced <code>SSOAuthProvider</code> in the <code>shared</code> package that handles authentication flows in external SSO applications.
+- **Code**: Removed all virtual list components due to the complexity of calculating item height dynamically.

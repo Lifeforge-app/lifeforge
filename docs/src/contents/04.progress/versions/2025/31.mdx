@@ -1,0 +1,12 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+- **UI**: Introduced a <code>Slider</code> component for better user interaction with range inputs.
+- **UI**: More progress on storybook integration.
+- **UI**: Integrated the new <code>forgeAPI</code> client into the <code>lifeforge-ui</code> package to adapt to the new API structure.
+- **UI**: QrCodeScanner component now utilizes the global modal manager.
+- **UI**: Separated the <code>ListboxOrCombobox</code> component into two distinct components: <code>Listbox</code> and <code>Combobox</code>, to better reflect their individual functionalities.
+- **UI**: Cleaned up props for all the inputs.
+- **Code**: User data is now properly typed in the <code>useAuth</code> hook.
+- **Code**: Fixed a bug where the favicon is replaced by the default one no matter what.
+- **Code**: Replaced all custom <code>useAPIQuery</code> with vanilla <code>useQuery</code> from <code>@tanstack/react-query</code> and <code>forgeAPI</code>.
