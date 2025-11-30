@@ -17,7 +17,7 @@ export interface WidgetProps {
    *
    * If no translation is found, the raw title string will be displayed.
    */
-  title: string
+  title?: string
   /** The content of the widget. */
   children?: React.ReactNode
   /** An optional component to render beside the title, such as action buttons or dropdowns. */
@@ -51,21 +51,23 @@ function _Widget(
         className
       )}
     >
-      <div className="flex items-center justify-between gap-12">
-        <h2 className="flex w-full min-w-0 items-center gap-3 text-xl font-semibold">
-          <Icon className="size-6 shrink-0" icon={icon} />
-          <span className="w-full min-w-0 truncate">
-            {namespace !== false
-              ? t([
-                  `widgets.${_.camelCase(title)}.title`,
-                  `widgets.${_.camelCase(title)}`,
-                  title
-                ])
-              : title}
-          </span>
-        </h2>
-        {componentBesideTitle}
-      </div>
+      {title && (
+        <div className="flex items-center justify-between gap-12">
+          <h2 className="flex w-full min-w-0 items-center gap-3 text-xl font-semibold">
+            <Icon className="size-6 shrink-0" icon={icon} />
+            <span className="w-full min-w-0 truncate">
+              {namespace !== false
+                ? t([
+                    `widgets.${_.camelCase(title)}.title`,
+                    `widgets.${_.camelCase(title)}`,
+                    title
+                  ])
+                : title}
+            </span>
+          </h2>
+          {componentBesideTitle}
+        </div>
+      )}
       {children}
     </div>
   )
