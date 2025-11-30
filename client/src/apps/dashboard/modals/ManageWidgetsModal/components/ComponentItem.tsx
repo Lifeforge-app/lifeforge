@@ -1,4 +1,4 @@
-import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Switch } from 'lifeforge-ui'

@@ -1,4 +1,4 @@
-import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import { Listbox, ListboxOption, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
@@ -56,7 +56,7 @@ function LanguageSelector() {
             </span>
           </div>
         }
-        className="min-w-64"
+        className="component-bg-lighter min-w-64"
         value={language}
         onChange={language => {
           changeLanguage(language)

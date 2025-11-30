@@ -1,4 +1,4 @@
-import { useUserPersonalization } from '@/providers/UserPersonalizationProvider'
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import clsx from 'clsx'
 import { Listbox, ListboxOption } from 'lifeforge-ui'
 import _ from 'lodash'
@@ -65,11 +65,11 @@ function DefaultThemeColorSelector({
           </span>
         </div>
       }
-      className="min-w-64 p-6"
+      className="component-bg-lighter min-w-64 p-6"
+      value={themeColor.startsWith('#') ? 'theme-custom' : themeColor}
       onChange={color => {
         changeThemeColor(color === 'theme-custom' ? customThemeColor : color)
       }}
-      value={themeColor.startsWith('#') ? 'theme-custom' : themeColor}
     >
       {COLORS.map(color => (
         <ListboxOption
