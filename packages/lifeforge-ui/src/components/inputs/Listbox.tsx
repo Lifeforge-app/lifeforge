@@ -24,7 +24,7 @@ function Listbox<T>({
     <HeadlessListbox value={value} onChange={onChange}>
       <ListboxButton
         className={clsx(
-          'shadow-custom component-bg-lighter-with-hover flex-between w-full min-w-0 gap-6 rounded-lg p-5 text-left outline-hidden transition-all focus:outline-hidden',
+          'shadow-custom component-bg-with-hover flex-between w-full min-w-0 gap-6 rounded-lg p-4 text-left outline-hidden transition-all focus:outline-hidden',
           className
         )}
       >
