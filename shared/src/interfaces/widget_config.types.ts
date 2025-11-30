@@ -4,4 +4,6 @@ export default interface WidgetConfig {
   icon: string
   minW?: number
   minH?: number
+  maxW?: number
+  maxH?: number
 }
