@@ -73,5 +73,6 @@
     }
   },
   "imagePreview": "圖片預覽",
-  "qrCodeScanner": "二維碼掃描器"
+  "qrCodeScanner": "二維碼掃描器",
+  "viewImage": "查看圖片"
 }
