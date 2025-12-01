@@ -39,6 +39,7 @@ function cloneModuleRepository(config: ModuleInstallConfig): void {
         stdio: ['ignore', 'ignore', 'ignore']
       }
     )
+
     CLILoggingService.success('Repository cloned successfully')
   } catch (error) {
     CLILoggingService.actionableError(
@@ -176,6 +177,24 @@ function processServerInjection(moduleName: string): void {
   }
 }
 
+function updateGitSubmodules(): void {
+  CLILoggingService.progress('Updating git submodules')
+
+  try {
+    executeCommand('git submodule update --init --recursive --remote', {
+      stdio: ['ignore', 'ignore', 'ignore'],
+      exitOnError: false
+    })
+    CLILoggingService.success('Git submodules updated successfully')
+  } catch (error) {
+    CLILoggingService.actionableError(
+      'Failed to update git submodules',
+      'Check your git configuration and try again'
+    )
+    throw error
+  }
+}
+
 /**
  * Handles adding a new module to the LifeForge system
  */
@@ -211,6 +230,7 @@ export async function addModuleHandler(repoPath: string): Promise<void> {
     cloneModuleRepository(config)
     validateModuleStructure(config)
     moveModuleToApps(config)
+    updateGitSubmodules()
     processServerInjection(config.moduleName)
     installDependencies()
 
