@@ -73,5 +73,6 @@
     }
   },
   "imagePreview": "Pratonton Imej",
-  "qrCodeScanner": "Pengimbas Kod QR"
+  "qrCodeScanner": "Pengimbas Kod QR",
+  "viewImage": "Lihat Imej"
 }

@@ -73,5 +73,6 @@
     }
   },
   "imagePreview": "图片预览",
-  "qrCodeScanner": "二维码扫描器"
+  "qrCodeScanner": "二维码扫描器",
+  "viewImage": "查看图片"
 }

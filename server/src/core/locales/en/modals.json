@@ -73,5 +73,6 @@
     }
   },
   "imagePreview": "Image Preview",
-  "qrCodeScanner": "QR Code Scanner"
+  "qrCodeScanner": "QR Code Scanner",
+  "viewImage": "View Image"
 }
