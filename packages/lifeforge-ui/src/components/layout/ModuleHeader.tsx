@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { useMainSidebarState } from 'shared'
 
 import { Button } from '@components/inputs'
-import { ContextMenu } from '@components/overlays'
 
+import ContextMenu from '../overlays/ContextMenu'
 import { useModuleHeaderState } from './ModuleHeaderStateProvider'
 
 interface ModuleHeaderProps {
