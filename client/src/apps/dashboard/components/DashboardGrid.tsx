@@ -4,9 +4,8 @@ import clsx from 'clsx'
 import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+import { useDivSize, usePersonalization } from 'shared'
 
-import useDivSize from '../hooks/useDivSize'
 import DASHBOARD_WIDGETS from '../widgets'
 import NotFoundWidget from './NotFoundWidget'
 
