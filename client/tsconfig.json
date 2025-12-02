@@ -2,10 +2,17 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable", "ES2024.Object"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable",
+      "ES2024.Object"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     /* Bundler mode */
     "outDir": "${configDir}/tsbuild",
     "moduleResolution": "bundler",
@@ -21,12 +28,20 @@
     "composite": true,
     "rootDir": "../",
     "paths": {
-      "@/*": ["./src/*"],
-      "@server/*": ["../server/src/*"],
-      "@modules/*": ["../apps/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@server/*": [
+        "../server/src/*"
+      ],
+      "@modules/*": [
+        "../apps/*"
+      ]
     }
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*",
+  ],
   "references": [
     {
       "path": "../server/tsconfig.json"
