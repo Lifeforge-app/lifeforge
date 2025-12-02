@@ -138,6 +138,7 @@ const coreRoutes = forgeRouter({
   locations: (await import('@lib/locations')).default,
   backups: (await import('@lib/backups')).default,
   database: (await import('@lib/database')).default,
+  modules: (await import('@lib/modules')).default,
   ai: (await import('@lib/ai')).default,
   ping,
   status,
