@@ -56,7 +56,7 @@ function InputWrapper({
   )
 
   return (
-    <div className={clsx('space-y-2', className)}>
+    <div className={clsx('flex-1 space-y-2', className)}>
       <div
         className={clsx(
           'bg-bg-200/50 shadow-custom hover:bg-bg-200 group component-bg-lighter-with-hover relative flex w-full shrink-0 items-center gap-1 rounded-t-lg border-b-2 pl-6 transition-all',

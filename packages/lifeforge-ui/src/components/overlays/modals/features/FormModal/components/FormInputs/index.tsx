@@ -18,6 +18,7 @@ import FormNumberInput from './components/FormNumberInput'
 import FormRRuleInput from './components/FormRRuleInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
+import { Tooltip } from '@components/utilities'
 
 // Map of form field types to their corresponding components
 const COMPONENT_MAP: Record<
@@ -69,15 +70,25 @@ const MemoizedFormField = memo(
     const FormComponent = COMPONENT_MAP[fieldType] || (() => <></>)
 
     return (
-      <FormComponent
-        key={id}
-        autoFocus={autoFocus}
-        field={{ ...field, errorMsg }}
-        handleChange={onFieldChange}
-        namespace={namespace}
-        options={options}
-        value={value}
-      />
+      <div className="flex flex-1 items-center gap-4">
+        <FormComponent
+          key={id}
+          autoFocus={autoFocus}
+          field={{ ...field, errorMsg }}
+          handleChange={onFieldChange}
+          namespace={namespace}
+          options={options}
+          value={value}
+        />
+        {field.disabled && field.disabledReason && (
+          <Tooltip
+            icon="tabler:info-circle"
+            id={`tooltip-disabled-reason-${field.label}`}
+          >
+            {field.disabledReason}
+          </Tooltip>
+        )}
+      </div>
     )
   },
   (prevProps, nextProps) => {

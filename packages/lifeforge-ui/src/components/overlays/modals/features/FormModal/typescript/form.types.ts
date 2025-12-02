@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type React from 'react'
 import type { ZodType } from 'zod'
 
 import type { CheckboxFieldProps } from '../components/FormInputs/components/FormCheckboxInput'
@@ -23,6 +24,7 @@ export type BaseFieldProps<
   hidden?: boolean
   required?: boolean
   disabled?: boolean
+  disabledReason?: string | React.ReactElement
   __formDataType: TFormDataType
   __finalDataType: TFinalDataType
   __autoFocusable?: TAutoFocusable
