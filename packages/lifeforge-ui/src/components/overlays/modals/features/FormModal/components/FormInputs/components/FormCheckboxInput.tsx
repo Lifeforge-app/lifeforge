@@ -37,6 +37,7 @@ function FormCheckboxInput({
           </span>
         </div>
         <Switch
+          disabled={field.disabled}
           value={value}
           onChange={() => {
             handleChange(!value)

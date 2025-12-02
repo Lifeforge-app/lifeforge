@@ -8,12 +8,14 @@ interface SwitchProps {
   value: boolean
   /** Callback function called when the switch state changes. */
   onChange: (value: boolean) => void
+  /** Whether the switch is disabled and non-interactive. */
+  disabled?: boolean
 }
 
 /**
  * A switch component for toggling between two states.
  */
-function Switch({ value, onChange }: SwitchProps) {
+function Switch({ value, onChange, disabled }: SwitchProps) {
   const { derivedThemeColor } = usePersonalization()
 
   const getStateClassName = () => {
@@ -34,9 +36,10 @@ function Switch({ value, onChange }: SwitchProps) {
       checked={value}
       className={clsx(
         'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full',
-        value ? 'bg-custom-500' : '-component-bg-with-hover'
+        value ? 'bg-custom-500' : '-component-bg-with-hover',
+        disabled && 'cursor-not-allowed! opacity-50'
       )}
-      onChange={onChange}
+      onChange={!disabled ? onChange : undefined}
     >
       <span
         className={clsx(
