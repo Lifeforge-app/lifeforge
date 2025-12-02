@@ -10,6 +10,17 @@ import type {
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
 /**
+ * Helper type to wrap a simple output type into the Forge controller structure.
+ * Used by `untyped()` to allow passing just the response type.
+ */
+type UntypedControllerType<TOutput = any, TBody = any, TQuery = any> = {
+  __isForgeController: true
+  __input: { body: TBody; query: TQuery }
+  __output: TOutput
+  __media: null
+}
+
+/**
  * ForgeAPIClientController is a chainable API client controller for making type-safe
  * HTTP requests, designed to pair with LifeForge Server API schema and support React Query.
  *
@@ -200,7 +211,11 @@ export class ForgeAPIClientController<
 export function createForgeAPIClient<T>(
   apiHost?: string,
   path: string[] = []
-): ClientTree<T> {
+): ClientTree<T> & {
+  untyped: <TOutput = any, TBody = any, TQuery = any>(
+    url: string
+  ) => ForgeAPIClientController<UntypedControllerType<TOutput, TBody, TQuery>>
+} {
   const controller = new ForgeAPIClientController<
     T extends { __isForgeController: true } ? T : never
   >(apiHost, path.join('/'))
@@ -208,6 +223,14 @@ export function createForgeAPIClient<T>(
   return new Proxy(() => {}, {
     get: (_, prop: string) => {
       if (typeof prop === 'symbol' || prop === 'then') return undefined
+
+      // Handle untyped() method at root level
+      if (prop === 'untyped' && path.length === 0) {
+        return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
+          new ForgeAPIClientController<
+            UntypedControllerType<TOutput, TBody, TQuery>
+          >(apiHost, url)
+      }
 
       if (
         prop in controller &&
