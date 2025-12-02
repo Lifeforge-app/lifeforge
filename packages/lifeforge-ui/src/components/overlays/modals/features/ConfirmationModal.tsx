@@ -12,7 +12,8 @@ function ConfirmationModal({
     description,
     confirmationButton = 'confirm',
     confirmationPrompt,
-    onConfirm
+    onConfirm,
+    children
   }
 }: {
   onClose: () => void
@@ -24,7 +25,8 @@ function ConfirmationModal({
       | 'confirm'
       | React.ComponentProps<typeof Button>
     confirmationPrompt?: string
-    onConfirm: () => Promise<void>
+    onConfirm?: () => Promise<void>
+    children?: React.ReactNode
   }
 }) {
   const { t } = useTranslation(['common.modals', 'common.buttons'])
@@ -33,7 +35,7 @@ function ConfirmationModal({
 
   const handleClick = async () => {
     try {
-      await onConfirm()
+      await onConfirm?.()
       onClose()
     } catch (error) {
       console.error('Error during confirmation:', error)
@@ -62,44 +64,48 @@ function ConfirmationModal({
           onChange={setConfirmationTextState}
         />
       )}
-      <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
-        <Button
-          className="w-full"
-          icon=""
-          variant="secondary"
-          onClick={onClose}
-        >
-          Cancel
-        </Button>
-        {typeof confirmationButton === 'string' ? (
+      {children || (
+        <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
           <Button
             className="w-full"
-            dangerous={confirmationButton === 'delete'}
-            disabled={
-              !!confirmationPrompt &&
-              confirmationPrompt !== confirmationTextState
-            }
-            icon={
-              confirmationButton === 'delete' ? 'tabler:trash' : 'tabler:check'
-            }
-            loading={isLoading}
-            onClick={onClick}
+            icon=""
+            variant="secondary"
+            onClick={onClose}
           >
-            {confirmationButton}
+            Cancel
           </Button>
-        ) : (
-          <Button
-            {...confirmationButton}
-            className={clsx('w-full', confirmationButton.className)}
-            disabled={
-              !!confirmationPrompt &&
-              confirmationPrompt !== confirmationTextState
-            }
-            loading={isLoading}
-            onClick={onClick}
-          />
-        )}
-      </div>
+          {typeof confirmationButton === 'string' ? (
+            <Button
+              className="w-full"
+              dangerous={confirmationButton === 'delete'}
+              disabled={
+                !!confirmationPrompt &&
+                confirmationPrompt !== confirmationTextState
+              }
+              icon={
+                confirmationButton === 'delete'
+                  ? 'tabler:trash'
+                  : 'tabler:check'
+              }
+              loading={isLoading}
+              onClick={onClick}
+            >
+              {confirmationButton}
+            </Button>
+          ) : (
+            <Button
+              {...confirmationButton}
+              className={clsx('w-full', confirmationButton.className)}
+              disabled={
+                !!confirmationPrompt &&
+                confirmationPrompt !== confirmationTextState
+              }
+              loading={isLoading}
+              onClick={onClick}
+            />
+          )}
+        </div>
+      )}
     </div>
   )
 }
