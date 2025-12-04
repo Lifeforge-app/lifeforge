@@ -70,7 +70,7 @@ function LockedScreen({
       </p>
       <TextInput
         isPassword
-        className="w-full md:w-3/4 xl:w-1/2"
+        className="w-full flex-0! md:w-3/4 xl:w-1/2"
         icon="tabler:lock"
         label="vault.inputs.masterPassword"
         namespace="common.vault"
