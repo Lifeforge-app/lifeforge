@@ -37,7 +37,7 @@ class DatabaseValidationError extends Error {
  * Validates the required environment variables for database connection
  * @throws {DatabaseConnectionError} When required environment variables are missing
  */
-function validateEnvironmentVariables(): DBConnectionConfig {
+export function validateEnvironmentVariables(): DBConnectionConfig {
   const { PB_HOST, PB_EMAIL, PB_PASSWORD } = process.env
 
   if (!PB_HOST || !PB_EMAIL || !PB_PASSWORD) {
