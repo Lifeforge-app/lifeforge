@@ -20,6 +20,8 @@ interface TagChipProps {
   }
   /** Optional click handler for the entire tag chip. */
   onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
+  /** Additional class names to apply to the tag chip container. */
+  className?: string
 }
 
 const CLASSNAMES_WITHOUT_COLOR = {
@@ -38,7 +40,8 @@ function TagChip({
   color,
   variant = 'outlined',
   actionButtonProps,
-  onClick
+  onClick,
+  className
 }: TagChipProps) {
   const { bgTempPalette } = usePersonalization()
 
@@ -52,7 +55,8 @@ function TagChip({
         'flex-center shadow-custom shrink-0 gap-1 rounded-full border px-3 py-1 text-sm whitespace-nowrap!',
         color === undefined && CLASSNAMES_WITHOUT_COLOR[variant],
         onClick !== undefined &&
-          'cursor-pointer transition-all hover:brightness-120'
+          'cursor-pointer transition-all hover:brightness-120',
+        className
       )}
       style={
         convertedColor !== undefined
