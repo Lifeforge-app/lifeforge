@@ -38,7 +38,7 @@ function Tabs<
           <button
             key={id}
             className={clsx(
-              'flex flex-1 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
+              'flex flex-1 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest whitespace-nowrap uppercase transition-all',
               currentTab === id
                 ? `${
                     !color ? 'border-custom-500 text-custom-500' : ''
