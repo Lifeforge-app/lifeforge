@@ -69,7 +69,7 @@ function CalendarHeader({
         </div>
         <div className="relative">
           <Select
-            className="hover:bg-bg-200/30 dark:hover:bg-bg-700/30 appearance-none rounded-md px-3 py-2 pr-8 text-base font-medium transition-all"
+            className="hover:bg-bg-200/30 dark:hover:bg-bg-700/30 hidden appearance-none rounded-md px-3 py-2 pr-8 text-base font-medium transition-all sm:block"
             value={months[dayjs(date).month()]}
             onChange={({ target: { value } }) =>
               changeMonth(months.indexOf(value))
@@ -78,6 +78,19 @@ function CalendarHeader({
             {months.map(option => (
               <option key={option} value={option}>
                 {option}
+              </option>
+            ))}
+          </Select>
+          <Select
+            className="hover:bg-bg-200/30 dark:hover:bg-bg-700/30 appearance-none rounded-md px-3 py-2 pr-8 text-base font-medium transition-all sm:hidden"
+            value={months[dayjs(date).month()]}
+            onChange={({ target: { value } }) =>
+              changeMonth(months.indexOf(value))
+            }
+          >
+            {months.map(option => (
+              <option key={option} value={option}>
+                {option.slice(0, 3)}
               </option>
             ))}
           </Select>

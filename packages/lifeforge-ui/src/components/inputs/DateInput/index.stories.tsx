@@ -26,7 +26,11 @@ export const Default: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} onChange={setDate} value={date} />
+    return (
+      <div className="p-12">
+        <DateInput {...args} value={date} onChange={setDate} />
+      </div>
+    )
   }
 }
 
@@ -47,6 +51,10 @@ export const WithTime: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} onChange={setDate} value={date} />
+    return (
+      <div>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </div>
+    )
   }
 }
