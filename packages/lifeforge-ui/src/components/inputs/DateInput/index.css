@@ -12,12 +12,12 @@
 }
 
 .react-datepicker {
-  @apply border-bg-200 bg-bg-50 shadow-custom dark:border-bg-700 dark:bg-bg-800 overflow-hidden rounded-lg p-4 text-sm! font-medium;
+  @apply border-bg-200 bg-bg-50 shadow-custom dark:border-bg-700 dark:bg-bg-800 overflow-hidden rounded-lg p-2 text-sm! font-medium sm:p-4;
 }
 
 .react-datepicker__day {
   line-height: auto;
-  @apply text-bg-500 hover:bg-bg-300 dark:hover:bg-bg-700/50 inline-flex aspect-square! h-auto w-12 items-center justify-center text-center transition-all;
+  @apply text-bg-500 hover:bg-bg-300 dark:hover:bg-bg-700/50 inline-flex aspect-square! h-auto w-10 items-center justify-center text-center transition-all sm:w-12;
 }
 
 .react-datepicker__day--today {
@@ -25,7 +25,7 @@
 }
 
 .react-datepicker__day-name {
-  @apply w-12 font-medium;
+  @apply w-10 font-medium sm:w-12;
 }
 
 .theme-dark .react-datepicker__day--selected {
@@ -49,7 +49,7 @@
 }
 
 .react-datepicker__time-container {
-  @apply border-bg-200 dark:border-bg-700;
+  @apply border-bg-200 dark:border-bg-700 hidden sm:block;
 }
 
 .react-datepicker__time {
