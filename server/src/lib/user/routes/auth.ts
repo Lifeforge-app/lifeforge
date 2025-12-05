@@ -48,7 +48,6 @@ const generateOTP = forgeController
 const login = forgeController
   .mutation()
   .noAuth()
-  .noEncryption()
   .description({
     en: 'Authenticate user with credentials',
     ms: 'Sahkan pengguna dengan kelayakan',

@@ -129,10 +129,12 @@ export default function AuthProvider({
         if (data.state === 'success') {
           localStorage.setItem('session', data.session)
 
-          setUserData(data.userData)
+          // Fetch user data separately via encrypted endpoint
+          const userData = await forgeAPI.user.auth.getUserData.query()
+          setUserData(userData)
           setAuth(true)
 
-          return 'success: ' + data.userData.name
+          return 'success: ' + userData.name
         } else if (data.state === '2fa_required') {
           onTwoFAModalOpen()
           tid.current = data.tid
@@ -176,10 +178,12 @@ export default function AuthProvider({
         if (res.ok && data.state === 'success') {
           localStorage.setItem('session', data.data.session)
 
-          setUserData(data.data.userData)
+          // Fetch user data separately via encrypted endpoint
+          const userData = await forgeAPI.user.auth.getUserData.query()
+          setUserData(userData)
           setAuth(true)
 
-          return data.data.userData.name
+          return userData.name
         } else {
           throw new Error('Invalid OTP')
         }

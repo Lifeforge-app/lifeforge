@@ -61,7 +61,6 @@ const getEndpoint = forgeController
 const verify = forgeController
   .mutation()
   .noAuth()
-  .noEncryption()
   .description({
     en: 'Verify OAuth authorization callback',
     ms: 'Sahkan panggilan balik kebenaran OAuth',
