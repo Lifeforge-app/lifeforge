@@ -78,24 +78,36 @@ export default function AuthProvider({
       success: boolean
       userData: UserData | null
     }> => {
-      return await fetch(forgeAPI.user.auth.verifySessionToken.endpoint, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${session}`
-        }
-      })
-        .then(async res => {
-          const data = await res.json()
-
-          if (res.ok && (data as any).state === 'success') {
-            return { success: true, userData: (data as any).data.userData }
-          } else {
-            return { success: false, userData: null }
+      try {
+        // Step 1: Verify session token (unencrypted endpoint)
+        const verifyRes = await fetch(
+          forgeAPI.user.auth.verifySessionToken.endpoint,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${session}`
+            }
           }
-        })
-        .catch(() => {
+        )
+
+        const verifyData = await verifyRes.json()
+
+        if (!verifyRes.ok || verifyData.state !== 'success') {
           return { success: false, userData: null }
-        })
+        }
+
+        // Update session if refreshed
+        if (verifyData.data.session) {
+          localStorage.setItem('session', verifyData.data.session)
+        }
+
+        // Step 2: Fetch user data (encrypted endpoint)
+        const userData = await forgeAPI.user.auth.getUserData.query()
+
+        return { success: true, userData }
+      } catch {
+        return { success: false, userData: null }
+      }
     },
     []
   )

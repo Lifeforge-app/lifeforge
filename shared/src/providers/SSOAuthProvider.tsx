@@ -21,9 +21,15 @@ function SSOAuthProvider({
 
   const verifyToken = async () => {
     try {
-      const { userData } = await forgeAPI.user.auth.verifySessionToken.mutate(
-        {}
-      )
+      // First verify session token (unencrypted)
+      const response = await forgeAPI.user.auth.verifySessionToken.mutateRaw({})
+
+      if (response.state !== 'success') {
+        throw new Error('Invalid session')
+      }
+
+      // Then fetch user data (encrypted)
+      const userData = await forgeAPI.user.auth.getUserData.query()
 
       setIsAuthed(true)
 

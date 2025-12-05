@@ -21,6 +21,7 @@ import {
   ToastProvider
 } from 'shared'
 
+import EncryptionProvider from './features/EncryptionProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 
@@ -45,6 +46,10 @@ function Providers() {
 
         // Provider that tells components the API endpoint to use
         [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
+
+        // Provider that initializes end-to-end encryption (fetches server public key)
+        [EncryptionProvider, { apiHost: import.meta.env.VITE_API_HOST }],
+
         // Provider that stores all the theming information
         [PersonalizationProvider],
 

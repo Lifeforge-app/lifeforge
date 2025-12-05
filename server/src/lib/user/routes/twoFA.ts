@@ -212,6 +212,7 @@ const disable = forgeController
 const verify = forgeController
   .mutation()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Verify two-factor authentication code',
     ms: 'Sahkan kod pengesahan dua faktor',
@@ -271,8 +272,7 @@ const verify = forgeController
     await updateNullData(sanitizedUserData, pb)
 
     return {
-      session: pb.authStore.token,
-      userData: sanitizedUserData
+      session: pb.authStore.token
     }
   })
 

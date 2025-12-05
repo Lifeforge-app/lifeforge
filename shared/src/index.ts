@@ -35,7 +35,21 @@ export { default as useDivSize } from './hooks/useDivSize'
 
 // Useful utility functions
 export { default as forceDown } from './utils/forceDown'
-export { encrypt, decrypt } from './utils/encryption'
+export {
+  encrypt,
+  decrypt,
+  setServerPublicKey,
+  hasServerPublicKey,
+  clearServerPublicKey,
+  initializeEncryption,
+  createEncryptionSession,
+  encryptRequest,
+  decryptResponse,
+  isEncryptedResponse,
+  type EncryptedPayload,
+  type EncryptedResponse,
+  type EncryptionConfig
+} from './utils/encryption'
 export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
 
 // Forge API client and types

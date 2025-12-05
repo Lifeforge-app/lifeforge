@@ -9,9 +9,7 @@ import Providers from './providers'
 import './utils/extendDayJs'
 import forgeAPI from './utils/forgeAPI'
 
-export type UserData = InferOutput<
-  typeof forgeAPI.user.auth.verifySessionToken
->['userData']
+export type UserData = InferOutput<typeof forgeAPI.user.auth.getUserData>
 
 function App() {
   useEffect(() => {

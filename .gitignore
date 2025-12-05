@@ -2,6 +2,7 @@
 node_modules
 .pnp
 .pnp.js
+bun.lock
 
 # testing
 coverage
@@ -13,11 +14,15 @@ tsbuild
 *.js
 !eslint.config.js
 *.tsbuildinfo
+logs
+pocketbase
+pb_*
+medium
+.temp
 
-# misc
+# system files
+Thumbs.db
 .DS_Store
-*.local
-!env/.env.example
 
 # logs
 npm-debug.log*
@@ -36,9 +41,10 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-pocketbase
-pb_*
-medium
-logs
-.temp
-bun.lock
+# environment variables & credentials
+*.local
+env
+.env
+.env.*
+!env/.env.example
+keys
