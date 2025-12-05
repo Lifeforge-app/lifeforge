@@ -14,7 +14,6 @@ tsbuild
 *.js
 !eslint.config.js
 *.tsbuildinfo
-logs
 pocketbase
 pb_*
 medium
@@ -29,6 +28,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+logs
+*.log
 
 # editor directories and files
 .idea
