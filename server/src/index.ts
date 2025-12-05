@@ -1,7 +1,7 @@
+import checkDB from '@functions/database/dbUtils'
 import { ensureKeysExist } from '@functions/encryption'
 import { LoggingService } from '@functions/logging/loggingService'
 import { setupSocket } from '@functions/socketio/setupSocket'
-import checkDB from '@functions/utils/checkDB'
 import traceRouteStack from '@functions/utils/traceRouteStack'
 import dotenv from 'dotenv'
 import fs from 'fs'
