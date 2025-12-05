@@ -87,12 +87,14 @@ export default async function fetchAPI<T>(
   {
     method = 'GET',
     body,
+    headers: customHeaders,
     timeout = 300000,
     raiseError = true,
     isExternal = false
   }: {
     method?: string
     body?: string | FormData | URLSearchParams | Blob | Record<string, unknown>
+    headers?: Record<string, string>
     timeout?: number
     raiseError?: boolean
     isExternal?: boolean
@@ -123,7 +125,7 @@ export default async function fetchAPI<T>(
       : new URL(endpoint, apiHost).pathname + new URL(endpoint, apiHost).search,
     timeout,
     data: body,
-    headers: {}
+    headers: { ...customHeaders }
   }
 
   // Handle different body types

@@ -1,3 +1,4 @@
+import { ensureKeysExist } from '@functions/encryption'
 import { LoggingService } from '@functions/logging/loggingService'
 import { setupSocket } from '@functions/socketio/setupSocket'
 import checkDB from '@functions/utils/checkDB'
@@ -26,6 +27,9 @@ if (!process.env.MASTER_KEY) {
 if (!fs.existsSync('./medium')) {
   fs.mkdirSync('./medium')
 }
+
+// Initialize encryption keys (generate if not exist)
+ensureKeysExist()
 
 await checkDB()
 

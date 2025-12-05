@@ -30,6 +30,12 @@
  * ```
  */
 import { checkExistence } from '@functions/database'
+import {
+  decryptAESData,
+  decryptAESKey,
+  encryptResponse,
+  isEncryptedPayload
+} from '@functions/encryption'
 import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import type { Request, Response, Router } from 'express'
@@ -122,6 +128,9 @@ export class ForgeControllerBuilder<
 
   protected _noAuth = false
 
+  /** Whether this endpoint uses end-to-end encryption (defaults to true) */
+  protected _encrypted = true
+
   /** The main callback function to handle the request */
   protected _callback: (
     context: Context<TMethod, TInput, TOutput, TMedia>
@@ -177,6 +186,7 @@ export class ForgeControllerBuilder<
     builder._description = this._description
     builder._isDownloadable = this._isDownloadable
     builder._noAuth = this._noAuth
+    builder._encrypted = this._encrypted
     builder._callback = this._callback as any
 
     return builder
@@ -206,8 +216,20 @@ export class ForgeControllerBuilder<
     return this
   }
 
+  /**
+   * Configures file upload fields for the endpoint.
+   * Automatically disables encryption since FormData cannot be encrypted.
+   *
+   * @param config - Object defining the media fields and their options
+   * @returns New builder instance with updated media configuration
+   */
   media<NewMedia extends MediaConfig>(config: NewMedia) {
-    return this.cloneWith<TMethod, TInput, TOutput, NewMedia>({}, config)
+    const builder = this.cloneWith<TMethod, TInput, TOutput, NewMedia>(
+      {},
+      config
+    )
+
+    return builder
   }
 
   /**
@@ -345,6 +367,33 @@ export class ForgeControllerBuilder<
   }
 
   /**
+   * Disables end-to-end encryption for this endpoint.
+   *
+   * By default, all endpoints use RSA + AES hybrid encryption.
+   * Use this method to disable encryption for endpoints that:
+   * - Need to expose public information (like the encryption public key endpoint)
+   * - Require raw binary responses
+   * - Need maximum performance for non-sensitive data
+   *
+   * @returns This builder instance for method chaining
+   *
+   * @example
+   * ```typescript
+   * controller
+   *   .noEncryption()
+   *   .input({})
+   *   .callback(async () => {
+   *     return { publicInfo: 'not encrypted' }
+   *   })
+   * ```
+   */
+  noEncryption() {
+    this._encrypted = false
+
+    return this
+  }
+
+  /**
    * Marks this endpoint as returning downloadable content.
    * Sets appropriate headers and disables the default response wrapper.
    * Automatically sets status code to 200 and enables noDefaultResponse.
@@ -399,6 +448,8 @@ export class ForgeControllerBuilder<
   ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia> {
     const schema = this._schema
 
+    const isEncrypted = this._encrypted
+
     const options = {
       statusCode: this._statusCode,
       noDefaultResponse: this._noDefaultResponse,
@@ -417,6 +468,24 @@ export class ForgeControllerBuilder<
     ) => {
       if (!(await isAuthTokenValid(req, res, this._noAuth))) return
 
+      // Store the decrypted AES key for response encryption
+      let aesKey: Buffer | null = null
+
+      // For GET requests with encryption, client sends AES key via header
+      if (isEncrypted && req.method === 'GET') {
+        const encryptedKeyHeader = req.headers['x-lifeforge-key'] as
+          | string
+          | undefined
+
+        if (encryptedKeyHeader) {
+          try {
+            aesKey = decryptAESKey(encryptedKeyHeader)
+          } catch {
+            return clientError(res, 'Failed to decrypt encryption key', 400)
+          }
+        }
+      }
+
       try {
         let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
 
@@ -426,9 +495,32 @@ export class ForgeControllerBuilder<
           let result
 
           if (type === 'body') {
+            let bodyData = req[type]
+
+            // Handle encrypted request body
+            if (isEncrypted && isEncryptedPayload(bodyData)) {
+              try {
+                // Decrypt the AES key
+                aesKey = decryptAESKey(bodyData.k)
+
+                // Decrypt the body data
+                const decryptedJson = decryptAESData(
+                  bodyData.data,
+                  aesKey,
+                  bodyData.iv,
+                  bodyData.tag
+                )
+
+                bodyData = JSON.parse(decryptedJson)
+                req.body = bodyData
+              } catch {
+                return clientError(res, 'Failed to decrypt request body', 400)
+              }
+            }
+
             const { data, media } = splitMediaAndData(
               this._media,
-              req[type],
+              bodyData,
               (req.files || {}) as Record<string, Express.Multer.File[]>
             )
 
@@ -545,7 +637,25 @@ export class ForgeControllerBuilder<
 
         if (!options.noDefaultResponse) {
           res.status(options.statusCode || 200)
-          successWithBaseResponse(res, result)
+
+          // Handle encrypted response
+          if (isEncrypted && aesKey) {
+            const encryptedResult = encryptResponse(result, aesKey)
+
+            res.setHeader('X-LifeForge-Encrypted', 'true')
+            res.setHeader(
+              'Access-Control-Expose-Headers',
+              'X-LifeForge-Encrypted'
+            )
+            // The response structure is different for encrypted responses
+            // Client-side decryption handles converting back to original type
+            res.json({
+              state: 'success',
+              data: encryptedResult as any
+            })
+          } else {
+            successWithBaseResponse(res, result)
+          }
         }
       } catch (err) {
         if (ClientError.isClientError(err)) {
@@ -579,7 +689,8 @@ export class ForgeControllerBuilder<
         statusCode: this._statusCode,
         noDefaultResponse: this._noDefaultResponse,
         existenceCheck: this._existenceCheck,
-        isDownloadable: this._isDownloadable
+        isDownloadable: this._isDownloadable,
+        encrypted: this._encrypted
       }
     }
 
@@ -600,6 +711,7 @@ export class ForgeControllerBuilder<
     newBuilder._description = this._description
     newBuilder._isDownloadable = this._isDownloadable
     newBuilder._noAuth = this._noAuth
+    newBuilder._encrypted = this._encrypted
     newBuilder._handler = handlerWithMeta
     newBuilder._callback = cb
 
@@ -657,6 +769,7 @@ class ForgeControllerBuilderWithoutSchema<
   /** Human-readable description of what this endpoint does */
   protected _description: Description = ''
   protected _noAuth = false
+  protected _encrypted = true
 
   constructor(public _method: TMethod) {}
 
@@ -674,6 +787,16 @@ class ForgeControllerBuilderWithoutSchema<
 
   noAuth() {
     this._noAuth = true
+
+    return this
+  }
+
+  /**
+   * Disables end-to-end encryption for this endpoint.
+   * @see ForgeControllerBuilder.noEncryption for full documentation
+   */
+  noEncryption() {
+    this._encrypted = false
 
     return this
   }
@@ -706,6 +829,10 @@ class ForgeControllerBuilderWithoutSchema<
 
     if (this._noAuth) {
       controller = controller.noAuth()
+    }
+
+    if (!this._encrypted) {
+      controller = controller.noEncryption()
     }
 
     return controller

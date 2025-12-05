@@ -11,6 +11,7 @@ import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 const validateOTP = forgeController
   .mutation()
+  .noEncryption()
   .description({
     en: 'Verify one-time password',
     ms: 'Sahkan kata laluan sekali guna',
@@ -27,6 +28,7 @@ const validateOTP = forgeController
 
 const generateOTP = forgeController
   .query()
+  .noEncryption()
   .description({
     en: 'Generate one-time password',
     ms: 'Jana kata laluan sekali guna',
@@ -46,6 +48,7 @@ const generateOTP = forgeController
 const login = forgeController
   .mutation()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Authenticate user with credentials',
     ms: 'Sahkan pengguna dengan kelayakan',
@@ -94,8 +97,7 @@ const login = forgeController
 
       return {
         state: 'success' as const,
-        session: pb.authStore.token,
-        userData: sanitizedUserData
+        session: pb.authStore.token
       }
     } else {
       throw new ClientError('Invalid credentials', 401)
@@ -104,6 +106,7 @@ const login = forgeController
 
 const verifySessionToken = forgeController
   .mutation()
+  .noEncryption()
   .description({
     en: 'Validate user session token',
     ms: 'Sahkan token sesi pengguna',
@@ -130,25 +133,43 @@ const verifySessionToken = forgeController
       throw new ClientError('Invalid session', 401)
     }
 
-    const userData = pb.authStore.record
+    if (!pb.authStore.record) {
+      throw new ClientError('Invalid session', 401)
+    }
+
+    return {
+      valid: true as const,
+      session: pb.authStore.token
+    }
+  })
+
+const getUserData = forgeController
+  .query()
+  .description({
+    en: 'Get current user data',
+    ms: 'Dapatkan data pengguna semasa',
+    'zh-CN': '获取当前用户数据',
+    'zh-TW': '獲取當前用戶資料'
+  })
+  .input({})
+  .callback(async ({ pb }) => {
+    const userData = pb.instance.authStore.record
 
     if (!userData) {
-      throw new ClientError('Invalid session', 401)
+      throw new ClientError('User not found', 404)
     }
 
     const sanitizedUserData = removeSensitiveData(userData)
 
-    await updateNullData(sanitizedUserData, pb)
+    await updateNullData(sanitizedUserData, pb.instance)
 
-    return {
-      session: pb.authStore.token,
-      userData: sanitizedUserData
-    }
+    return sanitizedUserData
   })
 
 export default forgeRouter({
   validateOTP,
   generateOTP,
   login,
-  verifySessionToken
+  verifySessionToken,
+  getUserData
 })

@@ -1,3 +1,4 @@
+import { getEncryptionConfig, getPublicKey } from '@functions/encryption'
 import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
@@ -7,6 +8,7 @@ import z from 'zod'
 const welcome = forgeController
   .query()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Welcome to LifeForge API',
     ms: 'Selamat datang ke API LifeForge',
@@ -19,6 +21,7 @@ const welcome = forgeController
 const ping = forgeController
   .mutation()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Ping the server',
     ms: 'Ping pelayan',
@@ -38,6 +41,7 @@ const ping = forgeController
 const status = forgeController
   .query()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Get server status',
     ms: 'Dapatkan status pelayan',
@@ -52,6 +56,7 @@ const status = forgeController
 const getMedia = forgeController
   .query()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Retrieve media file from PocketBase',
     ms: 'Dapatkan fail media dari PocketBase',
@@ -129,6 +134,22 @@ const corsAnywhere = forgeController
     return response.text()
   })
 
+const encryptionPublicKey = forgeController
+  .query()
+  .noAuth()
+  .noEncryption()
+  .description({
+    en: 'Get server public key for end-to-end encryption',
+    ms: 'Dapatkan kunci awam pelayan untuk penyulitan hujung-ke-hujung',
+    'zh-CN': '获取服务器公钥用于端到端加密',
+    'zh-TW': '獲取伺服器公鑰用於端到端加密'
+  })
+  .input({})
+  .callback(async () => ({
+    publicKey: getPublicKey(),
+    config: getEncryptionConfig()
+  }))
+
 const coreRoutes = forgeRouter({
   '': welcome,
   locales: (await import('@lib/locales')).default,
@@ -143,7 +164,8 @@ const coreRoutes = forgeRouter({
   ping,
   status,
   media: getMedia,
-  corsAnywhere
+  corsAnywhere,
+  encryptionPublicKey
 })
 
 export default coreRoutes

@@ -11,6 +11,7 @@ let currentCodeVerifier: string | null = null
 const listProviders = forgeController
   .query()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Retrieve available OAuth providers',
     ms: 'Dapatkan penyedia OAuth yang tersedia',
@@ -27,6 +28,7 @@ const listProviders = forgeController
 const getEndpoint = forgeController
   .query()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Get OAuth authorization URL for provider',
     ms: 'Dapatkan URL kebenaran OAuth untuk penyedia',
@@ -59,6 +61,7 @@ const getEndpoint = forgeController
 const verify = forgeController
   .mutation()
   .noAuth()
+  .noEncryption()
   .description({
     en: 'Verify OAuth authorization callback',
     ms: 'Sahkan panggilan balik kebenaran OAuth',
