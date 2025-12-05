@@ -15,7 +15,7 @@ tsbuild
 !eslint.config.js
 *.tsbuildinfo
 pocketbase
-pb_*
+pb_*/
 medium
 .temp
 
