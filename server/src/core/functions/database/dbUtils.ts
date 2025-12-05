@@ -92,14 +92,6 @@ export async function connectToPocketBase(
 }
 
 /**
- * Maps collection names to their target names in PocketBase
- * Handles special cases like users__users -> users
- */
-function mapCollectionName(collectionName: string): string {
-  return collectionName === 'user__users' ? 'users' : collectionName
-}
-
-/**
  * Validates that all required collections exist in PocketBase
  * @param pb Authenticated PocketBase instance
  * @returns Validation result with details about missing collections
@@ -118,7 +110,7 @@ async function validateCollections(
   const collectionsWithDiscrepancies: string[] = []
 
   for (const collection of requiredCollections) {
-    const targetCollection = mapCollectionName(collection)
+    const targetCollection = collection === 'user__users' ? 'users' : collection
 
     if (!existingCollectionNames.has(targetCollection)) {
       missingCollections.push(collection)
