@@ -1,4 +1,7 @@
-import { getPBSuperUserInstance } from '@functions/database'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
 import { forgeController, forgeRouter } from '@functions/routes'
 
 const list = forgeController
@@ -11,7 +14,7 @@ const list = forgeController
   })
   .input({})
   .callback(async () => {
-    const pb = await getPBSuperUserInstance()
+    const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     const collections = await pb.collections.getFullList()
 

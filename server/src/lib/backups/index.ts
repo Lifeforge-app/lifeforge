@@ -1,4 +1,7 @@
-import { getPBSuperUserInstance } from '@functions/database'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
 import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import z from 'zod'
@@ -13,7 +16,7 @@ const list = forgeController
   })
   .input({})
   .callback(async () => {
-    const pb = await getPBSuperUserInstance()
+    const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     const allBackups = await pb.backups.getFullList()
 
@@ -39,7 +42,7 @@ const download = forgeController
   })
   .isDownloadable()
   .callback(async ({ res, query: { key } }) => {
-    const pb = await getPBSuperUserInstance()
+    const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     const token = await pb.files.getToken()
 
@@ -76,7 +79,7 @@ const create = forgeController
   })
   .statusCode(201)
   .callback(async ({ body: { backupName } }) => {
-    const pb = await getPBSuperUserInstance()
+    const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     if (!backupName) {
       backupName = `pb_backup_lifeforge_${moment().format('YYYYMMDD_HHmmss')}.zip`
@@ -100,7 +103,7 @@ const remove = forgeController
   })
   .statusCode(204)
   .callback(async ({ query: { key } }) => {
-    const pb = await getPBSuperUserInstance()
+    const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     await pb.backups.delete(key)
   })
