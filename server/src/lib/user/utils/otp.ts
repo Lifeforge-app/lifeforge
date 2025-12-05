@@ -1,6 +1,7 @@
-import { decrypt } from '@functions/auth/encryption'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
+
+import { decrypt } from '@functions/auth/encryption'
 
 import { currentSession } from '..'
 

@@ -1,5 +1,6 @@
-import { forgeRouter } from '@functions/routes'
 import { v4 } from 'uuid'
+
+import { forgeRouter } from '@functions/routes'
 
 import authRouter from './routes/auth'
 import entriesRouter from './routes/entries'

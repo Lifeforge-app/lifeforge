@@ -1,9 +1,10 @@
-import type { PBService } from '@functions/database'
 import { ALLOWED_LANG } from '@lib/locales/constants/locales'
 import type { Request, Response } from 'express'
 import type { Server } from 'socket.io'
 import z from 'zod'
 import type { ZodIntersection, ZodObject, ZodTypeAny } from 'zod'
+
+import type { PBService } from '@functions/database'
 
 export interface BaseResponse<T = ''> {
   data?: T

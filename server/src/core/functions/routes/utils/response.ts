@@ -1,7 +1,8 @@
-import { LoggingService } from '@functions/logging/loggingService'
 import chalk from 'chalk'
 import { Response } from 'express'
 import fs from 'fs'
+
+import { LoggingService } from '@functions/logging/loggingService'
 
 import { BaseResponse } from '../typescript/forge_controller.types'
 

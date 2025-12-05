@@ -1,7 +1,8 @@
-import { LoggingService } from '@functions/logging/loggingService'
 import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
 import chalk from 'chalk'
 import Pocketbase from 'pocketbase'
+
+import { LoggingService } from '@functions/logging/loggingService'
 
 interface DBConnectionConfig {
   host: string

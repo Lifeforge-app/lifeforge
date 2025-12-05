@@ -1,6 +1,7 @@
+import z from 'zod'
+
 import { decrypt2, encrypt2 } from '@functions/auth/encryption'
 import { forgeController, forgeRouter } from '@functions/routes'
-import z from 'zod'
 
 import { challenge } from '..'
 import getDecryptedMaster from '../utils/getDecryptedMaster'

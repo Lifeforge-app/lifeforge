@@ -1,3 +1,6 @@
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import {
   CollectionKey,
   ExpandConfig,
@@ -6,8 +9,6 @@ import {
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
 import { LoggingService } from '@functions/logging/loggingService'
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 

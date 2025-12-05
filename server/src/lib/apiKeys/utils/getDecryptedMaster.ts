@@ -1,7 +1,8 @@
+import bcrypt from 'bcryptjs'
+
 import { decrypt2 } from '@functions/auth/encryption'
 import { PBService } from '@functions/database'
 import { ClientError } from '@functions/routes/utils/response'
-import bcrypt from 'bcryptjs'
 
 import { challenge } from '..'
 

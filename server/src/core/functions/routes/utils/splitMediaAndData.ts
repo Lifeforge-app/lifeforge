@@ -1,5 +1,6 @@
-import { LoggingService } from '@functions/logging/loggingService'
 import chalk from 'chalk'
+
+import { LoggingService } from '@functions/logging/loggingService'
 
 import { MediaConfig } from '../typescript/forge_controller.types'
 

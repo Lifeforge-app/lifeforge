@@ -1,6 +1,7 @@
+import z from 'zod'
+
 import { forgeController, forgeRouter } from '@functions/routes'
 import { checkModulesAvailability as cma } from '@functions/utils/checkModulesAvailability'
-import z from 'zod'
 
 const checkModuleAvailability = forgeController
   .query()

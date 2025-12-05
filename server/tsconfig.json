@@ -44,6 +44,7 @@
     "../apps/passwords/passwords",
     "../apps/scoresLibrary/scoresLibrary",
     "../apps/wishlist/wishlist",
-    "../journal"
+    "../journal",
+    "../apps/minecraftServerTracker/client/src/utils/minecraftTextToHtml.ts"
   ]
 }

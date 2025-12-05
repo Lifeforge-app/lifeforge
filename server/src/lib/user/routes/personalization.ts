@@ -1,8 +1,9 @@
+import z from 'zod'
+
 import { getAPIKey } from '@functions/database'
 import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import z from 'zod'
 
 export interface FontFamily {
   family: string

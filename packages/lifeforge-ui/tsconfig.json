@@ -4,18 +4,10 @@
     "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@/*": [
-        "./src/*"
-      ]
+      "@components/*": ["./src/components/*"],
+      "@/*": ["./src/*"]
     },
     "declaration": true,
     "declarationMap": true,
@@ -28,10 +20,7 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": true
   },
-  "include": [
-    "./src/**/*",
-    "./.storybook/*"
-  ],
+  "include": ["./src/**/*", "./.storybook/*"],
   "references": [
     {
       "path": "../../server/tsconfig.json"

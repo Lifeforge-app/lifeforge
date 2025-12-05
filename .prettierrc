@@ -12,6 +12,7 @@
     "^shared/(.*)$",
     "@apps/(.*)$",
     "@components/(.*)$",
+    "@functions/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
