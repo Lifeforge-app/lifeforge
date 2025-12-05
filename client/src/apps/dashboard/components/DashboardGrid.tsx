@@ -95,7 +95,10 @@ function DashboardGrid({
             .flat()
         )
       ].map(widgetId => (
-        <div key={widgetId} className={clsx(canLayoutChange && 'cursor-move')}>
+        <div
+          key={widgetId}
+          className={clsx('relative', canLayoutChange && 'cursor-move')}
+        >
           {(() => {
             if (!width || !height) {
               return null
@@ -123,10 +126,13 @@ function DashboardGrid({
             )
           })()}
           {canLayoutChange && (
-            <Icon
-              className="absolute right-0 bottom-0 text-2xl"
-              icon="clarity:drag-handle-corner-line"
-            />
+            <>
+              <div className="bg-bg-900/30 absolute inset-0 top-0 left-0 rounded" />
+              <Icon
+                className="absolute right-0 bottom-0 text-2xl"
+                icon="clarity:drag-handle-corner-line"
+              />
+            </>
           )}
         </div>
       ))}
