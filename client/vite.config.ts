@@ -33,12 +33,14 @@ export const alias: Alias[] = [
 
       const matched = globSync([
         path.resolve(rootDir, 'src', id.slice(2) + '.{tsx,ts,json}'),
-        path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}')
+        path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}'),
+        path.resolve(rootDir, 'src', id.slice(2))
       ])
       if (!matched[0]) {
         console.log([
           path.resolve(rootDir, 'src', id.slice(2) + '.{tsx,ts,json}'),
-          path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}')
+          path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}'),
+          path.resolve(rootDir, 'src', id.slice(2))
         ])
         console.log(
           `[vite] failed to resolve import "${id}" from "${importer}"`
