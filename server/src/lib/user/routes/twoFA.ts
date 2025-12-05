@@ -212,7 +212,6 @@ const disable = forgeController
 const verify = forgeController
   .mutation()
   .noAuth()
-  .noEncryption()
   .description({
     en: 'Verify two-factor authentication code',
     ms: 'Sahkan kod pengesahan dua faktor',
