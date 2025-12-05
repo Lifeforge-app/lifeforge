@@ -1,8 +1,9 @@
+import z from 'zod'
+
 import { getAPIKey } from '@functions/database'
 import searchLocations from '@functions/external/location'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import z from 'zod'
 
 const search = forgeController
   .query()

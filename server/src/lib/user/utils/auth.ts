@@ -1,8 +1,9 @@
-import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 import COLLECTION_SCHEMAS from '@schema'
 import _ from 'lodash'
 import Pocketbase from 'pocketbase'
 import z from 'zod'
+
+import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
 
 export function removeSensitiveData(userData: Record<string, any>) {
   const newUserData = _.cloneDeep(userData)

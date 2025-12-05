@@ -1,10 +1,11 @@
-import { LoggingService } from '@functions/logging/loggingService'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
+
+import { LoggingService } from '@functions/logging/loggingService'
+import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 
 import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
 

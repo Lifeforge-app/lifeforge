@@ -1,7 +1,8 @@
-import { LoggingService } from '@functions/logging/loggingService'
 import chalk from 'chalk'
 import { Request, Response } from 'express'
 import morgan from 'morgan'
+
+import { LoggingService } from '@functions/logging/loggingService'
 
 const METHOD_COLOR = {
   GET: '#34ace0',

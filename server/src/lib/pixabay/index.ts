@@ -1,7 +1,8 @@
+import z from 'zod'
+
 import { getAPIKey } from '@functions/database'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-import z from 'zod'
 
 const searchImages = forgeController
   .query()

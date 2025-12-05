@@ -29,6 +29,11 @@
  * controller.register(router)
  * ```
  */
+import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
+import COLLECTION_SCHEMAS from '@schema'
+import type { Request, Response, Router } from 'express'
+import z from 'zod'
+
 import { checkExistence } from '@functions/database'
 import {
   decryptAESData,
@@ -36,10 +41,6 @@ import {
   encryptResponse,
   isEncryptedPayload
 } from '@functions/encryption'
-import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
-import COLLECTION_SCHEMAS from '@schema'
-import type { Request, Response, Router } from 'express'
-import z from 'zod'
 
 import {
   BaseResponse,

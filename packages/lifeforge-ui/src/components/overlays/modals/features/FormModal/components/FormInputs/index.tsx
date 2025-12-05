@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useMemo } from 'react'
 
+import { Tooltip } from '@components/utilities'
+
 import {
   type FormFieldPropsUnion,
   type FormInputProps,
@@ -18,7 +20,6 @@ import FormNumberInput from './components/FormNumberInput'
 import FormRRuleInput from './components/FormRRuleInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
-import { Tooltip } from '@components/utilities'
 
 // Map of form field types to their corresponding components
 const COMPONENT_MAP: Record<

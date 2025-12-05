@@ -1,9 +1,10 @@
-import { getEncryptionConfig, getPublicKey } from '@functions/encryption'
-import { LoggingService } from '@functions/logging/loggingService'
-import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import request from 'request'
 import z from 'zod'
+
+import { getEncryptionConfig, getPublicKey } from '@functions/encryption'
+import { LoggingService } from '@functions/logging/loggingService'
+import { forgeController, forgeRouter } from '@functions/routes'
 
 const welcome = forgeController
   .query()

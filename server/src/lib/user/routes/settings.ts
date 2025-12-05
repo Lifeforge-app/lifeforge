@@ -1,7 +1,8 @@
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
 import moment from 'moment'
 import z from 'zod'
+
+import getMedia from '@functions/external/media'
+import { forgeController, forgeRouter } from '@functions/routes'
 
 const updateAvatar = forgeController
   .mutation()

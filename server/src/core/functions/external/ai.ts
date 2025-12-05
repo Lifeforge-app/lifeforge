@@ -1,13 +1,14 @@
-import { PBService, getAPIKey } from '@functions/database'
-import { LoggingService } from '@functions/logging/loggingService'
-import { ClientError } from '@functions/routes/utils/response'
-import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 import chalk from 'chalk'
 import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
 import OpenAI from 'openai'
 import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
 import z from 'zod'
+
+import { PBService, getAPIKey } from '@functions/database'
+import { LoggingService } from '@functions/logging/loggingService'
+import { ClientError } from '@functions/routes/utils/response'
+import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 
 export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
   pb: PBService

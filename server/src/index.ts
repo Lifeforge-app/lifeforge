@@ -1,12 +1,13 @@
+import dotenv from 'dotenv'
+import fs from 'fs'
+import { createServer } from 'node:http'
+import { Server } from 'socket.io'
+
 import checkDB from '@functions/database/dbUtils'
 import { ensureKeysExist } from '@functions/encryption'
 import { LoggingService } from '@functions/logging/loggingService'
 import { setupSocket } from '@functions/socketio/setupSocket'
 import traceRouteStack from '@functions/utils/traceRouteStack'
-import dotenv from 'dotenv'
-import fs from 'fs'
-import { createServer } from 'node:http'
-import { Server } from 'socket.io'
 
 import app from './core/app'
 import { CORS_ALLOWED_ORIGINS } from './core/routes/constants/corsAllowedOrigins'
