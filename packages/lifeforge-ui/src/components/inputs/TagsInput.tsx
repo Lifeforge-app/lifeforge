@@ -111,7 +111,7 @@ function TagsInput({
           label={inputLabel}
           required={required === true}
         />
-        <div className="mt-10 mb-4 ml-[14px] flex w-full flex-wrap items-center gap-2">
+        <div className="mt-10 mb-4 ml-3.5 flex w-full flex-wrap items-center gap-2">
           {value.map((tag, index) =>
             renderTags ? (
               renderTags(tag, index, () => removeTag(index))
