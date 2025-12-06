@@ -32,7 +32,7 @@ export default function Quotes() {
         {quote => (
           <div
             className={clsx(
-              'text-center text-xl',
+              'text-center text-lg sm:text-xl',
               tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50'
             )}
           >

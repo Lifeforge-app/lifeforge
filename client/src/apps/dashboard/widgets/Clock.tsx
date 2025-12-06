@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-import type { WidgetConfig } from 'shared'
+import { type WidgetConfig } from 'shared'
 
 function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
@@ -20,11 +20,18 @@ function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   return (
     <div
       className={clsx(
-        'shadow-custom component-bg flex size-full gap-3 rounded-lg p-4',
-        h < 2 ? 'flex-between flex-row' : 'flex-col'
+        'shadow-custom component-bg flex size-full gap-6 rounded-lg p-4',
+        h < 2
+          ? 'items-center justify-center min-[488px]:justify-between'
+          : 'flex-col'
       )}
     >
-      <div className="flex flex-col">
+      <div
+        className={clsx(
+          'flex-col',
+          h === 1 ? 'hidden min-[488px]:flex' : 'flex'
+        )}
+      >
         <span className="font-medium">
           {Intl.DateTimeFormat()
             .resolvedOptions()
@@ -39,14 +46,16 @@ function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
       <span
         className={clsx(
           'flex items-end font-semibold tracking-wider',
-          h < 2 ? 'text-4xl' : 'my-auto justify-center text-center text-6xl'
+          h < 2
+            ? 'text-4xl'
+            : 'my-auto justify-center text-center text-4xl min-[520px]:text-6xl'
         )}
       >
         {time}
         <span
           className={clsx(
             'text-bg-500 -mb-0.5 ml-1 inline-block w-9',
-            h < 2 ? 'text-2xl' : 'text-4xl'
+            h < 2 ? 'text-2xl' : 'text-2xl min-[520px]:text-4xl'
           )}
         >
           {second}
@@ -63,6 +72,5 @@ export const config: WidgetConfig = {
   icon: 'tabler:clock',
   minW: 2,
   minH: 1,
-  maxW: 4,
   maxH: 2
 }
