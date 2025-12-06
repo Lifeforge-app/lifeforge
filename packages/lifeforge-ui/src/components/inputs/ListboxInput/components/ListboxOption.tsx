@@ -1,6 +1,7 @@
 import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { formatHex, parse } from 'culori'
 
 function ListboxOption({
   value,
@@ -28,6 +29,10 @@ function ListboxOption({
   style?: React.CSSProperties
   selected?: boolean
 }) {
+  const convertedColor = color?.startsWith('oklch(')
+    ? formatHex(parse(color))
+    : color
+
   return (
     <HeadlessListboxOption
       className={clsx(
@@ -62,7 +67,7 @@ function ListboxOption({
                   style={
                     color !== undefined
                       ? {
-                          backgroundColor: color + '20',
+                          backgroundColor: convertedColor + '20',
                           color
                         }
                       : {}

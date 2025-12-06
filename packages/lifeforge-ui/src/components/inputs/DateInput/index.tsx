@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
@@ -17,10 +18,12 @@ import CalendarHeader from './components/CalendarHeader'
  * Props for the DateInput component.
  */
 interface DateInputProps {
-  /** The label text displayed above the date input field. */
-  label: string
-  /** The icon to display in the date input field. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the date input field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the date input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The current date value of the input. */
   value: Date | null
   /** Callback function called when the date value changes. */
@@ -45,6 +48,7 @@ interface DateInputProps {
  * DateInput component for selecting dates and times.
  */
 function DateInput({
+  variant = 'classic',
   label,
   icon,
   value,
@@ -57,7 +61,7 @@ function DateInput({
   namespace,
   errorMsg
 }: DateInputProps) {
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const { derivedThemeColor } = usePersonalization()
 
@@ -70,22 +74,27 @@ function DateInput({
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
+      variant={variant}
       onFocus={() => ref.current?.input?.focus()}
     >
-      <InputIcon
-        active={!!value}
-        hasError={!!errorMsg}
-        icon={icon}
-        isFocused={isCalendarOpen}
-      />
-      <div className="flex w-full items-center gap-2">
-        <InputLabel
+      {variant === 'classic' && icon && (
+        <InputIcon
           active={!!value}
-          focused={isCalendarOpen}
           hasError={!!errorMsg}
-          label={inputLabel}
-          required={required === true}
+          icon={icon}
+          isFocused={isCalendarOpen}
         />
+      )}
+      <div className="flex w-full items-center gap-2">
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={!!value}
+            focused={isCalendarOpen}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
         <DatePicker
           ref={autoFocusableRef(autoFocus, ref, e => {
             e.input?.focus()
@@ -96,7 +105,12 @@ function DateInput({
               ? 'theme-light'
               : 'theme-dark'
           }
-          className="focus:placeholder:text-bg-500 mt-6 h-13 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-hidden placeholder:text-transparent focus:outline-hidden"
+          className={clsx(
+            'focus:placeholder:text-bg-500 w-full rounded-lg border-none bg-transparent tracking-wider outline-hidden focus:outline-hidden',
+            variant === 'classic'
+              ? 'mt-6 h-13 px-4 placeholder:text-transparent'
+              : 'h-7 p-0'
+          )}
           dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}
           formatWeekDay={(date: string) => {
             return date.slice(0, 3)
@@ -126,7 +140,10 @@ function DateInput({
         />
         {!!value && (
           <Button
-            className="hover:bg-bg-300 dark:hover:bg-bg-700/30! mr-4 p-2!"
+            className={clsx(
+              'hover:bg-bg-300 dark:hover:bg-bg-700/30! p-2!',
+              variant === 'classic' && 'mr-4'
+            )}
             icon="tabler:x"
             variant="plain"
             onClick={() => {

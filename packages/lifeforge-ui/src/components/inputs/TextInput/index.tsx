@@ -9,10 +9,12 @@ import useInputLabel from '../shared/hooks/useInputLabel'
 import TextInputBox from './components/TextInputBox'
 
 export type TextInputProps = {
-  /** The label text displayed above the input field. */
-  label: string
-  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the input field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The placeholder text shown when the input is empty. */
   placeholder: string
   /** The current text value of the input field. */
@@ -48,6 +50,7 @@ export type TextInputProps = {
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>
 
 function TextInput({
+  variant = 'classic',
   label,
   icon,
   placeholder,
@@ -68,7 +71,7 @@ function TextInput({
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [actionButtonLoading, handleClick] = usePromiseLoading(
     (actionButtonProps?.onClick as () => Promise<void>) ||
@@ -81,19 +84,24 @@ function TextInput({
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={inputRef}
+      variant={variant}
     >
-      <InputIcon
-        active={!!value && String(value).length > 0}
-        hasError={!!errorMsg}
-        icon={icon}
-      />
-      <div className="flex w-full items-center gap-2">
-        <InputLabel
+      {variant === 'classic' && icon && (
+        <InputIcon
           active={!!value && String(value).length > 0}
           hasError={!!errorMsg}
-          label={inputLabel}
-          required={required === true}
+          icon={icon}
         />
+      )}
+      <div className="flex w-full items-center gap-2">
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={!!value && String(value).length > 0}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
         <TextInputBox
           autoFocus={autoFocus}
           disabled={disabled}
@@ -102,6 +110,7 @@ function TextInput({
           isPassword={isPassword}
           placeholder={placeholder}
           showPassword={showPassword}
+          variant={variant}
           value={value}
           onChange={onChange}
           {...inputProps}

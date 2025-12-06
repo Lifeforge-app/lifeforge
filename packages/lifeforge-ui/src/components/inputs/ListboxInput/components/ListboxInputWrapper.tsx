@@ -9,7 +9,8 @@ function ListboxInputWrapper<T>({
   children,
   disabled,
   onClick,
-  errorMsg
+  errorMsg,
+  variant = 'classic'
 }: {
   value: T
   onChange: (value: T) => void
@@ -19,16 +20,21 @@ function ListboxInputWrapper<T>({
   disabled?: boolean
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   errorMsg?: string
+  variant?: 'classic' | 'plain'
 }) {
   return (
     <div className={clsx('flex-1 space-y-2', className)}>
       <Listbox
         as="div"
         className={clsx(
-          'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 relative flex w-full items-center gap-1 rounded-t-lg border-b-2 transition-all',
-          errorMsg
-            ? 'border-red-500'
-            : 'border-bg-500 focus-within:border-custom-500! data-open:border-custom-500!',
+          'relative flex w-full items-center gap-1 transition-all',
+          variant === 'classic'
+            ? 'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 rounded-t-lg border-b-2'
+            : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
+          variant === 'classic' &&
+            (errorMsg
+              ? 'border-red-500'
+              : 'border-bg-500 focus-within:border-custom-500! data-open:border-custom-500!'),
           disabled ? 'pointer-events-none! opacity-50' : ''
         )}
         multiple={multiple}

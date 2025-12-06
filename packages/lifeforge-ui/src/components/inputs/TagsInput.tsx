@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
 import Button from './Button'
@@ -11,10 +12,12 @@ import useInputLabel from './shared/hooks/useInputLabel'
  * Props for the TagsInput component.
  */
 interface TagsInputProps {
-  /** The label text displayed above the tags input field. */
-  label: string
-  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the tags input field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The placeholder text displayed when the input is empty. */
   placeholder: string
   /** The current array of tag values. */
@@ -49,6 +52,7 @@ interface TagsInputProps {
  * A tags input component that allows users to add, remove, and manage multiple tags.
  */
 function TagsInput({
+  variant = 'classic',
   label,
   icon,
   placeholder,
@@ -64,7 +68,7 @@ function TagsInput({
   namespace,
   errorMsg
 }: TagsInputProps) {
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [currentTag, setCurrentTag] = useState<string>('')
 
@@ -98,20 +102,30 @@ function TagsInput({
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={inputRef}
+      variant={variant}
     >
-      <InputIcon
-        active={String(value).length > 0}
-        hasError={!!errorMsg}
-        icon={icon}
-      />
-      <div className="flex w-full items-center gap-2">
-        <InputLabel
+      {variant === 'classic' && icon && (
+        <InputIcon
           active={String(value).length > 0}
           hasError={!!errorMsg}
-          label={inputLabel}
-          required={required === true}
+          icon={icon}
         />
-        <div className="mt-10 mb-4 ml-3.5 flex w-full flex-wrap items-center gap-2">
+      )}
+      <div className="flex w-full items-center gap-2">
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={String(value).length > 0}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
+        <div
+          className={clsx(
+            'flex w-full flex-wrap items-center gap-2',
+            variant === 'classic' ? 'mt-10 mb-4 ml-3.5' : ''
+          )}
+        >
           {value.map((tag, index) =>
             renderTags ? (
               renderTags(tag, index, () => removeTag(index))
@@ -141,6 +155,7 @@ function TagsInput({
               className="my-0! h-auto w-min! py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}
+              variant={variant}
               value={currentTag}
               onBlur={addTag}
               onChange={setCurrentTag}

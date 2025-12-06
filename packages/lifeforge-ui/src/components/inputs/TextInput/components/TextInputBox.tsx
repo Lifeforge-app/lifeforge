@@ -13,6 +13,7 @@ function TextInputBox({
   disabled = false,
   className = '',
   autoFocus = false,
+  variant = 'classic',
   ...inputProps
 }: {
   value: string
@@ -34,6 +35,7 @@ function TextInputBox({
   autoFocus?: boolean
   disabled?: boolean
   className?: string
+  variant?: 'classic' | 'plain'
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
   return (
     <>
@@ -45,7 +47,10 @@ function TextInputBox({
         aria-label={placeholder}
         autoComplete="off"
         className={clsx(
-          'caret-custom-500 focus:placeholder:text-bg-500 mt-6 h-13 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden',
+          'caret-custom-500 focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wider focus:outline-hidden',
+          variant === 'classic'
+            ? 'mt-6 h-13 p-6 pl-4 placeholder:text-transparent'
+            : 'h-7 p-0',
           className
         )}
         disabled={disabled}
