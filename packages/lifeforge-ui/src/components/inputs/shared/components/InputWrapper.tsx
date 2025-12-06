@@ -5,12 +5,14 @@ import { useCallback } from 'react'
 
 function InputWrapper({
   className = '',
+  variant = 'classic',
   disabled = false,
   inputRef,
   onFocus,
   children,
   errorMsg
 }: {
+  variant?: 'classic' | 'plain'
   className?: string
   disabled?: boolean
   inputRef?: React.RefObject<any | null>
@@ -59,10 +61,14 @@ function InputWrapper({
     <div className={clsx('flex-1 space-y-2', className)}>
       <div
         className={clsx(
-          'bg-bg-200/50 shadow-custom hover:bg-bg-200 group component-bg-lighter-with-hover relative flex w-full shrink-0 items-center gap-1 rounded-t-lg border-b-2 pl-6 transition-all',
-          errorMsg
-            ? 'border-red-500 focus-within:!border-red-500'
-            : 'border-bg-500 focus-within:!border-custom-500',
+          'group relative flex w-full shrink-0 items-center gap-1 transition-all',
+          variant === 'classic'
+            ? 'bg-bg-200/50 shadow-custom hover:bg-bg-200 component-bg-lighter-with-hover rounded-t-lg border-b-2 pl-6'
+            : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
+          variant === 'classic' &&
+            (errorMsg
+              ? 'border-red-500 focus-within:!border-red-500'
+              : 'border-bg-500 focus-within:!border-custom-500'),
           disabled ? 'pointer-events-none! opacity-50' : 'cursor-text'
         )}
         role="button"

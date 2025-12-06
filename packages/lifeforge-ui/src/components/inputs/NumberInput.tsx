@@ -1,13 +1,14 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import { useEffect, useState } from 'react'
 
 import TextInput from './TextInput'
 
 interface NumberInputProps {
-  /** The label text displayed above the number input field. */
-  label: string
-  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the number input field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The current numeric value of the input. */
   value: number
   /** Callback function called when the input value changes. */
@@ -24,9 +25,16 @@ interface NumberInputProps {
   namespace?: string
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** The minimum value allowed. */
+  min?: number
+  /** The maximum value allowed. */
+  max?: number
+  /** The placeholder text shown when the input is empty. */
+  placeholder?: string
 }
 
 function NumberInput({
+  variant = 'classic',
   label,
   icon,
   value,
@@ -36,7 +44,10 @@ function NumberInput({
   autoFocus = false,
   className,
   namespace,
-  errorMsg
+  errorMsg,
+  min,
+  max,
+  placeholder = '123'
 }: NumberInputProps) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
@@ -56,11 +67,9 @@ function NumberInput({
       inputMode="numeric"
       label={label}
       namespace={namespace}
-      placeholder="123"
+      placeholder={placeholder}
       required={required}
-      onChange={(value: string) => {
-        setCurrentStringValue(value)
-      }}
+      variant={variant}
       value={currentStringValue}
       onBlur={() => {
         if (currentStringValue.trim() === '') {
@@ -79,11 +88,22 @@ function NumberInput({
           return
         }
 
-        const numericValue = currentStringValue.includes('.')
+        let numericValue = currentStringValue.includes('.')
           ? parseFloat(currentStringValue)
           : parseInt(currentStringValue)
 
+        if (min !== undefined && numericValue < min) {
+          numericValue = min
+        }
+
+        if (max !== undefined && numericValue > max) {
+          numericValue = max
+        }
+
         onChange(numericValue)
+      }}
+      onChange={(value: string) => {
+        setCurrentStringValue(value)
       }}
     />
   )

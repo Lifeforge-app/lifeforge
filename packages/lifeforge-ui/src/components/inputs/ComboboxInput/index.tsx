@@ -1,4 +1,5 @@
 import { ComboboxInput as HeadlessComboboxInput } from '@headlessui/react'
+import clsx from 'clsx'
 import { useCallback, useMemo } from 'react'
 
 import InputIcon from '../shared/components/InputIcon'
@@ -9,10 +10,12 @@ import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ComboboxOptions from './components/ComboboxOptions'
 
 interface ComboboxInputProps<T> {
-  /** The label text displayed above the combobox field. */
-  label: string
-  /** The icon to display in the combobox. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the combobox field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the combobox. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The current selected value of the combobox. */
   value: T
   /** Callback function called when the selected value changes. */
@@ -38,6 +41,7 @@ interface ComboboxInputProps<T> {
 }
 
 function ComboboxInput<T>({
+  variant = 'classic',
   label,
   icon,
   value,
@@ -52,7 +56,7 @@ function ComboboxInput<T>({
   className,
   namespace
 }: ComboboxInputProps<T>) {
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
@@ -98,22 +102,34 @@ function ComboboxInput<T>({
       className={className}
       disabled={disabled}
       setQuery={setQuery}
+      variant={variant}
       value={value}
       onChange={handleChange}
       onClick={focusInput}
     >
       <div className="group relative flex w-full items-center">
-        <InputIcon active={isActive} className="absolute left-6" icon={icon} />
-        <InputLabel
-          isCombobox
-          isListboxOrCombobox
-          active={isActive}
-          label={inputLabel}
-          required={required === true}
-        />
+        {variant === 'classic' && icon && (
+          <InputIcon
+            active={isActive}
+            className="absolute left-6"
+            icon={icon}
+          />
+        )}
+        {variant === 'classic' && label && (
+          <InputLabel
+            isCombobox
+            isListboxOrCombobox
+            active={isActive}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
         <HeadlessComboboxInput
           ref={autoFocusableRef(autoFocus)}
-          className="relative mt-10 mb-3 flex w-full items-center gap-2 rounded-lg bg-transparent! pr-5 pl-17 text-left focus:outline-hidden"
+          className={clsx(
+            'relative flex w-full items-center gap-2 rounded-lg bg-transparent! text-left focus:outline-hidden',
+            variant === 'classic' ? 'mt-10 mb-3 pr-5 pl-17' : 'h-7 p-0'
+          )}
           displayValue={displayValue}
           onChange={e => {
             setQuery(e.target.value)

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
 
 import InputIcon from './shared/components/InputIcon'
@@ -7,10 +8,12 @@ import useInputLabel from './shared/hooks/useInputLabel'
 import { autoFocusableRef } from './shared/utils/autoFocusableRef'
 
 export interface TextAreaInputProps {
-  /** The label text displayed above the textarea field. */
-  label: string
-  /** The icon to display next to the label. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the textarea field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display next to the label. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The placeholder text displayed when the textarea is empty. */
   placeholder: string
   /** The current text value of the textarea. */
@@ -32,6 +35,7 @@ export interface TextAreaInputProps {
 }
 
 function TextAreaInput({
+  variant = 'classic',
   label,
   icon,
   placeholder,
@@ -44,7 +48,7 @@ function TextAreaInput({
   namespace,
   errorMsg
 }: TextAreaInputProps) {
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const ref = useRef<HTMLTextAreaElement>(null)
 
@@ -61,22 +65,32 @@ function TextAreaInput({
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={ref}
+      variant={variant}
     >
-      <InputIcon
-        active={!!value && String(value).length > 0}
-        hasError={!!errorMsg}
-        icon={icon}
-      />
-      <div className="flex w-full items-center gap-2">
-        <InputLabel
+      {variant === 'classic' && icon && (
+        <InputIcon
           active={!!value && String(value).length > 0}
           hasError={!!errorMsg}
-          label={inputLabel}
-          required={required === true}
+          icon={icon}
         />
+      )}
+      <div className="flex w-full items-center gap-2">
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={!!value && String(value).length > 0}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
         <textarea
           ref={autoFocusableRef(autoFocus, ref)}
-          className="focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 mt-9 max-h-128 min-h-8 w-full resize-none rounded-lg bg-transparent px-6 pb-3 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
+          className={clsx(
+            'focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 max-h-128 min-h-8 w-full resize-none rounded-lg bg-transparent tracking-wide outline-hidden focus:outline-hidden',
+            variant === 'classic'
+              ? 'mt-9 px-6 pb-3 pl-4 placeholder:text-transparent'
+              : 'p-0'
+          )}
           placeholder={placeholder}
           value={value}
           onInput={e => {

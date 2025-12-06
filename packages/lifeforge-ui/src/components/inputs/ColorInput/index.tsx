@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { useRef } from 'react'
 
 import { useModalStore } from '@components/overlays'
@@ -11,8 +12,10 @@ import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import ColorPickerModal from './ColorPickerModal'
 
 interface ColorInputProps {
-  /** The label text displayed above the color input field. */
-  label: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the color input field. Required for 'classic' style. */
+  label?: string
   /** The current color value in hex format (e.g., "#FF0000"). */
   value: string
   /** Callback function called when the color value changes. */
@@ -32,6 +35,7 @@ interface ColorInputProps {
 }
 
 function ColorInput({
+  variant = 'classic',
   label,
   value,
   onChange,
@@ -44,7 +48,7 @@ function ColorInput({
 }: ColorInputProps) {
   const open = useModalStore(state => state.open)
 
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const ref = useRef<HTMLInputElement | null>(null)
 
@@ -54,20 +58,30 @@ function ColorInput({
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={ref}
+      variant={variant}
     >
-      <InputIcon
-        active={value !== ''}
-        hasError={!!errorMsg}
-        icon="tabler:palette"
-      />
-      <div className="flex w-full items-center gap-2">
-        <InputLabel
-          active={!!value}
+      {variant === 'classic' && (
+        <InputIcon
+          active={value !== ''}
           hasError={!!errorMsg}
-          label={inputLabel}
-          required={required}
+          icon="tabler:palette"
         />
-        <div className="mt-6 mr-4 flex w-full items-center gap-2 pl-4">
+      )}
+      <div className="flex w-full items-center gap-2">
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={!!value}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required}
+          />
+        )}
+        <div
+          className={clsx(
+            'flex w-full items-center gap-2',
+            variant === 'classic' ? 'mt-6 mr-4 pl-4' : ''
+          )}
+        >
           <div
             className={`group-focus-within:border-bg-400 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
             style={{
@@ -78,7 +92,12 @@ function ColorInput({
           />
           <input
             ref={autoFocusableRef(autoFocus, ref)}
-            className="focus:placeholder:text-bg-500 h-8 w-full min-w-28 rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden"
+            className={clsx(
+              'focus:placeholder:text-bg-500 w-full min-w-28 rounded-lg bg-transparent tracking-wide focus:outline-hidden',
+              variant === 'classic'
+                ? 'h-8 p-6 pl-0 placeholder:text-transparent'
+                : 'h-7 p-0'
+            )}
             placeholder="#FFFFFF"
             value={value}
             onBlur={e => {

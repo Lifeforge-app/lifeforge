@@ -1,5 +1,6 @@
 import { ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { useCallback, useMemo } from 'react'
 
 import InputIcon from '../shared/components/InputIcon'
@@ -9,10 +10,12 @@ import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOptions from './components/ListboxOptions'
 
 interface ListboxInputProps<T> {
-  /** The label text displayed above the listbox field. */
-  label: string
-  /** The icon to display in the listbox button. Should be a valid icon name from Iconify. */
-  icon: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the listbox field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the listbox button. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The current selected value of the listbox. */
   value: T
   /** Callback function called when the selected value changes. */
@@ -38,6 +41,7 @@ interface ListboxInputProps<T> {
 }
 
 function ListboxInput<T>({
+  variant = 'classic',
   label,
   icon,
   value,
@@ -52,7 +56,7 @@ function ListboxInput<T>({
   namespace,
   errorMsg
 }: ListboxInputProps<T>) {
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
@@ -90,25 +94,45 @@ function ListboxInput<T>({
       disabled={disabled}
       errorMsg={errorMsg}
       multiple={multiple}
+      variant={variant}
       value={value}
       onChange={onChange}
       onClick={focusInput}
     >
-      <ListboxButton className="group flex w-full min-w-64 items-center pl-6">
-        <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
-        <InputLabel
-          isListboxOrCombobox
-          active={isActive}
-          hasError={!!errorMsg}
-          label={inputLabel}
-          required={required === true}
-        />
-        <div className="relative mt-10 mb-3 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pr-10 pl-5 text-left focus:outline-hidden">
-          {isActive && buttonContent}
+      <ListboxButton
+        className={clsx(
+          'group flex w-full items-center sm:min-w-64',
+          variant === 'classic' ? 'pl-6' : ''
+        )}
+      >
+        {variant === 'classic' && icon && (
+          <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
+        )}
+        {variant === 'classic' && label && (
+          <InputLabel
+            isListboxOrCombobox
+            active={isActive}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
+        <div
+          className={clsx(
+            'relative flex min-h-[1.2rem] w-full min-w-0 items-center gap-2 rounded-lg text-left focus:outline-hidden',
+            variant === 'classic' ? 'mt-10 mb-3 pr-10 pl-5' : 'h-7 pr-8'
+          )}
+        >
+          {variant === 'classic' ? isActive && buttonContent : buttonContent}
         </div>
-        <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 mr-2 flex items-center pr-4">
+        <span
+          className={clsx(
+            'pointer-events-none absolute inset-y-0 right-0 flex items-center',
+            variant === 'classic' ? 'mt-1 mr-2 pr-4' : 'pr-2'
+          )}
+        >
           <Icon
-            className="text-bg-500 group-data-open:text-bg-800 dark:group-data-open:text-bg-100 size-6"
+            className="text-bg-400 dark:text-bg-600 group-data-open:text-bg-800 dark:group-data-open:text-bg-100 size-6"
             icon="heroicons:chevron-up-down-16-solid"
           />
         </span>

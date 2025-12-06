@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 
@@ -8,10 +9,13 @@ import useInputLabel from './shared/hooks/useInputLabel'
 import { autoFocusableRef } from './shared/utils/autoFocusableRef'
 
 interface CurrencyInputProps {
-  /** The label text displayed above the currency input field. */
-  label: string
-  /** The icon to display in the input field. Should be a valid icon name from Iconify. */
-  icon: string
+  currency?: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the currency input field. Required for 'classic' style. */
+  label?: string
+  /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
+  icon?: string
   /** The placeholder text displayed when the input is empty. */
   placeholder: string
   /** The current numeric value of the currency input. */
@@ -34,6 +38,8 @@ interface CurrencyInputProps {
 
 /** CurrencyInputComponent for entering currency values with two decimal places and comma-separated thousands. */
 function CurrencyInputComponent({
+  currency,
+  variant = 'classic',
   label,
   icon,
   placeholder,
@@ -46,7 +52,7 @@ function CurrencyInputComponent({
   namespace,
   errorMsg
 }: CurrencyInputProps) {
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [innerValue, setInnerValue] = useState(
     value.toString() === '0' ? '' : value.toString()
@@ -64,33 +70,51 @@ function CurrencyInputComponent({
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={inputRef}
+      variant={variant}
     >
-      <InputIcon active={!!innerValue} hasError={!!errorMsg} icon={icon} />
+      {variant === 'classic' && icon && (
+        <InputIcon active={!!innerValue} hasError={!!errorMsg} icon={icon} />
+      )}
       <div className="flex w-full items-center gap-2">
-        <InputLabel
-          active={!!innerValue}
-          hasError={!!errorMsg}
-          label={inputLabel}
-          required={required === true}
-        />
-        <CurrencyInput
-          ref={autoFocusableRef(autoFocus, inputRef)}
-          className="focus:placeholder:text-bg-500 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden"
-          decimalsLimit={2}
-          name={label}
-          placeholder={placeholder}
-          value={innerValue}
-          onBlur={() => {
-            const numericValue = parseFloat(innerValue)
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={!!innerValue}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required === true}
+          />
+        )}
+        <div
+          className={clsx(
+            'flex-between gap-2',
+            variant === 'classic' ? 'mt-6 h-8 p-6 pl-4' : 'h-7 p-0'
+          )}
+        >
+          {currency && (
+            <span className="text-bg-400 dark:text-bg-600">{currency}</span>
+          )}
+          <CurrencyInput
+            ref={autoFocusableRef(autoFocus, inputRef)}
+            className={clsx(
+              'focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wider focus:outline-hidden',
+              variant === 'classic' && 'placeholder:text-transparent'
+            )}
+            decimalsLimit={2}
+            name={label}
+            placeholder={placeholder}
+            value={innerValue}
+            onBlur={() => {
+              const numericValue = parseFloat(innerValue)
 
-            if (!isNaN(numericValue)) {
-              onChange(numericValue)
-            } else {
-              onChange(0)
-            }
-          }}
-          onValueChange={value => setInnerValue(value || '')}
-        />
+              if (!isNaN(numericValue)) {
+                onChange(numericValue)
+              } else {
+                onChange(0)
+              }
+            }}
+            onValueChange={value => setInnerValue(value || '')}
+          />
+        </div>
       </div>
     </InputWrapper>
   )

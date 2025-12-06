@@ -12,8 +12,10 @@ import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import IconPickerModal from './IconPickerModal'
 
 interface IconInputProps {
-  /** The label text displayed above the icon input field. */
-  label: string
+  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
+  variant?: 'classic' | 'plain'
+  /** The label text displayed above the icon input field. Required for 'classic' style. */
+  label?: string
   /** The current icon value of the input. Should be a valid icon name from Iconify. */
   value: string
   /** Callback function called when the icon value changes. */
@@ -31,6 +33,7 @@ interface IconInputProps {
 }
 
 function IconInput({
+  variant = 'classic',
   label,
   value,
   onChange,
@@ -42,7 +45,7 @@ function IconInput({
 }: IconInputProps) {
   const open = useModalStore(state => state.open)
 
-  const inputLabel = useInputLabel({ namespace, label })
+  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [iconExists, setIconExists] = useState(false)
 
@@ -74,16 +77,30 @@ function IconInput({
   }, [value])
 
   return (
-    <InputWrapper disabled={disabled} errorMsg={errorMsg} inputRef={ref}>
-      <InputIcon active={!!value} hasError={!!errorMsg} icon="tabler:icons" />
+    <InputWrapper
+      disabled={disabled}
+      errorMsg={errorMsg}
+      inputRef={ref}
+      variant={variant}
+    >
+      {variant === 'classic' && (
+        <InputIcon active={!!value} hasError={!!errorMsg} icon="tabler:icons" />
+      )}
       <div className="flex w-full items-center gap-2">
-        <InputLabel
-          active={!!value}
-          hasError={!!errorMsg}
-          label={inputLabel}
-          required={required}
-        />
-        <div className="mt-6 flex w-full items-center gap-2 pl-4">
+        {variant === 'classic' && label && (
+          <InputLabel
+            active={!!value}
+            hasError={!!errorMsg}
+            label={inputLabel}
+            required={required}
+          />
+        )}
+        <div
+          className={clsx(
+            'flex w-full items-center gap-2',
+            variant === 'classic' ? 'mt-6 pl-4' : ''
+          )}
+        >
           <span className="icon-input-icon size-5 shrink-0">
             <Icon
               className={clsx(
@@ -97,7 +114,12 @@ function IconInput({
           <input
             ref={autoFocusableRef(autoFocus, ref)}
             autoComplete="off"
-            className="focus:placeholder:text-bg-500 h-8 w-full rounded-lg bg-transparent py-6 tracking-wide placeholder:text-transparent focus:outline-none"
+            className={clsx(
+              'focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wide focus:outline-none',
+              variant === 'classic'
+                ? 'h-8 py-6 placeholder:text-transparent'
+                : 'h-7 p-0'
+            )}
             disabled={disabled}
             name={label}
             placeholder="tabler:cube"
