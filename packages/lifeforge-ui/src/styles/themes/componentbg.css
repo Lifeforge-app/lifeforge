@@ -18,15 +18,15 @@
   @apply bg-bg-100 dark:bg-bg-800/50;
 
   .has-bg-image & {
-    @apply bg-bg-100 dark:bg-bg-800/50;
+    @apply bg-bg-100 dark:bg-bg-800/70;
   }
 }
 
 @utility component-bg-lighter-with-hover {
-  @apply bg-bg-100 dark:bg-bg-800/50 hover:bg-bg-200/50 dark:hover:bg-bg-800/80 transition-all;
+  @apply bg-bg-100 dark:bg-bg-800/70 hover:bg-bg-200/50 dark:hover:bg-bg-800/80 transition-all;
 
   .has-bg-image & {
-    @apply bg-bg-100 dark:bg-bg-800/50 hover:bg-bg-200/50 dark:hover:bg-bg-700/50 transition-all;
+    @apply bg-bg-100 dark:bg-bg-800/70 hover:bg-bg-200/50 dark:hover:bg-bg-700/50 transition-all;
   }
 }
 
