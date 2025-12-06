@@ -22,6 +22,8 @@ interface TagChipProps {
   onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
   /** Additional class names to apply to the tag chip container. */
   className?: string
+  /** Additional class names to apply to the icon. */
+  iconClassName?: string
 }
 
 const CLASSNAMES_WITHOUT_COLOR = {
@@ -41,12 +43,13 @@ function TagChip({
   variant = 'outlined',
   actionButtonProps,
   onClick,
-  className
+  className,
+  iconClassName
 }: TagChipProps) {
   const { bgTempPalette } = usePersonalization()
 
   const convertedColor = color?.startsWith('oklch(')
-    ? formatHex(formatHex(parse(color)))
+    ? formatHex(parse(color))
     : color
 
   return (
@@ -89,14 +92,14 @@ function TagChip({
 
           return (
             <span
-              className="size-4"
+              className={clsx('size-4', iconClassName)}
               dangerouslySetInnerHTML={{
                 __html: icon.replace(/^customHTML:/, '')
               }}
             />
           )
         } else {
-          return <Icon className="size-4" icon={icon} />
+          return <Icon className={clsx('size-4', iconClassName)} icon={icon} />
         }
       })()}
       {label}
