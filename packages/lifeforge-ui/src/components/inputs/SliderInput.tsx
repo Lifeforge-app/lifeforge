@@ -49,12 +49,18 @@ function SliderInput({
   return (
     <div className={clsx('w-full', wrapperClassName)}>
       {icon && label && (
-        <div className="text-bg-400 dark:text-bg-600 mb-4 flex items-center gap-2 font-medium tracking-wide">
-          <Icon className="size-6 shrink-0" icon={icon} />
-          <span>
-            {inputLabel}
-            {required && <span className="text-red-500"> *</span>}
-          </span>
+        <div className="flex-between mb-4 w-full min-w-0 gap-8">
+          <div className="text-bg-400 dark:text-bg-600 flex min-w-0 items-center gap-2 font-medium tracking-wide">
+            <Icon className="size-6 shrink-0" icon={icon} />
+            <div className="flex w-full min-w-0 items-center gap-2">
+              <div className="w-full min-w-0 truncate">{inputLabel}</div>
+              {required && <span className="text-red-500">*</span>}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span>{value}</span>
+            <span className="text-bg-500 text-xs">/{max}</span>
+          </div>
         </div>
       )}
       <div className="w-full">
