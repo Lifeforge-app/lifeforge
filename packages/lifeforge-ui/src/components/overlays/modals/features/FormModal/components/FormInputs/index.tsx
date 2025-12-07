@@ -18,6 +18,7 @@ import FormListboxInput from './components/FormListboxInput'
 import FormLocationInput from './components/FormLocationInput'
 import FormNumberInput from './components/FormNumberInput'
 import FormRRuleInput from './components/FormRRuleInput'
+import FormSliderInput from './components/FormSliderInput'
 import FormTextAreaInput from './components/FormTextAreaInput'
 import FormTextInput from './components/FormTextInput'
 
@@ -37,7 +38,8 @@ const COMPONENT_MAP: Record<
   location: FormLocationInput,
   checkbox: FormCheckboxInput,
   file: FormFileInput,
-  rrule: FormRRuleInput
+  rrule: FormRRuleInput,
+  slider: FormSliderInput
 }
 
 // Memoized individual form field component to prevent unnecessary rerenders
@@ -140,7 +142,7 @@ function FormInputs<T extends FormState>({
   }, [fields])
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {Object.entries(fields as Record<string, FormFieldPropsUnion>).map(
         ([id, field]) => {
           // Render corresponding form field component based on field type
