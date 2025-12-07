@@ -3,7 +3,7 @@
   "name": "Life Forge.",
   "description": "Your all-in-one solution to manage your life.",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#09090b",
   "theme_color": "#2dd4bf",
   "start_url": "/",
