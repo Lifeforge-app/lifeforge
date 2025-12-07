@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
+    "@types/culori": "^4.0.1",
     "@types/javascript-color-gradient": "^2.4.2",
     "@types/lodash": "^4.17.20",
     "@types/react": "^19.2.0",
