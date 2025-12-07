@@ -12,6 +12,7 @@ import type { ListboxFieldProps } from '../components/FormInputs/components/Form
 import type { LocationFieldProps } from '../components/FormInputs/components/FormLocationInput'
 import type { NumberFieldProps } from '../components/FormInputs/components/FormNumberInput'
 import type { RRuleFieldProps } from '../components/FormInputs/components/FormRRuleInput'
+import type { SliderFieldProps } from '../components/FormInputs/components/FormSliderInput'
 import type { TextAreaFieldProps } from '../components/FormInputs/components/FormTextAreaInput'
 import type { TextFieldProps } from '../components/FormInputs/components/FormTextInput'
 
@@ -220,3 +221,4 @@ export type FormFieldPropsUnion =
   | LocationFieldProps
   | CheckboxFieldProps
   | RRuleFieldProps
+  | SliderFieldProps
