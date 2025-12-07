@@ -10,7 +10,7 @@ import { type IDashboardLayout, usePersonalization } from 'shared'
 
 function NotFoundWidget({
   widgetId,
-  dimension: { h }
+  dimension: { h, w }
 }: {
   widgetId: string
   dimension: { w: number; h: number }
@@ -57,14 +57,16 @@ function NotFoundWidget({
       icon="tabler:apps-off"
       title={widgetId}
     >
-      <EmptyStateScreen
-        smaller
-        icon={h > 2 ? 'tabler:apps-off' : ''}
-        message={{
-          id: 'notFound',
-          namespace: 'apps.dashboard'
-        }}
-      />
+      {h > 1 && w > 1 && (
+        <EmptyStateScreen
+          smaller
+          icon={h > 2 ? 'tabler:apps-off' : ''}
+          message={{
+            id: 'notFound',
+            namespace: 'apps.dashboard'
+          }}
+        />
+      )}
     </Widget>
   )
 }
