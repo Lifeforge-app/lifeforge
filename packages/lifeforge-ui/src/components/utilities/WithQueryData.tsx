@@ -1,22 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
+import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
 import type { ForgeAPIClientController, InferOutput } from 'shared'
 
 import { ErrorScreen, LoadingScreen } from '@components/feedback'
 
 function WithQueryData<T extends ForgeAPIClientController>({
   controller,
+  queryOptions,
   children,
   showLoading = true,
   showRetryButton = true
 }: {
   controller: T
+  queryOptions?: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> & {
+    queryKey?: unknown[]
+  }
   children: (data: InferOutput<T>) => React.ReactElement | false
   showLoading?: boolean
   showRetryButton?: boolean
 }) {
   const query = useQuery(
     controller.queryOptions({
-      retry: false
+      retry: false,
+      ...queryOptions
     })
   )
 
