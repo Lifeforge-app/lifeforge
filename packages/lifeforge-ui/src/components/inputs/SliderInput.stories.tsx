@@ -22,8 +22,8 @@ export const Default: Story = {
     const [value, onChange] = useState(args.value)
 
     return (
-      <div className="w-96">
-        <SliderInput {...args} onChange={onChange} value={value} />
+      <div className="w-48 sm:w-96">
+        <SliderInput {...args} value={value} onChange={onChange} />
       </div>
     )
   }
