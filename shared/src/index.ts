@@ -34,6 +34,7 @@ export { default as usePromiseLoading } from './hooks/usePromiseLoading'
 export { default as useDivSize } from './hooks/useDivSize'
 
 // Useful utility functions
+export { default as anyColorToHex } from './utils/anyColorToHex'
 export { default as forceDown } from './utils/forceDown'
 export {
   encrypt,
