@@ -12,6 +12,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.18",
     "lifeforge-ui": "workspace:*",
+    "lodash": "^4.17.21",
     "react": "^19.2.0",
     "react-i18next": "^15.1.1",
     "react-toastify": "^11.0.5",
@@ -20,6 +21,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.21",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "vite": "^7.1.9"
