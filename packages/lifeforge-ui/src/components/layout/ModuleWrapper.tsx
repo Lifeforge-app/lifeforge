@@ -1,3 +1,7 @@
+import { useQueryClient } from '@tanstack/react-query'
+import _ from 'lodash'
+import { useEffect } from 'react'
+
 import { Scrollbar } from '@components/utilities'
 
 import { ModuleHeaderStateContext } from './ModuleHeaderStateProvider'
@@ -13,6 +17,16 @@ function ModuleWrapper({
     icon: string
   }
 }) {
+  const queryClient = useQueryClient()
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries({
+        queryKey: [_.camelCase(config.title)]
+      })
+    }
+  }, [queryClient])
+
   return (
     <ModuleHeaderStateContext value={config}>
       <ModuleSidebarStateProvider>
