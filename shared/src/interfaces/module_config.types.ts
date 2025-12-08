@@ -19,6 +19,7 @@ export interface ModuleConfig {
   hidden?: boolean
   disabled?: boolean
   category?: string
+  clearQueryOnUnmount?: boolean
 }
 
 export interface ModuleCategory {

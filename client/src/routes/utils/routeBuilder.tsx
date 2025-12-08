@@ -13,6 +13,7 @@ interface RouteBuilderOptions {
   config: {
     title: string
     icon: string
+    clearQueryOnUnmount: boolean
   }
 }
 
@@ -61,7 +62,8 @@ export function createModuleRoute(
     APIKeys: item.requiredAPIKeys,
     config: {
       title: item.name,
-      icon: item.icon
+      icon: item.icon,
+      clearQueryOnUnmount: item.clearQueryOnUnmount ?? true
     },
     loadingMessage
   }
