@@ -27,6 +27,16 @@ import { constructComponentTree, defineProviders } from './utils/providerUtils'
 
 const queryClient = new QueryClient()
 
+// Auto-detect global providers from modules
+const moduleGlobalProviders = import.meta.glob(
+  ['../../../apps/**/client/src/providers/global.tsx'],
+  { eager: true, import: 'default' }
+)
+
+const GLOBAL_PROVIDERS = Object.values(moduleGlobalProviders) as React.FC<{
+  children: React.ReactNode
+}>[]
+
 function Providers() {
   const open = useModalStore(state => state.open)
 
@@ -70,12 +80,16 @@ function Providers() {
         ],
         // Provider that manages the main sidebar state (not the module sidebars, the main one)
         [MainSidebarStateProvider],
-        // Provider that manages synchronization of user personalization data with the backend
+        // Provider that synchronizes user personalization data with the backend
         [UserPersonalizationProvider],
         // Provider that manages background images styling
         [BackgroundProvider],
         // Provider that exposes a socket.io client instance to the app
         [SocketProvider],
+        // Module-specific global providers (auto-detected from apps/**/providers/global.tsx)
+        ...GLOBAL_PROVIDERS.map(
+          Provider => [Provider] as readonly [typeof Provider]
+        ),
         // This is where all the routes are defined
         [AppRoutesProvider]
       ] as const),
