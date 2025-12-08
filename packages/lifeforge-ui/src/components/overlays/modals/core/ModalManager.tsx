@@ -34,9 +34,13 @@ function StackModal({ index }: { index: number }) {
     return () => clearTimeout(timer)
   }, [])
 
+  // Check if this modal is the topmost (last non-closing modal in stack)
+  const isTopmost = stack.findLastIndex(modal => !modal.isClosing) === index
+
   return (
     <ModalWrapper
       isOpen={localOpen && !isClosing}
+      isTopmost={isTopmost}
       zIndex={index * 10}
       onExited={() => {
         if (isClosing) {
