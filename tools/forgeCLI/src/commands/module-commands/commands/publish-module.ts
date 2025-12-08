@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { executeCommand } from '../../../utils/helpers'
+import { checkRunningPBInstances, executeCommand } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { getInstalledModules } from '../utils/file-system'
 
@@ -154,6 +154,7 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
     process.exit(1)
   }
 
+  checkRunningPBInstances()
   checkGitCleanliness(moduleName)
   checkGithubCLI()
 
