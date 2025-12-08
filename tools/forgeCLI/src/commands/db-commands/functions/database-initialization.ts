@@ -30,6 +30,14 @@ export async function startPocketbaseServer(
       if (output.includes('Server started')) {
         resolve(pbProcess.pid!)
       }
+
+      if (output.includes('bind: address already in use')) {
+        CLILoggingService.actionableError(
+          'Port 8090 is already in use by another application.',
+          'Please free up the port. Are you using the port for non-pocketbase applications? (e.g., port forwarding, etc.)'
+        )
+        process.exit(1)
+      }
     })
 
     pbProcess.stderr?.on('data', data => {
