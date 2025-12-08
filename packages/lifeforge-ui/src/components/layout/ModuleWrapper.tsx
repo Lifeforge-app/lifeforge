@@ -9,26 +9,29 @@ import ModuleSidebarStateProvider from './ModuleSidebarStateProvider'
 
 function ModuleWrapper({
   children,
-  config
+  config: { title, icon, clearQueryOnUnmount = true }
 }: {
   children: React.ReactNode
   config: {
     title: string
     icon: string
+    clearQueryOnUnmount: boolean
   }
 }) {
   const queryClient = useQueryClient()
 
   useEffect(() => {
     return () => {
+      if (!clearQueryOnUnmount) return
+
       queryClient.removeQueries({
-        queryKey: [_.camelCase(config.title)]
+        queryKey: [_.camelCase(title)]
       })
     }
-  }, [queryClient])
+  }, [queryClient, clearQueryOnUnmount, title])
 
   return (
-    <ModuleHeaderStateContext value={config}>
+    <ModuleHeaderStateContext value={{ title, icon }}>
       <ModuleSidebarStateProvider>
         <Scrollbar
           className="no-overflow-x flex min-h-0 flex-col transition-all"
