@@ -22,14 +22,14 @@ function InputLabel({
 }: InputLabelProps) {
   const labelPositionClasses = useMemo(() => {
     if (!active) {
-      return `top-1/2 -translate-y-1/2 ${
+      return `top-1/2 -translate-y-1/2 text-sm ${
         isListboxOrCombobox
-          ? `${isCombobox && 'group-focus-within:top-5 group-focus-within:text-[14px]'} group-data-open:top-5 group-data-open:text-[14px]`
-          : 'group-focus-within:top-5 group-focus-within:text-[14px]'
+          ? `${isCombobox && 'group-focus-within:top-5 group-focus-within:text-base'} group-data-open:top-5 group-data-open:text-base`
+          : 'group-focus-within:top-5 group-focus-within:text-base'
       }`
     }
 
-    return 'top-5 -translate-y-1/2 text-[14px]'
+    return 'top-5 -translate-y-1/2 text-base'
   }, [active, isListboxOrCombobox, isCombobox])
 
   return (
