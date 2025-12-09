@@ -7,6 +7,10 @@
 
 @import 'react-medium-image-zoom/dist/styles.css';
 
+:root {
+  --custom-font-scale: 1 !important;
+}
+
 *:not(code *) {
   font-family: 'Albert Sans', sans-serif;
 }
