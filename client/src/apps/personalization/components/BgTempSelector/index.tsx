@@ -21,7 +21,7 @@ function BgTempSelector() {
 
   return (
     <OptionsColumn
-      breakpoint={false}
+      breakpoint="md"
       className="[@media(min-width:1170px)]:flex-row"
       description={t('bgTempSelector.desc')}
       icon="tabler:temperature"
