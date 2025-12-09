@@ -25,7 +25,7 @@ function SidebarItemWrapper({
         className={clsx(
           'flex-between group relative flex h-14 w-full cursor-pointer gap-3 rounded-lg pr-3 pl-4 text-left whitespace-nowrap transition-all duration-100',
           active
-            ? 'bg-bg-200/50 shadow-custom dark:bg-bg-800'
+            ? 'bg-bg-200/50 shadow-custom border-bg-500/20 dark:bg-bg-800 in-[.bordered]:border-2'
             : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/30'
         )}
         role="button"

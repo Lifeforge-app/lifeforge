@@ -23,6 +23,8 @@ interface IPersonalizationData {
   rootElement: HTMLElement | null
   fontFamily: string
   fontScale: number
+  borderRadiusMultiplier: number
+  bordered: boolean
   theme: 'light' | 'dark' | 'system'
   derivedTheme: 'light' | 'dark'
   rawThemeColor: string
@@ -36,6 +38,8 @@ interface IPersonalizationData {
 
   setFontFamily: React.Dispatch<React.SetStateAction<string>>
   setFontScale: React.Dispatch<React.SetStateAction<number>>
+  setBorderRadiusMultiplier: React.Dispatch<React.SetStateAction<number>>
+  setBordered: React.Dispatch<React.SetStateAction<boolean>>
   setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark' | 'system'>>
   setRawThemeColor: React.Dispatch<React.SetStateAction<string>>
   setBgTemp: React.Dispatch<React.SetStateAction<string>>

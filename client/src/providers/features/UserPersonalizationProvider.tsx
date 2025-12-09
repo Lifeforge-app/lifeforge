@@ -14,6 +14,8 @@ const UserPersonalizationContext = createContext<{
   changeBackdropFilters: (filters: IBackdropFilters) => Promise<void>
   changeLanguage: (language: string) => Promise<void>
   changeDashboardLayout: (layout: IDashboardLayout) => Promise<void>
+  changeBorderRadiusMultiplier: (multiplier: number) => Promise<void>
+  changeBordered: (bordered: boolean) => Promise<void>
 }>({} as any)
 
 async function syncUserData(
@@ -53,7 +55,9 @@ function UserPersonalizationProvider({
     setLanguage,
     setDashboardLayout,
     setFontScale,
-    setBgImage
+    setBgImage,
+    setBorderRadiusMultiplier,
+    setBordered
   } = usePersonalization()
 
   async function changeFontFamily(font: string) {
@@ -86,6 +90,14 @@ function UserPersonalizationProvider({
 
   async function changeDashboardLayout(layout: IDashboardLayout) {
     await syncUserData({ dashboardLayout: layout }, setUserData)
+  }
+
+  async function changeBorderRadiusMultiplier(multiplier: number) {
+    await syncUserData({ borderRadiusMultiplier: multiplier }, setUserData)
+  }
+
+  async function changeBordered(bordered: boolean) {
+    await syncUserData({ bordered }, setUserData)
   }
 
   useEffect(() => {
@@ -138,6 +150,14 @@ function UserPersonalizationProvider({
     if (userData?.fontScale !== undefined) {
       setFontScale(userData.fontScale)
     }
+
+    if (userData?.borderRadiusMultiplier !== undefined) {
+      setBorderRadiusMultiplier(userData.borderRadiusMultiplier)
+    }
+
+    if (userData?.bordered !== undefined) {
+      setBordered(userData.bordered)
+    }
   }, [userData])
 
   return (
@@ -150,7 +170,9 @@ function UserPersonalizationProvider({
         changeBgTemp,
         changeBackdropFilters,
         changeLanguage,
-        changeDashboardLayout
+        changeDashboardLayout,
+        changeBorderRadiusMultiplier,
+        changeBordered
       }}
     >
       {children}

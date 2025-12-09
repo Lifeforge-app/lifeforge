@@ -85,7 +85,7 @@ function DefaultThemeColorSelector({
           renderColorAndIcon={() => (
             <span
               className={clsx(
-                'bg-custom-500 inline-block size-4 rounded-full',
+                'bg-custom-500 inline-block size-4 shrink-0 rounded-full',
                 `theme-${color}`
               )}
             />

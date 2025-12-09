@@ -47,7 +47,7 @@ function _Widget(
     <div
       ref={ref}
       className={clsx(
-        'shadow-custom component-bg flex size-full flex-col gap-6 rounded-lg p-6',
+        'shadow-custom component-bg border-bg-500/20 flex size-full flex-col gap-6 rounded-lg p-6 in-[.bordered]:border-2',
         className
       )}
     >

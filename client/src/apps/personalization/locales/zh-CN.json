@@ -98,6 +98,14 @@
     "title": "字体大小",
     "desc": "选择一个适合你所选字体家族的字体大小。"
   },
+  "borderRadiusSelector": {
+    "title": "边框圆角",
+    "desc": "调整界面中各元素的圆角程度。"
+  },
+  "borderedSelector": {
+    "title": "边框组件",
+    "desc": "为UI组件启用可见边框。"
+  },
   "bgImageSelector": {
     "title": "背景图片",
     "desc": "上传或搜索背景图片",

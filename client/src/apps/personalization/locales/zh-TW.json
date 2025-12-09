@@ -98,6 +98,14 @@
     "title": "字體大小",
     "desc": "選擇一個適合你所選字體家族的字體大小。"
   },
+  "borderRadiusSelector": {
+    "title": "邊框圓角",
+    "desc": "調整介面中各元素的圓角程度。"
+  },
+  "borderedSelector": {
+    "title": "邊框組件",
+    "desc": "為UI組件啟用可見邊框。"
+  },
   "bgImageSelector": {
     "title": "背景圖片",
     "desc": "上傳或搜索背景圖片",
