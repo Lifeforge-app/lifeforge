@@ -52,18 +52,43 @@
     "desc": "Pilih fon yang sesuai dengan keutamaan anda",
     "tooltip": "Untuk maklumat terperinci mengenai semua fon, lawati laman web Google Fonts.",
     "tooltipTitle": "Dikuasakan oleh Google Fonts",
+    "tabs": {
+      "googleFonts": "Google Fonts",
+      "customFonts": "Fon Tersuai"
+    },
     "empty": {
       "apiKey": {
-        "title": "Kunci API Tidak Ditemui",
+        "title": "Kunci API Google Cloud Tidak Ditemui",
         "description": "Untuk mengaktifkan ciri ini, sila tambahkan kunci API Google Cloud ke dalam peti API anda."
       },
       "search": {
         "title": "Tiada Keluarga Fon Ditemui",
         "description": "Tiada keluarga fon ditemui untuk pertanyaan yang diberikan. Sila cuba yang lain."
+      },
+      "customFont": {
+        "title": "Tiada Fon Tersuai",
+        "description": "Anda belum memuat naik sebarang fon tersuai lagi. Klik butang di atas untuk memuat naik satu."
       }
     },
+    "inputs": {
+      "displayName": "Nama Paparan",
+      "fontFamily": "Keluarga Fon",
+      "fontWeight": "Ketebalan Fon",
+      "fontFile": "Fail Fon"
+    },
     "modals": {
-      "fontFamilySelector": "Pemilih Keluarga Fon"
+      "fontFamilySelector": "Pemilih Keluarga Fon",
+      "customFonts": {
+        "upload": "Muat Naik Fon Tersuai",
+        "edit": "Edit Fon Tersuai",
+        "delete": {
+          "title": "Padam Fon Tersuai",
+          "description": "Adakah anda pasti mahu memadam fon tersuai ini? Tindakan ini tidak boleh dibatalkan."
+        }
+      }
+    },
+    "buttons": {
+      "uploadButton": "Muat Naik Fon Tersuai"
     },
     "items": {
       "fontFamily": "keluarga fon"

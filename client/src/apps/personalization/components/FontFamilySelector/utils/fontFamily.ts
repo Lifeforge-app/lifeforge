@@ -1,4 +1,4 @@
-import type { FontFamily } from '../components/FontFamilySelectorModal'
+import type { FontFamily } from '../components/FontFamilySelectorModal/tabs/GoogleFontSelector'
 
 const fontRuleMap = new Map<string, number[]>()
 

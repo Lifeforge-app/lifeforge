@@ -34,7 +34,7 @@ function SSOAppMainView({
   return (
     <APIEndpointProvider endpoint={apiEndpoint}>
       <QueryClientProvider client={queryClient}>
-        <PersonalizationProvider>
+        <PersonalizationProvider forgeAPI={forgeAPI}>
           <ToastProvider>
             <main
               className="bg-bg-200/50 text-bg-800 dark:bg-bg-900/50 dark:text-bg-50 flex min-h-dvh w-full flex-col"

@@ -28,6 +28,16 @@ function FontFamilySelector() {
 
   const { fontFamily } = usePersonalization()
 
+  const customFontQuery = useQuery(
+    forgeAPI.user.customFonts.get
+      .input({
+        id: fontFamily.replace('custom:', '')
+      })
+      .queryOptions({
+        enabled: fontFamily.startsWith('custom:')
+      })
+  )
+
   return (
     <OptionsColumn
       description={t('fontFamily.desc')}
@@ -49,17 +59,33 @@ function FontFamilySelector() {
         {available =>
           available ? (
             <div className="flex w-full flex-col items-center gap-6 md:flex-row">
-              <div
-                className="shrink-0"
-                style={{
-                  fontFamily
-                }}
-              >
-                {fontFamily}
-              </div>
+              {fontFamily.startsWith('custom:') ? (
+                <WithQuery query={customFontQuery}>
+                  {customFont => (
+                    <div
+                      className="shrink-0"
+                      style={{
+                        fontFamily: customFont.family
+                      }}
+                    >
+                      {customFont.displayName}
+                    </div>
+                  )}
+                </WithQuery>
+              ) : (
+                <div
+                  className="shrink-0"
+                  style={{
+                    fontFamily
+                  }}
+                >
+                  {fontFamily}
+                </div>
+              )}
               <Button
                 className="w-full md:w-auto"
                 icon="tabler:text-size"
+                variant="secondary"
                 onClick={() => {
                   open(FontFamilySelectorModal, {})
                 }}
