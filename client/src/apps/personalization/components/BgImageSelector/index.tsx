@@ -136,6 +136,7 @@ function BgImageSelector() {
             <Button
               className="w-full md:w-auto"
               icon="tabler:photo-hexagon"
+              variant="secondary"
               onClick={handleOpenImageSelector}
             >
               select
