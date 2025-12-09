@@ -63,12 +63,12 @@ function InputWrapper({
         className={clsx(
           'group relative flex w-full shrink-0 items-center gap-1 transition-all',
           variant === 'classic'
-            ? 'bg-bg-200/50 shadow-custom hover:bg-bg-200 component-bg-lighter-with-hover rounded-t-lg border-b-2 pl-6'
+            ? 'bg-bg-200/50 shadow-custom hover:bg-bg-200 component-bg-lighter-with-hover rounded-t-lg in-[.bordered]:rounded-lg border-b-2 pl-6 in-[.bordered]:border-2'
             : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
           variant === 'classic' &&
             (errorMsg
-              ? 'border-red-500 focus-within:!border-red-500'
-              : 'border-bg-500 focus-within:!border-custom-500'),
+              ? 'border-red-500 focus-within:border-red-500!'
+              : 'border-bg-500 in-[.bordered]:border-bg-500/20 focus-within:border-custom-500!'),
           disabled ? 'pointer-events-none! opacity-50' : 'cursor-text'
         )}
         role="button"

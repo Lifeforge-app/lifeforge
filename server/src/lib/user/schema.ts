@@ -23,6 +23,8 @@ const usersSchemas = {
       twoFASecret: z.string(),
       fontScale: z.number(),
       pinnedFontFamilies: z.any(),
+      borderRadiusMultiplier: z.number(),
+      bordered: z.boolean(),
       created: z.string(),
       updated: z.string()
     }),
@@ -326,6 +328,27 @@ const usersSchemas = {
           required: false,
           system: false,
           type: 'json'
+        },
+        {
+          hidden: false,
+          id: 'number2565733205',
+          max: null,
+          min: 0,
+          name: 'borderRadiusMultiplier',
+          onlyInt: false,
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'number'
+        },
+        {
+          hidden: false,
+          id: 'bool2844964936',
+          name: 'bordered',
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'bool'
         },
         {
           hidden: false,

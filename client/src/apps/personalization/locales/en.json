@@ -98,6 +98,14 @@
     "title": "Font Scale",
     "desc": "Choose a font scale that suits the font family you chose."
   },
+  "borderRadiusSelector": {
+    "title": "Border Radius",
+    "desc": "Adjust the roundness of corners across the interface."
+  },
+  "borderedSelector": {
+    "title": "Bordered Components",
+    "desc": "Enable visible borders on UI components."
+  },
   "bgImageSelector": {
     "title": "Background Image",
     "desc": "Upload or search for a background image",

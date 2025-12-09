@@ -5,6 +5,8 @@ import { createContext, useContext, useMemo, useState } from 'react'
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
 import useBgTempEffect from './hooks/useBgTempEffect'
+import useBorderRadiusEffect from './hooks/useBorderRadiusEffect'
+import useBorderedEffect from './hooks/useBorderedEffect'
 import useFontFamily from './hooks/useFontFamilyEffect'
 import useLanguageEffect from './hooks/useLanguageEffect'
 import useMetaEffect from './hooks/useMetaEffect'
@@ -21,6 +23,8 @@ const DEFAULT_VALUE: IPersonalizationData = {
   rootElement: document.body,
   fontFamily: 'Onest',
   fontScale: 1,
+  borderRadiusMultiplier: 1,
+  bordered: false,
   theme: 'system',
   derivedTheme: 'dark',
   rawThemeColor: 'theme-lime',
@@ -41,6 +45,8 @@ const DEFAULT_VALUE: IPersonalizationData = {
   setRawThemeColor: () => {},
   setFontFamily: () => {},
   setFontScale: () => {},
+  setBorderRadiusMultiplier: () => {},
+  setBordered: () => {},
   setTheme: () => {},
   setBgTemp: () => {},
   setBgImage: () => {},
@@ -73,6 +79,12 @@ export default function PersonalizationProvider({
   const [fontFamily, setFontFamily] = useState<string>(defaultValue.fontFamily)
 
   const [fontScale, setFontScale] = useState<number>(defaultValue.fontScale)
+
+  const [borderRadiusMultiplier, setBorderRadiusMultiplier] = useState<number>(
+    defaultValue.borderRadiusMultiplier
+  )
+
+  const [bordered, setBordered] = useState<boolean>(defaultValue.bordered)
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>(
     defaultValue.theme
@@ -130,12 +142,16 @@ export default function PersonalizationProvider({
   useBgTempEffect(rootElement, bgTemp, derivedTheme)
   useLanguageEffect(language)
   useMetaEffect(themeColor)
+  useBorderRadiusEffect(borderRadiusMultiplier)
+  useBorderedEffect(rootElement, bordered)
 
   const value = useMemo<IPersonalizationData>(
     () => ({
       rootElement,
       fontFamily,
       fontScale,
+      borderRadiusMultiplier,
+      bordered,
       theme,
       derivedTheme,
       rawThemeColor,
@@ -150,6 +166,8 @@ export default function PersonalizationProvider({
       setRawThemeColor,
       setFontFamily,
       setFontScale,
+      setBorderRadiusMultiplier,
+      setBordered,
       setTheme,
       setBgTemp,
       setBgImage,
@@ -160,6 +178,8 @@ export default function PersonalizationProvider({
       rootElement,
       fontFamily,
       fontScale,
+      borderRadiusMultiplier,
+      bordered,
       theme,
       rawThemeColor,
       themeColor,

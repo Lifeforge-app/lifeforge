@@ -258,7 +258,8 @@ export async function setupDefaultData(
       name: 'Admin User',
       theme: 'system',
       language: 'en',
-      fontScale: 1.0
+      fontScale: 1.0,
+      borderRadiusMultiplier: 1.0
     })
 
     CLILoggingService.success('Default data setup completed successfully.')

@@ -257,6 +257,8 @@ const updatePersonalization = forgeController
         bgTemp: z.string().optional(),
         language: z.string().optional(),
         fontScale: z.number().optional(),
+        borderRadiusMultiplier: z.number().optional(),
+        bordered: z.boolean().optional(),
         dashboardLayout: z.record(z.string(), z.any()).optional(),
         backdropFilters: z.record(z.string(), z.any()).optional()
       })
@@ -273,10 +275,12 @@ const updatePersonalization = forgeController
       'bgTemp',
       'language',
       'fontScale',
+      'borderRadiusMultiplier',
+      'bordered',
       'dashboardLayout',
       'backdropFilters'
     ]) {
-      if (data[item as keyof typeof data]) {
+      if (data[item as keyof typeof data] !== undefined) {
         toBeUpdated[item] = data[item as keyof typeof data]
       }
     }

@@ -98,6 +98,14 @@
     "title": "Skala Fon",
     "desc": "Pilih skala fon yang sesuai dengan keluarga fon yang anda pilih."
   },
+  "borderRadiusSelector": {
+    "title": "Jejari Sempadan",
+    "desc": "Laraskan kebulataan sudut di seluruh antara muka."
+  },
+  "borderedSelector": {
+    "title": "Komponen Bersempadan",
+    "desc": "Dayakan sempadan yang kelihatan pada komponen UI."
+  },
   "bgImageSelector": {
     "title": "Imej Latar Belakang",
     "desc": "Muat naik atau cari imej latar belakang",

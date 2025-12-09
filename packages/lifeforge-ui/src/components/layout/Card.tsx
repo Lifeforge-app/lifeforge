@@ -31,7 +31,7 @@ function Card<C extends React.ElementType = 'div'>({
     <Component
       {...props}
       className={clsx(
-        'shadow-custom relative rounded-lg p-4',
+        'shadow-custom border-bg-500/20 relative rounded-lg p-4 in-[.bordered]:border-2',
         isInteractive
           ? 'component-bg-with-hover cursor-pointer transition-all'
           : 'component-bg',
