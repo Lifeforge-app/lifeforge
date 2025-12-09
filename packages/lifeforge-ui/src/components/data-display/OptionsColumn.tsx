@@ -33,7 +33,7 @@ function OptionsColumn({
   orientation = 'horizontal',
   tooltip,
   children,
-  breakpoint: wrapWhen = 'md',
+  breakpoint = 'md',
   className
 }: OptionsColumnProps) {
   return (
@@ -46,16 +46,18 @@ function OptionsColumn({
               return 'flex-col'
             }
 
-            if (!wrapWhen) {
+            if (!breakpoint) {
               return 'flex-row'
             }
 
-            return {
-              sm: 'sm:flex-row',
-              md: 'md:flex-row',
-              lg: 'lg:flex-row',
-              xl: 'xl:flex-row'
-            }[wrapWhen]
+            return `flex-col ${
+              {
+                sm: 'sm:flex-row',
+                md: 'md:flex-row',
+                lg: 'lg:flex-row',
+                xl: 'xl:flex-row'
+              }[breakpoint]
+            }`
           })(),
           className
         )}
@@ -78,13 +80,13 @@ function OptionsColumn({
           className={clsx(
             'flex w-full min-w-0 shrink-0 items-center gap-3 md:w-auto',
             orientation === 'horizontal' &&
-              (wrapWhen
+              (breakpoint
                 ? {
                     sm: 'sm:mr-2',
                     md: 'md:mr-2',
                     lg: 'lg:mr-2',
                     xl: 'xl:mr-2'
-                  }[wrapWhen]
+                  }[breakpoint]
                 : 'mr-2')
           )}
         >
