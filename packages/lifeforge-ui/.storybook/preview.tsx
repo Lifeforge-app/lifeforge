@@ -1,3 +1,4 @@
+import forgeAPI from '@/utils/forgeAPI'
 import {
   Controls,
   Description,
@@ -117,6 +118,7 @@ const withBodyClass = (Story: any, context: any) => {
       <QueryClientProvider client={queryClient}>
         <div id="body" className="flex-center h-full flex-col transition-all">
           <PersonalizationProvider
+            forgeAPI={forgeAPI}
             defaultValueOverride={{
               rawThemeColor: '#a9d066',
               theme: context.globals.theme,

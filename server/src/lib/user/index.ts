@@ -1,6 +1,7 @@
 import { forgeRouter } from '@functions/routes'
 
 import authRouter from './routes/auth'
+import customFontsRouter from './routes/customFonts'
 import oAuthRouter from './routes/oauth'
 import personalizationRouter from './routes/personalization'
 import settingsRouter from './routes/settings'
@@ -22,5 +23,6 @@ export default forgeRouter({
   oauth: oAuthRouter,
   '2fa': twoFARouter,
   settings: settingsRouter,
-  personalization: personalizationRouter
+  personalization: personalizationRouter,
+  customFonts: customFontsRouter
 })

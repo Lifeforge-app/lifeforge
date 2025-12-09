@@ -52,18 +52,43 @@
     "desc": "选择一个符合你偏好的字体",
     "tooltip": "有关所有字体的详细信息，请访问Google字体网站。",
     "tooltipTitle": "由Google字体提供支持",
+    "tabs": {
+      "googleFonts": "Google 字体",
+      "customFonts": "自定义字体"
+    },
     "empty": {
       "apiKey": {
         "title": "未找到 Google Cloud API 密钥",
-        "description": "要启用此功能，请将 Google Cloud API 密钥添加到您的 API 保险库中。"
+        "description": "要启用此功能,请将 Google Cloud API 密钥添加到您的 API 保险库中。"
       },
       "search": {
         "title": "未找到字体系列",
         "description": "未找到符合查询的字体家族。请尝试其他查询。"
+      },
+      "customFont": {
+        "title": "未找到自定义字体",
+        "description": "您还没有上传任何自定义字体。点击上方按钮上传。"
       }
     },
+    "inputs": {
+      "displayName": "显示名称",
+      "fontFamily": "字体家族",
+      "fontWeight": "字体粗细",
+      "fontFile": "字体文件"
+    },
     "modals": {
-      "fontFamilySelector": "字体家族选择器"
+      "fontFamilySelector": "字体家族选择器",
+      "customFonts": {
+        "upload": "上传自定义字体",
+        "edit": "编辑自定义字体",
+        "delete": {
+          "title": "删除自定义字体",
+          "description": "您确定要删除这个自定义字体吗？此操作无法撤销。"
+        }
+      }
+    },
+    "buttons": {
+      "uploadButton": "上传自定义字体"
     },
     "items": {
       "fontFamily": "字体家族"

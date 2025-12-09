@@ -409,6 +409,118 @@ const usersSchemas = {
         body: '<p>Hello,</p>\n<p>Click on the button below to confirm your new email address.</p>\n<p>\n  <a class="btn" href="{APP_URL}/_/#/auth/confirm-email-change/{TOKEN}" target="_blank" rel="noopener">Confirm new email</a>\n</p>\n<p><i>If you didn\'t ask to change your email address, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>'
       }
     }
+  },
+  font_family_upload: {
+    schema: z.object({
+      displayName: z.string(),
+      family: z.string(),
+      file: z.string(),
+      weight: z.number(),
+      created: z.string(),
+      updated: z.string()
+    }),
+    raw: {
+      id: 'pbc_1737152613',
+      listRule: '@request.auth.id != ""',
+      viewRule: '@request.auth.id != ""',
+      createRule: '@request.auth.id != ""',
+      updateRule: '@request.auth.id != ""',
+      deleteRule: '@request.auth.id != ""',
+      name: 'user__font_family_upload',
+      type: 'base',
+      fields: [
+        {
+          autogeneratePattern: '[a-z0-9]{15}',
+          hidden: false,
+          id: 'text3208210256',
+          max: 15,
+          min: 15,
+          name: 'id',
+          pattern: '^[a-z0-9]+$',
+          presentable: false,
+          primaryKey: true,
+          required: true,
+          system: true,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          id: 'text1731158936',
+          max: 0,
+          min: 0,
+          name: 'displayName',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: false,
+          system: false,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          id: 'text2783322459',
+          max: 0,
+          min: 0,
+          name: 'family',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: false,
+          system: false,
+          type: 'text'
+        },
+        {
+          hidden: false,
+          id: 'file2359244304',
+          maxSelect: 1,
+          maxSize: 99999999999999,
+          mimeTypes: [],
+          name: 'file',
+          presentable: false,
+          protected: false,
+          required: false,
+          system: false,
+          thumbs: [],
+          type: 'file'
+        },
+        {
+          hidden: false,
+          id: 'number130897217',
+          max: null,
+          min: null,
+          name: 'weight',
+          onlyInt: false,
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'number'
+        },
+        {
+          hidden: false,
+          id: 'autodate2990389176',
+          name: 'created',
+          onCreate: true,
+          onUpdate: false,
+          presentable: false,
+          system: false,
+          type: 'autodate'
+        },
+        {
+          hidden: false,
+          id: 'autodate3332085495',
+          name: 'updated',
+          onCreate: true,
+          onUpdate: true,
+          presentable: false,
+          system: false,
+          type: 'autodate'
+        }
+      ],
+      indexes: [],
+      system: false
+    }
   }
 }
 

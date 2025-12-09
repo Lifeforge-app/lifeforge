@@ -52,6 +52,10 @@
     "desc": "Choose a font that matches your preference",
     "tooltip": "For detailed information on all fonts, visit the Google Fonts website.",
     "tooltipTitle": "Powered by Google Fonts",
+    "tabs": {
+      "googleFonts": "Google Fonts",
+      "customFonts": "Custom Fonts"
+    },
     "empty": {
       "apiKey": {
         "title": "Google Cloud API Key Not Found",
@@ -60,10 +64,31 @@
       "search": {
         "title": "No Font Families Found",
         "description": "No font families found for the given queries. Please try another one."
+      },
+      "customFont": {
+        "title": "No Custom Fonts",
+        "description": "You haven't uploaded any custom fonts yet. Click the button above to upload one."
       }
     },
+    "inputs": {
+      "displayName": "Display Name",
+      "fontFamily": "Font Family",
+      "fontWeight": "Font Weight",
+      "fontFile": "Font File"
+    },
     "modals": {
-      "fontFamilySelector": "Font Family Selector"
+      "fontFamilySelector": "Font Family Selector",
+      "customFonts": {
+        "upload": "Upload Custom Font",
+        "edit": "Edit Custom Font",
+        "delete": {
+          "title": "Delete Custom Font",
+          "description": "Are you sure you want to delete this custom font? This action cannot be undone."
+        }
+      }
+    },
+    "buttons": {
+      "uploadButton": "Upload Custom Font"
     },
     "items": {
       "fontFamily": "font family"

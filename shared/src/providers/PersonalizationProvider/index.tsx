@@ -1,3 +1,4 @@
+import type { ClientTree } from '@shared/api/typescript/forge_api_client.types'
 import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 
@@ -52,9 +53,11 @@ const PersonalizationContext = createContext<IPersonalizationData | undefined>(
 )
 
 export default function PersonalizationProvider({
+  forgeAPI,
   defaultValueOverride = {},
   children
 }: {
+  forgeAPI: ClientTree<any>
   defaultValueOverride?: Partial<IPersonalizationData>
   children: React.ReactNode
 }) {
@@ -121,7 +124,7 @@ export default function PersonalizationProvider({
       : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
 
-  useFontFamily(fontFamily, fontScale)
+  useFontFamily(fontFamily, fontScale, forgeAPI)
   useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)
   useRawThemeColorEffect(rootElement, rawThemeColor, derivedTheme)
   useBgTempEffect(rootElement, bgTemp, derivedTheme)

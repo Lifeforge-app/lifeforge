@@ -7,11 +7,11 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
-import type { FontFamily } from '..'
 import {
   addFontToStylesheet,
   removeFontFromStylesheet
 } from '../../../utils/fontFamily'
+import type { FontFamily } from '../tabs/GoogleFontSelector'
 
 function FontListItem({
   font,

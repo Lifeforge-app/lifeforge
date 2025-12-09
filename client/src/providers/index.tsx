@@ -61,7 +61,7 @@ function Providers() {
         [EncryptionProvider, { apiHost: import.meta.env.VITE_API_HOST }],
 
         // Provider that stores all the theming information
-        [PersonalizationProvider],
+        [PersonalizationProvider, { forgeAPI }],
 
         // Provider that checks if the API is online or not
         // A wrapper exported from lifeforge-ui is used to avoid circular dependencies
