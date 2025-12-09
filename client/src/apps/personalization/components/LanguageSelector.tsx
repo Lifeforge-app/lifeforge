@@ -40,6 +40,7 @@ function LanguageSelector() {
 
   return (
     <OptionsColumn
+      breakpoint="md"
       description={t('languageSelector.desc')}
       icon="tabler:language"
       title={t('languageSelector.title')}
