@@ -12,6 +12,7 @@ import {
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 
 // Paginated return type for getList
@@ -136,7 +137,7 @@ export class GetList<
       : undefined
 
     const result = (await this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection(getFinalCollectionName(this.collectionKey))
       .getList(this._page, this._perPage, {
         filter: filterString,
         sort: this._sort,

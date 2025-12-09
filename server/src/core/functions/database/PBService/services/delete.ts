@@ -5,6 +5,7 @@ import { CollectionKey } from '@functions/database/PBService/typescript/pb_servi
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Class for deleting records from PocketBase collections with type safety
@@ -56,7 +57,7 @@ export class Delete<TCollectionKey extends CollectionKey>
     }
 
     const result = await this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection(getFinalCollectionName(this.collectionKey))
       .delete(this._recordId)
 
     LoggingService.debug(
