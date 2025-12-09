@@ -1,9 +1,0 @@
-[submodule "apps/vanillaTweaks"]
-	path = apps/vanillaTweaks
-	url = https://github.com/melvinchia3636/lifeforge-module-vanillaTweaks.git
-[submodule "apps/wallet"]
-	path = apps/wallet
-	url = https://github.com/lifeforge-app/lifeforge-module-wallet.git
-[submodule "apps/pomodoroTimer"]
-	path = apps/pomodoroTimer
-	url = https://github.com/melvinchia3636/lifeforge-module-pomodoroTimer.git
