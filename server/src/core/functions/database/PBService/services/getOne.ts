@@ -10,6 +10,7 @@ import {
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Class for retrieving a single record from PocketBase collections with field selection and expansion capabilities
@@ -115,7 +116,7 @@ export class GetOne<
     }
 
     const result = this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection(getFinalCollectionName(this.collectionKey))
       .getOne(this._itemId, {
         expand: this._expand,
         fields: this._fields

@@ -11,6 +11,7 @@ import {
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Type for create data - allows any field from the collection with any value
@@ -122,7 +123,7 @@ export class Create<
     }
 
     const result = await this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection(getFinalCollectionName(this.collectionKey))
       .create(this._data, {
         expand: this._expand,
         fields: this._fields,

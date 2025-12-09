@@ -12,6 +12,7 @@ import {
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 
 export class GetFirstListItem<
@@ -103,7 +104,7 @@ export class GetFirstListItem<
       : 'id != ""' // Default filter to ensure we get a valid response
 
     const result = await this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection(getFinalCollectionName(this.collectionKey))
       .getFirstListItem(filterString, {
         sort: this._sort,
         expand: this._expand,

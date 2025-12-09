@@ -13,6 +13,7 @@ import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Class for retrieving all records from PocketBase collections with filtering, sorting, and expansion capabilities
@@ -141,7 +142,7 @@ export class GetFullList<
       : undefined
 
     const result = (await this._pb
-      .collection((this.collectionKey as string).replace(/^user__/, ''))
+      .collection(getFinalCollectionName(this.collectionKey))
       .getFullList({
         filter: filterString,
         sort: this._sort,
