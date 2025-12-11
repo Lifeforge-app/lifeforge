@@ -37,7 +37,6 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       onChange: (value: number) => {
         setBgBlur(Object.keys(BG_BLURS)[value] as keyof typeof BG_BLURS)
       },
-      labels: Object.keys(BG_BLURS),
       max: 7
     },
     {
@@ -45,7 +44,6 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       title: 'Brightness',
       value: bgBrightness,
       onChange: setBgBrightness,
-      labels: ['0%', '100%', '200%'],
       max: 200
     },
     {
@@ -53,7 +51,6 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       title: 'Contrast',
       value: bgContrast,
       onChange: setBgContrast,
-      labels: ['0%', '150%', '200%'],
       max: 200
     },
     {
@@ -61,7 +58,6 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       title: 'Saturation',
       value: bgSaturation,
       onChange: setBgSaturation,
-      labels: ['0%', '100%', '200%'],
       max: 200
     },
     {
@@ -69,7 +65,6 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
       title: 'Overlay Opacity',
       value: overlayOpacity,
       onChange: setOverlayOpacity,
-      labels: ['0%', '50%', '100%'],
       max: 100
     }
   ]
