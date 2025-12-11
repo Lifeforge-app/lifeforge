@@ -1,6 +1,18 @@
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import type { MDXComponents } from 'mdx/types'
 import Zoom from 'react-medium-image-zoom'
 import { Link } from 'shared'
+
+const HashIcon = ({ className }: { className?: string }) => (
+  <Icon
+    className={clsx(
+      'text-custom-500 stroke-custom-500 top-1/2 -left-6 stroke-[1px]! sm:absolute sm:-left-8 sm:-translate-y-1/2',
+      className
+    )}
+    icon="streamline-sharp:sign-hashtag-remix"
+  />
+)
 
 export const components: MDXComponents = {
   em(properties) {
@@ -18,18 +30,33 @@ export const components: MDXComponents = {
     return (
       <h2
         {...properties}
-        className="mt-8 text-2xl font-semibold sm:mt-12 sm:text-3xl"
-      />
+        className="relative mt-8 flex items-center gap-2 text-2xl font-semibold sm:mt-12 sm:text-3xl"
+      >
+        <HashIcon className="text-lg sm:text-xl" />
+        {properties.children}
+      </h2>
     )
   },
   h3(properties) {
     return (
-      <h3 {...properties} className="mt-10 text-xl font-semibold sm:text-2xl" />
+      <h3
+        {...properties}
+        className="relative mt-10 flex items-center gap-2 text-xl font-semibold sm:text-2xl"
+      >
+        <HashIcon className="text-base sm:text-lg" />
+        {properties.children}
+      </h3>
     )
   },
   h4(properties) {
     return (
-      <h4 {...properties} className="mt-8 text-lg font-semibold sm:text-xl" />
+      <h4
+        {...properties}
+        className="relative mt-8 text-lg font-semibold sm:text-xl"
+      >
+        <HashIcon />
+        {properties.children}
+      </h4>
     )
   },
   p(properties) {
