@@ -84,7 +84,7 @@ function LockedScreen({
         }}
       />
       <Button
-        className="w-full md:w-3/4 xl:w-1/2"
+        className="mt-6 w-full md:w-3/4 xl:w-1/2"
         icon="tabler:lock"
         loading={loading}
         namespace="common.vault"
