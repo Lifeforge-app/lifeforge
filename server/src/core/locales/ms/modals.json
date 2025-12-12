@@ -55,6 +55,14 @@
       "pixabay": {
         "title": "Disediakan oleh Pixabay",
         "description": "Cari lebih daripada 13 juta imej percuma berkualiti tinggi."
+      },
+      "noAPIKey": {
+        "title": "Kunci API Pixabay tidak dikonfigurasikan",
+        "description": "Sila tetapkan kunci API Pixabay anda dalam Peti Kunci API untuk menggunakan ciri ini."
+      },
+      "noOpenAIKey": {
+        "title": "Kunci API OpenAI tidak dikonfigurasikan",
+        "description": "Sila tetapkan kunci API OpenAI anda dalam Peti Kunci API untuk menggunakan ciri ini."
       }
     },
     "ai": "Penjanaan Imej AI"

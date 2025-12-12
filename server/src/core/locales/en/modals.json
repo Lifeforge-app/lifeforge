@@ -55,6 +55,14 @@
       "pixabay": {
         "title": "Provided by Pixabay",
         "description": "Search over 13 million high-quality free images."
+      },
+      "noAPIKey": {
+        "title": "Pixabay API Key not configured",
+        "description": "Please set up your Pixabay API key in the API Key vault to use this feature."
+      },
+      "noOpenAIKey": {
+        "title": "OpenAI API Key not configured",
+        "description": "Please set up your OpenAI API key in the API Key vault to use this feature."
       }
     },
     "ai": "AI Image Generation"
