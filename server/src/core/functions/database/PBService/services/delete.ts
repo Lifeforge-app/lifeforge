@@ -57,33 +57,36 @@ export class Delete<TCollectionKey extends CollectionKey>
       )
     }
 
-  const result = await this._pb
-      .collection(getFinalCollectionName(this.collectionKey))
-      .delete(this._recordId)
-      .catch(err => {
-        if (
-          err instanceof Error &&
-          err.message.includes(
-            'Make sure that the record is not part of a required relation reference'
-          )
-        ) {
-          throw new ClientError(
-            `Failed to delete record in collection "${this.collectionKey}". The record is part of a required relation reference.`,
-            409
-          )
-        }
-      })
+    try {
+      const result = await this._pb
+        .collection(getFinalCollectionName(this.collectionKey))
+        .delete(this._recordId)
 
-    LoggingService.debug(
-      `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
-        .hex('#34ace0')
-        .bold(
-          this._recordId
-        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-      'DB'
-    )
+      LoggingService.debug(
+        `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
+          .hex('#34ace0')
+          .bold(
+            this._recordId
+          )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
+        'DB'
+      )
 
-    return result
+      return result
+    } catch (err) {
+      if (
+        err instanceof Error &&
+        err.message.includes(
+          'Make sure that the record is not part of a required relation reference'
+        )
+      ) {
+        throw new ClientError(
+          `Failed to delete record in collection "${this.collectionKey}". The record is part of a required relation reference.`,
+          409
+        )
+      }
+
+      throw err
+    }
   }
 }
 
