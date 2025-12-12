@@ -54,7 +54,7 @@ function Alert({
 }) {
   return (
     <div
-      className={`relative w-full space-y-4 rounded-md p-2 pl-6 before:absolute before:top-0 before:left-0 before:h-full before:w-1 before:rounded-full ${STYLES[type].before} ${className}`}
+      className={`alert relative w-full space-y-4 rounded-md p-2 pl-6 before:absolute before:top-0 before:left-0 before:h-full before:w-1 before:rounded-full ${STYLES[type].before} ${className}`}
     >
       <div className={clsx('flex items-center gap-2', STYLES[type].textColor)}>
         <Icon className="h-6 w-6" icon={STYLES[type].icon} />
