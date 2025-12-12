@@ -55,6 +55,14 @@
       "pixabay": {
         "title": "由Pixabay提供",
         "description": "搜索超过1300万张高质量免费图片。"
+      },
+      "noAPIKey": {
+        "title": "Pixabay API密钥未配置",
+        "description": "请在API密钥库中设置您的Pixabay API密钥以使用此功能。"
+      },
+      "noOpenAIKey": {
+        "title": "OpenAI API密钥未配置",
+        "description": "请在API密钥库中设置您的OpenAI API密钥以使用此功能。"
       }
     },
     "ai": "AI图像生成"
