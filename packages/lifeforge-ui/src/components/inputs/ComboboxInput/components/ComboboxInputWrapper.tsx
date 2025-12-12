@@ -26,7 +26,7 @@ function ComboboxInputWrapper<T>({
       className={clsx(
         'relative flex cursor-text items-center gap-1 transition-all',
         variant === 'classic'
-          ? 'border-bg-500/30 bg-bg-200/50 shadow-custom focus-within:border-custom-500! hover:bg-bg-200 data-[open]:border-custom-500! dark:bg-bg-800/50 dark:hover:bg-bg-800/80 rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
+          ? 'border-bg-500 component-bg-lighter-with-hover shadow-custom focus-within:border-custom-500! data-[open]:border-custom-500! rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
           : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
         className,
         disabled ? 'pointer-events-none! opacity-50' : ''

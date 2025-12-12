@@ -29,12 +29,12 @@ function ListboxInputWrapper<T>({
         className={clsx(
           'relative flex w-full items-center gap-1 transition-all',
           variant === 'classic'
-            ? 'bg-bg-200/50 shadow-custom hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
+            ? 'shadow-custom component-bg-lighter-with-hover rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
             : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
           variant === 'classic' &&
             (errorMsg
               ? 'border-red-500'
-              : 'border-bg-500/30 in-[.bordered]:border-bg-500/20 focus-within:border-custom-500! data-open:border-custom-500!'),
+              : 'border-bg-500 in-[.bordered]:border-bg-500/20 focus-within:border-custom-500! data-open:border-custom-500!'),
           disabled ? 'pointer-events-none! opacity-50' : ''
         )}
         multiple={multiple}
