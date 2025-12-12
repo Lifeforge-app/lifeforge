@@ -1,12 +1,4 @@
-import clsx from 'clsx'
-
 import Scrollbars, { type ScrollbarsProps } from './Scrollbars'
-
-export interface ScrollbarProps extends ScrollbarsProps {
-  /* Whether to add padding to the right side of the content area. */
-  usePaddingRight?: boolean
-  children: React.ReactNode
-}
 
 /**
  * A wrapper around the `react-custom-scrollbars` component that provides custom styling and optional right padding.
@@ -14,12 +6,11 @@ export interface ScrollbarProps extends ScrollbarsProps {
  */
 function Scrollbar({
   children,
-  usePaddingRight = true,
   ...props
-}: ScrollbarProps) {
+}: { children: React.ReactNode } & ScrollbarsProps) {
   return (
     <Scrollbars
-      {...(props as any)}
+      {...props}
       hideTracksWhenNotNeeded
       autoHide={props.autoHide !== undefined ? props.autoHide : true}
       autoHideTimeout={1000}
@@ -40,10 +31,7 @@ function Scrollbar({
       renderView={props => (
         <div
           {...props}
-          className={clsx(
-            'flex min-h-0 w-full min-w-0 flex-1 flex-col',
-            usePaddingRight && 'pr-4'
-          )}
+          className="flex min-h-0 w-full min-w-0 flex-1 flex-col"
         />
       )}
     >
