@@ -64,7 +64,7 @@ input:-webkit-autofill:active {
 
 @page {
   size: A4 portrait;
-  margin: auto;
+  margin: 20mm;
 }
 
 @media print {
