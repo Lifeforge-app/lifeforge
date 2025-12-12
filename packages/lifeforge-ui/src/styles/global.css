@@ -18,7 +18,7 @@
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   interpolate-size: allow-keywords;
-  @apply selection:bg-custom-500 select-none focus:outline-none disabled:cursor-not-allowed;
+  @apply selection:bg-custom-500 focus:outline-none disabled:cursor-not-allowed;
 }
 
 input,
