@@ -100,7 +100,7 @@ function CreatePasswordScreen({
             icon: 'tabler:dice',
             onClick: generateRandomPassword
           }}
-          className="w-1/2"
+          className="w-1/2 flex-0!"
           icon="tabler:lock"
           label="vault.inputs.newPassword"
           namespace="common.vault"
@@ -111,7 +111,7 @@ function CreatePasswordScreen({
         <TextInput
           key="confirmPassword"
           isPassword
-          className="w-1/2"
+          className="w-1/2 flex-0!"
           icon="tabler:lock-check"
           label="vault.inputs.confirmPassword"
           namespace="common.vault"
@@ -124,7 +124,11 @@ function CreatePasswordScreen({
             }
           }}
         />
-        <Button className="w-1/2" icon="tabler:check" onClick={confirmAction}>
+        <Button
+          className="mt-6 w-1/2"
+          icon="tabler:check"
+          onClick={confirmAction}
+        >
           Submit
         </Button>
       </div>

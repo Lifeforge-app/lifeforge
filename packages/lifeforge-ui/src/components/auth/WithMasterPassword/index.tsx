@@ -20,14 +20,12 @@ function WithMasterPassword({
   const [masterPassword, setMasterPassword] = useState('')
 
   if (!hasMasterPassword) {
-    if (hasMasterPassword === false) {
-      return (
-        <CreatePasswordScreen
-          challengeController={controllers.getChallenge}
-          controller={controllers.createPassword}
-        />
-      )
-    }
+    return (
+      <CreatePasswordScreen
+        challengeController={controllers.getChallenge}
+        controller={controllers.createPassword}
+      />
+    )
   }
 
   if (masterPassword === '') {
