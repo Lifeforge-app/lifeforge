@@ -30,7 +30,7 @@ function ViewModeSelector<
   return (
     <div
       className={clsx(
-        'shadow-custom component-bg bg-bg-50 flex items-center gap-2 rounded-md p-2',
+        'shadow-custom component-bg bg-bg-50 border-bg-500/20 flex items-center gap-2 rounded-md p-2 in-[.bordered]:border-2',
         className
       )}
     >
@@ -40,7 +40,7 @@ function ViewModeSelector<
           className={clsx(
             'flex items-center gap-2 rounded-md p-3 transition-all',
             value === currentMode
-              ? 'bg-bg-200/50 dark:bg-bg-800/70 shadow-custom'
+              ? 'bg-bg-200/50 dark:bg-bg-800/70 shadow-custom border-bg-500/20 in-[.bordered]:border-2'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           )}
           onClick={() => {
