@@ -14,7 +14,7 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { type InferOutput } from 'shared'
+import { type InferOutput, usePersonalization } from 'shared'
 
 import CustomFontUploadModal from '../../CustomFontUploadModal'
 
@@ -30,6 +30,8 @@ function CustomFontSelector({
   setSelectedFont: (font: string | null) => void
 }) {
   const { t } = useTranslation('apps.personalization')
+
+  const { fontFamily } = usePersonalization()
 
   const open = useModalStore(state => state.open)
 
@@ -92,7 +94,7 @@ function CustomFontSelector({
         {fonts =>
           fonts.length > 0 ? (
             <Scrollbar className="flex-1">
-              <div className="space-y-3 p-2 pr-0">
+              <div className="space-y-3 p-2">
                 {fonts.map(font => (
                   <Card
                     key={font.id}
@@ -162,6 +164,7 @@ function CustomFontSelector({
                         />
                         <ContextMenuItem
                           dangerous
+                          disabled={fontFamily === `custom:${font.id}`}
                           icon="tabler:trash"
                           label="Delete"
                           onClick={() => handleDeleteClick(font)}
@@ -177,7 +180,7 @@ function CustomFontSelector({
               <EmptyStateScreen
                 icon="tabler:file-typography"
                 message={{
-                  id: 'customFonts',
+                  id: 'customFont',
                   namespace: 'apps.personalization',
                   tKey: 'fontFamily'
                 }}
