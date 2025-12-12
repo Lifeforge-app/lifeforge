@@ -1,7 +1,7 @@
 // @ts-expect-error: Iconify types are not fully compatible with the current setup
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
-import { useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { usePersonalization } from 'shared'
 
 import { TagChip } from '@components/data-display'
@@ -44,6 +44,26 @@ function Header({
     []
   )
 
+  const handleSearchKeyUp = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && searchQuery !== '') {
+        setCurrentIconSet({ search: searchQuery })
+      }
+    },
+    [searchQuery, setCurrentIconSet]
+  )
+
+  const handleSearchButtonClick = useCallback(() => {
+    if (searchQuery !== '') setCurrentIconSet({ search: searchQuery })
+  }, [searchQuery, setCurrentIconSet])
+
+  const handleCategoryClick = useCallback(
+    (category: string) => {
+      setSelectedCategory(prev => (prev === category ? null : category))
+    },
+    [setSelectedCategory]
+  )
+
   return (
     <>
       <div className="flex w-full flex-col gap-2 sm:flex-row">
@@ -53,18 +73,12 @@ function Header({
           searchTarget="iconPicker.items.icon"
           value={searchQuery}
           onChange={setSearchQuery}
-          onKeyUp={e => {
-            if (e.key === 'Enter' && searchQuery !== '') {
-              setCurrentIconSet({ search: searchQuery })
-            }
-          }}
+          onKeyUp={handleSearchKeyUp}
         />
         <Button
           icon="tabler:arrow-right"
           iconPosition="end"
-          onClick={() => {
-            if (searchQuery !== '') setCurrentIconSet({ search: searchQuery })
-          }}
+          onClick={handleSearchButtonClick}
         >
           Search
         </Button>
@@ -78,17 +92,14 @@ function Header({
                 selectedCategory === category ? derivedThemeColor : undefined
               }
               label={category}
-              onClick={() => {
-                setSelectedCategory(
-                  selectedCategory === category ? null : category
-                )
-              }}
+              onClick={() => handleCategoryClick(category)}
             />
           ))}
         </div>
         <div className="w-full lg:w-3/5 xl:w-1/3">
           <SearchInput
             className="component-bg-lighter-with-hover"
+            debounceMs={300}
             icon="tabler:filter"
             namespace="common.modals"
             searchTarget="iconPicker.items.iconSet"
@@ -101,4 +112,4 @@ function Header({
   )
 }
 
-export default Header
+export default memo(Header)

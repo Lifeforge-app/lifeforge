@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 
 function IconEntry({
   icon,
@@ -12,7 +12,7 @@ function IconEntry({
 }) {
   const handleIconSelected = useCallback(() => {
     onIconSelected(`${iconSet}:${icon}`)
-  }, [icon])
+  }, [icon, iconSet, onIconSelected])
 
   return (
     <button
@@ -28,4 +28,4 @@ function IconEntry({
   )
 }
 
-export default IconEntry
+export default memo(IconEntry)

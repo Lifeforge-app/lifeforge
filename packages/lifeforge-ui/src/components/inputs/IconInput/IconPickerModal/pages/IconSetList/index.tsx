@@ -1,7 +1,7 @@
 // @ts-expect-error: Iconify types are not fully compatible with the current setup
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Scrollbar } from '@components/utilities'
 
@@ -40,6 +40,27 @@ export default function IconSetList({
 
   const [iconFilterTerm, setIconFilterTerm] = useState('')
 
+  const filteredCollections = useMemo(() => {
+    const normalizedFilter = iconFilterTerm.trim().toLowerCase()
+
+    return Object.entries(COLLECTIONS)
+      .filter(
+        ([category]) =>
+          selectedCategory === null || selectedCategory === category
+      )
+      .map(([category, iconSets]) => {
+        const filtered =
+          normalizedFilter === ''
+            ? iconSets
+            : iconSets.filter(iconSet =>
+                iconSet.name.toLowerCase().includes(normalizedFilter)
+              )
+
+        return { category, iconSets: filtered }
+      })
+      .filter(({ iconSets }) => iconSets.length > 0)
+  }, [iconFilterTerm, selectedCategory])
+
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col">
       <Header
@@ -54,28 +75,14 @@ export default function IconSetList({
       <Scrollbar autoHeight autoHeightMax="60vh">
         <div className="mt-4 flex min-h-0 w-full flex-col items-center overflow-scroll">
           <div className="flex w-full flex-col">
-            {Object.entries(COLLECTIONS).map(
-              ([category, iconSets]) =>
-                Boolean(
-                  (selectedCategory === null ||
-                    selectedCategory === category) &&
-                    iconSets.filter(
-                      iconSet =>
-                        iconFilterTerm.trim() === '' ||
-                        iconSet.name
-                          .toLowerCase()
-                          .includes(iconFilterTerm.trim().toLowerCase())
-                    ).length
-                ) && (
-                  <CategoryEntry
-                    key={category}
-                    category={category}
-                    iconFilterTerm={iconFilterTerm}
-                    iconSets={iconSets}
-                    setCurrentIconSet={setCurrentIconSet}
-                  />
-                )
-            )}
+            {filteredCollections.map(({ category, iconSets }) => (
+              <CategoryEntry
+                key={category}
+                category={category}
+                iconSets={iconSets}
+                setCurrentIconSet={setCurrentIconSet}
+              />
+            ))}
           </div>
         </div>
       </Scrollbar>

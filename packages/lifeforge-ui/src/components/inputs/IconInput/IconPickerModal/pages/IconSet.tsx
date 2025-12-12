@@ -43,12 +43,12 @@ function IconSet({
   const [iconData, setIconData] = useState<IIconSetData | null>(null)
 
   const filteredIconList = useMemo(() => {
-    const allIcons = [
-      ...(iconData?.uncategorized ?? []),
-      ...Object.values(iconData?.categories ?? {}).flat()
-    ]
-
     if (!iconData) return []
+
+    const allIcons = [
+      ...(iconData.uncategorized ?? []),
+      ...Object.values(iconData.categories ?? {}).flat()
+    ]
 
     if (!currentTag) {
       return allIcons.filter(icon =>

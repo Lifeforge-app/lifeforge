@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 
 import { EmptyStateScreen } from '@components/feedback'
@@ -86,9 +86,19 @@ function Search({
 
   const [iconData, setIconData] = useState<IIconSearchResult | null>(null)
 
-  const [filteredIconList, setFilteredIconList] = useState<string[]>([])
-
   const [searchQuery, setSearchQuery] = useState(searchTerm ?? '')
+
+  const filteredIconList = useMemo(() => {
+    if (iconData === null) return []
+
+    if (currentIconSet !== null) {
+      return iconData.iconList.filter(
+        e => e.split(':').shift() === currentIconSet
+      )
+    }
+
+    return iconData.iconList
+  }, [currentIconSet, iconData])
 
   useEffect(() => {
     setIconData(null)
@@ -96,25 +106,12 @@ function Search({
       .then(data => {
         if (!data) return
         setIconData(data)
-        setFilteredIconList(data.iconList)
         setCurrentIconSet(null)
       })
       .catch(err => {
         console.error(err)
       })
   }, [searchTerm])
-
-  useEffect(() => {
-    if (iconData !== null) {
-      setFilteredIconList(
-        currentIconSet !== null
-          ? iconData.iconList.filter(
-              e => e.split(':').shift() === currentIconSet
-            )
-          : iconData.iconList
-      )
-    }
-  }, [currentIconSet, iconData])
 
   return iconData !== null ? (
     <div className="flex min-h-0 w-full flex-1 flex-col">
