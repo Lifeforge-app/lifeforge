@@ -35,7 +35,7 @@ function Switch({ value, onChange, disabled }: SwitchProps) {
     <HeadlessSwitch
       checked={value}
       className={clsx(
-        'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full',
+        'ring-bg-500/20 relative inline-flex h-6 w-11 shrink-0 items-center rounded-full in-[.bordered]:ring-2',
         value ? 'bg-custom-500' : '-component-bg-with-hover',
         disabled && 'cursor-not-allowed! opacity-50'
       )}

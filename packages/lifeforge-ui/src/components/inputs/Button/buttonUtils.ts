@@ -24,11 +24,11 @@ export const generateColorClass = (
         return 'border-[1.6px] border-red-500 shadow-custom text-red-500 disabled:border-red-300 hover:bg-red-500/15 disabled:text-red-300 disabled:hover:border-red-300 disabled:hover:text-red-300 disabled:hover:bg-transparent dark:disabled:border-red-900/50 dark:disabled:text-red-900/50 dark:disabled:hover:border-red-900/50 dark:disabled:hover:bg-transparent'
       case 'primary':
       default:
-        return `bg-red-500 shadow-custom hover:bg-red-600 ${
+        return `bg-red-500 border-red-900 in-[.bordered]:border-2 shadow-custom hover:bg-red-600 ${
           tinycolor(themeColor).isLight()
             ? 'text-bg-800 dark:text-bg-800'
             : 'text-bg-50 dark:text-bg-50'
-        } disabled:bg-red-500/10 disabled:text-red-300 disabled:hover:bg-red-500/10 dark:disabled:bg-red-500/10 dark:disabled:text-red-900/50 dark:disabled:hover:bg-red-500/10`
+        } disabled:bg-red-500/10 disabled:border-red-500/10 dark:disabled:border-red-500/10 disabled:text-red-300 disabled:hover:bg-red-500/10 dark:disabled:bg-red-500/10 dark:disabled:text-red-900/50 dark:disabled:hover:bg-red-500/10`
     }
   }
 
@@ -41,11 +41,11 @@ export const generateColorClass = (
       return 'border-[1.6px] border-custom-500 shadow-custom text-custom-500 hover:bg-custom-500/10 disabled:border-bg-300 disabled:text-bg-300 disabled:hover:border-bg-300 disabled:hover:text-bg-300 disabled:hover:bg-transparent dark:disabled:border-bg-700 dark:disabled:text-bg-700 dark:disabled:hover:border-bg-700'
     case 'primary':
     default:
-      return `bg-custom-500 shadow-custom hover:bg-custom-600 ${
+      return `bg-custom-500 border-custom-900/20 dark:border-custom-900 in-[.bordered]:border-2 shadow-custom hover:bg-custom-600 ${
         tinycolor(themeColor).isLight()
           ? 'text-bg-800 dark:text-bg-800'
           : 'text-bg-50 dark:text-bg-50'
-      } disabled:bg-bg-200 disabled:text-bg-400 disabled:hover:bg-bg-200 dark:disabled:bg-bg-800/50 dark:disabled:text-bg-600 dark:disabled:hover:bg-bg-800/50`
+      } disabled:bg-bg-200 disabled:border-bg-500/20 dark:disabled:border-bg-500/20 disabled:text-bg-400 disabled:hover:bg-bg-200 dark:disabled:bg-bg-800/50 dark:disabled:text-bg-600 dark:disabled:hover:bg-bg-800/50`
   }
 }
 
