@@ -156,7 +156,7 @@ export class GetFullList<
 
     LoggingService.debug(
       `${chalk
-        .hex('#34ace0')
+        .hex('#82c8e5')
         .bold('getFullList')} Fetched ${result.length} items from ${chalk
         .hex('#34ace0')
         .bold(this.collectionKey)}`,

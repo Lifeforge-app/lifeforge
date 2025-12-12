@@ -123,7 +123,7 @@ export class GetOne<
       })
 
     LoggingService.debug(
-      `${chalk.hex('#34ace0').bold('getOne')} Fetched record with ID ${chalk
+      `${chalk.hex('#82c8e5').bold('getOne')} Fetched record with ID ${chalk
         .hex('#34ace0')
         .bold(
           this._itemId
