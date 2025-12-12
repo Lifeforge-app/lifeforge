@@ -1,6 +1,5 @@
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
-import { useDebounce } from '@uidotdev/usehooks'
 import {
   EmptyStateScreen,
   Listbox,
@@ -42,8 +41,6 @@ function GoogleFontSelector({
 
   const [searchQuery, setSearchQuery] = useState<string>('')
 
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
-
   const [page, setPage] = useState(1)
 
   const scrollableRef = useRef<any>(null)
@@ -54,9 +51,7 @@ function GoogleFontSelector({
         .filter(font => {
           return (
             (font.category === selectedCategory || !selectedCategory) &&
-            font.family
-              .toLowerCase()
-              .includes(debouncedSearchQuery.toLowerCase())
+            font.family.toLowerCase().includes(searchQuery.toLowerCase())
           )
         })
         .sort((a, b) => {
@@ -70,18 +65,13 @@ function GoogleFontSelector({
 
           return a.family.localeCompare(b.family) // Then sort alphabetically
         }),
-    [
-      fontsQuery.data,
-      selectedCategory,
-      debouncedSearchQuery,
-      pinnedFontsQuery.data
-    ]
+    [fontsQuery.data, selectedCategory, searchQuery, pinnedFontsQuery.data]
   )
 
   useEffect(() => {
     setPage(1)
     scrollableRef.current?.scrollToTop()
-  }, [selectedCategory, debouncedSearchQuery])
+  }, [selectedCategory, searchQuery])
 
   useEffect(() => {
     if (!fontsQuery.data) return
@@ -121,6 +111,7 @@ function GoogleFontSelector({
         </Listbox>
         <SearchInput
           className="component-bg-lighter-with-hover"
+          debounceMs={300}
           namespace="apps.personalization"
           searchTarget="fontFamily.items.fontFamily"
           value={searchQuery}
