@@ -12,6 +12,7 @@ function BorderedSelector() {
 
   return (
     <OptionsColumn
+      breakpoint={false}
       description={t('borderedSelector.desc')}
       icon="tabler:border-style-2"
       title={t('borderedSelector.title')}
