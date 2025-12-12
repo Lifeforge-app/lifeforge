@@ -29,12 +29,24 @@ function GoogleFontSelector({
 }) {
   const { fontFamily } = usePersonalization()
 
+  const apiKeyAvailable = useQuery(
+    forgeAPI.apiKeys.entries.checkKeys
+      .input({
+        keys: 'gcloud'
+      })
+      .queryOptions()
+  )
+
   const fontsQuery = useQuery(
-    forgeAPI.user.personalization.listGoogleFonts.queryOptions()
+    forgeAPI.user.personalization.listGoogleFonts.queryOptions({
+      enabled: apiKeyAvailable.data === true
+    })
   )
 
   const pinnedFontsQuery = useQuery(
-    forgeAPI.user.personalization.listGoogleFontsPin.queryOptions()
+    forgeAPI.user.personalization.listGoogleFontsPin.queryOptions({
+      enabled: apiKeyAvailable.data === true
+    })
   )
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -88,112 +100,135 @@ function GoogleFontSelector({
   }, [fontsQuery.data])
 
   return (
-    <>
-      <div className="mb-4 flex flex-col items-center gap-2 md:flex-row">
-        <Listbox
-          buttonContent={
-            <span>{_.startCase(selectedCategory || '') || 'All category'}</span>
-          }
-          className="component-bg-lighter-with-hover md:max-w-56"
-          value={selectedCategory}
-          onChange={setSelectedCategory}
-        >
-          <ListboxOption key="all" label="All category" value={null} />
-          {[...new Set(fontsQuery.data?.items.map(font => font.category))].map(
-            category => (
-              <ListboxOption
-                key={category}
-                label={_.startCase(category)}
-                value={category}
-              />
-            )
-          )}
-        </Listbox>
-        <SearchInput
-          className="component-bg-lighter-with-hover"
-          debounceMs={300}
-          namespace="apps.personalization"
-          searchTarget="fontFamily.items.fontFamily"
-          value={searchQuery}
-          onChange={setSearchQuery}
-        />
-      </div>
-      <WithQuery query={pinnedFontsQuery}>
-        {pinnedFontsData => (
-          <WithQuery query={fontsQuery}>
-            {data =>
-              !data.enabled ? (
-                <EmptyStateScreen
-                  icon="tabler:key-off"
-                  message={{
-                    id: 'apiKey',
-                    namespace: 'apps.personalization',
-                    tKey: 'fontFamily'
-                  }}
-                />
-              ) : filteredFonts!.length > 0 ? (
-                <div className="h-full w-full flex-1">
-                  <AutoSizer>
-                    {({ height, width }) => (
-                      <Scrollbar
-                        ref={scrollableRef}
-                        style={{
-                          height: `${height}px`,
-                          width: `${width}px`
-                        }}
-                      >
-                        <div className="w-full space-y-3">
-                          <Pagination
-                            page={page}
-                            totalPages={Math.ceil(filteredFonts!.length / 10)}
-                            onPageChange={page => {
-                              setPage(page)
-                              scrollableRef.current?.scrollToTop()
-                            }}
-                          />
-                          {filteredFonts
-                            ?.slice((page - 1) * 10, page * 10)
-                            .map(font => (
-                              <FontListItem
-                                key={font.family}
-                                font={font}
-                                isPinned={pinnedFontsData.some(
-                                  pinnedFont => pinnedFont === font.family
-                                )}
-                                selectedFont={selectedFont}
-                                setSelectedFont={setSelectedFont}
-                              />
-                            ))}
-                          <Pagination
-                            page={page}
-                            totalPages={Math.ceil(filteredFonts!.length / 10)}
-                            onPageChange={page => {
-                              setPage(page)
-                              scrollableRef.current?.scrollToTop()
-                            }}
-                          />
-                        </div>
-                      </Scrollbar>
-                    )}
-                  </AutoSizer>
-                </div>
-              ) : (
-                <div className="flex-center flex-1">
-                  <EmptyStateScreen
-                    icon="tabler:search-off"
-                    message={{
-                      id: 'search',
-                      namespace: 'apps.personalization',
-                      tKey: 'fontFamily'
-                    }}
+    <WithQuery query={apiKeyAvailable}>
+      {apiKeyAvailable =>
+        !apiKeyAvailable ? (
+          <>
+            <div className="mb-4 flex flex-col items-center gap-2 md:flex-row">
+              <Listbox
+                buttonContent={
+                  <span>
+                    {_.startCase(selectedCategory || '') || 'All category'}
+                  </span>
+                }
+                className="component-bg-lighter-with-hover md:max-w-56"
+                value={selectedCategory}
+                onChange={setSelectedCategory}
+              >
+                <ListboxOption key="all" label="All category" value={null} />
+                {[
+                  ...new Set(fontsQuery.data?.items.map(font => font.category))
+                ].map(category => (
+                  <ListboxOption
+                    key={category}
+                    label={_.startCase(category)}
+                    value={category}
                   />
-                </div>
-              )
-            }
-          </WithQuery>
-        )}
-      </WithQuery>
-    </>
+                ))}
+              </Listbox>
+              <SearchInput
+                className="component-bg-lighter-with-hover"
+                debounceMs={300}
+                namespace="apps.personalization"
+                searchTarget="fontFamily.items.fontFamily"
+                value={searchQuery}
+                onChange={setSearchQuery}
+              />
+            </div>
+            <WithQuery query={pinnedFontsQuery}>
+              {pinnedFontsData => (
+                <WithQuery query={fontsQuery}>
+                  {data =>
+                    !data.enabled ? (
+                      <EmptyStateScreen
+                        icon="tabler:key-off"
+                        message={{
+                          id: 'apiKey',
+                          namespace: 'apps.personalization',
+                          tKey: 'fontFamily'
+                        }}
+                      />
+                    ) : filteredFonts!.length > 0 ? (
+                      <div className="h-full w-full flex-1">
+                        <AutoSizer>
+                          {({ height, width }) => (
+                            <Scrollbar
+                              ref={scrollableRef}
+                              style={{
+                                height: `${height}px`,
+                                width: `${width}px`
+                              }}
+                            >
+                              <div className="w-full space-y-3">
+                                <Pagination
+                                  page={page}
+                                  totalPages={Math.ceil(
+                                    filteredFonts!.length / 10
+                                  )}
+                                  onPageChange={page => {
+                                    setPage(page)
+                                    scrollableRef.current?.scrollToTop()
+                                  }}
+                                />
+                                {filteredFonts
+                                  ?.slice((page - 1) * 10, page * 10)
+                                  .map(font => (
+                                    <FontListItem
+                                      key={font.family}
+                                      font={font}
+                                      isPinned={pinnedFontsData.some(
+                                        pinnedFont => pinnedFont === font.family
+                                      )}
+                                      selectedFont={selectedFont}
+                                      setSelectedFont={setSelectedFont}
+                                    />
+                                  ))}
+                                <Pagination
+                                  page={page}
+                                  totalPages={Math.ceil(
+                                    filteredFonts!.length / 10
+                                  )}
+                                  onPageChange={page => {
+                                    setPage(page)
+                                    scrollableRef.current?.scrollToTop()
+                                  }}
+                                />
+                              </div>
+                            </Scrollbar>
+                          )}
+                        </AutoSizer>
+                      </div>
+                    ) : (
+                      <div className="flex-center flex-1">
+                        <EmptyStateScreen
+                          icon="tabler:search-off"
+                          message={{
+                            id: 'search',
+                            namespace: 'apps.personalization',
+                            tKey: 'fontFamily'
+                          }}
+                        />
+                      </div>
+                    )
+                  }
+                </WithQuery>
+              )}
+            </WithQuery>
+          </>
+        ) : (
+          <div className="flex-center flex-1">
+            <EmptyStateScreen
+              icon="tabler:key-off"
+              message={{
+                id: 'apiKey',
+                namespace: 'apps.personalization',
+                tKey: 'fontFamily'
+              }}
+            />
+          </div>
+        )
+      }
+    </WithQuery>
   )
 }
 

@@ -45,7 +45,7 @@
     "desc": "Choose a background temperature that suits your mood.",
     "cool": "Cool",
     "warm": "Warm",
-    "customBgTemp": "Custom Background Temperature"
+    "customBgTemp": "Custom"
   },
   "fontFamily": {
     "title": "Font Style",
