@@ -422,8 +422,14 @@ export async function createModuleHandler(moduleName?: string): Promise<void> {
   injectModuleRoute(camelizedModuleName)
   injectModuleSchema(camelizedModuleName)
 
-  runDatabaseMigrations(pbInstancePath)
-  generateDatabaseSchemas()
+  if (
+    fs.existsSync(
+      `${process.cwd()}/apps/${camelizedModuleName}/server/schema.ts`
+    )
+  ) {
+    runDatabaseMigrations(pbInstancePath)
+    generateDatabaseSchemas()
+  }
 
   CLILoggingService.success(
     `Module "${moduleMetadata.moduleName.en}" setup is complete!`
