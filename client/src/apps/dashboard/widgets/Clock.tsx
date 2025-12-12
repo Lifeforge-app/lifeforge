@@ -20,7 +20,7 @@ function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   return (
     <div
       className={clsx(
-        'shadow-custom component-bg flex size-full gap-6 rounded-lg p-4',
+        'shadow-custom component-bg border-bg-500/20 flex size-full gap-6 rounded-lg p-4 in-[.bordered]:border-2',
         h < 2
           ? 'items-center justify-center min-[488px]:justify-between'
           : 'flex-col'
