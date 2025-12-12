@@ -78,14 +78,14 @@ function OptionsColumn({
         </div>
         <div
           className={clsx(
-            'flex w-full min-w-0 shrink-0 items-center gap-3 md:w-auto',
+            'flex min-w-0 shrink-0 items-center gap-3',
             orientation === 'horizontal' &&
               (breakpoint
                 ? {
-                    sm: 'sm:mr-2',
-                    md: 'md:mr-2',
-                    lg: 'lg:mr-2',
-                    xl: 'xl:mr-2'
+                    sm: 'w-full sm:mr-2 sm:w-auto',
+                    md: 'w-full md:mr-2 md:w-auto',
+                    lg: 'w-full lg:mr-2 lg:w-auto',
+                    xl: 'w-full xl:mr-2 xl:w-auto'
                   }[breakpoint]
                 : 'mr-2')
           )}
