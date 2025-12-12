@@ -86,7 +86,7 @@ function AvatarColumn() {
           onClick={() =>
             open(FilePickerModal, {
               acceptedMimeTypes: {
-                'image/*': ['.jpg', '.jpeg', '.png', '.gif']
+                image: ['.jpg', '.jpeg', '.png', '.gif']
               },
               enablePixabay: true,
               enableUrl: true,
