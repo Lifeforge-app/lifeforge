@@ -53,7 +53,7 @@ function ModalWrapper({
           maxWidth: maxWidth
         }}
       >
-        <div className="p-6">{children}</div>
+        <div className="min-w-0 p-6">{children}</div>
       </div>
     </div>,
     document.getElementById('app') || document.body
