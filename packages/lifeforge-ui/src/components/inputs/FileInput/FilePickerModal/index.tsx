@@ -98,7 +98,7 @@ function FilePickerModal({
           }}
         />
       )}
-      <div className="mt-4 flex h-full min-h-0 w-full flex-1 flex-col">
+      <div className="my-6 flex h-full min-h-0 w-full flex-1 flex-col">
         {(() => {
           switch (mode) {
             case 'local':
