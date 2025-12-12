@@ -19,7 +19,7 @@ export default function Quotes() {
   const { derivedThemeColor: themeColor } = usePersonalization()
 
   return (
-    <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-4">
+    <div className="bg-custom-500 border-custom-900/20 dark:border-custom-900 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-4 in-[.bordered]:border-2">
       <Icon
         className="text-bg-800/10 absolute top-2 right-2 text-8xl"
         icon="tabler:quote"

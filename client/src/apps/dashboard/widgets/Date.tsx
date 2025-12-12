@@ -22,7 +22,7 @@ export default function DateWidget({
     <div
       ref={containerRef}
       className={clsx(
-        'bg-custom-500 shadow-custom flex size-full gap-3 rounded-lg p-4',
+        'bg-custom-500 border-custom-900/20 dark:border-custom-900 shadow-custom flex size-full gap-3 rounded-lg p-4 in-[.bordered]:border-2',
         tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50',
         h === 2
           ? 'flex-col items-start'
