@@ -1,8 +1,6 @@
 import { LoadingScreen } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 
-import Code from '../../../components/Code'
-
 function EnvExample() {
   const [envContent, setEnvContent] = useState('')
 
@@ -20,7 +18,9 @@ function EnvExample() {
       <LoadingScreen />
     </div>
   ) : (
-    <Code language="bash">{envContent}</Code>
+    <pre className="overflow-x-auto rounded-lg bg-zinc-900 p-4">
+      <code className="text-sm whitespace-pre text-zinc-300">{envContent}</code>
+    </pre>
   )
 }
 

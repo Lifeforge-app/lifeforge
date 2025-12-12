@@ -1,5 +1,4 @@
 import Commit from "../../components/Commit";
-import Code from "@/components/Code";
 
 ### 🏢 Module-Specific & Feature Updates
 
@@ -14,22 +13,21 @@ import Code from "@/components/Code";
 ### 🎨 UI Components & Design System
 
 - <Commit hash="62c132a283cfc6bb3e9d7d37ca48b48570f56439" />: Removed
-  <code>ContextMenuSeparator</code> component.
+  `ContextMenuSeparator` component.
 - <Commit hash="fee0fe11ab27114e35ebdb73fffcf2a769b32ca9" />: Made the action
   button default to plain variant in ModalHeader
 - <Commit hash="2e8957677628d2abc40ee366373dc7240e678e27" />: Added
-  <code>ItemWrapper</code> component for more unified styling of list items.
+  `ItemWrapper` component for more unified styling of list items.
 
-        <Code language="tsx">
-            {`<ul>
-        {data.map(item => (
-          <ItemWrapper key={item.id}>
-            {item.name}
-          </ItemWrapper>
-        ))}
-
-    </ul>`}
-  </Code>
+  ```tsx
+  <ul>
+    {data.map(item => (
+      <ItemWrapper key={item.id}>
+        {item.name}
+      </ItemWrapper>
+    ))}
+  </ul>
+  ```
 
 - <Commit hash="2beb68165a220d42f01bd1bf28a4792c1296e8d7" />: Improved
   background color consistency for various inputs.
@@ -46,97 +44,87 @@ import Code from "@/components/Code";
   getting the system ready for AI agent.
 - <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Replaced constant
   file containing routes that requires no authentication with chained method
-  definition in <code>forgeController</code>.
+  definition in `forgeController`.
 
-      <Code language="typescript">
-          {`const myController = forgeController.query()
-
-  .noAuth()
-  .description('...')
-  // ...`}
-  </Code>
+  ```typescript
+  const myController = forgeController.query()
+    .noAuth()
+    .description('...')
+    // ...
+  ```
 
 - <Commit hash="2466c7f552d228a53892f082ce89c927860aa9a7" />: Added a ping
   handler in the server to allow external services (e.g. CRON) to ping the
   server to keep it awake.
 - <Commit hash="0ac266883b04095a96db634ea47fde4b275e4035" />: Updated type
-  inference so that query handler of server-side <code>forgeController</code>
+  inference so that query handler of server-side `forgeController`
   cannot accept body as input.
 
-        <Code language="typescript">
-            {`// This will cause a typescript error
-
+  ```typescript
+  // This will cause a typescript error
   const myController = forgeController.query()
-  .input({
-  body: z.object({
-  // ...
-  }) // Type 'ZodObject<{}, $strip>' is not assignable to type 'undefined'.
-  })`}
-
-    </Code>
+    .input({
+      body: z.object({
+        // ...
+      }) // Type 'ZodObject<{}, $strip>' is not assignable to type 'undefined'.
+    })
+  ```
 
 - <Commit hash="5952f4ca1170b45d2827755013c167d69fea6b9c" />: Removed
-  <code>.method()</code> chain method in <code>forgeController</code> as it's
-  redundant. (It's already implied by using <code>.query</code> or
-  <code>.mutation</code> when creating the controller instance.)
+  `.method()` chain method in `forgeController` as it's
+  redundant. (It's already implied by using `.query` or
+  `.mutation` when creating the controller instance.)
 - <Commit hash="1c73e2383c186e39a07c126b878244a4c2f55425" />: Splitted app and
   core routes into separate route files.
 
-        <Code language="plaintext">
-            {`/server/src/routes/
-
+  ```plaintext
+  /server/src/routes/
   ├── app.routes.ts
   ├── core.routes.ts
   ├── routes.types.ts
-  └── index.ts`}
-
-    </Code>
+  └── index.ts
+  ```
 
 - <Commit hash="340a713993368ccb394eec73f372f1428b7e3daa" />: Moved
-  <code>ModuleWrapper</code> to route construction layer so that it doesn't need
+  `ModuleWrapper` to route construction layer so that it doesn't need
   to be manually wrapped around each module page. Also, module title and icon
   are now passed via context provider in this level instead of manually defining
   them in each module page. However, explicit definition is still supported for
   special use cases.
 
-        <Code language="tsx">
-
-  {`// Before
+  ```tsx
+  // Before
   return (
-
-  <ModuleWrapper>
-    <ModuleHeader icon="tabler:calendar" title="Calendar" />
-    ...
-  </ModuleWrapper>
+    <ModuleWrapper>
+      <ModuleHeader icon="tabler:calendar" title="Calendar" />
+      ...
+    </ModuleWrapper>
   )
 
-        // After
-        return (
+  // After
+  return (
+    <>
+      <ModuleHeader />
+      ...
+    </>
+  )
 
-        <>
-            <ModuleHeader />
-            ...
-        </>
-        )
-
-        // Or, for explicit definition
-        return (
-
-        <>
-            <ModuleHeader icon="tabler:cube" title="Subpage" />
-            ...
-        </>
-        ) `}
-
-        </Code>
+  // Or, for explicit definition
+  return (
+    <>
+      <ModuleHeader icon="tabler:cube" title="Subpage" />
+      ...
+    </>
+  )
+  ```
 
 ### 🐛 Bug Fixes
 
 - <Commit hash="e03eda0e13b952d542d559070d52338b0e816218" />: Fixed a bug where
-  the location is not updated correctly when the <code>GoBackButton</code>
+  the location is not updated correctly when the `GoBackButton`
   component is clicked.
 - <Commit hash="552b1c35b098e543242b4aeafd199c425ad50916" />: Fixed a bug in the
-  <code>RRuleInput</code> component where the update made to duration fields are
+  `RRuleInput` component where the update made to duration fields are
   not reflected correctly, as well as responsive layout issues.
 - <Commit hash="98136e8e0e6ebc7f96da8c77915db028b6a0619c" />: Fixed a bug in the
   form validation mechanism where the file input field is deemed empty even when
@@ -147,7 +135,7 @@ import Code from "@/components/Code";
   event modal initial data to set type as 'single' and fixed the start date
   format.
 - <Commit hash="09713b660f9e7d12530e55428d25c6cfeaa94ca1" />: Fixed padding in
-  the drag and drop container of <code>FileInput</code> component.
+  the drag and drop container of `FileInput` component.
 - <Commit hash="a01450b99d9c217ca0bc1ae1792d48b663501e08" />: Fixed translation
   issues in file picker modal.
 - <Commit hash="6a56ad5629a0cd61ac92ed81366134a69f205a87" />: Fixed a bug in
@@ -174,6 +162,6 @@ import Code from "@/components/Code";
 - <Commit hash="a1c72f4a3d73e3b16a568ed862cb321ab916ab25" />: Simplified code
   styling for non-pre code elements.
 - <Commit hash="c74c40de4d12793fbf1941a8c3d942b573b76b1b" />: Added
-  documentation for constructing backend API with <code>forgeController</code>.
+  documentation for constructing backend API with `forgeController`.
   See [Building API](/developer-guide/building-api).
 - Purchase domain "lifeforge.dev" and set it up for the documentation site. Original domain "docs.lifeforge.melvinchia.dev" will still be kept as an alias but has been setup to redirect to the new domain.

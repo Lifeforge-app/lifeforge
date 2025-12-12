@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 
-import Code from '../../components/Code'
 import CustomLink from '../../components/CustomLink'
 import { Alert } from "lifeforge-ui"
 
@@ -29,7 +28,7 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
     <Icon icon="tabler:language" className="translate-y-1" />
     **4 Supported Languages** (for now)
   </div>
-  English (<code>en</code>), Simplified Chinese (<code>zh-CN</code>), Traditional Chinese (<code>zh-TW</code>), and Bahasa Malaysia (<code>ms</code>). 
+  English (`en`), Simplified Chinese (`zh-CN`), Traditional Chinese (`zh-TW`), and Bahasa Malaysia (`ms`). 
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:download" className="translate-y-1" />
     **Dynamic Loading**
@@ -39,7 +38,7 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
     <Icon icon="tabler:folders" className="translate-y-1" />
     **Namespace Architecture**
   </div>
-  Modular organization with <code>apps.\*</code> and <code>common.*</code> namespaces for clean separation
+  Modular organization with `apps.\*` and `common.*` namespaces for clean separation
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:tool" className="translate-y-1" />
     **UI-based Management**
@@ -63,24 +62,24 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
 
 ### Module Locales (<code className='text-xl!'>apps.*</code> namespace)
 
-Each module has its own <code>locales/</code> directory containing 4 JSON files, one for each supported language:
+Each module has its own `locales/` directory containing 4 JSON files, one for each supported language:
 
-<Code language="plaintext">
-{`apps/
+```plaintext
+apps/
 └── myModule/
     └── locales/
         ├── en.json      # English (primary)
         ├── ms.json      # Bahasa Malaysia
         ├── zh-CN.json   # Simplified Chinese
-        └── zh-TW.json   # Traditional Chinese`}
-</Code>
+        └── zh-TW.json   # Traditional Chinese
+```
 
 ### Core Locales (<code className='text-xl!'>common.*</code> namespace)
 
 Shared translations used across the entire application are stored in the server's core locales:
 
-<Code language="plaintext">
-{`server/src/core/locales/
+```plaintext
+server/src/core/locales/
 ├── en/
 │   ├── auth.json       # Authentication strings
 │   ├── buttons.json    # Common button labels
@@ -91,8 +90,8 @@ Shared translations used across the entire application are stored in the server'
 │   └── vault.json      # Master password vault
 ├── ms/
 ├── zh-CN/
-└── zh-TW/`}
-</Code>
+└── zh-TW/
+```
 
 </section>
 
@@ -101,8 +100,8 @@ Shared translations used across the entire application are stored in the server'
 
 A well-structured locale file uses consistent key naming and logical grouping. Here's a recommended template for module locales:
 
-<Code language="json">
-{`{
+```json
+{
     "title": "Module Name",
     "description": "Module description for ModuleHeader.",
     
@@ -148,45 +147,45 @@ A well-structured locale file uses consistent key naming and logical grouping. H
       "overview": "Overview",
       "settings": "Settings"
     }
-}`}
-</Code>
+}
+```
 
 <Alert className="mt-6" type="caution">
 #### Reserved Keys
 
 There are a few keys that are reserved for specific components. These should be used as intended to ensure proper functionality:
-- <code>title</code> and <code>description</code> for module metadata
-- <code>empty.&lt;item&gt;.title</code> and <code>empty.&lt;item&gt;.description</code> for <code>EmptyStateScreen</code>
-- <code>widgets.&lt;widgetName&gt;.title</code> and <code>widgets.&lt;widgetName&gt;.description</code> for <code>Widget</code> component
-- <code>modals.&lt;modalName&gt;</code> or <code>modals.&lt;modalName&gt;.title</code> for <code>ModalHeader</code>
-- <code>inputs.&lt;inputName&gt;.label</code> or <code>inputs.&lt;inputName&gt;</code> for input labels
-- <code>inputs.&lt;inputName&gt;.placeholder</code> for input placeholders
-- <code>buttons.&lt;buttonName&gt;</code> for button labels
-- <code>items.&lt;itemName&gt;</code> for searchable item (used specifically in the <code>SearchInput</code> component)
+- `title` and `description` for module metadata
+- `empty.&lt;item&gt;.title` and `empty.&lt;item&gt;.description` for `EmptyStateScreen`
+- `widgets.&lt;widgetName&gt;.title` and `widgets.&lt;widgetName&gt;.description` for `Widget` component
+- `modals.&lt;modalName&gt;` or `modals.&lt;modalName&gt;.title` for `ModalHeader`
+- `inputs.&lt;inputName&gt;.label` or `inputs.&lt;inputName&gt;` for input labels
+- `inputs.&lt;inputName&gt;.placeholder` for input placeholders
+- `buttons.&lt;buttonName&gt;` for button labels
+- `items.&lt;itemName&gt;` for searchable item (used specifically in the `SearchInput` component)
 </Alert>
 
 ### Common Buttons Reference
 
-Rather than defining common button labels in every module, you can use the shared <code>common.buttons</code> namespace. Here are some commonly available keys:
+Rather than defining common button labels in every module, you can use the shared `common.buttons` namespace. Here are some commonly available keys:
 
 | Key | English |
 |-----|---------|
-| <code>create</code> | Create |
-| <code>update</code> | Update |
-| <code>cancel</code> | Cancel |
-| <code>delete</code> | Delete |
-| <code>save</code> | Save |
-| <code>new</code> | New \{\{item\}\} |
-| <code>submit</code> | Submit |
-| <code>confirm</code> | Confirm |
+| `create` | Create |
+| `update` | Update |
+| `cancel` | Cancel |
+| `delete` | Delete |
+| `save` | Save |
+| `new` | New \{\{item\}\} |
+| `submit` | Submit |
+| `confirm` | Confirm |
 
-By default, the <code>namespace</code> prop in lifeforge-ui button components points to <code>common.buttons</code>, so you can directly use these keys without explicitly specifying the namespace. For example,
+By default, the `namespace` prop in lifeforge-ui button components points to `common.buttons`, so you can directly use these keys without explicitly specifying the namespace. For example,
 
-<Code language="tsx">
-{`<Button>
+```tsx
+<Button>
     create  {/* The localized text will be automatically looked up from common.buttons.create */}
-</Button>`}
-</Code>
+</Button>
+```
 
 <Alert className="mt-6" type="tip">
   These are just a few examples. You can find the full list of available keys in the locale file in the codebase.
@@ -199,10 +198,10 @@ By default, the <code>namespace</code> prop in lifeforge-ui button components po
 
 ### Basic Component Usage
 
-The most straightforward way to use translations is with the <code>useTranslation</code> hook:
+The most straightforward way to use translations is with the `useTranslation` hook:
 
-<Code language="tsx">
-{`import { useTranslation } from 'react-i18next'
+```tsx
+import { useTranslation } from 'react-i18next'
 
 function MyComponent() {
     // Load module-specific translations
@@ -214,15 +213,15 @@ function MyComponent() {
         <p>{t('description')}</p>
       </div>
     )
-}`}
-</Code>
+}
+```
 
 ### Multiple Namespaces
 
-When you need translations from multiple namespaces, pass an array to <code>useTranslation</code>:
+When you need translations from multiple namespaces, pass an array to `useTranslation`:
 
-<Code language="tsx">
-{`function MyComponent() {
+```tsx
+function MyComponent() {
     const { t } = useTranslation(['apps.myModule', 'apps.anotherModule'])
     
     return (
@@ -231,40 +230,39 @@ When you need translations from multiple namespaces, pass an array to <code>useT
         <p>{t('apps.anotherModule:someText')}</p>
       </>
     )
-}`}
-</Code>
+}
+```
 
 ### Interpolation
 
 For dynamic content, use interpolation with double curly braces in your locale files:
 
-<Code language="tsx">
-{`// In locale file: "greeting": "Hello, {{name}}!"
-t('greeting', { name: 'John' }) // → "Hello, John!"`}
-</Code>
+```tsx
+// In locale file: "greeting": "Hello, {{name}}!"
+t('greeting', { name: 'John' }) // → "Hello, John!"
+```
 
-A few components in lifeforge-ui have a <code>tProps</code> prop that allows you to pass translation props to the component.
+A few components in lifeforge-ui have a `tProps` prop that allows you to pass translation props to the component.
 
-<Code language="tsx">
-{`<Button tProps={{ item: t('items.entry') }}>
+```tsx
+<Button tProps={{ item: t('items.entry') }}>
     new  {/* -> New Entry */}
 </Button>
-`}
-</Code>
+```
 
 </section>
 
 <section id="lifeforge-ui-integration">
 ## lifeforge-ui Integration
 
-Many components in <code>lifeforge-ui</code> have built-in translation support via the <code>namespace</code> prop. This allows for cleaner code by automating translation lookups. However, different components may have different translation props, so refer to the Storybook documentation for [lifeforge-ui](https://ui.lifeforge.dev/) for more information.
+Many components in `lifeforge-ui` have built-in translation support via the `namespace` prop. This allows for cleaner code by automating translation lookups. However, different components may have different translation props, so refer to the Storybook documentation for [lifeforge-ui](https://ui.lifeforge.dev/) for more information.
 
 </section>
 
 <section id="adding-translations-to-your-module">
 ## Adding Translations to Your Module
 
-When using <code>ForgeCLI</code> to create a module, locale files are automatically generated for you with a basic structure. If you have an OpenAI API key configured in your API Key Vault, the CLI will even auto-translate your module name and description into all supported languages!
+When using `ForgeCLI` to create a module, locale files are automatically generated for you with a basic structure. If you have an OpenAI API key configured in your API Key Vault, the CLI will even auto-translate your module name and description into all supported languages!
 
 </section>
 
@@ -294,7 +292,7 @@ LifeForge includes a dedicated web-based **Localization Manager** tool for manag
   </div>
   Quickly find keys across all namespaces
 
-The Localization Manager is accessible via SSO from the main application and is located in the <code>tools/localizationManager</code> directory.
+The Localization Manager is accessible via SSO from the main application and is located in the `tools/localizationManager` directory.
 
 </section>
 
@@ -303,68 +301,68 @@ The Localization Manager is accessible via SSO from the main application and is 
 
 ### 1. Consistent Key Naming
 
-Use <code>camelCase</code> for keys and organize them by type:
+Use `camelCase` for keys and organize them by type:
 
-<Code language="json">
-{`{
+```json
+{
     "buttons": { "exportToCSV": "Export to CSV" },
     "modals": { "confirmDelete": "Confirm Delete" },
     "inputs": { "entryName": { "label": "Entry Name", "placeholder": "Enter name..." } }
-}`}
-</Code>
+}
+```
 
 ### 2. Use Interpolation for Dynamic Content
 
-Interpolation is an <code>i18next</code> built-in feature that allows you to insert dynamic values into your translations. This is useful for dynamic content that changes based on user input or other factors.
+Interpolation is an `i18next` built-in feature that allows you to insert dynamic values into your translations. This is useful for dynamic content that changes based on user input or other factors.
 
-<Code language="json">
-{`{
+```json
+{
     "messages": {
       "deleteConfirm": "Are you sure you want to delete {{name}}?",
       "itemCount": "{{count}} item(s) found"
     }
-}`}
-</Code>
+}
+```
 
 ### 3. Provide Context with Nested Keys
 
 Nested keys allow you to group related translations together and make it easier to find and manage them.
 
-<Code language="json">
-{`{
+```json
+{
   "empty": {
     "entries": {
       "title": "No Entries",
       "description": "Create your first entry to get started."
     }
   }
-}`}
-</Code>
+}
+```
 
 ### 4. Leverage lifeforge-ui's Namespace Prop
 
-Instead of manual <code>t()</code> calls, use the <code>namespace</code> prop on lifeforge-ui components whenever possible. Refer to the [lifeforge-ui](https://ui.lifeforge.dev/) documentation for explanation and examples on how to use each component.
+Instead of manual `t()` calls, use the `namespace` prop on lifeforge-ui components whenever possible. Refer to the [lifeforge-ui](https://ui.lifeforge.dev/) documentation for explanation and examples on how to use each component.
 
-<Code language="tsx">
-{`// ✅ Good - automatic lookup
+```tsx
+// ✅ Good - automatic lookup
 <Button namespace="apps.myModule">saveEntry</Button>
 
 // ❌ Verbose - manual translation
-<Button>{t('buttons.saveEntry')}</Button>`}
-</Code>
+<Button>{t('buttons.saveEntry')}</Button>
+```
 
 ### 5. Do not Reinvent the Wheel
 
 When defining a new key, check if it already exists in the core locales. If it does, use the existing key instead of creating a new one.
 
-<Code language="json">
-{`{
+```json
+{
     "buttons": {
       "newEntry": "New Entry" // ❌ Bad - it is already defined in core locales
       "exportToCSV": "Export to CSV" // ✅ OK - it is module specific
     }
-}`}
-</Code>
+}
+```
 
 ### 6. Keep Translations in Sync
 
@@ -379,9 +377,9 @@ When adding a key to English, immediately add placeholder or translated values t
 
 Check server logs for "Missing locale" warnings. The i18n system automatically reports missing keys:
 
-<Code language="plaintext">
-{`Missing locale apps.myModule:buttons.newButton`}
-</Code>
+```plaintext
+Missing locale apps.myModule:buttons.newButton
+```
 
 ### Translation Not Updating
 
@@ -396,13 +394,13 @@ Check server logs for "Missing locale" warnings. The i18n system automatically r
 
 Ensure that:
 - The module is properly registered
-- The <code>locales/</code> directory exists at the correct path within your module
+- The `locales/` directory exists at the correct path within your module
 - The JSON files are valid and properly formatted
 
 <Alert type="tip" className="mt-6">
 Sometimes you'll face an issue where the locales for the entire system are not properly loaded. This is usually caused by a syntax error in one of the many JSON files. Check the files that you have recently modified for any syntax errors.
 
-Another reason might be the version mismatch of the <code>i18next</code> and the <code>react-i18next</code> packages. Ensure that all the client codebase and all your modules are using the same version of these packages.
+Another reason might be the version mismatch of the `i18next` and the `react-i18next` packages. Ensure that all the client codebase and all your modules are using the same version of these packages.
 </Alert>
 
 </section>

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 
-import Code from '../../components/Code'
 import CustomLink from '../../components/CustomLink'
 import { Alert } from "lifeforge-ui"
 
@@ -15,27 +14,27 @@ LifeForge is your canvas, and modules are the vibrant colors that bring your cre
 <section id="module-structure">
 ## Module Structure
 
-All the modules in LifeForge's codebase is located in the <code>apps/</code> directory at the root of the repository. Each module is contained within its own subdirectory, following a consistent structure to ensure ease of development and maintenance.
+All the modules in LifeForge's codebase is located in the `apps/` directory at the root of the repository. Each module is contained within its own subdirectory, following a consistent structure to ensure ease of development and maintenance.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
 
-This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. Here, you can define the pages, components, and styles specific to your module. A UI library called <code>lifeforge-ui</code> is also provided in the <code>packages/</code> directory, which you can use to maintain a consistent design language across your module.
+This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. Here, you can define the pages, components, and styles specific to your module. A UI library called `lifeforge-ui` is also provided in the `packages/` directory, which you can use to maintain a consistent design language across your module.
 
 <CustomLink text="Explore UI Library" to="/developer-guide/ui-library" />
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
 
-This directory contains the backend code for the module. It is built using ExpressJS, the same framework used in the main LifeForge server codebase as well. Here, you can define the API routes, business logic, and database interactions specific to your module. Everything from the main server codebase is also available for you to use, including the type-safe API constructor <code>forgeController</code> and <code>forgeRouter</code>, as well as the type-safe PocketBase wrapper <code>PBService</code>.
+This directory contains the backend code for the module. It is built using ExpressJS, the same framework used in the main LifeForge server codebase as well. Here, you can define the API routes, business logic, and database interactions specific to your module. Everything from the main server codebase is also available for you to use, including the type-safe API constructor `forgeController` and `forgeRouter`, as well as the type-safe PocketBase wrapper `PBService`.
 
 <CustomLink text="Learn More" to="/developer-guide/building-api" />
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-i18n" /><code className="text-xl!">locales/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-i18n" /><code className="text-xl!">locales/</code></div>
 
 This directory contains the localization files for the module. It is structured to support multiple languages, allowing you to provide translations for your module's content. Each language has its own JSON file, where you can define the key-value pairs for the translated strings.
 
 <CustomLink text="Learn More" to="/developer-guide/localization" />
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:nodejs" /><code className="text-xl!">package.json</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:nodejs" /><code className="text-xl!">package.json</code></div>
 
 This file contains the module's metadata and dependencies. LifeForge's monorepo is managed using **bun**, which supports workspaces natively. The newest version of **bun** is mandatory since the dependencies management relies on features that are only available in the latest versions.
 
@@ -48,11 +47,13 @@ In bun version 1.2.x and below, workspace dependencies are shared across all wor
 <section id="creating-modules">
 ## Creating Modules
 
-To create a new module, you can use the <code>ForgeCLI</code> tool, which provides a convenient command-line interface for managing LifeForge instances. The CLI includes a command to scaffold a new module with the necessary directory structure and boilerplate code.
+To create a new module, you can use the `ForgeCLI` tool, which provides a convenient command-line interface for managing LifeForge instances. The CLI includes a command to scaffold a new module with the necessary directory structure and boilerplate code.
 
 Simply run the following command in your terminal:
 
-<Code language="bash">{`bun run forge modules create`}</Code>
+```bash
+bun run forge modules create
+```
 
 Several prompts will guide you through the setup process, allowing you to customize the module's name, description, and other settings, which should look something like this:
 
@@ -75,31 +76,29 @@ You can choose from several boilerplate templates to kickstart your module devel
 <section id="client-manifest">
 ## Client Manifest
 
-In each module of LifeForge, the client-side codebase contains a special file named <code>manifest.ts</code> at the root of the <code>client/</code> directory. This file serves as the entry point for the module's client application and defines the module's metadata and configuration.
+In each module of LifeForge, the client-side codebase contains a special file named `manifest.ts` at the root of the `client/` directory. This file serves as the entry point for the module's client application and defines the module's metadata and configuration.
 
-When creating a module using the <code>ForgeCLI</code>, a default manifest file will be generated for you with the basic structure and necessary fields. Here's an example of what the manifest file looks like:
+When creating a module using the `ForgeCLI`, a default manifest file will be generated for you with the basic structure and necessary fields. Here's an example of what the manifest file looks like:
 
-<Code language="typescript">
-{`// apps/[module]/client/manifest.ts
-  import { lazy } from 'react'
-  import type { ModuleConfig } from 'shared'
+```typescript
+// apps/[module]/client/manifest.ts
+import { lazy } from 'react'
+import type { ModuleConfig } from 'shared'
 
 export default {
-name: 'My Module',
-icon: 'tabler:cube',
-routes: {
-'my-module': lazy(() => import('@'))
-},
-category: 'Utilities',
+  name: 'My Module',
+  icon: 'tabler:cube',
+  routes: {
+    'my-module': lazy(() => import('@'))
+  },
+  category: 'Utilities',
 } satisfies ModuleConfig
-`}
+```
 
-</Code>
+Shown below are the type definition for the `ModuleConfig` interface:
 
-Shown below are the type definition for the <code>ModuleConfig</code> interface:
-
-<Code language="typescript">
-{`export interface ModuleConfig {
+```typescript
+export interface ModuleConfig {
     // Basic module information
     name: string
     icon: string
@@ -148,39 +147,37 @@ Shown below are the type definition for the <code>ModuleConfig</code> interface:
   }
 
 export interface ModuleCategory {
-title: string
-items: ModuleConfig[]
+  title: string
+  items: ModuleConfig[]
 }
-`}
-
-</Code>
+```
 </section>
 
 <section id="categorizing-modules">
 ## Categorizing Modules
 
-As mentioned above, each module can be assigned to a specific category using the <code>category</code> field in the manifest file. This categorization helps organize modules in the sidebar, making it easier for users to navigate and find the modules they need.
+As mentioned above, each module can be assigned to a specific category using the `category` field in the manifest file. This categorization helps organize modules in the sidebar, making it easier for users to navigate and find the modules they need.
 
-All modules with the same category will be grouped together under a common heading in the sidebar and sorted alphabetically within that category. However, when it comes to the order of the categories themselves, there is a special file located at <code>apps/cat.config.json</code> that defines the order of the categories. This file exports an array of category names, which determines the order in which the categories are displayed in the sidebar. Categories that are not listed in this file will be placed at the end of the sidebar, sorted alphabetically.
+All modules with the same category will be grouped together under a common heading in the sidebar and sorted alphabetically within that category. However, when it comes to the order of the categories themselves, there is a special file located at `apps/cat.config.json` that defines the order of the categories. This file exports an array of category names, which determines the order in which the categories are displayed in the sidebar. Categories that are not listed in this file will be placed at the end of the sidebar, sorted alphabetically.
 
 There are several special category names that are reserved for specific purposes. Their order is fixed and cannot be changed. Shown below is the order where your categories will be displayed in the sidebar:
 
-<Code language="plaintext">
-{`<START>
+```plaintext
+<START>
 [Your Custom Categories in cat.config.json]
 Miscellaneous
 Settings
 SSO
-<END>`}
-</Code>
+<END>
+```
 </section>
 
 <section id="managing-dependencies">
 ## Managing Dependencies
 
-As mentioned above, each module in LifeForge is treated as an independent unit, which means, each module will have its own set of dependencies defined in its own <code>package.json</code> file. This allows module developers to manage their own dependencies without affecting other modules or the main LifeForge codebase.
+As mentioned above, each module in LifeForge is treated as an independent unit, which means, each module will have its own set of dependencies defined in its own `package.json` file. This allows module developers to manage their own dependencies without affecting other modules or the main LifeForge codebase.
 
-When you install a module using the <code>ForgeCLI</code>, it will automatically install several commonly used dependencies that are more often than not required by most modules. These dependencies include:
+When you install a module using the `ForgeCLI`, it will automatically install several commonly used dependencies that are more often than not required by most modules. These dependencies include:
 
 - **@iconify/react** – Icon library for rendering icons from Iconify
 - **@tanstack/react-query** – Data fetching and state management
@@ -199,7 +196,7 @@ These dependencies provide the foundational tools and libraries needed for build
 
 <Alert className="mt-6" type="note">
   When adding new dependencies to your module, make sure to run{' '}
-  <code>bun install</code> in the respective module directory to ensure that the
+  `bun install` in the respective module directory to ensure that the
   dependencies are installed in the desired module's context, otherwise they
   might end up being installed at the root level, causing potential waste of
   disk space and dependency mismanagement issues.
@@ -215,13 +212,15 @@ For dependencies that are shared across multiple modules, please be mindful of t
 
 When dealing with modules in a monorepo setup, it's important to consider how version control is managed. In LifeForge, each module is treated as an independent unit, thus each module has its own Git repository. This allows module developers to manage their own versioning, branching, and release cycles without affecting the main LifeForge codebase.
 
-LifeForge utilizes git submodules to manage the modules within the main repository. When you install a module using the <code>ForgeCLI</code>, it adds the module as a git submodule, pointing to the module's own Git repository. This way, you can easily update or switch to different versions of the module without interfering with other modules or the main codebase.
+LifeForge utilizes git submodules to manage the modules within the main repository. When you install a module using the `ForgeCLI`, it adds the module as a git submodule, pointing to the module's own Git repository. This way, you can easily update or switch to different versions of the module without interfering with other modules or the main codebase.
 
-By default, the <code>ForgeCLI</code> will install the latest stable release of the module from its Git repository. However, you can also specify a specific branch, tag, or commit hash to install a different version of the module if needed.
+By default, the `ForgeCLI` will install the latest stable release of the module from its Git repository. However, you can also specify a specific branch, tag, or commit hash to install a different version of the module if needed.
 
-You can verify that the module has been added as a git submodule by checking the <code>.gitmodules</code> file at the root of the main repository. This file contains information about all the submodules, including their paths and URLs. Or, you can run the following command to see the list of submodules:
+You can verify that the module has been added as a git submodule by checking the `.gitmodules` file at the root of the main repository. This file contains information about all the submodules, including their paths and URLs. Or, you can run the following command to see the list of submodules:
 
-<Code language="bash">{`git submodule status`}</Code>
+```bash
+git submodule status
+```
 
 The result will look something like this:
 
@@ -242,18 +241,20 @@ The result will look something like this:
   Publishing modules to the public LifeForge module registry is not yet
   implemented. For now, you can share your module by pushing your code to a public
   Git repository with a certain structure, and other users can install it using the
-  <code>ForgeCLI</code> by providing the Git URL.
+  `ForgeCLI` by providing the Git URL.
 
 But don't worry, module publishing will be available soon!
 
 </Alert>
 
-When you are ready to share your module with the world, you can use the <code>ForgeCLI</code> to publish your module to your own GitHub repository. This allows other users to easily install your module in their own LifeForge instances. However, this requires you to have your GitHub CLI configured with the necessary permissions to create repositories on your behalf.
+When you are ready to share your module with the world, you can use the `ForgeCLI` to publish your module to your own GitHub repository. This allows other users to easily install your module in their own LifeForge instances. However, this requires you to have your GitHub CLI configured with the necessary permissions to create repositories on your behalf.
 
 To publish your module, simply run the following command in your terminal:
 
-<Code language="bash">{`bun run forge modules publish [module]`}</Code>
+```bash
+bun run forge modules publish [module]
+```
 
-Initially, your module will be created locally with a Git repository separated from the main LifeForge codebase. Once published, the module will be deleted from your local <code>apps/</code> directory, and readded as a git submodule pointing to the newly created repository. This ensures that your module remains independent and can be updated separately from the main LifeForge codebase.
+Initially, your module will be created locally with a Git repository separated from the main LifeForge codebase. Once published, the module will be deleted from your local `apps/` directory, and readded as a git submodule pointing to the newly created repository. This ensures that your module remains independent and can be updated separately from the main LifeForge codebase.
 
 </section>

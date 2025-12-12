@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 
-import Code from '../../components/Code'
 import CustomLink from '../../components/CustomLink'
 import { Alert } from "lifeforge-ui"
 
@@ -15,65 +14,65 @@ LifeForge used to be a combination of multiple repositories, where everything is
 
 After cloning into the repository, you'll find the following folders lying in the root directory:
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
 
-This is where all the installable applications (or modules) live. Each folder represents a distinct application with its own set of features and functionality. When you install a module using the <code>ForgeCLI</code>, its code will be placed inside this directory.
+This is where all the installable applications (or modules) live. Each folder represents a distinct application with its own set of features and functionality. When you install a module using the `ForgeCLI`, its code will be placed inside this directory.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
 
 This is where the client-side application magic resides. The frontend code of all your installed modules lives here. It is the part of the repo where user interfaces are built and styled. When deploying to cloud service provider, this is where you assign your domain name to.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
 
 This is where all the business logics of your application live. It is responsible for handling requests, processing data, interacting with databases, and performing any other server-side operations.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-database" /><code className="text-xl!">database/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-database" /><code className="text-xl!">database/</code></div>
 
 Contains Pocketbase database files, including the binary executable and data storage. This is where all your data is stored and managed.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-shared" /><code className="text-xl!">shared/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-shared" /><code className="text-xl!">shared/</code></div>
 
-Mainly contains providers that are shared across different applications in the ecosystem, and most importantly, <code>forgeAPIClient</code> - a type-safe API client that hugely inspired by tRPC, providing a seamless and integration between the client and server with absolute type safety.
+Mainly contains providers that are shared across different applications in the ecosystem, and most importantly, `forgeAPIClient` - a type-safe API client that hugely inspired by tRPC, providing a seamless and integration between the client and server with absolute type safety.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-packages" /><code className="text-xl!">packages/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-packages" /><code className="text-xl!">packages/</code></div>
 
 Houses reusable packages that can be consumed by other parts of the monorepo. Currently contains:
 
-- **<code>lifeforge-ui/</code>** - The official LifeForge UI component library built with React and Tailwind CSS, providing consistent design components across all applications. <CustomLink text="Explore UI Library" to="/developer-guide/ui-library" />
+- **`lifeforge-ui/`** - The official LifeForge UI component library built with React and Tailwind CSS, providing consistent design components across all applications. <CustomLink text="Explore UI Library" to="/developer-guide/ui-library" />
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-docs" /><code className="text-xl!">docs/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-docs" /><code className="text-xl!">docs/</code></div>
 
 Contains the documentation site for LifeForge, built with React and MDX. This is where you can find guides, tutorials, and references to help you understand and use LifeForge effectively. <CustomLink text="Explore Documentation" to="/getting-started/introduction" />
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-tools" /><code className="text-xl!">tools/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-tools" /><code className="text-xl!">tools/</code></div>
 
 Contains standalone development tools that are part of the LifeForge ecosystem, some of them are publicly available, while some of them requires SSO authentication through the main LifeForge application:
 
-- **<code>forgeCLI/</code>** - Command-line interface tool for managing LifeForge instances, including module management, database migrations, and other administrative tasks. <CustomLink text="Explore ForgeCLI" to="/user-guide/cli/forgecli" />
-- **<code>apiBuilder/</code>** - Interactive tool for building and testing API endpoints
-- **<code>apiExplorer/</code>** - Visual explorer for browsing available API routes
-- **<code>localizationManager/</code>** - Management interface for handling translations and localization
+- **`forgeCLI/`** - Command-line interface tool for managing LifeForge instances, including module management, database migrations, and other administrative tasks. <CustomLink text="Explore ForgeCLI" to="/user-guide/cli/forgecli" />
+- **`apiBuilder/`** - Interactive tool for building and testing API endpoints
+- **`apiExplorer/`** - Visual explorer for browsing available API routes
+- **`localizationManager/`** - Management interface for handling translations and localization
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-scripts" /><code className="text-xl!">scripts/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-scripts" /><code className="text-xl!">scripts/</code></div>
 
 Contains various miscellaneous scripts for automating tasks such as deployment, database seeding, and other utilities.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-environment" /><code className="text-xl!">env/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-environment" /><code className="text-xl!">env/</code></div>
 
-Contains environment configuration files for both server and client applications. Inside will contain an example file for you to copy and create your own <code>.env</code> files.
+Contains environment configuration files for both server and client applications. Inside will contain an example file for you to copy and create your own `.env` files.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:folder-log" /><code className="text-xl!">logs/</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-log" /><code className="text-xl!">logs/</code></div>
 
 This directory is used to store log files generated by the server application. It helps in monitoring and debugging the application by keeping track of various events and errors.
 
-### <div className="flex items-center gap-3 -mb-4"><Icon icon="material-icon-theme:settings" /><code className="text-xl!">Configuration Files</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:settings" /><code className="text-xl!">Configuration Files</code></div>
 
 The root directory also contains several important configuration files:
 
-- **<code>package.json</code>** - Monorepo configuration with Bun workspaces
-- **<code>tsconfig.json</code>** - Root TypeScript configuration
-- **<code>eslint.config.js</code>** - ESLint configuration for code quality
-- **<code>.prettierrc</code>** - Prettier configuration for code formatting
-- **<code>bun.lock</code>** - Lock file for consistent dependency versions
-- **<code>.github/</code>** - GitHub workflows and repository settings
+- **`package.json`** - Monorepo configuration with Bun workspaces
+- **`tsconfig.json`** - Root TypeScript configuration
+- **`eslint.config.js`** - ESLint configuration for code quality
+- **`.prettierrc`** - Prettier configuration for code formatting
+- **`bun.lock`** - Lock file for consistent dependency versions
+- **`.github/`** - GitHub workflows and repository settings
 </section>

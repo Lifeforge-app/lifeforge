@@ -1,5 +1,4 @@
 import Commit from "../../components/Commit";
-import Code from "@/components/Code";
 
 ### 🏢 Module-Specific & Feature Updates
 
@@ -22,7 +21,7 @@ import Code from "@/components/Code";
 ### 🎨 UI Components & Design System
 
 - <Commit hash="7d88a6728d04978bcf2ab67d60ad43e1a369c5ae" />: feat(ui): Added
-  RGB and HSV input support in <code>ColorInput</code> component.
+  RGB and HSV input support in `ColorInput` component.
 
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w37-3.webp)
 
@@ -34,63 +33,55 @@ import Code from "@/components/Code";
   directory instead of being hardcoded in the dashboard module. They will be
   automatically discovered and imported during runtime.
 
-        <Code language="plaintext">
-            {`/src/apps/01.Productivity/calendar/
-
+  ```plaintext
+  /src/apps/01.Productivity/calendar/
   ├── widgets/
-  │ ├── MiniCalendar.tsx
-  │ ├── TodaysEvents.tsx
-  │ └── ...
-  └── ...`}
-
-    </Code>
+  │   ├── MiniCalendar.tsx
+  │   ├── TodaysEvents.tsx
+  │   └── ...
+  └── ...
+  ```
 
 - <Commit hash="7dfd3974ddc6ce49418f445134606afdd50d023b" />: Implemented
   mechanism for dynamically scan for modules and construct routes based on the
   modules available. Modules are now categorized into different categories under
-  the <code>src/apps</code> directory, and the order of the categories in the
+  the `src/apps` directory, and the order of the categories in the
   sidebar are controlled by the number prefix of the category folder name.
 
-        <Code language="plaintext">
-            {`/apps/
-
+  ```plaintext
+  /apps/
   ├── 00
   ├── 01.Productivity
   ├── 02.Lifestyle
   ├── 03. ...
-  └── 99`}
-
-    </Code>
+  └── 99
+  ```
 
 - <Commit hash="c5a78ae2aee61937fc3adb86c88065ee8d43ad68" />: All localization
   files are now moved to client side.
 
-        <Code language="plaintext">
-            {`/src/apps/01.Productivity/myApp/locales/
-
+  ```plaintext
+  /src/apps/01.Productivity/myApp/locales/
   ├── en.json
   ├── zh.json
-  └── ...`}
-
-    </Code>
+  └── ...
+  ```
 
 - <Commit hash="c3f5386c5992f51e0f03d1cd6400111455f3b271" />,
   <Commit hash="7c3547c5227592170ae4b2106f2b8f1ed6f4c6fb" />: Moved all
-  module-related business logics to <code>server/src/lib</code> folder.
+  module-related business logics to `server/src/lib` folder.
 - <Commit hash="d8d52607aed12c2b406cebc2945da5c8635c11fb" />: Module-related
   database schemas are now located in their respective module folders instead of
-  everything being in <code>server/src/schemas.ts</code>.
+  everything being in `server/src/schemas.ts`.
 - <Commit hash="e58894090389c1a613c7a1f78a1d7102213a34a0" />: Implemented
   database connection and collection validation during server starting process.
 
-        <Code language="log">
-            {`INFO  2025-09-13 09:46:00 | [DB] Successfully connected to PocketBase
-
-  INFO 2025-09-13 09:46:00 | [DB] Database validation complete. All 65 collections are present
+  ```log
+  INFO  2025-09-13 09:46:00 | [DB] Successfully connected to PocketBase
+  INFO  2025-09-13 09:46:00 | [DB] Database validation complete. All 65 collections are present
   DEBUG 2025-09-13 09:46:00 | [API] Registered routes: 268
-  INFO 2025-09-13 09:46:00 | [API] REST API server running on port 3636`}
-
-    </Code>
+  INFO  2025-09-13 09:46:00 | [API] REST API server running on port 3636
+  ```
 
 - <Commit hash="b47e0faee5b20de5b3e033dc0f33816c3fa9053d" />: Replaced
   cookie-based session management with local storage-based session management
@@ -101,11 +92,11 @@ import Code from "@/components/Code";
 - <Commit hash="0169ec1e2fecb067af69bed4271f46a9bccbe2c6" />: Improve media file
   fetching and streaming logics.
 - <Commit hash="de0fe27f500608eaab744d96c35e1c7ccf4d7054" />: Fixed a bug where
-  the <code>X-Powered-By</code> header is not removed from the server responses.
+  the `X-Powered-By` header is not removed from the server responses.
 - <Commit hash="d23b331341d5cf858fcc83e78ad74492124189da" />: Fixed a bug where
   the service names are not recorded in the log files.
 - <Commit hash="bf960d7de343df1bf3fe2453c6c547c724a0100e" />: Fixed height
-  issues in <code>NotFoundScreen</code> component.
+  issues in `NotFoundScreen` component.
 - <Commit hash="3b3288a7c02d5b81409abf4824695c67051c09bb" />: Added fallback
   response for requests on non-existing API routes (somehow being omitted for
   months, my bad).
@@ -121,4 +112,4 @@ import Code from "@/components/Code";
 ### 📖 Documentation & Tooling
 
 - <Commit hash="5e25232f67c8b4ee391e2a1ec6559298727a3f5d" />: Improved styling
-  for <code>Note</code> and <code>Warning</code> components in documentation.
+  for `Note` and `Warning` components in documentation.
