@@ -78,7 +78,7 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
 }
 
 .Toastify__toast-container {
-  @apply w-full sm:w-min sm:min-w-96;
+  @apply w-full! p-4 sm:max-w-lg md:max-w-lg lg:max-w-xl xl:max-w-2xl;
 }
 
 .Toastify__toast-container * {
@@ -86,7 +86,7 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
 }
 
 .Toastify__toast {
-  @apply bg-bg-50 text-bg-800 dark:bg-bg-800 dark:text-bg-50;
+  @apply bg-bg-50 text-bg-800 dark:bg-bg-800 dark:text-bg-50 w-full!;
 }
 
 .sidebar-opening {
