@@ -1,12 +1,10 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Icon } from '@iconify/react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import {
   Button,
   ConfirmationModal,
   FilePickerModal,
-  OptionsColumn,
-  Tooltip
+  OptionsColumn
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
@@ -20,22 +18,6 @@ function BgImageSelector() {
   const open = useModalStore(state => state.open)
 
   const { t } = useTranslation('apps.personalization')
-
-  const pixabayEnabledQuery = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys
-      .input({
-        keys: 'pixabay'
-      })
-      .queryOptions()
-  )
-
-  const imageGenAPIKeyExistsQuery = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys
-      .input({
-        keys: 'openai'
-      })
-      .queryOptions()
-  )
 
   const { bgImage } = usePersonalization()
 
@@ -90,14 +72,14 @@ function BgImageSelector() {
   const handleOpenImageSelector = useCallback(() => {
     open(FilePickerModal, {
       enableUrl: true,
+      enablePixabay: true,
       acceptedMimeTypes: {
         'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
       },
-      enableAI: imageGenAPIKeyExistsQuery.data ?? false,
-      enablePixabay: pixabayEnabledQuery.data ?? false,
+      enableAI: true,
       onSelect: onSubmit
     })
-  }, [imageGenAPIKeyExistsQuery.data, pixabayEnabledQuery.data])
+  }, [onSubmit])
 
   return (
     <>
@@ -126,11 +108,6 @@ function BgImageSelector() {
               remove
             </Button>
           </>
-        ) : pixabayEnabledQuery.isLoading ? (
-          <Icon
-            className="text-bg-500 size-6"
-            icon="svg-spinners:ring-resize"
-          />
         ) : (
           <>
             <Button
@@ -141,25 +118,6 @@ function BgImageSelector() {
             >
               select
             </Button>
-            {!pixabayEnabledQuery.data && (
-              <Tooltip
-                clickable={true}
-                icon="tabler:info-circle"
-                id="pixabayDisabled"
-              >
-                <p className="text-bg-500 max-w-84">
-                  {t('bgImageSelector.pixabayDisabled.tooltip')}{' '}
-                  <a
-                    className="text-custom-500 decoration-custom-500 font-medium underline decoration-2"
-                    href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#pixabay"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Customization Guide
-                  </a>
-                </p>
-              </Tooltip>
-            )}
           </>
         )}
       </OptionsColumn>
