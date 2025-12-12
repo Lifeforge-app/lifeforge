@@ -1,54 +1,53 @@
 import Commit from "../../components/Commit";
-import Code from "@/components/Code";
  
 ### 🏢 Module-Specific & Feature Updates
 - <Commit hash="3d4c5d6e723503cf090b596a048c59b5519c2aaa"/>:  Added more levels of intensity to the activity calendar in CodeTime dashboard.
-- Refactored API Builder to adapt to new SSO app SDK (Notably, all the authentication flows are now packed in an integrated component called <code>SSOAppMainView</code>).
+- Refactored API Builder to adapt to new SSO app SDK (Notably, all the authentication flows are now packed in an integrated component called `SSOAppMainView`).
 - Added scrollbar to movie list, making the header and the search bar sticky.
 - <Commit hash="89593da985c19f5e57f3e3c879bb6835c989d54b" />: Added poster images of movies in calendar event details.
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w33-4.webp)
 - Created a new module called "Sin Chew Daily", basically a news aggregator for 星洲日报, a Chinese-language newspaper in Malaysia.
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w33-3.webp)
-- Added the new <code>RRuleInput</code> component from <code>lifeforge-ui</code> into the Calendar module, now the modify modal is finally working properly again.
-- Implemented RRule string parser to parse RRule string back into <code>RRuleInput</code>, and now recurring events can now be updated (Originally, they could not be modified at all after creation).
+- Added the new `RRuleInput` component from `lifeforge-ui` into the Calendar module, now the modify modal is finally working properly again.
+- Implemented RRule string parser to parse RRule string back into `RRuleInput`, and now recurring events can now be updated (Originally, they could not be modified at all after creation).
 
 ### 🎨 UI Components & Design System
 
-- Migrated from manually implementing <code>Listbox</code> component from <code>@headlessui/react</code> to using <code>Listbox</code> component from <code>lifeforge-ui</code>. See [commit](https://github.com/lifeforge-app/lifeforge/commit/5e6ea6076669e2d41ef3ec409022dc560f32ee5e) (Commits are still not properly staged at this point in time, apologies).
-- Removed all confusing <code>lighter</code> props from various input components and unified their background colors.
-- Introduced a new props into <code>ListboxOption</code> component: <code>renderColorAndIcon</code>, which allows for custom rendering of the option's color and icon.
+- Migrated from manually implementing `Listbox` component from `@headlessui/react` to using `Listbox` component from `lifeforge-ui`. See [commit](https://github.com/lifeforge-app/lifeforge/commit/5e6ea6076669e2d41ef3ec409022dc560f32ee5e) (Commits are still not properly staged at this point in time, apologies).
+- Removed all confusing `lighter` props from various input components and unified their background colors.
+- Introduced a new props into `ListboxOption` component: `renderColorAndIcon`, which allows for custom rendering of the option's color and icon.
 - <Commit hash="c5c5d55b35fd28327d8ecf0f67330e5dae760022" />: Migrated the
   context menu to use the dropdown component from Radix UI instead of Headless
-  UI. Renamed HamburgerMenu to <code>ContextMenu</code>.
+  UI. Renamed HamburgerMenu to `ContextMenu`.
 - <Commit hash="e8ad843fcdae677d8fa6c39ae44eb8d9ec2afe50" />: Added a new props
-  to <code>ContextMenu</code> that allows for custom rendering of the trigger
+  to `ContextMenu` that allows for custom rendering of the trigger
   element.
 - <Commit hash="6d2af07e5a56d9c0d6e80b22890c082bd0f35227" />: Consolidated
-  action button props into a single props in <code>ModalHeader</code>,
+  action button props into a single props in `ModalHeader`,
   consolidated context menu props into a single props in
-  <code>ModuleHeader</code>.
+  `ModuleHeader`.
 - <Commit hash="3e17ba33c6c9a05a5656b1067edea9f349c9c67a" />: Fixes the
-  <code>Scrollbar</code> component to ensure the width is not overflowing nor
+  `Scrollbar` component to ensure the width is not overflowing nor
   underflowing.
 - <Commit hash="5700235cb3bd7eb2e64008861d5177ad9e9239fe" />: Replaced
-  <code>iconAtEnd</code> prop with <code>iconPosition</code> and removed tProps
+  `iconAtEnd` prop with `iconPosition` and removed tProps
   for Button component.
 - <Commit hash="8ce5b62fd6960eb6dae5511aa4b9a191f429e80d" />: Enhanced various
   button components with improved props and functionality, added docstring to
   props.
 - <Commit hash="27cea6d71214f8c2b15123a24c6adb5bd19e662e" />: Updated
-  <code>ConfirmationModal</code> component to accept custom button component for
+  `ConfirmationModal` component to accept custom button component for
   confirmation button.
 - <Commit hash="61e8f3f412b9a89ae5624a304993b0cc38a6cd51" />: Added docstring
   for props and improved props naming for various UI components.
 - Various improvements in UI spacing.
-- Renamed the <code>Previous</code> button to <code>Prev</code>.
+- Renamed the `Previous` button to `Prev`.
 - Added back icon in module header in mobile view.
-- Value will now be default to 0 when the <code>NumberInput</code> is empty.
+- Value will now be default to 0 when the `NumberInput` is empty.
 - <Commit hash="78575fdefafb4e644b9b6b58499fdd114bb20678" />: Added
-  <code>RRuleInput</code> component to <code>lifeforge-ui</code>, allowing users
+  `RRuleInput` component to `lifeforge-ui`, allowing users
   to create and edit recurrence rules for events.
-- <code>SliderInput</code> component now handles decimal values correctly.
+- `SliderInput` component now handles decimal values correctly.
 - Created a custom modal for selecting font families.
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w33-1.webp)
 - Implemented mechanism for user to adjust global font size in the personalization page.
@@ -61,9 +60,9 @@ import Code from "@/components/Code";
 - <Commit hash="057bb8250fec6c4696b6b726039f7344b01c635c" />: Moved task pool
   middleware to socket.io functions folder.
 
-  <Code language="typescript">
-    {`import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'`}
-  </Code>
+  ```typescript
+  import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
+  ```
 
 - Rolled back the changes made to the localization manager (the codebase is too complex and difficult to migrate to using React Query, and since it works just fine, it's not worth the effort).
 - <Commit hash="66988c3424a7003579cd87a06032b1bbd43d5488" />: Updated repository
@@ -71,7 +70,7 @@ import Code from "@/components/Code";
 - <Commit hash="58e546a3e4a75548c0546fe7d7e609040db75814" />: Optimized
   FormInputs component by memoizing individual form fields and improved change
   handler management to prevent unnecessary rerender of fields.
-- Replaced <code>z.infer</code> with <code>z.input</code> in the forgeAPI type inference system for more accurate type safety.
+- Replaced `z.infer` with `z.input` in the forgeAPI type inference system for more accurate type safety.
 - Added typescript definition for font families data returned from Google Fonts API.
 
 ### 🐛 Bug Fixes
@@ -88,15 +87,15 @@ import Code from "@/components/Code";
 ### 📖 Documentation & Tooling
 
 - <Commit hash="45168157fcca480c7112e30a8e4449f22fb79fc8" />: Bumped the version
-  of storybook in <code>lifeforge-ui</code> from version 8 to version 9, added
-  <code>autodocs</code> feature for automatic documentation generation.
+  of storybook in `lifeforge-ui` from version 8 to version 9, added
+  `autodocs` feature for automatic documentation generation.
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w33-6.webp)
 - <Commit hash="e36df05b56b08b4436ccddeef07942bc4f84fca8" />: Added guideline
   for AI generation of docstring.
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w33-5.webp)
 - <Commit hash="2c4802c2d1709979bb948b855b6365dfb2445214" />: Added docstring to
-  <code>FormBuilder</code> class.
-- Added i18n support for the storybook of <code>lifeforge-ui</code>.
+  `FormBuilder` class.
+- Added i18n support for the storybook of `lifeforge-ui`.
 - <Commit hash="0b46c83dbf43673be043e0b75ef6dd62774f63ff" />: Implemented dark
   mode switch mechanism in documentation.
   ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w33-7.webp)

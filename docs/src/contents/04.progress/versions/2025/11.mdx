@@ -16,29 +16,29 @@ import Code from "@/components/Code";
 - **Authentication**: Two-factor authentication via an external authenticator app has been added as a togglable security mechanism.
 - **Authentication**: If a user doesn't have an authenticator app available, they can now choose to perform 2FA with email OTP.
 - **Authentication**: Improved error handling logic.
-- **Personalization**: The availability of the font family selector now depends on the presence of <code>gcloud</code> key in the API key vault.
-- **Localization**: The sign-in button to the localization manager will now only be shown if there is <code>VITE_LOCALIZATION_MANAGER_URL</code> present in the frontend <code>.env</code> file
+- **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
+- **Localization**: The sign-in button to the localization manager will now only be shown if there is `VITE_LOCALIZATION_MANAGER_URL` present in the frontend `.env` file
 - **Code**: Replaced multiple custom utility functions with optimized, pre-existing Node.js modules.
-- **Code**: Consolidated core logic by moving all non-module-specific files from <code>modules</code> into the <code>core</code> directory.
+- **Code**: Consolidated core logic by moving all non-module-specific files from `modules` into the `core` directory.
 - **Code**: We reorganized providers, interfaces, and constants into their respective module directories to better separate concerns.
 - **Code**: Eliminated redundant constant files to reduce unnecessary complexity.
-- **Code**: Standardized naming conventions by renaming <code>useXXXContext</code> to <code>useXXX</code> for clarity.
-- **Code**: Centralized theme-related states by moving them from the <code>useThemeColors</code> hook into the <code>usePersonalization</code> context provider.
-- **Code**: Renamed <code>useThemeColors</code> hook to <code>useComponentsBg</code> for better semantic alignment with its functionality.
-- **Code**: Migrated <code>VITE_GOOGLE_API_KEY</code> from <code>.env</code> file to the API key vault.
-- **Code**: Removed unused typescript declarations like <code>function Component() {}</code>, etc.
-- **Code**: Refactored <code>PersonalizationProvider</code>.
-- **Code**: Moved routing logics and related files into <code>core/routes</code>.
-- **Code**: Refactored and modularized components into an independent package, <code>lifeforge-ui</code>, to improve maintainability.
-- **UI**: Abstracted and relocated reusable UI components to <code>lifeforge-ui</code> for a more structured component architecture.
-- **UI**: Renamed <code>no-bg</code> variant of button to <code>plain</code>.
-- **UI**: Added <code>tertiary</code> variant to button.
+- **Code**: Standardized naming conventions by renaming `useXXXContext` to `useXXX` for clarity.
+- **Code**: Centralized theme-related states by moving them from the `useThemeColors` hook into the `usePersonalization` context provider.
+- **Code**: Renamed `useThemeColors` hook to `useComponentsBg` for better semantic alignment with its functionality.
+- **Code**: Migrated `VITE_GOOGLE_API_KEY` from `.env` file to the API key vault.
+- **Code**: Removed unused typescript declarations like `function Component() {}`, etc.
+- **Code**: Refactored `PersonalizationProvider`.
+- **Code**: Moved routing logics and related files into `core/routes`.
+- **Code**: Refactored and modularized components into an independent package, `lifeforge-ui`, to improve maintainability.
+- **UI**: Abstracted and relocated reusable UI components to `lifeforge-ui` for a more structured component architecture.
+- **UI**: Renamed `no-bg` variant of button to `plain`.
+- **UI**: Added `tertiary` variant to button.
 - **UI**: Improved styling for button component.
 - **UI**: Started integrating Storybook for visualizing and documenting the design system.
-- **UI**: Removed <code>CreateOrUpdateButton</code> component.
-- **UI**: Restructured the props of <code>ContextMenu</code> and remove redundant props.
-- **UI**: Location selector will now be disabled if there is no <code>gcloud</code> key found in the API key vault.
+- **UI**: Removed `CreateOrUpdateButton` component.
+- **UI**: Restructured the props of `ContextMenu` and remove redundant props.
+- **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
 - **UI**: Main sidebar item with a subsection will now open the subsection menu without navigating anywhere.
-- **API**: Renamed <code>uploads</code> folder to <code>medium</code>.
-- **API**: Split the subroutes for <code>/users</code> route into multiple files.
+- **API**: Renamed `uploads` folder to `medium`.
+- **API**: Split the subroutes for `/users` route into multiple files.
 - **API**: Continued working on Controller + Service refactoring.

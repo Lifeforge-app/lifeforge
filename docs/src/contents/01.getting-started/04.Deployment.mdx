@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 
-import Code from '../../components/Code'
 import CustomLink from '../../components/CustomLink'
 import { Alert } from "lifeforge-ui"
 
@@ -15,18 +14,20 @@ Now that you have successfully set up your LifeForge system, it's time to deploy
 <section id="deploying-frontend">
 ## Deploying Frontend
 
-Since the frontend is basically just a **Single Page Application (SPA)**, we can easily deploy it to Vercel, Netlify, or maybe even GitHub Pages (never done it before, not sure if it works). Simply import your GitHub repository, select the root directory to point to the <code>client</code> folder, and set the build command to <code>bun run build</code> and the output directory to <code>client/dist</code>.
+Since the frontend is basically just a **Single Page Application (SPA)**, we can easily deploy it to Vercel, Netlify, or maybe even GitHub Pages (never done it before, not sure if it works). Simply import your GitHub repository, select the root directory to point to the `client` folder, and set the build command to `bun run build` and the output directory to `client/dist`.
 
 <Alert className="mt-6" type="warning">
 ### Bun Version Requirement
 
 When deploying the client application to PaaS providers like Vercel or Netlify, make sure that the Bun version used in the build environment is at least **v1.3.0**, since the dependency resolution mechanism used in Bun v1.3.0 and later is required to properly build the client application. If the Bun version is lower than v1.3.0, your app should still build, but you might run into lots of issues when running the app.
 
-However, as of October 2025, Vercel and Netlify do not yet support Bun v1.3.0 in their build environments. Therefore, you will need to manually configure the installation script to upgrade Bun using the command <code>bun upgrade</code> before installing the dependencies.
+However, as of October 2025, Vercel and Netlify do not yet support Bun v1.3.0 in their build environments. Therefore, you will need to manually configure the installation script to upgrade Bun using the command `bun upgrade` before installing the dependencies.
 
 In Vercel, head to the project settings, and under the **Build & Development Settings** section, override the **Install Command** to the following:
 
-<Code language="bash">{`bun upgrade && bun install --linker isolated`}</Code>
+```bash
+bun upgrade && bun install --linker isolated
+```
 
 As shown in the image below:
 
@@ -53,15 +54,15 @@ Before we start, make sure you have setup the port forwarding on your router to 
 
 Next, clone the proxy server repository that I have created for you:
 
-<Code language="bash">
-  {`git clone https://github.com/LifeForge-app/lifeforge-api-proxy.git`}
-</Code>
+```bash
+git clone https://github.com/LifeForge-app/lifeforge-api-proxy.git
+```
 
-Then, navigate to the <code>lifeforge-proxy</code> directory and create a <code>.env</code> file. There is only one field that you need to fill in, which is the <code>TARGET_URL</code> field. This field is the public URL of your backend API server. Make sure to put the full URL, including the <code>http(s)://</code> prefix.
+Then, navigate to the `lifeforge-proxy` directory and create a `.env` file. There is only one field that you need to fill in, which is the `TARGET_URL` field. This field is the public URL of your backend API server. Make sure to put the full URL, including the `http(s)://` prefix.
 
-Finally, deploy the proxy server to Render or any other cloud server that supports Node.js applications. Make sure to copy and paste the environment variables from your <code>.env</code> file to the server dashboard.
+Finally, deploy the proxy server to Render or any other cloud server that supports Node.js applications. Make sure to copy and paste the environment variables from your `.env` file to the server dashboard.
 
-Once the deployment is complete, you should see a link to your proxy server. Try to access your API using the link and see if it works. Make sure to update the <code>VITE_API_HOST</code> field in your <code>.env.local</code> file to the URL of your proxy server.
+Once the deployment is complete, you should see a link to your proxy server. Try to access your API using the link and see if it works. Make sure to update the `VITE_API_HOST` field in your `.env.local` file to the URL of your proxy server.
 
 </Alert>
 </section>

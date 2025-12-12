@@ -1,17 +1,16 @@
 import Commit from "../../components/Commit";
-import Code from "@/components/Code";
 
 ### 🏗️ Infrastructure & Technical Improvements
 
 - <Commit hash="84ec5a3a71cece2f29a90fa52d99af208fd1d12b" />: Implemented Git submodule mechanism to manage modules as separate repositories, allowing for better modularity and easier maintenance.
-- <Commit hash="6160be75909b6d5922b748171b5bb24faab296a6" />: Added testing framework setup using Vitest, and implemented initial test cases for <code>recursivelyBuildFilter</code> function.
+- <Commit hash="6160be75909b6d5922b748171b5bb24faab296a6" />: Added testing framework setup using Vitest, and implemented initial test cases for `recursivelyBuildFilter` function.
 - <Commit hash="8c11778ab343c67b4c9c55917f4d375bc47a34ec" />, <Commit hash="7b49ac34062c8dcfe1f9abbada7787ce99fb10d0" />: Removed module category numbering mechanism in client side routing, allowing for more flexible route management.
-- <Commit hash="57099127e4de38a6cdbb2b28636238db9b2b6a6a" />: Flattened core route structure in client side, and renamed <code>config.tsx</code> to <code>manifest.ts</code> for better consistency with module structure.
+- <Commit hash="57099127e4de38a6cdbb2b28636238db9b2b6a6a" />: Flattened core route structure in client side, and renamed `config.tsx` to `manifest.ts` for better consistency with module structure.
 
 ### 🎨 UI Components & Design System
 
-- <Commit hash="525e03245a2ee83c2e059ebd8013dfd359962943" />: Added support for okLCH color conversion in <code>FilterChip</code> component.
-- <Commit hash="40417ba8fa78f2faf75f3a94d6058469eca93a48" />: Added retry button in <code>ErrorScreen</code> component for better user experience during error states.
+- <Commit hash="525e03245a2ee83c2e059ebd8013dfd359962943" />: Added support for okLCH color conversion in `FilterChip` component.
+- <Commit hash="40417ba8fa78f2faf75f3a94d6058469eca93a48" />: Added retry button in `ErrorScreen` component for better user experience during error states.
 
 ### 🐛 Bug Fixes & Chores
 
@@ -22,8 +21,8 @@ import Code from "@/components/Code";
 - <Commit hash="f7036882d3549fc42fa14a65d1618da606fc48c3" />: Added fallback widget for dashboard widgets that fail to load.
 - <Commit hash="05240187015cf6474f488d00528fbecb7ffa3fb8" />: Readded ESLint configuration file that was accidentally deleted in previous commit.
 - <Commit hash="5ddbcd461def6ba82defbcc65571c9d80e8570b5" />: Updated error message in server DB checking script to use correct command name.
-- <Commit hash="196c8aff2cfd83b540b1a3bc9647f94cdbc757dc" />: Moved CSS import for <code>react-datepicker</code> to <code>DateInput</code> component since it is somehow not being loaded properly when imported in global CSS file.
-- <Commit hash="03a93a0fcf1f18ceb0482d450f5dc31890e71bc1" />: Simplified combination filter generation in <code>recursivelyBuildFilter</code> function, removing unnecessary brackets.
+- <Commit hash="196c8aff2cfd83b540b1a3bc9647f94cdbc757dc" />: Moved CSS import for `react-datepicker` to `DateInput` component since it is somehow not being loaded properly when imported in global CSS file.
+- <Commit hash="03a93a0fcf1f18ceb0482d450f5dc31890e71bc1" />: Simplified combination filter generation in `recursivelyBuildFilter` function, removing unnecessary brackets.
 
 ### 📖 Documentation & Tooling
 
@@ -39,18 +38,18 @@ import Code from "@/components/Code";
 - <Commit hash="f7f117903076801597003a679b9e164b9aa64cd8" />: Improve env file handling in forgeCLI setup process.
 - <Commit hash="36deeebaf434bbcd8f642397b0a0e857075858db" />: Added module update command in forgeCLI to allow users to easily update modules to the latest version.
 
-  <Code language="bash">
-    {`bun forge modules update <module-name>`}
-  </Code>
+  ```bash
+  bun forge modules update <module-name>
+  ```
   
 - <Commit hash="0733934c8b4ca45ab3e69d4fdf95f3e9f40fd5c8" />: Implemented module creation command in forgeCLI to allow users to easily create new modules with boilerplate code.
 
-  <Code language="bash">
-    {`bun forge modules create [module-name]`}
-  </Code>
+  ```bash
+  bun forge modules create [module-name]
+  ```
 
 - <Commit hash="50340228144c2a0507a078fde369fac0b21ae68c" />: Added module publish command in forgeCLI to allow users to easily publish their modules to GitHub repositories.
 
-  <Code language="bash">
-    {`bun forge modules publish <module-name>`}
-  </Code>
+  ```bash
+  bun forge modules publish <module-name>
+  ```

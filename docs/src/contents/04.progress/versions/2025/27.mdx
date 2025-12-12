@@ -2,7 +2,7 @@ import Commit from "../../components/Commit";
 import Code from "@/components/Code";
 
 - **Books Library**: Fixed a bug in the API logic where the error is not properly handled when the book fail to be added to the library.
-- **Books Library**: Renamed <code>category</code> to <code>collection</code> for better clarity.
+- **Books Library**: Renamed `category` to `collection` for better clarity.
 - **Books Library**: Fixed a bug where the sidebar content is not updated when stuff got deleted.
 - **Books Library**: Download process is now handled by the task pool mechanism.
 - **Books Library**: User can now download books from different mirrors of Libgen.
@@ -11,12 +11,12 @@ import Code from "@/components/Code";
 - **Wallet**: User can now view the details of a transaction by clicking on the transaction entry,
 - **Wallet**: Coordinates of the transaction location are now recorded and displayed as a map in the transaction details.
 - **Wallet**: Location of each transaction is now displayed in the recent transaction widget in the dashboard.
-- **Wallet**: Moved the create transaction button to the <code>ModuleHeader</code> component for better consistency.
+- **Wallet**: Moved the create transaction button to the `ModuleHeader` component for better consistency.
 - **Wallet**: Replaced receipt thumbnail in transaction table view with a button to open the receipt image in a modal.
 - **Backups**: Added a new module to allow users to create and manage backups of their data right from the system without needing to use the PocketBase admin UI.
 - **API**: Implemented task pool mechanism using socketIO to handle long-running tasks like downloading books from Libgen.
-- **UI**: Added inline style for the <code>preloader</code> component so that styling will be applied when tailwind is not loaded yet.
-- **UI**: Completely revamped the <code>ModalStore</code>, now you can pass in the modal component directly into the <code>open</code> function instead of registering it first. This allow facilitate the type safety of the modal component.
+- **UI**: Added inline style for the `preloader` component so that styling will be applied when tailwind is not loaded yet.
+- **UI**: Completely revamped the `ModalStore`, now you can pass in the modal component directly into the `open` function instead of registering it first. This allow facilitate the type safety of the modal component.
 - **UI**: Fixed a bug in combobox input where the input will not be focused when the user click the area outside of the input itself in the container.
-- **UI**: Migrated to the new Google Places API for the <code>locationInput</code> component.
-- **UI**: Removed <code>useComponentsBg</code> hook and moved them into CSS files.
+- **UI**: Migrated to the new Google Places API for the `locationInput` component.
+- **UI**: Removed `useComponentsBg` hook and moved them into CSS files.
