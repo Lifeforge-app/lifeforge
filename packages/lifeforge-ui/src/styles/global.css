@@ -76,6 +76,7 @@ input:-webkit-autofill:active {
 
   .print-area {
     page-break-inside: avoid;
+    zoom: 0.87;
   }
 }
 
