@@ -100,7 +100,15 @@
   },
   "borderRadiusSelector": {
     "title": "边框圆角",
-    "desc": "调整界面中各元素的圆角程度。"
+    "desc": "调整界面中各元素的圆角程度。",
+    "options": {
+      "none": "无",
+      "small": "小",
+      "default": "默认",
+      "medium": "中",
+      "large": "大",
+      "full": "最大"
+    }
   },
   "borderedSelector": {
     "title": "边框组件",

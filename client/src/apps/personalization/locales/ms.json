@@ -100,7 +100,15 @@
   },
   "borderRadiusSelector": {
     "title": "Jejari Sempadan",
-    "desc": "Laraskan kebulataan sudut di seluruh antara muka."
+    "desc": "Laraskan kebulataan sudut di seluruh antara muka.",
+    "options": {
+      "none": "Tiada",
+      "small": "Kecil",
+      "default": "Lalai",
+      "medium": "Sederhana",
+      "large": "Besar",
+      "full": "Penuh"
+    }
   },
   "borderedSelector": {
     "title": "Komponen Bersempadan",

@@ -100,7 +100,15 @@
   },
   "borderRadiusSelector": {
     "title": "Border Radius",
-    "desc": "Adjust the roundness of corners across the interface."
+    "desc": "Adjust the roundness of corners across the interface.",
+    "options": {
+      "none": "None",
+      "small": "Small",
+      "default": "Default",
+      "medium": "Medium",
+      "large": "Large",
+      "full": "Full"
+    }
   },
   "borderedSelector": {
     "title": "Bordered Components",
