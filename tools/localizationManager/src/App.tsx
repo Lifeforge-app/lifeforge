@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useDebounce } from '@uidotdev/usehooks'
 import {
   Button,
   ConfirmationModal,
@@ -34,8 +33,6 @@ function App() {
   >({})
 
   const [searchQuery, setSearchQuery] = useState('')
-
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
   const [changedKeys, setChangedKeys] = useState<string[]>([])
 
@@ -350,6 +347,7 @@ function App() {
       {namespace && subNamespace && JSON.stringify(locales) !== '{}' ? (
         <div className="mt-3 flex h-full flex-1 flex-col">
           <SearchInput
+            debounceMs={500}
             namespace="apps.localizationManager"
             searchTarget="entry"
             value={searchQuery}
@@ -360,7 +358,7 @@ function App() {
             fetchSuggestions={fetchSuggestions}
             locales={locales}
             oldLocales={oldLocales}
-            searchQuery={debouncedSearchQuery}
+            searchQuery={searchQuery}
             setChangedKeys={setChangedKeys}
             onChange={onChange}
             onCreateEntry={parent => {

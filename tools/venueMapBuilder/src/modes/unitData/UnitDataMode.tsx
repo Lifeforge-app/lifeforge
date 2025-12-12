@@ -1,4 +1,3 @@
-import { useDebounce } from '@uidotdev/usehooks'
 import { Button, SearchInput, useModalStore } from 'lifeforge-ui'
 import { useState } from 'react'
 
@@ -12,8 +11,6 @@ function UnitDataMode() {
   const { unitData, setUnitData } = useUnitData()
 
   const [searchQuery, setSearchQuery] = useState('')
-
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col space-y-4">
@@ -33,20 +30,21 @@ function UnitDataMode() {
       </div>
       <SearchInput
         className="component-bg-lighter-with-hover"
+        debounceMs={300}
         searchTarget="store"
-        onChange={setSearchQuery}
         value={searchQuery}
+        onChange={setSearchQuery}
       />
       {unitData.length > 0 ? (
         <div className="min-h-0 flex-1 space-y-2 overflow-y-auto">
           {unitData
             .filter(entry => {
-              if (!debouncedSearchQuery.startsWith('@')) {
+              if (!searchQuery.startsWith('@')) {
                 return entry.name
                   .toLowerCase()
-                  .includes(debouncedSearchQuery.toLowerCase())
+                  .includes(searchQuery.toLowerCase())
               } else {
-                const unitSearch = debouncedSearchQuery
+                const unitSearch = searchQuery
                   .slice(1)
                   .replace(/\s/g, '')
                   .toLowerCase()
