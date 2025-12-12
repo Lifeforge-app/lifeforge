@@ -39,26 +39,25 @@ Here is a gist of how to build an API handler in LifeForge:
 
 <Code language="typescript">
 {`import { forgeController, forgeRouter } from '@functions/routes'
-  import z from 'zod'
+import z from 'zod'
 
 const myHandler = forgeController
-.query()
-.description("This is a sample query handler")
-.input({
-query: z.object({
-name: z.string()
-})
-})
-.callback(async ({ query: { name } }) => {
-// Your logic here
-return { message: \`Hello, \${name}!\` };
-});
+  .query()
+  .description("This is a sample query handler")
+  .input({
+    query: z.object({
+      name: z.string()
+    })
+  })
+  .callback(async ({ query: { name } }) => {
+    // Your logic here
+    return { message: \`Hello, \${name}!\` };
+  });
 
-export forgeRouter({
-myHandler
+export default forgeRouter({
+  myHandler
 })
 `}
-
 </Code>
 
 Paired with the <code>forgeAPI</code> system in the frontend, you can call the API like this:
@@ -107,39 +106,39 @@ In <code>accounts.ts</code>, we define the API handlers for managing accounts:
 
 <Code language="typescript">
 {`import { forgeController, forgeRouter } from '@functions/routes'
-  import z from 'zod'
+import z from 'zod'
 
-const list = forgeRouter
-.query()
-.description("List all accounts")
-.callback(async () => {
-// Your logic here
-return [];
-});
+const list = forgeController
+  .query()
+  .description("List all accounts")
+  .callback(async () => {
+    // Your logic here
+    return [];
+  });
 
-const create = forgeRouter
-.mutation()
-.description("Create a new account")
-.input({
-body: z.object({
-name: z.string(),
-balance: z.number().min(0)
-})
-})
-.callback(async ({ body: { name, balance } }) => {
-// Your logic here
-return { id: "new_account_id", name, balance };
-});
+const create = forgeController
+  .mutation()
+  .description("Create a new account")
+  .input({
+    body: z.object({
+      name: z.string(),
+      balance: z.number().min(0)
+    })
+  })
+  .callback(async ({ body: { name, balance } }) => {
+    // Your logic here
+    return { id: "new_account_id", name, balance };
+  });
 
 const update = ...
 
 const remove = ...
 
 export default forgeRouter({
-list,
-create,
-update,
-remove
+  list,
+  create,
+  update,
+  remove
 });
 `}
 
@@ -164,9 +163,9 @@ export default forgeRouter({
 Finally, in the routing file located at <code>src/core/routes/app.routes.ts</code>, we import the router from <code>src/Finances/index.ts</code> and register it into the Express.js application:
 
 <Code language="typescript">
-  {`const appRoutes = forgeRouter({
-    // Other routers...
-    finances: (await import('@app/finances')).default,
+{`const appRoutes = forgeRouter({
+  // Other routers...
+  finances: (await import('@app/finances')).default,
 });
 `}
 </Code>
@@ -191,24 +190,24 @@ The input schema is defined in the <code>.input()</code> method using [Zod](http
 
 <Code language="typescript">
 {`const myQueryHandler = forgeController
-    .query()
-    .input({
-      query: z.object({
-        name: z.string()
-      })
+  .query()
+  .input({
+    query: z.object({
+      name: z.string()
     })
+  })
 
 const myMutationHandler = forgeController
-.mutation()
-.input({
-query: z.object({
-id: z.string().uuid()
-}),
-body: z.object({
-name: z.string(),
-age: z.number().min(0)
-})
-})
+  .mutation()
+  .input({
+    query: z.object({
+      id: z.string().uuid()
+    }),
+    body: z.object({
+      name: z.string(),
+      age: z.number().min(0)
+    })
+  })
 `}
 
 </Code>
@@ -230,12 +229,12 @@ More often than not, you would want to upload files to the server, such as image
 To enable file uploads, you need to use the <code>.media()</code> method in the API handler definition. This method takes an object that defines the file fields and their respective configurations. The structure of this object is as follows:
 
 <Code language="typescript">
-  {`type MediaConfig = Record<
-    string,
-    {
-      optional: boolean
-      multiple?: boolean
-    }
+{`type MediaConfig = Record<
+  string,
+  {
+    optional: boolean
+    multiple?: boolean
+  }
 >
 `}
 </Code>
@@ -250,29 +249,29 @@ Most of the time, you would want to store the uploaded files in the database. Ho
 {`import { getMedia } from '@functions/external/media'
 
 const update = forgeController
-.mutation()
-.description("Upload a file")
-.input({
-query: z.object({
-id: z.string().uuid()
-}),
-body: z.object({
-...
-})
-})
-.media({
-file: { optional: false }
-})
-.callback(async ({ media: { file }, query: { id }, body, pb }) => {
-const updatedRecord = await pb.update
-.collection('your_collection')
-.id(id)
-.data({
-...body,
-...(await getMedia('file', file))
-})
-.execute();
-});
+  .mutation()
+  .description("Upload a file")
+  .input({
+    query: z.object({
+      id: z.string().uuid()
+    }),
+    body: z.object({
+      ...
+    })
+  })
+  .media({
+    file: { optional: false }
+  })
+  .callback(async ({ media: { file }, query: { id }, body, pb }) => {
+    const updatedRecord = await pb.update
+      .collection('your_collection')
+      .id(id)
+      .data({
+        ...body,
+        ...(await getMedia('file', file))
+      })
+      .execute();
+  });
 `}
 
 </Code>
@@ -284,19 +283,19 @@ const updatedRecord = await pb.update
 In scenarios where you need to ensure that a record exists in the database before proceeding with the business logic, you can use the <code>.existenceCheck()</code> method. This method takes two arguments: the data input source to be checked (either <code>"query"</code> or <code>"body"</code>), and an object with key being the field name and value being the collection name. If the field is optional, you can wrap the field name in square brackets, e.g. <code>"[userId]"</code>.
 
 <Code language="typescript">
-  {`const getUserProfile = forgeController
-    .query()
-    .description("Get user profile")
-    .input({
-      query: z.object({
-          userId: z.string().uuid()
-      })
+{`const getUserProfile = forgeController
+  .query()
+  .description("Get user profile")
+  .input({
+    query: z.object({
+      userId: z.string().uuid()
     })
-    .existenceCheck("query", { userId: "users" })
-    .callback(async ({ query: { userId }, pb }) => {
-      const user = await pb.collection('users').getOne(userId);
-      return user;
-    });
+  })
+  .existenceCheck("query", { userId: "users" })
+  .callback(async ({ query: { userId }, pb }) => {
+    const user = await pb.collection('users').getOne(userId);
+    return user;
+  });
 `}
 </Code>
 
@@ -328,30 +327,29 @@ Here is an example of a complete API handler that demonstrates the usage of the 
 
 <Code language="typescript">
 {`const createUser = forgeController
-    .mutation()
-    .description("Create a new user")
-    .input({
-      body: z.object({
-        name: z.string(),
-        email: z.string().email()
+  .mutation()
+  .description("Create a new user")
+  .input({
+    body: z.object({
+      name: z.string(),
+      email: z.string().email()
+    })
+  })
+  .media({
+    avatar: { optional: true }
+  })
+  .callback(async ({ body: { name, email }, media: { avatar }, pb }) => {
+    const newUser = await pb.create
+      .collection('users')
+      .data({
+        name,
+        email,
+        ...(await getMedia('avatar', avatar))
       })
-    })
-    .media({
-      avatar: { optional: true }
-    })
-    .callback(async ({ body: { name, email }, media: { avatar }, pb }) => {
-      const newUser = await pb.create
-        .collection('users')
-        .data({
-          name,
-          email,
-          ...(await getMedia('avatar', avatar))
-        })
-        .execute();
+      .execute();
 
-      return newUser;
-    });
-
+    return newUser;
+  });
 `}
 
 </Code>
