@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { ContextMenu, ContextMenuItem } from 'lifeforge-ui'
+import { Card, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'shared'
@@ -37,9 +37,9 @@ function SidebarBottomBar() {
     >
       <ContextMenu
         buttonComponent={
-          <button
+          <Card
             className={clsx(
-              'flex-between shadow-custom w-full min-w-0 gap-8 rounded-md p-4 text-left',
+              'flex-between gap-8',
               sidebarExpanded &&
                 'bg-bg-200/50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200/50 transition-all'
             )}
@@ -75,7 +75,7 @@ function SidebarBottomBar() {
               )}
               icon="ph:caret-up-down-bold"
             />
-          </button>
+          </Card>
         }
         classNames={{
           wrapper: 'w-full'

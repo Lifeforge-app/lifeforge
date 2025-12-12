@@ -53,7 +53,7 @@ function ThemeSelector() {
                 changeTheme(id as 'system' | 'light' | 'dark')
               }}
             >
-              <div className="relative rounded-lg p-2 lg:rounded-2xl">
+              <div className="relative rounded-md p-2 lg:rounded-lg">
                 {theme === id && (
                   <Icon
                     className="text-custom-500 absolute right-2.5 bottom-2 block size-6 text-xl"
