@@ -100,7 +100,15 @@
   },
   "borderRadiusSelector": {
     "title": "邊框圓角",
-    "desc": "調整介面中各元素的圓角程度。"
+    "desc": "調整介面中各元素的圓角程度。",
+    "options": {
+      "none": "無",
+      "small": "小",
+      "default": "預設",
+      "medium": "中",
+      "large": "大",
+      "full": "最大"
+    }
   },
   "borderedSelector": {
     "title": "邊框組件",

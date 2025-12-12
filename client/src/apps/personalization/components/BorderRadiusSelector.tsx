@@ -1,8 +1,16 @@
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Button, OptionsColumn, SliderInput } from 'lifeforge-ui'
-import { useState } from 'react'
+import { Listbox, ListboxOption, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
+
+const BORDER_RADIUS_OPTIONS = [
+  { value: 0, labelKey: 'none' },
+  { value: 0.5, labelKey: 'small' },
+  { value: 1, labelKey: 'default' },
+  { value: 2, labelKey: 'medium' },
+  { value: 3, labelKey: 'large' },
+  { value: 3.6, labelKey: 'full' }
+] as const
 
 function BorderRadiusSelector() {
   const { borderRadiusMultiplier } = usePersonalization()
@@ -11,39 +19,77 @@ function BorderRadiusSelector() {
 
   const { t } = useTranslation('apps.personalization')
 
-  const [selectedMultiplier, setSelectedMultiplier] = useState(
-    borderRadiusMultiplier
-  )
-
   return (
     <OptionsColumn
+      breakpoint="md"
       description={t('borderRadiusSelector.desc')}
       icon="tabler:border-radius"
       title={t('borderRadiusSelector.title')}
     >
-      <div className="flex w-full flex-col items-center gap-6 md:flex-row">
-        <SliderInput
-          className="w-full"
-          max={5}
-          min={0}
-          namespace="apps.personalization"
-          step={0.1}
-          value={selectedMultiplier}
-          onChange={value => {
-            setSelectedMultiplier(value)
-          }}
-        />
-        <Button
-          className="w-full md:w-auto"
-          disabled={selectedMultiplier === borderRadiusMultiplier}
-          icon="tabler:check"
-          onClick={() => {
-            changeBorderRadiusMultiplier(selectedMultiplier)
-          }}
-        >
-          save
-        </Button>
-      </div>
+      <Listbox
+        buttonContent={
+          <div className="flex items-center gap-2">
+            <svg
+              className="size-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="13"
+                rx={Math.min(borderRadiusMultiplier * 2, 6.5)}
+                ry={Math.min(borderRadiusMultiplier * 2, 6.5)}
+                width="13"
+                x="1.5"
+                y="1.5"
+              />
+            </svg>
+            <span className="-mt-px block truncate">
+              {t(
+                `borderRadiusSelector.options.${
+                  BORDER_RADIUS_OPTIONS.find(
+                    opt => opt.value === borderRadiusMultiplier
+                  )?.labelKey ?? 'default'
+                }`
+              )}
+            </span>
+          </div>
+        }
+        className="component-bg-lighter min-w-48"
+        value={borderRadiusMultiplier}
+        onChange={value => {
+          changeBorderRadiusMultiplier(value)
+        }}
+      >
+        {BORDER_RADIUS_OPTIONS.map(({ value, labelKey }) => (
+          <ListboxOption
+            key={value}
+            label={t(`borderRadiusSelector.options.${labelKey}`)}
+            renderColorAndIcon={() => (
+              <svg
+                className="mr-2 size-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx={Math.min(value * 2, 6.5)}
+                  ry={Math.min(value * 2, 6.5)}
+                  width="13"
+                  x="1.5"
+                  y="1.5"
+                />
+              </svg>
+            )}
+            value={value}
+          />
+        ))}
+      </Listbox>
     </OptionsColumn>
   )
 }
