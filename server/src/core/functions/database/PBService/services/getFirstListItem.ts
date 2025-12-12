@@ -113,7 +113,7 @@ export class GetFirstListItem<
 
     LoggingService.debug(
       `${chalk
-        .hex('#34ace0')
+        .hex('#82c8e5')
         .bold('getFirstListItem')} Fetched first item from ${chalk
         .hex('#34ace0')
         .bold(this.collectionKey)}`,

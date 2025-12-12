@@ -151,7 +151,7 @@ export class GetList<
 
     LoggingService.debug(
       `${chalk
-        .hex('#34ace0')
+        .hex('#82c8e5')
         .bold(
           'getList'
         )} Fetched ${result.perPage} items${result.totalItems ? ` out of ${result.totalItems} items` : ''} from ${chalk
