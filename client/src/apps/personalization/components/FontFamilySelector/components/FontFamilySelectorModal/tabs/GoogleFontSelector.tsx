@@ -102,7 +102,7 @@ function GoogleFontSelector({
   return (
     <WithQuery query={apiKeyAvailable}>
       {apiKeyAvailable =>
-        !apiKeyAvailable ? (
+        apiKeyAvailable ? (
           <>
             <div className="mb-4 flex flex-col items-center gap-2 md:flex-row">
               <Listbox
