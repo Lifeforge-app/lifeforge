@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { memo, useCallback } from 'react'
 
 import { Card } from '@components/layout'
 
@@ -11,14 +12,16 @@ function IconSetEntry({
   iconSet: IIconSet
   setCurrentIconSet: ({ iconSet }: { iconSet: string }) => void
 }) {
+  const handleClick = useCallback(() => {
+    setCurrentIconSet({ iconSet: iconSet.prefix })
+  }, [iconSet.prefix, setCurrentIconSet])
+
   return (
     <Card
       key={iconSet.prefix}
       isInteractive
       className="component-bg-lighter-with-hover flex w-full grow flex-col overflow-hidden"
-      onClick={() => {
-        setCurrentIconSet({ iconSet: iconSet.prefix })
-      }}
+      onClick={handleClick}
     >
       <div className="flex w-full shrink-0 flex-col py-6 font-medium">
         <div className="flex-center size-full gap-5">
@@ -54,4 +57,4 @@ function IconSetEntry({
   )
 }
 
-export default IconSetEntry
+export default memo(IconSetEntry)
