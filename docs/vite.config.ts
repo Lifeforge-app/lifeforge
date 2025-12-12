@@ -1,4 +1,4 @@
-import mdx from '@mdx-js/rollup'
+import mdx, { Options } from '@mdx-js/rollup'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
@@ -6,9 +6,8 @@ import rehypeHighlight from 'rehype-highlight'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
 
-const options = {
-  remarkPlugins: [remarkGfm],
-  rehypePlugins: [rehypeHighlight]
+const options: Options = {
+  remarkPlugins: [remarkGfm]
 }
 
 // https://vitejs.dev/config/

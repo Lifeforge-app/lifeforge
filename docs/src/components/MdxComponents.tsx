@@ -4,10 +4,12 @@ import type { MDXComponents } from 'mdx/types'
 import Zoom from 'react-medium-image-zoom'
 import { Link } from 'shared'
 
+import Code from './Code'
+
 const HashIcon = ({ className }: { className?: string }) => (
   <Icon
     className={clsx(
-      'text-custom-500 stroke-custom-500 top-1/2 -left-6 stroke-[1px]! sm:absolute sm:-left-8 sm:-translate-y-1/2',
+      'text-custom-500 stroke-custom-500 top-1/2 -left-6 stroke-[1px]! in-[.alert]:hidden sm:absolute sm:-left-8 sm:-translate-y-1/2',
       className
     )}
     icon="streamline-sharp:sign-hashtag-remix"
@@ -94,12 +96,16 @@ export const components: MDXComponents = {
       />
     )
   },
-  code() {
-    return (
-      <div className="text-5xl text-red-500">
-        USE CUSTOM COMPONENT FOR CODE SNIPPET
-      </div>
-    )
+  code(properties) {
+    if (properties.className) {
+      return (
+        <Code language={properties.className.replace('language-', '')}>
+          {properties.children as string}
+        </Code>
+      )
+    }
+
+    return <code>{properties.children}</code>
   },
   table(properties) {
     return (

@@ -39,7 +39,6 @@
     "react-medium-image-zoom": "^5.3.0",
     "react-router": "^7.9.4",
     "react-syntax-highlighter": "^15.6.1",
-    "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
     "shared": "workspace:*",
     "tailwindcss": "^4.1.11",
