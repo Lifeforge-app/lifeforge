@@ -8,11 +8,13 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
-  OptionsColumn
+  OptionsColumn,
+  TagChip
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
+import COLORS from 'tailwindcss/colors'
 
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import decryptKey from '../utils/decryptKey'
@@ -97,6 +99,13 @@ function EntryItem({
         <>
           {entry.name}
           <code className="text-bg-500 text-sm">({entry.keyId})</code>
+          <TagChip
+            className="ml-2 text-xs!"
+            color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
+            icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
+            iconClassName="size-3.5!"
+            label={entry.exposable ? 'Exposable' : 'Internal Only'}
+          />
         </>
       }
     >
