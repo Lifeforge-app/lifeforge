@@ -41,15 +41,15 @@ export default function Tooltip({
             ? bgTempPalette[200]
             : tinycolor(bgTempPalette[700]).setAlpha(0.5).toRgbString()
         }`}
-        className="shadow-custom bg-bg-800! z-9999 rounded-md! p-0! text-base!"
-        classNameArrow="size-6! bg-bg-800!"
+        className="shadow-custom bg-bg-50! dark:bg-bg-800! z-9999 rounded-md! p-0! text-base!"
+        classNameArrow="size-6! bg-bg-50! dark:bg-bg-800!"
         id={`tooltip-${_.kebabCase(id)}`}
         opacity={1}
         place="top-start"
         positionStrategy="fixed"
         {...tooltipProps}
       >
-        <div className="bg-bg-800! text-bg-600 dark:text-bg-400 h-full w-full rounded-md p-4">
+        <div className="bg-bg-50~ dark:bg-bg-800! text-bg-600 dark:text-bg-400 h-full w-full rounded-md p-4">
           {children}
         </div>
       </ReactTooltip>
