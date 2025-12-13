@@ -69,8 +69,8 @@ function NumberInput({
       namespace={namespace}
       placeholder={placeholder}
       required={required}
-      variant={variant}
       value={currentStringValue}
+      variant={variant}
       onBlur={() => {
         if (currentStringValue.trim() === '') {
           onChange(0)

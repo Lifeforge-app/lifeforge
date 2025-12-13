@@ -21,6 +21,7 @@ function FormCurrencyInput({
     <CurrencyInput
       autoFocus={autoFocus}
       disabled={field.disabled}
+      errorMsg={field.errorMsg}
       icon={field.icon}
       label={field.label}
       namespace={namespace}
