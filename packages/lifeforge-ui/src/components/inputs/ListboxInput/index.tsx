@@ -94,8 +94,8 @@ function ListboxInput<T>({
       disabled={disabled}
       errorMsg={errorMsg}
       multiple={multiple}
-      variant={variant}
       value={value}
+      variant={variant}
       onChange={onChange}
       onClick={focusInput}
     >

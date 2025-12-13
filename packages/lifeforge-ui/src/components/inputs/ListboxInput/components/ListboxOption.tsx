@@ -13,7 +13,8 @@ function ListboxOption({
   className,
   renderColorAndIcon,
   style,
-  selected
+  selected,
+  onClick
 }: {
   value: unknown
   label: string | React.ReactElement
@@ -28,6 +29,7 @@ function ListboxOption({
   }) => React.ReactNode
   style?: React.CSSProperties
   selected?: boolean
+  onClick?: () => void
 }) {
   const convertedColor = color?.startsWith('oklch(')
     ? formatHex(parse(color))
@@ -41,6 +43,7 @@ function ListboxOption({
       )}
       style={style}
       value={value}
+      onClick={onClick}
     >
       {({ selected: innerSelected }) => {
         const finalSelected =
