@@ -34,6 +34,8 @@ interface ListboxInputProps<T> {
   customActive?: boolean
   /** The custom content to display in the listbox button. */
   buttonContent: React.ReactElement
+  /** Whether to show an action button inside the listbox. */
+  hasActionButton?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
   /** The error message to display when the field is invalid. */
@@ -53,6 +55,7 @@ function ListboxInput<T>({
   children,
   customActive,
   buttonContent,
+  hasActionButton,
   namespace,
   errorMsg
 }: ListboxInputProps<T>) {
@@ -137,7 +140,9 @@ function ListboxInput<T>({
           />
         </span>
       </ListboxButton>
-      <ListboxOptions portal={!multiple}>{children}</ListboxOptions>
+      <ListboxOptions portal={!(multiple && hasActionButton)}>
+        {children}
+      </ListboxOptions>
     </ListboxInputWrapper>
   )
 }
