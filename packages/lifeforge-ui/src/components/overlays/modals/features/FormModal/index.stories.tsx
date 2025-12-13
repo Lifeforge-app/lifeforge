@@ -321,3 +321,75 @@ export const ListboxInputWithActionButtonOption: Story = {
     )
   }
 }
+
+export const DisabledFieldsWithTooltips: Story = {
+  args: {
+    ui: {
+      icon: 'tabler:forms',
+      title: 'Form Modal with Disabled Fields and Tooltips',
+      namespace: '',
+      onClose: () => {},
+      loading: false,
+      submitButton: 'create'
+    }
+  } as never,
+  render: () => {
+    const open = useModalStore(state => state.open)
+
+    const FormWithDisabledFieldsAndTooltips = ({
+      onClose
+    }: {
+      onClose: () => void
+    }) => {
+      const { formProps } = defineForm<{ username: string; email: string }>({
+        icon: 'tabler:forms',
+        title: 'Form Modal',
+        namespace: '',
+        onClose,
+        submitButton: 'create'
+      })
+        .typesMap({
+          username: 'text',
+          email: 'text'
+        })
+        .setupFields({
+          username: {
+            icon: 'tabler:user',
+            label: 'Username',
+            disabled: true,
+            disabledReason: 'Your username cannot be changed once set.',
+            placeholder: 'john_doe'
+          },
+          email: {
+            icon: 'tabler:mail',
+            label: 'Email',
+            disabled: true,
+            disabledReason:
+              'Email changes are restricted for security reasons.',
+            placeholder: 'john_doe@example.com'
+          }
+        })
+        .initialData({
+          username: 'john_doe',
+          email: 'john_doe@example.com'
+        })
+        .onSubmit(async formData => {
+          alert(`Form submitted with data: ${JSON.stringify(formData)}`)
+        })
+        .build()
+
+      return <FormModal {...formProps} />
+    }
+
+    return (
+      <Button
+        icon="tabler:plus"
+        onClick={() => {
+          open(FormWithDisabledFieldsAndTooltips, {})
+        }}
+      >
+        Open Form Modal
+      </Button>
+    )
+  }
+}
