@@ -10,8 +10,11 @@ interface LoadingScreenProps {
  */
 export default function LoadingScreen({ message }: LoadingScreenProps) {
   return (
-    <div className="flex-center size-full flex-1 flex-col gap-6">
-      <Icon className="text-bg-500 size-10" icon="svg-spinners:ring-resize" />
+    <div className="flex-center size-full flex-1 flex-col gap-[1.5rem]">
+      <Icon
+        className="text-bg-500 size-[2.5rem]"
+        icon="svg-spinners:ring-resize"
+      />
       <p className="text-bg-500 text-lg font-medium">{message ?? ''}</p>
     </div>
   )

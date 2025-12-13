@@ -14,7 +14,7 @@ interface ErrorScreenProps {
  */
 function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
   return (
-    <div className="flex-center size-full flex-col gap-6">
+    <div className="flex-center size-full flex-col gap-[1.5rem]">
       <Icon className="size-[4rem] text-red-500" icon="tabler:alert-triangle" />
       <p className="text-center text-lg font-medium text-red-500">{message}</p>
       {showRetryButton && (
