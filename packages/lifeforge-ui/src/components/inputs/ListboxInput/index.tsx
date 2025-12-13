@@ -137,7 +137,7 @@ function ListboxInput<T>({
           />
         </span>
       </ListboxButton>
-      <ListboxOptions>{children}</ListboxOptions>
+      <ListboxOptions portal={!multiple}>{children}</ListboxOptions>
     </ListboxInputWrapper>
   )
 }
