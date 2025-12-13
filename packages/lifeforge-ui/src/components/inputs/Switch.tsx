@@ -1,7 +1,5 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import clsx from 'clsx'
-import { usePersonalization } from 'shared'
-import tinycolor from 'tinycolor2'
 
 interface SwitchProps {
   /** Whether the switch is currently checked (on) or unchecked (off). */
@@ -16,37 +14,20 @@ interface SwitchProps {
  * A switch component for toggling between two states.
  */
 function Switch({ value, onChange, disabled }: SwitchProps) {
-  const { derivedThemeColor } = usePersonalization()
-
-  const getStateClassName = () => {
-    if (value) {
-      return clsx(
-        tinycolor(derivedThemeColor).isLight()
-          ? 'bg-bg-100 dark:bg-bg-800'
-          : 'bg-bg-100',
-        'translate-x-6'
-      )
-    }
-
-    return 'translate-x-1 bg-bg-50 dark:bg-bg-500'
-  }
-
   return (
     <HeadlessSwitch
       checked={value}
       className={clsx(
-        'ring-bg-500/20 shadow-custom relative inline-flex h-6 w-11 shrink-0 items-center rounded-full in-[.bordered]:ring-2',
-        value
-          ? 'bg-custom-500'
-          : 'component-bg-lighter-with-hover bg-bg-200/50',
+        'focus-visible:ring-custom-500 focus-visible:ring-offset-bg-50 dark:focus-visible:ring-offset-bg-900 relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+        value ? 'bg-custom-500 shadow-inner' : 'bg-bg-300 dark:bg-bg-600',
         disabled && 'cursor-not-allowed! opacity-50'
       )}
       onChange={!disabled ? onChange : undefined}
     >
       <span
         className={clsx(
-          'inline-block size-4 shrink-0 rounded-full transition',
-          getStateClassName()
+          'pointer-events-none inline-block size-4 shrink-0 rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out',
+          value ? 'translate-x-6' : 'translate-x-1'
         )}
       />
     </HeadlessSwitch>
