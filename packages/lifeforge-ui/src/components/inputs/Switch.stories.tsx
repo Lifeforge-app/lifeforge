@@ -16,3 +16,11 @@ export const Default: Story = {
     onChange: () => {}
   }
 }
+
+export const Disabled: Story = {
+  args: {
+    value: false,
+    onChange: () => {},
+    disabled: true
+  }
+}
