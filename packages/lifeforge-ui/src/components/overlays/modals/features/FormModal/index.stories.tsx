@@ -247,3 +247,77 @@ export const Default: Story = {
     )
   }
 }
+
+/**
+ * Story demonstrating a FormModal with a Listbox input that includes an action button option.
+ * This action button allows users to perform a custom action, such as opening another modal for adding new options.
+ */
+export const ListboxInputWithActionButtonOption: Story = {
+  args: {
+    ui: {
+      icon: 'tabler:forms',
+      title: 'Form Modal with Listbox Input Action Button Option',
+      namespace: '',
+      onClose: () => {},
+      loading: false,
+      submitButton: 'create'
+    }
+  } as never,
+  render: () => {
+    const open = useModalStore(state => state.open)
+
+    const FormWithListboxInputActionButtonOption = ({
+      onClose
+    }: {
+      onClose: () => void
+    }) => {
+      const { formProps } = defineForm<{ choice: string | null }>({
+        icon: 'tabler:forms',
+        title: 'Form Modal',
+        namespace: '',
+        onClose,
+        submitButton: 'create'
+      })
+        .typesMap({
+          choice: 'listbox'
+        })
+        .setupFields({
+          choice: {
+            multiple: false,
+            label: 'Choose an option',
+            icon: 'tabler:list',
+            required: true,
+            options: [
+              { text: 'Option 1', value: 'option1', icon: 'tabler:number-1' },
+              { text: 'Option 2', value: 'option2', icon: 'tabler:number-2' },
+              { text: 'Option 3', value: 'option3', icon: 'tabler:number-3' }
+            ],
+            actionButtonOption: {
+              text: 'Add Option',
+              icon: 'tabler:plus',
+              onClick: () => {
+                alert('Add Option clicked!')
+              }
+            }
+          }
+        })
+        .onSubmit(async formData => {
+          alert(`Form submitted with data: ${JSON.stringify(formData)}`)
+        })
+        .build()
+
+      return <FormModal {...formProps} />
+    }
+
+    return (
+      <Button
+        icon="tabler:plus"
+        onClick={() => {
+          open(FormWithListboxInputActionButtonOption, {})
+        }}
+      >
+        Open Form Modal
+      </Button>
+    )
+  }
+}
