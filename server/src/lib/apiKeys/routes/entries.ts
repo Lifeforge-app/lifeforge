@@ -2,6 +2,7 @@ import z from 'zod'
 
 import { decrypt2, encrypt2 } from '@functions/auth/encryption'
 import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 
 import { challenge } from '..'
 import getDecryptedMaster from '../utils/getDecryptedMaster'
@@ -9,10 +10,10 @@ import getDecryptedMaster from '../utils/getDecryptedMaster'
 const get = forgeController
   .query()
   .description({
-    en: 'Retrieve API key by key ID',
-    ms: 'Dapatkan kunci API mengikut ID kunci',
-    'zh-CN': '通过密钥ID获取API密钥',
-    'zh-TW': '透過密鑰ID獲取API密鑰'
+    en: 'Retrieve API key by key ID. Only exposable keys can be retrieved.',
+    ms: 'Dapatkan kunci API mengikut ID kunci. Hanya kunci yang boleh didedahkan boleh diperoleh.',
+    'zh-CN': '通过密钥ID获取API密钥。只有可公开的密钥才能被获取。',
+    'zh-TW': '透過密鑰ID獲取API密鑰。只有可公開的密鑰才能被獲取。'
   })
   .input({
     query: z.object({
@@ -31,8 +32,12 @@ const get = forgeController
       ])
       .execute()
 
-    if (!entry || !entry.exposable) {
-      throw new Error('Entry is not exposible')
+    if (!entry) {
+      throw new ClientError('API Key not found', 404)
+    }
+
+    if (!entry.exposable) {
+      throw new ClientError(`API Key "${entry.keyId}" is not exposable`, 403)
     }
 
     try {
