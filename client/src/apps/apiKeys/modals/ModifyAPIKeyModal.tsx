@@ -41,6 +41,7 @@ function ModifyAPIKeyModal({
     description: string
     icon: string
     key: string
+    exposable: boolean
   }>({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
     namespace: 'apps.apiKeys',
@@ -53,7 +54,8 @@ function ModifyAPIKeyModal({
       name: 'text',
       description: 'text',
       icon: 'icon',
-      key: 'text'
+      key: 'text',
+      exposable: 'checkbox'
     })
     .setupFields({
       keyId: {
@@ -85,6 +87,11 @@ function ModifyAPIKeyModal({
         placeholder: '••••••••••••••••',
         label: 'API Key',
         icon: 'tabler:key'
+      },
+      exposable: {
+        required: false,
+        label: 'Exposable',
+        icon: 'tabler:eye'
       }
     })
     .initialData({
@@ -92,7 +99,8 @@ function ModifyAPIKeyModal({
       name: initialData?.name || '',
       description: initialData?.description || '',
       icon: initialData?.icon || '',
-      key: initialData?.key || ''
+      key: initialData?.key || '',
+      exposable: initialData?.exposable || false
     })
     .onSubmit(async data => {
       const challenge = await forgeAPI.apiKeys.auth.getChallenge.query()

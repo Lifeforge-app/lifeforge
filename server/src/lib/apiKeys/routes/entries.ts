@@ -158,7 +158,8 @@ const create = forgeController
   .callback(async ({ pb, body: { data } }) => {
     const decryptedData = JSON.parse(decrypt2(data, challenge))
 
-    const { keyId, name, description, icon, key, master } = decryptedData
+    const { keyId, name, description, icon, key, exposable, master } =
+      decryptedData
 
     const decryptedMaster = await getDecryptedMaster(pb, master)
 
@@ -173,6 +174,7 @@ const create = forgeController
         name,
         description,
         icon,
+        exposable,
         key: encryptedKey
       })
       .execute()
@@ -204,7 +206,8 @@ const update = forgeController
   .callback(async ({ pb, query: { id }, body: { data } }) => {
     const decryptedData = JSON.parse(decrypt2(data, challenge))
 
-    const { keyId, name, description, icon, key, master } = decryptedData
+    const { keyId, name, description, icon, key, exposable, master } =
+      decryptedData
 
     const decryptedMaster = await getDecryptedMaster(pb, master)
 
@@ -220,6 +223,7 @@ const update = forgeController
         name,
         description,
         icon,
+        exposable,
         key: encryptedKey
       })
       .execute()
