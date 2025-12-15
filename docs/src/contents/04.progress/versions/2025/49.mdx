@@ -1,0 +1,87 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="5171f74efc46b02dd645bce99d761631b1983fcb" />: Added `bun.lock` file to `.gitignore` to prevent version control issues every time dependencies are installed using Bun.
+- <Commit hash="98f3f8684285eeb8f90c579d486afce8a9d55a0e1" />, <Commit hash="7c02363271edb694289ba0be5dbbdd7089163db8" />: **Dashboard** mechanism overhaul, widget dimensions are now passed into the widget component, which can be used for responsive layout. Max dimensions can now be specified per widget.
+- <Commit hash="a9986299bd7e3a4536cbda8ca16671f09c79466b" />: Added button to remove widgets from dashboard if the module that provides the widget is uninstalled.
+- <Commit hash="de09ca0c89d66c3909c9e36cefe857e7cae679aa" />: Providers in the client codebase are now stored and loaded as a flattened list instead of nested structure for easier management and lookup.
+
+    ```tsx
+    // Old structure
+    return (
+        <ProviderA>
+            <ProviderB>
+                <ProviderC>
+                    {children}
+                </ProviderC>
+            </ProviderB>
+        </ProviderA>
+    )
+
+    // New structure
+    // New structure
+    const providers = useMemo(
+        () =>
+            defineProviders([
+                [ProviderA],
+                [ProviderB],
+                [ProviderC]
+            ] as const),
+        []
+    )
+
+    return constructComponentTree(providers)
+    ```
+- <Commit hash="7214c38dd1709fed4dd93bfc460c7499de419eee" />: Renamed `useSidebarState` into `useMainSidebarState` for clarity.
+- <Commit hash="0b71305d109a9d25c30ebac8be5b8f1a4e88adb3" />: Added `useDivSize` hook to get real-time size of a div element.
+- <Commit hash="0c165d909db255f299c1ea094ac35577698b9562" />: Added `forgeAPI.modules.checkModuleAvailability` route to check if a module is installed. This is useful for modules that depends on other modules to function.
+- <Commit hash="32a9f74cf70ec57eb45014e792392035b6c1c894" />: Added untyped method to client side of `forgeAPI`. This is useful for dynamic routes where the response type is not known at compile time.
+
+    ```ts
+    // Usage
+    const response = await forgeAPI.untyped("/modules/someSubPath/someEndpoint").queryOptions()
+    ```
+
+- <Commit hash="0c6a285732c1214bd20b26d0c6a0728ba68a51ec" />: Implemented end-to-end encryption for API requests using asymmetric encryption.
+- <Commit hash="e3eda1c48a1abb3f8b363a712840e0d8f1b37e6f" />: Renamed `checkDB.ts` to `dbUtils.ts`.
+- <Commit hash="eeade999c95d1b568af351b10e25319b66dbb892" />: Replaced `getPBSuperUserInstance` function with `connectToPocketBase` function.
+- <Commit hash="6746ade9756b46f89f7928d2f7499c37b97d33f8" />: User interaction for widgets is now disabled when user is editing dashboard user layout.
+- <Commit hash="f7d7037d02f2bd6637243e9593e8501978136c96" />: Updated `vite.config.ts` module resolution to handle static assets.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="756430bbff2dc4a442925e7004adb4cd2ebb05e0" />: Added `VirtualGrid` component for rendering large datasets efficiently with virtualization.
+- <Commit hash="5df7b16264048e1fd56e489c9e0ff073a66889b8" />: Updated `TagChip` and `TagsFilter` components to use `label` instead of `name` for better clarity and consistency.
+- <Commit hash="9e079b7da373b04da7307c405ff7a68efe1bfc4e" />: Updated `tips` props in `ModuleHeader` component to accept React nodes for more flexible content.
+- <Commit hash="7288e61a5e79ed44d9bf7eaf55cf96d525dea4b7" />: Added subsection support in `Sidebar` component (originally it is only available in `MainSidebar`).
+- <Commit hash="cb707ceee1bbe8ed58bb84ad185d8c641936faf1" />: `title` prop in `Widget` component is now optional. This is useful for widgets that only requires small spaces.
+- <Commit hash="d13d688292f06c6ffcc7a85f0430cd0eeb538d78" />: Added `ViewImageModal` component for displaying images in a modal.
+- <Commit hash="9062bd9c3289b846a8c34537741e2a78951edd3b" />: Added tooltip support for disabled fields in `FormModal` component to facilitate explanation of why a field is disabled.
+     
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w49-1.webp)
+
+- <Commit hash="cc3b4104bbaa2632b640080db438a398cfb682e8" />: Added `disabled` state for `Switch` component.
+- <Commit hash="de1df2c7058232a3cebc2fbeb8e069763062c0e1" />: Added support for custom confirmation buttons component in `ConfirmationModal`.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w49-2.webp)
+
+- <Commit hash="91a88d6901ca0a837d1ffd6cb2bbfcf6c074e634" />, <Commit hash="f58ee55627749033df953bfba0345695509a6b1f" />: Added `className` and `iconClassName` props to `TagChip` component for more flexible styling.
+- <Commit hash="8d0dfd7b5e7918aa7a265608331adacd5d5d70c0" />: Added `classic` and `plain` variants option for various input components, where `classic` variant is the typical input styling with label and icon, while `plain` variant is a bare input box without label and icon.
+- Various minor improvements and optimizations across multiple UI components.
+
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="5785feacbdc69e6e23b3a0cecece9b01dfc215f9" />: Fixed localization issue for dashboard widget management modal.
+- <Commit hash="534104870fa49381d8325d883be9ffa78cac0614" />, <Commit hash="c99822b33e6c4469a6627ba894d1cb919be3d4fa" />: Fixed responsiveness issue in `Clock` and `Date` widget components.
+- <Commit hash="2c53694927af74ed6cc1ac50e0aba054530139af" />: Updated brand name references across the codebase to ensure consistency. (LifeForge, case sensitive)
+- <Commit hash="2b2a6687c84f316342750dc84352042fedf0f038" />: Organized main exporting file in `shared` library for better maintainability.
+- <Commit hash="62deb68d42f6dabb586e9e2bb75b842990da9f46" />: Fixed text wrapping issue in `Tab` component.
+- <Commit hash="258c599f8f6d81086503ac2f215cc98421ae785c" />: Fixed responsive layout issue for `DateInput` component in mobile view.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="c24021c2c2b6fff27489d8c712de9d8dda621f29" />: Migrated old `CHANGELOG.md` entries into the new documentation site structure for better accessibility.
+- <Commit hash="e4e48810277930ae9b7f88f72647e6775bfbcf44" />: Updated `add module` command in `forgeCLI` to update git submodules into newest commit after installing to prevent stale versions.
+- <Commit hash="63973d55521dbcf5fedce0ad99f4d9402b200a3c" />: Added unit tests for `PBService`.
