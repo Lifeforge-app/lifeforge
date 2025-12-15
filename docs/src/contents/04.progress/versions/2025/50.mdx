@@ -1,0 +1,47 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="0c8c08ed7cf41894e1485938726927fe35809385" />: Added `anyColorToHex` utility function to `shared` library that converts strings of any color representations into hex string.
+- <Commit hash="ea13d643a9a44c997efe4d8b257cc1297f876f8a" />: Added `queryOptions` prop to `WithQueryData` component for more flexible query confirmation.
+- <Commit hash="6c8e30b5e87fb6d266972fb381b1212ae101ad47" />, <Commit hash="e44e11bbd6f609ea58db96aaa44d0907a12a37c4" />, <Commit hash="b7767f0b0197430a5c43cfa6ea8858f2f74bd1ac" />: : Module-related queries are now automatically cleaned up by default when the module is unmounted. This can be optionally disabled through the module's `manifest.json` using the `clearQueryOnUnmount` option.
+- <Commit hash="672bb8ca3273f36ceab320a77a695a251eeadd13" />: Global providers located at `<moduleName>/client/src/providers/global.tsx` are now automatically detected and added.
+- <Commit hash="878f884d9f1f0ad3d45905d23a62bb1afab53255" />: Added custom font support in system personalization.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w50-1.webp)
+
+- <Commit hash="55f61e3688b2ee330207d76ddf5fcb4094aa4945" />, <Commit hash="efa24ed5f3c8f2edfbf20f43934bc33cf3b8689f" />: Added personalization options for border radius and bordered components.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w50-2.webp)
+
+- <Commit hash="d8a788c105544286e788891563fe48008ae4bebb" />: Removed email OTP requirement for API Key vault as Gmail app passwords are nearly deprecated and the current implementation needs to be reworked.
+- <Commit hash="25c74f6c90cbb612671363fdc734e0ea6af80712" />: Removed `select-none` class from global CSS to allow text selection in all parts of the application.
+- <Commit hash="d818e732bcfbede4671941868384efd00c6c7382" />, <Commit hash="c96cb20a6231ac0adf986f53a15adbe6563521ae" />: Improved error handling when deleting record from the database.
+- <Commit hash="5c53619ace653c14b2e1e452131d61eb3cfa723b" />: Made exposable field ui-modifiable for API key entry and add indicator in entry item display.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="f29c879d1614006ef9d7e0cfe6f3831065d33d2c" />: Added value display next to slider label in `SliderInput` component.
+- <Commit hash="402df6aa180ed14e99788a703cf228c18fe4c5fe" />: `FormModal` now supports slider input.
+- <Commit hash="9763e6966819e095995e2480263bdd05b0237757" />: Huge improvement on modal opening and closing flow.
+- <Commit hash="8b780f599454628a02042c07fb266f4025f72952" />: Update `ModalHeader` component to accept title as ReactNode.
+- <Commit hash="1fb97e7fe0d596a7f052e700af0876157dfb6441" />, <Commit hash="d1b49dd636ab5ca68d16e94a0de84bb74b708a36" />: Added `debounceMs` prop to `SearchInput` component for better control over input debounce timing.
+- <Commit hash="d29b5dcc565866d4967ad7b80024ec6d594a61f0" />: Made Toastify container and toast wider.
+- <Commit hash="34f83caf62d70e3e10f6d66806315f40b6e1991a" />, <Commit hash="6806f65c9eaa7d19fbbe9c027b58ba71a6092e6f" />: Added action button support for listbox input in `FormModal` component.
+- <Commit hash="36423fa7cbfa11841d0752f8f63a641fd78bc758" />: Improved styling for `Switch` component.
+- Minor fixes and improvements on layout and consistency across the codebase.
+
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="df9099ef86782c5bf5802c78ba03dfc9209a16a2" />, <Commit hash="40f142fd45432f6a401b90411a42a6e7b8da871b" />: Users are now allowed to freely rotate their screen.
+- <Commit hash="079065e58124eeb1379118625cef971ed9367c4b" />: Fixed font size issue in `InputLabel` component.
+- Lots of minor fixes and improvements across multiple UI components.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="99c26bb10c17f624698c840170e1a5c7d48040ff" />: Added check for running PocketBase instance when publishing module.
+- <Commit hash="9dd029677c22010438750486146d3be59a33edc6" />: Added localization guide to documentation.
+- <Commit hash="ce38897c19a8517de46483d8132a55a1b2e875d3" />: Decreased base font size in documentation.
+- <Commit hash="0a87c8e1e763165508d0fedfa4149c8da8a465d4" />, <Commit hash="68fbe083b5b7dc54a552a53a3b491232ca48645d" />, <Commit hash="111e97fc30c29686cc7e75eacdcddce651f56707" />: Fixed code block rendering mechanism, now code can be written in typical markdown notation in MDX instead of using custom `<Code>` component.
+- <Commit hash="e819199ef09d96e9529f8450678eca2c339325fc" />: Added check for `schema.ts` existence when generating migration files.
