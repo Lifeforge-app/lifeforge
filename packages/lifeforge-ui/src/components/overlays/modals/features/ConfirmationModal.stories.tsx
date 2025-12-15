@@ -83,3 +83,67 @@ export const WithConfirmationPrompt: Story = {
     )
   }
 }
+
+/**
+ * Story demonstrating the use of custom confirmation buttons in the ConfirmationModal.
+ * This will replace the default confirmation button with a set of custom buttons provided by the user.
+ * You can define any React nodes, not necessarily buttons, to be rendered in the modal.
+ */
+export const WithCustomConfirmationButtons: Story = {
+  args: {
+    onClose: () => {},
+    data: {
+      title: 'Are you sure?',
+      description:
+        'Are you sure you want to perform this cool action? This is an absolutely cool action that you probably want to do.',
+      children: (
+        <div className="mt-6 grid w-full gap-2 sm:grid-cols-2">
+          <Button
+            className="w-full"
+            icon="tabler:question-mark"
+            variant="secondary"
+            onClick={() => {}}
+          >
+            Uhmmmmm...
+          </Button>
+          <Button
+            className="w-full"
+            icon="tabler:bubble"
+            variant="secondary"
+            onClick={() => alert('Rocket launched!')}
+          >
+            Let me think again
+          </Button>
+          <Button
+            className="w-full"
+            icon="tabler:arrow-left"
+            variant="secondary"
+            onClick={() => {}}
+          >
+            No, go back
+          </Button>
+          <Button
+            className="w-full"
+            icon="tabler:rocket"
+            onClick={() => alert('Rocket launched!')}
+          >
+            Yes, launch the rocket
+          </Button>
+        </div>
+      )
+    }
+  },
+  render: args => {
+    const open = useModalStore(state => state.open)
+
+    return (
+      <Button
+        dangerous
+        icon="tabler:trash"
+        onClick={() => open(ConfirmationModal, args.data)}
+      >
+        Delete LifeForge
+      </Button>
+    )
+  }
+}
