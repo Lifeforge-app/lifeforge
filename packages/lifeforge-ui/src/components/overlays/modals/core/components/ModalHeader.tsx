@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '@components/inputs'
+import Button from '../../../../inputs/Button'
 
 function ModalHeader({
   title,
