@@ -36,8 +36,8 @@ function ModalHeader({
 
   return (
     <div className={clsx('flex-between mb-4 flex gap-3', className)}>
-      <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
-        <Icon className="size-7 shrink-0" icon={innerIcon} />
+      <h1 className="flex w-full min-w-0 items-center gap-3 text-xl font-semibold">
+        <Icon className="size-6 shrink-0" icon={innerIcon} />
         {typeof innerTitle === 'string' ? (
           <>
             <span className="min-w-0 truncate">
@@ -72,12 +72,7 @@ function ModalHeader({
             variant={actionButtonProps.variant || 'plain'}
           />
         )}
-        <Button
-          icon="tabler:x"
-          iconClassName="size-6"
-          variant="plain"
-          onClick={onClose}
-        />
+        <Button icon="tabler:x" variant="plain" onClick={onClose} />
       </div>
     </div>
   )

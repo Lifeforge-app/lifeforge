@@ -161,7 +161,7 @@ function UserPersonalizationProvider({
   }, [userData])
 
   return (
-    <UserPersonalizationContext.Provider
+    <UserPersonalizationContext
       value={{
         changeFontFamily,
         changeFontScale,
@@ -176,7 +176,7 @@ function UserPersonalizationProvider({
       }}
     >
       {children}
-    </UserPersonalizationContext.Provider>
+    </UserPersonalizationContext>
   )
 }
 

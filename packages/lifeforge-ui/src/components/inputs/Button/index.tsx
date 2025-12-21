@@ -85,6 +85,7 @@ function Button<C extends React.ElementType = 'button'>({
       {icon && iconPosition === 'start' && (
         <ButtonIcon
           disabled={disabled}
+          hasChildren={Boolean(children)}
           icon={icon}
           iconClassName={iconClassName}
           loading={loading}

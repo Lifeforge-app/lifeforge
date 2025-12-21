@@ -6,19 +6,21 @@ function ButtonIcon({
   icon,
   disabled,
   loading,
-  iconClassName
+  iconClassName,
+  hasChildren
 }: {
   icon: string
   disabled?: boolean
   loading?: boolean
   iconClassName?: string
+  hasChildren?: boolean
 }) {
   const finalIcon = useMemo(() => {
     if (loading) {
       return 'svg-spinners:ring-resize'
     }
 
-    if (disabled) {
+    if (disabled && hasChildren) {
       return 'tabler:ban'
     }
 
