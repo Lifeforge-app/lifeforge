@@ -21,5 +21,11 @@
   },
   "items": {
     "module": "模块"
+  },
+  "empty": {
+    "modules": {
+      "title": "未找到模块",
+      "description": "请调整模块搜索。"
+    }
   }
 }
