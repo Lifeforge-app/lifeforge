@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 export interface ViewModeSelectorProps<
-  T extends ReadonlyArray<{ value: string; icon: string }>,
+  T extends ReadonlyArray<{ value: string; icon: string; text?: string }>,
   TKey = T[number]['value']
 > {
   /** The current selected mode */
@@ -19,7 +19,7 @@ export interface ViewModeSelectorProps<
  * A view mode selector for switching between different view modes. Nothing too fancy.
  */
 function ViewModeSelector<
-  T extends ReadonlyArray<{ value: string; icon: string }>,
+  T extends ReadonlyArray<{ value: string; icon: string; text?: string }>,
   TKey = T[number]['value']
 >({
   currentMode,
@@ -34,13 +34,13 @@ function ViewModeSelector<
         className
       )}
     >
-      {options.map(({ value, icon }) => (
+      {options.map(({ value, icon, text }) => (
         <button
           key={value}
           className={clsx(
-            'flex items-center gap-2 rounded-md p-3 transition-all',
+            'flex-center flex-1 gap-2 rounded-md p-3 transition-all',
             value === currentMode
-              ? 'bg-bg-200/50 dark:bg-bg-800/70 shadow-custom border-bg-500/20 in-[.bordered]:border-2'
+              ? 'bg-bg-200/50 dark:bg-bg-800 shadow-custom border-bg-500/20 in-[.bordered]:border-2'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           )}
           onClick={() => {
@@ -48,6 +48,7 @@ function ViewModeSelector<
           }}
         >
           <Icon className="size-6" icon={icon} />
+          {text && <span>{text}</span>}
         </button>
       ))}
     </div>

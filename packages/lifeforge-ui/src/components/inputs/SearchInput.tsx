@@ -102,10 +102,14 @@ function SearchInput({
     >
       <Icon className="text-bg-500 size-5 shrink-0" icon={icon} />
       <input
+        autoComplete="one-time-code"
+        autoCorrect="off"
         className={clsx(
           'caret-custom-500 placeholder:text-bg-500 w-full bg-transparent',
           actionButtonProps ? 'pr-20' : 'pr-10'
         )}
+        data-form-type="other"
+        data-lpignore="true"
         placeholder={t([`search`, `Search ${searchTarget}`], {
           item: t([
             `${namespace}:items.${_.camelCase(searchTarget)}`,

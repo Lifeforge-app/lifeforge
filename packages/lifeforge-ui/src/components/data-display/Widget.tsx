@@ -53,7 +53,7 @@ function _Widget(
     >
       {title && (
         <div className="flex items-center justify-between gap-12">
-          <h2 className="flex w-full min-w-0 items-center gap-3 text-xl font-semibold">
+          <h2 className="flex w-full min-w-0 items-center gap-3 text-lg font-semibold">
             <Icon className="size-6 shrink-0" icon={icon} />
             <span className="w-full min-w-0 truncate">
               {namespace !== false
