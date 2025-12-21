@@ -10,11 +10,7 @@ function SVGRefProvider({ children }: { children: React.ReactNode }) {
 
   const gRef = useRef<SVGGElement | null>(null)
 
-  return (
-    <SVGRefContext.Provider value={{ svgRef, gRef }}>
-      {children}
-    </SVGRefContext.Provider>
-  )
+  return <SVGRefContext value={{ svgRef, gRef }}>{children}</SVGRefContext>
 }
 
 export function useSVGRefContext() {
