@@ -21,5 +21,11 @@
   },
   "items": {
     "module": "Modul"
+  },
+  "empty": {
+    "modules": {
+      "title": "Tiada Modul Ditemui",
+      "description": "Cuba mengubahcari modul."
+    }
   }
 }

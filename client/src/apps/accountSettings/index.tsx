@@ -3,6 +3,7 @@ import { ModuleHeader } from 'lifeforge-ui'
 import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from './components/OrdinaryColumn'
 import PasswordColumn from './components/PasswordColumn'
+import QRLoginColumn from './components/QRLoginColumn'
 import TwoFAColumn from './components/TwoFAColumn'
 
 function AccountSettings() {
@@ -37,6 +38,7 @@ function AccountSettings() {
         />
         <PasswordColumn />
         <TwoFAColumn />
+        <QRLoginColumn />
       </div>
     </>
   )

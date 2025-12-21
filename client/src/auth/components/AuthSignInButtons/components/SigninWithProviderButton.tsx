@@ -50,7 +50,7 @@ function SigninWithProviderButton({
     <Button
       key={provider}
       className="w-full"
-      icon={`uil:${provider}`}
+      icon={`tabler:brand-${provider}`}
       loading={
         loading ||
         auth ||

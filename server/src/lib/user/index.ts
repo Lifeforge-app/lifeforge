@@ -4,6 +4,7 @@ import authRouter from './routes/auth'
 import customFontsRouter from './routes/customFonts'
 import oAuthRouter from './routes/oauth'
 import personalizationRouter from './routes/personalization'
+import qrLoginRouter from './routes/qrLogin'
 import settingsRouter from './routes/settings'
 import twoFARouter from './routes/twoFA'
 
@@ -22,6 +23,7 @@ export default forgeRouter({
   auth: authRouter,
   oauth: oAuthRouter,
   '2fa': twoFARouter,
+  qrLogin: qrLoginRouter,
   settings: settingsRouter,
   personalization: personalizationRouter,
   customFonts: customFontsRouter

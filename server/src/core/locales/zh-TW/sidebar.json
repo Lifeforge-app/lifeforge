@@ -21,5 +21,11 @@
   },
   "items": {
     "module": "模組"
+  },
+  "empty": {
+    "modules": {
+      "title": "未找到模組",
+      "description": "請調整模組搜索。"
+    }
   }
 }

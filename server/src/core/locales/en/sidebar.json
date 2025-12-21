@@ -21,5 +21,11 @@
   },
   "items": {
     "module": "Module"
+  },
+  "empty": {
+    "modules": {
+      "title": "No modules found",
+      "description": "Try adjusting your search for modules."
+    }
   }
 }

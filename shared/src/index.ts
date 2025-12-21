@@ -52,6 +52,7 @@ export {
   type EncryptionConfig
 } from './utils/encryption'
 export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
+export { default as getBrowserInfo } from './utils/getBrowserInfo'
 
 // Forge API client and types
 export {
