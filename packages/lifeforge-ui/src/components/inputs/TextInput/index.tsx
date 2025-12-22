@@ -110,8 +110,8 @@ function TextInput({
           isPassword={isPassword}
           placeholder={placeholder}
           showPassword={showPassword}
-          variant={variant}
           value={value}
+          variant={variant}
           onChange={onChange}
           {...inputProps}
         />
@@ -137,7 +137,7 @@ function TextInput({
         {actionButtonProps && (
           <Button
             {...actionButtonProps}
-            className="mr-4 p-2!"
+            className="hover:bg-bg-200! dark:hover:bg-bg-700/50! mr-4 p-2!"
             loading={actionButtonLoading}
             variant="plain"
             onClick={e => {
