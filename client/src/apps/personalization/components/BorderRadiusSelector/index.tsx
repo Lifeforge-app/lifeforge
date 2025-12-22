@@ -3,6 +3,8 @@ import { Listbox, ListboxOption, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
+import BorderRadiusIcon from './components/BorderRadiusIcon'
+
 const BORDER_RADIUS_OPTIONS = [
   { value: 0, labelKey: 'none' },
   { value: 0.5, labelKey: 'small' },
@@ -29,23 +31,7 @@ function BorderRadiusSelector() {
       <Listbox
         buttonContent={
           <div className="flex items-center gap-2">
-            <svg
-              className="size-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              viewBox="0 0 16 16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                height="13"
-                rx={Math.min(borderRadiusMultiplier * 2, 6.5)}
-                ry={Math.min(borderRadiusMultiplier * 2, 6.5)}
-                width="13"
-                x="1.5"
-                y="1.5"
-              />
-            </svg>
+            <BorderRadiusIcon radius={borderRadiusMultiplier} />
             <span className="-mt-px block truncate">
               {t(
                 `borderRadiusSelector.options.${
@@ -68,23 +54,7 @@ function BorderRadiusSelector() {
             key={value}
             label={t(`borderRadiusSelector.options.${labelKey}`)}
             renderColorAndIcon={() => (
-              <svg
-                className="mr-2 size-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  height="13"
-                  rx={Math.min(value * 2, 6.5)}
-                  ry={Math.min(value * 2, 6.5)}
-                  width="13"
-                  x="1.5"
-                  y="1.5"
-                />
-              </svg>
+              <BorderRadiusIcon className="mr-2 size-4" radius={value} />
             )}
             value={value}
           />
