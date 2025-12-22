@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import Button from './Button'
 import TextInput from './TextInput'
 
 interface NumberInputProps {
@@ -31,6 +32,8 @@ interface NumberInputProps {
   max?: number
   /** The placeholder text shown when the input is empty. */
   placeholder?: string
+  /** Properties for constructing the action button component at the right hand side. */
+  actionButtonProps?: React.ComponentProps<typeof Button>
 }
 
 function NumberInput({
@@ -47,7 +50,8 @@ function NumberInput({
   errorMsg,
   min,
   max,
-  placeholder = '123'
+  placeholder = '123',
+  actionButtonProps
 }: NumberInputProps) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
@@ -59,6 +63,7 @@ function NumberInput({
 
   return (
     <TextInput
+      actionButtonProps={actionButtonProps}
       autoFocus={autoFocus}
       className={className}
       disabled={disabled}
