@@ -73,7 +73,7 @@ function FormModal({
     }
   }
   ui: {
-    title: string
+    title: string | React.ReactNode
     icon: string
     onClose: () => void
     namespace?: string
