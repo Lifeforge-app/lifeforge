@@ -1,0 +1,169 @@
+import chalk from 'chalk'
+import fs from 'fs'
+import type PocketBase from 'pocketbase'
+
+import {
+  checkRunningPBInstances,
+  executeCommand,
+  killExistingProcess,
+  validateEnvironment
+} from '../../../utils/helpers'
+import { CLILoggingService } from '../../../utils/logging'
+import { startPocketBaseAndGetPid } from '../../db-commands/functions/database-initialization'
+import getPocketbaseInstance, {
+  validatePocketBaseSetup
+} from '../../db-commands/utils/pocketbase-utils'
+import { getInstalledLocales, localeExists, validateLocaleName } from '../utils'
+
+/**
+ * Updates users' language preferences when a locale is being removed
+ */
+async function updateUsersLanguage(
+  pb: PocketBase,
+  fromLang: string,
+  toLang: string
+): Promise<number> {
+  const users = await pb.collection('users').getFullList({
+    filter: `language = "${fromLang}"`
+  })
+
+  if (users.length === 0) {
+    return 0
+  }
+
+  CLILoggingService.progress(
+    `Updating ${users.length} user(s) from "${fromLang}" to "${toLang}"`
+  )
+
+  for (const user of users) {
+    await pb.collection('users').update(user.id, { language: toLang })
+  }
+
+  return users.length
+}
+
+/**
+ * Removes the git submodule for a locale
+ */
+function removeGitSubmodule(localeDir: string): void {
+  CLILoggingService.progress('Removing git submodule')
+
+  try {
+    executeCommand(`git submodule deinit -f ${localeDir}`, {
+      exitOnError: false,
+      stdio: ['ignore', 'ignore', 'ignore']
+    })
+
+    executeCommand(`git rm -f ${localeDir}`, {
+      exitOnError: false,
+      stdio: ['ignore', 'ignore', 'ignore']
+    })
+
+    const gitModulesPath = `.git/modules/${localeDir}`
+
+    if (fs.existsSync(gitModulesPath)) {
+      fs.rmSync(gitModulesPath, { recursive: true })
+    }
+
+    executeCommand('git add .gitmodules', {
+      exitOnError: false,
+      stdio: ['ignore', 'ignore', 'ignore']
+    })
+
+    CLILoggingService.success('Git submodule removed successfully')
+  } catch (error) {
+    CLILoggingService.warn(`Failed to fully remove submodule: ${error}`)
+  }
+}
+
+/**
+ * Cleans up locale directory if it still exists
+ */
+function cleanupLocaleDir(localeDir: string): void {
+  if (fs.existsSync(localeDir)) {
+    fs.rmSync(localeDir, { recursive: true })
+  }
+}
+
+/**
+ * Handles removing a locale from the LifeForge system
+ */
+export async function removeLocaleHandler(langName: string): Promise<void> {
+  if (!validateLocaleName(langName)) {
+    CLILoggingService.actionableError(
+      'Invalid language name format',
+      'Use formats like "en", "ms", "zh-CN", "zh-TW"'
+    )
+    process.exit(1)
+  }
+
+  if (!localeExists(langName)) {
+    CLILoggingService.actionableError(
+      `Language "${langName}" is not installed`,
+      'Use "bun forge locales list" to see installed languages'
+    )
+    process.exit(1)
+  }
+
+  const installedLocales = getInstalledLocales()
+
+  if (installedLocales.length <= 1) {
+    CLILoggingService.actionableError(
+      'Cannot remove the last installed language',
+      'At least one language must remain installed'
+    )
+    process.exit(1)
+  }
+
+  CLILoggingService.step(`Removing language pack: ${langName}`)
+
+  validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
+
+  const pbRunning = checkRunningPBInstances(false)
+
+  let pbPid: number | undefined
+
+  if (!pbRunning) {
+    const { pbInstancePath } = await validatePocketBaseSetup(
+      process.env.PB_DIR!
+    )
+
+    pbPid = await startPocketBaseAndGetPid(pbInstancePath)
+  }
+
+  try {
+    const pb = await getPocketbaseInstance()
+
+    const remainingLocales = installedLocales.filter(l => l !== langName)
+
+    const fallbackLang = remainingLocales[0]
+
+    const affectedUsers = await updateUsersLanguage(pb, langName, fallbackLang)
+
+    if (affectedUsers > 0) {
+      CLILoggingService.info(
+        `Updated ${chalk.bold.blue(affectedUsers)} user(s) to "${fallbackLang}"`
+      )
+    }
+
+    const localeDir = `locales/${langName}`
+
+    removeGitSubmodule(localeDir)
+    cleanupLocaleDir(localeDir)
+
+    CLILoggingService.success(
+      `Language pack "${langName}" removed successfully! Restart the server to apply changes.`
+    )
+  } catch (error) {
+    CLILoggingService.actionableError(
+      'Locale removal failed',
+      'Check the error details above and try again'
+    )
+    CLILoggingService.debug(`Removal error: ${error}`)
+    process.exit(1)
+  } finally {
+    if (!pbRunning && pbPid) {
+      killExistingProcess(pbPid)
+    }
+  }
+}

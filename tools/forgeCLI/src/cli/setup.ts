@@ -4,6 +4,7 @@ import fs from 'fs'
 import { createChangelogHandler } from '../commands/changelog-commands'
 import * as dbHandlers from '../commands/db-commands'
 import { devHandler, getAvailableServices } from '../commands/dev-commands'
+import * as localeHandlers from '../commands/locale-commands'
 import * as moduleHandlers from '../commands/module-commands'
 import {
   createCommandHandler,
@@ -27,6 +28,7 @@ export function setupCLI(): void {
   setupProjectCommands()
   setupDevCommand()
   setupModulesCommand()
+  setupLocalesCommand()
   setupDatabaseCommands()
   setupChangelogCommand()
 }
@@ -139,6 +141,27 @@ function setupDatabaseCommands(): void {
     .description('Generate PocketBase migrations from schema files')
     .argument('[module]', 'Optional module name to generate migrations for')
     .action(dbHandlers.generateMigrationsHandler)
+}
+
+/**
+ * Sets up commands for managing locales
+ */
+function setupLocalesCommand(): void {
+  const command = program
+    .command('locales')
+    .description('Manage LifeForge language packs')
+
+  command
+    .command('add')
+    .description('Download and install a language pack')
+    .argument('<lang>', 'Language code, e.g., en, ms, zh-CN, zh-TW')
+    .action(localeHandlers.addLocaleHandler)
+
+  command
+    .command('remove')
+    .description('Remove an installed language pack')
+    .argument('<lang>', 'Language code to remove')
+    .action(localeHandlers.removeLocaleHandler)
 }
 
 function setupChangelogCommand(): void {
