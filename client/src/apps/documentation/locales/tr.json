@@ -1,0 +1,39 @@
+{
+    "title": "Dokümantasyon",
+    "description": "Sistem için kılavuzlara, öğreticilere ve referans materyallerine erişin.",
+    "sections": {
+        "gettingStarted": "Başlarken",
+        "userGuides": "Kullanıcı Kılavuzları",
+        "apiReference": "API Referansı",
+        "troubleshooting": "Sorun Giderme",
+        "faq": "Sık Sorulan Sorular"
+    },
+    "buttons": {
+        "search": "Dokümantasyonda Ara",
+        "downloadPdf": "PDF Olarak İndir",
+        "reportIssue": "Sorun Bildir",
+        "suggestEdit": "Düzenleme Öner"
+    },
+    "navigation": {
+        "previous": "Önceki",
+        "next": "Sonraki",
+        "tableOfContents": "İçindekiler",
+        "relatedTopics": "İlgili Konular"
+    },
+    "modals": {
+        "feedback": {
+            "title": "Dokümantasyon Geri Bildirimi",
+            "description": "Geri bildiriminizi sağlayarak dokümantasyonumuzu geliştirmemize yardımcı olun."
+        }
+    },
+    "messages": {
+        "pdfDownloaded": "Dokümantasyon PDF'i başarıyla indirildi.",
+        "feedbackSubmitted": "Geri bildiriminiz için teşekkürler!"
+    },
+    "empty": {
+        "searchResults": {
+            "title": "Sonuç Bulunamadı",
+            "description": "Farklı anahtar kelimeler kullanmayı veya kategorilere göz atmayı deneyin."
+        }
+    }
+}

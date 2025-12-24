@@ -1,0 +1,39 @@
+{
+    "title": "Kontrol Paneli",
+    "description": "Görev kontrol merkeziniz, her şeyi daha heyecanlı hale getiriyor.",
+    "widgets": {
+        "date": {
+            "title": "Tarih",
+            "description": "Bugünün tarihini gösteren basit bir dekoratif widget."
+        },
+        "clock": {
+            "title": "Saat",
+            "description": "Zamanı takip etmenize yardımcı olan küçük bir saat."
+        },
+        "quotes": {
+            "description": "Günü boyunca size ilham verecek rastgele bir alıntı.",
+            "title": "Alıntılar"
+        }
+    },
+    "modals": {
+        "manageWidgets": "Widget'ları Yönet"
+    },
+    "buttons": {
+        "manageCategories": "Kategorileri Yönet",
+        "unlockLayout": "Düzeni Kilitle Aç",
+        "manageWidgets": "Widget'ları Yönet",
+        "lockLayout": "Düzeni Kilitle"
+    },
+    "empty": {
+        "welcome": {
+            "title": "LifeForge'a Hoş Geldiniz!",
+            "description": "ForgeStore'dan bazı modüller yükleyerek başlayın."
+        },
+        "notFound": {
+            "title": "Widget Bulunamadı",
+            "description": "Aradığınız widget mevcut değil. Lütfen yüklü modüllerinizi kontrol edin."
+        }
+    },
+    "loading": "Kontrol paneli yükleniyor...",
+    "test": ""
+}

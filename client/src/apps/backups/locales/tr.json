@@ -1,0 +1,25 @@
+{
+    "title": "Yedekler",
+    "description": "Veritabanı yedeklerinizi yönetin.",
+    "items": {
+        "backup": "Yedek"
+    },
+    "empty": {
+        "noBackups": {
+            "title": "Yedek Bulunamadı",
+            "description": "Kullanılabilir yedek yok. Yukarıdaki düğmeyi kullanarak yeni bir tane oluşturun."
+        }
+    },
+    "modals": {
+        "createBackup": "Yeni Yedek Başlat"
+    },
+    "inputs": {
+        "backupName": {
+            "label": "Yedek Adı (.zip ile bitmelidir)",
+            "placeholder": "Yedek Adını Girin (otomatik oluşturmak için boş bırakın)"
+        }
+    },
+    "buttons": {
+        "startBackup": "Yedeklemeyi Başlat"
+    }
+}

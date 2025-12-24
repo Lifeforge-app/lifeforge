@@ -42,7 +42,7 @@ i18n
     backend: {
       loadPath: (langs: string[], namespaces: string[]) => {
         if (
-          !['en', 'zh-TW', 'zh-CN', 'ms'].includes(langs[0]) ||
+          !['en', 'zh-TW', 'zh-CN', 'ms', 'tr'].includes(langs[0]) ||
           !namespaces.filter(e => e && e !== 'undefined').length
         ) {
           return
@@ -55,7 +55,7 @@ i18n
         }
 
         return forgeAPI.locales.getLocale.input({
-          lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms',
+          lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms' | 'tr',
           namespace: namespace as 'apps' | 'common',
           subnamespace: subnamespace
         }).endpoint

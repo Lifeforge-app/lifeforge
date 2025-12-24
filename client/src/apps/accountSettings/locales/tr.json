@@ -1,0 +1,67 @@
+{
+    "title": "Hesap Ayarları",
+    "description": "Tüm hesap bilgilerinizi yönetebileceğiniz yer",
+    "settings": {
+        "title": {
+            "profilePicture": "Profil Resmi",
+            "username": "Kullanıcı Adı",
+            "displayName": "Görünen Ad",
+            "email": "E-posta Adresi",
+            "password": "Şifre",
+            "dateOfBirth": "Doğum Tarihi",
+            "twoFA": "İki Faktörlü Kimlik Doğrulama"
+        },
+        "desc": {
+            "profilePicture": "Hesabınızı kişiselleştirmek için bir profil resmi yükleyin.",
+            "username": "Platformda sizi tanımlayan isim.",
+            "displayName": "Diğer kullanıcılara gösterilen isim.",
+            "email": "Hesabınıza giriş yapmak için kullandığınız e-posta adresi.",
+            "password": "Hesabınızı korumak için güçlü bir şifre belirleyin.",
+            "dateOfBirth": "Doğum tarihinizi belirleyin, size bir sürprizimiz olacak!",
+            "twoFA": "Sisteme giriş yaparken iki faktörlü kimlik doğrulamayı etkinleştirin."
+        },
+        "empty": "Ayarlanmadı"
+    },
+    "modals": {
+        "username": {
+            "update": "Kullanıcı Adını Güncelle"
+        },
+        "email": {
+            "update": "E-postayı Güncelle"
+        },
+        "displayName": {
+            "update": "Görünen Adı Güncelle"
+        },
+        "dateOfBirth": {
+            "update": "Doğum Tarihini Güncelle"
+        },
+        "enable2FA": {
+            "title": "İki Faktörlü Kimlik Doğrulamayı Etkinleştir",
+            "description": "Lütfen aşağıdaki QR kodunu Google Authenticator gibi tercih ettiğiniz kimlik doğrulama uygulamasıyla tarayın ve devam edin.",
+            "confirmationDescription": "2FA'yı etkinleştirmeyi onaylamak için lütfen kimlik doğrulama uygulamanızda gösterilen OTP'yi girin."
+        },
+        "disable2FA": {
+            "title": "İki Faktörlü Kimlik Doğrulamayı Devre Dışı Bırak",
+            "description": "İki faktörlü kimlik doğrulamayı devre dışı bırakmak istediğinizden emin misiniz?"
+        }
+    },
+    "buttons": {
+        "changePassword": "Şifreyi Değiştir"
+    },
+    "inputs": {
+        "dateOfBirth": "Doğum Tarihi",
+        "username": "Kullanıcı Adı",
+        "email": "E-posta Adresi",
+        "displayName": "Görünen Ad"
+    },
+    "messages": {
+        "twoFA": {
+            "enableSuccess": "İki faktörlü kimlik doğrulama başarıyla etkinleştirildi.",
+            "disableSuccess": "İki faktörlü kimlik doğrulama başarıyla devre dışı bırakıldı."
+        }
+    },
+    "misc": {
+        "enabled": "Etkin",
+        "disabled": "Devre Dışı"
+    }
+}

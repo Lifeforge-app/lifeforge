@@ -1,0 +1,36 @@
+{
+    "title": "API Anahtarları",
+    "description": "Modüller için gerekli tüm API anahtarlarını yönetin",
+    "lockedMessage": "API anahtarı yapılandırma modülü kilitli",
+    "passwordRequired": "API anahtarlarının şifresini çözmek için şifre gereklidir",
+    "missing": {
+        "title": "Eksik API Anahtarları",
+        "description": "Bir veya daha fazla API anahtarı eksik. Lütfen bunları ayarlamak için API anahtarı yapılandırma modülüne gidin",
+        "requiredKeysAre": "Eksik gerekli API anahtarları:"
+    },
+    "modals": {
+        "apiKey": {
+            "create": "API Anahtarı Oluştur",
+            "update": "API Anahtarını Güncelle"
+        }
+    },
+    "buttons": {
+        "configApiKeys": "API Anahtarlarını Yapılandır"
+    },
+    "inputs": {
+        "keyName": "Anahtar Adı",
+        "keyDescription": "Anahtar Açıklaması",
+        "keyIcon": "Anahtar İkonu",
+        "apiKey": "API Anahtarı",
+        "keyId": "Anahtar ID"
+    },
+    "items": {
+        "apiKey": "API Anahtarı"
+    },
+    "empty": {
+        "apiKeys": {
+            "title": "API Anahtarı Yok",
+            "description": "API anahtarı bulunamadı. Yeni bir API anahtarı oluşturmak için aşağıdaki düğmeye tıklayın"
+        }
+    }
+}
