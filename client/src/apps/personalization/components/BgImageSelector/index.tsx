@@ -17,7 +17,7 @@ import AdjustBgImageModal from './modals/AdjustBgImageModal'
 function BgImageSelector() {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   const { bgImage } = usePersonalization()
 

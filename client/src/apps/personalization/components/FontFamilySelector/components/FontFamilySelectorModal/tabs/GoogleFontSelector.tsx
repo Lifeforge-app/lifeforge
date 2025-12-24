@@ -129,7 +129,7 @@ function GoogleFontSelector({
               <SearchInput
                 className="component-bg-lighter-with-hover"
                 debounceMs={300}
-                namespace="apps.personalization"
+                namespace="common.personalization"
                 searchTarget="fontFamily.items.fontFamily"
                 value={searchQuery}
                 onChange={setSearchQuery}
@@ -144,7 +144,7 @@ function GoogleFontSelector({
                         icon="tabler:key-off"
                         message={{
                           id: 'apiKey',
-                          namespace: 'apps.personalization',
+                          namespace: 'common.personalization',
                           tKey: 'fontFamily'
                         }}
                       />
@@ -204,7 +204,7 @@ function GoogleFontSelector({
                           icon="tabler:search-off"
                           message={{
                             id: 'search',
-                            namespace: 'apps.personalization',
+                            namespace: 'common.personalization',
                             tKey: 'fontFamily'
                           }}
                         />
@@ -221,7 +221,7 @@ function GoogleFontSelector({
               icon="tabler:key-off"
               message={{
                 id: 'apiKey',
-                namespace: 'apps.personalization',
+                namespace: 'common.personalization',
                 tKey: 'fontFamily'
               }}
             />

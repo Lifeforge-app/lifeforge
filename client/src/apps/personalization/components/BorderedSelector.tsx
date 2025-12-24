@@ -8,7 +8,7 @@ function BorderedSelector() {
 
   const { changeBordered } = useUserPersonalization()
 
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   return (
     <OptionsColumn

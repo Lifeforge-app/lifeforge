@@ -9,7 +9,7 @@ function FontScaleSelector() {
 
   const { changeFontScale } = useUserPersonalization()
 
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   const [selectedFontScale, setSelectedFontScale] = useState(fontScale)
 
@@ -24,7 +24,7 @@ function FontScaleSelector() {
           className="w-full"
           max={2}
           min={0.5}
-          namespace="apps.personalization"
+          namespace="common.personalization"
           step={0.1}
           value={selectedFontScale}
           onChange={value => {
