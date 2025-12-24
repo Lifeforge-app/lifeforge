@@ -7,7 +7,12 @@ import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
+import {
+  ALLOWED_LANG,
+  ALLOWED_NAMESPACE,
+  LANG_MANIFESTS,
+  SYSTEM_LOCALES
+} from '../constants/locales'
 
 export const allApps = fs
   .globSync([
@@ -20,6 +25,26 @@ export const allApps = fs
   })
   .map(dir => path.dirname(dir))
 
+const listLanguages = forgeController
+  .query()
+  .noAuth()
+  .noEncryption()
+  .description({
+    en: 'List all languages',
+    ms: 'Senarai semua bahasa',
+    'zh-CN': '列出所有语言',
+    'zh-TW': '列出所有語言'
+  })
+  .input({})
+  .callback(async () => {
+    return LANG_MANIFESTS as unknown as {
+      name: string
+      alternative?: string[]
+      icon: string
+      displayName: string
+    }[]
+  })
+
 const getLocale = forgeController
   .query()
   .noAuth()
@@ -31,13 +56,17 @@ const getLocale = forgeController
   })
   .input({
     query: z.object({
-      lang: z.enum(ALLOWED_LANG),
+      lang: z.enum(ALLOWED_LANG.flat()),
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     })
   })
   .callback(async ({ query: { lang, namespace, subnamespace } }) => {
-    const finalLang = lang === 'zh' ? 'zh-CN' : lang
+    const finalLang = ALLOWED_LANG.find(e => e.includes(lang))?.[0]
+
+    if (!finalLang) {
+      throw new ClientError(`Language ${lang} does not exist`, 404)
+    }
 
     let data
 
@@ -55,41 +84,39 @@ const getLocale = forgeController
         fs.readFileSync(`${target}/locales/${finalLang}.json`, 'utf-8')
       )
     } else {
-      if (
-        !fs.existsSync(
-          `${process.cwd()}/src/core/locales/${finalLang}/${subnamespace}.json`
-        )
-      ) {
+      if (!SYSTEM_LOCALES[finalLang][subnamespace]) {
         throw new ClientError(
-          `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+          `Namespace ${subnamespace} does not exist in system locales`,
           404
         )
       }
 
-      data = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/src/core/locales/${finalLang}/${subnamespace}.json`,
-          'utf-8'
-        )
-      )
+      data = SYSTEM_LOCALES[finalLang][subnamespace]
     }
 
     if (namespace === 'common' && subnamespace === 'sidebar') {
-      data.apps = Object.fromEntries(
-        allApps.map(module => {
-          const data = JSON.parse(
-            fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
-          )
+      data.apps = {
+        ...Object.fromEntries(
+          allApps.map(module => {
+            const data = JSON.parse(
+              fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
+            )
 
-          return [
-            module.split('/').pop() || '',
-            {
-              title: data.title ?? '',
-              subsections: data.subsections ?? {}
-            }
-          ]
-        })
-      )
+            return [
+              module.split('/').pop() || '',
+              {
+                title: data.title ?? '',
+                subsections: data.subsections ?? {}
+              }
+            ]
+          })
+        ),
+        ...Object.fromEntries(
+          Object.entries(SYSTEM_LOCALES[finalLang])
+            .filter(e => 'title' in e[1])
+            .map(e => [e[0], { title: e[1].title }])
+        )
+      }
     }
 
     return data
@@ -110,10 +137,14 @@ const notifyMissing = forgeController
     })
   })
   .callback(async ({ body: { namespace, key } }) => {
-    LoggingService.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
+    LoggingService.warn(
+      `Missing locale ${chalk.red(`${namespace}:${key}`)}`,
+      'LOCALES'
+    )
   })
 
 export default forgeRouter({
+  listLanguages,
   getLocale,
   notifyMissing
 })

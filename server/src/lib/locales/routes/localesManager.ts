@@ -1,500 +1,500 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import fs from 'fs'
-import z from 'zod'
-
-import { fetchAI } from '@functions/external/ai'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
-
-import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
-import { allApps } from './locales'
-
-const listSubnamespaces = forgeController
-  .query()
-  .description({
-    en: 'Retrieve subnamespaces in a namespace',
-    ms: 'Dapatkan subruang nama dalam ruang nama',
-    'zh-CN': '获取命名空间中的子空间',
-    'zh-TW': '獲取命名空間中的子空間'
-  })
-  .input({
-    query: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE)
-    })
-  })
-  .callback(async ({ query: { namespace } }) => {
-    if (namespace === 'apps') {
-      const data = allApps.map(module => module.split('/').pop())
-
-      return data.sort()
-    }
-
-    const data = fs
-      .readdirSync(`${process.cwd()}/src/core/locales/en`)
-      .map(file => file.replace('.json', ''))
-
-    return data.sort()
-  })
-
-const listLocales = forgeController
-  .query()
-  .description({
-    en: 'Retrieve localization entries for subnamespace',
-    ms: 'Dapatkan entri penyetempatan untuk subruang nama',
-    'zh-CN': '获取子空间的本地化条目',
-    'zh-TW': '獲取子空間的本地化條目'
-  })
-  .input({
-    query: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    })
-  })
-  .callback(async ({ query: { namespace, subnamespace } }) => {
-    const final: Omit<Record<(typeof ALLOWED_LANG)[number], any>, 'zh'> = {
-      en: {},
-      ms: {},
-      'zh-CN': {},
-      'zh-TW': {}
-    }
-
-    if (namespace === 'apps') {
-      const target = allApps.find(e => e.split('/').pop() === subnamespace)
-
-      if (!target) {
-        throw new ClientError(
-          `Subnamespace ${subnamespace} does not exist in apps`,
-          404
-        )
-      }
-
-      for (const lang of ALLOWED_LANG.filter(lng => lng !== 'zh')) {
-        final[lang] = JSON.parse(
-          fs.readFileSync(`${target}/locales/${lang}.json`, 'utf-8')
-        )
-      }
-    } else {
-      for (const lng of ALLOWED_LANG.filter(lng => lng !== 'zh')) {
-        if (
-          !fs.existsSync(
-            `${process.cwd()}/src/core/locales/${lng}/${subnamespace}.json`
-          )
-        ) {
-          throw new ClientError(
-            `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
-            404
-          )
-        }
-
-        final[lng] = JSON.parse(
-          fs.readFileSync(
-            `${process.cwd()}/src/core/locales/${lng}/${subnamespace}.json`,
-            'utf-8'
-          )
-        )
-      }
-    }
-
-    return final
-  })
-
-const sync = forgeController
-  .mutation()
-  .description({
-    en: 'Synchronize localization changes to files',
-    ms: 'Segerakkan perubahan penyetempatan ke fail',
-    'zh-CN': '同步本地化更改到文件',
-    'zh-TW': '同步本地化更改到文件'
-  })
-  .input({
-    body: z.object({
-      data: z.record(
-        z.string(),
-        z.record(z.enum(ALLOWED_LANG).exclude(['zh']), z.string())
-      )
-    }),
-    query: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    })
-  })
-  .callback(async ({ body: { data }, query: { namespace, subnamespace } }) => {
-    let fileContent
-
-    if (namespace === 'apps') {
-      const target = allApps.find(e => e.split('/').pop() === subnamespace)
-
-      if (!target) {
-        throw new ClientError(
-          `Subnamespace ${subnamespace} does not exist in apps`,
-          404
-        )
-      }
-
-      fileContent = ['en', 'ms', 'zh-CN', 'zh-TW'].reduce<Record<string, any>>(
-        (acc, lang) => {
-          const path = `${target}/locales/${lang}.json`
-
-          if (fs.existsSync(path)) {
-            acc[lang] = JSON.parse(fs.readFileSync(path, 'utf-8'))
-          } else {
-            acc[lang] = {}
-          }
-
-          return acc
-        },
-        {}
-      )
-    } else {
-      fileContent = ['en', 'ms', 'zh-CN', 'zh-TW'].reduce<Record<string, any>>(
-        (acc, lang) => {
-          const path = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
-
-          if (fs.existsSync(path)) {
-            acc[lang] = JSON.parse(fs.readFileSync(path, 'utf-8'))
-          } else {
-            acc[lang] = {}
-          }
-
-          return acc
-        },
-        {}
-      )
-    }
-
-    for (const key in data) {
-      for (const lang in data[key]) {
-        const target = key
-          .split('.')
-          .slice(0, -1)
-          .reduce((acc, cur) => {
-            if (!acc[cur]) {
-              acc[cur] = {}
-            }
-
-            return acc[cur]
-          }, fileContent[lang])
-
-        target[key.split('.').pop() as keyof typeof target] =
-          data[key][lang as 'en' | 'ms' | 'zh-CN' | 'zh-TW']
-      }
-    }
-
-    if (namespace === 'apps') {
-      const target = allApps.find(e => e.split('/').pop() === subnamespace)!
-
-      for (const lang in fileContent) {
-        fs.writeFileSync(
-          `${target}/locales/${lang}.json`,
-          JSON.stringify(fileContent[lang], null, 2)
-        )
-      }
-    } else {
-      for (const lang in fileContent) {
-        fs.writeFileSync(
-          `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`,
-          JSON.stringify(fileContent[lang], null, 2)
-        )
-      }
-    }
-
-    return true
-  })
-
-const create = forgeController
-  .mutation()
-  .description({
-    en: 'Create new localization entry or folder',
-    ms: 'Cipta entri atau folder penyetempatan baharu',
-    'zh-CN': '创建新的本地化条目或文件夹',
-    'zh-TW': '創建新的本地化條目或文件夾'
-  })
-  .input({
-    body: z.object({
-      type: z.enum(['entry', 'folder']),
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string(),
-      path: z.string().optional().default('')
-    })
-  })
-  .statusCode(201)
-  .callback(async ({ body: { path, type, namespace, subnamespace } }) => {
-    for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
-      let filePath: string = ''
-
-      if (namespace === 'apps') {
-        const target = allApps.find(e => e.split('/').pop() === subnamespace)
-
-        if (!target) {
-          throw new ClientError(
-            `Subnamespace ${subnamespace} does not exist in apps`,
-            404
-          )
-        }
-
-        filePath = `${target}/locales/${lang}.json`
-      } else {
-        filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
-      }
-
-      if (!fs.existsSync(filePath)) {
-        throw new ClientError(
-          `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
-          404
-        )
-      }
-
-      const data: Record<string, any> = JSON.parse(
-        fs.readFileSync(filePath, 'utf-8')
-      )
-
-      const splitted: string[] = path.split('.')
-
-      const key = splitted.pop()
-
-      const target = splitted.reduce((acc, cur) => {
-        if (!acc[cur]) {
-          acc[cur] = {}
-        }
-
-        return acc[cur]
-      }, data)
-
-      if (target[key as string] !== undefined) {
-        throw new ClientError(`Key ${key} already exists in path ${path}`)
-      }
-
-      target[key as string] = type === 'entry' ? '' : {}
-
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
-    }
-
-    return true
-  })
-
-const rename = forgeController
-  .mutation()
-  .description({
-    en: 'Rename a localization key',
-    ms: 'Namakan semula kunci penyetempatan',
-    'zh-CN': '重命名本地化键',
-    'zh-TW': '重新命名本地化鍵'
-  })
-  .input({
-    query: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    }),
-    body: z.object({
-      path: z.string().optional().default(''),
-      newName: z.string().optional().default('')
-    })
-  })
-  .callback(
-    async ({ query: { namespace, subnamespace }, body: { path, newName } }) => {
-      for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
-        let filePath: string = ''
-
-        if (namespace === 'apps') {
-          const target = allApps.find(e => e.split('/').pop() === subnamespace)
-
-          if (!target) {
-            throw new ClientError(
-              `Subnamespace ${subnamespace} does not exist in apps`,
-              404
-            )
-          }
-
-          filePath = `${target}/locales/${lang}.json`
-        } else {
-          filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
-        }
-
-        if (!fs.existsSync(filePath)) {
-          throw new ClientError(
-            `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
-            404
-          )
-        }
-
-        const data: Record<string, any> = JSON.parse(
-          fs.readFileSync(filePath, 'utf-8')
-        )
-
-        const splitted: string[] = path.split('.')
-
-        const key = splitted.pop()
-
-        const target = splitted.reduce((acc, cur) => {
-          if (!acc[cur]) {
-            acc[cur] = {}
-          }
-
-          return acc[cur]
-        }, data)
-
-        if (target[key as string] === undefined) {
-          throw new ClientError(`Key ${key} does not exist in path ${path}`)
-        }
-
-        if (target[newName] !== undefined) {
-          throw new ClientError(
-            `Key ${newName} already exists in path ${path}`,
-            400
-          )
-        }
-
-        target[newName] = target[key as string]
-        delete target[key as string]
-
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
-      }
-
-      return true
-    }
-  )
-
-const remove = forgeController
-  .mutation()
-  .description({
-    en: 'Delete a localization entry',
-    ms: 'Padam entri penyetempatan',
-    'zh-CN': '删除本地化条目',
-    'zh-TW': '刪除本地化條目'
-  })
-  .input({
-    query: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    }),
-    body: z.object({
-      path: z.string().optional().default('')
-    })
-  })
-  .statusCode(204)
-  .callback(async ({ query: { namespace, subnamespace }, body: { path } }) => {
-    ;['en', 'ms', 'zh-CN', 'zh-TW'].forEach(lang => {
-      let filePath: string = ''
-
-      if (namespace === 'apps') {
-        const target = allApps.find(e => e.split('/').pop() === subnamespace)
-
-        if (!target) {
-          throw new ClientError(
-            `Subnamespace ${subnamespace} does not exist in apps`,
-            404
-          )
-        }
-
-        filePath = `${target}/locales/${lang}.json`
-      } else {
-        filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
-      }
-
-      if (!fs.existsSync(filePath)) {
-        throw new ClientError(
-          `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
-          404
-        )
-      }
-
-      const data: Record<string, any> = JSON.parse(
-        fs.readFileSync(filePath, 'utf-8')
-      )
-
-      const splitted: string[] = path.split('.')
-
-      const key = splitted.pop()
-
-      const target = splitted.reduce((acc, cur) => {
-        if (!acc[cur]) {
-          acc[cur] = {}
-        }
-
-        return acc[cur]
-      }, data)
-
-      delete target[key as string]
-
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
-    })
-
-    return true
-  })
-
-const getTranslationSuggestions = forgeController
-  .mutation()
-  .description({
-    en: 'Generate AI-powered translation suggestions',
-    ms: 'Jana cadangan terjemahan berkuasa AI',
-    'zh-CN': '生成AI驱动的翻译建议',
-    'zh-TW': '生成AI驅動的翻譯建議'
-  })
-  .input({
-    query: z.object({
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    }),
-    body: z.object({
-      path: z.string(),
-      hint: z.string().optional().default('')
-    })
-  })
-  .callback(
-    async ({
-      pb,
-      query: { namespace, subnamespace },
-      body: { path, hint }
-    }) => {
-      const LocaleSuggestions = z.object({
-        en: z.string(),
-        ms: z.string(),
-        'zh-CN': z.string(),
-        'zh-TW': z.string()
-      })
-
-      const prompt = `Translate i18n locale keys into natural language suitable for user interface elements such as buttons, labels, and descriptions. The input will be an array of two elements: the first is a locale key in the format {namespace}.{subnamespace}:{key}, and the second is an optional user-provided hint for reference.
-
-        When translating, focus on {key}, but also consider {namespace} and {subnamespace} to understand the broader context. If the hint is appropriate, follow it to produce the translation without removing any words. If the hint is unclear, ambiguous, or inconsistent with the key’s context, use reasonable judgment based on the namespaces and key structure.
-
-        Provide concise and clear translations in English (en), Bahasa Malaysia (ms), Simplified Chinese (zh-CN), and Traditional Chinese (zh-TW), ensuring they are user-friendly and contextually appropriate. Avoid overly technical language; adapt programming terms based on their role in the user interface.
-
-        If the key remains ambiguous despite the hint and namespace context, seek clarification. If clarification is unavailable, provide a reasonable translation based on general UI patterns. For non-translatable texts, offer a functionally equivalent alternative that aligns with the UI’s purpose. Preserve the meaning of general text while ensuring it reads naturally.`
-
-      const suggestions = await fetchAI({
-        pb,
-        model: 'gpt-4o-mini',
-        provider: 'openai',
-        messages: [
-          {
-            role: 'system',
-            content: prompt
-          },
-          {
-            role: 'user',
-            content: JSON.stringify([
-              `${namespace}.${subnamespace}:${path}`,
-              hint
-            ])
-          }
-        ],
-        structure: LocaleSuggestions
-      })
-
-      if (!suggestions) {
-        throw new Error('Failed to generate suggestions')
-      }
-
-      return suggestions
-    }
-  )
-
-export default forgeRouter({
-  listSubnamespaces,
-  listLocales,
-  getTranslationSuggestions,
-  sync,
-  create,
-  rename,
-  remove
-})
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// import fs from 'fs'
+// import z from 'zod'
+
+// import { fetchAI } from '@functions/external/ai'
+// import { forgeController, forgeRouter } from '@functions/routes'
+// import { ClientError } from '@functions/routes/utils/response'
+
+// import { ALLOWED_LANG, ALLOWED_NAMESPACE } from '../constants/locales'
+// import { allApps } from './locales'
+
+// const listSubnamespaces = forgeController
+//   .query()
+//   .description({
+//     en: 'Retrieve subnamespaces in a namespace',
+//     ms: 'Dapatkan subruang nama dalam ruang nama',
+//     'zh-CN': '获取命名空间中的子空间',
+//     'zh-TW': '獲取命名空間中的子空間'
+//   })
+//   .input({
+//     query: z.object({
+//       namespace: z.enum(ALLOWED_NAMESPACE)
+//     })
+//   })
+//   .callback(async ({ query: { namespace } }) => {
+//     if (namespace === 'apps') {
+//       const data = allApps.map(module => module.split('/').pop())
+
+//       return data.sort()
+//     }
+
+//     const data = fs
+//       .readdirSync(`${process.cwd()}/src/core/locales/en`)
+//       .map(file => file.replace('.json', ''))
+
+//     return data.sort()
+//   })
+
+// const listLocales = forgeController
+//   .query()
+//   .description({
+//     en: 'Retrieve localization entries for subnamespace',
+//     ms: 'Dapatkan entri penyetempatan untuk subruang nama',
+//     'zh-CN': '获取子空间的本地化条目',
+//     'zh-TW': '獲取子空間的本地化條目'
+//   })
+//   .input({
+//     query: z.object({
+//       namespace: z.enum(ALLOWED_NAMESPACE),
+//       subnamespace: z.string()
+//     })
+//   })
+//   .callback(async ({ query: { namespace, subnamespace } }) => {
+//     const final: Omit<Record<(typeof ALLOWED_LANG)[number], any>, 'zh'> = {
+//       en: {},
+//       ms: {},
+//       'zh-CN': {},
+//       'zh-TW': {}
+//     }
+
+//     if (namespace === 'apps') {
+//       const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+//       if (!target) {
+//         throw new ClientError(
+//           `Subnamespace ${subnamespace} does not exist in apps`,
+//           404
+//         )
+//       }
+
+//       for (const lang of ALLOWED_LANG.filter(lng => lng !== 'zh')) {
+//         final[lang] = JSON.parse(
+//           fs.readFileSync(`${target}/locales/${lang}.json`, 'utf-8')
+//         )
+//       }
+//     } else {
+//       for (const lng of ALLOWED_LANG.filter(lng => lng !== 'zh')) {
+//         if (
+//           !fs.existsSync(
+//             `${process.cwd()}/src/core/locales/${lng}/${subnamespace}.json`
+//           )
+//         ) {
+//           throw new ClientError(
+//             `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+//             404
+//           )
+//         }
+
+//         final[lng] = JSON.parse(
+//           fs.readFileSync(
+//             `${process.cwd()}/src/core/locales/${lng}/${subnamespace}.json`,
+//             'utf-8'
+//           )
+//         )
+//       }
+//     }
+
+//     return final
+//   })
+
+// const sync = forgeController
+//   .mutation()
+//   .description({
+//     en: 'Synchronize localization changes to files',
+//     ms: 'Segerakkan perubahan penyetempatan ke fail',
+//     'zh-CN': '同步本地化更改到文件',
+//     'zh-TW': '同步本地化更改到文件'
+//   })
+//   .input({
+//     body: z.object({
+//       data: z.record(
+//         z.string(),
+//         z.record(z.enum(ALLOWED_LANG.flat()).exclude(['zh']), z.string())
+//       )
+//     }),
+//     query: z.object({
+//       namespace: z.enum(ALLOWED_NAMESPACE),
+//       subnamespace: z.string()
+//     })
+//   })
+//   .callback(async ({ body: { data }, query: { namespace, subnamespace } }) => {
+//     let fileContent
+
+//     if (namespace === 'apps') {
+//       const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+//       if (!target) {
+//         throw new ClientError(
+//           `Subnamespace ${subnamespace} does not exist in apps`,
+//           404
+//         )
+//       }
+
+//       fileContent = ['en', 'ms', 'zh-CN', 'zh-TW'].reduce<Record<string, any>>(
+//         (acc, lang) => {
+//           const path = `${target}/locales/${lang}.json`
+
+//           if (fs.existsSync(path)) {
+//             acc[lang] = JSON.parse(fs.readFileSync(path, 'utf-8'))
+//           } else {
+//             acc[lang] = {}
+//           }
+
+//           return acc
+//         },
+//         {}
+//       )
+//     } else {
+//       fileContent = ['en', 'ms', 'zh-CN', 'zh-TW'].reduce<Record<string, any>>(
+//         (acc, lang) => {
+//           const path = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+
+//           if (fs.existsSync(path)) {
+//             acc[lang] = JSON.parse(fs.readFileSync(path, 'utf-8'))
+//           } else {
+//             acc[lang] = {}
+//           }
+
+//           return acc
+//         },
+//         {}
+//       )
+//     }
+
+//     for (const key in data) {
+//       for (const lang in data[key]) {
+//         const target = key
+//           .split('.')
+//           .slice(0, -1)
+//           .reduce((acc, cur) => {
+//             if (!acc[cur]) {
+//               acc[cur] = {}
+//             }
+
+//             return acc[cur]
+//           }, fileContent[lang])
+
+//         target[key.split('.').pop() as keyof typeof target] =
+//           data[key][lang as 'en' | 'ms' | 'zh-CN' | 'zh-TW']
+//       }
+//     }
+
+//     if (namespace === 'apps') {
+//       const target = allApps.find(e => e.split('/').pop() === subnamespace)!
+
+//       for (const lang in fileContent) {
+//         fs.writeFileSync(
+//           `${target}/locales/${lang}.json`,
+//           JSON.stringify(fileContent[lang], null, 2)
+//         )
+//       }
+//     } else {
+//       for (const lang in fileContent) {
+//         fs.writeFileSync(
+//           `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`,
+//           JSON.stringify(fileContent[lang], null, 2)
+//         )
+//       }
+//     }
+
+//     return true
+//   })
+
+// const create = forgeController
+//   .mutation()
+//   .description({
+//     en: 'Create new localization entry or folder',
+//     ms: 'Cipta entri atau folder penyetempatan baharu',
+//     'zh-CN': '创建新的本地化条目或文件夹',
+//     'zh-TW': '創建新的本地化條目或文件夾'
+//   })
+//   .input({
+//     body: z.object({
+//       type: z.enum(['entry', 'folder']),
+//       namespace: z.enum(ALLOWED_NAMESPACE),
+//       subnamespace: z.string(),
+//       path: z.string().optional().default('')
+//     })
+//   })
+//   .statusCode(201)
+//   .callback(async ({ body: { path, type, namespace, subnamespace } }) => {
+//     for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
+//       let filePath: string = ''
+
+//       if (namespace === 'apps') {
+//         const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+//         if (!target) {
+//           throw new ClientError(
+//             `Subnamespace ${subnamespace} does not exist in apps`,
+//             404
+//           )
+//         }
+
+//         filePath = `${target}/locales/${lang}.json`
+//       } else {
+//         filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+//       }
+
+//       if (!fs.existsSync(filePath)) {
+//         throw new ClientError(
+//           `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+//           404
+//         )
+//       }
+
+//       const data: Record<string, any> = JSON.parse(
+//         fs.readFileSync(filePath, 'utf-8')
+//       )
+
+//       const splitted: string[] = path.split('.')
+
+//       const key = splitted.pop()
+
+//       const target = splitted.reduce((acc, cur) => {
+//         if (!acc[cur]) {
+//           acc[cur] = {}
+//         }
+
+//         return acc[cur]
+//       }, data)
+
+//       if (target[key as string] !== undefined) {
+//         throw new ClientError(`Key ${key} already exists in path ${path}`)
+//       }
+
+//       target[key as string] = type === 'entry' ? '' : {}
+
+//       fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
+//     }
+
+//     return true
+//   })
+
+// const rename = forgeController
+//   .mutation()
+//   .description({
+//     en: 'Rename a localization key',
+//     ms: 'Namakan semula kunci penyetempatan',
+//     'zh-CN': '重命名本地化键',
+//     'zh-TW': '重新命名本地化鍵'
+//   })
+//   .input({
+//     query: z.object({
+//       namespace: z.enum(ALLOWED_NAMESPACE),
+//       subnamespace: z.string()
+//     }),
+//     body: z.object({
+//       path: z.string().optional().default(''),
+//       newName: z.string().optional().default('')
+//     })
+//   })
+//   .callback(
+//     async ({ query: { namespace, subnamespace }, body: { path, newName } }) => {
+//       for (const lang of ['en', 'ms', 'zh-CN', 'zh-TW']) {
+//         let filePath: string = ''
+
+//         if (namespace === 'apps') {
+//           const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+//           if (!target) {
+//             throw new ClientError(
+//               `Subnamespace ${subnamespace} does not exist in apps`,
+//               404
+//             )
+//           }
+
+//           filePath = `${target}/locales/${lang}.json`
+//         } else {
+//           filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+//         }
+
+//         if (!fs.existsSync(filePath)) {
+//           throw new ClientError(
+//             `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+//             404
+//           )
+//         }
+
+//         const data: Record<string, any> = JSON.parse(
+//           fs.readFileSync(filePath, 'utf-8')
+//         )
+
+//         const splitted: string[] = path.split('.')
+
+//         const key = splitted.pop()
+
+//         const target = splitted.reduce((acc, cur) => {
+//           if (!acc[cur]) {
+//             acc[cur] = {}
+//           }
+
+//           return acc[cur]
+//         }, data)
+
+//         if (target[key as string] === undefined) {
+//           throw new ClientError(`Key ${key} does not exist in path ${path}`)
+//         }
+
+//         if (target[newName] !== undefined) {
+//           throw new ClientError(
+//             `Key ${newName} already exists in path ${path}`,
+//             400
+//           )
+//         }
+
+//         target[newName] = target[key as string]
+//         delete target[key as string]
+
+//         fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
+//       }
+
+//       return true
+//     }
+//   )
+
+// const remove = forgeController
+//   .mutation()
+//   .description({
+//     en: 'Delete a localization entry',
+//     ms: 'Padam entri penyetempatan',
+//     'zh-CN': '删除本地化条目',
+//     'zh-TW': '刪除本地化條目'
+//   })
+//   .input({
+//     query: z.object({
+//       namespace: z.enum(ALLOWED_NAMESPACE),
+//       subnamespace: z.string()
+//     }),
+//     body: z.object({
+//       path: z.string().optional().default('')
+//     })
+//   })
+//   .statusCode(204)
+//   .callback(async ({ query: { namespace, subnamespace }, body: { path } }) => {
+//     ;['en', 'ms', 'zh-CN', 'zh-TW'].forEach(lang => {
+//       let filePath: string = ''
+
+//       if (namespace === 'apps') {
+//         const target = allApps.find(e => e.split('/').pop() === subnamespace)
+
+//         if (!target) {
+//           throw new ClientError(
+//             `Subnamespace ${subnamespace} does not exist in apps`,
+//             404
+//           )
+//         }
+
+//         filePath = `${target}/locales/${lang}.json`
+//       } else {
+//         filePath = `${process.cwd()}/src/core/locales/${lang}/${subnamespace}.json`
+//       }
+
+//       if (!fs.existsSync(filePath)) {
+//         throw new ClientError(
+//           `Subnamespace ${subnamespace} does not exist in namespace ${namespace}`,
+//           404
+//         )
+//       }
+
+//       const data: Record<string, any> = JSON.parse(
+//         fs.readFileSync(filePath, 'utf-8')
+//       )
+
+//       const splitted: string[] = path.split('.')
+
+//       const key = splitted.pop()
+
+//       const target = splitted.reduce((acc, cur) => {
+//         if (!acc[cur]) {
+//           acc[cur] = {}
+//         }
+
+//         return acc[cur]
+//       }, data)
+
+//       delete target[key as string]
+
+//       fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
+//     })
+
+//     return true
+//   })
+
+// const getTranslationSuggestions = forgeController
+//   .mutation()
+//   .description({
+//     en: 'Generate AI-powered translation suggestions',
+//     ms: 'Jana cadangan terjemahan berkuasa AI',
+//     'zh-CN': '生成AI驱动的翻译建议',
+//     'zh-TW': '生成AI驅動的翻譯建議'
+//   })
+//   .input({
+//     query: z.object({
+//       namespace: z.enum(ALLOWED_NAMESPACE),
+//       subnamespace: z.string()
+//     }),
+//     body: z.object({
+//       path: z.string(),
+//       hint: z.string().optional().default('')
+//     })
+//   })
+//   .callback(
+//     async ({
+//       pb,
+//       query: { namespace, subnamespace },
+//       body: { path, hint }
+//     }) => {
+//       const LocaleSuggestions = z.object({
+//         en: z.string(),
+//         ms: z.string(),
+//         'zh-CN': z.string(),
+//         'zh-TW': z.string()
+//       })
+
+//       const prompt = `Translate i18n locale keys into natural language suitable for user interface elements such as buttons, labels, and descriptions. The input will be an array of two elements: the first is a locale key in the format {namespace}.{subnamespace}:{key}, and the second is an optional user-provided hint for reference.
+
+//         When translating, focus on {key}, but also consider {namespace} and {subnamespace} to understand the broader context. If the hint is appropriate, follow it to produce the translation without removing any words. If the hint is unclear, ambiguous, or inconsistent with the key’s context, use reasonable judgment based on the namespaces and key structure.
+
+//         Provide concise and clear translations in English (en), Bahasa Malaysia (ms), Simplified Chinese (zh-CN), and Traditional Chinese (zh-TW), ensuring they are user-friendly and contextually appropriate. Avoid overly technical language; adapt programming terms based on their role in the user interface.
+
+//         If the key remains ambiguous despite the hint and namespace context, seek clarification. If clarification is unavailable, provide a reasonable translation based on general UI patterns. For non-translatable texts, offer a functionally equivalent alternative that aligns with the UI’s purpose. Preserve the meaning of general text while ensuring it reads naturally.`
+
+//       const suggestions = await fetchAI({
+//         pb,
+//         model: 'gpt-4o-mini',
+//         provider: 'openai',
+//         messages: [
+//           {
+//             role: 'system',
+//             content: prompt
+//           },
+//           {
+//             role: 'user',
+//             content: JSON.stringify([
+//               `${namespace}.${subnamespace}:${path}`,
+//               hint
+//             ])
+//           }
+//         ],
+//         structure: LocaleSuggestions
+//       })
+
+//       if (!suggestions) {
+//         throw new Error('Failed to generate suggestions')
+//       }
+
+//       return suggestions
+//     }
+//   )
+
+// export default forgeRouter({
+//   listSubnamespaces,
+//   listLocales,
+//   getTranslationSuggestions,
+//   sync,
+//   create,
+//   rename,
+//   remove
+// })
