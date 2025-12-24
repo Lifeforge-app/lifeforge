@@ -1,4 +1,3 @@
-import { ALLOWED_LANG } from '@lib/locales/constants/locales'
 import type { Request, Response } from 'express'
 import type { Server } from 'socket.io'
 import z from 'zod'
@@ -12,9 +11,7 @@ export interface BaseResponse<T = ''> {
   message?: string
 }
 
-export type Description =
-  | string
-  | Omit<Record<(typeof ALLOWED_LANG)[number], string>, 'zh'>
+export type Description = string | Record<string, string>
 
 export type ZodObjectOrIntersection =
   | ZodObject<any>

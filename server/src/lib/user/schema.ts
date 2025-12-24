@@ -16,7 +16,7 @@ const usersSchemas = {
       bgImage: z.string(),
       backdropFilters: z.any(),
       fontFamily: z.string(),
-      language: z.enum(['zh-CN', 'en', 'ms', 'zh-TW']),
+      language: z.string(),
       dashboardLayout: z.any(),
       masterPasswordHash: z.string(),
       APIKeysMasterPasswordHash: z.string(),
@@ -125,8 +125,8 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'text1579384326',
-          max: 255,
+          id: 'users_name',
+          max: 0,
           min: 0,
           name: 'name',
           pattern: '',
@@ -138,9 +138,9 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'file376926767',
+          id: 'users_avatar',
           maxSelect: 1,
-          maxSize: 0,
+          maxSize: 5242880,
           mimeTypes: [
             'image/jpeg',
             'image/png',
@@ -153,7 +153,7 @@ const usersSchemas = {
           protected: false,
           required: false,
           system: false,
-          thumbs: null,
+          thumbs: ['256x0'],
           type: 'file'
         },
         {
@@ -245,15 +245,18 @@ const usersSchemas = {
           type: 'text'
         },
         {
+          autogeneratePattern: '',
           hidden: false,
-          id: 'bv7hnazi',
-          maxSelect: 1,
+          id: 'text3571151285',
+          max: 0,
+          min: 0,
           name: 'language',
+          pattern: '',
           presentable: false,
-          required: true,
+          primaryKey: false,
+          required: false,
           system: false,
-          type: 'select',
-          values: ['zh-CN', 'en', 'ms', 'zh-TW']
+          type: 'text'
         },
         {
           hidden: false,
