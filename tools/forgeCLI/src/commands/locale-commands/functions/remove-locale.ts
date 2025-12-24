@@ -48,32 +48,66 @@ async function updateUsersLanguage(
 function removeGitSubmodule(localeDir: string): void {
   CLILoggingService.progress('Removing git submodule')
 
+  // Step 1: Deinitialize the submodule
   try {
     executeCommand(`git submodule deinit -f ${localeDir}`, {
       exitOnError: false,
       stdio: ['ignore', 'ignore', 'ignore']
     })
+  } catch {
+    // May fail if not a proper submodule
+  }
 
-    executeCommand(`git rm -f ${localeDir}`, {
+  // Step 2: Remove from git index
+  try {
+    executeCommand(`git rm -rf ${localeDir}`, {
       exitOnError: false,
       stdio: ['ignore', 'ignore', 'ignore']
     })
+  } catch {
+    // May fail if not tracked
+  }
 
-    const gitModulesPath = `.git/modules/${localeDir}`
+  // Step 3: Remove from .git/modules
+  const gitModulesPath = `.git/modules/${localeDir}`
 
-    if (fs.existsSync(gitModulesPath)) {
-      fs.rmSync(gitModulesPath, { recursive: true })
+  if (fs.existsSync(gitModulesPath)) {
+    fs.rmSync(gitModulesPath, { recursive: true })
+  }
+
+  // Step 4: Remove entry from .gitmodules file
+  if (fs.existsSync('.gitmodules')) {
+    const content = fs.readFileSync('.gitmodules', 'utf-8')
+
+    const lines = content.split('\n')
+
+    const filteredLines: string[] = []
+
+    let skipSection = false
+
+    for (const line of lines) {
+      if (line.startsWith('[submodule')) {
+        skipSection = line.includes(`"${localeDir}"`)
+      }
+
+      if (!skipSection) {
+        filteredLines.push(line)
+      }
     }
 
-    executeCommand('git add .gitmodules', {
-      exitOnError: false,
-      stdio: ['ignore', 'ignore', 'ignore']
-    })
+    fs.writeFileSync('.gitmodules', filteredLines.join('\n').trim() + '\n')
 
-    CLILoggingService.success('Git submodule removed successfully')
-  } catch (error) {
-    CLILoggingService.warn(`Failed to fully remove submodule: ${error}`)
+    try {
+      executeCommand('git add .gitmodules', {
+        exitOnError: false,
+        stdio: ['ignore', 'ignore', 'ignore']
+      })
+    } catch {
+      // Ignore
+    }
   }
+
+  CLILoggingService.success('Git submodule removed successfully')
 }
 
 /**
