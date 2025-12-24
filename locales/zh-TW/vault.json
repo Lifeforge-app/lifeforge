@@ -1,0 +1,46 @@
+{
+  "vault": {
+    "lockedMessage": "您的保險庫已鎖定",
+    "passwordRequired": "需要主密碼來解密您的保險庫。",
+    "unlocked": "保險庫已解鎖",
+    "failedToUnlock": "解鎖保險庫失敗",
+    "buttons": {
+      "unlock": "解鎖"
+    },
+    "createPassword": {
+      "title": "設置主密碼",
+      "desc": "請設置一個主密碼來保護您的保險庫。"
+    },
+    "inputs": {
+      "newPassword": "新密碼",
+      "confirmPassword": "確認密碼",
+      "masterPassword": "主密碼"
+    },
+    "confirmSetNewPassword": {
+      "title": "確保您記住您的主密碼！",
+      "desc": "此主密碼是不可更改的（目前）！如果您不小心忘記了密碼，您將失去一切。此密碼會被哈希並存儲在您的用戶資料中，且無法解密。它將用於加密和解密您存儲在保險庫中的數據。"
+    }
+  },
+  "otp": {
+    "buttons": {
+      "request": "請求一次性密碼",
+      "resend": "重新發送一次性密碼",
+      "verify": "驗證一次性密碼",
+      "authByQR": "通過 QR 碼驗證"
+    },
+    "messages": {
+      "success": "一次性密碼已發送！請檢查您的電子郵件。",
+      "failed": "請求一次性密碼失敗",
+      "invalid": "一次性密碼必須是6位數字",
+      "cooldown": "請求過於頻繁，請稍後再試",
+      "required": {
+        "title": "需要一次性密碼來解鎖",
+        "desc": "為了增加安全性，需要一次性密碼來解鎖此模塊。請點擊下面的按鈕來請求一次性密碼。"
+      },
+      "verify": {
+        "success": "一次性密碼驗證成功",
+        "failed": "一次性密碼驗證失敗"
+      }
+    }
+  }
+}

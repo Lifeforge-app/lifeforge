@@ -1,0 +1,36 @@
+{
+  "title": "Kunci API",
+  "description": "Urus semua kunci API yang diperlukan untuk modul",
+  "lockedMessage": "Modul konfigurasi kunci API dikunci",
+  "passwordRequired": "Kata laluan diperlukan untuk menyahsulit kunci API",
+  "missing": {
+    "title": "Kunci API Hilang",
+    "description": "Satu atau lebih kunci API hilang. Sila pergi ke modul konfigurasi kunci API untuk menetapkannya",
+    "requiredKeysAre": "Kunci API yang diperlukan hilang:"
+  },
+  "modals": {
+    "apiKey": {
+      "create": "Cipta Kunci API",
+      "update": "Kemas kini Kunci API"
+    }
+  },
+  "buttons": {
+    "configApiKeys": "Konfigurasi Kunci API"
+  },
+  "inputs": {
+    "keyName": "Nama Kunci",
+    "keyDescription": "Deskripsi Kunci",
+    "keyIcon": "Ikon Kunci",
+    "apiKey": "Kunci API",
+    "keyId": "ID Kunci"
+  },
+  "items": {
+    "apiKey": "Kunci API"
+  },
+  "empty": {
+    "apiKeys": {
+      "title": "Tiada Kunci API",
+      "description": "Tiada kunci API dijumpai. Klik butang di bawah untuk mencipta kunci API baru"
+    }
+  }
+}
