@@ -16,7 +16,6 @@ import {
 
 export const allApps = fs
   .globSync([
-    '../client/src/apps/**/locales',
     '../tools/**/locales',
     path.resolve(process.cwd(), '../apps/**/locales')
   ])
@@ -80,6 +79,13 @@ const getLocale = forgeController
         )
       }
 
+      if (!fs.existsSync(`${target}/locales/${finalLang}.json`)) {
+        throw new ClientError(
+          `Locale ${finalLang} is not supported for app ${subnamespace}`,
+          404
+        )
+      }
+
       data = JSON.parse(
         fs.readFileSync(`${target}/locales/${finalLang}.json`, 'utf-8')
       )
@@ -97,24 +103,33 @@ const getLocale = forgeController
     if (namespace === 'common' && subnamespace === 'sidebar') {
       data.apps = {
         ...Object.fromEntries(
-          allApps.map(module => {
-            const data = JSON.parse(
-              fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
-            )
-
-            return [
-              module.split('/').pop() || '',
-              {
-                title: data.title ?? '',
-                subsections: data.subsections ?? {}
+          allApps
+            .map(module => {
+              if (!fs.existsSync(`${module}/locales/${finalLang}.json`)) {
+                return []
               }
-            ]
-          })
+
+              const data = JSON.parse(
+                fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
+              )
+
+              return [
+                module.split('/').pop() || '',
+                {
+                  title: data.title ?? '',
+                  subsections: data.subsections ?? {}
+                }
+              ]
+            })
+            .filter(e => e.length > 0)
         ),
         ...Object.fromEntries(
           Object.entries(SYSTEM_LOCALES[finalLang])
             .filter(e => 'title' in e[1])
-            .map(e => [e[0], { title: e[1].title }])
+            .map(e => [
+              e[0],
+              { title: e[1].title, subsections: e[1].subsections || {} }
+            ])
         )
       }
     }
