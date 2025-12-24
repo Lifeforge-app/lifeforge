@@ -25,11 +25,19 @@ function GithubStarCount() {
         className="text-bg-400 group-hover:text-bg-800 dark:group-hover:text-bg-100 h-6 w-6 transition-colors"
         icon="uil:github"
       />
-      <TagChip
-        className="hidden sm:flex"
-        icon="tabler:star-filled"
-        label={stars.toLocaleString()}
-      />
+      {stars ? (
+        <TagChip
+          className="hidden sm:flex"
+          icon="tabler:star-filled"
+          label={stars.toLocaleString()}
+        />
+      ) : (
+        <img
+          alt="GitHub stars"
+          className="hidden sm:flex"
+          src="https://img.shields.io/github/stars/LifeForge-app/lifeforge?style=for-the-badge&color=%2396b85a"
+        />
+      )}
     </a>
   )
 }
