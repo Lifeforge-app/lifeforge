@@ -152,6 +152,11 @@ function setupLocalesCommand(): void {
     .description('Manage LifeForge language packs')
 
   command
+    .command('list')
+    .description('List all installed language packs')
+    .action(localeHandlers.listLocalesHandler)
+
+  command
     .command('add')
     .description('Download and install a language pack')
     .argument('<lang>', 'Language code, e.g., en, ms, zh-CN, zh-TW')
