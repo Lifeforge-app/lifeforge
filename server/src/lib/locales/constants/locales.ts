@@ -69,9 +69,9 @@ export const LANG_MANIFESTS = languagePacks.map(e => {
 export const SYSTEM_LOCALES = Object.fromEntries(
   languagePacks.map(lang => {
     try {
-      const languagePackContent = fs.readdirSync(
-        path.join(LANGUAGE_PACK_PATH, lang)
-      )
+      const languagePackContent = fs
+        .readdirSync(path.join(LANGUAGE_PACK_PATH, lang))
+        .filter(e => e !== '.git')
 
       for (const item of languagePackContent) {
         const itemPath = path.join(LANGUAGE_PACK_PATH, lang, item)
