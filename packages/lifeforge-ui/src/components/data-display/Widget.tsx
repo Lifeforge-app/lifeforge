@@ -37,7 +37,7 @@ function _Widget(
     title,
     children,
     actionComponent: componentBesideTitle,
-    namespace = 'apps.dashboard'
+    namespace = 'common.dashboard'
   }: WidgetProps,
   ref: React.Ref<HTMLDivElement>
 ) {

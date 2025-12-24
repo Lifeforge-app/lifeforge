@@ -8,7 +8,8 @@ function WithQueryData<T extends ForgeAPIClientController>({
   queryOptions,
   children,
   showLoading = true,
-  showRetryButton = true
+  showRetryButton = true,
+  loaderSize
 }: {
   controller: T
   queryOptions?: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> & {
@@ -17,6 +18,7 @@ function WithQueryData<T extends ForgeAPIClientController>({
   children: (data: InferOutput<T>) => React.ReactElement | false
   showLoading?: boolean
   showRetryButton?: boolean
+  loaderSize?: string
 }) {
   const query = useQuery(
     controller.queryOptions({
@@ -26,7 +28,7 @@ function WithQueryData<T extends ForgeAPIClientController>({
   )
 
   if (query.isLoading || query.isEnabled === false) {
-    return showLoading ? <LoadingScreen /> : <></>
+    return showLoading ? <LoadingScreen loaderSize={loaderSize} /> : <></>
   }
 
   if (query.isError) {
