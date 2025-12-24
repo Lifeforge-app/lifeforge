@@ -8,7 +8,7 @@
 @import 'react-medium-image-zoom/dist/styles.css';
 
 :root {
-  --custom-font-scale: 1 !important;
+  --custom-font-scale: 1.1 !important;
 }
 
 *:not(code *) {
@@ -51,7 +51,7 @@ article section {
 }
 
 .dark ::marker {
-  @apply text-bg-700!;
+  @apply text-bg-600!;
 }
 
 li p:first-of-type {
