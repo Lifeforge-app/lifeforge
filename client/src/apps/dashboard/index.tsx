@@ -26,7 +26,7 @@ function Dashboard() {
                 <ContextMenuItem
                   icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
                   label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
-                  namespace="apps.dashboard"
+                  namespace="common.dashboard"
                   onClick={() => {
                     setCanLayoutChange(!canLayoutChange)
                   }}
@@ -34,7 +34,7 @@ function Dashboard() {
                 <ContextMenuItem
                   icon="tabler:apps"
                   label="Manage Widgets"
-                  namespace="apps.dashboard"
+                  namespace="common.dashboard"
                   onClick={handleManageWidget}
                 />
               </>

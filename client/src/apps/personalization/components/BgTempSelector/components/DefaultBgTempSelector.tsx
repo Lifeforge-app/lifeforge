@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 
 function DefaultBgTempSelector({ bgTemp }: { bgTemp: string }) {
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   const { changeBgTemp } = useUserPersonalization()
 

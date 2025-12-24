@@ -40,7 +40,7 @@ function CustomFontUploadModal({
   >({
     icon: openType === 'create' ? 'tabler:upload' : 'tabler:edit',
     title: `fontFamily.modals.customFonts.${openType === 'create' ? 'upload' : 'edit'}`,
-    namespace: 'apps.personalization',
+    namespace: 'common.personalization',
     onClose,
     submitButton: 'create'
   })

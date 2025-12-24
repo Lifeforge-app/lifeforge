@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { encrypt } from 'shared'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation('apps.accountSettings')
+  const { t } = useTranslation('common.accountSettings')
 
   const [otp, setOtp] = useState('')
 

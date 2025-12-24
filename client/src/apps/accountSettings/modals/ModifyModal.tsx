@@ -39,7 +39,7 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
   const { formProps } = defineForm<{
     [key in string]: string
   }>({
-    namespace: 'apps.accountSettings',
+    namespace: 'common.accountSettings',
     icon: 'tabler:pencil',
     title: `${_.camelCase(title)}.update`,
     onClose,

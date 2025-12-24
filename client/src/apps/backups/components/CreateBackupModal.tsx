@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import type { InferInput } from 'shared'
 
 function CreateBackupModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('apps.backups')
+  const { t } = useTranslation('common.backups')
 
   const queryClient = useQueryClient()
 
@@ -25,11 +25,11 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
     InferInput<typeof forgeAPI.backups.create>['body']
   >({
     icon: 'tabler:plus',
-    namespace: 'apps.backups',
+    namespace: 'common.backups',
     submitButton: {
       children: 'Start Backup',
       icon: 'tabler:arrow-right',
-      namespace: 'apps.backups',
+      namespace: 'common.backups',
       iconPosition: 'end'
     },
     title: 'Create Backup',
