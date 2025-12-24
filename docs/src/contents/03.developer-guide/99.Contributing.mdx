@@ -221,6 +221,87 @@ To make sure that your AI-generated content is safe and high-quality, consider t
 </Alert>
 </section>
 
+<section id="commit-message-guidelines">
+## Commit Message Guidelines
+
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification for our commit messages. This helps us maintain a clean and readable git history, and enables automated changelog generation.
+
+### Commit Message Format
+
+Each commit message should follow this structure:
+
+```plaintext
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Commit Types
+
+| Type | Description |
+|------|-------------|
+| `feat` | A new feature |
+| `fix` | A bug fix |
+| `docs` | Documentation only changes |
+| `style` | Changes that do not affect the meaning of the code (white-space, formatting, etc.) |
+| `refactor` | A code change that neither fixes a bug nor adds a feature |
+| `perf` | A code change that improves performance |
+| `test` | Adding missing tests or correcting existing tests |
+| `build` | Changes that affect the build system or external dependencies |
+| `ci` | Changes to our CI configuration files and scripts |
+| `chore` | Other changes that don't modify src or test files |
+| `revert` | Reverts a previous commit |
+
+### Scope
+
+The scope is optional and can be used to provide more context about the changes being made. However, it is strongly recommended to use the scope to make the commit message more readable and easier to understand. In LifeForge, the scope is usually the codebase or module being modified. For example, `client`, `server`, `ui`, `shared`, `docs`, 'forgeCLI', etc.
+
+### Examples
+
+```plaintext
+feat(client,server): add QR code login functionality
+
+fix(ui): resolve widget overflow issue on mobile
+
+docs(server): update endpoint documentation for user routes
+
+refactor(client): simplify module loading logic
+
+feat(shared): add `useDivSize` hook for getting div size
+```
+
+<Alert className="mt-6" type="tip">
+Keep the first line (subject) under 72 characters. Use the body to explain what and why, not how.
+</Alert>
+
+<Alert className="mt-6" type="note">
+If your commit introduces a breaking change, add `BREAKING CHANGE:` in the footer or append `!` after the type/scope, e.g.
+
+```plaintext
+feat(server)!: remove deprecated endpoints
+```
+</Alert>
+
+### AI Commit Message Generation
+
+If you are using AI to generate commit messages, most editors allow you to use custom prompts to guide the AI tool to generate content that aligns with our project's standards and guidelines.
+
+```plaintext
+Generate a commit message following Conventional Commits: <type>(<scope>): <description>
+
+Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+Scope: client, server, ui, shared, docs, forgeCLI, etc. (use comma for multiple, e.g., client,server)
+
+Rules:
+- Subject line under 72 characters, lowercase, no period
+- Use imperative mood ("add" not "added")
+- Append ! after scope for breaking changes
+```
+
+</section>
+
 <section id="whats-next">
 ## What's Next
 
