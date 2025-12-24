@@ -6,15 +6,17 @@ function WithQuery<T>({
   query,
   children,
   showLoading = true,
-  showRetryButton = true
+  showRetryButton = true,
+  loaderSize
 }: {
   query: UseQueryResult<T, Error>
   children: (data: T) => React.ReactElement | false
   showLoading?: boolean
   showRetryButton?: boolean
+  loaderSize?: string
 }) {
   if (query.isLoading || query.isEnabled === false) {
-    return showLoading ? <LoadingScreen /> : <></>
+    return showLoading ? <LoadingScreen loaderSize={loaderSize} /> : <></>
   }
 
   if (query.isError) {

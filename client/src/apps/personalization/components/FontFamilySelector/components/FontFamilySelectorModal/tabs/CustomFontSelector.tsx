@@ -29,7 +29,7 @@ function CustomFontSelector({
   selectedFont: string | null
   setSelectedFont: (font: string | null) => void
 }) {
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   const { fontFamily } = usePersonalization()
 
@@ -181,7 +181,7 @@ function CustomFontSelector({
                 icon="tabler:file-typography"
                 message={{
                   id: 'customFont',
-                  namespace: 'apps.personalization',
+                  namespace: 'common.personalization',
                   tKey: 'fontFamily'
                 }}
               />

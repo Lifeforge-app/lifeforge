@@ -6,7 +6,7 @@ import { usePromiseLoading } from 'shared'
 import { useAuth } from 'shared'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('apps.accountSettings')
+  const { t } = useTranslation('common.accountSettings')
 
   const { setUserData } = useAuth()
 
@@ -30,7 +30,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
     <div>
       <ModalHeader
         icon="tabler:lock-access-off"
-        namespace="apps.accountSettings"
+        namespace="common.accountSettings"
         title="disable2FA"
         onClose={onClose}
       />

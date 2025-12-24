@@ -15,7 +15,7 @@ function ThemeColorSelector() {
     themeColor.startsWith('#') ? themeColor : '#000000'
   )
 
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   return (
     <OptionsColumn
@@ -34,7 +34,7 @@ function ThemeColorSelector() {
             <ColorInput
               className="w-full md:w-min"
               label="Color Hex"
-              namespace="apps.personalization"
+              namespace="common.personalization"
               value={customThemeColor}
               onChange={setCustomThemeColor}
             />

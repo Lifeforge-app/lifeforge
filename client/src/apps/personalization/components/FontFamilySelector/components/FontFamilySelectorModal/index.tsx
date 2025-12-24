@@ -11,7 +11,7 @@ import GoogleFontSelector from './tabs/GoogleFontSelector'
 type TabType = 'google' | 'custom'
 
 function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   const { fontFamily } = usePersonalization()
 
@@ -27,7 +27,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
     <div className="flex h-full min-h-[80vh] min-w-[60vw] flex-col">
       <ModalHeader
         icon="tabler:text-size"
-        namespace="apps.personalization"
+        namespace="common.personalization"
         title="fontFamily.modals.fontFamilySelector"
         onClose={onClose}
       />

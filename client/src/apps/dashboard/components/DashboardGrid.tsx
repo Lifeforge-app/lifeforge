@@ -37,7 +37,7 @@ function DashboardGrid({
   wrapperRef: React.RefObject<HTMLDivElement | null>
   canLayoutChange: boolean
 }) {
-  const { t } = useTranslation('apps.dashboard')
+  const { t } = useTranslation('common.dashboard')
 
   const { width, height } = useDivSize(wrapperRef)
 
@@ -56,7 +56,7 @@ function DashboardGrid({
           icon="tabler:hammer"
           message={{
             id: 'welcome',
-            namespace: 'apps.dashboard'
+            namespace: 'common.dashboard'
           }}
         />
       </div>

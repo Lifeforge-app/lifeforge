@@ -61,6 +61,9 @@ export const components: MDXComponents = {
   li(properties) {
     return <li {...properties} className="dark:text-bg-400 text-bg-600" />
   },
+  ol(properties) {
+    return <ol {...properties} className="mt-4 list-decimal space-y-3 pl-6" />
+  },
   strong(properties) {
     return (
       <strong

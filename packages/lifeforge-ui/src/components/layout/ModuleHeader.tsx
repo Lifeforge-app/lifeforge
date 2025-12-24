@@ -44,6 +44,7 @@ function ModuleHeader({
 
   const { t } = useTranslation([
     `apps.${_.camelCase(title?.toString() ?? '')}`,
+    `common.${_.camelCase(title?.toString() ?? '')}`,
     'common.misc',
     namespace ?? ''
   ])
@@ -73,6 +74,7 @@ function ModuleHeader({
                 `${namespace}:${tKey}.${_.camelCase(title?.toString() ?? '')}.title`,
                 `${namespace}:${_.camelCase(title?.toString() ?? '')}.title`,
                 `apps.${_.camelCase(title?.toString() ?? '')}:title`,
+                `common.${_.camelCase(title?.toString() ?? '')}:title`,
                 'common.misc:title',
                 'title',
                 title?.toString() ?? ''
@@ -89,6 +91,7 @@ function ModuleHeader({
               `${namespace}:${tKey}.${_.camelCase(title?.toString() ?? '')}.description`,
               `${namespace}:${_.camelCase(title?.toString() ?? '')}.description`,
               `apps.${_.camelCase(title?.toString() ?? '')}:description`,
+              `common.${_.camelCase(title?.toString() ?? '')}:description`,
               'common.misc:description',
               'description',
               `Description for ${title?.toString() ?? ''}`

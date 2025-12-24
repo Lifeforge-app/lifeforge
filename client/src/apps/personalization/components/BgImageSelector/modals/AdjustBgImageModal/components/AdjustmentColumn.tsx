@@ -15,7 +15,7 @@ function AdjustmentColumn({
   onChange: (value: number) => void
   max: number
 }) {
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   return (
     <OptionsColumn
