@@ -42,7 +42,7 @@ i18n
     backend: {
       loadPath: (langs: string[], namespaces: string[]) => {
         if (
-          !['en', 'zh-TW', 'zh-CN', 'ms', 'tr'].includes(langs[0]) ||
+          !['en', 'zh', 'zh-TW', 'zh-CN', 'ms', 'tr'].includes(langs[0]) ||
           !namespaces.filter(e => e && e !== 'undefined').length
         ) {
           return
