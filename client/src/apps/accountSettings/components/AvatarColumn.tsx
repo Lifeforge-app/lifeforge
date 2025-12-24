@@ -16,7 +16,7 @@ import { useAuth } from 'shared'
 function AvatarColumn() {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('apps.accountSettings')
+  const { t } = useTranslation('common.accountSettings')
 
   const { getAvatarURL, userData, setUserData } = useAuth()
 

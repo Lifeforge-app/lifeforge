@@ -8,7 +8,7 @@ import { usePersonalization } from 'shared'
 import FontFamilySelectorModal from './components/FontFamilySelectorModal'
 
 function FontFamilySelector() {
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   const open = useModalStore(state => state.open)
 

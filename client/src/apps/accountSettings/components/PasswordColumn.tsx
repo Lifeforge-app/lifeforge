@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 
 function PasswordColumn() {
-  const { t } = useTranslation('apps.accountSettings')
+  const { t } = useTranslation('common.accountSettings')
 
   async function handlePasswordChange() {
     try {
@@ -29,7 +29,7 @@ function PasswordColumn() {
         className="w-full whitespace-nowrap md:w-auto"
         icon="tabler:key"
         loading={loading}
-        namespace="apps.accountSettings"
+        namespace="common.accountSettings"
         variant="secondary"
         onClick={onSubmit}
       >

@@ -23,7 +23,7 @@ function ComponentListItem({
   maxH?: number
   namespace?: string
 }) {
-  const { t } = useTranslation([namespace ?? 'apps.dashboard'])
+  const { t } = useTranslation([namespace ?? 'common.dashboard'])
 
   const {
     dashboardLayout: enabledWidgets,

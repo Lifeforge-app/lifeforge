@@ -8,7 +8,7 @@ function ManageWidgetsModal({ onClose }: { onClose: () => void }) {
     <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:apps"
-        namespace="apps.dashboard"
+        namespace="common.dashboard"
         title="Manage Widgets"
         onClose={onClose}
       />

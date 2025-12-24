@@ -63,7 +63,7 @@ function NotFoundWidget({
           icon={h > 2 ? 'tabler:apps-off' : ''}
           message={{
             id: 'notFound',
-            namespace: 'apps.dashboard'
+            namespace: 'common.dashboard'
           }}
         />
       )}

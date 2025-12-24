@@ -19,7 +19,7 @@ function BorderRadiusSelector() {
 
   const { changeBorderRadiusMultiplier } = useUserPersonalization()
 
-  const { t } = useTranslation('apps.personalization')
+  const { t } = useTranslation('common.personalization')
 
   return (
     <OptionsColumn
