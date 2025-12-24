@@ -1,0 +1,39 @@
+{
+  "title": "Papan Pemuka",
+  "description": "Pusat kawalan misi anda, menjadikan segalanya lebih menarik.",
+  "widgets": {
+    "date": {
+      "title": "Tarikh",
+      "description": "Widget hiasan mudah yang menunjukkan tarikh hari ini."
+    },
+    "clock": {
+      "title": "Jam",
+      "description": "Jam kecil untuk membantu anda mengawasi masa."
+    },
+    "quotes": {
+      "description": "Petikan rawak untuk memberi inspirasi kepada anda sepanjang hari.",
+      "title": "Petikan"
+    }
+  },
+  "modals": {
+    "manageWidgets": "Urus Widget"
+  },
+  "buttons": {
+    "manageCategories": "Urus Kategori",
+    "unlockLayout": "Buka Kunci Susun Atur",
+    "manageWidgets": "Urus Widget",
+    "lockLayout": "Kunci Susun Atur"
+  },
+  "empty": {
+    "welcome": {
+      "title": "Selamat Datang ke LifeForge!",
+      "description": "Mulakan dengan memasang beberapa modul dari ForgeStore."
+    },
+    "notFound": {
+      "title": "Widget Tidak Ditemui",
+      "description": "Widget yang anda cari tidak wujud. Sila semak modul yang dipasang."
+    }
+  },
+  "loading": "Memuatkan papan pemuka...",
+  "test": ""
+}

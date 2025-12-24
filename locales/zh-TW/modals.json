@@ -1,0 +1,86 @@
+{
+  "deleteConfirmation": {
+    "title": "您確定要刪除{{itemName}}嗎？",
+    "desc": "這將刪除{{itemName}}及其所有相關內容。此操作不可逆！",
+    "inputs": {
+      "confirmation": {
+        "placeholder": "請輸入 \"{{text}}\" 以確認刪除",
+        "label": "確認刪除"
+      }
+    },
+    "error": "刪除項目時出錯。請再試一次。"
+  },
+  "searchFilters": "搜索過濾器",
+  "iconPicker": {
+    "title": "選擇圖標",
+    "items": {
+      "icon": "圖標",
+      "iconSet": "圖標集"
+    },
+    "empty": {
+      "icon": {
+        "title": "沒有圖標",
+        "description": "未找到圖標，請嘗試其他關鍵詞。"
+      }
+    }
+  },
+  "imagePicker": {
+    "title": "選擇文件",
+    "local": "上傳本地圖片",
+    "url": "圖片網址",
+    "pixabay": "從Pixabay下載",
+    "orPasteLink": "或粘貼圖片鏈接",
+    "inputs": {
+      "imageLink": "圖片鏈接",
+      "imageType": "圖片類型",
+      "imageCategory": "圖片類別",
+      "imageColor": "圖片顏色",
+      "editorsChoice": "編輯推薦",
+      "prompt": "AI提示文本"
+    },
+    "imageType": {
+      "all": "所有",
+      "photo": "照片",
+      "vector": "矢量圖",
+      "illustration": "插圖"
+    },
+    "items": {
+      "pixabay": "Pixabay"
+    },
+    "empty": {
+      "result": {
+        "title": "沒有結果",
+        "description": "未找到圖片，請嘗試其他關鍵詞。"
+      },
+      "pixabay": {
+        "title": "由Pixabay提供",
+        "description": "搜索超過1300萬張高質量免費圖片。"
+      },
+      "noAPIKey": {
+        "title": "Pixabay API密鑰未配置",
+        "description": "請在API密鑰庫中設置您的Pixabay API密鑰以使用此功能。"
+      },
+      "noOpenAIKey": {
+        "title": "OpenAI API密鑰未配置",
+        "description": "請在API密鑰庫中設置您的OpenAI API密鑰以使用此功能。"
+      }
+    },
+    "ai": "AI影像生成"
+  },
+  "colorPicker": {
+    "title": "選擇顏色",
+    "modals": {
+      "morandiColorPalette": "莫蘭迪色調",
+      "tailwindCssColorPalette": "Tailwind CSS色調",
+      "flatUiColors": "Flat UI Colors"
+    },
+    "buttons": {
+      "morandiColorPalette": "莫蘭迪色調",
+      "tailwindCssColorPalette": "Tailwind CSS色調",
+      "flatUiColors": "Flat UI Colors"
+    }
+  },
+  "imagePreview": "圖片預覽",
+  "qrCodeScanner": "二維碼掃描器",
+  "viewImage": "查看圖片"
+}

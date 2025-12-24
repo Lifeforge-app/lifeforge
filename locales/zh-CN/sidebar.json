@@ -1,0 +1,31 @@
+{
+  "categories": {
+    "productivity": "生产力",
+    "storage": "存储",
+    "study": "学习",
+    "finance": "财务",
+    "confidential": "机密",
+    "settings": "设置",
+    "technologies": "技术",
+    "utilities": "实用工具",
+    "information": "信息",
+    "sso": "单一登录",
+    "references": "参考资料",
+    "lifestyle": "生活方式",
+    "externalManagement": "外部管理",
+    "healthFitness": "健康与健身"
+  },
+  "buttons": {
+    "signOut": "登出",
+    "accountSettings": "账户设置"
+  },
+  "items": {
+    "module": "模块"
+  },
+  "empty": {
+    "modules": {
+      "title": "未找到模块",
+      "description": "请调整模块搜索。"
+    }
+  }
+}

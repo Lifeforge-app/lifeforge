@@ -1,0 +1,67 @@
+{
+  "title": "帐户设定",
+  "description": "管理您所有帐户详细信息的地方",
+  "settings": {
+    "title": {
+      "profilePicture": "个人资料图片",
+      "username": "用户名",
+      "displayName": "显示名称",
+      "email": "电子邮件地址",
+      "password": "密码",
+      "dateOfBirth": "出生日期",
+      "twoFA": "双因素认证"
+    },
+    "desc": {
+      "profilePicture": "上传个人资料图片以个性化您的帐户。",
+      "username": "在平台上识别您的名称。",
+      "displayName": "显示给其他用户的名称。",
+      "email": "您用来登录帐户的电子邮件地址。",
+      "password": "设置一个强密码以保护您的帐户。",
+      "dateOfBirth": "设置您的出生日期，我们会给您一个惊喜！",
+      "twoFA": "在登录系统时启用双重身份验证。"
+    },
+    "empty": "未设置"
+  },
+  "modals": {
+    "username": {
+      "update": "更新用户名"
+    },
+    "email": {
+      "update": "更新电子邮件"
+    },
+    "displayName": {
+      "update": "更新显示名称"
+    },
+    "dateOfBirth": {
+      "update": "更新出生日期"
+    },
+    "enable2FA": {
+      "title": "启用双重身份验证",
+      "description": "请使用您选择的身份验证器应用程序（例如 Google Authenticator）扫描下面的二维码，然后点击继续。",
+      "confirmationDescription": "请在验证器应用程序中输入显示的OTP以确认启用2FA。"
+    },
+    "disable2FA": {
+      "title": "禁用双重认证",
+      "description": "您确定要禁用两步验证吗？"
+    }
+  },
+  "buttons": {
+    "changePassword": "更改密码"
+  },
+  "inputs": {
+    "dateOfBirth": "出生日期",
+    "username": "用户名",
+    "email": "电子邮件地址",
+    "displayName": "显示名称"
+  },
+  "messages": {
+    "twoFA": {
+      "enableSuccess": "双重身份验证成功启用。",
+      "disableSuccess": "双重身份验证已成功禁用。"
+    }
+  },
+  "misc": {
+    "enabled": "已启用",
+    "disabled": "已禁用"
+  }
+}
