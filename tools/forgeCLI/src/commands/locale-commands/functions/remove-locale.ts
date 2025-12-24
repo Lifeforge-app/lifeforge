@@ -58,7 +58,7 @@ function removeGitSubmodule(localeDir: string): void {
     // May fail if not a proper submodule
   }
 
-  // Step 2: Remove from git index
+  // Step 2: Remove from git index (git rm)
   try {
     executeCommand(`git rm -rf ${localeDir}`, {
       exitOnError: false,
@@ -68,14 +68,24 @@ function removeGitSubmodule(localeDir: string): void {
     // May fail if not tracked
   }
 
-  // Step 3: Remove from .git/modules
+  // Step 3: Force remove from git index (handles orphaned entries)
+  try {
+    executeCommand(`git update-index --force-remove ${localeDir}`, {
+      exitOnError: false,
+      stdio: ['ignore', 'ignore', 'ignore']
+    })
+  } catch {
+    // May fail if not in index
+  }
+
+  // Step 4: Remove from .git/modules
   const gitModulesPath = `.git/modules/${localeDir}`
 
   if (fs.existsSync(gitModulesPath)) {
     fs.rmSync(gitModulesPath, { recursive: true })
   }
 
-  // Step 4: Remove entry from .gitmodules file
+  // Step 5: Remove entry from .gitmodules file
   if (fs.existsSync('.gitmodules')) {
     const content = fs.readFileSync('.gitmodules', 'utf-8')
 
