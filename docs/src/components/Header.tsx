@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react'
 import { Link } from 'shared'
 import { usePersonalization } from 'shared'
 
+import GithubStarCount from './GithubStarCount'
+
 function Header({
   sidebarOpen,
   setSidebarOpen
@@ -54,14 +56,7 @@ function Header({
             icon={derivedTheme === 'dark' ? 'uil:moon' : 'uil:sun'}
           />
         </button>
-        <a
-          className="text-bg-400 hover:text-bg-800 dark:hover:text-bg-100 block p-2"
-          href="https://github.com/LifeForge-app/lifeforge"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <Icon className="h-6 w-6 transition-all" icon="uil:github" />
-        </a>
+        <GithubStarCount />
         <button
           className="block p-2 xl:hidden"
           onClick={() => setSidebarOpen(!sidebarOpen)}
