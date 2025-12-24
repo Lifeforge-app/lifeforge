@@ -9,8 +9,8 @@ import { Alert } from "lifeforge-ui"
 
 LifeForge comes with a built-in internationalization (i18n) system that allows you to provide translations for your module's content. This means your module can speak the same language as your users, no matter where they are in the world.
 
-<Alert className="mt-6" type="note">
-  Currently, there are only 4 supported languages: English, Simplified Chinese, Traditional Chinese, and Bahasa Malaysia. A dynamic language addition system is planned for future releases.
+<Alert className="mt-6" type="tip">
+  LifeForge supports dynamic language pack installation. You can add or remove languages at any time using the `ForgeCLI`. See the [Language Packs](/user-guide/LanguagePacks) documentation for more details.
 </Alert>
 
 <Alert className="mt-6" type="important">
@@ -370,7 +370,34 @@ When adding a key to English, immediately add placeholder or translated values t
 
 </section>
 
-<section id="troubleshooting">
+<section id="creating-language-packs">
+## Creating Language Packs
+
+Want to contribute a new language to LifeForge? Here's how to create a language pack:
+
+1. **Fork an existing language pack** — Start with the English ([lang-en](https://github.com/lifeforge-app/lang-en)) repository as a template
+2. **Translate all JSON files** — Maintain the same structure and keys
+3. **Update `manifest.json`** — Set the correct `name`, `icon`, and `displayName`
+4. **Create the repository** — Name it `lang-<code>` (e.g., `lang-ja` for Japanese)
+5. **Submit for inclusion** — Open an issue in the main LifeForge repository
+
+### Manifest File Structure
+
+```json
+{
+    "name": "ja",
+    "icon": "circle-flags:jp",
+    "displayName": "日本語"
+}
+```
+
+<Alert className="mt-6" type="note">
+The `icon` field uses [Iconify](https://icon-sets.iconify.design/) icon names. The `circle-flags` set is recommended for country flags.
+</Alert>
+
+</section>
+
+<section id="Troubleshooting">
 ## Troubleshooting
 
 ### Missing Translation Warnings
