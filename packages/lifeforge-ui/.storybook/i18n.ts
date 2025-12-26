@@ -48,7 +48,8 @@ i18n
           return
         }
 
-        return forgeAPI.locales.getLocale
+        return forgeAPI
+          .untyped('/locales/getLocale')
           .setHost(import.meta.env.VITE_API_HOST)
           .input({
             lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms',
