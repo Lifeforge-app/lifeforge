@@ -60,6 +60,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tinycolor2": "^1.6.0",
     "typescript": "^5.9.3",
+    "uuid": "^13.0.0",
     "zod": "^4.0.17"
   },
   "devDependencies": {
