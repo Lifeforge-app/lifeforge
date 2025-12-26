@@ -42,7 +42,6 @@ pre * {
   text-shadow: none !important;
 }
 
-
 ::marker {
   @apply text-bg-300;
 }
@@ -59,8 +58,8 @@ hr + section > h2 {
   @apply mt-4!;
 }
 
-.notes h3 {
-  @apply mt-8! text-xl;
+.notes h4 {
+  @apply mt-6! text-xl;
 
   & + p {
     @apply mt-4;
