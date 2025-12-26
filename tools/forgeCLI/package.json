@@ -7,12 +7,16 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
-    "@babel/generator": "^7.28.3",
-    "@babel/traverse": "^7.28.4",
+    "@babel/generator": "^7.28.5",
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
     "@types/babel__generator": "^7.27.0",
     "@types/babel__traverse": "^7.28.0",
     "axios": "^1.12.2",
     "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "concurrently": "^9.2.1",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.18",
     "dotenv": "^17.2.3",
@@ -21,6 +25,8 @@
     "openai": "^6.7.0",
     "ora": "^9.0.0",
     "pocketbase": "^0.26.3",
+    "prettier": "^3.7.4",
+    "prompts": "^2.4.2",
     "zod": "^4.1.12"
   },
   "devDependencies": {

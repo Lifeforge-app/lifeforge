@@ -3,6 +3,7 @@ import path from 'path'
 
 import {
   checkRunningPBInstances,
+  isDockerMode,
   killExistingProcess,
   validateEnvironment
 } from '../../../utils/helpers'
@@ -14,9 +15,7 @@ import {
   processSchemaGeneration
 } from '../functions/schema-generation'
 import { writeFormattedFile } from '../utils/file-utils'
-import getPocketbaseInstance, {
-  validatePocketBaseSetup
-} from '../utils/pocketbase-utils'
+import getPocketbaseInstance from '../utils/pocketbase-utils'
 
 /**
  * Command handler for generating database schemas
@@ -27,18 +26,22 @@ export async function generateSchemaHandler(
   try {
     CLILoggingService.info('Starting schema generation process...')
 
-    validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
+    // In Docker mode, PB_DIR is not required - PocketBase is already running externally
+    if (isDockerMode()) {
+      validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
+    } else {
+      validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
+    }
 
-    const pbRunning = checkRunningPBInstances(false)
+    let pbPid: number | undefined
 
-    let pbPid: number
+    // In Docker mode, PocketBase is already running as a separate service
+    if (!isDockerMode()) {
+      const pbRunning = checkRunningPBInstances(false)
 
-    if (!pbRunning) {
-      const { pbInstancePath } = await validatePocketBaseSetup(
-        process.env.PB_DIR!
-      )
-
-      pbPid = await startPocketBaseAndGetPid(pbInstancePath)
+      if (!pbRunning) {
+        pbPid = await startPocketBaseAndGetPid()
+      }
     }
 
     // Authenticate with PocketBase
@@ -91,8 +94,9 @@ export async function generateSchemaHandler(
         : `Schema generation completed! Created ${moduleCount} module schema files.`
     )
 
-    if (!pbRunning) {
-      killExistingProcess(pbPid!)
+    // Kill PocketBase if we started it
+    if (pbPid) {
+      killExistingProcess(pbPid)
     }
   } catch (error) {
     CLILoggingService.error(`Schema generation failed: ${error}`)

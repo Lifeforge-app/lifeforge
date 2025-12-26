@@ -15,6 +15,11 @@ import {
   validateEnvironment
 } from '../utils/helpers'
 import { CLILoggingService } from '../utils/logging'
+import {
+  PB_BINARY_PATH,
+  PB_DATA_DIR,
+  PB_MIGRATIONS_DIR
+} from './db-commands/utils/constants'
 
 /**
  * Service command configurations
@@ -42,7 +47,7 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         process.exit(1)
       }
 
-      return './pocketbase serve'
+      return `${PB_BINARY_PATH} serve --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`
     },
     cwd: () => process.env.PB_DIR!,
     requiresEnv: ['PB_DIR']

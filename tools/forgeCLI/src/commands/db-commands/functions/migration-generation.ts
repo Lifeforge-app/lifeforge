@@ -4,7 +4,12 @@ import fs from 'fs'
 import prettier from 'prettier'
 
 import { CLILoggingService } from '../../../utils/logging'
-import { MIGRATION_PRETTIER_OPTIONS } from '../utils/constants'
+import {
+  MIGRATION_PRETTIER_OPTIONS,
+  PB_BINARY_PATH,
+  PB_DATA_DIR,
+  PB_MIGRATIONS_DIR
+} from '../utils/constants'
 import type { MigrationResult } from '../utils/types'
 
 /**
@@ -46,12 +51,11 @@ export function generateMigrationContent(
  */
 export async function createMigrationFile(
   moduleName: string,
-  schema: Record<string, { raw: any }>,
-  pbInstancePath: string
+  schema: Record<string, { raw: any }>
 ): Promise<MigrationResult> {
   try {
     const response = execSync(
-      `${pbInstancePath} migrate create ${moduleName}`,
+      `${PB_BINARY_PATH} migrate create ${moduleName} --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
       {
         input: 'y\n',
         stdio: ['pipe', 'pipe', 'pipe']

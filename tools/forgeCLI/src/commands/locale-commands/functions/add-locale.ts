@@ -9,9 +9,7 @@ import {
 } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { startPocketBaseAndGetPid } from '../../db-commands/functions/database-initialization'
-import getPocketbaseInstance, {
-  validatePocketBaseSetup
-} from '../../db-commands/utils/pocketbase-utils'
+import getPocketbaseInstance from '../../db-commands/utils/pocketbase-utils'
 import {
   type LocaleInstallConfig,
   createLocaleConfig,
@@ -195,11 +193,7 @@ export async function addLocaleHandler(langName: string): Promise<void> {
       pbRunning = checkRunningPBInstances(false)
 
       if (!pbRunning) {
-        const { pbInstancePath } = await validatePocketBaseSetup(
-          process.env.PB_DIR!
-        )
-
-        pbPid = await startPocketBaseAndGetPid(pbInstancePath)
+        pbPid = await startPocketBaseAndGetPid()
       }
 
       const pb = await getPocketbaseInstance()

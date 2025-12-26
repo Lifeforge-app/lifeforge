@@ -5,7 +5,6 @@ import ora from 'ora'
 import z from 'zod'
 
 import { startPocketBaseAndGetPid } from '../commands/db-commands/functions/database-initialization'
-import { validatePocketBaseSetup } from '../commands/db-commands/utils'
 import getPocketbaseInstance from '../commands/db-commands/utils/pocketbase-utils'
 import {
   checkRunningPBInstances,
@@ -35,11 +34,7 @@ export async function getAPIKey(): Promise<string | null> {
   let pbPid: number
 
   if (!pbRunning) {
-    const { pbInstancePath } = await validatePocketBaseSetup(
-      process.env.PB_DIR!
-    )
-
-    pbPid = await startPocketBaseAndGetPid(pbInstancePath)
+    pbPid = await startPocketBaseAndGetPid()
   }
 
   const pbInstance = await getPocketbaseInstance()
