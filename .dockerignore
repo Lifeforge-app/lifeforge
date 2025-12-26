@@ -1,0 +1,47 @@
+# Dependencies (will be reinstalled in container)
+**/node_modules
+
+# Build outputs
+**/dist
+**/.next
+**/build
+
+# Development files
+**/.git
+**/.gitignore
+**/.env*
+!**/env/.env.docker.example
+
+# IDE and editor files
+**/.vscode
+**/.idea
+**/*.swp
+**/*.swo
+
+# Test files
+**/*.test.ts
+**/*.spec.ts
+**/coverage
+**/__tests__
+
+# Documentation
+**/README.md
+**/CHANGELOG.md
+**/docs
+
+# Docker files (not needed inside containers)
+**/Dockerfile
+**/docker-compose*.yaml
+**/.dockerignore
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# Logs
+**/*.log
+**/logs
+
+# Misc
+**/*.md
+**/LICENSE
