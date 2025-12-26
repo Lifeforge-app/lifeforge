@@ -94,6 +94,90 @@ If you ever submit an issue regarding installation or deployment on Windows, ple
 </Alert>
 </section>
 
+<section id="docker-installation">
+## Docker Installation
+
+Docker is the easiest way to get LifeForge up and running. It handles all dependencies and configuration automatically.
+
+### Prerequisites
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
+      <Icon icon="simple-icons:docker" className="translate-y-1" />
+      **Docker & Docker Compose:**
+    </span>
+    <span>
+      Make sure you have [Docker](https://www.docker.com/get-started/) and Docker Compose installed on your system.
+    </span>
+  </div>
+
+### Setup
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/lifeforge-app/lifeforge.git
+    cd lifeforge
+    ```
+
+2. Create the environment file:
+
+    ```bash
+    cp env/.env.docker.example env/.env.docker
+    ```
+
+3. Edit `env/.env.docker` and set the required variables:
+
+    ```bash
+    PB_EMAIL=your-email@example.com    # Admin email
+    PB_PASSWORD=your-secure-password   # Admin password (min 8 chars)
+    MASTER_KEY=your-master-key-here    # Encryption key (min 16 chars)
+    ```
+
+4. Build and start the containers:
+
+    ```bash
+    docker compose build
+    docker compose up
+    ```
+
+### Accessing LifeForge
+
+Once the containers are running, you can access LifeForge at:
+
+- **Web Interface:** [http://localhost](http://localhost)
+- **LifeForge API:** [http://localhost/api](http://localhost/api)
+- **PocketBase Dashboard:** The database is internal-only for security
+
+<Alert className="mt-6" type="important">
+### Type Inference Dependencies
+
+The client uses the server's database schemas for API type inference. Before building Docker containers, ensure schemas are up to date by running locally:
+
+```bash
+bun install --linker isolated
+bun forge db generate-schemas
+docker compose build
+docker compose up
+```
+
+Usually, installing and removing modules through ForgeCLI will automatically sync the schemas. If you have modified the schemas manually, you will need to run `bun forge db generate-schemas` to update the schemas.
+</Alert>
+
+<Alert className="mt-6" type="note">
+### Container Architecture
+
+- **Client:** Nginx serving the frontend (port 80)
+- **Server:** Express API server (internal)
+- **Database:** PocketBase (internal)
+
+Only port 80 is exposed externally. The API and database are accessible only within the Docker network.
+</Alert>
+
+
+
+</section>
+
 <section id="system-installation">
 ## System Installation
 
