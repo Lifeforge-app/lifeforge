@@ -42,9 +42,6 @@ pre * {
   text-shadow: none !important;
 }
 
-article section {
-  @apply scroll-mt-24;
-}
 
 ::marker {
   @apply text-bg-300;
