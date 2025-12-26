@@ -3,6 +3,7 @@ import BgTemp from './components/BgTemp'
 import CustomColorInput from './components/CustomColorInput'
 import LightAndDarkMode from './components/LightAndDarkMode'
 import ThemeColors from './components/ThemeColors'
+import CustomLink from "../../components/CustomLink"
 
 ###### Personalization
 
@@ -24,7 +25,11 @@ The personalization page is where you can adjust the appearance of the system to
 <section id="languages">
 ## Languages
 
-LifeForge currently supports 4 languages: English, Simplified Chinese, and Traditional Chinese, and Malay. You can choose the language you prefer to use in the system by selecting the language from the dropdown list in the **Languages** section.
+LifeForge comes with English language by default. However, you can add more languages to the system by installing language packs. Click the link below to learn how to add language packs to your system.
+
+<CustomLink to="/user-guide/language-packs" text='Learn More' />
+
+After installing the language packs, you can choose the language you prefer to use in the system by selecting the language from the dropdown list in the **Languages** section.
 
 <Alert className="mt-6" type="note">
 For my fellow developers, you must provide the required locale files if you are creating custom modules. Head over to the [Localization Guide](/developer-guide/localization) to learn how to add localization support to your modules.
@@ -105,7 +110,7 @@ Click on **Adjust** to adjust the background image settings, such as the opacity
 
 </section>
 
-<section id="font-family-&-scale">
+<section id="font-family-scale">
 ## Font Family & Scale
 
 The font family used in the system is default to [Onest](https://fonts.google.com/specimen/Onest) from Google Fonts. If you prefer to use a different font family, feel free to browse and choose one from the font selector.
