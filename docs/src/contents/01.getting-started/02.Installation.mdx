@@ -108,6 +108,19 @@ Once the containers are running, you can access LifeForge at:
 - **Database:** PocketBase (internal)
 
 Only port 80 is exposed externally. The API and database are accessible only within the Docker network.
+
+#### Data Persistence
+
+Database files are persisted to `./database/pb_data` on your host machine via Docker volume mounting. This is the same location used by manual local installation by default, allowing you to switch between Docker and local development while sharing the same data.
+
+This directory contains:
+
+- `data.db` - Main SQLite database
+- `pb_migrations/` - Database migration files
+- Other PocketBase data files
+
+Your data will persist across container restarts. To reset the database, simply delete the `./database/pb_data` directory and restart the containers.
+
 </Alert>
 
 </section>
