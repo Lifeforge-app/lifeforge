@@ -4,6 +4,10 @@ import { v4 } from 'uuid'
 import z from 'zod'
 
 import { default as _validateOTP } from '@functions/auth/validateOTP'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
@@ -166,10 +170,57 @@ const getUserData = forgeController
     return sanitizedUserData
   })
 
+const createFirstUser = forgeController
+  .mutation()
+  .noAuth()
+  .description({
+    en: 'Create the first user (only works when no users exist)',
+    ms: 'Cipta pengguna pertama (hanya berfungsi jika tiada pengguna)',
+    'zh-CN': '创建第一个用户（仅在没有用户存在时有效）',
+    'zh-TW': '建立第一個用戶（僅在沒有用戶存在時有效）'
+  })
+  .input({
+    body: z.object({
+      email: z.email(),
+      username: z.string().min(3),
+      name: z.string().min(1),
+      password: z.string().min(8)
+    })
+  })
+  .callback(async ({ body: { email, username, name, password } }) => {
+    const config = validateEnvironmentVariables()
+
+    const superPBInstance = await connectToPocketBase(config)
+
+    const users = await superPBInstance.collection('users').getFullList()
+
+    if (users.length > 0) {
+      throw new ClientError('Users already exist', 400)
+    }
+
+    await superPBInstance.collection('users').create({
+      email,
+      username,
+      name,
+      verified: true,
+      password,
+      passwordConfirm: password,
+      theme: 'system',
+      language: 'en',
+      fontScale: 1.0,
+      borderRadiusMultiplier: 1.0
+    })
+
+    return {
+      state: 'success' as const
+    }
+  })
+
 export default forgeRouter({
   validateOTP,
   generateOTP,
   login,
   verifySessionToken,
-  getUserData
+  getUserData,
+  createFirstUser
 })
