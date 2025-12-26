@@ -51,7 +51,8 @@ function LocationInput({
   const debouncedQuery = useDebounce(query, 500)
 
   const enabledQuery = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys
+    forgeAPI
+      .untyped('/apiKeys/entries/checkKeys')
       .setHost(apiHost)
       .input({
         keys: 'gcloud'
@@ -67,7 +68,8 @@ function LocationInput({
         : false
 
   const dataQuery = useQuery(
-    forgeAPI.locations.search
+    forgeAPI
+      .untyped('/locations/search')
       .setHost(apiHost)
       .input({
         q: debouncedQuery
@@ -98,7 +100,7 @@ function LocationInput({
         {query.trim() !== '' &&
           (dataQuery.data ? (
             <>
-              {dataQuery.data.map(loc => (
+              {dataQuery.data.map((loc: Location) => (
                 <ComboboxOption
                   key={JSON.stringify(loc.location)}
                   label={
