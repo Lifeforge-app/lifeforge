@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "cd ../shared && bun run build && cd ../packages/lifeforge-ui && bun run build && cd ../../client && vite",
     "types": "tsc -b && for dir in ../apps/*/; do echo \"Running types in $dir\" && (cd \"$dir\" && bun types); done",
-    "build": "cd ../shared && bun run build && cd ../packages/lifeforge-ui && bun run build && cd ../../client && tsc -b && vite build",
+    "build": "cd ../server && bun types && cd ../shared && bun run build && cd ../packages/lifeforge-ui && bun run build && cd ../../client && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
