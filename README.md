@@ -76,7 +76,7 @@ explore and discover within the project.
   <img width="49%" src="https://github.com/user-attachments/assets/441d5996-1695-4eaf-b47f-ddad866a45d0">
   <img width="49%" src="https://github.com/user-attachments/assets/b5fb64bb-23f7-4aba-8dcb-2f8d9f646615">
   <img width="49%" src="https://github.com/user-attachments/assets/16b23910-37bf-4f56-892d-c971d70b19ae">
-</div>=
+</div>
 
 ## 🔬 Technologies Used
 
@@ -91,10 +91,9 @@ explore and discover within the project.
 
 ## ⌨️ Setup
 
-Setting up LifeForge can be a bit challenging and may require some technical
-expertise and your own hardware. A docker file is hopefully on the way, but for now, you have to install it manually.
-Visit the [Documentation](https://docs.lifeforge.melvinchia.dev)
-to see how to install and setup.
+LifeForge now supports Docker for easy deployment! 🐳 You can get up and running with just a few commands. For those who prefer manual installation, that option is still available.
+
+Visit the [Documentation](https://docs.lifeforge.melvinchia.dev) to see how to install and setup.
 
 ## 📈 Status
 
