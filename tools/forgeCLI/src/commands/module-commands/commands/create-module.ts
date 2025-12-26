@@ -10,7 +10,6 @@ import { fetchAI } from '../../../utils/ai'
 import { checkRunningPBInstances, executeCommand } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { runDatabaseMigrations } from '../../db-commands/functions/database-initialization'
-import { validatePocketBaseSetup } from '../../db-commands/utils'
 import { getInstalledModules } from '../utils/file-system'
 import { injectModuleRoute } from '../utils/route-injection'
 import { injectModuleSchema } from '../utils/schema-injection'
@@ -389,8 +388,6 @@ function generateDatabaseSchemas(): void {
 export async function createModuleHandler(moduleName?: string): Promise<void> {
   checkRunningPBInstances()
 
-  const { pbInstancePath } = await validatePocketBaseSetup(process.env.PB_DIR!)
-
   const moduleNameWithTranslation = await promptForModuleName(moduleName)
 
   const moduleType = await promptModuleType()
@@ -427,7 +424,7 @@ export async function createModuleHandler(moduleName?: string): Promise<void> {
       `${process.cwd()}/apps/${camelizedModuleName}/server/schema.ts`
     )
   ) {
-    runDatabaseMigrations(pbInstancePath)
+    runDatabaseMigrations()
     generateDatabaseSchemas()
   }
 

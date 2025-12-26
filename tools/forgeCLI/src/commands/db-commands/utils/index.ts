@@ -5,10 +5,7 @@ export {
   importSchemaModules
 } from './file-utils'
 
-export {
-  validatePocketBaseSetup,
-  cleanupOldMigrations
-} from './pocketbase-utils'
+export { cleanupOldMigrations } from './pocketbase-utils'
 
 export {
   buildModuleCollectionsMap,

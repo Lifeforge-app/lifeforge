@@ -253,6 +253,13 @@ export async function delay(ms: number): Promise<void> {
 }
 
 /**
+ * Checks if running in Docker mode
+ */
+export function isDockerMode(): boolean {
+  return process.env.DOCKER_MODE === 'true'
+}
+
+/**
  * Executes a command and returns the output as a string
  */
 export function executeCommandWithOutput(
