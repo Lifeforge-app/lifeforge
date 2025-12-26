@@ -7,6 +7,11 @@ import prompts from 'prompts'
 
 import { executeCommand, killExistingProcess } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
+import {
+  PB_BINARY_PATH,
+  PB_DATA_DIR,
+  PB_MIGRATIONS_DIR
+} from '../utils/constants'
 import getPocketbaseInstance from '../utils/pocketbase-utils'
 
 /**
@@ -16,13 +21,15 @@ import getPocketbaseInstance from '../utils/pocketbase-utils'
 /**
  * Starts a PocketBase server instance
  */
-export async function startPocketbaseServer(
-  pbInstancePath: string
-): Promise<number> {
+export async function startPocketbaseServer(): Promise<number> {
   return new Promise((resolve, reject) => {
-    const pbProcess = spawn(pbInstancePath, ['serve'], {
-      stdio: ['ignore', 'pipe', 'pipe']
-    })
+    const pbProcess = spawn(
+      PB_BINARY_PATH,
+      ['serve', `--dir=${PB_DATA_DIR}`, `--migrationsDir=${PB_MIGRATIONS_DIR}`],
+      {
+        stdio: ['ignore', 'pipe', 'pipe']
+      }
+    )
 
     pbProcess.stdout?.on('data', data => {
       const output = data.toString()
@@ -108,8 +115,8 @@ export function ensureEnvironmentFile(): string {
 /**
  * Validates that PocketBase data directory doesn't already exist
  */
-export function validatePocketBaseNotInitialized(pbDir: string): void {
-  if (fs.existsSync(path.resolve(pbDir, 'pb_data'))) {
+export function validatePocketBaseNotInitialized(): void {
+  if (fs.existsSync(path.resolve(PB_DATA_DIR, 'pb_data'))) {
     CLILoggingService.actionableError(
       'PocketBase is already initialized in the specified directory, aborting.',
       'If you want to re-initialize, please remove the existing pb_data folder in the database directory.'
@@ -122,7 +129,6 @@ export function validatePocketBaseNotInitialized(pbDir: string): void {
  * Creates PocketBase superuser
  */
 export function createPocketBaseSuperuser(
-  pbInstancePath: string,
   email: string,
   password: string
 ): void {
@@ -132,7 +138,7 @@ export function createPocketBaseSuperuser(
     )
 
     const result = executeCommand(
-      `${pbInstancePath} superuser create`,
+      `${PB_BINARY_PATH} superuser create --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
       {
         stdio: ['pipe', 'pipe', 'pipe']
       },
@@ -159,16 +165,19 @@ export function createPocketBaseSuperuser(
 /**
  * Runs database migrations
  */
-export function runDatabaseMigrations(pbInstancePath: string): void {
+export function runDatabaseMigrations(): void {
   try {
     CLILoggingService.step('Migrating database schema to latest state...')
     executeCommand(`bun forge db generate-migrations`, {
       stdio: ['pipe', 'pipe', 'pipe']
     })
     CLILoggingService.success('Initial migration generated successfully.')
-    executeCommand(`${pbInstancePath} migrate up`, {
-      stdio: ['pipe', 'pipe', 'pipe']
-    })
+    executeCommand(
+      `${PB_BINARY_PATH} migrate up --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
+      {
+        stdio: ['pipe', 'pipe', 'pipe']
+      }
+    )
     CLILoggingService.success('Database schema migrated successfully.')
   } catch (error) {
     CLILoggingService.error(
@@ -276,13 +285,11 @@ export async function setupDefaultData(
 /**
  * Starts PocketBase server and returns the process ID
  */
-export async function startPocketBaseAndGetPid(
-  pbInstancePath: string
-): Promise<number> {
+export async function startPocketBaseAndGetPid(): Promise<number> {
   try {
     CLILoggingService.step('Starting PocketBase server...')
 
-    const pbPid = await startPocketbaseServer(pbInstancePath)
+    const pbPid = await startPocketbaseServer()
 
     CLILoggingService.success(
       `PocketBase server started successfully with PID ${chalk.bold.blue(

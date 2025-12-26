@@ -1,0 +1,54 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    container_name: lifeforge-db
+    restart: unless-stopped
+    env_file:
+      - ./env/.env.docker
+    environment:
+      - DOCKER_MODE=true
+      - PB_BINARY_PATH=/usr/local/bin/pocketbase
+      - PB_DIR=/pb_data
+    expose:
+      - "8090"
+    volumes:
+      - ./database/pb_data:/pb_data
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    container_name: lifeforge-server
+    restart: unless-stopped
+    env_file:
+      - ./env/.env.docker
+    environment:
+      - DOCKER_MODE=true
+      - NODE_ENV=production
+      - PB_HOST=http://db:8090
+    expose:
+      - "3636"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+      args:
+        - VITE_API_HOST=/api
+    container_name: lifeforge-client
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - server

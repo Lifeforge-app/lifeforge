@@ -5,40 +5,7 @@ import path from 'path'
 import PocketBase from 'pocketbase'
 
 import { CLILoggingService } from '../../../utils/logging'
-
-/**
- * Validates PocketBase setup and returns paths
- */
-export async function validatePocketBaseSetup(pbDir: string): Promise<{
-  pbInstancePath: string
-  pbDir: string
-}> {
-  const resolvedPbDir = path.resolve(pbDir)
-
-  const pbInstancePath = path.resolve(resolvedPbDir, 'pocketbase')
-
-  try {
-    fs.accessSync(resolvedPbDir)
-  } catch {
-    CLILoggingService.actionableError(
-      'PocketBase directory does not exist.',
-      'Have you accidentally removed or renamed the folder in your project named "database"? This is the default location specified by PB_DIR. If you plan to use a different location, please update the PB_DIR environment variable accordingly.'
-    )
-    process.exit(1)
-  }
-
-  try {
-    fs.accessSync(pbInstancePath)
-  } catch {
-    CLILoggingService.actionableError(
-      'PocketBase binary not found in the specified directory.',
-      'The database folder is found, but the PocketBase binary is missing. Please ensure that PocketBase is correctly set up in the specified directory.'
-    )
-    process.exit(1)
-  }
-
-  return { pbInstancePath, pbDir: resolvedPbDir }
-}
+import { PB_BINARY_PATH, PB_DATA_DIR, PB_MIGRATIONS_DIR } from './constants'
 
 export default async function getPocketbaseInstance(): Promise<PocketBase> {
   const pb = new PocketBase(process.env.PB_HOST)
@@ -65,33 +32,34 @@ export default async function getPocketbaseInstance(): Promise<PocketBase> {
  * Cleans up old migrations
  */
 export async function cleanupOldMigrations(
-  pbDir: string,
-  pbInstancePath: string,
   targetModule?: string
 ): Promise<void> {
-  const migrationsPath = path.resolve(pbDir, 'pb_migrations')
-
   try {
-    fs.accessSync(migrationsPath)
     CLILoggingService.warn('Cleaning up old migrations directory...')
 
     if (!targetModule) {
-      fs.rmSync(migrationsPath, { recursive: true, force: true })
-      execSync(`${pbInstancePath} migrate history-sync`, {
-        stdio: ['pipe', 'pipe', 'pipe']
-      })
+      fs.rmSync(PB_MIGRATIONS_DIR, { recursive: true, force: true })
+      execSync(
+        `${PB_BINARY_PATH} migrate history-sync --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
+        {
+          stdio: ['pipe', 'pipe', 'pipe']
+        }
+      )
     } else {
-      const migrationFiles = fs.readdirSync(migrationsPath)
+      const migrationFiles = fs.readdirSync(PB_MIGRATIONS_DIR)
 
       migrationFiles.forEach(file => {
         if (file.endsWith(`_${targetModule}.js`)) {
-          fs.rmSync(path.join(migrationsPath, file))
+          fs.rmSync(path.join(PB_MIGRATIONS_DIR, file))
         }
       })
 
-      execSync(`${pbInstancePath} migrate history-sync`, {
-        stdio: ['pipe', 'pipe', 'pipe']
-      })
+      execSync(
+        `${PB_BINARY_PATH} migrate history-sync --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
+        {
+          stdio: ['pipe', 'pipe', 'pipe']
+        }
+      )
 
       CLILoggingService.info(
         `Removed ${chalk.bold.blue(

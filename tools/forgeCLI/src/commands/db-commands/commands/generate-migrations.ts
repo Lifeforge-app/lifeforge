@@ -1,16 +1,10 @@
 import chalk from 'chalk'
 
-import {
-  checkRunningPBInstances,
-  validateEnvironment
-} from '../../../utils/helpers'
+import { checkRunningPBInstances, isDockerMode } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { createMigrationFile } from '../functions/migration-generation'
 import { getSchemaFiles, importSchemaModules } from '../utils/file-utils'
-import {
-  cleanupOldMigrations,
-  validatePocketBaseSetup
-} from '../utils/pocketbase-utils'
+import { cleanupOldMigrations } from '../utils/pocketbase-utils'
 
 /**
  * Command handler for generating database migrations
@@ -21,17 +15,13 @@ export async function generateMigrationsHandler(
   try {
     CLILoggingService.step('Starting database migration generation')
 
-    validateEnvironment(['PB_DIR'])
-
-    const { pbInstancePath, pbDir } = await validatePocketBaseSetup(
-      process.env.PB_DIR!
-    )
-
-    // Check for running instances
-    checkRunningPBInstances()
+    // Skip running instances check in Docker mode (we control the container)
+    if (!isDockerMode()) {
+      checkRunningPBInstances()
+    }
 
     // Clean up old migrations
-    await cleanupOldMigrations(pbDir, pbInstancePath, targetModule)
+    await cleanupOldMigrations(targetModule)
 
     // Get and process schema files
     const schemaFiles = getSchemaFiles(targetModule)
@@ -46,11 +36,7 @@ export async function generateMigrationsHandler(
 
     // Process migrations
     for (const { moduleName, schema } of importedSchemas) {
-      const result = await createMigrationFile(
-        moduleName,
-        schema,
-        pbInstancePath
-      )
+      const result = await createMigrationFile(moduleName, schema)
 
       if (!result.success) {
         CLILoggingService.actionableError(

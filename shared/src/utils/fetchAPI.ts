@@ -111,6 +111,12 @@ export default async function fetchAPI<T>(
       body instanceof Blob
     )
 
+  // Normalize endpoint path - ensure it starts with / for relative paths
+  const normalizedEndpoint =
+    endpoint.startsWith('/') || endpoint.startsWith('http')
+      ? endpoint
+      : `/${endpoint}`
+
   const config: AxiosRequestConfig = {
     method: method.toUpperCase() as
       | 'GET'
@@ -120,9 +126,7 @@ export default async function fetchAPI<T>(
       | 'PATCH'
       | 'HEAD'
       | 'OPTIONS',
-    url: isExternal
-      ? endpoint
-      : new URL(endpoint, apiHost).pathname + new URL(endpoint, apiHost).search,
+    url: isExternal ? endpoint : normalizedEndpoint,
     timeout,
     data: body,
     headers: { ...customHeaders }

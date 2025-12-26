@@ -79,7 +79,8 @@ function Pixabay({
     setResults(null)
 
     try {
-      const data = await forgeAPI.pixabay.searchImages
+      const data = await forgeAPI
+        .untyped('/pixabay/searchImages')
         .setHost(apiHost)
         .input({
           q: query,
@@ -99,9 +100,12 @@ function Pixabay({
 
   return (
     <WithQueryData
-      controller={forgeAPI.apiKeys.entries.checkKeys.setHost(apiHost).input({
-        keys: 'pixabay'
-      })}
+      controller={forgeAPI
+        .untyped('/apiKeys/entries/checkKeys')
+        .setHost(apiHost)
+        .input({
+          keys: 'pixabay'
+        })}
     >
       {exists =>
         exists ? (

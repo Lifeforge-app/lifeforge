@@ -17,7 +17,7 @@ Now that you have successfully set up your LifeForge system, it's time to deploy
 Since the frontend is basically just a **Single Page Application (SPA)**, we can easily deploy it to Vercel, Netlify, or maybe even GitHub Pages (never done it before, not sure if it works). Simply import your GitHub repository, select the root directory to point to the `client` folder, and set the build command to `bun run build` and the output directory to `client/dist`.
 
 <Alert className="mt-6" type="warning">
-### Bun Version Requirement
+#### Bun Version Requirement
 
 When deploying the client application to PaaS providers like Vercel or Netlify, make sure that the Bun version used in the build environment is at least **v1.3.0**, since the dependency resolution mechanism used in Bun v1.3.0 and later is required to properly build the client application. If the Bun version is lower than v1.3.0, your app should still build, but you might run into lots of issues when running the app.
 
@@ -46,7 +46,7 @@ You will eventually need to make your server accessible from the public internet
 The backend server is a **vanilla Express.JS application**, which means you can deploy it to any cloud server that supports Node.js applications. You can use some sort of Virtual Private Server (VPS) like DigitalOcean, Linode, or even AWS EC2.
 
 <Alert className="mt-6" type="note">
-### Using a Proxy Server
+#### Using a Proxy Server
 
 If you want to save some money and avoid the hassle of setting up a VPS, and you just so happen to have an old computer or a Raspberry Pi lying around, you can also host the backend server on your own local server and use a **proxy server** to redirect the requests to your local server through a secure connection.
 
