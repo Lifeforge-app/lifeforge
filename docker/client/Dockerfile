@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM oven/bun:alpine AS builder
 
 # Build args (Vite inlines env vars at build time)
@@ -6,7 +7,8 @@ ARG VITE_API_HOST
 # Set working directory
 WORKDIR /app
 
-# Copy source code (including server for type checking)
+# Copy all source code
+COPY bun.lock bun.lock
 COPY client client
 COPY server server
 COPY shared shared
@@ -14,11 +16,12 @@ COPY packages packages
 COPY apps apps
 COPY tsconfig.json tsconfig.json
 
-# Create a minimal package.json with all needed workspaces
-RUN echo '{"workspaces": ["./shared", "./packages/*", "./client", "./apps/*", "./server"]}' > package.json
+# Create a Docker-specific package.json with only needed workspaces
+RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./client"]}' > package.json
 
-# Install all dependencies from root (resolves workspace deps)
-RUN bun install --ignore-scripts --linker isolated
+# Install all dependencies with cache mount for faster rebuilds
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install --ignore-scripts --linker isolated
 
 # Build packages in order
 RUN cd client && bun run build
