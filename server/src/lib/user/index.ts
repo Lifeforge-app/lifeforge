@@ -1,4 +1,8 @@
-import { forgeRouter } from '@functions/routes'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
+import { forgeController, forgeRouter } from '@functions/routes'
 
 import authRouter from './routes/auth'
 import customFontsRouter from './routes/customFonts'
@@ -20,6 +24,25 @@ if (!process.env.MASTER_KEY) {
 }
 
 export default forgeRouter({
+  exists: forgeController
+    .query()
+    .noAuth()
+    .description({
+      en: 'Check if user exists',
+      ms: 'Cek keadaan pengguna',
+      'zh-CN': '检查用户是否存在',
+      'zh-TW': '檢查用戶是否存在'
+    })
+    .input({})
+    .callback(async () => {
+      const config = validateEnvironmentVariables()
+
+      const superPBInstance = await connectToPocketBase(config)
+
+      const users = await superPBInstance.collection('users').getFullList()
+
+      return users.length > 0
+    }),
   auth: authRouter,
   oauth: oAuthRouter,
   '2fa': twoFARouter,

@@ -73,7 +73,18 @@ export class ForgeAPIClientController<
    * Returns the full endpoint URL (absolute), including query string if present.
    */
   get endpoint() {
-    return new URL(this._getPath(), this._apiHost).toString()
+    const path = this._getPath()
+
+    // Handle relative URLs (e.g., /api)
+    if (this._apiHost.startsWith('/')) {
+      const origin = typeof window !== 'undefined' ? window.location.origin : ''
+
+      const normalizedPath = path.startsWith('/') ? path : `/${path}`
+
+      return `${origin}${this._apiHost}${normalizedPath}`
+    }
+
+    return new URL(path, this._apiHost).toString()
   }
 
   setHost(apiHost: string) {

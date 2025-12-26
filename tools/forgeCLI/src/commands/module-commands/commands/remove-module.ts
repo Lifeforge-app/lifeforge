@@ -1,10 +1,12 @@
 import chalk from 'chalk'
+import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 import prompts from 'prompts'
 
-import { executeCommand } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
+import { generateSchemaHandler } from '../../db-commands'
+import { cleanupOldMigrations } from '../../db-commands/utils/pocketbase-utils'
 import {
   getInstalledModules,
   hasServerComponents,
@@ -39,56 +41,169 @@ function removeServerReferences(moduleName: string): void {
 }
 
 /**
- * Removes the module directory
+ * Removes module migration files and syncs history
+ */
+async function removeModuleMigrations(moduleName: string): Promise<void> {
+  CLILoggingService.progress(`Removing migrations for module: ${moduleName}`)
+
+  try {
+    await cleanupOldMigrations(moduleName)
+    CLILoggingService.success(`Migrations for module "${moduleName}" removed`)
+  } catch (error) {
+    CLILoggingService.warn(
+      `Failed to remove migrations for ${moduleName}: ${error}`
+    )
+  }
+}
+
+/**
+ * Removes the module directory (handles both regular directories and git submodules)
  */
 function removeModuleDirectory(moduleName: string): void {
-  const moduleDir = `apps/${moduleName}`
+  const modulePath = `apps/${moduleName}`
+
+  const moduleDir = path.join(process.cwd(), modulePath)
 
   if (!fs.existsSync(moduleDir)) {
-    CLILoggingService.warn(`Module directory ${moduleDir} does not exist`)
+    CLILoggingService.warn(`Module directory ${modulePath} does not exist`)
 
     return
   }
 
-  CLILoggingService.progress(`Removing module directory: ${moduleDir}`)
+  CLILoggingService.progress(`Removing module directory: ${modulePath}`)
+
+  // Check if it's a git submodule
+  const gitModulesPath = path.join(process.cwd(), '.gitmodules')
+
+  const isSubmodule =
+    fs.existsSync(gitModulesPath) &&
+    fs
+      .readFileSync(gitModulesPath, 'utf8')
+      .includes(`[submodule "${modulePath}"]`)
+
+  if (isSubmodule) {
+    removeGitSubmodule(modulePath)
+  } else {
+    removeRegularDirectory(moduleDir, modulePath)
+  }
+}
+
+/**
+ * Removes a git submodule using proper git commands
+ */
+function removeGitSubmodule(modulePath: string): void {
+  CLILoggingService.progress(`Removing git submodule: ${modulePath}`)
 
   try {
-    executeCommand(`rm -rf ${moduleDir}`)
-    CLILoggingService.success(`Module directory removed: ${moduleDir}`)
+    // Deinitialize the submodule
+    execSync(`git submodule deinit -f ${modulePath}`, {
+      cwd: process.cwd(),
+      stdio: ['pipe', 'pipe', 'pipe']
+    })
+    CLILoggingService.debug('Submodule deinitialized')
+
+    // Remove from git index and working tree
+    execSync(`git rm -f ${modulePath}`, {
+      cwd: process.cwd(),
+      stdio: ['pipe', 'pipe', 'pipe']
+    })
+    CLILoggingService.debug('Submodule removed from git')
+
+    // Remove the .git/modules entry
+    const gitModulesDir = path.join(
+      process.cwd(),
+      '.git',
+      'modules',
+      modulePath
+    )
+
+    if (fs.existsSync(gitModulesDir)) {
+      fs.rmSync(gitModulesDir, { recursive: true, force: true })
+      CLILoggingService.debug('Submodule git directory removed')
+    }
+
+    CLILoggingService.success(`Git submodule removed: ${modulePath}`)
+  } catch (error) {
+    CLILoggingService.warn(
+      `Git submodule removal failed, falling back to manual removal: ${error}`
+    )
+
+    // Fallback to manual removal
+    const moduleDir = path.join(process.cwd(), modulePath)
+
+    removeRegularDirectory(moduleDir, modulePath)
+    removeGitModulesEntry(modulePath)
+  }
+}
+
+/**
+ * Removes a regular directory (non-submodule)
+ */
+function removeRegularDirectory(moduleDir: string, modulePath: string): void {
+  try {
+    fs.rmSync(moduleDir, { recursive: true, force: true })
+    CLILoggingService.success(`Module directory removed: ${modulePath}`)
   } catch (error) {
     CLILoggingService.actionableError(
-      `Failed to remove module directory: ${moduleDir}`,
+      `Failed to remove module directory: ${modulePath}`,
       'Check file permissions and ensure no processes are using the module files'
     )
     throw error
   }
+}
 
-  const gitModulesPath = path.join('.gitmodules')
+/**
+ * Manually removes module entry from .gitmodules file (fallback)
+ */
+function removeGitModulesEntry(modulePath: string): void {
+  const gitModulesPath = path.join(process.cwd(), '.gitmodules')
 
-  if (fs.existsSync(gitModulesPath)) {
-    CLILoggingService.progress('Updating .gitmodules file')
+  if (!fs.existsSync(gitModulesPath)) {
+    return
+  }
 
-    try {
-      let gitModulesContent = fs.readFileSync(gitModulesPath, 'utf8')
+  CLILoggingService.progress('Updating .gitmodules file')
 
-      const modulePath = `apps/${moduleName}`
+  try {
+    let gitModulesContent = fs.readFileSync(gitModulesPath, 'utf8')
 
-      // Remove the module entry from .gitmodules
-      const moduleEntryRegex = new RegExp(
-        `\\[submodule "${modulePath.replace(
-          /[-\/\\^$*+?.()|[\]{}]/g,
-          '\\$&'
-        )}"\\][^\\[]*`,
-        'g'
-      )
-      gitModulesContent = gitModulesContent.replace(moduleEntryRegex, '')
+    // Remove the module entry from .gitmodules
+    const moduleEntryRegex = new RegExp(
+      `\\[submodule "${modulePath.replace(
+        /[-/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )}"\\][^\\[]*`,
+      'g'
+    )
 
-      fs.writeFileSync(gitModulesPath, gitModulesContent, 'utf8')
+    gitModulesContent = gitModulesContent.replace(moduleEntryRegex, '')
 
-      CLILoggingService.success('.gitmodules file updated')
-    } catch (error) {
-      CLILoggingService.warn(`Failed to update .gitmodules file: ${error}`)
+    // Clean up empty lines
+    gitModulesContent = gitModulesContent.replace(/\n{3,}/g, '\n\n').trim()
+
+    if (gitModulesContent) {
+      fs.writeFileSync(gitModulesPath, gitModulesContent + '\n', 'utf8')
+    } else {
+      fs.unlinkSync(gitModulesPath)
     }
+
+    CLILoggingService.success('.gitmodules file updated')
+  } catch (error) {
+    CLILoggingService.warn(`Failed to update .gitmodules file: ${error}`)
+  }
+}
+
+/**
+ * Regenerates database schemas after module removal
+ */
+async function regenerateSchemas(): Promise<void> {
+  CLILoggingService.progress('Regenerating database schemas')
+
+  try {
+    await generateSchemaHandler()
+    CLILoggingService.success('Database schemas regenerated')
+  } catch (error) {
+    CLILoggingService.warn(`Failed to regenerate schemas: ${error}`)
   }
 }
 
@@ -130,12 +245,8 @@ async function selectModuleToRemove(): Promise<string> {
         ? chalk.green('[Server]')
         : chalk.blue('[Client only]')
 
-    const moduleName = chalk.cyan.bold(module)
-
-    const moduleDescription = chalk.gray(description)
-
     return {
-      title: `${moduleName} - ${moduleDescription} ${serverStatus}`,
+      title: `${chalk.cyan.bold(module)} - ${chalk.gray(description)} ${serverStatus}`,
       value: module
     }
   })
@@ -152,7 +263,7 @@ async function selectModuleToRemove(): Promise<string> {
     message: 'Which module would you like to remove?',
     choices,
     initial: 0,
-    suggest: (input: string, choices: any[]) => {
+    suggest: (input: string, choices: { value?: string; title?: string }[]) => {
       return Promise.resolve(
         choices.filter(
           choice =>
@@ -172,7 +283,7 @@ async function selectModuleToRemove(): Promise<string> {
   const confirmResponse = await prompts({
     type: 'confirm',
     name: 'confirmRemoval',
-    message: `Are you sure you want to PERMANENTLY REMOVE the "${response.selectedModule}" module?\n   This action cannot be undone and will delete all module files.`,
+    message: `Are you sure you want to PERMANENTLY REMOVE the "${response.selectedModule}" module?\n   This action cannot be undone and will delete all module files and migrations.`,
     initial: false
   })
 
@@ -210,15 +321,18 @@ export async function removeModuleHandler(moduleName?: string): Promise<void> {
     // Remove server references first
     removeServerReferences(moduleName)
 
+    // Remove module migrations
+    await removeModuleMigrations(moduleName)
+
     // Remove the module directory
     removeModuleDirectory(moduleName)
+
+    // Regenerate schemas
+    await regenerateSchemas()
 
     CLILoggingService.success(`Module "${moduleName}" removed successfully`)
     CLILoggingService.info(
       'Restart the system with "bun forge dev all" to see the changes'
-    )
-    CLILoggingService.warn(
-      'Database migrations are not rolled back to prevent data loss. Remove database schemas manually if needed.'
     )
   } catch (error) {
     CLILoggingService.actionableError(

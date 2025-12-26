@@ -10,9 +10,7 @@ import {
 } from '../../../utils/helpers'
 import { CLILoggingService } from '../../../utils/logging'
 import { startPocketBaseAndGetPid } from '../../db-commands/functions/database-initialization'
-import getPocketbaseInstance, {
-  validatePocketBaseSetup
-} from '../../db-commands/utils/pocketbase-utils'
+import getPocketbaseInstance from '../../db-commands/utils/pocketbase-utils'
 import { getInstalledLocales, localeExists, validateLocaleName } from '../utils'
 
 /**
@@ -168,11 +166,7 @@ export async function removeLocaleHandler(langName: string): Promise<void> {
   let pbPid: number | undefined
 
   if (!pbRunning) {
-    const { pbInstancePath } = await validatePocketBaseSetup(
-      process.env.PB_DIR!
-    )
-
-    pbPid = await startPocketBaseAndGetPid(pbInstancePath)
+    pbPid = await startPocketBaseAndGetPid()
   }
 
   try {

@@ -10,8 +10,127 @@ Back in the day, LifeForge used to be a collection of multiple repositories, whe
 
 ---
 
-<section id="prerequisites">
-## Prerequisites
+<section id="docker-installation">
+## Docker Installation
+
+Docker is the easiest way to get LifeForge up and running. It handles all dependencies and configuration automatically.
+
+### Prerequisites
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
+      <Icon icon="simple-icons:docker" className="translate-y-1" />
+      **Docker & Docker Compose:**
+    </span>
+    <span>
+      Make sure you have [Docker](https://www.docker.com/get-started/) and Docker Compose installed on your system.
+    </span>
+  </div>
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
+      <Icon icon="tabler:brain" className="translate-y-1" />
+      **A functional brain:**
+    </span>
+    <span>
+      While Docker simplifies the installation process, you'll still need to understand basic command-line operations, and how to ~~prompt ai~~ debug if something goes wrong.
+    </span>
+  </div>
+
+- <div>
+    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
+      <Icon icon="uil:nerd" className="translate-y-1" />
+      **Nerdy knowledges:**
+    </span>
+    <span>
+      People who are using Docker are usually a bit nerdy already. So I assume you know your way around Docker and containers. :)
+    </span>
+  </div>
+
+### Setup
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/lifeforge-app/lifeforge.git
+    cd lifeforge
+    ```
+
+2. Create the environment file:
+
+    ```bash
+    cp env/.env.docker.example env/.env.docker
+    ```
+
+3. Edit `env/.env.docker` and set the required variables. Docker will use this file for configuration:
+
+    ```bash
+    PB_EMAIL=your-email@example.com    # Admin email
+    PB_PASSWORD=your-secure-password   # Admin password (min 8 chars)
+    MASTER_KEY=your-master-key-here    # Encryption key (min 16 chars)
+    ```
+
+4. Build and start the containers:
+
+    ```bash
+    docker compose build
+    docker compose up
+    ```
+
+<Alert className="mt-6" type="important">
+#### Type Inference Dependencies
+
+The client uses the server's database schemas for API type inference. Before building Docker containers, ensure schemas are up to date by running locally:
+
+```bash
+bun install --linker isolated
+bun forge db generate-schemas
+docker compose build
+docker compose up
+```
+
+Usually, installing and removing modules through ForgeCLI will automatically sync the schemas. If you have modified the schemas manually, you will need to run `bun forge db generate-schemas` to update the schemas.
+</Alert>
+
+### Accessing LifeForge
+
+Once the containers are running, you can access LifeForge at:
+
+- **Web Interface:** [http://localhost](http://localhost)
+- **LifeForge API:** [http://localhost/api](http://localhost/api)
+- **PocketBase Dashboard:** The database is internal-only for security
+
+<Alert className="mt-6" type="note">
+#### Container Architecture
+
+- **Client:** Nginx serving the frontend (port 80)
+- **Server:** Express API server (internal)
+- **Database:** PocketBase (internal)
+
+Only port 80 is exposed externally. The API and database are accessible only within the Docker network.
+
+#### Data Persistence
+
+Database files are persisted to `./database/pb_data` on your host machine via Docker volume mounting. This is the same location used by manual local installation by default, allowing you to switch between Docker and local development while sharing the same data.
+
+This directory contains:
+
+- `data.db` - Main SQLite database
+- `pb_migrations/` - Database migration files
+- Other PocketBase data files
+
+Your data will persist across container restarts. To reset the database, simply delete the `./database/pb_data` directory and restart the containers.
+
+</Alert>
+
+</section>
+
+<section id="manual-installation">
+## Manual Installation
+
+If you are a developer, you must install and run LifeForge manually on your local machine.
+
+### Prerequisites
 
 Before you start, make sure you have the following items on hand:
 
@@ -79,7 +198,7 @@ Before you start, make sure you have the following items on hand:
   </div>
 
 <Alert className="mt-6" type="warning">
-### Please Don't Use Windows
+#### Please Don't Use Windows
 
 According to [this site](https://www.enterpriseappstoday.com/stats/linux-statistics.html#Linux_Usage_Statistics), as of 2024,
 
@@ -92,10 +211,8 @@ Therefore, if you're using Windows to host the LifeForge system, you might run i
 If you ever submit an issue regarding installation or deployment on Windows, please understand that I might simply mark it as "won't fix" since I don't have a Windows machine to test and debug the issues.
 
 </Alert>
-</section>
 
-<section id="system-installation">
-## System Installation
+### System Installation
 
 First, clone the LifeForge monorepo to your local machine or your server. You can do this by running the following command in your terminal:
 
@@ -110,7 +227,7 @@ cd lifeforge && bun install --linker isolated
 ```
 
 <Alert className="mt-6" type="warning">
-### Using `--linker isolated`
+#### Using `--linker isolated`
 
 By default, Bun uses a global cache for dependencies. However, in a monorepo setup like LifeForge, this can lead to issues with dependency resolution. To avoid these issues, we recommend using the `--linker isolated` flag when installing dependencies. This will ensure that each package in the monorepo has its own isolated set of dependencies to prevent phantom dependency issues.
 
@@ -120,10 +237,7 @@ When doing deployment on a server, make sure to always use the `--linker isolate
 
 That's pretty much it for the installation of the system itself. Now, let's move on to the installation of the database.
 
-</section>
-
-<section id="database-installation">
-## Database Installation
+### Database Installation
 
 You'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. Head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in the root of the LifeForge project.
 
