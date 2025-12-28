@@ -8,13 +8,16 @@ import { challenge } from '..'
 
 export default async function getDecryptedMaster(
   pb: PBService,
+  userId: string,
   master: string
 ): Promise<string> {
-  if (!pb.instance.authStore.record) {
-    throw new ClientError('Auth store not initialized', 401)
+  if (!userId) {
+    throw new ClientError('User not authenticated', 401)
   }
 
-  const { APIKeysMasterPasswordHash } = pb.instance.authStore.record
+  const user = await pb.getOne.collection('user__users').id(userId).execute()
+
+  const { APIKeysMasterPasswordHash } = user
 
   const decryptedMaster = decrypt2(master, challenge)
 

@@ -131,14 +131,16 @@ const listGoogleFontsPin = forgeController
     'zh-TW': '獲取已固定的Google字體'
   })
   .input({})
-  .callback(async ({ pb }) => {
-    if (!pb.instance.authStore.record) {
+  .callback(async ({ pb, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
       throw new ClientError('Unauthorized', 401)
     }
 
     const record = await pb.getOne
       .collection('user__users')
-      .id(pb.instance.authStore.record.id)
+      .id(userId)
       .execute()
 
     return (record.pinnedFontFamilies || []) as string[]
@@ -158,14 +160,16 @@ const toggleGoogleFontsPin = forgeController
     })
   })
   .statusCode(204)
-  .callback(async ({ pb, body: { family } }) => {
-    if (!pb.instance.authStore.record) {
+  .callback(async ({ pb, body: { family }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
       throw new ClientError('Unauthorized', 401)
     }
 
     const record = await pb.getOne
       .collection('user__users')
-      .id(pb.instance.authStore.record.id)
+      .id(userId)
       .execute()
 
     const pinnedFontFamilies: string[] = record.pinnedFontFamilies || []
@@ -176,7 +180,7 @@ const toggleGoogleFontsPin = forgeController
 
     await pb.update
       .collection('user__users')
-      .id(pb.instance.authStore.record.id)
+      .id(userId)
       .data({
         pinnedFontFamilies: updatedPinnedFontFamilies
       })
@@ -197,10 +201,16 @@ const updateBgImage = forgeController
       optional: false
     }
   })
-  .callback(async ({ pb, media: { file } }) => {
+  .callback(async ({ pb, media: { file }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('Unauthorized', 401)
+    }
+
     const newRecord = await pb.update
       .collection('user__users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userId)
       .data({
         ...(await getMedia('bgImage', file)),
         backdropFilters: {
@@ -230,15 +240,21 @@ const deleteBgImage = forgeController
   })
   .input({})
   .statusCode(204)
-  .callback(({ pb }) =>
-    pb.update
+  .callback(async ({ pb, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('Unauthorized', 401)
+    }
+
+    await pb.update
       .collection('user__users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userId)
       .data({
         bgImage: null
       })
       .execute()
-  )
+  })
 
 const updatePersonalization = forgeController
   .mutation()
@@ -265,7 +281,13 @@ const updatePersonalization = forgeController
     })
   })
   .statusCode(204)
-  .callback(async ({ pb, body: { data } }) => {
+  .callback(async ({ pb, body: { data }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('Unauthorized', 401)
+    }
+
     const toBeUpdated: { [key: string]: unknown } = {}
 
     for (const item of [
@@ -291,7 +313,7 @@ const updatePersonalization = forgeController
 
     await pb.update
       .collection('user__users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userId)
       .data(toBeUpdated)
       .execute()
   })

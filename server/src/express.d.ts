@@ -1,3 +1,4 @@
+import type { DecodedToken } from '@functions/auth/jwt'
 import { PBService } from '@functions/database'
 import { ITaskPoolTask } from '@functions/socketio/taskPool'
 
@@ -7,6 +8,7 @@ declare global {
       io: SocketIO.Server
       pb: PBService
       taskPool: Record<string, ITaskPoolTask>
+      jwtPayload?: DecodedToken
     }
   }
 }

@@ -1,18 +1,24 @@
 import moment from 'moment'
-import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
+import {
+  decrypt,
+  decrypt2,
+  encrypt,
+  encrypt2
+} from '@functions/auth/encryption'
 import { signToken } from '@functions/auth/jwt'
-import { default as _validateOTP } from '@functions/auth/validateOTP'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
-import { verifyAppOTP, verifyEmailOTP } from '../utils/otp'
 
 export let canDisable2FA = false
 
@@ -38,68 +44,6 @@ const getChallenge = forgeController
   .input({})
   .callback(async () => challenge)
 
-const requestOTP = forgeController
-  .query()
-  .noAuth()
-  .description({
-    en: 'Request OTP for two-factor authentication',
-    ms: 'Minta OTP untuk pengesahan dua faktor',
-    'zh-CN': '请求二次验证的OTP',
-    'zh-TW': '請求二次驗證的OTP'
-  })
-  .input({
-    query: z.object({
-      email: z.string().email()
-    })
-  })
-  .callback(async ({ pb, query: { email } }) => {
-    const otp = await pb.instance
-      .collection('users')
-      .requestOTP(email as string)
-      .catch(() => null)
-
-    if (!otp) {
-      throw new Error('Failed to request OTP')
-    }
-
-    currentSession.tokenId = v4()
-    currentSession.otpId = otp.otpId
-    currentSession.tokenExpireAt = moment().add(5, 'minutes').toISOString()
-
-    return currentSession.tokenId
-  })
-
-const validateOTP = forgeController
-  .mutation()
-  .noAuth()
-  .description({
-    en: 'Verify OTP for two-factor authentication',
-    ms: 'Sahkan OTP untuk pengesahan dua faktor',
-    'zh-CN': '验证二次验证的OTP',
-    'zh-TW': '驗證二次驗證的OTP'
-  })
-  .input({
-    body: z.object({
-      otp: z.string(),
-      otpId: z.string()
-    })
-  })
-  .callback(async ({ pb, body }) => {
-    if (await _validateOTP(pb, body, challenge)) {
-      canDisable2FA = true
-      setTimeout(
-        () => {
-          canDisable2FA = false
-        },
-        1000 * 60 * 5
-      )
-
-      return true
-    }
-
-    return false
-  })
-
 const generateAuthenticatorLink = forgeController
   .query()
   .description({
@@ -111,22 +55,24 @@ const generateAuthenticatorLink = forgeController
   .input({})
   .callback(
     async ({
-      pb,
       req: {
+        jwtPayload,
         headers: { authorization }
       }
     }) => {
-      const { email } = pb.instance.authStore.record!
+      if (!jwtPayload) {
+        throw new ClientError('User not authenticated', 401)
+      }
 
       tempCode = speakeasy.generateSecret({
-        name: email,
+        name: jwtPayload.email,
         length: 32,
         issuer: 'LifeForge.'
       }).base32
 
       return encrypt2(
         encrypt2(
-          `otpauth://totp/${email}?secret=${tempCode}&issuer=LifeForge.`,
+          `otpauth://totp/${jwtPayload.email}?secret=${tempCode}&issuer=LifeForge.`,
           challenge
         ),
         authorization!.replace('Bearer ', '')
@@ -152,9 +98,14 @@ const verifyAndEnable = forgeController
       pb,
       body: { otp },
       req: {
+        jwtPayload,
         headers: { authorization }
       }
     }) => {
+      if (!jwtPayload) {
+        throw new ClientError('User not authenticated', 401)
+      }
+
       const decryptedOTP = decrypt2(
         decrypt2(otp, authorization!.replace('Bearer ', '')),
         challenge
@@ -172,7 +123,7 @@ const verifyAndEnable = forgeController
 
       await pb.update
         .collection('user__users')
-        .id(pb.instance.authStore.record!.id)
+        .id(jwtPayload.userId)
         .data({
           twoFASecret: encrypt(
             Buffer.from(tempCode),
@@ -183,6 +134,62 @@ const verifyAndEnable = forgeController
     }
   )
 
+const verifyForDisable = forgeController
+  .mutation()
+  .description({
+    en: 'Verify OTP to allow disabling 2FA',
+    ms: 'Sahkan OTP untuk melumpuhkan 2FA',
+    'zh-CN': '验证OTP以禁用2FA',
+    'zh-TW': '驗證OTP以禁用2FA'
+  })
+  .input({
+    body: z.object({
+      otp: z.string()
+    })
+  })
+  .callback(async ({ req: { jwtPayload }, body: { otp } }) => {
+    if (!jwtPayload) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    const config = validateEnvironmentVariables()
+
+    const superPB = await connectToPocketBase(config)
+
+    const userData = await superPB.collection('users').getOne(jwtPayload.userId)
+
+    const encryptedSecret = userData.twoFASecret
+
+    if (!encryptedSecret) {
+      throw new ClientError('2FA not enabled', 400)
+    }
+
+    const secret = decrypt(
+      Buffer.from(encryptedSecret, 'base64'),
+      process.env.MASTER_KEY!
+    )
+
+    const verified = speakeasy.totp.verify({
+      secret: secret.toString(),
+      encoding: 'base32',
+      token: otp
+    })
+
+    if (!verified) {
+      throw new ClientError('Invalid OTP', 401)
+    }
+
+    canDisable2FA = true
+    setTimeout(
+      () => {
+        canDisable2FA = false
+      },
+      1000 * 60 * 5
+    )
+
+    return true
+  })
+
 const disable = forgeController
   .mutation()
   .description({
@@ -192,17 +199,21 @@ const disable = forgeController
     'zh-TW': '禁用二次驗證'
   })
   .input({})
-  .callback(async ({ pb }) => {
+  .callback(async ({ pb, req: { jwtPayload } }) => {
+    if (!jwtPayload) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
     if (!canDisable2FA) {
       throw new ClientError(
-        'You cannot disable 2FA right now. Please try again later.',
+        'You cannot disable 2FA right now. Please verify your OTP first.',
         403
       )
     }
 
     await pb.update
       .collection('user__users')
-      .id(pb.instance.authStore.record!.id)
+      .id(jwtPayload.userId)
       .data({
         twoFASecret: ''
       })
@@ -215,21 +226,18 @@ const verify = forgeController
   .mutation()
   .noAuth()
   .description({
-    en: 'Verify two-factor authentication code',
-    ms: 'Sahkan kod pengesahan dua faktor',
-    'zh-CN': '验证二次验证代码',
-    'zh-TW': '驗證二次驗證代碼'
+    en: 'Verify two-factor authentication code during login',
+    ms: 'Sahkan kod pengesahan dua faktor semasa log masuk',
+    'zh-CN': '登录时验证二次验证代码',
+    'zh-TW': '登入時驗證二次驗證代碼'
   })
   .input({
     body: z.object({
       otp: z.string(),
-      tid: z.string(),
-      type: z.enum(['email', 'app'])
+      tid: z.string()
     })
   })
-  .callback(async ({ body: { otp, tid, type } }) => {
-    const pb = new PocketBase(process.env.PB_HOST)
-
+  .callback(async ({ body: { otp, tid } }) => {
     if (tid !== currentSession.tokenId) {
       throw new ClientError('Invalid token ID', 401)
     }
@@ -238,45 +246,57 @@ const verify = forgeController
       throw new ClientError('Token expired', 401)
     }
 
-    const currentSessionToken = currentSession.token
-
-    if (!currentSessionToken) {
-      throw new ClientError('No session token found', 401)
+    if (!currentSession.userId) {
+      throw new ClientError('No user session found', 401)
     }
 
-    pb.authStore.save(currentSessionToken, null)
-    await pb
+    const config = validateEnvironmentVariables()
+
+    const superPB = await connectToPocketBase(config)
+
+    const userData = await superPB
       .collection('users')
-      .authRefresh()
-      .catch(() => {})
+      .getOne(currentSession.userId)
 
-    if (!pb.authStore.isValid || !pb.authStore.record) {
-      throw new ClientError('Invalid session', 401)
+    if (!userData) {
+      throw new ClientError('User not found', 404)
     }
 
-    let verified = false
+    const encryptedSecret = userData.twoFASecret
 
-    if (type === 'app') {
-      verified = await verifyAppOTP(pb, otp)
-    } else if (type === 'email') {
-      verified = await verifyEmailOTP(pb, otp)
+    if (!encryptedSecret) {
+      throw new ClientError('2FA not configured', 400)
     }
+
+    const secret = decrypt(
+      Buffer.from(encryptedSecret, 'base64'),
+      process.env.MASTER_KEY!
+    )
+
+    const verified = speakeasy.totp.verify({
+      secret: secret.toString(),
+      encoding: 'base32',
+      token: otp
+    })
 
     if (!verified) {
       throw new ClientError('Invalid OTP', 401)
     }
 
-    const userData = pb.authStore.record
-
     const sanitizedUserData = removeSensitiveData(userData)
 
-    await updateNullData(sanitizedUserData, pb)
+    await updateNullData(sanitizedUserData, superPB)
 
     const jwtToken = signToken({
       userId: userData.id,
       email: userData.email,
       username: userData.username
     })
+
+    currentSession.token = ''
+    currentSession.tokenId = ''
+    currentSession.tokenExpireAt = ''
+    currentSession.userId = ''
 
     return {
       session: jwtToken
@@ -285,10 +305,9 @@ const verify = forgeController
 
 export default forgeRouter({
   getChallenge,
-  requestOTP,
-  validateOTP,
   generateAuthenticatorLink,
   verifyAndEnable,
+  verifyForDisable,
   disable,
   verify
 })

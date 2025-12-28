@@ -3,6 +3,7 @@ import z from 'zod'
 
 import getMedia from '@functions/external/media'
 import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 
 const updateAvatar = forgeController
   .mutation()
@@ -18,14 +19,18 @@ const updateAvatar = forgeController
       optional: false
     }
   })
-  .callback(async ({ media: { file: rawFile }, pb }) => {
-    const fileResult = await getMedia('avatar', rawFile)
+  .callback(async ({ media: { file: rawFile }, pb, req }) => {
+    const userId = req.jwtPayload?.userId
 
-    const { id } = pb.instance.authStore.record!
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    const fileResult = await getMedia('avatar', rawFile)
 
     const newRecord = await pb.update
       .collection('user__users')
-      .id(id)
+      .id(userId)
       .data(fileResult)
       .execute()
 
@@ -42,12 +47,16 @@ const deleteAvatar = forgeController
   })
   .input({})
   .statusCode(204)
-  .callback(async ({ pb }) => {
-    const { id } = pb.instance.authStore.record!
+  .callback(async ({ pb, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
 
     await pb.update
       .collection('user__users')
-      .id(id)
+      .id(userId)
       .data({
         avatar: ''
       })
@@ -76,8 +85,12 @@ const updateProfile = forgeController
     })
   })
   .statusCode(200)
-  .callback(async ({ body: { data }, pb }) => {
-    const { id } = pb.instance.authStore.record!
+  .callback(async ({ body: { data }, pb, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
 
     if (data.email) {
       await pb.instance.collection('users').requestEmailChange(data.email)
@@ -101,7 +114,7 @@ const updateProfile = forgeController
     if (Object.keys(updateData).length > 0) {
       await pb.update
         .collection('user__users')
-        .id(id)
+        .id(userId)
         .data(updateData)
         .execute()
     }
@@ -116,11 +129,15 @@ const requestPasswordReset = forgeController
     'zh-TW': '請求密碼重置郵件'
   })
   .input({})
-  .callback(({ pb }) =>
-    pb.instance
-      .collection('users')
-      .requestPasswordReset(pb.instance.authStore.record?.email)
-  )
+  .callback(async ({ pb, req }) => {
+    const email = req.jwtPayload?.email
+
+    if (!email) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    await pb.instance.collection('users').requestPasswordReset(email)
+  })
 
 export default forgeRouter({
   updateAvatar,

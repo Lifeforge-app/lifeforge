@@ -65,8 +65,14 @@ const list = forgeController
       master: z.string()
     })
   })
-  .callback(async ({ pb, query: { master } }) => {
-    await getDecryptedMaster(pb, decodeURIComponent(master))
+  .callback(async ({ pb, query: { master }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    await getDecryptedMaster(pb, userId, decodeURIComponent(master))
 
     const entries = await pb.getFullList
       .collection('api_keys__entries')
@@ -122,9 +128,16 @@ const decrypt = forgeController
   .existenceCheck('query', {
     id: 'api_keys__entries'
   })
-  .callback(async ({ pb, query: { id, master } }) => {
+  .callback(async ({ pb, query: { id, master }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
     const decryptedMaster = await getDecryptedMaster(
       pb,
+      userId,
       decodeURIComponent(master)
     )
 
@@ -160,13 +173,19 @@ const create = forgeController
     })
   })
   .statusCode(201)
-  .callback(async ({ pb, body: { data } }) => {
+  .callback(async ({ pb, body: { data }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
     const decryptedData = JSON.parse(decrypt2(data, challenge))
 
     const { keyId, name, description, icon, key, exposable, master } =
       decryptedData
 
-    const decryptedMaster = await getDecryptedMaster(pb, master)
+    const decryptedMaster = await getDecryptedMaster(pb, userId, master)
 
     const decryptedKey = decrypt2(key, decryptedMaster)
 
@@ -208,13 +227,19 @@ const update = forgeController
   .existenceCheck('query', {
     id: 'api_keys__entries'
   })
-  .callback(async ({ pb, query: { id }, body: { data } }) => {
+  .callback(async ({ pb, query: { id }, body: { data }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
     const decryptedData = JSON.parse(decrypt2(data, challenge))
 
     const { keyId, name, description, icon, key, exposable, master } =
       decryptedData
 
-    const decryptedMaster = await getDecryptedMaster(pb, master)
+    const decryptedMaster = await getDecryptedMaster(pb, userId, master)
 
     const decryptedKey = decrypt2(key, decryptedMaster)
 

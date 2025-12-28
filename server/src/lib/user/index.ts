@@ -16,7 +16,7 @@ export const currentSession = {
   token: '',
   tokenId: '',
   tokenExpireAt: '',
-  otpId: ''
+  userId: ''
 }
 
 if (!process.env.MASTER_KEY) {

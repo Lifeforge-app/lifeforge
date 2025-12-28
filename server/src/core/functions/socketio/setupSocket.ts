@@ -1,6 +1,6 @@
-import Pocketbase from 'pocketbase'
 import { Server } from 'socket.io'
 
+import { verifyToken } from '@functions/auth/jwt'
 import { globalTaskPool } from '@functions/socketio/taskPool'
 
 export function setupSocket(io: Server) {
@@ -31,11 +31,9 @@ export function setupSocket(io: Server) {
     })
   })
 
-  // Main namespace - authenticated connections only
+  // Main namespace - authenticated connections only using JWT
   io.use(async (socket, next) => {
     const bearerToken = socket.handshake.auth.token as string
-
-    const pb = new Pocketbase(process.env.PB_HOST)
 
     if (!bearerToken) {
       next(new Error('Authorization token is required'))
@@ -44,20 +42,20 @@ export function setupSocket(io: Server) {
     }
 
     try {
-      pb.authStore.save(bearerToken, null)
-
-      try {
-        await pb.collection('users').authRefresh()
-      } catch (error: any) {
-        if (error.response.code === 401) {
-          next(new Error('Invalid authorization credentials'))
-
-          return
-        }
-      }
+      verifyToken(bearerToken)
       next()
-    } catch {
-      next(new Error('Internal server error'))
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.name === 'TokenExpiredError') {
+          next(new Error('Token expired'))
+        } else if (error.name === 'JsonWebTokenError') {
+          next(new Error('Invalid authorization credentials'))
+        } else {
+          next(new Error('Internal server error'))
+        }
+      } else {
+        next(new Error('Internal server error'))
+      }
     }
   })
 

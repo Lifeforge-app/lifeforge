@@ -1,5 +1,6 @@
 import rateLimit from 'express-rate-limit'
-import Pocketbase from 'pocketbase'
+
+import { verifyToken } from '@functions/auth/jwt'
 
 export default rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -25,29 +26,17 @@ export default rateLimit({
 
     const bearerToken = req.headers.authorization?.split(' ')[1]
 
-    const pb = new Pocketbase(process.env.PB_HOST)
-
     if (!bearerToken) {
       return false
     }
 
     try {
-      pb.authStore.save(bearerToken, null)
+      verifyToken(bearerToken)
 
-      try {
-        await pb.collection('users').authRefresh()
-
-        return true
-      } catch (error: any) {
-        if (error.response.code === 401) {
-          return false
-        }
-      }
+      return true
     } catch {
       return false
     }
-
-    return false
   },
   validate: { xForwardedForHeader: false }
 })

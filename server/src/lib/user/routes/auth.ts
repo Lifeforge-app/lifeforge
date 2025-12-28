@@ -4,7 +4,6 @@ import { v4 } from 'uuid'
 import z from 'zod'
 
 import { signToken } from '@functions/auth/jwt'
-import { default as _validateOTP } from '@functions/auth/validateOTP'
 import {
   connectToPocketBase,
   validateEnvironmentVariables
@@ -14,49 +13,6 @@ import { ClientError } from '@functions/routes/utils/response'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
-
-const validateOTP = forgeController
-  .mutation()
-  .noEncryption()
-  .description({
-    en: 'Verify one-time password',
-    ms: 'Sahkan kata laluan sekali guna',
-    'zh-CN': '验证一次性密码',
-    'zh-TW': '驗證一次性密碼'
-  })
-  .input({
-    body: z.object({
-      otp: z.string(),
-      otpId: z.string()
-    })
-  })
-  .callback(({ pb, body }) => _validateOTP(pb, body))
-
-const generateOTP = forgeController
-  .query()
-  .noEncryption()
-  .description({
-    en: 'Generate one-time password',
-    ms: 'Jana kata laluan sekali guna',
-    'zh-CN': '生成一次性密码',
-    'zh-TW': '生成一次性密碼'
-  })
-  .input({})
-  .callback(async ({ req }) => {
-    const userId = req.jwtPayload?.userId
-
-    if (!userId) {
-      throw new ClientError('User not authenticated', 401)
-    }
-
-    const config = validateEnvironmentVariables()
-
-    const superPB = await connectToPocketBase(config)
-
-    const user = await superPB.collection('users').getOne(userId)
-
-    return (await superPB.collection('users').requestOTP(user.email)).otpId
-  })
 
 const login = forgeController
   .mutation()
@@ -98,6 +54,7 @@ const login = forgeController
         currentSession.token = pb.authStore.token
         currentSession.tokenExpireAt = moment().add(5, 'minutes').toISOString()
         currentSession.tokenId = v4()
+        currentSession.userId = userData.id
 
         return {
           state: '2fa_required' as const,
@@ -231,8 +188,6 @@ const createFirstUser = forgeController
   })
 
 export default forgeRouter({
-  validateOTP,
-  generateOTP,
   login,
   verifySessionToken,
   getUserData,

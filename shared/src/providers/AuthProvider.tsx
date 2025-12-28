@@ -25,12 +25,7 @@ interface AuthData {
     email: string
     password: string
   }) => Promise<string | void>
-  authenticateWith2FA: ({
-    otp
-  }: {
-    otp: string
-    type: 'email' | 'app'
-  }) => Promise<string | void>
+  authenticateWith2FA: ({ otp }: { otp: string }) => Promise<string | void>
   verifySession: (
     session: string
   ) => Promise<{ success: boolean; userData: UserData | null }>
@@ -158,20 +153,14 @@ export default function AuthProvider({
   )
 
   const authenticateWith2FA = useCallback(
-    async ({
-      otp,
-      type
-    }: {
-      otp: string
-      type: 'email' | 'app'
-    }): Promise<void> => {
+    async ({ otp }: { otp: string }): Promise<void> => {
       try {
         const res = await fetch(forgeAPI.user['2fa'].verify.endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ otp, tid: tid.current, type })
+          body: JSON.stringify({ otp, tid: tid.current })
         })
 
         const data: any = await res.json()

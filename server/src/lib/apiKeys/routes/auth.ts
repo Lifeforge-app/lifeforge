@@ -2,8 +2,8 @@ import bcrypt from 'bcryptjs'
 import z from 'zod'
 
 import { decrypt2 } from '@functions/auth/encryption'
-import { default as _validateOTP } from '@functions/auth/validateOTP'
 import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 
 import { challenge } from '..'
 
@@ -31,18 +31,22 @@ const createOrUpdate = forgeController
       password: z.string()
     })
   })
-  .callback(async ({ pb, body: { password } }) => {
+  .callback(async ({ pb, body: { password }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
     const salt = await bcrypt.genSalt(10)
 
     const decryptedMaster = decrypt2(password, challenge)
 
     const APIKeysMasterPasswordHash = await bcrypt.hash(decryptedMaster, salt)
 
-    const id = pb.instance.authStore.record!.id
-
     await pb.update
       .collection('user__users')
-      .id(id)
+      .id(userId)
       .data({
         APIKeysMasterPasswordHash
       })
@@ -62,37 +66,24 @@ const verify = forgeController
       password: z.string()
     })
   })
-  .callback(async ({ pb, body: { password } }) => {
-    const id = pb.instance.authStore.record!.id
+  .callback(async ({ pb, body: { password }, req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
 
     const decryptedMaster = decrypt2(password, challenge)
 
-    const user = await pb.getOne.collection('user__users').id(id).execute()
+    const user = await pb.getOne.collection('user__users').id(userId).execute()
 
     const { APIKeysMasterPasswordHash } = user
 
     return await bcrypt.compare(decryptedMaster, APIKeysMasterPasswordHash)
   })
 
-const verifyOTP = forgeController
-  .mutation()
-  .description({
-    en: 'Verify OTP for API key authentication',
-    ms: 'Sahkan OTP untuk pengesahan kunci API',
-    'zh-CN': '验证API密钥认证的OTP',
-    'zh-TW': '驗證API密鑰認證的OTP'
-  })
-  .input({
-    body: z.object({
-      otp: z.string(),
-      otpId: z.string()
-    })
-  })
-  .callback(async ({ pb, body }) => await _validateOTP(pb, body, challenge))
-
 export default forgeRouter({
   getChallenge,
   createOrUpdate,
-  verify,
-  verifyOTP
+  verify
 })
