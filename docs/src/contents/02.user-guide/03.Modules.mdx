@@ -20,12 +20,12 @@ LifeForge provides a robust module API and a set of powerful UI components to fa
 <section id="discovering-modules">
 ## Discovering Modules
 
-Currently, all official LifeForge modules (those you have seen living inside the monorepo before) are hosted on GitHub under the [LifeForge App](https://github.com/lifeforge-app) organization. Each module will be in its own repository, with the name formatted as `lifeforge-module-\<moduleName\>`. If you want to install the module, the name you will use is simply the `\<moduleName\>` part.
+Currently, all official LifeForge modules (those you have seen living inside the monorepo before) are hosted on GitHub under the [LifeForge App](https://github.com/lifeforge-app) organization. Each module will be in its own repository, with the name formatted as `lifeforge-module-\<moduleName\>`. 
 
 ![LifeForge Modules GitHub Repositories](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/user-modules/modules-gh.webp)
 
 <Alert className="mt-6" type="note">
-In the very near future, there will be an official LifeForge module registry / marketplace website where you can browse and search for modules easily.
+In the very near future, there will be an official LifeForge module registry / marketplace website, namely Forgistry, where you can browse and search for modules easily.
 </Alert>
 </section>
 
@@ -41,7 +41,7 @@ bun run forge modules add <author>/<moduleName>
 For example, to install a module named `ideaBox` from the official LifeForge GitHub repository, you would run:
 
 ```bash
-bun run forge modules add lifeforge-app/ideaBox
+bun run forge modules add lifeforge-app/lifeforge-module-ideaBox
 ```
 
 This command will download the module, install its dependencies and database schema, and register it with your LifeForge instance automatically. Once installed, you can start using the module right away.
@@ -54,7 +54,7 @@ Make sure your LifeForge instance is **NOT** running while installing or uninsta
 <section id="uninstalling-modules">
 ## Uninstalling Modules
 
-Uninstalling a module is just as easy as installing one. You can use the `ForgeCLI` tool to remove a module from your LifeForge instance.
+Uninstalling a module is just as easy as installing one. You can use the `ForgeCLI` tool to remove a module from your LifeForge instance. When you want to remove the module, the name you will use is simply the `\<moduleName\>` part.
 
 ```bash
 bun run forge modules remove <moduleName>
