@@ -1,8 +1,8 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Button, ModalHeader, WithOTP } from 'lifeforge-ui'
+import { Button, ModalHeader, OTPInputBox } from 'lifeforge-ui'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
 import { useAuth } from 'shared'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
@@ -10,8 +10,21 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
 
   const { setUserData } = useAuth()
 
+  const [otp, setOtp] = useState('')
+
+  const [loading, setLoading] = useState(false)
+
   async function handleConfirm() {
+    if (otp.length !== 6) {
+      toast.error('OTP must be 6 characters long')
+
+      return
+    }
+
+    setLoading(true)
+
     try {
+      await forgeAPI.user['2fa'].verifyForDisable.mutate({ otp })
       await forgeAPI.user['2fa'].disable.mutate({})
 
       setUserData(userData =>
@@ -20,11 +33,11 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
       toast.success(t('messages.twoFA.disableSuccess'))
       onClose()
     } catch {
-      toast.error('Failed to disable 2FA')
+      toast.error('Invalid OTP or failed to disable 2FA')
+    } finally {
+      setLoading(false)
     }
   }
-
-  const [loading, onConfirm] = usePromiseLoading(handleConfirm)
 
   return (
     <div>
@@ -34,30 +47,26 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
         title="disable2FA"
         onClose={onClose}
       />
-      <WithOTP
-        controllers={{
-          getChallenge: forgeAPI.user['2fa'].getChallenge,
-          verifyOTP: forgeAPI.user['2fa'].validateOTP,
-          generateOTP: forgeAPI.user.auth.generateOTP
-        }}
+      <p className="text-bg-500 mb-4">{t('modals.disable2FA.description')}</p>
+      <p className="text-bg-500 mb-4">
+        Enter the 6-digit code from your authenticator app to confirm:
+      </p>
+      <OTPInputBox
+        buttonFullWidth
+        lighter
+        otp={otp}
+        setOtp={setOtp}
+        verifyOTP={handleConfirm}
+        verifyOtpLoading={loading}
+      />
+      <Button
+        className="mt-2 w-full"
+        icon=""
+        variant="secondary"
+        onClick={onClose}
       >
-        <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
-        <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
-          <Button className="sm:w-1/2" icon="" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            dangerous
-            className="sm:w-1/2"
-            icon="tabler:check"
-            loading={loading}
-            variant="secondary"
-            onClick={onConfirm}
-          >
-            Confirm
-          </Button>
-        </div>
-      </WithOTP>
+        Cancel
+      </Button>
     </div>
   )
 }

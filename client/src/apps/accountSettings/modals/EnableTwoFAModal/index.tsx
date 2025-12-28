@@ -1,5 +1,4 @@
-import forgeAPI from '@/utils/forgeAPI'
-import { ModalHeader, WithOTP } from 'lifeforge-ui'
+import { ModalHeader } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -28,15 +27,7 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
         title="enable2FA"
         onClose={onClose}
       />
-      <WithOTP
-        controllers={{
-          getChallenge: forgeAPI.user['2fa'].getChallenge,
-          verifyOTP: forgeAPI.user['2fa'].validateOTP,
-          generateOTP: forgeAPI.user.auth.generateOTP
-        }}
-      >
-        <TwoFAEnableProcedure onSuccess={handleSuccess} />
-      </WithOTP>
+      <TwoFAEnableProcedure onSuccess={handleSuccess} />
     </div>
   )
 }

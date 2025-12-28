@@ -1,10 +1,7 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Button } from 'lifeforge-ui'
 import _ from 'lodash'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import { toast } from 'react-toastify'
-import { useSearchParams } from 'shared'
-import { useAuth } from 'shared'
 
 function SigninWithProviderButton({
   provider,
@@ -13,52 +10,21 @@ function SigninWithProviderButton({
   provider: string
   loading: boolean
 }) {
-  const { auth } = useAuth()
-
-  const [searchParams] = useSearchParams()
-
-  const signInWithProvider = useCallback(async () => {
-    const providerInstance = await fetch(
-      forgeAPI.user.oauth.getEndpoint.input({
-        provider
-      }).endpoint
+  const handleClick = () => {
+    toast.info(
+      'OAuth sign-in is temporarily disabled during authentication migration'
     )
-      .then(async res => {
-        const data = await res.json()
-
-        if (res.ok) {
-          return data.data
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error("Couldn't fetch provider data")
-        console.error(err)
-      })
-
-    if (!providerInstance) return
-
-    localStorage.setItem('authState', providerInstance.state)
-    localStorage.setItem('authProvider', provider)
-
-    window.location.href =
-      providerInstance.authUrl + `${window.location.origin}/auth`
-  }, [provider])
+  }
 
   return (
     <Button
       key={provider}
+      disabled
       className="w-full"
       icon={`tabler:brand-${provider}`}
-      loading={
-        loading ||
-        auth ||
-        (searchParams.get('code') !== null &&
-          searchParams.get('state') !== null)
-      }
+      loading={loading}
       variant="secondary"
-      onClick={signInWithProvider}
+      onClick={handleClick}
     >
       {_.capitalize(provider)}
     </Button>
