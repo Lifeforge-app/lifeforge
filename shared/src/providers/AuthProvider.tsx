@@ -131,6 +131,7 @@ export default function AuthProvider({
 
           // Fetch user data separately via encrypted endpoint
           const userData = await forgeAPI.user.auth.getUserData.query()
+
           setUserData(userData)
           setAuth(true)
 
@@ -180,6 +181,7 @@ export default function AuthProvider({
 
           // Fetch user data separately via encrypted endpoint
           const userData = await forgeAPI.user.auth.getUserData.query()
+
           setUserData(userData)
           setAuth(true)
 

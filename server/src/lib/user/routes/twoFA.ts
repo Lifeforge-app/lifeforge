@@ -5,6 +5,7 @@ import { v4 } from 'uuid'
 import z from 'zod'
 
 import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
+import { signToken } from '@functions/auth/jwt'
 import { default as _validateOTP } from '@functions/auth/validateOTP'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
@@ -271,8 +272,14 @@ const verify = forgeController
 
     await updateNullData(sanitizedUserData, pb)
 
+    const jwtToken = signToken({
+      userId: userData.id,
+      email: userData.email,
+      username: userData.username
+    })
+
     return {
-      session: pb.authStore.token
+      session: jwtToken
     }
   })
 

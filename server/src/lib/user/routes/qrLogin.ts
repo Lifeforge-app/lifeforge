@@ -1,7 +1,11 @@
 import moment from 'moment'
-import PocketBase from 'pocketbase'
 import z from 'zod'
 
+import { signToken } from '@functions/auth/jwt'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
@@ -91,59 +95,60 @@ const approveQRLogin = forgeController
       sessionId: z.string().uuid()
     })
   })
-  .callback(async ({ pb, body: { sessionId }, req }) => {
-    // Find the pending session
+  .callback(async ({ req, body: { sessionId } }) => {
     const pendingSession = pendingQRSessions.get(sessionId)
 
     if (!pendingSession) {
       throw new ClientError('Session not found or expired', 404)
     }
 
-    // Check if already approved
     if (pendingSession.status === 'approved') {
       throw new ClientError('Session already approved', 400)
     }
 
-    // Check if expired
     if (moment(pendingSession.expiresAt).isBefore(moment())) {
       pendingQRSessions.delete(sessionId)
+
       throw new ClientError('Session expired', 400)
     }
 
-    // Get the approving user's data
-    const userData = pb.instance.authStore.record
+    const jwtPayload = req.jwtPayload
+
+    if (!jwtPayload) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    const config = validateEnvironmentVariables()
+
+    const superPB = await connectToPocketBase(config)
+
+    const userData = await superPB.collection('users').getOne(jwtPayload.userId)
 
     if (!userData) {
       throw new ClientError('User not found', 404)
     }
 
-    // Create a new session for the desktop client
-    // We need to refresh to get a fresh token
-    const newPb = new PocketBase(process.env.PB_HOST)
+    const jwtToken = signToken({
+      userId: userData.id,
+      email: userData.email,
+      username: userData.username
+    })
 
-    newPb.authStore.save(pb.instance.authStore.token, userData)
-    await newPb.collection('users').authRefresh()
-
-    const newSessionToken = newPb.authStore.token
-
-    // Update the pending session
     pendingSession.status = 'approved'
     pendingSession.userId = userData.id
-    pendingSession.sessionToken = newSessionToken
+    pendingSession.sessionToken = jwtToken
 
-    // Update user data if needed
     const sanitizedUserData = removeSensitiveData(userData)
 
-    await updateNullData(sanitizedUserData, pb.instance)
+    await updateNullData(sanitizedUserData, superPB)
 
-    // Emit the session to the WebSocket room
     const io = req.io
 
     if (io) {
       const qrLoginNamespace = io.of('/qr-login')
 
       qrLoginNamespace.to(`qr-session:${sessionId}`).emit('sessionApproved', {
-        session: newSessionToken,
+        session: jwtToken,
         user: sanitizedUserData
       })
     }

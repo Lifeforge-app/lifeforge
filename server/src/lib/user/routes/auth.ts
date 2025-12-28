@@ -3,6 +3,7 @@ import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
 import z from 'zod'
 
+import { signToken } from '@functions/auth/jwt'
 import { default as _validateOTP } from '@functions/auth/validateOTP'
 import {
   connectToPocketBase,
@@ -41,14 +42,21 @@ const generateOTP = forgeController
     'zh-TW': '生成一次性密碼'
   })
   .input({})
-  .callback(
-    async ({ pb }) =>
-      (
-        await pb.instance
-          .collection('users')
-          .requestOTP(pb.instance.authStore.record?.email)
-      ).otpId
-  )
+  .callback(async ({ req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    const config = validateEnvironmentVariables()
+
+    const superPB = await connectToPocketBase(config)
+
+    const user = await superPB.collection('users').getOne(userId)
+
+    return (await superPB.collection('users').requestOTP(user.email)).otpId
+  })
 
 const login = forgeController
   .mutation()
@@ -99,9 +107,15 @@ const login = forgeController
 
       await updateNullData(sanitizedUserData, pb)
 
+      const jwtToken = signToken({
+        userId: userData.id,
+        email: userData.email,
+        username: userData.username
+      })
+
       return {
         state: 'success' as const,
-        session: pb.authStore.token
+        session: jwtToken
       }
     } else {
       throw new ClientError('Invalid credentials', 401)
@@ -119,31 +133,21 @@ const verifySessionToken = forgeController
   })
   .input({})
   .callback(async ({ req }) => {
-    const bearerToken = req.headers.authorization?.split(' ')[1].trim()
+    const jwtPayload = req.jwtPayload
 
-    const pb = new PocketBase(process.env.PB_HOST)
-
-    if (!bearerToken) {
-      throw new ClientError('No token provided', 401)
-    }
-
-    pb.authStore.save(bearerToken, null)
-    await pb
-      .collection('users')
-      .authRefresh()
-      .catch(() => {})
-
-    if (!pb.authStore.isValid) {
+    if (!jwtPayload) {
       throw new ClientError('Invalid session', 401)
     }
 
-    if (!pb.authStore.record) {
-      throw new ClientError('Invalid session', 401)
-    }
+    const newToken = signToken({
+      userId: jwtPayload.userId,
+      email: jwtPayload.email,
+      username: jwtPayload.username
+    })
 
     return {
       valid: true as const,
-      session: pb.authStore.token
+      session: newToken
     }
   })
 
@@ -156,8 +160,18 @@ const getUserData = forgeController
     'zh-TW': '獲取當前用戶資料'
   })
   .input({})
-  .callback(async ({ pb }) => {
-    const userData = pb.instance.authStore.record
+  .callback(async ({ req }) => {
+    const userId = req.jwtPayload?.userId
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    const config = validateEnvironmentVariables()
+
+    const superPB = await connectToPocketBase(config)
+
+    const userData = await superPB.collection('users').getOne(userId)
 
     if (!userData) {
       throw new ClientError('User not found', 404)
@@ -165,7 +179,7 @@ const getUserData = forgeController
 
     const sanitizedUserData = removeSensitiveData(userData)
 
-    await updateNullData(sanitizedUserData, pb.instance)
+    await updateNullData(sanitizedUserData, superPB)
 
     return sanitizedUserData
   })
