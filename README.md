@@ -93,7 +93,7 @@ explore and discover within the project.
 
 LifeForge now supports Docker for easy deployment! 🐳 You can get up and running with just a few commands. For those who prefer manual installation, that option is still available.
 
-Visit the [Documentation](https://docs.lifeforge.melvinchia.dev) to see how to install and setup.
+Visit the [Documentation](https://docs.lifeforge.dev) to see how to install and setup.
 
 ## 📈 Status
 
@@ -107,8 +107,8 @@ addressed promptly.
 LifeForge was inspired by the need for a unified personal management system that
 integrates various tools and resources to help streamline daily life, and also
 [this project](https://github.com/Volmarg/personal-management-system).
-For the full story, visit the [Documentation](https://docs.lifeforge.melvinchia.dev).
+For the full story, visit the [Documentation](https://docs.lifeforge.dev).
 
 ## 📄 License
 
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/LifeForge-app/lifeforge">LifeForge</a> is a project initiated by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://melvinchia.dev">Melvin Chia</a>, and is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/LifeForge-app/lifeforge">LifeForge</a> is a project initiated by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://dev">Melvin Chia</a>, and is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
