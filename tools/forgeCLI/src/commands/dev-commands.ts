@@ -1,7 +1,7 @@
 import concurrently from 'concurrently'
 import fs from 'fs'
 
-import { PB_BINARY_PATH } from '@/constants/db'
+import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 
 import {
   PROJECTS_ALLOWED,

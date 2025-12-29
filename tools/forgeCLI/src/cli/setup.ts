@@ -1,5 +1,6 @@
 import { program } from 'commander'
 import fs from 'fs'
+import path from 'path'
 
 import { createChangelogHandler } from '../commands/changelog-commands'
 import * as dbHandlers from '../commands/db-commands'
@@ -13,9 +14,15 @@ import {
 import { PROJECTS_ALLOWED } from '../constants/constants'
 import CLILoggingService from '../utils/logging'
 
-const VERSION_NUMBER = JSON.parse(
-  fs.readFileSync('package.json', 'utf-8')
-).version
+function getVersion(): string {
+  try {
+    const packagePath = path.resolve(__dirname, '../../package.json')
+
+    return JSON.parse(fs.readFileSync(packagePath, 'utf-8')).version
+  } catch {
+    return '0.0.0'
+  }
+}
 
 const LOG_LEVELS = ['debug', 'info', 'warn', 'error', 'fatal'] as const
 
@@ -26,7 +33,7 @@ export function setupCLI(): void {
   program
     .name('bun forge')
     .description('Build and manage the LifeForge ecosystem')
-    .version(VERSION_NUMBER)
+    .version(getVersion())
     .option(
       '-l, --log-level <level>',
       `Set log level (${LOG_LEVELS.join(', ')})`,
