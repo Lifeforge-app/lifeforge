@@ -65,11 +65,7 @@ export function clientError(
   }
 }
 
-export function serverError(
-  res: Response,
-  message = 'Internal Server Error',
-  err?: string
-) {
+export function serverError(res: Response, err?: string) {
   fs.readdirSync('medium').forEach(file => {
     if (fs.statSync('medium/' + file).isFile()) {
       fs.unlinkSync('medium/' + file)
@@ -78,21 +74,12 @@ export function serverError(
     }
   })
 
-  if (err) {
-    console.error(err)
-  }
-
   try {
-    LoggingService.error(
-      chalk.red(
-        typeof message === 'string' ? message : JSON.stringify(message)
-      ),
-      'API'
-    )
+    LoggingService.error(chalk.red(err), 'API')
 
     res.status(500).json({
       state: 'error',
-      message
+      message: 'Internal server error'
     })
   } catch {
     console.error('Failed to send response')
