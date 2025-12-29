@@ -73,10 +73,7 @@ const getLocale = forgeController
       const target = allApps.find(e => e.split('/').pop() === subnamespace)
 
       if (!target) {
-        throw new ClientError(
-          `Subnamespace ${subnamespace} does not exist in apps`,
-          404
-        )
+        return {}
       }
 
       if (!fs.existsSync(`${target}/locales/${finalLang}.json`)) {
@@ -91,10 +88,7 @@ const getLocale = forgeController
       )
     } else {
       if (!SYSTEM_LOCALES[finalLang][subnamespace]) {
-        throw new ClientError(
-          `Namespace ${subnamespace} does not exist in system locales`,
-          404
-        )
+        return {}
       }
 
       data = SYSTEM_LOCALES[finalLang][subnamespace]
