@@ -4,14 +4,14 @@ import path from 'path'
 
 import { createChangelogHandler } from '../commands/changelog-commands'
 import * as dbHandlers from '../commands/db-commands'
-import { devHandler, getAvailableServices } from '../commands/dev-commands'
+import { devHandler } from '../commands/dev-commands'
 import * as localeHandlers from '../commands/locale-commands'
 import * as moduleHandlers from '../commands/module-commands'
 import {
   createCommandHandler,
   getAvailableCommands
 } from '../commands/project-commands'
-import { PROJECTS_ALLOWED } from '../constants/constants'
+import { PROJECTS_ALLOWED, VALID_SERVICES } from '../constants/constants'
 import CLILoggingService from '../utils/logging'
 
 function getVersion(): string {
@@ -66,8 +66,8 @@ function setupProjectCommands(): void {
       .command(commandType)
       .description(`Run ${commandType} for specified projects`)
       .argument(
-        '<projects...>',
-        `Project names to run ${commandType} on. Use 'all' for all projects. Available: all, ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
+        '[projects...]',
+        `Project names to run ${commandType} on. Leave blank for all projects. Available: ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
       )
       .action(createCommandHandler(commandType))
   }
@@ -77,14 +77,12 @@ function setupProjectCommands(): void {
  * Sets up the dev command for starting services in development mode
  */
 function setupDevCommand(): void {
-  const availableServices = getAvailableServices()
-
   program
     .command('dev')
     .description('Start LifeForge services for development')
     .argument(
-      '<service>',
-      `Service to start. Use all for starting db, server, and client. Available: ${availableServices.join(', ')}`
+      '[service]',
+      `Service to start. Leave blank for starting db, server, and client. Available: ${VALID_SERVICES.join(', ')}`
     )
     .action(devHandler)
 }
