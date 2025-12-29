@@ -72,7 +72,12 @@ function ModalHeader({
             variant={actionButtonProps.variant || 'plain'}
           />
         )}
-        <Button icon="tabler:x" variant="plain" onClick={onClose} />
+        <Button
+          className="p-3!"
+          icon="tabler:x"
+          variant="plain"
+          onClick={onClose}
+        />
       </div>
     </div>
   )
