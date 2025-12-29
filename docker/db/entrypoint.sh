@@ -48,7 +48,7 @@ validate_env
 
 # Generate migration schemas
 echo "Generating database migrations..."
-cd /app && bun run forge db generate-migrations
+cd /app && bun run forge db push
 
 # Apply migrations
 echo "Applying database migrations..."
