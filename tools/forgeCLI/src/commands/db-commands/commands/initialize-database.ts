@@ -1,33 +1,35 @@
+import { ensureEnvExists } from '@/utils/helpers'
+import CLILoggingService from '@/utils/logging'
+import { checkRunningPBInstances } from '@/utils/pocketbase'
+
 import {
-  checkRunningPBInstances,
-  validateEnvironment
-} from '../../../utils/helpers'
-import {
-  completeInitialization,
   createPocketBaseSuperuser,
-  ensureEnvironmentFile,
+  downloadPocketBaseBinary,
   runDatabaseMigrations,
   setupDefaultData,
-  startPocketBaseAndGetPid,
-  updateEnvironmentFile,
   validatePocketBaseNotInitialized
 } from '../functions/database-initialization'
 
-export async function initializeDatabaseHandler(
-  email: string,
-  password: string
-) {
-  const envPath = ensureEnvironmentFile()
+export async function initializeDatabaseHandler() {
+  ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'MASTER_KEY'])
+
+  const email = process.env.PB_EMAIL!
+
+  const password = process.env.PB_PASSWORD!
+
+  await downloadPocketBaseBinary()
 
   checkRunningPBInstances()
   validatePocketBaseNotInitialized()
   createPocketBaseSuperuser(email, password)
   runDatabaseMigrations()
-  await updateEnvironmentFile(envPath, email, password)
-  validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
-
-  const pbPid = await startPocketBaseAndGetPid()
 
   await setupDefaultData(email, password)
-  completeInitialization(pbPid)
+
+  CLILoggingService.success(
+    'PocketBase server stopped, setup process complete.'
+  )
+  CLILoggingService.info(
+    'You can now start the PocketBase server with `bun forge dev db`'
+  )
 }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import ora from 'ora'
 import prompts from 'prompts'
 
-import { CLILoggingService } from '../../../utils/logging'
+import CLILoggingService from '@/utils/logging'
 
 /**
  * Prompts the user to select an icon from Iconify's icon sets.

@@ -5,7 +5,8 @@ import * as t from '@babel/types'
 import fs from 'fs'
 import path from 'path'
 
-import { CLILoggingService } from '../../../utils/logging'
+import CLILoggingService from '@/utils/logging'
+
 import { AST_GENERATION_OPTIONS, SERVER_CONFIG } from './constants'
 
 /**

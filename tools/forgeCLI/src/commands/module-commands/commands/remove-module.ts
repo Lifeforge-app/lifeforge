@@ -4,7 +4,8 @@ import fs from 'fs'
 import path from 'path'
 import prompts from 'prompts'
 
-import { CLILoggingService } from '../../../utils/logging'
+import CLILoggingService from '@/utils/logging'
+
 import { generateSchemaHandler } from '../../db-commands'
 import { cleanupOldMigrations } from '../../db-commands/utils/pocketbase-utils'
 import {

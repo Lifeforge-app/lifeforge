@@ -4,14 +4,10 @@ import type { ResponseInput } from 'openai/resources/responses/responses.mjs'
 import ora from 'ora'
 import z from 'zod'
 
-import { startPocketBaseAndGetPid } from '../commands/db-commands/functions/database-initialization'
 import getPocketbaseInstance from '../commands/db-commands/utils/pocketbase-utils'
-import {
-  checkRunningPBInstances,
-  killExistingProcess,
-  validateEnvironment
-} from './helpers'
-import { CLILoggingService } from './logging'
+import { ensureEnvExists } from './helpers'
+import CLILoggingService from './logging'
+import { startPocketbase } from './pocketbase'
 import { zodTextFormat } from './zodResponseFormat'
 
 export interface FetchAIParams<T extends z.ZodType<any>> {
@@ -21,7 +17,7 @@ export interface FetchAIParams<T extends z.ZodType<any>> {
 }
 
 export async function getAPIKey(): Promise<string | null> {
-  validateEnvironment([
+  ensureEnvExists([
     'PB_DIR',
     'PB_HOST',
     'PB_EMAIL',
@@ -29,13 +25,7 @@ export async function getAPIKey(): Promise<string | null> {
     'MASTER_KEY'
   ])
 
-  const pbRunning = checkRunningPBInstances(false)
-
-  let pbPid: number
-
-  if (!pbRunning) {
-    pbPid = await startPocketBaseAndGetPid()
-  }
+  const killPB = await startPocketbase()
 
   const pbInstance = await getPocketbaseInstance()
 
@@ -57,9 +47,7 @@ export async function getAPIKey(): Promise<string | null> {
 
     return null
   } finally {
-    if (!pbRunning) {
-      killExistingProcess(pbPid!)
-    }
+    killPB?.()
   }
 }
 

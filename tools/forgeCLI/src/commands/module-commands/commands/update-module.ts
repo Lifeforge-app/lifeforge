@@ -4,8 +4,9 @@ import {
   confirmAction,
   executeCommand,
   executeCommandWithOutput
-} from '../../../utils/helpers'
-import { CLILoggingService } from '../../../utils/logging'
+} from '@/utils/helpers'
+import CLILoggingService from '@/utils/logging'
+
 import { getInstalledModules, moduleExists } from '../utils/file-system'
 
 interface CommitInfo {
@@ -95,7 +96,7 @@ async function updateSingleModule(moduleName: string): Promise<void> {
     )
 
     if (fs.existsSync(`apps/${moduleName}/server/schema.ts`)) {
-      executeCommand(`bun forge db generate-migrations ${moduleName}`)
+      executeCommand(`bun forge db push ${moduleName}`)
     }
 
     CLILoggingService.success(`Successfully updated module: ${moduleName}`)
