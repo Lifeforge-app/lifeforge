@@ -114,6 +114,24 @@ export function getEnvVars<const T extends readonly string[]>(
   return vars as Record<T[number], string>
 }
 
+export function getEnvVar(varName: string, fallback?: string): string {
+  const value = process.env[varName]
+
+  if (value) {
+    return value
+  }
+
+  if (fallback !== undefined) {
+    return fallback
+  }
+
+  CLILoggingService.actionableError(
+    `Missing required environment variable: ${varName}`,
+    'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
+  )
+  process.exit(1)
+}
+
 /**
  * Formats project list for display
  */
