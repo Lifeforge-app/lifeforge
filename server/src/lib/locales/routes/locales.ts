@@ -17,7 +17,7 @@ import {
 export const allApps = fs
   .globSync([
     '../tools/**/locales',
-    path.resolve(process.cwd(), '../apps/**/locales')
+    path.resolve(import.meta.dirname.split('/server')[0], 'apps/**/locales')
   ])
   .filter(dir => {
     return fs.existsSync(path.join(dir, 'en.json'))
