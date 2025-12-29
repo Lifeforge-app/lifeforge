@@ -1,5 +1,7 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import clsx from 'clsx'
+import { usePersonalization } from 'shared'
+import tinycolor from 'tinycolor2'
 
 interface SwitchProps {
   /** Whether the switch is currently checked (on) or unchecked (off). */
@@ -14,6 +16,8 @@ interface SwitchProps {
  * A switch component for toggling between two states.
  */
 function Switch({ value, onChange, disabled }: SwitchProps) {
+  const { derivedThemeColor, derivedTheme } = usePersonalization()
+
   return (
     <HeadlessSwitch
       checked={value}
@@ -26,8 +30,13 @@ function Switch({ value, onChange, disabled }: SwitchProps) {
     >
       <span
         className={clsx(
-          'pointer-events-none inline-block size-4 shrink-0 rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out',
-          value ? 'translate-x-6' : 'translate-x-1'
+          'pointer-events-none inline-block size-4 shrink-0 rounded-full shadow-lg ring-0 transition-transform duration-200 ease-in-out',
+          value ? 'translate-x-6' : 'translate-x-1',
+          !value
+            ? 'bg-bg-100'
+            : tinycolor(derivedThemeColor).isLight() && derivedTheme === 'dark'
+              ? 'bg-bg-900'
+              : 'bg-bg-100'
         )}
       />
     </HeadlessSwitch>
