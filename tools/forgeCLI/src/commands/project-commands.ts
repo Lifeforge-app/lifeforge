@@ -1,4 +1,4 @@
-import { PROJECTS_ALLOWED, VALID_COMMANDS } from '../constants/constants'
+import { PROJECTS_ALLOWED } from '../constants/constants'
 import type { CommandType, ProjectType } from '../types'
 import {
   executeCommand,
@@ -13,11 +13,11 @@ import CLILoggingService from '../utils/logging'
  */
 export function executeProjectCommand(
   commandType: CommandType,
-  projects: ProjectType[]
+  projects: ProjectType[] | undefined
 ): void {
   const allProjectKeys = Object.keys(PROJECTS_ALLOWED) as ProjectType[]
 
-  const finalProjects = projects.length ? projects : allProjectKeys
+  const finalProjects = projects?.length ? projects : allProjectKeys
 
   logProcessStart(commandType, finalProjects)
 
@@ -36,8 +36,12 @@ export function executeProjectCommand(
 /**
  * Validates project arguments for command execution
  */
-export function validateProjectArguments(projects: string[]): void {
-  const validProjects = [...Object.keys(PROJECTS_ALLOWED), 'all']
+export function validateProjectArguments(projects: string[] | undefined): void {
+  const validProjects = Object.keys(PROJECTS_ALLOWED)
+
+  if (!projects?.length || !projects) {
+    return
+  }
 
   const validation = validateProjects(projects, validProjects)
 
@@ -54,15 +58,8 @@ export function validateProjectArguments(projects: string[]): void {
  * Creates command handlers for build, types, and lint commands
  */
 export function createCommandHandler(commandType: CommandType) {
-  return (projects: string[]) => {
+  return (projects: string[] | undefined) => {
     validateProjectArguments(projects)
     executeProjectCommand(commandType, projects as ProjectType[])
   }
-}
-
-/**
- * Gets available commands
- */
-export function getAvailableCommands(): readonly CommandType[] {
-  return VALID_COMMANDS
 }

@@ -4,7 +4,7 @@ import { isDockerMode } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
-import { createMigrationFile } from '../functions/migration-generation'
+import { createMigrationFile } from '../functions/migration-generation/migration-file'
 import { getSchemaFiles, importSchemaModules } from '../utils/file-utils'
 import { cleanupOldMigrations } from '../utils/pocketbase-utils'
 
