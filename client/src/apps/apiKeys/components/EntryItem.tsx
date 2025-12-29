@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import copy from 'copy-to-clipboard'
@@ -13,20 +12,20 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import COLORS from 'tailwindcss/colors'
 
-import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
-import decryptKey from '../utils/decryptKey'
-import type { APIKeysEntry } from './ContentContainer'
+import ROUTES from '@/routes'
+import forgeAPI from '@/utils/forgeAPI'
 
-function EntryItem({
-  entry,
-  masterPassword
-}: {
-  entry: APIKeysEntry
-  masterPassword: string
-}) {
+import type { APIKeysEntry } from '..'
+import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
+import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
+
+function EntryItem({ entry }: { entry: APIKeysEntry }) {
+  const { t } = useTranslation('common.apiKeys')
+
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -51,11 +50,21 @@ function EntryItem({
       })
   )
 
+  const modulesRequiredCount = ROUTES.flatMap(cat => cat.items).filter(item =>
+    item.apiAccess?.some(access => access.key === entry.keyId)
+  ).length
+
   async function copyKey() {
     setIsCopying(true)
 
     try {
-      copy(await decryptKey({ entry, masterPassword }))
+      const key = await forgeAPI.apiKeys.entries.get
+        .input({
+          keyId: entry.id
+        })
+        .query()
+
+      copy(key)
       toast.success('Key copied to clipboard')
     } catch (err) {
       console.error(err)
@@ -70,15 +79,13 @@ function EntryItem({
       open(ModifyAPIKeyModal, {
         type: 'update',
         initialData: {
-          ...entry,
-          key: await decryptKey({ entry, masterPassword })
-        },
-        masterPassword
+          ...entry
+        }
       })
     } catch {
       toast.error('Failed to fetch API Key')
     }
-  }, [entry, masterPassword])
+  }, [entry])
 
   const handleDeleteEntry = () =>
     open(ConfirmationModal, {
@@ -93,7 +100,23 @@ function EntryItem({
   return (
     <OptionsColumn
       key={entry.id}
-      description={entry.description}
+      description={
+        modulesRequiredCount > 0 && (
+          <p className="text-bg-500 mt-2 flex items-center gap-1">
+            {t('misc.requiredBy', { count: modulesRequiredCount })}
+            <Button
+              className="p-1!"
+              icon="tabler:info-circle"
+              variant="plain"
+              onClick={() =>
+                open(ModulesRequiredListModal, {
+                  keyId: entry.keyId
+                })
+              }
+            />
+          </p>
+        )
+      }
       icon={entry.icon}
       title={
         <>
@@ -104,7 +127,9 @@ function EntryItem({
             color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
             icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
             iconClassName="size-3.5!"
-            label={entry.exposable ? 'Exposable' : 'Internal Only'}
+            label={
+              entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
+            }
           />
         </>
       }
@@ -119,19 +144,21 @@ function EntryItem({
           <span className="ml-0.5">{entry.key}</span>
         </code>
         <span className="text-bg-500 text-sm">
-          Last updated: {dayjs(entry.updated).fromNow()}
+          {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
         </span>
       </div>
       <div className="ml-2 flex gap-2">
-        <Button
-          className="shrink-0"
-          icon="tabler:copy"
-          loading={isCopying}
-          variant="plain"
-          onClick={() => {
-            copyKey().catch(console.error)
-          }}
-        />
+        {entry.exposable && (
+          <Button
+            className="shrink-0"
+            icon="tabler:copy"
+            loading={isCopying}
+            variant="plain"
+            onClick={() => {
+              copyKey().catch(console.error)
+            }}
+          />
+        )}
         <ContextMenu>
           <ContextMenuItem
             icon="tabler:pencil"

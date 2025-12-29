@@ -89,7 +89,7 @@ ROUTES = ROUTES.sort((a, b) => {
   items: cat.items.sort((a, b) => a.name.localeCompare(b.name))
 }))
 
-import.meta.glob('../../../apps/**/client/src/index.css', {
+import.meta.glob('../../../apps/**/client/index.css', {
   eager: true
 })
 

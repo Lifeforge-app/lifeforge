@@ -1,15 +1,20 @@
-import APIKeyStatusProvider from '@/providers/features/APIKeyStatusProvider'
 import { LoadingScreen, ModalManager, ModuleWrapper } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Suspense } from 'react'
 import type { RouteObject } from 'shared'
 import type { ModuleConfig } from 'shared'
 
+import APIKeyStatusProvider from '@/providers/features/APIKeyStatusProvider'
+
 interface RouteBuilderOptions {
   routes: ModuleConfig['routes']
   loadingMessage: string
   isNested?: boolean
-  APIKeys?: string[]
+  apiKeys?: {
+    key: string
+    required: boolean
+    usage: string
+  }[]
   config: {
     title: string
     icon: string
@@ -22,7 +27,7 @@ interface RouteBuilderOptions {
  */
 export function buildChildRoutes({
   routes,
-  APIKeys = [],
+  apiKeys = [],
   loadingMessage = 'loadingModule',
   config
 }: RouteBuilderOptions): RouteObject[] {
@@ -34,7 +39,7 @@ export function buildChildRoutes({
     return {
       path,
       element: (
-        <APIKeyStatusProvider APIKeys={APIKeys}>
+        <APIKeyStatusProvider apiKeys={apiKeys}>
           <Suspense
             key={`route-${path}`}
             fallback={<LoadingScreen message={loadingMessage} />}
@@ -59,7 +64,7 @@ export function createModuleRoute(
 ): RouteObject | RouteObject[] {
   const routeConfig = {
     routes: item.routes,
-    APIKeys: item.requiredAPIKeys,
+    apiKeys: item.apiAccess,
     config: {
       title: item.name,
       icon: item.icon,

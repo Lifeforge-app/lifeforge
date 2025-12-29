@@ -132,8 +132,14 @@ async function validateCollections(
     delete requiredSchema?.updated
     delete requiredSchema?.created
 
-    existingCollection?.fields.forEach((field: any) => delete field.id)
-    requiredSchema?.fields.forEach((field: any) => delete field.id)
+    existingCollection?.fields.forEach((field: any) => {
+      delete field.id
+      delete field.collectionId
+    })
+    requiredSchema?.fields.forEach((field: any) => {
+      delete field.id
+      delete field.collectionId
+    })
 
     if ('oauth2' in requiredCollections) {
       delete requiredCollections?.oauth2
