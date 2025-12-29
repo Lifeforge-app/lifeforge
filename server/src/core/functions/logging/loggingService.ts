@@ -1,9 +1,10 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import moment from 'moment'
+import path from 'path'
 import { stripVTControlCharacters } from 'util'
 
-const logPath = process.cwd().replace(/\/server$/, '') + '/logs'
+const logPath = path.resolve(import.meta.dirname.split('/server')[0], 'logs')
 
 if (!fs.existsSync(logPath)) {
   fs.mkdirSync(logPath)

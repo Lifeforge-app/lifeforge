@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import fs from 'fs'
 import { createServer } from 'node:http'
+import path from 'path'
 import { Server } from 'socket.io'
 
 import checkDB from '@functions/database/dbUtils'
@@ -17,6 +18,15 @@ const PORT = process.env.PORT || 3636
 dotenv.config({
   path: '../env/.env.local'
 })
+
+const projectRoot = path.basename(path.resolve(import.meta.dirname, '../..'))
+
+if (projectRoot !== 'lifeforge') {
+  LoggingService.error(
+    `Project root directory must be named 'lifeforge', but found '${projectRoot}'. Please rename the root directory.`
+  )
+  process.exit(1)
+}
 
 if (!process.env.MASTER_KEY) {
   LoggingService.error(
