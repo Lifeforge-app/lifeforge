@@ -12,6 +12,7 @@ import {
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import COLORS from 'tailwindcss/colors'
 
@@ -23,6 +24,8 @@ import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 
 function EntryItem({ entry }: { entry: APIKeysEntry }) {
+  const { t } = useTranslation('common.apiKeys')
+
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -100,7 +103,7 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
       description={
         modulesRequiredCount > 0 && (
           <p className="text-bg-500 mt-2 flex items-center gap-1">
-            Required by: {modulesRequiredCount} modules
+            {t('misc.requiredBy', { count: modulesRequiredCount })}
             <Button
               className="p-1!"
               icon="tabler:info-circle"
@@ -124,7 +127,9 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
             color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
             icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
             iconClassName="size-3.5!"
-            label={entry.exposable ? 'Exposable' : 'Internal Only'}
+            label={
+              entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
+            }
           />
         </>
       }
@@ -139,7 +144,7 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
           <span className="ml-0.5">{entry.key}</span>
         </code>
         <span className="text-bg-500 text-sm">
-          Last updated: {dayjs(entry.updated).fromNow()}
+          {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
         </span>
       </div>
       <div className="ml-2 flex gap-2">
