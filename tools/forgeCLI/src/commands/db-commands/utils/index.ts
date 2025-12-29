@@ -22,15 +22,5 @@ export {
 export {
   FIELD_TYPE_MAPPING,
   PRETTIER_OPTIONS,
-  MIGRATION_PRETTIER_OPTIONS,
   SCHEMA_PATTERNS
 } from './constants'
-
-export type {
-  Environment,
-  SchemaModule,
-  MigrationResult,
-  ModuleCollectionsMap,
-  PocketBaseField,
-  FieldTypeMapping
-} from './types'
