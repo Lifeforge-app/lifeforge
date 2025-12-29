@@ -3,15 +3,13 @@ import _ from 'lodash'
 
 import CLILoggingService from '@/utils/logging'
 
-import type { ModuleCollectionsMap } from '../../utils'
-
 /**
  * Builds mapping of modules to their collections
  */
 export async function buildModuleCollectionsMap(
   collections: Array<Record<string, unknown>>
-): Promise<ModuleCollectionsMap> {
-  const moduleCollectionsMap: ModuleCollectionsMap = {}
+): Promise<Record<string, Record<string, unknown>[]>> {
+  const moduleCollectionsMap: Record<string, Record<string, unknown>[]> = {}
 
   const modulesDirs = [
     './server/src/lib/**/schema.ts',

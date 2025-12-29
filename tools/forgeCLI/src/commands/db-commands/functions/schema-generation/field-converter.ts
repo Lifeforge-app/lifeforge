@@ -1,6 +1,7 @@
 import CLILoggingService from '@/utils/logging'
 
-import { FIELD_TYPE_MAPPING, type PocketBaseField } from '../../utils'
+import { FIELD_TYPE_MAPPING } from '../../utils'
+import type { PocketBaseField } from '../../utils/constants'
 
 /**
  * Converts a PocketBase field to Zod schema string
