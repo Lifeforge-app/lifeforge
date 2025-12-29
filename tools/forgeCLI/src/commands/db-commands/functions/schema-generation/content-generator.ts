@@ -8,10 +8,14 @@ import { generateCollectionSchema, stripCollectionIds } from './field-converter'
 
 /**
  * Generates schema content for a module
+ * @param moduleName - The name of the module
+ * @param collections - Collections belonging to this module
+ * @param idToNameMap - Map of collection IDs to names for relation resolution
  */
 export function generateModuleSchemaContent(
   moduleName: string,
-  collections: Array<Record<string, unknown>>
+  collections: Array<Record<string, unknown>>,
+  idToNameMap?: Map<string, string>
 ): string {
   const schemaEntries: string[] = []
 
@@ -34,8 +38,8 @@ export function generateModuleSchemaContent(
 
     const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
 
-    // Remove IDs and timestamps to avoid migration conflicts
-    const cleanedCollection = stripCollectionIds(collection)
+    // Remove IDs and convert relation collectionIds to names
+    const cleanedCollection = stripCollectionIds(collection, idToNameMap)
 
     schemaEntries.push(`  ${shortName}: {
         schema: ${zodSchemaString},

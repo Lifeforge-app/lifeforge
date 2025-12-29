@@ -48,9 +48,11 @@ export function generateCollectionSchema(
 /**
  * Strips collection ID and field IDs from raw config
  * This prevents migration conflicts when importing to different databases
+ * For relation fields, converts collectionId to collection name for portability
  */
 export function stripCollectionIds(
-  collection: Record<string, unknown>
+  collection: Record<string, unknown>,
+  idToNameMap?: Map<string, string>
 ): Record<string, unknown> {
   const cleaned = { ...collection }
 
@@ -63,12 +65,28 @@ export function stripCollectionIds(
     delete cleaned.oauth2
   }
 
-  // Remove field IDs
+  // Remove field IDs and convert relation collectionIds to names
   if (cleaned.fields && Array.isArray(cleaned.fields)) {
     cleaned.fields = cleaned.fields.map((field: Record<string, unknown>) => {
       const cleanedField = { ...field }
 
       delete cleanedField.id
+
+      // For relation fields, convert collectionId to collection name
+      if (
+        cleanedField.type === 'relation' &&
+        cleanedField.collectionId &&
+        idToNameMap
+      ) {
+        const collectionName = idToNameMap.get(
+          cleanedField.collectionId as string
+        )
+
+        if (collectionName) {
+          // PocketBase can look up by name instead of ID
+          cleanedField.collectionId = collectionName
+        }
+      }
 
       return cleanedField
     })

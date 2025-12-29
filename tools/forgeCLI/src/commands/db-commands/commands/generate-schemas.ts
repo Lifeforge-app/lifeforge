@@ -33,11 +33,20 @@ export async function generateSchemaHandler(
       `Found ${userCollections.length} user-defined collections`
     )
 
+    // Build ID-to-name map for all collections (including system)
+    // This allows relation fields to reference collections by name instead of ID
+    const idToNameMap = new Map<string, string>()
+
+    for (const collection of allCollections) {
+      idToNameMap.set(collection.id, collection.name)
+    }
+
     const moduleCollectionsMap =
       await buildModuleCollectionsMap(userCollections)
 
     const { moduleSchemas, moduleDirs } = await processSchemaGeneration(
       moduleCollectionsMap,
+      idToNameMap,
       targetModule
     )
 
