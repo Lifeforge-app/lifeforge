@@ -5,7 +5,10 @@ import { LoggingService } from '@functions/logging/loggingService'
 
 export const ALLOWED_NAMESPACE = ['apps', 'common'] as const
 
-const LANGUAGE_PACK_PATH = path.resolve(process.cwd(), '../locales')
+const LANGUAGE_PACK_PATH = path.resolve(
+  import.meta.dirname.split('/server')[0],
+  'locales'
+)
 
 if (!fs.existsSync(LANGUAGE_PACK_PATH)) {
   LoggingService.error(
