@@ -29,7 +29,6 @@ const usersSchemas = {
       updated: z.string()
     }),
     raw: {
-      id: '_pb_users_auth_',
       listRule: 'id = @request.auth.id',
       viewRule: 'id = @request.auth.id',
       createRule: '',
@@ -41,7 +40,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '[a-z0-9]{15}',
           hidden: false,
-          id: 'text3208210256',
           max: 15,
           min: 15,
           name: 'id',
@@ -55,7 +53,6 @@ const usersSchemas = {
         {
           cost: 10,
           hidden: true,
-          id: 'password901924565',
           max: 0,
           min: 8,
           name: 'password',
@@ -68,7 +65,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '[a-zA-Z0-9_]{50}',
           hidden: true,
-          id: 'text2504183744',
           max: 60,
           min: 30,
           name: 'tokenKey',
@@ -82,7 +78,6 @@ const usersSchemas = {
         {
           exceptDomains: null,
           hidden: false,
-          id: 'email3885137012',
           name: 'email',
           onlyDomains: null,
           presentable: false,
@@ -92,7 +87,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'bool1547992806',
           name: 'emailVisibility',
           presentable: false,
           required: false,
@@ -101,7 +95,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'bool256245529',
           name: 'verified',
           presentable: false,
           required: false,
@@ -111,7 +104,6 @@ const usersSchemas = {
         {
           autogeneratePattern: 'users[0-9]{6}',
           hidden: false,
-          id: 'text4166911607',
           max: 150,
           min: 3,
           name: 'username',
@@ -125,7 +117,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'users_name',
           max: 0,
           min: 0,
           name: 'name',
@@ -138,7 +129,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'users_avatar',
           maxSelect: 1,
           maxSize: 5242880,
           mimeTypes: [
@@ -158,7 +148,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'fsmwvydl',
           max: '',
           min: '',
           name: 'dateOfBirth',
@@ -169,7 +158,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'nppdhyft',
           maxSelect: 1,
           name: 'theme',
           presentable: false,
@@ -181,7 +169,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: '1ik4v2wa',
           max: 0,
           min: 0,
           name: 'color',
@@ -195,7 +182,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'd0lgczhi',
           max: 0,
           min: 0,
           name: 'bgTemp',
@@ -208,7 +194,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'xjb7bo9y',
           maxSelect: 1,
           maxSize: 5242880000,
           mimeTypes: null,
@@ -222,7 +207,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'apt6wrsc',
           maxSize: 2000000,
           name: 'backdropFilters',
           presentable: false,
@@ -233,7 +217,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'c34od4fd',
           max: 0,
           min: 0,
           name: 'fontFamily',
@@ -247,7 +230,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'text3571151285',
           max: 0,
           min: 0,
           name: 'language',
@@ -260,7 +242,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'wjxwozyv',
           maxSize: 2000000,
           name: 'dashboardLayout',
           presentable: false,
@@ -271,7 +252,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'ivwqhyvx',
           max: 0,
           min: 0,
           name: 'masterPasswordHash',
@@ -285,7 +265,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'afbxzben',
           max: 0,
           min: 0,
           name: 'APIKeysMasterPasswordHash',
@@ -299,7 +278,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'oi6j9b9d',
           max: 0,
           min: 0,
           name: 'twoFASecret',
@@ -312,7 +290,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'number3058924606',
           max: null,
           min: 0.1,
           name: 'fontScale',
@@ -324,7 +301,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'json3078794215',
           maxSize: 0,
           name: 'pinnedFontFamilies',
           presentable: false,
@@ -334,7 +310,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'number2565733205',
           max: null,
           min: 0,
           name: 'borderRadiusMultiplier',
@@ -346,7 +321,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'bool2844964936',
           name: 'bordered',
           presentable: false,
           required: false,
@@ -355,7 +329,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'autodate2990389176',
           name: 'created',
           onCreate: true,
           onUpdate: false,
@@ -365,7 +338,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'autodate3332085495',
           name: 'updated',
           onCreate: true,
           onUpdate: true,
@@ -446,7 +418,6 @@ const usersSchemas = {
       updated: z.string()
     }),
     raw: {
-      id: 'pbc_1737152613',
       listRule: '@request.auth.id != ""',
       viewRule: '@request.auth.id != ""',
       createRule: '@request.auth.id != ""',
@@ -458,7 +429,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '[a-z0-9]{15}',
           hidden: false,
-          id: 'text3208210256',
           max: 15,
           min: 15,
           name: 'id',
@@ -472,7 +442,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'text1731158936',
           max: 0,
           min: 0,
           name: 'displayName',
@@ -486,7 +455,6 @@ const usersSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'text2783322459',
           max: 0,
           min: 0,
           name: 'family',
@@ -499,7 +467,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'file2359244304',
           maxSelect: 1,
           maxSize: 99999999999999,
           mimeTypes: [],
@@ -513,7 +480,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'number130897217',
           max: null,
           min: null,
           name: 'weight',
@@ -525,7 +491,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'autodate2990389176',
           name: 'created',
           onCreate: true,
           onUpdate: false,
@@ -535,7 +500,6 @@ const usersSchemas = {
         },
         {
           hidden: false,
-          id: 'autodate3332085495',
           name: 'updated',
           onCreate: true,
           onUpdate: true,
