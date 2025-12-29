@@ -1,11 +1,10 @@
 import chalk from 'chalk'
 import fs from 'fs'
 
-import { ensureEnvExists, executeCommand } from '@/utils/helpers'
+import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
-import { startPocketbase } from '@/utils/pocketbase'
+import getPBInstance from '@/utils/pocketbase'
 
-import getPocketbaseInstance from '../../db-commands/utils/pocketbase-utils'
 import {
   type LocaleInstallConfig,
   createLocaleConfig,
@@ -181,11 +180,7 @@ export async function addLocaleHandler(langName: string): Promise<void> {
         'First language pack - setting as default for all users'
       )
 
-      ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
-
-      const killPB = await startPocketbase()
-
-      const pb = await getPocketbaseInstance()
+      const { pb, killPB } = await getPBInstance()
 
       const users = await pb.collection('users').getFullList()
 

@@ -1,4 +1,4 @@
-import { ensureEnvExists } from '@/utils/helpers'
+import { getEnvVars } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
@@ -10,17 +10,17 @@ import {
 } from '../functions/database-initialization/superuser'
 
 export async function initializeDatabaseHandler() {
-  ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'MASTER_KEY'])
-
-  const email = process.env.PB_EMAIL!
-
-  const password = process.env.PB_PASSWORD!
+  const { PB_EMAIL, PB_PASSWORD } = getEnvVars([
+    'PB_EMAIL',
+    'PB_PASSWORD',
+    'MASTER_KEY'
+  ])
 
   await downloadPocketBaseBinary()
 
   checkRunningPBInstances()
   validatePocketBaseNotInitialized()
-  createPocketBaseSuperuser(email, password)
+  createPocketBaseSuperuser(PB_EMAIL, PB_PASSWORD)
   runDatabaseMigrations()
 
   CLILoggingService.success(

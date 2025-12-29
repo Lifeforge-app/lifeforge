@@ -1,10 +1,20 @@
-import type { FieldTypeMapping } from './types'
-
 /**
  * Constants for database command operations
  */
 
-export const FIELD_TYPE_MAPPING: FieldTypeMapping = {
+export interface PocketBaseField {
+  name: string
+  type: string
+  required?: boolean
+  maxSelect?: number
+  values?: string[]
+  [key: string]: unknown
+}
+
+export const FIELD_TYPE_MAPPING: Record<
+  string,
+  (field: PocketBaseField) => string
+> = {
   text: () => 'z.string()',
   richtext: () => 'z.string()',
   number: () => 'z.number()',
@@ -45,16 +55,6 @@ export const PRETTIER_OPTIONS = {
   trailingComma: 'none' as const,
   arrowParens: 'avoid' as const,
   endOfLine: 'auto' as const
-}
-
-/**
- * Migration prettier options
- */
-export const MIGRATION_PRETTIER_OPTIONS = {
-  parser: 'typescript' as const,
-  singleQuote: true,
-  trailingComma: 'all' as const,
-  printWidth: 80
 }
 
 /**

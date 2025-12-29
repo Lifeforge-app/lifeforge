@@ -2,11 +2,10 @@ import chalk from 'chalk'
 import fs from 'fs'
 import type PocketBase from 'pocketbase'
 
-import { ensureEnvExists, executeCommand } from '@/utils/helpers'
+import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
-import { startPocketbase } from '@/utils/pocketbase'
+import getPBInstance from '@/utils/pocketbase'
 
-import getPocketbaseInstance from '../../db-commands/utils/pocketbase-utils'
 import { getInstalledLocales, localeExists, validateLocaleName } from '../utils'
 
 /**
@@ -155,13 +154,9 @@ export async function removeLocaleHandler(langName: string): Promise<void> {
 
   CLILoggingService.step(`Removing language pack: ${langName}`)
 
-  ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
-
-  const killPocketbase = await startPocketbase()
+  const { pb, killPB } = await getPBInstance()
 
   try {
-    const pb = await getPocketbaseInstance()
-
     const remainingLocales = installedLocales.filter(l => l !== langName)
 
     const fallbackLang = remainingLocales[0]
@@ -182,14 +177,15 @@ export async function removeLocaleHandler(langName: string): Promise<void> {
     CLILoggingService.success(
       `Language pack "${langName}" removed successfully! Restart the server to apply changes.`
     )
+    killPB?.()
   } catch (error) {
     CLILoggingService.actionableError(
       'Locale removal failed',
       'Check the error details above and try again'
     )
     CLILoggingService.debug(`Removal error: ${error}`)
+    killPB?.()
+
     process.exit(1)
-  } finally {
-    killPocketbase?.()
   }
 }

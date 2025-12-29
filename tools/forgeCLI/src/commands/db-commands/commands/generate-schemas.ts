@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 import path from 'path'
 
-import { ensureEnvExists, isDockerMode } from '@/utils/helpers'
+import { isDockerMode } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
-import { startPocketbase } from '@/utils/pocketbase'
+import getPBInstance from '@/utils/pocketbase'
 
 import {
   buildModuleCollectionsMap,
@@ -11,7 +11,6 @@ import {
   processSchemaGeneration
 } from '../functions/schema-generation'
 import { writeFormattedFile } from '../utils/file-utils'
-import getPocketbaseInstance from '../utils/pocketbase-utils'
 
 /**
  * Command handler for generating database schemas
@@ -22,19 +21,8 @@ export async function generateSchemaHandler(
   try {
     CLILoggingService.info('Starting schema generation process...')
 
-    // In Docker mode, PB_DIR is not required - PocketBase is already running externally
-    if (isDockerMode()) {
-      ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
-    } else {
-      ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
-    }
+    const { pb, killPB } = await getPBInstance(!isDockerMode())
 
-    const killPB = !isDockerMode() ? await startPocketbase() : undefined
-
-    // Authenticate with PocketBase
-    const pb = await getPocketbaseInstance()
-
-    // Fetch collections
     CLILoggingService.debug('Fetching collections from PocketBase...')
 
     const allCollections = await pb.collections.getFullList()
@@ -47,17 +35,14 @@ export async function generateSchemaHandler(
       `Found ${userCollections.length} user-defined collections`
     )
 
-    // Build module mapping
     const moduleCollectionsMap =
       await buildModuleCollectionsMap(userCollections)
 
-    // Process schema generation
     const { moduleSchemas, moduleDirs } = await processSchemaGeneration(
       moduleCollectionsMap,
       targetModule
     )
 
-    // Generate and write main schema file if not targeting a specific module
     if (!targetModule) {
       const mainSchemaContent = generateMainSchemaContent(moduleDirs)
 
@@ -72,7 +57,6 @@ export async function generateSchemaHandler(
       )
     }
 
-    // Summary
     const moduleCount = Object.keys(moduleSchemas).length
 
     CLILoggingService.info(

@@ -12,8 +12,8 @@ import type { ConcurrentServiceConfig, ServiceType } from '../types'
 import {
   checkPortInUse,
   delay,
-  ensureEnvExists,
   executeCommand,
+  getEnvVars,
   killExistingProcess
 } from '../utils/helpers'
 import CLILoggingService from '../utils/logging'
@@ -134,7 +134,7 @@ async function getConcurrentServices(): Promise<ConcurrentServiceConfig[]> {
     const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
 
     if (config.requiresEnv) {
-      ensureEnvExists(config.requiresEnv)
+      getEnvVars(config.requiresEnv)
     }
 
     concurrentServices.push({
@@ -156,7 +156,7 @@ async function startSingleService(service: string): Promise<void> {
     const config = SERVICE_COMMANDS[service]
 
     if (config.requiresEnv) {
-      ensureEnvExists(config.requiresEnv)
+      getEnvVars(config.requiresEnv)
     }
 
     const command =
