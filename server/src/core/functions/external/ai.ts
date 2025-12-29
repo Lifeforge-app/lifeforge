@@ -6,6 +6,10 @@ import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
 import z from 'zod'
 
 import { PBService, getAPIKey } from '@functions/database'
+import {
+  getCallerModuleId,
+  validateCallerAccess
+} from '@functions/database/getAPIKey'
 import { LoggingService } from '@functions/logging/loggingService'
 import { ClientError } from '@functions/routes/utils/response'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
@@ -32,6 +36,14 @@ export async function fetchAI<
   if (structure && provider !== 'openai') {
     throw new Error('Structure is only supported for OpenAI provider')
   }
+
+  const callerModule = getCallerModuleId()
+
+  if (!callerModule) {
+    throw new Error('Unable to determine caller module for API key validation.')
+  }
+
+  await validateCallerAccess(callerModule, provider)
 
   const apiKey = await getAPIKey(provider, pb)
 

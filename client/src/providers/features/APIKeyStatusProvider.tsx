@@ -1,14 +1,19 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
-import { EmptyStateScreen, WithQuery } from 'lifeforge-ui'
+import { Button, Card, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'shared'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 function APIKeyStatusProvider({
-  APIKeys,
+  apiKeys,
   children
 }: {
-  APIKeys: string[]
+  apiKeys: {
+    key: string
+    required: boolean
+    usage: string
+  }[]
   children: React.ReactNode
 }) {
   const { t } = useTranslation('common.apiKeys')
@@ -16,43 +21,50 @@ function APIKeyStatusProvider({
   const hasRequiredAPIKeysQuery = useQuery(
     forgeAPI.apiKeys.entries.checkKeys
       .input({
-        keys: APIKeys.join(',')
+        keys: apiKeys
+          .filter(key => key.required)
+          .map(key => key.key)
+          .join(',')
       })
       .queryOptions({
-        enabled: APIKeys.length > 0
+        enabled: apiKeys.length > 0
       })
   )
 
   return (
     <>
-      {APIKeys.length > 0 ? (
+      {apiKeys.length > 0 ? (
         <WithQuery query={hasRequiredAPIKeysQuery}>
           {hasRequiredAPIKeys =>
             hasRequiredAPIKeys ? (
               <>{children}</>
             ) : (
               <EmptyStateScreen
-                CTAButtonProps={{
-                  as: Link,
-                  icon: 'tabler:arrow-right',
-                  iconPosition: 'end',
-                  to: '/api-keys',
-                  children: 'configAPIKeys',
-                  namespace: 'common.apiKeys'
-                }}
                 icon="tabler:key-off"
                 message={{
                   title: t('missing.title'),
                   description: (
-                    <>
-                      <p className="text-bg-500 text-center text-lg">
+                    <div className="flex-center w-full flex-col gap-4 space-y-3 px-8 sm:w-3/4 lg:w-1/2">
+                      <p className="text-bg-400 dark:text-bg-600 text-center text-lg">
                         {t('missing.description')}
                       </p>
-                      <p className="text-bg-500 mt-4 mb-8 text-center text-lg">
-                        {t('missing.requiredKeysAre')}{' '}
-                        <code>{APIKeys.join(', ')}</code>
-                      </p>
-                    </>
+                      {apiKeys.map((item, index) => (
+                        <Card key={index} className="w-full">
+                          <code className="text-xl">{item.key}</code>
+                          <p className="text-bg-500 mt-1">{item.usage}</p>
+                        </Card>
+                      ))}
+                      <Button
+                        as={Link}
+                        className="w-full"
+                        icon="tabler:arrow-right"
+                        iconPosition="end"
+                        namespace="common.apiKeys"
+                        to="/api-keys"
+                      >
+                        configAPIKeys
+                      </Button>
+                    </div>
                   )
                 }}
               />

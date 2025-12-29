@@ -5,7 +5,6 @@ const apiKeysSchemas = {
     schema: z.object({
       keyId: z.string(),
       name: z.string(),
-      description: z.string(),
       icon: z.string(),
       key: z.string(),
       exposable: z.boolean(),
@@ -53,19 +52,6 @@ const apiKeysSchemas = {
           max: 0,
           min: 0,
           name: 'name',
-          pattern: '',
-          presentable: false,
-          primaryKey: false,
-          required: false,
-          system: false,
-          type: 'text'
-        },
-        {
-          autogeneratePattern: '',
-          hidden: false,
-          max: 0,
-          min: 0,
-          name: 'description',
           pattern: '',
           presentable: false,
           primaryKey: false,

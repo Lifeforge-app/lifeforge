@@ -21,7 +21,7 @@ import fs from 'fs'
 import path from 'path'
 
 // Key storage paths
-const KEYS_DIR = path.join(process.cwd(), 'keys')
+const KEYS_DIR = path.join(import.meta.dirname, 'keys')
 
 const PRIVATE_KEY_PATH = path.join(KEYS_DIR, 'server_private.pem')
 
