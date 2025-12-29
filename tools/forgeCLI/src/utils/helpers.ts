@@ -177,9 +177,10 @@ export function killExistingProcess(
   }
 }
 
-type PathConfig = {
+export type PathConfig = {
   path: string
   type: 'file' | 'directory'
+  children?: PathConfig[]
 }
 
 export function validateFilePaths(
@@ -187,22 +188,35 @@ export function validateFilePaths(
   basedir: string
 ): boolean {
   for (const p of paths) {
-    const { path: pth, type } = p
+    const { path: pth, type, children } = p
 
     const fullPath = path.resolve(basedir, pth)
 
     if (!fs.existsSync(fullPath)) {
-      return false
+      CLILoggingService.error(
+        `Invalid module structure detected: ${pth} does not exist`
+      )
+      process.exit(1)
     }
 
     const stats = fs.lstatSync(fullPath)
 
     if (type === 'file' && !stats.isFile()) {
-      return false
+      CLILoggingService.error(
+        `Invalid module structure detected: ${pth} is not a file`
+      )
+      process.exit(1)
     }
 
     if (type === 'directory' && !stats.isDirectory()) {
-      return false
+      CLILoggingService.error(
+        `Invalid module structure detected: ${pth} is not a directory`
+      )
+      process.exit(1)
+    }
+
+    if (children) {
+      validateFilePaths(children, fullPath)
     }
   }
 

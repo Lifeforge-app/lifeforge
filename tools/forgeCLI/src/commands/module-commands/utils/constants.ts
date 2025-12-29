@@ -1,3 +1,5 @@
+import type { PathConfig } from '@/utils/helpers'
+
 /**
  * Module installation configuration
  */
@@ -20,14 +22,26 @@ export const SERVER_CONFIG = {
 /**
  * Module structure validation requirements
  */
-export const MODULE_STRUCTURE_REQUIREMENTS = [
+export const MODULE_STRUCTURE_REQUIREMENTS: PathConfig[] = [
   {
     path: 'client',
-    type: 'directory' as const
+    type: 'directory'
   },
   {
     path: 'package.json',
-    type: 'file' as const
+    type: 'file'
+  },
+  {
+    path: 'manifest.ts',
+    type: 'file'
+  },
+  {
+    path: 'locales',
+    type: 'directory'
+  },
+  {
+    path: 'tsconfig.json',
+    type: 'file'
   }
 ]
 
