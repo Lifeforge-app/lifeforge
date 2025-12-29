@@ -4,7 +4,6 @@ import {
   executeCommand,
   logProcessComplete,
   logProcessStart,
-  resolveProjects,
   validateProjects
 } from '../utils/helpers'
 import CLILoggingService from '../utils/logging'
@@ -18,7 +17,7 @@ export function executeProjectCommand(
 ): void {
   const allProjectKeys = Object.keys(PROJECTS_ALLOWED) as ProjectType[]
 
-  const finalProjects = resolveProjects(projects, allProjectKeys)
+  const finalProjects = projects.length ? projects : allProjectKeys
 
   logProcessStart(commandType, finalProjects)
 

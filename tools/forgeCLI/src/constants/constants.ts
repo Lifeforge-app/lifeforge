@@ -32,7 +32,6 @@ export const PROJECTS_ALLOWED = {
  * Valid services that can be started in development mode
  */
 export const VALID_SERVICES = [
-  'all',
   'db',
   'server',
   'client',

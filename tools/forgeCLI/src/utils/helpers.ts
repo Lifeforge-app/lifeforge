@@ -25,18 +25,6 @@ export function validateProjects(
 }
 
 /**
- * Resolves project list, handling 'all' keyword
- */
-export function resolveProjects<T extends string>(
-  projects: string[],
-  allProjects: T[]
-): T[] {
-  const isAll = projects.includes('all')
-
-  return isAll ? allProjects : (projects as T[])
-}
-
-/**
  * Executes a shell command with proper error handling
  */
 export function executeCommand(
