@@ -8,7 +8,7 @@ interface OptionsColumnProps {
   /** The title of the configuration column */
   title: string | React.ReactNode
   /** A brief description of the configuration column */
-  description: string
+  description: React.ReactNode | string
   /** The icon to display alongside the title */
   icon: string
   /** The orientation of the configuration column */
@@ -73,7 +73,11 @@ function OptionsColumn({
                 </Tooltip>
               )}
             </h3>
-            <p className="text-bg-500">{description}</p>
+            {typeof description === 'string' ? (
+              <p className="text-bg-500">{description}</p>
+            ) : (
+              description
+            )}
           </div>
         </div>
         <div
