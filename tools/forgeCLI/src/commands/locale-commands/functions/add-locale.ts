@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import fs from 'fs'
 
+import { updateGitSubmodules } from '@/commands/module-commands/functions'
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 import getPBInstance from '@/utils/pocketbase'
@@ -84,27 +85,6 @@ function validateLocaleStructure(config: LocaleInstallConfig): void {
 }
 
 /**
- * Updates git submodules
- */
-function updateGitSubmodules(): void {
-  CLILoggingService.progress('Updating git submodules')
-
-  try {
-    executeCommand('git submodule update --init --recursive --remote', {
-      stdio: ['ignore', 'ignore', 'ignore'],
-      exitOnError: false
-    })
-    CLILoggingService.success('Git submodules updated successfully')
-  } catch (error) {
-    CLILoggingService.actionableError(
-      'Failed to update git submodules',
-      'Check your git configuration and try again'
-    )
-    throw error
-  }
-}
-
-/**
  * Cleans up on failure
  */
 function cleanup(localeDir: string): void {
@@ -171,7 +151,7 @@ export async function addLocaleHandler(langName: string): Promise<void> {
   try {
     cloneLocaleRepository(config)
     validateLocaleStructure(config)
-    updateGitSubmodules()
+    updateGitSubmodules(config.localeDir)
 
     executeCommand('git add .gitmodules')
 
