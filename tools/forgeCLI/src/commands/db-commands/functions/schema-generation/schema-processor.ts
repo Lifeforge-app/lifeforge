@@ -8,9 +8,13 @@ import { generateModuleSchemaContent } from './content-generator'
 
 /**
  * Processes schema generation for modules
+ * @param moduleCollectionsMap - Map of module paths to their collections
+ * @param idToNameMap - Map of collection IDs to names for relation resolution
+ * @param targetModule - Optional specific module to process
  */
 export async function processSchemaGeneration(
   moduleCollectionsMap: Record<string, Record<string, unknown>[]>,
+  idToNameMap: Map<string, string>,
   targetModule?: string
 ): Promise<{ moduleSchemas: Record<string, string>; moduleDirs: string[] }> {
   const filteredModuleCollectionsMap = targetModule
@@ -52,7 +56,8 @@ export async function processSchemaGeneration(
 
     const moduleSchemaContent = generateModuleSchemaContent(
       moduleName,
-      collections as Array<Record<string, unknown>>
+      collections as Array<Record<string, unknown>>,
+      idToNameMap
     )
 
     moduleSchemas[moduleDirName] = moduleSchemaContent
